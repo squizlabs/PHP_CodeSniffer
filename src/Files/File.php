@@ -450,8 +450,9 @@ class File
             // File has already been parsed.
             return;
         }
-/*
+
         $stdin     = false;
+/*
         $cliValues = $this->phpcs->cli->getCommandLineValues();
         if (empty($cliValues['files']) === true) {
             $stdin = true;

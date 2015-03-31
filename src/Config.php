@@ -65,6 +65,8 @@ class Config
     public $reportWidth;
     public $errorSeverity;
     public $warningSeverity;
+    public $suffix;
+    public $noPatch;
 
     /**
      * Whether or not to kill the process when an unknown command line arg is found.
@@ -236,11 +238,13 @@ class Config
         $this->sniffs = array();
         $this->ignored = array();
         $this->reportFile = null;
-        $this->generator = '';
+        $this->generator = null;
         $this->reports = array('full' => null);
         $this->reportWidth = 'auto';
         $this->errorSeverity = 5;
         $this->warningSeverity = 5;
+        $this->suffix = '';
+        $this->noPatch = false;
 
         $reportFormat = $this->getConfigData('report_format');
         if ($reportFormat !== null) {
@@ -472,6 +476,10 @@ class Config
             $this->cliArgs[($pos + 2)] = '';
             PHP_CodeSniffer::setConfigData($key, $value, true);
             break;
+        case 'no-patch':
+            $this->noPatch = true;
+            $this->overriddenDefaults['noPatch'] = true;
+            break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
                 $sniffs = explode(',', substr($arg, 7));
@@ -572,6 +580,9 @@ class Config
             } else if (substr($arg, 0, 11) === 'extensions=') {
                 $this->extensions = explode(',', substr($arg, 11));
                 $this->overriddenDefaults['extensions'] = true;
+            } else if (substr($arg, 0, 7) === 'suffix=') {
+                $this->suffix = explode(',', substr($arg, 7));
+                $this->overriddenDefaults['suffix'] = true;
             } else if (substr($arg, 0, 9) === 'severity=') {
                 $this->errorSeverity   = (int) substr($arg, 9);
                 $this->warningSeverity = $this->errorSeverity;

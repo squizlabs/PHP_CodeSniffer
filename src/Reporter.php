@@ -278,12 +278,12 @@ class Reporter
     public function printReports()
     {
         $toScreen = false;
-        foreach ($this->config->reports as $type => $report) {
-            if ($report['output'] === null) {
+        foreach ($this->config->reports as $type => $output) {
+            if ($output === null) {
                 $toScreen = true;
             }
 
-            $this->printReport($type, $report['output']);
+            $this->printReport($type, $output);
         }
 
         return $toScreen;

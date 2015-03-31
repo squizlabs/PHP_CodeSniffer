@@ -1,4 +1,7 @@
 <?php
+
+namespace PHP_CodeSniffer\Reports;
+
 /**
  * CBF report for PHP_CodeSniffer.
  *
@@ -33,7 +36,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
+class Cbf implements Report
 {
 
 
@@ -53,14 +56,13 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
      */
     public function generateFileReport(
         $report,
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $showSources=false,
         $width=80
     ) {
-        $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
-        $errors    = $phpcsFile->getFixableCount();
+        $errors = $phpcsFile->getFixableCount();
         if ($errors !== 0) {
-            if (empty($cliValues['files']) === false) {
+            if (empty($phpcsFile->config->files) === false) {
                 ob_end_clean();
                 $errors    = $phpcsFile->getFixableCount();
                 $startTime = microtime(true);
@@ -70,7 +72,7 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
             $fixed = $phpcsFile->fixer->fixFile();
         }
 
-        if (empty($cliValues['files']) === true) {
+        if (empty($phpcsFile->config->files) === true) {
             // Replacing STDIN, so output current file to STDOUT
             // even if nothing was fixed. Exit here because we
             // can't process any more than 1 file in this setup.
@@ -99,7 +101,7 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
         }
 
         if ($fixed === true) {
-            $newFilename = $report['filename'].$cliValues['phpcbf-suffix'];
+            $newFilename = $report['filename'].$phpcsFile->config->suffix;
             $newContent  = $phpcsFile->fixer->getContents();
             file_put_contents($newFilename, $newContent);
 
@@ -140,6 +142,7 @@ class PHP_CodeSniffer_Reports_Cbf implements PHP_CodeSniffer_Report
         $totalFixable,
         $showSources=false,
         $width=80,
+        $interactive=false,
         $toScreen=true
     ) {
         echo $cachedData;
