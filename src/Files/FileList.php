@@ -76,7 +76,7 @@ class FileList implements \Iterator, \Countable
         $paths = $config->files;
         $local = $config->local;
         $extensions = $config->extensions;
-        $ignore = $config->ignored;
+        $ignore = $ruleset->ignorePatterns;
 
         if (empty($extensions) === true) {
             $this->allowedFileExtensions = $this->defaultFileExtensions;
