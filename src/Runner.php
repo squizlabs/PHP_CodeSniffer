@@ -17,8 +17,6 @@ use PHP_CodeSniffer\Files\FileList;
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-error_reporting(E_ALL | E_STRICT);
-
 /**
  * A class to process command line phpcs scripts.
  *
