@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Reports;
+
+use PHP_CodeSniffer\Config;
+
 /**
  * Notify-send report for PHP_CodeSniffer.
  *
@@ -32,7 +37,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
+class Notifysend implements Report
 {
 
     /**
@@ -80,17 +85,18 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     public function __construct()
     {
-        $path = PHP_CodeSniffer::getConfigData('notifysend_path');
+        $config = new Config();
+        $path = $config->getConfigData('notifysend_path');
         if ($path !== null) {
             $this->path = $path;
         }
 
-        $timeout = PHP_CodeSniffer::getConfigData('notifysend_timeout');
+        $timeout = $config->getConfigData('notifysend_timeout');
         if ($timeout !== null) {
             $this->timeout = (int) $timeout;
         }
 
-        $showOk = PHP_CodeSniffer::getConfigData('notifysend_showok');
+        $showOk = $config->getConfigData('notifysend_showok');
         if ($showOk !== null) {
             $this->showOk = (boolean) $showOk;
         }
@@ -120,7 +126,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     public function generateFileReport(
         $report,
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $showSources=false,
         $width=80
     ) {
@@ -155,6 +161,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
         $totalFixable,
         $showSources=false,
         $width=80,
+        $interactive=false,
         $toScreen=true
     ) {
         $msg = $this->generateMessage($totalFiles, $totalErrors, $totalWarnings);

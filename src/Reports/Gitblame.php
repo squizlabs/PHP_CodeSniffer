@@ -1,4 +1,7 @@
 <?php
+
+namespace PHP_CodeSniffer\Reports;
+
 /**
  * Gitblame report for PHP_CodeSniffer.
  *
@@ -27,7 +30,7 @@
  * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Gitblame extends PHP_CodeSniffer_Reports_VersionControl
+class Gitblame extends VersionControl
 {
 
     /**

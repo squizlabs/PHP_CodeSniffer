@@ -1,4 +1,7 @@
 <?php
+
+namespace PHP_CodeSniffer\Reports;
+
 /**
  * Json report for PHP_CodeSniffer.
  *
@@ -27,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
+class Json implements Report
 {
 
 
@@ -47,7 +50,7 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
      */
     public function generateFileReport(
         $report,
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $showSources=false,
         $width=80
     ) {
@@ -105,6 +108,7 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
         $totalFixable,
         $showSources=false,
         $width=80,
+        $interactive=false,
         $toScreen=true
     ) {
         echo '{"totals":{"errors":'.$totalErrors.',"warnings":'.$totalWarnings.'},"files":{';

@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Reports;
+
+use PHP_CodeSniffer\Util\Timing;
+
 /**
  * Version control report base class for PHP_CodeSniffer.
  *
@@ -27,7 +32,7 @@
  * @version   Release: 1.2.2
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer_Report
+abstract class VersionControl implements Report
 {
 
     /**
@@ -75,7 +80,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
      */
     public function generateFileReport(
         $report,
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $showSources=false,
         $width=80
     ) {
@@ -170,6 +175,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         $totalFixable,
         $showSources=false,
         $width=80,
+        $interactive=false,
         $toScreen=true
     ) {
         $errorsShown = ($totalErrors + $totalWarnings);
@@ -266,8 +272,8 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
         echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
-        if ($toScreen === true && PHP_CODESNIFFER_INTERACTIVE === false) {
-            PHP_CodeSniffer_Reporting::printRunTime();
+        if ($toScreen === true && $interactive === false) {
+            Timing::printRunTime();
         }
 
     }//end generate()

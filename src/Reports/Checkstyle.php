@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Reports;
+
+use PHP_CodeSniffer\Config;
+
 /**
  * Checkstyle report for PHP_CodeSniffer.
  *
@@ -29,7 +34,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
+class Checkstyle implements Report
 {
 
 
@@ -49,11 +54,11 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
      */
     public function generateFileReport(
         $report,
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $showSources=false,
         $width=80
     ) {
-        $out = new XMLWriter;
+        $out = new \XMLWriter;
         $out->openMemory();
         $out->setIndent(true);
 
@@ -69,8 +74,8 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
                     $error['type'] = strtolower($error['type']);
-                    if (PHP_CODESNIFFER_ENCODING !== 'utf-8') {
-                        $error['message'] = iconv(PHP_CODESNIFFER_ENCODING, 'utf-8', $error['message']);
+                    if ($phpcsFile->config->encoding !== 'utf-8') {
+                        $error['message'] = iconv($phpcsFile->config->encoding, 'utf-8', $error['message']);
                     }
 
                     $out->startElement('error');
@@ -115,10 +120,11 @@ class PHP_CodeSniffer_Reports_Checkstyle implements PHP_CodeSniffer_Report
         $totalFixable,
         $showSources=false,
         $width=80,
+        $interactive=false,
         $toScreen=true
     ) {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<checkstyle version="'.PHP_CodeSniffer::VERSION.'">'.PHP_EOL;
+        echo '<checkstyle version="'.Config::VERSION.'">'.PHP_EOL;
         echo $cachedData;
         echo '</checkstyle>'.PHP_EOL;
 

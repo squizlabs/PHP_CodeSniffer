@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Reports;
+
+use PHP_CodeSniffer\Util\Timing;
+
 /**
  * Info report for PHP_CodeSniffer.
  *
@@ -25,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
+class Info implements Report
 {
 
     /**
@@ -40,7 +45,7 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
      *
      * @var array
      */
-    private $_metricCache = array();
+    private $metricCache = array();
 
 
     /**
@@ -59,24 +64,24 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
      */
     public function generateFileReport(
         $report,
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $showSources=false,
         $width=80
     ) {
         $metrics = $phpcsFile->getMetrics();
         foreach ($metrics as $metric => $data) {
-            if (isset($this->_metricCache[$metric]) === false) {
-                $this->_metricCache[$metric] = array();
+            if (isset($this->metricCache[$metric]) === false) {
+                $this->metricCache[$metric] = array();
             }
 
             foreach ($data['values'] as $value => $locations) {
                 $locations = array_unique($locations);
                 $count     = count($locations);
 
-                if (isset($this->_metricCache[$metric][$value]) === false) {
-                    $this->_metricCache[$metric][$value] = $count;
+                if (isset($this->metricCache[$metric][$value]) === false) {
+                    $this->metricCache[$metric][$value] = $count;
                 } else {
-                    $this->_metricCache[$metric][$value] += $count;
+                    $this->metricCache[$metric][$value] += $count;
                 }
             }
         }//end foreach
@@ -109,19 +114,20 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
         $totalFixable,
         $showSources=false,
         $width=80,
+        $interactive=false,
         $toScreen=true
     ) {
-        if (empty($this->_metricCache) === true) {
+        if (empty($this->metricCache) === true) {
             // Nothing to show.
             return;
         }
 
-        ksort($this->_metricCache);
+        ksort($this->metricCache);
 
         echo PHP_EOL."\033[1m".'PHP CODE SNIFFER INFORMATION REPORT'."\033[0m".PHP_EOL;
         echo str_repeat('-', 70).PHP_EOL;
 
-        foreach ($this->_metricCache as $metric => $values) {
+        foreach ($this->metricCache as $metric => $values) {
             $winner      = '';
             $winnerCount = 0;
             $totalCount  = 0;
@@ -152,8 +158,8 @@ class PHP_CodeSniffer_Reports_Info implements PHP_CodeSniffer_Report
 
         echo str_repeat('-', 70).PHP_EOL;
 
-        if ($toScreen === true && PHP_CODESNIFFER_INTERACTIVE === false) {
-            PHP_CodeSniffer_Reporting::printRunTime();
+        if ($toScreen === true && $interactive === false) {
+            Timing::printRunTime();
         }
 
     }//end generate()

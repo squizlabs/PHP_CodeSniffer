@@ -1,4 +1,7 @@
 <?php
+
+namespace PHP_CodeSniffer\Reports;
+
 /**
  * Mercurial report for PHP_CodeSniffer.
  *
@@ -27,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Hgblame extends PHP_CodeSniffer_Reports_VersionControl
+class Hgblame extends VersionControl
 {
 
     /**

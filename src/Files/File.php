@@ -451,36 +451,13 @@ class File
             return;
         }
 
-        $stdin     = false;
-/*
-        $cliValues = $this->phpcs->cli->getCommandLineValues();
-        if (empty($cliValues['files']) === true) {
-            $stdin = true;
-        }
-*/
-
         try {
-            /*
-            $tabWidth = null;
-            $encoding = null;
-            if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
-                $cliValues = $this->phpcs->cli->getCommandLineValues();
-                if (isset($cliValues['tabWidth']) === true) {
-                    $tabWidth = $cliValues['tabWidth'];
-                }
-
-                if (isset($cliValues['encoding']) === true) {
-                    $encoding = $cliValues['encoding'];
-                }
-            }
-            */
-
             $tokenizerClass = 'PHP_CodeSniffer\Tokenizers\\'.$this->tokenizerType;
             $this->tokenizer = new $tokenizerClass($this->content, $this->config, $this->eolChar);
             $this->tokens = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
-            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo PHP_EOL;
@@ -488,7 +465,7 @@ class File
             }
 
             return;
-        }//end try
+        }
 
         $this->numTokens = count($this->tokens);
 
@@ -506,7 +483,7 @@ class File
             $this->addWarningOnLine($error, 1, 'Internal.LineEndings.Mixed');
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)) {
             if ($this->numTokens === 0) {
                 $numLines = 0;
             } else {
@@ -520,75 +497,6 @@ class File
         }
 
     }//end parse()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Rebuilds the list of listeners to ensure their state is cleared.
-     *
-     * @return void
-     */
-    public function refreshTokenListeners()
-    {
-        $this->ruleset->populateTokenListeners();
-        $this->listeners = $this->phpcs->getTokenSniffs();
-
-    }//end refreshTokenListeners()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -617,11 +525,6 @@ class File
         $this->fixer = null;
 
     }//end cleanUp()
-
-
-
-
-    
 
 
     /**

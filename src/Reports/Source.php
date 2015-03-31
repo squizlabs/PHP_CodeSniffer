@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Reports;
+
+use PHP_CodeSniffer\Util\Timing;
+
 /**
  * Source report for PHP_CodeSniffer.
  *
@@ -29,7 +34,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
+class Source implements Report
 {
 
     /**
@@ -37,7 +42,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
      *
      * @var array
      */
-    private $_sourceCache = array();
+    private $sourceCache = array();
 
 
     /**
@@ -56,7 +61,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
      */
     public function generateFileReport(
         $report,
-        PHP_CodeSniffer_File $phpcsFile,
+        $phpcsFile,
         $showSources=false,
         $width=80
     ) {
@@ -69,7 +74,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
                     $source = $error['source'];
-                    if (isset($this->_sourceCache[$source]) === false) {
+                    if (isset($this->sourceCache[$source]) === false) {
                         if ($showSources === true) {
                             $parts = null;
                             $sniff = $source;
@@ -93,14 +98,14 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                             $parts[2] = $sniff;
                         }//end if
 
-                        $this->_sourceCache[$source] = array(
+                        $this->sourceCache[$source] = array(
                                                         'count'   => 1,
                                                         'fixable' => $error['fixable'],
                                                         'parts'   => $parts,
                                                         'strlen'  => strlen($sniff),
                                                        );
                     } else {
-                        $this->_sourceCache[$source]['count']++;
+                        $this->sourceCache[$source]['count']++;
                     }//end if
                 }//end foreach
             }//end foreach
@@ -134,16 +139,17 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         $totalFixable,
         $showSources=false,
         $width=80,
+        $interactive=false,
         $toScreen=true
     ) {
-        if (empty($this->_sourceCache) === true) {
+        if (empty($this->sourceCache) === true) {
             // Nothing to show.
             return;
         }
 
         // Make sure the report width isn't too big.
         $maxLength = 0;
-        foreach ($this->_sourceCache as $source => $data) {
+        foreach ($this->sourceCache as $source => $data) {
             $maxLength = max($maxLength, $data['strlen']);
         }
 
@@ -155,8 +161,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
 
         $width = max($width, 70);
 
-        asort($this->_sourceCache);
-        $this->_sourceCache = array_reverse($this->_sourceCache);
+        asort($this->sourceCache);
+        $this->sourceCache = array_reverse($this->sourceCache);
 
         echo PHP_EOL."\033[1mPHP CODE SNIFFER VIOLATION SOURCE SUMMARY\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL."\033[1m";
@@ -182,7 +188,7 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             $maxSniffWidth += 4;
         }
 
-        foreach ($this->_sourceCache as $source => $sourceData) {
+        foreach ($this->sourceCache as $source => $sourceData) {
             if ($totalFixable > 0) {
                 echo '[';
                 if ($sourceData['fixable'] === true) {
@@ -239,8 +245,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             echo 'S';
         }
 
-        echo ' WERE FOUND IN '.count($this->_sourceCache).' SOURCE';
-        if (count($this->_sourceCache) !== 1) {
+        echo ' WERE FOUND IN '.count($this->sourceCache).' SOURCE';
+        if (count($this->sourceCache) !== 1) {
             echo 'S';
         }
 
@@ -253,8 +259,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
 
         echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
 
-        if ($toScreen === true && PHP_CODESNIFFER_INTERACTIVE === false) {
-            PHP_CodeSniffer_Reporting::printRunTime();
+        if ($toScreen === true && $interactive === false) {
+            Timing::printRunTime();
         }
 
     }//end generate()
