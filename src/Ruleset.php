@@ -34,6 +34,7 @@ class Ruleset
 
     private $config = null;
     public $name = '';
+    public $ignorePatterns = array();
 
     /**
      * An array of sniff objects that are being used to check files.
