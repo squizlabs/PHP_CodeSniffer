@@ -66,7 +66,7 @@ class CSSLintSniff implements Sniff
     {
         $fileName = $phpcsFile->getFilename();
 
-        $csslintPath = PHP_CodeSniffer::getConfigData('csslint_path');
+        $csslintPath = $phpcsFile->config->getConfigData('csslint_path');
         if ($csslintPath === null) {
             return;
         }

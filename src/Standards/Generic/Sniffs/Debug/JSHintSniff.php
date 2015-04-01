@@ -69,8 +69,8 @@ class JSHintSniff implements Sniff
     {
         $fileName = $phpcsFile->getFilename();
 
-        $rhinoPath  = PHP_CodeSniffer::getConfigData('rhino_path');
-        $jshintPath = PHP_CodeSniffer::getConfigData('jshint_path');
+        $rhinoPath  = $phpcsFile->config->getConfigData('rhino_path');
+        $jshintPath = $phpcsFile->config->getConfigData('jshint_path');
         if ($rhinoPath === null || $jshintPath === null) {
             return;
         }
