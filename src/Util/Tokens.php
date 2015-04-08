@@ -180,6 +180,7 @@ final class Tokens
                                  T_DO                  => 50,
                                  T_TRY                 => 50,
                                  T_CATCH               => 50,
+                                 T_FINALLY             => 50,
                                  T_SWITCH              => 50,
 
                                  T_SELF                => 25,
@@ -352,6 +353,7 @@ final class Tokens
                                    T_DO        => T_DO,
                                    T_TRY       => T_TRY,
                                    T_CATCH     => T_CATCH,
+                                   T_FINALLY   => T_FINALLY,
                                    T_PROPERTY  => T_PROPERTY,
                                    T_OBJECT    => T_OBJECT,
                                    T_USE       => T_USE,

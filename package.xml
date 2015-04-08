@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #479 : Yielded values are not recognised as returned values in Squiz FunctionComment sniff
   - Fixed bug #512 : Endless loop whilst parsing mixture of control structure styles
   - Fixed bug #515 : Spaces in JS block incorrectly flagged as indentation error
+  - Fixed bug #523 : Generic ScopeIndent errors for IF in FINALLY
   - Fixed bug #527 : Closure inside IF statement is not tokenized correctly
  </notes>
  <contents>
