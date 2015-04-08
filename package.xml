@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Xaver Loppenstedt for helping with tests
   - Added Generic DisallowShortArraySyntaxSniff to ban the use of the PHP short array syntax (request #483)
     -- Thanks to Xaver Loppenstedt for helping with tests
+  - Generic ScopeIndentSniff no longer does exact checking for content inside parenthesis (request #528)
+    -- Only applies to custom coding standards that set the "exact" flag to TRUE
   - Squiz ConcatenationSpacingSniff now has a setting to ignore newline characters around operators (request #511)
       -- Default remains FALSE, so newlines are not allowed
       -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
@@ -755,6 +757,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.1.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.2.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.3.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
