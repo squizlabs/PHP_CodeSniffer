@@ -102,3 +102,12 @@ function myFunction(
     $firstParameter,$secondParameter=[1,2,3],$third=null
 ) {
 }
+
+if (array_filter(
+    $commands,
+    function ($cmd) use ($commandName) {
+        return ($cmd['name'] == $commandName);
+    }
+)) {
+    // Do something
+}
