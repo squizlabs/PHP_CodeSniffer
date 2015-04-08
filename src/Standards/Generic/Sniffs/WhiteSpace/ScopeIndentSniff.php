@@ -193,7 +193,14 @@ class ScopeIndentSniff implements Sniff
 
             $checkToken  = null;
             $checkIndent = null;
-            $exact       = $this->exact;
+
+            $exact = (bool) $this->exact;
+            if ($exact === true && isset($tokens[$i]['nested_parenthesis']) === true) {
+                // Don't check indents exactly between parenthesis as they
+                // tend to have custom rules, such as with multi-line function calls
+                // and control structure conditions.
+                $exact = false;
+            }
 
             // Detect line changes and figure out where the indent is.
             if ($tokens[$i]['column'] === 1) {
