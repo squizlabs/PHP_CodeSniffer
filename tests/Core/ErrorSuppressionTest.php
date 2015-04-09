@@ -49,7 +49,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -59,7 +59,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -85,7 +85,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -95,7 +95,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd'.PHP_EOL.'$var = TRUE;';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -121,7 +121,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'//TODO: write some code';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -131,7 +131,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -157,7 +157,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -167,7 +167,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -197,7 +197,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
             '$var = FALSE;'.PHP_EOL.
             '$var = TRUE;'.PHP_EOL.
             '// @codingStandardsIgnoreEnd';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -213,7 +213,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
             '$var = FALSE;'.PHP_EOL.
             '$var = TRUE;'.PHP_EOL.
             '// @codingStandardsIgnoreEnd';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -237,7 +237,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'function myFunction() {'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -247,7 +247,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//@codingStandardsIgnoreStart'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//@codingStandardsIgnoreEnd'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -273,7 +273,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'//TODO: write some code';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -283,7 +283,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'//TODO: write some code';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -293,7 +293,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with a Doc Block suppression.
         $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
-        $file = new DummyFile($content, 'PHP', $ruleset, $config);
+        $file = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();

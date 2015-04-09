@@ -67,6 +67,7 @@ class Config
     public $warningSeverity;
     public $suffix;
     public $noPatch;
+    public $stdin;
 
     /**
      * Whether or not to kill the process when an unknown command line arg is found.
@@ -187,7 +188,14 @@ class Config
             }
 
             if ($arg{0} === '-') {
-                if ($arg === '-' || $arg === '--') {
+                if ($arg === '-') {
+                    // Asking to read from STDIN.
+                    $this->stdin = true;
+                    $this->overriddenDefaults['stdin'] = true;
+                    continue;
+                }
+
+                if ($arg === '--') {
                     // Empty argument, ignore it.
                     continue;
                 }
@@ -234,7 +242,12 @@ class Config
         $this->showProgress = false;
         $this->tabWidth = 0;
         $this->encoding = 'utf-8';
-        $this->extensions = array();
+        $this->extensions = array(
+                             'php' => 'PHP',
+                             'inc' => 'PHP',
+                             'js'  => 'JS',
+                             'css' => 'CSS',
+                            );
         $this->sniffs = array();
         $this->ignored = array();
         $this->reportFile = null;
@@ -245,6 +258,7 @@ class Config
         $this->warningSeverity = 5;
         $this->suffix = '';
         $this->noPatch = false;
+        $this->stdin = false;
 
         $reportFormat = $this->getConfigData('report_format');
         if ($reportFormat !== null) {
@@ -578,7 +592,25 @@ class Config
 
                 $this->overriddenDefaults['standards'] = true;
             } else if (substr($arg, 0, 11) === 'extensions=') {
-                $this->extensions = explode(',', substr($arg, 11));
+                $extensions    = explode(',', substr($arg, 11));
+                $newExtensions = array();
+                foreach ($extensions as $ext) {
+                    $slash = strpos($ext, '/');
+                    if ($slash !== false) {
+                        // They specified the tokenizer too.
+                        list($ext, $tokenizer) = explode('/', $ext);
+                        $newExtensions[$ext]   = strtoupper($tokenizer);
+                        continue;
+                    }
+
+                    if (isset($this->extensions[$ext]) === true) {
+                        $newExtensions[$ext] = $this->extensions[$ext];
+                    } else {
+                        $newExtensions[$ext] = 'PHP';
+                    }
+                }
+
+                $this->extensions = $newExtensions;
                 $this->overriddenDefaults['extensions'] = true;
             } else if (substr($arg, 0, 7) === 'suffix=') {
                 $this->suffix = explode(',', substr($arg, 7));
@@ -709,8 +741,8 @@ class Config
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
-        echo '                      Set runtime value (see --config-set) '.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
@@ -761,7 +793,8 @@ class Config
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
@@ -1039,8 +1072,6 @@ class Config
 
         $phpcs->processFiles($values['files'], $values['local']);
 
-        */
-
         if (empty($values['files']) === true) {
             // Check if they are passing in the file contents.
             $handle       = fopen('php://stdin', 'r');
@@ -1058,7 +1089,7 @@ class Config
                 }
             }
         }
-
+*/
         // Interactive runs don't require a final report and it doesn't really
         // matter what the retun value is because we know it isn't being read
         // by a script.

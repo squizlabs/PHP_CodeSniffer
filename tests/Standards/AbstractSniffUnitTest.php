@@ -144,14 +144,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 
             try {
                 $this->setCliValues($filename, $config);
-
-                $parts = explode('.', $testFile);
-                $extension = strtoupper(array_pop($parts));
-                if ($extension === 'INC') {
-                    $extension = 'PHP';
-                }
-
-                $phpcsFile = new LocalFile($testFile, $extension, $ruleset, $config);
+                $phpcsFile = new LocalFile($testFile, $ruleset, $config);
                 $phpcsFile->process();
             } catch (RuntimeException $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());

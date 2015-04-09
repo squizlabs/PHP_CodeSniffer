@@ -52,10 +52,24 @@ class DummyFile extends File
      * @throws PHP_CodeSniffer_Exception If the register() method does
      *                                   not return an array.
      */
-    public function __construct($content, $fileType, Ruleset $ruleset, Config $config)
+    public function __construct($content, Ruleset $ruleset, Config $config)
     {
         $this->setContent($content);
-        return parent::__construct($fileType, $ruleset, $config);
+
+        // See if a filename was defined in the content.
+        // This is done by including: phpcs_input_file: [file path]
+        // as the first line of content.
+        $path = 'STDIN';
+        if ($content !== null) {
+            if (substr($content, 0, 17) === 'phpcs_input_file:') {
+                $eolPos     = strpos($content, $this->eolChar);
+                $filename   = trim(substr($content, 17, ($eolPos - 17)));
+                $content    = substr($content, ($eolPos + strlen($this->eolChar)));
+                $path = $filename;
+            }
+        }
+
+        return parent::__construct($path, $ruleset, $config);
 
     }//end __construct()
 

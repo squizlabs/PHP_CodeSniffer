@@ -37,30 +37,6 @@ class FileList implements \Iterator, \Countable
     private $config = null;
 
     /**
-     * An array of extensions for files we will check.
-     *
-     * @var array
-     */
-    public $allowedFileExtensions = array();
-
-    /**
-     * An array of default extensions and associated tokenizers.
-     *
-     * If no extensions are set, these will be used as the defaults.
-     * If extensions are set, these will be used when the correct tokenizer
-     * can not be determined, such as when checking a passed filename instead
-     * of files in a directory.
-     *
-     * @var array
-     */
-    public $defaultFileExtensions = array(
-                                     'php' => 'PHP',
-                                     'inc' => 'PHP',
-                                     'js'  => 'JS',
-                                     'css' => 'CSS',
-                                    );
-
-    /**
      * An array of patterns to use for skipping files.
      *
      * @var array
@@ -77,12 +53,6 @@ class FileList implements \Iterator, \Countable
         $local = $config->local;
         $extensions = $config->extensions;
         $ignore = $ruleset->getIgnorePatterns();
-
-        if (empty($extensions) === true) {
-            $this->allowedFileExtensions = $this->defaultFileExtensions;
-        } else {
-            $this->setAllowedFileExtensions($extensions);
-        }
 
         $this->ignorePatterns = $ignore;
         $this->ruleset = $ruleset;
@@ -136,42 +106,6 @@ class FileList implements \Iterator, \Countable
     }//end __construct()
 
 
-    /**
-     * Sets an array of file extensions that we will allow checking of.
-     *
-     * If the extension is one of the defaults, a specific tokenizer
-     * will be used. Otherwise, the PHP tokenizer will be used for
-     * all extensions passed.
-     *
-     * @param array $extensions An array of file extensions.
-     *
-     * @return void
-     */
-    public function setAllowedFileExtensions(array $extensions)
-    {
-        $newExtensions = array();
-        foreach ($extensions as $ext) {
-            $slash = strpos($ext, '/');
-            if ($slash !== false) {
-                // They specified the tokenizer too.
-                list($ext, $tokenizer) = explode('/', $ext);
-                $newExtensions[$ext]   = strtoupper($tokenizer);
-                continue;
-            }
-
-            if (isset($this->allowedFileExtensions[$ext]) === true) {
-                $newExtensions[$ext] = $this->allowedFileExtensions[$ext];
-            } else if (isset($this->defaultFileExtensions[$ext]) === true) {
-                $newExtensions[$ext] = $this->defaultFileExtensions[$ext];
-            } else {
-                $newExtensions[$ext] = 'PHP';
-            }
-        }
-
-        $this->allowedFileExtensions = $newExtensions;
-
-    }//end setAllowedFileExtensions()
-
 
     /**
      * Checks filtering rules to see if a file should be checked.
@@ -203,7 +137,7 @@ class FileList implements \Iterator, \Countable
             array_shift($fileParts);
         }
 
-        $matches = array_intersect_key($extensions, $this->allowedFileExtensions);
+        $matches = array_intersect_key($extensions, $this->config->extensions);
         if (empty($matches) === true) {
             return false;
         }
@@ -284,18 +218,7 @@ class FileList implements \Iterator, \Countable
     {
         $path = key($this->files);
         if ($this->files[$path] === null) {
-            $parts = explode('.', $path);
-            $extension = array_pop($parts);
-            if (isset($this->allowedFileExtensions[$extension]) === true) {
-                $fileType = $this->allowedFileExtensions[$extension];
-            } else if (isset($this->defaultFileExtensions[$extension]) === true) {
-                $fileType = $this->defaultFileExtensions[$extension];
-            } else {
-                // Revert to default.
-                $fileType = 'PHP';
-            }
-
-            $this->files[$path] = new LocalFile($path, $fileType, $this->ruleset, $this->config);
+            $this->files[$path] = new LocalFile($path, $this->ruleset, $this->config);
         }
 
         return $this->files[$path];

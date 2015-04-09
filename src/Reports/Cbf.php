@@ -62,7 +62,7 @@ class Cbf implements Report
     ) {
         $errors = $phpcsFile->getFixableCount();
         if ($errors !== 0) {
-            if (empty($phpcsFile->config->files) === false) {
+            if ($phpcsFile->config->stdin === false) {
                 ob_end_clean();
                 $errors    = $phpcsFile->getFixableCount();
                 $startTime = microtime(true);
@@ -72,7 +72,7 @@ class Cbf implements Report
             $fixed = $phpcsFile->fixer->fixFile();
         }
 
-        if (empty($phpcsFile->config->files) === true) {
+        if ($phpcsFile->config->stdin === true) {
             // Replacing STDIN, so output current file to STDOUT
             // even if nothing was fixed. Exit here because we
             // can't process any more than 1 file in this setup.

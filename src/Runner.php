@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Files\FileList;
+use PHP_CodeSniffer\Files\DummyFile;
 
 /**
  * A class to process command line phpcs scripts.
@@ -111,9 +112,9 @@ class Runner
         $this->config->reportFile   = null;
         $this->config->reports      = array();
 
-        if (empty($this->config->files) === true) {
+        if ($this->config->stdin === true) {
             // They are using STDIN, which can't use diff.
-            $this->config->allowPatch = false;
+            $this->config->noPatch = true;
         }
 
         if ($this->config->suffix === '' && $this->config->noPatch === false) {
@@ -272,15 +273,25 @@ class Runner
         // The class manages all reporter for the run.
         $this->reporter = new Reporter($this->config);
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'Creating file list... ';
-        }
 
-        $todo     = new FileList($this->config, $ruleset);
-        $numFiles = count($todo);
+        if ($this->config->stdin === true) {
+            $handle       = fopen('php://stdin', 'r');
+            $fileContents = stream_get_contents($handle);
+            fclose($handle);
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo "DONE ($numFiles files in queue)".PHP_EOL;
+            $todo     = array(new DummyFile($fileContents, $ruleset, $this->config));
+            $numFiles = 1;
+        } else {
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                echo 'Creating file list... ';
+            }
+
+            $todo     = new FileList($this->config, $ruleset);
+            $numFiles = count($todo);
+
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                echo "DONE ($numFiles files in queue)".PHP_EOL;
+            }
         }
 
         $numProcessed = 0;
@@ -288,25 +299,17 @@ class Runner
         $maxLength    = strlen($numFiles);
         $lastDir      = '';
 
-
-
-
-$stdin = false;
-
-
-
-
         foreach ($todo as $path => $file) {
             $currDir    = dirname($path);
             if ($lastDir !== $currDir) {
-                if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
+                if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
                     echo 'Changing into directory '.$currDir.PHP_EOL;
                 }
 
                 $lastDir = $currDir;
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
                 $startTime = microtime(true);
                 echo 'Processing '.basename($path).' ';
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -317,7 +320,7 @@ $stdin = false;
             try {
                 $file->process();
 
-                if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
+                if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
                     $timeTaken = ((microtime(true) - $startTime) * 1000);
                     if ($timeTaken < 1000) {
                         $timeTaken = round($timeTaken);

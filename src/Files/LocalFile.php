@@ -4,9 +4,6 @@ namespace PHP_CodeSniffer\Files;
 
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Fixer;
-use PHP_CodeSniffer\Util;
-use PHP_CodeSniffer\Exceptions\TokenizerException;
 
 /**
  * A PHP_CodeSniffer_File object represents a PHP source file and the tokens
@@ -37,13 +34,6 @@ use PHP_CodeSniffer\Exceptions\TokenizerException;
 class LocalFile extends File
 {
 
-    /**
-     * The absolute path to the file associated with this object.
-     *
-     * @var string
-     */
-    protected $path = '';
-
 
     /**
      * Constructs a PHP_CodeSniffer_File.
@@ -59,18 +49,17 @@ class LocalFile extends File
      * @throws PHP_CodeSniffer_Exception If the register() method does
      *                                   not return an array.
      */
-    public function __construct($path, $fileType, Ruleset $ruleset, Config $config)
+    public function __construct($path, Ruleset $ruleset, Config $config)
     {
-        $this->path = trim($path);
-
-        if (is_readable($this->path) === false) {
+        $path = trim($path);
+        if (is_readable($path) === false) {
             exit('file not reable');
         }
 
         // Before we go and spend time tokenizing this file, just check
         // to see if there is a tag up top to indicate that the whole
         // file should be ignored. It must be on one of the first two lines.
-        $handle = fopen($this->path, 'r');
+        $handle = fopen($path, 'r');
         if ($handle !== false) {
             $firstContent  = fgets($handle);
             $firstContent .= fgets($handle);
@@ -79,7 +68,7 @@ class LocalFile extends File
             if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
                 // We are ignoring the whole file.
                 if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                    echo 'Ignoring '.basename($this->path).PHP_EOL;
+                    echo 'Ignoring '.basename($path).PHP_EOL;
                 }
 
                 $this->ignored = true;
@@ -87,9 +76,9 @@ class LocalFile extends File
             }
         }
 
-        $this->setContent(file_get_contents($this->path));
+        $this->setContent(file_get_contents($path));
 
-        return parent::__construct($fileType, $ruleset, $config);
+        return parent::__construct($path, $ruleset, $config);
 
     }//end __construct()
 

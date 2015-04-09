@@ -61,7 +61,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 
         $ruleset = new Ruleset($config);
 
-        $this->phpcsFile = new DummyFile(file_get_contents(__FILE__), 'PHP', $ruleset, $config);
+        $this->phpcsFile = new DummyFile(file_get_contents(__FILE__), $ruleset, $config);
         $this->phpcsFile->process();
 
     }//end setUp()

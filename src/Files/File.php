@@ -43,6 +43,7 @@ class File
      *
      * @var string
      */
+    protected $path = '';
     protected $content = '';
     public $ignored = false;
     public $config = null;
@@ -204,12 +205,21 @@ class File
      * @throws PHP_CodeSniffer_Exception If the register() method does
      *                                   not return an array.
      */
-    public function __construct($fileType, Ruleset $ruleset, Config $config)
+    public function __construct($path, Ruleset $ruleset, Config $config)
     {
+        $this->path          = $path;
         $this->ruleset       = $ruleset;
         $this->config        = $config;
-        $this->tokenizerType = $fileType;
         $this->fixer         = new Fixer();
+
+        $parts = explode('.', $path);
+        $extension = array_pop($parts);
+        if (isset($config->extensions[$extension]) === true) {
+            $this->tokenizerType = $config->extensions[$extension];
+        } else {
+            // Revert to default.
+            $this->tokenizerType = 'PHP';
+        }
 /*
         if ($this->config->interactive === false) {
             $cliValues = $phpcs->config->getCommandLineValues();
@@ -239,6 +249,13 @@ class File
     {
         $this->content = $content;
         $this->tokens = array();
+
+        try {
+            $this->eolChar = Util\Common::detectLineEndings($content);
+        } catch (RuntimeException $e) {
+            $this->addWarningOnLine($e->getMessage(), 1, 'Internal.DetectLineEndings');
+            return;
+        }
     }
 
     /**
@@ -261,12 +278,6 @@ class File
         // if we are fixing this file.
         #self::$ignoredLines = array();
 
-        try {
-            $this->eolChar = Util\Common::detectLineEndings($this->content);
-        } catch (RuntimeException $e) {
-            $this->addWarningOnLine($e->getMessage(), 1, 'Internal.DetectLineEndings');
-            return;
-        }
 /*
         // If this is standard input, see if a filename was passed in as well.
         // This is done by including: phpcs_input_file: [file path]
