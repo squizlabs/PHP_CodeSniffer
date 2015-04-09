@@ -258,6 +258,12 @@ class File
         }
     }
 
+    function reloadContent()
+    {
+        // By default, we have no idea where our content
+        // comes from, so we can't do anything.
+    }
+
     /**
      * Starts the stack traversal and tells listeners when tokens are found.
      *

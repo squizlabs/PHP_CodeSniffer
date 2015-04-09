@@ -232,6 +232,7 @@ class Reporter
                 $filename    = $data['uri'];
                 $reportCache = file_get_contents($filename);
                 fclose($this->_tmpFiles[$report]);
+                unset($this->_tmpFiles[$report]);
             } else {
                 $reportCache = '';
                 $filename    = null;

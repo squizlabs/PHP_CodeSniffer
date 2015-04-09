@@ -56,6 +56,12 @@ class Runner
         // values the user has set.
         $this->config = new Config();
 
+        // Other report formats don't really make sense in interactive mode
+        // so we hard-code the full report here and when outputting.
+        if ($this->config->interactive === true) {
+            $this->config->reports = array('full' => null);
+        }
+
         $numErrors = $this->run();
 
         // Print all the reports for this run.
@@ -375,10 +381,9 @@ class Runner
                 */
             }//end try
 
-            if ($this->config->interactive === false) {
-                // Cache the report data for this file so we can unset it to save memory.
-                $this->reporter->cacheFileReport($file, $this->config);
-            } else {
+            $this->reporter->cacheFileReport($file, $this->config);
+
+            if ($this->config->interactive === true) {
                 /*
                     Running interactively.
                     Print the error report for the current file and then wait for user input.
@@ -388,14 +393,12 @@ class Runner
                 // we only print violations for a single file each time.
                 $numErrors = null;
                 while ($numErrors !== 0) {
-                    $numErrors = ($phpcsFile->getErrorCount() + $phpcsFile->getWarningCount());
+                    $numErrors = ($file->getErrorCount() + $file->getWarningCount());
                     if ($numErrors === 0) {
                         continue;
                     }
 
-                    $reportClass = $this->reporter->factory('full');
-                    $reportData  = $this->reporter->prepareFileReport($phpcsFile);
-                    $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
+                    $this->reporter->printReport('full');
 
                     echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
                     $input = fgets(STDIN);
@@ -411,12 +414,14 @@ class Runner
                         // Repopulate the sniffs because some of them save their state
                         // and only clear it when the file changes, but we are rechecking
                         // the same file.
-                        $this->populateTokenListeners();
-                        $phpcsFile = $this->_processFile($file, $contents);
+                        $file->ruleset->populateTokenListeners();
+                        $file->reloadContent();
+                        $file->process();
+                        $this->reporter->cacheFileReport($file, $this->config);
                         break;
                     }
                 }//end while
-            }
+            }//end if
 
             // Clean up the file to save (a lot of) memory.
             $file->cleanUp();

@@ -82,5 +82,10 @@ class LocalFile extends File
 
     }//end __construct()
 
+    function reloadContent()
+    {
+        $this->setContent(file_get_contents($this->path));
+    }
+
 
 }//end class
