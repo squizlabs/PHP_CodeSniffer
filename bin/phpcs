@@ -14,7 +14,7 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-require_once 'vendor/autoload.php';
+require_once __DIR__.'/../autoload.php';
 
 use PHP_CodeSniffer\Runner;
 
