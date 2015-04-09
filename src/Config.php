@@ -342,7 +342,7 @@ class Config
             exit(0);
             break;
         case 'i' :
-            $this->printInstalledStandards();
+            Util\Standards::printInstalledStandards();
             exit(0);
             break;
         case 'v' :
