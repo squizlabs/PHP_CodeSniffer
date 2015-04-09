@@ -274,6 +274,10 @@ class File
      */
     public function process()
     {
+        if ($this->ignored === true) {
+            return;
+        }
+
         $this->errors       = array();
         $this->warnings     = array();
         $this->errorCount   = 0;

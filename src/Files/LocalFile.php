@@ -53,7 +53,11 @@ class LocalFile extends File
     {
         $path = trim($path);
         if (is_readable($path) === false) {
-            exit('file not reable');
+            parent::__construct($path, $ruleset, $config);
+            $error = 'Error opening file; file no longer exists or you do not have access to read the file';
+            $this->_addError($error, 1, 1, 'Internal.LocalFile', array(), 5, false);
+            $this->ignored = true;
+            return;
         }
 
         // Before we go and spend time tokenizing this file, just check
