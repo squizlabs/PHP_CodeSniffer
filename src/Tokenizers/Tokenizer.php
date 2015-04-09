@@ -3,7 +3,6 @@
 namespace PHP_CodeSniffer\Tokenizers;
 
 use PHP_CodeSniffer\RuntimeException;
-use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Util;
 
 /**
@@ -39,18 +38,21 @@ abstract class Tokenizer
     public $knownLengths = array();
     public $ignoredLines = array();
 
-    public function __construct($content, Config $config, $eolChar='\n')
+    public function __construct($content, $config, $eolChar='\n')
     {
         $this->eolChar = $eolChar;
-        $this->config = $config;
 
+        $this->config = $config;
         $this->tokens = $this->tokenize($content);
+
+        if ($config === null) {
+            return;
+        }
 
         $this->createPositionMap();
         $this->createTokenMap();
         $this->createParenthesisNestingMap();
         $this->createScopeMap();
-
         $this->createLevelMap();
 
         // Allow the tokenizer to do additional processing if required.

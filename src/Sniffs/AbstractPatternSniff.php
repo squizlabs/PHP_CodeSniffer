@@ -936,8 +936,7 @@ abstract class AbstractPatternSniff implements Sniff
     {
         // Don't add a space after the closing php tag as it will add a new
         // whitespace token.
-        $config = new Config();
-        $tokenizer = new PHP('<?php '.$str.'?>', $config);
+        $tokenizer = new PHP('<?php '.$str.'?>', null);
 
         // Remove the <?php tag from the front and the end php tag from the back.
         $tokens = $tokenizer->getTokens();
