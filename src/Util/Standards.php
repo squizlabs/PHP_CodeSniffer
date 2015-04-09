@@ -130,7 +130,7 @@ class Standards
         } else {
             // This could be a custom standard, installed outside our
             // standards directory.
-            $standard = Util::realPath($standard);
+            $standard = Common::realPath($standard);
 
             // Might be an actual ruleset file itUtil.
             // If it has an XML extension, let's at least try it.
