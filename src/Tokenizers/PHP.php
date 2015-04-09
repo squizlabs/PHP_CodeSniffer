@@ -931,6 +931,15 @@ class PHP extends Tokenizer
                     }
                 }
 
+                // This is a special case when checking PHP 5.5+ code in PHP < 5.5
+                // where "finally" should be T_FINALLY instead of T_STRING.
+                if ($newToken['code'] === T_STRING
+                    && strtolower($newToken['content']) === 'finally'
+                ) {
+                    $newToken['code'] = T_FINALLY;
+                    $newToken['type'] = 'T_FINALLY';
+                }
+
                 // This is a special case for the PHP 5.5 classname::class syntax
                 // where "class" should be T_STRING instead of T_CLASS.
                 if ($newToken['code'] === T_CLASS

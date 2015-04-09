@@ -21,7 +21,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 /**
  * Squiz_Sniffs_WhiteSpace_ObjectOperatorSpacingSniff.
  *
- * Ensure there is no whitespace before a semicolon.
+ * Ensure there is no whitespace before/after an object operator.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
