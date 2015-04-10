@@ -824,10 +824,13 @@ class Ruleset
                 continue;
             }
 
-            $className = substr($file, ($slashPos + 1));
-            $className = substr($className, 0, -4);
-            $className = str_replace(DIRECTORY_SEPARATOR, '\\', $className);
-            $className = 'PHP_CodeSniffer\Standards\\'.$className;
+            #$className = substr($file, ($slashPos + 1));
+            #$className = substr($className, 0, -4);
+            #$className = str_replace(DIRECTORY_SEPARATOR, '\\', $className);
+            #$className = 'PHP_CodeSniffer\Standards\\'.$className;
+            #echo "OLD: $className\n";
+
+            $className = Autoload::loadFile($file);
 
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.
@@ -836,8 +839,6 @@ class Ruleset
             ) {
                 continue;
             }
-
-            include_once $file;
 
             // Skip abstract classes.
             $reflection = new \ReflectionClass($className);
@@ -870,17 +871,13 @@ class Ruleset
 
         foreach ($this->sniffs as $sniffClass => $sniffObject) {
             $this->sniffs[$sniffClass] = null;
-
-            // Work out the internal code for this sniff.
-            $parts = explode('\\', $sniffClass);
-            $code = $parts[2].'.'.$parts[4].'.'.$parts[5];
-            $code = substr($code, 0, -5);
-
             $this->sniffs[$sniffClass] = new $sniffClass();
 
+            $sniffCode = Util\Common::getSniffCode($sniffClass);
+
             // Set custom properties.
-            if (isset($this->ruleset[$code]['properties']) === true) {
-                foreach ($this->ruleset[$code]['properties'] as $name => $value) {
+            if (isset($this->ruleset[$sniffCode]['properties']) === true) {
+                foreach ($this->ruleset[$sniffCode]['properties'] as $name => $value) {
                     $this->setSniffProperty($sniffClass, $name, $value);
                 }
             }
@@ -901,10 +898,8 @@ class Ruleset
                 throw new RuntimeException($msg);
             }
 
-            $parts          = explode('\\', $sniffClass);
-            $listenerSource = $parts[2].'.'.$parts[4].'.'.substr($parts[5], 0, -5);
             $ignorePatterns = array();
-            $patterns       = $this->getIgnorePatterns($listenerSource);
+            $patterns       = $this->getIgnorePatterns($sniffCode);
             foreach ($patterns as $pattern => $type) {
                 // While there is support for a type of each pattern
                 // (absolute or relative) we don't actually support it here.
@@ -924,7 +919,7 @@ class Ruleset
                 if (isset($this->tokenListeners[$token][$sniffClass]) === false) {
                     $this->tokenListeners[$token][$sniffClass] = array(
                                                                       'class'      => $sniffClass,
-                                                                      'source'     => $listenerSource,
+                                                                      'source'     => $sniffCode,
                                                                       'tokenizers' => $tokenizers,
                                                                       'ignore'     => $ignorePatterns,
                                                                      );

@@ -2,7 +2,8 @@
 
 namespace PHP_CodeSniffer\Tests\Standards;
 
-use PHP_CodeSniffer\Util;
+use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Util\Standards;
 
 /**
  * A test class for testing all sniffs for installed standards.
@@ -17,6 +18,22 @@ use PHP_CodeSniffer\Util;
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
+if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+    define('PHP_CODESNIFFER_IN_TESTS', true);
+}
+
+if (defined('PHP_CODESNIFFER_CBF') === false) {
+    define('PHP_CODESNIFFER_CBF', false);
+}
+
+if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
+    define('PHP_CODESNIFFER_VERBOSITY', 0);
+}
+
+require_once __DIR__.'/../../autoload.php';
+
+$tokens = new Tokens();
 
 /**
  * A test class for testing all sniffs for installed standards.
@@ -61,14 +78,17 @@ class AllSniffs
      */
     public static function suite()
     {
+        $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = array();
+        $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = array();
+
         $suite = new \PHPUnit_Framework_TestSuite('PHP CodeSniffer Standards');
 
         #$isInstalled = !is_file(dirname(__FILE__).'/../../CodeSniffer.php');
 
-        $installedPaths = Util\Standards::getInstalledStandardPaths();
+        $installedPaths = Standards::getInstalledStandardPaths();
         foreach ($installedPaths as $path) {
             $origPath  = $path;
-            $standards = Util\Standards::getInstalledStandards(true, $path);
+            $standards = Standards::getInstalledStandards(true, $path);
 
             // If the test is running PEAR installed, the built-in standards
             // are split into different directories; one for the sniffs and

@@ -44,8 +44,8 @@ class TestSuite extends \PHPUnit_Framework_TestSuite
      */
     public function run(\PHPUnit_Framework_TestResult $result=null, $filter=false)
     {
-        $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = array();
-        $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = array();
+        #$GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = array();
+        #$GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = array();
 
         #spl_autoload_register(array('PHP_CodeSniffer', 'autoload'));
         $result = parent::run($result, $filter);

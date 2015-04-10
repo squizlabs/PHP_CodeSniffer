@@ -50,13 +50,6 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
     protected $backupGlobals = false;
 
     /**
-     * The PHP_CodeSniffer object used for testing.
-     *
-     * @var PHP_CodeSniffer
-     */
-    protected static $phpcs = null;
-
-    /**
      * The path to the directory under which the sniff's standard lives.
      *
      * @var string
@@ -131,12 +124,30 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
         // Get them in order.
         sort($testFiles);
 
-        $config = new Config();
+        if (isset($GLOBALS['PHP_CODESNIFFER_CONFIG']) === true) {
+            $config  = $GLOBALS['PHP_CODESNIFFER_CONFIG'];
+        } else {
+            $config = new Config();
+            $GLOBALS['PHP_CODESNIFFER_CONFIG']  = $config;
+        }
+
         $config->standards = array($standardName);
         $config->sniffs = array($sniffCode);
         $config->ignored = array();
 
-        $ruleset = new Ruleset($config);
+        if (isset($GLOBALS['PHP_CODESNIFFER_RULESET']) === true) {
+            $ruleset = $GLOBALS['PHP_CODESNIFFER_RULESET'];
+
+            $sniffBasename = str_replace('\Tests\\', '\Sniffs\\', $basename).'Sniff';
+            $testFile      = $this->standardsDir.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $sniffBasename).'.php';
+
+            $restrictions = array('php_codesniffer\standards\\'.strtolower($sniffBasename) => true);
+            $ruleset->registerSniffs(array($testFile), $restrictions);
+            $ruleset->populateTokenListeners();
+        } else {
+            $ruleset = new Ruleset($config);
+            $GLOBALS['PHP_CODESNIFFER_RULESET'] = $ruleset;
+        }
 
         $failureMessages = array();
         foreach ($testFiles as $testFile) {

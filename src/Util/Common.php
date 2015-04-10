@@ -389,4 +389,15 @@ class Common
 
     }//end suggestType()
 
+    public static function getSniffCode($sniffClass)
+    {
+        $parts    = explode('\\', $sniffClass);
+        $sniff    = substr(array_pop($parts), 0, -5);
+        $category = array_pop($parts);
+        $sniffDir = array_pop($parts);
+        $standard = array_pop($parts);
+        $code     = $standard.'.'.$category.'.'.$sniff;
+        return $code;
+    }
+
 }
