@@ -105,6 +105,7 @@ class Config
             $cliArgs = $_SERVER['argv'];
             array_shift($cliArgs);
 
+            $this->restoreDefaults();
             $this->setCommandLineValues($cliArgs);
         } else {
             exit('not done');
@@ -175,7 +176,7 @@ class Config
         #if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
         #    $this->values = array();
         #} else if (empty($this->values) === true) {
-            $this->restoreDefaults();
+            #$this->restoreDefaults();
         #}
 
         $this->cliArgs = $args;
