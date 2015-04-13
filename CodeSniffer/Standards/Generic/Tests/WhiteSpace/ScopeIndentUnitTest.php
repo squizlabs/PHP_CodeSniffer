@@ -88,6 +88,14 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                    );
         }
 
+        if ($testFile === 'ScopeIndentUnitTest.3.inc') {
+            return array(
+                    6  => 1,
+                    7  => 1,
+                    10 => 1,
+                   );
+        }
+
         return array(
                 7   => 1,
                 10  => 1,
@@ -131,8 +139,8 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                 802 => 1,
                 803 => 1,
                 823 => 1,
-                838 => 1,
-                850 => 1,
+                848 => 1,
+                860 => 1,
                );
 
     }//end getErrorList()

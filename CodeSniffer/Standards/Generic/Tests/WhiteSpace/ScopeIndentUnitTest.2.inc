@@ -835,6 +835,16 @@ array(
  },
 );
 
+try {
+	echo 'foo';
+} catch (\Exception $e) {
+	echo 'catch';
+} finally {
+	if (false) {
+		echo 'finally false';
+	}
+}
+
 	function foo()
 	{
 		$foo = array(

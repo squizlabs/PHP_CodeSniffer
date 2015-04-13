@@ -33,13 +33,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Xaver Loppenstedt for helping with tests
   - Added Generic DisallowShortArraySyntaxSniff to ban the use of the PHP short array syntax (request #483)
     -- Thanks to Xaver Loppenstedt for helping with tests
+  - Generic ScopeIndentSniff no longer does exact checking for content inside parenthesis (request #528)
+    -- Only applies to custom coding standards that set the "exact" flag to TRUE
   - Squiz ConcatenationSpacingSniff now has a setting to ignore newline characters around operators (request #511)
       -- Default remains FALSE, so newlines are not allowed
       -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
   - Squiz InlineCommentSniff no longer checks the last char of a comment if the first char is not a letter (request #505)
+  - The Squiz standard has increased the max padding for statement alignment from 12 to 20
   - Fixed bug #479 : Yielded values are not recognised as returned values in Squiz FunctionComment sniff
   - Fixed bug #512 : Endless loop whilst parsing mixture of control structure styles
   - Fixed bug #515 : Spaces in JS block incorrectly flagged as indentation error
+  - Fixed bug #523 : Generic ScopeIndent errors for IF in FINALLY
+  - Fixed bug #527 : Closure inside IF statement is not tokenized correctly
  </notes>
  <contents>
   <dir name="/">
@@ -753,6 +758,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.1.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.2.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeIndentUnitTest.3.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="ScopeIndentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
