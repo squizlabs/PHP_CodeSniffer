@@ -209,7 +209,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
         $data  = array($function);
         $error = 'The use of function %s() is ';
         if ($this->error === true) {
-            $type   = 'Found';
+            $type   = 'Forbidden';
             $error .= 'forbidden';
         } else {
             $type   = 'Discouraged';
