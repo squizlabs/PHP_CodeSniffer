@@ -2,6 +2,8 @@
 
 namespace PHP_CodeSniffer;
 
+use PHP_CodeSniffer\Util\Common;
+
 /**
  * A helper class for fixing errors.
  *
@@ -250,16 +252,8 @@ class Fixer
         $filename = str_replace($cwd, '', $filePath);
         $contents = $this->getContents();
 
-        if (function_exists('sys_get_temp_dir') === true) {
-            // This is needed for HHVM support, but only available from 5.2.1.
-            $tempName  = tempnam(sys_get_temp_dir(), 'phpcs-fixer');
-            $fixedFile = fopen($tempName, 'w');
-        } else {
-            $fixedFile = tmpfile();
-            $data      = stream_get_meta_data($fixedFile);
-            $tempName  = $data['uri'];
-        }
-
+        $tempName  = tempnam(sys_get_temp_dir(), 'phpcs-fixer');
+        $fixedFile = fopen($tempName, 'w');
         fwrite($fixedFile, $contents);
 
         // We must use something like shell_exec() because whitespace at the end
@@ -473,11 +467,11 @@ class Fixer
 
             $tokens     = $this->currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
-            $oldContent = PHP_CodeSniffer::prepareForOutput($this->_tokens[$stackPtr]);
-            $newContent = PHP_CodeSniffer::prepareForOutput($content);
+            $oldContent = Common::prepareForOutput($this->_tokens[$stackPtr]);
+            $newContent = Common::prepareForOutput($content);
             if (trim($this->_tokens[$stackPtr]) === '' && isset($this->_tokens[($stackPtr + 1)]) === true) {
                 // Add some context for whitespace only changes.
-                $append      = PHP_CodeSniffer::prepareForOutput($this->_tokens[($stackPtr + 1)]);
+                $append      = Common::prepareForOutput($this->_tokens[($stackPtr + 1)]);
                 $oldContent .= $append;
                 $newContent .= $append;
             }
@@ -580,11 +574,11 @@ class Fixer
 
             $tokens     = $this->currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
-            $oldContent = PHP_CodeSniffer::prepareForOutput($this->_tokens[$stackPtr]);
-            $newContent = PHP_CodeSniffer::prepareForOutput($this->_fixedTokens[$stackPtr]);
+            $oldContent = Common::prepareForOutput($this->_tokens[$stackPtr]);
+            $newContent = Common::prepareForOutput($this->_fixedTokens[$stackPtr]);
             if (trim($this->_tokens[$stackPtr]) === '' && isset($tokens[($stackPtr + 1)]) === true) {
                 // Add some context for whitespace only changes.
-                $append      = PHP_CodeSniffer::prepareForOutput($this->_tokens[($stackPtr + 1)]);
+                $append      = Common::prepareForOutput($this->_tokens[($stackPtr + 1)]);
                 $oldContent .= $append;
                 $newContent .= $append;
             }
