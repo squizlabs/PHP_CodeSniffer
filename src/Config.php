@@ -1,33 +1,19 @@
 <?php
+/**
+ * Stores the configuration used to run PHPCS and PHPCBF.
+ *
+ * Parses the command line to determine user supplied values
+ * and provides functions to access data stored in config files.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
-/**
- * A class to process command line phpcs scripts.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A class to process command line phpcs scripts.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class Config
 {
 
@@ -45,28 +31,171 @@ class Config
      */
     const STABILITY = 'alpha';
 
+    /**
+     * The files and directories to check.
+     *
+     * @var string[]
+     */
     public $files;
+
+    /**
+     * The standards being used for checking.
+     *
+     * @var string[]
+     */
     public $standards;
+
+    /**
+     * How verbose the output should be.
+     *
+     * 0: no unnecessary output
+     * 1: basic output for files being checked
+     * 2: ruleset and file parsing output
+     * 3: sniff execution output
+     *
+     * @var int
+     */
     public $verbosity;
+
+    /**
+     * Enable interactive checking mode.
+     *
+     * @var bool
+     */
     public $interactive;
+
+    /**
+     * Display colous in output.
+     *
+     * @var bool
+     */
     public $colors;
+
+    /**
+     * Explain the coding standards.
+     *
+     * @var bool
+     */
     public $explain;
+
+    /**
+     * Process local files in directories only (no recursion)
+     *
+     * @var bool
+     */
     public $local;
+
+    /**
+     * Show sniff source codes in report output.
+     *
+     * @var bool
+     */
     public $showSources;
+
+    /**
+     * Show basic progress information while running.
+     *
+     * @var bool
+     */
     public $showProgress;
+
+    /**
+     * How many spaces each tab is worth.
+     *
+     * @var int
+     */
     public $tabWidth;
+
+    /**
+     * The encoding of the files being checked.
+     *
+     * @var string
+     */
     public $encoding;
+
+    /**
+     * File extensions that should be checked, and what tokenizer to use.
+     *
+     * E.g., array('inc' => 'PHP');
+     *
+     * @var array<string, string>
+     */
     public $extensions;
+
+    /**
+     * The sniffs that should be used for checking.
+     *
+     * If empty, all sniffs in the supplied standards will be used.
+     *
+     * @var string[]
+     */
     public $sniffs;
+
+    /**
+     * Regular expressions used to ignore files and folders during checking.
+     *
+     * @var string[]
+     */
     public $ignored;
+
+    /**
+     * A file system location where the report output should be written.
+     *
+     * @var string
+     */
     public $reportFile;
+
+    /**
+     * The documentation generator to use.
+     *
+     * @var string
+     */
     public $generator;
+
     public $reports;
+
+    /**
+     * The maximum number of columns that reports should use for output.
+     *
+     * @var int
+     */
     public $reportWidth;
+
+    /**
+     * The minimum severity an error must have to be displayed.
+     *
+     * @var int
+     */
     public $errorSeverity;
+
+    /**
+     * The minimum severity a warning must have to be displayed.
+     *
+     * @var int
+     */
     public $warningSeverity;
+
+    /**
+     * A suffix to add to fixed files.
+     *
+     * @var string
+     */
     public $suffix;
+
+    /**
+     * If TRUE, the fixed files will be replaced directly instead of being patched.
+     *
+     * Set to TRUE if the environment does not have the patch command available.
+     *
+     * @var bool
+     */
     public $noPatch;
+
+    /**
+     * Read content from STDIN instead of supplied files.
+     *
+     * @var bool
+     */
     public $stdin;
 
     /**
@@ -80,20 +209,33 @@ class Config
     public $dieOnUnknownArg;
 
     /**
-     * An array of the current command line arguments we are processing.
+     * The current command line arguments we are processing.
      *
-     * @var array
+     * @var string[]
      */
     private $cliArgs = array();
 
-    private static $configData = null;
+    /**
+     * Command line values that the user has supplied directly.
+     *
+     * @var array<string, TRUE>
+     */
     private $overriddenDefaults = array();
+
+    /**
+     * Config file data that has been loaded for the run.
+     *
+     * @var array<string, string>
+     */
+    private static $configData = null;
 
 
     /**
-     * Creates a CLI object.
+     * Creates a Config object and populates it with command line values.
      *
-     * @param array $cliArgs An array of values gathered from CLI args.
+     * @param array $cliArgs         An array of values gathered from CLI args.
+     * @param bool  $dieOnUnknownArg Whether or not to kill the process when an
+     *                               unknown command line arg is found.
      *
      * @return void
      */
@@ -104,16 +246,10 @@ class Config
         if (empty($cliArgs) === true) {
             $cliArgs = $_SERVER['argv'];
             array_shift($cliArgs);
-
-            $this->restoreDefaults();
-            $this->setCommandLineValues($cliArgs);
-        } else {
-            exit('not done');
-            /*
-            $values       = array_merge($this->getDefaults(), $values);
-            $this->values = $values;
-            */
         }
+
+        $this->restoreDefaults();
+        $this->setCommandLineValues($cliArgs);
 
         // Support auto terminal width.
         if ($this->reportWidth === 'auto'
@@ -155,23 +291,18 @@ class Config
 
     }//end __construct()
 
+
     /**
      * Set the command line values.
      *
-     * @param array $args An array of command line arguments to process.
+     * @param array $args An array of command line arguments to set.
      *
      * @return void
      */
     public function setCommandLineValues($args)
     {
-        #if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
-        #    $this->values = array();
-        #} else if (empty($this->values) === true) {
-            #$this->restoreDefaults();
-        #}
-
         $this->cliArgs = $args;
-        $numArgs        = count($args);
+        $numArgs       = count($args);
 
         for ($i = 0; $i < $numArgs; $i++) {
             $arg = $this->cliArgs[$i];
@@ -211,46 +342,42 @@ class Config
 
     }//end setCommandLineValues()
 
+
     /**
-     * Get a list of default values for all possible command line arguments.
+     * Restore default values for all possible command line arguments.
      *
      * @return array
      */
     public function restoreDefaults()
     {
-        #if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
-        #    return array();
-        #}
-
-        // The default values for config settings.
-        $this->files = array();
-        $this->standards = array('PEAR');
-        $this->verbosity = 0;
-        $this->interactive = false;
-        $this->colors = false;
-        $this->explain = false;
-        $this->local = false;
-        $this->showSources = false;
-        $this->showProgress = false;
-        $this->tabWidth = 0;
-        $this->encoding = 'utf-8';
-        $this->extensions = array(
-                             'php' => 'PHP',
-                             'inc' => 'PHP',
-                             'js'  => 'JS',
-                             'css' => 'CSS',
-                            );
-        $this->sniffs = array();
-        $this->ignored = array();
-        $this->reportFile = null;
-        $this->generator = null;
-        $this->reports = array('full' => null);
-        $this->reportWidth = 'auto';
-        $this->errorSeverity = 5;
+        $this->files           = array();
+        $this->standards       = array('PEAR');
+        $this->verbosity       = 0;
+        $this->interactive     = false;
+        $this->colors          = false;
+        $this->explain         = false;
+        $this->local           = false;
+        $this->showSources     = false;
+        $this->showProgress    = false;
+        $this->tabWidth        = 0;
+        $this->encoding        = 'utf-8';
+        $this->extensions      = array(
+                                  'php' => 'PHP',
+                                  'inc' => 'PHP',
+                                  'js'  => 'JS',
+                                  'css' => 'CSS',
+                                 );
+        $this->sniffs          = array();
+        $this->ignored         = array();
+        $this->reportFile      = null;
+        $this->generator       = null;
+        $this->reports         = array('full' => null);
+        $this->reportWidth     = 'auto';
+        $this->errorSeverity   = 5;
         $this->warningSeverity = 5;
-        $this->suffix = '';
-        $this->noPatch = false;
-        $this->stdin = false;
+        $this->suffix          = '';
+        $this->noPatch         = false;
+        $this->stdin           = false;
 
         $standard = self::getConfigData('default_standard');
         if ($standard !== null) {
@@ -274,8 +401,8 @@ class Config
 
         $severity = self::getConfigData('severity');
         if ($severity !== null) {
-            $this->errorSeverity    = (int) $severity;
-            $this->warningSeverity  = (int) $severity;
+            $this->errorSeverity   = (int) $severity;
+            $this->warningSeverity = (int) $severity;
         }
 
         $severity = self::getConfigData('error_severity');
@@ -310,16 +437,8 @@ class Config
         if ($colors !== null) {
             $this->colors = (bool) $colors;
         }
-/*
-        if (PHP_CodeSniffer::isPharFile(dirname(dirname(__FILE__))) === true) {
-            // If this is a phar file, check for the standard in the config.
-            $standard = PHP_CodeSniffer::getConfigData('standard');
-            if ($standard !== null) {
-                $defaults['standard'] = $standard;
-            }
-        }
-*/
-    }//end getDefaults()
+
+    }//end restoreDefaults()
 
 
     /**
@@ -615,7 +734,7 @@ class Config
             } else if (substr($arg, 0, 9) === 'severity=') {
                 $this->errorSeverity   = (int) substr($arg, 9);
                 $this->warningSeverity = $this->errorSeverity;
-                $this->overriddenDefaults['errorSeverity'] = true;
+                $this->overriddenDefaults['errorSeverity']   = true;
                 $this->overriddenDefaults['warningSeverity'] = true;
             } else if (substr($arg, 0, 15) === 'error-severity=') {
                 $this->errorSeverity = (int) substr($arg, 15);
@@ -708,6 +827,7 @@ class Config
         }
 
     }//end processUnknownArgument()
+
 
     /**
      * Prints out the usage information for this script.
@@ -821,9 +941,6 @@ class Config
     /**
      * Get a single config value.
      *
-     * Config data is stored in the data dir, in a file called
-     * CodeSniffer.conf. It is a simple PHP array.
-     *
      * @param string $key The name of the config value.
      *
      * @return string|null
@@ -850,9 +967,6 @@ class Config
     /**
      * Set a single config value.
      *
-     * Config data is stored in the data dir, in a file called
-     * CodeSniffer.conf. It is a simple PHP array.
-     *
      * @param string      $key   The name of the config value.
      * @param string|null $value The value to set. If null, the config
      *                           entry is deleted, reverting it to the
@@ -861,9 +975,9 @@ class Config
      *                           script run. This will not write the config
      *                           data to the config file.
      *
-     * @return boolean
+     * @return bool
      * @see    getConfigData()
-     * @throws PHP_CodeSniffer_Exception If the config file can not be written.
+     * @throws RuntimeException If the config file can not be written.
      */
     public static function setConfigData($key, $value, $temp=false)
     {
@@ -913,7 +1027,7 @@ class Config
 
 
     /**
-     * Get all config data in an array.
+     * Get all config data.
      *
      * @return array<string, string>
      * @see    getConfigData()
@@ -970,7 +1084,6 @@ class Config
         }
 
     }//end printConfigData()
-
 
 
 }//end class
