@@ -788,7 +788,11 @@ class File
         // Make sure we are interested in this severity level.
         if (isset($this->ruleset->ruleset[$sniffCode]['severity']) === true) {
             $severity = $this->ruleset->ruleset[$sniffCode]['severity'];
-        } else if ($severity !== 0 && $this->config->errorSeverity > $severity) {
+        } else if ($severity === 0) {
+            $severity = 5;
+        }
+
+        if ($this->config->errorSeverity > $severity) {
             return false;
         }
 
@@ -932,7 +936,11 @@ class File
         // Make sure we are interested in this severity level.
         if (isset($this->ruleset->ruleset[$sniffCode]['severity']) === true) {
             $severity = $this->ruleset->ruleset[$sniffCode]['severity'];
-        } else if ($severity !== 0 && $this->config->warningSeverity > $severity) {
+        } else if ($severity === 0) {
+            $severity = 5;
+        }
+
+        if ($this->config->warningSeverity > $severity) {
             return false;
         }
 

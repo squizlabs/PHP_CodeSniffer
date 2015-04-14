@@ -58,7 +58,7 @@ class Ruleset
      *
      * @var array
      */
-    protected $ruleset = array();
+    public $ruleset = array();
 
     /**
      * The directories that the processed rulesets are in.
