@@ -85,18 +85,17 @@ class Notifysend implements Report
      */
     public function __construct()
     {
-        $config = new Config();
-        $path = $config->getConfigData('notifysend_path');
+        $path = Config::getConfigData('notifysend_path');
         if ($path !== null) {
             $this->path = $path;
         }
 
-        $timeout = $config->getConfigData('notifysend_timeout');
+        $timeout = Config::getConfigData('notifysend_timeout');
         if ($timeout !== null) {
             $this->timeout = (int) $timeout;
         }
 
-        $showOk = $config->getConfigData('notifysend_showok');
+        $showOk = Config::getConfigData('notifysend_showok');
         if ($showOk !== null) {
             $this->showOk = (boolean) $showOk;
         }

@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Config;
 
 /**
  * Generic_Sniffs_PHP_SyntaxSniff.
@@ -59,7 +60,7 @@ class SyntaxSniff implements Sniff
      */
     public function process($phpcsFile, $stackPtr)
     {
-        $phpPath = $phpcsFile->config->getConfigData('php_path');
+        $phpPath = Config::getConfigData('php_path');
         if ($phpPath === null) {
             return;
         }

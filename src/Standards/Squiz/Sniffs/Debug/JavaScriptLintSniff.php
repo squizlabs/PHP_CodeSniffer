@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Debug;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 /**
@@ -65,12 +66,12 @@ class JavaScriptLintSniff implements Sniff
      */
     public function process($phpcsFile, $stackPtr)
     {
-        $fileName = $phpcsFile->getFilename();
-
-        $jslPath = $phpcsFile->config->getConfigData('jsl_path');
+        $jslPath = Config::getConfigData('jsl_path');
         if (is_null($jslPath) === true) {
             return;
         }
+
+        $fileName = $phpcsFile->getFilename();
 
         $cmd = '"'.$jslPath.'" -nologo -nofilelisting -nocontext -nosummary -output-format __LINE__:__ERROR__ -process "'.$fileName.'"';
         $msg = exec($cmd, $output, $retval);

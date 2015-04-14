@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Zend\Sniffs\Debug;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 /**
@@ -60,11 +61,12 @@ class CodeAnalyzerSniff implements Sniff
      */
     public function process($phpcsFile, $stackPtr)
     {
-        $fileName     = $phpcsFile->getFilename();
-        $analyzerPath = $phpcsFile->config->getConfigData('zend_ca_path');
+        $analyzerPath = Config::getConfigData('zend_ca_path');
         if (is_null($analyzerPath) === true) {
             return;
         }
+
+        $fileName = $phpcsFile->getFilename();
 
         // In the command, 2>&1 is important because the code analyzer sends its
         // findings to stderr. $output normally contains only stdout, so using 2>&1

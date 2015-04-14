@@ -2,6 +2,8 @@
 
 namespace PHP_CodeSniffer\Util;
 
+use PHP_CodeSniffer\Config;
+
 /**
  * A class to process command line phpcs scripts.
  *
@@ -37,7 +39,7 @@ class Standards
     public static function getInstalledStandardPaths()
     {
         $installedPaths = array(Common::realPath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'Standards'));
-        $configPaths    = null;//PHP_CodeSniffer::getConfigData('installed_paths');
+        $configPaths    = Config::getConfigData('installed_paths');
         if ($configPaths !== null) {
             $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
         }
@@ -45,7 +47,7 @@ class Standards
         $resolvedInstalledPaths = array();
         foreach ($installedPaths as $installedPath) {
             if (substr($installedPath, 0, 1) === '.') {
-                $installedPath = Common::realPath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.$installedPath);
+                $installedPath = Common::realPath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.$installedPath);
             }
 
             $resolvedInstalledPaths[] = $installedPath;

@@ -2,9 +2,8 @@
 <ruleset name="PHP_CodeSniffer">
  <description>The coding standard for PHP_CodeSniffer itself.</description>
 
- <file>CodeSniffer.php</file>
- <file>CodeSniffer</file>
- <file>scripts</file>
+ <file>src</file>
+ <file>bin</file>
 
  <exclude-pattern>*/Tests/*</exclude-pattern>
 

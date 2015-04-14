@@ -498,8 +498,8 @@ class Runner
 
         */
 
-        $ignoreWarnings = $this->config->getConfigData('ignore_warnings_on_exit');
-        $ignoreErrors   = $this->config->getConfigData('ignore_errors_on_exit');
+        $ignoreWarnings = Config::getConfigData('ignore_warnings_on_exit');
+        $ignoreErrors   = Config::getConfigData('ignore_errors_on_exit');
 
         $return = ($this->reporter->totalErrors + $this->reporter->totalWarnings);
         if ($ignoreErrors !== null) {

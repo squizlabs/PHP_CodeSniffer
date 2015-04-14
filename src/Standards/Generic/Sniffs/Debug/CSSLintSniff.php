@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Config;
 
 /**
  * Generic_Sniffs_Debug_CSSLintSniff.
@@ -64,12 +65,12 @@ class CSSLintSniff implements Sniff
      */
     public function process($phpcsFile, $stackPtr)
     {
-        $fileName = $phpcsFile->getFilename();
-
-        $csslintPath = $phpcsFile->config->getConfigData('csslint_path');
+        $csslintPath = Config::getConfigData('csslint_path');
         if ($csslintPath === null) {
             return;
         }
+
+        $fileName = $phpcsFile->getFilename();
 
         $cmd = $csslintPath.' '.escapeshellarg($fileName);
         exec($cmd, $output, $retval);

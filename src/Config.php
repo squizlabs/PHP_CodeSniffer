@@ -86,7 +86,7 @@ class Config
      */
     private $cliArgs = array();
 
-    private $configData = null;
+    private static $configData = null;
     private $overriddenDefaults = array();
 
 
@@ -124,27 +124,18 @@ class Config
             $this->reportWidth = (int) $this->reportWidth;
         }
 
-/*
-        if ($this->standards === null) {
+        if (isset($this->overriddenDefaults['standards']) === false
+            && empty($this->files) === true
+            && Config::getConfigData('default_standard') === null
+        ) {
             // They did not supply a standard to use.
-            // Looks for a ruleset in the current directory.
-            if (empty($this->files) === true) {
-                $default = getcwd().DIRECTORY_SEPARATOR.'phpcs.xml';
-                if (is_file($default) === true) {
-                    return array($default);
-                }
+            // Look for a ruleset in the current directory.
+            $default = getcwd().DIRECTORY_SEPARATOR.'phpcs.xml';
+            if (is_file($default) === true) {
+                $this->standards = array($default);
             }
-
-            // Try to get the default from the config system.
-            $standard = null;//PHP_CodeSniffer::getConfigData('default_standard');
-            if ($standard === null) {
-                // Product default standard.
-                $standard = 'PEAR';
-            }
-
-            return array($standard);
         }
-*/
+
         $cleaned = array();
 
         // Check if the standard name is valid, or if the case is invalid.
@@ -261,38 +252,43 @@ class Config
         $this->noPatch = false;
         $this->stdin = false;
 
-        $reportFormat = $this->getConfigData('report_format');
+        $standard = self::getConfigData('default_standard');
+        if ($standard !== null) {
+            $this->standards = array($standard);
+        }
+
+        $reportFormat = self::getConfigData('report_format');
         if ($reportFormat !== null) {
             $this->reports = array($reportFormat => null);
         }
 
-        $tabWidth = $this->getConfigData('tab_width');
+        $tabWidth = self::getConfigData('tab_width');
         if ($tabWidth !== null) {
             $this->tabWidth = (int) $tabWidth;
         }
 
-        $encoding = $this->getConfigData('encoding');
+        $encoding = self::getConfigData('encoding');
         if ($encoding !== null) {
             $this->encoding = strtolower($encoding);
         }
 
-        $severity = $this->getConfigData('severity');
+        $severity = self::getConfigData('severity');
         if ($severity !== null) {
             $this->errorSeverity    = (int) $severity;
             $this->warningSeverity  = (int) $severity;
         }
 
-        $severity = $this->getConfigData('error_severity');
+        $severity = self::getConfigData('error_severity');
         if ($severity !== null) {
             $this->errorSeverity = (int) $severity;
         }
 
-        $severity = $this->getConfigData('warning_severity');
+        $severity = self::getConfigData('warning_severity');
         if ($severity !== null) {
             $this->warningSeverity = (int) $severity;
         }
 
-        $showWarnings = $this->getConfigData('show_warnings');
+        $showWarnings = self::getConfigData('show_warnings');
         if ($showWarnings !== null) {
             $showWarnings = (bool) $showWarnings;
             if ($showWarnings === false) {
@@ -300,17 +296,17 @@ class Config
             }
         }
 
-        $reportWidth = $this->getConfigData('report_width');
+        $reportWidth = self::getConfigData('report_width');
         if ($reportWidth !== null) {
             $this->reportWidth = $reportWidth;
         }
 
-        $showProgress = $this->getConfigData('show_progress');
+        $showProgress = self::getConfigData('show_progress');
         if ($showProgress !== null) {
             $this->showProgress = (bool) $showProgress;
         }
 
-        $colors = $this->getConfigData('colors');
+        $colors = self::getConfigData('colors');
         if ($colors !== null) {
             $this->colors = (bool) $colors;
         }
@@ -435,7 +431,7 @@ class Config
 
             $key     = $this->cliArgs[($pos + 1)];
             $value   = $this->cliArgs[($pos + 2)];
-            $current = $this->getConfigData($key);
+            $current = self::getConfigData($key);
 
             try {
                 $this->setConfigData($key, $value);
@@ -458,7 +454,7 @@ class Config
             }
 
             $key     = $this->cliArgs[($pos + 1)];
-            $current = $this->getConfigData($key);
+            $current = self::getConfigData($key);
             if ($current === null) {
                 echo "Config value \"$key\" has not been set".PHP_EOL;
             } else {
@@ -473,7 +469,7 @@ class Config
             }
             exit(0);
         case 'config-show':
-            $data = $this->getAllConfigData();
+            $data = self::getAllConfigData();
             $this->printConfigData($data);
             exit(0);
         case 'runtime-set':
@@ -834,9 +830,9 @@ class Config
      * @see    setConfigData()
      * @see    getAllConfigData()
      */
-    public function getConfigData($key)
+    public static function getConfigData($key)
     {
-        $phpCodeSnifferConfig = $this->getAllConfigData();
+        $phpCodeSnifferConfig = self::getAllConfigData();
 
         if ($phpCodeSnifferConfig === null) {
             return null;
@@ -869,7 +865,7 @@ class Config
      * @see    getConfigData()
      * @throws PHP_CodeSniffer_Exception If the config file can not be written.
      */
-    public function setConfigData($key, $value, $temp=false)
+    public static function setConfigData($key, $value, $temp=false)
     {
         if ($temp === false) {
             $configFile = dirname(__FILE__).'/../CodeSniffer.conf';
@@ -889,7 +885,7 @@ class Config
             }
         }
 
-        $phpCodeSnifferConfig = $this->getAllConfigData();
+        $phpCodeSnifferConfig = self::getAllConfigData();
 
         if ($value === null) {
             if (isset($phpCodeSnifferConfig[$key]) === true) {
@@ -909,7 +905,7 @@ class Config
             }
         }
 
-        $this->configData = $phpCodeSnifferConfig;
+        self::$configData = $phpCodeSnifferConfig;
 
         return true;
 
@@ -922,10 +918,10 @@ class Config
      * @return array<string, string>
      * @see    getConfigData()
      */
-    public function getAllConfigData()
+    public static function getAllConfigData()
     {
-        if (isset($this->configData) === true) {
-            return $this->configData;
+        if (self::$configData !== null) {
+            return self::$configData;
         }
 
         $configFile = dirname(__FILE__).'/../CodeSniffer.conf';
@@ -934,274 +930,15 @@ class Config
         }
 
         if (is_file($configFile) === false) {
-            $this->configData = array();
+            self::$configData = array();
             return array();
         }
 
         include $configFile;
-        $this->configData = $phpCodeSnifferConfig;
-        return $this->configData;
+        self::$configData = $phpCodeSnifferConfig;
+        return self::$configData;
 
     }//end getAllConfigData()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Runs PHP_CodeSniffer over files and directories.
-     *
-     * @param array $values An array of values determined from CLI args.
-     *
-     * @return int The number of error and warning messages shown.
-     * @see    getCommandLineValues()
-     */
-    public function process($values=array())
-    {
-        /*
-        if (empty($values) === true) {
-            $values = $this->getCommandLineValues();
-        } else {
-            $values       = array_merge($this->getDefaults(), $values);
-            $this->values = $values;
-        }
-
-        if ($values['generator'] !== '') {
-            $phpcs = new PHP_CodeSniffer($values['verbosity']);
-            foreach ($values['standard'] as $standard) {
-                $phpcs->generateDocs(
-                    $standard,
-                    $values['sniffs'],
-                    $values['generator']
-                );
-            }
-
-            exit(0);
-        }
-
-        // If no standard is supplied, get the default.
-        $values['standard'] = $this->validateStandard($values['standard']);
-        foreach ($values['standard'] as $standard) {
-            if (PHP_CodeSniffer::isInstalledStandard($standard) === false) {
-                // They didn't select a valid coding standard, so help them
-                // out by letting them know which standards are installed.
-                echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
-                $this->printInstalledStandards();
-                exit(2);
-            }
-        }
-
-        if ($values['explain'] === true) {
-            foreach ($values['standard'] as $standard) {
-                $this->explainStandard($standard);
-            }
-
-            exit(0);
-        }
-
-
-        $phpcs = new PHP_CodeSniffer($values['verbosity'], null, null, null);
-        $phpcs->setCli($this);
-        $phpcs->initStandard($values['standard'], $values['sniffs']);
-        $values = $this->values;
-
-        $phpcs->setTabWidth($values['tabWidth']);
-        $phpcs->setEncoding($values['encoding']);
-        $phpcs->setInteractive($values['interactive']);
-
-        // Set file extensions if they were specified. Otherwise,
-        // let PHP_CodeSniffer decide on the defaults.
-        if (empty($values['extensions']) === false) {
-            $phpcs->setAllowedFileExtensions($values['extensions']);
-        }
-
-        // Set ignore patterns if they were specified.
-        if (empty($values['ignored']) === false) {
-            $ignorePatterns = array_merge($phpcs->getIgnorePatterns(), $values['ignored']);
-            $phpcs->setIgnorePatterns($ignorePatterns);
-        }
-
-        // Set some convenience member vars.
-        if ($values['errorSeverity'] === null) {
-            $this->errorSeverity = PHPCS_DEFAULT_ERROR_SEV;
-        } else {
-            $this->errorSeverity = $values['errorSeverity'];
-        }
-
-        if ($values['warningSeverity'] === null) {
-            $this->warningSeverity = PHPCS_DEFAULT_WARN_SEV;
-        } else {
-            $this->warningSeverity = $values['warningSeverity'];
-        }
-
-        if (empty($values['reports']) === true) {
-            $values['reports']['full'] = $values['reportFile'];
-            $this->reports   = $values['reports'];
-        }
-
-        $phpcs->processFiles($values['files'], $values['local']);
-
-        if (empty($values['files']) === true) {
-            // Check if they are passing in the file contents.
-            $handle       = fopen('php://stdin', 'r');
-            $fileContents = stream_get_contents($handle);
-            fclose($handle);
-
-            if ($fileContents === '') {
-                // No files and no content passed in.
-                echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
-                $this->printUsage();
-                exit(2);
-            } else {
-                if ($fileContents !== '') {
-                    $phpcs->processFile('STDIN', $fileContents);
-                }
-            }
-        }
-*/
-        // Interactive runs don't require a final report and it doesn't really
-        // matter what the retun value is because we know it isn't being read
-        // by a script.
-        if ($values['interactive'] === true) {
-            return 0;
-        }
-
-        return $this->printErrorReport(
-            $phpcs,
-            $values['reports'],
-            $values['showSources'],
-            $values['reportFile'],
-            $values['reportWidth']
-        );
-
-    }//end process()
-
-    
-
-
-
-    /**
-     * Prints the error report for the run.
-     *
-     * Note that this function may actually print multiple reports
-     * as the user may have specified a number of output formats.
-     *
-     * @param PHP_CodeSniffer $phpcs       The PHP_CodeSniffer object containing
-     *                                     the errors.
-     * @param array           $reports     A list of reports to print.
-     * @param bool            $showSources TRUE if report should show error sources
-     *                                     (not used by all reports).
-     * @param string          $reportFile  A default file to log report output to.
-     * @param int             $reportWidth How wide the screen reports should be.
-     *
-     * @return int The number of error and warning messages shown.
-     */
-    public function printErrorReport(
-        PHP_CodeSniffer $phpcs,
-        $reports,
-        $showSources,
-        $reportFile,
-        $reportWidth
-    ) {
-        if (empty($reports) === true) {
-            $reports['full'] = $reportFile;
-        }
-
-        $errors   = 0;
-        $warnings = 0;
-        $toScreen = false;
-
-        foreach ($reports as $report => $output) {
-            if ($output === null) {
-                $output = $reportFile;
-            }
-
-            if ($reportFile === null) {
-                $toScreen = true;
-            }
-
-            // We don't add errors here because the number of
-            // errors reported by each report type will always be the
-            // same, so we really just need 1 number.
-            $result = $phpcs->reporting->printReport(
-                $report,
-                $showSources,
-                $this->values,
-                $output,
-                $reportWidth
-            );
-
-            $errors   = $result['errors'];
-            $warnings = $result['warnings'];
-        }//end foreach
-
-        // Only print timer output if no reports were
-        // printed to the screen so we don't put additional output
-        // in something like an XML report. If we are printing to screen,
-        // the report types would have already worked out who should
-        // print the timer info.
-        if ($this->interactive === false
-            && ($toScreen === false
-            || (($errors + $warnings) === 0 && $this->showProgress === true))
-        ) {
-            PHP_CodeSniffer_Reporting::printRunTime();
-        }
-
-        // They should all return the same value, so it
-        // doesn't matter which return value we end up using.
-        $ignoreWarnings = PHP_CodeSniffer::getConfigData('ignore_warnings_on_exit');
-        $ignoreErrors   = PHP_CodeSniffer::getConfigData('ignore_errors_on_exit');
-
-        $return = ($errors + $warnings);
-        if ($ignoreErrors !== null) {
-            $ignoreErrors = (bool) $ignoreErrors;
-            if ($ignoreErrors === true) {
-                $return -= $errors;
-            }
-        }
-
-        if ($ignoreWarnings !== null) {
-            $ignoreWarnings = (bool) $ignoreWarnings;
-            if ($ignoreWarnings === true) {
-                $return -= $warnings;
-            }
-        }
-
-        return $return;
-
-    }//end printErrorReport()
 
 
     /**

@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Config;
 
 /**
  * Generic_Sniffs_Debug_ClosureLinterSniff.
@@ -81,12 +82,12 @@ class ClosureLinterSniff implements Sniff
      */
     public function process($phpcsFile, $stackPtr)
     {
-        $fileName = $phpcsFile->getFilename();
-
-        $lintPath = $phpcsFile->config->getConfigData('gjslint_path');
+        $lintPath = Config::getConfigData('gjslint_path');
         if ($lintPath === null) {
             return;
         }
+
+        $fileName = $phpcsFile->getFilename();
 
         $cmd = "$lintPath --nosummary --notime --unix_mode \"$fileName\"";
         $msg = exec($cmd, $output, $retval);

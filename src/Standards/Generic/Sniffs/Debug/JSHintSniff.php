@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Config;
 
 /**
  * Generic_Sniffs_Debug_JSHintSniff.
@@ -67,13 +68,13 @@ class JSHintSniff implements Sniff
      */
     public function process($phpcsFile, $stackPtr)
     {
-        $fileName = $phpcsFile->getFilename();
-
-        $rhinoPath  = $phpcsFile->config->getConfigData('rhino_path');
-        $jshintPath = $phpcsFile->config->getConfigData('jshint_path');
+        $rhinoPath  = Config::getConfigData('rhino_path');
+        $jshintPath = Config::getConfigData('jshint_path');
         if ($rhinoPath === null || $jshintPath === null) {
             return;
         }
+
+        $fileName = $phpcsFile->getFilename();
 
         $cmd = "$rhinoPath \"$jshintPath\" \"$fileName\"";
         $msg = exec($cmd, $output, $retval);
