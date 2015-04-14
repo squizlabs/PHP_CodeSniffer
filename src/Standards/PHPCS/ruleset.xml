@@ -4,7 +4,13 @@
  <exclude-pattern>*/Tests/*</exclude-pattern>
 
  <!-- Include the whole PEAR standard -->
- <rule ref="PEAR"/>
+ <rule ref="PEAR">
+    <exclude name="PEAR.NamingConventions.ValidVariableName" />
+    <exclude name="PEAR.Commenting.ClassComment" />
+    <exclude name="PEAR.Commenting.FileComment.MissingCategoryTag" />
+    <exclude name="PEAR.Commenting.FileComment.MissingPackageTag" />
+    <exclude name="PEAR.Commenting.FileComment.MissingLinkTag" />
+ </rule>
 
  <!-- Include some sniffs from other standards that don't conflict with PEAR -->
  <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
@@ -34,6 +40,7 @@
  <rule ref="Generic.PHP.DeprecatedFunctions"/>
  <rule ref="Generic.PHP.LowerCaseKeyword"/>
  <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
+ <rule ref="PSR2.Classes.PropertyDeclaration"/>
  <rule ref="PSR2.Files.EndFileNewline"/>
  <rule ref="Zend.Files.ClosingTag"/>
 
