@@ -1289,6 +1289,42 @@ class PHP_CodeSniffer_File
 
     }//end recordMetric()
 
+    /**
+     * Adds a grouped metric.
+     *
+     * @param int    $stackPtr The stack position where the metric was recorded.
+     * @param string $metric   The name of the metric being recorded.
+     * @param string $value    The value of the metric being recorded.
+     * @param int[]  $groups   The limiting value for each group
+     *
+     * @return boolean
+     */
+    public function recordGroupMetric($stackPtr, $metric, $value, array $groups)
+    {
+        // find the group the value belongs to.
+        // The value belongs to the last group that is smaller than the value itself.
+        reset($groups);
+        $group = key($groups);
+        $limitfound = false;
+        foreach( $groups as $key => $limit ) {
+            if( $limit >= $value ) {
+                $limitfound = true;
+                break;
+            }
+            $group = $key;
+        }
+
+        $suffix = $limitfound ? ' or less' : 'or more';
+
+        if( !is_string($group) ) {
+            $name = $groups[$group].$suffix;
+        } else {
+            $name = $group;
+        }
+
+        return $this->recordMetric($stackPtr, $metric, $name);
+
+    }//end recordMetric()
 
     /**
      * Returns the number of errors raised.
@@ -3447,7 +3483,6 @@ class PHP_CodeSniffer_File
         return $foundToken;
 
     }//end findFirstOnLine()
-
 
     /**
      * Determine if the passed token has a condition of one of the passed types.
