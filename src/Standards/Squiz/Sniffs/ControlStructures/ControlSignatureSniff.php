@@ -207,12 +207,11 @@ class ControlSignatureSniff implements Sniff
         }//end if
 
         // Only want to check multi-keyword structures from here on.
-        if ($tokens[$stackPtr]['code'] === T_TRY
-            || $tokens[$stackPtr]['code'] === T_DO
-        ) {
+        if ($tokens[$stackPtr]['code'] === T_DO) {
             $closer = $tokens[$stackPtr]['scope_closer'];
         } else if ($tokens[$stackPtr]['code'] === T_ELSE
             || $tokens[$stackPtr]['code'] === T_ELSEIF
+            || $tokens[$stackPtr]['code'] === T_CATCH
         ) {
             $closer = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($closer === false || $tokens[$closer]['code'] !== T_CLOSE_CURLY_BRACKET) {
