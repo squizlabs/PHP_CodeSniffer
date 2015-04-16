@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\FunctionCommentSniff as SquizFunctionCommentSniff;
 use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Parses and verifies the doc comments for functions.
@@ -45,7 +46,7 @@ class FunctionCommentSniff extends SquizFunctionCommentSniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         parent::process($phpcsFile, $stackPtr);
 

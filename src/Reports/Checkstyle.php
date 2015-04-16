@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Reports;
 
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Checkstyle report for PHP_CodeSniffer.
@@ -52,12 +53,8 @@ class Checkstyle implements Report
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         $out = new \XMLWriter;
         $out->openMemory();
         $out->setIndent(true);

@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\MySource\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Ensures that getRequestData() is used to access super globals.
@@ -53,7 +54,7 @@ class GetRequestDataSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

@@ -2,6 +2,7 @@
 
 namespace PHP_CodeSniffer;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Common;
 
 /**
@@ -125,11 +126,11 @@ class Fixer
     /**
      * Starts fixing a new file.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being fixed.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being fixed.
      *
      * @return void
      */
-    public function startFile($phpcsFile)
+    public function startFile(File $phpcsFile)
     {
         $this->currentFile = $phpcsFile;
         $this->_numFixes    = 0;

@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff.
@@ -81,7 +82,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $this->equalsSpacing           = (int) $this->equalsSpacing;
         $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;

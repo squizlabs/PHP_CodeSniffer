@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Squiz_Sniffs_ControlStructures_ForLoopDeclarationSniff.
@@ -81,7 +82,7 @@ class ForLoopDeclarationSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;

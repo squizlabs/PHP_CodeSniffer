@@ -2,6 +2,8 @@
 
 namespace PHP_CodeSniffer\Sniffs;
 
+use PHP_CodeSniffer\Files\File;
+
 /**
  * Represents a PHP_CodeSniffer sniff for sniffing coding standards.
  *
@@ -86,7 +88,7 @@ interface Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr);
+    public function process(File $phpcsFile, $stackPtr);
 
 
 }//end interface

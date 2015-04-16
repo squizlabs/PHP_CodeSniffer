@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Channels;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
 
 /**
@@ -76,11 +77,8 @@ class IncludeSystemSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected function processTokenWithinScope(
-        $phpcsFile,
-        $stackPtr,
-        $currScope
-    ) {
+    protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope) 
+    {
         $tokens = $phpcsFile->getTokens();
 
         // Determine the name of the class that the static function
@@ -220,7 +218,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected function processTokenOutsideScope($phpcsFile, $stackPtr)
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -307,11 +305,8 @@ class IncludeSystemSniff extends AbstractScopeSniff
      *
      * @return string
      */
-    protected function getIncludedClassFromToken(
-        $phpcsFile,
-        array $tokens,
-        $stackPtr
-    ) {
+    protected function getIncludedClassFromToken(File $phpcsFile, array $tokens, $stackPtr)
+    {
         if (strtolower($tokens[$stackPtr]['content']) === 'includesystem') {
             $systemName = $phpcsFile->findNext(T_CONSTANT_ENCAPSED_STRING, ($stackPtr + 1));
             $systemName = trim($tokens[$systemName]['content'], " '");

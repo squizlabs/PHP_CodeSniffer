@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Squiz_Sniffs_ControlStructures_ElseIfDeclarationSniff.
@@ -58,7 +59,7 @@ class ElseIfDeclarationSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $error = 'Usage of ELSEIF not allowed; use ELSE IF instead';
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed');

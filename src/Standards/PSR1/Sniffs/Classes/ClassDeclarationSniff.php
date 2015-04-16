@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class Declaration Test.
@@ -59,7 +60,7 @@ class ClassDeclarationSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         if (isset($tokens[$stackPtr]['scope_closer']) === false) {

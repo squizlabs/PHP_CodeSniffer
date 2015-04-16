@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * PSR2_Sniffs_Namespaces_UseDeclarationSniff.
@@ -55,7 +56,7 @@ class UseDeclarationSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         if ($this->_shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
             return;

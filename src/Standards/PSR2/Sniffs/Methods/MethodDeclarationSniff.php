@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * PSR2_Sniffs_Methods_MethodDeclarationSniff.
@@ -54,7 +55,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected function processTokenWithinScope($phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -152,6 +153,22 @@ class MethodDeclarationSniff extends AbstractScopeSniff
         }
 
     }//end processTokenWithinScope()
+
+
+    /**
+     * Processes a token that is found within the scope that this test is
+     * listening to.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param int                  $stackPtr  The position in the stack where this
+     *                                        token was found.
+     *
+     * @return void
+     */
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+    {
+
+    }//end processTokenOutsideScope()
 
 
 }//end class

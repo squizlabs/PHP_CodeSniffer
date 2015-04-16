@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Reports;
 
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * JUnit report for PHP_CodeSniffer.
@@ -40,7 +41,7 @@ class Junit implements Report
      *
      * @var int
      */
-    private $_tests = 0;
+    private $tests = 0;
 
 
     /**
@@ -57,16 +58,12 @@ class Junit implements Report
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         if (count($report['messages']) === 0) {
-            $this->_tests++;
+            $this->tests++;
         } else {
-            $this->_tests += ($report['errors'] + $report['warnings']);
+            $this->tests += ($report['errors'] + $report['warnings']);
         }
 
         $out = new \XMLWriter;
@@ -145,7 +142,7 @@ class Junit implements Report
     ) {
         $failures = ($totalErrors + $totalWarnings);
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<testsuites name="PHP_CodeSniffer '.Config::VERSION.'" tests="'.$this->_tests.'" failures="'.$failures.'">'.PHP_EOL;
+        echo '<testsuites name="PHP_CodeSniffer '.Config::VERSION.'" tests="'.$this->tests.'" failures="'.$failures.'">'.PHP_EOL;
         echo $cachedData;
         echo '</testsuites>'.PHP_EOL;
 

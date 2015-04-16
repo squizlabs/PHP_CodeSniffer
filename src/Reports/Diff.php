@@ -2,6 +2,7 @@
 
 namespace PHP_CodeSniffer\Reports;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util;
 
 /**
@@ -48,12 +49,8 @@ class Diff implements Report
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         $errors = $phpcsFile->getFixableCount();
         if ($errors === 0) {
             return false;

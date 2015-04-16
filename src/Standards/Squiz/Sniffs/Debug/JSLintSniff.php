@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Debug;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
 
 /**
@@ -64,7 +65,7 @@ class JSLintSniff implements Sniff
      * @return void
      * @throws PHP_CodeSniffer_Exception If jslint.js could not be run
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $rhinoPath  = Config::getConfigData('rhino_path');
         $jslintPath = Config::getConfigData('jslint_path');

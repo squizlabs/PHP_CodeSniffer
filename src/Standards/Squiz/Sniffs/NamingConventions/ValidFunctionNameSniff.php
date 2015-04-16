@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions\ValidFunctionNameSniff as PEARValidFunctionNameSniff;
 use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Squiz_Sniffs_NamingConventions_ValidFunctionNameSniff.
@@ -47,7 +48,7 @@ class ValidFunctionNameSniff extends PEARValidFunctionNameSniff
      *
      * @return void
      */
-    protected function processTokenOutsideScope($phpcsFile, $stackPtr)
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
     {
         $functionName = $phpcsFile->getDeclarationName($stackPtr);
         if ($functionName === null) {

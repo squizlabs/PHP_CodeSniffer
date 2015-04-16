@@ -2,6 +2,7 @@
 
 namespace PHP_CodeSniffer\Sniffs;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 /**
@@ -144,7 +145,7 @@ abstract class AbstractScopeSniff implements Sniff
      * @return void
      * @see    processTokenWithinScope()
      */
-    public final function process($phpcsFile, $stackPtr)
+    public final function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -176,11 +177,7 @@ abstract class AbstractScopeSniff implements Sniff
      *
      * @return void
      */
-    protected abstract function processTokenWithinScope(
-        $phpcsFile,
-        $stackPtr,
-        $currScope
-    );
+    protected abstract function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope);
 
 
     /**
@@ -193,12 +190,7 @@ abstract class AbstractScopeSniff implements Sniff
      *
      * @return void
      */
-    protected function processTokenOutsideScope(
-        $phpcsFile,
-        $stackPtr
-    ) {
-
-    }//end processTokenOutsideScope()
+    protected abstract function processTokenOutsideScope(File $phpcsFile, $stackPtr);
 
 
 }//end class

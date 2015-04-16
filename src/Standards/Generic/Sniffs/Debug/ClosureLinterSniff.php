@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
 
 /**
@@ -80,7 +81,7 @@ class ClosureLinterSniff implements Sniff
      * @return void
      * @throws PHP_CodeSniffer_Exception If jslint.js could not be run
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $lintPath = Config::getConfigData('gjslint_path');
         if ($lintPath === null) {

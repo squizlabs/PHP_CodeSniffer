@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Reports\Report;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 /**
@@ -145,7 +146,7 @@ class Reporter
      *
      * @return void
      */
-    public function cacheFileReport($phpcsFile)
+    public function cacheFileReport(File $phpcsFile)
     {
         if (isset($this->config->reports) === false) {
             // This happens during unit testing, or any time someone just wants
@@ -300,7 +301,7 @@ class Reporter
      *
      * @return array
      */
-    public function prepareFileReport($phpcsFile)
+    public function prepareFileReport(File $phpcsFile)
     {
         $report = array(
                    'filename' => $phpcsFile->getFilename(),

@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Zend\Sniffs\Files;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Zend_Sniffs_Files_ClosingTagsSniff.
@@ -57,7 +58,7 @@ class ClosingTagSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         // Find the last non-empty token.
         $tokens = $phpcsFile->getTokens();

@@ -2,6 +2,7 @@
 
 namespace PHP_CodeSniffer\Sniffs;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 /**
@@ -94,11 +95,8 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected final function processTokenWithinScope(
-        $phpcsFile,
-        $stackPtr,
-        $currScope
-    ) {
+    protected final function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
+    {
         if ($this->currentFile !== $phpcsFile) {
             $this->currentFile   = $phpcsFile;
             $this->_functionOpen = false;
@@ -170,10 +168,8 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected final function processTokenOutsideScope(
-        $phpcsFile,
-        $stackPtr
-    ) {
+    protected final function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+    {
         $tokens = $phpcsFile->getTokens();
         // These variables are not member vars.
         if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
@@ -200,10 +196,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    abstract protected function processMemberVar(
-        $phpcsFile,
-        $stackPtr
-    );
+    abstract protected function processMemberVar(File $phpcsFile, $stackPtr);
 
 
     /**
@@ -215,10 +208,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    abstract protected function processVariable(
-        $phpcsFile,
-        $stackPtr
-    );
+    abstract protected function processVariable(File $phpcsFile, $stackPtr);
 
 
     /**
@@ -234,10 +224,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    abstract protected function processVariableInString(
-        $phpcsFile,
-        $stackPtr
-    );
+    abstract protected function processVariableInString(File $phpcsFile, $stackPtr);
 
 
 }//end class

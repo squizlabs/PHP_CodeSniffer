@@ -2,6 +2,7 @@
 
 namespace PHP_CodeSniffer\Reports;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util;
 
 /**
@@ -45,7 +46,7 @@ class Summary implements Report
      *
      * @var boolean
      */
-    private $_reportFiles = array();
+    private $reportFiles = array();
 
 
     /**
@@ -62,12 +63,8 @@ class Summary implements Report
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         if (PHP_CODESNIFFER_VERBOSITY === 0
             && $report['errors'] === 0
             && $report['warnings'] === 0
@@ -76,7 +73,7 @@ class Summary implements Report
             return false;
         }
 
-        $this->_reportFiles[$report['filename']] = array(
+        $this->reportFiles[$report['filename']] = array(
                                                     'errors'   => $report['errors'],
                                                     'warnings' => $report['warnings'],
                                                     'strlen'   => strlen($report['filename']),
@@ -114,13 +111,13 @@ class Summary implements Report
         $toScreen=true
     ) {
 
-        if (empty($this->_reportFiles) === true) {
+        if (empty($this->reportFiles) === true) {
             return;
         }
 
         // Make sure the report width isn't too big.
         $maxLength = 0;
-        foreach ($this->_reportFiles as $file => $data) {
+        foreach ($this->reportFiles as $file => $data) {
             $maxLength = max($maxLength, $data['strlen']);
         }
 
@@ -132,7 +129,7 @@ class Summary implements Report
         echo "\033[1m".'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
-        foreach ($this->_reportFiles as $file => $data) {
+        foreach ($this->reportFiles as $file => $data) {
             $padding = ($width - 18 - $data['strlen']);
             if ($padding < 0) {
                 $file    = '...'.substr($file, (($padding * -1) + 3));

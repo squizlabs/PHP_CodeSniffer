@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Debug;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Ensures that console is not used for function or var names.
@@ -65,7 +66,7 @@ class FirebugConsoleSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

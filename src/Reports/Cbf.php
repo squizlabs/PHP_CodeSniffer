@@ -2,6 +2,8 @@
 
 namespace PHP_CodeSniffer\Reports;
 
+use PHP_CodeSniffer\Files\File;
+
 /**
  * CBF report for PHP_CodeSniffer.
  *
@@ -54,12 +56,8 @@ class Cbf implements Report
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         $errors = $phpcsFile->getFixableCount();
         if ($errors !== 0) {
             if ($phpcsFile->config->stdin === false) {

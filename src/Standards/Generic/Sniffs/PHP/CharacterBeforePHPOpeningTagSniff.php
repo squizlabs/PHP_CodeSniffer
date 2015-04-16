@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff.
@@ -53,7 +54,7 @@ class CharacterBeforePHPOpeningTagSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $expected = 0;
         if ($stackPtr > 0) {

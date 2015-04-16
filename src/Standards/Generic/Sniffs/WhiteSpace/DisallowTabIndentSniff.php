@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff.
@@ -68,7 +69,7 @@ class DisallowTabIndentSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens    = $phpcsFile->getTokens();
         $error     = 'Spaces must be used to indent lines; tabs are not allowed';

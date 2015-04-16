@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Generic_Sniffs_NamingConventions_ConstructorNameSniff.
@@ -69,11 +70,8 @@ class ConstructorNameSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected function processTokenWithinScope(
-        $phpcsFile,
-        $stackPtr,
-        $currScope
-    ) {
+    protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
+    {
         $className = $phpcsFile->getDeclarationName($currScope);
         if ($className !== $this->_currentClass) {
             $this->loadFunctionNamesInScope($phpcsFile, $currScope);
@@ -119,6 +117,21 @@ class ConstructorNameSniff extends AbstractScopeSniff
 
     }//end processTokenWithinScope()
 
+    /**
+     * Processes a token that is found within the scope that this test is
+     * listening to.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param int                  $stackPtr  The position in the stack where this
+     *                                        token was found.
+     *
+     * @return void
+     */
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+    {
+
+    }
+
 
     /**
      * Extracts all the function names found in the given scope.
@@ -128,7 +141,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected function loadFunctionNamesInScope($phpcsFile, $currScope)
+    protected function loadFunctionNamesInScope(File $phpcsFile, $currScope)
     {
         $this->_functionList = array();
         $tokens = $phpcsFile->getTokens();

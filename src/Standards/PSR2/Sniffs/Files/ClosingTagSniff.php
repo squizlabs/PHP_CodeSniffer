@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Files;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * PSR2_Sniffs_Files_ClosingTagsSniff.
@@ -55,7 +56,7 @@ class ClosingTagSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

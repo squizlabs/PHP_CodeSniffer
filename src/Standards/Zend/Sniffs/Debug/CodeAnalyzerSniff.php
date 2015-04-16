@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Zend\Sniffs\Debug;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
@@ -59,7 +60,7 @@ class CodeAnalyzerSniff implements Sniff
      *
      * @return int
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $analyzerPath = Config::getConfigData('zend_ca_path');
         if (is_null($analyzerPath) === true) {

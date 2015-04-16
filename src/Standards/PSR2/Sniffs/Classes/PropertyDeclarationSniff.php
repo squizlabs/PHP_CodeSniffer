@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes;
 
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Verifies that properties are declared correctly.
@@ -41,7 +42,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
      *
      * @return void
      */
-    protected function processMemberVar($phpcsFile, $stackPtr)
+    protected function processMemberVar(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -90,7 +91,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
      *
      * @return void
      */
-    protected function processVariable($phpcsFile, $stackPtr)
+    protected function processVariable(File $phpcsFile, $stackPtr)
     {
         /*
             We don't care about normal variables.
@@ -107,7 +108,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
      *
      * @return void
      */
-    protected function processVariableInString($phpcsFile, $stackPtr)
+    protected function processVariableInString(File $phpcsFile, $stackPtr)
     {
         /*
             We don't care about normal variables.

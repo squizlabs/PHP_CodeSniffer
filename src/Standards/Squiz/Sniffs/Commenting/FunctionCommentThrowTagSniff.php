@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Verifies that a @throws tag exists for a function that throws exceptions.
@@ -57,7 +58,7 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected function processTokenWithinScope($phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
         // Is this the first throw token within the current function scope?
         // If so, we have to validate other throw tokens within the same scope.
@@ -197,6 +198,22 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
         }
 
     }//end processTokenWithinScope()
+
+
+    /**
+     * Processes a token that is found within the scope that this test is
+     * listening to.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param int                  $stackPtr  The position in the stack where this
+     *                                        token was found.
+     *
+     * @return void
+     */
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+    {
+
+    }//end processTokenOutsideScope()
 
 
 }//end class

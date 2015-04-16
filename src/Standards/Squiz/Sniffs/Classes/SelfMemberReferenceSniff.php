@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Squiz_Sniffs_Classes_ClassFileNameSniff.
@@ -60,7 +61,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected function processTokenWithinScope($phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -132,6 +133,21 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
 
     }//end processTokenWithinScope()
 
+    /**
+     * Processes a token that is found within the scope that this test is
+     * listening to.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param int                  $stackPtr  The position in the stack where this
+     *                                        token was found.
+     *
+     * @return void
+     */
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+    {
+
+    }//end processTokenOutsideScope()
+
 
     /**
      * Returns the declaration names for classes/interfaces/functions with a namespace.
@@ -167,7 +183,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
      *
      * @return string
      */
-    protected function getNamespaceOfScope($phpcsFile, $stackPtr)
+    protected function getNamespaceOfScope(File $phpcsFile, $stackPtr)
     {
         $namespace            = '\\';
         $namespaceDeclaration = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);

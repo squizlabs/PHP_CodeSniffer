@@ -2,6 +2,7 @@
 
 namespace PHP_CodeSniffer\Reports;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util;
 
 /**
@@ -48,12 +49,8 @@ class Full implements Report
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
             // Nothing to print.
             return false;

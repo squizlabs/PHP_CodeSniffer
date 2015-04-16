@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * PSR2_Sniffs_ControlStructures_ElseIfDeclarationSniff.
@@ -58,7 +59,7 @@ class ElseIfDeclarationSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes;
 
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Classes\ClassDeclarationSniff as PEARClassDeclarationSniff;
 use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Class Declaration Test.
@@ -44,7 +45,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         // We want all the errors from the PEAR standard, plus some of our own.
         parent::process($phpcsFile, $stackPtr);
@@ -63,7 +64,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
      *
      * @return void
      */
-    public function processOpen($phpcsFile, $stackPtr)
+    public function processOpen(File $phpcsFile, $stackPtr)
     {
         $tokens       = $phpcsFile->getTokens();
         $stackPtrType = strtolower($tokens[$stackPtr]['content']);
@@ -406,7 +407,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
      *
      * @return void
      */
-    public function processClose($phpcsFile, $stackPtr)
+    public function processClose(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

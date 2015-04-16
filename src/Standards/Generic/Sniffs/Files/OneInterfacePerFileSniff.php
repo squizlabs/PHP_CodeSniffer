@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Files;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Generic_Sniffs_Files_OneInterfacePerFileSniff.
@@ -53,7 +54,7 @@ class OneInterfacePerFileSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $nextInterface = $phpcsFile->findNext($this->register(), ($stackPtr + 1));
         if ($nextInterface !== false) {

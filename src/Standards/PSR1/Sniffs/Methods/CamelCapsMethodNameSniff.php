@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods;
 
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff as GenericCamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * PSR1_Sniffs_Methods_CamelCapsMethodNameSniff.
@@ -55,7 +56,7 @@ class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
      *
      * @return void
      */
-    protected function processTokenWithinScope($phpcsFile, $stackPtr, $currScope)
+    protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {
@@ -96,7 +97,7 @@ class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
      *
      * @return void
      */
-    protected function processTokenOutsideScope($phpcsFile, $stackPtr)
+    protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
     {
 
     }//end processTokenOutsideScope()

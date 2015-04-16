@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * PEAR_Sniffs_WhiteSpace_ObjectOperatorIndentSniff.
@@ -63,7 +64,7 @@ class ObjectOperatorIndentSniff implements Sniff
      *
      * @return void
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Files;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Generic_Sniffs_Files_EndFileNewlineSniff.
@@ -66,7 +67,7 @@ class EndFileNewlineSniff implements Sniff
      *
      * @return int
      */
-    public function process($phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         // Skip to the end of the file.
         $tokens   = $phpcsFile->getTokens();

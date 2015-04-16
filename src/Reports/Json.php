@@ -2,6 +2,8 @@
 
 namespace PHP_CodeSniffer\Reports;
 
+use PHP_CodeSniffer\Files\File;
+
 /**
  * Json report for PHP_CodeSniffer.
  *
@@ -48,12 +50,8 @@ class Json implements Report
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         $filename = str_replace('\\', '\\\\', $report['filename']);
         $filename = str_replace('"', '\"', $filename);
         $filename = str_replace('/', '\/', $filename);

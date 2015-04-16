@@ -3,6 +3,7 @@
 namespace PHP_CodeSniffer\Reports;
 
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
 
 /**
  * Notify-send report for PHP_CodeSniffer.
@@ -123,12 +124,8 @@ class Notifysend implements Report
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         // We don't need to print anything, but we want this file counted
         // in the total number of checked files even if it has no errors.
         $this->_lastCheckedFile = $report['filename'];
