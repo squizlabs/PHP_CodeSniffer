@@ -1,8 +1,8 @@
 <?php
 /**
- * Respnsible for running PHPCS and PHPCBF.
+ * Responsible for running PHPCS and PHPCBF.
  *
- * After creating and object of this class, you probably just want to
+ * After creating an object of this class, you probably just want to
  * call runPHPCS() or runPHPCBF().
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
