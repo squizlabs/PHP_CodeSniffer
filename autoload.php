@@ -3,17 +3,11 @@ namespace PHP_CodeSniffer;
 
 class Autoload {
 
-    private static $declaredClasses = array();
-    private static $declaredInterfaces = array();
     private static $loadedClasses = array();
+    private static $loadedFiles = array();
 
     public static function load($class)
     {
-        if (empty(self::$declaredClasses) === true) {
-            self::$declaredClasses = get_declared_classes();
-            self::$declaredInterfaces = get_declared_interfaces();
-        }
-
         $ds   = DIRECTORY_SEPARATOR;
         $path = null;
 
@@ -50,6 +44,7 @@ class Autoload {
         }
 
         self::$loadedClasses[$path] = $className;
+        self::$loadedFiles[$className] = $path;
         return self::$loadedClasses[$path];
     }
 
@@ -60,6 +55,15 @@ class Autoload {
         }
 
         return self::$loadedClasses[$file];
+    }
+
+    public static function getLoadedFileName($class)
+    {
+        if (isset(self::$loadedFiles[$class]) === false) {
+            throw new \Exception("Cannot get file name for $class; class has not been included");
+        }
+
+        return self::$loadedFiles[$class];
     }
 
 }
