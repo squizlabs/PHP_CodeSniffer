@@ -13,6 +13,7 @@
 namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Files\FileList;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Files\DummyFile;
 
 class Runner
@@ -349,40 +350,29 @@ class Runner
                         echo " ($errors errors, $warnings warnings)".PHP_EOL;
                     }
                 }
-            } catch (Exception $e) {
-                /*
+            } catch (\Exception $e) {
                     $trace = $e->getTrace();
 
                     $filename = $trace[0]['args'][0];
-                    if (is_object($filename) === true
-                    && get_class($filename) === 'PHP_CodeSniffer_File'
-                    ) {
-                    $filename = $filename->getFilename();
+                    if (is_object($filename) === true && ($filename instanceof File) === true) {
+                        $filename = $filename->getFilename();
                     } else if (is_numeric($filename) === true) {
-                    // See if we can find the PHP_CodeSniffer_File object.
-                    foreach ($trace as $data) {
-                        if (isset($data['args'][0]) === true
-                            && ($data['args'][0] instanceof PHP_CodeSniffer_File) === true
-                        ) {
-                            $filename = $data['args'][0]->getFilename();
+                        // See if we can find the File object.
+                        foreach ($trace as $data) {
+                            if (isset($data['args'][0]) === true
+                                && ($data['args'][0] instanceof File) === true
+                            ) {
+                                $filename = $data['args'][0]->getFilename();
+                            }
                         }
-                    }
                     } else if (is_string($filename) === false) {
-                    $filename = (string) $filename;
+                        $filename = (string) $filename;
                     }
 
                     $errorMessage = '"'.$e->getMessage().'" at '.$e->getFile().':'.$e->getLine();
                     $error        = "An error occurred during processing; checking has been aborted. The error message was: $errorMessage";
 
-                    $phpcsFile = new PHP_CodeSniffer_File(
-                    $filename,
-                    $this->_tokenListeners,
-                    $this->ruleset,
-                    $this
-                    );
-
-                    $phpcsFile->addError($error, null);
-                */
+                    $file->addErrorOnLine($error, 1);
             }//end try
 
             $this->reporter->cacheFileReport($file, $this->config);
