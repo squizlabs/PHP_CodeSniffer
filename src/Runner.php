@@ -138,7 +138,7 @@ class Runner
             // or writing to a file with a new suffix.
             $this->config->reports = array('cbf' => null);
         }
-
+print_r($config);exit;
         $numErrors = $this->run();
 
         // Printing the reports will generate the diff file and/or

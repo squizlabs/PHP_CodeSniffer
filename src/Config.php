@@ -636,7 +636,9 @@ class Config
 
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
-            } else if (substr($arg, 0, 12) === 'report-file=') {
+            } else if (substr($arg, 0, 12) === 'report-file='
+                && PHP_CODESNIFFER_CBF === false
+            ) {
                 $this->reportFile = PHP_CodeSniffer::realpath(substr($arg, 12));
 
                 // It may not exist and return false instead.
@@ -672,8 +674,9 @@ class Config
             } else if (substr($arg, 0, 13) === 'report-width=') {
                 $this->reportWidth = substr($arg, 13);
                 $this->overriddenDefaults['reportWidth'] = true;
-            } else if (substr($arg, 0, 7) === 'report='
-                || substr($arg, 0, 7) === 'report-'
+            } else if ((substr($arg, 0, 7) === 'report='
+                || substr($arg, 0, 7) === 'report-')
+                && PHP_CODESNIFFER_CBF === false
             ) {
                 if ($arg[6] === '-') {
                     // This is a report with file output.
@@ -772,7 +775,9 @@ class Config
                 }
 
                 $this->overriddenDefaults['ignored'] = true;
-            } else if (substr($arg, 0, 10) === 'generator=') {
+            } else if (substr($arg, 0, 10) === 'generator='
+                && PHP_CODESNIFFER_CBF === false
+            ) {
                 $this->generator = substr($arg, 10);
                 $this->overriddenDefaults['generator'] = true;
             } else if (substr($arg, 0, 9) === 'encoding=') {
