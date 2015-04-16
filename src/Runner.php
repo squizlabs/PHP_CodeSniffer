@@ -1,39 +1,42 @@
 <?php
+/**
+ * Respnsible for running PHPCS and PHPCBF.
+ *
+ * After creating and object of this class, you probably just want to
+ * call runPHPCS() or runPHPCBF().
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Files\FileList;
 use PHP_CodeSniffer\Files\DummyFile;
 
-/**
- * A class to process command line phpcs scripts.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A class to process command line phpcs scripts.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class Runner
 {
 
+    /**
+     * The config data for the run.
+     *
+     * @var \PHP_CodeSniffer\Config
+     */
     public $config = null;
+
+    /**
+     * The ruleset used for the run.
+     *
+     * @var \PHP_CodeSniffer\Ruleset
+     */
     public $ruleset = null;
+
+    /**
+     * The reporter used for generating reports after the run.
+     *
+     * @var \PHP_CodeSniffer\Reporter
+     */
     public $reporter = null;
 
 
@@ -85,7 +88,7 @@ class Runner
             exit(1);
         }
 
-    }//end runphpcs()
+    }//end runPHPCS()
 
 
     /**
@@ -108,7 +111,6 @@ class Runner
         $this->config = new Config();
 
         // Override some of the command line settings that might break the fixes.
-#$config->dieOnUnknownArg = false;
         $this->config->verbosity    = 0;
         $this->config->showProgress = false;
         $this->config->generator    = null;
@@ -134,7 +136,6 @@ class Runner
             // Replace the file without the patch command
             // or writing to a file with a new suffix.
             $this->config->reports = array('cbf' => null);
-#$config->phpcbf-suffix = $config->suffix;
         }
 
         $numErrors = $this->run();
@@ -203,7 +204,7 @@ class Runner
         Util\Timing::printRunTime();
         exit($exit);
 
-    }//end runphpcbf()
+    }//end runPHPCBF()
 
 
     /**
@@ -301,7 +302,7 @@ class Runner
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo "DONE ($numFiles files in queue)".PHP_EOL;
             }
-        }
+        }//end if
 
         $numProcessed = 0;
         $dots         = 0;
@@ -309,7 +310,7 @@ class Runner
         $lastDir      = '';
 
         foreach ($todo as $path => $file) {
-            $currDir    = dirname($path);
+            $currDir = dirname($path);
             if ($lastDir !== $currDir) {
                 if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
                     echo 'Changing into directory '.$currDir.PHP_EOL;
@@ -350,14 +351,14 @@ class Runner
                 }
             } catch (Exception $e) {
                 /*
-                $trace = $e->getTrace();
+                    $trace = $e->getTrace();
 
-                $filename = $trace[0]['args'][0];
-                if (is_object($filename) === true
+                    $filename = $trace[0]['args'][0];
+                    if (is_object($filename) === true
                     && get_class($filename) === 'PHP_CodeSniffer_File'
-                ) {
+                    ) {
                     $filename = $filename->getFilename();
-                } else if (is_numeric($filename) === true) {
+                    } else if (is_numeric($filename) === true) {
                     // See if we can find the PHP_CodeSniffer_File object.
                     foreach ($trace as $data) {
                         if (isset($data['args'][0]) === true
@@ -366,21 +367,21 @@ class Runner
                             $filename = $data['args'][0]->getFilename();
                         }
                     }
-                } else if (is_string($filename) === false) {
+                    } else if (is_string($filename) === false) {
                     $filename = (string) $filename;
-                }
+                    }
 
-                $errorMessage = '"'.$e->getMessage().'" at '.$e->getFile().':'.$e->getLine();
-                $error        = "An error occurred during processing; checking has been aborted. The error message was: $errorMessage";
+                    $errorMessage = '"'.$e->getMessage().'" at '.$e->getFile().':'.$e->getLine();
+                    $error        = "An error occurred during processing; checking has been aborted. The error message was: $errorMessage";
 
-                $phpcsFile = new PHP_CodeSniffer_File(
+                    $phpcsFile = new PHP_CodeSniffer_File(
                     $filename,
                     $this->_tokenListeners,
                     $this->ruleset,
                     $this
-                );
+                    );
 
-                $phpcsFile->addError($error, null);
+                    $phpcsFile->addError($error, null);
                 */
             }//end try
 
@@ -483,7 +484,7 @@ class Runner
         }
 
         /*
-        if ($values['generator'] !== '') {
+            if ($values['generator'] !== '') {
             $phpcs = new PHP_CodeSniffer($values['verbosity']);
             foreach ($values['standard'] as $standard) {
                 $phpcs->generateDocs(
@@ -494,7 +495,7 @@ class Runner
             }
 
             exit(0);
-        }
+            }
 
         */
 
