@@ -5,6 +5,7 @@
 
  <!-- Include the whole PEAR standard -->
  <rule ref="PEAR">
+    <exclude name="PEAR.NamingConventions.ValidFunctionName" />
     <exclude name="PEAR.NamingConventions.ValidVariableName" />
     <exclude name="PEAR.Commenting.ClassComment" />
     <exclude name="PEAR.Commenting.FileComment.MissingCategoryTag" />
@@ -41,6 +42,7 @@
  <rule ref="Generic.PHP.LowerCaseKeyword"/>
  <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
  <rule ref="PSR2.Classes.PropertyDeclaration"/>
+ <rule ref="PSR2.Methods.MethodDeclaration"/>
  <rule ref="PSR2.Files.EndFileNewline"/>
  <rule ref="Zend.Files.ClosingTag"/>
 
