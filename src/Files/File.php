@@ -635,7 +635,7 @@ class File
         $data=array(),
         $severity=0
     ) {
-        return $this->addError($error, $line, 1, $code, $data, $severity, false);
+        return $this->_addError($error, $line, 1, $code, $data, $severity, false);
 
     }//end addErrorOnLine()
 
@@ -659,7 +659,7 @@ class File
         $data=array(),
         $severity=0
     ) {
-        return $this->addWarning($warning, $line, 1, $code, $data, $severity, false);
+        return $this->_addWarning($warning, $line, 1, $code, $data, $severity, false);
 
     }//end addWarningOnLine()
 
