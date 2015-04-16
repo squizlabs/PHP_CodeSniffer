@@ -351,28 +351,28 @@ class Runner
                     }
                 }
             } catch (\Exception $e) {
-                    $trace = $e->getTrace();
+                $trace = $e->getTrace();
 
-                    $filename = $trace[0]['args'][0];
-                    if (is_object($filename) === true && ($filename instanceof File) === true) {
-                        $filename = $filename->getFilename();
-                    } else if (is_numeric($filename) === true) {
-                        // See if we can find the File object.
-                        foreach ($trace as $data) {
-                            if (isset($data['args'][0]) === true
-                                && ($data['args'][0] instanceof File) === true
-                            ) {
-                                $filename = $data['args'][0]->getFilename();
-                            }
+                $filename = $trace[0]['args'][0];
+                if (is_object($filename) === true && ($filename instanceof File) === true) {
+                    $filename = $filename->getFilename();
+                } else if (is_numeric($filename) === true) {
+                    // See if we can find the File object.
+                    foreach ($trace as $data) {
+                        if (isset($data['args'][0]) === true
+                            && ($data['args'][0] instanceof File) === true
+                        ) {
+                            $filename = $data['args'][0]->getFilename();
                         }
-                    } else if (is_string($filename) === false) {
-                        $filename = (string) $filename;
                     }
+                } else if (is_string($filename) === false) {
+                    $filename = (string) $filename;
+                }
 
-                    $errorMessage = '"'.$e->getMessage().'" at '.$e->getFile().':'.$e->getLine();
-                    $error        = "An error occurred during processing; checking has been aborted. The error message was: $errorMessage";
+                $errorMessage = '"'.$e->getMessage().'" at '.$e->getFile().':'.$e->getLine();
+                $error        = "An error occurred during processing; checking has been aborted. The error message was: $errorMessage";
 
-                    $file->addErrorOnLine($error, 1);
+                $file->addErrorOnLine($error, 1);
             }//end try
 
             $this->reporter->cacheFileReport($file, $this->config);
