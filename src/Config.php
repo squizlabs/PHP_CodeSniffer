@@ -152,6 +152,19 @@ class Config
      */
     public $generator;
 
+    /**
+     * The reports to use for printing output after the run.
+     *
+     * The format of the array is:
+     *     array(
+     *      'reportName1' => 'outputFile',
+     *      'reportName2' => null,
+     *     );
+     *
+     * If the array value is NULL, the report will be written to the screen.
+     *
+     * @var array<string, string|null>
+     */
     public $reports;
 
     /**

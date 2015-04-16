@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Generators;
+
+use PHP_CodeSniffer\Config;
+
 /**
  * A doc generator that outputs documentation in Markdown format.
  *
@@ -12,9 +17,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (class_exists('PHP_CodeSniffer_DocGenerators_Generator', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_DocGenerators_Generator not found');
-}
 
 /**
  * A doc generator that outputs documentation in Markdown format.
@@ -27,7 +29,7 @@ if (class_exists('PHP_CodeSniffer_DocGenerators_Generator', true) === false) {
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerators_Generator
+class Markdown extends Generator
 {
 
 
@@ -42,11 +44,9 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
         ob_start();
         $this->printHeader();
 
-        $standardFiles = $this->getStandardFiles();
-
-        foreach ($standardFiles as $standard) {
-            $doc = new DOMDocument();
-            $doc->load($standard);
+        foreach ($this->docFiles as $file) {
+            $doc = new \DOMDocument();
+            $doc->load($file);
             $documentation = $doc->getElementsByTagName('documentation')->item(0);
             $this->processSniff($documentation);
         }
@@ -67,7 +67,7 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
      */
     protected function printHeader()
     {
-        $standard = $this->getStandard();
+        $standard = $this->ruleset->name;
 
         echo "# $standard Coding Standard".PHP_EOL;
 
@@ -85,7 +85,7 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
         // don't have their timezone set.
         error_reporting(0);
         echo 'Documentation generated on '.date('r');
-        echo ' by [PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'](https://github.com/squizlabs/PHP_CodeSniffer)';
+        echo ' by [PHP_CodeSniffer '.Config::VERSION.'](https://github.com/squizlabs/PHP_CodeSniffer)'.PHP_EOL;
 
     }//end printFooter()
 
@@ -93,13 +93,13 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
     /**
      * Process the documentation for a single sniff.
      *
-     * @param DOMNode $doc The DOMNode object for the sniff.
+     * @param \DOMNode $doc The DOMNode object for the sniff.
      *                     It represents the "documentation" tag in the XML
      *                     standard file.
      *
      * @return void
      */
-    protected function processSniff(DOMNode $doc)
+    protected function processSniff(\DOMNode $doc)
     {
         $title = $this->getTitle($doc);
         echo "## $title".PHP_EOL;
@@ -118,11 +118,11 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
     /**
      * Print a text block found in a standard.
      *
-     * @param DOMNode $node The DOMNode object for the text block.
+     * @param \DOMNode $node The DOMNode object for the text block.
      *
      * @return void
      */
-    protected function printTextBlock(DOMNode $node)
+    protected function printTextBlock(\DOMNode $node)
     {
         $content = trim($node->nodeValue);
         $content = htmlspecialchars($content);
@@ -138,11 +138,11 @@ class PHP_CodeSniffer_DocGenerators_Markdown extends PHP_CodeSniffer_DocGenerato
     /**
      * Print a code comparison block found in a standard.
      *
-     * @param DOMNode $node The DOMNode object for the code comparison block.
+     * @param \DOMNode $node The DOMNode object for the code comparison block.
      *
      * @return void
      */
-    protected function printCodeComparisonBlock(DOMNode $node)
+    protected function printCodeComparisonBlock(\DOMNode $node)
     {
         $codeBlocks = $node->getElementsByTagName('code');
 

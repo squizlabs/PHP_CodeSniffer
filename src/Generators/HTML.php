@@ -1,4 +1,9 @@
 <?php
+
+namespace PHP_CodeSniffer\Generators;
+
+use PHP_CodeSniffer\Config;
+
 /**
  * A doc generator that outputs documentation in one big HTML file.
  *
@@ -12,10 +17,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-
-if (class_exists('PHP_CodeSniffer_DocGenerators_Generator', true) === false) {
-    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_DocGenerators_Generator not found');
-}
 
 /**
  * A doc generator that outputs documentation in one big HTML file.
@@ -33,7 +34,7 @@ if (class_exists('PHP_CodeSniffer_DocGenerators_Generator', true) === false) {
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_Generator
+class HTML extends Generator
 {
 
 
@@ -47,13 +48,11 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
     {
         ob_start();
         $this->printHeader();
+        $this->printToc();
 
-        $standardFiles = $this->getStandardFiles();
-        $this->printToc($standardFiles);
-
-        foreach ($standardFiles as $standard) {
-            $doc = new DOMDocument();
-            $doc->load($standard);
+        foreach ($this->docFiles as $file) {
+            $doc = new \DOMDocument();
+            $doc->load($file);
             $documentation = $doc->getElementsByTagName('documentation')->item(0);
             $this->processSniff($documentation);
         }
@@ -75,7 +74,7 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
      */
     protected function printHeader()
     {
-        $standard = $this->getStandard();
+        $standard = $this->ruleset->name;
         echo '<html>'.PHP_EOL;
         echo ' <head>'.PHP_EOL;
         echo "  <title>$standard Coding Standards</title>".PHP_EOL;
@@ -161,14 +160,14 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
      *
      * @return void
      */
-    protected function printToc($standardFiles)
+    protected function printToc()
     {
         echo '  <h2>Table of Contents</h2>'.PHP_EOL;
         echo '  <ul class="toc">'.PHP_EOL;
 
-        foreach ($standardFiles as $standard) {
-            $doc = new DOMDocument();
-            $doc->load($standard);
+        foreach ($this->docFiles as $file) {
+            $doc = new \DOMDocument();
+            $doc->load($file);
             $documentation = $doc->getElementsByTagName('documentation')->item(0);
             $title         = $this->getTitle($documentation);
             echo '   <li><a href="#'.str_replace(' ', '-', $title)."\">$title</a></li>".PHP_EOL;
@@ -191,7 +190,7 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
         $errorLevel = error_reporting(0);
         echo '  <div class="tag-line">';
         echo 'Documentation generated on '.date('r');
-        echo ' by <a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer '.PHP_CodeSniffer::VERSION.'</a>';
+        echo ' by <a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer '.Config::VERSION.'</a>';
         echo '</div>'.PHP_EOL;
         error_reporting($errorLevel);
 
@@ -204,13 +203,13 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
     /**
      * Process the documentation for a single sniff.
      *
-     * @param DOMNode $doc The DOMNode object for the sniff.
+     * @param \DOMNode $doc The DOMNode object for the sniff.
      *                     It represents the "documentation" tag in the XML
      *                     standard file.
      *
      * @return void
      */
-    public function processSniff(DOMNode $doc)
+    public function processSniff(\DOMNode $doc)
     {
         $title = $this->getTitle($doc);
         echo '  <a name="'.str_replace(' ', '-', $title).'" />'.PHP_EOL;
@@ -230,11 +229,11 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
     /**
      * Print a text block found in a standard.
      *
-     * @param DOMNode $node The DOMNode object for the text block.
+     * @param \DOMNode $node The DOMNode object for the text block.
      *
      * @return void
      */
-    protected function printTextBlock($node)
+    protected function printTextBlock(\DOMNode $node)
     {
         $content = trim($node->nodeValue);
         $content = htmlspecialchars($content);
@@ -251,11 +250,11 @@ class PHP_CodeSniffer_DocGenerators_HTML extends PHP_CodeSniffer_DocGenerators_G
     /**
      * Print a code comparison block found in a standard.
      *
-     * @param DOMNode $node The DOMNode object for the code comparison block.
+     * @param \DOMNode $node The DOMNode object for the code comparison block.
      *
      * @return void
      */
-    protected function printCodeComparisonBlock($node)
+    protected function printCodeComparisonBlock(\DOMNode $node)
     {
         $codeBlocks = $node->getElementsByTagName('code');
 

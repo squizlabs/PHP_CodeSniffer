@@ -274,6 +274,20 @@ class Runner
             exit(0);
         }
 
+        // Generate documentation for each of the supplied standards.
+        if ($this->config->generator !== null) {
+            $standards = $this->config->standards;
+            foreach ($standards as $standard) {
+                $this->config->standards = array($standard);
+                $ruleset   = new Ruleset($this->config);
+                $class     = 'PHP_CodeSniffer\Generators\\'.$this->config->generator;
+                $generator = new $class($ruleset);
+                $generator->generate();
+            }
+
+            exit(0);
+        }
+
         // The ruleset contains all the information about how the files
         // should be checked and/or fixed.
         $ruleset = new Ruleset($this->config);
@@ -472,22 +486,6 @@ class Runner
         ) {
             echo PHP_EOL.PHP_EOL;
         }
-
-        /*
-            if ($values['generator'] !== '') {
-            $phpcs = new PHP_CodeSniffer($values['verbosity']);
-            foreach ($values['standard'] as $standard) {
-                $phpcs->generateDocs(
-                    $standard,
-                    $values['sniffs'],
-                    $values['generator']
-                );
-            }
-
-            exit(0);
-            }
-
-        */
 
         $ignoreWarnings = Config::getConfigData('ignore_warnings_on_exit');
         $ignoreErrors   = Config::getConfigData('ignore_errors_on_exit');

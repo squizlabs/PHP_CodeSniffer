@@ -824,12 +824,6 @@ class Ruleset
                 continue;
             }
 
-            #$className = substr($file, ($slashPos + 1));
-            #$className = substr($className, 0, -4);
-            #$className = str_replace(DIRECTORY_SEPARATOR, '\\', $className);
-            #$className = 'PHP_CodeSniffer\Standards\\'.$className;
-            #echo "OLD: $className\n";
-
             $className = Autoload::loadFile($file);
 
             // If they have specified a list of sniffs to restrict to, check
