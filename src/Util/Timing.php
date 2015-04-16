@@ -31,6 +31,7 @@ class Timing
 
     private static $startTime;
 
+
     /**
      * Start recording time for the run.
      *
@@ -71,4 +72,5 @@ class Timing
 
     }//end printRunTime()
 
-}
+
+}//end class

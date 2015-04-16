@@ -46,10 +46,10 @@ class ScopeClosingBraceSniff implements Sniff
 
 
      /**
-     * Returns an array of tokens this test wants to listen for.
-     *
-     * @return array
-     */
+      * Returns an array of tokens this test wants to listen for.
+      *
+      * @return array
+      */
     public function register()
     {
         return Tokens::$scopeOpeners;

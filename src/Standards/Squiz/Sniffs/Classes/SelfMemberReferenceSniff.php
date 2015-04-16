@@ -133,6 +133,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
 
     }//end processTokenWithinScope()
 
+
     /**
      * Processes a token that is found within the scope that this test is
      * listening to.

@@ -132,7 +132,7 @@ class Fixer
      */
     public function startFile(File $phpcsFile)
     {
-        $this->currentFile = $phpcsFile;
+        $this->currentFile  = $phpcsFile;
         $this->_numFixes    = 0;
         $this->_fixedTokens = array();
 

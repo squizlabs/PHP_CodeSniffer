@@ -95,7 +95,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected final function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
+    final protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
         if ($this->currentFile !== $phpcsFile) {
             $this->currentFile   = $phpcsFile;
@@ -168,7 +168,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      *
      * @return void
      */
-    protected final function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+    final protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
         // These variables are not member vars.

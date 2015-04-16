@@ -38,7 +38,7 @@ use PHP_CodeSniffer\Util\Common;
 abstract class Generator
 {
 
-    public $ruleset = null;
+    public $ruleset  = null;
     public $docFiles = array();
 
 
@@ -124,7 +124,7 @@ abstract class Generator
      * @return void
      * @see    generate()
      */
-    protected abstract function processSniff(\DOMNode $doc);
+    abstract protected function processSniff(\DOMNode $doc);
 
 
 }//end class

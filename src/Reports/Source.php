@@ -96,11 +96,11 @@ class Source implements Report
                         }//end if
 
                         $this->sourceCache[$source] = array(
-                                                        'count'   => 1,
-                                                        'fixable' => $error['fixable'],
-                                                        'parts'   => $parts,
-                                                        'strlen'  => strlen($sniff),
-                                                       );
+                                                       'count'   => 1,
+                                                       'fixable' => $error['fixable'],
+                                                       'parts'   => $parts,
+                                                       'strlen'  => strlen($sniff),
+                                                      );
                     } else {
                         $this->sourceCache[$source]['count']++;
                     }//end if

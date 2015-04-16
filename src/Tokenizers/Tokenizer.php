@@ -32,11 +32,12 @@ use PHP_CodeSniffer\Util;
 abstract class Tokenizer
 {
 
-    protected $eolChar = array();
-    protected $config = null;
-    protected $tokens = array();
+    protected $eolChar   = array();
+    protected $config    = null;
+    protected $tokens    = array();
     public $knownLengths = array();
     public $ignoredLines = array();
+
 
     public function __construct($content, $config, $eolChar='\n')
     {
@@ -57,17 +58,20 @@ abstract class Tokenizer
 
         // Allow the tokenizer to do additional processing if required.
         $this->processAdditional();
-    }
+
+    }//end __construct()
 
 
     public function getTokens()
     {
         return $this->tokens;
-    }
 
+    }//end getTokens()
 
 
     abstract protected function tokenize($string);
+
+
     abstract protected function processAdditional();
 
 
@@ -77,22 +81,22 @@ abstract class Tokenizer
      * Can also convert tabs into spaces. Each tab can represent between
      * 1 and $width spaces, so this cannot be a straight string replace.
      *
-     * @param array  $this->tokens    The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $this->eolChar   The EOL character to use for splitting strings.
-     * @param string $this->config->encoding  The charset of the sniffed file.
-     * @param int    $this->config->tabWidth  The number of spaces that each tab represents.
+     * @param array  $this->tokens           The array of tokens to process.
+     * @param object $tokenizer              The tokenizer being used to process this file.
+     * @param string $this->eolChar          The EOL character to use for splitting strings.
+     * @param string $this->config->encoding The charset of the sniffed file.
+     * @param int    $this->config->tabWidth The number of spaces that each tab represents. Set to 0 to disable tab replacement.
      *                          Set to 0 to disable tab replacement.
      *
      * @return void
      */
     private function createPositionMap()
     {
-        $currColumn    = 1;
-        $lineNumber    = 1;
-        $eolLen        = (strlen($this->eolChar) * -1);
-        $ignoring      = false;
-        $inTests       = defined('PHP_CODESNIFFER_IN_TESTS');
+        $currColumn = 1;
+        $lineNumber = 1;
+        $eolLen     = (strlen($this->eolChar) * -1);
+        $ignoring   = false;
+        $inTests    = defined('PHP_CODESNIFFER_IN_TESTS');
 
         $checkEncoding = false;
         if ($this->config->encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
@@ -100,17 +104,17 @@ abstract class Tokenizer
         }
 
         $this->tokensWithTabs = array(
-                           T_WHITESPACE               => true,
-                           T_COMMENT                  => true,
-                           T_DOC_COMMENT              => true,
-                           T_DOC_COMMENT_WHITESPACE   => true,
-                           T_DOC_COMMENT_STRING       => true,
-                           T_CONSTANT_ENCAPSED_STRING => true,
-                           T_DOUBLE_QUOTED_STRING     => true,
-                           T_HEREDOC                  => true,
-                           T_NOWDOC                   => true,
-                           T_INLINE_HTML              => true,
-                          );
+                                 T_WHITESPACE               => true,
+                                 T_COMMENT                  => true,
+                                 T_DOC_COMMENT              => true,
+                                 T_DOC_COMMENT_WHITESPACE   => true,
+                                 T_DOC_COMMENT_STRING       => true,
+                                 T_CONSTANT_ENCAPSED_STRING => true,
+                                 T_DOUBLE_QUOTED_STRING     => true,
+                                 T_HEREDOC                  => true,
+                                 T_NOWDOC                   => true,
+                                 T_INLINE_HTML              => true,
+                                );
 
         $this->numTokens = count($this->tokens);
         for ($i = 0; $i < $this->numTokens; $i++) {
@@ -249,15 +253,15 @@ abstract class Tokenizer
             }
         }//end for
 
-    }//end _createPositionMap()
+    }//end createPositionMap()
 
 
     /**
      * Creates a map of brackets positions.
      *
-     * @param array  $this->tokens    The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $this->eolChar   The EOL character to use for splitting strings.
+     * @param array  $this->tokens  The array of tokens to process.
+     * @param object $tokenizer     The tokenizer being used to process this file.
+     * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -267,9 +271,9 @@ abstract class Tokenizer
             echo "\t*** START TOKEN MAP ***".PHP_EOL;
         }
 
-        $squareOpeners = array();
-        $curlyOpeners  = array();
-        $this->numTokens     = count($this->tokens);
+        $squareOpeners   = array();
+        $curlyOpeners    = array();
+        $this->numTokens = count($this->tokens);
 
         $openers   = array();
         $openOwner = null;
@@ -376,21 +380,21 @@ abstract class Tokenizer
             echo "\t*** END TOKEN MAP ***".PHP_EOL;
         }
 
-    }//end _createTokenMap()
+    }//end createTokenMap()
 
 
     /**
      * Creates a map for the parenthesis tokens that surround other tokens.
      *
-     * @param array  $this->tokens    The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $this->eolChar   The EOL character to use for splitting strings.
+     * @param array  $this->tokens  The array of tokens to process.
+     * @param object $tokenizer     The tokenizer being used to process this file.
+     * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */
     private function createParenthesisNestingMap()
     {
-        $map       = array();
+        $map = array();
         for ($i = 0; $i < $this->numTokens; $i++) {
             if (isset($this->tokens[$i]['parenthesis_opener']) === true
                 && $i === $this->tokens[$i]['parenthesis_opener']
@@ -417,13 +421,13 @@ abstract class Tokenizer
             }//end if
         }//end for
 
-    }//end _createParenthesisNestingMap()
+    }//end createParenthesisNestingMap()
 
 
     /**
      * Creates a scope map of tokens that open scopes.
      *
-     * @param array  $this->tokens    The array of tokens to process.
+     * @param array $this->tokens The array of tokens to process.
      *
      * @return void
      * @see    recurseScopeMap()
@@ -455,7 +459,7 @@ abstract class Tokenizer
             echo "\t*** END SCOPE MAP ***".PHP_EOL;
         }
 
-    }//end _createScopeMap()
+    }//end createScopeMap()
 
 
     /**
@@ -463,16 +467,17 @@ abstract class Tokenizer
      *
      * @param array  $this->tokens    The array of tokens to process.
      * @param int    $this->numTokens The size of the tokens array.
-     * @param object $tokenizer The tokenizer being used to process this file.
+     * @param object $tokenizer       The tokenizer being used to process this file.
      * @param string $this->eolChar   The EOL character to use for splitting strings.
-     * @param int    $stackPtr  The position in the stack of the token that
+     * @param int    $stackPtr        The position in the stack of the token that opened the scope (eg. an IF token or FOR token).
      *                          opened the scope (eg. an IF token or FOR token).
-     * @param int    $depth     How many scope levels down we are.
-     * @param int    $ignore    How many curly braces we are ignoring.
+     * @param int    $depth           How many scope levels down we are.
+     * @param int    $ignore          How many curly braces we are ignoring.
      *
      * @return int The position in the stack that closed the scope.
      */
-    private function recurseScopeMap($stackPtr, $depth=1, &$ignore=0) {
+    private function recurseScopeMap($stackPtr, $depth=1, &$ignore=0)
+    {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             if ($depth === 1) {
                 echo "\t*** START SCOPE MAP ***".PHP_EOL;
@@ -881,7 +886,7 @@ abstract class Tokenizer
 
         return $stackPtr;
 
-    }//end _recurseScopeMap()
+    }//end recurseScopeMap()
 
 
     /**
@@ -892,9 +897,9 @@ abstract class Tokenizer
      * 'condition' index which is an array of the scope conditions that opened
      * each of the scopes - position 0 being the first scope opener.
      *
-     * @param array  $this->tokens    The array of tokens to process.
-     * @param object $tokenizer The tokenizer being used to process this file.
-     * @param string $this->eolChar   The EOL character to use for splitting strings.
+     * @param array  $this->tokens  The array of tokens to process.
+     * @param object $tokenizer     The tokenizer being used to process this file.
+     * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */
@@ -904,11 +909,11 @@ abstract class Tokenizer
             echo "\t*** START LEVEL MAP ***".PHP_EOL;
         }
 
-        $this->numTokens  = count($this->tokens);
-        $level      = 0;
-        $conditions = array();
-        $lastOpener = null;
-        $openers    = array();
+        $this->numTokens = count($this->tokens);
+        $level           = 0;
+        $conditions      = array();
+        $lastOpener      = null;
+        $openers         = array();
 
         for ($i = 0; $i < $this->numTokens; $i++) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1129,7 +1134,7 @@ abstract class Tokenizer
             echo "\t*** END LEVEL MAP ***".PHP_EOL;
         }
 
-    }//end _createLevelMap()
+    }//end createLevelMap()
 
 
 }//end class

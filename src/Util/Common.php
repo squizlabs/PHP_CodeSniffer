@@ -47,7 +47,7 @@ class Common
                                    'resource',
                                    'callable',
                                   );
-    
+
 
     /**
      * Return TRUE, if the path is a phar file.
@@ -65,7 +65,7 @@ class Common
         return false;
 
     }//end isPharFile()
-    
+
 
     /**
      * CodeSniffer alternative for realpath.
@@ -114,6 +114,7 @@ class Common
 
     }//end realpath()
 
+
     /**
      * Opens a file and detects the EOL character being used.
      *
@@ -127,7 +128,7 @@ class Common
     public static function detectLineEndings($contents)
     {
         /*
-        if ($contents === null) {
+            if ($contents === null) {
             // Determine the newline character being used in this file.
             // Will be either \r, \r\n or \n.
             if (is_readable($file) === false) {
@@ -156,19 +157,20 @@ class Common
                 // doesn't matter considering there are no newlines.
                 $eolChar = "\n";
             }
-        } else {
-            */
-            if (preg_match("/\r\n?|\n/", $contents, $matches) !== 1) {
-                // Assuming there are no newlines.
-                $eolChar = "\n";
             } else {
-                $eolChar = $matches[0];
-            }
-        //}//end if
+            */
+        if (preg_match("/\r\n?|\n/", $contents, $matches) !== 1) {
+            // Assuming there are no newlines.
+            $eolChar = "\n";
+        } else {
+            $eolChar = $matches[0];
+        }
 
+        // }//end if
         return $eolChar;
 
     }//end detectLineEndings()
+
 
     /**
      * Prepares token content for output to screen.
@@ -196,6 +198,7 @@ class Common
         return $content;
 
     }//end prepareForOutput()
+
 
     /**
      * Returns true if the specified string is in the camel caps format.
@@ -389,6 +392,7 @@ class Common
 
     }//end suggestType()
 
+
     public static function getSniffCode($sniffClass)
     {
         $parts    = explode('\\', $sniffClass);
@@ -398,6 +402,8 @@ class Common
         $standard = array_pop($parts);
         $code     = $standard.'.'.$category.'.'.$sniff;
         return $code;
-    }
 
-}
+    }//end getSniffCode()
+
+
+}//end class

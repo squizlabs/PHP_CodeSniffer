@@ -43,10 +43,10 @@ class File
      *
      * @var string
      */
-    protected $path = '';
+    protected $path    = '';
     protected $content = '';
-    public $ignored = false;
-    public $config = null;
+    public $ignored    = false;
+    public $config     = null;
 
     /**
      * The EOL character this file uses.
@@ -207,12 +207,12 @@ class File
      */
     public function __construct($path, Ruleset $ruleset, Config $config)
     {
-        $this->path          = $path;
-        $this->ruleset       = $ruleset;
-        $this->config        = $config;
-        $this->fixer         = new Fixer();
+        $this->path    = $path;
+        $this->ruleset = $ruleset;
+        $this->config  = $config;
+        $this->fixer   = new Fixer();
 
-        $parts = explode('.', $path);
+        $parts     = explode('.', $path);
         $extension = array_pop($parts);
         if (isset($config->extensions[$extension]) === true) {
             $this->tokenizerType = $config->extensions[$extension];
@@ -220,8 +220,9 @@ class File
             // Revert to default.
             $this->tokenizerType = 'PHP';
         }
-/*
-        if ($this->config->interactive === false) {
+
+        /*
+            if ($this->config->interactive === false) {
             $cliValues = $phpcs->config->getCommandLineValues();
             if (isset($cliValues['showSources']) === true
                 && $cliValues['showSources'] !== true
@@ -239,7 +240,7 @@ class File
 
                 $this->recordErrors = $recordErrors;
             }
-        }
+            }
         */
 
     }//end __construct()
@@ -248,7 +249,7 @@ class File
     function setContent($content)
     {
         $this->content = $content;
-        $this->tokens = array();
+        $this->tokens  = array();
 
         try {
             $this->eolChar = Util\Common::detectLineEndings($content);
@@ -256,13 +257,16 @@ class File
             $this->addWarningOnLine($e->getMessage(), 1, 'Internal.DetectLineEndings');
             return;
         }
-    }
+
+    }//end setContent()
+
 
     function reloadContent()
     {
         // By default, we have no idea where our content
         // comes from, so we can't do anything.
-    }
+    }//end reloadContent()
+
 
     /**
      * Starts the stack traversal and tells listeners when tokens are found.
@@ -286,21 +290,20 @@ class File
 
         // Reset the ignored lines because lines numbers may have changed
         // if we are fixing this file.
-        #self::$ignoredLines = array();
-
-/*
-        // If this is standard input, see if a filename was passed in as well.
-        // This is done by including: phpcs_input_file: [file path]
-        // as the first line of content.
-        if ($this->path === 'STDIN' && $contents !== null) {
+        // self::$ignoredLines = array();
+        /*
+            // If this is standard input, see if a filename was passed in as well.
+            // This is done by including: phpcs_input_file: [file path]
+            // as the first line of content.
+            if ($this->path === 'STDIN' && $contents !== null) {
             if (substr($contents, 0, 17) === 'phpcs_input_file:') {
                 $eolPos      = strpos($contents, $this->eolChar);
                 $filename    = trim(substr($contents, 17, ($eolPos - 17)));
                 $contents    = substr($contents, ($eolPos + strlen($this->eolChar)));
                 $this->path = $filename;
             }
-        }
-*/
+            }
+        */
         $this->parse();
 
         $this->fixer->startFile($this);
@@ -309,8 +312,8 @@ class File
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
         }
 
-        $foundCode        = false;
-        #$listeners        = $this->ruleset->getSniffs();
+        $foundCode = false;
+        // $listeners        = $this->ruleset->getSniffs();
         $listenerIgnoreTo = array();
         $inTests          = defined('PHP_CODESNIFFER_IN_TESTS');
 
@@ -449,11 +452,10 @@ class File
         }
 
         // We don't need these any more.
-        #$this->listenerTimes = null;
-        #$this->content = null;
-        #$this->tokens = null;
-        #$this->tokenizer = null;
-
+        // $this->listenerTimes = null;
+        // $this->content = null;
+        // $this->tokens = null;
+        // $this->tokenizer = null;
     }//end process()
 
 
@@ -473,9 +475,9 @@ class File
         }
 
         try {
-            $tokenizerClass = 'PHP_CodeSniffer\Tokenizers\\'.$this->tokenizerType;
+            $tokenizerClass  = 'PHP_CodeSniffer\Tokenizers\\'.$this->tokenizerType;
             $this->tokenizer = new $tokenizerClass($this->content, $this->config, $this->eolChar);
-            $this->tokens = $this->tokenizer->getTokens();
+            $this->tokens    = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
             if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)) {
@@ -540,10 +542,10 @@ class File
     public function cleanUp()
     {
         $this->listenerTimes = null;
-        $this->content = null;
-        $this->tokens = null;
-        $this->tokenizer = null;
-        $this->fixer = null;
+        $this->content       = null;
+        $this->tokens        = null;
+        $this->tokenizer     = null;
+        $this->fixer         = null;
 
     }//end cleanUp()
 
@@ -854,11 +856,11 @@ class File
         }
 
         $this->errors[$line][$column][] = array(
-                                            'message'  => $message,
-                                            'source'   => $sniffCode,
-                                            'severity' => $severity,
-                                            'fixable'  => $fixable,
-                                           );
+                                           'message'  => $message,
+                                           'source'   => $sniffCode,
+                                           'severity' => $severity,
+                                           'fixable'  => $fixable,
+                                          );
 
         if (PHP_CODESNIFFER_VERBOSITY > 1
             && $this->fixer->enabled === true
@@ -1002,11 +1004,11 @@ class File
         }
 
         $this->warnings[$line][$column][] = array(
-                                              'message'  => $message,
-                                              'source'   => $sniffCode,
-                                              'severity' => $severity,
-                                              'fixable'  => $fixable,
-                                             );
+                                             'message'  => $message,
+                                             'source'   => $sniffCode,
+                                             'severity' => $severity,
+                                             'fixable'  => $fixable,
+                                            );
 
         if (PHP_CODESNIFFER_VERBOSITY > 1
             && $this->fixer->enabled === true
@@ -1035,10 +1037,10 @@ class File
     {
         if (isset($this->metrics[$metric]) === false) {
             $this->metrics[$metric] = array(
-                                        'values' => array(
-                                                     $value => array($stackPtr),
-                                                    ),
-                                       );
+                                       'values' => array(
+                                                    $value => array($stackPtr),
+                                                   ),
+                                      );
         } else {
             if (isset($this->metrics[$metric]['values'][$value]) === false) {
                 $this->metrics[$metric]['values'][$value] = array($stackPtr);
@@ -1159,7 +1161,6 @@ class File
         return $this->path;
 
     }//end getFilename()
-
 
 
     /**

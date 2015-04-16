@@ -88,7 +88,7 @@ class Reporter
      * @var array
      */
     private $_tmpFiles = array();
-    protected $config = null;
+    protected $config  = null;
 
 
     /**
@@ -130,12 +130,12 @@ class Reporter
             }
 
             $this->_reports[$type] = array(
-                                    'output' => $output,
-                                    'class' => $reportClass,
-                                    );
-        }
+                                      'output' => $output,
+                                      'class'  => $reportClass,
+                                     );
+        }//end foreach
 
-    }//end factory()
+    }//end __construct()
 
 
     /**
@@ -213,7 +213,7 @@ class Reporter
      */
     public function printReport($report, $reportFile=null)
     {
-        $report = ucfirst($report);
+        $report      = ucfirst($report);
         $reportClass = $this->_reports[$report]['class'];
 
         if ($reportFile !== null) {
@@ -289,7 +289,8 @@ class Reporter
         }
 
         return $toScreen;
-    }
+
+    }//end printReports()
 
 
     /**

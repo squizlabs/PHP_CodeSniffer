@@ -128,7 +128,7 @@ abstract class AbstractScopeSniff implements Sniff
      * @return int[]
      * @see    __constructor()
      */
-    public final function register()
+    final public function register()
     {
         return $this->_tokens;
 
@@ -145,7 +145,7 @@ abstract class AbstractScopeSniff implements Sniff
      * @return void
      * @see    processTokenWithinScope()
      */
-    public final function process(File $phpcsFile, $stackPtr)
+    final public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -177,7 +177,7 @@ abstract class AbstractScopeSniff implements Sniff
      *
      * @return void
      */
-    protected abstract function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope);
+    abstract protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope);
 
 
     /**
@@ -190,7 +190,7 @@ abstract class AbstractScopeSniff implements Sniff
      *
      * @return void
      */
-    protected abstract function processTokenOutsideScope(File $phpcsFile, $stackPtr);
+    abstract protected function processTokenOutsideScope(File $phpcsFile, $stackPtr);
 
 
 }//end class

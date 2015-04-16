@@ -74,10 +74,10 @@ class Summary implements Report
         }
 
         $this->reportFiles[$report['filename']] = array(
-                                                    'errors'   => $report['errors'],
-                                                    'warnings' => $report['warnings'],
-                                                    'strlen'   => strlen($report['filename']),
-                                                   );
+                                                   'errors'   => $report['errors'],
+                                                   'warnings' => $report['warnings'],
+                                                   'strlen'   => strlen($report['filename']),
+                                                  );
 
         return true;
 

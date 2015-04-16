@@ -32,8 +32,8 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
 class Ruleset
 {
 
-    private $config = null;
-    public $name = '';
+    private $config        = null;
+    public $name           = '';
     public $ignorePatterns = array();
 
     /**
@@ -76,7 +76,7 @@ class Ruleset
     /**
      * Initialise the standard that the run will use.
      *
-     * @param string|array $standards    The set of code sniffs we are testing
+     * @param string|array $standards The set of code sniffs we are testing
      *
      * @return void
      */
@@ -121,7 +121,7 @@ class Ruleset
 
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {
-            $parts = explode('.', strtolower($sniffCode));
+            $parts     = explode('.', strtolower($sniffCode));
             $sniffName = 'php_codesniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
             $sniffRestrictions[$sniffName] = true;
         }
@@ -197,7 +197,6 @@ class Ruleset
         }//end foreach
 
     }//end explain()
-
 
 
     /**
@@ -401,7 +400,7 @@ class Ruleset
         $sniffs = array();
 
         $rdi = new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
-        $di = new \RecursiveIteratorIterator($rdi, 0, \RecursiveIteratorIterator::CATCH_GET_CHILD);
+        $di  = new \RecursiveIteratorIterator($rdi, 0, \RecursiveIteratorIterator::CATCH_GET_CHILD);
 
         $dirLen = strlen($directory);
 
@@ -912,11 +911,11 @@ class Ruleset
 
                 if (isset($this->tokenListeners[$token][$sniffClass]) === false) {
                     $this->tokenListeners[$token][$sniffClass] = array(
-                                                                      'class'      => $sniffClass,
-                                                                      'source'     => $sniffCode,
-                                                                      'tokenizers' => $tokenizers,
-                                                                      'ignore'     => $ignorePatterns,
-                                                                     );
+                                                                  'class'      => $sniffClass,
+                                                                  'source'     => $sniffCode,
+                                                                  'tokenizers' => $tokenizers,
+                                                                  'ignore'     => $ignorePatterns,
+                                                                 );
                 }
             }
         }//end foreach
@@ -928,8 +927,8 @@ class Ruleset
      * Set a single property for a sniff.
      *
      * @param string $sniffClass The class name of the sniff.
-     * @param string $name          The name of the property to change.
-     * @param string $value         The new value of the property.
+     * @param string $name       The name of the property to change.
+     * @param string $value      The new value of the property.
      *
      * @return void
      */
@@ -956,6 +955,7 @@ class Ruleset
 
     }//end setSniffProperty()
 
+
     /**
      * Gets the array of ignore patterns.
      *
@@ -981,4 +981,5 @@ class Ruleset
 
     }//end getIgnorePatterns()
 
-}
+
+}//end class

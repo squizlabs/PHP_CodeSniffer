@@ -34,7 +34,7 @@ class FileList implements \Iterator, \Countable
 {
     private $files    = array();
     private $numFiles = 0;
-    private $config = null;
+    private $config   = null;
 
     /**
      * An array of patterns to use for skipping files.
@@ -49,14 +49,14 @@ class FileList implements \Iterator, \Countable
         Ruleset $ruleset
     ) {
 
-        $paths = $config->files;
-        $local = $config->local;
+        $paths      = $config->files;
+        $local      = $config->local;
         $extensions = $config->extensions;
-        $ignore = $ruleset->getIgnorePatterns();
+        $ignore     = $ruleset->getIgnorePatterns();
 
         $this->ignorePatterns = $ignore;
-        $this->ruleset = $ruleset;
-        $this->config = $config;
+        $this->ruleset        = $ruleset;
+        $this->config         = $config;
 
         foreach ($paths as $path) {
             if (is_dir($path) === true || Util\Common::isPharFile($path) === true) {
@@ -104,7 +104,6 @@ class FileList implements \Iterator, \Countable
         $this->numFiles = count($this->files);
 
     }//end __construct()
-
 
 
     /**
@@ -250,11 +249,12 @@ class FileList implements \Iterator, \Countable
 
     }//end valid()
 
+
     function count()
     {
         return $this->numFiles;
 
-    }//end valid()
+    }//end count()
 
 
 }//end class

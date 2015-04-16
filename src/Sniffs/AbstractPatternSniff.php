@@ -103,7 +103,7 @@ abstract class AbstractPatternSniff implements Sniff
      * @return int[]
      * @see    process()
      */
-    public final function register()
+    final public function register()
     {
         $listenTypes = array();
         $patterns    = $this->getPatterns();
@@ -207,7 +207,7 @@ abstract class AbstractPatternSniff implements Sniff
      * @return void
      * @see    register()
      */
-    public final function process(File $phpcsFile, $stackPtr)
+    final public function process(File $phpcsFile, $stackPtr)
     {
         $file = $phpcsFile->getFilename();
         if ($this->currFile !== $file) {
@@ -738,7 +738,7 @@ abstract class AbstractPatternSniff implements Sniff
      *
      * @return string[]
      */
-    protected abstract function getPatterns();
+    abstract protected function getPatterns();
 
 
     /**

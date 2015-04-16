@@ -31,6 +31,7 @@ use PHP_CodeSniffer\Config;
 class Standards
 {
 
+
     /**
      * Get a list paths where standards are installed.
      *
@@ -213,4 +214,4 @@ class Standards
     }//end printInstalledStandards()
 
 
-}
+}//end class

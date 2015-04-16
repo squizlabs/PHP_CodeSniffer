@@ -121,6 +121,11 @@ class Runner
         $this->config->reportFile   = null;
         $this->config->reports      = array();
 
+        // If a standard tries to set command line arguments itself, some
+        // may be blocked because PHPCBF is running, so stop the script
+        // dying if any are found.
+        $this->config->dieOnUnknownArg = false;
+
         if ($this->config->stdin === true) {
             // They are using STDIN, which can't use diff.
             $this->config->noPatch = true;
@@ -138,7 +143,7 @@ class Runner
             // or writing to a file with a new suffix.
             $this->config->reports = array('cbf' => null);
         }
-print_r($config);exit;
+
         $numErrors = $this->run();
 
         // Printing the reports will generate the diff file and/or

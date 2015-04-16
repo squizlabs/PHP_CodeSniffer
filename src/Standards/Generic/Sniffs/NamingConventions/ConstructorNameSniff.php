@@ -117,6 +117,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
 
     }//end processTokenWithinScope()
 
+
     /**
      * Processes a token that is found within the scope that this test is
      * listening to.
@@ -130,7 +131,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
     protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
     {
 
-    }
+    }//end processTokenOutsideScope()
 
 
     /**

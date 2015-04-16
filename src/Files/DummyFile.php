@@ -62,10 +62,10 @@ class DummyFile extends File
         $path = 'STDIN';
         if ($content !== null) {
             if (substr($content, 0, 17) === 'phpcs_input_file:') {
-                $eolPos     = strpos($content, $this->eolChar);
-                $filename   = trim(substr($content, 17, ($eolPos - 17)));
-                $content    = substr($content, ($eolPos + strlen($this->eolChar)));
-                $path = $filename;
+                $eolPos   = strpos($content, $this->eolChar);
+                $filename = trim(substr($content, 17, ($eolPos - 17)));
+                $content  = substr($content, ($eolPos + strlen($this->eolChar)));
+                $path     = $filename;
             }
         }
 

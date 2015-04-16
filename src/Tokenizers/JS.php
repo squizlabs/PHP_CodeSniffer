@@ -260,7 +260,8 @@ class JS extends Tokenizer
         }
 
         return parent::__construct($content, $config, $eolChar);
-    }
+
+    }//end __construct()
 
 
     /**
@@ -269,7 +270,7 @@ class JS extends Tokenizer
      * Starts by using token_get_all() but does a lot of extra processing
      * to insert information about the context of the token.
      *
-     * @param string $string  The string to tokenize.
+     * @param string $string        The string to tokenize.
      * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return array
@@ -854,7 +855,7 @@ class JS extends Tokenizer
 
         return $finalTokens;
 
-    }//end tokenizeString()
+    }//end tokenize()
 
 
     /**
@@ -862,10 +863,10 @@ class JS extends Tokenizer
      *
      * If a regular expression is not found, NULL is returned.
      *
-     * @param string $char    The index of the possible regex start character.
-     * @param string $string  The complete content of the string being tokenized.
-     * @param string $chars   An array of characters being tokenized.
-     * @param string $tokens  The current array of tokens found in the string.
+     * @param string $char          The index of the possible regex start character.
+     * @param string $string        The complete content of the string being tokenized.
+     * @param string $chars         An array of characters being tokenized.
+     * @param string $tokens        The current array of tokens found in the string.
      * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
@@ -887,12 +888,12 @@ class JS extends Tokenizer
                         );
 
         $afterTokens = array(
-                        ','      => true,
-                        ')'      => true,
-                        ']'      => true,
-                        ';'      => true,
-                        ' '      => true,
-                        '.'      => true,
+                        ','            => true,
+                        ')'            => true,
+                        ']'            => true,
+                        ';'            => true,
+                        ' '            => true,
+                        '.'            => true,
                         $this->eolChar => true,
                        );
 
@@ -998,7 +999,7 @@ class JS extends Tokenizer
      *
      * This additional processing looks for properties, closures, labels and objects.
      *
-     * @param array  $tokens  The array of tokens to process.
+     * @param array  $tokens        The array of tokens to process.
      * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void

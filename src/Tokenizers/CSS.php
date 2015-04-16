@@ -38,7 +38,7 @@ class CSS extends PHP
      *
      * Uses the PHP tokenizer to do all the tricky work
      *
-     * @param string $string  The string to tokenize.
+     * @param string $string        The string to tokenize.
      * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return array
@@ -391,13 +391,13 @@ class CSS extends PHP
 
         return $finalTokens;
 
-    }//end tokenizeString()
+    }//end tokenize()
 
 
     /**
      * Performs additional processing after main tokenizing.
      *
-     * @param array  $tokens  The array of tokens to process.
+     * @param array  $tokens        The array of tokens to process.
      * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
