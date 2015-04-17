@@ -857,4 +857,9 @@ try {
         return false;
     }
 
+/*
+$a = array(
+    */
+);
+
 echo ""

@@ -223,6 +223,7 @@ class ScopeIndentSniff implements Sniff
             // the same level as where they were opened (but can be more).
             if ($checkToken !== null
                 && $tokens[$checkToken]['code'] === T_CLOSE_PARENTHESIS
+                && isset($tokens[$checkToken]['parenthesis_opener']) === true
             ) {
                 if ($this->_debug === true) {
                     $line = $tokens[$i]['line'];
