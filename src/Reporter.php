@@ -118,8 +118,7 @@ class Reporter
                     exit(2);
                 }
 
-                $reportClassName = 'PHP_CodeSniffer\Reports\\'.basename($filename);
-                $reportClassName = substr($reportClassName, 0, strpos($reportClassName, '.'));
+                $reportClassName = Autoload::loadFile($filename);
             } else {
                 $reportClassName = 'PHP_CodeSniffer\Reports\\'.$type;
             }
