@@ -66,6 +66,8 @@ class DummyFile extends File
                 $filename = trim(substr($content, 17, ($eolPos - 17)));
                 $content  = substr($content, ($eolPos + strlen($this->eolChar)));
                 $path     = $filename;
+
+                $this->setContent($content);
             }
         }
 
