@@ -1,38 +1,18 @@
 <?php
+/**
+ * Version control report base class for PHP_CodeSniffer.
+ *
+ * @author    Ben Selby <benmatselby@gmail.com>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Reports;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Timing;
 
-/**
- * Version control report base class for PHP_CodeSniffer.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Ben Selby <benmatselby@gmail.com>
- * @copyright 2009-2014 SQLI <www.sqli.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Version control report base class for PHP_CodeSniffer.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Ben Selby <benmatselby@gmail.com>
- * @copyright 2009-2014 SQLI <www.sqli.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: 1.2.2
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 abstract class VersionControl implements Report
 {
 
@@ -48,21 +28,21 @@ abstract class VersionControl implements Report
      *
      * @var array
      */
-    private $_authorCache = array();
+    private $authorCache = array();
 
     /**
      * A cache of blame stats collected during the run.
      *
      * @var array
      */
-    private $_praiseCache = array();
+    private $praiseCache = array();
 
     /**
      * A cache of source stats collected during the run.
      *
      * @var array
      */
-    private $_sourceCache = array();
+    private $sourceCache = array();
 
 
     /**
@@ -72,12 +52,12 @@ abstract class VersionControl implements Report
      * and FALSE if it ignored the file. Returning TRUE indicates that the file and
      * its data should be counted in the grand totals.
      *
-     * @param array                $report      Prepared report data.
-     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
-     * @param boolean              $showSources Show sources?
-     * @param int                  $width       Maximum allowed line width.
+     * @param array                 $report      Prepared report data.
+     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
+     * @param bool                  $showSources Show sources?
+     * @param int                   $width       Maximum allowed line width.
      *
-     * @return boolean
+     * @return bool
      */
     public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
     {
@@ -92,26 +72,26 @@ abstract class VersionControl implements Report
                 }
             }
 
-            if (isset($this->_authorCache[$author]) === false) {
-                $this->_authorCache[$author] = 0;
-                $this->_praiseCache[$author] = array(
-                                                'good' => 0,
-                                                'bad'  => 0,
-                                               );
+            if (isset($this->authorCache[$author]) === false) {
+                $this->authorCache[$author] = 0;
+                $this->praiseCache[$author] = array(
+                                               'good' => 0,
+                                               'bad'  => 0,
+                                              );
             }
 
-            $this->_praiseCache[$author]['bad']++;
+            $this->praiseCache[$author]['bad']++;
 
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $this->_authorCache[$author]++;
+                    $this->authorCache[$author]++;
 
                     if ($showSources === true) {
                         $source = $error['source'];
-                        if (isset($this->_sourceCache[$author][$source]) === false) {
-                            $this->_sourceCache[$author][$source] = 1;
+                        if (isset($this->sourceCache[$author][$source]) === false) {
+                            $this->sourceCache[$author][$source] = 1;
                         } else {
-                            $this->_sourceCache[$author][$source]++;
+                            $this->sourceCache[$author][$source]++;
                         }
                     }
                 }
@@ -128,20 +108,20 @@ abstract class VersionControl implements Report
                 $author = 'Unknown';
             }
 
-            if (isset($this->_authorCache[$author]) === false) {
+            if (isset($this->authorCache[$author]) === false) {
                 // This author doesn't have any errors.
                 if (PHP_CODESNIFFER_VERBOSITY === 0) {
                     continue;
                 }
 
-                $this->_authorCache[$author] = 0;
-                $this->_praiseCache[$author] = array(
-                                                'good' => 0,
-                                                'bad'  => 0,
-                                               );
+                $this->authorCache[$author] = 0;
+                $this->praiseCache[$author] = array(
+                                               'good' => 0,
+                                               'bad'  => 0,
+                                              );
             }
 
-            $this->_praiseCache[$author]['good']++;
+            $this->praiseCache[$author]['good']++;
         }//end foreach
 
         return true;
@@ -152,15 +132,16 @@ abstract class VersionControl implements Report
     /**
      * Prints the author of all errors and warnings, as given by "version control blame".
      *
-     * @param string  $cachedData    Any partial report data that was returned from
-     *                               generateFileReport during the run.
-     * @param int     $totalFiles    Total number of files processed during the run.
-     * @param int     $totalErrors   Total number of errors found during the run.
-     * @param int     $totalWarnings Total number of warnings found during the run.
-     * @param int     $totalFixable  Total number of problems that can be fixed.
-     * @param boolean $showSources   Show sources?
-     * @param int     $width         Maximum allowed line width.
-     * @param boolean $toScreen      Is the report being printed to screen?
+     * @param string $cachedData    Any partial report data that was returned from
+     *                              generateFileReport during the run.
+     * @param int    $totalFiles    Total number of files processed during the run.
+     * @param int    $totalErrors   Total number of errors found during the run.
+     * @param int    $totalWarnings Total number of warnings found during the run.
+     * @param int    $totalFixable  Total number of problems that can be fixed.
+     * @param bool   $showSources   Show sources?
+     * @param int    $width         Maximum allowed line width.
+     * @param bool   $interactive   Are we running in interactive mode?
+     * @param bool   $toScreen      Is the report being printed to screen?
      *
      * @return void
      */
@@ -183,10 +164,10 @@ abstract class VersionControl implements Report
 
         // Make sure the report width isn't too big.
         $maxLength = 0;
-        foreach ($this->_authorCache as $author => $count) {
+        foreach ($this->authorCache as $author => $count) {
             $maxLength = max($maxLength, strlen($author));
-            if ($showSources === true && isset($this->_sourceCache[$author]) === true) {
-                foreach ($this->_sourceCache[$author] as $source => $count) {
+            if ($showSources === true && isset($this->sourceCache[$author]) === true) {
+                foreach ($this->sourceCache[$author] as $source => $count) {
                     if ($source === 'count') {
                         continue;
                     }
@@ -198,7 +179,7 @@ abstract class VersionControl implements Report
 
         $width = min($width, ($maxLength + 30));
         $width = max($width, 70);
-        arsort($this->_authorCache);
+        arsort($this->authorCache);
 
         echo PHP_EOL."\033[1m".'PHP CODE SNIFFER '.$this->reportName.' BLAME SUMMARY'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL."\033[1m";
@@ -212,12 +193,12 @@ abstract class VersionControl implements Report
 
         echo "\033[0m";
 
-        foreach ($this->_authorCache as $author => $count) {
-            if ($this->_praiseCache[$author]['good'] === 0) {
+        foreach ($this->authorCache as $author => $count) {
+            if ($this->praiseCache[$author]['good'] === 0) {
                 $percent = 0;
             } else {
-                $total   = ($this->_praiseCache[$author]['bad'] + $this->_praiseCache[$author]['good']);
-                $percent = round(($this->_praiseCache[$author]['bad'] / $total * 100), 2);
+                $total   = ($this->praiseCache[$author]['bad'] + $this->praiseCache[$author]['good']);
+                $percent = round(($this->praiseCache[$author]['bad'] / $total * 100), 2);
             }
 
             $overallPercent = '('.round((($count / $errorsShown) * 100), 2).')';
@@ -233,8 +214,8 @@ abstract class VersionControl implements Report
 
             echo $line.PHP_EOL;
 
-            if ($showSources === true && isset($this->_sourceCache[$author]) === true) {
-                $errors = $this->_sourceCache[$author];
+            if ($showSources === true && isset($this->sourceCache[$author]) === true) {
+                $errors = $this->sourceCache[$author];
                 asort($errors);
                 $errors = array_reverse($errors);
 
@@ -255,8 +236,8 @@ abstract class VersionControl implements Report
             echo 'S';
         }
 
-        echo ' WERE COMMITTED BY '.count($this->_authorCache).' AUTHOR';
-        if (count($this->_authorCache) !== 1) {
+        echo ' WERE COMMITTED BY '.count($this->authorCache).' AUTHOR';
+        if (count($this->authorCache) !== 1) {
             echo 'S';
         }
 
