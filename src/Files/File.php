@@ -780,7 +780,7 @@ class File
             && $this->ruleset->ruleset[$sniffCode]['type'] === 'warning'
         ) {
             // Pass this off to the warning handler.
-            return $this->addWarning($error, $line, $column, $code, $data, $severity, $fixable);
+            return $this->_addWarning($error, $line, $column, $code, $data, $severity, $fixable);
         } else if ($this->config->errorSeverity === 0) {
             // Don't bother doing any processing as errors are just going to
             // be hidden in the reports anyway.
@@ -928,7 +928,7 @@ class File
             && $this->ruleset->ruleset[$sniffCode]['type'] === 'error'
         ) {
             // Pass this off to the error handler.
-            return $this->addError($warning, $line, $column, $code, $data, $severity, $fixable);
+            return $this->_addError($warning, $line, $column, $code, $data, $severity, $fixable);
         } else if ($this->config->warningSeverity === 0) {
             // Don't bother doing any processing as warnings are just going to
             // be hidden in the reports anyway.
