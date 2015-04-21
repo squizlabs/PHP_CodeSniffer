@@ -99,3 +99,20 @@ if ($this->allowShopping !== true):
 else:
     echo 'foo';
 endif;
+
+// ELSE IF split over multiple lines (not inline)
+if ($test) {
+} else
+    if ($test) {
+    } else {
+    }
+
+switch($response = \Bar::baz('bat', function ($foo) {
+    return 'bar';
+})) {
+    case 1:
+        return 'test';
+
+    case 2:
+        return 'other';
+}

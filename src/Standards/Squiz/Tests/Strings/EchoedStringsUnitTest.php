@@ -52,7 +52,7 @@ class EchoedStringsUnitTest extends AbstractSniffUnitTest
                 6  => 1,
                 7  => 1,
                 8  => 1,
-                11 => 1,
+                12 => 1,
                );
 
     }//end getErrorList()
