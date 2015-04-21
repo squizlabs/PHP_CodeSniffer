@@ -46,6 +46,11 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
      */
     public $error = true;
 
+    /**
+     * If set do allow string concatenation if
+     * without the line would become too long
+     */
+    public $lineLimit = 0;
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -103,6 +108,16 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
                     $nextChar = $tokens[$next]['content'][1];
                     $combined = $prevChar.$nextChar;
                     if ($combined === '?'.'>' || $combined === '<'.'?') {
+                        return;
+                    }
+                }
+
+                if ($this->lineLimit) {
+                    $end = $tokens[$prev]['column']
+                           + $tokens[$prev]['length']
+                           + $tokens[$next]['length'];
+
+                    if ($end > $this->lineLimit) {
                         return;
                     }
                 }
