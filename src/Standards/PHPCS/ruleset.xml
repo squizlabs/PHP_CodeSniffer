@@ -61,4 +61,9 @@
   </properties>
  </rule>
 
+ <!-- Private methods MUST not be prefixed with an underscore -->
+ <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+  <type>error</type>
+ </rule>
+
 </ruleset>
