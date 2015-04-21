@@ -57,7 +57,7 @@ class Squiz_Sniffs_Strings_EchoedStringsSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $firstContent = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
+        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         // If the first non-whitespace token is not an opening parenthesis, then we are not concerned.
         if ($tokens[$firstContent]['code'] !== T_OPEN_PARENTHESIS) {
             $phpcsFile->recordMetric($stackPtr, 'Brackets around echoed strings', 'no');
@@ -69,6 +69,12 @@ class Squiz_Sniffs_Strings_EchoedStringsSniff implements PHP_CodeSniffer_Sniff
         // If the token before the semi-colon is not a closing parenthesis, then we are not concerned.
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($end - 1), null, true);
         if ($tokens[$prev]['code'] !== T_CLOSE_PARENTHESIS) {
+            $phpcsFile->recordMetric($stackPtr, 'Brackets around echoed strings', 'no');
+            return;
+        }
+
+        // If the parenthesis don't match, then we are not concerned.
+        if ($tokens[$firstContent]['parenthesis_closer'] !== $prev) {
             $phpcsFile->recordMetric($stackPtr, 'Brackets around echoed strings', 'no');
             return;
         }
