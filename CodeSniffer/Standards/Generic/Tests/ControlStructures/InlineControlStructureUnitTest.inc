@@ -98,3 +98,10 @@ if ($this->allowShopping !== true):
 else:
     echo 'foo';
 endif;
+
+// ELSE IF split over multiple lines (not inline)
+if ($test) {
+} else
+    if ($test) {
+    } else {
+    }
