@@ -1,52 +1,64 @@
 <?php
+/**
+ * Stores the rules used to check and fix files.
+ *
+ * A ruleset object directly maps to a ruleset XML file.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Util;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
-/**
- * A class to process command line phpcs scripts.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A class to process command line phpcs scripts.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class Ruleset
 {
 
-    private $config        = null;
-    public $name           = '';
+    /**
+     * The name of the coding standard being used.
+     *
+     * If a top-level standard includes other standards, or sniffs
+     * from other standards, only the name of the top-level standard
+     * will be stored in here.
+     *
+     * If multiple top-level standards are being loaded into
+     * a single ruleset object, this will store a comma separated list
+     * of the top-level standard names.
+     *
+     * @var string
+     */
+    public $name = '';
+
+    /**
+     * A list of regular expressions used to ignore files and folders.
+     *
+     * The key is the regular expression and the value is the type
+     * of ignore pattern (absolute or relative).
+     *
+     * @var array<string, string>
+     */
     public $ignorePatterns = array();
 
     /**
      * An array of sniff objects that are being used to check files.
      *
-     * @var array<string, PHP_CodeSniffer\Sniff>
+     * The key is the fully qualified name of the sniff class
+     * and the value is the sniff object.
+     *
+     * @var array<string, \PHP_CodeSniffer\Sniff>
      */
     public $sniffs = array();
 
     /**
-     * The listeners array, indexed by token type.
+     * An array of token types and the sniffs that are listening for them.
      *
-     * @var array<int, PHP_CodeSniffer\Sniff>
+     * The key is the token name being listened for and the value
+     * is the sniff object.
+     *
+     * @var array<int, \PHP_CodeSniffer\Sniff>
      */
     public $tokenListeners = array();
 
@@ -56,27 +68,29 @@ class Ruleset
      * It may be empty, indicating that the ruleset does not override
      * any of the default sniff settings.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     public $ruleset = array();
 
     /**
      * The directories that the processed rulesets are in.
      *
-     * This is declared static because it is also used in the
-     * autoloader to look for sniffs outside the PHPCS install.
-     * This way, standards designed to be installed inside PHPCS can
-     * also be used from outside the PHPCS Standards directory.
-     *
-     * @var string
+     * @var string[]
      */
-    protected static $rulesetDirs = array();
+    protected $rulesetDirs = array();
+
+    /**
+     * The config data for the run.
+     *
+     * @var \PHP_CodeSniffer\Config
+     */
+    private $config = null;
 
 
     /**
-     * Initialise the standard that the run will use.
+     * Initialise the ruleset that the run will use.
      *
-     * @param string|array $standards The set of code sniffs we are testing
+     * @param \PHP_CodeSniffer\Config $config The config data for the run.
      *
      * @return void
      */
@@ -209,7 +223,7 @@ class Ruleset
      * @param int    $depth       How many nested processing steps we are in. This
      *                            is only used for debug output.
      *
-     * @return array
+     * @return string[]
      * @throws RuntimeException If the ruleset path is invalid.
      */
     public function processRuleset($rulesetPath, $depth=0)
@@ -230,7 +244,7 @@ class Ruleset
         $excludedSniffs = array();
 
         $rulesetDir          = dirname($rulesetPath);
-        self::$rulesetDirs[] = $rulesetDir;
+        $this->rulesetDirs[] = $rulesetDir;
 
         if (is_dir($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs') === true) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -238,12 +252,12 @@ class Ruleset
                 echo "\tAdding sniff files from \"/.../".basename($rulesetDir)."/Sniffs/\" directory".PHP_EOL;
             }
 
-            $ownSniffs = $this->_expandSniffDirectory($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs', $depth);
+            $ownSniffs = $this->expandSniffDirectory($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs', $depth);
         }
 
         foreach ($ruleset->rule as $rule) {
             if (isset($rule['ref']) === false
-                || $this->_shouldProcessElement($rule) === false
+                || $this->shouldProcessElement($rule) === false
             ) {
                 continue;
             }
@@ -255,12 +269,12 @@ class Ruleset
 
             $includedSniffs = array_merge(
                 $includedSniffs,
-                $this->_expandRulesetReference($rule['ref'], $rulesetDir, $depth)
+                $this->expandRulesetReference($rule['ref'], $rulesetDir, $depth)
             );
 
             if (isset($rule->exclude) === true) {
                 foreach ($rule->exclude as $exclude) {
-                    if ($this->_shouldProcessElement($exclude) === false) {
+                    if ($this->shouldProcessElement($exclude) === false) {
                         continue;
                     }
 
@@ -281,19 +295,19 @@ class Ruleset
                     } else {
                         $excludedSniffs = array_merge(
                             $excludedSniffs,
-                            $this->_expandRulesetReference($exclude['name'], $rulesetDir, ($depth + 1))
+                            $this->expandRulesetReference($exclude['name'], $rulesetDir, ($depth + 1))
                         );
                     }
                 }//end foreach
             }//end if
 
-            $this->_processRule($rule, $depth);
+            $this->processRule($rule, $depth);
         }//end foreach
 
         // Process custom command line arguments.
         $cliArgs = array();
         foreach ($ruleset->{'arg'} as $arg) {
-            if ($this->_shouldProcessElement($arg) === false) {
+            if ($this->shouldProcessElement($arg) === false) {
                 continue;
             }
 
@@ -332,7 +346,7 @@ class Ruleset
 
         // Process custom sniff config settings.
         foreach ($ruleset->{'config'} as $config) {
-            if ($this->_shouldProcessElement($config) === false) {
+            if ($this->shouldProcessElement($config) === false) {
                 continue;
             }
 
@@ -345,7 +359,7 @@ class Ruleset
 
         // Process custom ignore pattern rules.
         foreach ($ruleset->{'exclude-pattern'} as $pattern) {
-            if ($this->_shouldProcessElement($pattern) === false) {
+            if ($this->shouldProcessElement($pattern) === false) {
                 continue;
             }
 
@@ -395,7 +409,7 @@ class Ruleset
      *
      * @return array
      */
-    private function _expandSniffDirectory($directory, $depth=0)
+    private function expandSniffDirectory($directory, $depth=0)
     {
         $sniffs = array();
 
@@ -428,7 +442,7 @@ class Ruleset
             // Skip files in hidden directories within the Sniffs directory of this
             // standard. We use the offset with strpos() to allow hidden directories
             // before, valid example:
-            // /home/foo/.composer/vendor/drupal/coder/coder_sniffer/Drupal/Sniffs/...
+            // /home/foo/.composer/vendor/squiz/custom_tool/MyStandard/Sniffs/...
             if (strpos($path, DIRECTORY_SEPARATOR.'.', $dirLen) !== false) {
                 continue;
             }
@@ -443,7 +457,7 @@ class Ruleset
 
         return $sniffs;
 
-    }//end _expandSniffDirectory()
+    }//end expandSniffDirectory()
 
 
     /**
@@ -458,7 +472,7 @@ class Ruleset
      * @return array
      * @throws RuntimeException If the reference is invalid.
      */
-    private function _expandRulesetReference($ref, $rulesetDir, $depth=0)
+    private function expandRulesetReference($ref, $rulesetDir, $depth=0)
     {
         // Ignore internal sniffs codes as they are used to only
         // hide and change internal messages.
@@ -502,7 +516,7 @@ class Ruleset
         if (is_file($ref) === true) {
             if (substr($ref, -9) === 'Sniff.php') {
                 // A single external sniff.
-                self::$rulesetDirs[] = dirname(dirname(dirname($ref)));
+                $this->rulesetDirs[] = dirname(dirname(dirname($ref)));
                 return array($ref);
             }
         } else {
@@ -564,7 +578,7 @@ class Ruleset
                     // by looking through all directories where we have found ruleset
                     // files before, looking for ones for this particular standard,
                     // and seeing if it is in there.
-                    foreach (self::$rulesetDirs as $dir) {
+                    foreach ($this->rulesetDirs as $dir) {
                         if (strtolower(basename($dir)) !== strtolower($stdName)) {
                             continue;
                         }
@@ -604,7 +618,7 @@ class Ruleset
                     echo "\t\tAdding sniff files from directory".PHP_EOL;
                 }
 
-                return $this->_expandSniffDirectory($ref, ($depth + 1));
+                return $this->expandSniffDirectory($ref, ($depth + 1));
             }
         } else {
             if (is_file($ref) === false) {
@@ -626,7 +640,7 @@ class Ruleset
             }
         }//end if
 
-    }//end _expandRulesetReference()
+    }//end expandRulesetReference()
 
 
     /**
@@ -638,13 +652,13 @@ class Ruleset
      *
      * @return void
      */
-    private function _processRule($rule, $depth=0)
+    private function processRule($rule, $depth=0)
     {
         $code = (string) $rule['ref'];
 
         // Custom severity.
         if (isset($rule->severity) === true
-            && $this->_shouldProcessElement($rule->severity) === true
+            && $this->shouldProcessElement($rule->severity) === true
         ) {
             if (isset($this->ruleset[$code]) === false) {
                 $this->ruleset[$code] = array();
@@ -659,7 +673,7 @@ class Ruleset
 
         // Custom message type.
         if (isset($rule->type) === true
-            && $this->_shouldProcessElement($rule->type) === true
+            && $this->shouldProcessElement($rule->type) === true
         ) {
             if (isset($this->ruleset[$code]) === false) {
                 $this->ruleset[$code] = array();
@@ -674,7 +688,7 @@ class Ruleset
 
         // Custom message.
         if (isset($rule->message) === true
-            && $this->_shouldProcessElement($rule->message) === true
+            && $this->shouldProcessElement($rule->message) === true
         ) {
             if (isset($this->ruleset[$code]) === false) {
                 $this->ruleset[$code] = array();
@@ -689,10 +703,10 @@ class Ruleset
 
         // Custom properties.
         if (isset($rule->properties) === true
-            && $this->_shouldProcessElement($rule->properties) === true
+            && $this->shouldProcessElement($rule->properties) === true
         ) {
             foreach ($rule->properties->property as $prop) {
-                if ($this->_shouldProcessElement($prop) === false) {
+                if ($this->shouldProcessElement($prop) === false) {
                     continue;
                 }
 
@@ -738,7 +752,7 @@ class Ruleset
 
         // Ignore patterns.
         foreach ($rule->{'exclude-pattern'} as $pattern) {
-            if ($this->_shouldProcessElement($pattern) === false) {
+            if ($this->shouldProcessElement($pattern) === false) {
                 continue;
             }
 
@@ -757,19 +771,17 @@ class Ruleset
             }
         }
 
-    }//end _processRule()
+    }//end processRule()
 
 
     /**
      * Determine if an element should be processed or ignored.
      *
      * @param SimpleXMLElement $element An object from a ruleset XML file.
-     * @param int              $depth   How many nested processing steps we are in.
-     *                                  This is only used for debug output.
      *
      * @return bool
      */
-    private function _shouldProcessElement($element, $depth=0)
+    private function shouldProcessElement($element)
     {
         if (isset($element['phpcbf-only']) === false
             && isset($element['phpcs-only']) === false
@@ -794,7 +806,7 @@ class Ruleset
 
         return false;
 
-    }//end _shouldProcessElement()
+    }//end shouldProcessElement()
 
 
     /**
