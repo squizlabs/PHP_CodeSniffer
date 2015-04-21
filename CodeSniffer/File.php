@@ -2067,6 +2067,27 @@ class PHP_CodeSniffer_File
                         continue;
                     }
 
+                    if ($tokenType === T_FUNCTION) {
+                        // Probably a closure, so process it manually.
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $tokens[$stackPtr]['type'];
+                            echo str_repeat("\t", $depth);
+                            echo "=> Found function before scope opener for $stackPtr:$type, processing manually".PHP_EOL;
+                        }
+
+                        $i = self::_recurseScopeMap(
+                            $tokens,
+                            $numTokens,
+                            $tokenizer,
+                            $eolChar,
+                            $i,
+                            ($depth + 1),
+                            $ignore
+                        );
+
+                        continue;
+                    }//end if
+
                     // Found another opening condition but still haven't
                     // found our opener, so we are never going to find one.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -2076,7 +2097,7 @@ class PHP_CodeSniffer_File
                     }
 
                     return $stackPtr;
-                }
+                }//end if
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);

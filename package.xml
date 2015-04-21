@@ -45,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #515 : Spaces in JS block incorrectly flagged as indentation error
   - Fixed bug #523 : Generic ScopeIndent errors for IF in FINALLY
   - Fixed bug #527 : Closure inside IF statement is not tokenized correctly
+  - Fixed bug #543 : SWITCH with closure in condition generates inline control structure error
   - Fixed bug #551 : Multiple catch blocks not checked in Squiz.ControlStructures.ControlSignature sniff
   - Fixed bug #554 : ScopeIndentSniff causes errors when encountering an unmatched parenthesis
   - Fixed bug #558 : PHPCBF adds brace for ELSE IF split over multiple lines

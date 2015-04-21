@@ -106,3 +106,13 @@ if ($test) {
     if ($test) {
     } else {
     }
+
+switch($response = \Bar::baz('bat', function ($foo) {
+    return 'bar';
+})) {
+    case 1:
+        return 'test';
+
+    case 2:
+        return 'other';
+}
