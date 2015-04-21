@@ -5,8 +5,9 @@
  <file>autoload.php</file>
  <file>bin</file>
  <file>src</file>
+ <file>tests</file>
 
- <exclude-pattern>*/Tests/*</exclude-pattern>
+ <exclude-pattern>*/Standards/*/Tests/*.(inc|css|js)</exclude-pattern>
 
  <arg name="report" value="summary"/>
  <arg value="np"/>
