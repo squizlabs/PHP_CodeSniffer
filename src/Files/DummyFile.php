@@ -1,56 +1,34 @@
 <?php
+/**
+ * A dummy file represents a chunk of text that does not have a file system location.
+ *
+ * Dummy files can also represent a changed (but not saved) version of a file
+ * and so can have a file path either set manually, or set by putting
+ * phpcs_input_file: /path/to/file
+ * as the first line of the file contents.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Files;
 
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Fixer;
-use PHP_CodeSniffer\Util;
-use PHP_CodeSniffer\Exceptions\TokenizerException;
 
-/**
- * A PHP_CodeSniffer_File object represents a PHP source file and the tokens
- * associated with it.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A PHP_CodeSniffer_File object represents a PHP source file and the tokens
- * associated with it.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class DummyFile extends File
 {
 
 
     /**
-     * Constructs a PHP_CodeSniffer_File.
+     * Creates a DummyFile object and sets the content.
      *
-     * @param string          $file      The absolute path to the file to process.
-     * @param array(string)   $listeners The initial listeners listening to processing of this file.
-     *                                   to processing of this file.
-     * @param array           $ruleset   An array of rules from the ruleset.xml file.
-     *                                   ruleset.xml file.
-     * @param PHP_CodeSniffer $phpcs     The PHP_CodeSniffer object controlling this run.
-     *                                   this run.
+     * @param string                   $content The content of the file.
+     * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
+     * @param \PHP_CodeSniffer\Config  $config  The config data for the run.
      *
-     * @throws PHP_CodeSniffer_Exception If the register() method does
-     *                                   not return an array.
+     * @return void
      */
     public function __construct($content, Ruleset $ruleset, Config $config)
     {
