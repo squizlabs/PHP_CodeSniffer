@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #523 : Generic ScopeIndent errors for IF in FINALLY
   - Fixed bug #527 : Closure inside IF statement is not tokenized correctly
   - Fixed bug #529 : Squiz.Strings.EchoedStrings gives false positive when echo'ing using an inline condition
+  - Fixed bug #537 : Using --config-set is breaking phpcs.phar
   - Fixed bug #543 : SWITCH with closure in condition generates inline control structure error
   - Fixed bug #551 : Multiple catch blocks not checked in Squiz.ControlStructures.ControlSignature sniff
   - Fixed bug #554 : ScopeIndentSniff causes errors when encountering an unmatched parenthesis
