@@ -158,6 +158,10 @@ class MultipleStatementAlignmentSniff implements Sniff
                 }//end if
 
                 continue;
+            } else if ($assign !== $stackPtr && $tokens[$assign]['line'] === $lastLine) {
+                // Skip multiple assignments on the same line. We only need to
+                // try and align the first assignment.
+                continue;
             }//end if
 
             if ($assign !== $stackPtr) {

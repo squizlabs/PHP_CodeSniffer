@@ -660,10 +660,12 @@ abstract class Tokenizer
                         continue;
                     }
 
-                    if ($tokenType === T_FUNCTION) {
+                    if ($tokenType === T_FUNCTION
+                        && $this->tokens[$stackPtr]['code'] !== T_FUNCTION
+                    ) {
                         // Probably a closure, so process it manually.
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $type = $tokens[$stackPtr]['type'];
+                            $type = $this->tokens[$stackPtr]['type'];
                             echo str_repeat("\t", $depth);
                             echo "=> Found function before scope opener for $stackPtr:$type, processing manually".PHP_EOL;
                         }

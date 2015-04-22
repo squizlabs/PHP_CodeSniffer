@@ -227,3 +227,8 @@ $path .= FileSystem::getHashDir($itemid).'/'.$itemid;
 
 $contents  .= 'if (';
 $conditions = array();
+
+$bar = 'hi';
+$foo = $moo = $test;
+$boo = 'boo';
+$foo = $moooo = 'foo';
