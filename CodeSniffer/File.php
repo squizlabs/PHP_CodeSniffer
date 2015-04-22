@@ -2067,7 +2067,9 @@ class PHP_CodeSniffer_File
                         continue;
                     }
 
-                    if ($tokenType === T_FUNCTION) {
+                    if ($tokenType === T_FUNCTION
+                        && $tokens[$stackPtr]['code'] !== T_FUNCTION
+                    ) {
                         // Probably a closure, so process it manually.
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $type = $tokens[$stackPtr]['type'];
