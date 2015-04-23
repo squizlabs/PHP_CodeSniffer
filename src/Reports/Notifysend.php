@@ -67,7 +67,7 @@ class Notifysend implements Report
      */
     public function __construct()
     {
-        $path = Config::getConfigData('notifysend_path');
+        $path = Config::getExecutablePath('notifysend');
         if ($path !== null) {
             $this->path = $path;
         }

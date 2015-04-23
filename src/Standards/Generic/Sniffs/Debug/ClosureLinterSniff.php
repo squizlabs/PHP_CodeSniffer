@@ -83,7 +83,7 @@ class ClosureLinterSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $lintPath = Config::getConfigData('gjslint_path');
+        $lintPath = Config::getExecutablePath('gjslint');
         if ($lintPath === null) {
             return;
         }

@@ -242,6 +242,13 @@ class Config
      */
     private static $configData = null;
 
+    /**
+     * Automatically discovered executable utility paths.
+     *
+     * @var array<string, string>
+     */
+    private static $executablePaths = array();
+
 
     /**
      * Creates a Config object and populates it with command line values.
@@ -980,6 +987,46 @@ class Config
         return $phpCodeSnifferConfig[$key];
 
     }//end getConfigData()
+
+
+    /**
+     * Get the executable utility path
+     *
+     * @param string $name The name of the executable utility.
+     *
+     * @return string|null
+     * @see    getConfigData()
+     */
+    public static function getExecutablePath($name)
+    {
+        $key = $name . '_path';
+        $data = self::getConfigData($key);
+
+        if ($data !== null) {
+            return $data;
+        }
+
+        if (array_key_exists($name, self::$executablePaths)) {
+            return self::$executablePaths[$name];
+        }
+
+        $isWin = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+        if ($isWin === true) {
+            $cmd = 'where ' . escapeshellarg($name) . ' 2> nul';
+        } else {
+            $cmd = 'which ' . escapeshellarg($name);
+        }
+
+        $result = exec($cmd, $output, $retVal);
+        if ($retVal !== 0) {
+            $result = null;
+        }
+
+        self::$executablePaths[$name] = $result;
+
+        return $result;
+
+    }//end getExecutablePath()
 
 
     /**
