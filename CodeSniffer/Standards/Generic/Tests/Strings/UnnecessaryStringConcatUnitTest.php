@@ -49,6 +49,8 @@ class Generic_Tests_Strings_UnnecessaryStringConcatUnitTest extends AbstractSnif
                     6  => 1,
                     9  => 1,
                     12 => 1,
+                    19 => 1,
+                    20 => 1,
                    );
             break;
         case 'UnnecessaryStringConcatUnitTest.js':
@@ -56,6 +58,8 @@ class Generic_Tests_Strings_UnnecessaryStringConcatUnitTest extends AbstractSnif
                     1  => 1,
                     8  => 1,
                     11 => 1,
+                    14 => 1,
+                    15 => 1,
                    );
             break;
         default:
