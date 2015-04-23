@@ -222,6 +222,7 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
                               T_COMMA               => true,
                               T_OPEN_PARENTHESIS    => true,
                               T_OPEN_SQUARE_BRACKET => true,
+                              T_OPEN_SHORT_ARRAY    => true,
                               T_DOUBLE_ARROW        => true,
                               T_COLON               => true,
                               T_INLINE_THEN         => true,
