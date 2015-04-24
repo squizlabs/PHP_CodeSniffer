@@ -2157,6 +2157,16 @@ class PHP_CodeSniffer_File
                         throw new PHP_CodeSniffer_Exception('Maximum nesting level reached; file could not be processed');
                     }
 
+                    if ($isShared === true
+                        && isset($tokenizer->scopeOpeners[$tokenType]['with'][$currType]) === true
+                    ) {
+                        // Don't allow the depth to incremement because this is
+                        // possibly not a true nesting if we are sharing our closer.
+                        // This can happen, for example, when a SWITCH has a large
+                        // number of CASE statements with the same shared BREAK.
+                        $depth--;
+                    }
+
                     $i = self::_recurseScopeMap(
                         $tokens,
                         $numTokens,
