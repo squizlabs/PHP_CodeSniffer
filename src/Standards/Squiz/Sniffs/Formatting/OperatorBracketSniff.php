@@ -211,6 +211,7 @@ class OperatorBracketSniff implements Sniff
                                   T_COLON,
                                   T_OPEN_PARENTHESIS,
                                   T_OPEN_SQUARE_BRACKET,
+                                  T_OPEN_SHORT_ARRAY,
                                   T_CASE,
                                  );
 
