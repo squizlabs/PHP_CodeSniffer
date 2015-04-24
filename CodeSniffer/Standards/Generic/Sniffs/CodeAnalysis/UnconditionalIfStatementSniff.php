@@ -46,6 +46,14 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
 
 
     /**
+     * Indicates that problems found by this sniff should be treated as errors.
+     *
+     * @var boolean
+     */
+    public $treatAsError = false;
+
+
+    /**
      * Registers the tokens that this sniff wants to listen for.
      *
      * @return int[]
@@ -73,6 +81,7 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
     {
         $tokens = $phpcsFile->getTokens();
         $token  = $tokens[$stackPtr];
+        $this->treatAsError = (bool) $this->treatAsError;
 
         // Skip for-loop without body.
         if (isset($token['parenthesis_opener']) === false) {
@@ -95,7 +104,12 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
 
         if ($goodCondition === false) {
             $error = 'Avoid IF statements that are always true or false';
-            $phpcsFile->addWarning($error, $stackPtr, 'Found');
+
+            if ($this->treatAsError === true) {
+                $phpcsFile->addError($error, $stackPtr, 'Found');
+            } else {
+                $phpcsFile->addWarning($error, $stackPtr, 'Found');
+            }
         }
 
     }//end process()
