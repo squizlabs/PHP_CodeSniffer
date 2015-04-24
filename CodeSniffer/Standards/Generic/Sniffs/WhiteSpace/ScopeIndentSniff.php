@@ -421,6 +421,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 } else if (isset($tokens[$scopeCloser]['bracket_opener']) === true) {
                     $firstLine = $tokens[$scopeCloser]['bracket_opener'];
                 }
+
                 $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $firstLine, true);
 
                 $currentIndent = ($tokens[$first]['column'] - 1);
