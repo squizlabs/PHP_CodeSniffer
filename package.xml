@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Squiz OperatorSpacingSniff no longer complains about negative numbers in short arrays
+    -- Thanks to Vašek Purchart for the patch
+  - Squiz OperatorBracketSniff no longer complains about negative numbers in short arrays
   - Fixed bug #545 : Long list of CASE statements can cause tokenizer to reach a depth limit
  </notes>
  <contents>
