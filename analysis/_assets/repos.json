@@ -887,5 +887,12 @@
         "path": "",
         "ignore": "*/lib/,*/etc/*,*/var/*",
         "extensions": ""
+    },
+    {
+        "name": "GintonicCMS",
+        "url": "gintonicweb/GintonicCMS",
+        "path": "",
+        "ignore": "",
+        "extensions": ""
     }
 ]
