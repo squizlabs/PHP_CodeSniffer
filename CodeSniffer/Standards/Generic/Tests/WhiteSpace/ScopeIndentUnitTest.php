@@ -97,7 +97,19 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
         }
 
         if ($testFile === 'ScopeIndentUnitTest.4.js') {
-            return array();
+            return array(
+                    7  => 1,
+                    10 => 1,
+                    11 => 1,
+                    12 => 1,
+                    13 => 1,
+                    18 => 1,
+                    21 => 1,
+                    22 => 1,
+                    23 => 1,
+                    24 => 1,
+                    27 => 1,
+                   );
         }
 
         return array(

@@ -414,7 +414,14 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     array_pop($openScopes);
                 }
 
-                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$scopeCloser]['scope_condition'], true);
+                // JS object scopes don't have a scope_condition property, so we need
+                // to look at bracket_opener instead.
+                if (isset($tokens[$scopeCloser]['scope_condition']) === true) {
+                    $firstLine = $tokens[$scopeCloser]['scope_condition'];
+                } else if (isset($tokens[$scopeCloser]['bracket_opener']) === true) {
+                    $firstLine = $tokens[$scopeCloser]['bracket_opener'];
+                }
+                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $firstLine, true);
 
                 $currentIndent = ($tokens[$first]['column'] - 1);
                 if (isset($adjustments[$first]) === true) {
@@ -422,7 +429,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
 
                 // Make sure it is divisible by our expected indent.
-                if ($tokens[$tokens[$scopeCloser]['scope_condition']]['code'] !== T_CLOSURE) {
+                if ($tokens[$firstLine]['code'] !== T_CLOSURE) {
                     $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
                 }
 
