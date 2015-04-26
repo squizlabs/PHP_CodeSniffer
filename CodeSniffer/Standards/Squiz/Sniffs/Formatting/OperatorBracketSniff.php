@@ -204,6 +204,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                                   T_COLON,
                                   T_OPEN_PARENTHESIS,
                                   T_OPEN_SQUARE_BRACKET,
+                                  T_OPEN_SHORT_ARRAY,
                                   T_CASE,
                                  );
 

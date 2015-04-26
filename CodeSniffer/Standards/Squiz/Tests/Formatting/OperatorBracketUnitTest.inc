@@ -137,3 +137,7 @@ $value = (int) isset($blah) + (int) isset($foo) + (int) isset($bar);
 doSomething(getValue($var, 2)) - $y;
 
 $codeFiles = array($global => $codeFiles[$global]) + $codeFiles;
+
+$var = array(-1);
+$var = [-1];
+$var = [0, -1, -2];

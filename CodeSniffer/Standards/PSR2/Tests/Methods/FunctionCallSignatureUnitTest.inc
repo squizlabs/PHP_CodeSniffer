@@ -89,3 +89,12 @@ Foo
 END
 ,
 'bar');
+
+if (array_filter(
+    $commands,
+    function ($cmd) use ($commandName) {
+        return ($cmd['name'] == $commandName);
+    }
+)) {
+    // Do something
+}
