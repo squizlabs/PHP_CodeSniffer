@@ -2067,6 +2067,29 @@ class PHP_CodeSniffer_File
                         continue;
                     }
 
+                    if ($tokenType === T_FUNCTION
+                        && $tokens[$stackPtr]['code'] !== T_FUNCTION
+                    ) {
+                        // Probably a closure, so process it manually.
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $tokens[$stackPtr]['type'];
+                            echo str_repeat("\t", $depth);
+                            echo "=> Found function before scope opener for $stackPtr:$type, processing manually".PHP_EOL;
+                        }
+
+                        $i = self::_recurseScopeMap(
+                            $tokens,
+                            $numTokens,
+                            $tokenizer,
+                            $eolChar,
+                            $i,
+                            ($depth + 1),
+                            $ignore
+                        );
+
+                        continue;
+                    }//end if
+
                     // Found another opening condition but still haven't
                     // found our opener, so we are never going to find one.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -2076,7 +2099,7 @@ class PHP_CodeSniffer_File
                     }
 
                     return $stackPtr;
-                }
+                }//end if
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
@@ -2132,6 +2155,16 @@ class PHP_CodeSniffer_File
                         }
 
                         throw new PHP_CodeSniffer_Exception('Maximum nesting level reached; file could not be processed');
+                    }
+
+                    if ($isShared === true
+                        && isset($tokenizer->scopeOpeners[$tokenType]['with'][$currType]) === true
+                    ) {
+                        // Don't allow the depth to incremement because this is
+                        // possibly not a true nesting if we are sharing our closer.
+                        // This can happen, for example, when a SWITCH has a large
+                        // number of CASE statements with the same shared BREAK.
+                        $depth--;
                     }
 
                     $i = self::_recurseScopeMap(

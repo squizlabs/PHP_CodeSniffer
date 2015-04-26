@@ -144,3 +144,13 @@ elseif ($a == 6) :
 else :
     echo "a is neither 5 nor 6";
 endif;
+
+try {
+    // try body
+}
+catch (FirstExceptionType $e) {
+    // catch body
+}
+catch (OtherExceptionType $e) {
+    // catch body
+}
