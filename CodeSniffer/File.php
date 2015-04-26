@@ -1289,6 +1289,7 @@ class PHP_CodeSniffer_File
 
     }//end recordMetric()
 
+
     /**
      * Adds a grouped metric.
      *
@@ -1301,22 +1302,27 @@ class PHP_CodeSniffer_File
      */
     public function recordGroupMetric($stackPtr, $metric, $value, array $groups)
     {
-        // find the group the value belongs to.
+        // Find the group the value belongs to.
         // The value belongs to the last group that is smaller than the value itself.
         reset($groups);
-        $group = key($groups);
+        $group      = key($groups);
         $limitfound = false;
-        foreach( $groups as $key => $limit ) {
-            if( $limit >= $value ) {
+        foreach ($groups as $key => $limit) {
+            if ($limit >= $value) {
                 $limitfound = true;
                 break;
             }
+
             $group = $key;
         }
 
-        $suffix = $limitfound ? ' or less' : 'or more';
+        if ($limitfound === true) {
+            $suffix = ' or less';
+        } else {
+            $suffix = ' or more';
+        }
 
-        if( !is_string($group) ) {
+        if (is_string($group) === false) {
             $name = $groups[$group].$suffix;
         } else {
             $name = $group;
@@ -1324,7 +1330,8 @@ class PHP_CodeSniffer_File
 
         return $this->recordMetric($stackPtr, $metric, $name);
 
-    }//end recordMetric()
+    }//end recordGroupMetric()
+
 
     /**
      * Returns the number of errors raised.

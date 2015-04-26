@@ -97,7 +97,7 @@ class Generic_Sniffs_Methods_MethodSignatureSniff extends PHP_CodeSniffer_Standa
         $signatureTokenSet = self::getSignatureTokens($phpcsFile, $stackPtr);
         $doesMatch         = self::assertSignaturePattern($tokenPatternSet, $signatureTokenSet);
 
-        if ($doesMatch === true) {
+        if ($doesMatch === false) {
             $fix = $phpcsFile->addFixableError(
                 'Method signature does not match defined signature pattern.',
                 $stackPtr
