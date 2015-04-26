@@ -990,7 +990,7 @@ class Config
 
 
     /**
-     * Get the executable utility path
+     * Get the path to an executable utility.
      *
      * @param string $name The name of the executable utility.
      *
@@ -999,22 +999,19 @@ class Config
      */
     public static function getExecutablePath($name)
     {
-        $key = $name . '_path';
-        $data = self::getConfigData($key);
-
+        $data = self::getConfigData($name.'_path');
         if ($data !== null) {
             return $data;
         }
 
-        if (array_key_exists($name, self::$executablePaths)) {
+        if (array_key_exists($name, self::$executablePaths) === true) {
             return self::$executablePaths[$name];
         }
 
-        $isWin = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
-        if ($isWin === true) {
-            $cmd = 'where ' . escapeshellarg($name) . ' 2> nul';
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $cmd = 'where '.escapeshellarg($name).' 2> nul';
         } else {
-            $cmd = 'which ' . escapeshellarg($name);
+            $cmd = 'which '.escapeshellarg($name);
         }
 
         $result = exec($cmd, $output, $retVal);
@@ -1023,7 +1020,6 @@ class Config
         }
 
         self::$executablePaths[$name] = $result;
-
         return $result;
 
     }//end getExecutablePath()
