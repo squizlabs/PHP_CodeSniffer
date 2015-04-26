@@ -69,8 +69,8 @@ class JSHintSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $rhinoPath  = Config::getConfigData('rhino_path');
-        $jshintPath = Config::getConfigData('jshint_path');
+        $rhinoPath  = Config::getExecutablePath('rhino');
+        $jshintPath = Config::getExecutablePath('jshint');
         if ($rhinoPath === null || $jshintPath === null) {
             return;
         }

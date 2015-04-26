@@ -67,7 +67,7 @@ class JavaScriptLintSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $jslPath = Config::getConfigData('jsl_path');
+        $jslPath = Config::getExecutablePath('jsl');
         if (is_null($jslPath) === true) {
             return;
         }

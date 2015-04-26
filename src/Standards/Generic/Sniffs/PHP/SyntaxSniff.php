@@ -61,7 +61,7 @@ class SyntaxSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $phpPath = Config::getConfigData('php_path');
+        $phpPath = Config::getExecutablePath('php');
         if ($phpPath === null) {
             return;
         }
