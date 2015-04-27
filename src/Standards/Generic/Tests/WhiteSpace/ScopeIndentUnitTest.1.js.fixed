@@ -199,3 +199,8 @@ a.prototype = {
     }
 
 };
+
+for (var i = 0; i < 10; i++) {
+    var foo = {foo:{'a':'b',
+        'c':'d'}};
+}
