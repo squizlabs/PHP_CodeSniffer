@@ -88,7 +88,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * @return void
      * @throws PHPUnit_Framework_Error
      */
-    public final function testSniff()
+    final public function testSniff()
     {
         // Skip this test if we can't run in this environment.
         if ($this->shouldSkipTest() === true) {
@@ -125,15 +125,15 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
         sort($testFiles);
 
         if (isset($GLOBALS['PHP_CODESNIFFER_CONFIG']) === true) {
-            $config  = $GLOBALS['PHP_CODESNIFFER_CONFIG'];
+            $config = $GLOBALS['PHP_CODESNIFFER_CONFIG'];
         } else {
             $config = new Config();
-            $GLOBALS['PHP_CODESNIFFER_CONFIG']  = $config;
+            $GLOBALS['PHP_CODESNIFFER_CONFIG'] = $config;
         }
 
         $config->standards = array($standardName);
-        $config->sniffs = array($sniffCode);
-        $config->ignored = array();
+        $config->sniffs    = array($sniffCode);
+        $config->ignored   = array();
 
         if (isset($GLOBALS['PHP_CODESNIFFER_RULESET']) === true) {
             $ruleset = $GLOBALS['PHP_CODESNIFFER_RULESET'];
@@ -189,7 +189,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
             $this->fail(implode(PHP_EOL, $failureMessages));
         }
 
-    }//end runTest()
+    }//end testSniff()
 
 
     /**
@@ -404,7 +404,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
     {
         return;
 
-    }//end getCliValues()
+    }//end setCliValues()
 
 
     /**
@@ -415,7 +415,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      *
      * @return array(int => int)
      */
-    protected abstract function getErrorList();
+    abstract protected function getErrorList();
 
 
     /**
@@ -426,7 +426,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      *
      * @return array(int => int)
      */
-    protected abstract function getWarningList();
+    abstract protected function getWarningList();
 
 
 }//end class
