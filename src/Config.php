@@ -261,7 +261,13 @@ class Config
      */
     public function __construct(array $cliArgs=array(), $dieOnUnknownArg=true)
     {
-        $this->dieOnUnknownArg = $dieOnUnknownArg;
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+            // Let everything through during testing so that we can
+            // make use of PHPUnit command line arguments as well.
+            $this->dieOnUnknownArg = false;
+        } else {
+            $this->dieOnUnknownArg = $dieOnUnknownArg;
+        }
 
         if (empty($cliArgs) === true) {
             $cliArgs = $_SERVER['argv'];
