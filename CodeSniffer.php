@@ -2299,7 +2299,11 @@ class PHP_CodeSniffer
     public static function setConfigData($key, $value, $temp=false)
     {
         if ($temp === false) {
-            $path = Phar::running(false);
+            $path = '';
+            if (class_exists('Phar') === true) {
+                $path = Phar::running(false);
+            }
+
             if ($path !== '') {
                 $configFile = dirname($path).'/CodeSniffer.conf';
             } else {
@@ -2360,7 +2364,11 @@ class PHP_CodeSniffer
             return $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'];
         }
 
-        $path = Phar::running(false);
+        $path = '';
+        if (class_exists('Phar') === true) {
+            $path = Phar::running(false);
+        }
+
         if ($path !== '') {
             $configFile = dirname($path).'/CodeSniffer.conf';
         } else {
