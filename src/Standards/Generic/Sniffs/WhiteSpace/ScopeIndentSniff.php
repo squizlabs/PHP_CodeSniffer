@@ -873,7 +873,7 @@ class ScopeIndentSniff implements Sniff
                 }
 
                 // Make sure it is divisible by our expected indent.
-                $currentIndent  = (int) (ceil($currentIndent / $this->indent) * $this->indent);
+                $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
 
                 if ($this->_debug === true) {
                     echo "\t=> indent set to $currentIndent".PHP_EOL;
