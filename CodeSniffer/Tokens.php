@@ -14,123 +14,123 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-define('T_NONE', 0);
-define('T_OPEN_CURLY_BRACKET', 1000);
-define('T_CLOSE_CURLY_BRACKET', 1001);
-define('T_OPEN_SQUARE_BRACKET', 1002);
-define('T_CLOSE_SQUARE_BRACKET', 1003);
-define('T_OPEN_PARENTHESIS', 1004);
-define('T_CLOSE_PARENTHESIS', 1005);
-define('T_COLON', 1006);
-define('T_STRING_CONCAT', 1007);
-define('T_INLINE_THEN', 1008);
-define('T_INLINE_ELSE', 1009);
-define('T_NULL', 1010);
-define('T_FALSE', 1011);
-define('T_TRUE', 1012);
-define('T_SEMICOLON', 1013);
-define('T_EQUAL', 1014);
-define('T_MULTIPLY', 1015);
-define('T_DIVIDE', 1016);
-define('T_PLUS', 1017);
-define('T_MINUS', 1018);
-define('T_MODULUS', 1019);
-define('T_POWER', 1020);
-define('T_BITWISE_AND', 1021);
-define('T_BITWISE_OR', 1022);
-define('T_ARRAY_HINT', 1023);
-define('T_GREATER_THAN', 1024);
-define('T_LESS_THAN', 1025);
-define('T_BOOLEAN_NOT', 1026);
-define('T_SELF', 1027);
-define('T_PARENT', 1028);
-define('T_DOUBLE_QUOTED_STRING', 1029);
-define('T_COMMA', 1030);
-define('T_HEREDOC', 1031);
-define('T_PROTOTYPE', 1032);
-define('T_THIS', 1033);
-define('T_REGULAR_EXPRESSION', 1034);
-define('T_PROPERTY', 1035);
-define('T_LABEL', 1036);
-define('T_OBJECT', 1037);
-define('T_CLOSE_OBJECT', 1038);
-define('T_COLOUR', 1039);
-define('T_HASH', 1040);
-define('T_URL', 1041);
-define('T_STYLE', 1042);
-define('T_ASPERAND', 1043);
-define('T_DOLLAR', 1044);
-define('T_TYPEOF', 1045);
-define('T_CLOSURE', 1046);
-define('T_BACKTICK', 1047);
-define('T_START_NOWDOC', 1048);
-define('T_NOWDOC', 1049);
-define('T_END_NOWDOC', 1050);
-define('T_OPEN_SHORT_ARRAY', 1051);
-define('T_CLOSE_SHORT_ARRAY', 1052);
-define('T_GOTO_LABEL', 1053);
-define('T_BINARY_CAST', 1054);
-define('T_EMBEDDED_PHP', 1055);
+define('T_NONE', 'PHPCS_T_NONE');
+define('T_OPEN_CURLY_BRACKET', 'PHPCS_T_OPEN_CURLY_BRACKET');
+define('T_CLOSE_CURLY_BRACKET', 'PHPCS_T_CLOSE_CURLY_BRACKET');
+define('T_OPEN_SQUARE_BRACKET', 'PHPCS_T_OPEN_SQUARE_BRACKET');
+define('T_CLOSE_SQUARE_BRACKET', 'PHPCS_T_CLOSE_SQUARE_BRACKET');
+define('T_OPEN_PARENTHESIS', 'PHPCS_T_OPEN_PARENTHESIS');
+define('T_CLOSE_PARENTHESIS', 'PHPCS_T_CLOSE_PARENTHESIS');
+define('T_COLON', 'PHPCS_T_COLON');
+define('T_STRING_CONCAT', 'PHPCS_T_STRING_CONCAT');
+define('T_INLINE_THEN', 'PHPCS_T_INLINE_THEN');
+define('T_INLINE_ELSE', 'PHPCS_T_INLINE_ELSE');
+define('T_NULL', 'PHPCS_T_NULL');
+define('T_FALSE', 'PHPCS_T_FALSE');
+define('T_TRUE', 'PHPCS_T_TRUE');
+define('T_SEMICOLON', 'PHPCS_T_SEMICOLON');
+define('T_EQUAL', 'PHPCS_T_EQUAL');
+define('T_MULTIPLY', 'PHPCS_T_MULTIPLY');
+define('T_DIVIDE', 'PHPCS_T_DIVIDE');
+define('T_PLUS', 'PHPCS_T_PLUS');
+define('T_MINUS', 'PHPCS_T_MINUS');
+define('T_MODULUS', 'PHPCS_T_MODULUS');
+define('T_POWER', 'PHPCS_T_POWER');
+define('T_BITWISE_AND', 'PHPCS_T_BITWISE_AND');
+define('T_BITWISE_OR', 'PHPCS_T_BITWISE_OR');
+define('T_ARRAY_HINT', 'PHPCS_T_ARRAY_HINT');
+define('T_GREATER_THAN', 'PHPCS_T_GREATER_THAN');
+define('T_LESS_THAN', 'PHPCS_T_LESS_THAN');
+define('T_BOOLEAN_NOT', 'PHPCS_T_BOOLEAN_NOT');
+define('T_SELF', 'PHPCS_T_SELF');
+define('T_PARENT', 'PHPCS_T_PARENT');
+define('T_DOUBLE_QUOTED_STRING', 'PHPCS_T_DOUBLE_QUOTED_STRING');
+define('T_COMMA', 'PHPCS_T_COMMA');
+define('T_HEREDOC', 'PHPCS_T_HEREDOC');
+define('T_PROTOTYPE', 'PHPCS_T_PROTOTYPE');
+define('T_THIS', 'PHPCS_T_THIS');
+define('T_REGULAR_EXPRESSION', 'PHPCS_T_REGULAR_EXPRESSION');
+define('T_PROPERTY', 'PHPCS_T_PROPERTY');
+define('T_LABEL', 'PHPCS_T_LABEL');
+define('T_OBJECT', 'PHPCS_T_OBJECT');
+define('T_CLOSE_OBJECT', 'PHPCS_T_CLOSE_OBJECT');
+define('T_COLOUR', 'PHPCS_T_COLOUR');
+define('T_HASH', 'PHPCS_T_HASH');
+define('T_URL', 'PHPCS_T_URL');
+define('T_STYLE', 'PHPCS_T_STYLE');
+define('T_ASPERAND', 'PHPCS_T_ASPERAND');
+define('T_DOLLAR', 'PHPCS_T_DOLLAR');
+define('T_TYPEOF', 'PHPCS_T_TYPEOF');
+define('T_CLOSURE', 'PHPCS_T_CLOSURE');
+define('T_BACKTICK', 'PHPCS_T_BACKTICK');
+define('T_START_NOWDOC', 'PHPCS_T_START_NOWDOC');
+define('T_NOWDOC', 'PHPCS_T_NOWDOC');
+define('T_END_NOWDOC', 'PHPCS_T_END_NOWDOC');
+define('T_OPEN_SHORT_ARRAY', 'PHPCS_T_OPEN_SHORT_ARRAY');
+define('T_CLOSE_SHORT_ARRAY', 'PHPCS_T_CLOSE_SHORT_ARRAY');
+define('T_GOTO_LABEL', 'PHPCS_T_GOTO_LABEL');
+define('T_BINARY_CAST', 'PHPCS_T_BINARY_CAST');
+define('T_EMBEDDED_PHP', 'PHPCS_T_EMBEDDED_PHP');
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 1100);
+    define('T_NAMESPACE', 'PHPCS_T_NAMESPACE');
 }
 
 if (defined('T_NS_C') === false) {
-    define('T_NS_C', 1101);
+    define('T_NS_C', 'PHPCS_T_NS_C');
 }
 
 if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 1102);
+    define('T_NS_SEPARATOR', 'PHPCS_T_NS_SEPARATOR');
 }
 
 if (defined('T_GOTO') === false) {
-    define('T_GOTO', 1103);
+    define('T_GOTO', 'PHPCS_T_GOTO');
 }
 
 if (defined('T_DIR') === false) {
-    define('T_DIR', 1104);
+    define('T_DIR', 'PHPCS_T_DIR');
 }
 
 // Some PHP 5.4 tokens, replicated for lower versions.
 if (defined('T_TRAIT') === false) {
-    define('T_TRAIT', 1105);
+    define('T_TRAIT', 'PHPCS_T_TRAIT');
 }
 
 if (defined('T_TRAIT_C') === false) {
-    define('T_TRAIT_C', 1106);
+    define('T_TRAIT_C', 'PHPCS_T_TRAIT_C');
 }
 
 if (defined('T_INSTEADOF') === false) {
-    define('T_INSTEADOF', 1107);
+    define('T_INSTEADOF', 'PHPCS_T_INSTEADOF');
 }
 
 if (defined('T_CALLABLE') === false) {
-    define('T_CALLABLE', 1108);
+    define('T_CALLABLE', 'PHPCS_T_CALLABLE');
 }
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
-    define('T_FINALLY', 1109);
+    define('T_FINALLY', 'PHPCS_T_FINALLY');
 }
 
 if (defined('T_YIELD') === false) {
-    define('T_YIELD', 1110);
+    define('T_YIELD', 'PHPCS_T_YIELD');
 }
 
 // Some PHP 5.6 tokens, replicated for lower versions.
 if (defined('T_ELLIPSIS') === false) {
-    define('T_ELLIPSIS', 1111);
+    define('T_ELLIPSIS', 'PHPCS_T_ELLIPSIS');
 }
 
 // Tokens used for parsing doc blocks.
-define('T_DOC_COMMENT_STAR', 1200);
-define('T_DOC_COMMENT_WHITESPACE', 1201);
-define('T_DOC_COMMENT_TAG', 1202);
-define('T_DOC_COMMENT_OPEN_TAG', 1203);
-define('T_DOC_COMMENT_CLOSE_TAG', 1204);
-define('T_DOC_COMMENT_STRING', 1205);
+define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
+define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');
+define('T_DOC_COMMENT_TAG', 'PHPCS_T_DOC_COMMENT_TAG');
+define('T_DOC_COMMENT_OPEN_TAG', 'PHPCS_T_DOC_COMMENT_OPEN_TAG');
+define('T_DOC_COMMENT_CLOSE_TAG', 'PHPCS_T_DOC_COMMENT_CLOSE_TAG');
+define('T_DOC_COMMENT_STRING', 'PHPCS_T_DOC_COMMENT_STRING');
 
 /**
  * The Tokens class contains weightings for tokens based on their
