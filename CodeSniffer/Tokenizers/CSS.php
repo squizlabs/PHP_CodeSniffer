@@ -268,28 +268,21 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     if ($finalTokens[($stackPtr - 1)]['code'] === T_STRING) {
                         $newContent = $finalTokens[($stackPtr - 1)]['content'].'-'.$finalTokens[($stackPtr + 1)]['content'];
 
-                        $finalTokens[($stackPtr - 1)]['content'] = $newContent;
+                        $finalTokens[($stackPtr + 1)]['content'] = $newContent;
                         unset($finalTokens[$stackPtr]);
-                        unset($finalTokens[($stackPtr + 1)]);
-                        $stackPtr -= 2;
+                        unset($finalTokens[($stackPtr - 1)]);
                     } else {
                         $newContent = '-'.$finalTokens[($stackPtr + 1)]['content'];
 
                         $finalTokens[($stackPtr + 1)]['content'] = $newContent;
                         unset($finalTokens[$stackPtr]);
-                        $stackPtr--;
                     }
 
-                    $finalTokens = array_values($finalTokens);
-                    $numTokens   = count($finalTokens);
                 } else if ($finalTokens[($stackPtr + 1)]['code'] === T_LNUMBER) {
                     // They can also be used to provide negative numbers.
                     $finalTokens[($stackPtr + 1)]['content']
                         = '-'.$finalTokens[($stackPtr + 1)]['content'];
                     unset($finalTokens[$stackPtr]);
-
-                    $finalTokens = array_values($finalTokens);
-                    $numTokens   = count($finalTokens);
                 }//end if
 
                 break;
@@ -365,6 +358,10 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 break;
             }//end switch
         }//end for
+
+        // Reset the array keys to avoid gaps.
+        $finalTokens = array_values($finalTokens);
+        $numTokens   = count($finalTokens);
 
         // Blank out the content of the end tag.
         $finalTokens[($numTokens - 1)]['content'] = '';
