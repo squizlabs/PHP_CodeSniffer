@@ -46,6 +46,11 @@
 
 .GUITextBox.container:after {}
 
+/* Now just add a very large portion of CSS to test the performance of the CSS
+ * tokenizer, we don't care about coding standards in that.
+ */
+
+/* @codingStandardsIgnoreStart */
 /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
 /* line 9, ../../../../../../usr/local/rvm/gems/ruby-1.9.3-p547@global/gems/bootstrap-sass-3.2.0.2/assets/stylesheets/bootstrap/_normalize.scss */
 html {
@@ -8071,4 +8076,4 @@ button.close {
     display: none !important;
   }
 }
-
+/* @codingStandardsIgnoreEnd */
