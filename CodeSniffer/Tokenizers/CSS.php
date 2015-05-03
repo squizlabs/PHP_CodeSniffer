@@ -277,7 +277,6 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                         $finalTokens[($stackPtr + 1)]['content'] = $newContent;
                         unset($finalTokens[$stackPtr]);
                     }
-
                 } else if ($finalTokens[($stackPtr + 1)]['code'] === T_LNUMBER) {
                     // They can also be used to provide negative numbers.
                     $finalTokens[($stackPtr + 1)]['content']
