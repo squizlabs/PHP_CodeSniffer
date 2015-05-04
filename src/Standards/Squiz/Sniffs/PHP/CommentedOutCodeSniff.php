@@ -5,6 +5,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Exceptions\TokenizerException;
 
 /**
  * Squiz_Sniffs_PHP_CommentedOutCodeSniff.
@@ -148,9 +149,16 @@ class CommentedOutCodeSniff implements Sniff
         // of errors that don't mean anything, so ignore them.
         $oldErrors = ini_get('error_reporting');
         ini_set('error_reporting', 0);
-        $tokenizerClass = get_class($phpcsFile->tokenizer);
-        $tokenizer      = new $tokenizerClass($content, $phpcsFile->config, $phpcsFile->eolChar);
-        $stringTokens   = $tokenizer->getTokens();
+        try {
+            $tokenizerClass = get_class($phpcsFile->tokenizer);
+            $tokenizer      = new $tokenizerClass($content, $phpcsFile->config, $phpcsFile->eolChar);
+            $stringTokens   = $tokenizer->getTokens();
+        } catch (TokenizerException $e) {
+            // We couldn't check the comment, so ignore it.
+            ini_set('error_reporting', $oldErrors);
+            return;
+        }
+
         ini_set('error_reporting', $oldErrors);
 
         $emptyTokens = array(

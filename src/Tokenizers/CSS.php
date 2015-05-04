@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Tokenizers;
 
 use PHP_CodeSniffer\Util;
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Exceptions\TokenizerException;
 
 /**
  * Tokenizes CSS code.
@@ -31,6 +32,22 @@ use PHP_CodeSniffer\Config;
  */
 class CSS extends PHP
 {
+
+
+    public function __construct($content, Config $config, $eolChar='\n')
+    {
+        // Minified files often have a very large number of characters per line
+        // and cause issues when tokenizing.
+        $numChars = strlen($content);
+        $numLines = (substr_count($content, $eolChar) + 1);
+        $average  = ($numChars / $numLines);
+        if ($average > 100) {
+            throw new TokenizerException('File appears to be minified and cannot be processed');
+        }
+
+        return parent::__construct($content, $config, $eolChar);
+
+    }//end __construct()
 
 
     /**
@@ -74,10 +91,13 @@ class CSS extends PHP
         for ($stackPtr = 1; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
 
-            // CSS files don't have lists or break tags, so convert these to
+            // CSS files don't have lists, breaks etc, so convert these to
             // standard strings early so they can be converted into T_STYLE
             // tokens and joined with other strings if needed.
-            if ($token['code'] === T_BREAK || $token['code'] === T_LIST) {
+            if ($token['code'] === T_BREAK
+                || $token['code'] === T_LIST
+                || $token['code'] === T_DEFAULT
+            ) {
                 $token['type'] = 'T_STRING';
                 $token['code'] = T_STRING;
             }
@@ -269,28 +289,20 @@ class CSS extends PHP
                     if ($finalTokens[($stackPtr - 1)]['code'] === T_STRING) {
                         $newContent = $finalTokens[($stackPtr - 1)]['content'].'-'.$finalTokens[($stackPtr + 1)]['content'];
 
-                        $finalTokens[($stackPtr - 1)]['content'] = $newContent;
+                        $finalTokens[($stackPtr + 1)]['content'] = $newContent;
                         unset($finalTokens[$stackPtr]);
-                        unset($finalTokens[($stackPtr + 1)]);
-                        $stackPtr -= 2;
+                        unset($finalTokens[($stackPtr - 1)]);
                     } else {
                         $newContent = '-'.$finalTokens[($stackPtr + 1)]['content'];
 
                         $finalTokens[($stackPtr + 1)]['content'] = $newContent;
                         unset($finalTokens[$stackPtr]);
-                        $stackPtr--;
                     }
-
-                    $finalTokens = array_values($finalTokens);
-                    $numTokens   = count($finalTokens);
                 } else if ($finalTokens[($stackPtr + 1)]['code'] === T_LNUMBER) {
                     // They can also be used to provide negative numbers.
                     $finalTokens[($stackPtr + 1)]['content']
                         = '-'.$finalTokens[($stackPtr + 1)]['content'];
                     unset($finalTokens[$stackPtr]);
-
-                    $finalTokens = array_values($finalTokens);
-                    $numTokens   = count($finalTokens);
                 }//end if
 
                 break;
@@ -366,6 +378,10 @@ class CSS extends PHP
                 break;
             }//end switch
         }//end for
+
+        // Reset the array keys to avoid gaps.
+        $finalTokens = array_values($finalTokens);
+        $numTokens   = count($finalTokens);
 
         // Blank out the content of the end tag.
         $finalTokens[($numTokens - 1)]['content'] = '';
