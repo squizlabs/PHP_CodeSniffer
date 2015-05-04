@@ -819,6 +819,14 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                     continue;
                 }
 
+                // Skip to the end of multi-line strings.
+                if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$i]['code']]) === true) {
+                    $i = $phpcsFile->findNext($tokens[$i]['code'], ($i + 1), null, true);
+                    $i--;
+                    $valueLine = $tokens[$i]['line'];
+                    continue;
+                }
+
                 if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
                     $i         = $tokens[$i]['bracket_closer'];
                     $valueLine = $tokens[$i]['line'];
