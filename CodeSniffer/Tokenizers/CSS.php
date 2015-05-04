@@ -72,10 +72,13 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
         for ($stackPtr = 1; $stackPtr < $numTokens; $stackPtr++) {
             $token = $tokens[$stackPtr];
 
-            // CSS files don't have lists or break tags, so convert these to
+            // CSS files don't have lists, breaks etc, so convert these to
             // standard strings early so they can be converted into T_STYLE
             // tokens and joined with other strings if needed.
-            if ($token['code'] === T_BREAK || $token['code'] === T_LIST) {
+            if ($token['code'] === T_BREAK
+                || $token['code'] === T_LIST
+                || $token['code'] === T_DEFAULT
+            ) {
                 $token['type'] = 'T_STRING';
                 $token['code'] = T_STRING;
             }
