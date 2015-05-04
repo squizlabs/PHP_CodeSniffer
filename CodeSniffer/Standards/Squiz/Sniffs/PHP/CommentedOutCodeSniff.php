@@ -141,7 +141,14 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
         // of errors that don't mean anything, so ignore them.
         $oldErrors = ini_get('error_reporting');
         ini_set('error_reporting', 0);
-        $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
+        try {
+            $stringTokens = PHP_CodeSniffer_File::tokenizeString($content, $phpcsFile->tokenizer, $phpcsFile->eolChar);
+        } catch (PHP_CodeSniffer_Exception $e) {
+            // We couldn't check the comment, so ignore it.
+            ini_set('error_reporting', $oldErrors);
+            return;
+        }
+
         ini_set('error_reporting', $oldErrors);
 
         $emptyTokens = array(
