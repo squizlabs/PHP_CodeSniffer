@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Improved the performance of the CSS tokenizer, especially on very large CSS files (thousands of lines)
+    -- Thanks to Klaus Purer for the patch
   - Defined tokens for lower PHP versions are now phpcs-specific string instead of ints
     -- Stops conflict with other projects, like PHP_CodeCoverage
  </notes>
