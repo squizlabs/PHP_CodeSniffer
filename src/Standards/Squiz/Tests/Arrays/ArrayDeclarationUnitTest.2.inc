@@ -311,3 +311,12 @@ $ids = [
             '2',
            ]
 ];
+
+$var = [
+        'tab_template'   => '
+        <li>%s</li>',
+        'panel_template' => '
+        <div id="%s">
+            %s
+        </div>',
+       ];

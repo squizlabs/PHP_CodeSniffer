@@ -336,3 +336,12 @@ array(
             '2',
            ),
 );
+
+$var = array(
+        'tab_template'   => '
+        <li>%s</li>',
+        'panel_template' => '
+        <div id="%s">
+            %s
+        </div>',
+       );
