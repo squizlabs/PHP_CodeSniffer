@@ -124,7 +124,7 @@ class FunctionCommentSniff implements Sniff
      *
      * @return void
      */
-    protected function processReturn($phpcsFile, $stackPtr, $commentStart)
+    protected function processReturn(File $phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -173,7 +173,7 @@ class FunctionCommentSniff implements Sniff
      *
      * @return void
      */
-    protected function processThrows($phpcsFile, $stackPtr, $commentStart)
+    protected function processThrows(File $phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -213,7 +213,7 @@ class FunctionCommentSniff implements Sniff
      *
      * @return void
      */
-    protected function processParams($phpcsFile, $stackPtr, $commentStart)
+    protected function processParams(File $phpcsFile, $stackPtr, $commentStart)
     {
         $tokens = $phpcsFile->getTokens();
 
