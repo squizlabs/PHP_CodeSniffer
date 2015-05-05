@@ -137,6 +137,30 @@ class Autoload
     }//end getLoadedFileName()
 
 
+    /**
+     * Gets the mapping of file names to class names.
+     *
+     * @return array<string, string>
+     */
+    public static function getLoadedClasses()
+    {
+        return self::$loadedClasses;
+
+    }//end getLoadedClasses()
+
+
+    /**
+     * Gets the mapping of class names to file names.
+     *
+     * @return array<string, string>
+     */
+    public static function getLoadedFiles()
+    {
+        return self::$loadedFiles;
+
+    }//end getLoadedFiles()
+
+
 }//end class
 
 

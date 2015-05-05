@@ -322,7 +322,7 @@ class Runner
             $numFiles = count($todo);
 
             if ($this->config->cache === true) {
-                Cache::load($this->config);
+                Cache::load($this->config, $ruleset);
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {

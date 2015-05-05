@@ -44,10 +44,7 @@ class FileList implements \Iterator, \Countable
     protected $ignorePatterns = array();
 
 
-    public function __construct(
-        Config $config,
-        Ruleset $ruleset
-    ) {
+    public function __construct(Config $config, Ruleset $ruleset) {
 
         $paths      = $config->files;
         $local      = $config->local;
