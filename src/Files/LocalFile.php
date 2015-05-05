@@ -84,6 +84,10 @@ class LocalFile extends File
      */
     public function process()
     {
+        if ($this->config->cache === false) {
+            return parent::process();
+        }
+
         $hash  = $this->path.'.'.md5_file($this->path);
         $cache = Cache::get($hash);
         if ($cache !== false) {
