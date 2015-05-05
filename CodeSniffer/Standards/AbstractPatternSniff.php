@@ -440,6 +440,10 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
         $patternLen        = count($pattern);
 
         for ($i = $patternInfo['listen_pos']; $i < $patternLen; $i++) {
+            if (isset($tokens[$stackPtr]) === false) {
+                break;
+            }
+
             if ($pattern[$i]['type'] === 'token') {
                 if ($pattern[$i]['token'] === T_WHITESPACE) {
                     if ($this->ignoreComments === true) {
@@ -452,7 +456,9 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         // If the next token is a comment, the we need to skip the
                         // current token as we should allow a space before a
                         // comment for readability.
-                        if (isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[($stackPtr + 1)]['code']]) === true) {
+                        if (isset($tokens[($stackPtr + 1)]) === true
+                            && isset(PHP_CodeSniffer_Tokens::$commentTokens[$tokens[($stackPtr + 1)]['code']]) === true
+                        ) {
                             continue;
                         }
                     }

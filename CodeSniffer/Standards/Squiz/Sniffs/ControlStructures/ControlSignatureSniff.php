@@ -72,6 +72,10 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[($stackPtr + 1)]) === false) {
+            return;
+        }
+
         // Single space after the keyword.
         $found = 1;
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
@@ -202,6 +206,10 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
 
         // Only want to check multi-keyword structures from here on.
         if ($tokens[$stackPtr]['code'] === T_DO) {
+            if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+                return;
+            }
+
             $closer = $tokens[$stackPtr]['scope_closer'];
         } else if ($tokens[$stackPtr]['code'] === T_ELSE
             || $tokens[$stackPtr]['code'] === T_ELSEIF
