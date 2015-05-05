@@ -15,6 +15,7 @@ namespace PHP_CodeSniffer;
 use PHP_CodeSniffer\Files\FileList;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Files\DummyFile;
+use PHP_CodeSniffer\Util\Cache;
 
 class Runner
 {
@@ -117,6 +118,7 @@ class Runner
         $this->config->generator    = null;
         $this->config->explain      = false;
         $this->config->interactive  = false;
+        $this->config->cache        = false;
         $this->config->showSources  = false;
         $this->config->reportFile   = null;
         $this->config->reports      = array();
@@ -319,6 +321,10 @@ class Runner
             $todo     = new FileList($this->config, $ruleset);
             $numFiles = count($todo);
 
+            if ($this->config->cache === true) {
+                Cache::load($this->config);
+            }
+
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo "DONE ($numFiles files in queue)".PHP_EOL;
             }
@@ -490,6 +496,12 @@ class Runner
             && $this->config->showProgress === true
         ) {
             echo PHP_EOL.PHP_EOL;
+        }
+
+        if ($this->config->cache === true
+            && $this->config->stdin === false
+        ) {
+            Cache::save();
         }
 
         $ignoreWarnings = Config::getConfigData('ignore_warnings_on_exit');

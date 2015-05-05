@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Files;
 
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Util\Cache;
 
 class LocalFile extends File
 {
@@ -74,6 +75,48 @@ class LocalFile extends File
         $this->setContent(file_get_contents($this->path));
 
     }//end reloadContent()
+
+
+    /**
+     * 
+     *
+     * @return void
+     */
+    public function process()
+    {
+        $hash  = $this->path.'.'.md5_file($this->path);
+        $cache = Cache::get($hash);
+        if ($cache !== false) {
+            $this->errors   = $cache['errors'];
+            $this->warnings = $cache['warnings'];
+            $this->metrics  = $cache['metrics'];
+            $this->errorCount   = $cache['errorCount'];
+            $this->warningCount = $cache['warningCount'];
+            $this->fixableCount  = $cache['fixableCount'];
+
+            if (PHP_CODESNIFFER_VERBOSITY > 0
+                || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)
+            ) {
+                echo "[loaded from cache]... ";
+            }
+
+            return;
+        }
+
+        parent::process();
+
+        $cache = array(
+                  'errors'   => $this->errors,
+                  'warnings' => $this->warnings,
+                  'metrics'  => $this->metrics,
+                  'errorCount'   => $this->errorCount,
+                  'warningCount' => $this->warningCount,
+                  'fixableCount'  => $this->fixableCount,
+                 );
+
+        Cache::set($hash, $cache);
+
+    }//end process()
 
 
 }//end class

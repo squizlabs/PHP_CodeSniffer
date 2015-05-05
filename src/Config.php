@@ -65,6 +65,13 @@ class Config
     public $interactive;
 
     /**
+     * Enable the use of the file cache.
+     *
+     * @var bool
+     */
+    public $cache;
+
+    /**
      * Display colous in output.
      *
      * @var bool
@@ -380,6 +387,7 @@ class Config
         $this->standards       = array('PEAR');
         $this->verbosity       = 0;
         $this->interactive     = false;
+        $this->cache           = false;
         $this->colors          = false;
         $this->explain         = false;
         $this->local           = false;
@@ -462,6 +470,11 @@ class Config
         $colors = self::getConfigData('colors');
         if ($colors !== null) {
             $this->colors = (bool) $colors;
+        }
+
+        $cache = self::getConfigData('cache');
+        if ($cache !== null) {
+            $this->cache = (bool) $cache;
         }
 
     }//end restoreDefaults()
@@ -564,6 +577,14 @@ class Config
         case 'no-colors':
             $this->colors = false;
             $this->overriddenDefaults['colors'] = true;
+            break;
+        case 'cache':
+            $this->cache = true;
+            $this->overriddenDefaults['cache'] = true;
+            break;
+        case 'no-cache':
+            $this->cache = false;
+            $this->overriddenDefaults['cache'] = true;
             break;
         case 'config-set':
             if (isset($this->cliArgs[($pos + 1)]) === false
@@ -883,7 +904,7 @@ class Config
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--cache] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -905,6 +926,8 @@ class Config
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --colors      Use colors in output'.PHP_EOL;
         echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
+        echo '        --cache       Cache results between runs'.PHP_EOL;
+        echo '        --no-cache    Do not cache results between runs (this is the default)'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;

@@ -827,7 +827,7 @@ class ArrayDeclarationSniff implements Sniff
                 }
 
                 // Skip to the end of multi-line strings.
-                if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$i]['code']]) === true) {
+                if (isset(Tokens::$stringTokens[$tokens[$i]['code']]) === true) {
                     $i = $phpcsFile->findNext($tokens[$i]['code'], ($i + 1), null, true);
                     $i--;
                     $valueLine = $tokens[$i]['line'];
