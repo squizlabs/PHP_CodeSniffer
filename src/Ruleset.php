@@ -33,6 +33,13 @@ class Ruleset
     public $name = '';
 
     /**
+     * A list of file paths for the ruleset files being used.
+     *
+     * @var string[]
+     */
+    public $paths = '';
+
+    /**
      * A list of regular expressions used to ignore files and folders.
      *
      * The key is the regular expression and the value is the type
@@ -120,7 +127,8 @@ class Ruleset
                     $this->name .= ', ';
                 }
 
-                $this->name .= $standardName;
+                $this->name   .= $standardName;
+                $this->paths[] = $standard;
             }
 
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
