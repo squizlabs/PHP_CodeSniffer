@@ -127,7 +127,8 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
         if (isset($GLOBALS['PHP_CODESNIFFER_CONFIG']) === true) {
             $config = $GLOBALS['PHP_CODESNIFFER_CONFIG'];
         } else {
-            $config = new Config();
+            $config        = new Config();
+            $config->cache = false;
             $GLOBALS['PHP_CODESNIFFER_CONFIG'] = $config;
         }
 
