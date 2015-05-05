@@ -538,7 +538,7 @@ class Config
             $this->overriddenDefaults['warningSeverity'] = true;
             break;
         case 'w' :
-            $this->warningSeverity = null;
+            $this->warningSeverity = $this->errorSeverity;
             $this->overriddenDefaults['warningSeverity'] = true;
             break;
         default:
