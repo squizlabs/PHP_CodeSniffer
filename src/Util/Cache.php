@@ -61,14 +61,11 @@ class Cache
                        'errorSeverity'   => $config->errorSeverity,
                        'warningSeverity' => $config->warningSeverity,
                        'sniffs'          => $config->sniffs,
-                       'standards'       => $ruleset->paths,
                        'codeHash'        => $codeHash,
                       );
 
         sort($configData['sniffs']);
-        sort($configData['standards']);
-        $configData['sniffs']    = implode(',', $configData['sniffs']);
-        $configData['standards'] = implode(',', $configData['standards']);
+        $configData['sniffs'] = implode(',', $configData['sniffs']);
 
         $configString = implode(',', $configData);
         $hash         = substr(sha1($configString), 0, 12);
