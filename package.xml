@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Automatic discovery of executable paths (request #571)
     -- Thanks to Sergey Morozov for the patch
   - All sniff errors are now exceptions and caught to stop infinite loops
+  - installed_paths config setting can now point directly to a standard instead of the dir above
   - Improved the performance of the CSS tokenizer, especially on very large CSS files (thousands of lines)
     -- Thanks to Klaus Purer for the patch
   - Defined tokens for lower PHP versions are now phpcs-specific string instead of ints

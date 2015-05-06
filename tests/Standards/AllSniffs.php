@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Tests\Standards;
 
 use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Util\Standards;
+use PHP_CodeSniffer\Autoload;
 
 /**
  * A test class for testing all sniffs for installed standards.
@@ -87,7 +88,7 @@ class AllSniffs
 
         $installedPaths = Standards::getInstalledStandardPaths();
         foreach ($installedPaths as $path) {
-            $origPath  = $path;
+            #$origPath  = $path;
             $standards = Standards::getInstalledStandards(true, $path);
 
             // If the test is running PEAR installed, the built-in standards
@@ -100,11 +101,18 @@ class AllSniffs
             #}
 
             foreach ($standards as $standard) {
-                $testsDir = $path.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
+                $standardDir = $path.DIRECTORY_SEPARATOR.$standard;
+                $testsDir    = $standardDir.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
 
                 if (is_dir($testsDir) === false) {
-                    // No tests for this standard.
-                    continue;
+                    // Check if the installed path is actually a standard itself.
+                    $standardDir = $path;
+                    $testsDir    = $standardDir.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
+                    if (is_dir($testsDir) === false) {
+                        // No tests for this standard.
+                        continue;
+                    }
+                } else {
                 }
 
                 $di = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($testsDir));
@@ -122,21 +130,10 @@ class AllSniffs
                         continue;
                     }
 
-                    $filePath  = $file->getPathname();
-                    $className = str_replace($path.DIRECTORY_SEPARATOR, 'PHP_CodeSniffer\Standards\\', $filePath);
-                    $className = substr($className, 0, -4);
-                    $className = str_replace(DIRECTORY_SEPARATOR, '\\', $className);
-
-                    // Include the sniff here so tests can use it in their setup() methods.
-                    #$parts     = explode('_', $className);
-                    #$sniffPath = $origPath.DIRECTORY_SEPARATOR.$parts[0].DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR.$parts[2].DIRECTORY_SEPARATOR.$parts[3];
-                    #$sniffPath = substr($sniffPath, 0, -8).'Sniff.php';
-                    #include_once $sniffPath;
-
-                    include_once $filePath;
-                    $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'][$className] = $path;
+                    $className = Autoload::loadFile($file->getPathname());
+                    $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'][$className] = $standardDir;
                     $suite->addTestSuite($className);
-                }//end foreach
+                }
             }//end foreach
         }//end foreach
 

@@ -396,7 +396,16 @@ class Common
     public static function getSniffCode($sniffClass)
     {
         $parts    = explode('\\', $sniffClass);
-        $sniff    = substr(array_pop($parts), 0, -5);
+        $sniff    = array_pop($parts);
+
+        if (substr($sniff, -5) === 'Sniff') {
+            // Sniff class name.
+            $sniff = substr($sniff, 0, -5);
+        } else {
+            // Unit test class name.
+            $sniff = substr($sniff, 0, -8);
+        }
+
         $category = array_pop($parts);
         $sniffDir = array_pop($parts);
         $standard = array_pop($parts);

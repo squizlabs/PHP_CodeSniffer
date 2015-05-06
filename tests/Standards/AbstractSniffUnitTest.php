@@ -6,6 +6,8 @@ use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\RuntimeException;
+use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Autoload;
 
 /**
  * An abstract class that all sniff unit tests must extend.
@@ -50,7 +52,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
     protected $backupGlobals = false;
 
     /**
-     * The path to the directory under which the sniff's standard lives.
+     * The path to the standard's main directory.
      *
      * @var string
      */
@@ -95,15 +97,10 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped();
         }
 
-        // The basis for determining file locations.
-        $basename = substr(get_class($this), 26, -8);
+        $sniffCode = Common::getSniffCode(get_class($this));
+        list($standardName, $categoryName, $sniffName) = explode('.', $sniffCode);
 
-        // The code of the sniff we are testing.
-        $parts        = explode('\\', $basename);
-        $standardName = $parts[0];
-        $sniffCode    = $parts[0].'.'.$parts[2].'.'.$parts[3];
-
-        $testFileBase = $this->standardsDir.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $basename).'UnitTest.';
+        $testFileBase = $this->standardsDir.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR.$categoryName.DIRECTORY_SEPARATOR.$sniffName.'UnitTest.';
 
         // Get a list of all test files to check. These will have the same base
         // name but different extensions. We ignore the .php file as it is the class.
@@ -139,11 +136,13 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
         if (isset($GLOBALS['PHP_CODESNIFFER_RULESET']) === true) {
             $ruleset = $GLOBALS['PHP_CODESNIFFER_RULESET'];
 
-            $sniffBasename = str_replace('\Tests\\', '\Sniffs\\', $basename).'Sniff';
-            $testFile      = $this->standardsDir.DIRECTORY_SEPARATOR.str_replace('\\', DIRECTORY_SEPARATOR, $sniffBasename).'.php';
+            $sniffFile = $this->standardsDir.DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR.$categoryName.DIRECTORY_SEPARATOR.$sniffName.'Sniff.php';
 
-            $restrictions = array('php_codesniffer\standards\\'.strtolower($sniffBasename) => true);
-            $ruleset->registerSniffs(array($testFile), $restrictions);
+            $sniffClassName = substr(get_class($this), 0, -8).'Sniff';
+            $sniffClassName = str_replace('\Tests\\', '\Sniffs\\', $sniffClassName);
+
+            $restrictions = array(strtolower($sniffClassName) => true);
+            $ruleset->registerSniffs(array($sniffFile), $restrictions);
             $ruleset->populateTokenListeners();
         } else {
             $ruleset = new Ruleset($config);
