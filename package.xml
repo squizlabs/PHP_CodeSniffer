@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Caching between runs (--cache, --no-cache and "cache" config var) (request #530)
   - Automatic discovery of executable paths (request #571)
     -- Thanks to Sergey Morozov for the patch
+  - All sniff errors are now exceptions and caught to stop infinite loops
   - Improved the performance of the CSS tokenizer, especially on very large CSS files (thousands of lines)
     -- Thanks to Klaus Purer for the patch
   - Defined tokens for lower PHP versions are now phpcs-specific string instead of ints

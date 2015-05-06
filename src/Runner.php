@@ -16,6 +16,7 @@ use PHP_CodeSniffer\Files\FileList;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Files\DummyFile;
 use PHP_CodeSniffer\Util\Cache;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 class Runner
 {
@@ -335,6 +336,9 @@ class Runner
         $maxLength    = strlen($numFiles);
         $lastDir      = '';
 
+        // Turn all sniff errors into exceptions.
+        set_error_handler(array($this, 'handleErrors'));
+
         foreach ($todo as $path => $file) {
             $currDir = dirname($path);
             if ($lastDir !== $currDir) {
@@ -376,27 +380,7 @@ class Runner
                     }
                 }
             } catch (\Exception $e) {
-                $trace = $e->getTrace();
-
-                $filename = $trace[0]['args'][0];
-                if (is_object($filename) === true && ($filename instanceof File) === true) {
-                    $filename = $filename->getFilename();
-                } else if (is_numeric($filename) === true) {
-                    // See if we can find the File object.
-                    foreach ($trace as $data) {
-                        if (isset($data['args'][0]) === true
-                            && ($data['args'][0] instanceof File) === true
-                        ) {
-                            $filename = $data['args'][0]->getFilename();
-                        }
-                    }
-                } else if (is_string($filename) === false) {
-                    $filename = (string) $filename;
-                }
-
-                $errorMessage = '"'.$e->getMessage().'" at '.$e->getFile().':'.$e->getLine();
-                $error        = "An error occurred during processing; checking has been aborted. The error message was: $errorMessage";
-
+                $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
                 $file->addErrorOnLine($error, 1);
             }//end try
 
@@ -491,6 +475,8 @@ class Runner
             }
         }//end foreach
 
+        restore_error_handler();
+
         if (PHP_CODESNIFFER_VERBOSITY === 0
             && $this->config->interactive === false
             && $this->config->showProgress === true
@@ -525,6 +511,27 @@ class Runner
         return $return;
 
     }//end run()
+
+
+    /**
+     * Converts all PHP errors into exceptions.
+     *
+     * This method forces a sniff to stop processing if it is not
+     * able to handle a specific piece of code, instead of continuing
+     * and potentially getting into a loop.
+     *
+     * @param int    $code    The level of error raised.
+     * @param string $message The error message.
+     * @param string $file    The path of the file that raised the error.
+     * @param int    $line    The line number the error was raised at.
+     *
+     * @return void
+     */
+    public function handleErrors($code, $message, $file, $line)
+    {
+        throw new RuntimeException("$message in $file on line $line");
+
+    }//end handleErrors()
 
 
 }//end class
