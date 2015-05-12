@@ -79,4 +79,6 @@ function myFunction()
 /*
     [^\'"]
 */
+
+// http://www.google.com
 ?>
