@@ -233,6 +233,11 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
                 // Commented out HTML/XML and other docs contain a lot of these
                 // characters, so it is best to not use them directly.
                 $numPossible++;
+            } else if ($stringTokens[$i]['code'] === T_GOTO_LABEL
+                && in_array(rtrim($stringTokens[$i]['content'], ':'), $this->uriScheme) === true
+            ) {
+                // Remove false positive token.
+                $numTokens--;
             } else {
                 // Looks like code.
                 $numCode++;
