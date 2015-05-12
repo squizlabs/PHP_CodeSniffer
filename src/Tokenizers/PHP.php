@@ -1006,7 +1006,9 @@ class PHP extends Tokenizer
             // Looking for functions that are actually closures.
             if ($this->tokens[$i]['code'] === T_FUNCTION && isset($this->tokens[$i]['scope_opener']) === true) {
                 for ($x = ($i + 1); $x < $numTokens; $x++) {
-                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false
+                        && $this->tokens[$x]['code'] !== T_BITWISE_AND
+                    ) {
                         break;
                     }
                 }

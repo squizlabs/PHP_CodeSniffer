@@ -174,3 +174,7 @@ blah
 {
     // body
 }
+
+$b = function &() {
+    echo "hello";
+};

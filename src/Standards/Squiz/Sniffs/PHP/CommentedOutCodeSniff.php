@@ -167,6 +167,7 @@ class CommentedOutCodeSniff implements Sniff
                         T_STRING_CONCAT           => true,
                         T_ENCAPSED_AND_WHITESPACE => true,
                         T_NONE                    => true,
+                        T_COMMENT                 => true,
                        );
 
         $numTokens = count($stringTokens);
@@ -208,6 +209,7 @@ class CommentedOutCodeSniff implements Sniff
                 $numComment++;
             } else if (in_array($stringTokens[$i]['code'], Tokens::$comparisonTokens) === true
                 || in_array($stringTokens[$i]['code'], Tokens::$arithmeticTokens) === true
+                || $stringTokens[$i]['code'] === T_GOTO_LABEL
             ) {
                 // Commented out HTML/XML and other docs contain a lot of these
                 // characters, so it is best to not use them directly.
