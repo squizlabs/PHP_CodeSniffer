@@ -47,6 +47,37 @@ class Squiz_Sniffs_PHP_CommentedOutCodeSniff implements PHP_CodeSniffer_Sniff
      */
     public $maxPercentage = 35;
 
+    /**
+     * Returns arbitrary array of protocols that may be misleadingly confused with
+     * T_GOTO_LABEL. It may result in false negative.
+     * See http://en.wikipedia.org/wiki/URI_scheme
+     *
+     * @return array
+     */
+    public $uriScheme = array(
+                         'attachment',
+                         'callto',
+                         'chrome',
+                         'data',
+                         'dns',
+                         'file',
+                         'ftp',
+                         'git',
+                         'http',
+                         'https',
+                         'irc',
+                         'mailto',
+                         'nfs',
+                         'rsync',
+                         'sftp',
+                         'smb',
+                         'ssh',
+                         'svn',
+                         'tcp',
+                         'tel',
+                         'udp',
+                        );
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
