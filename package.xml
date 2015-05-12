@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Stops conflict with other projects, like PHP_CodeCoverage
   - Added more guard code for syntax errors to various sniffs
   - Fixed bug #584 : Squiz.Arrays.ArrayDeclaration sniff gives incorrect NoComma error for multiline string values
+  - Fixed bug #594 : Tokenizer issue on closure that returns by reference
  </notes>
  <contents>
   <dir name="/">

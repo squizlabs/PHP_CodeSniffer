@@ -854,7 +854,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
             // Looking for functions that are actually closures.
             if ($tokens[$i]['code'] === T_FUNCTION && isset($tokens[$i]['scope_opener']) === true) {
                 for ($x = ($i + 1); $x < $numTokens; $x++) {
-                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false
+                        && $tokens[$x]['code'] !== T_BITWISE_AND
+                    ) {
                         break;
                     }
                 }
