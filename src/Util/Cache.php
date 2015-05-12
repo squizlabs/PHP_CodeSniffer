@@ -60,12 +60,8 @@ class Cache
                        'encoding'        => $config->encoding,
                        'errorSeverity'   => $config->errorSeverity,
                        'warningSeverity' => $config->warningSeverity,
-                       'sniffs'          => $config->sniffs,
                        'codeHash'        => $codeHash,
                       );
-
-        sort($configData['sniffs']);
-        $configData['sniffs'] = implode(',', $configData['sniffs']);
 
         $configString = implode(',', $configData);
         $hash         = substr(sha1($configString), 0, 12);
