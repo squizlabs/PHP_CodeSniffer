@@ -451,6 +451,14 @@ abstract class Tokenizer
                     echo "\tStart scope map at $i:$type => $content".PHP_EOL;
                 }
 
+                if (isset($this->tokens[$i]['scope_condition']) === true) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t* already processed, skipping *".PHP_EOL;
+                    }
+
+                    continue;
+                }
+
                 $i = $this->recurseScopeMap($i);
             }//end if
         }//end for
