@@ -88,4 +88,18 @@ switch (true) {
             return null;
         }
 }
-?>
+
+use Vendor\Test\FooBar;
+
+function test()
+{
+    switch ($val) {
+        case 'foo':
+            echo 'foo';
+            break;
+        default:
+            echo 'foo';
+    }
+
+    exit;
+}
