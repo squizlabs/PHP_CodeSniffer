@@ -143,6 +143,12 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
         }//end if
 
         $asToken = $phpcsFile->findNext(T_AS, $openingBracket);
+        if ($asToken === false) {
+            $error = 'Possible parse error: FOREACH has no AS statement';
+            $phpcsFile->addWarning($error, $stackPtr, 'MissingAs');
+            return;
+        }
+
         $content = $tokens[$asToken]['content'];
         if ($content !== strtolower($content)) {
             $expected = strtolower($content);
