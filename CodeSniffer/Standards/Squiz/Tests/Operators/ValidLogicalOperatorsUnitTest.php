@@ -46,8 +46,6 @@ class Squiz_Tests_Operators_ValidLogicalOperatorsUnitTest extends AbstractSniffU
                 5  => 1,
                 11 => 1,
                 17 => 2,
-                23 => 1,
-                26 => 1,
                );
 
     }//end getErrorList()
