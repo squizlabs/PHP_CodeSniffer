@@ -472,9 +472,11 @@ class Config
             $this->colors = (bool) $colors;
         }
 
-        $cache = self::getConfigData('cache');
-        if ($cache !== null) {
-            $this->cache = (bool) $cache;
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+            $cache = self::getConfigData('cache');
+            if ($cache !== null) {
+                $this->cache = (bool) $cache;
+            }
         }
 
     }//end restoreDefaults()
@@ -534,12 +536,16 @@ class Config
             }
             break;
         case 'n' :
-            $this->warningSeverity = 0;
-            $this->overriddenDefaults['warningSeverity'] = true;
+            if (isset($this->overriddenDefaults['warningSeverity']) === false) {
+                $this->warningSeverity = 0;
+                $this->overriddenDefaults['warningSeverity'] = true;
+            }
             break;
         case 'w' :
-            $this->warningSeverity = $this->errorSeverity;
-            $this->overriddenDefaults['warningSeverity'] = true;
+            if (isset($this->overriddenDefaults['warningSeverity']) === false) {
+                $this->warningSeverity = $this->errorSeverity;
+                $this->overriddenDefaults['warningSeverity'] = true;
+            }
             break;
         default:
             if ($this->dieOnUnknownArg === false) {
@@ -579,8 +585,10 @@ class Config
             $this->overriddenDefaults['colors'] = true;
             break;
         case 'cache':
-            $this->cache = true;
-            $this->overriddenDefaults['cache'] = true;
+            if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+                $this->cache = true;
+                $this->overriddenDefaults['cache'] = true;
+            }
             break;
         case 'no-cache':
             $this->cache = false;
