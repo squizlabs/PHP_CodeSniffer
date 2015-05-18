@@ -2,12 +2,12 @@
 );
 test();
 test($arg, $arg2);
-test ();
+isset ();
 test( );
 test() ;
 test( $arg);
-test( $arg );
-test ( $arg );
+empty( $arg );
+eval ( $arg );
 
 if (is_array($arg) === true) {
 

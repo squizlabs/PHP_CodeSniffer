@@ -654,6 +654,27 @@ final class PHP_CodeSniffer_Tokens
                                     T_NOWDOC        => T_NOWDOC,
                                    );
 
+    /**
+     * Tokens that represent the names of called functions.
+     *
+     * Mostly, these are just strings. But PHP tokeizes some language
+     * constructs and functions using their own tokens.
+     *
+     * @var array(int)
+     */
+    public static $functionNameTokens = array(
+                                         T_STRING       => T_STRING,
+                                         T_EVAL         => T_EVAL,
+                                         T_EXIT         => T_EXIT,
+                                         T_INCLUDE      => T_INCLUDE,
+                                         T_INCLUDE_ONCE => T_INCLUDE_ONCE,
+                                         T_REQUIRE      => T_REQUIRE,
+                                         T_REQUIRE_ONCE => T_REQUIRE_ONCE,
+                                         T_ISSET        => T_ISSET,
+                                         T_UNSET        => T_UNSET,
+                                         T_EMPTY        => T_EMPTY,
+                                        );
+
 
     /**
      * A PHP_CodeSniffer_Tokens class cannot be constructed.

@@ -74,7 +74,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
      */
     public function register()
     {
-        return array(T_STRING);
+        return PHP_CodeSniffer_Tokens::$functionNameTokens;
 
     }//end register()
 
