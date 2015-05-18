@@ -81,7 +81,7 @@ class FunctionCallSignatureSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STRING);
+        return Tokens::$functionNameTokens;
 
     }//end register()
 

@@ -48,7 +48,6 @@ class ValidLogicalOperatorsSniff implements Sniff
         return array(
                 T_LOGICAL_AND,
                 T_LOGICAL_OR,
-                T_LOGICAL_XOR,
                );
 
     }//end register()
@@ -70,7 +69,6 @@ class ValidLogicalOperatorsSniff implements Sniff
         $replacements = array(
                          'and' => '&&',
                          'or'  => '||',
-                         'xor' => '^',
                         );
 
         $operator = strtolower($tokens[$stackPtr]['content']);

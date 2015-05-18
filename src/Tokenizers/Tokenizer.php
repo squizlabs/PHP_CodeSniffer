@@ -1051,7 +1051,7 @@ abstract class Tokenizer
                                 echo "* token $badToken:$type removed from conditions array *".PHP_EOL;
                             }
 
-                            unset ($openers[$lastOpener]);
+                            unset($openers[$lastOpener]);
 
                             $level--;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {

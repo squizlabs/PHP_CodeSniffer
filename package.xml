@@ -33,13 +33,17 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - installed_paths config setting can now point directly to a standard instead of the dir above
   - Improved the performance of the CSS tokenizer, especially on very large CSS files (thousands of lines)
     -- Thanks to Klaus Purer for the patch
-  - Defined tokens for lower PHP versions are now phpcs-specific string instead of ints
+  - Defined tokens for lower PHP versions are now phpcs-specific strings instead of ints
     -- Stops conflict with other projects, like PHP_CodeCoverage
   - Added more guard code for syntax errors to various sniffs
+  - Squiz ValidLogicalOperatorsSniff now ignores XOR as type casting is different when using the ^ operator (request #567)
   - Squiz CommentedOutCodeSniff is now better at ignoring URLs inside comments
   - Fixed bug #584 : Squiz.Arrays.ArrayDeclaration sniff gives incorrect NoComma error for multiline string values
+  - Fixed bug #589 : PEAR.Functions.FunctionCallSignature sniff not checking all function calls
   - Fixed bug #592 : USE statement tokenising can sometimes result in mismatched scopes
   - Fixed bug #594 : Tokenizer issue on closure that returns by reference
+  - Fixed bug #595 : Colons in CSS selectors within media queries throw false positives
+    -- Thanks to Klaus Purer for the patch
  </notes>
  <contents>
   <dir name="/">

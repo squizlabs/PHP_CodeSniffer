@@ -267,9 +267,12 @@ class CSS extends PHP
         }//end for
 
         // A flag to indicate if we are inside a style definition,
-        // which is defined using curly braces. I'm assuming you can't
-        // have nested curly brackets.
+        // which is defined using curly braces.
         $inStyleDef = false;
+
+        // A flag to indicate if an At-rule like "@media" is used, which will result
+        // in nested curly brackets.
+        $asperandStart = false;
 
         $numTokens = count($finalTokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
@@ -277,10 +280,20 @@ class CSS extends PHP
 
             switch ($token['code']) {
             case T_OPEN_CURLY_BRACKET:
-                $inStyleDef = true;
+                // Opening curly brackets for an At-rule do not start a style
+                // definition. We also reset the asperand flag here because the next
+                // opening curly bracket could be indeed the start of a style
+                // definition.
+                if ($asperandStart === true) {
+                    $inStyleDef    = false;
+                    $asperandStart = false;
+                } else {
+                    $inStyleDef = true;
+                }
                 break;
             case T_CLOSE_CURLY_BRACKET:
-                $inStyleDef = false;
+                $inStyleDef    = false;
+                $asperandStart = false;
                 break;
             case T_MINUS:
                 // Minus signs are often used instead of spaces inside
@@ -372,6 +385,9 @@ class CSS extends PHP
                     }
                 }//end if
 
+                break;
+            case T_ASPERAND:
+                $asperandStart = true;
                 break;
             default:
                 // Nothing special to be done with this token.
