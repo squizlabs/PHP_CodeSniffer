@@ -234,7 +234,7 @@ class IncrementDecrementUsageSniff implements Sniff
             }
 
             $error .= " operators should be used where possible; found \"$found\" but expected \"$expected\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }//end if
 
     }//end processAssignment()

@@ -85,18 +85,24 @@ class LocalFile extends File
     public function process()
     {
         if ($this->config->cache === false) {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo PHP_EOL;
+            }
+
             return parent::process();
         }
 
         $hash  = $this->path.'.'.md5_file($this->path);
         $cache = Cache::get($hash);
         if ($cache !== false) {
-            $this->errors   = $cache['errors'];
-            $this->warnings = $cache['warnings'];
-            $this->metrics  = $cache['metrics'];
-            $this->errorCount   = $cache['errorCount'];
-            $this->warningCount = $cache['warningCount'];
-            $this->fixableCount  = $cache['fixableCount'];
+            // We can't filter metrics, so just load all of them.
+            $this->metrics = $cache['metrics'];
+
+            // Replay the cached errors and warnings to filter out the ones
+            // we don't need for this specific run.
+            $this->config->cache = false;
+            $this->replayErrors($cache['errors'], $cache['warnings']);
+            $this->config->cache = true;
 
             if (PHP_CODESNIFFER_VERBOSITY > 0
                 || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)
@@ -105,6 +111,10 @@ class LocalFile extends File
             }
 
             return;
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo PHP_EOL;
         }
 
         parent::process();
@@ -120,7 +130,58 @@ class LocalFile extends File
 
         Cache::set($hash, $cache);
 
+        // During caching, we don't filter out errors in any way, so
+        // we need to do that manually now by replaying them.
+        $this->config->cache = false;
+        $this->replayErrors($this->errors, $this->warnings);
+        $this->config->cache = true;
+
     }//end process()
+
+
+    private function replayErrors($errors, $warnings)
+    {
+        $this->errors = array();
+        $this->warnigns = array();
+        $this->errorCount = 0;
+        $this->warningCount = 0;
+        $this->fixableCount = 0;
+
+        foreach ($errors as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $this->activeListener = $error['listener'];
+                    $this->_addError(
+                        $error['message'],
+                        $line,
+                        $column,
+                        $error['source'],
+                        array(),
+                        $error['severity'],
+                        $error['fixable']
+                    );
+                }
+            }
+        }
+
+        foreach ($warnings as $line => $lineErrors) {
+            foreach ($lineErrors as $column => $colErrors) {
+                foreach ($colErrors as $error) {
+                    $this->activeListener = $error['listener'];
+                    $this->_addWarning(
+                        $error['message'],
+                        $line,
+                        $column,
+                        $error['source'],
+                        array(),
+                        $error['severity'],
+                        $error['fixable']
+                    );
+                }
+            }
+        }
+
+    }//end replayErrors()
 
 
 }//end class

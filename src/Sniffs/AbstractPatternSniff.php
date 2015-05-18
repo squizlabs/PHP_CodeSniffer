@@ -255,7 +255,7 @@ abstract class AbstractPatternSniff implements Sniff
         }
 
         foreach ($allErrors as $stackPtr => $error) {
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }
 
     }//end process()

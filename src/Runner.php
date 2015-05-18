@@ -322,12 +322,21 @@ class Runner
             $todo     = new FileList($this->config, $ruleset);
             $numFiles = count($todo);
 
-            if ($this->config->cache === true) {
-                Cache::load($this->config, $ruleset);
-            }
-
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo "DONE ($numFiles files in queue)".PHP_EOL;
+            }
+
+            if ($this->config->cache === true) {
+                if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                    echo 'Loading cache... ';
+                }
+
+                Cache::load($this->config, $ruleset);
+
+                if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                    $size = Cache::getSize();
+                    echo "DONE ($size files in cache)".PHP_EOL;
+                }
             }
         }//end if
 
@@ -352,9 +361,6 @@ class Runner
             if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
                 $startTime = microtime(true);
                 echo 'Processing '.basename($path).' ';
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo PHP_EOL;
-                }
             }
 
             try {
@@ -381,7 +387,7 @@ class Runner
                 }
             } catch (\Exception $e) {
                 $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
-                $file->addErrorOnLine($error, 1);
+                $file->addErrorOnLine($error, 1, 'Internal.Exception');
             }//end try
 
             $this->reporter->cacheFileReport($file, $this->config);

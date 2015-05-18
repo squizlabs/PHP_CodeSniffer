@@ -103,7 +103,12 @@ class Ruleset
      */
     public function __construct(Config $config)
     {
-        $restrictions = $config->sniffs;
+        // Ignore sniff restrictions if caching is on.
+        $restrictions = array();
+        if ($config->cache === false) {
+            $restrictions = $config->sniffs;
+        }
+
         $this->config = $config;
 
         $sniffs = array();

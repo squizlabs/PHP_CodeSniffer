@@ -566,7 +566,7 @@ class File
     public function addError(
         $error,
         $stackPtr,
-        $code='',
+        $code,
         $data=array(),
         $severity=0,
         $fixable=false
@@ -600,7 +600,7 @@ class File
     public function addWarning(
         $warning,
         $stackPtr,
-        $code='',
+        $code,
         $data=array(),
         $severity=0,
         $fixable=false
@@ -633,7 +633,7 @@ class File
     public function addErrorOnLine(
         $error,
         $line,
-        $code='',
+        $code,
         $data=array(),
         $severity=0
     ) {
@@ -657,7 +657,7 @@ class File
     public function addWarningOnLine(
         $warning,
         $line,
-        $code='',
+        $code,
         $data=array(),
         $severity=0
     ) {
@@ -683,7 +683,7 @@ class File
     public function addFixableError(
         $error,
         $stackPtr,
-        $code='',
+        $code,
         $data=array(),
         $severity=0
     ) {
@@ -714,7 +714,7 @@ class File
     public function addFixableWarning(
         $warning,
         $stackPtr,
-        $code='',
+        $code,
         $data=array(),
         $severity=0
     ) {
@@ -751,24 +751,24 @@ class File
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
-            $sniff     = $code;
-            $sniffCode = $code;
+            $listenerCode = Util\Common::getSniffCode($this->activeListener);
+            $sniffCode    = $code;
+        } else if (strpos($code, '.') !== false) {
+            // The full message code has been passed in.
+            $sniffCode    = $code;
+            $listenerCode = substr($sniffCode, 0, strrpos($sniffCode, '.'));
         } else {
-            $parts = explode('\\', $this->activeListener);
-            if (isset($parts[5]) === true) {
-                $sniff = $parts[2].'.'.$parts[4].'.'.$parts[5];
+            $listenerCode = Util\Common::getSniffCode($this->activeListener);
+            $sniffCode    = $listenerCode.'.'.$code;
+        }
 
-                // Remove "Sniff" from the end.
-                $sniff = substr($sniff, 0, -5);
-            } else {
-                $sniff = 'unknownSniff';
-            }
-
-            $sniffCode = $sniff;
-            if ($code !== '') {
-                $sniffCode .= '.'.$code;
-            }
-        }//end if
+        // Filter out any messages for sniffs that shouldn't have run.
+        if ($this->config->cache === false
+            && empty($this->config->sniffs) === false
+            && in_array($listenerCode, $this->config->sniffs) === false
+        ) {
+            return false;
+        }
 
         // If we know this sniff code is being ignored for this file, return early.
         if (isset($this->ignoredCodes[$sniffCode]) === true) {
@@ -781,7 +781,7 @@ class File
         ) {
             // Pass this off to the warning handler.
             return $this->_addWarning($error, $line, $column, $code, $data, $severity, $fixable);
-        } else if ($this->config->errorSeverity === 0) {
+        } else if ($this->config->cache === false && $this->config->errorSeverity === 0) {
             // Don't bother doing any processing as errors are just going to
             // be hidden in the reports anyway.
             return false;
@@ -794,7 +794,7 @@ class File
             $severity = 5;
         }
 
-        if ($this->config->errorSeverity > $severity) {
+        if ($this->config->cache === false && $this->config->errorSeverity > $severity) {
             return false;
         }
 
@@ -827,7 +827,7 @@ class File
             $this->fixableCount++;
         }
 
-        if ($this->recordErrors === false) {
+        if ($this->config->cache === false && $this->recordErrors === false) {
             if (isset($this->errors[$line]) === false) {
                 $this->errors[$line] = 0;
             }
@@ -858,6 +858,7 @@ class File
         $this->errors[$line][$column][] = array(
                                            'message'  => $message,
                                            'source'   => $sniffCode,
+                                           'listener' => $this->activeListener,
                                            'severity' => $severity,
                                            'fixable'  => $fixable,
                                           );
@@ -896,27 +897,31 @@ class File
             return false;
         }
 
+        if (isset($this->ruleset->sniffs[$this->activeListener]) === false) {
+            return false;
+        }
+
         // Work out which sniff generated the warning.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
-            $sniff     = $code;
-            $sniffCode = $code;
+            $listenerCode = Util\Common::getSniffCode($this->activeListener);
+            $sniffCode    = $code;
+        } else if (strpos($code, '.') !== false) {
+            // The full message code has been passed in.
+            $sniffCode    = $code;
+            $listenerCode = substr($sniffCode, 0, strrpos($sniffCode, '.'));
         } else {
-            $parts = explode('\\', $this->activeListener);
-            if (isset($parts[5]) === true) {
-                $sniff = $parts[2].'.'.$parts[4].'.'.$parts[5];
+            $listenerCode = Util\Common::getSniffCode($this->activeListener);
+            $sniffCode    = $listenerCode.'.'.$code;
+        }
 
-                // Remove "Sniff" from the end.
-                $sniff = substr($sniff, 0, -5);
-            } else {
-                $sniff = 'unknownSniff';
-            }
-
-            $sniffCode = $sniff;
-            if ($code !== '') {
-                $sniffCode .= '.'.$code;
-            }
-        }//end if
+        // Filter out any messages for sniffs that shouldn't have run.
+        if ($this->config->cache === false
+            && empty($this->config->sniffs) === false
+            && in_array($listenerCode, $this->config->sniffs) === false
+        ) {
+            return false;
+        }
 
         // If we know this sniff code is being ignored for this file, return early.
         if (isset($this->ignoredCodes[$sniffCode]) === true) {
@@ -929,7 +934,7 @@ class File
         ) {
             // Pass this off to the error handler.
             return $this->_addError($warning, $line, $column, $code, $data, $severity, $fixable);
-        } else if ($this->config->warningSeverity === 0) {
+        } else if ($this->config->cache === false && $this->config->warningSeverity === 0) {
             // Don't bother doing any processing as warnings are just going to
             // be hidden in the reports anyway.
             return false;
@@ -942,7 +947,7 @@ class File
             $severity = 5;
         }
 
-        if ($this->config->warningSeverity > $severity) {
+        if ($this->config->cache === false && $this->config->warningSeverity > $severity) {
             return false;
         }
 
@@ -975,7 +980,7 @@ class File
             $this->fixableCount++;
         }
 
-        if ($this->recordErrors === false) {
+        if ($this->config->cache === false && $this->recordErrors === false) {
             if (isset($this->warnings[$line]) === false) {
                 $this->warnings[$line] = 0;
             }
@@ -1006,6 +1011,7 @@ class File
         $this->warnings[$line][$column][] = array(
                                              'message'  => $message,
                                              'source'   => $sniffCode,
+                                             'listener' => $this->activeListener,
                                              'severity' => $severity,
                                              'fixable'  => $fixable,
                                             );
