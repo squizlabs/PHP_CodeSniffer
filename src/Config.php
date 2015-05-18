@@ -712,6 +712,8 @@ class Config
                 || substr($arg, 0, 7) === 'report-')
                 && PHP_CODESNIFFER_CBF === false
             ) {
+                $reports = array();
+
                 if ($arg[6] === '-') {
                     // This is a report with file output.
                     $split = strpos($arg, '=');
@@ -737,18 +739,27 @@ class Config
                             }
                         }//end if
                     }//end if
+
+                    $reports[$report] = $output;
                 } else {
                     // This is a single report.
-                    $report = substr($arg, 7);
-                    $output = null;
+                    if (isset($this->overriddenDefaults['reports']) === true) {
+                        break;
+                    }
+
+                    $reportNames = explode(',', substr($arg, 7));
+                    foreach ($reportNames as $report) {
+                        $reports[$report] = null;
+                    }
                 }//end if
 
                 // Remove the default value so the CLI value overrides it.
                 if (isset($this->overriddenDefaults['reports']) === false) {
-                    $this->reports = array();
+                    $this->reports = $reports;
+                } else {
+                    $this->reports = array_merge($this->reports, $reports);
                 }
 
-                $this->reports[$report] = $output;
                 $this->overriddenDefaults['reports'] = true;
             } else if (substr($arg, 0, 9) === 'standard=') {
                 $standards = trim(substr($arg, 9));
