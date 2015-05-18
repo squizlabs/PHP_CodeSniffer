@@ -44,6 +44,10 @@ class Cache
         // to generate a hash for the code used during the run.
         // At this point, the loaded class list contains the core PHPCS code
         // and all sniffs that have been loaded as part of the run.
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo PHP_EOL."\tGenerating loaded file list for code hash".PHP_EOL;
+        }
+
         $codeHash = '';
         $classes  = array_keys(Autoload::getLoadedClasses());
         sort($classes);
@@ -60,10 +64,10 @@ class Cache
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo PHP_EOL."\t=> including external file in code hash: ".$file;
+                    echo "\t\t=> external file: $file".PHP_EOL;
                 }
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo PHP_EOL."\t=> including internal sniff file in code hash: ".$file;
+                echo "\t\t=> internal sniff: $file".PHP_EOL;
             }
 
             $codeHash .= md5_file($file);
@@ -109,7 +113,7 @@ class Cache
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo PHP_EOL."\t=> including core file in code hash: ".$file;
+                echo "\t\t=> core file: $file".PHP_EOL;
             }
 
             $codeHash .= md5_file($file);
@@ -127,25 +131,88 @@ class Cache
                       );
 
         $configString = implode(',', $configData);
-        $hash         = substr(sha1($configString), 0, 12);
+        $cacheHash    = substr(sha1($configString), 0, 12);
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo PHP_EOL."\t** Cache key data generated **".PHP_EOL;
+            echo "\tGenerating cache key data".PHP_EOL;
             echo "\t\t=> tabWidth: ".$configData['tabWidth'].PHP_EOL;
             echo "\t\t=> encoding: ".$configData['encoding'].PHP_EOL;
             echo "\t\t=> codeHash: ".$configData['codeHash'].PHP_EOL;
-            echo "\t\t=> cacheHash: $hash".PHP_EOL;
+            echo "\t\t=> cacheHash: $cacheHash".PHP_EOL;
         }
 
-        self::$path = getcwd().DIRECTORY_SEPARATOR.".phpcs.$hash.cache";
+        // Determine the common paths for all files being checked.
+        // We can use this to locate an existing cache file, or to
+        // determine where to create a new one.
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t** Using cache file \"".self::$path.'" **'.PHP_EOL;
+            echo "\tChecking possible cache file paths".PHP_EOL;
+        }
+
+        $paths = array();
+        foreach ($config->files as $file) {
+            $file = Common::realpath($file);
+            while ($file !== DIRECTORY_SEPARATOR) {
+                if (isset($paths[$file]) === false) {
+                    $paths[$file] = 1;
+                } else {
+                    $paths[$file]++;
+                }
+
+                $lastFile = $file;
+                $file     = dirname($file);
+                if ($file === $lastFile) {
+                    // Just in case something went wrong,
+                    // we don't want to end up in an inifite loop.
+                    break;
+                }
+            }
+        }
+
+        ksort($paths);
+        $paths = array_reverse($paths);
+
+        $numFiles  = count($config->files);
+        $tmpDir    = sys_get_temp_dir();
+        $cacheFile = null;
+        foreach ($paths as $file => $count) {
+            if ($count !== $numFiles) {
+                unset($paths[$file]);
+                continue;
+            }
+
+            $fileHash = substr(sha1($file), 0, 12);
+            $testFile = $tmpDir.DIRECTORY_SEPARATOR."phpcs.$fileHash.$cacheHash.cache";
+            if ($cacheFile === null) {
+                // This will be our default location if we can't find
+                // an existing file.
+                $cacheFile = $testFile;
+            }
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\t\t=> $testFile".PHP_EOL;
+                echo "\t\t\t * based on shared location: $file *".PHP_EOL;
+            }
+
+            if (file_exists($testFile) === true) {
+                $cacheFile = $testFile;
+                break;
+            }
+        }//end foreach
+
+        if ($cacheFile === null) {
+            // Unlikely, but just in case $paths is empty for some reason.
+            $cacheFile = $tmpDir.DIRECTORY_SEPARATOR."phpcs.$cacheHash.cache";
+        }
+
+        self::$path = $cacheFile;
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            echo "\t=> Using cache file: ".self::$path.' **'.PHP_EOL;
         }
 
         if (file_exists(self::$path) === true) {
             self::$cache = json_decode(file_get_contents(self::$path), true);
         } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t** Cache file does not exist **".PHP_EOL;
+            echo "\t* cache file does not exist *".PHP_EOL;
         }
 
         self::$cache['config'] = $configData;
