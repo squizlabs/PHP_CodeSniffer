@@ -49,7 +49,7 @@ class FileList implements \Iterator, \Countable
         $paths      = $config->files;
         $local      = $config->local;
         $extensions = $config->extensions;
-        $ignore     = $ruleset->getIgnorePatterns();
+        $ignore     = array_merge($config->ignored, $ruleset->getIgnorePatterns());
 
         $this->ignorePatterns = $ignore;
         $this->ruleset        = $ruleset;
