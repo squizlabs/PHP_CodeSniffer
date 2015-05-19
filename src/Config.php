@@ -659,7 +659,7 @@ class Config
             $value = $this->cliArgs[($pos + 2)];
             $this->cliArgs[($pos + 1)] = '';
             $this->cliArgs[($pos + 2)] = '';
-            PHP_CodeSniffer::setConfigData($key, $value, true);
+            self::setConfigData($key, $value, true);
             break;
         case 'no-patch':
             $this->noPatch = true;
