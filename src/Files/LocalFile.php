@@ -78,7 +78,7 @@ class LocalFile extends File
 
 
     /**
-     * 
+     *
      *
      * @return void
      */
@@ -92,9 +92,9 @@ class LocalFile extends File
             return parent::process();
         }
 
-        $hash  = $this->path.'.'.md5_file($this->path);
-        $cache = Cache::get($hash);
-        if ($cache !== false) {
+        $hash  = md5_file($this->path);
+        $cache = Cache::get($this->path);
+        if ($cache !== false && $cache['hash'] === $hash) {
             // We can't filter metrics, so just load all of them.
             $this->metrics = $cache['metrics'];
 
@@ -120,15 +120,16 @@ class LocalFile extends File
         parent::process();
 
         $cache = array(
-                  'errors'   => $this->errors,
-                  'warnings' => $this->warnings,
-                  'metrics'  => $this->metrics,
+                  'hash'         => $hash,
+                  'errors'       => $this->errors,
+                  'warnings'     => $this->warnings,
+                  'metrics'      => $this->metrics,
                   'errorCount'   => $this->errorCount,
                   'warningCount' => $this->warningCount,
-                  'fixableCount'  => $this->fixableCount,
+                  'fixableCount' => $this->fixableCount,
                  );
 
-        Cache::set($hash, $cache);
+        Cache::set($this->path, $cache);
 
         // During caching, we don't filter out errors in any way, so
         // we need to do that manually now by replaying them.
@@ -141,9 +142,9 @@ class LocalFile extends File
 
     private function replayErrors($errors, $warnings)
     {
-        $this->errors = array();
-        $this->warnigns = array();
-        $this->errorCount = 0;
+        $this->errors       = array();
+        $this->warnigns     = array();
+        $this->errorCount   = 0;
         $this->warningCount = 0;
         $this->fixableCount = 0;
 
