@@ -969,29 +969,77 @@ class PHP_CodeSniffer_CLI
             PHP_CodeSniffer_Reporting::printRunTime();
         }
 
-        // They should all return the same value, so it
-        // doesn't matter which return value we end up using.
-        $ignoreWarnings = PHP_CodeSniffer::getConfigData('ignore_warnings_on_exit');
-        $ignoreErrors   = PHP_CodeSniffer::getConfigData('ignore_errors_on_exit');
+        // All calls to printReport() should return the same value,
+        // so it doesn't matter which return value we end up using.
+        return $this->calculateErrorsAndWarnings($errors, $warnings);
 
-        $return = ($errors + $warnings);
+    }//end printErrorReport()
+
+
+    /**
+     * Calculate how many errors and warnings should be shown
+     *
+     * @param int $errors   The number of errors.
+     * @param int $warnings The number of warnings.
+     *
+     * @return int The number of error and warning messages to be shown.
+     */
+    protected function calculateErrorsAndWarnings($errors, $warnings)
+    {
+        $errorsAndWarnings = ($errors + $warnings);
+
+        $errorsAndWarnings = $this->ignoreErrors($errors, $errorsAndWarnings);
+        $errorsAndWarnings = $this->ignoreWarnings($warnings, $errorsAndWarnings);
+
+        return $errorsAndWarnings;
+
+    }//end calculateErrorsAndWarnings()
+
+
+    /**
+     * If configured, ignore errors
+     *
+     * @param int $errors            The number of errors.
+     * @param int $errorsAndWarnings The accumulated number of errors and warnings.
+     *
+     * @return int The number of error and warning messages to be shown.
+     */
+    protected function ignoreErrors($errors, $errorsAndWarnings)
+    {
+        $ignoreErrors = PHP_CodeSniffer::getConfigData('ignore_errors_on_exit');
         if ($ignoreErrors !== null) {
             $ignoreErrors = (bool) $ignoreErrors;
             if ($ignoreErrors === true) {
-                $return -= $errors;
+                $errorsAndWarnings -= $errors;
             }
         }
 
+        return $errorsAndWarnings;
+
+    }//end ignoreErrors()
+
+
+    /**
+     * If configured, ignore warnings
+     *
+     * @param int $warnings          The number of warnings.
+     * @param int $errorsAndWarnings The accumulated number of errors and warnings.
+     *
+     * @return int The number of error and warning messages to be shown.
+     */
+    protected function ignoreWarnings($warnings, $errorsAndWarnings)
+    {
+        $ignoreWarnings = PHP_CodeSniffer::getConfigData('ignore_warnings_on_exit');
         if ($ignoreWarnings !== null) {
             $ignoreWarnings = (bool) $ignoreWarnings;
             if ($ignoreWarnings === true) {
-                $return -= $warnings;
+                $errorsAndWarnings -= $warnings;
             }
         }
 
-        return $return;
+        return $errorsAndWarnings;
 
-    }//end printErrorReport()
+    }//end ignoreWarnings()
 
 
     /**
