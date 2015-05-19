@@ -681,7 +681,7 @@ class Config
             } else if (substr($arg, 0, 12) === 'report-file='
                 && PHP_CODESNIFFER_CBF === false
             ) {
-                $this->reportFile = PHP_CodeSniffer::realpath(substr($arg, 12));
+                $this->reportFile = Util\Common::realpath(substr($arg, 12));
 
                 // It may not exist and return false instead.
                 if ($this->reportFile === false) {
@@ -707,7 +707,7 @@ class Config
                     // Passed report file is a filename in the current directory.
                     $this->reportFile = getcwd().'/'.basename($this->reportFile);
                 } else {
-                    $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
+                    $dir = Util\Common::realpath(getcwd().'/'.$dir);
                     if ($dir !== false) {
                         // Report file path is relative.
                         $this->reportFile = $dir.'/'.basename($this->reportFile);
@@ -739,7 +739,7 @@ class Config
                                 // Passed report file is a filename in the current directory.
                                 $output = getcwd().'/'.basename($output);
                             } else {
-                                $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
+                                $dir = Util\Common::realpath(getcwd().'/'.$dir);
                                 if ($dir !== false) {
                                     // Report file path is relative.
                                     $output = $dir.'/'.basename($output);
