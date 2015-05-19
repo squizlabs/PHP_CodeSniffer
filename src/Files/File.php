@@ -222,7 +222,7 @@ class File
         }
 
         /*
-            if ($this->config->interactive === false) {
+            if ($this->config->cache === false && $this->config->interactive === false) {
             $cliValues = $phpcs->config->getCommandLineValues();
             if (isset($cliValues['showSources']) === true
                 && $cliValues['showSources'] !== true
@@ -827,7 +827,7 @@ class File
             $this->fixableCount++;
         }
 
-        if ($this->config->cache === false && $this->recordErrors === false) {
+        if ($this->recordErrors === false) {
             if (isset($this->errors[$line]) === false) {
                 $this->errors[$line] = 0;
             }
@@ -980,7 +980,7 @@ class File
             $this->fixableCount++;
         }
 
-        if ($this->config->cache === false && $this->recordErrors === false) {
+        if ($this->recordErrors === false) {
             if (isset($this->warnings[$line]) === false) {
                 $this->warnings[$line] = 0;
             }
@@ -1044,14 +1044,14 @@ class File
         if (isset($this->metrics[$metric]) === false) {
             $this->metrics[$metric] = array(
                                        'values' => array(
-                                                    $value => array($stackPtr),
+                                                    $value => 1,
                                                    ),
                                       );
         } else {
             if (isset($this->metrics[$metric]['values'][$value]) === false) {
-                $this->metrics[$metric]['values'][$value] = array($stackPtr);
+                $this->metrics[$metric]['values'][$value] = 1;
             } else {
-                $this->metrics[$metric]['values'][$value][] = $stackPtr;
+                $this->metrics[$metric]['values'][$value]++;
             }
         }
 

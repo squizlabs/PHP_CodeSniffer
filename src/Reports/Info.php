@@ -52,10 +52,7 @@ class Info implements Report
                 $this->metricCache[$metric] = array();
             }
 
-            foreach ($data['values'] as $value => $locations) {
-                $locations = array_unique($locations);
-                $count     = count($locations);
-
+            foreach ($data['values'] as $value => $count) {
                 if (isset($this->metricCache[$metric][$value]) === false) {
                     $this->metricCache[$metric][$value] = $count;
                 } else {
