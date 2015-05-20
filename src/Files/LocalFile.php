@@ -84,6 +84,10 @@ class LocalFile extends File
      */
     public function process()
     {
+        if ($this->ignored === true) {
+            return;
+        }
+
         if ($this->config->cache === false) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo PHP_EOL;
