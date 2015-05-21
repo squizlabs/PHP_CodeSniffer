@@ -61,3 +61,7 @@ switch ($blah) {
 }
 
 ?>
+
+<?php while($row = $data->getRow()): ?>
+    <p><?= $val ?></p>
+<?php endwhile; ?>

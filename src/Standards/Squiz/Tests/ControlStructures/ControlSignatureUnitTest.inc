@@ -154,3 +154,9 @@ catch (FirstExceptionType $e) {
 catch (OtherExceptionType $e) {
     // catch body
 }
+
+?>
+
+<?php while($row = $data->getRow()): ?>
+    <p><?= $val ?></p>
+<?php endwhile; ?>

@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added more guard code for syntax errors to various sniffs
   - Squiz ValidLogicalOperatorsSniff now ignores XOR as type casting is different when using the ^ operator (request #567)
   - Squiz CommentedOutCodeSniff is now better at ignoring URLs inside comments
+  - Squiz ControlSignatureSniff is now better at checking embedded PHP code
+  - Squiz ScopeClosingBraceSniff is now better at checking embedded PHP code
   - Fixed bug #584 : Squiz.Arrays.ArrayDeclaration sniff gives incorrect NoComma error for multiline string values
   - Fixed bug #589 : PEAR.Functions.FunctionCallSignature sniff not checking all function calls
   - Fixed bug #592 : USE statement tokenising can sometimes result in mismatched scopes

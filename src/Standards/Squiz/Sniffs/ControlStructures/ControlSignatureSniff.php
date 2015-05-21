@@ -121,9 +121,14 @@ class ControlSignatureSniff implements Sniff
             $content = $phpcsFile->getTokensAsString(($closer + 1), ($opener - $closer - 1));
 
             if ($content !== ' ') {
-                $error = 'Expected 1 space after closing parenthesis; found "%s"';
-                $data  = array(str_replace($phpcsFile->eolChar, '\n', $content));
-                $fix   = $phpcsFile->addFixableError($error, $closer, 'SpaceAfterCloseParenthesis', $data);
+                $error = 'Expected 1 space after closing parenthesis; found %s';
+                if (trim($content) === '') {
+                    $found = strlen($content);
+                } else {
+                    $found = '"'.str_replace($phpcsFile->eolChar, '\n', $content).'"';
+                }
+
+                $fix = $phpcsFile->addFixableError($error, $closer, 'SpaceAfterCloseParenthesis', array($found));
                 if ($fix === true) {
                     if ($closer === ($opener - 1)) {
                         $phpcsFile->fixer->addContent($closer, ' ');
@@ -153,8 +158,7 @@ class ControlSignatureSniff implements Sniff
             for ($next = ($opener + 1); $next < $phpcsFile->numTokens; $next++) {
                 $code = $tokens[$next]['code'];
 
-                // Skip all whitespace.
-                if ($code === T_WHITESPACE) {
+                if ($code === T_WHITESPACE || $code === T_CLOSE_TAG) {
                     continue;
                 }
 
