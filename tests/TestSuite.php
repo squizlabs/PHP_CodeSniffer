@@ -48,9 +48,11 @@ class PHP_CodeSniffer_TestSuite extends PHPUnit_Framework_TestSuite
         $result = parent::run($result, $filter);
         spl_autoload_unregister(array('PHP_CodeSniffer', 'autoload'));
 
-        $codes   = count($GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']);
-        $fixes   = count($GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']);
-        $percent = round(($fixes / $codes * 100), 2);
+        $codes = count($GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']);
+        $fixes = count($GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']);
+
+        $divisor = ($codes === 0) ? 1 : $codes;
+        $percent = round(($fixes / $divisor * 100), 2);
 
         echo PHP_EOL.PHP_EOL;
         echo "Tests generated $codes unique error codes; $fixes were fixable ($percent%)";
