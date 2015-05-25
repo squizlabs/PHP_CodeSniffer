@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #594 : Tokenizer issue on closure that returns by reference
   - Fixed bug #595 : Colons in CSS selectors within media queries throw false positives
     -- Thanks to Klaus Purer for the patch
+  - Fixed bug #598 : PHPCBF can break function/use closure brace placement
  </notes>
  <contents>
   <dir name="/">
