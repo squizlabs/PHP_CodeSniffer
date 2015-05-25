@@ -94,7 +94,16 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
         }
 
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
-        $functionLine = $tokens[$tokens[$stackPtr]['parenthesis_closer']]['line'];
+        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
+            if ($use !== false) {
+                $openBracket  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
+                $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
+            }
+        }
+
+        $functionLine = $tokens[$closeBracket]['line'];
         $braceLine    = $tokens[$openingBrace]['line'];
 
         $lineDifference = ($braceLine - $functionLine);
@@ -104,7 +113,6 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
             $error = 'Opening brace should be on the same line as the declaration';
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnNewLine');
             if ($fix === true) {
-                $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->addContent($closeBracket, ' {');
                 $phpcsFile->fixer->replaceToken($openingBrace, '');
@@ -131,15 +139,6 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
         // Only continue checking if the opening brace looks good.
         if ($lineDifference > 0) {
             return;
-        }
-
-        $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
-        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
-            $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
-            if ($use !== false) {
-                $openBracket  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
-                $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
-            }
         }
 
         if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
