@@ -1,4 +1,10 @@
 <?php
+namespace Coding_Standards_Analysis\Reports;
+
+use PHP_CodeSniffer\Reports\Report;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Timing;
+
 /**
  * Summary report for PHP_CodeSniffer.
  *
@@ -25,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_PHPCSSummaryReport implements PHP_CodeSniffer_Report
+class PHPCSSummaryReport implements Report
 {
 
     /**
@@ -57,15 +63,11 @@ class PHP_CodeSniffer_Reports_PHPCSSummaryReport implements PHP_CodeSniffer_Repo
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        PHP_CodeSniffer_File $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         $tokens = $phpcsFile->getTokens();
         if ($phpcsFile->numTokens === 0) {
-            $lines = 1;
+            $lines = 0;
         } else if (isset($tokens[($phpcsFile->numTokens - 1)]) === true) {
             $lines = $tokens[($phpcsFile->numTokens - 1)]['line'];
         } else {
@@ -104,19 +106,24 @@ class PHP_CodeSniffer_Reports_PHPCSSummaryReport implements PHP_CodeSniffer_Repo
         $totalFixable,
         $showSources=false,
         $width=80,
+        $interactive=false,
         $toScreen=true
     ) {
-        $numTokens = 0;
-        $numLines  = 0;
-        $numFiles  = 0;
+        $numTokens  = 0;
+        $numLines   = 0;
+        $numFiles   = 0;
+        $totalFiles = 0;
         foreach ($this->_files as $file => $data) {
-            $numFiles++;
+            $totalFiles++;
             $numTokens += $data['tokens'];
             $numLines  += $data['lines'];
+            if ($data['tokens'] > 0) {
+                $numFiles++;
+            }
         }
 
-        echo "Processed $numFiles files containing $numTokens tokens across $numLines lines".PHP_EOL;
-        PHP_CodeSniffer_Reporting::printRunTime();
+        echo "Processed $numFiles/$totalFiles files containing $numTokens tokens across $numLines lines".PHP_EOL;
+        Timing::printRunTime();
 
     }//end generate()
 

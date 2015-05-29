@@ -1,5 +1,6 @@
 <?php
 $repoDates = array();
+$reposUpdated = array();
 
 function getRepoDirs($repo)
 {
@@ -63,31 +64,34 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         // Figure out the HEAD ref and use that.
         echo "\t=> Determining branch to use".PHP_EOL;
         $cmd = "cd $cloneDir; cat .git/refs/remotes/origin/HEAD";
-        echo "\t\tcmd: ";
-        echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
+        #echo "\t\tcmd: ";
+        #echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
         $branch = trim(shell_exec($cmd));
-        echo "\t\tout: $branch".PHP_EOL;
+        #echo "\t\tout: $branch".PHP_EOL;
         $branch = substr($branch, (strpos($branch, 'origin/') + 7));
-        echo "\t\t* using branch $branch *".PHP_EOL;
+        #echo "\t\t* using branch $branch *".PHP_EOL;
 
-        echo "\t=> Updating repository".PHP_EOL;
-        $cmd  = "cd $cloneDir; git reset --hard; git clean -df; git checkout -f $branch 2>&1; git pull 2>&1; ";
-        $cmd .= 'git submodule update --init --recursive 2>&1';
-        echo "\t\tcmd: ";
-        echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
-        $output = trim(shell_exec($cmd));
-        echo "\t\tout: ";
-        echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
+        if (isset($GLOBALS['reposUpdated'][$repo->url]) === false) {
+            echo "\t=> Updating repository".PHP_EOL;
+            $cmd  = "cd $cloneDir; git reset --hard; git clean -df; git checkout -f $branch 2>&1; git pull 2>&1; ";
+            $cmd .= 'git submodule update --init --recursive 2>&1';
+            #echo "\t\tcmd: ";
+            #echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
+            $output = trim(shell_exec($cmd));
+            #echo "\t\tout: ";
+            #echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
+            $GLOBALS['reposUpdated'][$repo->url] = true;
+        }
 
         if ($checkoutDate !== date('Y-m-d')) {
             if (isset($GLOBALS['repoDates'][$repo->url]) === false) {
                 echo "\t=> Determining checkout dates".PHP_EOL;
                 $cmd  = "cd $cloneDir; git log --graph --pretty=format:'%cd:%H' --after=\"2013-11-05\" --date=short $branch | sed  -E '/^[^*]/d;s/^\*[ |\\/]+//'";
-                echo "\t\tcmd: ";
-                echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
+                #echo "\t\tcmd: ";
+                #echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
                 $output = trim(shell_exec($cmd));
-                echo "\t\tout: ";
-                echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
+                #echo "\t\tout: ";
+                #echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
 
                 $GLOBALS['repoDates'][$repo->url] = array();
                 foreach (explode(PHP_EOL, $output) as $line) {
@@ -108,11 +112,12 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
             //$cmd  = "cd $cloneDir; git checkout $hash . 2>&1; ";
             $cmd  = "cd $cloneDir; git reset --hard $hash 2>&1; git checkout -f $branch 2>&1; ";
             $cmd .= 'git submodule update --init --recursive 2>&1';
-            echo "\t\tcmd: ";
-            echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
+            #echo "\t\tcmd: ";
+            #echo str_replace('; ', PHP_EOL."\t\tcmd: ", $cmd).PHP_EOL;
             $output = trim(shell_exec($cmd));
-            echo "\t\tout: ";
-            echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
+            #echo "\t\tout: ";
+            #echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;
+
         }
     } else {
         echo "\t* skipping respository update step *".PHP_EOL;
@@ -123,8 +128,8 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         $infoReportPath    = __DIR__.'/PHPCSInfoReport.php';
         $summaryReportPath = __DIR__.'/PHPCSSummaryReport.php';
         //$cmd  = 'phpcs';
-        $cmd  = 'php /Users/gsherwood/Sites/Projects/PHPCS_ST2/scripts/phpcs';
-        $cmd .= ' -d memory_limit=512M '.$checkDir.' --standard='.__DIR__.'/ruleset.xml';
+        $cmd  = 'php /Users/gsherwood/Sites/Projects/PHPCS_ST2/bin/phpcs';
+        $cmd .= ' -d memory_limit=512M '.$checkDir.' --cache --standard='.__DIR__.'/ruleset.xml';
         $cmd .= ' --extensions=php,inc,'.$repo->extensions;
         $cmd .= ' --ignore=*/tests/*,'.$repo->ignore;
         $cmd .= ' --runtime-set project '.$repo->url;
@@ -135,8 +140,8 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         }
 
         echo "\t=> Running PHP_CodeSniffer".PHP_EOL;
-        echo "\t\tcmd: ";
-        echo str_replace(' --', PHP_EOL."\t\tcmd: --", $cmd).PHP_EOL;
+        #echo "\t\tcmd: ";
+        #echo str_replace(' --', PHP_EOL."\t\tcmd: --", $cmd).PHP_EOL;
         $output = trim(shell_exec($cmd));
         echo "\t\tout: ";
         echo str_replace(PHP_EOL, PHP_EOL."\t\tout: ", $output).PHP_EOL;

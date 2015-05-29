@@ -17,11 +17,11 @@ var itemSeries = {targetAxisIndex:1,pointSize:0,color:"#aed2dd"};
 var trendOptions = {
     backgroundColor:"transparent",
     legend:{position:'none'},
-    chartArea:{left:50,top:20,width:'735',height:'170'},
+    chartArea:{left:40,top:10,width:'745',height:'220'},
     colors:['#2D3F50','#91A2B2','#D1D4DB','#E5E5E5'],
     fontName:"arial",
     fontSize:"11",
-    hAxis:{slantedText:true,slantedTextAngle:60,textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11}},
+    hAxis:{slantedText:false,textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},baselineColor:"transparent",gridlines:{count:12,color:"transparent"}},
     vAxes:[{gridlines:{count:7},textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},format:"##.##'%'",baseline:"transparent"},{viewWindowMode:"maximized",gridlines:{color:"transparent"},textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},titleTextStyle:{color:"#9F9F9F",fontName:"arial",fontSize:13,italic:false},baseline:"transparent"}],
     focusTarget:"category",
     tooltip:{textStyle:{fontName:"arial",fontSize:13}},

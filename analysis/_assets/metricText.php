@@ -134,7 +134,7 @@ $metricText = array(
                                                                        'items'       => 'operators',
                                                                       ),
                'Space after operator'                              => array(
-                                                                       'description' => 'How many spaces precede comparison, arithmetic and assignment operators?',
+                                                                       'description' => 'How many spaces follow comparison, arithmetic and assignment operators?',
                                                                        'items'       => 'operators',
                                                                       ),
                'Line indent'                                       => array(

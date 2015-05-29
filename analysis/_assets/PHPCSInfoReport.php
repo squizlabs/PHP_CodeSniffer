@@ -1,4 +1,10 @@
 <?php
+namespace Coding_Standards_Analysis\Reports;
+
+use PHP_CodeSniffer\Reports\Report;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Config;
+
 /**
  * Info report for PHP_CodeSniffer.
  *
@@ -25,7 +31,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
+class PHPCSInfoReport implements Report
 {
 
     /**
@@ -64,14 +70,10 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
      *
      * @return boolean
      */
-    public function generateFileReport(
-        $report,
-        PHP_CodeSniffer_File $phpcsFile,
-        $showSources=false,
-        $width=80
-    ) {
+    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    {
         if ($this->_project === null) {
-            $this->_project = $phpcsFile->phpcs->getConfigData('project');
+            $this->_project = Config::getConfigData('project');
         }
 
         $metrics = $phpcsFile->getMetrics();
@@ -85,9 +87,7 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
                                                           );
             }
 
-            foreach ($data['values'] as $value => $locations) {
-                $count = count(array_unique($locations));
-
+            foreach ($data['values'] as $value => $count) {
                 if (isset($this->_metricCache['metrics'][$metric]['values'][$value]) === false) {
                     $this->_metricCache['metrics'][$metric]['values'][$value] = $count;
                 } else {
@@ -126,6 +126,7 @@ class PHP_CodeSniffer_Reports_PHPCSInfoReport implements PHP_CodeSniffer_Report
         $totalFixable,
         $showSources=false,
         $width=80,
+        $interactive=false,
         $toScreen=true
     ) {
         foreach ($this->_metricCache['metrics'] as $metric => $data) {

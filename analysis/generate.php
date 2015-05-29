@@ -422,7 +422,7 @@ function generateReport($results, $repo=null)
         }
 
         $trendData  = 'var data = new google.visualization.DataTable();'.PHP_EOL;
-        $trendData .= 'data.addColumn("string", "Date");'.PHP_EOL;
+        $trendData .= 'data.addColumn("date", "Date");'.PHP_EOL;
         foreach ($sigValues as $value) {
             $trendData .= "data.addColumn('number', '$value');".PHP_EOL;
             $trendData .= "data.addColumn({type:'boolean',role:'emphasis'});".PHP_EOL;
@@ -444,8 +444,9 @@ function generateReport($results, $repo=null)
             $pos++;
 
             $trendTotal = array_sum($trendValues);
-            $time       = strtotime($date);
-            $trendData .= "['".date('d M', $time)."',";
+            //$time       = strtotime($date);
+            //$trendData .= "['".date('d M y', $time)."',";
+            $trendData .= "[new Date('".$date."'),";
             foreach ($sigValues as $value) {
                 if (isset($trendValues[$value]) === false) {
                     $score = '0';

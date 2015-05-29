@@ -247,7 +247,7 @@
     {
         "name": "SabreDAV",
         "url": "fruux/sabre-dav",
-        "path": "lib/Sabre",
+        "path": "lib",
         "ignore": "",
         "extensions": ""
     },
@@ -611,7 +611,7 @@
     {
         "name": "PHP Parser",
         "url": "nikic/PHP-Parser",
-        "path": "src",
+        "path": "lib",
         "ignore": "",
         "extensions": ""
     },
