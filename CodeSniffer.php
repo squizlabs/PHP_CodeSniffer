@@ -2300,7 +2300,7 @@ class PHP_CodeSniffer
     {
         if ($temp === false) {
             $path = '';
-            if (class_exists('Phar') === true) {
+            if (is_callable('Phar::running') === true) {
                 $path = Phar::running(false);
             }
 
@@ -2365,7 +2365,7 @@ class PHP_CodeSniffer
         }
 
         $path = '';
-        if (class_exists('Phar') === true) {
+        if (is_callable('Phar::running') === true) {
             $path = Phar::running(false);
         }
 
