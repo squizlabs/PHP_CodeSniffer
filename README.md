@@ -17,6 +17,10 @@ The SVN pre-commit hook requires PHP version 5.2.4 or greater due to its use of 
 Installation
 ------------
 
+On OS X you can install PHP\_CodeSniffer using [Homebrew](http://brew.sh/):
+
+    brew install php-code-sniffer
+
 The easiest way to get started with PHP\_CodeSniffer is to download the [Phar](http://php.net/manual/en/intro.phar.php) files for each of the commands:
 
     curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
