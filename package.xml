@@ -31,6 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Defined tokens for lower PHP versions are now phpcs-specific strings instead of ints
     -- Stops conflict with other projects, like PHP_CodeCoverage
   - Added more guard code for syntax errors to various sniffs
+  - Improved support for older HHVM versions
+    -- Thanks to Kunal Mehta for the patch
   - Squiz ValidLogicalOperatorsSniff now ignores XOR as type casting is different when using the ^ operator (request #567)
   - Squiz CommentedOutCodeSniff is now better at ignoring URLs inside comments
   - Squiz ControlSignatureSniff is now better at checking embedded PHP code
