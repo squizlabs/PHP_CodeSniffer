@@ -90,7 +90,7 @@ class Diff implements Report
             return false;
         }
 
-        echo $diff;
+        echo $diff.PHP_EOL;
         return true;
 
     }//end generateFileReport()
