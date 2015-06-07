@@ -75,7 +75,8 @@ class Squiz_Tests_ControlStructures_ControlSignatureUnitTest extends AbstractSni
             $errors[134] = 1;
             $errors[150] = 1;
             $errors[153] = 1;
-            $errors[160] = 2;
+            $errors[158] = 2;
+            $errors[167] = 2;
         }
 
         return $errors;

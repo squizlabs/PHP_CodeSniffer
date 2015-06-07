@@ -155,6 +155,13 @@ catch (OtherExceptionType $e) {
     // catch body
 }
 
+switch($foo) {
+
+    case 'bar':
+    break;
+
+}
+
 ?>
 
 <?php while($row = $data->getRow()): ?>

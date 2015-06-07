@@ -54,6 +54,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
                 T_FOREACH,
                 T_ELSE,
                 T_ELSEIF,
+                T_SWITCH,
                );
 
     }//end register()
