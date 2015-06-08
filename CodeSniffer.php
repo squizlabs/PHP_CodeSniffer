@@ -1511,7 +1511,7 @@ class PHP_CodeSniffer
                 }//end foreach
             } else {
 
-                if ($this->shouldIgnoreFile($path, $root_path)) {
+                if (!$this->shouldProcessFile($path, $root_path)) {
                     continue;
                 }
 
@@ -1536,6 +1536,11 @@ class PHP_CodeSniffer
      */
     public function shouldProcessFile($path, $basedir)
     {
+        //Don't check directories for extensions
+        if(is_dir($path)){
+            return !$this->shouldIgnoreFile($path, $basedir);
+        }
+
         // Check that the file's extension is one we are checking.
         // We are strict about checking the extension and we don't
         // let files through with no extension or that start with a dot.
