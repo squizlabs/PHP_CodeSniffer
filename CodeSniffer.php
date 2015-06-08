@@ -1511,7 +1511,7 @@ class PHP_CodeSniffer
                 }//end foreach
             } else {
 
-                if (!$this->shouldIgnoreFile($path, $root_path)) {
+                if ($this->shouldIgnoreFile($path, $root_path)) {
                     continue;
                 }
 
