@@ -1474,6 +1474,7 @@ class PHP_CodeSniffer
     public function getFilesToProcess($paths, $local=false)
     {
         $files = array();
+        $root_path = PHP_CodeSniffer::realpath('.');
 
         foreach ($paths as $path) {
             if (is_dir($path) === true || self::isPharFile($path) === true) {
@@ -1481,15 +1482,18 @@ class PHP_CodeSniffer
                     $path = 'phar://'.$path;
                 }
 
-                if ($local === true) {
-                    $di = new DirectoryIterator($path);
-                } else {
-                    $di = new RecursiveIteratorIterator(
-                        new RecursiveDirectoryIterator($path),
-                        0,
-                        RecursiveIteratorIterator::CATCH_GET_CHILD
-                    );
-                }
+                $filter = new PHP_CodeSniffer_ExcludeFilter(
+                    new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+                    $this,
+                    $root_path,
+                    !$local
+                );
+
+                $di = new RecursiveIteratorIterator(
+                    $filter,
+                    RecursiveIteratorIterator::LEAVES_ONLY,
+                    RecursiveIteratorIterator::CATCH_GET_CHILD
+                );
 
                 foreach ($di as $file) {
                     // Check if the file exists after all symlinks are resolved.
@@ -1498,18 +1502,16 @@ class PHP_CodeSniffer
                         continue;
                     }
 
+                    //Skip directories from processing
                     if (is_dir($filePath) === true) {
-                        continue;
-                    }
-
-                    if ($this->shouldProcessFile($file->getPathname(), $path) === false) {
                         continue;
                     }
 
                     $files[] = $file->getPathname();
                 }//end foreach
             } else {
-                if ($this->shouldIgnoreFile($path, dirname($path)) === true) {
+
+                if (!$this->shouldIgnoreFile($path, $root_path)) {
                     continue;
                 }
 
@@ -1567,20 +1569,33 @@ class PHP_CodeSniffer
     }//end shouldProcessFile()
 
 
-    /**
-     * Checks filtering rules to see if a file should be ignored.
-     *
-     * @param string $path    The path to the file being checked.
-     * @param string $basedir The directory to use for relative path checks.
-     *
-     * @return bool
-     */
-    public function shouldIgnoreFile($path, $basedir)
+    protected function shouldIgnoreFile($path, $basedir)
     {
         $relativePath = $path;
         if (strpos($path, $basedir) === 0) {
             // The +1 cuts off the directory separator as well.
             $relativePath = substr($path, (strlen($basedir) + 1));
+        }
+
+        if (strpos($path, $basedir) === 0) {
+            // The +1 cuts off the directory separator as well.
+            $relativePath = substr($path, (strlen($basedir) + 1));
+        }
+
+        //Perform some quick index matching for common exclude syntaxs (dir/path.php, ./dir/path.php, ^dir/path.php, ^dir/path.php$, ./dir/path.php$, dir, dir/, dir/*, ^dir/*, */dir/*)
+        if( isset($this->ignorePatterns[$relativePath]) ||
+            isset($this->ignorePatterns[$relativePath.'/']) ||
+            isset($this->ignorePatterns[$relativePath.'/*']) ||
+            isset($this->ignorePatterns[$relativePath.'$']) ||
+            isset($this->ignorePatterns['^'.$relativePath]) ||
+            isset($this->ignorePatterns['^'.$relativePath.'$']) ||
+            isset($this->ignorePatterns['^'.$relativePath.'/']) ||
+            isset($this->ignorePatterns['^'.$relativePath.'/*']) ||
+            isset($this->ignorePatterns['./'.$relativePath]) ||
+            isset($this->ignorePatterns['./'.$relativePath.'$']) ||
+            isset($this->ignorePatterns['*/'.$relativePath.'/*'])
+        ){
+            return true;
         }
 
         foreach ($this->ignorePatterns as $pattern => $type) {
@@ -1597,9 +1612,9 @@ class PHP_CodeSniffer
             }
 
             $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+                '\\,' => ',',
+                '*'   => '.*',
+            );
 
             // We assume a / directory separator, as do the exclude rules
             // most developers write, so we need a special case for any system
