@@ -147,12 +147,20 @@ class PHP_CodeSniffer
     protected $ruleset = array();
 
     /**
-     * An array of patterns to use for skipping files.
+     * An array of simple ignores to use for skipping files.
+     * Must conform to the following syntax:
+     *
+     * (dir/path.php, ./dir/path.php, ^dir/path.php, ^dir/path.php$, ./dir/path.php$, dir, dir/, dir/*, ^dir/*, * /dir/*)
      *
      * @var array
      */
     protected $globalIgnores = array();
 
+    /**
+     * An array of patterns to use for skipping files.
+     *
+     * @var array
+     */
     protected $globalIgnorePatterns = array();
 
     /**
