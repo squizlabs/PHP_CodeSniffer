@@ -162,6 +162,9 @@ switch($foo) {
 
 }
 
+if ($foo)  :
+endif;
+
 ?>
 
 <?php while($row = $data->getRow()): ?>

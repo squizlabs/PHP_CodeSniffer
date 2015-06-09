@@ -128,7 +128,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
                         $phpcsFile->fixer->addContent($closer, ' ');
                     } else {
                         $phpcsFile->fixer->beginChangeset();
-                        $phpcsFile->fixer->addContent($closer, ' {');
+                        $phpcsFile->fixer->addContent($closer, ' '.$tokens[$opener]['content']);
                         $phpcsFile->fixer->replaceToken($opener, '');
 
                         if ($tokens[$opener]['line'] !== $tokens[$closer]['line']) {
