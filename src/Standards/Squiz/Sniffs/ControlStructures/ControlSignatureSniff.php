@@ -61,6 +61,7 @@ class ControlSignatureSniff implements Sniff
                 T_FOREACH,
                 T_ELSE,
                 T_ELSEIF,
+                T_SWITCH,
                );
 
     }//end register()
@@ -134,7 +135,7 @@ class ControlSignatureSniff implements Sniff
                         $phpcsFile->fixer->addContent($closer, ' ');
                     } else {
                         $phpcsFile->fixer->beginChangeset();
-                        $phpcsFile->fixer->addContent($closer, ' {');
+                        $phpcsFile->fixer->addContent($closer, ' '.$tokens[$opener]['content']);
                         $phpcsFile->fixer->replaceToken($opener, '');
 
                         if ($tokens[$opener]['line'] !== $tokens[$closer]['line']) {

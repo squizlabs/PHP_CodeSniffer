@@ -40,6 +40,6 @@
  <!-- 4.3. Methods -->
 
  <!-- Method names MUST be declared in camelCase(). -->
- <!-- checked in Methods/CamelCaseMethodNameSniff -->
+ <!-- checked in Methods/CamelCapsMethodNameSniff -->
 
 </ruleset>

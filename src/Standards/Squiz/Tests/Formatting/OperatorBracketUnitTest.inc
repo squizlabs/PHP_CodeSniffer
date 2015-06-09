@@ -141,3 +141,5 @@ $codeFiles = array($global => $codeFiles[$global]) + $codeFiles;
 $var = array(-1);
 $var = [-1];
 $var = [0, -1, -2];
+
+$cntPages = ceil(count($items) / self::ON_PAGE);
