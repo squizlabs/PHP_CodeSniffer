@@ -480,7 +480,7 @@ class PHP_CodeSniffer
      * @param $pattern
      * @param $type
      */
-    public function addIgnorePattern($pattern, $type)
+    protected function addIgnorePattern($pattern, $type)
     {
         //If pattern contains [], {}, () it needs regex matching
         if (preg_match('#[\[\]\(\)\{\}]#', $pattern)) {
