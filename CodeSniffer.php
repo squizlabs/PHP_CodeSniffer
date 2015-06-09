@@ -437,12 +437,12 @@ class PHP_CodeSniffer
      *
      * @return void
      */
-    public function setIgnorePatterns(array $patterns)
+    public function addIgnorePatterns(array $patterns)
     {
         foreach($patterns as $pattern => $type){
-            $this->setIgnorePattern($pattern, $type);
+            $this->addIgnorePattern($pattern, $type);
         }
-    }//end setIgnorePatterns()
+    }//end addIgnorePatterns()
 
 
     /**
@@ -480,7 +480,7 @@ class PHP_CodeSniffer
      * @param $pattern
      * @param $type
      */
-    public function setIgnorePattern($pattern, $type)
+    public function addIgnorePattern($pattern, $type)
     {
         //If pattern contains [], {}, () it needs regex matching
         if (preg_match('#[\[\]\(\)\{\}]#', $pattern)) {
@@ -501,8 +501,8 @@ class PHP_CodeSniffer
         }
 
         $this->globalIgnorePatterns[$pattern] = $type;
-        
-    }//end setIgnorePattern()
+
+    }//end addIgnorePattern()
 
 
     /**
@@ -872,7 +872,7 @@ class PHP_CodeSniffer
                 $pattern['type'] = 'absolute';
             }
 
-            $this->setIgnorePattern((string) $pattern, (string) $pattern['type']);
+            $this->addIgnorePattern((string) $pattern, (string) $pattern['type']);
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t=> added global ".(string) $pattern['type'].' ignore pattern: '.(string) $pattern.PHP_EOL;
