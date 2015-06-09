@@ -488,7 +488,7 @@ class PHP_CodeSniffer
             return;
         }
 
-        //If string contains no regex characters (^[](){}$), it's a regular ignore
+        //If string contains no regex characters (^[](){}$*), it's a regular ignore
         if(!preg_match('#[\[\]\(\)\*\$\{\}]#', $pattern)){
             $this->globalIgnores[$pattern] = $type;
             return;
