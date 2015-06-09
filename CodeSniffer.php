@@ -1634,11 +1634,6 @@ class PHP_CodeSniffer
             $relativePath = substr($path, (strlen($basedir) + 1));
         }
 
-        if (strpos($path, $basedir) === 0) {
-            // The +1 cuts off the directory separator as well.
-            $relativePath = substr($path, (strlen($basedir) + 1));
-        }
-
         //Perform some quick index matching for common exclude syntaxs (dir/path.php, ./dir/path.php, ^dir/path.php, ^dir/path.php$, ./dir/path.php$, dir, dir/, dir/*, ^dir/*, */dir/*)
         if( isset($this->globalIgnores[$relativePath]) ||
             isset($this->globalIgnores[$relativePath.'/']) ||
