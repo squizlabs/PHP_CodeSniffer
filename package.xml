@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #598 : PHPCBF can break function/use closure brace placement
   - Fixed bug #603 : Squiz ControlSignatureSniff hard-codes opener type while fixing
   - Fixed bug #612 : Multi-file diff generating incorrectly if files do not end with EOL char
+  - Fixed bug #615 : Squiz OperatorBracketSniff incorrectly reports and fixes operations using self::
   - Fixed bug #617 : Space after switch keyword in PSR-2 is not being enforced
  </notes>
  <contents>
