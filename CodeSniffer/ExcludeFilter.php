@@ -1,17 +1,33 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oli
- * Date: 6/5/15
- * Time: 3:56 PM
+ * Class PHP_CodeSniffer_ExcludeFilter
+ *
+ * This filter is used by the RecursiveDirectoryIterator to pre-process files and check for inclusion in the files to
+ * iterate. If accept() returns false, the file or directory is excluded from the result set. If a directory is excluded
+ * then all subdirectories and files are also excluded
  */
-
 class PHP_CodeSniffer_ExcludeFilter extends RecursiveFilterIterator
 {
+    /**
+     * A PHP_CodeSniffer instance, used to check if the file should be excluded
+     *
+     * @var PHP_CodeSniffer
+     */
     protected $_phpcs;
+
+    /**
+     * The root path that the phpcs command was run from, used to generate relative file paths
+     *
+     * @var
+     */
     protected $_root_path;
-    protected $_extensions = array();
-    protected $_recurse = array();
+
+    /**
+     * Recurse into subdirectories?
+     *
+     * @var bool
+     */
+    protected $_recurse = true;
 
     /**
      * Object constructor
@@ -30,15 +46,24 @@ class PHP_CodeSniffer_ExcludeFilter extends RecursiveFilterIterator
         $this->_recurse = $recurse;
     }
 
+    /**
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * Check whether the inner iterator's current element has children
+     * @link http://php.net/manual/en/recursivefilteriterator.haschildren.php
+     * @return bool true if the inner iterator has children, otherwise false
+     */
     public function hasChildren()
     {
         return $this->_recurse && parent::hasChildren();
     }
 
     /**
-     * Get the filter for the child directories
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * Return the inner iterator's children contained in a RecursiveFilterIterator
+     * A new instance of set is created, passing the appropriate constructor arguments
      *
-     * @return PHP_CodeSniffer_ExcludeFilter
+     * @link http://php.net/manual/en/recursivefilteriterator.getchildren.php
+     * @return RecursiveFilterIterator containing the inner iterator's children.
      */
     public function getChildren()
     {
@@ -60,13 +85,13 @@ class PHP_CodeSniffer_ExcludeFilter extends RecursiveFilterIterator
      */
     public function accept()
     {
-        //Check if file is a hidden file
-        if($this->getFilename() !== '.' && substr($this->getFilename(), 0, 1) == '.'){
+        //Check if file is a hidden file, or a dotfile
+        if ($this->getFilename() !== '.' && substr($this->getFilename(), 0, 1) == '.') {
             return false;
         }
 
-        //Check if a file and no extension, or is a g
-        if (($this->isFile() && !$this->getExtension()) || $this->isDot()) {
+        //Check if a file and no extension
+        if ($this->isFile() && !$this->getExtension()) {
             return false;
         }
 
