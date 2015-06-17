@@ -184,12 +184,26 @@ class CSS extends PHP
                 && (substr($token['content'], 0, 2) === '//'
                 || $token['content']{0} === '#')
             ) {
-                $content       = ltrim($token['content'], '#/');
+                $content = ltrim($token['content'], '#/');
+
+                // Guard against PHP7+ syntax errors by stripping
+                // leading zeros so the content doesn't look like an invalid int.
+                $leadingZero = false;
+                if ($content{0} === '0') {
+                    $content     = '1'.$content;
+                    $leadingZero = false;
+                }
+
                 $commentTokens = parent::tokenize('<?php '.$content.'?>');
 
                 // The first and last tokens are the open/close tags.
                 array_shift($commentTokens);
                 array_pop($commentTokens);
+
+                if ($leadingZero === true) {
+                    $commentTokens[0]['content'] = substr($commentTokens[0]['content'], 1);
+                    $content = substr($content, 1);
+                }
 
                 if ($token['content']{0} === '#') {
                     // The # character is not a comment in CSS files, so

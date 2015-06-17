@@ -54,6 +54,8 @@ class DisallowComparisonAssignmentUnitTest extends AbstractSniffUnitTest
                 7  => 1,
                 8  => 1,
                 10 => 1,
+                52 => 1,
+                53 => 1,
                );
 
     }//end getErrorList()
