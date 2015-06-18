@@ -103,3 +103,13 @@ function test()
 
     exit;
 }
+
+switch ($foo) {
+    case 1: $bar = 1; break;
+    case 2:
+    
+        $bar = 2; break;
+    case 21:
+    case 3: return 3;
+    default: $bar = 0;
+}

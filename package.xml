@@ -57,6 +57,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #615 : Squiz OperatorBracketSniff incorrectly reports and fixes operations using self::
   - Fixed bug #616 : Squiz DisallowComparisonAssignmentSniff inconsistent errors with inline IF statements
   - Fixed bug #617 : Space after switch keyword in PSR-2 is not being enforced
+  - Fixed bug #621 : PSR2 SwitchDeclaration sniff doesn't detect, or correctly fix, case body on same line as statement
  </notes>
  <contents>
   <dir name="/">
