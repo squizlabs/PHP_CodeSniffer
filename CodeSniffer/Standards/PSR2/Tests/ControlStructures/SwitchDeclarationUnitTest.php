@@ -41,15 +41,20 @@ class PSR2_Tests_ControlStructures_SwitchDeclarationUnitTest extends AbstractSni
     public function getErrorList()
     {
         return array(
-                10 => 1,
-                11 => 1,
-                14 => 1,
-                16 => 1,
-                20 => 1,
-                23 => 1,
-                29 => 1,
-                33 => 1,
-                37 => 2,
+                10  => 1,
+                11  => 1,
+                14  => 1,
+                16  => 1,
+                20  => 1,
+                23  => 1,
+                29  => 1,
+                33  => 1,
+                37  => 2,
+                108 => 2,
+                109 => 1,
+                111 => 1,
+                113 => 2,
+                114 => 1,
                );
 
     }//end getErrorList()
