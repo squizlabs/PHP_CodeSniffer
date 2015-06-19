@@ -310,11 +310,13 @@ class Runner
 
             $todo     = array(new DummyFile($fileContents, $ruleset, $this->config));
             $numFiles = 1;
-        } else if (empty($this->config->files) === true) {
-            echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
-            $this->config->printUsage();
-            exit(0);
         } else {
+            if (empty($this->config->files) === true) {
+                echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
+                $this->config->printUsage();
+                exit(0);
+            }
+
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo 'Creating file list... ';
             }

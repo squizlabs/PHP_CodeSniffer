@@ -32,191 +32,83 @@ class Config
     const STABILITY = 'alpha';
 
     /**
-     * The files and directories to check.
+     * An array of settings that PHPCS and PHPCBF accept.
      *
-     * @var string[]
+     * This array is not meant to be accessed directly. Instead, use the settings
+     * as if they are class member vars so the __get() and __set() magic methods
+     * can be used to validate the values. For example, to set the verbosity level to
+     * level 2, use $this->verbosity = 2; insteas of accessing this property directly.
+     *
+     * The list of settings are:
+     *
+     * string[] files           The files and directories to check.
+     * string[] standards       The standards being used for checking.
+     * int      verbosity       How verbose the output should be.
+     *                          0: no unnecessary output
+     *                          1: basic output for files being checked
+     *                          2: ruleset and file parsing output
+     *                          3: sniff execution output
+     * bool     interactive     Enable interactive checking mode.
+     * bool     cache           Enable the use of the file cache.
+     * bool     colors          Display colous in output.
+     * bool     explain         Explain the coding standards.
+     * bool     local           Process local files in directories only (no recursion).
+     * bool     showSources     Show sniff source codes in report output.
+     * bool     showProgress    Show basic progress information while running.
+     * int      tabWidth        How many spaces each tab is worth.
+     * string   encoding        The encoding of the files being checked.
+     * string[] sniffs          The sniffs that should be used for checking.
+     *                          If empty, all sniffs in the supplied standards will be used.
+     * string[] ignored         Regular expressions used to ignore files and folders during checking.
+     * string   reportFile      A file system location where the report output should be written.
+     * string   generator       The documentation generator to use.
+     * int      reportWidth     The maximum number of columns that reports should use for output.
+     *                          Set to "auto" for have this value changed to the width of the terminal.
+     * int      errorSeverity   The minimum severity an error must have to be displayed.
+     * int      warningSeverity The minimum severity a warning must have to be displayed.
+     * string   suffix          A suffix to add to fixed files.
+     * bool     noPatch         If TRUE, the fixed files will be replaced directly instead of being patched.
+     *                          Set to TRUE if the environment does not have the patch command available.
+     * bool     stdin           Read content from STDIN instead of supplied files.
+     *
+     * array<string, string>      extensions File extensions that should be checked, and what tokenizer to use.
+     *                                       E.g., array('inc' => 'PHP');
+     * array<string, string|null> reports    The reports to use for printing output after the run.
+     *                                       The format of the array is:
+     *                                           array(
+     *                                            'reportName1' => 'outputFile',
+     *                                            'reportName2' => null,
+     *                                           );
+     *                                       If the array value is NULL, the report will be written to the screen.
+     *
+     * @var array<string, mixed>
      */
-    public $files;
-
-    /**
-     * The standards being used for checking.
-     *
-     * @var string[]
-     */
-    public $standards;
-
-    /**
-     * How verbose the output should be.
-     *
-     * 0: no unnecessary output
-     * 1: basic output for files being checked
-     * 2: ruleset and file parsing output
-     * 3: sniff execution output
-     *
-     * @var int
-     */
-    public $verbosity;
-
-    /**
-     * Enable interactive checking mode.
-     *
-     * @var bool
-     */
-    public $interactive;
-
-    /**
-     * Enable the use of the file cache.
-     *
-     * @var bool
-     */
-    public $cache;
-
-    /**
-     * Display colous in output.
-     *
-     * @var bool
-     */
-    public $colors;
-
-    /**
-     * Explain the coding standards.
-     *
-     * @var bool
-     */
-    public $explain;
-
-    /**
-     * Process local files in directories only (no recursion)
-     *
-     * @var bool
-     */
-    public $local;
-
-    /**
-     * Show sniff source codes in report output.
-     *
-     * @var bool
-     */
-    public $showSources;
-
-    /**
-     * Show basic progress information while running.
-     *
-     * @var bool
-     */
-    public $showProgress;
-
-    /**
-     * How many spaces each tab is worth.
-     *
-     * @var int
-     */
-    public $tabWidth;
-
-    /**
-     * The encoding of the files being checked.
-     *
-     * @var string
-     */
-    public $encoding;
-
-    /**
-     * File extensions that should be checked, and what tokenizer to use.
-     *
-     * E.g., array('inc' => 'PHP');
-     *
-     * @var array<string, string>
-     */
-    public $extensions;
-
-    /**
-     * The sniffs that should be used for checking.
-     *
-     * If empty, all sniffs in the supplied standards will be used.
-     *
-     * @var string[]
-     */
-    public $sniffs;
-
-    /**
-     * Regular expressions used to ignore files and folders during checking.
-     *
-     * @var string[]
-     */
-    public $ignored;
-
-    /**
-     * A file system location where the report output should be written.
-     *
-     * @var string
-     */
-    public $reportFile;
-
-    /**
-     * The documentation generator to use.
-     *
-     * @var string
-     */
-    public $generator;
-
-    /**
-     * The reports to use for printing output after the run.
-     *
-     * The format of the array is:
-     *     array(
-     *      'reportName1' => 'outputFile',
-     *      'reportName2' => null,
-     *     );
-     *
-     * If the array value is NULL, the report will be written to the screen.
-     *
-     * @var array<string, string|null>
-     */
-    public $reports;
-
-    /**
-     * The maximum number of columns that reports should use for output.
-     *
-     * @var int
-     */
-    public $reportWidth;
-
-    /**
-     * The minimum severity an error must have to be displayed.
-     *
-     * @var int
-     */
-    public $errorSeverity;
-
-    /**
-     * The minimum severity a warning must have to be displayed.
-     *
-     * @var int
-     */
-    public $warningSeverity;
-
-    /**
-     * A suffix to add to fixed files.
-     *
-     * @var string
-     */
-    public $suffix;
-
-    /**
-     * If TRUE, the fixed files will be replaced directly instead of being patched.
-     *
-     * Set to TRUE if the environment does not have the patch command available.
-     *
-     * @var bool
-     */
-    public $noPatch;
-
-    /**
-     * Read content from STDIN instead of supplied files.
-     *
-     * @var bool
-     */
-    public $stdin;
+    private $settings = array(
+                         'files'           => null,
+                         'standards'       => null,
+                         'verbosity'       => null,
+                         'interactive'     => null,
+                         'cache'           => null,
+                         'colors'          => null,
+                         'explain'         => null,
+                         'local'           => null,
+                         'showSources'     => null,
+                         'showProgress'    => null,
+                         'tabWidth'        => null,
+                         'encoding'        => null,
+                         'extensions'      => null,
+                         'sniffs'          => null,
+                         'ignored'         => null,
+                         'reportFile'      => null,
+                         'generator'       => null,
+                         'reports'         => null,
+                         'reportWidth'     => null,
+                         'errorSeverity'   => null,
+                         'warningSeverity' => null,
+                         'suffix'          => null,
+                         'noPatch'         => null,
+                         'stdin'           => null,
+                        );
 
     /**
      * Whether or not to kill the process when an unknown command line arg is found.
@@ -258,6 +150,105 @@ class Config
 
 
     /**
+     * Get the value of an inaccessible property.
+     *
+     * @param string $name The name of the property.
+     *
+     * @return mixed
+     * @throws RuntimeException If the setting name is invalid.
+     */
+    public function __get($name)
+    {
+        if (array_key_exists($name, $this->settings) === false) {
+            throw new RuntimeException("cant get $name");
+        }
+
+        return $this->settings[$name];
+
+    }//end __get()
+
+
+    /**
+     * Set the value of an inaccessible property.
+     *
+     * @param string $name  The name of the property.
+     * @param mixed  $value The value of the property.
+     *
+     * @return void
+     * @throws RuntimeException If the setting name is invalid.
+     */
+    public function __set($name, $value)
+    {
+        if (array_key_exists($name, $this->settings) === false) {
+            throw new RuntimeException("cant set $name");
+        }
+
+        switch ($name) {
+        case 'reportWidth' :
+            // Support auto terminal width.
+            if ($value === 'auto' && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1) {
+                $value = (int) $matches[1];
+            } else {
+                $value = (int) $value;
+            }
+            break;
+        case 'standards' :
+            $cleaned = array();
+
+            // Check if the standard name is valid, or if the case is invalid.
+            $installedStandards = Util\Standards::getInstalledStandards();
+            foreach ($value as $standard) {
+                foreach ($installedStandards as $validStandard) {
+                    if (strtolower($standard) === strtolower($validStandard)) {
+                        $standard = $validStandard;
+                        break;
+                    }
+                }
+
+                $cleaned[] = $standard;
+            }
+
+            $value = $cleaned;
+            break;
+        default :
+            // No validation required.
+            break;
+        }//end switch
+
+        $this->settings[$name] = $value;
+
+    }//end __set()
+
+
+    /**
+     * Check if the value of an inaccessible property is set.
+     *
+     * @param string $name The name of the property.
+     *
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        return isset($this->settings[$name]);
+
+    }//end __isset()
+
+
+    /**
+     * Unset the value of an inaccessible property.
+     *
+     * @param string $name The name of the property.
+     *
+     * @return void
+     */
+    public function __unset($name)
+    {
+        $this->settings[$name] = null;
+
+    }//end __unset()
+
+
+    /**
      * Creates a Config object and populates it with command line values.
      *
      * @param array $cliArgs         An array of values gathered from CLI args.
@@ -284,15 +275,6 @@ class Config
         $this->restoreDefaults();
         $this->setCommandLineValues($cliArgs);
 
-        // Support auto terminal width.
-        if ($this->reportWidth === 'auto'
-            && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1
-        ) {
-            $this->reportWidth = (int) $matches[1];
-        } else {
-            $this->reportWidth = (int) $this->reportWidth;
-        }
-
         if (isset($this->overriddenDefaults['standards']) === false
             && empty($this->files) === true
             && Config::getConfigData('default_standard') === null
@@ -304,23 +286,6 @@ class Config
                 $this->standards = array($default);
             }
         }
-
-        $cleaned = array();
-
-        // Check if the standard name is valid, or if the case is invalid.
-        $installedStandards = Util\Standards::getInstalledStandards();
-        foreach ($this->standards as $standard) {
-            foreach ($installedStandards as $validStandard) {
-                if (strtolower($standard) === strtolower($validStandard)) {
-                    $standard = $validStandard;
-                    break;
-                }
-            }
-
-            $cleaned[] = $standard;
-        }
-
-        $this->standards = $cleaned;
 
     }//end __construct()
 
@@ -893,7 +858,9 @@ class Config
             $this->printUsage();
             exit(2);
         } else {
-            $this->files[] = $file;
+            $files       = $this->files;
+            $files[]     = $file;
+            $this->files = $files;
             $this->overriddenDefaults['files'] = true;
         }
 
