@@ -1317,6 +1317,11 @@ class PHP_CodeSniffer
 
             include_once $file;
 
+            $elements = explode('_', $className);
+            if (count($elements) <> 4) {
+                throw new Exception('Sniff: class name '.$className.' do not fit to class naming convention. The class name must be with 4 elements separated by underscores.');
+            }
+
             // Support the use of PHP namespaces. If the class name we included
             // contains namespace separators instead of underscores, use this as the
             // class name from now on.
