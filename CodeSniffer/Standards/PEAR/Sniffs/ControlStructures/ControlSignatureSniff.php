@@ -31,7 +31,6 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractPatternSniff', true) === fal
  */
 class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffer_Standards_AbstractPatternSniff
 {
-
     /**
      * If true, comments will be ignored if they are found in the code.
      *
@@ -39,15 +38,12 @@ class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffe
      */
     public $ignoreComments = true;
 
-
     /**
-     * Returns the patterns that this test wishes to verify.
+     * Patterns that this test wishes to verify
      *
-     * @return string[]
+     * @var array 
      */
-    protected function getPatterns()
-    {
-        return array(
+    public $patternArray = array(
                 'do {EOL...} while (...);EOL',
                 'while (...) {EOL',
                 'for (...) {EOL',
@@ -58,8 +54,15 @@ class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffe
                 '} else {EOL',
                 'do {EOL',
                );
-
+    
+    /**
+     * Returns the patterns that this test wishes to verify.
+     *
+     * @return string[]
+     */
+    protected function getPatterns()
+    {
+        return $patternArray;
     }//end getPatterns()
-
 
 }//end class
