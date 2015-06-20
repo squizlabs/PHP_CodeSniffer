@@ -43,7 +43,16 @@ class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffe
      *
      * @var array 
      */
-    public $patternArray = array(
+    public $patternArray;
+    
+    /**
+     * Returns the patterns that this test wishes to verify.
+     *
+     * @return string[]
+     */
+    protected function getPatterns()
+    {
+        $patternArray = array(
                 'do {EOL...} while (...);EOL',
                 'while (...) {EOL',
                 'for (...) {EOL',
@@ -54,14 +63,7 @@ class PEAR_Sniffs_ControlStructures_ControlSignatureSniff extends PHP_CodeSniffe
                 '} else {EOL',
                 'do {EOL',
                );
-    
-    /**
-     * Returns the patterns that this test wishes to verify.
-     *
-     * @return string[]
-     */
-    protected function getPatterns()
-    {
+        
         return $patternArray;
     }//end getPatterns()
 
