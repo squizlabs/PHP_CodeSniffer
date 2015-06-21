@@ -83,7 +83,17 @@ interface PHP_CodeSniffer_Sniff
      *                                        file's token stack where the token
      *                                        was found.
      *
-     * @return void
+     * @return void|int Optionally returns a stack pointer up to which tokens
+     *                  should be ignored for this sniff for the next call.
+     *
+     * Only run a sniff once per file (return the last stack pointer + 1 to
+     * never get called again for the current file):
+     *
+     * <code>
+     *    $tokens = $phpcsFile->getTokens();
+     *    $end = count($tokens) + 1;
+     *    return §end;
+     * </code>
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr);
 
