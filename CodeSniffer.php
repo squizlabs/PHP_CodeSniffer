@@ -1285,6 +1285,7 @@ class PHP_CodeSniffer
      *                            listeners to.
      *
      * @return void
+     * @throws PHP_CodeSniffer_Exception If a sniff file path is invalid.
      */
     public function registerSniffs($files, $restrictions)
     {
@@ -1304,6 +1305,11 @@ class PHP_CodeSniffer
             }
 
             $className = substr($file, ($slashPos + 1));
+
+            if (substr_count($className, DIRECTORY_SEPARATOR) !== 3) {
+                throw new PHP_CodeSniffer_Exception("Sniff file $className is not valid; sniff files must be located in a .../StandardName/Sniffs/CategoryName/ directory");
+            }
+
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
