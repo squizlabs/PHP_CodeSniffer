@@ -46,6 +46,15 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
      */
     public $error = true;
 
+    /**
+     * If true strings concatenated on multiple lines are allowed
+     * default this is disabled, use this feature to prevent clashes
+     * with the LineLengthSniff.
+     *
+     * @var bool
+     */
+    public $allowMultiline = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -107,13 +116,19 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
                     }
                 }
 
+                if ($this->allowMultiline === true
+                    && $tokens[$prev]['line'] !== $tokens[$next]['line']
+                ) {
+                    return;
+                }
+
                 $error = 'String concat is not required here; use a single string instead';
                 if ($this->error === true) {
                     $phpcsFile->addError($error, $stackPtr, 'Found');
                 } else {
                     $phpcsFile->addWarning($error, $stackPtr, 'Found');
                 }
-            }
+            }//end if
         }//end if
 
     }//end process()
