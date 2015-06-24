@@ -4,7 +4,6 @@ namespace PHP_CodeSniffer\Util;
 
 use PHP_CodeSniffer\Autoload;
 use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Util\Common;
 
 /**
@@ -38,7 +37,7 @@ class Cache
     private static $cache = array();
 
 
-    public static function load(Config $config, Ruleset $ruleset)
+    public static function load(Config $config)
     {
         // Look at every loaded sniff class so far and use their file contents
         // to generate a hash for the code used during the run.

@@ -333,7 +333,7 @@ class Runner
                     echo 'Loading cache... ';
                 }
 
-                Cache::load($this->config, $ruleset);
+                Cache::load($this->config);
 
                 if (PHP_CODESNIFFER_VERBOSITY > 0) {
                     $size = Cache::getSize();
