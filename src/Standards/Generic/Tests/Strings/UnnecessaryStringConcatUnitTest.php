@@ -54,6 +54,8 @@ class UnnecessaryStringConcatUnitTest extends AbstractSniffUnitTest
                     6  => 1,
                     9  => 1,
                     12 => 1,
+                    19 => 1,
+                    20 => 1,
                    );
             break;
         case 'UnnecessaryStringConcatUnitTest.js':
@@ -61,6 +63,8 @@ class UnnecessaryStringConcatUnitTest extends AbstractSniffUnitTest
                     1  => 1,
                     8  => 1,
                     11 => 1,
+                    14 => 1,
+                    15 => 1,
                    );
             break;
         default:

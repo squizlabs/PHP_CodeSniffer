@@ -14,11 +14,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2015-04-29</date>
- <time>09:27:00</time>
+ <date>2015-06-24</date>
+ <time>13:14:00</time>
  <version>
-  <release>2.3.3</release>
-  <api>2.3.3</api>
+  <release>2.3.4</release>
+  <api>2.3.4</api>
  </version>
  <stability>
   <release>stable</release>
@@ -33,33 +33,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniff codes are no longer optional - use them with addError/Warning/Fixable
   - installed_paths config setting can now point directly to a standard instead of the dir above
   - --report=full,summary,info instead of --report=full --report=summary --report=info
-  - Improved the performance of the CSS tokenizer, especially on very large CSS files (thousands of lines)
-    -- Thanks to Klaus Purer for the patch
-  - Defined tokens for lower PHP versions are now phpcs-specific strings instead of ints
-    -- Stops conflict with other projects, like PHP_CodeCoverage
-  - Added more guard code for syntax errors to various sniffs
-  - Improved support for older HHVM versions
-    -- Thanks to Kunal Mehta for the patch
-  - Squiz ValidLogicalOperatorsSniff now ignores XOR as type casting is different when using the ^ operator (request #567)
-  - Squiz CommentedOutCodeSniff is now better at ignoring URLs inside comments
-  - Squiz ControlSignatureSniff is now better at checking embedded PHP code
-  - Squiz ScopeClosingBraceSniff is now better at checking embedded PHP code
-  - Fixed bug #584 : Squiz.Arrays.ArrayDeclaration sniff gives incorrect NoComma error for multiline string values
-  - Fixed bug #589 : PEAR.Functions.FunctionCallSignature sniff not checking all function calls
-  - Fixed bug #592 : USE statement tokenising can sometimes result in mismatched scopes
-  - Fixed bug #594 : Tokenizer issue on closure that returns by reference
-  - Fixed bug #595 : Colons in CSS selectors within media queries throw false positives
-    -- Thanks to Klaus Purer for the patch
-  - Fixed bug #598 : PHPCBF can break function/use closure brace placement
-  - Fixed bug #603 : Squiz ControlSignatureSniff hard-codes opener type while fixing
-  - Fixed bug #605 : Auto report-width specified in ruleset.xml ignored
-  - Fixed bug #611 : Invalid numeric literal on CSS files under PHP7
-  - Fixed bug #612 : Multi-file diff generating incorrectly if files do not end with EOL char
-  - Fixed bug #615 : Squiz OperatorBracketSniff incorrectly reports and fixes operations using self::
-  - Fixed bug #616 : Squiz DisallowComparisonAssignmentSniff inconsistent errors with inline IF statements
-  - Fixed bug #617 : Space after switch keyword in PSR-2 is not being enforced
-  - Fixed bug #621 : PSR2 SwitchDeclaration sniff doesn't detect, or correctly fix, case body on same line as statement
- </notes>
+  - Generic UnnecessaryStringConcatSniff can now allow strings concatenated over multiple lines
+    -- Set the allowMultiline property to TRUE (default is FALSE) in your ruleset.xml file to enable this
+    -- By default, concat used only for getting around line length limits still generates an error
+    -- Thanks to Stefan Lenselink for the contribution
  <contents>
   <dir name="/">
    <file baseinstalldir="PHP" name="CodeSniffer.php" role="php">
@@ -2358,6 +2335,46 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>2.3.3</release>
+    <api>2.3.3</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2015-06-24</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Improved the performance of the CSS tokenizer, especially on very large CSS files (thousands of lines)
+      -- Thanks to Klaus Purer for the patch
+    - Defined tokens for lower PHP versions are now phpcs-specific strings instead of ints
+      -- Stops conflict with other projects, like PHP_CodeCoverage
+    - Added more guard code for syntax errors to various sniffs
+    - Improved support for older HHVM versions
+      -- Thanks to Kunal Mehta for the patch
+    - Squiz ValidLogicalOperatorsSniff now ignores XOR as type casting is different when using the ^ operator (request   #567)
+    - Squiz CommentedOutCodeSniff is now better at ignoring URLs inside comments
+    - Squiz ControlSignatureSniff is now better at checking embedded PHP code
+    - Squiz ScopeClosingBraceSniff is now better at checking embedded PHP code
+    - Fixed bug #584 : Squiz.Arrays.ArrayDeclaration sniff gives incorrect NoComma error for multiline string values
+    - Fixed bug #589 : PEAR.Functions.FunctionCallSignature sniff not checking all function calls
+    - Fixed bug #592 : USE statement tokenising can sometimes result in mismatched scopes
+    - Fixed bug #594 : Tokenizer issue on closure that returns by reference
+    - Fixed bug #595 : Colons in CSS selectors within media queries throw false positives
+      -- Thanks to Klaus Purer for the patch
+    - Fixed bug #598 : PHPCBF can break function/use closure brace placement
+    - Fixed bug #603 : Squiz ControlSignatureSniff hard-codes opener type while fixing
+    - Fixed bug #605 : Auto report-width specified in ruleset.xml ignored
+    - Fixed bug #611 : Invalid numeric literal on CSS files under PHP7
+    - Fixed bug #612 : Multi-file diff generating incorrectly if files do not end with EOL char
+    - Fixed bug #615 : Squiz OperatorBracketSniff incorrectly reports and fixes operations using self::
+    - Fixed bug #616 : Squiz DisallowComparisonAssignmentSniff inconsistent errors with inline IF statements
+    - Fixed bug #617 : Space after switch keyword in PSR-2 is not being enforced
+    - Fixed bug #621 : PSR2 SwitchDeclaration sniff doesn't detect, or correctly fix, case body on same line as statement
+    </notes>
+  </release>
   <release>
    <version>
     <release>2.3.2</release>
