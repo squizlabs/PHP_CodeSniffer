@@ -47,9 +47,10 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
     public $error = true;
 
     /**
-     * If true strings concatenated on multiple lines are allowed
-     * default this is disabled, use this feature to prevent clashes
-     * with the LineLengthSniff.
+     * If true, strings concatenated over multiple lines are allowed.
+     *
+     * Useful if you break strings over multiple lines to work
+     * within a max line length.
      *
      * @var bool
      */
