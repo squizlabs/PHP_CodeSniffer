@@ -753,14 +753,25 @@ class File
             // Any internal message.
             $listenerCode = Util\Common::getSniffCode($this->activeListener);
             $sniffCode    = $code;
-        } else if (strpos($code, '.') !== false) {
-            // The full message code has been passed in.
-            $sniffCode    = $code;
-            $listenerCode = substr($sniffCode, 0, strrpos($sniffCode, '.'));
+            $checkCodes  = array($sniffCode);
         } else {
-            $listenerCode = Util\Common::getSniffCode($this->activeListener);
-            $sniffCode    = $listenerCode.'.'.$code;
-        }
+            if (strpos($code, '.') !== false) {
+                // The full message code has been passed in.
+                $sniffCode    = $code;
+                $listenerCode = substr($sniffCode, 0, strrpos($sniffCode, '.'));
+            } else {
+                $listenerCode = Util\Common::getSniffCode($this->activeListener);
+                $sniffCode    = $listenerCode.'.'.$code;
+            }
+
+            $parts      = explode('.', $sniffCode);
+            $checkCodes = array(
+                           $sniffCode,
+                           $parts[0].'.'.$parts[1].'.'.$parts[2],
+                           $parts[0].'.'.$parts[1],
+                           $parts[0],
+                          );
+        }//end if
 
         // Filter out any messages for sniffs that shouldn't have run.
         if ($this->config->cache === false
@@ -775,23 +786,32 @@ class File
             return false;
         }
 
-        // Make sure this message type has not been set to "warning".
-        if (isset($this->ruleset->ruleset[$sniffCode]['type']) === true
-            && $this->ruleset->ruleset[$sniffCode]['type'] === 'warning'
-        ) {
-            // Pass this off to the warning handler.
-            return $this->_addWarning($error, $line, $column, $code, $data, $severity, $fixable);
-        } else if ($this->config->cache === false && $this->config->errorSeverity === 0) {
+        foreach ($checkCodes as $checkCode) {
+            // Make sure this message type has not been set to "warning".
+            if (isset($this->ruleset->ruleset[$checkCode]['type']) === true
+                && $this->ruleset->ruleset[$checkCode]['type'] === 'warning'
+            ) {
+                // Pass this off to the warning handler.
+                return $this->_addWarning($error, $line, $column, $code, $data, $severity, $fixable);
+            }
+        }
+
+        if ($this->config->cache === false && $this->config->errorSeverity === 0) {
             // Don't bother doing any processing as errors are just going to
             // be hidden in the reports anyway.
             return false;
         }
 
-        // Make sure we are interested in this severity level.
-        if (isset($this->ruleset->ruleset[$sniffCode]['severity']) === true) {
-            $severity = $this->ruleset->ruleset[$sniffCode]['severity'];
-        } else if ($severity === 0) {
+        if ($severity === 0) {
             $severity = 5;
+        }
+
+        foreach ($checkCodes as $checkCode) {
+            // Make sure we are interested in this severity level.
+            if (isset($this->ruleset->ruleset[$checkCode]['severity']) === true) {
+                $severity = $this->ruleset->ruleset[$checkCode]['severity'];
+                break;
+            }
         }
 
         if ($this->config->cache === false && $this->config->errorSeverity > $severity) {
@@ -906,14 +926,25 @@ class File
             // Any internal message.
             $listenerCode = Util\Common::getSniffCode($this->activeListener);
             $sniffCode    = $code;
-        } else if (strpos($code, '.') !== false) {
-            // The full message code has been passed in.
-            $sniffCode    = $code;
-            $listenerCode = substr($sniffCode, 0, strrpos($sniffCode, '.'));
+            $checkCodes  = array($sniffCode);
         } else {
-            $listenerCode = Util\Common::getSniffCode($this->activeListener);
-            $sniffCode    = $listenerCode.'.'.$code;
-        }
+            if (strpos($code, '.') !== false) {
+                // The full message code has been passed in.
+                $sniffCode    = $code;
+                $listenerCode = substr($sniffCode, 0, strrpos($sniffCode, '.'));
+            } else {
+                $listenerCode = Util\Common::getSniffCode($this->activeListener);
+                $sniffCode    = $listenerCode.'.'.$code;
+            }
+
+            $parts      = explode('.', $sniffCode);
+            $checkCodes = array(
+                           $sniffCode,
+                           $parts[0].'.'.$parts[1].'.'.$parts[2],
+                           $parts[0].'.'.$parts[1],
+                           $parts[0],
+                          );
+        }//end if
 
         // Filter out any messages for sniffs that shouldn't have run.
         if ($this->config->cache === false
@@ -928,23 +959,32 @@ class File
             return false;
         }
 
-        // Make sure this message type has not been set to "error".
-        if (isset($this->ruleset->ruleset[$sniffCode]['type']) === true
-            && $this->ruleset->ruleset[$sniffCode]['type'] === 'error'
-        ) {
-            // Pass this off to the error handler.
-            return $this->_addError($warning, $line, $column, $code, $data, $severity, $fixable);
-        } else if ($this->config->cache === false && $this->config->warningSeverity === 0) {
+        foreach ($checkCodes as $checkCode) {
+            // Make sure this message type has not been set to "error".
+            if (isset($this->ruleset->ruleset[$checkCode]['type']) === true
+                && $this->ruleset->ruleset[$checkCode]['type'] === 'error'
+            ) {
+                // Pass this off to the error handler.
+                return $this->_addError($warning, $line, $column, $code, $data, $severity, $fixable);
+            }
+        }
+
+        if ($this->config->cache === false && $this->config->warningSeverity === 0) {
             // Don't bother doing any processing as warnings are just going to
             // be hidden in the reports anyway.
             return false;
         }
 
-        // Make sure we are interested in this severity level.
-        if (isset($this->ruleset->ruleset[$sniffCode]['severity']) === true) {
-            $severity = $this->ruleset->ruleset[$sniffCode]['severity'];
-        } else if ($severity === 0) {
+        if ($severity === 0) {
             $severity = 5;
+        }
+
+        foreach ($checkCodes as $checkCode) {
+            // Make sure we are interested in this severity level.
+            if (isset($this->ruleset->ruleset[$checkCode]['severity']) === true) {
+                $severity = $this->ruleset->ruleset[$checkCode]['severity'];
+                break;
+            }
         }
 
         if ($this->config->cache === false && $this->config->warningSeverity > $severity) {

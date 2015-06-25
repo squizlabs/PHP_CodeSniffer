@@ -280,10 +280,33 @@ class Ruleset
                 echo "\tProcessing rule \"".$rule['ref'].'"'.PHP_EOL;
             }
 
-            $includedSniffs = array_merge(
-                $includedSniffs,
-                $this->expandRulesetReference($rule['ref'], $rulesetDir, $depth)
-            );
+            $expandedSniffs = $this->expandRulesetReference($rule['ref'], $rulesetDir, $depth);
+            $newSniffs      = array_diff($expandedSniffs, $includedSniffs);
+            $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
+
+            $parts = explode('.', $rule['ref']);
+            if (count($parts) === 4) {
+                $sniffCode = $parts[0].'.'.$parts[1].'.'.$parts[2];
+                if (isset($this->ruleset[$sniffCode]['severity']) === true
+                    && $this->ruleset[$sniffCode]['severity'] === 0
+                ) {
+                    $this->ruleset[(string) $rule['ref']]['severity'] = 5;
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", $depth);
+                        echo "\t\t* disabling sniff exclusion for specific message code *".PHP_EOL;
+                        echo str_repeat("\t", $depth);
+                        echo "\t\t=> severity set to 5".PHP_EOL;
+                    }
+                } else if (empty($newSniffs) === false) {
+                    // Turn off all messages in the sniff, except this one.
+                    $this->ruleset[$sniffCode]['severity']            = 0;
+                    $this->ruleset[(string) $rule['ref']]['severity'] = 5;
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", $depth);
+                        echo "\t\tExcluding sniff \"".$sniffCode.'" except for "'.$parts[3].'"'.PHP_EOL;
+                    }
+                }
+            }//end if
 
             if (isset($rule->exclude) === true) {
                 foreach ($rule->exclude as $exclude) {
@@ -664,6 +687,7 @@ class Ruleset
      *                                This is only used for debug output.
      *
      * @return void
+     * @throws RuntimeException If rule settings are invalid.
      */
     private function processRule($rule, $depth=0)
     {
@@ -692,7 +716,12 @@ class Ruleset
                 $this->ruleset[$code] = array();
             }
 
-            $this->ruleset[$code]['type'] = (string) $rule->type;
+            $type = strtolower((string) $rule->type);
+            if ($type !== 'error' && $type !== 'warning') {
+                throw new RuntimeException("Message type \"$type\" is invalid; must be \"error\" or \"warning\"");
+            }
+
+            $this->ruleset[$code]['type'] = $type;
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> message type set to ".(string) $rule->type.PHP_EOL;
