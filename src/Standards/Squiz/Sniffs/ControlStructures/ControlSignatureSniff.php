@@ -159,13 +159,14 @@ class ControlSignatureSniff implements Sniff
             for ($next = ($opener + 1); $next < $phpcsFile->numTokens; $next++) {
                 $code = $tokens[$next]['code'];
 
-                if ($code === T_WHITESPACE || $code === T_CLOSE_TAG) {
+                if ($code === T_WHITESPACE) {
                     continue;
                 }
 
                 // Skip all empty tokens on the same line as the opener.
                 if ($tokens[$next]['line'] === $tokens[$opener]['line']
-                    && isset(Tokens::$emptyTokens[$code]) === true
+                    && (isset(Tokens::$emptyTokens[$code]) === true
+                    || $code === T_CLOSE_TAG)
                 ) {
                     continue;
                 }
