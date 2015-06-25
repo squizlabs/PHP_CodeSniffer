@@ -170,3 +170,14 @@ endif;
 <?php while($row = $data->getRow()): ?>
     <p><?= $val ?></p>
 <?php endwhile; ?>
+
+<?php
+if ($foo === 1) {
+    ?>
+    <table><tr><td>
+    <?php
+    echo '2';
+    ?>
+    </td></tr></table>
+    <?php
+}

@@ -152,13 +152,14 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
             for ($next = ($opener + 1); $next < $phpcsFile->numTokens; $next++) {
                 $code = $tokens[$next]['code'];
 
-                if ($code === T_WHITESPACE || $code === T_CLOSE_TAG) {
+                if ($code === T_WHITESPACE) {
                     continue;
                 }
 
                 // Skip all empty tokens on the same line as the opener.
                 if ($tokens[$next]['line'] === $tokens[$opener]['line']
-                    && isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true
+                    && (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true
+                    || $code === T_CLOSE_TAG)
                 ) {
                     continue;
                 }
