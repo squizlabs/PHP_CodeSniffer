@@ -80,6 +80,9 @@ class Squiz_Tests_Operators_ComparisonOperatorUsageUnitTest extends AbstractSnif
                     17 => 1,
                     18 => 1,
                     28 => 2,
+                    40 => 1,
+                    47 => 1,
+                    52 => 1,
                    );
             break;
         default:
