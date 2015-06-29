@@ -47,8 +47,8 @@ class Json implements Report
                     $error['message'] = str_replace('/', '\/', $error['message']);
 
                     $fixable = 'false';
-                    if ($error['fixable'] === false) {
-                        $fixable = 'false';
+                    if ($error['fixable'] === true) {
+                        $fixable = 'true';
                     }
 
                     $messages .= '{"message":"'.$error['message'].'",';
