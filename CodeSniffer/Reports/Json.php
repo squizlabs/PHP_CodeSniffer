@@ -65,14 +65,22 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
                     $error['message'] = str_replace('"', '\"', $error['message']);
                     $error['message'] = str_replace('/', '\/', $error['message']);
 
+                    $fixable = 'false';
+                    if ($error['fixable'] === false) {
+                        $fixable = 'false';
+                    }
+
                     $messages .= '{"message":"'.$error['message'].'",';
                     $messages .= '"source":"'.$error['source'].'",';
                     $messages .= '"severity":'.$error['severity'].',';
                     $messages .= '"type":"'.$error['type'].'",';
-                    $messages .= '"line":'.$line.',"column":'.$column.'},';
+                    $messages .= '"line":'.$line.',';
+                    $messages .= '"column":'.$column.',';
+                    $messages .= '"fixable":'.$fixable;
+                    $messages .= '},';
                 }
-            }
-        }
+            }//end foreach
+        }//end foreach
 
         echo rtrim($messages, ',');
         echo ']},';
@@ -107,7 +115,7 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
         $width=80,
         $toScreen=true
     ) {
-        echo '{"totals":{"errors":'.$totalErrors.',"warnings":'.$totalWarnings.'},"files":{';
+        echo '{"totals":{"errors":'.$totalErrors.',"warnings":'.$totalWarnings.',"fixable":'.$totalFixable.'},"files":{';
         echo rtrim($cachedData, ',');
         echo "}}";
 
