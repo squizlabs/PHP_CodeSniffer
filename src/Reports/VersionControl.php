@@ -23,27 +23,6 @@ abstract class VersionControl implements Report
      */
     protected $reportName = 'VERSION CONTROL';
 
-    /**
-     * A cache of author stats collected during the run.
-     *
-     * @var array
-     */
-    private $authorCache = array();
-
-    /**
-     * A cache of blame stats collected during the run.
-     *
-     * @var array
-     */
-    private $praiseCache = array();
-
-    /**
-     * A cache of source stats collected during the run.
-     *
-     * @var array
-     */
-    private $sourceCache = array();
-
 
     /**
      * Generate a partial report for a single processed file.
@@ -63,6 +42,10 @@ abstract class VersionControl implements Report
     {
         $blames = $this->getBlameContent($report['filename']);
 
+        $authorCache = array();
+        $praiseCache = array();
+        $sourceCache = array();
+
         foreach ($report['messages'] as $line => $lineErrors) {
             $author = 'Unknown';
             if (isset($blames[($line - 1)]) === true) {
@@ -72,26 +55,26 @@ abstract class VersionControl implements Report
                 }
             }
 
-            if (isset($this->authorCache[$author]) === false) {
-                $this->authorCache[$author] = 0;
-                $this->praiseCache[$author] = array(
-                                               'good' => 0,
-                                               'bad'  => 0,
-                                              );
+            if (isset($authorCache[$author]) === false) {
+                $authorCache[$author] = 0;
+                $praiseCache[$author] = array(
+                                         'good' => 0,
+                                         'bad'  => 0,
+                                        );
             }
 
-            $this->praiseCache[$author]['bad']++;
+            $praiseCache[$author]['bad']++;
 
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $this->authorCache[$author]++;
+                    $authorCache[$author]++;
 
                     if ($showSources === true) {
                         $source = $error['source'];
-                        if (isset($this->sourceCache[$author][$source]) === false) {
-                            $this->sourceCache[$author][$source] = 1;
+                        if (isset($sourceCache[$author][$source]) === false) {
+                            $sourceCache[$author][$source] = 1;
                         } else {
-                            $this->sourceCache[$author][$source]++;
+                            $sourceCache[$author][$source]++;
                         }
                     }
                 }
@@ -100,7 +83,7 @@ abstract class VersionControl implements Report
             unset($blames[($line - 1)]);
         }//end foreach
 
-        // No go through and give the authors some credit for
+        // Now go through and give the authors some credit for
         // all the lines that do not have errors.
         foreach ($blames as $line) {
             $author = $this->getAuthor($line);
@@ -108,21 +91,35 @@ abstract class VersionControl implements Report
                 $author = 'Unknown';
             }
 
-            if (isset($this->authorCache[$author]) === false) {
+            if (isset($authorCache[$author]) === false) {
                 // This author doesn't have any errors.
                 if (PHP_CODESNIFFER_VERBOSITY === 0) {
                     continue;
                 }
 
-                $this->authorCache[$author] = 0;
-                $this->praiseCache[$author] = array(
-                                               'good' => 0,
-                                               'bad'  => 0,
-                                              );
+                $authorCache[$author] = 0;
+                $praiseCache[$author] = array(
+                                         'good' => 0,
+                                         'bad'  => 0,
+                                        );
             }
 
-            $this->praiseCache[$author]['good']++;
+            $praiseCache[$author]['good']++;
         }//end foreach
+
+        foreach ($authorCache as $author => $errors) {
+            echo "AUTHOR>>$author>>$errors".PHP_EOL;
+        }
+
+        foreach ($praiseCache as $author => $praise) {
+            echo "PRAISE>>$author>>".$praise['good'].'>>'.$praise['bad'].PHP_EOL;
+        }
+
+        foreach ($sourceCache as $author => $sources) {
+            foreach ($sources as $source => $errors) {
+                echo "SOURCE>>$author>>$source>>$errors".PHP_EOL;
+            }
+        }
 
         return true;
 
@@ -162,12 +159,60 @@ abstract class VersionControl implements Report
             return;
         }
 
+        $lines = explode(PHP_EOL, $cachedData);
+        array_pop($lines);
+
+        if (empty($lines) === true) {
+            return;
+        }
+
+        $authorCache = array();
+        $praiseCache = array();
+        $sourceCache = array();
+
+        foreach ($lines as $line) {
+            $parts = explode('>>', $line);
+            switch ($parts[0]) {
+            case 'AUTHOR':
+                if (isset($authorCache[$parts[1]]) === false) {
+                    $authorCache[$parts[1]] = $parts[2];
+                } else {
+                    $authorCache[$parts[1]] += $parts[2];
+                }
+                break;
+            case 'PRAISE':
+                if (isset($praiseCache[$parts[1]]) === false) {
+                    $praiseCache[$parts[1]] = array(
+                                               'good' => $parts[2],
+                                               'bad'  => $parts[3],
+                                              );
+                } else {
+                    $praiseCache[$parts[1]]['good'] += $parts[2];
+                    $praiseCache[$parts[1]]['bad']  += $parts[3];
+                }
+                break;
+            case 'SOURCE':
+                if (isset($praiseCache[$parts[1]]) === false) {
+                    $praiseCache[$parts[1]] = array();
+                }
+
+                if (isset($sourceCache[$parts[1]][$parts[2]]) === false) {
+                    $sourceCache[$parts[1]][$parts[2]] = $parts[3];
+                } else {
+                    $sourceCache[$parts[1]][$parts[2]] += $parts[3];
+                }
+                break;
+            default:
+                break;
+            }//end switch
+        }//end foreach
+
         // Make sure the report width isn't too big.
         $maxLength = 0;
-        foreach ($this->authorCache as $author => $count) {
+        foreach ($authorCache as $author => $count) {
             $maxLength = max($maxLength, strlen($author));
-            if ($showSources === true && isset($this->sourceCache[$author]) === true) {
-                foreach ($this->sourceCache[$author] as $source => $count) {
+            if ($showSources === true && isset($sourceCache[$author]) === true) {
+                foreach ($sourceCache[$author] as $source => $count) {
                     if ($source === 'count') {
                         continue;
                     }
@@ -179,7 +224,7 @@ abstract class VersionControl implements Report
 
         $width = min($width, ($maxLength + 30));
         $width = max($width, 70);
-        arsort($this->authorCache);
+        arsort($authorCache);
 
         echo PHP_EOL."\033[1m".'PHP CODE SNIFFER '.$this->reportName.' BLAME SUMMARY'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL."\033[1m";
@@ -193,12 +238,12 @@ abstract class VersionControl implements Report
 
         echo "\033[0m";
 
-        foreach ($this->authorCache as $author => $count) {
-            if ($this->praiseCache[$author]['good'] === 0) {
+        foreach ($authorCache as $author => $count) {
+            if ($praiseCache[$author]['good'] === 0) {
                 $percent = 0;
             } else {
-                $total   = ($this->praiseCache[$author]['bad'] + $this->praiseCache[$author]['good']);
-                $percent = round(($this->praiseCache[$author]['bad'] / $total * 100), 2);
+                $total   = ($praiseCache[$author]['bad'] + $praiseCache[$author]['good']);
+                $percent = round(($praiseCache[$author]['bad'] / $total * 100), 2);
             }
 
             $overallPercent = '('.round((($count / $errorsShown) * 100), 2).')';
@@ -214,8 +259,8 @@ abstract class VersionControl implements Report
 
             echo $line.PHP_EOL;
 
-            if ($showSources === true && isset($this->sourceCache[$author]) === true) {
-                $errors = $this->sourceCache[$author];
+            if ($showSources === true && isset($sourceCache[$author]) === true) {
+                $errors = $sourceCache[$author];
                 asort($errors);
                 $errors = array_reverse($errors);
 
@@ -236,8 +281,8 @@ abstract class VersionControl implements Report
             echo 'S';
         }
 
-        echo ' WERE COMMITTED BY '.count($this->authorCache).' AUTHOR';
-        if (count($this->authorCache) !== 1) {
+        echo ' WERE COMMITTED BY '.count($authorCache).' AUTHOR';
+        if (count($authorCache) !== 1) {
             echo 'S';
         }
 
