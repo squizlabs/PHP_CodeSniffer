@@ -145,6 +145,10 @@ class CommentedOutCodeSniff implements Sniff
         // to frame comments and licence headers.
         $content = preg_replace('/[-=*]+/', '-', $content);
 
+        // Random numbers sitting inside the content can throw parse errors
+        // for invalid literals in PHP7+, so strip those.
+        $content = preg_replace('/\d+/', '', $content);
+
         // Because we are not really parsing code, the tokenizer can throw all sorts
         // of errors that don't mean anything, so ignore them.
         $oldErrors = ini_get('error_reporting');
