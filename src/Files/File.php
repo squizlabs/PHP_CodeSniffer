@@ -43,7 +43,7 @@ class File
      *
      * @var string
      */
-    protected $path    = '';
+    public $path    = '';
     protected $content = '';
     public $ignored    = false;
     public $config     = null;
@@ -265,14 +265,12 @@ class File
     {
         // By default, we have no idea where our content
         // comes from, so we can't do anything.
+
     }//end reloadContent()
 
 
     /**
      * Starts the stack traversal and tells listeners when tokens are found.
-     *
-     * @param string $contents The contents to parse. If NULL, the content
-     *                         is taken from the file system.
      *
      * @return void
      */
@@ -456,14 +454,12 @@ class File
         // $this->content = null;
         // $this->tokens = null;
         // $this->tokenizer = null;
+
     }//end process()
 
 
     /**
      * Tokenizes the file and prepares it for the test run.
-     *
-     * @param string $contents The contents to parse. If NULL, the content
-     *                         is taken from the file system.
      *
      * @return void
      */
@@ -480,7 +476,10 @@ class File
             $this->tokens    = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
-            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)) {
+            if ($this->config->parallel === 1
+                && (PHP_CODESNIFFER_VERBOSITY > 0
+                || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false))
+            ) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo PHP_EOL;
@@ -506,7 +505,10 @@ class File
             $this->addWarningOnLine($error, 1, 'Internal.LineEndings.Mixed');
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)) {
+        if ($this->config->parallel === 1
+            && (PHP_CODESNIFFER_VERBOSITY > 0
+            || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false))
+        ) {
             if ($this->numTokens === 0) {
                 $numLines = 0;
             } else {
@@ -625,8 +627,8 @@ class File
      * @param int    $line     The line on which the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the error message.
-     * @param int    $severity The severity level for this error. A value of 0 will be converted into the default severity level.
-     *                          will be converted into the default severity level.
+     * @param int    $severity The severity level for this error. A value of 0
+     *                         will be converted into the default severity level.
      *
      * @return boolean
      */
@@ -649,8 +651,8 @@ class File
      * @param int    $line     The line on which the warning occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the warning message.
-     * @param int    $severity The severity level for this warning. A value of 0 will be converted into the default severity level.
-     *                          will be converted into the default severity level.
+     * @param int    $severity The severity level for this warning. A value of 0 will
+     *                         will be converted into the default severity level.
      *
      * @return boolean
      */
@@ -926,7 +928,7 @@ class File
             // Any internal message.
             $listenerCode = Util\Common::getSniffCode($this->activeListener);
             $sniffCode    = $code;
-            $checkCodes  = array($sniffCode);
+            $checkCodes   = array($sniffCode);
         } else {
             if (strpos($code, '.') !== false) {
                 // The full message code has been passed in.

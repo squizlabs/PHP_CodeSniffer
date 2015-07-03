@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Caching between runs (--cache, --no-cache and "cache" config var) (request #530)
+  - Check files in parallel (--parallel=1 for off, --parallel=100 etc) (request #421)
   - Automatic discovery of executable paths (request #571)
     -- Thanks to Sergey Morozov for the patch
   - All sniff errors are now exceptions and caught to stop infinite loops

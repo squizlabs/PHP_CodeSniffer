@@ -22,13 +22,6 @@ class Summary implements Report
      */
     public $recordErrors = false;
 
-    /**
-     * An array of process files and their error data.
-     *
-     * @var boolean
-     */
-    private $reportFiles = array();
-
 
     /**
      * Generate a partial report for a single processed file.
@@ -54,12 +47,7 @@ class Summary implements Report
             return false;
         }
 
-        $this->reportFiles[$report['filename']] = array(
-                                                   'errors'   => $report['errors'],
-                                                   'warnings' => $report['warnings'],
-                                                   'strlen'   => strlen($report['filename']),
-                                                  );
-
+        echo $report['filename'].'>>'.$report['errors'].'>>'.$report['warnings'].PHP_EOL;
         return true;
 
     }//end generateFileReport()
@@ -92,15 +80,26 @@ class Summary implements Report
         $interactive=false,
         $toScreen=true
     ) {
+        $lines = explode(PHP_EOL, $cachedData);
+        array_pop($lines);
 
-        if (empty($this->reportFiles) === true) {
+        if (empty($lines) === true) {
             return;
         }
 
-        // Make sure the report width isn't too big.
-        $maxLength = 0;
-        foreach ($this->reportFiles as $file => $data) {
-            $maxLength = max($maxLength, $data['strlen']);
+        $reportFiles = array();
+        $maxLength   = 0;
+
+        foreach ($lines as $line) {
+            $parts   = explode('>>', $line);
+            $fileLen = strlen($parts[0]);
+            $reportFiles[$parts[0]] = array(
+                                       'errors'   => $parts[1],
+                                       'warnings' => $parts[2],
+                                       'strlen'   => $fileLen,
+                                      );
+
+            $maxLength = max($maxLength, $fileLen);
         }
 
         $width = min($width, ($maxLength + 21));
@@ -111,7 +110,7 @@ class Summary implements Report
         echo "\033[1m".'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
-        foreach ($this->reportFiles as $file => $data) {
+        foreach ($reportFiles as $file => $data) {
             $padding = ($width - 18 - $data['strlen']);
             if ($padding < 0) {
                 $file    = '...'.substr($file, (($padding * -1) + 3));

@@ -22,13 +22,6 @@ class Info implements Report
      */
     public $recordErrors = false;
 
-    /**
-     * A cache of metrics collected during the run.
-     *
-     * @var array
-     */
-    private $metricCache = array();
-
 
     /**
      * Generate a partial report for a single processed file.
@@ -48,18 +41,10 @@ class Info implements Report
     {
         $metrics = $phpcsFile->getMetrics();
         foreach ($metrics as $metric => $data) {
-            if (isset($this->metricCache[$metric]) === false) {
-                $this->metricCache[$metric] = array();
-            }
-
             foreach ($data['values'] as $value => $count) {
-                if (isset($this->metricCache[$metric][$value]) === false) {
-                    $this->metricCache[$metric][$value] = $count;
-                } else {
-                    $this->metricCache[$metric][$value] += $count;
-                }
+                echo "$metric>>$value>>$count".PHP_EOL;
             }
-        }//end foreach
+        }
 
         return true;
 
@@ -93,17 +78,36 @@ class Info implements Report
         $interactive=false,
         $toScreen=true
     ) {
-        if (empty($this->metricCache) === true) {
-            // Nothing to show.
+        $lines = explode(PHP_EOL, $cachedData);
+        array_pop($lines);
+
+        if (empty($lines) === true) {
             return;
         }
 
-        ksort($this->metricCache);
+        $metrics = array();
+        foreach ($lines as $line) {
+            $parts  = explode('>>', $line);
+            $metric = $parts[0];
+            $value  = $parts[1];
+            $count  = $parts[2];
+            if (isset($metrics[$metric]) === false) {
+                $metrics[$metric] = array();
+            }
+
+            if (isset($metrics[$metric][$value]) === false) {
+                $metrics[$metric][$value] = $count;
+            } else {
+                $metrics[$metric][$value] += $count;
+            }
+        }
+
+        ksort($metrics);
 
         echo PHP_EOL."\033[1m".'PHP CODE SNIFFER INFORMATION REPORT'."\033[0m".PHP_EOL;
         echo str_repeat('-', 70).PHP_EOL;
 
-        foreach ($this->metricCache as $metric => $values) {
+        foreach ($metrics as $metric => $values) {
             $winner      = '';
             $winnerCount = 0;
             $totalCount  = 0;

@@ -346,9 +346,16 @@ class Runner
         $dots         = 0;
         $maxLength    = strlen($numFiles);
         $lastDir      = '';
+        $childProcs   = array();
 
         // Turn all sniff errors into exceptions.
         set_error_handler(array($this, 'handleErrors'));
+
+        // If verbosity is too high, turn off parallelism so the
+        // debug output is clean.
+        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            $this->config->parallel = 1;
+        }
 
         foreach ($todo as $path => $file) {
             $currDir = dirname($path);
@@ -360,82 +367,48 @@ class Runner
                 $lastDir = $currDir;
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
-                $startTime = microtime(true);
-                echo 'Processing '.basename($path).' ';
-            }
-
-            try {
-                $file->process();
-
-                if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
-                    $timeTaken = ((microtime(true) - $startTime) * 1000);
-                    if ($timeTaken < 1000) {
-                        $timeTaken = round($timeTaken);
-                        echo "DONE in {$timeTaken}ms";
-                    } else {
-                        $timeTaken = round(($timeTaken / 1000), 2);
-                        echo "DONE in $timeTaken secs";
-                    }
-
-                    if (PHP_CODESNIFFER_CBF === true) {
-                        $errors = $file->getFixableCount();
-                        echo " ($errors fixable violations)".PHP_EOL;
-                    } else {
-                        $errors   = $file->getErrorCount();
-                        $warnings = $file->getWarningCount();
-                        echo " ($errors errors, $warnings warnings)".PHP_EOL;
-                    }
+            if ($this->config->parallel === 1) {
+                $this->processFile($file);
+            } else {
+                if (count($childProcs) === $this->config->parallel) {
+                    $this->processChildProcs($childProcs);
+                    $childProcs = array();
                 }
-            } catch (\Exception $e) {
-                $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
-                $file->addErrorOnLine($error, 1, 'Internal.Exception');
-            }//end try
 
-            $this->reporter->cacheFileReport($file, $this->config);
+                $childOutFilename = tempnam(sys_get_temp_dir(), 'phpcs-child');
 
-            if ($this->config->interactive === true) {
-                /*
-                    Running interactively.
-                    Print the error report for the current file and then wait for user input.
-                */
+                $pid = pcntl_fork();
+                if ($pid === -1) {
+                    throw new RuntimeException('Failed to create child process');
+                } else if ($pid !== 0) {
+                    $childProcs[$path] = array(
+                                          'pid' => $pid,
+                                          'out' => $childOutFilename,
+                                         );
+                } else {
+                    // Reset the reporter to make sure only figures from this
+                    // file are recorded.
+                    $this->reporter->totalFiles    = 0;
+                    $this->reporter->totalErrors   = 0;
+                    $this->reporter->totalWarnings = 0;
+                    $this->reporter->totalFixable  = 0;
 
-                // Get current violations and then clear the list to make sure
-                // we only print violations for a single file each time.
-                $numErrors = null;
-                while ($numErrors !== 0) {
-                    $numErrors = ($file->getErrorCount() + $file->getWarningCount());
-                    if ($numErrors === 0) {
-                        continue;
-                    }
+                    $this->processFile($file);
 
-                    $this->reporter->printReport('full');
+                    $childOutput = array(
+                                    'totalFiles'    => $this->reporter->totalFiles,
+                                    'totalErrors'   => $this->reporter->totalErrors,
+                                    'totalWarnings' => $this->reporter->totalWarnings,
+                                    'totalFixable'  => $this->reporter->totalFixable,
+                                   );
 
-                    echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
-                    $input = fgets(STDIN);
-                    $input = trim($input);
-
-                    switch ($input) {
-                    case 's':
-                        break(2);
-                    case 'q':
-                        exit(0);
-                        break;
-                    default:
-                        // Repopulate the sniffs because some of them save their state
-                        // and only clear it when the file changes, but we are rechecking
-                        // the same file.
-                        $file->ruleset->populateTokenListeners();
-                        $file->reloadContent();
-                        $file->process();
-                        $this->reporter->cacheFileReport($file, $this->config);
-                        break;
-                    }
-                }//end while
+                    $output  = '<'.'?php'."\n".' $childOutput = ';
+                    $output .= var_export($childOutput, true);
+                    $output .= "\n?".'>';
+                    file_put_contents($childOutFilename, $output);
+                    exit($pid);
+                }//end if
             }//end if
-
-            // Clean up the file to save (a lot of) memory.
-            $file->cleanUp();
 
             $numProcessed++;
 
@@ -482,6 +455,10 @@ class Runner
                 $dots = 0;
             }
         }//end foreach
+
+        if ($this->config->parallel > 1) {
+            $this->processChildProcs($childProcs);
+        }
 
         restore_error_handler();
 
@@ -540,6 +517,138 @@ class Runner
         throw new RuntimeException("$message in $file on line $line");
 
     }//end handleErrors()
+
+
+    /**
+     * Processes a single file, including checking and fixing.
+     *
+     * @param \PHP_CodeSniffer\Files\File $file The file to be processed.
+     *
+     * @return void
+     */
+    private function processFile($file)
+    {
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
+            $startTime = microtime(true);
+            $message   = 'Processing '.basename($file->path);
+            if ($this->config->parallel > 1) {
+                echo $message.PHP_EOL;
+            } else {
+                echo $message.' ';
+            }
+        }
+
+        try {
+            $file->process();
+
+            if ($this->config->parallel === 1
+                && (PHP_CODESNIFFER_VERBOSITY > 0
+                || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false))
+            ) {
+                $timeTaken = ((microtime(true) - $startTime) * 1000);
+                if ($timeTaken < 1000) {
+                    $timeTaken = round($timeTaken);
+                    echo "DONE in {$timeTaken}ms";
+                } else {
+                    $timeTaken = round(($timeTaken / 1000), 2);
+                    echo "DONE in $timeTaken secs";
+                }
+
+                if (PHP_CODESNIFFER_CBF === true) {
+                    $errors = $file->getFixableCount();
+                    echo " ($errors fixable violations)".PHP_EOL;
+                } else {
+                    $errors   = $file->getErrorCount();
+                    $warnings = $file->getWarningCount();
+                    echo " ($errors errors, $warnings warnings)".PHP_EOL;
+                }
+            }
+        } catch (\Exception $e) {
+            $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
+            $file->addErrorOnLine($error, 1, 'Internal.Exception');
+        }//end try
+
+        $this->reporter->cacheFileReport($file, $this->config);
+
+        // Clean up the file to save (a lot of) memory.
+        $file->cleanUp();
+
+        if ($this->config->interactive === true) {
+            /*
+                Running interactively.
+                Print the error report for the current file and then wait for user input.
+            */
+
+            // Get current violations and then clear the list to make sure
+            // we only print violations for a single file each time.
+            $numErrors = null;
+            while ($numErrors !== 0) {
+                $numErrors = ($file->getErrorCount() + $file->getWarningCount());
+                if ($numErrors === 0) {
+                    continue;
+                }
+
+                $this->reporter->printReport('full');
+
+                echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
+                $input = fgets(STDIN);
+                $input = trim($input);
+
+                switch ($input) {
+                case 's':
+                    break(2);
+                case 'q':
+                    exit(0);
+                    break;
+                default:
+                    // Repopulate the sniffs because some of them save their state
+                    // and only clear it when the file changes, but we are rechecking
+                    // the same file.
+                    $file->ruleset->populateTokenListeners();
+                    $file->reloadContent();
+                    $file->process();
+                    $this->reporter->cacheFileReport($file, $this->config);
+                    break;
+                }
+            }//end while
+        }//end if
+
+    }//end processFile()
+
+
+    /**
+     * Waits for child processes to complete and cleans up after them.
+     *
+     * The reporting information returned by each child process is merged
+     * into the main reporter class.
+     *
+     * @param array $childProcs An array of child processes to wait for.
+     *
+     * @return void
+     */
+    private function processChildProcs($childProcs)
+    {
+        while (count($childProcs) > 0) {
+            foreach ($childProcs as $path => $procData) {
+                $res = pcntl_waitpid($procData['pid'], $status, WNOHANG);
+                if ($res === $procData['pid']) {
+                    if (file_exists($procData['out']) === true) {
+                        include $procData['out'];
+                        if (isset($childOutput) === true) {
+                            $this->reporter->totalFiles    += $childOutput['totalFiles'];
+                            $this->reporter->totalErrors   += $childOutput['totalErrors'];
+                            $this->reporter->totalWarnings += $childOutput['totalWarnings'];
+                            $this->reporter->totalFixable  += $childOutput['totalFixable'];
+                        }
+
+                        unlink($procData['out']);
+                        unset($childProcs[$path]);
+                    }
+                }
+            }
+        }
+
+    }//end processChildProcs()
 
 
 }//end class

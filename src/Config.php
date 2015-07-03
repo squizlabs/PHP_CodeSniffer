@@ -49,6 +49,7 @@ class Config
      *                          2: ruleset and file parsing output
      *                          3: sniff execution output
      * bool     interactive     Enable interactive checking mode.
+     * bool     parallel        Check files in parallel.
      * bool     cache           Enable the use of the file cache.
      * bool     colors          Display colous in output.
      * bool     explain         Explain the coding standards.
@@ -88,6 +89,7 @@ class Config
                          'standards'       => null,
                          'verbosity'       => null,
                          'interactive'     => null,
+                         'parallel'        => null,
                          'cache'           => null,
                          'colors'          => null,
                          'explain'         => null,
@@ -358,6 +360,7 @@ class Config
         $this->local           = false;
         $this->showSources     = false;
         $this->showProgress    = false;
+        $this->parallel        = 1;
         $this->tabWidth        = 0;
         $this->encoding        = 'utf-8';
         $this->extensions      = array(
@@ -441,6 +444,11 @@ class Config
             $cache = self::getConfigData('cache');
             if ($cache !== null) {
                 $this->cache = (bool) $cache;
+            }
+
+            $parallel = self::getConfigData('parallel');
+            if ($parallel !== null) {
+                $this->parallel = max((int) $parallel, 1);
             }
         }
 
@@ -765,6 +773,9 @@ class Config
             } else if (substr($arg, 0, 7) === 'suffix=') {
                 $this->suffix = explode(',', substr($arg, 7));
                 $this->overriddenDefaults['suffix'] = true;
+            } else if (substr($arg, 0, 9) === 'parallel=') {
+                $this->parallel = max((int) substr($arg, 9), 1);
+                $this->overriddenDefaults['parallel'] = true;
             } else if (substr($arg, 0, 9) === 'severity=') {
                 $this->errorSeverity   = (int) substr($arg, 9);
                 $this->warningSeverity = $this->errorSeverity;
@@ -895,7 +906,7 @@ class Config
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
@@ -923,6 +934,7 @@ class Config
         echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
         echo '                      (forces doc generation instead of checking)'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
+        echo '        <processes>   How many files should be checked simultaneously (default is 1)'.PHP_EOL;
         echo '        <report>      Print either the "full", "xml", "checkstyle", "csv"'.PHP_EOL;
         echo '                      "json", "emacs", "source", "summary", "diff"'.PHP_EOL;
         echo '                      "svnblame", "gitblame", "hgblame" or "notifysend" report'.PHP_EOL;
@@ -949,7 +961,7 @@ class Config
         echo 'Usage: phpcbf [-nwli] [-d key[=value]]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
-        echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
+        echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
@@ -967,6 +979,7 @@ class Config
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '                      e.g., module/php,es/js'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
+        echo '        <processes>   How many files should be fixed simultaneously (default is 1)'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to fix an error or warning'.PHP_EOL;

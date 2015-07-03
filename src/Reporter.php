@@ -132,6 +132,14 @@ class Reporter
                                       'output' => $output,
                                       'class'  => $reportClass,
                                      );
+
+            if ($output === null) {
+                // Using a temp file.
+                $this->_tmpFiles[$type] = tempnam(sys_get_temp_dir(), 'phpcs');
+                file_put_contents($this->_tmpFiles[$type], '');
+            } else {
+                file_put_contents($output, '');
+            }
         }//end foreach
 
     }//end __construct()
@@ -170,19 +178,10 @@ class Reporter
 
             if ($report['output'] === null) {
                 // Using a temp file.
-                if (isset($this->_tmpFiles[$type]) === false) {
-                    $this->_tmpFiles[$type] = fopen(tempnam(sys_get_temp_dir(), 'phpcs'), 'w');
-                }
-
-                fwrite($this->_tmpFiles[$type], $generatedReport);
+                file_put_contents($this->_tmpFiles[$type], $generatedReport, FILE_APPEND);
             } else {
                 $flags = FILE_APPEND;
-                if (isset($this->_cachedReports[$type]) === false) {
-                    $this->_cachedReports[$type] = true;
-                    $flags = null;
-                }
-
-                file_put_contents($report['output'], $generatedReport, $flags);
+                file_put_contents($report['output'], $generatedReport, FILE_APPEND);
             }//end if
         }//end foreach
 
@@ -210,36 +209,29 @@ class Reporter
      *
      * @return int[]
      */
-    public function printReport($report, $reportFile=null)
+    public function printReport($report)
     {
         $report      = ucfirst($report);
         $reportClass = $this->_reports[$report]['class'];
+        $reportFile  = $this->_reports[$report]['output'];
 
         if ($reportFile !== null) {
             $filename = $reportFile;
             $toScreen = false;
-
-            if (file_exists($filename) === true
-                && isset($this->_cachedReports[$report]) === true
-            ) {
-                $reportCache = file_get_contents($filename);
-            } else {
-                $reportCache = '';
-            }
         } else {
             if (isset($this->_tmpFiles[$report]) === true) {
-                $data        = stream_get_meta_data($this->_tmpFiles[$report]);
-                $filename    = $data['uri'];
-                $reportCache = file_get_contents($filename);
-                fclose($this->_tmpFiles[$report]);
-                unset($this->_tmpFiles[$report]);
+                $filename = $this->_tmpFiles[$report];
             } else {
-                $reportCache = '';
-                $filename    = null;
+                $filename = null;
             }
 
             $toScreen = true;
-        }//end if
+        }
+
+        $reportCache = '';
+        if ($filename !== null) {
+            $reportCache = file_get_contents($filename);
+        }
 
         ob_start();
         $reportClass->generate(
@@ -279,12 +271,12 @@ class Reporter
     public function printReports()
     {
         $toScreen = false;
-        foreach ($this->config->reports as $type => $output) {
-            if ($output === null) {
+        foreach ($this->_reports as $type => $report) {
+            if ($report['output'] === null) {
                 $toScreen = true;
             }
 
-            $this->printReport($type, $output);
+            $this->printReport($type);
         }
 
         return $toScreen;

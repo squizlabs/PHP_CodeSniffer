@@ -15,13 +15,6 @@ use PHP_CodeSniffer\Util\Timing;
 class Source implements Report
 {
 
-    /**
-     * A cache of source stats collected during the run.
-     *
-     * @var array
-     */
-    private $sourceCache = array();
-
 
     /**
      * Generate a partial report for a single processed file.
@@ -44,46 +37,26 @@ class Source implements Report
             return false;
         }
 
+        $sources = array();
+
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $source = $error['source'];
-                    if (isset($this->sourceCache[$source]) === false) {
-                        if ($showSources === true) {
-                            $parts = null;
-                            $sniff = $source;
-                        } else {
-                            $parts = explode('.', $source);
-                            if ($parts[0] === 'Internal') {
-                                $parts[2] = $parts[1];
-                                $parts[1] = '';
-                            }
-
-                            $parts[1] = $this->makeFriendlyName($parts[1]);
-
-                            $sniff = $this->makeFriendlyName($parts[2]);
-                            if (isset($parts[3]) === true) {
-                                $name    = $this->makeFriendlyName($parts[3]);
-                                $name[0] = strtolower($name[0]);
-                                $sniff  .= ' '.$name;
-                                unset($parts[3]);
-                            }
-
-                            $parts[2] = $sniff;
-                        }//end if
-
-                        $this->sourceCache[$source] = array(
-                                                       'count'   => 1,
-                                                       'fixable' => $error['fixable'],
-                                                       'parts'   => $parts,
-                                                       'strlen'  => strlen($sniff),
-                                                      );
+                    if (isset($sources[$error['source']]) === false) {
+                        $sources[$error['source']] = array(
+                                                      'fixable' => (int) $error['fixable'],
+                                                      'count'   => 1,
+                                                     );
                     } else {
-                        $this->sourceCache[$source]['count']++;
-                    }//end if
-                }//end foreach
-            }//end foreach
-        }//end foreach
+                        $sources[$error['source']]['count']++;
+                    }
+                }
+            }
+        }
+
+        foreach ($sources as $source => $data) {
+            echo $source.'>>'.$data['fixable'].'>>'.$data['count'].PHP_EOL;
+        }
 
         return true;
 
@@ -117,16 +90,64 @@ class Source implements Report
         $interactive=false,
         $toScreen=true
     ) {
-        if (empty($this->sourceCache) === true) {
-            // Nothing to show.
+        $lines = explode(PHP_EOL, $cachedData);
+        array_pop($lines);
+
+        if (empty($lines) === true) {
             return;
         }
 
-        // Make sure the report width isn't too big.
+        $sources   = array();
         $maxLength = 0;
-        foreach ($this->sourceCache as $source => $data) {
-            $maxLength = max($maxLength, $data['strlen']);
-        }
+
+        foreach ($lines as $line) {
+            $parts   = explode('>>', $line);
+            $source  = $parts[0];
+            $fixable = (bool) $parts[1];
+            $count   = $parts[2];
+
+            if (isset($sources[$source]) === false) {
+                if ($showSources === true) {
+                    $parts = null;
+                    $sniff = $source;
+                } else {
+                    $parts = explode('.', $source);
+                    if ($parts[0] === 'Internal') {
+                        $parts[2] = $parts[1];
+                        $parts[1] = '';
+                    }
+
+                    $parts[1] = $this->makeFriendlyName($parts[1]);
+
+                    $sniff = $this->makeFriendlyName($parts[2]);
+                    if (isset($parts[3]) === true) {
+                        $name    = $this->makeFriendlyName($parts[3]);
+                        $name[0] = strtolower($name[0]);
+                        $sniff  .= ' '.$name;
+                        unset($parts[3]);
+                    }
+
+                    $parts[2] = $sniff;
+                }//end if
+
+                $maxLength = max($maxLength, $sniff);
+
+                $sources[$source] = array(
+                                     'count'   => 1,
+                                     'fixable' => $fixable,
+                                     'parts'   => $parts,
+                                    );
+            } else {
+                $sources[$source]['count']++;
+            }//end if
+
+            $fileLen = strlen($parts[0]);
+            $reportFiles[$parts[0]] = array(
+                                       'errors'   => $parts[1],
+                                       'warnings' => $parts[2],
+                                       'strlen'   => $fileLen,
+                                      );
+        }//end foreach
 
         if ($showSources === true) {
             $width = min($width, ($maxLength + 11));
@@ -136,8 +157,8 @@ class Source implements Report
 
         $width = max($width, 70);
 
-        asort($this->sourceCache);
-        $this->sourceCache = array_reverse($this->sourceCache);
+        asort($sources);
+        $sources = array_reverse($sources);
 
         echo PHP_EOL."\033[1mPHP CODE SNIFFER VIOLATION SOURCE SUMMARY\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL."\033[1m";
@@ -163,7 +184,7 @@ class Source implements Report
             $maxSniffWidth += 4;
         }
 
-        foreach ($this->sourceCache as $source => $sourceData) {
+        foreach ($sources as $source => $sourceData) {
             if ($totalFixable > 0) {
                 echo '[';
                 if ($sourceData['fixable'] === true) {
