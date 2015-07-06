@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - JSON report format now includes the fixable status for each error message and the total number of fixable errors
+  - Added more guard code for function declarations with syntax errors
   - Generic UnnecessaryStringConcatSniff can now allow strings concatenated over multiple lines
     -- Set the allowMultiline property to TRUE (default is FALSE) in your ruleset.xml file to enable this
     -- By default, concat used only for getting around line length limits still generates an error
