@@ -88,6 +88,10 @@ class UpperCaseConstantNameSniff implements Sniff
             }
         }
 
+        if ($openBracket === $phpcsFile->numTokens) {
+            return;
+        }
+
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
             $functionKeyword = $phpcsFile->findPrevious(
                 array(

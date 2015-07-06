@@ -72,6 +72,14 @@ class FunctionDeclarationSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[$stackPtr]['parenthesis_opener']) === false
+            || isset($tokens[$stackPtr]['parenthesis_closer']) === false
+            || $tokens[$stackPtr]['parenthesis_opener'] === null
+            || $tokens[$stackPtr]['parenthesis_closer'] === null
+        ) {
+            return;
+        }
+
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
 

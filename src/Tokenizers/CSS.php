@@ -97,6 +97,10 @@ class CSS extends PHP
             if ($token['code'] === T_BREAK
                 || $token['code'] === T_LIST
                 || $token['code'] === T_DEFAULT
+                || $token['code'] === T_SWITCH
+                || $token['code'] === T_FOR
+                || $token['code'] === T_FOREACH
+                || $token['code'] === T_WHILE
             ) {
                 $token['type'] = 'T_STRING';
                 $token['code'] = T_STRING;

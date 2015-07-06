@@ -38,11 +38,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - can include a single sniff code, which will exclude all other codes from that sniff
     -- if the sniff is already included by an imported standard, set sniff severity to 0 and include the specific message you want
   - JSON report format now includes the fixable status for each error message and the total number of fixable errors
+  - Added more guard code for function declarations with syntax errors
   - Generic UnnecessaryStringConcatSniff can now allow strings concatenated over multiple lines
     -- Set the allowMultiline property to TRUE (default is FALSE) in your ruleset.xml file to enable this
     -- By default, concat used only for getting around line length limits still generates an error
     -- Thanks to Stefan Lenselink for the contribution
+  - Generic TodoSniff and FixmeSniff are now better at processing strings with invalid characters
   - Squiz ControlSignatureSniff now supports control structures with only inline HTML content
+  - Fixed bug #636 : Some class names cause CSS tokenizer to hang
  </notes>
  <contents>
   <dir name="/">

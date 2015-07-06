@@ -84,11 +84,20 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        $tokens = $phpcsFile->getTokens();
+
+        if (isset($tokens[$stackPtr]['parenthesis_opener']) === false
+            || isset($tokens[$stackPtr]['parenthesis_closer']) === false
+            || $tokens[$stackPtr]['parenthesis_opener'] === null
+            || $tokens[$stackPtr]['parenthesis_closer'] === null
+        ) {
+            return;
+        }
+
         $this->equalsSpacing           = (int) $this->equalsSpacing;
         $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
 
-        $tokens      = $phpcsFile->getTokens();
         $openBracket = $tokens[$stackPtr]['parenthesis_opener'];
         $this->processBracket($phpcsFile, $openBracket);
 

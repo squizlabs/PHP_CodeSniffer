@@ -73,7 +73,8 @@ class TodoSniff implements Sniff
 
         $content = $tokens[$stackPtr]['content'];
         $matches = array();
-        if (preg_match('/(?:\A|[^\p{L}]+)todo([^\p{L}]+(.*)|\Z)/ui', $content, $matches) !== 0) {
+        preg_match('/(?:\A|[^\p{L}]+)todo([^\p{L}]+(.*)|\Z)/ui', $content, $matches);
+        if (empty($matches) === false) {
             // Clear whitespace and some common characters not required at
             // the end of a to-do message to make the warning more informative.
             $type        = 'CommentFound';
