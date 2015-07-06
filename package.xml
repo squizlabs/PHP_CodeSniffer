@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Stefan Lenselink for the contribution
   - Generic TodoSniff and FixmeSniff are now better at processing strings with invalid characters
   - Squiz ControlSignatureSniff now supports control structures with only inline HTML content
+  - Fixed bug #636 : Some class names cause CSS tokenizer to hang
  </notes>
  <contents>
   <dir name="/">
