@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set the allowMultiline property to TRUE (default is FALSE) in your ruleset.xml file to enable this
     -- By default, concat used only for getting around line length limits still generates an error
     -- Thanks to Stefan Lenselink for the contribution
+  - Generic TodoSniff and FixmeSniff are now better at processing strings with invalid characters
   - Squiz ControlSignatureSniff now supports control structures with only inline HTML content
  </notes>
  <contents>
