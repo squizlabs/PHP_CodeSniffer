@@ -432,27 +432,6 @@ class PHP_CodeSniffer
 
     }//end setAllowedFileExtensions()
 
-
-    /**
-     * Sets an array of ignore patterns that we use to skip files and folders.
-     *
-     * Patterns are not case sensitive.
-     *
-     * @param array $patterns An array of ignore patterns. The pattern is the key
-     *                        and the value is either "absolute" or "relative",
-     *                        depending on how the pattern should be applied to a
-     *                        file path.
-     *
-     * @return void
-     */
-    public function addIgnorePatterns(array $patterns)
-    {
-        foreach($patterns as $pattern => $type){
-            $this->addIgnorePattern($pattern, $type);
-        }
-    }//end addIgnorePatterns()
-
-
     /**
      * Gets the array of ignore patterns.
      *
@@ -480,6 +459,47 @@ class PHP_CodeSniffer
 
 
     /**
+     * Sets an array of ignore patterns that we use to skip files and folders.
+     *
+     * Patterns are not case sensitive.
+     *
+     * @param array $patterns An array of ignore patterns. The pattern is the key
+     *                        and the value is either "absolute" or "relative",
+     *                        depending on how the pattern should be applied to a
+     *                        file path.
+     *
+     * @return void
+     */
+    public function setIgnorePatterns(array $patterns)
+    {
+        $this->globalIgnorePatterns = array();
+        $this->globalIgnores = array();
+
+        $this->addIgnorePatterns($patterns);
+    }//end setIgnorePatterns()
+
+
+    /**
+     * Sets an array of ignore patterns that we use to skip files and folders.
+     *
+     * Patterns are not case sensitive.
+     *
+     * @param array $patterns An array of ignore patterns. The pattern is the key
+     *                        and the value is either "absolute" or "relative",
+     *                        depending on how the pattern should be applied to a
+     *                        file path.
+     *
+     * @return void
+     */
+    public function addIgnorePatterns(array $patterns)
+    {
+        foreach ($patterns as $pattern => $type) {
+            $this->addIgnorePattern($pattern, $type);
+        }
+    }//end addIgnorePatterns()
+
+
+    /**
      * Sets a specific ignore patterns
      *
      * Check the pattern against the following syntaxes (dir/path.php, ./dir/path.php, ^dir/path.php, ^dir/path.php$, ./dir/path.php$, dir, dir/, dir/*, ^dir/*, * /dir/*)
@@ -497,13 +517,13 @@ class PHP_CodeSniffer
         }
 
         //If string contains no regex characters (^[](){}$*), it's a regular ignore
-        if(!preg_match('#[\[\]\(\)\*\$\{\}]#', $pattern)){
+        if (!preg_match('#[\[\]\(\)\*\$\{\}]#', $pattern)) {
             $this->globalIgnores[$pattern] = $type;
             return;
         }
 
         //Check for starting ^ and/or ending /* or $
-        if(preg_match('#^\^?.*(?:/*)?\$?$#', $pattern)){
+        if (preg_match('#^\^?.*(?:/*)?\$?$#', $pattern)) {
             $this->globalIgnores[$pattern] = $type;
             return;
         }
