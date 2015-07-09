@@ -1511,7 +1511,7 @@ class PHP_CodeSniffer_File
                 // There are no tabs in this content, or we aren't replacing them.
                 if ($checkEncoding === true) {
                     // Not using the default encoding, so take a bit more care.
-                    $length = iconv_strlen($tokens[$i]['content'], $encoding);
+                    $length = @iconv_strlen($tokens[$i]['content'], $encoding);
                     if ($length === false) {
                         // String contained invalid characters, so revert to default.
                         $length = strlen($tokens[$i]['content']);
