@@ -757,7 +757,9 @@ class JS extends Tokenizer
 
                         // If the substr failed, skip the token as the content
                         // will now be blank.
-                        if ($tokens[$stackPtr]['content'] !== false) {
+                        if ($tokens[$stackPtr]['content'] !== false
+                            && $tokens[$stackPtr]['content'] !== ''
+                        ) {
                             $stackPtr--;
                         }
 
