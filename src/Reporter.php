@@ -1,4 +1,11 @@
 <?php
+/**
+ * Manages reporting of errors and warnings.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer;
 
@@ -6,32 +13,15 @@ use PHP_CodeSniffer\Reports\Report;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
-/**
- * A class to manage reporting.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A class to manage reporting.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class Reporter
 {
+
+    /**
+     * The config data for the run.
+     *
+     * @var \PHP_CodeSniffer\Config
+     */
+    public $config = null;
 
     /**
      * Total number of files that contain errors or warnings.
@@ -69,35 +59,31 @@ class Reporter
     public static $startTime = 0;
 
     /**
-     * A list of reports that have written partial report output.
-     *
-     * @var array
-     */
-    private $_cachedReports = array();
-
-    /**
      * A cache of report objects.
      *
      * @var array
      */
-    private $_reports = array();
+    private $reports = array();
 
     /**
-     * A cache of opened tmp files.
+     * A cache of opened temporary files.
      *
      * @var array
      */
-    private $_tmpFiles = array();
-    protected $config  = null;
+    private $tmpFiles = array();
 
 
     /**
-     * Produce the appropriate report object based on $type parameter.
+     * Initialise the reporter.
      *
-     * @param string $type The type of the report.
+     * All reports specified in the config will be created and their
+     * output file (or a temp file if none is specified) initialised by
+     * clearing the current contents.
      *
-     * @return PHP_CodeSniffer_Report
-     * @throws PHP_CodeSniffer_Exception If report is not available.
+     * @param \PHP_CodeSniffer\Config $config The config data for the run.
+     *
+     * @return void
+     * @throws RuntimeException If a report is not available.
      */
     public function __construct(Config $config)
     {
@@ -128,15 +114,15 @@ class Reporter
                 throw new RuntimeException('Class "'.$reportClassName.'" must implement the "PHP_CodeSniffer\Report" interface.');
             }
 
-            $this->_reports[$type] = array(
-                                      'output' => $output,
-                                      'class'  => $reportClass,
-                                     );
+            $this->reports[$type] = array(
+                                     'output' => $output,
+                                     'class'  => $reportClass,
+                                    );
 
             if ($output === null) {
                 // Using a temp file.
-                $this->_tmpFiles[$type] = tempnam(sys_get_temp_dir(), 'phpcs');
-                file_put_contents($this->_tmpFiles[$type], '');
+                $this->tmpFiles[$type] = tempnam(sys_get_temp_dir(), 'phpcs');
+                file_put_contents($this->tmpFiles[$type], '');
             } else {
                 file_put_contents($output, '');
             }
@@ -146,81 +132,48 @@ class Reporter
 
 
     /**
-     * Actually generates the report.
+     * Generates and prints final versions of all reports.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file that has been processed.
-     * @param array                $cliValues An array of command line arguments.
+     * Returns TRUE if any of the reports output content to the screen
+     * or FALSE if all reports were silently printed to a file.
      *
-     * @return void
+     * @return bool
      */
-    public function cacheFileReport(File $phpcsFile)
+    public function printReports()
     {
-        if (isset($this->config->reports) === false) {
-            // This happens during unit testing, or any time someone just wants
-            // the error data and not the printed report.
-            return;
-        }
-
-        $reportData  = $this->prepareFileReport($phpcsFile);
-        $errorsShown = false;
-
-        foreach ($this->_reports as $type => $report) {
-            $reportClass = $report['class'];
-
-            ob_start();
-            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $this->config->showSources, $this->config->reportWidth);
-            if ($result === true) {
-                $errorsShown = true;
+        $toScreen = false;
+        foreach ($this->reports as $type => $report) {
+            if ($report['output'] === null) {
+                $toScreen = true;
             }
 
-            $generatedReport = ob_get_contents();
-            ob_end_clean();
-
-            if ($report['output'] === null) {
-                // Using a temp file.
-                file_put_contents($this->_tmpFiles[$type], $generatedReport, FILE_APPEND);
-            } else {
-                $flags = FILE_APPEND;
-                file_put_contents($report['output'], $generatedReport, FILE_APPEND);
-            }//end if
-        }//end foreach
-
-        if ($errorsShown === true) {
-            $this->totalFiles++;
-            $this->totalErrors   += $reportData['errors'];
-            $this->totalWarnings += $reportData['warnings'];
-            $this->totalFixable  += $reportData['fixable'];
+            $this->printReport($type);
         }
 
-    }//end cacheFileReport()
+        return $toScreen;
+
+    }//end printReports()
 
 
     /**
-     * Generates and prints a final report.
+     * Generates and prints a single final report.
      *
-     * Returns an array with the number of errors and the number of
-     * warnings, in the form ['errors' => int, 'warnings' => int].
+     * @param string $report The report type to print.
      *
-     * @param string  $report      Report type.
-     * @param boolean $showSources Show sources?
-     * @param array   $cliValues   An array of command line arguments.
-     * @param string  $reportFile  Report file to generate.
-     * @param integer $reportWidth Report max width.
-     *
-     * @return int[]
+     * @return void
      */
     public function printReport($report)
     {
         $report      = ucfirst($report);
-        $reportClass = $this->_reports[$report]['class'];
-        $reportFile  = $this->_reports[$report]['output'];
+        $reportClass = $this->reports[$report]['class'];
+        $reportFile  = $this->reports[$report]['output'];
 
         if ($reportFile !== null) {
             $filename = $reportFile;
             $toScreen = false;
         } else {
-            if (isset($this->_tmpFiles[$report]) === true) {
-                $filename = $this->_tmpFiles[$report];
+            if (isset($this->tmpFiles[$report]) === true) {
+                $filename = $this->tmpFiles[$report];
             } else {
                 $filename = null;
             }
@@ -268,28 +221,63 @@ class Reporter
     }//end printReport()
 
 
-    public function printReports()
+    /**
+     * Caches the result of a single processed file for all reports.
+     *
+     * The report content that is generated is appended to the output file
+     * assigned to each report. This content may be an intermediate report format
+     * and not reflect the final report output.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file that has been processed.
+     *
+     * @return void
+     */
+    public function cacheFileReport(File $phpcsFile)
     {
-        $toScreen = false;
-        foreach ($this->_reports as $type => $report) {
-            if ($report['output'] === null) {
-                $toScreen = true;
-            }
-
-            $this->printReport($type);
+        if (isset($this->config->reports) === false) {
+            // This happens during unit testing, or any time someone just wants
+            // the error data and not the printed report.
+            return;
         }
 
-        return $toScreen;
+        $reportData  = $this->prepareFileReport($phpcsFile);
+        $errorsShown = false;
 
-    }//end printReports()
+        foreach ($this->reports as $type => $report) {
+            $reportClass = $report['class'];
+
+            ob_start();
+            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $this->config->showSources, $this->config->reportWidth);
+            if ($result === true) {
+                $errorsShown = true;
+            }
+
+            $generatedReport = ob_get_contents();
+            ob_end_clean();
+
+            if ($report['output'] === null) {
+                // Using a temp file.
+                file_put_contents($this->tmpFiles[$type], $generatedReport, FILE_APPEND);
+            } else {
+                $flags = FILE_APPEND;
+                file_put_contents($report['output'], $generatedReport, FILE_APPEND);
+            }//end if
+        }//end foreach
+
+        if ($errorsShown === true) {
+            $this->totalFiles++;
+            $this->totalErrors   += $reportData['errors'];
+            $this->totalWarnings += $reportData['warnings'];
+            $this->totalFixable  += $reportData['fixable'];
+        }
+
+    }//end cacheFileReport()
 
 
     /**
-     * Pre-process and package violations for all files.
+     * Generate summary information to be used during report generation.
      *
-     * Used by error reports to get a packaged list of all errors in each file.
-     *
-     * @param PHP_CodeSniffer_File $phpcsFile The file that has been processed.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file that has been processed.
      *
      * @return array
      */
