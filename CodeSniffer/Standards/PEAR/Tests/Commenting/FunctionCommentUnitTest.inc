@@ -284,3 +284,16 @@ class Baz {
 
     }
 }
+
+/**
+ * Complete a step.
+ *
+ * @param string $status Status of step to complete.
+ * @param array  $array  Array.
+ * @param string $note   Optional note.
+ *
+ * @return void
+ */
+public function completeStep($status, array $array = [Class1::class, 'test'], $note = '') {
+    echo 'foo';
+}
