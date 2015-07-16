@@ -2717,14 +2717,21 @@ class PHP_CodeSniffer_File
         $typeHint        = '';
 
         for ($i = ($opener + 1); $i <= $closer; $i++) {
-            // Check to see if this token has a parenthesis opener. If it does
-            // its likely to be an array, which might have arguments in it, which
-            // we cause problems in our parsing below, so lets just skip to the
+            // Check to see if this token has a parenthesis or bracket opener. If it does
+            // it's likely to be an array which might have arguments in it. This
+            // could cause problems in our parsing below, so lets just skip to the
             // end of it.
             if (isset($this->_tokens[$i]['parenthesis_opener']) === true) {
                 // Don't do this if it's the close parenthesis for the method.
                 if ($i !== $this->_tokens[$i]['parenthesis_closer']) {
                     $i = ($this->_tokens[$i]['parenthesis_closer'] + 1);
+                }
+            }
+
+            if (isset($this->_tokens[$i]['bracket_opener']) === true) {
+                // Don't do this if it's the close parenthesis for the method.
+                if ($i !== $this->_tokens[$i]['bracket_closer']) {
+                    $i = ($this->_tokens[$i]['bracket_closer'] + 1);
                 }
             }
 
