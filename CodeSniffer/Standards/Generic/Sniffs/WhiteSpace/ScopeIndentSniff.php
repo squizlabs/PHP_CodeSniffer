@@ -159,8 +159,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $openScopes    = array();
         $adjustments   = array();
 
-        $tokens = $phpcsFile->getTokens();
-        $first  = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
+        $tokens  = $phpcsFile->getTokens();
+        $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
         $trimmed = ltrim($tokens[$first]['content']);
         if ($trimmed === '') {
             $currentIndent = ($tokens[$stackPtr]['column'] - 1);
