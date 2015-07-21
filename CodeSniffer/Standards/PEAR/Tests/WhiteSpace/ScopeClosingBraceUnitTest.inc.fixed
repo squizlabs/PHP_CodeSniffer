@@ -8,9 +8,10 @@ class Test
 
     function test1()
     {
-     }
+    }
 
-    function test2() {}
+    function test2() {
+    }
 
     private function _test3()
     {
@@ -21,13 +22,14 @@ class Test
 
 class Test2
 {
- }
+}
 
 
 public function test2()
 {
     if ($str{0}) {
-        $chr = $str{0}; }
+        $chr = $str{0}; 
+    }
 
 
     if (!class_exists($class_name)) {
@@ -58,11 +60,11 @@ case 1:
                 break;
             default:
                 // Do something.
-            break;
+                break;
             }
         }
     }
-break;
+    break;
 case 2:
     // Do something;
     break;
@@ -82,11 +84,12 @@ switch ($httpResponseCode) {
     case 102:
         return 'Processing.';
     default:
-    return 'Unknown';
+        return 'Unknown';
 }
 
 switch($i) {
-case 1: {}
+case 1: {
+    }
 }
 
 switch ($httpResponseCode) {
@@ -95,7 +98,7 @@ switch ($httpResponseCode) {
     case 102:
         exit;
     default:
-    exit;
+        exit;
 }
 
 if ($foo):
@@ -119,10 +122,10 @@ endif;
 <ul>
     <?php foreach ($array as $value) : ?>
         <li><?php echo $value ?></li>
-<?php endforeach ?>
+    <?php endforeach ?>
 </ul>
 <ul>
     <?php foreach ($array as $value) : ?>
         <li><?php echo $value ?></li>
-            <?php endforeach ?>
+    <?php endforeach ?>
 </ul>

@@ -48,6 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #636 : Some class names cause CSS tokenizer to hang
   - Fixed bug #642 : Method params incorrectly detected when default value uses short array syntax
     -- Thanks to Josh Davis for the patch
+  - Fixed bug #644 : PEAR ScopeClosingBrace sniff does not work with mixed HTML/PHP
   - Fixed bug #645 : FunctionSignature and ScopeIndent sniffs don't detect indents correctly when PHP open tag is not on a line by itself
  </notes>
  <contents>
@@ -1114,6 +1115,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

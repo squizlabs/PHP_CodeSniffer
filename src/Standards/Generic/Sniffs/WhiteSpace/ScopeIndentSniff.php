@@ -165,8 +165,8 @@ class ScopeIndentSniff implements Sniff
         $openScopes    = array();
         $adjustments   = array();
 
-        $tokens = $phpcsFile->getTokens();
-        $first  = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
+        $tokens  = $phpcsFile->getTokens();
+        $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
         $trimmed = ltrim($tokens[$first]['content']);
         if ($trimmed === '') {
             $currentIndent = ($tokens[$stackPtr]['column'] - 1);
