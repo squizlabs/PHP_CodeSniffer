@@ -293,7 +293,6 @@ class FunctionCallSignatureSniff implements Sniff
         // We need to work out how far indented the function
         // call itself is, so we can work out how far to
         // indent the arguments.
-        $functionIndent = 0;
         for ($i = ($stackPtr - 1); $i >= 0; $i--) {
             if ($tokens[$i]['line'] !== $tokens[$stackPtr]['line']) {
                 $i++;
@@ -301,8 +300,17 @@ class FunctionCallSignatureSniff implements Sniff
             }
         }
 
-        if ($i > 0 && $tokens[$i]['code'] === T_WHITESPACE) {
+        if ($i <= 0) {
+            $functionIndent = 0;
+        } else if ($tokens[$i]['code'] === T_WHITESPACE) {
             $functionIndent = strlen($tokens[$i]['content']);
+        } else {
+            $trimmed = ltrim($tokens[$i]['content']);
+            if ($trimmed === '') {
+                $functionIndent = ($tokens[$i]['column'] - 1);
+            } else {
+                $functionIndent = (strlen($tokens[$i]['content']) - strlen($trimmed));
+            }
         }
 
         if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {

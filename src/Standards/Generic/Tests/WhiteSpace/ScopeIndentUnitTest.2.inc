@@ -835,6 +835,14 @@ array(
  },
 );
 
+?>
+<script>
+	var foo = <?php echo bar(
+		'baz'
+	); ?>;
+</script>
+<?php
+
 try {
 	echo 'foo';
 } catch (\Exception $e) {
