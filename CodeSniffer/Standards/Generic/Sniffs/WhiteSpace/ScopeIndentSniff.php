@@ -159,8 +159,19 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $openScopes    = array();
         $adjustments   = array();
 
-        $tokens        = $phpcsFile->getTokens();
-        $currentIndent = ($tokens[$stackPtr]['column'] - 1);
+        $tokens = $phpcsFile->getTokens();
+        $first  = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
+        $trimmed = ltrim($tokens[$first]['content']);
+        if ($trimmed === '') {
+            $currentIndent = ($tokens[$stackPtr]['column'] - 1);
+        } else {
+            $currentIndent = (strlen($tokens[$first]['content']) - strlen($trimmed));
+        }
+
+        if ($this->_debug === true) {
+            $line = $tokens[$stackPtr]['line'];
+            echo "Start with token $stackPtr on line $line with indent $currentIndent".PHP_EOL;
+        }
 
         if (empty($this->_ignoreIndentationTokens) === true) {
             $this->_ignoreIndentationTokens = array(T_INLINE_HTML => true);
@@ -269,8 +280,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
             }//end if
 
-            // Closing parenthesis should just be indented to at least
-            // the same level as where they were opened (but can be more).
+            // Closing short array bracket should just be indented to at least
+            // the same level as where it was opened (but can be more).
             if ($checkToken !== null
                 && $tokens[$checkToken]['code'] === T_CLOSE_SHORT_ARRAY
             ) {

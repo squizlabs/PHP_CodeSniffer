@@ -215,3 +215,16 @@ test( $arg, $arg2 );
 test(  $arg, $arg2  );
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 0
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 0
+
+?>
+<script>
+    var foo = <?php echo bar(
+        'baz'
+    ); ?>;
+</script>
+    <script>
+        var foo = <?php echo bar(
+            'baz'
+        ); ?>;
+    </script>
+<?php
