@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- By default, concat used only for getting around line length limits still generates an error
     -- Thanks to Stefan Lenselink for the contribution
   - Generic TodoSniff and FixmeSniff are now better at processing strings with invalid characters
+  - PEAR FunctionCallSignatureSniff now ignores indentation of inline HTML content
   - Squiz ControlSignatureSniff now supports control structures with only inline HTML content
   - Fixed bug #636 : Some class names cause CSS tokenizer to hang
   - Fixed bug #642 : Method params incorrectly detected when default value uses short array syntax

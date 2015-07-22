@@ -228,3 +228,13 @@ test(  $arg, $arg2  );
         ); ?>;
     </script>
 <?php
+
+array_walk(
+    $types,
+    function ($title, $type) {
+        $plural = 'all' !== $type ? 's' : '';
+        ?>
+        <li><a href="<?php esc_url('#tabs-documents-' . $type . $plural); ?>"><?php echo esc_html($title); ?></a></li>
+        <?php
+    }
+);

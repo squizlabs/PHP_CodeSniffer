@@ -348,10 +348,15 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 }
 
                 // Ignore multi-line string indentation.
-                if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$i]['code']]) === true) {
-                    if ($tokens[$i]['code'] === $tokens[($i - 1)]['code']) {
-                        continue;
-                    }
+                if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$i]['code']]) === true
+                    && $tokens[$i]['code'] === $tokens[($i - 1)]['code']
+                ) {
+                    continue;
+                }
+
+                // Ignore inline HTML.
+                if ($tokens[$i]['code'] === T_INLINE_HTML) {
+                    continue;
                 }
 
                 // We changed lines, so this should be a whitespace indent token, but first make
