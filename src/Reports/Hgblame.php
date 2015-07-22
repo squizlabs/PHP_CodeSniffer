@@ -90,7 +90,7 @@ class Hgblame extends VersionControl
             exit(2);
         }
 
-        $command = 'hg blame -u -d -v "'.$filename.'"';
+        $command = 'hg blame -u -d -v "'.$filename.'" 2>&1';
         $handle  = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;

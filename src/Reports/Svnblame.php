@@ -54,7 +54,7 @@ class Svnblame extends VersionControl
             echo 'Getting SVN blame info for '.basename($filename).'... ';
         }
 
-        $command = 'svn blame "'.$filename.'"';
+        $command = 'svn blame "'.$filename.'" 2>&1';
         $handle  = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;

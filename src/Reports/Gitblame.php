@@ -89,7 +89,7 @@ class Gitblame extends VersionControl
             exit(2);
         }
 
-        $command = 'git blame --date=short "'.$filename.'"';
+        $command = 'git blame --date=short "'.$filename.'" 2>&1';
         $handle  = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;

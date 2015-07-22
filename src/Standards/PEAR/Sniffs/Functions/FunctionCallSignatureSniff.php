@@ -355,10 +355,15 @@ class FunctionCallSignatureSniff implements Sniff
                 }
 
                 // Ignore multi-line string indentation.
-                if (isset(Tokens::$stringTokens[$tokens[$i]['code']]) === true) {
-                    if ($tokens[$i]['code'] === $tokens[($i - 1)]['code']) {
-                        continue;
-                    }
+                if (isset(Tokens::$stringTokens[$tokens[$i]['code']]) === true
+                    && $tokens[$i]['code'] === $tokens[($i - 1)]['code']
+                ) {
+                    continue;
+                }
+
+                // Ignore inline HTML.
+                if ($tokens[$i]['code'] === T_INLINE_HTML) {
+                    continue;
                 }
 
                 // We changed lines, so this should be a whitespace indent token, but first make
