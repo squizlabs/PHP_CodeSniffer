@@ -43,6 +43,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set the allowMultiline property to TRUE (default is FALSE) in your ruleset.xml file to enable this
     -- By default, concat used only for getting around line length limits still generates an error
     -- Thanks to Stefan Lenselink for the contribution
+  - Invalid byte sequences no longer throw iconv_strlen() errors (request #639)
+    -- Thanks to Willem Stuursma for the patch
   - Generic TodoSniff and FixmeSniff are now better at processing strings with invalid characters
   - PEAR FunctionCallSignatureSniff now ignores indentation of inline HTML content
   - Squiz ControlSignatureSniff now supports control structures with only inline HTML content
