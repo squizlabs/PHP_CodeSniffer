@@ -887,5 +887,12 @@
         "path": "",
         "ignore": "*/lib/,*/etc/*,*/var/*",
         "extensions": ""
+    },
+    {
+        "name": "RadPHP",
+        "url": "radphp/radphp",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
     }
 ]
