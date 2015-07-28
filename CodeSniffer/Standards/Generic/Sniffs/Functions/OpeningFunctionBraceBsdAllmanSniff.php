@@ -155,16 +155,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceBsdAllmanSniff implements PHP
         // as if this is a method with tokens before it (public, static etc)
         // or an if with an else before it, then we need to start the scope
         // checking from there, rather than the current token.
-        $lineStart = $stackPtr;
-        while (($lineStart = $phpcsFile->findPrevious(T_WHITESPACE, ($lineStart - 1), null, false)) !== false) {
-            if (strpos($tokens[$lineStart]['content'], $phpcsFile->eolChar) !== false) {
-                break;
-            }
-        }
-
-        // We found a new line, now go forward and find the first
-        // non-whitespace token.
-        $lineStart = $phpcsFile->findNext(T_WHITESPACE, $lineStart, null, true);
+        $lineStart = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr, true);
 
         // The opening brace is on the correct line, now it needs to be
         // checked to be correctly indented.

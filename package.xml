@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Josh Davis for the patch
   - Fixed bug #644 : PEAR ScopeClosingBrace sniff does not work with mixed HTML/PHP
   - Fixed bug #645 : FunctionSignature and ScopeIndent sniffs don't detect indents correctly when PHP open tag is not on a line by itself
+  - Fixed bug #654 : Comments affect indent check for BSDAllman brace style
  </notes>
  <contents>
   <dir name="/">
@@ -2739,7 +2740,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Setting and removing config values now catches exceptions if the config file is not writable
       -- Thanks to Ken Guest for the patch
     - Setting and removing config values now prints a message to confirm the action and show old values
-    - Generic ScopeIndentSniff has been completly rewritten to improve fixing and embedded PHP detection
+    - Generic ScopeIndentSniff has been completely rewritten to improve fixing and embedded PHP detection
     - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents at the start of block comments
     - Generic DisallowTabIndent and DisallowSpaceIndent sniffs now detect indents inside multi-line strings
     - Generic DisallowTabIndentSniff now replaces tabs inside doc block comments
@@ -2779,7 +2780,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Override the property in a ruleset.xml file to define forbidden functions and their replacements
       -- A replacement of NULL indicates that no replacement is available
       -- e.g., value="delete=>unset,print=>echo,create_function=>null"
-      -- Custom sniffs overriding this one will need to change the visbility of their member var
+      -- Custom sniffs overriding this one will need to change the visibility of their member var
     - Improved closure support in Generic ScopeIndentSniff
     - Improved indented PHP tag support in Generic ScopeIndentSniff
     - Improved fixing of mixed line indents in Generic ScopeIndentSniff
