@@ -321,11 +321,11 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                     }
 
                     $spaceAfterOpen = 0;
-                    if ($multiLine === false && $tokens[($bracket + 1)]['code'] === T_WHITESPACE) {
+                    if ($tokens[($bracket + 1)]['code'] === T_WHITESPACE) {
                         $spaceAfterOpen = strlen($tokens[($bracket + 1)]['content']);
                     }
 
-                    if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
+                    if ($multiLine === false && $spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
                         $error = 'Expected %s spaces between opening bracket and type hint "%s"; %s found';
                         $data  = array(
                                   $this->requiredSpacesAfterOpen,
