@@ -112,16 +112,16 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
             // the WHILE. We can detect this by checking only a single semicolon
             // is present between them.
             if ($phpcsFile->tokenizerType === 'JS') {
-                $lastDo = $phpcsFile->findPrevious(T_DO, $stackPtr - 1);
-                $lastSemicolon = $phpcsFile->findPrevious(T_SEMICOLON, $stackPtr - 1);
+                $lastDo        = $phpcsFile->findPrevious(T_DO, ($stackPtr - 1));
+                $lastSemicolon = $phpcsFile->findPrevious(T_SEMICOLON, ($stackPtr - 1));
                 if ($lastDo !== false && $lastSemicolon !== false && $lastDo < $lastSemicolon) {
-                    $precedingSemicolon = $phpcsFile->findPrevious(T_SEMICOLON, $lastSemicolon - 1);
+                    $precedingSemicolon = $phpcsFile->findPrevious(T_SEMICOLON, ($lastSemicolon - 1));
                     if ($precedingSemicolon === false || $precedingSemicolon < $lastDo) {
                         return;
                     }
                 }
             }
-        }
+        }//end if
 
         // This is a control structure without an opening brace,
         // so it is an inline statement.
