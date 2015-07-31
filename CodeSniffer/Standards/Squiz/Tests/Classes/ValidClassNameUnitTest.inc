@@ -31,5 +31,4 @@ class 5InvalidCamelCaseClassStartingWithNumber extends MyClass {}
 class ValidCamelCaseClassEndingWithNumber5 extends MyClass {}
 class 12345 extends MyClass {}
 
-
-?>
+class Testing{}

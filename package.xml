@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #644 : PEAR ScopeClosingBrace sniff does not work with mixed HTML/PHP
   - Fixed bug #645 : FunctionSignature and ScopeIndent sniffs don't detect indents correctly when PHP open tag is not on a line by itself
   - Fixed bug #654 : Comments affect indent check for BSDAllman brace style
+  - Fixed bug #663 : No space after class name generates: Class name "" is not in camel caps format
  </notes>
  <contents>
   <dir name="/">
