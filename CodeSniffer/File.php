@@ -285,7 +285,7 @@ class PHP_CodeSniffer_File
      */
     protected $ruleset = array();
 
-
+    private $_process_selected_lines = array();
     /**
      * Constructs a PHP_CodeSniffer_File.
      *
@@ -454,6 +454,15 @@ class PHP_CodeSniffer_File
         } catch (PHP_CodeSniffer_Exception $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.DetectLineEndings');
             return;
+        }
+        
+        if($reportSha = getenv('SHA')){
+          //update content for proper annotate
+          if(!empty($contents)){
+            file_put_contents($this->_file, $contents);
+          }
+          $this->_process_selected_lines = array();
+          exec('git annotate -lt ' . $this->_file. "|grep -E '" . $reportSha . "|0000000000000000000000000000000000000000' |awk -F $'\t' '{print$4}'|awk -F\) '{print$1}'", $this->_process_selected_lines);
         }
 
         // If this is standard input, see if a filename was passed in as well.
@@ -983,6 +992,12 @@ class PHP_CodeSniffer_File
         if (isset(self::$_ignoredLines[$line]) === true) {
             return false;
         }
+        
+        if($reportSha = getenv('SHA')){
+          if(!in_array($line, $this->_process_selected_lines)){
+            return false;
+          }
+        }
 
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
@@ -1130,6 +1145,12 @@ class PHP_CodeSniffer_File
     {
         if (isset(self::$_ignoredLines[$line]) === true) {
             return false;
+        }
+        
+        if($reportSha = getenv('SHA')){
+          if(!in_array($line, $this->_process_selected_lines)){
+            return false;
+          }
         }
 
         // Work out which sniff generated the warning.
