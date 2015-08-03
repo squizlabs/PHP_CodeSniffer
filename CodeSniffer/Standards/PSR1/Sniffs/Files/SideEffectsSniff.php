@@ -161,10 +161,14 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
                         $firstSymbol = $i;
                     }
 
-                    $i = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
+                    $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($i + 1));
+                    if ($semicolon !== false) {
+                        $i = $semicolon;
+                    }
+
                     continue;
                 }
-            }
+            }//end if
 
             // Conditional statements are allowed in symbol files as long as the
             // contents is only a symbol definition. So don't count these as effects
