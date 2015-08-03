@@ -62,6 +62,7 @@ class PSR1_Tests_Files_SideEffectsUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'SideEffectsUnitTest.3.inc':
         case 'SideEffectsUnitTest.4.inc':
+        case 'SideEffectsUnitTest.5.inc':
             return array(
                     1 => 1,
                    );
