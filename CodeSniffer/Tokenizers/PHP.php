@@ -673,6 +673,27 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }//end if
 
             /*
+                HHVM 3.5 and 3.6 tokenizes a hashbang like #!/usr/bin/php
+                as T_HASHANG instead of T_INLINE_HTML,so fix that.
+            */
+
+            if ($tokenIsArray === true
+                && token_name($token[0]) === 'T_HASHBANG'
+            ) {
+                $finalTokens[$newStackPtr] = array(
+                                              'content' => $token[1],
+                                              'code'    => T_INLINE_HTML,
+                                              'type'    => 'T_INLINE_HTML',
+                                             );
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr changed from T_HASHBANG to T_INLINE_HTML".PHP_EOL;
+                }
+
+                $newStackPtr++;
+                continue;
+            }//end if
+
+            /*
                 If this token has newlines in its content, split each line up
                 and create a new token for each line. We do this so it's easier
                 to ascertain where errors occur on a line.
