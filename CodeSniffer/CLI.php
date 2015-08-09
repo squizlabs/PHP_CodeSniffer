@@ -135,6 +135,14 @@ class PHP_CodeSniffer_CLI
         $cliValues['reportFile']   = null;
         $cliValues['reports']      = array();
 
+        if ((isset($cliValues['no-patch']) === false)
+            && ($this->_commandExists('diff') === false || $this->_commandExists('patch') === false)
+        ) {
+            echo 'The commandline tool "diff" or "patch" are not available on the system.'.PHP_EOL;
+            echo 'Use --no-patch option or install the programs.'.PHP_EOL;
+            exit(2);
+        }
+
         $suffix = '';
         if (isset($cliValues['suffix']) === true) {
             $suffix = $cliValues['suffix'];
@@ -1274,6 +1282,28 @@ class PHP_CodeSniffer_CLI
         return (int) $width;
 
     }//end _validateReportWidth()
+
+
+    /**
+     * Checks if the given command exists on the system
+     *
+     * @param string $cmd The name of the command
+     *
+     * @return bool
+     */
+    private function _commandExists($cmd)
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $whichCommand = 'where';
+        } else {
+            $whichCommand = 'which';
+        }
+
+        $returnVal = shell_exec("$whichCommand $cmd 2> /dev/null");
+
+        return !empty($returnVal);
+
+    }//end _commandExists()
 
 
 }//end class
