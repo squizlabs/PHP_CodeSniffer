@@ -46,6 +46,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #654 : Comments affect indent check for BSDAllman brace style
   - Fixed bug #663 : No space after class name generates: Class name "" is not in camel caps format
   - Fixed bug #667 : Scope indent check can go into infinite loop due to some parse errors
+  - Fixed bug #670 : Endless loop in PSR1 SideEffects sniffer if no semicolon after last statement
+    -- Thanks to Thomas Jarosch for the patch
  </notes>
  <contents>
   <dir name="/">
@@ -1165,6 +1167,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP" name="SideEffectsUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
