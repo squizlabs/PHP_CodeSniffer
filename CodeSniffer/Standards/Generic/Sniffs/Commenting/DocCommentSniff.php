@@ -250,7 +250,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
                     || ($paramGroupid !== null
                     && $paramGroupid !== $groupid)
                 ) {
-                    $error = 'Parameter tags must be grouped together in a doc commment';
+                    $error = 'Parameter tags must be grouped together in a doc comment';
                     $phpcsFile->addError($error, $tag, 'ParamGroup');
                 }
 
@@ -328,7 +328,7 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
 
         // If there is a param group, it needs to be first.
         if ($paramGroupid !== null && $paramGroupid !== 0) {
-            $error = 'Parameter tags must be defined first in a doc commment';
+            $error = 'Parameter tags must be defined first in a doc comment';
             $phpcsFile->addError($error, $tagGroups[$paramGroupid][0], 'ParamNotFirst');
         }
 
