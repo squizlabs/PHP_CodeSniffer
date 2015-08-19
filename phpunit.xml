@@ -5,4 +5,12 @@
             <file>tests/AllTests.php</file>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory>./CodeSniffer</directory>
+            <exclude>
+                <directory>./CodeSniffer/Standards/*/Tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>
