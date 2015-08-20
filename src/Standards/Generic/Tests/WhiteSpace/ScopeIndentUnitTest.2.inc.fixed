@@ -853,6 +853,17 @@ try {
 	}
 }
 
+namespace Foo {
+
+	use \Foo\Bar;
+	use \Foo\Baz;
+
+	function test() {
+		return true;
+	}
+
+}
+
 function foo()
 {
 	$foo = array(

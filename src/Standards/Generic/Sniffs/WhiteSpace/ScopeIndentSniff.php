@@ -431,29 +431,31 @@ class ScopeIndentSniff implements Sniff
                     array_pop($openScopes);
                 }
 
-                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$scopeCloser]['scope_condition'], true);
+                if (isset($tokens[$scopeCloser]['scope_condition']) === true) {
+                    $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$scopeCloser]['scope_condition'], true);
 
-                $currentIndent = ($tokens[$first]['column'] - 1);
-                if (isset($adjustments[$first]) === true) {
-                    $currentIndent += $adjustments[$first];
-                }
+                    $currentIndent = ($tokens[$first]['column'] - 1);
+                    if (isset($adjustments[$first]) === true) {
+                        $currentIndent += $adjustments[$first];
+                    }
 
-                // Make sure it is divisible by our expected indent.
-                if ($tokens[$tokens[$scopeCloser]['scope_condition']]['code'] !== T_CLOSURE) {
-                    $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
-                }
+                    // Make sure it is divisible by our expected indent.
+                    if ($tokens[$tokens[$scopeCloser]['scope_condition']]['code'] !== T_CLOSURE) {
+                        $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
+                    }
 
-                if ($this->_debug === true) {
-                    echo "\t=> indent set to $currentIndent".PHP_EOL;
-                }
+                    if ($this->_debug === true) {
+                        echo "\t=> indent set to $currentIndent".PHP_EOL;
+                    }
 
-                // We only check the indent of scope closers if they are
-                // curly braces because other constructs tend to have different rules.
-                if ($tokens[$scopeCloser]['code'] === T_CLOSE_CURLY_BRACKET) {
-                    $exact = true;
-                } else {
-                    $checkToken = null;
-                }
+                    // We only check the indent of scope closers if they are
+                    // curly braces because other constructs tend to have different rules.
+                    if ($tokens[$scopeCloser]['code'] === T_CLOSE_CURLY_BRACKET) {
+                        $exact = true;
+                    } else {
+                        $checkToken = null;
+                    }
+                }//end if
             }//end if
 
             // Handle scope for JS object notation.

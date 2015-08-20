@@ -82,7 +82,9 @@ class ScopeClosingBraceSniff implements Sniff
         // If the scope closer doesn't think it belongs to this scope opener
         // then the opener is sharing its closer with other tokens. We only
         // want to process the closer once, so skip this one.
-        if ($tokens[$scopeEnd]['scope_condition'] !== $stackPtr) {
+        if (isset($tokens[$scopeEnd]['scope_condition']) === false
+            || $tokens[$scopeEnd]['scope_condition'] !== $stackPtr
+        ) {
             return;
         }
 
