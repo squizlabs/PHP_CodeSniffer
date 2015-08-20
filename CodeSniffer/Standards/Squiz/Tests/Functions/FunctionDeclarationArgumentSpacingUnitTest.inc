@@ -56,6 +56,14 @@ function myFunc(array $blah ) {}
 function myFunc(  array $blah ) {}
 function myFunc() {}
 function myFunc( ) {}
+
+function multiLineFunction(
+	array $flatList,
+	$markup,
+	array $otherList,
+	$lastOffset=0
+) {
+}
 // @codingStandardsChangeSetting Squiz.Functions.FunctionDeclarationArgumentSpacing requiredSpacesAfterOpen 0
 // @codingStandardsChangeSetting Squiz.Functions.FunctionDeclarationArgumentSpacing requiredSpacesBeforeClose 0
 
