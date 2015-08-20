@@ -51,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #667 : Scope indent check can go into infinite loop due to some parse errors
   - Fixed bug #670 : Endless loop in PSR1 SideEffects sniffer if no semicolon after last statement
     -- Thanks to Thomas Jarosch for the patch
+  - Fixed bug #672 : Call-time pass-by-reference false positive
  </notes>
  <contents>
   <dir name="/">
