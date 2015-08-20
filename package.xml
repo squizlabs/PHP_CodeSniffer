@@ -56,10 +56,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #645 : FunctionSignature and ScopeIndent sniffs don't detect indents correctly when PHP open tag is not on a line by itself
   - Fixed bug #648 : Namespace not tokenized correctly when followed by multiple use statements
   - Fixed bug #654 : Comments affect indent check for BSDAllman brace style
+  - Fixed bug #658 : Squiz.Functions.FunctionDeclarationSpacing error for multi-line declarations with required spaces greater than zero
+    -- Thanks to J.D. Grimes for the patch
   - Fixed bug #663 : No space after class name generates: Class name "" is not in camel caps format
   - Fixed bug #667 : Scope indent check can go into infinite loop due to some parse errors
   - Fixed bug #670 : Endless loop in PSR1 SideEffects sniffer if no semicolon after last statement
     -- Thanks to Thomas Jarosch for the patch
+  - Fixed bug #672 : Call-time pass-by-reference false positive
  </notes>
  <contents>
   <dir name="/">
