@@ -2085,6 +2085,17 @@ class PHP_CodeSniffer_File
                             echo "=> Found function before scope opener for $stackPtr:$type, processing manually".PHP_EOL;
                         }
 
+                        if (isset($tokens[$i]['scope_closer']) === true) {
+                            // We've already processed this closure.
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo str_repeat("\t", $depth);
+                                echo '* already processed, skipping *'.PHP_EOL;
+                            }
+
+                            $i = $tokens[$i]['scope_closer'];
+                            continue;
+                        }
+
                         $i = self::_recurseScopeMap(
                             $tokens,
                             $numTokens,
