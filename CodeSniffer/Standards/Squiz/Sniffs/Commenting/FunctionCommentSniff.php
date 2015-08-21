@@ -359,7 +359,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 } else if (count($typeNames) === 1) {
                     // Check type hint for array and custom type.
                     $suggestedTypeHint = '';
-                    if (strpos($suggestedName, 'array') !== false) {
+                    if (strpos($suggestedName, 'array') !== false || strpos($suggestedName, '[]') !== false) {
                         $suggestedTypeHint = 'array';
                     } else if (strpos($suggestedName, 'callable') !== false) {
                         $suggestedTypeHint = 'callable';
