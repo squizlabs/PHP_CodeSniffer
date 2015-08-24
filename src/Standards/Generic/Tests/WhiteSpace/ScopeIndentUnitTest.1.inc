@@ -853,6 +853,17 @@ try {
     }
 }
 
+class C0
+{
+     public function m0()
+    {
+    }
+
+    public function m1()
+    {
+    }
+}
+
 namespace Foo {
 
     use \Foo\Bar;
