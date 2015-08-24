@@ -55,6 +55,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Thomas Jarosch for the patch
   - Fixed bug #672 : Call-time pass-by-reference false positive
   - Fixed bug #687 : ScopeIndent does not check indent correctly for method prefixes like public and abstract
+  - Fixed bug #689 : False error on some comments after class closing brace
  </notes>
  <contents>
   <dir name="/">
