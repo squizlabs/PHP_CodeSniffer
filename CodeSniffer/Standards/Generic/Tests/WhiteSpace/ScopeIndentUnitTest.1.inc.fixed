@@ -875,6 +875,10 @@ namespace Foo {
 
 }
 
+declare(ticks=1) {
+    echo 'foo';
+}
+
 function foo()
 {
     $foo = array(
