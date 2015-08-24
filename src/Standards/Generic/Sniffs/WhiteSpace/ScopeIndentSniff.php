@@ -605,7 +605,7 @@ class ScopeIndentSniff implements Sniff
             // Method prefix indentation has to be exact or else if will break
             // the rest of the function declaration, and potentially future ones.
             if ($checkToken !== null
-                && isset(PHP_CodeSniffer_Tokens::$methodPrefixes[$tokens[$checkToken]['code']]) === true
+                && isset(Tokens::$methodPrefixes[$tokens[$checkToken]['code']]) === true
                 && $tokens[($checkToken + 1)]['code'] !== T_DOUBLE_COLON
             ) {
                 $exact = true;
