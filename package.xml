@@ -39,6 +39,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- if the sniff is already included by an imported standard, set sniff severity to 0 and include the specific message you want
   - JSON report format now includes the fixable status for each error message and the total number of fixable errors
   - Added more guard code for function declarations with syntax errors
+  - Added tokenizer support for the PHP declare construct
+    -- Thanks to Andy Blyler for the patch
   - Generic UnnecessaryStringConcatSniff can now allow strings concatenated over multiple lines
     -- Set the allowMultiline property to TRUE (default is FALSE) in your ruleset.xml file to enable this
     -- By default, concat used only for getting around line length limits still generates an error

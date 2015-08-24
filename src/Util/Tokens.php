@@ -327,6 +327,7 @@ final class Tokens
                                          T_IF       => T_IF,
                                          T_ELSEIF   => T_ELSEIF,
                                          T_CATCH    => T_CATCH,
+                                         T_DECLARE  => T_DECLARE,
                                         );
 
     /**
@@ -344,6 +345,7 @@ final class Tokens
                                    T_IF        => T_IF,
                                    T_SWITCH    => T_SWITCH,
                                    T_CASE      => T_CASE,
+                                   T_DECLARE   => T_DECLARE,
                                    T_DEFAULT   => T_DEFAULT,
                                    T_WHILE     => T_WHILE,
                                    T_ELSE      => T_ELSE,
