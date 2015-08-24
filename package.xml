@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #670 : Endless loop in PSR1 SideEffects sniffer if no semicolon after last statement
     -- Thanks to Thomas Jarosch for the patch
   - Fixed bug #672 : Call-time pass-by-reference false positive
+  - Fixed bug #687 : ScopeIndent does not check indent correctly for method prefixes like public and abstract
  </notes>
  <contents>
   <dir name="/">

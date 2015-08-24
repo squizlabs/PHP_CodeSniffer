@@ -499,7 +499,9 @@ class PHP_CodeSniffer_Fixer
                                                  'loop' => $this->loops,
                                                 );
         } else {
-            if ($this->_oldTokenValues[$stackPtr]['prev'] === $content) {
+            if ($this->_oldTokenValues[$stackPtr]['prev'] === $content
+                && $this->_oldTokenValues[$stackPtr]['loop'] === ($this->loops - 1)
+            ) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $indent = "\t";
                     if (empty($this->_changeset) === false) {

@@ -596,6 +596,15 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
             }//end if
 
+            // Method prefix indentation has to be exact or else if will break
+            // the rest of the function declaration, and potentially future ones.
+            if ($checkToken !== null
+                && isset(PHP_CodeSniffer_Tokens::$methodPrefixes[$tokens[$checkToken]['code']]) === true
+                && $tokens[($checkToken + 1)]['code'] !== T_DOUBLE_COLON
+            ) {
+                $exact = true;
+            }
+
             // JS property indentation has to be exact or else if will break
             // things like function and object indentation.
             if ($checkToken !== null && $tokens[$checkToken]['code'] === T_PROPERTY) {
