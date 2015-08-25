@@ -760,17 +760,19 @@ abstract class Tokenizer
                         throw new RuntimeException('Maximum nesting level reached; file could not be processed');
                     }
 
+                    $oldDepth = $depth;
                     if ($isShared === true
                         && isset($this->scopeOpeners[$tokenType]['with'][$currType]) === true
                     ) {
-                        // Don't allow the depth to incremement because this is
+                        // Don't allow the depth to increment because this is
                         // possibly not a true nesting if we are sharing our closer.
                         // This can happen, for example, when a SWITCH has a large
                         // number of CASE statements with the same shared BREAK.
                         $depth--;
                     }
 
-                    $i = self::recurseScopeMap($i, ($depth + 1), $ignore);
+                    $i     = self::recurseScopeMap($i, ($depth + 1), $ignore);
+                    $depth = $oldDepth;
 
                     if (isset($this->scopeOpeners[$tokenType]['end'][T_CLOSE_CURLY_BRACKET]) === true) {
                         $ignore = $oldIgnore;
