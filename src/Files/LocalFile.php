@@ -32,7 +32,7 @@ class LocalFile extends File
         if (is_readable($path) === false) {
             parent::__construct($path, $ruleset, $config);
             $error = 'Error opening file; file no longer exists or you do not have access to read the file';
-            $this->_addError($error, 1, 1, 'Internal.LocalFile', array(), 5, false);
+            $this->addMessage(true, $error, 1, 1, 'Internal.LocalFile', array(), 5, false);
             $this->ignored = true;
             return;
         }
@@ -156,7 +156,8 @@ class LocalFile extends File
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
                     $this->activeListener = $error['listener'];
-                    $this->_addError(
+                    $this->addMessage(
+                        true,
                         $error['message'],
                         $line,
                         $column,
@@ -173,7 +174,8 @@ class LocalFile extends File
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
                     $this->activeListener = $error['listener'];
-                    $this->_addWarning(
+                    $this->addMessage(
+                        false,
                         $error['message'],
                         $line,
                         $column,

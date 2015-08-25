@@ -450,10 +450,10 @@ class File
         }
 
         // We don't need these any more.
-        // $this->listenerTimes = null;
-        // $this->content = null;
-        // $this->tokens = null;
-        // $this->tokenizer = null;
+        # $this->listenerTimes = null;
+        # $this->content = null;
+        # $this->tokens = null;
+        # $this->tokenizer = null;
 
     }//end process()
 
@@ -581,7 +581,7 @@ class File
             $column = $this->tokens[$stackPtr]['column'];
         }
 
-        return $this->_addError($error, $line, $column, $code, $data, $severity, $fixable);
+        return $this->addMessage(true, $error, $line, $column, $code, $data, $severity, $fixable);
 
     }//end addError()
 
@@ -615,7 +615,7 @@ class File
             $column = $this->tokens[$stackPtr]['column'];
         }
 
-        return $this->_addWarning($warning, $line, $column, $code, $data, $severity, $fixable);
+        return $this->addMessage(false, $warning, $line, $column, $code, $data, $severity, $fixable);
 
     }//end addWarning()
 
@@ -639,7 +639,7 @@ class File
         $data=array(),
         $severity=0
     ) {
-        return $this->_addError($error, $line, 1, $code, $data, $severity, false);
+        return $this->addMessage(true, $error, $line, 1, $code, $data, $severity, false);
 
     }//end addErrorOnLine()
 
@@ -663,7 +663,7 @@ class File
         $data=array(),
         $severity=0
     ) {
-        return $this->_addWarning($warning, $line, 1, $code, $data, $severity, false);
+        return $this->addMessage(false, $warning, $line, 1, $code, $data, $severity, false);
 
     }//end addWarningOnLine()
 
@@ -733,203 +733,27 @@ class File
     /**
      * Adds an error to the error stack.
      *
-     * @param string  $error    The error message.
-     * @param int     $line     The line on which the error occurred.
-     * @param int     $column   The column at which the error occurred.
+     * @param boolean $error    Is this an error message?
+     * @param string  $message  The text of the message.
+     * @param int     $line     The line on which the message occurred.
+     * @param int     $column   The column at which the message occurred.
      * @param string  $code     A violation code unique to the sniff message.
-     * @param array   $data     Replacements for the error message.
-     * @param int     $severity The severity level for this error. A value of 0
+     * @param array   $data     Replacements for the message.
+     * @param int     $severity The severity level for this message. A value of 0
      *                          will be converted into the default severity level.
-     * @param boolean $fixable  Can the error be fixed by the sniff?
+     * @param boolean $fixable  Can the problem be fixed by the sniff?
      *
      * @return boolean
      */
-    protected function _addError($error, $line, $column, $code, $data, $severity, $fixable)
+    protected function addMessage($error, $message, $line, $column, $code, $data, $severity, $fixable)
     {
         if (isset($this->tokenizer->ignoredLines[$line]) === true) {
             return false;
         }
 
-        // Work out which sniff generated the error.
+        // Work out which sniff generated the message.
         if (substr($code, 0, 9) === 'Internal.') {
-            // Any internal message.
-            $listenerCode = Util\Common::getSniffCode($this->activeListener);
-            $sniffCode    = $code;
-            $checkCodes  = array($sniffCode);
-        } else {
-            if (strpos($code, '.') !== false) {
-                // The full message code has been passed in.
-                $sniffCode    = $code;
-                $listenerCode = substr($sniffCode, 0, strrpos($sniffCode, '.'));
-            } else {
-                $listenerCode = Util\Common::getSniffCode($this->activeListener);
-                $sniffCode    = $listenerCode.'.'.$code;
-            }
-
-            $parts      = explode('.', $sniffCode);
-            $checkCodes = array(
-                           $sniffCode,
-                           $parts[0].'.'.$parts[1].'.'.$parts[2],
-                           $parts[0].'.'.$parts[1],
-                           $parts[0],
-                          );
-        }//end if
-
-        // Filter out any messages for sniffs that shouldn't have run.
-        if ($this->config->cache === false
-            && empty($this->config->sniffs) === false
-            && in_array($listenerCode, $this->config->sniffs) === false
-        ) {
-            return false;
-        }
-
-        // If we know this sniff code is being ignored for this file, return early.
-        foreach ($checkCodes as $checkCode) {
-            if (isset($this->ignoredCodes[$checkCode]) === true) {
-                return false;
-            }
-        }
-
-        foreach ($checkCodes as $checkCode) {
-            // Make sure this message type has not been set to "warning".
-            if (isset($this->ruleset->ruleset[$checkCode]['type']) === true
-                && $this->ruleset->ruleset[$checkCode]['type'] === 'warning'
-            ) {
-                // Pass this off to the warning handler.
-                return $this->_addWarning($error, $line, $column, $code, $data, $severity, $fixable);
-            }
-        }
-
-        if ($this->config->cache === false && $this->config->errorSeverity === 0) {
-            // Don't bother doing any processing as errors are just going to
-            // be hidden in the reports anyway.
-            return false;
-        }
-
-        if ($severity === 0) {
-            $severity = 5;
-        }
-
-        foreach ($checkCodes as $checkCode) {
-            // Make sure we are interested in this severity level.
-            if (isset($this->ruleset->ruleset[$checkCode]['severity']) === true) {
-                $severity = $this->ruleset->ruleset[$checkCode]['severity'];
-                break;
-            }
-        }
-
-        if ($this->config->cache === false && $this->config->errorSeverity > $severity) {
-            return false;
-        }
-
-        // Make sure we are not ignoring this file.
-        foreach ($checkCodes as $checkCode) {
-            $patterns = $this->ruleset->getIgnorePatterns($checkCode);
-            foreach ($patterns as $pattern => $type) {
-                // While there is support for a type of each pattern
-                // (absolute or relative) we don't actually support it here.
-                $replacements = array(
-                                 '\\,' => ',',
-                                 '*'   => '.*',
-                                );
-
-                // We assume a / directory separator, as do the exclude rules
-                // most developers write, so we need a special case for any system
-                // that is different.
-                if (DIRECTORY_SEPARATOR === '\\') {
-                    $replacements['/'] = '\\\\';
-                }
-
-                $pattern = '`'.strtr($pattern, $replacements).'`i';
-                if (preg_match($pattern, $this->path) === 1) {
-                    $this->ignoredCodes[$checkCode] = true;
-                    return false;
-                }
-            }//end foreach
-        }//end foreach
-
-        $this->errorCount++;
-        if ($fixable === true) {
-            $this->fixableCount++;
-        }
-
-        if ($this->recordErrors === false) {
-            if (isset($this->errors[$line]) === false) {
-                $this->errors[$line] = 0;
-            }
-
-            $this->errors[$line]++;
-            return true;
-        }
-
-        // Work out the error message.
-        if (isset($this->ruleset->ruleset[$sniffCode]['message']) === true) {
-            $error = $this->ruleset->ruleset[$sniffCode]['message'];
-        }
-
-        if (empty($data) === true) {
-            $message = $error;
-        } else {
-            $message = vsprintf($error, $data);
-        }
-
-        if (isset($this->errors[$line]) === false) {
-            $this->errors[$line] = array();
-        }
-
-        if (isset($this->errors[$line][$column]) === false) {
-            $this->errors[$line][$column] = array();
-        }
-
-        $this->errors[$line][$column][] = array(
-                                           'message'  => $message,
-                                           'source'   => $sniffCode,
-                                           'listener' => $this->activeListener,
-                                           'severity' => $severity,
-                                           'fixable'  => $fixable,
-                                          );
-
-        if (PHP_CODESNIFFER_VERBOSITY > 1
-            && $this->fixer->enabled === true
-            && $fixable === true
-        ) {
-            @ob_end_clean();
-            echo "\tE: [Line $line] $message ($sniffCode)".PHP_EOL;
-            ob_start();
-        }
-
-        return true;
-
-    }//end _addError()
-
-
-    /**
-     * Adds an warning to the warning stack.
-     *
-     * @param string  $warning  The error message.
-     * @param int     $line     The line on which the warning occurred.
-     * @param int     $column   The column at which the warning occurred.
-     * @param string  $code     A violation code unique to the sniff message.
-     * @param array   $data     Replacements for the warning message.
-     * @param int     $severity The severity level for this warning. A value of 0
-     *                          will be converted into the default severity level.
-     * @param boolean $fixable  Can the warning be fixed by the sniff?
-     *
-     * @return boolean
-     */
-    protected function _addWarning($warning, $line, $column, $code, $data, $severity, $fixable)
-    {
-        if (isset($this->tokenizer->ignoredLines[$line]) === true) {
-            return false;
-        }
-
-        if (isset($this->ruleset->sniffs[$this->activeListener]) === false) {
-            return false;
-        }
-
-        // Work out which sniff generated the warning.
-        if (substr($code, 0, 9) === 'Internal.') {
-            // Any internal message.
+            // An internal message.
             $listenerCode = Util\Common::getSniffCode($this->activeListener);
             $sniffCode    = $code;
             $checkCodes   = array($sniffCode);
@@ -967,18 +791,33 @@ class File
             }
         }
 
+        $oppositeType = 'warning';
+        if ($error === false) {
+            $oppositeType = 'error';
+        }
+
         foreach ($checkCodes as $checkCode) {
-            // Make sure this message type has not been set to "error".
+            // Make sure this message type has not been set to the opposite message type.
             if (isset($this->ruleset->ruleset[$checkCode]['type']) === true
-                && $this->ruleset->ruleset[$checkCode]['type'] === 'error'
+                && $this->ruleset->ruleset[$checkCode]['type'] === $oppositeType
             ) {
-                // Pass this off to the error handler.
-                return $this->_addError($warning, $line, $column, $code, $data, $severity, $fixable);
+                // Start over.
+                $error = !$error;
             }
         }
 
-        if ($this->config->cache === false && $this->config->warningSeverity === 0) {
-            // Don't bother doing any processing as warnings are just going to
+        if ($error === true) {
+            $configSeverity = $this->config->errorSeverity;
+            $messageCount   = &$this->errorCount;
+            $messages       = &$this->errors;
+        } else {
+            $configSeverity = $this->config->warningSeverity;
+            $messageCount   = &$this->warningCount;
+            $messages       = &$this->warnings;
+        }
+
+        if ($this->config->cache === false && $configSeverity === 0) {
+            // Don't bother doing any processing as these messages are just going to
             // be hidden in the reports anyway.
             return false;
         }
@@ -995,7 +834,7 @@ class File
             }
         }
 
-        if ($this->config->cache === false && $this->config->warningSeverity > $severity) {
+        if ($this->config->cache === false && $configSeverity > $severity) {
             return false;
         }
 
@@ -1025,59 +864,57 @@ class File
             }//end foreach
         }//end foreach
 
-        $this->warningCount++;
+        $messageCount++;
         if ($fixable === true) {
             $this->fixableCount++;
         }
 
         if ($this->recordErrors === false) {
-            if (isset($this->warnings[$line]) === false) {
-                $this->warnings[$line] = 0;
+            if (isset($messages[$line]) === false) {
+                $messages[$line] = 0;
             }
 
-            $this->warnings[$line]++;
+            $messages[$line]++;
             return true;
         }
 
-        // Work out the warning message.
+        // Work out the error message.
         if (isset($this->ruleset->ruleset[$sniffCode]['message']) === true) {
-            $warning = $this->ruleset->ruleset[$sniffCode]['message'];
+            $message = $this->ruleset->ruleset[$sniffCode]['message'];
         }
 
-        if (empty($data) === true) {
-            $message = $warning;
-        } else {
-            $message = vsprintf($warning, $data);
+        if (empty($data) === false) {
+            $message = vsprintf($message, $data);
         }
 
-        if (isset($this->warnings[$line]) === false) {
-            $this->warnings[$line] = array();
+        if (isset($messages[$line]) === false) {
+            $messages[$line] = array();
         }
 
-        if (isset($this->warnings[$line][$column]) === false) {
-            $this->warnings[$line][$column] = array();
+        if (isset($messages[$line][$column]) === false) {
+            $messages[$line][$column] = array();
         }
 
-        $this->warnings[$line][$column][] = array(
-                                             'message'  => $message,
-                                             'source'   => $sniffCode,
-                                             'listener' => $this->activeListener,
-                                             'severity' => $severity,
-                                             'fixable'  => $fixable,
-                                            );
+        $messages[$line][$column][] = array(
+                                       'message'  => $message,
+                                       'source'   => $sniffCode,
+                                       'listener' => $this->activeListener,
+                                       'severity' => $severity,
+                                       'fixable'  => $fixable,
+                                      );
 
         if (PHP_CODESNIFFER_VERBOSITY > 1
             && $this->fixer->enabled === true
             && $fixable === true
         ) {
             @ob_end_clean();
-            echo "\tW: $message ($sniffCode)".PHP_EOL;
+            echo "\tE: [Line $line] $message ($sniffCode)".PHP_EOL;
             ob_start();
         }
 
         return true;
 
-    }//end _addWarning()
+    }//end addMessage()
 
 
     /**
@@ -1092,11 +929,7 @@ class File
     public function recordMetric($stackPtr, $metric, $value)
     {
         if (isset($this->metrics[$metric]) === false) {
-            $this->metrics[$metric] = array(
-                                       'values' => array(
-                                                    $value => 1,
-                                                   ),
-                                      );
+            $this->metrics[$metric] = array('values' => array($value => 1));
         } else {
             if (isset($this->metrics[$metric]['values'][$value]) === false) {
                 $this->metrics[$metric]['values'][$value] = 1;
@@ -1353,7 +1186,7 @@ class File
                     $i = ($this->tokens[$i]['parenthesis_closer'] + 1);
                 }
             }
-            
+
             if (isset($this->tokens[$i]['bracket_opener']) === true) {
                 // Don't do this if it's the close parenthesis for the method.
                 if ($i !== $this->tokens[$i]['bracket_closer']) {
