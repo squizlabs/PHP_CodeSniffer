@@ -801,8 +801,8 @@ class File
             if (isset($this->ruleset->ruleset[$checkCode]['type']) === true
                 && $this->ruleset->ruleset[$checkCode]['type'] === $oppositeType
             ) {
-                // Start over.
                 $error = !$error;
+                break;
             }
         }
 
