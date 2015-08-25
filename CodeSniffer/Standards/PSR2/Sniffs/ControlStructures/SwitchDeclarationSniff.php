@@ -122,7 +122,7 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                     }
                 }
 
-                $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
+                $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($opener + 1), null, true);
                 if ($tokens[$next]['line'] !== ($tokens[$opener]['line'] + 1)) {
                     $error = 'The '.strtoupper($type).' body must start on the line following the statement';
                     $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.strtoupper($type));
