@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 /**
  * PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff.
@@ -128,7 +129,7 @@ class SwitchDeclarationSniff implements Sniff
                     }
                 }
 
-                $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($opener + 1), null, true);
+                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($opener + 1), null, true);
                 if ($tokens[$next]['line'] !== ($tokens[$opener]['line'] + 1)) {
                     $error = 'The '.strtoupper($type).' body must start on the line following the statement';
                     $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.strtoupper($type));
