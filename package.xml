@@ -34,7 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniff codes are no longer optional - use them with addError/Warning/Fixable
   - installed_paths config setting can now point directly to a standard instead of the dir above
   - --report=full,summary,info instead of --report=full --report=summary --report=info
-  - can now set severity and type of entire sniff, category or standard
+  - can now set severity, message type and exclude patterns for entire sniff, category or standard
   - can include a single sniff code, which will exclude all other codes from that sniff
     -- if the sniff is already included by an imported standard, set sniff severity to 0 and include the specific message you want
   - JSON report format now includes the fixable status for each error message and the total number of fixable errors

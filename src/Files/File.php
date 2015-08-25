@@ -784,8 +784,10 @@ class File
         }
 
         // If we know this sniff code is being ignored for this file, return early.
-        if (isset($this->ignoredCodes[$sniffCode]) === true) {
-            return false;
+        foreach ($checkCodes as $checkCode) {
+            if (isset($this->ignoredCodes[$checkCode]) === true) {
+                return false;
+            }
         }
 
         foreach ($checkCodes as $checkCode) {
@@ -821,27 +823,29 @@ class File
         }
 
         // Make sure we are not ignoring this file.
-        $patterns = $this->ruleset->getIgnorePatterns($sniffCode);
-        foreach ($patterns as $pattern => $type) {
-            // While there is support for a type of each pattern
-            // (absolute or relative) we don't actually support it here.
-            $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+        foreach ($checkCodes as $checkCode) {
+            $patterns = $this->ruleset->getIgnorePatterns($checkCode);
+            foreach ($patterns as $pattern => $type) {
+                // While there is support for a type of each pattern
+                // (absolute or relative) we don't actually support it here.
+                $replacements = array(
+                                 '\\,' => ',',
+                                 '*'   => '.*',
+                                );
 
-            // We assume a / directory separator, as do the exclude rules
-            // most developers write, so we need a special case for any system
-            // that is different.
-            if (DIRECTORY_SEPARATOR === '\\') {
-                $replacements['/'] = '\\\\';
-            }
+                // We assume a / directory separator, as do the exclude rules
+                // most developers write, so we need a special case for any system
+                // that is different.
+                if (DIRECTORY_SEPARATOR === '\\') {
+                    $replacements['/'] = '\\\\';
+                }
 
-            $pattern = '`'.strtr($pattern, $replacements).'`i';
-            if (preg_match($pattern, $this->path) === 1) {
-                $this->ignoredCodes[$sniffCode] = true;
-                return false;
-            }
+                $pattern = '`'.strtr($pattern, $replacements).'`i';
+                if (preg_match($pattern, $this->path) === 1) {
+                    $this->ignoredCodes[$checkCode] = true;
+                    return false;
+                }
+            }//end foreach
         }//end foreach
 
         $this->errorCount++;
@@ -957,8 +961,10 @@ class File
         }
 
         // If we know this sniff code is being ignored for this file, return early.
-        if (isset($this->ignoredCodes[$sniffCode]) === true) {
-            return false;
+        foreach ($checkCodes as $checkCode) {
+            if (isset($this->ignoredCodes[$checkCode]) === true) {
+                return false;
+            }
         }
 
         foreach ($checkCodes as $checkCode) {
@@ -994,27 +1000,29 @@ class File
         }
 
         // Make sure we are not ignoring this file.
-        $patterns = $this->ruleset->getIgnorePatterns($sniffCode);
-        foreach ($patterns as $pattern => $type) {
-            // While there is support for a type of each pattern
-            // (absolute or relative) we don't actually support it here.
-            $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+        foreach ($checkCodes as $checkCode) {
+            $patterns = $this->ruleset->getIgnorePatterns($checkCode);
+            foreach ($patterns as $pattern => $type) {
+                // While there is support for a type of each pattern
+                // (absolute or relative) we don't actually support it here.
+                $replacements = array(
+                                 '\\,' => ',',
+                                 '*'   => '.*',
+                                );
 
-            // We assume a / directory separator, as do the exclude rules
-            // most developers write, so we need a special case for any system
-            // that is different.
-            if (DIRECTORY_SEPARATOR === '\\') {
-                $replacements['/'] = '\\\\';
-            }
+                // We assume a / directory separator, as do the exclude rules
+                // most developers write, so we need a special case for any system
+                // that is different.
+                if (DIRECTORY_SEPARATOR === '\\') {
+                    $replacements['/'] = '\\\\';
+                }
 
-            $pattern = '`'.strtr($pattern, $replacements).'`i';
-            if (preg_match($pattern, $this->path) === 1) {
-                $this->ignoredCodes[$sniffCode] = true;
-                return false;
-            }
+                $pattern = '`'.strtr($pattern, $replacements).'`i';
+                if (preg_match($pattern, $this->path) === 1) {
+                    $this->ignoredCodes[$checkCode] = true;
+                    return false;
+                }
+            }//end foreach
         }//end foreach
 
         $this->warningCount++;

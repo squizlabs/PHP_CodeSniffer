@@ -809,7 +809,7 @@ class Ruleset
             $this->ignorePatterns[$code][(string) $pattern] = (string) $pattern['type'];
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
-                echo "\t\t=> added sniff-specific ".(string) $pattern['type'].' ignore pattern: '.(string) $pattern.PHP_EOL;
+                echo "\t\t=> added rule-specific ".(string) $pattern['type'].' ignore pattern for '.$code.': '.(string) $pattern.PHP_EOL;
             }
         }
 
