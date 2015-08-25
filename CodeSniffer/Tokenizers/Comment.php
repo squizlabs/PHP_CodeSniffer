@@ -54,7 +54,7 @@ class PHP_CodeSniffer_Tokenizers_Comment
         */
 
         for ($c = 0; $c < $numChars; $c++) {
-            if ($string[$c] !== '/' && $string[$c] !== '*') {
+            if (substr($string, $c, 1) !== '/' && substr($string, $c, 1) !== '*') {
                 break;
             }
         }
@@ -82,7 +82,7 @@ class PHP_CodeSniffer_Tokenizers_Comment
         */
 
         for ($i = ($numChars - 1); $i > $c; $i--) {
-            if ($string[$i] !== '/' && $string[$i] !== '*') {
+            if (substr($string, $i, 1) !== '/' && substr($string, $i, 1) !== '*') {
                 break;
             }
         }
@@ -141,7 +141,7 @@ class PHP_CodeSniffer_Tokenizers_Comment
                 }
             }
 
-            if ($string[$c] === '*') {
+            if (substr($string, $c, 1) === '*') {
                 // This is a function or class doc block line.
                 $c++;
                 $tokens[$stackPtr] = array(
@@ -198,14 +198,19 @@ class PHP_CodeSniffer_Tokenizers_Comment
             $start   += strlen($space['content']);
         }
 
-        if (isset($string[$start]) === false) {
+        if ($start >= strlen($string)) {
             return $tokens;
         }
 
-        if ($string[$start] === '@') {
+        if (substr($string, $start, 1) === '@') {
             // The content up until the first whitespace is the tag name.
             $matches = array();
-            preg_match('/@[^\s]+/', $string, $matches, 0, $start);
+            if (function_exists('mb_strlen')) {
+                $startBit = mb_strlen(substr($string, 0, $start), '8bit');
+            } else {
+                $startBit = $start;
+            }
+            preg_match('/@[^\s]+/', $string, $matches, 0, $startBit);
             if (isset($matches[0]) === true) {
                 $tagName  = $matches[0];
                 $start   += strlen($tagName);
@@ -264,11 +269,11 @@ class PHP_CodeSniffer_Tokenizers_Comment
     {
         $space = '';
         for ($start; $start < $end; $start++) {
-            if ($string[$start] !== ' ' && $string[$start] !== "\t") {
+            if (substr($string, $start, 1) !== ' ' && substr($string, $start, 1) !== "\t") {
                 break;
             }
 
-            $space .= $string[$start];
+            $space .= substr($string, $start, 1);
         }
 
         if ($space === '') {
