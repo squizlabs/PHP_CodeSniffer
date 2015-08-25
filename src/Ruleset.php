@@ -290,6 +290,8 @@ class Ruleset
                 if (isset($this->ruleset[$sniffCode]['severity']) === true
                     && $this->ruleset[$sniffCode]['severity'] === 0
                 ) {
+                    // This sniff code has already been turned off, but now
+                    // it is being explicitly included again, so turn it back on.
                     $this->ruleset[(string) $rule['ref']]['severity'] = 5;
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
@@ -298,14 +300,16 @@ class Ruleset
                         echo "\t\t=> severity set to 5".PHP_EOL;
                     }
                 } else if (empty($newSniffs) === false) {
-                    // Turn off all messages in the sniff, except this one.
+                    // Including a sniff that hasn't been included higher up, but
+                    // only including a single message from it. So turn off all messages in
+                    // the sniff, except this one.
                     $this->ruleset[$sniffCode]['severity']            = 0;
                     $this->ruleset[(string) $rule['ref']]['severity'] = 5;
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\tExcluding sniff \"".$sniffCode.'" except for "'.$parts[3].'"'.PHP_EOL;
                     }
-                }
+                }//end if
             }//end if
 
             if (isset($rule->exclude) === true) {
@@ -337,7 +341,7 @@ class Ruleset
                 }//end foreach
             }//end if
 
-            $this->processRule($rule, $depth);
+            $this->processRule($rule, $newSniffs, $depth);
         }//end foreach
 
         // Process custom command line arguments.
@@ -682,136 +686,183 @@ class Ruleset
     /**
      * Processes a rule from a ruleset XML file, overriding built-in defaults.
      *
-     * @param SimpleXMLElement $rule  The rule object from a ruleset XML file.
-     * @param int              $depth How many nested processing steps we are in.
-     *                                This is only used for debug output.
+     * @param SimpleXMLElement $rule      The rule object from a ruleset XML file.
+     * @param string[]         $newSniffs An array of sniffs that got included by this rule.
+     * @param int              $depth     How many nested processing steps we are in.
+     *                                    This is only used for debug output.
      *
      * @return void
      * @throws RuntimeException If rule settings are invalid.
      */
-    private function processRule($rule, $depth=0)
+    private function processRule($rule, $newSniffs, $depth=0)
     {
-        $code = (string) $rule['ref'];
+        $ref  = (string) $rule['ref'];
+        $todo = array($ref);
 
-        // Custom severity.
-        if (isset($rule->severity) === true
-            && $this->shouldProcessElement($rule->severity) === true
-        ) {
-            if (isset($this->ruleset[$code]) === false) {
-                $this->ruleset[$code] = array();
-            }
-
-            $this->ruleset[$code]['severity'] = (int) $rule->severity;
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t\t=> severity set to ".(int) $rule->severity.PHP_EOL;
-            }
-        }
-
-        // Custom message type.
-        if (isset($rule->type) === true
-            && $this->shouldProcessElement($rule->type) === true
-        ) {
-            if (isset($this->ruleset[$code]) === false) {
-                $this->ruleset[$code] = array();
-            }
-
-            $type = strtolower((string) $rule->type);
-            if ($type !== 'error' && $type !== 'warning') {
-                throw new RuntimeException("Message type \"$type\" is invalid; must be \"error\" or \"warning\"");
-            }
-
-            $this->ruleset[$code]['type'] = $type;
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t\t=> message type set to ".(string) $rule->type.PHP_EOL;
+        $parts = explode('.', $ref);
+        if (count($parts) <= 2) {
+            // We are processing a standard or a category of sniffs.
+            foreach ($newSniffs as $sniffFile) {
+                $parts         = explode(DIRECTORY_SEPARATOR, $sniffFile);
+                $sniffName     = array_pop($parts);
+                $sniffCategory = array_pop($parts);
+                array_pop($parts);
+                $sniffStandard = array_pop($parts);
+                $todo[]        = $sniffStandard.'.'.$sniffCategory.'.'.substr($sniffName, 0, -9);
             }
         }
 
-        // Custom message.
-        if (isset($rule->message) === true
-            && $this->shouldProcessElement($rule->message) === true
-        ) {
-            if (isset($this->ruleset[$code]) === false) {
-                $this->ruleset[$code] = array();
+        foreach ($todo as $code) {
+            // Custom severity.
+            if (isset($rule->severity) === true
+                && $this->shouldProcessElement($rule->severity) === true
+            ) {
+                if (isset($this->ruleset[$code]) === false) {
+                    $this->ruleset[$code] = array();
+                }
+
+                $this->ruleset[$code]['severity'] = (int) $rule->severity;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t\t=> severity set to ".(int) $rule->severity;
+                    if ($code !== $ref) {
+                        echo " for $code";
+                    }
+
+                    echo PHP_EOL;
+                }
             }
 
-            $this->ruleset[$code]['message'] = (string) $rule->message;
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t\t=> message set to ".(string) $rule->message.PHP_EOL;
-            }
-        }
+            // Custom message type.
+            if (isset($rule->type) === true
+                && $this->shouldProcessElement($rule->type) === true
+            ) {
+                if (isset($this->ruleset[$code]) === false) {
+                    $this->ruleset[$code] = array();
+                }
 
-        // Custom properties.
-        if (isset($rule->properties) === true
-            && $this->shouldProcessElement($rule->properties) === true
-        ) {
-            foreach ($rule->properties->property as $prop) {
-                if ($this->shouldProcessElement($prop) === false) {
+                $type = strtolower((string) $rule->type);
+                if ($type !== 'error' && $type !== 'warning') {
+                    throw new RuntimeException("Message type \"$type\" is invalid; must be \"error\" or \"warning\"");
+                }
+
+                $this->ruleset[$code]['type'] = $type;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t\t=> message type set to ".(string) $rule->type;
+                    if ($code !== $ref) {
+                        echo " for $code";
+                    }
+
+                    echo PHP_EOL;
+                }
+            }//end if
+
+            // Custom message.
+            if (isset($rule->message) === true
+                && $this->shouldProcessElement($rule->message) === true
+            ) {
+                if (isset($this->ruleset[$code]) === false) {
+                    $this->ruleset[$code] = array();
+                }
+
+                $this->ruleset[$code]['message'] = (string) $rule->message;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t\t=> message set to ".(string) $rule->message;
+                    if ($code !== $ref) {
+                        echo " for $code";
+                    }
+
+                    echo PHP_EOL;
+                }
+            }
+
+            // Custom properties.
+            if (isset($rule->properties) === true
+                && $this->shouldProcessElement($rule->properties) === true
+            ) {
+                foreach ($rule->properties->property as $prop) {
+                    if ($this->shouldProcessElement($prop) === false) {
+                        continue;
+                    }
+
+                    if (isset($this->ruleset[$code]) === false) {
+                        $this->ruleset[$code] = array(
+                                                 'properties' => array(),
+                                                );
+                    } else if (isset($this->ruleset[$code]['properties']) === false) {
+                        $this->ruleset[$code]['properties'] = array();
+                    }
+
+                    $name = (string) $prop['name'];
+                    if (isset($prop['type']) === true
+                        && (string) $prop['type'] === 'array'
+                    ) {
+                        $value  = (string) $prop['value'];
+                        $values = array();
+                        foreach (explode(',', $value) as $val) {
+                            $v = '';
+
+                            list($k,$v) = explode('=>', $val.'=>');
+                            if ($v !== '') {
+                                $values[$k] = $v;
+                            } else {
+                                $values[] = $k;
+                            }
+                        }
+
+                        $this->ruleset[$code]['properties'][$name] = $values;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo "\t\t=> array property \"$name\" set to \"$value\"";
+                            if ($code !== $ref) {
+                                echo " for $code";
+                            }
+
+                            echo PHP_EOL;
+                        }
+                    } else {
+                        $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo "\t\t=> property \"$name\" set to \"".(string) $prop['value'].'"';
+                            if ($code !== $ref) {
+                                echo " for $code";
+                            }
+
+                            echo PHP_EOL;
+                        }
+                    }//end if
+                }//end foreach
+            }//end if
+
+            // Ignore patterns.
+            foreach ($rule->{'exclude-pattern'} as $pattern) {
+                if ($this->shouldProcessElement($pattern) === false) {
                     continue;
                 }
 
-                if (isset($this->ruleset[$code]) === false) {
-                    $this->ruleset[$code] = array(
-                                             'properties' => array(),
-                                            );
-                } else if (isset($this->ruleset[$code]['properties']) === false) {
-                    $this->ruleset[$code]['properties'] = array();
+                if (isset($this->ignorePatterns[$code]) === false) {
+                    $this->ignorePatterns[$code] = array();
                 }
 
-                $name = (string) $prop['name'];
-                if (isset($prop['type']) === true
-                    && (string) $prop['type'] === 'array'
-                ) {
-                    $value  = (string) $prop['value'];
-                    $values = array();
-                    foreach (explode(',', $value) as $val) {
-                        $v = '';
+                if (isset($pattern['type']) === false) {
+                    $pattern['type'] = 'absolute';
+                }
 
-                        list($k,$v) = explode('=>', $val.'=>');
-                        if ($v !== '') {
-                            $values[$k] = $v;
-                        } else {
-                            $values[] = $k;
-                        }
+                $this->ignorePatterns[$code][(string) $pattern] = (string) $pattern['type'];
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t\t=> added rule-specific ".(string) $pattern['type'].' ignore pattern';
+                    if ($code !== $ref) {
+                        echo " for $code";
                     }
 
-                    $this->ruleset[$code]['properties'][$name] = $values;
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo str_repeat("\t", $depth);
-                        echo "\t\t=> array property \"$name\" set to \"$value\"".PHP_EOL;
-                    }
-                } else {
-                    $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo str_repeat("\t", $depth);
-                        echo "\t\t=> property \"$name\" set to \"".(string) $prop['value'].'"'.PHP_EOL;
-                    }
-                }//end if
+                    echo ': '.(string) $pattern.PHP_EOL;
+                }
             }//end foreach
-        }//end if
-
-        // Ignore patterns.
-        foreach ($rule->{'exclude-pattern'} as $pattern) {
-            if ($this->shouldProcessElement($pattern) === false) {
-                continue;
-            }
-
-            if (isset($this->ignorePatterns[$code]) === false) {
-                $this->ignorePatterns[$code] = array();
-            }
-
-            if (isset($pattern['type']) === false) {
-                $pattern['type'] = 'absolute';
-            }
-
-            $this->ignorePatterns[$code][(string) $pattern] = (string) $pattern['type'];
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t\t=> added rule-specific ".(string) $pattern['type'].' ignore pattern for '.$code.': '.(string) $pattern.PHP_EOL;
-            }
-        }
+        }//end foreach
 
     }//end processRule()
 
