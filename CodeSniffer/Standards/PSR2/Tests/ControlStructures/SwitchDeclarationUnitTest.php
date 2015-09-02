@@ -55,6 +55,7 @@ class PSR2_Tests_ControlStructures_SwitchDeclarationUnitTest extends AbstractSni
                 111 => 1,
                 113 => 2,
                 114 => 1,
+                128 => 1,
                );
 
     }//end getErrorList()

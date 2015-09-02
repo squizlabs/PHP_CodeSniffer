@@ -115,11 +115,20 @@ switch ($foo) {
 }
 
 switch ($foo) {
-    case 'bar': // some comment
+    case 'foo': // some comment
+        echo 'foo';
+        break;
+    case 'bar':
+        // some comment
         echo 'bar';
         break;
     case 'baz': // other comment
         echo 'baz';
+        break;
+    case 'boo':
+
+        // other comment
+        echo 'boo';
         break;
     default: // other comment
         echo 'default';
