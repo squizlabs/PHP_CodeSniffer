@@ -27,7 +27,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class YL1_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
+class YL1-Strict_Sniffs_Classes_PropertyDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
 
 

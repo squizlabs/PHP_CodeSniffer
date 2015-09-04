@@ -1,6 +1,6 @@
 <?php
 /**
- * YL1_Sniffs_Methods_MethodDeclarationSniff.
+ * YL1-Simple_Sniffs_Methods_MethodDeclarationSniff.
  *
  * PHP version 5
  *
@@ -17,7 +17,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
 }
 
 /**
- * YL1_Sniffs_Methods_MethodDeclarationSniff.
+ * YL1-Simple_Sniffs_Methods_MethodDeclarationSniff.
  *
  * Checks that the method declaration is correct.
  *
@@ -29,7 +29,7 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractScopeSniff', true) === false
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class YL1_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+class YL1-Simple_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standards_AbstractScopeSniff
 {
 
 
