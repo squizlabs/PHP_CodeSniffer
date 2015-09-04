@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="YL1-Strict">
-    <description>The YL1-Strict coding standard.</description>
+<ruleset name="YL1Strict">
+    <description>The YL1Strict coding standard.</description>
     <arg name="tab-width" value="4"/>
     
      <rule ref="PSR2">
@@ -58,9 +58,9 @@
 
     <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
 
-    <rule ref="YL1-Simple.Methods.MethodDeclaration"/> 
+    <rule ref="YL1Simple.Methods.MethodDeclaration"/> 
  
-    <rule ref="YL1-Simple.Classes.PropertyDeclaration"/> 
+    <rule ref="YL1Simple.Classes.PropertyDeclaration"/> 
  
     <rule ref="Squiz.Functions.FunctionDeclaration"/>
  
