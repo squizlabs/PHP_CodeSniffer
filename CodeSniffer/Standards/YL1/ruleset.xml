@@ -3,11 +3,20 @@
  <description>The YL-1 coding standard.</description>
  <arg name="tab-width" value="4"/>
 
- <!-- 2. General -->
+<rule ref="Generic.NamingConventions">
+    <exclude name="Generic.NamingConventions.CamelCapsFunctionName" /> 
+</rule>
+<rule ref="PEAR.NamingConventions">
+    <exclude name="PEAR.NamingConventions.ValidFunctionName" />
+</rule>
+<rule ref="PSR1.Methods">
+    <exclude name="PSR1.Methods.CamelCapsMethodName" />
+</rule>
 
- <!-- 2.1 Basic Coding Standard -->
+<rule ref="PSR1.Classes">
+    <exclude name="PSR1.Classes.ClassDeclaration" />
+</rule>
 
- <!-- Include the whole PSR-2 standard -->
  <rule ref="PSR2">
   <exclude name="PSR2.Methods.MethodDeclaration"/>
   <exclude name="PSR2.Classes.PropertyDeclaration"/>
@@ -127,32 +136,10 @@
   <severity>0</severity>
  </rule>
 
- <!-- Method arguments with default values MUST go at the end of the argument list. -->
  <rule ref="PEAR.Functions.ValidDefaultValue"/>
 
- <!-- Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line. When the argument list is split across multiple lines, the closing parenthesis and opening brace MUST be placed together on their own line with one space between them. -->
  <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
 
- <!-- 4.5 abstract, final, and static -->
-
- <!-- When present, the abstract and final declarations MUST precede the visibility declaration.
-      When present, the static declaration MUST come after the visibility declaration. -->
- <!-- checked in Methods/MethodDeclarationSniff -->
-
- <!-- 4.6 Method and Function Calls -->
-
- <!-- When making a method or function call, there MUST NOT be a space between the method or function name and the opening parenthesis, there MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma.
- Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line. -->
-
- <!-- 5. Control Structures -->
-
- <!-- The general style rules for control structures are as follows:
- There MUST be one space after the control structure keyword
- There MUST NOT be a space after the opening parenthesis
- There MUST NOT be a space before the closing parenthesis
- There MUST be one space between the closing parenthesis and the opening brace
- The structure body MUST be indented once
- The closing brace MUST be on the next line after the body -->
  <rule ref="Squiz.ControlStructures.ControlSignature">
   <properties>
    <property name="ignoreComments" value="true"/>
@@ -162,29 +149,5 @@
  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
  <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
  <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
- <!-- checked in ControlStructures/ControlStructureSpacingSniff -->
-
- <!-- The body of each structure MUST be enclosed by braces. This standardizes how the structures look, and reduces the likelihood of introducing errors as new lines get added to the body. -->
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
-
- <!-- 5.1. if, elseif, else -->
-
- <!-- The keyword elseif SHOULD be used instead of else if so that all control keywords look like single words. -->
- <!-- checked in ControlStructures/ElseIfDeclarationSniff -->
-
- <!-- 5.2. switch, case -->
-
- <!-- The case statement MUST be indented once from switch, and the break keyword (or other terminating keyword) MUST be indented at the same level as the case body. There MUST be a comment such as // no break when fall-through is intentional in a non-empty case body. -->
- <!-- checked in ControlStructures/SwitchDeclarationSniff -->
-
- <!-- 6. Closures -->
-
- <!-- Closures MUST be declared with a space after the function keyword, and a space before and after the use keyword.
- The opening brace MUST go on the same line, and the closing brace MUST go on the next line following the body.
- There MUST NOT be a space after the opening parenthesis of the argument list or variable list, and there MUST NOT be a space before the closing parenthesis of the argument list or variable list.
- In the argument list and variable list, there MUST NOT be a space before each comma, and there MUST be one space after each comma.
- Closure arguments with default values MUST go at the end of the argument list.
- Argument lists and variable lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument or variable per line.
- When the ending list (whether or arguments or variables) is split across multiple lines, the closing parenthesis and opening brace MUST be placed together on their own line with one space between them. -->
- <!-- checked in Squiz.Functions.MultiLineFunctionDeclaration -->
 </ruleset>
