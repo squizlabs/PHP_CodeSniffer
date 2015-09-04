@@ -1,0 +1,46 @@
+<?php
+if ($something) {
+}
+foreach ($this as $that) {
+}
+while (true) {
+    for ($i = 0; $i < 10; $i++) {
+    }
+    if ($something) {
+    }
+
+    foreach ($this as $that) {
+        do {
+        } while (true);
+
+    }
+}
+
+if ($defaultPageDesign === 0
+    && $defaultCascade === TRUE
+    && $defaultChildDesign === 0
+) {
+    $settingsUpdated = FALSE;
+}
+
+foreach ($blah as $var) {
+    if ($blah) {
+    }
+}
+
+if ($defaultPageDesign === 0
+    && $defaultCascade === TRUE
+    && $defaultChildDesign === 0
+) {
+    $settingsUpdated = FALSE;
+}
+
+// @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing requiredSpacesAfterOpen 1
+// @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 1
+foreach ( $something as $blah => $that ) {}
+foreach ( $something as $blah => $that ) {}
+foreach ( $something as $blah => $that ) {}
+// @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing requiredSpacesAfterOpen 0
+// @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 0
+
+$binary = b"binary string";
