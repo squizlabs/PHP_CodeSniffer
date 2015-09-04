@@ -1,23 +1,9 @@
 <?xml version="1.0"?>
-<ruleset name="YL1">
- <description>The YL-1 coding standard.</description>
+<ruleset name="YL1-Strict">
+ <description>The YL1-Strict coding standard.</description>
  <arg name="tab-width" value="4"/>
 
-<rule ref="Generic.NamingConventions">
-    <exclude name="Generic.NamingConventions.CamelCapsFunctionName" /> 
-</rule>
-<rule ref="PEAR.NamingConventions">
-    <exclude name="PEAR.NamingConventions.ValidFunctionName" />
-</rule>
-<rule ref="PSR1.Methods">
-    <exclude name="PSR1.Methods.CamelCapsMethodName" />
-</rule>
-
-<rule ref="PSR1.Classes">
-    <exclude name="PSR1.Classes.ClassDeclaration" />
-</rule>
-
- <rule ref="PSR2">
+<rule ref="PSR2">
   <exclude name="PSR2.Methods.MethodDeclaration"/>
   <exclude name="PSR2.Classes.PropertyDeclaration"/>
   <exclude name="Zend.Files.ClosingTag"/>
