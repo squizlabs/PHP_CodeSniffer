@@ -1,115 +1,115 @@
 <?xml version="1.0"?>
 <ruleset name="YL1Simple">
-    <description>The YL1Simple coding standard.</description>
-    <arg name="tab-width" value="4"/>
-    
-    <rule ref="Generic.NamingConventions">
-	<exclude name="Generic.NamingConventions.CamelCapsFunctionName" /> 
-    </rule>
+	<description>The YL1Simple coding standard.</description>
+	<arg name="tab-width" value="4" />
 
-    <rule ref="PEAR.NamingConventions">
-	<exclude name="PEAR.NamingConventions.ValidFunctionName" />
-    </rule>
+	<rule ref="Generic.NamingConventions">
+		<exclude name="Generic.NamingConventions.CamelCapsFunctionName" />
+	</rule>
 
-    <rule ref="PSR1.Methods">
-	<exclude name="PSR1.Methods.CamelCapsMethodName" />
-    </rule>
+	<rule ref="PEAR.NamingConventions">
+		<exclude name="PEAR.NamingConventions.ValidFunctionName" />
+	</rule>
 
-    <rule ref="PSR1.Classes">
-	<exclude name="PSR1.Classes.ClassDeclaration" />
-    </rule>
+	<rule ref="PSR1.Methods">
+		<exclude name="PSR1.Methods.CamelCapsMethodName" />
+	</rule>
 
-     <rule ref="PSR2">
-	<exclude name="PSR2.Methods.MethodDeclaration"/>
-	<exclude name="PSR2.Classes.PropertyDeclaration"/>
-	<exclude name="Zend.Files.ClosingTag"/>
-    </rule>
- 
-    <rule ref="Generic.Files.LineEndings">
-	<properties>
-	    <property name="eolChar" value="\n"/>
-	</properties>
-    </rule>
+	<rule ref="PSR1.Classes">
+		<exclude name="PSR1.Classes.ClassDeclaration" />
+	</rule>
 
-    <rule ref="Generic.Files.LineLength">
-	<properties>
-	    <property name="lineLimit" value="1200"/>
-	    <property name="absoluteLineLimit" value="0"/>
-	</properties>
-    </rule>
+	<rule ref="PSR2">
+		<exclude name="PSR2.Methods.MethodDeclaration" />
+		<exclude name="PSR2.Classes.PropertyDeclaration" />
+		<exclude name="Zend.Files.ClosingTag" />
+		<exclude name="Squiz.WhiteSpace.ScopeClosingBrace" />
+		<exclude name="Generic.WhiteSpace.ScopeIndent" />
+	</rule>
 
-    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
-	<properties>
-	    <property name="ignoreBlankLines" value="true"/>
-	</properties>
-    </rule>
- 
-    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
-	<severity>0</severity>
-    </rule>
- 
-    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
-	<severity>0</severity>
-    </rule>
+	<rule ref="Generic.Files.LineEndings">
+		<properties>
+			<property name="eolChar" value="\n" />
+		</properties>
+	</rule>
 
-    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
-	<severity>0</severity>
-    </rule>
+	<rule ref="Generic.Files.LineLength">
+		<properties>
+			<property name="lineLimit" value="1200" />
+			<property name="absoluteLineLimit" value="0" />
+		</properties>
+	</rule>
 
-    <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+		<properties>
+			<property name="ignoreBlankLines" value="true" />
+		</properties>
+	</rule>
 
-    <rule ref="Generic.WhiteSpace.ScopeIndent">
-	<properties>
-	    <property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT_OPEN_TAG"/>
-	</properties>
-    </rule>
-    
-    <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
+		<severity>0</severity>
+	</rule>
 
-    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
+		<severity>0</severity>
+	</rule>
 
-    <rule ref="Generic.PHP.LowerCaseConstant"/>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+		<severity>0</severity>
+	</rule>
 
-    <rule ref="Squiz.Scope.MethodScope"/>
+	<rule ref="Generic.Formatting.DisallowMultipleStatements" />
 
-    <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT_OPEN_TAG" />
+		</properties>
+	</rule>
 
-    <rule ref="YL1Simple.Methods.MethodDeclaration"/> 
- 
-    <rule ref="YL1Simple.Classes.PropertyDeclaration"/> 
- 
-    <rule ref="Squiz.Functions.FunctionDeclaration"/>
- 
-    <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+	<rule ref="Generic.WhiteSpace.DisallowTabIndent" />
 
-    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
-	<properties>
-	    <property name="equalsSpacing" value="1"/>
-	</properties>
-    </rule>
+	<rule ref="Generic.PHP.LowerCaseKeyword" />
 
-    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
-	<severity>0</severity>
-    </rule>
+	<rule ref="Generic.PHP.LowerCaseConstant" />
 
-    <rule ref="PEAR.Functions.ValidDefaultValue"/>
+	<rule ref="Squiz.Scope.MethodScope" />
 
-    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
+	<rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing" />
 
-    <rule ref="Squiz.ControlStructures.ControlSignature">
-	<properties>
-	    <property name="ignoreComments" value="true"/>
-	</properties>
-    </rule>
+	<rule ref="YL1Simple.Methods.MethodDeclaration" />
 
-    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
+	<rule ref="YL1Simple.Classes.PropertyDeclaration" />
 
-    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
-    
-    <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
-    
-    <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
-    
-    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+	<rule ref="Squiz.Functions.FunctionDeclaration" />
+
+	<rule ref="Squiz.Functions.LowercaseFunctionKeywords" />
+
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+		<properties>
+			<property name="equalsSpacing" value="1" />
+		</properties>
+	</rule>
+
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
+		<severity>0</severity>
+	</rule>
+
+	<rule ref="PEAR.Functions.ValidDefaultValue" />
+
+	<rule ref="Squiz.Functions.MultiLineFunctionDeclaration" />
+
+	<rule ref="Squiz.ControlStructures.ControlSignature">
+		<properties>
+			<property name="ignoreComments" value="true" />
+		</properties>
+	</rule>
+
+	<rule ref="Squiz.ControlStructures.ForEachLoopDeclaration" />
+
+	<rule ref="Squiz.ControlStructures.ForLoopDeclaration" />
+
+	<rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
+
+	<rule ref="Generic.ControlStructures.InlineControlStructure" />
 
 </ruleset>
