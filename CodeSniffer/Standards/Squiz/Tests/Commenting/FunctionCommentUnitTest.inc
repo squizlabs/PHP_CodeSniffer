@@ -704,3 +704,14 @@ function yieldTest()
 public function specifiedArray(array $values) {
 
 }// end specifiedArray()
+
+/**
+ * Using "callable" as a type hint should satisfy a "callback" parameter type.
+ *
+ * @param callback $cb A callback.
+ *
+ * @return void
+ */
+public function callableCallback(callable $cb) {
+
+}// end callableCallback()

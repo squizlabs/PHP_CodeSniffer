@@ -363,6 +363,8 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                         $suggestedTypeHint = 'array';
                     } else if (strpos($suggestedName, 'callable') !== false) {
                         $suggestedTypeHint = 'callable';
+                    } else if (strpos($suggestedName, 'callback') !== false) {
+                        $suggestedTypeHint = 'callable';
                     } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
                         $suggestedTypeHint = $suggestedName;
                     }
