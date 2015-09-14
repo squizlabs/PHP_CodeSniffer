@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed bug #625 : Consider working around T_HASHBANG in HHVM 3.5.x and 3.6.x
     -- Thanks to Kunal Mehta for the patch
+  - Fixed bug #694 : Long sniff codes can cause PHP warnings in source report when showing error codes
  </notes>
  <contents>
   <dir name="/">
