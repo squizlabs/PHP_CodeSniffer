@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2015-09-09</date>
  <time>10:15:00</time>
  <version>
-  <release>2.3.4</release>
-  <api>2.3.4</api>
+  <release>2.3.5</release>
+  <api>2.3.5</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,37 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - JSON report format now includes the fixable status for each error message and the total number of fixable errors
-  - Added more guard code for function declarations with syntax errors
-  - Added tokenizer support for the PHP declare construct
-    -- Thanks to Andy Blyler for the patch
-  - Generic UnnecessaryStringConcatSniff can now allow strings concatenated over multiple lines
-    -- Set the allowMultiline property to TRUE (default is FALSE) in your ruleset.xml file to enable this
-    -- By default, concat used only for getting around line length limits still generates an error
-    -- Thanks to Stefan Lenselink for the contribution
-  - Invalid byte sequences no longer throw iconv_strlen() errors (request #639)
-    -- Thanks to Willem Stuursma for the patch
-  - Generic TodoSniff and FixmeSniff are now better at processing strings with invalid characters
-  - PEAR FunctionCallSignatureSniff now ignores indentation of inline HTML content
-  - Squiz ControlSignatureSniff now supports control structures with only inline HTML content
-  - Fixed bug #636 : Some class names cause CSS tokenizer to hang
-  - Fixed bug #638 : VCS blame reports output error content from the blame commands for files not under VC
-  - Fixed bug #642 : Method params incorrectly detected when default value uses short array syntax
-    -- Thanks to Josh Davis for the patch
-  - Fixed bug #644 : PEAR ScopeClosingBrace sniff does not work with mixed HTML/PHP
-  - Fixed bug #645 : FunctionSignature and ScopeIndent sniffs don't detect indents correctly when PHP open tag is not on a line by itself
-  - Fixed bug #648 : Namespace not tokenized correctly when followed by multiple use statements
-  - Fixed bug #654 : Comments affect indent check for BSDAllman brace style
-  - Fixed bug #658 : Squiz.Functions.FunctionDeclarationSpacing error for multi-line declarations with required spaces greater than zero
-    -- Thanks to J.D. Grimes for the patch
-  - Fixed bug #663 : No space after class name generates: Class name "" is not in camel caps format
-  - Fixed bug #667 : Scope indent check can go into infinite loop due to some parse errors
-  - Fixed bug #670 : Endless loop in PSR1 SideEffects sniffer if no semicolon after last statement
-    -- Thanks to Thomas Jarosch for the patch
-  - Fixed bug #672 : Call-time pass-by-reference false positive
-  - Fixed bug #683 : Comments are incorrectly reported by PSR2.ControlStructures.SwitchDeclaration sniff
-  - Fixed bug #687 : ScopeIndent does not check indent correctly for method prefixes like public and abstract
-  - Fixed bug #689 : False error on some comments after class closing brace
+  - Fixed bug #625 : Consider working around T_HASHBANG in HHVM 3.5.x and 3.6.x
+    -- Thanks to Kunal Mehta for the patch
  </notes>
  <contents>
   <dir name="/">
