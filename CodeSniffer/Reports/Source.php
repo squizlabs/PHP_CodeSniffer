@@ -177,13 +177,13 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         echo "\033[0m".str_repeat('-', $width).PHP_EOL;
 
         $fixableSources = 0;
-        
+
         if ($showSources === true) {
             $maxSniffWidth = ($width - 7);
         } else {
             $maxSniffWidth = ($width - 37);
         }
-        
+
         if ($totalFixable > 0) {
             $maxSniffWidth -= 4;
         }
