@@ -72,11 +72,21 @@ class Squiz_Sniffs_Scope_MethodScopeSniff extends PHP_CodeSniffer_Standards_Abst
             }
         }
 
-        if ($modifier === null) {
-            $error = 'Visibility must be declared on method "%s"';
-            $data  = array($methodName);
-            $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
+        if ($modifier) {
+            return;
         }
+
+        // Look for parent function
+        $parent_scope = $phpcsFile->findPrevious(array(T_FUNCTION), $stackPtr-1);
+
+        // Check if function is defined within another functions scope, in which case no visibility required
+        if ($parent_scope && $stackPtr > $tokens[$parent_scope]['scope_opener'] && $stackPtr < $tokens[$parent_scope]['scope_closer']) {
+            return;
+        }
+
+        $error = 'Visibility must be declared on method "%s"';
+        $data  = array($methodName);
+        $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
 
     }//end processTokenWithinScope()
 
