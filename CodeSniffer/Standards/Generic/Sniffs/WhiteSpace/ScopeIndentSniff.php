@@ -494,7 +494,6 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $condition = 0;
                 if (isset($tokens[$scopeCloser]['conditions']) === true
                     && empty($tokens[$scopeCloser]['conditions']) === false
-
                 ) {
                     end($tokens[$scopeCloser]['conditions']);
                     $condition = key($tokens[$scopeCloser]['conditions']);
@@ -648,7 +647,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 || ($tokenIndent < $checkIndent && $exact === false))
             ) {
                 $type  = 'IncorrectExact';
-                $error = 'Line indented incorrectly; expected ' ;
+                $error = 'Line indented incorrectly; expected ';
                 if ($exact === false) {
                     $error .= 'at least ';
                     $type   = 'Incorrect';
@@ -877,7 +876,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
             // JS objects set the indent level.
             if ($phpcsFile->tokenizerType === 'JS'
-                    && ($tokens[$i]['code'] === T_OBJECT || $tokens[$i]['code'] === T_OPEN_SHORT_ARRAY)
+                && ($tokens[$i]['code'] === T_OBJECT || $tokens[$i]['code'] === T_OPEN_SHORT_ARRAY)
             ) {
                 $closer = $tokens[$i]['bracket_closer'];
                 if ($tokens[$i]['line'] === $tokens[$closer]['line']) {
