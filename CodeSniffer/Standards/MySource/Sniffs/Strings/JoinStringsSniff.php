@@ -69,7 +69,7 @@ class MySource_Sniffs_Strings_JoinStringsSniff implements PHP_CodeSniffer_Sniff
         }
 
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($prev - 1), null, true);
-        if ($tokens[$prev]['code'] === T_CLOSE_SQUARE_BRACKET) {
+        if ($tokens[$prev]['code'] === T_CLOSE_SHORT_ARRAY) {
             $opener = $tokens[$prev]['bracket_opener'];
             if ($tokens[($opener - 1)]['code'] !== T_STRING) {
                 // This means the array is declared inline, like x = [a,b,c].join()

@@ -1063,6 +1063,53 @@ class PHP_CodeSniffer_Tokenizers_JS
                 }
             } else if ($tokens[$i]['code'] === T_CLOSE_OBJECT) {
                 $opener = array_pop($classStack);
+            } else if ($tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
+                // Unless there is a variable or a bracket before this token,
+                // it is the start of an array being defined using the short syntax.
+                for ($x = ($i - 1); $x > 0; $x--) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        break;
+                    }
+                }
+
+                $allowed = array(
+                            T_CLOSE_CURLY_BRACKET  => T_CLOSE_CURLY_BRACKET,
+                            T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
+                            T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
+                            T_VARIABLE             => T_VARIABLE,
+                            T_STRING               => T_STRING,
+                           );
+
+                if (isset($allowed[$tokens[$x]['code']]) === false
+                    && isset($tokens[$i]['bracket_closer']) === true
+                ) {
+
+                    $tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
+                    $tokens[$i]['type'] = 'T_OPEN_SHORT_ARRAY';
+
+                    $closer = $tokens[$i]['bracket_closer'];
+                    $tokens[$closer]['code'] = T_CLOSE_SHORT_ARRAY;
+                    $tokens[$closer]['type'] = 'T_CLOSE_SHORT_ARRAY';
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_OPEN_SQUARE_BRACKET to T_OPEN_SHORT_ARRAY".PHP_EOL;
+                        $line = $tokens[$closer]['line'];
+                        echo "\t* token $closer on line $line changed from T_CLOSE_SQUARE_BRACKET to T_CLOSE_SHORT_ARRAY".PHP_EOL;
+                    }
+
+                    for ($x = ($i + 1); $x < $closer; $x++) {
+                        $tokens[$x]['conditions'][$i] = T_OPEN_SHORT_ARRAY;
+                        ksort($tokens[$x]['conditions'], SORT_NUMERIC);
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $tokens[$x]['type'];
+                            echo "\t\t* added T_OPEN_SHORT_ARRAY condition to $x ($type) *".PHP_EOL;
+                        }
+                    }
+
+
+                }
+
+                continue;
             } else if ($tokens[$i]['code'] === T_COLON) {
                 // If it is a scope opener, it belongs to a
                 // DEFAULT or CASE statement.
