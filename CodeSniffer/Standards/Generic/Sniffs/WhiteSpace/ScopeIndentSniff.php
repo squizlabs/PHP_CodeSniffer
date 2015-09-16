@@ -546,7 +546,6 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             $currentIndent += $this->indent;
                         }
                         $exact          = true;
-
                     }
                 } else {
                     $checkIndent = $currentIndent;
@@ -872,7 +871,6 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     continue;
                 }
             }//end if
-
 
             // JS objects set the indent level.
             if ($phpcsFile->tokenizerType === 'JS'
