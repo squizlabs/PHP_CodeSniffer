@@ -100,7 +100,6 @@ class MySource_Sniffs_Channels_IncludeOwnSystemSniff implements PHP_CodeSniffer_
         array $tokens,
         $stackPtr
     ) {
-        
 
         return false;
 
@@ -108,5 +107,3 @@ class MySource_Sniffs_Channels_IncludeOwnSystemSniff implements PHP_CodeSniffer_
 
 
 }//end class
-
-?>

@@ -74,12 +74,14 @@ class Squiz_Sniffs_Classes_LowercaseClassKeywordsSniff implements PHP_CodeSniffe
                       strtolower($content),
                       $content,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'FoundUppercase', $data);
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'FoundUppercase', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, strtolower($content));
+            }
         }
 
     }//end process()
 
 
 }//end class
-
-?>

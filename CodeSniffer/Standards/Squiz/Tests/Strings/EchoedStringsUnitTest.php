@@ -43,10 +43,11 @@ class Squiz_Tests_Strings_EchoedStringsUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                5 => 1,
-                6 => 1,
-                7 => 1,
-                8 => 1,
+                5  => 1,
+                6  => 1,
+                7  => 1,
+                8  => 1,
+                12 => 1,
                );
 
     }//end getErrorList()

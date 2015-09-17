@@ -152,12 +152,20 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
 
                 $start = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($i + 1), null, true);
             } else {
+                if (isset($tokens[$stackPtr]['parenthesis_opener']) === false) {
+                    return;
+                }
+
                 $start = $tokens[$end]['parenthesis_opener'];
-            }
+            }//end if
         } else {
+            if (isset($tokens[$stackPtr]['parenthesis_opener']) === false) {
+                return;
+            }
+
             $start = $tokens[$stackPtr]['parenthesis_opener'];
             $end   = $tokens[$stackPtr]['parenthesis_closer'];
-        }
+        }//end if
 
         $requiredOps = 0;
         $foundOps    = 0;
@@ -212,5 +220,3 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
 
 
 }//end class
-
-?>

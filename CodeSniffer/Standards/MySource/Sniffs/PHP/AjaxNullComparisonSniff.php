@@ -15,7 +15,7 @@
 /**
  * Ensures that values submitted via JS are not compared to NULL.
  *
- * jQuery 1.8 changed the behaviour of ajax requests so that null values are
+ * With jQuery 1.8, the behaviour of ajax requests changed so that null values are
  * submitted as null= instead of null=null.
  *
  * @category  PHP
@@ -56,22 +56,21 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
         $tokens = $phpcsFile->getTokens();
 
         // Make sure it is an API function. We know this by the doc comment.
-        $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr);
-        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT, ($commentEnd - 1), null, true);
-        $comment = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart));
+        $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT_CLOSE_TAG, $stackPtr);
+        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, ($commentEnd - 1));
+        $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart));
         if (strpos($comment, '* @api') === false) {
             return;
         }
 
-
         // Find all the vars passed in as we are only interested in comparisons
         // to NULL for these specific variables.
         $foundVars = array();
-        $open  = $tokens[$stackPtr]['parenthesis_opener'];
-        $close = $tokens[$stackPtr]['parenthesis_closer'];
+        $open      = $tokens[$stackPtr]['parenthesis_opener'];
+        $close     = $tokens[$stackPtr]['parenthesis_closer'];
         for ($i = ($open + 1); $i < $close; $i++) {
             if ($tokens[$i]['code'] === T_VARIABLE) {
-                $foundVars[] = $tokens[$i]['content'];
+                $foundVars[$tokens[$i]['content']] = true;
             }
         }
 
@@ -83,7 +82,7 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
         $end   = $tokens[$stackPtr]['scope_closer'];
         for ($i = ($start + 1); $i < $end; $i++) {
             if ($tokens[$i]['code'] !== T_VARIABLE
-                || in_array($tokens[$i]['content'], $foundVars) === false
+                || isset($foundVars[$tokens[$i]['content']]) === false
             ) {
                 continue;
             }
@@ -100,14 +99,11 @@ class MySource_Sniffs_PHP_AjaxNullComparisonSniff implements PHP_CodeSniffer_Sni
                 continue;
             }
 
-            $error = 'Values submitted via Ajax requests must not be compared directly to NULL; use empty() instead';
-            $phpcsFile->addError($error, $nullValue, 'Found');
+            $error = 'Values submitted via Ajax requests should not be compared directly to NULL; use empty() instead';
+            $phpcsFile->addWarning($error, $nullValue, 'Found');
         }//end for
-
 
     }//end process()
 
 
 }//end class
-
-?>

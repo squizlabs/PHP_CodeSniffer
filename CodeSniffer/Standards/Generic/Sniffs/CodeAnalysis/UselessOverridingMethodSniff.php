@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the CodeAnalysis addon for PHP_CodeSniffer.
+ * This file is part of the CodeAnalysis add-on for PHP_CodeSniffer.
  *
  * PHP version 5
  *
@@ -86,7 +86,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         for (; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
 
-            if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true) {
                 continue;
             } else if ($code === T_RETURN) {
                 continue;
@@ -142,7 +142,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
                 --$parenthesisCount;
             } else if ($parenthesisCount === 1 && $code === T_COMMA) {
                 $parameters[] = '';
-            } else if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            } else if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === false) {
                 $parameters[(count($parameters) - 1)] .= $tokens[$next]['content'];
             }
 
@@ -160,7 +160,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         for (++$next; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
             // Skip for any other content.
-            if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === false) {
                 return;
             }
         }
@@ -176,5 +176,3 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
 
 
 }//end class
-
-?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the CodeAnalysis addon for PHP_CodeSniffer.
+ * This file is part of the CodeAnalysis add-on for PHP_CodeSniffer.
  *
  * PHP version 5
  *
@@ -94,5 +94,3 @@ class Generic_Sniffs_CodeAnalysis_UnnecessaryFinalModifierSniff implements PHP_C
 
 
 }//end class
-
-?>

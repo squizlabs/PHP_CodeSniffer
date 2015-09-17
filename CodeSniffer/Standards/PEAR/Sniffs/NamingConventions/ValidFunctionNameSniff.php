@@ -41,21 +41,20 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      * @var array
      */
     protected $magicMethods = array(
-                               'construct',
-                               'destruct',
-                               'call',
-                               'callstatic',
-                               'get',
-                               'set',
-                               'isset',
-                               'unset',
-                               'sleep',
-                               'wakeup',
-                               'tostring',
-                               'set_state',
-                               'clone',
-                               'invoke',
-                               'call',
+                               'construct'  => true,
+                               'destruct'   => true,
+                               'call'       => true,
+                               'callstatic' => true,
+                               'get'        => true,
+                               'set'        => true,
+                               'isset'      => true,
+                               'unset'      => true,
+                               'sleep'      => true,
+                               'wakeup'     => true,
+                               'tostring'   => true,
+                               'set_state'  => true,
+                               'clone'      => true,
+                               'invoke'     => true,
                               );
 
     /**
@@ -63,7 +62,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
      *
      * @var array
      */
-    protected $magicFunctions = array('autoload');
+    protected $magicFunctions = array('autoload' => true);
 
 
     /**
@@ -100,7 +99,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         // Is this a magic method. i.e., is prefixed with "__" ?
         if (preg_match('|^__|', $methodName) !== 0) {
             $magicPart = strtolower(substr($methodName, 2));
-            if (in_array($magicPart, $this->magicMethods) === false) {
+            if (isset($this->magicMethods[$magicPart]) === false) {
                  $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
                  $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
             }
@@ -119,15 +118,25 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         }
 
         $methodProps    = $phpcsFile->getMethodProperties($stackPtr);
-        $isPublic       = ($methodProps['scope'] === 'private') ? false : true;
         $scope          = $methodProps['scope'];
         $scopeSpecified = $methodProps['scope_specified'];
 
+        if ($methodProps['scope'] === 'private') {
+            $isPublic = false;
+        } else {
+            $isPublic = true;
+        }
+
         // If it's a private method, it must have an underscore on the front.
-        if ($isPublic === false && $methodName{0} !== '_') {
-            $error = 'Private method name "%s" must be prefixed with an underscore';
-            $phpcsFile->addError($error, $stackPtr, 'PrivateNoUnderscore', $errorData);
-            return;
+        if ($isPublic === false) {
+            if ($methodName{0} !== '_') {
+                $error = 'Private method name "%s" must be prefixed with an underscore';
+                $phpcsFile->addError($error, $stackPtr, 'PrivateNoUnderscore', $errorData);
+                $phpcsFile->recordMetric($stackPtr, 'Private method prefixed with underscore', 'no');
+                return;
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Private method prefixed with underscore', 'yes');
+            }
         }
 
         // If it's not a private method, it must not have an underscore on the front.
@@ -187,12 +196,17 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
             return;
         }
 
+        if (ltrim($functionName, '_') === '') {
+            // Ignore special functions.
+            return;
+        }
+
         $errorData = array($functionName);
 
         // Is this a magic function. i.e., it is prefixed with "__".
         if (preg_match('|^__|', $functionName) !== 0) {
             $magicPart = strtolower(substr($functionName, 2));
-            if (in_array($magicPart, $this->magicFunctions) === false) {
+            if (isset($this->magicFunctions[$magicPart]) === false) {
                  $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
                  $phpcsFile->addError($error, $stackPtr, 'FunctionDoubleUnderscore', $errorData);
             }
@@ -281,5 +295,3 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
 
 
 }//end class
-
-?>

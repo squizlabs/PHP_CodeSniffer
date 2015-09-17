@@ -62,7 +62,7 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
 
     }//end process()
 
-    
+
     /**
      * Processes the opening section of a class declaration.
      *
@@ -84,7 +84,9 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
                 $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
                 $spaces     = strlen($blankSpace);
 
-                if (in_array($tokens[($stackPtr - 2)]['code'], array(T_ABSTRACT, T_FINAL)) === false) {
+                if ($tokens[($stackPtr - 2)]['code'] !== T_ABSTRACT
+                    && $tokens[($stackPtr - 2)]['code'] !== T_FINAL
+                ) {
                     if ($spaces !== 0) {
                         $type  = strtolower($tokens[$stackPtr]['content']);
                         $error = 'Expected 0 spaces before %s keyword; %s found';
@@ -92,10 +94,14 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
                                   $type,
                                   $spaces,
                                  );
-                        $phpcsFile->addError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
+
+                        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
+                        if ($fix === true) {
+                            $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+                        }
                     }
                 }
-            }
+            }//end if
         }//end if
 
     }//end processOpen()
@@ -113,9 +119,52 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
     public function processClose(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            return;
+        }
 
         $closeBrace = $tokens[$stackPtr]['scope_closer'];
-        if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
+
+        // Check that the closing brace has one blank line after it.
+        for ($nextContent = ($closeBrace + 1); $nextContent < $phpcsFile->numTokens; $nextContent++) {
+            // Ignore comments on the same lines as the brace.
+            if ($tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']
+                && ($tokens[$nextContent]['code'] === T_WHITESPACE
+                || $tokens[$nextContent]['code'] === T_COMMENT)
+            ) {
+                continue;
+            }
+
+            if ($tokens[$nextContent]['code'] !== T_WHITESPACE) {
+                break;
+            }
+        }
+
+        if ($nextContent === $phpcsFile->numTokens) {
+            // Ignore the line check as this is the very end of the file.
+            $difference = 1;
+        } else {
+            $difference = ($tokens[$nextContent]['line'] - $tokens[$closeBrace]['line'] - 1);
+        }
+
+        $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($closeBrace - 1), $stackPtr, true);
+
+        if ($difference === -1
+            || $tokens[$lastContent]['line'] === $tokens[$closeBrace]['line']
+        ) {
+            $error = 'Closing %s brace must be on a line by itself';
+            $data  = array($tokens[$stackPtr]['content']);
+            $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'CloseBraceSameLine', $data);
+            if ($fix === true) {
+                if ($difference === -1) {
+                    $phpcsFile->fixer->addNewlineBefore($nextContent);
+                }
+
+                if ($tokens[$lastContent]['line'] === $tokens[$closeBrace]['line']) {
+                    $phpcsFile->fixer->addNewlineBefore($closeBrace);
+                }
+            }
+        } else if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
             $prevContent = $tokens[($closeBrace - 1)]['content'];
             if ($prevContent !== $phpcsFile->eolChar) {
                 $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
@@ -127,51 +176,44 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
                     } else {
                         $error = 'Expected 0 spaces before closing brace; %s found';
                         $data  = array($spaces);
-                        $phpcsFile->addError($error, $closeBrace, 'SpaceBeforeCloseBrace', $data);
+                        $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpaceBeforeCloseBrace', $data);
+                        if ($fix === true) {
+                            $phpcsFile->fixer->replaceToken(($closeBrace - 1), '');
+                        }
                     }
                 }
             }
-        }
-
-        // Check that the closing brace has one blank line after it.
-        $nextContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT), ($closeBrace + 1), null, true);
-        if ($nextContent === false) {
-            // No content found, so we reached the end of the file.
-            // That means there was no closing tag either.
-            $error = 'Closing brace of a %s must be followed by a blank line and then a closing PHP tag';
-            $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $closeBrace, 'EndFileAfterCloseBrace', $data);
-        } else {
-            $nextLine  = $tokens[$nextContent]['line'];
-            $braceLine = $tokens[$closeBrace]['line'];
-            if ($braceLine === $nextLine) {
-                $error = 'Closing brace of a %s must be followed by a single blank line';
-                $data  = array($tokens[$stackPtr]['content']);
-                $phpcsFile->addError($error, $closeBrace, 'NoNewlineAfterCloseBrace', $data);
-            } else if ($nextLine !== ($braceLine + 2)) {
-                $difference = ($nextLine - $braceLine - 1);
-                $error      = 'Closing brace of a %s must be followed by a single blank line; found %s';
-                $data       = array(
-                               $tokens[$stackPtr]['content'],
-                               $difference,
-                              );
-                $phpcsFile->addError($error, $closeBrace, 'NewlinesAfterCloseBrace', $data);
-            }
         }//end if
 
-        // Check the closing brace is on it's own line, but allow
-        // for comments like "//end class".
-        $nextContent = $phpcsFile->findNext(T_COMMENT, ($closeBrace + 1), null, true);
-        if ($tokens[$nextContent]['content'] !== $phpcsFile->eolChar && $tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']) {
-            $type  = strtolower($tokens[$stackPtr]['content']);
-            $error = 'Closing %s brace must be on a line by itself';
-            $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $closeBrace, 'CloseBraceSameLine', $data);
-        }
+        if ($difference !== -1 && $difference !== 1) {
+            $error = 'Closing brace of a %s must be followed by a single blank line; found %s';
+            $data  = array(
+                      $tokens[$stackPtr]['content'],
+                      $difference,
+                     );
+            $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'NewlinesAfterCloseBrace', $data);
+            if ($fix === true) {
+                if ($difference === 0) {
+                    $first = $phpcsFile->findFirstOnLine(array(), $nextContent, true);
+                    $phpcsFile->fixer->addNewlineBefore($first);
+                } else {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($closeBrace + 1); $i < $nextContent; $i++) {
+                        if ($tokens[$i]['line'] <= ($tokens[$closeBrace]['line'] + 1)) {
+                            continue;
+                        } else if ($tokens[$i]['line'] === $tokens[$nextContent]['line']) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }
+        }//end if
 
     }//end processClose()
 
 
 }//end class
-
-?>

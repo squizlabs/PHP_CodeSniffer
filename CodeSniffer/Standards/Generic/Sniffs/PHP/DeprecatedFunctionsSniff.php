@@ -40,7 +40,7 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
      *
      * @var array(string => string|null)
      */
-    protected $forbiddenFunctions = array();
+    public $forbiddenFunctions = array();
 
 
     /**
@@ -54,6 +54,9 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
 
         foreach ($functions['internal'] as $functionName) {
             $function = new ReflectionFunction($functionName);
+            if (method_exists($function, 'isDeprecated') === false) {
+                break;
+            }
 
             if ($function->isDeprecated() === true) {
                 $this->forbiddenFunctions[$functionName] = null;
@@ -90,5 +93,3 @@ class Generic_Sniffs_PHP_DeprecatedFunctionsSniff extends Generic_Sniffs_PHP_For
 
 
 }//end class
-
-?>

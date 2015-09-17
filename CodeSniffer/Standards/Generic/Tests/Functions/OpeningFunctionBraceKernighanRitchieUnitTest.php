@@ -56,6 +56,10 @@ class Generic_Tests_Functions_OpeningFunctionBraceKernighanRitchieUnitTest exten
                 82  => 1,
                 87  => 1,
                 104 => 1,
+                119 => 1,
+                123 => 1,
+                127 => 1,
+                132 => 1,
                );
 
     }//end getErrorList()
@@ -77,5 +81,3 @@ class Generic_Tests_Functions_OpeningFunctionBraceKernighanRitchieUnitTest exten
 
 
 }//end class
-
-?>

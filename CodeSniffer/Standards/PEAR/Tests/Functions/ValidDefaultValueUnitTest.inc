@@ -83,4 +83,4 @@ class myClass()
     }
 }
 
-?>
+function myFunc($req, $opt=null, ...$params) {}

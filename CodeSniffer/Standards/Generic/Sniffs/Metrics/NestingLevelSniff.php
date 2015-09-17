@@ -110,5 +110,3 @@ class Generic_Sniffs_Metrics_NestingLevelSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

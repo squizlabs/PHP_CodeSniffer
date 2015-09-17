@@ -45,6 +45,13 @@ foreach ($elements as $element) {
     }
 }
 
+if ($token['code'] === T_COMMENT
+    && $multiLineComment === false
+    && (substr($token['content'], 0, 2) === '//'
+    || $token['content']{0} === '#')
+) {
+}
+
 switch ($blah) {
     case 'one':
         echo 'one';
@@ -54,3 +61,7 @@ switch ($blah) {
 }
 
 ?>
+
+<?php while($row = $data->getRow()): ?>
+    <p><?= $val ?></p>
+<?php endwhile; ?>

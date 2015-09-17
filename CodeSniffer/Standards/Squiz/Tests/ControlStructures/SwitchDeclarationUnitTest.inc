@@ -278,3 +278,28 @@ switch ($something) {
         echo 'default';
     exit;
 }
+
+switch ($foo) {
+    case '1':
+        return; // comment
+    break;
+
+}
+
+// Correct Multi line breaking statement with return.
+switch ($foo) {
+    case 1:
+    return array(
+            'whiz',
+            'bang',
+           );
+
+    case 2:
+    return helper_func(
+        'whiz',
+        'bang'
+    );
+
+    default:
+    throw new Exception();
+}

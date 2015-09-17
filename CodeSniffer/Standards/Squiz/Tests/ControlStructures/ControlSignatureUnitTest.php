@@ -44,66 +44,43 @@ class Squiz_Tests_ControlStructures_ControlSignatureUnitTest extends AbstractSni
      */
     public function getErrorList($testFile='ControlSignatureUnitTest.inc')
     {
-        switch ($testFile) {
-        case 'ControlSignatureUnitTest.inc':
-            return array(
-                    9   => 1,
-                    14  => 1,
-                    20  => 1,
-                    22  => 1,
-                    32  => 1,
-                    36  => 1,
-                    44  => 1,
-                    48  => 1,
-                    56  => 1,
-                    60  => 1,
-                    68  => 1,
-                    72  => 1,
-                    84  => 1,
-                    88  => 2,
-                    100 => 1,
-                    104 => 2,
-                    116 => 2,
-                    120 => 3,
-                    122 => 1,
-                    126 => 1,
-                    130 => 1,
-                    134 => 1,
-                    139 => 1,
-                    148 => 1,
-                    152 => 1,
-                    158 => 1,
-                   );
-        break;
-        case 'ControlSignatureUnitTest.js':
-            return array(
-                    7   => 1,
-                    12  => 1,
-                    18  => 1,
-                    20  => 1,
-                    29  => 1,
-                    33  => 1,
-                    40  => 1,
-                    44  => 1,
-                    51  => 1,
-                    55  => 1,
-                    66  => 1,
-                    70  => 2,
-                    88  => 2,
-                    92  => 3,
-                    94  => 1,
-                    98  => 1,
-                    102 => 1,
-                    106 => 1,
-                    111 => 1,
-                    120 => 1,
-                    124 => 1,
-                   );
-            break;
-        default:
-            return array();
-            break;
-        }//end switch
+        $errors = array(
+                   7   => 1,
+                   12  => 1,
+                   15  => 1,
+                   18  => 1,
+                   20  => 1,
+                   22  => 2,
+                   28  => 2,
+                   32  => 1,
+                   38  => 2,
+                   42  => 1,
+                   48  => 2,
+                   52  => 1,
+                   62  => 2,
+                   66  => 2,
+                   76  => 4,
+                   80  => 2,
+                   94  => 1,
+                   99  => 1,
+                   108 => 1,
+                   112 => 1,
+                   115 => 1,
+                  );
+
+        if ($testFile === 'ControlSignatureUnitTest.inc') {
+            $errors[120] = 1;
+            $errors[122] = 1;
+            $errors[130] = 2;
+            $errors[134] = 1;
+            $errors[150] = 1;
+            $errors[153] = 1;
+            $errors[158] = 2;
+            $errors[165] = 1;
+            $errors[170] = 2;
+        }
+
+        return $errors;
 
     }//end getErrorList()
 
@@ -124,5 +101,3 @@ class Squiz_Tests_ControlStructures_ControlSignatureUnitTest extends AbstractSni
 
 
 }//end class
-
-?>

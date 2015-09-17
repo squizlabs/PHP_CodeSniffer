@@ -121,17 +121,27 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
         $tokens  = $phpcsFile->getTokens();
         $keyword = $tokens[$stackPtr]['content'];
         if (strtolower($keyword) !== $keyword) {
+            if ($keyword === strtoupper($keyword)) {
+                $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'upper');
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'mixed');
+            }
+
             $error = 'PHP keywords must be lowercase; expected "%s" but found "%s"';
             $data  = array(
                       strtolower($keyword),
                       $keyword,
                      );
-            $phpcsFile->addError($error, $stackPtr, 'Found', $data);
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, strtolower($keyword));
+            }
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'lower');
         }
 
     }//end process()
 
 
 }//end class
-
-?>

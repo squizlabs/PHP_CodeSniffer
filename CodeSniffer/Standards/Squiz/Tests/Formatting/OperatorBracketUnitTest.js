@@ -104,3 +104,11 @@ if (urlValue.search(/[a-zA-z]+:\/\/*/) !== 0) {
 if (!value || /^\s*$/.test(value)) {
     return true;
 }
+
+parseInt(dfx.attr(selectors[idx], 'elemOffsetTop'), 10) - scrollCoords.y + 'px'
+
+if (something === true
+    ^ somethingElse === true
+) {
+    return false;
+}

@@ -62,15 +62,15 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
         $prev = $phpcsFile->findPrevious($allowedTokens, ($stackPtr - 1), null, true);
 
         $allowedTokens = array(
-                          T_EQUAL,
-                          T_DOUBLE_ARROW,
-                          T_THROW,
-                          T_RETURN,
-                          T_INLINE_THEN,
-                          T_INLINE_ELSE,
+                          T_EQUAL        => true,
+                          T_DOUBLE_ARROW => true,
+                          T_THROW        => true,
+                          T_RETURN       => true,
+                          T_INLINE_THEN  => true,
+                          T_INLINE_ELSE  => true,
                          );
 
-        if (in_array($tokens[$prev]['code'], $allowedTokens) === false) {
+        if (isset($allowedTokens[$tokens[$prev]['code']]) === false) {
             $error = 'New objects must be assigned to a variable';
             $phpcsFile->addError($error, $stackPtr, 'NotAssigned');
         }
@@ -79,5 +79,3 @@ class Squiz_Sniffs_Objects_ObjectInstantiationSniff implements PHP_CodeSniffer_S
 
 
 }//end class
-
-?>

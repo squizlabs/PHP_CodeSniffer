@@ -59,22 +59,22 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
     {
         $tokens = $phpcsFile->getTokens();
 
-        $className = $tokens[$stackPtr]['content'];
-        if (substr(strtolower($className), -10) !== 'widgettype') {
+        $className = $phpcsFile->findPrevious(T_STRING, ($stackPtr - 1));
+        if (substr(strtolower($tokens[$className]['content']), -10) !== 'widgettype') {
             return;
         }
 
         // Search for a create method.
-        $start  = ($tokens[$stackPtr]['scope_opener'] + 1);
-        $end    = ($tokens[$stackPtr]['scope_closer'] - 1);
-        $create = $phpcsFile->findNext(T_PROPERTY, $start, $end, null, 'create');
+        $create = $phpcsFile->findNext(T_PROPERTY, $stackPtr, $tokens[$stackPtr]['bracket_closer'], null, 'create');
         if ($create === false) {
             return;
         }
 
         $function = $phpcsFile->findNext(array(T_WHITESPACE, T_COLON), ($create + 1), null, true);
-        if ($tokens[$function]['code'] !== T_FUNCTION) {
-            continue;
+        if ($tokens[$function]['code'] !== T_FUNCTION
+            && $tokens[$function]['code'] !== T_CLOSURE
+        ) {
+            return;
         }
 
         $start = ($tokens[$function]['scope_opener'] + 1);
@@ -106,7 +106,8 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
                     $nestedFunction = null;
                     continue;
                 }
-            } else if ($tokens[$i]['code'] === T_FUNCTION
+            } else if (($tokens[$i]['code'] === T_FUNCTION
+                || $tokens[$i]['code'] === T_CLOSURE)
                 && isset($tokens[$i]['scope_closer']) === true
             ) {
                 $nestedFunction = $tokens[$i]['scope_closer'];
@@ -188,7 +189,7 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
 
             for ($next = $endBracket; $next <= $end; $next++) {
                 // Skip whitespace so we find the next content after the call.
-                if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+                if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$next]['code']]) === true) {
                     continue;
                 }
 
@@ -224,5 +225,3 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
 
 
 }//end class
-
-?>

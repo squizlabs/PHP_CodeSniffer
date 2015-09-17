@@ -85,22 +85,22 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
 
         // Predicate nodes for PHP.
         $find = array(
-                 'T_CASE',
-                 'T_DEFAULT',
-                 'T_CATCH',
-                 'T_IF',
-                 'T_FOR',
-                 'T_FOREACH',
-                 'T_WHILE',
-                 'T_DO',
-                 'T_ELSEIF',
+                 T_CASE    => true,
+                 T_DEFAULT => true,
+                 T_CATCH   => true,
+                 T_IF      => true,
+                 T_FOR     => true,
+                 T_FOREACH => true,
+                 T_WHILE   => true,
+                 T_DO      => true,
+                 T_ELSEIF  => true,
                 );
 
         $complexity = 1;
 
         // Iterate from start to end and count predicate nodes.
         for ($i = ($start + 1); $i < $end; $i++) {
-            if (in_array($tokens[$i]['type'], $find) === true) {
+            if (isset($find[$tokens[$i]['code']]) === true) {
                 $complexity++;
             }
         }
@@ -125,5 +125,3 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
 
 
 }//end class
-
-?>

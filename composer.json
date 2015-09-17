@@ -1,6 +1,6 @@
 {
     "name": "squizlabs/php_codesniffer",
-    "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+    "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
     "type": "library",
     "keywords": [
         "phpcs",
@@ -15,12 +15,13 @@
         }
     ],
     "support": {
-        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name%5B%5D=PHP_CodeSniffer",
+        "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
+        "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki",
         "source": "https://github.com/squizlabs/PHP_CodeSniffer"
     },
     "extra": {
         "branch-alias": {
-            "dev-phpcs-fixer": "2.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     },
     "autoload": {
@@ -29,12 +30,12 @@
             "CodeSniffer/CLI.php",
             "CodeSniffer/Exception.php",
             "CodeSniffer/File.php",
+            "CodeSniffer/Fixer.php",
             "CodeSniffer/Report.php",
             "CodeSniffer/Reporting.php",
             "CodeSniffer/Sniff.php",
             "CodeSniffer/Tokens.php",
             "CodeSniffer/Reports/",
-            "CodeSniffer/CommentParser/",
             "CodeSniffer/Tokenizers/",
             "CodeSniffer/DocGenerators/",
             "CodeSniffer/Standards/AbstractPatternSniff.php",
@@ -50,14 +51,13 @@
             "CodeSniffer/Standards/Zend/Sniffs/"
         ]
     },
-    "suggest": {
-        "phpunit/php-timer": "dev-master"
-    },
     "require": {
         "php": ">=5.1.2",
-        "ext-tokenizer": "*"
+        "ext-tokenizer": "*",
+        "ext-xmlwriter": "*"
     },
     "bin": [
-        "scripts/phpcs"
+        "scripts/phpcs",
+        "scripts/phpcbf"
     ]
 }

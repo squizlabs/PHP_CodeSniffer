@@ -74,8 +74,6 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
         $msg = exec($cmd, $output, $retval);
 
         if (is_array($output) === true) {
-            $tokens = $phpcsFile->getTokens();
-
             foreach ($output as $finding) {
                 $matches    = array();
                 $numMatches = preg_match('/^(.+)\(.+:([0-9]+).*:[0-9]+\)$/', $finding, $matches);
@@ -85,25 +83,14 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
 
                 $line    = (int) $matches[2];
                 $message = 'jshint says: '.trim($matches[1]);
+                $phpcsFile->addWarningOnLine($message, $line, 'ExternalTool');
+            }
+        }
 
-                // Find the token at the start of the line.
-                $lineToken = null;
-                foreach ($tokens as $ptr => $info) {
-                    if ($info['line'] === $line) {
-                        $lineToken = $ptr;
-                        break;
-                    }
-                }
-
-                if ($lineToken !== null) {
-                    $phpcsFile->addWarning($message, $lineToken, 'ExternalTool');
-                }
-            }//end foreach
-        }//end if
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
 
 }//end class
-
-?>

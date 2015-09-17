@@ -116,7 +116,24 @@ interface MyInterface extends
  LongInterfaceName1,
     LongInterfaceName2,
      LongInterfaceName3,
+LongInterfaceName4
 {
 }
 
-?>
+abstract
+class Test
+{
+}
+
+class ClassName implements
+
+    \ArrayAccess,\Countable,
+\Serializable
+{
+    // constants, properties, methods
+}
+
+class C1
+{
+
+} // C1

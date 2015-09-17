@@ -43,8 +43,8 @@ class Squiz_Tests_CSS_ClassDefinitionClosingBraceSpaceUnitTest extends AbstractS
         return array(
                 2  => 1,
                 11 => 1,
-                19 => 1,
                 44 => 1,
+                47 => 1,
                );
 
     }//end getErrorList()

@@ -2,7 +2,7 @@
 
 
 
-class ClassDeclaration
+ class ClassDeclaration
 {
 
 }
@@ -98,3 +98,13 @@ class CorrectClassDeclaration
 {
 
 }//end class
+
+// Class comment here, but wrong comment type.
+class testing
+{
+} /* end class */ echo 'hi';
+
+class IncorrectCodeBeforeClosingBrace
+{
+
+echo phpinfo();}

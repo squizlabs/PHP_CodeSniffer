@@ -72,6 +72,7 @@ class Generic_Tests_Formatting_MultipleStatementAlignmentUnitTest extends Abstra
                     38  => 1,
                     48  => 1,
                     50  => 1,
+                    51  => 1,
                     61  => 1,
                     62  => 1,
                     64  => 1,
@@ -93,6 +94,8 @@ class Generic_Tests_Formatting_MultipleStatementAlignmentUnitTest extends Abstra
                     178 => 1,
                     179 => 1,
                     182 => 1,
+                    206 => 1,
+                    207 => 1,
                    );
         break;
         case 'MultipleStatementAlignmentUnitTest.js':
@@ -107,6 +110,7 @@ class Generic_Tests_Formatting_MultipleStatementAlignmentUnitTest extends Abstra
                     38  => 1,
                     48  => 1,
                     50  => 1,
+                    51  => 1,
                     61  => 1,
                     62  => 1,
                     64  => 1,
@@ -119,6 +123,7 @@ class Generic_Tests_Formatting_MultipleStatementAlignmentUnitTest extends Abstra
                     83  => 1,
                     85  => 1,
                     86  => 1,
+                    100 => 1,
                    );
             break;
         default:

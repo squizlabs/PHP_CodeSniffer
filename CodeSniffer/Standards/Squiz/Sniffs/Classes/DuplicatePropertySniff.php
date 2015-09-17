@@ -60,19 +60,17 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $start  = $tokens[$stackPtr]['scope_opener'];
-        $end    = $tokens[$stackPtr]['scope_closer'];
 
         $properties   = array();
         $wantedTokens = array(
                          T_PROPERTY,
-                         T_OPEN_CURLY_BRACKET,
+                         T_OBJECT,
                         );
 
-        $next = $phpcsFile->findNext($wantedTokens, ($start + 1), $end);
-        while ($next !== false && $next < $end) {
-            // Skip nested objects.
-            if ($tokens[$next]['code'] === T_OPEN_CURLY_BRACKET) {
+        $next = $phpcsFile->findNext($wantedTokens, ($stackPtr + 1), $tokens[$stackPtr]['bracket_closer']);
+        while ($next !== false && $next < $tokens[$stackPtr]['bracket_closer']) {
+            if ($tokens[$next]['code'] === T_OBJECT) {
+                // Skip nested objects.
                 $next = $tokens[$next]['bracket_closer'];
             } else {
                 $propName = $tokens[$next]['content'];
@@ -88,13 +86,10 @@ class Squiz_Sniffs_Classes_DuplicatePropertySniff implements PHP_CodeSniffer_Sni
                 $properties[$propName] = $next;
             }//end if
 
-            $next = $phpcsFile->findNext($wantedTokens, ($next + 1), $end);
+            $next = $phpcsFile->findNext($wantedTokens, ($next + 1), $tokens[$stackPtr]['bracket_closer']);
         }//end while
 
     }//end process()
 
 
 }//end class
-
-
-?>

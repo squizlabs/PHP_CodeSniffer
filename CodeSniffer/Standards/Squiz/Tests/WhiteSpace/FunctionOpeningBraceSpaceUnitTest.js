@@ -36,6 +36,7 @@ function FuncFour()
 
 AbstractAttributeEditorWidgetType.prototype = {
     isActive: function() {
+
         return this.active;
 
     },
@@ -85,6 +86,8 @@ HelpWidgetType.prototype = {
     var x = 1;
     var y = {
         test: function() {
+
+
             alert(3);
         }
     }

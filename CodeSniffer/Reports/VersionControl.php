@@ -66,14 +66,16 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
      * and FALSE if it ignored the file. Returning TRUE indicates that the file and
      * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report data.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed line width.
+     * @param array                $report      Prepared report data.
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
+     * @param boolean              $showSources Show sources?
+     * @param int                  $width       Maximum allowed line width.
      *
      * @return boolean
      */
     public function generateFileReport(
         $report,
+        PHP_CodeSniffer_File $phpcsFile,
         $showSources=false,
         $width=80
     ) {
@@ -153,6 +155,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
      * @param int     $totalFiles    Total number of files processed during the run.
      * @param int     $totalErrors   Total number of errors found during the run.
      * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param int     $totalFixable  Total number of problems that can be fixed.
      * @param boolean $showSources   Show sources?
      * @param int     $width         Maximum allowed line width.
      * @param boolean $toScreen      Is the report being printed to screen?
@@ -164,6 +167,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         $totalFiles,
         $totalErrors,
         $totalWarnings,
+        $totalFixable,
         $showSources=false,
         $width=80,
         $toScreen=true
@@ -174,11 +178,27 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
             return;
         }
 
+        // Make sure the report width isn't too big.
+        $maxLength = 0;
+        foreach ($this->_authorCache as $author => $count) {
+            $maxLength = max($maxLength, strlen($author));
+            if ($showSources === true && isset($this->_sourceCache[$author]) === true) {
+                foreach ($this->_sourceCache[$author] as $source => $count) {
+                    if ($source === 'count') {
+                        continue;
+                    }
+
+                    $maxLength = max($maxLength, (strlen($source) + 9));
+                }
+            }
+        }
+
+        $width = min($width, ($maxLength + 30));
         $width = max($width, 70);
         arsort($this->_authorCache);
 
-        echo PHP_EOL.'PHP CODE SNIFFER '.$this->reportName.' BLAME SUMMARY'.PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL;
+        echo PHP_EOL."\033[1m".'PHP CODE SNIFFER '.$this->reportName.' BLAME SUMMARY'."\033[0m".PHP_EOL;
+        echo str_repeat('-', $width).PHP_EOL."\033[1m";
         if ($showSources === true) {
             echo 'AUTHOR   SOURCE'.str_repeat(' ', ($width - 43)).'(Author %) (Overall %) COUNT'.PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
@@ -186,6 +206,8 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
             echo 'AUTHOR'.str_repeat(' ', ($width - 34)).'(Author %) (Overall %) COUNT'.PHP_EOL;
             echo str_repeat('-', $width).PHP_EOL;
         }
+
+        echo "\033[0m";
 
         foreach ($this->_authorCache as $author => $count) {
             if ($this->_praiseCache[$author]['good'] === 0) {
@@ -197,10 +219,14 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
             $overallPercent = '('.round((($count / $errorsShown) * 100), 2).')';
             $authorPercent  = '('.$percent.')';
-            $line = str_repeat(' ', (6 - strlen($count))).$count;
-            $line = str_repeat(' ', (12 - strlen($overallPercent))).$overallPercent.$line;
-            $line = str_repeat(' ', (11 - strlen($authorPercent))).$authorPercent.$line;
-            $line = $author.str_repeat(' ', ($width - strlen($author) - strlen($line))).$line;
+            $line           = str_repeat(' ', (6 - strlen($count))).$count;
+            $line           = str_repeat(' ', (12 - strlen($overallPercent))).$overallPercent.$line;
+            $line           = str_repeat(' ', (11 - strlen($authorPercent))).$authorPercent.$line;
+            $line           = $author.str_repeat(' ', ($width - strlen($author) - strlen($line))).$line;
+
+            if ($showSources === true) {
+                $line = "\033[1m$line\033[0m";
+            }
 
             echo $line.PHP_EOL;
 
@@ -221,15 +247,27 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION(S) ';
-        echo 'WERE COMMITTED BY '.count($this->_authorCache).' AUTHOR(S)'.PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
+        echo "\033[1m".'A TOTAL OF '.$errorsShown.' SNIFF VIOLATION';
+        if ($errorsShown !== 1) {
+            echo 'S';
+        }
 
-        if ($toScreen === true
-            && PHP_CODESNIFFER_INTERACTIVE === false
-            && class_exists('PHP_Timer', false) === true
-        ) {
-            echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
+        echo ' WERE COMMITTED BY '.count($this->_authorCache).' AUTHOR';
+        if (count($this->_authorCache) !== 1) {
+            echo 'S';
+        }
+
+        echo "\033[0m";
+
+        if ($totalFixable > 0) {
+            echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
+            echo "\033[1mPHPCBF CAN FIX $totalFixable OF THESE SNIFF VIOLATIONS AUTOMATICALLY\033[0m";
+        }
+
+        echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
+
+        if ($toScreen === true && PHP_CODESNIFFER_INTERACTIVE === false) {
+            PHP_CodeSniffer_Reporting::printRunTime();
         }
 
     }//end generate()
@@ -256,5 +294,3 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
 
 }//end class
-
-?>

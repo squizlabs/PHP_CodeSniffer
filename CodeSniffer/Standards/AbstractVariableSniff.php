@@ -47,7 +47,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
     private $_endFunction = -1;
 
     /**
-     * true if a function is currently open.
+     * TRUE if a function is currently open.
      *
      * @var boolean
      */
@@ -134,7 +134,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
                 $this->_endFunction = $tokens[$stackPtr]['scope_closer'];
             }
-        }
+        }//end if
 
         if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING
             || $tokens[$stackPtr]['code'] === T_HEREDOC
@@ -242,5 +242,3 @@ abstract class PHP_CodeSniffer_Standards_AbstractVariableSniff extends PHP_CodeS
 
 
 }//end class
-
-?>

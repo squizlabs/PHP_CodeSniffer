@@ -68,6 +68,3 @@ class Squiz_Sniffs_Commenting_EmptyCatchCommentSniff implements PHP_CodeSniffer_
 
 
 }//end class
-
-
-?>

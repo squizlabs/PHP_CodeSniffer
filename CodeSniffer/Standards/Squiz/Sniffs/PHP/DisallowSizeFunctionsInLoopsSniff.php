@@ -45,11 +45,11 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
      */
     protected $forbiddenFunctions = array(
                                      'PHP' => array(
-                                               'sizeof',
-                                               'strlen',
-                                               'count',
+                                               'sizeof' => true,
+                                               'strlen' => true,
+                                               'count'  => true,
                                               ),
-                                     'JS'  => array('length'),
+                                     'JS'  => array('length' => true),
                                     );
 
 
@@ -94,7 +94,9 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
         }
 
         for ($i = ($start + 1); $i < $end; $i++) {
-            if ($tokens[$i]['code'] === T_STRING && in_array($tokens[$i]['content'], $this->forbiddenFunctions[$tokenizer])) {
+            if ($tokens[$i]['code'] === T_STRING
+                && isset($this->forbiddenFunctions[$tokenizer][$tokens[$i]['content']]) === true
+            ) {
                 $functionName = $tokens[$i]['content'];
                 if ($tokenizer === 'JS') {
                     // Needs to be in the form object.function to be valid.
@@ -123,5 +125,3 @@ class Squiz_Sniffs_PHP_DisallowSizeFunctionsInLoopsSniff implements PHP_CodeSnif
 
 
 }//end class
-
-?>

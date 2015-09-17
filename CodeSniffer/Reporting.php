@@ -14,12 +14,6 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
-    include_once dirname(__FILE__).'/../CodeSniffer.php';
-} else {
-    include_once 'PHP/CodeSniffer.php';
-}
-
 /**
  * A class to manage reporting.
  *
@@ -58,6 +52,20 @@ class PHP_CodeSniffer_Reporting
     public $totalWarnings = 0;
 
     /**
+     * Total number of errors/warnings that can be fixed.
+     *
+     * @var int
+     */
+    public $totalFixable = 0;
+
+    /**
+     * When the PHPCS run started.
+     *
+     * @var float
+     */
+    public static $startTime = 0;
+
+    /**
      * A list of reports that have written partial report output.
      *
      * @var array
@@ -94,11 +102,25 @@ class PHP_CodeSniffer_Reporting
             return $this->_reports[$type];
         }
 
-        $filename        = $type.'.php';
-        $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
-        if (class_exists($reportClassName, true) === false) {
-            throw new PHP_CodeSniffer_Exception('Report type "'.$type.'" not found.');
-        }
+        if (strpos($type, '.') !== false) {
+            // This is a path to a custom report class.
+            $filename = realpath($type);
+            if ($filename === false) {
+                echo 'ERROR: Custom report "'.$type.'" not found'.PHP_EOL;
+                exit(2);
+            }
+
+            $reportClassName = 'PHP_CodeSniffer_Reports_'.basename($filename);
+            $reportClassName = substr($reportClassName, 0, strpos($reportClassName, '.'));
+            include_once $filename;
+        } else {
+            $filename        = $type.'.php';
+            $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
+            if (class_exists($reportClassName, true) === false) {
+                echo 'ERROR: Report type "'.$type.'" not found'.PHP_EOL;
+                exit(2);
+            }
+        }//end if
 
         $reportClass = new $reportClassName();
         if (false === ($reportClass instanceof PHP_CodeSniffer_Report)) {
@@ -113,10 +135,10 @@ class PHP_CodeSniffer_Reporting
 
     /**
      * Actually generates the report.
-     * 
+     *
      * @param PHP_CodeSniffer_File $phpcsFile The file that has been processed.
      * @param array                $cliValues An array of command line arguments.
-     * 
+     *
      * @return void
      */
     public function cacheFileReport(PHP_CodeSniffer_File $phpcsFile, array $cliValues)
@@ -131,20 +153,17 @@ class PHP_CodeSniffer_Reporting
         $errorsShown = false;
 
         foreach ($cliValues['reports'] as $report => $output) {
-            $reportClass = self::factory($report);
+            $reportClass = $this->factory($report);
+            $report      = get_class($reportClass);
 
             ob_start();
-            $result = $reportClass->generateFileReport($reportData, $cliValues['showSources'], $cliValues['reportWidth']);
+            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
             if ($result === true) {
                 $errorsShown = true;
             }
 
             $generatedReport = ob_get_contents();
             ob_end_clean();
-
-            if ($generatedReport === '') {
-                continue;
-            }
 
             if ($output === null && $cliValues['reportFile'] !== null) {
                 $output = $cliValues['reportFile'];
@@ -153,54 +172,67 @@ class PHP_CodeSniffer_Reporting
             if ($output === null) {
                 // Using a temp file.
                 if (isset($this->_tmpFiles[$report]) === false) {
-                    $this->_tmpFiles[$report] = tmpfile();
+                    if (function_exists('sys_get_temp_dir') === true) {
+                        // This is needed for HHVM support, but only available from 5.2.1.
+                        $this->_tmpFiles[$report] = fopen(tempnam(sys_get_temp_dir(), 'phpcs'), 'w');
+                    } else {
+                        $this->_tmpFiles[$report] = tmpfile();
+                    }
                 }
 
                 fwrite($this->_tmpFiles[$report], $generatedReport);
             } else {
                 $flags = FILE_APPEND;
-                if (in_array($report, $this->_cachedReports) === false) {
-                    $this->_cachedReports[] = $report;
+                if (isset($this->_cachedReports[$report]) === false) {
+                    $this->_cachedReports[$report] = true;
                     $flags = null;
                 }
 
                 file_put_contents($output, $generatedReport, $flags);
-            }
+            }//end if
         }//end foreach
 
         if ($errorsShown === true) {
             $this->totalFiles++;
             $this->totalErrors   += $reportData['errors'];
             $this->totalWarnings += $reportData['warnings'];
+            $this->totalFixable  += $reportData['fixable'];
         }
 
     }//end cacheFileReport()
 
 
     /**
-     * Actually generates the report.
-     * 
+     * Generates and prints a final report.
+     *
+     * Returns an array with the number of errors and the number of
+     * warnings, in the form ['errors' => int, 'warnings' => int].
+     *
      * @param string  $report      Report type.
      * @param boolean $showSources Show sources?
+     * @param array   $cliValues   An array of command line arguments.
      * @param string  $reportFile  Report file to generate.
      * @param integer $reportWidth Report max width.
-     * 
-     * @return integer
+     *
+     * @return int[]
      */
     public function printReport(
         $report,
         $showSources,
+        array $cliValues,
         $reportFile='',
         $reportWidth=80
     ) {
-        $reportClass = self::factory($report);
+        $reportClass = $this->factory($report);
+        $report      = get_class($reportClass);
 
         if ($reportFile !== null) {
             $filename = $reportFile;
             $toScreen = false;
-            ob_start();
 
-            if (file_exists($filename) === true) {
+            if (file_exists($filename) === true
+                && isset($this->_cachedReports[$report]) === true
+            ) {
                 $reportCache = file_get_contents($filename);
             } else {
                 $reportCache = '';
@@ -217,33 +249,43 @@ class PHP_CodeSniffer_Reporting
             }
 
             $toScreen = true;
-        }
+        }//end if
 
+        ob_start();
         $reportClass->generate(
             $reportCache,
             $this->totalFiles,
             $this->totalErrors,
             $this->totalWarnings,
+            $this->totalFixable,
             $showSources,
             $reportWidth,
             $toScreen
         );
+        $generatedReport = ob_get_contents();
+        ob_end_clean();
+
+        if ($cliValues['colors'] !== true || $reportFile !== null) {
+            $generatedReport = preg_replace('`\033\[[0-9]+m`', '', $generatedReport);
+        }
 
         if ($reportFile !== null) {
-            $generatedReport = ob_get_contents();
-            ob_end_clean();
-
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo $generatedReport;
             }
 
-            $generatedReport = trim($generatedReport);
             file_put_contents($reportFile, $generatedReport.PHP_EOL);
-        } else if ($filename !== null && file_exists($filename) === true) {
-            unlink($filename);
+        } else {
+            echo $generatedReport;
+            if ($filename !== null && file_exists($filename) === true) {
+                unlink($filename);
+            }
         }
 
-        return ($this->totalErrors + $this->totalWarnings);
+        return array(
+                'errors'   => $this->totalErrors,
+                'warnings' => $this->totalWarnings,
+               );
 
     }//end printReport()
 
@@ -263,6 +305,7 @@ class PHP_CodeSniffer_Reporting
                    'filename' => $phpcsFile->getFilename(),
                    'errors'   => $phpcsFile->getErrorCount(),
                    'warnings' => $phpcsFile->getWarningCount(),
+                   'fixable'  => $phpcsFile->getFixableCount(),
                    'messages' => array(),
                   );
 
@@ -286,6 +329,7 @@ class PHP_CodeSniffer_Reporting
                                     'message'  => $data['message'],
                                     'source'   => $data['source'],
                                     'severity' => $data['severity'],
+                                    'fixable'  => $data['fixable'],
                                     'type'     => 'ERROR',
                                    );
                 }//end foreach
@@ -308,6 +352,7 @@ class PHP_CodeSniffer_Reporting
                                       'message'  => $data['message'],
                                       'source'   => $data['source'],
                                       'severity' => $data['severity'],
+                                      'fixable'  => $data['fixable'],
                                       'type'     => 'WARNING',
                                      );
                 }//end foreach
@@ -336,6 +381,45 @@ class PHP_CodeSniffer_Reporting
     }//end prepareFileReport()
 
 
-}//end class
+    /**
+     * Start recording time for the run.
+     *
+     * @return void
+     */
+    public static function startTiming()
+    {
 
-?>
+        self::$startTime = microtime(true);
+
+    }//end startTiming()
+
+
+    /**
+     * Print information about the run.
+     *
+     * @return void
+     */
+    public static function printRunTime()
+    {
+        $time = ((microtime(true) - self::$startTime) * 1000);
+
+        if ($time > 60000) {
+            $mins = floor($time / 60000);
+            $secs = round((($time % 60000) / 1000), 2);
+            $time = $mins.' mins';
+            if ($secs !== 0) {
+                $time .= ", $secs secs";
+            }
+        } else if ($time > 1000) {
+            $time = round(($time / 1000), 2).' secs';
+        } else {
+            $time = round($time).'ms';
+        }
+
+        $mem = round((memory_get_peak_usage(true) / (1024 * 1024)), 2).'Mb';
+        echo "Time: $time; Memory: $mem".PHP_EOL.PHP_EOL;
+
+    }//end printRunTime()
+
+
+}//end class

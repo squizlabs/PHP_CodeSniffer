@@ -58,11 +58,23 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
 
         $tokens = $phpcsFile->getTokens();
 
+        // One space after the use keyword.
+        if ($tokens[($stackPtr + 1)]['content'] !== ' ') {
+            $error = 'There must be a single space after the USE keyword';
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterUse');
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+            }
+        }
+
         // Only one USE declaration allowed per statement.
         $next = $phpcsFile->findNext(array(T_COMMA, T_SEMICOLON), ($stackPtr + 1));
         if ($tokens[$next]['code'] === T_COMMA) {
             $error = 'There must be one USE keyword per declaration';
-            $phpcsFile->addError($error, $stackPtr, 'MultipleDeclarations');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.'use ');
+            }
         }
 
         // Make sure this USE comes after the first namespace declaration.
@@ -98,8 +110,25 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
 
             $error = 'There must be one blank line after the last USE statement; %s found;';
             $data  = array($diff);
-            $phpcsFile->addError($error, $stackPtr, 'SpaceAfterLastUse', $data);
-        }
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterLastUse', $data);
+            if ($fix === true) {
+                if ($diff === 0) {
+                    $phpcsFile->fixer->addNewline($end);
+                } else {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($end + 1); $i < $next; $i++) {
+                        if ($tokens[$i]['line'] === $tokens[$next]['line']) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->addNewline($end);
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }
+        }//end if
 
     }//end process()
 
@@ -134,6 +163,3 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
 
 
 }//end class
-
-
-?>

@@ -56,14 +56,17 @@ class Generic_Sniffs_Formatting_NoSpaceAfterCastSniff implements PHP_CodeSniffer
     {
         $tokens = $phpcsFile->getTokens();
 
-        if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
-            $error = 'A cast statement must not be followed by a space';
-            $phpcsFile->addError($error, $stackPtr, 'SpaceFound');
+        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            return;
+        }
+
+        $error = 'A cast statement must not be followed by a space';
+        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceFound');
+        if ($fix === true) {
+            $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
         }
 
     }//end process()
 
 
 }//end class
-
-?>

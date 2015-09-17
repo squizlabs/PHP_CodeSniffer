@@ -137,6 +137,26 @@ switch ($moo)
     break;
 }
 
+do {
+}
+while (true);
+
+try {
+    // Something
+} catch (Exception $e) {
+    // Something
+}
+
+try {
+
+    // Something
+
+} catch (Exception $e) {
+
+    // Something
+
+}
+
 if ($one) {
 }
 elseif ($two) {
@@ -169,4 +189,11 @@ switch ($moo)
         }
 
     return $moo;
+}
+
+try {
+    // Something
+}
+catch (Exception $e) {
+    // Something
 }

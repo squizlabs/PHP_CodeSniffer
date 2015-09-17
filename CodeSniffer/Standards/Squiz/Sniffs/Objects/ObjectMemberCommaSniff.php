@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_Objects_ObjectInstantiationSniff.
+ * Squiz_Sniffs_Objects_ObjectMemberCommaSniff.
  *
  * PHP version 5
  *
@@ -13,9 +13,9 @@
  */
 
 /**
- * Squiz_Sniffs_Objects_ObjectInstantiationSniff.
+ * Squiz_Sniffs_Objects_ObjectMemberCommaSniff.
  *
- * Ensures objects are assigned to a variable when instantiated.
+ * Ensures the last member of an object is not followed by a comma.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -43,7 +43,7 @@ class Squiz_Sniffs_Objects_ObjectMemberCommaSniff implements PHP_CodeSniffer_Sni
      */
     public function register()
     {
-        return array(T_CLOSE_CURLY_BRACKET);
+        return array(T_CLOSE_OBJECT);
 
     }//end register()
 
@@ -61,24 +61,16 @@ class Squiz_Sniffs_Objects_ObjectMemberCommaSniff implements PHP_CodeSniffer_Sni
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Only interested in orphaned braces (which are objects)
-        // and object definitions.
-        if (isset($tokens[$stackPtr]['scope_condition']) === true) {
-            $condition = $tokens[$stackPtr]['scope_condition'];
-            if ($tokens[$condition]['code'] !== T_OBJECT) {
-                return;
-            }
-        }
-
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($tokens[$prev]['code'] === T_COMMA) {
             $error = 'Last member of object must not be followed by a comma';
-            $phpcsFile->addError($error, $prev, 'Missing');
+            $fix   = $phpcsFile->addFixableError($error, $prev, 'Missing');
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($prev, '');
+            }
         }
 
     }//end process()
 
 
 }//end class
-
-?>

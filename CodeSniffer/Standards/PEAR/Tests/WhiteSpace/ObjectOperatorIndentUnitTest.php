@@ -47,6 +47,9 @@ class PEAR_Tests_WhiteSpace_ObjectOperatorIndentUnitTest extends AbstractSniffUn
                 27 => 1,
                 37 => 1,
                 38 => 1,
+                48 => 1,
+                49 => 1,
+                50 => 1,
                );
 
     }//end getErrorList()

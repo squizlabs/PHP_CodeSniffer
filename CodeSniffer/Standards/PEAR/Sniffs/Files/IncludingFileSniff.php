@@ -32,18 +32,6 @@
 class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
 {
 
-    /**
-     * Conditions that should use include_once
-     *
-     * @var array(int)
-     */
-    private static $_conditions = array(
-                                   T_IF,
-                                   T_ELSE,
-                                   T_ELSEIF,
-                                   T_SWITCH,
-                                  );
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -79,10 +67,25 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
         if ($tokens[$nextToken]['code'] === T_OPEN_PARENTHESIS) {
             $error = '"%s" is a statement not a function; no parentheses are required';
             $data  = array($tokens[$stackPtr]['content']);
-            $phpcsFile->addError($error, $stackPtr, 'BracketsNotRequired', $data);
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'BracketsNotRequired', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->replaceToken($tokens[$nextToken]['parenthesis_closer'], '');
+                if ($tokens[($nextToken - 1)]['code'] !== T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken($nextToken, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken($nextToken, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
         }
 
-        $inCondition = (count($tokens[$stackPtr]['conditions']) !== 0) ? true : false;
+        if (count($tokens[$stackPtr]['conditions']) !== 0) {
+            $inCondition = true;
+        } else {
+            $inCondition = false;
+        }
 
         // Check to see if this including statement is within the parenthesis
         // of a condition. If that's the case then we need to process it as being
@@ -99,7 +102,7 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
         // including call. If they are then they are probably checking it, so
         // it's conditional.
         $previous = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-        if (in_array($tokens[$previous]['code'], PHP_CodeSniffer_Tokens::$assignmentTokens) === true) {
+        if (isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$tokens[$previous]['code']]) === true) {
             // The have assigned the return value to it, so its conditional.
             $inCondition = true;
         }
@@ -110,22 +113,34 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
             if ($tokenCode === T_REQUIRE_ONCE) {
                 $error  = 'File is being conditionally included; ';
                 $error .= 'use "include_once" instead';
-                $phpcsFile->addError($error, $stackPtr, 'UseIncludeOnce');
+                $fix    = $phpcsFile->addFixableError($error, $stackPtr, 'UseIncludeOnce');
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken($stackPtr, 'include_once');
+                }
             } else if ($tokenCode === T_REQUIRE) {
                 $error  = 'File is being conditionally included; ';
                 $error .= 'use "include" instead';
-                $phpcsFile->addError($error, $stackPtr, 'UseInclude');
+                $fix    = $phpcsFile->addFixableError($error, $stackPtr, 'UseInclude');
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken($stackPtr, 'include');
+                }
             }
         } else {
             // We are unconditionally including, we need a require_once.
             if ($tokenCode === T_INCLUDE_ONCE) {
                 $error  = 'File is being unconditionally included; ';
                 $error .= 'use "require_once" instead';
-                $phpcsFile->addError($error, $stackPtr, 'UseRequireOnce');
+                $fix    = $phpcsFile->addFixableError($error, $stackPtr, 'UseRequireOnce');
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken($stackPtr, 'require_once');
+                }
             } else if ($tokenCode === T_INCLUDE) {
                 $error  = 'File is being unconditionally included; ';
                 $error .= 'use "require" instead';
-                $phpcsFile->addError($error, $stackPtr, 'UseRequire');
+                $fix    = $phpcsFile->addFixableError($error, $stackPtr, 'UseRequire');
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken($stackPtr, 'require');
+                }
             }
         }//end if
 
@@ -133,5 +148,3 @@ class PEAR_Sniffs_Files_IncludingFileSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

@@ -52,4 +52,49 @@ somefunction6('
     $foo
 );
 
-?>
+$this->setFoo(true
+    ? 1
+    : 2, false, array(
+    'value',
+    'more'));
+
+$this->setFoo('some'
+    . 'long'
+    . 'text', 'string');
+
+foo(bar(), $a);
+foo();bar();
+
+foo(
+    true
+);
+
+myFunction(<<<END
+Foo
+END
+);
+
+var_dump(array(<<<'EOD'
+foobar!
+EOD
+));
+
+myFunction(<<<END
+Foo
+END
+, 'bar');
+
+myFunction(<<<END
+Foo
+END
+,
+'bar');
+
+if (array_filter(
+    $commands,
+    function ($cmd) use ($commandName) {
+        return ($cmd['name'] == $commandName);
+    }
+)) {
+    // Do something
+}

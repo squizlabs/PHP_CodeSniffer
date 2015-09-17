@@ -1,21 +1,19 @@
-<?php
 
-if ($something) echo 'hello';
 
-if ($something) {
-    echo 'hello';
-} else echo 'hi';
+if (something) print 'hello';
 
-if ($something) {
-    echo 'hello';
-} else if ($else) echo 'hi';
+if (something) {
+    print 'hello';
+} else print 'hi';
 
-for ($i; $i > 0; $i--) echo 'hello';
+if (something) {
+    print 'hello';
+} else if (something) print 'hi';
 
-while ($something) echo 'hello';
+for (i; i > 0; i--) print 'hello';
+
+while (something) print 'hello';
 
 do {
-    $i--;
-} while ($something);
-
-?>
+    i--;
+} while (something);

@@ -87,9 +87,9 @@ var myFunc = function()
 
 }
 
-CustomFormEditWidgetType.prototype = {
+a.prototype = {
 
-    addQuestion: function()
+    a: function()
     {
         var settings = {
             default: ''
@@ -97,10 +97,36 @@ CustomFormEditWidgetType.prototype = {
 
     },
 
-    addQuestionRulesEvent: function()
+    b: function()
     {
         var self = this;
 
     }
+
+};
+
+var a = new function()
+{
+    this.initScreen = function(usersFolderid)
+    {
+        for (var i = 0; i < paramSelectors.length; i++) {
+        }//end for
+    }
+
+};
+
+a.prototype = {
+
+    this.addItem(
+            id,
+            {
+                b: function()
+                {
+                    for (var i = 0; i < paramSelectors.length; i++) {
+                    }//end for
+
+                }
+            }
+    )
 
 };

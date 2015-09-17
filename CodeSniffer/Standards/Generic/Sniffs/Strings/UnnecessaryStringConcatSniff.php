@@ -46,6 +46,16 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
      */
     public $error = true;
 
+    /**
+     * If true, strings concatenated over multiple lines are allowed.
+     *
+     * Useful if you break strings over multiple lines to work
+     * within a max line length.
+     *
+     * @var bool
+     */
+    public $allowMultiline = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -91,9 +101,8 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
             return;
         }
 
-        $stringTokens = PHP_CodeSniffer_Tokens::$stringTokens;
-        if (in_array($tokens[$prev]['code'], $stringTokens) === true
-            && in_array($tokens[$next]['code'], $stringTokens) === true
+        if (isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$prev]['code']]) === true
+            && isset(PHP_CodeSniffer_Tokens::$stringTokens[$tokens[$next]['code']]) === true
         ) {
             if ($tokens[$prev]['content'][0] === $tokens[$next]['content'][0]) {
                 // Before we throw an error for PHP, allow strings to be
@@ -108,18 +117,22 @@ class Generic_Sniffs_Strings_UnnecessaryStringConcatSniff implements PHP_CodeSni
                     }
                 }
 
+                if ($this->allowMultiline === true
+                    && $tokens[$prev]['line'] !== $tokens[$next]['line']
+                ) {
+                    return;
+                }
+
                 $error = 'String concat is not required here; use a single string instead';
                 if ($this->error === true) {
                     $phpcsFile->addError($error, $stackPtr, 'Found');
                 } else {
                     $phpcsFile->addWarning($error, $stackPtr, 'Found');
                 }
-            }
-        }
+            }//end if
+        }//end if
 
     }//end process()
 
 
 }//end class
-
-?>

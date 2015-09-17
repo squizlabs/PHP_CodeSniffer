@@ -224,7 +224,6 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
                     $error = 'Variable "%s" is not in valid camel caps format';
                     $data  = array($varName);
                     $phpcsFile->addError($error, $stackPtr, 'StringNotCamelCaps', $data);
-                    
                 }
             }
         }
@@ -233,5 +232,3 @@ class Squiz_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSnif
 
 
 }//end class
-
-?>

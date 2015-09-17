@@ -95,24 +95,61 @@ class PSR2_Sniffs_Methods_MethodDeclarationSniff extends PHP_CodeSniffer_Standar
             }
         }
 
-        if ($static !== 0 && $static < $visibility) {
-            $error = 'The static declaration must come after the visibility declaration';
-            $phpcsFile->addError($error, $static, 'StaticBeforeVisibility');
-        }
+        $fixes = array();
 
         if ($visibility !== 0 && $final > $visibility) {
             $error = 'The final declaration must precede the visibility declaration';
-            $phpcsFile->addError($error, $final, 'FinalAfterVisibility');
+            $fix   = $phpcsFile->addFixableError($error, $final, 'FinalAfterVisibility');
+            if ($fix === true) {
+                $fixes[$final]       = '';
+                $fixes[($final + 1)] = '';
+                if (isset($fixes[$visibility]) === true) {
+                    $fixes[$visibility] = 'final '.$fixes[$visibility];
+                } else {
+                    $fixes[$visibility] = 'final '.$tokens[$visibility]['content'];
+                }
+            }
         }
 
         if ($visibility !== 0 && $abstract > $visibility) {
             $error = 'The abstract declaration must precede the visibility declaration';
-            $phpcsFile->addError($error, $abstract, 'AbstractAfterVisibility');
+            $fix   = $phpcsFile->addFixableError($error, $abstract, 'AbstractAfterVisibility');
+            if ($fix === true) {
+                $fixes[$abstract]       = '';
+                $fixes[($abstract + 1)] = '';
+                if (isset($fixes[$visibility]) === true) {
+                    $fixes[$visibility] = 'abstract '.$fixes[$visibility];
+                } else {
+                    $fixes[$visibility] = 'abstract '.$tokens[$visibility]['content'];
+                }
+            }
+        }
+
+        if ($static !== 0 && $static < $visibility) {
+            $error = 'The static declaration must come after the visibility declaration';
+            $fix   = $phpcsFile->addFixableError($error, $static, 'StaticBeforeVisibility');
+            if ($fix === true) {
+                $fixes[$static]       = '';
+                $fixes[($static + 1)] = '';
+                if (isset($fixes[$visibility]) === true) {
+                    $fixes[$visibility] = $fixes[$visibility].' static';
+                } else {
+                    $fixes[$visibility] = $tokens[$visibility]['content'].' static';
+                }
+            }
+        }
+
+        // Batch all the fixes together to reduce the possibility of conflicts.
+        if (empty($fixes) === false) {
+            $phpcsFile->fixer->beginChangeset();
+            foreach ($fixes as $stackPtr => $content) {
+                $phpcsFile->fixer->replaceToken($stackPtr, $content);
+            }
+
+            $phpcsFile->fixer->endChangeset();
         }
 
     }//end processTokenWithinScope()
 
 
 }//end class
-
-?>

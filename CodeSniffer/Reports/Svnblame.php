@@ -74,7 +74,7 @@ class PHP_CodeSniffer_Reports_Svnblame extends PHP_CodeSniffer_Reports_VersionCo
             echo 'Getting SVN blame info for '.basename($filename).'... ';
         }
 
-        $command = 'svn blame "'.$filename.'"';
+        $command = 'svn blame "'.$filename.'" 2>&1';
         $handle  = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
@@ -96,5 +96,3 @@ class PHP_CodeSniffer_Reports_Svnblame extends PHP_CodeSniffer_Reports_VersionCo
 
 
 }//end class
-
-?>

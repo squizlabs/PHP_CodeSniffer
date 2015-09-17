@@ -38,7 +38,7 @@ if (($condition1
 
 if (($condition1
    || $condition2)
-   && $condition3
+      && $condition3
    && $condition4
    && $condition5
 ) {
@@ -98,7 +98,7 @@ if ($condition1
 
 if ($condition1
     || $condition2 || $condition3
-) {
+){
 }
 
 if ($condition1)
@@ -140,4 +140,35 @@ if (array_key_exists($key, $value)
 if (true) :
     $foo = true;
 endif;
+
+if ($IPP->errorCode() == 401 || // comment
+    $IPP->errorCode() == 3200)  /* long comment
+                                   here
+                                 */
+{
+    return false;
+}
+
+if ($IPP->errorCode() == 401 || // comment
+    $IPP->errorCode() == 3200)  // long comment here
+{
+    return false;
+}
+
+if ($IPP->errorCode() == 401
+    // Comment explaining the next condition here.
+    || $IPP->errorCode() == 3200
+) {
+    return false;
+}
+
 ?>
+<?php foreach ($blah as $boo) : ?>
+    <?php if ($foo): ?>
+        <?php
+            if ($bar) {
+            } else {
+            }
+        ?>
+    <?php endif; ?>
+<?php endforeach; ?>

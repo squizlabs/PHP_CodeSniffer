@@ -31,6 +31,19 @@
 class Generic_Tests_WhiteSpace_DisallowTabIndentUnitTest extends AbstractSniffUnitTest
 {
 
+    /**
+     * Get a list of CLI values to set befor the file is tested.
+     *
+     * @param string $testFile The name of the file being tested.
+     *
+     * @return array
+     */
+    public function getCliValues($testFile)
+    {
+        return array('--tab-width=4', '--encoding=utf-8');
+
+    }//end getCliValues()
+
 
     /**
      * Returns the lines where errors should occur.
@@ -47,19 +60,29 @@ class Generic_Tests_WhiteSpace_DisallowTabIndentUnitTest extends AbstractSniffUn
         switch ($testFile) {
         case 'DisallowTabIndentUnitTest.inc':
             return array(
-                    5  => 1,
+                    5  => 2,
                     9  => 1,
                     15 => 1,
+                    20 => 2,
+                    21 => 1,
+                    22 => 2,
+                    23 => 1,
+                    24 => 2,
+                    31 => 1,
+                    32 => 2,
+                    33 => 2,
                    );
             break;
         case 'DisallowTabIndentUnitTest.js':
             return array(
                     3 => 1,
+                    5 => 1,
                     6 => 1,
                    );
             break;
         case 'DisallowTabIndentUnitTest.css':
             return array(
+                    1 => 1,
                     2 => 1,
                    );
             break;

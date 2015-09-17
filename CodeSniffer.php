@@ -1,6 +1,6 @@
 <?php
 /**
- * PHP_CodeSniffer tokenises PHP code and detects violations of a
+ * PHP_CodeSniffer tokenizes PHP code and detects violations of a
  * defined set of coding standards.
  *
  * PHP version 5
@@ -24,6 +24,10 @@ if (class_exists('PHP_CodeSniffer_File', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_File not found');
 }
 
+if (class_exists('PHP_CodeSniffer_Fixer', true) === false) {
+    throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Fixer not found');
+}
+
 if (class_exists('PHP_CodeSniffer_Tokens', true) === false) {
     throw new PHP_CodeSniffer_Exception('Class PHP_CodeSniffer_Tokens not found');
 }
@@ -37,7 +41,7 @@ if (interface_exists('PHP_CodeSniffer_Sniff', true) === false) {
 }
 
 /**
- * PHP_CodeSniffer tokenises PHP code and detects violations of a
+ * PHP_CodeSniffer tokenizes PHP code and detects violations of a
  * defined set of coding standards.
  *
  * Standards are specified by classes that implement the PHP_CodeSniffer_Sniff
@@ -69,10 +73,10 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '1.5.4';
+    const VERSION = '2.3.5';
 
     /**
-     * Package stability; either stable or beta.
+     * Package stability; either stable, beta or alpha.
      *
      * @var string
      */
@@ -84,14 +88,6 @@ class PHP_CodeSniffer
      * @var string
      */
     protected $file = '';
-
-    /**
-     * A cache of different token types, resolved into arrays.
-     *
-     * @var array()
-     * @see standardiseToken()
-     */
-    private static $_resolveTokenCache = array();
 
     /**
      * The directories that the processed rulesets are in.
@@ -162,7 +158,19 @@ class PHP_CodeSniffer
      *
      * @var array
      */
-    public $allowedFileExtensions = array(
+    public $allowedFileExtensions = array();
+
+    /**
+     * An array of default extensions and associated tokenizers.
+     *
+     * If no extensions are set, these will be used as the defaults.
+     * If extensions are set, these will be used when the correct tokenizer
+     * can not be determined, such as when checking a passed filename instead
+     * of files in a directory.
+     *
+     * @var array
+     */
+    public $defaultFileExtensions = array(
                                      'php' => 'PHP',
                                      'inc' => 'PHP',
                                      'js'  => 'JS',
@@ -212,20 +220,20 @@ class PHP_CodeSniffer
         $encoding='iso-8859-1',
         $interactive=false
     ) {
-        if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
-            define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
+        if ($verbosity !== null) {
+            $this->setVerbosity($verbosity);
         }
 
-        if (defined('PHP_CODESNIFFER_TAB_WIDTH') === false) {
-            define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        if ($tabWidth !== null) {
+            $this->setTabWidth($tabWidth);
         }
 
-        if (defined('PHP_CODESNIFFER_ENCODING') === false) {
-            define('PHP_CODESNIFFER_ENCODING', $encoding);
+        if ($encoding !== null) {
+            $this->setEncoding($encoding);
         }
 
-        if (defined('PHP_CODESNIFFER_INTERACTIVE') === false) {
-            define('PHP_CODESNIFFER_INTERACTIVE', $interactive);
+        if ($interactive !== null) {
+            $this->setInteractive($interactive);
         }
 
         if (defined('PHPCS_DEFAULT_ERROR_SEV') === false) {
@@ -234,6 +242,10 @@ class PHP_CodeSniffer
 
         if (defined('PHPCS_DEFAULT_WARN_SEV') === false) {
             define('PHPCS_DEFAULT_WARN_SEV', 5);
+        }
+
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
+            define('PHP_CODESNIFFER_CBF', false);
         }
 
         // Set default CLI object in case someone is running us
@@ -263,28 +275,108 @@ class PHP_CodeSniffer
             $newClassName = $className;
         }
 
-        $path = str_replace(array('_', '\\'), '/', $newClassName).'.php';
+        $path = str_replace(array('_', '\\'), DIRECTORY_SEPARATOR, $newClassName).'.php';
 
-        if (is_file(dirname(__FILE__).'/'.$path) === true) {
+        if (is_file(dirname(__FILE__).DIRECTORY_SEPARATOR.$path) === true) {
             // Check standard file locations based on class name.
-            include dirname(__FILE__).'/'.$path;
-        } else if (is_file(dirname(__FILE__).'/CodeSniffer/Standards/'.$path) === true) {
-            // Check for included sniffs.
-            include dirname(__FILE__).'/CodeSniffer/Standards/'.$path;
+            include dirname(__FILE__).DIRECTORY_SEPARATOR.$path;
+            return;
         } else {
-            // Check standard file locations based on the loaded rulesets.
-            foreach (self::$rulesetDirs as $rulesetDir) {
-                if (is_file(dirname($rulesetDir).'/'.$path) === true) {
-                    include_once dirname($rulesetDir).'/'.$path;
+            // Check for included sniffs.
+            $installedPaths = PHP_CodeSniffer::getInstalledStandardPaths();
+            foreach ($installedPaths as $installedPath) {
+                if (is_file($installedPath.DIRECTORY_SEPARATOR.$path) === true) {
+                    include $installedPath.DIRECTORY_SEPARATOR.$path;
                     return;
                 }
             }
 
-            // Everything else.
-            @include $path;
-        }
+            // Check standard file locations based on the loaded rulesets.
+            foreach (self::$rulesetDirs as $rulesetDir) {
+                if (is_file(dirname($rulesetDir).DIRECTORY_SEPARATOR.$path) === true) {
+                    include_once dirname($rulesetDir).DIRECTORY_SEPARATOR.$path;
+                    return;
+                }
+            }
+        }//end if
+
+        // Everything else.
+        @include $path;
 
     }//end autoload()
+
+
+    /**
+     * Sets the verbosity level.
+     *
+     * @param int $verbosity The verbosity level.
+     *                       1: Print progress information.
+     *                       2: Print tokenizer debug information.
+     *                       3: Print sniff debug information.
+     *
+     * @return void
+     */
+    public function setVerbosity($verbosity)
+    {
+        if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
+            define('PHP_CODESNIFFER_VERBOSITY', $verbosity);
+        }
+
+    }//end setVerbosity()
+
+
+    /**
+     * Sets the tab width.
+     *
+     * @param int $tabWidth The number of spaces each tab represents.
+     *                      If greater than zero, tabs will be replaced
+     *                      by spaces before testing each file.
+     *
+     * @return void
+     */
+    public function setTabWidth($tabWidth)
+    {
+        if (defined('PHP_CODESNIFFER_TAB_WIDTH') === false) {
+            define('PHP_CODESNIFFER_TAB_WIDTH', $tabWidth);
+        }
+
+    }//end setTabWidth()
+
+
+    /**
+     * Sets the encoding.
+     *
+     * @param string $encoding The charset of the sniffed files.
+     *                         This is important for some reports that output
+     *                         with utf-8 encoding as you don't want it double
+     *                         encoding messages.
+     *
+     * @return void
+     */
+    public function setEncoding($encoding)
+    {
+        if (defined('PHP_CODESNIFFER_ENCODING') === false) {
+            define('PHP_CODESNIFFER_ENCODING', $encoding);
+        }
+
+    }//end setEncoding()
+
+
+    /**
+     * Sets the interactive flag.
+     *
+     * @param bool $interactive If TRUE, will stop after each file with errors
+     *                          and wait for user input.
+     *
+     * @return void
+     */
+    public function setInteractive($interactive)
+    {
+        if (defined('PHP_CODESNIFFER_INTERACTIVE') === false) {
+            define('PHP_CODESNIFFER_INTERACTIVE', $interactive);
+        }
+
+    }//end setInteractive()
 
 
     /**
@@ -302,8 +394,18 @@ class PHP_CodeSniffer
     {
         $newExtensions = array();
         foreach ($extensions as $ext) {
+            $slash = strpos($ext, '/');
+            if ($slash !== false) {
+                // They specified the tokenizer too.
+                list($ext, $tokenizer) = explode('/', $ext);
+                $newExtensions[$ext]   = strtoupper($tokenizer);
+                continue;
+            }
+
             if (isset($this->allowedFileExtensions[$ext]) === true) {
                 $newExtensions[$ext] = $this->allowedFileExtensions[$ext];
+            } else if (isset($this->defaultFileExtensions[$ext]) === true) {
+                $newExtensions[$ext] = $this->defaultFileExtensions[$ext];
             } else {
                 $newExtensions[$ext] = 'PHP';
             }
@@ -374,7 +476,7 @@ class PHP_CodeSniffer
 
 
     /**
-     * Processes the files/directories that PHP_CodeSniffer was constructed with.
+     * Start a PHP_CodeSniffer run.
      *
      * @param string|array $files        The files and directories to process. For
      *                                   directories, each sub directory will also
@@ -386,17 +488,28 @@ class PHP_CodeSniffer
      * @param boolean      $local        If true, don't recurse into directories.
      *
      * @return void
-     * @throws PHP_CodeSniffer_Exception If files or standard are invalid.
      */
     public function process($files, $standards, array $restrictions=array(), $local=false)
     {
-        if (is_array($files) === false) {
-            $files = array($files);
-        }
+        $files = (array) $files;
+        $this->initStandard($standards, $restrictions);
+        $this->processFiles($files, $local);
 
-        if (is_array($standards) === false) {
-            $standards = array($standards);
-        }
+    }//end process()
+
+
+    /**
+     * Initialise the standard that the run will use.
+     *
+     * @param string|array $standards    The set of code sniffs we are testing
+     *                                   against.
+     * @param array        $restrictions The sniff codes to restrict the
+     *
+     * @return void
+     */
+    public function initStandard($standards, array $restrictions=array())
+    {
+        $standards = (array) $standards;
 
         // Reset the members.
         $this->listeners       = array();
@@ -414,14 +527,17 @@ class PHP_CodeSniffer
             $installed = $this->getInstalledStandardPath($standard);
             if ($installed !== null) {
                 $standard = $installed;
-            } else if (is_dir($standard) === true
-                && is_file(realpath($standard.'/ruleset.xml')) === true
-            ) {
-                $standard = realpath($standard.'/ruleset.xml');
+            } else {
+                $standard = self::realpath($standard);
+                if (is_dir($standard) === true
+                    && is_file(self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml')) === true
+                ) {
+                    $standard = self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml');
+                }
             }
 
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
-                $ruleset = simplexml_load_file($standard);
+                $ruleset = simplexml_load_string(file_get_contents($standard));
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
@@ -449,18 +565,33 @@ class PHP_CodeSniffer
             echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
         }
 
-        // The SVN pre-commit calls process() to init the sniffs
-        // and ruleset so there may not be any files to process.
-        // But this has to come after that initial setup.
-        if (empty($files) === true) {
-            return;
-        }
+    }//end initStandard()
 
+
+    /**
+     * Processes the files/directories that PHP_CodeSniffer was constructed with.
+     *
+     * @param string|array $files The files and directories to process. For
+     *                            directories, each sub directory will also
+     *                            be traversed for source files.
+     * @param boolean      $local If true, don't recurse into directories.
+     *
+     * @return void
+     * @throws PHP_CodeSniffer_Exception If files are invalid.
+     */
+    public function processFiles($files, $local=false)
+    {
+        $files        = (array) $files;
         $cliValues    = $this->cli->getCommandLineValues();
         $showProgress = $cliValues['showProgress'];
+        $useColors    = $cliValues['colors'];
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             echo 'Creating file list... ';
+        }
+
+        if (empty($this->allowedFileExtensions) === true) {
+            $this->allowedFileExtensions = $this->defaultFileExtensions;
         }
 
         $todo     = $this->getFilesToProcess($files, $local);
@@ -476,16 +607,16 @@ class PHP_CodeSniffer
         $lastDir      = '';
         foreach ($todo as $file) {
             $this->file = $file;
-            $currDir = dirname($file);
+            $currDir    = dirname($file);
             if ($lastDir !== $currDir) {
-                if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                if (PHP_CODESNIFFER_VERBOSITY > 0 || PHP_CODESNIFFER_CBF === true) {
                     echo 'Changing into directory '.$currDir.PHP_EOL;
                 }
 
                 $lastDir = $currDir;
             }
 
-            $phpcsFile = $this->processFile($file, null, $restrictions);
+            $phpcsFile = $this->processFile($file, null);
             $numProcessed++;
 
             if (PHP_CODESNIFFER_VERBOSITY > 0
@@ -502,19 +633,31 @@ class PHP_CodeSniffer
                 $errors   = $phpcsFile->getErrorCount();
                 $warnings = $phpcsFile->getWarningCount();
                 if ($errors > 0) {
+                    if ($useColors === true) {
+                        echo "\033[31m";
+                    }
+
                     echo 'E';
                 } else if ($warnings > 0) {
+                    if ($useColors === true) {
+                        echo "\033[33m";
+                    }
+
                     echo 'W';
                 } else {
                     echo '.';
                 }
-            }
+
+                if ($useColors === true) {
+                    echo "\033[0m";
+                }
+            }//end if
 
             $dots++;
             if ($dots === 60) {
                 $padding = ($maxLength - strlen($numProcessed));
                 echo str_repeat(' ', $padding);
-                $percent = round($numProcessed / $numFiles * 100);
+                $percent = round(($numProcessed / $numFiles) * 100);
                 echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
                 $dots = 0;
             }
@@ -527,7 +670,7 @@ class PHP_CodeSniffer
             echo PHP_EOL.PHP_EOL;
         }
 
-    }//end process()
+    }//end processFiles()
 
 
     /**
@@ -545,13 +688,13 @@ class PHP_CodeSniffer
      */
     public function processRuleset($rulesetPath, $depth=0)
     {
-        $rulesetPath = realpath($rulesetPath);
+        $rulesetPath = self::realpath($rulesetPath);
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo str_repeat("\t", $depth);
             echo "Processing ruleset $rulesetPath".PHP_EOL;
         }
 
-        $ruleset = simplexml_load_file($rulesetPath);
+        $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
         if ($ruleset === false) {
             throw new PHP_CodeSniffer_Exception("Ruleset $rulesetPath is not valid");
         }
@@ -559,21 +702,24 @@ class PHP_CodeSniffer
         $ownSniffs      = array();
         $includedSniffs = array();
         $excludedSniffs = array();
+        $cliValues      = $this->cli->getCommandLineValues();
 
         $rulesetDir          = dirname($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
 
-        if (is_dir($rulesetDir.'/Sniffs') === true) {
+        if (is_dir($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs') === true) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\tAdding sniff files from \"/.../".basename($rulesetDir)."/Sniffs/\" directory".PHP_EOL;
             }
 
-            $ownSniffs = $this->_expandSniffDirectory($rulesetDir.'/Sniffs', $depth);
+            $ownSniffs = $this->_expandSniffDirectory($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs', $depth);
         }
 
         foreach ($ruleset->rule as $rule) {
-            if (isset($rule['ref']) === false) {
+            if (isset($rule['ref']) === false
+                || $this->_shouldProcessElement($rule) === false
+            ) {
                 continue;
             }
 
@@ -589,6 +735,10 @@ class PHP_CodeSniffer
 
             if (isset($rule->exclude) === true) {
                 foreach ($rule->exclude as $exclude) {
+                    if ($this->_shouldProcessElement($exclude) === false) {
+                        continue;
+                    }
+
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\tExcluding rule \"".$exclude['name'].'"'.PHP_EOL;
@@ -615,8 +765,52 @@ class PHP_CodeSniffer
             $this->_processRule($rule, $depth);
         }//end foreach
 
-        // Process custom ignore pattern rules.
+        // Process custom command line arguments.
+        $cliArgs = array();
+        foreach ($ruleset->{'arg'} as $arg) {
+            if ($this->_shouldProcessElement($arg) === false) {
+                continue;
+            }
+
+            if (isset($arg['name']) === true) {
+                $argString = '--'.(string) $arg['name'];
+                if (isset($arg['value']) === true) {
+                    $argString .= '='.(string) $arg['value'];
+                }
+            } else {
+                $argString = '-'.(string) $arg['value'];
+            }
+
+            $cliArgs[] = $argString;
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo str_repeat("\t", $depth);
+                echo "\t=> set command line value $argString".PHP_EOL;
+            }
+        }//end foreach
+
+        if (empty($cliValues['files']) === true) {
+            // Process hard-coded file paths.
+            foreach ($ruleset->{'file'} as $file) {
+                $file      = (string) $file;
+                $cliArgs[] = $file;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t=> added \"$file\" to the file list".PHP_EOL;
+                }
+            }
+        }
+
+        if (empty($cliArgs) === false) {
+            $this->cli->setCommandLineValues($cliArgs);
+        }
+
+        // Process custom sniff config settings.
         foreach ($ruleset->{'config'} as $config) {
+            if ($this->_shouldProcessElement($config) === false) {
+                continue;
+            }
+
             $this->setConfigData((string) $config['name'], (string) $config['value'], true);
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
@@ -626,6 +820,10 @@ class PHP_CodeSniffer
 
         // Process custom ignore pattern rules.
         foreach ($ruleset->{'exclude-pattern'} as $pattern) {
+            if ($this->_shouldProcessElement($pattern) === false) {
+                continue;
+            }
+
             if (isset($pattern['type']) === false) {
                 $pattern['type'] = 'absolute';
             }
@@ -654,7 +852,7 @@ class PHP_CodeSniffer
             if (in_array($sniff, $excludedSniffs) === true) {
                 continue;
             } else {
-                $files[] = realpath($sniff);
+                $files[] = self::realpath($sniff);
             }
         }
 
@@ -684,6 +882,8 @@ class PHP_CodeSniffer
 
         $di = new RecursiveIteratorIterator($rdi, 0, RecursiveIteratorIterator::CATCH_GET_CHILD);
 
+        $dirLen = strlen($directory);
+
         foreach ($di as $file) {
             $filename = $file->getFilename();
 
@@ -705,8 +905,11 @@ class PHP_CodeSniffer
 
             $path = $file->getPathname();
 
-            // Skip files in hidden directories.
-            if (strpos($path, DIRECTORY_SEPARATOR.'.') !== false) {
+            // Skip files in hidden directories within the Sniffs directory of this
+            // standard. We use the offset with strpos() to allow hidden directories
+            // before, valid example:
+            // /home/foo/.composer/vendor/drupal/coder/coder_sniffer/Drupal/Sniffs/...
+            if (strpos($path, DIRECTORY_SEPARATOR.'.', $dirLen) !== false) {
                 continue;
             }
 
@@ -753,7 +956,7 @@ class PHP_CodeSniffer
         // to absolute paths. If this fails, let the reference run through
         // the normal checks and have it fail as normal.
         if (substr($ref, 0, 1) === '.') {
-            $realpath   = realpath($rulesetDir.'/'.$ref);
+            $realpath = self::realpath($rulesetDir.'/'.$ref);
             if ($realpath !== false) {
                 $ref = $realpath;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -763,9 +966,37 @@ class PHP_CodeSniffer
             }
         }
 
-        if (is_file($ref) === false) {
+        // As sniffs can't begin with a tilde, assume references in
+        // this format at relative to the user's home directory.
+        if (substr($ref, 0, 2) === '~/') {
+            $realpath = self::realpath($ref);
+            if ($realpath !== false) {
+                $ref = $realpath;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t\t=> $ref".PHP_EOL;
+                }
+            }
+        }
+
+        if (is_file($ref) === true) {
+            if (substr($ref, -9) === 'Sniff.php') {
+                // A single external sniff.
+                self::$rulesetDirs[] = dirname(dirname(dirname($ref)));
+                return array($ref);
+            }
+        } else {
             // See if this is a whole standard being referenced.
             $path = $this->getInstalledStandardPath($ref);
+            if (self::isPharFile($path) === true && strpos($path, 'ruleset.xml') === false) {
+                // If the ruleset exists inside the phar file, use it.
+                if (file_exists($path.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
+                    $path = $path.DIRECTORY_SEPARATOR.'ruleset.xml';
+                } else {
+                    $path = null;
+                }
+            }
+
             if ($path !== null) {
                 $ref = $path;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -786,17 +1017,25 @@ class PHP_CodeSniffer
                         $path = '';
                     } else if (count($parts) === 2) {
                         // A directory of sniffs?
-                        $path = '/Sniffs/'.$parts[1];
+                        $path = DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR.$parts[1];
                     } else {
                         // A single sniff?
-                        $path = '/Sniffs/'.$parts[1].'/'.$parts[2].'Sniff.php';
+                        $path = DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR.$parts[1].DIRECTORY_SEPARATOR.$parts[2].'Sniff.php';
                     }
                 }
 
                 $newRef  = false;
                 $stdPath = $this->getInstalledStandardPath($stdName);
                 if ($stdPath !== null && $path !== '') {
-                    $newRef = realpath(dirname($stdPath).$path);
+                    if (self::isPharFile($stdPath) === true
+                        && strpos($stdPath, 'ruleset.xml') === false
+                    ) {
+                        // Phar files can only return the directory,
+                        // since ruleset can be omitted if building one standard.
+                        $newRef = self::realpath($stdPath.$path);
+                    } else {
+                        $newRef = self::realpath(dirname($stdPath).$path);
+                    }
                 }
 
                 if ($newRef === false) {
@@ -810,8 +1049,8 @@ class PHP_CodeSniffer
                             continue;
                         }
 
-                        $newRef = realpath($dir.$path);
-                        
+                        $newRef = self::realpath($dir.$path);
+
                         if ($newRef !== false) {
                             $ref = $newRef;
                         }
@@ -828,14 +1067,14 @@ class PHP_CodeSniffer
         }//end if
 
         if (is_dir($ref) === true) {
-            if (is_file($ref.'/ruleset.xml') === true) {
+            if (is_file($ref.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
                 // We are referencing an external coding standard.
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t* rule is referencing a standard using directory name; processing *".PHP_EOL;
                 }
 
-                return $this->processRuleset($ref.'/ruleset.xml', ($depth + 2));
+                return $this->processRuleset($ref.DIRECTORY_SEPARATOR.'ruleset.xml', ($depth + 2));
             } else {
                 // We are referencing a whole directory of sniffs.
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -884,7 +1123,9 @@ class PHP_CodeSniffer
         $code = (string) $rule['ref'];
 
         // Custom severity.
-        if (isset($rule->severity) === true) {
+        if (isset($rule->severity) === true
+            && $this->_shouldProcessElement($rule->severity) === true
+        ) {
             if (isset($this->ruleset[$code]) === false) {
                 $this->ruleset[$code] = array();
             }
@@ -897,7 +1138,9 @@ class PHP_CodeSniffer
         }
 
         // Custom message type.
-        if (isset($rule->type) === true) {
+        if (isset($rule->type) === true
+            && $this->_shouldProcessElement($rule->type) === true
+        ) {
             if (isset($this->ruleset[$code]) === false) {
                 $this->ruleset[$code] = array();
             }
@@ -910,7 +1153,9 @@ class PHP_CodeSniffer
         }
 
         // Custom message.
-        if (isset($rule->message) === true) {
+        if (isset($rule->message) === true
+            && $this->_shouldProcessElement($rule->message) === true
+        ) {
             if (isset($this->ruleset[$code]) === false) {
                 $this->ruleset[$code] = array();
             }
@@ -923,8 +1168,14 @@ class PHP_CodeSniffer
         }
 
         // Custom properties.
-        if (isset($rule->properties) === true) {
+        if (isset($rule->properties) === true
+            && $this->_shouldProcessElement($rule->properties) === true
+        ) {
             foreach ($rule->properties->property as $prop) {
+                if ($this->_shouldProcessElement($prop) === false) {
+                    continue;
+                }
+
                 if (isset($this->ruleset[$code]) === false) {
                     $this->ruleset[$code] = array(
                                              'properties' => array(),
@@ -937,8 +1188,20 @@ class PHP_CodeSniffer
                 if (isset($prop['type']) === true
                     && (string) $prop['type'] === 'array'
                 ) {
-                    $value = (string) $prop['value'];
-                    $this->ruleset[$code]['properties'][$name] = explode(',', $value);
+                    $value  = (string) $prop['value'];
+                    $values = array();
+                    foreach (explode(',', $value) as $val) {
+                        $v = '';
+
+                        list($k,$v) = explode('=>', $val.'=>');
+                        if ($v !== '') {
+                            $values[$k] = $v;
+                        } else {
+                            $values[] = $k;
+                        }
+                    }
+
+                    $this->ruleset[$code]['properties'][$name] = $values;
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\t=> array property \"$name\" set to \"$value\"".PHP_EOL;
@@ -949,12 +1212,16 @@ class PHP_CodeSniffer
                         echo str_repeat("\t", $depth);
                         echo "\t\t=> property \"$name\" set to \"".(string) $prop['value'].'"'.PHP_EOL;
                     }
-                }
+                }//end if
             }//end foreach
         }//end if
 
         // Ignore patterns.
         foreach ($rule->{'exclude-pattern'} as $pattern) {
+            if ($this->_shouldProcessElement($pattern) === false) {
+                continue;
+            }
+
             if (isset($this->ignorePatterns[$code]) === false) {
                 $this->ignorePatterns[$code] = array();
             }
@@ -974,6 +1241,43 @@ class PHP_CodeSniffer
 
 
     /**
+     * Determine if an element should be processed or ignored.
+     *
+     * @param SimpleXMLElement $element An object from a ruleset XML file.
+     * @param int              $depth   How many nested processing steps we are in.
+     *                                  This is only used for debug output.
+     *
+     * @return bool
+     */
+    private function _shouldProcessElement($element, $depth=0)
+    {
+        if (isset($element['phpcbf-only']) === false
+            && isset($element['phpcs-only']) === false
+        ) {
+            // No exceptions are being made.
+            return true;
+        }
+
+        if (PHP_CODESNIFFER_CBF === true
+            && isset($element['phpcbf-only']) === true
+            && (string) $element['phpcbf-only'] === 'true'
+        ) {
+            return true;
+        }
+
+        if (PHP_CODESNIFFER_CBF === false
+            && isset($element['phpcs-only']) === true
+            && (string) $element['phpcs-only'] === 'true'
+        ) {
+            return true;
+        }
+
+        return false;
+
+    }//end _shouldProcessElement()
+
+
+    /**
      * Loads and stores sniffs objects used for sniffing files.
      *
      * @param array $files        Paths to the sniff files to register.
@@ -981,6 +1285,7 @@ class PHP_CodeSniffer
      *                            listeners to.
      *
      * @return void
+     * @throws PHP_CodeSniffer_Exception If a sniff file path is invalid.
      */
     public function registerSniffs($files, $restrictions)
     {
@@ -1000,6 +1305,11 @@ class PHP_CodeSniffer
             }
 
             $className = substr($file, ($slashPos + 1));
+
+            if (substr_count($className, DIRECTORY_SEPARATOR) !== 3) {
+                throw new PHP_CodeSniffer_Exception("Sniff file $className is not valid; sniff files must be located in a .../StandardName/Sniffs/CategoryName/ directory");
+            }
+
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
@@ -1019,6 +1329,12 @@ class PHP_CodeSniffer
             $classNameNS = str_replace('_', '\\', $className);
             if (class_exists($classNameNS, false) === true) {
                 $className = $classNameNS;
+            }
+
+            // Skip abstract classes.
+            $reflection = new ReflectionClass($className);
+            if ($reflection->isAbstract() === true) {
+                continue;
             }
 
             $listeners[$className] = $className;
@@ -1065,10 +1381,14 @@ class PHP_CodeSniffer
                 }
             }
 
-            $tokenizers = array('PHP');
+            $tokenizers = array();
             $vars       = get_class_vars($listenerClass);
             if (isset($vars['supportedTokenizers']) === true) {
-                $tokenizers = $vars['supportedTokenizers'];
+                foreach ($vars['supportedTokenizers'] as $tokenizer) {
+                    $tokenizers[$tokenizer] = $tokenizer;
+                }
+            } else {
+                $tokenizers = array('PHP' => 'PHP');
             }
 
             $tokens = $this->listeners[$listenerClass]->register();
@@ -1077,17 +1397,33 @@ class PHP_CodeSniffer
                 throw new PHP_CodeSniffer_Exception($msg);
             }
 
+            $parts          = explode('_', str_replace('\\', '_', $listenerClass));
+            $listenerSource = $parts[0].'.'.$parts[2].'.'.substr($parts[3], 0, -5);
+            $ignorePatterns = array();
+            $patterns       = $this->getIgnorePatterns($listenerSource);
+            foreach ($patterns as $pattern => $type) {
+                // While there is support for a type of each pattern
+                // (absolute or relative) we don't actually support it here.
+                $replacements = array(
+                                 '\\,' => ',',
+                                 '*'   => '.*',
+                                );
+
+                $ignorePatterns[] = strtr($pattern, $replacements);
+            }
+
             foreach ($tokens as $token) {
                 if (isset($this->_tokenListeners[$token]) === false) {
                     $this->_tokenListeners[$token] = array();
                 }
 
-                if (in_array($this->listeners[$listenerClass], $this->_tokenListeners[$token], true) === false) {
-                    $this->_tokenListeners[$token][] = array(
-                                                        'listener'   => $this->listeners[$listenerClass],
-                                                        'class'      => $listenerClass,
-                                                        'tokenizers' => $tokenizers,
-                                                       );
+                if (isset($this->_tokenListeners[$token][$listenerClass]) === false) {
+                    $this->_tokenListeners[$token][$listenerClass] = array(
+                                                                      'class'      => $listenerClass,
+                                                                      'source'     => $listenerSource,
+                                                                      'tokenizers' => $tokenizers,
+                                                                      'ignore'     => $ignorePatterns,
+                                                                     );
                 }
             }
         }//end foreach
@@ -1146,7 +1482,11 @@ class PHP_CodeSniffer
         $files = array();
 
         foreach ($paths as $path) {
-            if (is_dir($path) === true) {
+            if (is_dir($path) === true || self::isPharFile($path) === true) {
+                if (self::isPharFile($path) === true) {
+                    $path = 'phar://'.$path;
+                }
+
                 if ($local === true) {
                     $di = new DirectoryIterator($path);
                 } else {
@@ -1159,7 +1499,7 @@ class PHP_CodeSniffer
 
                 foreach ($di as $file) {
                     // Check if the file exists after all symlinks are resolved.
-                    $filePath = realpath($file->getPathname());
+                    $filePath = self::realpath($file->getPathname());
                     if ($filePath === false) {
                         continue;
                     }
@@ -1250,7 +1590,7 @@ class PHP_CodeSniffer
         }
 
         foreach ($this->ignorePatterns as $pattern => $type) {
-            if (is_array($pattern) === true) {
+            if (is_array($type) === true) {
                 // A sniff specific ignore pattern.
                 continue;
             }
@@ -1282,7 +1622,8 @@ class PHP_CodeSniffer
                 $testPath = $path;
             }
 
-            if (preg_match("|{$pattern}|i", $testPath) === 1) {
+            $pattern = '`'.$pattern.'`i';
+            if (preg_match($pattern, $testPath) === 1) {
                 return true;
             }
         }//end foreach
@@ -1299,23 +1640,21 @@ class PHP_CodeSniffer
      * conforms with the standard. Returns the processed file object, or NULL
      * if no file was processed due to error.
      *
-     * @param string $file         The file to process.
-     * @param string $contents     The contents to parse. If NULL, the content
-     *                             is taken from the file system.
-     * @param array  $restrictions The sniff codes to restrict the
-     *                             violations to.
+     * @param string $file     The file to process.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
      *
      * @return PHP_CodeSniffer_File
      * @throws PHP_CodeSniffer_Exception If the file could not be processed.
      * @see    _processFile()
      */
-    public function processFile($file, $contents=null, $restrictions=array())
+    public function processFile($file, $contents=null)
     {
         if ($contents === null && file_exists($file) === false) {
             throw new PHP_CodeSniffer_Exception("Source file $file does not exist");
         }
 
-        $filePath = realpath($file);
+        $filePath = self::realpath($file);
         if ($filePath === false) {
             $filePath = $file;
         }
@@ -1343,7 +1682,7 @@ class PHP_CodeSniffer
         }//end if
 
         try {
-            $phpcsFile = $this->_processFile($file, $contents, $restrictions);
+            $phpcsFile = $this->_processFile($file, $contents);
         } catch (Exception $e) {
             $trace = $e->getTrace();
 
@@ -1365,14 +1704,13 @@ class PHP_CodeSniffer
                 $filename = (string) $filename;
             }
 
-            $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
+            $errorMessage = '"'.$e->getMessage().'" at '.$e->getFile().':'.$e->getLine();
+            $error        = "An error occurred during processing; checking has been aborted. The error message was: $errorMessage";
 
             $phpcsFile = new PHP_CodeSniffer_File(
                 $filename,
                 $this->_tokenListeners,
-                $this->allowedFileExtensions,
                 $this->ruleset,
-                $restrictions,
                 $this
             );
 
@@ -1384,6 +1722,7 @@ class PHP_CodeSniffer
         if (PHP_CODESNIFFER_INTERACTIVE === false) {
             // Cache the report data for this file so we can unset it to save memory.
             $this->reporting->cacheFileReport($phpcsFile, $cliValues);
+            $phpcsFile->cleanUp();
             return $phpcsFile;
         }
 
@@ -1403,7 +1742,7 @@ class PHP_CodeSniffer
 
             $reportClass = $this->reporting->factory('full');
             $reportData  = $this->reporting->prepareFileReport($phpcsFile);
-            $reportClass->generateFileReport($reportData, $cliValues['showSources'], $cliValues['reportWidth']);
+            $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
 
             echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
             $input = fgets(STDIN);
@@ -1420,7 +1759,7 @@ class PHP_CodeSniffer
                 // and only clear it when the file changes, but we are rechecking
                 // the same file.
                 $this->populateTokenListeners();
-                $phpcsFile = $this->_processFile($file, $contents, $restrictions);
+                $phpcsFile = $this->_processFile($file, $contents);
                 break;
             }
         }//end while
@@ -1435,19 +1774,23 @@ class PHP_CodeSniffer
      *
      * Does raw processing only. No interactive support or error checking.
      *
-     * @param string $file         The file to process.
-     * @param string $contents     The contents to parse. If NULL, the content
-     *                             is taken from the file system.
-     * @param array  $restrictions The sniff codes to restrict the
-     *                             violations to.
+     * @param string $file     The file to process.
+     * @param string $contents The contents to parse. If NULL, the content
+     *                         is taken from the file system.
      *
      * @return PHP_CodeSniffer_File
      * @see    processFile()
      */
-    private function _processFile($file, $contents, $restrictions)
+    private function _processFile($file, $contents)
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            $startTime = time();
+        $stdin     = false;
+        $cliValues = $this->cli->getCommandLineValues();
+        if (empty($cliValues['files']) === true) {
+            $stdin = true;
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
+            $startTime = microtime(true);
             echo 'Processing '.basename($file).' ';
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo PHP_EOL;
@@ -1457,28 +1800,30 @@ class PHP_CodeSniffer
         $phpcsFile = new PHP_CodeSniffer_File(
             $file,
             $this->_tokenListeners,
-            $this->allowedFileExtensions,
             $this->ruleset,
-            $restrictions,
             $this
         );
 
         $phpcsFile->start($contents);
-        $phpcsFile->cleanUp();
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            $timeTaken = (time() - $startTime);
-            if ($timeTaken === 0) {
-                echo 'DONE in < 1 second';
-            } else if ($timeTaken === 1) {
-                echo 'DONE in 1 second';
+        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $stdin === false)) {
+            $timeTaken = ((microtime(true) - $startTime) * 1000);
+            if ($timeTaken < 1000) {
+                $timeTaken = round($timeTaken);
+                echo "DONE in {$timeTaken}ms";
             } else {
-                echo "DONE in $timeTaken seconds";
+                $timeTaken = round(($timeTaken / 1000), 2);
+                echo "DONE in $timeTaken secs";
             }
 
-            $errors   = $phpcsFile->getErrorCount();
-            $warnings = $phpcsFile->getWarningCount();
-            echo " ($errors errors, $warnings warnings)".PHP_EOL;
+            if (PHP_CODESNIFFER_CBF === true) {
+                $errors = $phpcsFile->getFixableCount();
+                echo " ($errors fixable violations)".PHP_EOL;
+            } else {
+                $errors   = $phpcsFile->getErrorCount();
+                $warnings = $phpcsFile->getWarningCount();
+                echo " ($errors errors, $warnings warnings)".PHP_EOL;
+            }
         }
 
         return $phpcsFile;
@@ -1531,210 +1876,6 @@ class PHP_CodeSniffer
         return $this->_tokenListeners;
 
     }//end getTokenSniffs()
-
-
-    /**
-     * Takes a token produced from <code>token_get_all()</code> and produces a
-     * more uniform token.
-     *
-     * Note that this method also resolves T_STRING tokens into more discrete
-     * types, therefore there is no need to call resolveTstringToken()
-     *
-     * @param string|array $token The token to convert.
-     *
-     * @return array The new token.
-     */
-    public static function standardiseToken($token)
-    {
-        if (is_array($token) === false) {
-            if (isset(self::$_resolveTokenCache[$token]) === true) {
-                $newToken = self::$_resolveTokenCache[$token];
-            } else {
-                $newToken = self::resolveSimpleToken($token);
-            }
-        } else {
-            switch ($token[0]) {
-            case T_STRING:
-                // Some T_STRING tokens can be more specific.
-                $tokenType = strtolower($token[1]);
-                if (isset(self::$_resolveTokenCache[$tokenType]) === true) {
-                    $newToken = self::$_resolveTokenCache[$tokenType];
-                } else {
-                    $newToken = self::resolveTstringToken($tokenType);
-                }
-
-                break;
-            case T_CURLY_OPEN:
-                $newToken = array(
-                             'code' => T_OPEN_CURLY_BRACKET,
-                             'type' => 'T_OPEN_CURLY_BRACKET',
-                            );
-                break;
-            default:
-                $newToken = array(
-                             'code' => $token[0],
-                             'type' => token_name($token[0]),
-                            );
-                break;
-            }//end switch
-
-            $newToken['content'] = $token[1];
-        }//end if
-
-        return $newToken;
-
-    }//end standardiseToken()
-
-
-    /**
-     * Converts T_STRING tokens into more usable token names.
-     *
-     * The token should be produced using the token_get_all() function.
-     * Currently, not all T_STRING tokens are converted.
-     *
-     * @param string $token The T_STRING token to convert as constructed
-     *                      by token_get_all().
-     *
-     * @return array The new token.
-     */
-    public static function resolveTstringToken($token)
-    {
-        $newToken = array();
-        switch ($token) {
-        case 'false':
-            $newToken['type'] = 'T_FALSE';
-            break;
-        case 'true':
-            $newToken['type'] = 'T_TRUE';
-            break;
-        case 'null':
-            $newToken['type'] = 'T_NULL';
-            break;
-        case 'self':
-            $newToken['type'] = 'T_SELF';
-            break;
-        case 'parent':
-            $newToken['type'] = 'T_PARENT';
-            break;
-        default:
-            $newToken['type'] = 'T_STRING';
-            break;
-        }
-
-        $newToken['code'] = constant($newToken['type']);
-
-        self::$_resolveTokenCache[$token] = $newToken;
-        return $newToken;
-
-    }//end resolveTstringToken()
-
-
-    /**
-     * Converts simple tokens into a format that conforms to complex tokens
-     * produced by token_get_all().
-     *
-     * Simple tokens are tokens that are not in array form when produced from
-     * token_get_all().
-     *
-     * @param string $token The simple token to convert.
-     *
-     * @return array The new token in array format.
-     */
-    public static function resolveSimpleToken($token)
-    {
-        $newToken = array();
-
-        switch ($token) {
-        case '{':
-            $newToken['type'] = 'T_OPEN_CURLY_BRACKET';
-            break;
-        case '}':
-            $newToken['type'] = 'T_CLOSE_CURLY_BRACKET';
-            break;
-        case '[':
-            $newToken['type'] = 'T_OPEN_SQUARE_BRACKET';
-            break;
-        case ']':
-            $newToken['type'] = 'T_CLOSE_SQUARE_BRACKET';
-            break;
-        case '(':
-            $newToken['type'] = 'T_OPEN_PARENTHESIS';
-            break;
-        case ')':
-            $newToken['type'] = 'T_CLOSE_PARENTHESIS';
-            break;
-        case ':':
-            $newToken['type'] = 'T_COLON';
-            break;
-        case '.':
-            $newToken['type'] = 'T_STRING_CONCAT';
-            break;
-        case '?':
-            $newToken['type'] = 'T_INLINE_THEN';
-            break;
-        case ';':
-            $newToken['type'] = 'T_SEMICOLON';
-            break;
-        case '=':
-            $newToken['type'] = 'T_EQUAL';
-            break;
-        case '*':
-            $newToken['type'] = 'T_MULTIPLY';
-            break;
-        case '/':
-            $newToken['type'] = 'T_DIVIDE';
-            break;
-        case '+':
-            $newToken['type'] = 'T_PLUS';
-            break;
-        case '-':
-            $newToken['type'] = 'T_MINUS';
-            break;
-        case '%':
-            $newToken['type'] = 'T_MODULUS';
-            break;
-        case '^':
-            $newToken['type'] = 'T_POWER';
-            break;
-        case '&':
-            $newToken['type'] = 'T_BITWISE_AND';
-            break;
-        case '|':
-            $newToken['type'] = 'T_BITWISE_OR';
-            break;
-        case '<':
-            $newToken['type'] = 'T_LESS_THAN';
-            break;
-        case '>':
-            $newToken['type'] = 'T_GREATER_THAN';
-            break;
-        case '!':
-            $newToken['type'] = 'T_BOOLEAN_NOT';
-            break;
-        case ',':
-            $newToken['type'] = 'T_COMMA';
-            break;
-        case '@':
-            $newToken['type'] = 'T_ASPERAND';
-            break;
-        case '$':
-            $newToken['type'] = 'T_DOLLAR';
-            break;
-        case '`':
-            $newToken['type'] = 'T_BACKTICK';
-            break;
-        default:
-            $newToken['type'] = 'T_NONE';
-            break;
-        }//end switch
-
-        $newToken['code']    = constant($newToken['type']);
-        $newToken['content'] = $token;
-
-        self::$_resolveTokenCache[$token] = $newToken;
-        return $newToken;
-
-    }//end resolveSimpleToken()
 
 
     /**
@@ -1931,13 +2072,41 @@ class PHP_CodeSniffer
 
 
     /**
+     * Prepares token content for output to screen.
+     *
+     * Replaces invisible characters so they are visible. On non-Windows
+     * OSes it will also colour the invisible characters.
+     *
+     * @param string $content The content to prepare.
+     *
+     * @return string
+     */
+    public static function prepareForOutput($content)
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $content = str_replace("\r", '\r', $content);
+            $content = str_replace("\n", '\n', $content);
+            $content = str_replace("\t", '\t', $content);
+        } else {
+            $content = str_replace("\r", "\033[30;1m\\r\033[0m", $content);
+            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $content);
+            $content = str_replace("\t", "\033[30;1m\\t\033[0m", $content);
+            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+        }
+
+        return $content;
+
+    }//end prepareForOutput()
+
+
+    /**
      * Get a list paths where standards are installed.
      *
      * @return array
      */
     public static function getInstalledStandardPaths()
     {
-        $installedPaths = array(dirname(__FILE__).'/CodeSniffer/Standards');
+        $installedPaths = array(dirname(__FILE__).DIRECTORY_SEPARATOR.'CodeSniffer'.DIRECTORY_SEPARATOR.'Standards');
         $configPaths    = PHP_CodeSniffer::getConfigData('installed_paths');
         if ($configPaths !== null) {
             $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
@@ -1946,7 +2115,7 @@ class PHP_CodeSniffer
         $resolvedInstalledPaths = array();
         foreach ($installedPaths as $installedPath) {
             if (substr($installedPath, 0, 1) === '.') {
-                $installedPath = dirname(__FILE__).'/'.$installedPath;
+                $installedPath = dirname(__FILE__).DIRECTORY_SEPARATOR.$installedPath;
             }
 
             $resolvedInstalledPaths[] = $installedPath;
@@ -1972,7 +2141,7 @@ class PHP_CodeSniffer
      *                                look in its default locations.
      *
      * @return array
-     * @see isInstalledStandard()
+     * @see    isInstalledStandard()
      */
     public static function getInstalledStandards(
         $includeGeneric=false,
@@ -2021,29 +2190,33 @@ class PHP_CodeSniffer
      * @param string $standard The name of the coding standard.
      *
      * @return boolean
-     * @see getInstalledStandards()
+     * @see    getInstalledStandards()
      */
     public static function isInstalledStandard($standard)
     {
         $path = self::getInstalledStandardPath($standard);
-        if ($path !== null) {
+        if ($path !== null && strpos($path, 'ruleset.xml') !== false) {
             return true;
         } else {
             // This could be a custom standard, installed outside our
             // standards directory.
-            $ruleset = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.'ruleset.xml';
-            if (is_file($ruleset) === true) {
-                return true;
-            }
+            $standard = self::realPath($standard);
 
-            // Might also be an actual ruleset file itself.
+            // Might be an actual ruleset file itself.
             // If it has an XML extension, let's at least try it.
             if (is_file($standard) === true
                 && substr(strtolower($standard), -4) === '.xml'
             ) {
                 return true;
             }
-        }
+
+            // If it is a directory with a ruleset.xml file in it,
+            // it is a standard.
+            $ruleset = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.'ruleset.xml';
+            if (is_file($ruleset) === true) {
+                return true;
+            }
+        }//end if
 
         return false;
 
@@ -2065,9 +2238,15 @@ class PHP_CodeSniffer
     {
         $installedPaths = self::getInstalledStandardPaths();
         foreach ($installedPaths as $installedPath) {
-            $path = realpath($installedPath.'/'.$standard.'/ruleset.xml');
+            $standardPath = $installedPath.DIRECTORY_SEPARATOR.$standard;
+            $path         = self::realpath($standardPath.DIRECTORY_SEPARATOR.'ruleset.xml');
             if (is_file($path) === true) {
                 return $path;
+            } else if (self::isPharFile($standardPath) === true) {
+                $path = self::realpath($standardPath);
+                if ($path !== false) {
+                    return $path;
+                }
             }
         }
 
@@ -2085,8 +2264,8 @@ class PHP_CodeSniffer
      * @param string $key The name of the config value.
      *
      * @return string|null
-     * @see setConfigData()
-     * @see getAllConfigData()
+     * @see    setConfigData()
+     * @see    getAllConfigData()
      */
     public static function getConfigData($key)
     {
@@ -2120,28 +2299,37 @@ class PHP_CodeSniffer
      *                           data to the config file.
      *
      * @return boolean
-     * @see getConfigData()
+     * @see    getConfigData()
      * @throws PHP_CodeSniffer_Exception If the config file can not be written.
      */
     public static function setConfigData($key, $value, $temp=false)
     {
         if ($temp === false) {
-            $configFile = dirname(__FILE__).'/CodeSniffer.conf';
-            if (is_file($configFile) === false
-                && strpos('@data_dir@', '@data_dir') === false
-            ) {
-                // If data_dir was replaced, this is a PEAR install and we can
-                // use the PEAR data dir to store the conf file.
-                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+            $path = '';
+            if (is_callable('Phar::running') === true) {
+                $path = Phar::running(false);
+            }
+
+            if ($path !== '') {
+                $configFile = dirname($path).'/CodeSniffer.conf';
+            } else {
+                $configFile = dirname(__FILE__).'/CodeSniffer.conf';
+                if (is_file($configFile) === false
+                    && strpos('@data_dir@', '@data_dir') === false
+                ) {
+                    // If data_dir was replaced, this is a PEAR install and we can
+                    // use the PEAR data dir to store the conf file.
+                    $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+                }
             }
 
             if (is_file($configFile) === true
                 && is_writable($configFile) === false
             ) {
-                $error = "Config file $configFile is not writable";
+                $error = 'Config file '.$configFile.' is not writable';
                 throw new PHP_CodeSniffer_Exception($error);
             }
-        }
+        }//end if
 
         $phpCodeSnifferConfig = self::getAllConfigData();
 
@@ -2173,8 +2361,8 @@ class PHP_CodeSniffer
     /**
      * Get all config data in an array.
      *
-     * @return string
-     * @see getConfigData()
+     * @return array<string, string>
+     * @see    getConfigData()
      */
     public static function getAllConfigData()
     {
@@ -2182,13 +2370,23 @@ class PHP_CodeSniffer
             return $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'];
         }
 
-        $configFile = dirname(__FILE__).'/CodeSniffer.conf';
-        if (is_file($configFile) === false) {
-            $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+        $path = '';
+        if (is_callable('Phar::running') === true) {
+            $path = Phar::running(false);
+        }
+
+        if ($path !== '') {
+            $configFile = dirname($path).'/CodeSniffer.conf';
+        } else {
+            $configFile = dirname(__FILE__).'/CodeSniffer.conf';
+            if (is_file($configFile) === false) {
+                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+            }
         }
 
         if (is_file($configFile) === false) {
-            return null;
+            $GLOBALS['PHP_CODESNIFFER_CONFIG_DATA'] = array();
+            return array();
         }
 
         include $configFile;
@@ -2198,6 +2396,91 @@ class PHP_CodeSniffer
     }//end getAllConfigData()
 
 
-}//end class
+    /**
+     * Return TRUE, if the path is a phar file.
+     *
+     * @param string $path The path to use.
+     *
+     * @return mixed
+     */
+    public static function isPharFile($path)
+    {
+        if (strpos($path, 'phar://') === 0) {
+            return true;
+        }
 
-?>
+        return false;
+
+    }//end isPharFile()
+
+
+    /**
+     * CodeSniffer alternative for realpath.
+     *
+     * Allows for phar support.
+     *
+     * @param string $path The path to use.
+     *
+     * @return mixed
+     */
+    public static function realpath($path)
+    {
+        // Support the path replacement of ~ with the user's home directory.
+        if (substr($path, 0, 2) === '~/') {
+            $homeDir = getenv('HOME');
+            if ($homeDir !== false) {
+                $path = $homeDir.substr($path, 1);
+            }
+        }
+
+        // No extra work needed if this is not a phar file.
+        if (self::isPharFile($path) === false) {
+            return realpath($path);
+        }
+
+        // Before trying to break down the file path,
+        // check if it exists first because it will mostly not
+        // change after running the below code.
+        if (file_exists($path) === true) {
+            return $path;
+        }
+
+        $phar  = Phar::running(false);
+        $extra = str_replace('phar://'.$phar, '', $path);
+        $path  = realpath($phar);
+        if ($path === false) {
+            return false;
+        }
+
+        $path = 'phar://'.$path.$extra;
+        if (file_exists($path) === true) {
+            return $path;
+        }
+
+        return false;
+
+    }//end realpath()
+
+
+    /**
+     * CodeSniffer alternative for chdir().
+     *
+     * Allows for phar support.
+     *
+     * @param string $path The path to use.
+     *
+     * @return void
+     */
+    public static function chdir($path)
+    {
+        if (self::isPharFile($path) === true) {
+            $phar = Phar::running(false);
+            chdir(dirname($phar));
+        } else {
+            chdir($path);
+        }
+
+    }//end chdir()
+
+
+}//end class

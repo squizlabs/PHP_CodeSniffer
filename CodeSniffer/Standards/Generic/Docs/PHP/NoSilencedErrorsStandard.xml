@@ -5,7 +5,7 @@
     ]]>
     </standard>
     <code_comparison>
-        <code title="Valid: isset is used to verify that a variable exists before trying to use it.">
+        <code title="Valid: isset() is used to verify that a variable exists before trying to use it.">
         <![CDATA[
 if (<em>isset($foo)</em> && $foo) {
     echo "Hello\n";

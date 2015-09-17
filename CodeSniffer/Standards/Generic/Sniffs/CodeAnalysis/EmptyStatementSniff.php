@@ -1,15 +1,15 @@
 <?php
 /**
- * This file is part of the CodeAnalysis addon for PHP_CodeSniffer.
+ * This file is part of the CodeAnalysis add-on for PHP_CodeSniffer.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2007-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
@@ -18,7 +18,7 @@
  *
  * This sniff implements the common algorithm for empty statement body detection.
  * A body is considered as empty if it is completely empty or it only contains
- * whitespace characters and|or comments.
+ * whitespace characters and/or comments.
  *
  * <code>
  * stmt {
@@ -29,41 +29,17 @@
  * }
  * </code>
  *
- * Statements covered by this sniff are <b>catch</b>, <b>do</b>, <b>else</b>,
- * <b>elsif</b>, <b>for</b>, <b>foreach<b>, <b>if</b>, <b>switch</b>, <b>try</b>
- * and <b>while</b>.
- *
  * @category  PHP
  * @package   PHP_CodeSniffer
  * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2007-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer_Sniff
 {
-
-    /**
-     * List of block tokens that this sniff covers.
-     *
-     * The key of this hash identifies the required token while the boolean
-     * value says mark an error or mark a warning.
-     *
-     * @var array
-     */
-    protected $checkedTokens = array(
-                                T_CATCH   => false,
-                                T_DO      => true,
-                                T_ELSE    => true,
-                                T_ELSEIF  => true,
-                                T_FOR     => true,
-                                T_FOREACH => true,
-                                T_IF      => true,
-                                T_SWITCH  => true,
-                                T_TRY     => true,
-                                T_WHILE   => true,
-                               );
 
 
     /**
@@ -73,7 +49,18 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
      */
     public function register()
     {
-        return array_keys($this->checkedTokens);
+        return array(
+                T_CATCH,
+                T_DO,
+                T_ELSE,
+                T_ELSEIF,
+                T_FOR,
+                T_FOREACH,
+                T_IF,
+                T_SWITCH,
+                T_TRY,
+                T_WHILE,
+               );
 
     }//end register()
 
@@ -92,37 +79,28 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
         $tokens = $phpcsFile->getTokens();
         $token  = $tokens[$stackPtr];
 
-        // Skip for-statements without body.
+        // Skip statements without a body.
         if (isset($token['scope_opener']) === false) {
             return;
         }
 
-        $next = ++$token['scope_opener'];
-        $end  = --$token['scope_closer'];
+        $next = $phpcsFile->findNext(
+            PHP_CodeSniffer_Tokens::$emptyTokens,
+            ($token['scope_opener'] + 1),
+            ($token['scope_closer'] - 1),
+            true
+        );
 
-        $emptyBody = true;
-        for (; $next <= $end; ++$next) {
-            if (in_array($tokens[$next]['code'], PHP_CodeSniffer_Tokens::$emptyTokens) === false) {
-                $emptyBody = false;
-                break;
-            }
+        if ($next !== false) {
+            return;
         }
 
-        if ($emptyBody === true) {
-            // Get token identifier.
-            $name  = $phpcsFile->getTokensAsString($stackPtr, 1);
-            $error = 'Empty %s statement detected';
-            $data  = array(strtoupper($name));
-            if ($this->checkedTokens[$token['code']] === true) {
-                $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
-            } else {
-                $phpcsFile->addWarning($error, $stackPtr, 'NotAllowedWarning', $data);
-            }
-        }
+        // Get token identifier.
+        $name  = strtoupper($token['content']);
+        $error = 'Empty %s statement detected';
+        $phpcsFile->addError($error, $stackPtr, 'Detected'.$name, array($name));
 
     }//end process()
 
 
 }//end class
-
-?>

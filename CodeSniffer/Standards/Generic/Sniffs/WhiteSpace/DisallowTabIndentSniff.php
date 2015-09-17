@@ -49,7 +49,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
      */
     public function register()
     {
-        return array(T_WHITESPACE);
+        return array(T_OPEN_TAG);
 
     }//end register()
 
@@ -65,22 +65,84 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
+        $tokens    = $phpcsFile->getTokens();
+        $error     = 'Spaces must be used to indent lines; tabs are not allowed';
+        $errorCode = 'TabsUsed';
 
-        // Make sure this is whitespace used for indentation.
-        $line = $tokens[$stackPtr]['line'];
-        if ($stackPtr > 0 && $tokens[($stackPtr - 1)]['line'] === $line) {
-            return;
-        }
+        $checkTokens = array(
+                        T_WHITESPACE             => true,
+                        T_DOC_COMMENT_WHITESPACE => true,
+                        T_DOC_COMMENT_STRING     => true,
+                       );
 
-        if (strpos($tokens[$stackPtr]['content'], "\t") !== false) {
-            $error = 'Spaces must be used to indent lines; tabs are not allowed';
-            $phpcsFile->addError($error, $stackPtr, 'TabsUsed');
-        }
+        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+            if (isset($checkTokens[$tokens[$i]['code']]) === false) {
+                continue;
+            }
+
+            // If tabs are being converted to spaces by PHPCS, the
+            // original content should be checked instead of the converted content.
+            if (isset($tokens[$i]['orig_content']) === true) {
+                $content = $tokens[$i]['orig_content'];
+            } else {
+                $content = $tokens[$i]['content'];
+            }
+
+            if ($content === '') {
+                continue;
+            }
+
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
+                // Ignore file/class-level DocBlock, especially for recording metrics.
+                continue;
+            }
+
+            $tabFound = false;
+            if ($tokens[$i]['column'] === 1) {
+                if ($content[0] === "\t") {
+                    $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                    $tabFound = true;
+                } else if ($content[0] === ' ') {
+                    if (strpos($content, "\t") !== false) {
+                        $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                        $tabFound = true;
+                    } else {
+                        $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
+                    }
+                }
+            } else {
+                // Look for tabs so we can report and replace, but don't
+                // record any metrics about them because they aren't
+                // line indent tokens.
+                if (strpos($content, "\t") !== false) {
+                    $tabFound  = true;
+                    $error     = 'Spaces must be used for alignment; tabs are not allowed';
+                    $errorCode = 'NonIndentTabsUsed';
+                }
+            }//end if
+
+            if ($tabFound === false) {
+                continue;
+            }
+
+            $fix = $phpcsFile->addFixableError($error, $i, $errorCode);
+            if ($fix === true) {
+                if (isset($tokens[$i]['orig_content']) === true) {
+                    // Use the replacement that PHPCS has already done.
+                    $phpcsFile->fixer->replaceToken($i, $tokens[$i]['content']);
+                } else {
+                    // Replace tabs with spaces, using an indent of 4 spaces.
+                    // Other sniffs can then correct the indent if they need to.
+                    $newContent = str_replace("\t", '    ', $tokens[$i]['content']);
+                    $phpcsFile->fixer->replaceToken($i, $newContent);
+                }
+            }
+        }//end for
+
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
 
 }//end class
-
-?>

@@ -3,7 +3,9 @@
  <description>The Squiz coding standard.</description>
 
  <!-- Include some specific sniffs -->
+ <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
  <rule ref="Generic.Commenting.Todo"/>
+ <rule ref="Generic.Commenting.DocComment"/>
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
  <rule ref="Generic.Formatting.SpaceAfterCast"/>
@@ -13,12 +15,16 @@
  <rule ref="Generic.PHP.DeprecatedFunctions"/>
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
  <rule ref="Generic.PHP.LowerCaseKeyword"/>
+ <rule ref="Generic.PHP.LowerCaseConstant"/>
  <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
  <rule ref="Generic.WhiteSpace.ScopeIndent"/>
  <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
  <rule ref="PEAR.Files.IncludingFile"/>
  <rule ref="PEAR.Formatting.MultiLineAssignment"/>
+ <rule ref="PEAR.Functions.ValidDefaultValue"/>
+ <rule ref="PSR2.Files.EndFileNewline"/>
+ <rule ref="Zend.Files.ClosingTag"/>
  <rule ref="Zend.Debug.CodeAnalyzer"/>
 
  <!-- Lines can be 120 chars long, but never show errors -->
@@ -36,13 +42,17 @@
   </properties>
  </rule>
 
- <!-- Have 8 chars padding maximum and always show as errors -->
+ <!-- Have 20 chars padding maximum and always show as errors -->
  <rule ref="Generic.Formatting.MultipleStatementAlignment">
   <properties>
-   <property name="maxPadding" value="8"/>
-   <property name="ignoreMultiLine" value="true"/>
+   <property name="maxPadding" value="20"/>
    <property name="error" value="true"/>
   </properties>
+ </rule>
+
+ <!-- We allow empty catch statements -->
+ <rule ref="Generic.CodeAnalysis.EmptyStatement.DetectedCATCH">
+   <severity>0</severity>
  </rule>
 
  <!-- We don't want gsjlint throwing errors for things we already check -->

@@ -28,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_DocGenerators_Generator
+abstract class PHP_CodeSniffer_DocGenerators_Generator
 {
 
     /**
@@ -103,7 +103,7 @@ class PHP_CodeSniffer_DocGenerators_Generator
      * method should be overridden to output content for each sniff.
      *
      * @return void
-     * @see processSniff()
+     * @see    processSniff()
      */
     public function generate()
     {
@@ -169,21 +169,16 @@ class PHP_CodeSniffer_DocGenerators_Generator
     /**
      * Process the documentation for a single sniff.
      *
-     * Doc generators should override this function to produce output.
+     * Doc generators must implement this function to produce output.
      *
      * @param DOMNode $doc The DOMNode object for the sniff.
      *                     It represents the "documentation" tag in the XML
      *                     standard file.
      *
      * @return void
-     * @see generate()
+     * @see    generate()
      */
-    protected function processSniff(DOMNode $doc)
-    {
-
-    }//end processSniff()
+    protected abstract function processSniff(DOMNode $doc);
 
 
 }//end class
-
-?>

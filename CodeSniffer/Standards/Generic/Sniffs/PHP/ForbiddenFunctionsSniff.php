@@ -39,10 +39,10 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
      *
      * @var array(string => string|null)
      */
-    protected $forbiddenFunctions = array(
-                                     'sizeof' => 'count',
-                                     'delete' => 'unset',
-                                    );
+    public $forbiddenFunctions = array(
+                                  'sizeof' => 'count',
+                                  'delete' => 'unset',
+                                 );
 
     /**
      * A cache of forbidden function names, for faster lookups.
@@ -81,9 +81,28 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             foreach ($this->forbiddenFunctionNames as $i => $name) {
                 $this->forbiddenFunctionNames[$i] = '/'.$name.'/i';
             }
+
+            return array(T_STRING);
         }
 
-        return array(T_STRING);
+        // If we are not pattern matching, we need to work out what
+        // tokens to listen for.
+        $string = '<?php ';
+        foreach ($this->forbiddenFunctionNames as $name) {
+            $string .= $name.'();';
+        }
+
+        $register = array();
+
+        $tokens = token_get_all($string);
+        array_shift($tokens);
+        foreach ($tokens as $token) {
+            if (is_array($token) === true) {
+                $register[] = $token[0];
+            }
+        }
+
+        return array_unique($register);
 
     }//end register()
 
@@ -102,18 +121,18 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
         $tokens = $phpcsFile->getTokens();
 
         $ignore = array(
-                   T_DOUBLE_COLON,
-                   T_OBJECT_OPERATOR,
-                   T_FUNCTION,
-                   T_CONST,
-                   T_PUBLIC,
-                   T_PRIVATE,
-                   T_PROTECTED,
-                   T_AS,
-                   T_NEW,
-                   T_INSTEADOF,
-                   T_NS_SEPARATOR,
-                   T_IMPLEMENTS,
+                   T_DOUBLE_COLON    => true,
+                   T_OBJECT_OPERATOR => true,
+                   T_FUNCTION        => true,
+                   T_CONST           => true,
+                   T_PUBLIC          => true,
+                   T_PRIVATE         => true,
+                   T_PROTECTED       => true,
+                   T_AS              => true,
+                   T_NEW             => true,
+                   T_INSTEADOF       => true,
+                   T_NS_SEPARATOR    => true,
+                   T_IMPLEMENTS      => true,
                   );
 
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
@@ -128,13 +147,18 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             }
         }
 
-        if (in_array($tokens[$prevToken]['code'], $ignore) === true) {
+        if (isset($ignore[$tokens[$prevToken]['code']]) === true) {
             // Not a call to a PHP function.
             return;
         }
 
         $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+        if (isset($ignore[$tokens[$nextToken]['code']]) === true) {
+            // Not a call to a PHP function.
+            return;
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_STRING && $tokens[$nextToken]['code'] !== T_OPEN_PARENTHESIS) {
             // Not a call to a PHP function.
             return;
         }
@@ -162,7 +186,7 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             if (in_array($function, $this->forbiddenFunctionNames) === false) {
                 return;
             }
-        }
+        }//end if
 
         $this->addError($phpcsFile, $stackPtr, $function, $pattern);
 
@@ -196,7 +220,9 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             $pattern = $function;
         }
 
-        if ($this->forbiddenFunctions[$pattern] !== null) {
+        if ($this->forbiddenFunctions[$pattern] !== null
+            && $this->forbiddenFunctions[$pattern] !== 'null'
+        ) {
             $type  .= 'WithAlternative';
             $data[] = $this->forbiddenFunctions[$pattern];
             $error .= '; use %s() instead';
@@ -212,5 +238,3 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
 
 
 }//end class
-
-?>

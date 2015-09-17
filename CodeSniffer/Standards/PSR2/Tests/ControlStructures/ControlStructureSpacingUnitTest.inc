@@ -43,3 +43,5 @@ foreach ( $something as $blah => $that ) {}
 foreach (  $something as $blah => $that  ) {}
 // @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing requiredSpacesAfterOpen 0
 // @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 0
+
+$binary = b"binary string";

@@ -67,6 +67,8 @@ class PHP_CodeSniffer_AllTests
      */
     public static function suite()
     {
+        $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'] = array();
+
         // Use a special PHP_CodeSniffer test suite so that we can
         // unset our autoload function after the run.
         $suite = new PHP_CodeSniffer_TestSuite('PHP CodeSniffer');
@@ -85,5 +87,3 @@ class PHP_CodeSniffer_AllTests
 
 
 }//end class
-
-?>

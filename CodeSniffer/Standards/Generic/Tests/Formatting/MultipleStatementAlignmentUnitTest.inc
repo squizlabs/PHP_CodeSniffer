@@ -34,7 +34,7 @@ $var1000 .= 'var1';
 
 // Invalid
 $var1    .= 'var1';
-$var10 .= 'var1';
+$var10.= 'var1';
 $var100 .= 'var1';
 $var1000 .= 'var1';
 
@@ -48,7 +48,7 @@ $var1000 .= 'var1';
 $var1    = 'var1';
 $var10   .= 'var1';
 $var100  = 'var1';
-$var1000 .= 'var1';
+$var1000.= 'var1';
 
 // Valid
 $var1  .= 'var1';
@@ -200,4 +200,35 @@ if (TRUE) {
     $args = array('foo' => 'foo');
     $res  = 'bar';
 }
-?>
+
+// @codingStandardsChangeSetting Generic.Formatting.MultipleStatementAlignment maxPadding 8
+
+$one                = 'one';
+$varonetwo          = 'two';
+$varonetwothree     = 'three';
+$varonetwothreefour = 'four';
+
+$one        = 'one';
+$varonetwo .= 'two';
+$varonetwo  = 'two';
+$varonetwo .= 'two';
+$varonetwothree     = 'three';
+$varonetwothreefour = 'four';
+
+// @codingStandardsChangeSetting Generic.Formatting.MultipleStatementAlignment maxPadding 1000
+
+$filterQuery = SquizRoadmap::getSearchQueryFilter($searchParams);
+Channels::addToBasket('itemid', $filterQuery);
+$query   = DAL::getDALQuery('SquizRoadmapItem', 'getItemIds');
+$results = DAL::getAssoc($query, 0);
+
+$path  = BaseSystem::getDataDir('SquizRoadmap').'/items/';
+$path .= FileSystem::getHashDir($itemid).'/'.$itemid;
+
+$contents  .= 'if (';
+$conditions = array();
+
+$bar = 'hi';
+$foo = $moo = $test;
+$boo = 'boo';
+$foo = $moooo = 'foo';

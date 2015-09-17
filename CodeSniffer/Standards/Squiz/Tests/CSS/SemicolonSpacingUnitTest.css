@@ -18,3 +18,10 @@
 .HelpWidgetType-list {
     list-style-image: url();
 }
+
+@media (min-width: 320px) and (max-width: 961px) {
+    .tooltipsrt:hover span.tltp,
+    .tooltipstp:hover span.tltp {
+        visibility: hidden;
+    }
+}

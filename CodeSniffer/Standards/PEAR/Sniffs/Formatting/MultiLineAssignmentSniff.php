@@ -115,6 +115,5 @@ class PEAR_Sniffs_Formatting_MultiLineAssignmentSniff implements PHP_CodeSniffer
 
     }//end process()
 
-}//end class
 
-?>
+}//end class

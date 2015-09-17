@@ -69,9 +69,9 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
         $cmd = '"'.$jslPath.'" -nologo -nofilelisting -nocontext -nosummary -output-format __LINE__:__ERROR__ -process "'.$fileName.'"';
         $msg = exec($cmd, $output, $retval);
 
-        // $exitCode is the last line of $output if no error occurs, on error it
-        // is numeric. Try to handle various error conditions and provide useful
-        // error reporting.
+        // Variable $exitCode is the last line of $output if no error occurs, on
+        // error it is numeric. Try to handle various error conditions and
+        // provide useful error reporting.
         if ($retval === 2 || $retval === 4) {
             if (is_array($output) === true) {
                 $msg = join('\n', $output);
@@ -80,31 +80,19 @@ class Squiz_Sniffs_Debug_JavaScriptLintSniff implements PHP_CodeSniffer_Sniff
             throw new PHP_CodeSniffer_Exception("Failed invoking JavaScript Lint, retval was [$retval], output was [$msg]");
         }
 
-
         if (is_array($output) === true) {
-            $tokens = $phpcsFile->getTokens();
-
             foreach ($output as $finding) {
                 $split   = strpos($finding, ':');
                 $line    = substr($finding, 0, $split);
                 $message = substr($finding, ($split + 1));
+                $phpcsFile->addWarningOnLine(trim($message), $line, 'ExternalTool');
+            }
+        }
 
-                // Find the token at the start of the line.
-                $lineToken = null;
-                foreach ($tokens as $ptr => $info) {
-                    if ($info['line'] == $line) {
-                        $lineToken = $ptr;
-                        break;
-                    }
-                }
-
-                if ($lineToken !== null) {
-                    $phpcsFile->addWarning(trim($message), $ptr, 'ExternalTool');
-                }
-            }//end foreach
-        }//end if
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
+
 }//end class
-?>

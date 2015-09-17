@@ -48,4 +48,6 @@ for ($node = $fieldsTag->nextSibling; $node; $node = $node->nextSibling) {
         }
     }
 }
-?>
+
+$a = $b ? $c : $d;
+$a = $b === true ? $c : $d;

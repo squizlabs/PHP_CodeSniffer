@@ -59,6 +59,8 @@ class PEAR_Tests_Files_IncludingFileUnitTest extends AbstractSniffUnitTest
                 74 => 1,
                 85 => 1,
                 86 => 1,
+                98 => 1,
+                99 => 2,
                );
 
     }//end getErrorList()

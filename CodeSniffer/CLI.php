@@ -12,6 +12,8 @@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
+error_reporting(E_ALL | E_STRICT);
+
 if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
     include_once dirname(__FILE__).'/../CodeSniffer.php';
 } else {
@@ -63,6 +65,166 @@ class PHP_CodeSniffer_CLI
      */
     public $dieOnUnknownArg = true;
 
+    /**
+     * An array of the current command line arguments we are processing.
+     *
+     * @var array
+     */
+    private $_cliArgs = array();
+
+
+    /**
+     * Run the PHPCS script.
+     *
+     * @return array
+     */
+    public function runphpcs()
+    {
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
+            define('PHP_CODESNIFFER_CBF', false);
+        }
+
+        if (is_file(dirname(__FILE__).'/../CodeSniffer/Reporting.php') === true) {
+            include_once dirname(__FILE__).'/../CodeSniffer/Reporting.php';
+        } else {
+            include_once 'PHP/CodeSniffer/Reporting.php';
+        }
+
+        PHP_CodeSniffer_Reporting::startTiming();
+        $this->checkRequirements();
+        $numErrors = $this->process();
+        if ($numErrors === 0) {
+            exit(0);
+        } else {
+            exit(1);
+        }
+
+    }//end runphpcs()
+
+
+    /**
+     * Run the PHPCBF script.
+     *
+     * @return array
+     */
+    public function runphpcbf()
+    {
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
+            define('PHP_CODESNIFFER_CBF', true);
+        }
+
+        if (is_file(dirname(__FILE__).'/../CodeSniffer/Reporting.php') === true) {
+            include_once dirname(__FILE__).'/../CodeSniffer/Reporting.php';
+        } else {
+            include_once 'PHP/CodeSniffer/Reporting.php';
+        }
+
+        PHP_CodeSniffer_Reporting::startTiming();
+        $this->checkRequirements();
+
+        $this->dieOnUnknownArg = false;
+
+        // Override some of the command line settings that might break the fixes.
+        $cliValues = $this->getCommandLineValues();
+        $cliValues['verbosity']    = 0;
+        $cliValues['showProgress'] = false;
+        $cliValues['generator']    = '';
+        $cliValues['explain']      = false;
+        $cliValues['interactive']  = false;
+        $cliValues['showSources']  = false;
+        $cliValues['reportFile']   = null;
+        $cliValues['reports']      = array();
+
+        $suffix = '';
+        if (isset($cliValues['suffix']) === true) {
+            $suffix = $cliValues['suffix'];
+        }
+
+        $allowPatch = true;
+        if (isset($cliValues['no-patch']) === true || empty($cliValues['files']) === true) {
+            // They either asked for this,
+            // or they are using STDIN, which can't use diff.
+            $allowPatch = false;
+        }
+
+        if ($suffix === '' && $allowPatch === true) {
+            // Using the diff/patch tools.
+            $diffFile = getcwd().'/phpcbf-fixed.diff';
+            $cliValues['reports'] = array('diff' => $diffFile);
+            if (file_exists($diffFile) === true) {
+                unlink($diffFile);
+            }
+        } else {
+            // Replace the file without the patch command
+            // or writing to a file with a new suffix.
+            $cliValues['reports']       = array('cbf' => null);
+            $cliValues['phpcbf-suffix'] = $suffix;
+        }
+
+        $numErrors = $this->process($cliValues);
+
+        if ($suffix === '' && $allowPatch === true) {
+            if (file_exists($diffFile) === false) {
+                // Nothing to fix.
+                if ($numErrors === 0) {
+                    // And no errors reported.
+                    $exit = 0;
+                } else {
+                    // Errors we can't fix.
+                    $exit = 2;
+                }
+            } else {
+                if (filesize($diffFile) < 10) {
+                    // Empty or bad diff file.
+                    if ($numErrors === 0) {
+                        // And no errors reported.
+                        $exit = 0;
+                    } else {
+                        // Errors we can't fix.
+                        $exit = 2;
+                    }
+                } else {
+                    $cmd    = "patch -p0 -ui \"$diffFile\"";
+                    $output = array();
+                    $retVal = null;
+                    exec($cmd, $output, $retVal);
+
+                    if ($retVal === 0) {
+                        // Everything went well.
+                        $filesPatched = count($output);
+                        echo "Patched $filesPatched file";
+                        if ($filesPatched > 1) {
+                            echo 's';
+                        }
+
+                        echo PHP_EOL;
+                        $exit = 1;
+                    } else {
+                        print_r($output);
+                        echo "Returned: $retVal".PHP_EOL;
+                        $exit = 3;
+                    }
+                }//end if
+
+                unlink($diffFile);
+            }//end if
+        } else {
+            // File are being patched manually, so we can't tell
+            // how many errors were fixed.
+            $exit = 1;
+        }//end if
+
+        if ($exit === 0) {
+            echo 'No fixable errors were found'.PHP_EOL;
+        } else if ($exit === 2) {
+            echo 'PHPCBF could not fix all the errors found'.PHP_EOL;
+        }
+
+        PHP_CodeSniffer_Reporting::printRunTime();
+        exit($exit);
+
+    }//end runphpcbf()
+
 
     /**
      * Exits if the minimum requirements of PHP_CodSniffer are not met.
@@ -92,11 +254,16 @@ class PHP_CodeSniffer_CLI
      */
     public function getDefaults()
     {
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+            return array();
+        }
+
         // The default values for config settings.
         $defaults['files']           = array();
         $defaults['standard']        = null;
         $defaults['verbosity']       = 0;
         $defaults['interactive']     = false;
+        $defaults['colors']          = false;
         $defaults['explain']         = false;
         $defaults['local']           = false;
         $defaults['showSources']     = false;
@@ -153,10 +320,11 @@ class PHP_CodeSniffer_CLI
         }
 
         $reportWidth = PHP_CodeSniffer::getConfigData('report_width');
-        if ($reportWidth === null) {
-            $defaults['reportWidth'] = 80;
+        if ($reportWidth !== null) {
+            $defaults['reportWidth'] = $this->_validateReportWidth($reportWidth);
         } else {
-            $defaults['reportWidth'] = (int) $reportWidth;
+            // Use function defaults.
+            $defaults['reportWidth'] = null;
         }
 
         $showProgress = PHP_CodeSniffer::getConfigData('show_progress');
@@ -166,30 +334,71 @@ class PHP_CodeSniffer_CLI
             $defaults['showProgress'] = (bool) $showProgress;
         }
 
+        $colors = PHP_CodeSniffer::getConfigData('colors');
+        if ($colors === null) {
+            $defaults['colors'] = false;
+        } else {
+            $defaults['colors'] = (bool) $colors;
+        }
+
+        if (PHP_CodeSniffer::isPharFile(dirname(dirname(__FILE__))) === true) {
+            // If this is a phar file, check for the standard in the config.
+            $standard = PHP_CodeSniffer::getConfigData('standard');
+            if ($standard !== null) {
+                $defaults['standard'] = $standard;
+            }
+        }
+
         return $defaults;
 
     }//end getDefaults()
 
 
     /**
-     * Process the command line arguments and returns the values.
+     * Gets the processed command line values.
+     *
+     * If the values have not yet been set, the values will be sourced
+     * from the command line arguments.
      *
      * @return array
      */
     public function getCommandLineValues()
     {
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
-            return array();
-        }
-
         if (empty($this->values) === false) {
             return $this->values;
         }
 
         $values = $this->getDefaults();
 
-        for ($i = 1; $i < $_SERVER['argc']; $i++) {
-            $arg = $_SERVER['argv'][$i];
+        $args = $_SERVER['argv'];
+        array_shift($args);
+
+        $this->setCommandLineValues($args);
+        return $this->values;
+
+    }//end getCommandLineValues()
+
+
+    /**
+     * Set the command line values.
+     *
+     * @param array $args An array of command line arguments to process.
+     *
+     * @return void
+     */
+    public function setCommandLineValues($args)
+    {
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+            $this->values = array();
+        } else if (empty($this->values) === true) {
+            $this->values = $this->getDefaults();
+        }
+
+        $this->_cliArgs = $args;
+        $numArgs        = count($args);
+
+        for ($i = 0; $i < $numArgs; $i++) {
+            $arg = $this->_cliArgs[$i];
             if ($arg === '') {
                 continue;
             }
@@ -201,8 +410,7 @@ class PHP_CodeSniffer_CLI
                 }
 
                 if ($arg{1} === '-') {
-                    $values
-                        = $this->processLongArgument(substr($arg, 2), $i, $values);
+                    $this->processLongArgument(substr($arg, 2), $i);
                 } else {
                     $switches = str_split($arg);
                     foreach ($switches as $switch) {
@@ -210,31 +418,26 @@ class PHP_CodeSniffer_CLI
                             continue;
                         }
 
-                        $values = $this->processShortArgument($switch, $i, $values);
+                        $this->processShortArgument($switch, $i);
                     }
                 }
             } else {
-                $values = $this->processUnknownArgument($arg, $i, $values);
+                $this->processUnknownArgument($arg, $i);
             }//end if
         }//end for
 
-        $this->values = $values;
-        return $values;
-
-    }//end getCommandLineValues()
+    }//end setCommandLineValues()
 
 
     /**
      * Processes a short (-e) command line argument.
      *
-     * @param string $arg    The command line argument.
-     * @param int    $pos    The position of the argument on the command line.
-     * @param array  $values An array of values determined from CLI args.
+     * @param string $arg The command line argument.
+     * @param int    $pos The position of the argument on the command line.
      *
-     * @return array The updated CLI values.
-     * @see getCommandLineValues()
+     * @return void
      */
-    public function processShortArgument($arg, $pos, $values)
+    public function processShortArgument($arg, $pos)
     {
         switch ($arg) {
         case 'h':
@@ -247,44 +450,49 @@ class PHP_CodeSniffer_CLI
             exit(0);
             break;
         case 'v' :
-            $values['verbosity']++;
+            if (isset($this->values['verbosity']) === false) {
+                $this->values['verbosity'] = 1;
+            } else {
+                $this->values['verbosity']++;
+            }
             break;
         case 'l' :
-            $values['local'] = true;
+            $this->values['local'] = true;
             break;
         case 's' :
-            $values['showSources'] = true;
+            $this->values['showSources'] = true;
             break;
         case 'a' :
-            $values['interactive'] = true;
+            $this->values['interactive'] = true;
             break;
         case 'e':
-            $values['explain'] = true;
+            $this->values['explain'] = true;
             break;
         case 'p' :
-            $values['showProgress'] = true;
+            $this->values['showProgress'] = true;
             break;
         case 'd' :
-            $ini = explode('=', $_SERVER['argv'][($pos + 1)]);
-            $_SERVER['argv'][($pos + 1)] = '';
+            $ini = explode('=', $this->_cliArgs[($pos + 1)]);
+            $this->_cliArgs[($pos + 1)] = '';
             if (isset($ini[1]) === true) {
                 ini_set($ini[0], $ini[1]);
             } else {
                 ini_set($ini[0], true);
             }
-
             break;
         case 'n' :
-            $values['warningSeverity'] = 0;
+            $this->values['warningSeverity'] = 0;
             break;
         case 'w' :
-            $values['warningSeverity'] = null;
+            $this->values['warningSeverity'] = null;
             break;
         default:
-            $values = $this->processUnknownArgument('-'.$arg, $pos, $values);
+            if ($this->dieOnUnknownArg === false) {
+                $this->values[$arg] = $arg;
+            } else {
+                $this->processUnknownArgument('-'.$arg, $pos);
+            }
         }//end switch
-
-        return $values;
 
     }//end processShortArgument()
 
@@ -292,14 +500,12 @@ class PHP_CodeSniffer_CLI
     /**
      * Processes a long (--example) command line argument.
      *
-     * @param string $arg    The command line argument.
-     * @param int    $pos    The position of the argument on the command line.
-     * @param array  $values An array of values determined from CLI args.
+     * @param string $arg The command line argument.
+     * @param int    $pos The position of the argument on the command line.
      *
-     * @return array The updated CLI values.
-     * @see getCommandLineValues()
+     * @return void
      */
-    public function processLongArgument($arg, $pos, $values)
+    public function processLongArgument($arg, $pos)
     {
         switch ($arg) {
         case 'help':
@@ -309,24 +515,77 @@ class PHP_CodeSniffer_CLI
             echo 'PHP_CodeSniffer version '.PHP_CodeSniffer::VERSION.' ('.PHP_CodeSniffer::STABILITY.') ';
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
+        case 'colors':
+            $this->values['colors'] = true;
+            break;
+        case 'no-colors':
+            $this->values['colors'] = false;
+            break;
         case 'config-set':
-            $key   = $_SERVER['argv'][($pos + 1)];
-            $value = $_SERVER['argv'][($pos + 2)];
-            PHP_CodeSniffer::setConfigData($key, $value);
+            if (isset($this->_cliArgs[($pos + 1)]) === false
+                || isset($this->_cliArgs[($pos + 2)]) === false
+            ) {
+                echo 'ERROR: Setting a config option requires a name and value'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(0);
+            }
+
+            $key     = $this->_cliArgs[($pos + 1)];
+            $value   = $this->_cliArgs[($pos + 2)];
+            $current = PHP_CodeSniffer::getConfigData($key);
+
+            try {
+                PHP_CodeSniffer::setConfigData($key, $value);
+            } catch (Exception $e) {
+                echo $e->getMessage().PHP_EOL;
+                exit(2);
+            }
+
+            if ($current === null) {
+                echo "Config value \"$key\" added successfully".PHP_EOL;
+            } else {
+                echo "Config value \"$key\" updated successfully; old value was \"$current\"".PHP_EOL;
+            }
             exit(0);
         case 'config-delete':
-            $key = $_SERVER['argv'][($pos + 1)];
-            PHP_CodeSniffer::setConfigData($key, null);
+            if (isset($this->_cliArgs[($pos + 1)]) === false) {
+                echo 'ERROR: Deleting a config option requires the name of the option'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(0);
+            }
+
+            $key     = $this->_cliArgs[($pos + 1)];
+            $current = PHP_CodeSniffer::getConfigData($key);
+            if ($current === null) {
+                echo "Config value \"$key\" has not been set".PHP_EOL;
+            } else {
+                try {
+                    PHP_CodeSniffer::setConfigData($key, null);
+                } catch (Exception $e) {
+                    echo $e->getMessage().PHP_EOL;
+                    exit(2);
+                }
+
+                echo "Config value \"$key\" removed successfully; old value was \"$current\"".PHP_EOL;
+            }
             exit(0);
         case 'config-show':
             $data = PHP_CodeSniffer::getAllConfigData();
-            print_r($data);
+            $this->printConfigData($data);
             exit(0);
         case 'runtime-set':
-            $key   = $_SERVER['argv'][($pos + 1)];
-            $value = $_SERVER['argv'][($pos + 2)];
-            $_SERVER['argv'][($pos + 1)] = '';
-            $_SERVER['argv'][($pos + 2)] = '';
+            if (isset($this->_cliArgs[($pos + 1)]) === false
+                || isset($this->_cliArgs[($pos + 2)]) === false
+            ) {
+                echo 'ERROR: Setting a runtime config option requires a name and value'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(0);
+            }
+
+            $key   = $this->_cliArgs[($pos + 1)];
+            $value = $this->_cliArgs[($pos + 2)];
+            $this->_cliArgs[($pos + 1)] = '';
+            $this->_cliArgs[($pos + 2)] = '';
             PHP_CodeSniffer::setConfigData($key, $value, true);
             break;
         default:
@@ -334,46 +593,46 @@ class PHP_CodeSniffer_CLI
                 $sniffs = explode(',', substr($arg, 7));
                 foreach ($sniffs as $sniff) {
                     if (substr_count($sniff, '.') !== 2) {
-                        echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid.'.PHP_EOL.PHP_EOL;
+                        echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
                         exit(2);
                     }
                 }
 
-                $values['sniffs'] = $sniffs;
+                $this->values['sniffs'] = $sniffs;
             } else if (substr($arg, 0, 12) === 'report-file=') {
-                $values['reportFile'] = realpath(substr($arg, 12));
+                $this->values['reportFile'] = PHP_CodeSniffer::realpath(substr($arg, 12));
 
                 // It may not exist and return false instead.
-                if ($values['reportFile'] === false) {
-                    $values['reportFile'] = substr($arg, 12);
+                if ($this->values['reportFile'] === false) {
+                    $this->values['reportFile'] = substr($arg, 12);
                 }
 
-                if (is_dir($values['reportFile']) === true) {
-                    echo 'ERROR: The specified report file path "'.$values['reportFile'].'" is a directory.'.PHP_EOL.PHP_EOL;
+                if (is_dir($this->values['reportFile']) === true) {
+                    echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" is a directory'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
                     exit(2);
                 }
 
-                $dir = dirname($values['reportFile']);
+                $dir = dirname($this->values['reportFile']);
                 if (is_dir($dir) === false) {
-                    echo 'ERROR: The specified report file path "'.$values['reportFile'].'" points to a non-existent directory.'.PHP_EOL.PHP_EOL;
+                    echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
                     exit(2);
                 }
 
                 if ($dir === '.') {
                     // Passed report file is a filename in the current directory.
-                    $values['reportFile'] = getcwd().'/'.basename($values['reportFile']);
+                    $this->values['reportFile'] = getcwd().'/'.basename($this->values['reportFile']);
                 } else {
-                    $dir = realpath(getcwd().'/'.$dir);
+                    $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
                     if ($dir !== false) {
                         // Report file path is relative.
-                        $values['reportFile'] = $dir.'/'.basename($values['reportFile']);
+                        $this->values['reportFile'] = $dir.'/'.basename($this->values['reportFile']);
                     }
                 }
             } else if (substr($arg, 0, 13) === 'report-width=') {
-                $values['reportWidth'] = (int) substr($arg, 13);
+                $this->values['reportWidth'] = $this->_validateReportWidth(substr($arg, 13));
             } else if (substr($arg, 0, 7) === 'report='
                 || substr($arg, 0, 7) === 'report-'
             ) {
@@ -394,7 +653,7 @@ class PHP_CodeSniffer_CLI
                                 // Passed report file is a filename in the current directory.
                                 $output = getcwd().'/'.basename($output);
                             } else {
-                                $dir = realpath(getcwd().'/'.$dir);
+                                $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
                                 if ($dir !== false) {
                                     // Report file path is relative.
                                     $output = $dir.'/'.basename($output);
@@ -406,41 +665,23 @@ class PHP_CodeSniffer_CLI
                     // This is a single report.
                     $report = substr($arg, 7);
                     $output = null;
-                }
+                }//end if
 
-                $validReports = array(
-                                 'full',
-                                 'xml',
-                                 'json',
-                                 'checkstyle',
-                                 'junit',
-                                 'csv',
-                                 'emacs',
-                                 'notifysend',
-                                 'source',
-                                 'summary',
-                                 'svnblame',
-                                 'gitblame',
-                                 'hgblame',
-                                );
-
-                if (in_array($report, $validReports) === false) {
-                    echo 'ERROR: Report type "'.$report.'" not known.'.PHP_EOL;
-                    exit(2);
-                }
-
-                $values['reports'][$report] = $output;
+                $this->values['reports'][$report] = $output;
             } else if (substr($arg, 0, 9) === 'standard=') {
-                $values['standard'] = explode(',', substr($arg, 9));
+                $standards = trim(substr($arg, 9));
+                if ($standards !== '') {
+                    $this->values['standard'] = explode(',', $standards);
+                }
             } else if (substr($arg, 0, 11) === 'extensions=') {
-                $values['extensions'] = explode(',', substr($arg, 11));
+                $this->values['extensions'] = array_merge($this->values['extensions'], explode(',', substr($arg, 11)));
             } else if (substr($arg, 0, 9) === 'severity=') {
-                $values['errorSeverity']   = (int) substr($arg, 9);
-                $values['warningSeverity'] = $values['errorSeverity'];
+                $this->values['errorSeverity']   = (int) substr($arg, 9);
+                $this->values['warningSeverity'] = $this->values['errorSeverity'];
             } else if (substr($arg, 0, 15) === 'error-severity=') {
-                $values['errorSeverity'] = (int) substr($arg, 15);
+                $this->values['errorSeverity'] = (int) substr($arg, 15);
             } else if (substr($arg, 0, 17) === 'warning-severity=') {
-                $values['warningSeverity'] = (int) substr($arg, 17);
+                $this->values['warningSeverity'] = (int) substr($arg, 17);
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
@@ -449,22 +690,36 @@ class PHP_CodeSniffer_CLI
                     substr($arg, 7)
                 );
                 foreach ($ignored as $pattern) {
-                    $values['ignored'][$pattern] = 'absolute';
+                    $pattern = trim($pattern);
+                    if ($pattern === '') {
+                        continue;
+                    }
+
+                    $this->values['ignored'][$pattern] = 'absolute';
                 }
             } else if (substr($arg, 0, 10) === 'generator=') {
-                $values['generator'] = substr($arg, 10);
+                $this->values['generator'] = substr($arg, 10);
             } else if (substr($arg, 0, 9) === 'encoding=') {
-                $values['encoding'] = strtolower(substr($arg, 9));
+                $this->values['encoding'] = strtolower(substr($arg, 9));
             } else if (substr($arg, 0, 10) === 'tab-width=') {
-                $values['tabWidth'] = (int) substr($arg, 10);
+                $this->values['tabWidth'] = (int) substr($arg, 10);
             } else {
-                $values = $this->processUnknownArgument('--'.$arg, $pos, $values);
+                if ($this->dieOnUnknownArg === false) {
+                    $eqPos = strpos($arg, '=');
+                    if ($eqPos === false) {
+                        $this->values[$arg] = $arg;
+                    } else {
+                        $value = substr($arg, ($eqPos + 1));
+                        $arg   = substr($arg, 0, $eqPos);
+                        $this->values[$arg] = $value;
+                    }
+                } else {
+                    $this->processUnknownArgument('--'.$arg, $pos);
+                }
             }//end if
 
             break;
         }//end switch
-
-        return $values;
 
     }//end processLongArgument()
 
@@ -474,19 +729,17 @@ class PHP_CodeSniffer_CLI
      *
      * Assumes all unknown arguments are files and folders to check.
      *
-     * @param string $arg    The command line argument.
-     * @param int    $pos    The position of the argument on the command line.
-     * @param array  $values An array of values determined from CLI args.
+     * @param string $arg The command line argument.
+     * @param int    $pos The position of the argument on the command line.
      *
-     * @return array The updated CLI values.
-     * @see getCommandLineValues()
+     * @return void
      */
-    public function processUnknownArgument($arg, $pos, $values)
+    public function processUnknownArgument($arg, $pos)
     {
         // We don't know about any additional switches; just files.
         if ($arg{0} === '-') {
             if ($this->dieOnUnknownArg === false) {
-                return $values;
+                return;
             }
 
             echo 'ERROR: option "'.$arg.'" not known.'.PHP_EOL.PHP_EOL;
@@ -494,20 +747,18 @@ class PHP_CodeSniffer_CLI
             exit(2);
         }
 
-        $file = realpath($arg);
+        $file = PHP_CodeSniffer::realpath($arg);
         if (file_exists($file) === false) {
             if ($this->dieOnUnknownArg === false) {
-                return $values;
+                return;
             }
 
             echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
             $this->printUsage();
             exit(2);
         } else {
-            $values['files'][] = $file;
+            $this->values['files'][] = $file;
         }
-
-        return $values;
 
     }//end processUnknownArgument()
 
@@ -518,7 +769,7 @@ class PHP_CodeSniffer_CLI
      * @param array $values An array of values determined from CLI args.
      *
      * @return int The number of error and warning messages shown.
-     * @see getCommandLineValues()
+     * @see    getCommandLineValues()
      */
     public function process($values=array())
     {
@@ -562,27 +813,14 @@ class PHP_CodeSniffer_CLI
             exit(0);
         }
 
-        $fileContents = '';
-        if (empty($values['files']) === true) {
-            // Check if they are passing in the file contents.
-            $handle       = fopen('php://stdin', 'r');
-            $fileContents = stream_get_contents($handle);
-            fclose($handle);
+        $phpcs = new PHP_CodeSniffer($values['verbosity'], null, null, null);
+        $phpcs->setCli($this);
+        $phpcs->initStandard($values['standard'], $values['sniffs']);
+        $values = $this->values;
 
-            if ($fileContents === '') {
-                // No files and no content passed in.
-                echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
-                $this->printUsage();
-                exit(2);
-            }
-        }
-
-        $phpcs = new PHP_CodeSniffer(
-            $values['verbosity'],
-            $values['tabWidth'],
-            $values['encoding'],
-            $values['interactive']
-        );
+        $phpcs->setTabWidth($values['tabWidth']);
+        $phpcs->setEncoding($values['encoding']);
+        $phpcs->setInteractive($values['interactive']);
 
         // Set file extensions if they were specified. Otherwise,
         // let PHP_CodeSniffer decide on the defaults.
@@ -592,7 +830,8 @@ class PHP_CodeSniffer_CLI
 
         // Set ignore patterns if they were specified.
         if (empty($values['ignored']) === false) {
-            $phpcs->setIgnorePatterns($values['ignored']);
+            $ignorePatterns = array_merge($phpcs->getIgnorePatterns(), $values['ignored']);
+            $phpcs->setIgnorePatterns($ignorePatterns);
         }
 
         // Set some convenience member vars.
@@ -609,20 +848,28 @@ class PHP_CodeSniffer_CLI
         }
 
         if (empty($values['reports']) === true) {
-            $this->values['reports']['full'] = $values['reportFile'];
+            $values['reports']['full'] = $values['reportFile'];
+            $this->values['reports']   = $values['reports'];
         }
 
-        $phpcs->setCli($this);
+        $phpcs->processFiles($values['files'], $values['local']);
 
-        $phpcs->process(
-            $values['files'],
-            $values['standard'],
-            $values['sniffs'],
-            $values['local']
-        );
+        if (empty($values['files']) === true) {
+            // Check if they are passing in the file contents.
+            $handle       = fopen('php://stdin', 'r');
+            $fileContents = stream_get_contents($handle);
+            fclose($handle);
 
-        if ($fileContents !== '') {
-            $phpcs->processFile('STDIN', $fileContents);
+            if ($fileContents === '') {
+                // No files and no content passed in.
+                echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(2);
+            } else {
+                if ($fileContents !== '') {
+                    $phpcs->processFile('STDIN', $fileContents);
+                }
+            }
         }
 
         // Interactive runs don't require a final report and it doesn't really
@@ -671,6 +918,7 @@ class PHP_CodeSniffer_CLI
         }
 
         $errors   = 0;
+        $warnings = 0;
         $toScreen = false;
 
         foreach ($reports as $report => $output) {
@@ -685,29 +933,51 @@ class PHP_CodeSniffer_CLI
             // We don't add errors here because the number of
             // errors reported by each report type will always be the
             // same, so we really just need 1 number.
-            $errors = $phpcs->reporting->printReport(
+            $result = $phpcs->reporting->printReport(
                 $report,
                 $showSources,
+                $this->values,
                 $output,
                 $reportWidth
             );
-        }
 
-        // Only print PHP_Timer output if no reports were
+            $errors   = $result['errors'];
+            $warnings = $result['warnings'];
+        }//end foreach
+
+        // Only print timer output if no reports were
         // printed to the screen so we don't put additional output
         // in something like an XML report. If we are printing to screen,
         // the report types would have already worked out who should
         // print the timer info.
-        if ($toScreen === false
-            && PHP_CODESNIFFER_INTERACTIVE === false
-            && class_exists('PHP_Timer', false) === true
+        if (PHP_CODESNIFFER_INTERACTIVE === false
+            && ($toScreen === false
+            || (($errors + $warnings) === 0 && $this->values['showProgress'] === true))
         ) {
-            echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
+            PHP_CodeSniffer_Reporting::printRunTime();
         }
 
         // They should all return the same value, so it
         // doesn't matter which return value we end up using.
-        return $errors;
+        $ignoreWarnings = PHP_CodeSniffer::getConfigData('ignore_warnings_on_exit');
+        $ignoreErrors   = PHP_CodeSniffer::getConfigData('ignore_errors_on_exit');
+
+        $return = ($errors + $warnings);
+        if ($ignoreErrors !== null) {
+            $ignoreErrors = (bool) $ignoreErrors;
+            if ($ignoreErrors === true) {
+                $return -= $errors;
+            }
+        }
+
+        if ($ignoreWarnings !== null) {
+            $ignoreWarnings = (bool) $ignoreWarnings;
+            if ($ignoreWarnings === true) {
+                $return -= $warnings;
+            }
+        }
+
+        return $return;
 
     }//end printErrorReport()
 
@@ -725,6 +995,14 @@ class PHP_CodeSniffer_CLI
     {
         if ($standards === null) {
             // They did not supply a standard to use.
+            // Looks for a ruleset in the current directory.
+            if (empty($this->values['files']) === true) {
+                $default = getcwd().DIRECTORY_SEPARATOR.'phpcs.xml';
+                if (is_file($default) === true) {
+                    return array($default);
+                }
+            }
+
             // Try to get the default from the config system.
             $standard = PHP_CodeSniffer::getConfigData('default_standard');
             if ($standard === null) {
@@ -735,7 +1013,8 @@ class PHP_CodeSniffer_CLI
             return array($standard);
         }
 
-        $cleaned = array();
+        $cleaned   = array();
+        $standards = (array) $standards;
 
         // Check if the standard name is valid, or if the case is invalid.
         $installedStandards = PHP_CodeSniffer::getInstalledStandards();
@@ -792,7 +1071,7 @@ class PHP_CodeSniffer_CLI
                 ob_end_clean();
 
                 echo PHP_EOL.$lastStandard.' ('.$lastCount.' sniffs)'.PHP_EOL;
-                echo str_repeat('-', strlen($lastStandard.$lastCount) + 10);
+                echo str_repeat('-', (strlen($lastStandard.$lastCount) + 10));
                 echo PHP_EOL;
                 echo $sniffList;
 
@@ -812,14 +1091,61 @@ class PHP_CodeSniffer_CLI
 
 
     /**
+     * Prints out the gathered config data.
+     *
+     * @param array $data The config data to print.
+     *
+     * @return void
+     */
+    public function printConfigData($data)
+    {
+        $max  = 0;
+        $keys = array_keys($data);
+        foreach ($keys as $key) {
+            $len = strlen($key);
+            if (strlen($key) > $max) {
+                $max = $len;
+            }
+        }
+
+        if ($max === 0) {
+            return;
+        }
+
+        $max += 2;
+        ksort($data);
+        foreach ($data as $name => $value) {
+            echo str_pad($name.': ', $max).$value.PHP_EOL;
+        }
+
+    }//end printConfigData()
+
+
+    /**
      * Prints out the usage information for this script.
      *
      * @return void
      */
     public function printUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
-        echo '    [--report=<report>] [--report-file=<reportfile>] [--report-<report>=<reportfile>] ...'.PHP_EOL;
+        if (PHP_CODESNIFFER_CBF === true) {
+            $this->printPHPCBFUsage();
+        } else {
+            $this->printPHPCSUsage();
+        }
+
+    }//end printUsage()
+
+
+    /**
+     * Prints out the usage information for PHPCS.
+     *
+     * @return void
+     */
+    public function printPHPCSUsage()
+    {
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
+        echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
@@ -827,7 +1153,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
-        echo '        -w            Print both warnings and errors (on by default)'.PHP_EOL;
+        echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
         echo '        -a            Run interactively'.PHP_EOL;
@@ -838,26 +1164,69 @@ class PHP_CodeSniffer_CLI
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
+        echo '        --colors      Use colors in output'.PHP_EOL;
+        echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
-        echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
-        echo '                      (only valid if checking a directory)'.PHP_EOL;
-        echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
+        echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
+        echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
+        echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
+        echo '                      e.g., module/php,es/js'.PHP_EOL;
+        echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
+        echo '                      (forces doc generation instead of checking)'.PHP_EOL;
+        echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
+        echo '        <report>      Print either the "full", "xml", "checkstyle", "csv"'.PHP_EOL;
+        echo '                      "json", "emacs", "source", "summary", "diff"'.PHP_EOL;
+        echo '                      "svnblame", "gitblame", "hgblame" or "notifysend" report'.PHP_EOL;
+        echo '                      (the "full" report is printed by default)'.PHP_EOL;
+        echo '        <reportFile>  Write the report to the specified file path'.PHP_EOL;
+        echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
+        echo '                      or set to "auto" to use current screen width, where supported'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
         echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
-        echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
-        echo '                      (forces doc generation instead of checking)'.PHP_EOL;
-        echo '        <report>      Print either the "full", "xml", "checkstyle", "csv", "json"'.PHP_EOL;
-        echo '                      "emacs", "source", "summary", "svnblame", "gitblame", "hgblame" or'.PHP_EOL;
-        echo '                      "notifysend" report'.PHP_EOL;
-        echo '                      (the "full" report is printed by default)'.PHP_EOL;
-        echo '        <reportfile>  Write the report to the specified file path'.PHP_EOL;
-        echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
 
-    }//end printUsage()
+    }//end printPHPCSUsage()
+
+
+    /**
+     * Prints out the usage information for PHPCBF.
+     *
+     * @return void
+     */
+    public function printPHPCBFUsage()
+    {
+        echo 'Usage: phpcbf [-nwli] [-d key[=value]]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
+        echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
+        echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
+        echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
+        echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
+        echo '        -l            Local directory only, no recursion'.PHP_EOL;
+        echo '        -i            Show a list of installed coding standards'.PHP_EOL;
+        echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
+        echo '        --help        Print this help message'.PHP_EOL;
+        echo '        --version     Print version information'.PHP_EOL;
+        echo '        --no-patch    Do not make use of the "diff" or "patch" programs'.PHP_EOL;
+        echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
+        echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
+        echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
+        echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
+        echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
+        echo '                      e.g., module/php,es/js'.PHP_EOL;
+        echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
+        echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
+        echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
+        echo '        <severity>    The minimum severity required to fix an error or warning'.PHP_EOL;
+        echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
+        echo '        <suffix>      Write modified files to a filename using this suffix'.PHP_EOL;
+        echo '                      ("diff" and "patch" are not used in this mode)'.PHP_EOL;
+        echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
+
+    }//end printPHPCBFUsage()
 
 
     /**
@@ -886,6 +1255,25 @@ class PHP_CodeSniffer_CLI
     }//end printInstalledStandards()
 
 
-}//end class
+    /**
+     * Set report width based on terminal width.
+     *
+     * @param int $width The width of the report. If "auto" then will
+     *                   be replaced by the terminal width.
+     *
+     * @return void
+     */
+    private function _validateReportWidth($width)
+    {
+        if ($width === 'auto'
+            && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1
+        ) {
+            return (int) $matches[1];
+        }
 
-?>
+        return (int) $width;
+
+    }//end _validateReportWidth()
+
+
+}//end class

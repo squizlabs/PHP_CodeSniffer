@@ -37,4 +37,14 @@ if ($bar) {
     ->setBar($foo)
     ->setFoo($bar);
 }
-?>
+
+$response -> CompletedTrackDetails -> TrackDetails -> Events;
+$response
+    -> CompletedTrackDetails
+    -> TrackDetails
+    -> Events;
+
+$response
+     -> CompletedTrackDetails
+-> TrackDetails
+ -> Events;

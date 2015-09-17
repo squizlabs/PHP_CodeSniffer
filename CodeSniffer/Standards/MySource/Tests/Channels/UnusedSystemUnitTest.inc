@@ -45,7 +45,7 @@ class MyLog implements Log3 {}
 if (self::systemExists($systemName) === FALSE) {
     return $actions;
 } else {
-    // Shouldnt throw an error because we dont know the system name.
+    // Shouldn't throw an error because we don't know the system name.
     self::includeSystem($systemName);
     self::includeSystem($systemNames['log']);
 }

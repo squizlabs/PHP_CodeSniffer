@@ -154,4 +154,37 @@ function myFunction(
                     $arg6
                     ) {
 }
-?>
+
+function myFunction() {}
+function myFunction()
+{}
+
+// @codingStandardsChangeSetting Generic.Functions.OpeningFunctionBraceBsdAllman checkClosures 1
+
+$closureWithArgs = function ($arg1, $arg2) {
+    // body
+};
+
+$closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
+    // body
+};
+
+$test = function ($param) use ($result) {
+    return null;
+}
+
+// @codingStandardsChangeSetting Generic.Functions.OpeningFunctionBraceBsdAllman checkClosures 0
+
+$closureWithArgs = function ($arg1, $arg2) {
+    // body
+};
+
+class Foo
+{
+//Comments should not affect code
+    public function bar()
+    {
+
+    }
+//Comments should not affect code
+}

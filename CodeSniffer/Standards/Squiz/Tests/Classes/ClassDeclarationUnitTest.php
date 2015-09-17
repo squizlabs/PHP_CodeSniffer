@@ -43,19 +43,20 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
+                5   => 1,
                 10  => 1,
                 15  => 2,
                 18  => 1,
-                22  => 3,
-                23  => 3,
-                24  => 3,
+                22  => 4,
+                23  => 4,
+                24  => 4,
                 27  => 2,
                 28  => 1,
                 30  => 2,
                 34  => 1,
                 35  => 1,
                 39  => 1,
-                42  => 2,
+                42  => 1,
                 45  => 1,
                 48  => 1,
                 50  => 2,
@@ -71,7 +72,10 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
                 89  => 1,
                 92  => 1,
                 97  => 1,
-                100 => 1,
+                103 => 1,
+                105 => 1,
+                107 => 1,
+                110 => 1,
                );
 
     }//end getErrorList()
@@ -93,5 +97,3 @@ class Squiz_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

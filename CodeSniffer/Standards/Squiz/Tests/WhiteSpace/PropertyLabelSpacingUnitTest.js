@@ -1,6 +1,7 @@
 var x = {
     b:  'x',
     xasd: x,
+    abc:x,
     a: function () {
         alert('thats right');
         x = (x?a:x);

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of the CodeAnalysis addon for PHP_CodeSniffer.
+ * This file is part of the CodeAnalysis add-on for PHP_CodeSniffer.
  *
  * PHP version 5
  *
@@ -15,7 +15,7 @@
 
 /**
  * Detects unconditional if- and elseif-statements.
- * 
+ *
  * This rule is based on the PMD rule catalog. The Unconditional If Statement
  * sniff detects statement conditions that are only set to one of the constant
  * values <b>true</b> or <b>false</b>
@@ -86,7 +86,7 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
         for (; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];
 
-            if (in_array($code, PHP_CodeSniffer_Tokens::$emptyTokens) === true) {
+            if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true) {
                 continue;
             } else if ($code !== T_TRUE && $code !== T_FALSE) {
                 $goodCondition = true;
@@ -102,5 +102,3 @@ class Generic_Sniffs_CodeAnalysis_UnconditionalIfStatementSniff implements PHP_C
 
 
 }//end class
-
-?>

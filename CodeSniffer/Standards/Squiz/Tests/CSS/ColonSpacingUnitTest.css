@@ -28,6 +28,12 @@ li {
     margin:0px;
     padding-left:10px;
     margin-bottom:<?php echo $marginBottom; ?>px;
+    margin-top: <?php echo $marginTop; ?>px;
     line-height:13px;
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#2e62a8, endColorstr=#123363);
+}
+
+/* empty style def */
+.p {
+    margin:;
 }

@@ -1,0 +1,16 @@
+<?php
+// A few keywords. Obviously not valid syntax.
+class Something extends SomethingElse implements Whatever
+abstract public private protected function whatever() {}
+const array()
+for ($var as $var) { exit; }
+if ($a and $b or $c xor $d) { die; } elseif { } else
+goto a;
+
+class Something extends SomethingElse implements Whatever
+abstract public private protected function whatever() {}
+const array()
+for ($var as $var) { exit; }
+if ($a and $b or $c xor $d) { die; } elseif { } else
+goto a;
+?>

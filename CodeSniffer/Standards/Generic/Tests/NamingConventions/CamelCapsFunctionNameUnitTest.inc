@@ -16,9 +16,9 @@ abstract class My_Class {
     protected function parseMyDSN() {}
     protected function get_some_value() {}
 
-    private function getSomeValue() {}
+    private function _getSomeValue() {}
     private function parseMyDSN() {}
-    private function get_some_value() {}
+    private function _get_some_value() {}
 
     function getSomeValue() {}
     function parseMyDSN() {}

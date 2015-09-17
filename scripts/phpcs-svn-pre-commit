@@ -57,19 +57,16 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
     /**
      * Processes an unknown command line argument.
      *
-     * All unknown args are sent to SVN commands.
+     * Assumes all unknown arguments are files and folders to check.
      *
-     * @param string $arg    The command line argument.
-     * @param int    $pos    The position of the argument on the command line.
-     * @param array  $values An array of values determined from CLI args.
+     * @param string $arg The command line argument.
+     * @param int    $pos The position of the argument on the command line.
      *
-     * @return array The updated CLI values.
-     * @see getCommandLineValues()
+     * @return void
      */
-    public function processUnknownArgument($arg, $pos, $values)
+    public function processUnknownArgument($arg, $pos)
     {
-        $values['svnArgs'][] = escapeshellarg($arg);
-        return $values;
+        $this->values['svnArgs'][] = escapeshellarg($arg);
 
     }//end processUnknownArgument()
 
@@ -80,12 +77,15 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
      * @param array $values An array of values determined from CLI args.
      *
      * @return int The number of error and warning messages shown.
-     * @see getCommandLineValues()
+     * @see    getCommandLineValues()
      */
     public function process($values=array())
     {
         if (empty($values) === true) {
-            $values = parent::getCommandLineValues();
+            $values = $this->getCommandLineValues();
+        } else {
+            $values       = array_merge($this->getDefaults(), $values);
+            $this->values = $values;
         }
 
         // Get list of files in this transaction.
@@ -127,6 +127,8 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
         // let PHP_CodeSniffer decide on the defaults.
         if (empty($values['extensions']) === false) {
             $phpcs->setAllowedFileExtensions($values['extensions']);
+        } else {
+            $phpcs->setAllowedFileExtensions(array_keys($phpcs->defaultFileExtensions));
         }
 
         // Set ignore patterns if they were specified.
@@ -153,7 +155,7 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
 
         // Initialize PHP_CodeSniffer listeners but don't process any files.
         $phpcs->setCli($this);
-        $phpcs->process(array(), $values['standard'], $values['sniffs']);
+        $phpcs->initStandard($values['standard'], $values['sniffs']);
 
         // Need double quotes around the following regex beause the vertical whitespace
         // char is not always treated correctly for whatever reason.
@@ -217,11 +219,11 @@ class PHP_CodeSniffer_SVN_Hook extends PHP_CodeSniffer_CLI
 }//end class
 
 $phpcs = new PHP_CodeSniffer_SVN_Hook();
+
+PHP_CodeSniffer_Reporting::startTiming();
 $phpcs->checkRequirements();
 
 $numErrors = $phpcs->process();
 if ($numErrors !== 0) {
     exit(1);
 }
-
-?>

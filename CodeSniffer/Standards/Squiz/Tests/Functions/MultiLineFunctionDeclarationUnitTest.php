@@ -36,28 +36,52 @@ class Squiz_Tests_Functions_MultiLineFunctionDeclarationUnitTest extends Abstrac
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList($testFile='MultiLineFunctionDeclarationUnitTest.inc')
     {
-        return array(
-                2  => 1,
-                3  => 1,
-                4  => 3,
-                5  => 1,
-                7  => 1,
-                11 => 1,
-                12 => 1,
-                13 => 1,
-                16 => 1,
-                33 => 1,
-                36 => 1,
-                43 => 2,
-                48 => 1,
-                81 => 1,
-                82 => 2,
-                88 => 2,
-               );
+        if ($testFile === 'MultiLineFunctionDeclarationUnitTest.inc') {
+            $errors = array(
+                       2   => 1,
+                       3   => 1,
+                       4   => 2,
+                       5   => 1,
+                       7   => 1,
+                       11  => 1,
+                       12  => 1,
+                       13  => 1,
+                       16  => 1,
+                       33  => 1,
+                       36  => 1,
+                       43  => 2,
+                       48  => 1,
+                       81  => 1,
+                       82  => 2,
+                       88  => 1,
+                       102 => 2,
+                      );
+        } else {
+            $errors = array(
+                       2  => 1,
+                       3  => 1,
+                       4  => 2,
+                       5  => 1,
+                       7  => 1,
+                       11 => 1,
+                       12 => 1,
+                       13 => 1,
+                       16 => 1,
+                       26 => 1,
+                       33 => 1,
+                       36 => 1,
+                       43 => 2,
+                       48 => 1,
+                      );
+        }//end if
+
+        return $errors;
 
     }//end getErrorList()
 
@@ -78,5 +102,3 @@ class Squiz_Tests_Functions_MultiLineFunctionDeclarationUnitTest extends Abstrac
 
 
 }//end class
-
-?>

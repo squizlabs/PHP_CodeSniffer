@@ -32,22 +32,38 @@
 class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
 {
 
+    /**
+     * TRUE if this report needs error messages instead of just totals.
+     *
+     * @var boolean
+     */
+    public $recordErrors = false;
+
+    /**
+     * An array of process files and their error data.
+     *
+     * @var boolean
+     */
+    private $_reportFiles = array();
+
 
     /**
      * Generate a partial report for a single processed file.
      *
-     * If verbose output is enabled, results are shown for all files, even if
-     * they have no errors or warnings. If verbose output is disabled, we only
-     * show files that have at least one warning or error.
+     * Function should return TRUE if it printed or stored data about the file
+     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
+     * its data should be counted in the grand totals.
      *
-     * @param array   $report      Prepared report data.
-     * @param boolean $showSources Show sources?
-     * @param int     $width       Maximum allowed line width.
+     * @param array                $report      Prepared report data.
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being reported on.
+     * @param boolean              $showSources Show sources?
+     * @param int                  $width       Maximum allowed line width.
      *
      * @return boolean
      */
     public function generateFileReport(
         $report,
+        PHP_CodeSniffer_File $phpcsFile,
         $showSources=false,
         $width=80
     ) {
@@ -59,20 +75,11 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
             return false;
         }
 
-        $width = max($width, 70);
-        $file  = $report['filename'];
-
-        $padding = ($width - 18 - strlen($file));
-        if ($padding < 0) {
-            $file    = '...'.substr($file, (($padding * -1) + 3));
-            $padding = 0;
-        }
-
-        echo $file.str_repeat(' ', $padding).'  ';
-        echo $report['errors'];
-        echo str_repeat(' ', (8 - strlen((string) $report['errors'])));
-        echo $report['warnings'];
-        echo PHP_EOL;
+        $this->_reportFiles[$report['filename']] = array(
+                                                    'errors'   => $report['errors'],
+                                                    'warnings' => $report['warnings'],
+                                                    'strlen'   => strlen($report['filename']),
+                                                   );
 
         return true;
 
@@ -81,12 +88,13 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
 
     /**
      * Generates a summary of errors and warnings for each file processed.
-     * 
+     *
      * @param string  $cachedData    Any partial report data that was returned from
      *                               generateFileReport during the run.
      * @param int     $totalFiles    Total number of files processed during the run.
      * @param int     $totalErrors   Total number of errors found during the run.
      * @param int     $totalWarnings Total number of warnings found during the run.
+     * @param int     $totalFixable  Total number of problems that can be fixed.
      * @param boolean $showSources   Show sources?
      * @param int     $width         Maximum allowed line width.
      * @param boolean $toScreen      Is the report being printed to screen?
@@ -98,38 +106,84 @@ class PHP_CodeSniffer_Reports_Summary implements PHP_CodeSniffer_Report
         $totalFiles,
         $totalErrors,
         $totalWarnings,
+        $totalFixable,
         $showSources=false,
         $width=80,
         $toScreen=true
     ) {
-        if ($cachedData === '') {
+
+        if (empty($this->_reportFiles) === true) {
             return;
         }
 
-        echo PHP_EOL.'PHP CODE SNIFFER REPORT SUMMARY'.PHP_EOL;
+        // Make sure the report width isn't too big.
+        $maxLength = 0;
+        foreach ($this->_reportFiles as $file => $data) {
+            $maxLength = max($maxLength, $data['strlen']);
+        }
+
+        $width = min($width, ($maxLength + 21));
+        $width = max($width, 70);
+
+        echo PHP_EOL."\033[1m".'PHP CODE SNIFFER REPORT SUMMARY'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'.PHP_EOL;
+        echo "\033[1m".'FILE'.str_repeat(' ', ($width - 20)).'ERRORS  WARNINGS'."\033[0m".PHP_EOL;
         echo str_repeat('-', $width).PHP_EOL;
 
-        echo $cachedData;
+        foreach ($this->_reportFiles as $file => $data) {
+            $padding = ($width - 18 - $data['strlen']);
+            if ($padding < 0) {
+                $file    = '...'.substr($file, (($padding * -1) + 3));
+                $padding = 0;
+            }
+
+            echo $file.str_repeat(' ', $padding).'  ';
+            if ($data['errors'] !== 0) {
+                echo "\033[31m".$data['errors']."\033[0m";
+                echo str_repeat(' ', (8 - strlen((string) $data['errors'])));
+            } else {
+                echo '0       ';
+            }
+
+            if ($data['warnings'] !== 0) {
+                echo "\033[33m".$data['warnings']."\033[0m";
+            } else {
+                echo '0';
+            }
+
+            echo PHP_EOL;
+        }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
-        echo 'A TOTAL OF '.$totalErrors.' ERROR(S) ';
-        echo 'AND '.$totalWarnings.' WARNING(S) ';
+        echo "\033[1mA TOTAL OF $totalErrors ERROR";
+        if ($totalErrors !== 1) {
+            echo 'S';
+        }
 
-        echo 'WERE FOUND IN '.$totalFiles.' FILE(S)'.PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL.PHP_EOL;
+        echo ' AND '.$totalWarnings.' WARNING';
+        if ($totalWarnings !== 1) {
+            echo 'S';
+        }
 
-        if ($toScreen === true
-            && PHP_CODESNIFFER_INTERACTIVE === false
-            && class_exists('PHP_Timer', false) === true
-        ) {
-            echo PHP_Timer::resourceUsage().PHP_EOL.PHP_EOL;
+        echo ' WERE FOUND IN '.$totalFiles.' FILE';
+        if ($totalFiles !== 1) {
+            echo 'S';
+        }
+
+        echo "\033[0m";
+
+        if ($totalFixable > 0) {
+            echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
+            echo "\033[1mPHPCBF CAN FIX $totalFixable OF THESE SNIFF VIOLATIONS AUTOMATICALLY\033[0m";
+        }
+
+        echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
+
+        if ($toScreen === true && PHP_CODESNIFFER_INTERACTIVE === false) {
+            PHP_CodeSniffer_Reporting::printRunTime();
         }
 
     }//end generate()
 
 
 }//end class
-
-?>

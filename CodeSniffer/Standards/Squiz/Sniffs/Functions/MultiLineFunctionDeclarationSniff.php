@@ -33,6 +33,16 @@ if (class_exists('PEAR_Sniffs_Functions_FunctionDeclarationSniff', true) === fal
 class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Sniffs_Functions_FunctionDeclarationSniff
 {
 
+    /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
 
     /**
      * Processes multi-line declarations.
@@ -102,39 +112,42 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
             $next = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);
             if ($tokens[$next]['line'] !== ($tokens[$openBracket]['line'] + 1)) {
                 $error = 'The first parameter of a multi-line '.$type.' declaration must be on the line after the opening bracket';
-                $phpcsFile->addError($error, $next, $errorPrefix.'FirstParamSpacing');
+                $fix   = $phpcsFile->addFixableError($error, $next, $errorPrefix.'FirstParamSpacing');
+                if ($fix === true) {
+                    $phpcsFile->fixer->addNewline($openBracket);
+                }
             }
         }
 
         // Each line between the brackets should contain a single parameter.
-        $lastCommaLine = null;
+        $lastComma = null;
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
             // Skip brackets, like arrays, as they can contain commas.
+            if (isset($tokens[$i]['bracket_opener']) === true) {
+                $i = $tokens[$i]['bracket_closer'];
+                continue;
+            }
+
             if (isset($tokens[$i]['parenthesis_opener']) === true) {
                 $i = $tokens[$i]['parenthesis_closer'];
                 continue;
             }
 
-            if ($tokens[$i]['code'] === T_COMMA) {
-                if ($lastCommaLine !== null && $lastCommaLine === $tokens[$i]['line']) {
-                    $error = 'Multi-line '.$type.' declarations must define one parameter per line';
-                    $phpcsFile->addError($error, $i, $errorPrefix.'OneParamPerLine');
-                } else {
-                    // Comma must be the last thing on the line.
-                    $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), null, true);
-                    if ($tokens[$next]['line'] !== ($tokens[$i]['line'] + 1)) {
-                        $error = 'Commas in multi-line '.$type.' declarations must be the last content on a line';
-                        $phpcsFile->addError($error, $next, $errorPrefix.'ContentAfterComma');
-                    }
-                }
-
-                $lastCommaLine = $tokens[$i]['line'];
+            if ($tokens[$i]['code'] !== T_COMMA) {
+                continue;
             }
-        }
+
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), null, true);
+            if ($tokens[$next]['line'] !== ($tokens[$i]['line'] + 1)) {
+                $error = 'Multi-line '.$type.' declarations must define one parameter per line';
+                $fix   = $phpcsFile->addFixableError($error, $next, $errorPrefix.'OneParamPerLine');
+                if ($fix === true) {
+                    $phpcsFile->fixer->addNewline($i);
+                }
+            }
+        }//end for
 
     }//end processBracket()
 
 
 }//end class
-
-?>

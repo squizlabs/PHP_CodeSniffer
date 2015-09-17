@@ -66,9 +66,13 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
 
         $nextArg = $argStart;
         while (($nextArg = $phpcsFile->findNext(T_VARIABLE, ($nextArg + 1), $argEnd)) !== false) {
+            if ($tokens[($nextArg - 1)]['code'] === T_ELLIPSIS) {
+                continue;
+            }
+
             $argHasDefault = self::_argHasDefault($phpcsFile, $nextArg);
-            if (($argHasDefault === false) && ($defaultFound === true)) {
-                $error  = 'Arguments with default values must be at the end of the argument list';
+            if ($argHasDefault === false && $defaultFound === true) {
+                $error = 'Arguments with default values must be at the end of the argument list';
                 $phpcsFile->addError($error, $nextArg, 'NotAtEnd');
                 return;
             }
@@ -104,5 +108,3 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
 
 
 }//end class
-
-?>

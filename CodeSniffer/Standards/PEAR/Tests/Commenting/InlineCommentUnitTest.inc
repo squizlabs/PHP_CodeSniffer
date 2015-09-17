@@ -24,4 +24,6 @@ function test()
 # This is a long comment
 # that is banned.
 
-?>
+### use the code from the regex
+### over hre
+### ok?

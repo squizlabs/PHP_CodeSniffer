@@ -36,14 +36,22 @@ class Generic_Tests_PHP_CharacterBeforePHPOpeningTagUnitTest extends AbstractSni
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList($testFile='')
     {
-        return array(
-                2 => 1,
-                7 => 1,
-               );
+        switch ($testFile) {
+        case 'CharacterBeforePHPOpeningTagUnitTest.1.inc':
+            return array(
+                    2 => 1,
+                   );
+            break;
+        default:
+            return array();
+            break;
+        }//end switch
 
     }//end getErrorList()
 

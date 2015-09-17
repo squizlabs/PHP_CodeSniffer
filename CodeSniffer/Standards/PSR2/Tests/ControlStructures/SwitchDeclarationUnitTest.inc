@@ -7,13 +7,13 @@ switch ($expr) {
         echo 'Second case, which falls through';
         // no break
     case 2:
-    case 3:
-    case 4:
+    case   3:
+    Case 4:
         echo 'Third case, return instead of break';
         return;
-    default:
+    Default:
         echo 'Default case';
-        break;
+            break;
 }
 
 switch ($expr) {
@@ -23,7 +23,7 @@ switch ($expr) {
     case 1 :
         echo 'Second case';
         // no break
-case 2:
+    case 2:
     case 3:
         echo 'Third case';
     return;
@@ -34,7 +34,7 @@ case 2:
 }
 
 switch ($foo) {
-    case 'Foo': {
+    case'Foo': {
         echo 'foo';
         break;
         }
@@ -88,4 +88,49 @@ switch (true) {
             return null;
         }
 }
-?>
+
+use Vendor\Test\FooBar;
+
+function test()
+{
+    switch ($val) {
+        case 'foo':
+            echo 'foo';
+            break;
+        default:
+            echo 'foo';
+    }
+
+    exit;
+}
+
+switch ($foo) {
+    case 1: $bar = 1; break;
+    case 2:
+    
+        $bar = 2; break;
+    case 21:
+    case 3: return 3;
+    default: $bar = 0;
+}
+
+switch ($foo) {
+    case 'foo': // some comment
+        echo 'foo';
+        break;
+    case 'bar':
+        // some comment
+        echo 'bar';
+        break;
+    case 'baz': // other comment
+        echo 'baz';
+        break;
+    case 'boo':
+
+        // other comment
+        echo 'boo';
+        break;
+    default: // other comment
+        echo 'default';
+        break;
+}

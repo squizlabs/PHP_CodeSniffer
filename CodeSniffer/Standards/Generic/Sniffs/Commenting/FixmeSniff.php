@@ -68,7 +68,8 @@ class Generic_Sniffs_Commenting_FixmeSniff implements PHP_CodeSniffer_Sniff
 
         $content = $tokens[$stackPtr]['content'];
         $matches = array();
-        if (preg_match('/(?:\A|[^\p{L}]+)fixme([^\p{L}]+(.*)|\Z)/ui', $content, $matches) !== 0) {
+        preg_match('/(?:\A|[^\p{L}]+)fixme([^\p{L}]+(.*)|\Z)/ui', $content, $matches);
+        if (empty($matches) === false) {
             // Clear whitespace and some common characters not required at
             // the end of a fixme message to make the error more informative.
             $type         = 'CommentFound';
@@ -88,5 +89,3 @@ class Generic_Sniffs_Commenting_FixmeSniff implements PHP_CodeSniffer_Sniff
 
 
 }//end class
-
-?>

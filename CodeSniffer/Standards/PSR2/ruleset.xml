@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="PSR2">
  <description>The PSR-2 coding standard.</description>
+ <arg name="tab-width" value="4"/>
 
  <!-- 2. General -->
 
@@ -22,7 +23,7 @@
  <!-- checked in Files/EndFileNewlineSniff -->
 
  <!-- The closing ?> tag MUST be omitted from files containing only PHP. -->
- <rule ref="Zend.Files.ClosingTag"/>
+ <!-- checked in Files/ClosingTagSniff -->
 
  <!-- 2.3 Lines -->
 
@@ -38,7 +39,7 @@
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
   <properties>
    <property name="ignoreBlankLines" value="true"/>
-   </properties>
+  </properties>
  </rule>
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
   <severity>0</severity>
@@ -58,7 +59,7 @@
  <!-- Code MUST use an indent of 4 spaces, and MUST NOT use tabs for indenting. -->
  <rule ref="Generic.WhiteSpace.ScopeIndent">
   <properties>
-   <property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT"/>
+   <property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT_OPEN_TAG"/>
   </properties>
  </rule>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
@@ -153,11 +154,7 @@
  There MUST be one space between the closing parenthesis and the opening brace
  The structure body MUST be indented once
  The closing brace MUST be on the next line after the body -->
- <rule ref="Squiz.ControlStructures.ControlSignature">
-  <properties>
-   <property name="ignoreComments" value="true"/>
-  </properties>
- </rule>
+ <rule ref="Squiz.ControlStructures.ControlSignature"/>
  <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
  <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>

@@ -114,3 +114,6 @@ mig.Gallery.prototype = {
 var foo = 'foo'; // Var set to foo.
 
 console.info(foo);
+
+//	Comment here.
+console.info(foo);

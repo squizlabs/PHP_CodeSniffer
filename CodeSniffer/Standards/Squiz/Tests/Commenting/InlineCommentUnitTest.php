@@ -47,20 +47,20 @@ class Squiz_Tests_Commenting_InlineCommentUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'InlineCommentUnitTest.inc':
             $errors = array(
-                       17 => 1,
-                       27 => 1,
-                       28 => 1,
-                       32 => 2,
-                       36 => 1,
-                       44 => 2,
-                       54 => 1,
-                       58 => 1,
-                       61 => 1,
-                       64 => 2,
-                       67 => 1,
-                       95 => 1,
-                       96 => 1,
-                       97 => 3,
+                       17  => 1,
+                       27  => 1,
+                       28  => 1,
+                       32  => 2,
+                       36  => 1,
+                       44  => 2,
+                       58  => 1,
+                       61  => 1,
+                       64  => 1,
+                       67  => 1,
+                       95  => 1,
+                       96  => 1,
+                       97  => 2,
+                       118 => 1,
                       );
 
             // The trait tests will only work in PHP version where traits exist and
@@ -74,14 +74,14 @@ class Squiz_Tests_Commenting_InlineCommentUnitTest extends AbstractSniffUnitTest
             return array(
                     31  => 1,
                     36  => 2,
-                    44  => 1,
                     48  => 1,
                     51  => 1,
-                    54  => 2,
+                    54  => 1,
                     57  => 1,
                     102 => 1,
                     103 => 1,
                     104 => 3,
+                    118 => 1,
                    );
         default:
             return array();
@@ -106,5 +106,3 @@ class Squiz_Tests_Commenting_InlineCommentUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

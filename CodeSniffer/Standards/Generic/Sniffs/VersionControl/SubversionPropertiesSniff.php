@@ -82,7 +82,7 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
             return;
         }
 
-        $allProperties = $properties + $this->properties;
+        $allProperties = ($properties + $this->properties);
         foreach ($allProperties as $key => $value) {
             if (isset($properties[$key]) === true
                 && isset($this->properties[$key]) === false
@@ -202,5 +202,3 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
 
 
 }//end class
-
-?>

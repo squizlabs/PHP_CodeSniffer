@@ -72,7 +72,11 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
         $opener    = $tokens[$stackPtr]['scope_opener'];
         $nameStart = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), $opener, true);
         $nameEnd   = $phpcsFile->findNext(T_WHITESPACE, $nameStart, $opener);
-        $name      = trim($phpcsFile->getTokensAsString($nameStart, ($nameEnd - $nameStart)));
+        if ($nameEnd === false) {
+            $name = $tokens[$nameStart]['content'];
+        } else {
+            $name = trim($phpcsFile->getTokensAsString($nameStart, ($nameEnd - $nameStart)));
+        }
 
         // Check for camel caps format.
         $valid = PHP_CodeSniffer::isCamelCaps($name, true, true, false);
@@ -84,12 +88,12 @@ class Squiz_Sniffs_Classes_ValidClassNameSniff implements PHP_CodeSniffer_Sniff
                       $name,
                      );
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase class name', 'no');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'CamelCase class name', 'yes');
         }
 
     }//end process()
 
 
 }//end class
-
-
-?>
