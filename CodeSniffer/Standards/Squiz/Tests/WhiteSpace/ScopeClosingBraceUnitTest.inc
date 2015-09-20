@@ -65,3 +65,11 @@ switch ($blah) {
 <?php while($row = $data->getRow()): ?>
     <p><?= $val ?></p>
 <?php endwhile; ?>
+
+<body>
+    <div>
+    <?php if (true == false) : ?>
+        <h1>o hai!</h1>
+    <?php endif; ?>
+    </div>
+</body>

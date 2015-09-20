@@ -73,7 +73,7 @@ class Squiz_Sniffs_WhiteSpace_ScopeClosingBraceSniff implements PHP_CodeSniffer_
         $scopeEnd    = $tokens[$stackPtr]['scope_closer'];
 
         // Check that the closing brace is on it's own line.
-        $lastContent = $phpcsFile->findPrevious(array(T_WHITESPACE, T_OPEN_TAG), ($scopeEnd - 1), $scopeStart, true);
+        $lastContent = $phpcsFile->findPrevious(array(T_INLINE_HTML, T_WHITESPACE, T_OPEN_TAG), ($scopeEnd - 1), $scopeStart, true);
         if ($tokens[$lastContent]['line'] === $tokens[$scopeEnd]['line']) {
             $error = 'Closing brace must be on a line by itself';
             $fix   = $phpcsFile->addFixableError($error, $scopeEnd, 'ContentBefore');
