@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Kunal Mehta for the patch
   - Fixed bug #694 : Long sniff codes can cause PHP warnings in source report when showing error codes
   - Fixed bug #704 : ScopeIndent can fail when an opening parenthesis is on a line by itself
+  - Fixed bug #707 : Squiz MethodScopeSniff doesn't handle nested functions
   - Fixed bug #709 : Squiz.Sniffs.Whitespace.ScopeClosingBraceSniff marking indented endif in mixed inline HTML blocks
  </notes>
  <contents>
