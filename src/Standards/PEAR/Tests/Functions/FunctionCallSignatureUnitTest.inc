@@ -238,3 +238,14 @@ array_walk(
         <?php
     }
 );
+
+$this->log(
+    'error',
+    sprintf(
+        'Message: %s',
+        isset($e->getData()['object']['evidence_details'])
+            ? $e->getData()['object']['evidence_details']['due_by']
+            : ''
+    ),
+    array($e->getData()['object'])
+);

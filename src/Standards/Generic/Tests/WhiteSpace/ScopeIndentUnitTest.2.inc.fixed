@@ -879,6 +879,12 @@ declare(ticks=1) {
 	echo 'foo';
 }
 
+$a =
+	(
+		$b = 1
+	);
+$c = 2;
+
 function foo()
 {
 	$foo = array(

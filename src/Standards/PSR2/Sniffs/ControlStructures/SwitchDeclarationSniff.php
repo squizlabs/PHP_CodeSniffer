@@ -129,7 +129,14 @@ class SwitchDeclarationSniff implements Sniff
                     }
                 }
 
-                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($opener + 1), null, true);
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
+                if ($tokens[$next]['line'] === $tokens[$opener]['line']
+                    && $tokens[$next]['code'] === T_COMMENT
+                ) {
+                    // Skip comments on the same line.
+                    $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
+                }
+
                 if ($tokens[$next]['line'] !== ($tokens[$opener]['line'] + 1)) {
                     $error = 'The '.strtoupper($type).' body must start on the line following the statement';
                     $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.strtoupper($type));
