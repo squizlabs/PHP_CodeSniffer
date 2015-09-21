@@ -207,7 +207,7 @@ function foo()
         // comment 
         'string'.
         /* comment
-        * comment
+         * comment
         */
         'string'.
     );
@@ -242,4 +242,15 @@ array_walk(
         <li><a href="<?php esc_url('#tabs-documents-' . $type . $plural); ?>"><?php echo esc_html($title); ?></a></li>
         <?php
     }
+);
+
+$this->log(
+    'error',
+    sprintf(
+        'Message: %s',
+        isset($e->getData()['object']['evidence_details'])
+            ? $e->getData()['object']['evidence_details']['due_by']
+            : ''
+    ),
+    array($e->getData()['object'])
 );
