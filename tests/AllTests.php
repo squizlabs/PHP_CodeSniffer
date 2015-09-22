@@ -30,7 +30,7 @@ if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
     define('PHP_CODESNIFFER_VERBOSITY', 0);
 }
 
-require_once __DIR__.'/../autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 $tokens = new Tokens();
 
