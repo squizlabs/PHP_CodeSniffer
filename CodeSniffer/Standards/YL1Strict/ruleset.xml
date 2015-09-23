@@ -3,10 +3,12 @@
     <description>The YL1Strict coding standard.</description>
     <arg name="tab-width" value="4"/>
     
-     <rule ref="PSR2">
+    <rule ref="PSR2">
 	<exclude name="PSR2.Methods.MethodDeclaration"/>
 	<exclude name="PSR2.Classes.PropertyDeclaration"/>
 	<exclude name="Zend.Files.ClosingTag"/>
+	<exclude name="Squiz.WhiteSpace.ScopeClosingBrace" />
+    <exclude name="Generic.WhiteSpace.ScopeIndent" />
     </rule>
  
     <rule ref="Generic.Files.LineEndings">
