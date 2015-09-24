@@ -1545,7 +1545,7 @@ class PHP_CodeSniffer_File
                             $newContent .= $content;
                             if ($checkEncoding === true) {
                                 // Not using the default encoding, so take a bit more care.
-                                $contentLength = iconv_strlen($content, $encoding);
+                                $contentLength = @iconv_strlen($content, $encoding);
                                 if ($contentLength === false) {
                                     // String contained invalid characters, so revert to default.
                                     $contentLength = strlen($content);
