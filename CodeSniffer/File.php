@@ -485,7 +485,7 @@ class PHP_CodeSniffer_File
         foreach ($this->_tokens as $stackPtr => $token) {
             // Check for ignored lines.
             if ($token['code'] === T_COMMENT
-                || $token['code'] === T_DOC_COMMENT
+                || $token['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $token['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($token['content'], '@codingStandards') !== false) {
@@ -1603,7 +1603,7 @@ class PHP_CodeSniffer_File
             }
 
             if ($tokens[$i]['code'] === T_COMMENT
-                || $tokens[$i]['code'] === T_DOC_COMMENT
+                || $tokens[$i]['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $tokens[$i]['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($tokens[$i]['content'], '@codingStandards') !== false) {
