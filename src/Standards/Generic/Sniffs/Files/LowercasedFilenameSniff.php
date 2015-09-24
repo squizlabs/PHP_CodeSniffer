@@ -56,12 +56,17 @@ class LowercasedFilenameSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $fileName          = basename($phpcsFile->getFilename());
-        $lowercaseFileName = strtolower($fileName);
-        if ($fileName !== $lowercaseFileName) {
+        $filename = $phpcsFile->getFilename();
+        if ($filename === 'STDIN') {
+            return;
+        }
+
+        $filename          = basename($filename);
+        $lowercaseFilename = strtolower($filename);
+        if ($filename !== $lowercaseFilename) {
             $data  = array(
-                      $fileName,
-                      $lowercaseFileName,
+                      $filename,
+                      $lowercaseFilename,
                      );
             $error = 'Filename "%s" doesn\'t match the expected filename "%s"';
             $phpcsFile->addError($error, $stackPtr, 'NotFound', $data);
