@@ -224,7 +224,7 @@ abstract class Tokenizer
             }
 
             if ($this->tokens[$i]['code'] === T_COMMENT
-                || $this->tokens[$i]['code'] === T_DOC_COMMENT
+                || $this->tokens[$i]['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($this->tokens[$i]['content'], '@codingStandards') !== false) {

@@ -320,7 +320,7 @@ class File
         foreach ($this->tokens as $stackPtr => $token) {
             // Check for ignored lines.
             if ($token['code'] === T_COMMENT
-                || $token['code'] === T_DOC_COMMENT
+                || $token['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $token['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($token['content'], '@codingStandards') !== false) {
