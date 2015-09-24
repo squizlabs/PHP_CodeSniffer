@@ -362,9 +362,11 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 } else if (count($typeNames) === 1) {
                     // Check type hint for array and custom type.
                     $suggestedTypeHint = '';
-                    if (strpos($suggestedName, 'array') !== false) {
+                    if (strpos($suggestedName, 'array') !== false || substr($suggestedName, -2) === '[]') {
                         $suggestedTypeHint = 'array';
                     } else if (strpos($suggestedName, 'callable') !== false) {
+                        $suggestedTypeHint = 'callable';
+                    } else if (strpos($suggestedName, 'callback') !== false) {
                         $suggestedTypeHint = 'callable';
                     } else if (in_array($typeName, Common::$allowedTypes) === false) {
                         $suggestedTypeHint = $suggestedName;

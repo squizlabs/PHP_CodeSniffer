@@ -132,7 +132,7 @@ abstract class Tokenizer
                 // There are no tabs in this content, or we aren't replacing them.
                 if ($checkEncoding === true) {
                     // Not using the default encoding, so take a bit more care.
-                    $length = iconv_strlen($this->tokens[$i]['content'], $this->config->encoding);
+                    $length = @iconv_strlen($this->tokens[$i]['content'], $this->config->encoding);
                     if ($length === false) {
                         // String contained invalid characters, so revert to default.
                         $length = strlen($this->tokens[$i]['content']);
@@ -166,7 +166,7 @@ abstract class Tokenizer
                             $newContent .= $content;
                             if ($checkEncoding === true) {
                                 // Not using the default encoding, so take a bit more care.
-                                $contentLength = iconv_strlen($content, $this->config->encoding);
+                                $contentLength = @iconv_strlen($content, $this->config->encoding);
                                 if ($contentLength === false) {
                                     // String contained invalid characters, so revert to default.
                                     $contentLength = strlen($content);
