@@ -885,6 +885,12 @@ $a =
     );
 $c = 2;
 
+$a =
+    [
+        $b => 1,
+    ];
+$c = 2;
+
     function foo()
     {
         $foo = array(
