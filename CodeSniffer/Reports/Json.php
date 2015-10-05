@@ -65,6 +65,7 @@ class PHP_CodeSniffer_Reports_Json implements PHP_CodeSniffer_Report
                     $error['message'] = str_replace('"', '\"', $error['message']);
                     $error['message'] = str_replace('/', '\/', $error['message']);
                     $error['message'] = str_replace("\n", '\n', $error['message']);
+                    $error['message'] = str_replace("\r", '\r', $error['message']);
                     $error['message'] = str_replace("\t", '\t', $error['message']);
 
                     $fixable = 'false';
