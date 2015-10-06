@@ -1820,12 +1820,15 @@ class File
                 return $lastNotEmpty;
             }
 
-            // Skip nested statements.
             if (isset($this->tokens[$i]['scope_opener']) === true
                 && $i === $this->tokens[$i]['scope_closer']
             ) {
-                $i = $this->tokens[$i]['scope_opener'];
-            } else if (isset($this->tokens[$i]['bracket_opener']) === true
+                // Found the end of the previous scope block.
+                return $lastNotEmpty;
+            }
+
+            // Skip nested statements.
+            if (isset($this->tokens[$i]['bracket_opener']) === true
                 && $i === $this->tokens[$i]['bracket_closer']
             ) {
                 $i = $this->tokens[$i]['bracket_opener'];

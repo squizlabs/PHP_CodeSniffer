@@ -232,16 +232,26 @@ class ScopeIndentSniff implements Sniff
 
             // Closing parenthesis should just be indented to at least
             // the same level as where they were opened (but can be more).
-            if ($checkToken !== null
+            if (($checkToken !== null
                 && $tokens[$checkToken]['code'] === T_CLOSE_PARENTHESIS
-                && isset($tokens[$checkToken]['parenthesis_opener']) === true
+                && isset($tokens[$checkToken]['parenthesis_opener']) === true)
+                || ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS
+                && isset($tokens[$i]['parenthesis_opener']) === true
+                && isset($tokens[$i]['parenthesis_owner']) === true
+                && $tokens[$tokens[$i]['parenthesis_owner']]['code'] === T_ARRAY)
             ) {
+                if ($checkToken !== null) {
+                    $parenCloser = $checkToken;
+                } else {
+                    $parenCloser = $i;
+                }
+
                 if ($this->_debug === true) {
                     $line = $tokens[$i]['line'];
                     echo "Closing parenthesis found on line $line".PHP_EOL;
                 }
 
-                $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$checkToken]['parenthesis_opener'], true);
+                $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$parenCloser]['parenthesis_opener'], true);
                 $checkIndent = ($tokens[$first]['column'] - 1);
                 if (isset($adjustments[$first]) === true) {
                     $checkIndent += $adjustments[$first];
@@ -255,7 +265,7 @@ class ScopeIndentSniff implements Sniff
                     echo "\t* first token on line $line is $type *".PHP_EOL;
                 }
 
-                if ($first === $tokens[$checkToken]['parenthesis_opener']) {
+                if ($first === $tokens[$parenCloser]['parenthesis_opener']) {
                     // This is unlikely to be the start of the statement, so look
                     // back further to find it.
                     $first--;
@@ -294,15 +304,22 @@ class ScopeIndentSniff implements Sniff
 
             // Closing short array bracket should just be indented to at least
             // the same level as where it was opened (but can be more).
-            if ($checkToken !== null
-                && $tokens[$checkToken]['code'] === T_CLOSE_SHORT_ARRAY
+            if ($tokens[$i]['code'] === T_CLOSE_SHORT_ARRAY
+                || ($checkToken !== null
+                && $tokens[$checkToken]['code'] === T_CLOSE_SHORT_ARRAY)
             ) {
+                if ($checkToken !== null) {
+                    $arrayCloser = $checkToken;
+                } else {
+                    $arrayCloser = $i;
+                }
+
                 if ($this->_debug === true) {
-                    $line = $tokens[$i]['line'];
+                    $line = $tokens[$arrayCloser]['line'];
                     echo "Closing short array bracket found on line $line".PHP_EOL;
                 }
 
-                $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$checkToken]['bracket_opener'], true);
+                $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$arrayCloser]['bracket_opener'], true);
                 $checkIndent = ($tokens[$first]['column'] - 1);
                 if (isset($adjustments[$first]) === true) {
                     $checkIndent += $adjustments[$first];
@@ -314,6 +331,12 @@ class ScopeIndentSniff implements Sniff
                     $line = $tokens[$first]['line'];
                     $type = $tokens[$first]['type'];
                     echo "\t* first token on line $line is $type *".PHP_EOL;
+                }
+
+                if ($first === $tokens[$arrayCloser]['bracket_opener']) {
+                    // This is unlikely to be the start of the statement, so look
+                    // back further to find it.
+                    $first--;
                 }
 
                 $prev = $phpcsFile->findStartOfStatement($first);

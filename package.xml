@@ -49,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #711 : Sniffing from STDIN shows Generic.Files.LowercasedFilename.NotFound error
   - Fixed bug #714 : Fixes suppression of errors using docblocks
     -- Thanks to Andrzej Karmazyn for the patch
+  - Fixed bug #723 : ScopeIndent can fail when multiple array closers are on the same line
+  - Fixed bug #730 : ScopeIndent can fail when a short array opening square bracket is on a line by itself
  </notes>
  <contents>
   <dir name="/">
