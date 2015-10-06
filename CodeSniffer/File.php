@@ -3372,12 +3372,15 @@ class PHP_CodeSniffer_File
                 return $lastNotEmpty;
             }
 
-            // Skip nested statements.
             if (isset($this->_tokens[$i]['scope_opener']) === true
                 && $i === $this->_tokens[$i]['scope_closer']
             ) {
-                $i = $this->_tokens[$i]['scope_opener'];
-            } else if (isset($this->_tokens[$i]['bracket_opener']) === true
+                // Found the end of the previous scope block.
+                return $lastNotEmpty;
+            }
+
+            // Skip nested statements.
+            if (isset($this->_tokens[$i]['bracket_opener']) === true
                 && $i === $this->_tokens[$i]['bracket_closer']
             ) {
                 $i = $this->_tokens[$i]['bracket_opener'];

@@ -310,6 +310,12 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     echo "\t* first token on line $line is $type *".PHP_EOL;
                 }
 
+                if ($first === $tokens[$checkToken]['bracket_opener']) {
+                    // This is unlikely to be the start of the statement, so look
+                    // back further to find it.
+                    $first--;
+                }
+
                 $prev = $phpcsFile->findStartOfStatement($first);
                 if ($prev !== $first) {
                     // This is not the start of the statement.
