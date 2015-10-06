@@ -348,10 +348,10 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $nameBits   = explode('_', $newContent);
             $firstBit   = array_shift($nameBits);
             
-            if(!isset($firstBit{0})){
-				// Package is empty.
-				continue;
-			}
+            if(isset($firstBit{0}) === false ){
+                // Package is empty.
+                continue;
+            }
             
             $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
             foreach ($nameBits as $bit) {
@@ -398,10 +398,10 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $nameBits   = explode('_', $newContent);
             $firstBit   = array_shift($nameBits);
             
-            if(!isset($firstBit{0})){
-				// Subpackage is empty.
-				continue;
-			}
+            if(isset($firstBit{0}) === false ){
+                // Subpackage is empty.
+                continue;
+            }
             
             $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
             foreach ($nameBits as $bit) {
