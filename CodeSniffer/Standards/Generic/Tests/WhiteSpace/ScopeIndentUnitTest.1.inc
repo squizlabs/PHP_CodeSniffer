@@ -891,6 +891,24 @@ $a =
     ];
 $c = 2;
 
+class foo
+{
+    public function get()
+    {
+        $foo = ['b' => 'c',
+                'd' => [
+                    ['e' => 'f']
+                    ]];
+        echo '42';
+
+        $foo = array('b' => 'c',
+                'd' => array(
+                    array('e' => 'f')
+                    ));
+        echo '42';
+    }
+}
+
     function foo()
     {
         $foo = array(
