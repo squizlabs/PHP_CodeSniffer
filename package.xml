@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Scato Eggen for the patch
   - Fixed bug #625 : Consider working around T_HASHBANG in HHVM 3.5.x and 3.6.x
     -- Thanks to Kunal Mehta for the patch
+  - Fixed bug #692 : Comment tokenizer can break when using mbstring function overloading
   - Fixed bug #694 : Long sniff codes can cause PHP warnings in source report when showing error codes
   - Fixed bug #698 : PSR2.Methods.FunctionCallSignature.Indent forces exact indent of ternary operator parameters
   - Fixed bug #704 : ScopeIndent can fail when an opening parenthesis is on a line by itself

@@ -53,13 +53,10 @@ class PHP_CodeSniffer_Tokenizers_Comment
             extra star when they are used for function and class comments.
         */
 
-        for ($c = 0; $c < $numChars; $c++) {
-            if ($string[$c] !== '/' && $string[$c] !== '*') {
-                break;
-            }
-        }
+        $char    = ($numChars - strlen(ltrim($string, '/*')));
+        $openTag = substr($string, 0, $char);
+        $string  = ltrim($string, '/*');
 
-        $openTag           = substr($string, 0, $c);
         $tokens[$stackPtr] = array(
                               'content'      => $openTag,
                               'code'         => T_DOC_COMMENT_OPEN_TAG,
@@ -81,51 +78,31 @@ class PHP_CodeSniffer_Tokenizers_Comment
             stack just before we return it.
         */
 
-        for ($i = ($numChars - 1); $i > $c; $i--) {
-            if ($string[$i] !== '/' && $string[$i] !== '*') {
-                break;
-            }
-        }
-
-        $i++;
         $closeTag = array(
-                     'content'        => substr($string, $i),
+                     'content'        => substr($string, strlen(rtrim($string, '/*'))),
                      'code'           => T_DOC_COMMENT_CLOSE_TAG,
                      'type'           => 'T_DOC_COMMENT_CLOSE_TAG',
                      'comment_opener' => $openPtr,
                     );
 
-        $string   = substr($string, 0, $i);
-        $numChars = strlen($string);
+        $string = rtrim($string, '/*');
 
         /*
             Process each line of the comment.
         */
 
-        while ($c < $numChars) {
-            $lineTokens = $this->_processLine($string, $eolChar, $c, $numChars);
-            foreach ($lineTokens as $lineToken) {
-                $tokens[$stackPtr] = $lineToken;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $content = PHP_CodeSniffer::prepareForOutput($lineToken['content']);
-                    $type    = $lineToken['type'];
-                    echo "\t\tCreate comment token: $type => $content".PHP_EOL;
-                }
-
-                if ($lineToken['code'] === T_DOC_COMMENT_TAG) {
-                    $tokens[$openPtr]['comment_tags'][] = $stackPtr;
-                }
-
-                $c += strlen($lineToken['content']);
-                $stackPtr++;
+        $lines    = explode($eolChar, $string);
+        $numLines = count($lines);
+        foreach ($lines as $lineNum => $string) {
+            if ($lineNum !== ($numLines - 1)) {
+                $string .= $eolChar;
             }
 
-            if ($c === $numChars) {
-                break;
-            }
+            $char     = 0;
+            $numChars = strlen($string);
 
             // We've started a new line, so process the indent.
-            $space = $this->_collectWhitespace($string, $c, $numChars);
+            $space = $this->_collectWhitespace($string, $char, $numChars);
             if ($space !== null) {
                 $tokens[$stackPtr] = $space;
                 $stackPtr++;
@@ -135,15 +112,19 @@ class PHP_CodeSniffer_Tokenizers_Comment
                     echo "\t\tCreate comment token: T_DOC_COMMENT_WHITESPACE => $content".PHP_EOL;
                 }
 
-                $c += strlen($space['content']);
-                if ($c === $numChars) {
+                $char += strlen($space['content']);
+                if ($char === $numChars) {
                     break;
                 }
             }
 
-            if ($string[$c] === '*') {
+            if ($string === '') {
+                continue;
+            }
+
+            if ($string[$char] === '*') {
                 // This is a function or class doc block line.
-                $c++;
+                $char++;
                 $tokens[$stackPtr] = array(
                                       'content' => '*',
                                       'code'    => T_DOC_COMMENT_STAR,
@@ -158,8 +139,22 @@ class PHP_CodeSniffer_Tokenizers_Comment
             }
 
             // Now we are ready to process the actual content of the line.
-            // So round we go.
-        }//end while
+            $lineTokens = $this->_processLine($string, $eolChar, $char, $numChars);
+            foreach ($lineTokens as $lineToken) {
+                $tokens[$stackPtr] = $lineToken;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $content = PHP_CodeSniffer::prepareForOutput($lineToken['content']);
+                    $type    = $lineToken['type'];
+                    echo "\t\tCreate comment token: $type => $content".PHP_EOL;
+                }
+
+                if ($lineToken['code'] === T_DOC_COMMENT_TAG) {
+                    $tokens[$openPtr]['comment_tags'][] = $stackPtr;
+                }
+
+                $stackPtr++;
+            }
+        }//end foreach
 
         $tokens[$stackPtr] = $closeTag;
         $tokens[$openPtr]['comment_closer'] = $stackPtr;
