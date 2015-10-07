@@ -1,37 +1,15 @@
 <?php
+/**
+ * Discourages the use of deprecated PHP functions.
+ *
+ * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
-/**
- * Generic_Sniffs_PHP_DeprecatedFunctionsSniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Generic_Sniffs_PHP_DeprecatedFunctionsSniff.
- *
- * Discourages the use of deprecated functions that are kept in PHP for
- * compatibility with older versions.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Sebastian Bergmann <sb@sebastian-bergmann.de>
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class DeprecatedFunctionsSniff extends ForbiddenFunctionsSniff
 {
 

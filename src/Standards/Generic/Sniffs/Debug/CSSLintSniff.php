@@ -1,4 +1,11 @@
 <?php
+/**
+ * Runs csslint on the file.
+ *
+ * @author    Roman Levishchenko <index.0h@gmail.com>
+ * @copyright 2013-2014 Roman Levishchenko
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
 
@@ -6,32 +13,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
 
-/**
- * Generic_Sniffs_Debug_CSSLintSniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Roman Levishchenko <index.0h@gmail.com>
- * @copyright 2013-2014 Roman Levishchenko
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Generic_Sniffs_Debug_CSSLintSniff.
- *
- * Runs csslint on the file.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Roman Levishchenko <index.0h@gmail.com>
- * @copyright 2013-2014 Roman Levishchenko
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class CSSLintSniff implements Sniff
 {
 

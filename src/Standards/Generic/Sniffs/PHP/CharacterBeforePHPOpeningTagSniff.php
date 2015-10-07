@@ -1,34 +1,17 @@
 <?php
+/**
+ * Checks that the opening PHP tag is the first content in a file.
+ *
+ * @author    Andy Grunwald <andygrunwald@gmail.com>
+ * @copyright 2010-2014 Andy Grunwald
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 
-/**
- * Generic_Sniffs_PHP_CharacterBeforePHPOpeningTagSniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Andy Grunwald <andygrunwald@gmail.com>
- * @copyright 2010-2014 Andy Grunwald
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Checks that the opening PHP tag is the first content in a file.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Andy Grunwald <andygrunwald@gmail.com>
- * @copyright 2010-2014 Andy Grunwald
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class CharacterBeforePHPOpeningTagSniff implements Sniff
 {
 

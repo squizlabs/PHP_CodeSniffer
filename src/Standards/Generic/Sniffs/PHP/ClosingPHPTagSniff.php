@@ -1,34 +1,17 @@
 <?php
+/**
+ * Checks that open PHP tags are paired with closing tags.
+ *
+ * @author    Stefano Kowalke <blueduck@gmx.net>
+ * @copyright 2010-2014 Stefano Kowalke
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 
-/**
- * Generic_Sniffs_PHP_ClosingPHPTagSniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Stefano Kowalke <blueduck@gmx.net>
- * @copyright 2010-2014 Stefano Kowalke
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Checks that open PHP tags are paired with closing tags.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Stefano Kowalke <blueduck@gmx.net>
- * @copyright 2010-2014 Stefano Kowalke
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class ClosingPHPTagSniff implements Sniff
 {
 

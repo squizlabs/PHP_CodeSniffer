@@ -1,37 +1,20 @@
 <?php
-
-namespace PHP_CodeSniffer;
-
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Common;
-
-/**
- * A helper class for fixing errors.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
 /**
  * A helper class for fixing errors.
  *
  * Provides helper functions that act upon a token array and modify the file
  * content.
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
+namespace PHP_CodeSniffer;
+
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Common;
+
 class Fixer
 {
 

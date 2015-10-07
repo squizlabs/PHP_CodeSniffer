@@ -1,34 +1,17 @@
 <?php
+/**
+ * Checks that only one trait is declared per file.
+ *
+ * @author    Alexander Obuhovich <aik.bold@gmail.com>
+ * @copyright 2010-2014 Alexander Obuhovich
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Files;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 
-/**
- * Generic_Sniffs_Files_OneTraitPerFileSniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Alexander Obuhovich <aik.bold@gmail.com>
- * @copyright 2010-2014 Alexander Obuhovich
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Checks that only one trait is declared per file.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Alexander Obuhovich <aik.bold@gmail.com>
- * @copyright 2010-2014 Alexander Obuhovich
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class OneTraitPerFileSniff implements Sniff
 {
 
