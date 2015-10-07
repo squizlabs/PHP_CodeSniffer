@@ -37,6 +37,8 @@ declare(encoding='utf-8');
 * @deprecated asd
 * @since      Class available since Release 1.2.0
 * @summary    An unknown summary tag
+* @package    ''
+* @subpackage !!
 */
 ?>
 <?php

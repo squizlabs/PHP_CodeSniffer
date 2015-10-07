@@ -249,3 +249,13 @@ $this->log(
     ),
     array($e->getData()['object'])
 );
+
+?>
+<div>
+    <?php getTemplatePart(
+        'partials/web-page/carousel-slick/item-slide/header',
+        [
+            'class' => $class
+        ]
+    ); ?>
+</div>
