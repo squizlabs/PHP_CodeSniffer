@@ -909,6 +909,13 @@ class foo
     }
 }
 
+switch ($foo) {
+    case 1:
+        return array();
+    case 2:
+        return '';
+}
+
 function foo()
 {
     $foo = array(

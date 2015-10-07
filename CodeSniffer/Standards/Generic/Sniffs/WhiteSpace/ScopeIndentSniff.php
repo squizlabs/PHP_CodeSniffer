@@ -284,15 +284,23 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
                 }
 
-                // Don't force current indent to divisible because there could be custom
-                // rules in place between parenthesis, such as with arrays.
-                $currentIndent = ($tokens[$first]['column'] - 1);
-                if (isset($adjustments[$first]) === true) {
-                    $currentIndent += $adjustments[$first];
-                }
+                if (isset($tokens[$first]['scope_closer']) === true
+                    && $tokens[$first]['scope_closer'] === $first
+                ) {
+                    if ($this->_debug === true) {
+                        echo "\t=> first token is a scope closer; ignoring".PHP_EOL;
+                    }
+                } else {
+                    // Don't force current indent to divisible because there could be custom
+                    // rules in place between parenthesis, such as with arrays.
+                    $currentIndent = ($tokens[$first]['column'] - 1);
+                    if (isset($adjustments[$first]) === true) {
+                        $currentIndent += $adjustments[$first];
+                    }
 
-                if ($this->_debug === true) {
-                    echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent".PHP_EOL;
+                    if ($this->_debug === true) {
+                        echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent".PHP_EOL;
+                    }
                 }
             }//end if
 
