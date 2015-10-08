@@ -1,33 +1,16 @@
 <?php
+/**
+ * Unit test class for the OneTraitPerFile sniff.
+ *
+ * @author    Alexander Obuhovich <aik.bold@gmail.com>
+ * @copyright 2010-2014 Alexander Obuhovich
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Tests\Files;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-/**
- * Generic_Tests_Files_OneTraitPerFileUnitTest.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Alexander Obuhovich <aik.bold@gmail.com>
- * @copyright 2010-2014 Alexander Obuhovich
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Unit test class for the OneTraitPerFile sniff.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Alexander Obuhovich <aik.bold@gmail.com>
- * @copyright 2010-2014 Alexander Obuhovich
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class OneTraitPerFileUnitTest extends AbstractSniffUnitTest
 {
 

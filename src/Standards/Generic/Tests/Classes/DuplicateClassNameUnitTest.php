@@ -1,36 +1,16 @@
 <?php
+/**
+ * Unit test class for the DuplicateClassName sniff.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Tests\Classes;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-/**
- * Unit test class for the DuplicateClassName multi-file sniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Unit test class for the DuplicateClassName multi-file sniff.
- *
- * A multi-file sniff unit test checks a .1.inc and a .2.inc file for expected violations
- * of a single coding standard. Expected errors and warnings are stored in this class.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
 {
 
@@ -82,9 +62,7 @@ class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
                    );
             break;
         case 'DuplicateClassNameUnitTest.6.inc':
-            return array(
-                    10 => 1,
-                   );
+            return array(10 => 1);
             break;
         default:
             return array();
@@ -95,5 +73,3 @@ class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

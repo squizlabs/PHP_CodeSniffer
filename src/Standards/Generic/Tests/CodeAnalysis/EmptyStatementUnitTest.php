@@ -1,37 +1,16 @@
 <?php
+/**
+ * Unit test class for the EmptyStatement sniff.
+ *
+ * @author    Manuel Pichler <mapi@manuel-pichler.de>
+ * @copyright 2007-2014 Manuel Pichler. All rights reserved.
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Tests\CodeAnalysis;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-/**
- * Unit test class for the EmptyStatement sniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2007-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Unit test class for the EmptyStatement sniff.
- *
- * A sniff unit test checks a .inc file for expected violations of a single
- * coding standard. Expected errors and warnings are stored in this class.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Manuel Pichler <mapi@manuel-pichler.de>
- * @copyright 2007-2014 Manuel Pichler. All rights reserved.
- * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class EmptyStatementUnitTest extends AbstractSniffUnitTest
 {
 
@@ -81,5 +60,3 @@ class EmptyStatementUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>
