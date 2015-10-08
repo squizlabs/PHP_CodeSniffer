@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added support for PHP 7 function return type declarations
+    - Return types are now tokenized as T_RETURN_TYPE
   - PEAR FunctionCallSignatureSniff now properly detects indents in more mixed HTML/PHP code blocks
   - Fixed bug #601 : Expected type hint int[]; found array in Squiz FunctionCommentSniff
     -- Thanks to Scato Eggen for the patch

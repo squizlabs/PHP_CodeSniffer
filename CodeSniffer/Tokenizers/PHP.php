@@ -849,7 +849,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
      * braces for scope openers and closers. It also turns some T_FUNCTION tokens
      * into T_CLOSURE when they are not standard function definitions. It also
      * detects short array syntax and converts those square brackets into new tokens.
-     * It also corrects some usage of the static and class keywords.
+     * It also corrects some usage of the static and class keywords. It also
+     * assigns tokens to function return types.
      *
      * @param array  $tokens  The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
@@ -871,8 +872,12 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 $tokens[$i]['scope_condition'] = $tokens[$tokens[$i]['scope_opener']]['scope_condition'];
             }
 
-            // Looking for functions that are actually closures.
             if ($tokens[$i]['code'] === T_FUNCTION && isset($tokens[$i]['scope_opener']) === true) {
+                /*
+                    Detect functions that are actually closures and
+                    assign them a different token.
+                */
+
                 for ($x = ($i + 1); $x < $numTokens; $x++) {
                     if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false
                         && $tokens[$x]['code'] !== T_BITWISE_AND
@@ -899,6 +904,28 @@ class PHP_CodeSniffer_Tokenizers_PHP
                             $type = $tokens[$x]['type'];
                             echo "\t\t* cleaned $x ($type) *".PHP_EOL;
                         }
+                    }
+                }
+
+                /*
+                    Detect function return values and assign them
+                    a special token, because PHP doesn't.
+                */
+
+                for ($x = ($tokens[$i]['scope_opener'] - 1); $x > $i; $x--) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        if ($tokens[$x]['code'] === T_STRING || $tokens[$x]['code'] === T_ARRAY) {
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $line = $tokens[$x]['line'];
+                                $type = $tokens[$x]['type'];
+                                echo "\t* token $x on line $line changed from $type to T_RETURN_TYPE".PHP_EOL;
+                            }
+
+                            $tokens[$x]['code'] = T_RETURN_TYPE;
+                            $tokens[$x]['type'] = 'T_RETURN_TYPE';
+                        }
+
+                        break;
                     }
                 }
 
