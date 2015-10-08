@@ -328,3 +328,8 @@ $var = array(
             %s
         </div>',
        );
+
+function test() : array
+{
+    return [];
+}

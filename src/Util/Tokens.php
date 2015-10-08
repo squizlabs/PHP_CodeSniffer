@@ -74,6 +74,7 @@ define('T_CLOSE_SHORT_ARRAY', 'PHPCS_T_CLOSE_SHORT_ARRAY');
 define('T_GOTO_LABEL', 'PHPCS_T_GOTO_LABEL');
 define('T_BINARY_CAST', 'PHPCS_T_BINARY_CAST');
 define('T_EMBEDDED_PHP', 'PHPCS_T_EMBEDDED_PHP');
+define('T_RETURN_TYPE', 'PHPCS_T_RETURN_TYPE');
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {

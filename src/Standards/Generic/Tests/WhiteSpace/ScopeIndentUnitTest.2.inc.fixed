@@ -914,6 +914,25 @@ switch ($foo) {
 		return array();
 	case 2:
 		return '';
+	case 3:
+		return $function();
+	case 4:
+		return $functionCall($param[0]);
+	case 5:
+		return array() + array(); // Array Merge
+	case 6:
+		// String connect
+		return $functionReturningString('') . $functionReturningString(array());
+	case 7:
+		return functionCall(
+			$withMultiLineParam[0],
+			array(),
+			$functionReturningString(
+				$withMultiLineParam[1]
+			)
+		);
+	case 8:
+		return $param[0][0];
 }
 
 function foo()

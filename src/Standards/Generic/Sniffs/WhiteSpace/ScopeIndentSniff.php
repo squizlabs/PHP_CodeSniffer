@@ -271,8 +271,27 @@ class ScopeIndentSniff implements Sniff
                     && $tokens[$first]['scope_closer'] === $first
                 ) {
                     if ($this->_debug === true) {
-                        echo "\t=> first token is a scope closer; ignoring".PHP_EOL;
+                        echo "\t* first token is a scope closer *".PHP_EOL;
                     }
+
+                    if (isset($tokens[$first]['scope_condition']) === true) {
+                        $scopeCloser = $first;
+                        $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$scopeCloser]['scope_condition'], true);
+
+                        $currentIndent = ($tokens[$first]['column'] - 1);
+                        if (isset($adjustments[$first]) === true) {
+                            $currentIndent += $adjustments[$first];
+                        }
+
+                        // Make sure it is divisible by our expected indent.
+                        if ($tokens[$tokens[$scopeCloser]['scope_condition']]['code'] !== T_CLOSURE) {
+                            $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
+                        }
+
+                        if ($this->_debug === true) {
+                            echo "\t=> indent set to $currentIndent".PHP_EOL;
+                        }
+                    }//end if
                 } else {
                     // Don't force current indent to divisible because there could be custom
                     // rules in place between parenthesis, such as with arrays.
@@ -284,7 +303,7 @@ class ScopeIndentSniff implements Sniff
                     if ($this->_debug === true) {
                         echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent".PHP_EOL;
                     }
-                }
+                }//end if
             }//end if
 
             // Closing short array bracket should just be indented to at least
