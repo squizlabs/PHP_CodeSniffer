@@ -403,7 +403,7 @@ class Whatever
 	protected $_protectedArray = array(
 		'normalString' => 'That email address is already in use!',
 		'offendingString' => <<<'STRING'
-Each line of this string is always said to be at column 0, 
+Each line of this string is always said to be at column 0,
     no matter how many spaces are placed
                 at the beginning of each line
 and the ending STRING on the next line is reported as having to be indented.
@@ -914,6 +914,25 @@ switch ($foo) {
 		return array();
 	case 2:
 		return '';
+	case 3:
+		return $function();
+	case 4:
+		return $functionCall($param[0]);
+	case 5:
+		return array() + array(); // Array Merge
+	case 6:
+		// String connect
+		return $functionReturningString('') . $functionReturningString(array());
+	case 7:
+		return functionCall(
+			$withMultiLineParam[0],
+			array(),
+			$functionReturningString(
+				$withMultiLineParam[1]
+			)
+		);
+	case 8:
+		return $param[0][0];
 }
 
 function foo()
