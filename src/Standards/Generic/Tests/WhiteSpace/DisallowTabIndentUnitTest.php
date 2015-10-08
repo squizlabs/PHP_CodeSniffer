@@ -1,45 +1,25 @@
 <?php
+/**
+ * Unit test class for the DisallowTabIndent sniff.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Tests\WhiteSpace;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-/**
- * Unit test class for the DisallowTabIndent sniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Unit test class for the DisallowTabIndent sniff.
- *
- * A sniff unit test checks a .inc file for expected violations of a single
- * coding standard. Expected errors and warnings are stored in this class.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class DisallowTabIndentUnitTest extends AbstractSniffUnitTest
 {
 
+
     /**
-     * Get a list of CLI values to set befor the file is tested.
+     * Get a list of CLI values to set before the file is tested.
      *
-     * @param string $testFile The name of the file being tested.
+     * @param string                  $testFile The name of the file being tested.
+     * @param \PHP_CodeSniffer\Config $config   The config data for the test run.
      *
      * @return array
      */
@@ -47,7 +27,7 @@ class DisallowTabIndentUnitTest extends AbstractSniffUnitTest
     {
         $config->tabWidth = 4;
 
-    }//end getCliValues()
+    }//end setCliValues()
 
 
     /**
@@ -115,5 +95,3 @@ class DisallowTabIndentUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

@@ -57,5 +57,3 @@ class LineLengthUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

@@ -1,38 +1,16 @@
 <?php
+/**
+ * Unit test class for the DisallowShortOpenTag sniff.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Generic\Tests\PHP;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-/**
- * Unit test class for the DisallowShortOpenTag sniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Unit test class for the DisallowShortOpenTag sniff.
- *
- * A sniff unit test checks a .inc file for expected violations of a single
- * coding standard. Expected errors and warnings are stored in this class.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
 {
 
@@ -56,9 +34,7 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
         } else if (version_compare(PHP_VERSION, '5.4.0RC1') >= 0) {
             // Shorthand echo is always available from PHP 5.4.0 but needed the
             // short_open_tag ini var to be set for versions before this.
-            return array(
-                    4 => 1,
-                   );
+            return array(4 => 1);
         }
 
         return array();
@@ -82,5 +58,3 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

@@ -25,9 +25,7 @@ class NestingLevelUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                73 => 1,
-               );
+        return array(73 => 1);
 
     }//end getErrorList()
 
@@ -51,5 +49,3 @@ class NestingLevelUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

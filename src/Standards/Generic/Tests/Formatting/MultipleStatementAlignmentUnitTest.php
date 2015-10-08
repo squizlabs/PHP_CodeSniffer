@@ -112,11 +112,9 @@ class MultipleStatementAlignmentUnitTest extends AbstractSniffUnitTest
         default:
             return array();
             break;
-        }
+        }//end switch
 
     }//end getWarningList()
 
 
 }//end class
-
-?>

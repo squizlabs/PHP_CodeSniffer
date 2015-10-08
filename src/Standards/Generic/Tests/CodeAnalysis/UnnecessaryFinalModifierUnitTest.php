@@ -50,5 +50,3 @@ class UnnecessaryFinalModifierUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

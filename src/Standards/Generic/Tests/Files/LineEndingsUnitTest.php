@@ -25,9 +25,7 @@ class LineEndingsUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                1 => 1,
-               );
+        return array(1 => 1);
 
     }//end getErrorList()
 
@@ -48,5 +46,3 @@ class LineEndingsUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

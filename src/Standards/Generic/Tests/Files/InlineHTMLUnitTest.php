@@ -29,14 +29,10 @@ class InlineHTMLUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'InlineHTMLUnitTest.3.inc':
-            return array(
-                    4 => 1,
-                   );
+            return array(4 => 1);
             break;
         case 'InlineHTMLUnitTest.4.inc':
-            return array(
-                    1 => 1,
-                   );
+            return array(1 => 1);
             break;
         default:
             return array();
@@ -64,5 +60,3 @@ class InlineHTMLUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

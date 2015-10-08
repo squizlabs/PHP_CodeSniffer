@@ -26,9 +26,9 @@ class UpperCaseConstantNameUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                8   => 1,
-                10  => 1,
-                15  => 1,
+                8  => 1,
+                10 => 1,
+                15 => 1,
                );
 
     }//end getErrorList()
@@ -50,5 +50,3 @@ class UpperCaseConstantNameUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

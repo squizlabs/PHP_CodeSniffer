@@ -80,5 +80,3 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

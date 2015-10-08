@@ -49,5 +49,3 @@ class ForLoopWithTestFunctionCallUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

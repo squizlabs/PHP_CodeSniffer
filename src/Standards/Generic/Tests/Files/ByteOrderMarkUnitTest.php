@@ -25,9 +25,7 @@ class ByteOrderMarkUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                1 => 1,
-               );
+        return array(1 => 1);
 
     }//end getErrorList()
 
@@ -48,5 +46,3 @@ class ByteOrderMarkUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

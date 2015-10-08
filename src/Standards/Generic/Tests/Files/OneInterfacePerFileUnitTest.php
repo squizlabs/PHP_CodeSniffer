@@ -49,5 +49,3 @@ class OneInterfacePerFileUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

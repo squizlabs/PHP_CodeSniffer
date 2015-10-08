@@ -50,5 +50,3 @@ class JumbledIncrementerUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

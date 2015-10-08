@@ -87,5 +87,3 @@ class CamelCapsFunctionNameUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

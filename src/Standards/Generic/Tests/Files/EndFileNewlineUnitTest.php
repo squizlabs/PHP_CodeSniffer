@@ -31,9 +31,7 @@ class EndFileNewlineUnitTest extends AbstractSniffUnitTest
         case 'EndFileNewlineUnitTest.3.inc':
         case 'EndFileNewlineUnitTest.3.js':
         case 'EndFileNewlineUnitTest.3.css':
-            return array(
-                    2 => 1,
-                   );
+            return array(2 => 1);
             break;
         default:
             return array();
@@ -61,5 +59,3 @@ class EndFileNewlineUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

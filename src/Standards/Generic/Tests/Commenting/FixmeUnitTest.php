@@ -3,7 +3,7 @@
  * Unit test class for the Fixme sniff.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Sam Graham <php-codesniffer BLAHBLAH illusori.co.uk>
+ * @author    Sam Graham <php-codesniffer@illusori.co.uk>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */

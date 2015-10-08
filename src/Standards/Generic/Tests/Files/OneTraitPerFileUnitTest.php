@@ -61,5 +61,3 @@ class OneTraitPerFileUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>
