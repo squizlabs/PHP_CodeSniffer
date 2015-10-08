@@ -1,4 +1,11 @@
 <?php
+/**
+ * Ensures a file declares new symbols and causes no other side effects, or executes logic with side effects, but not both.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Files;
 
@@ -6,33 +13,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
 
-/**
- * PSR1_Sniffs_Files_SideEffectsSniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * PSR1_Sniffs_Files_SideEffectsSniff.
- *
- * Ensures a file declare new symbols and causes no other side effects, or executes
- * logic with side effects, but not both.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class SideEffectsSniff implements Sniff
 {
 
@@ -61,7 +41,7 @@ class SideEffectsSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $result = $this->_searchForConflict($phpcsFile, 0, ($phpcsFile->numTokens - 1), $tokens);
+        $result = $this->searchForConflict($phpcsFile, 0, ($phpcsFile->numTokens - 1), $tokens);
 
         if ($result['symbol'] !== null && $result['effect'] !== null) {
             $error = 'A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line %s and the first side effect is on line %s.';
@@ -96,7 +76,7 @@ class SideEffectsSniff implements Sniff
      *
      * @return array
      */
-    private function _searchForConflict($phpcsFile, $start, $end, $tokens)
+    private function searchForConflict($phpcsFile, $start, $end, $tokens)
     {
         $symbols = array(
                     T_CLASS     => T_CLASS,
@@ -186,7 +166,7 @@ class SideEffectsSniff implements Sniff
                     continue;
                 }
 
-                $result = $this->_searchForConflict(
+                $result = $this->searchForConflict(
                     $phpcsFile,
                     ($tokens[$i]['scope_opener'] + 1),
                     ($tokens[$i]['scope_closer'] - 1),
@@ -228,7 +208,7 @@ class SideEffectsSniff implements Sniff
                 'effect' => $firstEffect,
                );
 
-    }//end _searchForConflict()
+    }//end searchForConflict()
 
 
 }//end class
