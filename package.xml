@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Return types are now tokenized as T_RETURN_TYPE
   - PEAR FunctionCallSignatureSniff now properly detects indents in more mixed HTML/PHP code blocks
   - Full report now properly indents lines when newlines are found inside error messages
+  - Squiz ArrayDeclaration now has guard code for arrays with syntax errors
   - Fixed bug #601 : Expected type hint int[]; found array in Squiz FunctionCommentSniff
     -- Thanks to Scato Eggen for the patch
   - Fixed bug #625 : Consider working around T_HASHBANG in HHVM 3.5.x and 3.6.x
