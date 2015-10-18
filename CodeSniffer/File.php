@@ -2632,13 +2632,15 @@ class PHP_CodeSniffer_File
             return null;
         }
 
+        $content = null;
         for ($i = $stackPtr; $i < $this->numTokens; $i++) {
             if ($this->_tokens[$i]['code'] === T_STRING) {
+                $content = $this->_tokens[$i]['content'];
                 break;
             }
         }
 
-        return $this->_tokens[$i]['content'];
+        return $content;
 
     }//end getDeclarationName()
 
