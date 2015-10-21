@@ -40,6 +40,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for PHP 7 function return type declarations
     - Return types are now tokenized as T_RETURN_TYPE
   - PEAR FunctionCallSignatureSniff now properly detects indents in more mixed HTML/PHP code blocks
+  - Full report now properly indents lines when newlines are found inside error messages
+  - Added more guard code for function declarations with syntax errors
+    -- Thanks to Yun Young-jin for the patch
+  - Added more guard code for foreach declarations with syntax errors
+      -- Thanks to Johan de Ruijter for the patch
+  - Squiz ArrayDeclaration now has guard code for arrays with syntax errors
   - Fixed bug #601 : Expected type hint int[]; found array in Squiz FunctionCommentSniff
     -- Thanks to Scato Eggen for the patch
   - Fixed bug #625 : Consider working around T_HASHBANG in HHVM 3.5.x and 3.6.x
@@ -53,6 +59,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #711 : Sniffing from STDIN shows Generic.Files.LowercasedFilename.NotFound error
   - Fixed bug #714 : Fixes suppression of errors using docblocks
     -- Thanks to Andrzej Karmazyn for the patch
+  - Fixed bug #716 : JSON report is invalid when messages contain newlines or tabs
+    -- Thanks to Pieter Frenssen for the patch
   - Fixed bug #723 : ScopeIndent can fail when multiple array closers are on the same line
   - Fixed bug #730 : ScopeIndent can fail when a short array opening square bracket is on a line by itself
   - Fixed bug #732 : PHP Notice if @package name is made up of all invalid characters

@@ -123,6 +123,7 @@ class Full implements Report
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
                     $message = $error['message'];
+                    $message = str_replace("\n", "\n".$paddingLine2, $message);
                     if ($showSources === true) {
                         $message = "\033[1m".$message."\033[0m".' ('.$error['source'].')';
                     }

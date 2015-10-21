@@ -45,6 +45,9 @@ class Json implements Report
                     $error['message'] = str_replace('\\', '\\\\', $error['message']);
                     $error['message'] = str_replace('"', '\"', $error['message']);
                     $error['message'] = str_replace('/', '\/', $error['message']);
+                    $error['message'] = str_replace("\n", '\n', $error['message']);
+                    $error['message'] = str_replace("\r", '\r', $error['message']);
+                    $error['message'] = str_replace("\t", '\t', $error['message']);
 
                     $fixable = 'false';
                     if ($error['fixable'] === true) {
@@ -59,7 +62,7 @@ class Json implements Report
                     $messages .= '"column":'.$column.',';
                     $messages .= '"fixable":'.$fixable;
                     $messages .= '},';
-                }
+                }//end foreach
             }//end foreach
         }//end foreach
 

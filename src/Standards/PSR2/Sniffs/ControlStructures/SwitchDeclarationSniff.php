@@ -120,7 +120,7 @@ class SwitchDeclarationSniff implements Sniff
 
                 if ($tokens[$next]['line'] !== ($tokens[$opener]['line'] + 1)) {
                     $error = 'The '.strtoupper($type).' body must start on the line following the statement';
-                    $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.strtoupper($type));
+                    $fix   = $phpcsFile->addFixableError($error, $nextCase, 'BodyOnNextLine'.strtoupper($type));
                     if ($fix === true) {
                         if ($tokens[$next]['line'] === $tokens[$opener]['line']) {
                             $padding = str_repeat(' ', ($caseAlignment + $this->indent - 1));

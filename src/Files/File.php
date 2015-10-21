@@ -1080,13 +1080,15 @@ class File
             return null;
         }
 
+        $content = null;
         for ($i = $stackPtr; $i < $this->numTokens; $i++) {
             if ($this->tokens[$i]['code'] === T_STRING) {
+                $content = $this->tokens[$i]['content'];
                 break;
             }
         }
 
-        return $this->tokens[$i]['content'];
+        return $content;
 
     }//end getDeclarationName()
 
