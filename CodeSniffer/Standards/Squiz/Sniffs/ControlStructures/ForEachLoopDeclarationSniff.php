@@ -76,13 +76,13 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
         $openingBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
         if ($openingBracket === false) {
             $error = 'Possible parse error: FOREACH has no opening parenthesis';
-            $phpcsFile->addWarning($error, $stackPtr, 'MissingParenthesis');
+            $phpcsFile->addWarning($error, $stackPtr, 'MissingOpenParenthesis');
             return;
         }
 
-        if (array_key_exists('parenthesis_closer', $tokens[$openingBracket]) === false) {
+        if (isset($tokens[$openingBracket]['parenthesis_closer']) === false) {
             $error = 'Possible parse error: FOREACH has no closing parenthesis';
-            $phpcsFile->addWarning($error, $stackPtr, 'MissingParenthesis');
+            $phpcsFile->addWarning($error, $stackPtr, 'MissingCloseParenthesis');
             return;
         }
 
