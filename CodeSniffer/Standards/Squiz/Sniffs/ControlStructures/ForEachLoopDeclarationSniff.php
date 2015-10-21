@@ -80,6 +80,12 @@ class Squiz_Sniffs_ControlStructures_ForEachLoopDeclarationSniff implements PHP_
             return;
         }
 
+        if (array_key_exists('parenthesis_closer', $tokens[$openingBracket]) === false) {
+            $error = 'Possible parse error: FOREACH has no closing parenthesis';
+            $phpcsFile->addWarning($error, $stackPtr, 'MissingParenthesis');
+            return;
+        }
+
         $closingBracket = $tokens[$openingBracket]['parenthesis_closer'];
 
         if ($this->requiredSpacesAfterOpen === 0 && $tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
