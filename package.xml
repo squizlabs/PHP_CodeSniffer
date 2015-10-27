@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Check files in parallel (--parallel=1 for off, --parallel=100 etc) (request #421)
   - Automatic discovery of executable paths (request #571)
     -- Thanks to Sergey Morozov for the patch
+  - Must pass '-' on the cli to check STDIN
   - All sniff errors are now exceptions and caught to stop infinite loops
   - Sniff codes are no longer optional - use them with addError/Warning/Fixable
   - installed_paths config setting can now point directly to a standard instead of the dir above
