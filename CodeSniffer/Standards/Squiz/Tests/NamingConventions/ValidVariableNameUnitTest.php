@@ -73,11 +73,6 @@ class Squiz_Tests_NamingConventions_ValidVariableNameUnitTest extends AbstractSn
                    117 => 1,
                   );
 
-        // The trait test will only work in PHP versions where traits exist.
-        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-            $errors[118] = 1;
-        }
-
         return $errors;
 
     }//end getErrorList()

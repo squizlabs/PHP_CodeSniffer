@@ -73,12 +73,6 @@ class Squiz_Tests_Commenting_BlockCommentUnitTest extends AbstractSniffUnitTest
                    188 => 1,
                   );
 
-        // The trait tests will only work in PHP versions where traits exist and
-        // will throw errors in earlier versions.
-        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-            $errors[169] = 1;
-        }
-
         return $errors;
 
     }//end getErrorList()

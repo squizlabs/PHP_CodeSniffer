@@ -589,6 +589,28 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
+                Emulate traits in PHP versions less than 5.4.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STRING
+                && strtolower($token[1]) === 'trait'
+            ) {
+                $finalTokens[$newStackPtr] = array(
+                                              'content' => $token[1],
+                                              'code'    => T_TRAIT,
+                                              'type'    => 'T_TRAIT',
+                                             );
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr changed from T_STRING to T_TRAIT".PHP_EOL;
+                }
+
+                $newStackPtr++;
+                continue;
+            }
+
+            /*
                 PHP doesn't assign a token to goto labels, so we have to.
                 These are just string tokens with a single colon after them. Double
                 colons are already tokenized and so don't interfere with this check.
