@@ -17,21 +17,21 @@
 
 /*
     - This is valid:
-   Not indented correctly.
+    Not indented correctly.
 */
 
 /*
-   Comments need to be indented 4 space.
+    Comments need to be indented 4 space.
 */
 
 /*
     Comments need to be indented 4 space.
      Comments need to be indented 4 space.
-   Comments need to be indented 4 space.
-  Comments need to be indented 4 space.
+    Comments need to be indented 4 space.
+    Comments need to be indented 4 space.
 
     Comments need to be indented 4 space.
-   Comments need to be indented 4 space.
+    Comments need to be indented 4 space.
 */
 
 /*
@@ -48,28 +48,30 @@ $code = 'should not be here';
     Closing comment not aligned
  */
 
-/* Not allowed */
+// Not allowed
 
-/*  Not allowed
+
+/*
+    Not allowed
     either.
 */
 
-/* */
+
 
 $code = 'should not be here';
 /*
-
     Block comments require a blank
     line before them. */
 
+
+
+// Not allowed
+
+
 /*
-*/
-
-/** Not allowed */
-
-/**  Not allowed
+    Not allowed
     either.
-**/
+*/
 
 /*
     no capital
@@ -81,15 +83,15 @@ echo 'hi';
 function func()
 {
     echo 1;
-    /**
-       test
-       here
-    **/
+    /*
+        test
+        here
+    */
     echo 'test';
-    /**
+    /*
         Test
         here
-       **/
+       */
 
 }//end func()
 
@@ -178,8 +180,9 @@ trait MyTrait {
     这是一条测试评论.
 */
 
-/*Channels::includeSystem('Permission');
-if (Permission::hasPermission($projectid, 'project.metadata.add') === FALSE) {
+/*
+    Channels::includeSystem('Permission');
+    if (Permission::hasPermission($projectid, 'project.metadata.add') === FALSE) {
     throw new PermissionException(_('You do not have permission to add metadata field'));
 }*/
 

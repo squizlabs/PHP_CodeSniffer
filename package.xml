@@ -54,6 +54,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #730 : ScopeIndent can fail when a short array opening square bracket is on a line by itself
   - Fixed bug #732 : PHP Notice if @package name is made up of all invalid characters
     -- Adds new error code PEAR.Commenting.FileComment.InvalidPackageValue
+  - Fixed bug #748 : Auto fix for Squiz.Commenting.BlockComment.WrongEnd is incorrect
+    -- Thanks to J.D. Grimes for the patch
   - Fixed bug #753 : PSR2 standard shouldn't require space after USE block when next code is a closing tag
  </notes>
  <contents>
@@ -1746,6 +1748,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Commenting">
         <file baseinstalldir="PHP" name="BlockCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="BlockCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="BlockCommentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
