@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #730 : ScopeIndent can fail when a short array opening square bracket is on a line by itself
   - Fixed bug #732 : PHP Notice if @package name is made up of all invalid characters
     -- Adds new error code PEAR.Commenting.FileComment.InvalidPackageValue
+  - Fixed bug #753 : PSR2 standard shouldn't require space after USE block when next code is a closing tag
  </notes>
  <contents>
   <dir name="/">
@@ -1322,6 +1323,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="UseDeclarationUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="UseDeclarationUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="UseDeclarationUnitTest.3.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="UseDeclarationUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="UseDeclarationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
