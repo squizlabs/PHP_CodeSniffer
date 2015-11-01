@@ -109,7 +109,7 @@ class BlockCommentSniff implements Sniff
                 $error = 'Block comments must be ended with */';
                 $fix   = $phpcsFile->addFixableError($error, $end, 'WrongEnd');
                 if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken($stackPtr, '*/');
+                    $phpcsFile->fixer->replaceToken($end, '*/');
                 }
             }
 

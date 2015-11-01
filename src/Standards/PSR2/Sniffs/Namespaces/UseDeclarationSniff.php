@@ -89,6 +89,11 @@ class UseDeclarationSniff implements Sniff
 
         $end  = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
         $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
+
+        if ($tokens[$next]['code'] === T_CLOSE_TAG) {
+            return;
+        }
+
         $diff = ($tokens[$next]['line'] - $tokens[$end]['line'] - 1);
         if ($diff !== 1) {
             if ($diff < 0) {
