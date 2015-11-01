@@ -54,13 +54,6 @@ class FileExtensionUnitTest extends AbstractSniffUnitTest
             return array(
                     1 => 1,
                    );
-        case 'FileExtensionUnitTest.4.inc':
-            if (version_compare(PHP_VERSION, '5.4.0', '<') === true) {
-                // Traits are available from PHP 5.4.0.
-                return array(
-                        1 => 1,
-                       );
-            }
         default:
             return array();
         }

@@ -68,12 +68,6 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
                        118 => 1,
                       );
 
-            // The trait tests will only work in PHP version where traits exist and
-            // will throw errors in earlier versions.
-            if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-                $errors[106] = 1;
-            }
-
             return $errors;
         case 'InlineCommentUnitTest.js':
             return array(
