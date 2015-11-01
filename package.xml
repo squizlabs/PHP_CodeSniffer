@@ -28,7 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Added support for PHP 7 function return type declarations
     - Return types are now tokenized as T_RETURN_TYPE
-  - Traits are now tokenized in PHP versions < 5.4 to make testing easier
+  - Traits are now tokenized in PHP versions before 5.4 to make testing easier
   - PEAR FunctionCallSignatureSniff now properly detects indents in more mixed HTML/PHP code blocks
   - Full report now properly indents lines when newlines are found inside error messages
   - Added more guard code for function declarations with syntax errors
