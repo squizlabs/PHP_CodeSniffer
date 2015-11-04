@@ -68,3 +68,9 @@ function myFunction()
  * @return void
  */
 function myFunction() {}
+
+$.extend(Datepicker.prototype, {
+	_widgetDatepicker: function() {
+	},
+	/* Action for selecting a new month/year. */
+});
