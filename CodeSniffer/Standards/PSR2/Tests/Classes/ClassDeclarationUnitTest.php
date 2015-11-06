@@ -79,7 +79,9 @@ class PSR2_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return array(
+            141 => 1,
+        );
 
     }//end getWarningList()
 

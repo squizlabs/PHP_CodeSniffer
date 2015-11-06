@@ -137,3 +137,5 @@ class C1
 {
 
 } // C1
+
+class Test

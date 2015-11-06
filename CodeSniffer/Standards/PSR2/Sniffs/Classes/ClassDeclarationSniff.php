@@ -149,7 +149,7 @@ class PSR2_Sniffs_Classes_ClassDeclarationSniff extends PEAR_Sniffs_Classes_Clas
         }
 
         // Check after the class/interface name.
-        if ($tokens[($className + 2)]['line'] === $tokens[$className]['line']) {
+        if (isset($tokens[($className + 2)]) === true && $tokens[($className + 2)]['line'] === $tokens[$className]['line']) {
             $gap = $tokens[($className + 1)]['content'];
             if (strlen($gap) !== 1) {
                 $found = strlen($gap);
