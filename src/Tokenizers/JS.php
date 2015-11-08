@@ -443,7 +443,7 @@ class JS extends Tokenizer
 
             // Special case for T_DIVIDE which can actually be
             // the start of a regular expression.
-            if ($buffer === $char && $char === '/') {
+            if ($buffer === $char && $char === '/' && $chars[($i + 1)] !== '*') {
                 $regex = $this->getRegexToken(
                     $i,
                     $string,

@@ -1104,6 +1104,41 @@ class PHP extends Tokenizer
                 }
 
                 continue;
+            } else if ($this->tokens[$i]['code'] === T_CLASS && isset($this->tokens[$i]['scope_opener']) === true) {
+                /*
+                    Detect anonymous classes and assign them a different token.
+                */
+
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
+                        break;
+                    }
+                }
+
+                if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS
+                    || $this->tokens[$x]['code'] === T_OPEN_CURLY_BRACKET
+                ) {
+                    $this->tokens[$i]['code'] = T_ANON_CLASS;
+                    $this->tokens[$i]['type'] = 'T_ANON_CLASS';
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_CLASS to T_ANON_CLASS".PHP_EOL;
+                    }
+
+                    for ($x = ($this->tokens[$i]['scope_opener'] + 1); $x < $this->tokens[$i]['scope_closer']; $x++) {
+                        if (isset($this->tokens[$x]['conditions'][$i]) === false) {
+                            continue;
+                        }
+
+                        $this->tokens[$x]['conditions'][$i] = T_ANON_CLASS;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $this->tokens[$x]['type'];
+                            echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                        }
+                    }
+                }
+
+                continue;
             } else if ($this->tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
                 // Unless there is a variable or a bracket before this token,
                 // it is the start of an array being defined using the short syntax.

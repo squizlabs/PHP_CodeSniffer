@@ -30,6 +30,13 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
     {
         // We want all the errors from the PEAR standard, plus some of our own.
         parent::process($phpcsFile, $stackPtr);
+
+        // Just in case.
+        $tokens = $phpcsFile->getTokens();
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
+            return;
+        }
+
         $this->processOpen($phpcsFile, $stackPtr);
         $this->processClose($phpcsFile, $stackPtr);
 
@@ -140,11 +147,6 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     $phpcsFile->fixer->replaceToken(($className + 1), ' ');
                 }
             }
-        }
-
-        // Just in case.
-        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            return;
         }
 
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
@@ -391,11 +393,6 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
     public function processClose(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        // Just in case.
-        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-            return;
-        }
 
         // Check that the closing brace comes right after the code body.
         $closeBrace  = $tokens[$stackPtr]['scope_closer'];

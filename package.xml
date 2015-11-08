@@ -38,15 +38,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - can now set severity, message type and exclude patterns for entire sniff, category or standard
   - can include a single sniff code, which will exclude all other codes from that sniff
     -- if the sniff is already included by an imported standard, set sniff severity to 0 and include the specific message you want
+  - Added support for PHP 7 anonymous classes
+    - Anonymous classes are now tokenized as T_ANON_CLASS and ignored by normal class sniffs
   - Added support for PHP 7 function return type declarations
     - Return types are now tokenized as T_RETURN_TYPE
   - Traits are now tokenized in PHP versions before 5.4 to make testing easier
+  - Improved regular expression detection in JS files
   - PEAR FunctionCallSignatureSniff now properly detects indents in more mixed HTML/PHP code blocks
   - Full report now properly indents lines when newlines are found inside error messages
   - Added more guard code for function declarations with syntax errors
     -- Thanks to Yun Young-jin for the patch
   - Added more guard code for foreach declarations with syntax errors
       -- Thanks to Johan de Ruijter for the patch
+  - Added more guard code for class declarations with syntax errors
   - Squiz ArrayDeclaration now has guard code for arrays with syntax errors
   - Fixed bug #601 : Expected type hint int[]; found array in Squiz FunctionCommentSniff
     -- Thanks to Scato Eggen for the patch
