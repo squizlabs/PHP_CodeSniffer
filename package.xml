@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added support for PHP 7 anonymous classes
+    - Anonymous classes are now tokenized as T_ANON_CLASS and ignored by normal class sniffs
   - Added support for PHP 7 function return type declarations
     - Return types are now tokenized as T_RETURN_TYPE
   - Traits are now tokenized in PHP versions before 5.4 to make testing easier

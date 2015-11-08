@@ -952,6 +952,41 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 continue;
+            } else if ($tokens[$i]['code'] === T_CLASS && isset($tokens[$i]['scope_opener']) === true) {
+                /*
+                    Detect anonymous classes and assign them a different token.
+                */
+
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        break;
+                    }
+                }
+
+                if ($tokens[$x]['code'] === T_OPEN_PARENTHESIS
+                    || $tokens[$x]['code'] === T_OPEN_CURLY_BRACKET
+                ) {
+                    $tokens[$i]['code'] = T_ANON_CLASS;
+                    $tokens[$i]['type'] = 'T_ANON_CLASS';
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_CLASS to T_ANON_CLASS".PHP_EOL;
+                    }
+
+                    for ($x = ($tokens[$i]['scope_opener'] + 1); $x < $tokens[$i]['scope_closer']; $x++) {
+                        if (isset($tokens[$x]['conditions'][$i]) === false) {
+                            continue;
+                        }
+
+                        $tokens[$x]['conditions'][$i] = T_ANON_CLASS;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $tokens[$x]['type'];
+                            echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                        }
+                    }
+                }
+
+                continue;
             } else if ($tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
                 // Unless there is a variable or a bracket before this token,
                 // it is the start of an array being defined using the short syntax.
