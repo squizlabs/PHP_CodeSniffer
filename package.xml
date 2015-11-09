@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Improved regular expression detection in JS files
   - PEAR FunctionCallSignatureSniff now properly detects indents in more mixed HTML/PHP code blocks
   - Full report now properly indents lines when newlines are found inside error messages
+  - Generic InlineControlStructureSniff now supports braceless do/while loops in JS
+    -- Thanks to Pieter Frenssen for the patch
   - Added more guard code for function declarations with syntax errors
     -- Thanks to Yun Young-jin for the patch
   - Added more guard code for foreach declarations with syntax errors
