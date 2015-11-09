@@ -17,3 +17,5 @@ while (something) print 'hello';
 do {
     i--;
 } while (something);
+
+do i++; while (i < 5);

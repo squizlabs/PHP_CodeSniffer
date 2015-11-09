@@ -106,7 +106,22 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                     }
                 }
             }
-        }
+
+            // In Javascript DO WHILE loops without curly braces are legal. This
+            // is only valid if a single statement is present between the DO and
+            // the WHILE. We can detect this by checking only a single semicolon
+            // is present between them.
+            if ($phpcsFile->tokenizerType === 'JS') {
+                $lastDo        = $phpcsFile->findPrevious(T_DO, ($stackPtr - 1));
+                $lastSemicolon = $phpcsFile->findPrevious(T_SEMICOLON, ($stackPtr - 1));
+                if ($lastDo !== false && $lastSemicolon !== false && $lastDo < $lastSemicolon) {
+                    $precedingSemicolon = $phpcsFile->findPrevious(T_SEMICOLON, ($lastSemicolon - 1));
+                    if ($precedingSemicolon === false || $precedingSemicolon < $lastDo) {
+                        return;
+                    }
+                }
+            }
+        }//end if
 
         // This is a control structure without an opening brace,
         // so it is an inline statement.

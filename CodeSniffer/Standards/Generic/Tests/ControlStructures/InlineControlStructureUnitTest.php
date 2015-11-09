@@ -71,6 +71,7 @@ class Generic_Tests_ControlStructures_InlineControlStructureUnitTest extends Abs
                     11 => 1,
                     13 => 1,
                     15 => 1,
+                    21 => 1,
                    );
             break;
         default:
