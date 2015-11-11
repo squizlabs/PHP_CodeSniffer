@@ -589,6 +589,28 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
+                Before PHP 5.6, the ** operator was tokenized as two
+                T_MULTIPLY tokens in a row. So look for and combine
+                these tokens in earlier versions.
+            */
+
+            if ($tokenIsArray === false
+                && $token[0] === '*'
+                && isset($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)] === '*'
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_POW;
+                $newToken['type']    = 'T_POW';
+                $newToken['content'] = '**';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr++;
+                continue;
+            }
+
+            /*
                 Emulate traits in PHP versions less than 5.4.
             */
 
@@ -1305,7 +1327,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             $newToken['type'] = 'T_MODULUS';
             break;
         case '^':
-            $newToken['type'] = 'T_POWER';
+            $newToken['type'] = 'T_BITWISE_XOR';
             break;
         case '&':
             $newToken['type'] = 'T_BITWISE_AND';
