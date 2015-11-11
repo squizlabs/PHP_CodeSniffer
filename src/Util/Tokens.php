@@ -15,7 +15,7 @@ namespace PHP_CodeSniffer\Util;
     * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
     * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
     * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
+*/
 
 define('T_NONE', 'PHPCS_T_NONE');
 define('T_OPEN_CURLY_BRACKET', 'PHPCS_T_OPEN_CURLY_BRACKET');
@@ -38,9 +38,9 @@ define('T_DIVIDE', 'PHPCS_T_DIVIDE');
 define('T_PLUS', 'PHPCS_T_PLUS');
 define('T_MINUS', 'PHPCS_T_MINUS');
 define('T_MODULUS', 'PHPCS_T_MODULUS');
-define('T_POWER', 'PHPCS_T_POWER');
 define('T_BITWISE_AND', 'PHPCS_T_BITWISE_AND');
 define('T_BITWISE_OR', 'PHPCS_T_BITWISE_OR');
+define('T_BITWISE_XOR', 'PHPCS_T_BITWISE_XOR');
 define('T_ARRAY_HINT', 'PHPCS_T_ARRAY_HINT');
 define('T_GREATER_THAN', 'PHPCS_T_GREATER_THAN');
 define('T_LESS_THAN', 'PHPCS_T_LESS_THAN');
@@ -129,6 +129,10 @@ if (defined('T_ELLIPSIS') === false) {
     define('T_ELLIPSIS', 'PHPCS_T_ELLIPSIS');
 }
 
+if (defined('T_POW') === false) {
+    define('T_POW', 'PHPCS_T_POW');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');
@@ -194,13 +198,14 @@ final class Tokens
 
                                  T_BITWISE_AND         => 8,
                                  T_BITWISE_OR          => 8,
+                                 T_BITWISE_XOR         => 8,
 
                                  T_MULTIPLY            => 5,
                                  T_DIVIDE              => 5,
                                  T_PLUS                => 5,
                                  T_MINUS               => 5,
                                  T_MODULUS             => 5,
-                                 T_POWER               => 5,
+                                 T_POW                 => 5,
 
                                  T_SL                  => 5,
                                  T_SR                  => 5,
@@ -232,7 +237,6 @@ final class Tokens
                                  T_IS_SMALLER_OR_EQUAL => 5,
                                  T_IS_GREATER_OR_EQUAL => 5,
                                 );
-
 
     /**
      * Tokens that represent assignments.
@@ -399,9 +403,10 @@ final class Tokens
                                 T_MULTIPLY    => T_MULTIPLY,
                                 T_DIVIDE      => T_DIVIDE,
                                 T_MODULUS     => T_MODULUS,
-                                T_POWER       => T_POWER,
+                                T_POW         => T_POW,
                                 T_BITWISE_AND => T_BITWISE_AND,
                                 T_BITWISE_OR  => T_BITWISE_OR,
+                                T_BITWISE_XOR => T_BITWISE_XOR,
                                 T_SL          => T_SL,
                                 T_SR          => T_SR,
                                );

@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2015-09-09</date>
  <time>10:15:00</time>
  <version>
-  <release>2.3.5</release>
-  <api>2.3.5</api>
+  <release>2.4.0</release>
+  <api>2.4.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -42,10 +42,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Anonymous classes are now tokenized as T_ANON_CLASS and ignored by normal class sniffs
   - Added support for PHP 7 function return type declarations
     - Return types are now tokenized as T_RETURN_TYPE
+  - Fixed tokenizing of the XOR operator, which was incorrectly identified as a power operator (bug #765)
+    - The T_POWER token has been removed and replaced by the T_BITWISE_XOR token
+    - The PHP-supplied T_POW token has been replicated for PHP versions < 5.6
   - Traits are now tokenized in PHP versions before 5.4 to make testing easier
   - Improved regular expression detection in JS files
   - PEAR FunctionCallSignatureSniff now properly detects indents in more mixed HTML/PHP code blocks
   - Full report now properly indents lines when newlines are found inside error messages
+  - Generic InlineControlStructureSniff now supports braceless do/while loops in JS
+    -- Thanks to Pieter Frenssen for the patch
   - Added more guard code for function declarations with syntax errors
     -- Thanks to Yun Young-jin for the patch
   - Added more guard code for foreach declarations with syntax errors

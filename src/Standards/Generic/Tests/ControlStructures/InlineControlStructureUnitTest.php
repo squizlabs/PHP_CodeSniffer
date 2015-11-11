@@ -54,6 +54,7 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
                     11 => 1,
                     13 => 1,
                     15 => 1,
+                    21 => 1,
                    );
             break;
         default:

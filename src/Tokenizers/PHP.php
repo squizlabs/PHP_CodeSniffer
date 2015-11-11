@@ -416,9 +416,10 @@ class PHP extends Tokenizer
                             T_PLUS                     => 1,
                             T_MINUS                    => 1,
                             T_MODULUS                  => 1,
-                            T_POWER                    => 1,
+                            T_POW                      => 2,
                             T_BITWISE_AND              => 1,
                             T_BITWISE_OR               => 1,
+                            T_BITWISE_XOR              => 1,
                             T_SL                       => 2,
                             T_SR                       => 2,
                             T_SL_EQUAL                 => 3,
@@ -737,6 +738,28 @@ class PHP extends Tokenizer
 
                 $newStackPtr++;
                 $stackPtr += 2;
+                continue;
+            }
+
+            /*
+                Before PHP 5.6, the ** operator was tokenized as two
+                T_MULTIPLY tokens in a row. So look for and combine
+                these tokens in earlier versions.
+            */
+
+            if ($tokenIsArray === false
+                && $token[0] === '*'
+                && isset($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)] === '*'
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_POW;
+                $newToken['type']    = 'T_POW';
+                $newToken['content'] = '**';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr++;
                 continue;
             }
 
@@ -1457,7 +1480,7 @@ class PHP extends Tokenizer
             $newToken['type'] = 'T_MODULUS';
             break;
         case '^':
-            $newToken['type'] = 'T_POWER';
+            $newToken['type'] = 'T_BITWISE_XOR';
             break;
         case '&':
             $newToken['type'] = 'T_BITWISE_AND';

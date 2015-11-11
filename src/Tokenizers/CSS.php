@@ -112,12 +112,12 @@ class CSS extends PHP
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
-            if ($token['code'] === T_POWER
+            if ($token['code'] === T_BITWISE_XOR
                 && $tokens[($stackPtr + 1)]['content'] === 'PHPCS_CSS_T_OPEN_TAG'
             ) {
                 $content = '<?php';
                 for ($stackPtr = ($stackPtr + 3); $stackPtr < $numTokens; $stackPtr++) {
-                    if ($tokens[$stackPtr]['code'] === T_POWER
+                    if ($tokens[$stackPtr]['code'] === T_BITWISE_XOR
                         && $tokens[($stackPtr + 1)]['content'] === 'PHPCS_CSS_T_CLOSE_TAG'
                     ) {
                         // Add the end tag and ignore the * we put at the end.
