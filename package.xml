@@ -32,7 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Return types are now tokenized as T_RETURN_TYPE
   - Fixed tokenizing of the XOR operator, which was incorrectly identified as a power operator (bug #765)
     - The T_POWER token has been removed and replaced by the T_BITWISE_XOR token
-    - The PHP-supplied T_POW token has been replicated for PHP versions < 5.6
+    - The PHP-supplied T_POW token has been replicated for PHP versions before 5.6
   - Traits are now tokenized in PHP versions before 5.4 to make testing easier
   - Improved regular expression detection in JS files
   - PEAR FunctionCallSignatureSniff now properly detects indents in more mixed HTML/PHP code blocks
