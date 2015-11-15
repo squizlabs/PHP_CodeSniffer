@@ -239,7 +239,7 @@ array_walk(
     }
 );
 
-$this->log(
+$this->log(// ...
     'error',
     sprintf(
         'Message: %s',

@@ -317,7 +317,8 @@ class FunctionCallSignatureSniff implements Sniff
             }
         }
 
-        if ($tokens[($openBracket + 1)]['content'] !== $phpcsFile->eolChar) {
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($openBracket + 1), null, true);
+        if ($tokens[$next]['line'] === $tokens[$openBracket]['line']) {
             $error = 'Opening parenthesis of a multi-line function call must be the last content on the line';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ContentAfterOpenBracket');
             if ($fix === true) {
