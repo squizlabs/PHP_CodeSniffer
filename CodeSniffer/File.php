@@ -3121,6 +3121,11 @@ class PHP_CodeSniffer_File
             return true;
         }
 
+        if ($this->_tokens[$tokenBefore]['code'] === T_OPEN_SHORT_ARRAY) {
+            // Inside an array declaration, this is a reference.
+            return true;
+        }
+
         if (isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$this->_tokens[$tokenBefore]['code']]) === true) {
             // This is directly after an assignment. It's a reference. Even if
             // it is part of an operation, the other tests will handle it.
