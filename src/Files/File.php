@@ -1569,6 +1569,11 @@ class File
             return true;
         }
 
+        if ($this->tokens[$tokenBefore]['code'] === T_OPEN_SHORT_ARRAY) {
+            // Inside an array declaration, this is a reference.
+            return true;
+        }
+
         if (isset(Util\Tokens::$assignmentTokens[$this->tokens[$tokenBefore]['code']]) === true) {
             // This is directly after an assignment. It's a reference. Even if
             // it is part of an operation, the other tests will handle it.

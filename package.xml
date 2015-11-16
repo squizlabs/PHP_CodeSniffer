@@ -80,6 +80,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to J.D. Grimes for the patch
   - Fixed bug #753 : PSR2 standard shouldn't require space after USE block when next code is a closing tag
   - Fixed bug #768 : PEAR FunctionCallSignature sniff forbids comments after opening parenthesis of a multiline call
+  - Fixed bug #769 : Incorrect detection of variable reference operator when used with short array syntax
+    -- Thanks to Klaus Purer for the patch
  </notes>
  <contents>
   <dir name="/">
