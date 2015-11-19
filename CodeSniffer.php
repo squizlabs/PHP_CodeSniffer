@@ -2179,6 +2179,24 @@ class PHP_CodeSniffer
 
     }//end getInstalledStandards()
 
+    public static function getInstalledGenerators()
+    {
+        $path = dirname(__FILE__).DIRECTORY_SEPARATOR.'CodeSniffer'.DIRECTORY_SEPARATOR.'DocGenerators';
+        $di = new DirectoryIterator($path);
+        $generators = array();
+        foreach ($di as $file) {
+            if ($file->isDir() === false && $file->isDot() === false) {
+                $filename = $file->getFilename();
+                if ($filename === 'Generator.php') {
+                    continue;
+                }
+                $generators[] = str_replace('.php', '', $filename);
+            }
+        }
+        sort($generators);
+        return $generators;
+    }
+
 
     /**
      * Determine if a standard is installed.
