@@ -782,6 +782,9 @@ class PHP_CodeSniffer_CLI
 
         if ($values['generator'] !== '') {
             $phpcs = new PHP_CodeSniffer($values['verbosity']);
+            if (is_null($values['standard'])) {
+                $values['standard'] = $this->validateStandard(null);
+            }
             foreach ($values['standard'] as $standard) {
                 $phpcs->generateDocs(
                     $standard,
