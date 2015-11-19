@@ -159,7 +159,10 @@ class ControlSignatureSniff implements Sniff
             for ($next = ($opener + 1); $next < $phpcsFile->numTokens; $next++) {
                 $code = $tokens[$next]['code'];
 
-                if ($code === T_WHITESPACE) {
+                if ($code === T_WHITESPACE
+                    || ($code === T_INLINE_HTML
+                    && trim($tokens[$next]['content']) === '')
+                ) {
                     continue;
                 }
 
@@ -174,7 +177,7 @@ class ControlSignatureSniff implements Sniff
                 // We found the first bit of a code, or a comment on the
                 // following line.
                 break;
-            }
+            }//end for
 
             $found = ($tokens[$next]['line'] - $tokens[$opener]['line']);
             if ($found !== 1) {
@@ -188,13 +191,18 @@ class ControlSignatureSniff implements Sniff
                             break;
                         }
 
+                        if (trim($tokens[$i]['content']) !== '') {
+                            break;
+                        }
+
+                        // Remove whitespace.
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
 
                     $phpcsFile->fixer->addContent($opener, $phpcsFile->eolChar);
                     $phpcsFile->fixer->endChangeset();
                 }
-            }
+            }//end if
         } else if ($tokens[$stackPtr]['code'] === T_WHILE) {
             // Zero spaces after parenthesis closer.
             $closer = $tokens[$stackPtr]['parenthesis_closer'];
