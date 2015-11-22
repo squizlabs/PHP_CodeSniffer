@@ -30,6 +30,55 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**
+     * The expected name of the author.
+     *
+     * @var string
+     */
+    public $authorName = 'Squiz Pty Ltd';
+
+    /**
+     * The expected email address of the author.
+     *
+     * @var string
+     */
+    public $authorEmail = 'products@squiz.net';
+
+    /**
+     * The expected full content of the author tag.
+     *
+     * @var string
+     */
+    private $_expectedAuthor;
+
+    /**
+     * The exxpected minimum copyright year.
+     *
+     * @var string
+     */
+    public $copyrightMinYear = 2006;
+
+    /**
+     * The expected name for who has copyright to the code.
+     *
+     * @var string
+     */
+    public $copyrightName = 'Squiz Pty Ltd (ABN 77 084 670 600)';
+
+    /**
+     * The expected full content of the copyright tag.
+     *
+     * @var string
+     */
+    private $_expectedCopyright;
+
+    /**
+     * The regular expression used to check the copyright tag
+     *
+     * @var string
+     */
+    private $_copyrightRegex;
+
+    /**
      * A list of tokenizers this sniff supports.
      *
      * @var array
@@ -38,6 +87,35 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                                    'PHP',
                                    'JS',
                                   );
+
+
+    /**
+     * Constructs the test with the tokens content it wishes to listen for.
+     */
+    public function __construct()
+    {
+        // Define the pattern of the author tag.
+        // Authors do not need to specify an email address.
+        $this->authorEmail = trim($this->authorEmail);
+        if (empty($this->authorEmail) === false) {
+            $this->_expectedAuthor = "{$this->authorName} <{$this->authorEmail}>";
+        } else {
+            $this->_expectedAuthor = $this->authorName;
+        }//end if
+
+        // Define the pattern of the copyright tag.
+        $this->copyrightMinYear = trim($this->copyrightMinYear);
+        if (empty($this->copyrightMinYear) === false) {
+            $currentYear = date('Y');
+            $this->_expectedCopyright = "{$this->copyrightMinYear}-{$currentYear} $this->copyrightName";
+
+            $this->_copyrightRegex = '/^([0-9]{4})(-[0-9]{4})? '.preg_quote($this->copyrightName).'$/';
+        } else {
+            $this->_expectedCopyright = $this->copyrightName;
+            $this->_copyrightRegex    = '/^'.preg_quote($this->copyrightName).'$/';
+        }//end if
+
+    }//end __construct()
 
 
     /**
@@ -125,27 +203,19 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ($name === '@author') {
-                if ($tokens[$string]['content'] !== 'Squiz Pty Ltd <products@squiz.net>') {
-                    $error = 'Expected "Squiz Pty Ltd <products@squiz.net>" for author tag';
+                if ($tokens[$string]['content'] !== $this->_expectedAuthor) {
+                    $error = 'Expected "'.$this->_expectedAuthor.'" for author tag';
                     $fix   = $phpcsFile->addFixableError($error, $tag, 'IncorrectAuthor');
                     if ($fix === true) {
-                        $expected = 'Squiz Pty Ltd <products@squiz.net>';
-                        $phpcsFile->fixer->replaceToken($string, $expected);
+                        $phpcsFile->fixer->replaceToken($string, $this->_expectedAuthor);
                     }
                 }
             } else if ($name === '@copyright') {
-                if (preg_match('/^([0-9]{4})(-[0-9]{4})? (Squiz Pty Ltd \(ABN 77 084 670 600\))$/', $tokens[$string]['content']) === 0) {
-                    $error = 'Expected "xxxx-xxxx Squiz Pty Ltd (ABN 77 084 670 600)" for copyright declaration';
+                if (preg_match($this->_copyrightRegex, $tokens[$string]['content']) === 0) {
+                    $error = 'Expected "'.$this->_expectedCopyright.'" for copyright declaration';
                     $fix   = $phpcsFile->addFixableError($error, $tag, 'IncorrectCopyright');
                     if ($fix === true) {
-                        $matches = array();
-                        preg_match('/^(([0-9]{4})(-[0-9]{4})?)?.*$/', $tokens[$string]['content'], $matches);
-                        if (isset($matches[1]) === false) {
-                            $matches[1] = date('Y');
-                        }
-
-                        $expected = $matches[1].' Squiz Pty Ltd (ABN 77 084 670 600)';
-                        $phpcsFile->fixer->replaceToken($string, $expected);
+                        $phpcsFile->fixer->replaceToken($string, $this->_expectedCopyright);
                     }
                 }
             }//end if
