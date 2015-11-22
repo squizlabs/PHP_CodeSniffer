@@ -178,7 +178,7 @@ class ControlStructureSpacingSniff implements Sniff
             );
 
             $lastNonEmptyContent = $phpcsFile->findPrevious(
-                PHP_CodeSniffer_Tokens::$emptyTokens,
+                Tokens::$emptyTokens,
                 ($scopeCloser - 1),
                 null,
                 true
