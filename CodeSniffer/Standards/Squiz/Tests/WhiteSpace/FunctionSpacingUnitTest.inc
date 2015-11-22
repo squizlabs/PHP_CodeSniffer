@@ -280,3 +280,19 @@ class MyClass
 function test() {
 
 }//end test()
+
+
+if ($foo) {
+    /**
+     * Comment
+     */
+    function foo() {
+        // Code here
+    }
+    /**
+     * Comment
+     */
+    function bar() {
+        // Code here
+    }
+}

@@ -120,10 +120,12 @@ echo $i;
 } while ($i > 0);
 
 if ($i === 0) {
+
     $i = 1
 }
 
 if ($a) {
+
 } elseif ($b) {
 }
 
@@ -157,6 +159,7 @@ try {
 }
 
 switch ($foo) {
+
     case 'bar':
     break;
 

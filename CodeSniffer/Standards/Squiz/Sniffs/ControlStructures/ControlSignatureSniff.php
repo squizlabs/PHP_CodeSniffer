@@ -172,18 +172,12 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
                 break;
             }//end for
 
-            $found = ($tokens[$next]['line'] - $tokens[$opener]['line']);
-            if ($found !== 1) {
-                $error = 'Expected 1 newline after opening brace; %s found';
-                $data  = array($found);
-                $fix   = $phpcsFile->addFixableError($error, $opener, 'NewlineAfterOpenBrace', $data);
+            if ($tokens[$next]['line'] === $tokens[$opener]['line']) {
+                $error = 'Newline required after opening brace';
+                $fix   = $phpcsFile->addFixableError($error, $opener, 'NewlineAfterOpenBrace');
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($opener + 1); $i < $next; $i++) {
-                        if ($found > 0 && $tokens[$i]['line'] === $tokens[$next]['line']) {
-                            break;
-                        }
-
                         if (trim($tokens[$i]['content']) !== '') {
                             break;
                         }
