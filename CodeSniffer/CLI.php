@@ -449,6 +449,10 @@ class PHP_CodeSniffer_CLI
             $this->printInstalledStandards();
             exit(0);
             break;
+        case 'g':
+            $this->printInstalledGenerators();
+            exit(0);
+            break;
         case 'v' :
             if (isset($this->values['verbosity']) === false) {
                 $this->values['verbosity'] = 1;
@@ -1166,6 +1170,7 @@ class PHP_CodeSniffer_CLI
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
+        echo '        -g            Show a list of generators'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --colors      Use colors in output'.PHP_EOL;
@@ -1232,6 +1237,13 @@ class PHP_CodeSniffer_CLI
 
     }//end printPHPCBFUsage()
 
+    public function printInstalledGenerators()
+    {
+        $installedGenerators = PHP_CodeSniffer::getInstalledGenerators();
+        $last = array_pop($installedGenerators);
+        $generators = implode(', ', $installedGenerators);
+        echo "The installed generators are ", $generators, " and ", $last, PHP_EOL;
+    }
 
     /**
      * Prints out a list of installed coding standards.
