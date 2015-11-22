@@ -4,6 +4,7 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceKernighanRitchieSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceBsdAllmanSniff;
 
@@ -374,7 +375,7 @@ class FunctionDeclarationSniff implements Sniff
             $error = 'The closing parenthesis and the opening brace of a multi-line function declaration must be on the same line';
             $fix   = $phpcsFile->addFixableError($error, $opener, 'NewlineBeforeOpenBrace');
             if ($fix === true) {
-                $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($opener - 1), $closeBracket, true);
+                $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($opener - 1), $closeBracket, true);
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->addContent($prev, ' {');
                 $phpcsFile->fixer->replaceToken($opener, '');
