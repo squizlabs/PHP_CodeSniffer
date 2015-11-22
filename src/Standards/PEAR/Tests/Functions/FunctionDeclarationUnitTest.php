@@ -56,9 +56,8 @@ class FunctionDeclarationUnitTest extends AbstractSniffUnitTest
                 11  => 1,
                 14  => 1,
                 17  => 1,
-                27  => 1,
                 44  => 1,
-                51  => 1,
+                52  => 1,
                 61  => 2,
                 98  => 1,
                 110 => 2,
@@ -72,6 +71,7 @@ class FunctionDeclarationUnitTest extends AbstractSniffUnitTest
                 167 => 2,
                 171 => 1,
                 173 => 1,
+                201 => 1,
                );
 
     }//end getErrorList()

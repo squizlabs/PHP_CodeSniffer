@@ -85,6 +85,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #769 : Incorrect detection of variable reference operator when used with short array syntax
     -- Thanks to Klaus Purer for the patch
   - Fixed bug #772 : Syntax error when using PHPCBF on alternative style foreach loops
+  - Fixed bug #781 : Incorrect checking for PHP7 return types on multi-line function declartions
   - Fixed bug #782 : Conditional function declarations cause fixing conflicts in Squiz standard
     -- Squiz.ControlStructures.ControlSignature no longer enforces a single newline after open brace
     -- Squiz.WhiteSpace.ControlStructureSpacing can be used to checl spacing at the start/end of control structures

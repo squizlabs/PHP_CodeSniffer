@@ -178,3 +178,25 @@ blah
 $b = function &() {
     echo "hello";
 };
+
+function foo(
+    $param1,
+    $param2,
+    $param3,
+) : SomeClass {
+}
+
+function foo(
+    $param1,
+    $param2,
+    $param3,
+): SomeClass {
+}
+
+function foo(
+    $param1,
+    $param2,
+    $param3,
+): SomeClass // Comment here
+{
+}
