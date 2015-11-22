@@ -141,7 +141,18 @@ class ControlStructureSpacingSniff implements Sniff
             }
         }
 
-        if ($tokens[$firstContent]['line'] >= ($tokens[$scopeOpener]['line'] + 2)) {
+        // We ignore spacing for some structures that tend to have their own rules.
+        $ignore = array(
+                   T_FUNCTION             => true,
+                   T_CLASS                => true,
+                   T_INTERFACE            => true,
+                   T_TRAIT                => true,
+                   T_DOC_COMMENT_OPEN_TAG => true,
+                  );
+
+        if (isset($ignore[$tokens[$firstContent]['code']]) === false
+            && $tokens[$firstContent]['line'] >= ($tokens[$scopeOpener]['line'] + 2)
+        ) {
             $error = 'Blank line found at start of control structure';
             $fix   = $phpcsFile->addFixableError($error, $scopeOpener, 'SpacingAfterOpen');
 
@@ -166,7 +177,21 @@ class ControlStructureSpacingSniff implements Sniff
                 true
             );
 
-            if ($tokens[$lastContent]['line'] <= ($tokens[$scopeCloser]['line'] - 2)) {
+            $lastNonEmptyContent = $phpcsFile->findPrevious(
+                PHP_CodeSniffer_Tokens::$emptyTokens,
+                ($scopeCloser - 1),
+                null,
+                true
+            );
+
+            $checkToken = $lastContent;
+            if (isset($tokens[$lastNonEmptyContent]['scope_condition']) === true) {
+                $checkToken = $tokens[$lastNonEmptyContent]['scope_condition'];
+            }
+
+            if (isset($ignore[$tokens[$checkToken]['code']]) === false
+                && $tokens[$lastContent]['line'] <= ($tokens[$scopeCloser]['line'] - 2)
+            ) {
                 $errorToken = $scopeCloser;
                 for ($i = ($scopeCloser - 1); $i > $lastContent; $i--) {
                     if ($tokens[$i]['line'] < $tokens[$scopeCloser]['line']) {

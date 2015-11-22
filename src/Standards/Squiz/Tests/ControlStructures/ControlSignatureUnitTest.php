@@ -70,17 +70,15 @@ class ControlSignatureUnitTest extends AbstractSniffUnitTest
                    99  => 1,
                    108 => 1,
                    112 => 1,
-                   115 => 1,
                   );
 
         if ($testFile === 'ControlSignatureUnitTest.inc') {
-            $errors[120] = 1;
             $errors[122] = 1;
             $errors[130] = 2;
             $errors[134] = 1;
             $errors[150] = 1;
             $errors[153] = 1;
-            $errors[158] = 2;
+            $errors[158] = 1;
             $errors[165] = 1;
             $errors[170] = 2;
             $errors[186] = 2;
