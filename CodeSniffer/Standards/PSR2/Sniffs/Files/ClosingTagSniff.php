@@ -74,7 +74,16 @@ class PSR2_Sniffs_Files_ClosingTagSniff implements PHP_CodeSniffer_Sniff
             $error = 'A closing tag is not permitted at the end of a PHP file';
             $fix   = $phpcsFile->addFixableError($error, $last, 'NotAllowed');
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($last, '');
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->replaceToken($last, $phpcsFile->eolChar);
+                $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($last - 1), null, true);
+                if ($tokens[$prev]['code'] !== T_SEMICOLON
+                    && $tokens[$prev]['code'] !== T_CLOSE_CURLY_BRACKET
+                ) {
+                    $phpcsFile->fixer->addContent($prev, ';');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
 
             $phpcsFile->recordMetric($stackPtr, 'PHP closing tag at end of PHP-only file', 'yes');
