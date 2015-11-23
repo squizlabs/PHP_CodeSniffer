@@ -58,6 +58,7 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
         return array(
                 T_IF,
                 T_ELSE,
+                T_ELSEIF,
                 T_FOREACH,
                 T_WHILE,
                 T_DO,

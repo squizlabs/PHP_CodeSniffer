@@ -46,7 +46,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added more guard code for foreach declarations with syntax errors
       -- Thanks to Johan de Ruijter for the patch
   - Added more guard code for class declarations with syntax errors
-  - Squiz ArrayDeclaration now has guard code for arrays with syntax errors
+  - Squiz ArrayDeclarationSniff now has guard code for arrays with syntax errors
+  - Generic InlineControlStructureSniff now correctly fixes ELSEIF statements
   - Fixed bug #601 : Expected type hint int[]; found array in Squiz FunctionCommentSniff
     -- Thanks to Scato Eggen for the patch
   - Fixed bug #625 : Consider working around T_HASHBANG in HHVM 3.5.x and 3.6.x

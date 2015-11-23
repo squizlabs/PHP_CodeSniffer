@@ -65,6 +65,9 @@ class Generic_Tests_ControlStructures_InlineControlStructureUnitTest extends Abs
                     120 => 1,
                     128 => 1,
                     134 => 1,
+                    142 => 1,
+                    143 => 1,
+                    144 => 1,
                    );
             break;
         case 'InlineControlStructureUnitTest.js':

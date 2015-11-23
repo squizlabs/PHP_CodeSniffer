@@ -139,3 +139,7 @@ foreach($stuff as $num) {
     if (true) {
         echo "true2\n";
     }
+
+if ($foo) { echo 'foo'; }
+elseif ($bar) { echo 'bar'; }
+else { echo 'baz'; }
