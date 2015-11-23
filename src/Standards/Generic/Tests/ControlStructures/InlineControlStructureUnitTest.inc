@@ -115,3 +115,30 @@ switch($response = \Bar::baz('bat', function ($foo) {
     case 2:
         return 'other';
 }
+
+$stuff = [1,2,3];
+foreach($stuff as $num)
+    if ($num %2 ) {
+        echo "even";
+    } else {
+        echo "odd";
+    }
+
+$i = 0;
+foreach($stuff as $num)
+    do {
+        echo $i;
+        $i++;
+    } while ($i < 5);
+
+foreach($stuff as $num)
+    if (true) {
+        echo "true1\n";
+    }
+    if (true) {
+        echo "true2\n";
+    }
+
+if ($foo) echo 'foo';
+elseif ($bar) echo 'bar';
+else echo 'baz';
