@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class InlineControlStructureSniff implements Sniff
 {
@@ -150,7 +151,7 @@ class InlineControlStructureSniff implements Sniff
                     $type = $tokens[$end]['code'];
                     $end  = $tokens[$end]['scope_closer'];
                     if ($type === T_DO || $type === T_IF || $type === T_ELSEIF) {
-                        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), null, true);
+                        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
                         if ($next === false) {
                             break;
                         }
