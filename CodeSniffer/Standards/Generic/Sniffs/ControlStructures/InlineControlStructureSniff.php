@@ -161,14 +161,38 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                 }
 
                 if (isset($tokens[$end]['scope_opener']) === true) {
-                    $end = $tokens[$end]['scope_closer'];
+                    $type = $tokens[$end]['code'];
+                    $end  = $tokens[$end]['scope_closer'];
+                    if ($type === T_DO || $type === T_IF || $type === T_ELSEIF) {
+                        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), null, true);
+                        if ($next === false) {
+                            break;
+                        }
+
+                        $nextType = $tokens[$next]['code'];
+
+                        // Let additional conditions loop and find their ending.
+                        if (($type === T_IF
+                            || $type === T_ELSEIF)
+                            && ($nextType === T_ELSEIF
+                            || $nextType === T_ELSE)
+                        ) {
+                            continue;
+                        }
+
+                        // Account for DO... WHILE conditions.
+                        if ($type === T_DO && $nextType === T_WHILE) {
+                            $end = $phpcsFile->findNext(T_SEMICOLON, ($next + 1));
+                        }
+                    }//end if
+
                     break;
-                }
+                }//end if
 
                 if ($tokens[$end]['code'] !== T_WHITESPACE) {
                     $lastNonEmpty = $end;
                 }
-            }
+            }//end for
 
             $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
 
