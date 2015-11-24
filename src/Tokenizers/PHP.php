@@ -770,6 +770,7 @@ class PHP extends Tokenizer
             if ($tokenIsArray === true
                 && $token[0] === T_STRING
                 && strtolower($token[1]) === 'trait'
+                && $tokens[($stackPtr - 1)][0] !== T_OBJECT_OPERATOR
             ) {
                 $finalTokens[$newStackPtr] = array(
                                               'content' => $token[1],

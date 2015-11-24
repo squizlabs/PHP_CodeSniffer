@@ -362,15 +362,26 @@ class ScopeIndentSniff implements Sniff
                     }
                 }
 
-                // Don't force current indent to be divisible because there could be custom
-                // rules in place for arrays.
-                $currentIndent = ($tokens[$first]['column'] - 1);
-                if (isset($adjustments[$first]) === true) {
-                    $currentIndent += $adjustments[$first];
-                }
+                if (isset($tokens[$first]['scope_closer']) === true
+                    && $tokens[$first]['scope_closer'] === $first
+                ) {
+                    // The first token is a scope closer and would have already
+                    // been processed and set the indent level correctly, so
+                    // don't adjust it again.
+                    if ($this->_debug === true) {
+                        echo "\t* first token is a scope closer; ignoring closing short array bracket *".PHP_EOL;
+                    }
+                } else {
+                    // Don't force current indent to be divisible because there could be custom
+                    // rules in place for arrays.
+                    $currentIndent = ($tokens[$first]['column'] - 1);
+                    if (isset($adjustments[$first]) === true) {
+                        $currentIndent += $adjustments[$first];
+                    }
 
-                if ($this->_debug === true) {
-                    echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent".PHP_EOL;
+                    if ($this->_debug === true) {
+                        echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent".PHP_EOL;
+                    }
                 }
             }//end if
 
