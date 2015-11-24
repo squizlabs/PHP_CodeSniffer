@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Fixed bug #784 : $this->trait is seen as a T_TRAIT token
   - Fixed bug #786 : Switch indent issue with short array notation
  </notes>
  <contents>
