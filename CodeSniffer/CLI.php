@@ -999,13 +999,17 @@ class PHP_CodeSniffer_CLI
     {
         if ($standards === null) {
             // They did not supply a standard to use.
-            // Looks for a ruleset in the current directory.
-            if (empty($this->values['files']) === true) {
-                $default = getcwd().DIRECTORY_SEPARATOR.'phpcs.xml';
+            // Look for a default ruleset in the current directory or higher.
+            $currentDir = getcwd();
+
+            do {
+                $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml';
                 if (is_file($default) === true) {
                     return array($default);
                 }
-            }
+
+                $currentDir = dirname($currentDir);
+            } while ($currentDir !== DIRECTORY_SEPARATOR && $currentDir !== '.');
 
             // Try to get the default from the config system.
             $standard = PHP_CodeSniffer::getConfigData('default_standard');
@@ -1015,7 +1019,7 @@ class PHP_CodeSniffer_CLI
             }
 
             return array($standard);
-        }
+        }//end if
 
         $cleaned   = array();
         $standards = (array) $standards;
