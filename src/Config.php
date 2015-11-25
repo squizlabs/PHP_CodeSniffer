@@ -288,6 +288,11 @@ class Config
                 $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml';
                 if (is_file($default) === true) {
                     $this->standards = array($default);
+                } else {
+                    $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml.dist';
+                    if (is_file($default) === true) {
+                        $this->standards = array($default);
+                    }
                 }
 
                 $currentDir = dirname($currentDir);

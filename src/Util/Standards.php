@@ -145,7 +145,8 @@ class Standards
             // Might be an actual ruleset file itUtil.
             // If it has an XML extension, let's at least try it.
             if (is_file($standard) === true
-                && substr(strtolower($standard), -4) === '.xml'
+                && (substr(strtolower($standard), -4) === '.xml'
+                || substr(strtolower($standard), -9) === '.xml.dist')
             ) {
                 return true;
             }
