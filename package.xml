@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCS will now look for a phpcs.xml file in parent directories as well as the current directory (request #626)
   - PHPCS will now use a phpcs.xml file even if files are specified on the command line
     -- This file is still only used if no standard is specified on the command line
+  - Added support for a phpcs.xml.dist file (request #583)
+    -- If both a phpcs.xml and phpcs.xml.dist file are present, the phpcs.xml file will be used
   - Fixed bug #784 : $this->trait is seen as a T_TRAIT token
   - Fixed bug #786 : Switch indent issue with short array notation
  </notes>

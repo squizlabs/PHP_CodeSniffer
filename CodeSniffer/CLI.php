@@ -1008,6 +1008,11 @@ class PHP_CodeSniffer_CLI
                     return array($default);
                 }
 
+                $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml.dist';
+                if (is_file($default) === true) {
+                    return array($default);
+                }
+
                 $currentDir = dirname($currentDir);
             } while ($currentDir !== DIRECTORY_SEPARATOR && $currentDir !== '.');
 
