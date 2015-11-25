@@ -278,15 +278,20 @@ class Config
         $this->setCommandLineValues($cliArgs);
 
         if (isset($this->overriddenDefaults['standards']) === false
-            && empty($this->files) === true
             && Config::getConfigData('default_standard') === null
         ) {
             // They did not supply a standard to use.
-            // Look for a ruleset in the current directory.
-            $default = getcwd().DIRECTORY_SEPARATOR.'phpcs.xml';
-            if (is_file($default) === true) {
-                $this->standards = array($default);
-            }
+            // Look for a default ruleset in the current directory or higher.
+            $currentDir = getcwd();
+
+            do {
+                $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml';
+                if (is_file($default) === true) {
+                    $this->standards = array($default);
+                }
+
+                $currentDir = dirname($currentDir);
+            } while ($currentDir !== DIRECTORY_SEPARATOR && $currentDir !== '.');
         }
 
     }//end __construct()
