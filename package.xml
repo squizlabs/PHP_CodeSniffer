@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If both a phpcs.xml and phpcs.xml.dist file are present, the phpcs.xml file will be used
   - Fixed bug #784 : $this->trait is seen as a T_TRAIT token
   - Fixed bug #786 : Switch indent issue with short array notation
+  - Fixed bug #787 : SpacingAfterDefaultBreak confused by multi-line statements
  </notes>
  <contents>
   <dir name="/">
