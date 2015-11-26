@@ -147,7 +147,7 @@ class LocalFile extends File
     private function replayErrors($errors, $warnings)
     {
         $this->errors       = array();
-        $this->warnigns     = array();
+        $this->warnings     = array();
         $this->errorCount   = 0;
         $this->warningCount = 0;
         $this->fixableCount = 0;
