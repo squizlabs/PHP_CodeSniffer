@@ -1,4 +1,16 @@
 <?php
+/**
+ * Tests self member references.
+ *
+ * Verifies that :
+ * - self:: is used instead of Self::
+ * - self:: is used for local static member reference
+ * - self:: is used instead of self ::
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Checks the indentation of embedded PHP code segments.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 
@@ -6,34 +13,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
 
-/**
- * Squiz_Sniffs_PHP_EmbeddedPhpSniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Squiz_Sniffs_PHP_EmbeddedPhpSniff.
- *
- * Checks the indentation of embedded PHP code segments.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class EmbeddedPhpSniff implements Sniff
 {
 
@@ -67,9 +46,9 @@ class EmbeddedPhpSniff implements Sniff
         // then we have an inline embedded PHP block.
         $closeTag = $phpcsFile->findNext(T_CLOSE_TAG, $stackPtr);
         if ($closeTag === false || $tokens[$stackPtr]['line'] !== $tokens[$closeTag]['line']) {
-            $this->_validateMultilineEmbeddedPhp($phpcsFile, $stackPtr);
+            $this->validateMultilineEmbeddedPhp($phpcsFile, $stackPtr);
         } else {
-            $this->_validateInlineEmbeddedPhp($phpcsFile, $stackPtr);
+            $this->validateInlineEmbeddedPhp($phpcsFile, $stackPtr);
         }
 
     }//end process()
@@ -84,7 +63,7 @@ class EmbeddedPhpSniff implements Sniff
      *
      * @return void
      */
-    private function _validateMultilineEmbeddedPhp($phpcsFile, $stackPtr)
+    private function validateMultilineEmbeddedPhp($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -305,7 +284,7 @@ class EmbeddedPhpSniff implements Sniff
             }
         }//end if
 
-    }//end _validateMultilineEmbeddedPhp()
+    }//end validateMultilineEmbeddedPhp()
 
 
     /**
@@ -317,7 +296,7 @@ class EmbeddedPhpSniff implements Sniff
      *
      * @return void
      */
-    private function _validateInlineEmbeddedPhp($phpcsFile, $stackPtr)
+    private function validateInlineEmbeddedPhp($phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -401,7 +380,7 @@ class EmbeddedPhpSniff implements Sniff
             }
         }
 
-    }//end _validateInlineEmbeddedPhp()
+    }//end validateInlineEmbeddedPhp()
 
 
 }//end class

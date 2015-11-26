@@ -1,28 +1,6 @@
 <?php
-
-namespace PHP_CodeSniffer\Sniffs;
-
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-
 /**
- * An AbstractScopeTest allows for tests that extend from this class to
- * listen for tokens within a particular scope.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * An AbstractScopeTest allows for tests that extend from this class to
- * listen for tokens within a particular scope.
+ * Allows tests that extend this class to listen for tokens within a particular scope.
  *
  * Below is a test that listens to methods that exist only within classes:
  * <code>
@@ -41,15 +19,16 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
  * }
  * </code>
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
+namespace PHP_CodeSniffer\Sniffs;
+
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+
 abstract class AbstractScopeSniff implements Sniff
 {
 

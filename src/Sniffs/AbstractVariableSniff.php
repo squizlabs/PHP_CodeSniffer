@@ -1,24 +1,4 @@
 <?php
-
-namespace PHP_CodeSniffer\Sniffs;
-
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-
-/**
- * A class to find T_VARIABLE tokens.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
 /**
  * A class to find T_VARIABLE tokens.
  *
@@ -28,22 +8,23 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
  * the token is found to be a normal T_VARIABLE token, then processVariable is
  * called.
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
+namespace PHP_CodeSniffer\Sniffs;
+
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+
 abstract class AbstractVariableSniff extends AbstractScopeSniff
 {
 
     /**
      * The end token of the current function that we are in.
      *
-     * @var int
+     * @var integer
      */
     private $_endFunction = -1;
 

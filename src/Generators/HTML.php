@@ -1,23 +1,4 @@
 <?php
-
-namespace PHP_CodeSniffer\Generators;
-
-use PHP_CodeSniffer\Config;
-
-/**
- * A doc generator that outputs documentation in one big HTML file.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
 /**
  * A doc generator that outputs documentation in one big HTML file.
  *
@@ -25,15 +6,15 @@ use PHP_CodeSniffer\Config;
  * your own stylesheet. It contains a table of contents at the top with anchors
  * to each sniff.
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
+namespace PHP_CodeSniffer\Generators;
+
+use PHP_CodeSniffer\Config;
+
 class HTML extends Generator
 {
 
@@ -155,8 +136,6 @@ class HTML extends Generator
      * Print the table of contents for the standard.
      *
      * The TOC is just an unordered list of bookmarks to sniffs on the page.
-     *
-     * @param array $standardFiles An array of paths to the XML standard files.
      *
      * @return void
      */

@@ -1,4 +1,14 @@
 <?php
+/**
+ * The base class for all PHP_CodeSniffer documentation generators.
+ *
+ * Documentation generators are used to print documentation about code sniffs
+ * in a standard.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Generators;
 
@@ -6,49 +16,28 @@ use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Autoload;
 use PHP_CodeSniffer\Util\Common;
 
-/**
- * The base class for all PHP_CodeSniffer documentation generators.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * The base class for all PHP_CodeSniffer documentation generators.
- *
- * Documentation generators are used to print documentation about code sniffs
- * in a standard.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 abstract class Generator
 {
 
-    public $ruleset  = null;
+    /**
+     * The ruleset used for the run.
+     *
+     * @var \PHP_CodeSniffer\Ruleset
+     */
+    public $ruleset = null;
+
+    /**
+     * XML documentation files used to produce the final output.
+     *
+     * @var string[]
+     */
     public $docFiles = array();
 
 
     /**
-     * Constructs a PHP_CodeSniffer_DocGenerators_Generator object.
+     * Constructs a doc generator.
      *
-     * @param string $standard The name of the coding standard to generate
-     *                         docs for.
-     * @param array  $sniffs   An array of sniffs that we are limiting the
-     *                         generated docs to.
+     * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
      *
      * @see generate()
      */

@@ -1,4 +1,11 @@
 <?php
+/**
+ * A Sniff to enforce the use of IDENTICAL type operators rather than EQUAL operators.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Operators;
 
@@ -6,53 +13,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
 
-/**
- * A Sniff to enforce the use of IDENTICAL type operators rather than EQUAL operators.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A Sniff to enforce the use of IDENTICAL type operators rather than EQUAL operators.
- *
- * The use of === true is enforced over implicit true statements,
- * for example:
- *
- * <code>
- * if ($a)
- * {
- *     ...
- * }
- * </code>
- *
- * should be:
- *
- * <code>
- * if ($a === true)
- * {
- *     ...
- * }
- * </code>
- *
- * It also enforces the use of === false over ! operators.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class ComparisonOperatorUsageSniff implements Sniff
 {
 
@@ -84,7 +44,7 @@ class ComparisonOperatorUsageSniff implements Sniff
     /**
      * A list of invalid operators with their alternatives.
      *
-     * @var array(int => string)
+     * @var array<int, string>
      */
     private static $_invalidOps = array(
                                    'PHP' => array(

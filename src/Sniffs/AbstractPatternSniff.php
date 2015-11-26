@@ -1,4 +1,11 @@
 <?php
+/**
+ * Processes pattern strings and checks that the code conforms to the pattern.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Sniffs;
 
@@ -8,34 +15,6 @@ use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Tokenizers\PHP;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
-/**
- * Processes pattern strings and checks that the code conforms to the pattern.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Processes pattern strings and checks that the code conforms to the pattern.
- *
- * This test essentially checks that code is correctly formatted with whitespace.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 abstract class AbstractPatternSniff implements Sniff
 {
 
@@ -63,7 +42,7 @@ abstract class AbstractPatternSniff implements Sniff
     /**
      * Tokens that this sniff wishes to process outside of the patterns.
      *
-     * @var array(int)
+     * @var int[]
      * @see registerSupplementary()
      * @see processSupplementary()
      */
@@ -72,7 +51,7 @@ abstract class AbstractPatternSniff implements Sniff
     /**
      * Positions in the stack where errors have occurred.
      *
-     * @var array()
+     * @var array<int, bool>
      */
     private $_errorPos = array();
 
@@ -109,11 +88,11 @@ abstract class AbstractPatternSniff implements Sniff
         $patterns    = $this->getPatterns();
 
         foreach ($patterns as $pattern) {
-            $parsedPattern = $this->_parse($pattern);
+            $parsedPattern = $this->parse($pattern);
 
             // Find a token position in the pattern that we can use
             // for a listener token.
-            $pos           = $this->_getListenerTokenPos($parsedPattern);
+            $pos           = $this->getListenerTokenPos($parsedPattern);
             $tokenType     = $parsedPattern[$pos]['token'];
             $listenTypes[] = $tokenType;
 
@@ -151,7 +130,7 @@ abstract class AbstractPatternSniff implements Sniff
      *
      * @return array<int, int>
      */
-    private function _getPatternTokenTypes($pattern)
+    private function getPatternTokenTypes($pattern)
     {
         $tokenTypes = array();
         foreach ($pattern as $pos => $patternInfo) {
@@ -164,7 +143,7 @@ abstract class AbstractPatternSniff implements Sniff
 
         return $tokenTypes;
 
-    }//end _getPatternTokenTypes()
+    }//end getPatternTokenTypes()
 
 
     /**
@@ -178,9 +157,9 @@ abstract class AbstractPatternSniff implements Sniff
      * @throws PHP_CodeSniffer_Exception If we could not determine a token
      *                                         to listen for.
      */
-    private function _getListenerTokenPos($pattern)
+    private function getListenerTokenPos($pattern)
     {
-        $tokenTypes = $this->_getPatternTokenTypes($pattern);
+        $tokenTypes = $this->getPatternTokenTypes($pattern);
         $tokenCodes = array_keys($tokenTypes);
         $token      = Tokens::getHighestWeightedToken($tokenCodes);
 
@@ -192,7 +171,7 @@ abstract class AbstractPatternSniff implements Sniff
 
         return $tokenTypes[$token];
 
-    }//end _getListenerTokenPos()
+    }//end getListenerTokenPos()
 
 
     /**
@@ -787,10 +766,10 @@ abstract class AbstractPatternSniff implements Sniff
      * @param string $pattern The pattern to parse.
      *
      * @return array The parsed pattern array.
-     * @see    _createSkipPattern()
-     * @see    _createTokenPattern()
+     * @see    createSkipPattern()
+     * @see    createTokenPattern()
      */
-    private function _parse($pattern)
+    private function parse($pattern)
     {
         $patterns   = array();
         $length     = strlen($pattern);
@@ -806,7 +785,7 @@ abstract class AbstractPatternSniff implements Sniff
                 // It's a skip pattern. The skip pattern requires the
                 // content of the token in the "from" position and the token
                 // to skip to.
-                $specialPattern = $this->_createSkipPattern($pattern, ($i - 1));
+                $specialPattern = $this->createSkipPattern($pattern, ($i - 1));
                 $lastToken      = ($i - $firstToken);
                 $firstToken     = ($i + 3);
                 $i = ($i + 2);
@@ -846,7 +825,7 @@ abstract class AbstractPatternSniff implements Sniff
                 }
 
                 if ($str !== '') {
-                    $tokenPatterns = $this->_createTokenPattern($str);
+                    $tokenPatterns = $this->createTokenPattern($str);
                     foreach ($tokenPatterns as $tokenPattern) {
                         $patterns[] = $tokenPattern;
                     }
@@ -868,7 +847,7 @@ abstract class AbstractPatternSniff implements Sniff
 
         return $patterns;
 
-    }//end _parse()
+    }//end parse()
 
 
     /**
@@ -878,10 +857,10 @@ abstract class AbstractPatternSniff implements Sniff
      * @param string $from    The token content that the skip pattern starts from.
      *
      * @return array The pattern step.
-     * @see    _createTokenPattern()
-     * @see    _parse()
+     * @see    createTokenPattern()
+     * @see    parse()
      */
-    private function _createSkipPattern($pattern, $from)
+    private function createSkipPattern($pattern, $from)
     {
         $skip = array('type' => 'skip');
 
@@ -922,7 +901,7 @@ abstract class AbstractPatternSniff implements Sniff
 
         return $skip;
 
-    }//end _createSkipPattern()
+    }//end createSkipPattern()
 
 
     /**
@@ -931,10 +910,10 @@ abstract class AbstractPatternSniff implements Sniff
      * @param string $str The tokens string that the pattern should match.
      *
      * @return array The pattern step.
-     * @see    _createSkipPattern()
-     * @see    _parse()
+     * @see    createSkipPattern()
+     * @see    parse()
      */
-    private function _createTokenPattern($str)
+    private function createTokenPattern($str)
     {
         // Don't add a space after the closing php tag as it will add a new
         // whitespace token.
@@ -955,7 +934,7 @@ abstract class AbstractPatternSniff implements Sniff
 
         return $patterns;
 
-    }//end _createTokenPattern()
+    }//end createTokenPattern()
 
 
 }//end class

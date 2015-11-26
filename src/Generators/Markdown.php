@@ -1,34 +1,16 @@
 <?php
+/**
+ * A doc generator that outputs documentation in Markdown format.
+ *
+ * @author    Stefano Kowalke <blueduck@gmx.net>
+ * @copyright 2014 Arroba IT
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Generators;
 
 use PHP_CodeSniffer\Config;
 
-/**
- * A doc generator that outputs documentation in Markdown format.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Stefano Kowalke <blueduck@gmx.net>
- * @copyright 2014 Arroba IT
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-
-/**
- * A doc generator that outputs documentation in Markdown format.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Stefano Kowalke <blueduck@gmx.net>
- * @copyright 2014 Arroba IT
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class Markdown extends Generator
 {
 
