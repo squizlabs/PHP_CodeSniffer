@@ -53,10 +53,12 @@ var_dump($cmd);
 var_dump($output);
         $matches = array();
         if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/', $output, $matches) === 1) {
+            echo "FOUND ERROR\n";
             $error = trim($matches[1]);
             $line  = (int) $matches[2];
             $phpcsFile->addErrorOnLine("PHP syntax error: $error", $line, 'PHPSyntax');
         }
+var_dump($matches);
 
         // Ignore the rest of the file.
         return ($phpcsFile->numTokens + 1);
