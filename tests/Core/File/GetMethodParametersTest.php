@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tests for the \PHP_CodeSniffer\Files\File:getMethodParameters method.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Tests\Core\File;
 
@@ -6,34 +13,6 @@ use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\DummyFile;
 
-/**
- * Tests for the PHP_CodeSniffer_File:getMethodParameters method.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Anti Veeranna <duke@masendav.com>
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009-2014 SQLI <www.sqli.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Tests for the PHP_CodeSniffer_File:getMethodParameters method.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Anti Veeranna <duke@masendav.com>
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009-2014 SQLI <www.sqli.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -55,9 +34,9 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $config = new Config();
+        $config            = new Config();
         $config->standards = array('Generic');
-        $config->sniffs = array('Generic.None.None');
+        $config->sniffs    = array('Generic.None.None');
 
         $ruleset = new Ruleset($config);
 
@@ -277,6 +256,3 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 /* testDefaultValues */ function defaultValues($var1=1, $var2='value') {}
 /* testTypeHint */ function typeHint(foo $var1, bar $var2) {}
 // @codingStandardsIgnoreEnd
-
-?>
-

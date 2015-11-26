@@ -1,24 +1,17 @@
 <?php
+/**
+ * A test class for testing all sniffs for installed standards.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Tests\Standards;
 
 use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Util\Standards;
 use PHP_CodeSniffer\Autoload;
-
-/**
- * A test class for testing all sniffs for installed standards.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 
 if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
     define('PHP_CODESNIFFER_IN_TESTS', true);
@@ -36,23 +29,6 @@ require_once __DIR__.'/../../autoload.php';
 
 $tokens = new Tokens();
 
-/**
- * A test class for testing all sniffs for installed standards.
- *
- * Usage: phpunit AllSniffs.php
- *
- * This test class loads all unit tests for all installed standards into a
- * single test suite and runs them. Errors are reported on the command line.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class AllSniffs
 {
 
@@ -84,21 +60,24 @@ class AllSniffs
 
         $suite = new \PHPUnit_Framework_TestSuite('PHP CodeSniffer Standards');
 
-        #$isInstalled = !is_file(dirname(__FILE__).'/../../CodeSniffer.php');
+        /*
+            $isInstalled = !is_file(dirname(__FILE__).'/../../CodeSniffer.php');
+        */
 
         $installedPaths = Standards::getInstalledStandardPaths();
         foreach ($installedPaths as $path) {
-            #$origPath  = $path;
             $standards = Standards::getInstalledStandards(true, $path);
 
-            // If the test is running PEAR installed, the built-in standards
-            // are split into different directories; one for the sniffs and
-            // a different file system location for tests.
-            #if ($isInstalled === true
-            #    && is_dir($path.DIRECTORY_SEPARATOR.'Generic') === true
-            #) {
-            #    $path = dirname(__FILE__);
-            #}
+            /*
+                // If the test is running PEAR installed, the built-in standards
+                // are split into different directories; one for the sniffs and
+                // a different file system location for tests.
+                if ($isInstalled === true
+                    && is_dir($path.DIRECTORY_SEPARATOR.'Generic') === true
+                ) {
+                    $path = dirname(__FILE__);
+                }
+            */
 
             foreach ($standards as $standard) {
                 $standardDir = $path.DIRECTORY_SEPARATOR.$standard;

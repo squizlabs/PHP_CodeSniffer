@@ -1,35 +1,18 @@
 <?php
+/**
+ * Tokenizes JS code.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
+
 namespace PHP_CodeSniffer\Tokenizers;
 
 use PHP_CodeSniffer\Util;
 use PHP_CodeSniffer\Exceptions\TokenizerException;
 use PHP_CodeSniffer\Config;
 
-/**
- * Tokenizes JS code.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Tokenizes JS code.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class JS extends Tokenizer
 {
 
@@ -248,6 +231,18 @@ class JS extends Tokenizer
                                );
 
 
+    /**
+     * Initialise the tokenizer.
+     *
+     * Pre-checks the content to see if it looks minified.
+     *
+     * @param string                  $content The content to tokenize,
+     * @param \PHP_CodeSniffer\Config $config  The config data for the run.
+     * @param string                  $eolChar The EOL char used in the content.
+     *
+     * @return void
+     * @throws TokenizerException If the file appears to be minified.
+     */
     public function __construct($content, Config $config, $eolChar='\n')
     {
         // Minified files often have a very large number of characters per line
@@ -270,8 +265,7 @@ class JS extends Tokenizer
      * Starts by using token_get_all() but does a lot of extra processing
      * to insert information about the context of the token.
      *
-     * @param string $string        The string to tokenize.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
+     * @param string $string The string to tokenize.
      *
      * @return array
      */
@@ -865,11 +859,10 @@ class JS extends Tokenizer
      *
      * If a regular expression is not found, NULL is returned.
      *
-     * @param string $char          The index of the possible regex start character.
-     * @param string $string        The complete content of the string being tokenized.
-     * @param string $chars         An array of characters being tokenized.
-     * @param string $tokens        The current array of tokens found in the string.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
+     * @param string $char   The index of the possible regex start character.
+     * @param string $string The complete content of the string being tokenized.
+     * @param string $chars  An array of characters being tokenized.
+     * @param string $tokens The current array of tokens found in the string.
      *
      * @return void
      */
@@ -1000,9 +993,6 @@ class JS extends Tokenizer
      * Performs additional processing after main tokenizing.
      *
      * This additional processing looks for properties, closures, labels and objects.
-     *
-     * @param array  $tokens        The array of tokens to process.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */

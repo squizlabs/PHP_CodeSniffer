@@ -1,4 +1,11 @@
 <?php
+/**
+ * Represents a piece of content being checked during the run.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Files;
 
@@ -9,32 +16,6 @@ use PHP_CodeSniffer\Util;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Exceptions\TokenizerException;
 
-/**
- * A PHP_CodeSniffer_File object represents a PHP source file and the tokens
- * associated with it.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A PHP_CodeSniffer_File object represents a PHP source file and the tokens
- * associated with it.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class File
 {
 
@@ -43,10 +24,35 @@ class File
      *
      * @var string
      */
-    public $path    = '';
+    public $path = '';
+
+    /**
+     * The absolute path to the file associated with this object.
+     *
+     * @var string
+     */
     protected $content = '';
-    public $ignored    = false;
-    public $config     = null;
+
+    /**
+     * The config data for the run.
+     *
+     * @var \PHP_CodeSniffer\Config
+     */
+    public $config = null;
+
+    /**
+     * The ruleset used for the run.
+     *
+     * @var \PHP_CodeSniffer\Ruleset
+     */
+    public $ruleset = null;
+
+    /**
+     * If TRUE, the entire file is being ignored.
+     *
+     * @var string
+     */
+    public $ignored = false;
 
     /**
      * The EOL character this file uses.
@@ -58,110 +64,103 @@ class File
     /**
      * The Fixer object to control fixing errors.
      *
-     * @var PHP_CodeSniffer_Fixer
+     * @var \PHP_CodeSniffer\Fixer
      */
     public $fixer = null;
 
     /**
      * The tokenizer being used for this file.
      *
-     * @var object
+     * @var \PHP_CodeSniffer\Tokenizers\Tokenizer
      */
     public $tokenizer = null;
-
 
     /**
      * The number of tokens in this file.
      *
      * Stored here to save calling count() everywhere.
      *
-     * @var int
+     * @var integer
      */
     public $numTokens = 0;
 
     /**
      * The tokens stack map.
      *
-     * Note that the tokens in this array differ in format to the tokens
-     * produced by token_get_all(). Tokens are initially produced with
-     * token_get_all(), then augmented so that it's easier to process them.
-     *
-     * @var array()
-     * @see Tokens.php
+     * @var array
      */
     protected $tokens = array();
 
     /**
-     * The errors raised from PHP_CodeSniffer_Sniffs.
+     * The errors raised from sniffs.
      *
-     * @var array()
+     * @var array
      * @see getErrors()
      */
     protected $errors = array();
 
     /**
-     * The warnings raised from PHP_CodeSniffer_Sniffs.
+     * The warnings raised from sniffs.
      *
-     * @var array()
+     * @var array
      * @see getWarnings()
      */
     protected $warnings = array();
 
     /**
-     * The metrics recorded from PHP_CodeSniffer_Sniffs.
+     * The metrics recorded by sniffs.
      *
-     * @var array()
+     * @var array
      * @see getMetrics()
      */
     protected $metrics = array();
 
     /**
-     * Record the errors and warnings raised.
-     *
-     * @var bool
-     */
-    protected $recordErrors = true;
-
-
-    /**
-     * An array of sniffs that are being ignored.
-     *
-     * @var array()
-     */
-    protected $ignoredListeners = array();
-
-    /**
-     * An array of message codes that are being ignored.
-     *
-     * @var array()
-     */
-    protected $ignoredCodes = array();
-
-    /**
      * The total number of errors raised.
      *
-     * @var int
+     * @var integer
      */
     protected $errorCount = 0;
 
     /**
      * The total number of warnings raised.
      *
-     * @var int
+     * @var integer
      */
     protected $warningCount = 0;
 
     /**
-     * The total number of errors/warnings that can be fixed.
+     * The total number of errors and warnings that can be fixed.
      *
-     * @var int
+     * @var integer
      */
     protected $fixableCount = 0;
 
     /**
+     * If TRUE, record the errors and warnings raised.
+     *
+     * @var boolean
+     */
+    protected $recordErrors = true;
+
+    /**
+     * An array of sniffs that are being ignored.
+     *
+     * @var array
+     */
+    protected $ignoredListeners = array();
+
+    /**
+     * An array of message codes that are being ignored.
+     *
+     * @var array
+     */
+    protected $ignoredCodes = array();
+
+    /**
      * An array of sniffs listening to this file's processing.
      *
-     * @var array(PHP_CodeSniffer_Sniff)
+     * @var \PHP_CodeSniffer\Sniffs\Sniff[]
      */
     protected $listeners = array();
 
@@ -175,35 +174,19 @@ class File
     /**
      * An array of sniffs being processed and how long they took.
      *
-     * @var array()
+     * @var array
      */
     protected $listenerTimes = array();
 
-    /**
-     * An array of rules from the ruleset.xml file.
-     *
-     * This value gets set by PHP_CodeSniffer when the object is created.
-     * It may be empty, indicating that the ruleset does not override
-     * any of the default sniff settings.
-     *
-     * @var array
-     */
-    public $ruleset = array();
-
 
     /**
-     * Constructs a PHP_CodeSniffer_File.
+     * Constructs a file.
      *
-     * @param string          $file      The absolute path to the file to process.
-     * @param array(string)   $listeners The initial listeners listening to processing of this file.
-     *                                   to processing of this file.
-     * @param array           $ruleset   An array of rules from the ruleset.xml file.
-     *                                   ruleset.xml file.
-     * @param PHP_CodeSniffer $phpcs     The PHP_CodeSniffer object controlling this run.
-     *                                   this run.
+     * @param string                   $path    The absolute path to the file to process.
+     * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
+     * @param \PHP_CodeSniffer\Config  $config  The config data for the run.
      *
-     * @throws PHP_CodeSniffer_Exception If the register() method does
-     *                                   not return an array.
+     * @return void
      */
     public function __construct($path, Ruleset $ruleset, Config $config)
     {
@@ -222,30 +205,41 @@ class File
         }
 
         /*
+            TODO: Is this still needed? We use the cache to speed things up now.
+            Don't record errors if none of the reports are going to show them.
             if ($this->config->cache === false && $this->config->interactive === false) {
-            $cliValues = $phpcs->config->getCommandLineValues();
-            if (isset($cliValues['showSources']) === true
-                && $cliValues['showSources'] !== true
-            ) {
-                $recordErrors = false;
-                foreach ($cliValues['reports'] as $report => $output) {
-                    $reportClass = $phpcs->reporting->factory($report);
-                    if (property_exists($reportClass, 'recordErrors') === false
-                        || $reportClass->recordErrors === true
-                    ) {
-                        $recordErrors = true;
-                        break;
+                $cliValues = $phpcs->config->getCommandLineValues();
+                if (isset($cliValues['showSources']) === true
+                    && $cliValues['showSources'] !== true
+                ) {
+                    $recordErrors = false;
+                    foreach ($cliValues['reports'] as $report => $output) {
+                        $reportClass = $phpcs->reporting->factory($report);
+                        if (property_exists($reportClass, 'recordErrors') === false
+                            || $reportClass->recordErrors === true
+                        ) {
+                            $recordErrors = true;
+                            break;
+                        }
                     }
-                }
 
-                $this->recordErrors = $recordErrors;
-            }
+                    $this->recordErrors = $recordErrors;
+                }
             }
         */
 
     }//end __construct()
 
 
+    /**
+     * Set the content of the file.
+     *
+     * Setting the content also calculates the EOL char being used.
+     *
+     * @param string $content The file content.
+     *
+     * @return void
+     */
     function setContent($content)
     {
         $this->content = $content;
@@ -261,10 +255,16 @@ class File
     }//end setContent()
 
 
+    /**
+     * Reloads the content of the file.
+     *
+     * By default, we have no idea where our content comes from,
+     * so we can't do anything.
+     *
+     * @return void
+     */
     function reloadContent()
     {
-        // By default, we have no idea where our content
-        // comes from, so we can't do anything.
 
     }//end reloadContent()
 
@@ -286,22 +286,6 @@ class File
         $this->warningCount = 0;
         $this->fixableCount = 0;
 
-        // Reset the ignored lines because lines numbers may have changed
-        // if we are fixing this file.
-        // self::$ignoredLines = array();
-        /*
-            // If this is standard input, see if a filename was passed in as well.
-            // This is done by including: phpcs_input_file: [file path]
-            // as the first line of content.
-            if ($this->path === 'STDIN' && $contents !== null) {
-            if (substr($contents, 0, 17) === 'phpcs_input_file:') {
-                $eolPos      = strpos($contents, $this->eolChar);
-                $filename    = trim(substr($contents, 17, ($eolPos - 17)));
-                $contents    = substr($contents, ($eolPos + strlen($this->eolChar)));
-                $this->path = $filename;
-            }
-            }
-        */
         $this->parse();
 
         $this->fixer->startFile($this);
@@ -310,8 +294,7 @@ class File
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
         }
 
-        $foundCode = false;
-        // $listeners        = $this->ruleset->getSniffs();
+        $foundCode        = false;
         $listenerIgnoreTo = array();
         $inTests          = defined('PHP_CODESNIFFER_IN_TESTS');
 
@@ -450,10 +433,12 @@ class File
         }
 
         // We don't need these any more.
-        # $this->listenerTimes = null;
-        # $this->content = null;
-        # $this->tokens = null;
-        # $this->tokenizer = null;
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+            $this->listenerTimes = null;
+            $this->content       = null;
+            $this->tokens        = null;
+            $this->tokenizer     = null;
+        }
 
     }//end process()
 

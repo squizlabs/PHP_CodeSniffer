@@ -1,22 +1,15 @@
 <?php
+/**
+ * A test class for running all PHP_CodeSniffer unit tests.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Tests;
 
 use PHP_CodeSniffer\Util\Tokens;
-
-/**
- * A test class for running all PHP_CodeSniffer unit tests.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 
 if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
     define('PHP_CODESNIFFER_IN_TESTS', true);
@@ -37,20 +30,6 @@ $tokens = new Tokens();
 require_once 'Core/AllTests.php';
 require_once 'Standards/AllSniffs.php';
 
-/**
- * A test class for running all PHP_CodeSniffer unit tests.
- *
- * Usage: phpunit AllTests.php
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class PHP_CodeSniffer_AllTests
 {
 
@@ -82,11 +61,6 @@ class PHP_CodeSniffer_AllTests
 
         $suite->addTest(Core\AllTests::suite());
         $suite->addTest(Standards\AllSniffs::suite());
-
-        // Unregister this here because the PEAR tester loads
-        // all package suites before running then, so our autoloader
-        // will cause problems for the packages included after us.
-        #spl_autoload_unregister(array('PHP_CodeSniffer', 'autoload'));
 
         return $suite;
 

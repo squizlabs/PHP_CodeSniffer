@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tokenizes CSS code.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Tokenizers;
 
@@ -6,34 +13,22 @@ use PHP_CodeSniffer\Util;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\TokenizerException;
 
-/**
- * Tokenizes CSS code.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Tokenizes CSS code.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class CSS extends PHP
 {
 
 
+    /**
+     * Initialise the tokenizer.
+     *
+     * Pre-checks the content to see if it looks minified.
+     *
+     * @param string                  $content The content to tokenize,
+     * @param \PHP_CodeSniffer\Config $config  The config data for the run.
+     * @param string                  $eolChar The EOL char used in the content.
+     *
+     * @return void
+     * @throws TokenizerException If the file appears to be minified.
+     */
     public function __construct($content, Config $config, $eolChar='\n')
     {
         // Minified files often have a very large number of characters per line
@@ -55,8 +50,7 @@ class CSS extends PHP
      *
      * Uses the PHP tokenizer to do all the tricky work
      *
-     * @param string $string        The string to tokenize.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
+     * @param string $string The string to tokenize.
      *
      * @return array
      */
@@ -446,9 +440,6 @@ class CSS extends PHP
 
     /**
      * Performs additional processing after main tokenizing.
-     *
-     * @param array  $tokens        The array of tokens to process.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */

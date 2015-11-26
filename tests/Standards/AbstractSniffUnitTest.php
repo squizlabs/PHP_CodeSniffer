@@ -1,4 +1,15 @@
 <?php
+/**
+ * An abstract class that all sniff unit tests must extend.
+ *
+ * A sniff unit test checks a .inc file for expected violations of a single
+ * coding standard. Expected errors and warnings that are not found, or
+ * warnings and errors that are not expected, are considered test failures.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Tests\Standards;
 
@@ -9,36 +20,6 @@ use PHP_CodeSniffer\RuntimeException;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Autoload;
 
-/**
- * An abstract class that all sniff unit tests must extend.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * An abstract class that all sniff unit tests must extend.
- *
- * A sniff unit test checks a .inc file for expected violations of a single
- * coding standard. Expected errors and warnings that are not found, or
- * warnings and errors that are not expected, are considered test failures.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -396,7 +377,8 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
     /**
      * Get a list of CLI values to set before the file is tested.
      *
-     * @param string $filename The name of the file being tested.
+     * @param string                  $filename The name of the file being tested.
+     * @param \PHP_CodeSniffer\Config $config   The config data for the run.
      *
      * @return array
      */
@@ -413,7 +395,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     abstract protected function getErrorList();
 

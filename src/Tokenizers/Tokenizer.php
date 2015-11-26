@@ -1,44 +1,66 @@
 <?php
+/**
+ * The base tokenizer class.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Tokenizers;
 
 use PHP_CodeSniffer\RuntimeException;
 use PHP_CodeSniffer\Util;
 
-/**
- * Tokenizes PHP code.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Tokenizes PHP code.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 abstract class Tokenizer
 {
 
-    protected $eolChar   = array();
-    protected $config    = null;
-    protected $tokens    = array();
+    /**
+     * The config data for the run.
+     *
+     * @var \PHP_CodeSniffer\Config
+     */
+    protected $config = null;
+
+    /**
+     * The EOL char used in the content.
+     *
+     * @var string
+     */
+    protected $eolChar = array();
+
+    /**
+     * A token-based representation of the content.
+     *
+     * @var array
+     */
+    protected $tokens = array();
+
+    /**
+     * Known lengths of tokens.
+     *
+     * @var array<int, int>
+     */
     public $knownLengths = array();
+
+    /**
+     * A list of lines being ignored due to error suppression comments.
+     *
+     * @var array
+     */
     public $ignoredLines = array();
 
 
+    /**
+     * Initialise and run the tokenizer.
+     *
+     * @param string                         $content The content to tokenize,
+     * @param \PHP_CodeSniffer\Config | null $config  The config data for the run.
+     * @param string                         $eolChar The EOL char used in the content.
+     *
+     * @return void
+     * @throws TokenizerException If the file appears to be minified.
+     */
     public function __construct($content, $config, $eolChar='\n')
     {
         $this->eolChar = $eolChar;
@@ -62,6 +84,11 @@ abstract class Tokenizer
     }//end __construct()
 
 
+    /**
+     * Gets the array of tokens.
+     *
+     * @return array
+     */
     public function getTokens()
     {
         return $this->tokens;
@@ -69,9 +96,21 @@ abstract class Tokenizer
     }//end getTokens()
 
 
+    /**
+     * Creates an array of tokens when given some content.
+     *
+     * @param string $string The string to tokenize.
+     *
+     * @return array
+     */
     abstract protected function tokenize($string);
 
 
+    /**
+     * Performs additional processing after main tokenizing.
+     *
+     * @return void
+     */
     abstract protected function processAdditional();
 
 
@@ -80,13 +119,6 @@ abstract class Tokenizer
      *
      * Can also convert tabs into spaces. Each tab can represent between
      * 1 and $width spaces, so this cannot be a straight string replace.
-     *
-     * @param array  $this->tokens           The array of tokens to process.
-     * @param object $tokenizer              The tokenizer being used to process this file.
-     * @param string $this->eolChar          The EOL character to use for splitting strings.
-     * @param string $this->config->encoding The charset of the sniffed file.
-     * @param int    $this->config->tabWidth The number of spaces that each tab represents. Set to 0 to disable tab replacement.
-     *                          Set to 0 to disable tab replacement.
      *
      * @return void
      */
@@ -259,10 +291,6 @@ abstract class Tokenizer
     /**
      * Creates a map of brackets positions.
      *
-     * @param array  $this->tokens  The array of tokens to process.
-     * @param object $tokenizer     The tokenizer being used to process this file.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
-     *
      * @return void
      */
     private function createTokenMap()
@@ -386,10 +414,6 @@ abstract class Tokenizer
     /**
      * Creates a map for the parenthesis tokens that surround other tokens.
      *
-     * @param array  $this->tokens  The array of tokens to process.
-     * @param object $tokenizer     The tokenizer being used to process this file.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
-     *
      * @return void
      */
     private function createParenthesisNestingMap()
@@ -426,8 +450,6 @@ abstract class Tokenizer
 
     /**
      * Creates a scope map of tokens that open scopes.
-     *
-     * @param array $this->tokens The array of tokens to process.
      *
      * @return void
      * @see    recurseScopeMap()
@@ -473,14 +495,10 @@ abstract class Tokenizer
     /**
      * Recurses though the scope openers to build a scope map.
      *
-     * @param array  $this->tokens    The array of tokens to process.
-     * @param int    $this->numTokens The size of the tokens array.
-     * @param object $tokenizer       The tokenizer being used to process this file.
-     * @param string $this->eolChar   The EOL character to use for splitting strings.
-     * @param int    $stackPtr        The position in the stack of the token that opened the scope (eg. an IF token or FOR token).
-     *                          opened the scope (eg. an IF token or FOR token).
-     * @param int    $depth           How many scope levels down we are.
-     * @param int    $ignore          How many curly braces we are ignoring.
+     * @param int $stackPtr The position in the stack of the token that
+     *                      opened the scope (eg. an IF token or FOR token).
+     * @param int $depth    How many scope levels down we are.
+     * @param int $ignore   How many curly braces we are ignoring.
      *
      * @return int The position in the stack that closed the scope.
      */
@@ -941,10 +959,6 @@ abstract class Tokenizer
      * depth that a token within a set of scope blocks. It also adds a
      * 'condition' index which is an array of the scope conditions that opened
      * each of the scopes - position 0 being the first scope opener.
-     *
-     * @param array  $this->tokens  The array of tokens to process.
-     * @param object $tokenizer     The tokenizer being used to process this file.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */

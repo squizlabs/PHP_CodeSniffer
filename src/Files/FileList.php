@@ -1,4 +1,13 @@
 <?php
+/**
+ * Represents a list of files on the file system that are to be checked during the run.
+ *
+ * File objects are created as needed rather than all at once.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Files;
 
@@ -6,35 +15,29 @@ use PHP_CodeSniffer\Util;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Config;
 
-/**
- * A class to process command line phpcs scripts.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A class to process command line phpcs scripts.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class FileList implements \Iterator, \Countable
 {
-    private $files    = array();
+
+    /**
+     * A list of file paths that are included in the list.
+     *
+     * @var array
+     */
+    private $files = array();
+
+    /**
+     * The number of files in the list.
+     *
+     * @var integer
+     */
     private $numFiles = 0;
-    private $config   = null;
+
+    /**
+     * The config data for the run.
+     *
+     * @var \PHP_CodeSniffer\Config
+     */
+    public $config = null;
 
     /**
      * An array of patterns to use for skipping files.
@@ -44,7 +47,16 @@ class FileList implements \Iterator, \Countable
     protected $ignorePatterns = array();
 
 
-    public function __construct(Config $config, Ruleset $ruleset) {
+    /**
+     * Constructs a file list and loads in an array of file paths to process.
+     *
+     * @param \PHP_CodeSniffer\Config  $config  The config data for the run.
+     * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
+     *
+     * @return void
+     */
+    public function __construct(Config $config, Ruleset $ruleset)
+    {
 
         $paths      = $config->files;
         $local      = $config->local;
@@ -203,6 +215,11 @@ class FileList implements \Iterator, \Countable
     }//end shouldIgnoreFile()
 
 
+    /**
+     * Rewind the iterator to the first file.
+     *
+     * @return void
+     */
     function rewind()
     {
         reset($this->files);
@@ -210,6 +227,11 @@ class FileList implements \Iterator, \Countable
     }//end rewind()
 
 
+    /**
+     * Get the file that is currently being processed.
+     *
+     * @return \PHP_CodeSniffer\Files\LocalFile
+     */
     function current()
     {
         $path = key($this->files);
@@ -222,6 +244,11 @@ class FileList implements \Iterator, \Countable
     }//end current()
 
 
+    /**
+     * Return the file path of the current file being processed.
+     *
+     * @return void
+     */
     function key()
     {
         return key($this->files);
@@ -229,6 +256,11 @@ class FileList implements \Iterator, \Countable
     }//end key()
 
 
+    /**
+     * Move forward to the next file.
+     *
+     * @return void
+     */
     function next()
     {
         next($this->files);
@@ -236,6 +268,11 @@ class FileList implements \Iterator, \Countable
     }//end next()
 
 
+    /**
+     * Checks if current position is valid.
+     *
+     * @return boolean
+     */
     function valid()
     {
         if (current($this->files) === false) {
@@ -247,6 +284,11 @@ class FileList implements \Iterator, \Countable
     }//end valid()
 
 
+    /**
+     * Return the number of files in the list.
+     *
+     * @return integer
+     */
     function count()
     {
         return $this->numFiles;

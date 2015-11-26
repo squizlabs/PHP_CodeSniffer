@@ -1,33 +1,16 @@
 <?php
+/**
+ * Tokenizes doc block comments.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Tokenizers;
 
 use PHP_CodeSniffer\Util;
 
-/**
- * Tokenizes doc block comments.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   FeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Tokenizes doc block comments.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class Comment
 {
 
@@ -107,7 +90,7 @@ class Comment
             $numChars = strlen($string);
 
             // We've started a new line, so process the indent.
-            $space = $this->_collectWhitespace($string, $char, $numChars);
+            $space = $this->collectWhitespace($string, $char, $numChars);
             if ($space !== null) {
                 $tokens[$stackPtr] = $space;
                 $stackPtr++;
@@ -144,7 +127,7 @@ class Comment
             }
 
             // Now we are ready to process the actual content of the line.
-            $lineTokens = $this->_processLine($string, $eolChar, $char, $numChars);
+            $lineTokens = $this->processLine($string, $eolChar, $char, $numChars);
             foreach ($lineTokens as $lineToken) {
                 $tokens[$stackPtr] = $lineToken;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -187,12 +170,12 @@ class Comment
      *
      * @return array
      */
-    private function _processLine($string, $eolChar, $start, $end)
+    private function processLine($string, $eolChar, $start, $end)
     {
         $tokens = array();
 
         // Collect content padding.
-        $space = $this->_collectWhitespace($string, $start, $end);
+        $space = $this->collectWhitespace($string, $start, $end);
         if ($space !== null) {
             $tokens[] = $space;
             $start   += strlen($space['content']);
@@ -216,7 +199,7 @@ class Comment
                             );
 
                 // Then there will be some whitespace.
-                $space = $this->_collectWhitespace($string, $start, $end);
+                $space = $this->collectWhitespace($string, $start, $end);
                 if ($space !== null) {
                     $tokens[] = $space;
                     $start   += strlen($space['content']);
@@ -248,7 +231,7 @@ class Comment
 
         return $tokens;
 
-    }//end _processLine()
+    }//end processLine()
 
 
     /**
@@ -260,7 +243,7 @@ class Comment
      *
      * @return array|null
      */
-    private function _collectWhitespace($string, $start, $end)
+    private function collectWhitespace($string, $start, $end)
     {
         $space = '';
         for ($start; $start < $end; $start++) {
@@ -283,7 +266,7 @@ class Comment
 
         return $token;
 
-    }//end _collectWhitespace()
+    }//end collectWhitespace()
 
 
 }//end class

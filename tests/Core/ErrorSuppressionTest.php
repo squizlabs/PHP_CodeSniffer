@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tests for PHP_CodeSniffer error suppression tags.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Tests\Core;
 
@@ -6,30 +13,6 @@ use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\DummyFile;
 
-/**
- * Tests for PHP_CodeSniffer error suppression tags.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Tests for PHP_CodeSniffer error suppression tags.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -41,15 +24,15 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
      */
     public function testSuppressError()
     {
-        $config = new Config();
+        $config            = new Config();
         $config->standards = array('Generic');
-        $config->sniffs = array('Generic.PHP.LowerCaseConstant');
+        $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
 
         $ruleset = new Ruleset($config);
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -59,7 +42,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with inline comment suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -69,7 +52,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with block comment suppression.
         $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/* @codingStandardsIgnoreEnd */';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -79,7 +62,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with a docblock suppression.
         $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** @codingStandardsIgnoreEnd */';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -97,15 +80,15 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
      */
     public function testSuppressSomeErrors()
     {
-        $config = new Config();
+        $config            = new Config();
         $config->standards = array('Generic');
-        $config->sniffs = array('Generic.PHP.LowerCaseConstant');
+        $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
 
         $ruleset = new Ruleset($config);
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -115,7 +98,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd'.PHP_EOL.'$var = TRUE;';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -125,7 +108,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with a PHPDoc block suppression.
         $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** @codingStandardsIgnoreEnd */'.PHP_EOL.'$var = TRUE;';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -143,15 +126,15 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
      */
     public function testSuppressWarning()
     {
-        $config = new Config();
+        $config            = new Config();
         $config->standards = array('Generic');
-        $config->sniffs = array('Generic.Commenting.Todo');
+        $config->sniffs    = array('Generic.Commenting.Todo');
 
         $ruleset = new Ruleset($config);
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'//TODO: write some code';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -161,7 +144,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -171,7 +154,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with a docblock suppression.
         $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'/** @codingStandardsIgnoreEnd */';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -189,15 +172,15 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
      */
     public function testSuppressLine()
     {
-        $config = new Config();
+        $config            = new Config();
         $config->standards = array('Generic');
-        $config->sniffs = array('Generic.PHP.LowerCaseConstant');
+        $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
 
         $ruleset = new Ruleset($config);
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -207,7 +190,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -225,19 +208,15 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
      */
     public function testNestedSuppressLine()
     {
-        $config = new Config();
+        $config            = new Config();
         $config->standards = array('Generic');
-        $config->sniffs = array('Generic.PHP.LowerCaseConstant');
+        $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
 
         $ruleset = new Ruleset($config);
 
         // Process with codingStandardsIgnore[Start|End] suppression and no single line suppression.
-        $content = '<?php '.PHP_EOL.
-            '// @codingStandardsIgnoreStart'.PHP_EOL.
-            '$var = FALSE;'.PHP_EOL.
-            '$var = TRUE;'.PHP_EOL.
-            '// @codingStandardsIgnoreEnd';
-        $file = new DummyFile($content, $ruleset, $config);
+        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -247,13 +226,8 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with codingStandardsIgnoreLine suppression
         // nested within codingStandardsIgnore[Start|End] suppression.
-        $content = '<?php '.PHP_EOL.
-            '// @codingStandardsIgnoreStart'.PHP_EOL.
-            '// @codingStandardsIgnoreLine'.PHP_EOL.
-            '$var = FALSE;'.PHP_EOL.
-            '$var = TRUE;'.PHP_EOL.
-            '// @codingStandardsIgnoreEnd';
-        $file = new DummyFile($content, $ruleset, $config);
+        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'// @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -277,7 +251,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'function myFunction() {'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -287,7 +261,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//@codingStandardsIgnoreStart'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//@codingStandardsIgnoreEnd'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $errors    = $file->getErrors();
@@ -314,15 +288,15 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
      */
     public function testSuppressFile()
     {
-        $config = new Config();
+        $config            = new Config();
         $config->standards = array('Generic');
-        $config->sniffs = array('Generic.Commenting.Todo');
+        $config->sniffs    = array('Generic.Commenting.Todo');
 
         $ruleset = new Ruleset($config);
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'//TODO: write some code';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -332,7 +306,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'//TODO: write some code';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -342,7 +316,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with a block comment suppression.
         $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -352,7 +326,7 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
         // Process with docblock suppression.
         $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
-        $file = new DummyFile($content, $ruleset, $config);
+        $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
         $warnings    = $file->getWarnings();
@@ -364,5 +338,3 @@ class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
 
 
 }//end class
-
-?>

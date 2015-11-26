@@ -1,33 +1,16 @@
 <?php
+/**
+ * Tokenizes PHP code.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Tokenizers;
 
 use PHP_CodeSniffer\Util;
 
-/**
- * Tokenizes PHP code.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Tokenizes PHP code.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class PHP extends Tokenizer
 {
 
@@ -292,9 +275,9 @@ class PHP extends Tokenizer
                              );
 
     /**
-     * The token weightings.
+     * Known lengths of tokens.
      *
-     * @var array(int => int)
+     * @var array<int, int>
      */
     public $knownLengths = array(
                             T_ABSTRACT                 => 8,
@@ -442,7 +425,7 @@ class PHP extends Tokenizer
     /**
      * A cache of different token types, resolved into arrays.
      *
-     * @var array()
+     * @var array
      * @see standardiseToken()
      */
     private static $_resolveTokenCache = array();
@@ -454,8 +437,7 @@ class PHP extends Tokenizer
      * Starts by using token_get_all() but does a lot of extra processing
      * to insert information about the context of the token.
      *
-     * @param string $string        The string to tokenize.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
+     * @param string $string The string to tokenize.
      *
      * @return array
      */
@@ -1049,9 +1031,6 @@ class PHP extends Tokenizer
      * detects short array syntax and converts those square brackets into new tokens.
      * It also corrects some usage of the static and class keywords. It also
      * assigns tokens to function return types.
-     *
-     * @param array  $tokens        The array of tokens to process.
-     * @param string $this->eolChar The EOL character to use for splitting strings.
      *
      * @return void
      */
