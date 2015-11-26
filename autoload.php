@@ -85,11 +85,23 @@ class Autoload
 
         include $path;
 
+        $className  = null;
         $newClasses = array_diff(get_declared_classes(), $classes);
-        $className  = array_pop($newClasses);
+        foreach ($newClasses as $name) {
+            if (isset(self::$loadedFiles[$name]) === false) {
+                $className = $name;
+                break;
+            }
+        }
+
         if ($className === null) {
             $newClasses = array_diff(get_declared_interfaces(), $classes);
-            $className  = array_pop($newClasses);
+            foreach ($newClasses as $name) {
+                if (isset(self::$loadedFiles[$name]) === false) {
+                    $className = $name;
+                    break;
+                }
+            }
         }
 
         self::$loadedClasses[$path]    = $className;
