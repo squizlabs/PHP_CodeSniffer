@@ -25,6 +25,7 @@
  <rule ref="Squiz.Commenting.InlineComment" />
  <rule ref="Squiz.Commenting.LongConditionClosingComment" />
  <rule ref="Squiz.Commenting.PostStatementComment" />
+ <rule ref="Squiz.Commenting.VariableComment" />
  <rule ref="Squiz.Formatting.OperatorBracket" />
  <rule ref="Squiz.Operators.ComparisonOperatorUsage" />
  <rule ref="Squiz.PHP.DisallowInlineIf" />
