@@ -19,7 +19,7 @@ class Junit implements Report
     /**
      * A count of tests that have been performed.
      *
-     * @var int
+     * @var integer
      */
     private $tests = 0;
 

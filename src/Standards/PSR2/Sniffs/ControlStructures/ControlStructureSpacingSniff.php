@@ -19,14 +19,14 @@ class ControlStructureSpacingSniff implements Sniff
     /**
      * How many spaces should follow the opening bracket.
      *
-     * @var int
+     * @var integer
      */
     public $requiredSpacesAfterOpen = 0;
 
     /**
      * How many spaces should precede the closing bracket.
      *
-     * @var int
+     * @var integer
      */
     public $requiredSpacesBeforeClose = 0;
 

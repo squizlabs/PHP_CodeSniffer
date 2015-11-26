@@ -24,7 +24,7 @@ class ForbiddenFunctionsSniff implements Sniff
      * The value is NULL if no alternative exists. IE, the
      * function should just not be used.
      *
-     * @var array(string => string|null)
+     * @var array<string, string|null>
      */
     public $forbiddenFunctions = array(
                                   'sizeof' => 'count',
@@ -34,21 +34,21 @@ class ForbiddenFunctionsSniff implements Sniff
     /**
      * A cache of forbidden function names, for faster lookups.
      *
-     * @var array(string)
+     * @var string[]
      */
     protected $forbiddenFunctionNames = array();
 
     /**
      * If true, forbidden functions will be considered regular expressions.
      *
-     * @var bool
+     * @var boolean
      */
     protected $patternMatch = false;
 
     /**
      * If true, an error will be thrown; otherwise a warning.
      *
-     * @var bool
+     * @var boolean
      */
     public $error = true;
 

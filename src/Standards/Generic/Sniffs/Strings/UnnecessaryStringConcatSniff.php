@@ -29,7 +29,7 @@ class UnnecessaryStringConcatSniff implements Sniff
     /**
      * If true, an error will be thrown; otherwise a warning.
      *
-     * @var bool
+     * @var boolean
      */
     public $error = true;
 
@@ -39,7 +39,7 @@ class UnnecessaryStringConcatSniff implements Sniff
      * Useful if you break strings over multiple lines to work
      * within a max line length.
      *
-     * @var bool
+     * @var boolean
      */
     public $allowMultiline = false;
 

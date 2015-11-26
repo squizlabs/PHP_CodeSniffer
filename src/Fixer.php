@@ -32,14 +32,14 @@ class Fixer
     /**
      * The number of times we have looped over a file.
      *
-     * @var int
+     * @var integer
      */
     public $loops = 0;
 
     /**
      * The file being fixed.
      *
-     * @var PHP_CodeSniffer_File
+     * @var \PHP_CodeSniffer\Files\File
      */
     private $currentFile = null;
 
@@ -50,7 +50,7 @@ class Fixer
      * else. This is the array that is updated as fixes are made, not the file's
      * token array. Imploding this array will give you the file content back.
      *
-     * @var array(int => string)
+     * @var array<int, string>
      */
     private $_tokens = array();
 
@@ -60,7 +60,7 @@ class Fixer
      * We don't allow the same token to be fixed more than once each time
      * through a file as this can easily cause conflicts between sniffs.
      *
-     * @var array(int)
+     * @var int[]
      */
     private $_fixedTokens = array();
 
@@ -70,7 +70,7 @@ class Fixer
      * If a token is being "fixed" back to its last value, the fix is
      * probably conflicting with another.
      *
-     * @var array(int => string)
+     * @var array<int, string>
      */
     private $_oldTokenValues = array();
 
@@ -80,7 +80,7 @@ class Fixer
      * All changes in changeset must be able to be applied, or else
      * the entire changeset is rejected.
      *
-     * @var array()
+     * @var array
      */
     private $_changeset = array();
 
@@ -101,7 +101,7 @@ class Fixer
     /**
      * The number of fixes that have been performed.
      *
-     * @var int
+     * @var integer
      */
     private $_numFixes = 0;
 

@@ -19,7 +19,7 @@ class SwitchDeclarationSniff implements Sniff
     /**
      * The number of spaces code should be indented.
      *
-     * @var int
+     * @var integer
      */
     public $indent = 4;
 

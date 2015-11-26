@@ -78,7 +78,7 @@ class LocalFile extends File
 
 
     /**
-     *
+     * Processes the file.
      *
      * @return void
      */
@@ -144,6 +144,18 @@ class LocalFile extends File
     }//end process()
 
 
+    /**
+     * Clears and replays error and warnings for the file.
+     *
+     * Replaying errors and warnings allows for filtering rules to be changed
+     * and then errors and warnings to be reapplied with the new rules. This is
+     * particularly useful while caching.
+     *
+     * @param array $errors   The list of errors to replay.
+     * @param array $warnings The list of warnings to replay.
+     *
+     * @return void
+     */
     private function replayErrors($errors, $warnings)
     {
         $this->errors       = array();

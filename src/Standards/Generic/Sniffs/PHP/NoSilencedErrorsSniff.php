@@ -25,7 +25,7 @@ class NoSilencedErrorsSniff implements Sniff
     /**
      * If true, an error will be thrown; otherwise a warning.
      *
-     * @var bool
+     * @var boolean
      */
     public $error = false;
 

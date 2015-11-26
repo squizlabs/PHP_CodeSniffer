@@ -29,7 +29,7 @@ class ScopeIndentSniff implements Sniff
     /**
      * The number of spaces code should be indented.
      *
-     * @var int
+     * @var integer
      */
     public $indent = 4;
 
@@ -39,7 +39,7 @@ class ScopeIndentSniff implements Sniff
      * If TRUE, indent needs to be exactly $indent spaces. If FALSE,
      * indent needs to be at least $indent spaces (but can be more).
      *
-     * @var bool
+     * @var boolean
      */
     public $exact = false;
 
@@ -50,14 +50,14 @@ class ScopeIndentSniff implements Sniff
      * The size of each tab is important, so it should be specified
      * using the --tab-width CLI argument.
      *
-     * @var bool
+     * @var boolean
      */
     public $tabIndent = false;
 
     /**
      * The --tab-width CLI value that is being used.
      *
-     * @var int
+     * @var integer
      */
     private $_tabWidth = null;
 
@@ -93,7 +93,7 @@ class ScopeIndentSniff implements Sniff
     /**
      * Show debug output for this sniff.
      *
-     * @var bool
+     * @var boolean
      */
     private $_debug = false;
 

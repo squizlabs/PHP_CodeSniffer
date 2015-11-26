@@ -19,14 +19,14 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
     /**
      * Should this sniff check function braces?
      *
-     * @var bool
+     * @var boolean
      */
     public $checkFunctions = true;
 
     /**
      * Should this sniff check closure braces?
      *
-     * @var bool
+     * @var boolean
      */
     public $checkClosures = false;
 

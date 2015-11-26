@@ -19,14 +19,14 @@ class NestingLevelSniff implements Sniff
     /**
      * A nesting level than this value will throw a warning.
      *
-     * @var int
+     * @var integer
      */
     public $nestingLevel = 5;
 
     /**
      * A nesting level than this value will throw an error.
      *
-     * @var int
+     * @var integer
      */
     public $absoluteNestingLevel = 10;
 

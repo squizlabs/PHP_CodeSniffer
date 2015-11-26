@@ -26,28 +26,28 @@ class Reporter
     /**
      * Total number of files that contain errors or warnings.
      *
-     * @var int
+     * @var integer
      */
     public $totalFiles = 0;
 
     /**
      * Total number of errors found during the run.
      *
-     * @var int
+     * @var integer
      */
     public $totalErrors = 0;
 
     /**
      * Total number of warnings found during the run.
      *
-     * @var int
+     * @var integer
      */
     public $totalWarnings = 0;
 
     /**
      * Total number of errors/warnings that can be fixed.
      *
-     * @var int
+     * @var integer
      */
     public $totalFixable = 0;
 
