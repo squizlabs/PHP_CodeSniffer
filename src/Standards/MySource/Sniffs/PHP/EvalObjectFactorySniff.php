@@ -1,4 +1,11 @@
 <?php
+/**
+ * Ensures that eval() is not used to create objects.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\MySource\Sniffs\PHP;
 
@@ -6,30 +13,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
 
-/**
- * Ensures that eval() is not used to create objects.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer_MySource
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Ensures that eval() is not used to create objects.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer_MySource
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class EvalObjectFactorySniff implements Sniff
 {
 

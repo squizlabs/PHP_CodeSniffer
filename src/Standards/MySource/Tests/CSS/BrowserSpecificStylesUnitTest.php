@@ -1,38 +1,19 @@
 <?php
+/**
+ * Unit test class for the BrowserSpecificStyles sniff.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\MySource\Tests\CSS;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-/**
- * Unit test class for the BrowserSpecificStyles sniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Unit test class for the BrowserSpecificStyles sniff.
- *
- * A sniff unit test checks a .inc file for expected violations of a single
- * coding standard. Expected errors and warnings are stored in this class.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class BrowserSpecificStylesUnitTest extends AbstractSniffUnitTest
 {
+
 
     /**
      * Returns the lines where errors should occur.
@@ -44,9 +25,7 @@ class BrowserSpecificStylesUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                5  => 1,
-               );
+        return array(5 => 1);
 
     }//end getErrorList()
 
@@ -67,5 +46,3 @@ class BrowserSpecificStylesUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

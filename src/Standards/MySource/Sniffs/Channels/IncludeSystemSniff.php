@@ -1,4 +1,11 @@
 <?php
+/**
+ * Ensures that systems, asset types and libs are included before they are used.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Channels;
 
@@ -6,37 +13,13 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
 
-/**
- * Ensures that systems, asset types and libs are included before they are used.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer_MySource
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * Ensures that systems, asset types and libs are included before they are used.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer_MySource
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class IncludeSystemSniff extends AbstractScopeSniff
 {
 
     /**
      * A list of classes that don't need to be included.
      *
-     * @var array(string)
+     * @var string[]
      */
     private $_ignore = array(
                         'self'                      => true,
