@@ -1,40 +1,23 @@
 <?php
+/**
+ * Basic util functions.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Util;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
-/**
- * A class to process command line phpcs scripts.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A class to process command line phpcs scripts.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class Common
 {
 
     /**
      * An array of variable types for param/var we will check.
      *
-     * @var array(string)
+     * @var string[]
      */
     public static $allowedTypes = array(
                                    'array',
@@ -50,7 +33,7 @@ class Common
 
 
     /**
-     * Return TRUE, if the path is a phar file.
+     * Return TRUE if the path is a PHAR file.
      *
      * @param string $path The path to use.
      *
@@ -70,7 +53,7 @@ class Common
     /**
      * CodeSniffer alternative for realpath.
      *
-     * Allows for phar support.
+     * Allows for PHAR support.
      *
      * @param string $path The path to use.
      *
@@ -116,57 +99,21 @@ class Common
 
 
     /**
-     * Opens a file and detects the EOL character being used.
+     * Detects the EOL character being used in a string.
      *
-     * @param string $file     The full path to the file.
-     * @param string $contents The contents to parse. If NULL, the content
-     *                         is taken from the file system.
+     * @param string $contents The contents to check.
      *
      * @return string
-     * @throws RuntimeException If $file could not be opened.
      */
     public static function detectLineEndings($contents)
     {
-        /*
-            if ($contents === null) {
-            // Determine the newline character being used in this file.
-            // Will be either \r, \r\n or \n.
-            if (is_readable($file) === false) {
-                $error = 'Error opening file; file no longer exists or you do not have access to read the file';
-                throw new RuntimeException($error);
-            } else {
-                $handle = fopen($file, 'r');
-                if ($handle === false) {
-                    $error = 'Error opening file; could not auto-detect line endings';
-                    throw new RuntimeException($error);
-                }
-            }
-
-            $firstLine = fgets($handle);
-            fclose($handle);
-
-            $eolChar = substr($firstLine, -1);
-            if ($eolChar === "\n") {
-                $secondLastChar = substr($firstLine, -2, 1);
-                if ($secondLastChar === "\r") {
-                    $eolChar = "\r\n";
-                }
-            } else if ($eolChar !== "\r") {
-                // Must not be an EOL char at the end of the line.
-                // Probably a one-line file, so assume \n as it really
-                // doesn't matter considering there are no newlines.
-                $eolChar = "\n";
-            }
-            } else {
-            */
         if (preg_match("/\r\n?|\n/", $contents, $matches) !== 1) {
-            // Assuming there are no newlines.
+            // Assume there are no newlines.
             $eolChar = "\n";
         } else {
             $eolChar = $matches[0];
         }
 
-        // }//end if
         return $eolChar;
 
     }//end detectLineEndings()
@@ -393,10 +340,17 @@ class Common
     }//end suggestType()
 
 
+    /**
+     * Given a sniff class name, returns the code for the sniff.
+     *
+     * @param string $sniffClass The fully qualified sniff class name.
+     *
+     * @return string
+     */
     public static function getSniffCode($sniffClass)
     {
-        $parts    = explode('\\', $sniffClass);
-        $sniff    = array_pop($parts);
+        $parts = explode('\\', $sniffClass);
+        $sniff = array_pop($parts);
 
         if (substr($sniff, -5) === 'Sniff') {
             // Sniff class name.

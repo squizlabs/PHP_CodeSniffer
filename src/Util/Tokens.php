@@ -1,21 +1,13 @@
 <?php
+/**
+ * Stores weightings and groupings of tokens.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Util;
-
-/*
-    * The Tokens class contains weightings for tokens based on their
-    * probability of occurrence in a file.
-    *
-    * PHP version 5
-    *
-    * @category  PHP
-    * @package   PHP_CodeSniffer
-    * @author    Greg Sherwood <gsherwood@squiz.net>
-    * @author    Marc McIntyre <mmcintyre@squiz.net>
-    * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
-    * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
-    * @link      http://pear.php.net/package/PHP_CodeSniffer
-*/
 
 define('T_NONE', 'PHPCS_T_NONE');
 define('T_OPEN_CURLY_BRACKET', 'PHPCS_T_OPEN_CURLY_BRACKET');
@@ -141,22 +133,6 @@ define('T_DOC_COMMENT_OPEN_TAG', 'PHPCS_T_DOC_COMMENT_OPEN_TAG');
 define('T_DOC_COMMENT_CLOSE_TAG', 'PHPCS_T_DOC_COMMENT_CLOSE_TAG');
 define('T_DOC_COMMENT_STRING', 'PHPCS_T_DOC_COMMENT_STRING');
 
-/**
- * The Tokens class contains weightings for tokens based on their
- * probability of occurrence in a file.
- *
- * The less the chance of a high occurrence of an arbitrary token, the higher
- * the weighting.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 final class Tokens
 {
 

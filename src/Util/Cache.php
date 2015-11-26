@@ -1,4 +1,11 @@
 <?php
+/**
+ * Function for caching between runs.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Util;
 
@@ -6,37 +13,31 @@ use PHP_CodeSniffer\Autoload;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Util\Common;
 
-/**
- * A class to process command line phpcs scripts.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * A class to process command line phpcs scripts.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class Cache
 {
 
-    private static $path  = '';
+    /**
+     * The filesystem location of the cache file.
+     *
+     * @var void
+     */
+    private static $path = '';
+
+    /**
+     * The cached data.
+     *
+     * @var array<string, mixed>
+     */
     private static $cache = array();
 
 
+    /**
+     * Loads existing cache data for the run, if any.
+     *
+     * @param \PHP_CodeSniffer\Config $config The config data for the run.
+     *
+     * @return void
+     */
     public static function load(Config $config)
     {
         // Look at every loaded sniff class so far and use their file contents
@@ -219,6 +220,11 @@ class Cache
     }//end load()
 
 
+    /**
+     * Saves the current cache to the filesystem.
+     *
+     * @return void
+     */
     public static function save()
     {
         file_put_contents(self::$path, json_encode(self::$cache));
@@ -226,6 +232,13 @@ class Cache
     }//end save()
 
 
+    /**
+     * Retrieves a single entry from the cache.
+     *
+     * @param string $key The key of the data to get.
+     *
+     * @return mixed
+     */
     public static function get($key)
     {
         if (isset(self::$cache[$key]) === true) {
@@ -237,6 +250,14 @@ class Cache
     }//end get()
 
 
+    /**
+     * Retrieves a single entry from the cache.
+     *
+     * @param string $key   The key of the data to set.
+     * @param mixed  $value The value to set.
+     *
+     * @return void
+     */
     public static function set($key, $value)
     {
         self::$cache[$key] = $value;
@@ -244,6 +265,11 @@ class Cache
     }//end set()
 
 
+    /**
+     * Retrieves the number of cache entries.
+     *
+     * @return int
+     */
     public static function getSize()
     {
         return (count(self::$cache) - 1);
