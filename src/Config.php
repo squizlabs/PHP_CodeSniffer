@@ -118,7 +118,7 @@ class Config
      * If FALSE, arguments that are not command line options or file/directory paths
      * will be ignored and execution will continue.
      *
-     * @var bool
+     * @var boolean
      */
     public $dieOnUnknownArg;
 
@@ -162,7 +162,7 @@ class Config
     public function __get($name)
     {
         if (array_key_exists($name, $this->settings) === false) {
-            throw new RuntimeException("cant get $name");
+            throw new RuntimeException("ERROR: unable to get value of property \"$name\"");
         }
 
         return $this->settings[$name];
@@ -699,10 +699,7 @@ class Config
             } else if (substr($arg, 0, 13) === 'report-width=') {
                 $this->reportWidth = substr($arg, 13);
                 $this->overriddenDefaults['reportWidth'] = true;
-            } else if ((substr($arg, 0, 7) === 'report='
-                || substr($arg, 0, 7) === 'report-')
-                && PHP_CODESNIFFER_CBF === false
-            ) {
+            } else if ((substr($arg, 0, 7) === 'report=' || substr($arg, 0, 7) === 'report-')) {
                 $reports = array();
 
                 if ($arg[6] === '-') {
