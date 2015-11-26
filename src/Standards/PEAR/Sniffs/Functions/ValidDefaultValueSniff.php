@@ -1,4 +1,11 @@
 <?php
+/**
+ * Ensures function params with default values are at the end of the declaration.
+ *
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ */
 
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions;
 
@@ -6,35 +13,6 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
 
-/**
- * PEAR_Sniffs_Functions_ValidDefaultValueSniff.
- *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-
-/**
- * PEAR_Sniffs_Functions_ValidDefaultValueSniff.
- *
- * A Sniff to ensure that parameters defined for a function that have a default
- * value come at the end of the function signature.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
 class ValidDefaultValueSniff implements Sniff
 {
 
@@ -42,7 +20,7 @@ class ValidDefaultValueSniff implements Sniff
     /**
      * Returns an array of tokens this test wants to listen for.
      *
-     * @return array
+     * @return int[]
      */
     public function register()
     {
@@ -77,7 +55,7 @@ class ValidDefaultValueSniff implements Sniff
                 continue;
             }
 
-            $argHasDefault = self::_argHasDefault($phpcsFile, $nextArg);
+            $argHasDefault = self::argHasDefault($phpcsFile, $nextArg);
             if ($argHasDefault === false && $defaultFound === true) {
                 $error = 'Arguments with default values must be at the end of the argument list';
                 $phpcsFile->addError($error, $nextArg, 'NotAtEnd');
@@ -101,7 +79,7 @@ class ValidDefaultValueSniff implements Sniff
      *
      * @return bool
      */
-    private static function _argHasDefault($phpcsFile, $argPtr)
+    private static function argHasDefault($phpcsFile, $argPtr)
     {
         $tokens    = $phpcsFile->getTokens();
         $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($argPtr + 1), null, true);
@@ -111,7 +89,7 @@ class ValidDefaultValueSniff implements Sniff
 
         return true;
 
-    }//end _argHasDefault()
+    }//end argHasDefault()
 
 
 }//end class
