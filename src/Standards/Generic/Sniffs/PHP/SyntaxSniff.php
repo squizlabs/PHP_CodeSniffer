@@ -49,7 +49,8 @@ class SyntaxSniff implements Sniff
         $fileName = $phpcsFile->getFilename();
         $cmd      = "$phpPath -l \"$fileName\" 2>&1";
         $output   = shell_exec($cmd);
-
+var_dump($cmd);
+var_dump($output);
         $matches = array();
         if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/', $output, $matches) === 1) {
             $error = trim($matches[1]);

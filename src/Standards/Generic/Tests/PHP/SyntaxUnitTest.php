@@ -24,9 +24,7 @@ class SyntaxUnitTest extends AbstractSniffUnitTest
      */
     protected function shouldSkipTest()
     {
-        echo "SHOULD SKIP SYTAX TEST?\n";
         $phpPath = Config::getExecutablePath('php');
-        var_dump($phpPath);
         if ($phpPath === null) {
             return true;
         }
