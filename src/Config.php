@@ -63,6 +63,7 @@ class Config
      * string[] ignored         Regular expressions used to ignore files and folders during checking.
      * string   reportFile      A file system location where the report output should be written.
      * string   generator       The documentation generator to use.
+     * string[] bootstrap       One of more files to include before the run begins.
      * int      reportWidth     The maximum number of columns that reports should use for output.
      *                          Set to "auto" for have this value changed to the width of the terminal.
      * int      errorSeverity   The minimum severity an error must have to be displayed.
@@ -103,6 +104,7 @@ class Config
                          'ignored'         => null,
                          'reportFile'      => null,
                          'generator'       => null,
+                         'bootstrap'       => null,
                          'reports'         => null,
                          'reportWidth'     => null,
                          'errorSeverity'   => null,
@@ -383,6 +385,7 @@ class Config
         $this->ignored         = array();
         $this->reportFile      = null;
         $this->generator       = null;
+        $this->bootstrap       = array();
         $this->reports         = array('full' => null);
         $this->reportWidth     = 'auto';
         $this->errorSeverity   = 5;
@@ -653,7 +656,7 @@ class Config
                 $sniffs = explode(',', substr($arg, 7));
                 foreach ($sniffs as $sniff) {
                     if (substr_count($sniff, '.') !== 2) {
-                        echo "ERROR: The specified sniff code \"$sniff\" is invalid".PHP_EOL.PHP_EOL;
+                        echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
                         exit(2);
                     }
@@ -661,6 +664,22 @@ class Config
 
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
+            } else if (substr($arg, 0, 10) === 'bootstrap=') {
+                $files     = explode(',', substr($arg, 10));
+                $bootstrap = array();
+                foreach ($files as $file) {
+                    $file = Util\Common::realpath($file);
+                    if (file_exists($file) === false) {
+                        echo 'ERROR: The specified bootstrap file "'.$file.'" does not exist'.PHP_EOL.PHP_EOL;
+                        $this->printUsage();
+                        exit(2);
+                    }
+
+                    $bootstrap[] = $file;
+                }
+
+                $this->bootstrap = $bootstrap;
+                $this->overriddenDefaults['bootstrap'] = true;
             } else if (substr($arg, 0, 12) === 'report-file='
                 && PHP_CODESNIFFER_CBF === false
             ) {

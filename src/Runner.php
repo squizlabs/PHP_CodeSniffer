@@ -248,6 +248,11 @@ class Runner
         // be detected properly for files created on a Mac with the /r line ending.
         ini_set('auto_detect_line_endings', true);
 
+        // Include bootstrap files.
+        foreach ($this->config->bootstrap as $bootstrap) {
+            include $bootstrap;
+        }
+
         // Check that the standards are valid.
         foreach ($this->config->standards as $standard) {
             if (Util\Standards::isInstalledStandard($standard) === false) {
