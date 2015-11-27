@@ -19,5 +19,5 @@ script:
   - phpunit -d date.timezone=Australia/Sydney tests/AllTests.php
   - php bin/phpcs
   #- if [[ $TRAVIS_PHP_VERSION != "hhvm" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
-  #- if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php scripts/build-phar.php; fi
-  #- if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php phpcs.phar; fi
+  - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php scripts/build-phar.php; fi
+  - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php phpcs.phar; fi
