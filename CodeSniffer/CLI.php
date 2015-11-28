@@ -604,14 +604,14 @@ class PHP_CodeSniffer_CLI
             } else if (substr($arg, 0, 10) === 'bootstrap=') {
                 $files = explode(',', substr($arg, 10));
                 foreach ($files as $file) {
-                    $file = PHP_CodeSniffer::realpath($file);
-                    if (file_exists($file) === false) {
+                    $path = PHP_CodeSniffer::realpath($file);
+                    if ($path === false) {
                         echo 'ERROR: The specified bootstrap file "'.$file.'" does not exist'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
                         exit(2);
                     }
 
-                    $this->values['bootstrap'][] = $file;
+                    $this->values['bootstrap'][] = $path;
                 }
             } else if (substr($arg, 0, 12) === 'report-file=') {
                 $this->values['reportFile'] = PHP_CodeSniffer::realpath(substr($arg, 12));
