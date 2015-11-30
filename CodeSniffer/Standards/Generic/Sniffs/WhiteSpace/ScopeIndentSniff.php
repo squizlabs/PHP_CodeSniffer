@@ -107,6 +107,18 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     protected $nonIndentingScopes = array();
 
     /**
+     * Is indentation reset on T_OPEN_TAG and T_CLOSE_TAG?
+     *
+     * If TRUE (default), both T_OPEN_TAG and T_CLOSE_TAG cause
+     * the reset of current indentation (with some exceptions). If FALSE,
+     * current indentation (from previous PHP blocks) isn't affected and
+     * next PHP should observe it.
+     *
+     * @var bool
+     */
+    public $resetIndentationWithOpenClose = true;
+
+    /**
      * Show debug output for this sniff.
      *
      * @var bool
@@ -799,6 +811,15 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     echo "Open PHP tag found on line $line".PHP_EOL;
                 }
 
+                if ($this->resetIndentationWithOpenClose === false) {
+                    // We don't want any reset to happen, inform and continue.
+                    if ($this->_debug === true) {
+                        echo "Skipping indentation reset, keeping it to $currentIndent".PHP_EOL;
+                    }
+
+                    continue;
+                }
+
                 if ($checkToken === null) {
                     $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $i, true);
                     $currentIndent = (strlen($tokens[$first]['content']) - strlen(ltrim($tokens[$first]['content'])));
@@ -828,6 +849,15 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 if ($this->_debug === true) {
                     $line = $tokens[$i]['line'];
                     echo "Close PHP tag found on line $line".PHP_EOL;
+                }
+
+                if ($this->resetIndentationWithOpenClose === false) {
+                    // We don't want any reset to happen, inform and continue.
+                    if ($this->_debug === true) {
+                        echo "Skipping indentation reset, keeping it to $currentIndent".PHP_EOL;
+                    }
+
+                    continue;
                 }
 
                 if ($tokens[$lastOpenTag]['line'] !== $tokens[$i]['line']) {
