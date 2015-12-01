@@ -793,11 +793,6 @@ class PHP_CodeSniffer_CLI
             $this->values = $values;
         }
 
-        // Include bootstrap files.
-        foreach ($values['bootstrap'] as $bootstrap) {
-            include $bootstrap;
-        }
-
         if ($values['generator'] !== '') {
             $phpcs = new PHP_CodeSniffer($values['verbosity']);
             if ($values['standard'] === null) {
@@ -872,6 +867,11 @@ class PHP_CodeSniffer_CLI
         if (empty($values['reports']) === true) {
             $values['reports']['full'] = $values['reportFile'];
             $this->values['reports']   = $values['reports'];
+        }
+
+        // Include bootstrap files.
+        foreach ($values['bootstrap'] as $bootstrap) {
+            include $bootstrap;
         }
 
         $phpcs->processFiles($values['files'], $values['local']);
