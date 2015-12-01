@@ -275,6 +275,10 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
         $numTokens = count($finalTokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
+            if (!isset($finalTokens[$stackPtr])) {
+                continue;
+            }
+
             $token = $finalTokens[$stackPtr];
 
             switch ($token['code']) {
@@ -378,9 +382,6 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                     if ($newContent !== '') {
                         $finalTokens[($x + 1)]['content'] .= $newContent;
-
-                        $finalTokens = array_values($finalTokens);
-                        $numTokens   = count($finalTokens);
                     }
                 }//end if
 
