@@ -33,6 +33,7 @@ class OpacityUnitTest extends AbstractSniffUnitTest
                 9  => 1,
                 10 => 1,
                 11 => 1,
+                26 => 1,
                );
 
     }//end getErrorList()
