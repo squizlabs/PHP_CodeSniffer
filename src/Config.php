@@ -668,14 +668,14 @@ class Config
                 $files     = explode(',', substr($arg, 10));
                 $bootstrap = array();
                 foreach ($files as $file) {
-                    $file = Util\Common::realpath($file);
-                    if (file_exists($file) === false) {
+                    $path = Util\Common::realpath($file);
+                    if ($path === false) {
                         echo 'ERROR: The specified bootstrap file "'.$file.'" does not exist'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
                         exit(2);
                     }
 
-                    $bootstrap[] = $file;
+                    $bootstrap[] = $path;
                 }
 
                 $this->bootstrap = $bootstrap;
