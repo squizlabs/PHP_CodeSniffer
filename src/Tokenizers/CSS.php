@@ -297,7 +297,7 @@ class CSS extends PHP
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $token['type'];
-                $content = PHP_CodeSniffer::prepareForOutput($token['content']);
+                $content = Util\Common::prepareForOutput($token['content']);
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
             }
 
@@ -350,8 +350,8 @@ class CSS extends PHP
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* token is a string joiner; ignoring this and previous token".PHP_EOL;
-                            $old = PHP_CodeSniffer::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
-                            $new = PHP_CodeSniffer::prepareForOutput($newContent);
+                            $old = Util\Common::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
+                            $new = Util\Common::prepareForOutput($newContent);
                             echo "\t\t=> token ".($stackPtr + 1)." content changed from \"$old\" to \"$new\"".PHP_EOL;
                         }
 
@@ -368,7 +368,7 @@ class CSS extends PHP
                     // They can also be used to provide negative numbers.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "\t\t* token is part of a negative number; adding content to next token and ignoring *".PHP_EOL;
-                        $content = PHP_CodeSniffer::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
+                        $content = Util\Common::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
                         echo "\t\t=> token ".($stackPtr + 1)." content changed from \"$content\" to \"-$content\"".PHP_EOL;
                     }
 
@@ -425,7 +425,7 @@ class CSS extends PHP
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         for ($i = ($stackPtr + 1); $i <= $y; $i++) {
                             $type    = $finalTokens[$i]['type'];
-                            $content = PHP_CodeSniffer::prepareForOutput($finalTokens[$i]['content']);
+                            $content = Util\Common::prepareForOutput($finalTokens[$i]['content']);
                             echo "\tProcess token $i: $type => $content".PHP_EOL;
                         }
 
@@ -441,7 +441,7 @@ class CSS extends PHP
 
                         $newContent .= $finalTokens[$i]['content'];
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = PHP_CodeSniffer::prepareForOutput($finalTokens[$i]['content']);
+                            $content = Util\Common::prepareForOutput($finalTokens[$i]['content']);
                             echo "\t\t=> token $i added to URL string and ignored: $content".PHP_EOL;
                         }
 
@@ -460,7 +460,7 @@ class CSS extends PHP
                     if ($newContent !== '') {
                         $finalTokens[($x + 1)]['content'] .= $newContent;
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $content = PHP_CodeSniffer::prepareForOutput($finalTokens[($x + 1)]['content']);
+                            $content = Util\Common::prepareForOutput($finalTokens[($x + 1)]['content']);
                             echo "\t\t=> token content changed to: $content".PHP_EOL;
                         }
                     }
