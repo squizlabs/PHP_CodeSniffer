@@ -17,14 +17,6 @@ class Junit implements Report
 {
 
     /**
-     * A count of tests that have been performed.
-     *
-     * @var integer
-     */
-    private $tests = 0;
-
-
-    /**
      * Generate a partial report for a single processed file.
      *
      * Function should return TRUE if it printed or stored data about the file
@@ -40,12 +32,6 @@ class Junit implements Report
      */
     public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
     {
-        if (count($report['messages']) === 0) {
-            $this->tests++;
-        } else {
-            $this->tests += ($report['errors'] + $report['warnings']);
-        }
-
         $out = new \XMLWriter;
         $out->openMemory();
         $out->setIndent(true);
@@ -121,9 +107,19 @@ class Junit implements Report
         $interactive=false,
         $toScreen=true
     ) {
+        // Figure out the total number of tests.
+        $tests   = 0;
+        $matches = array();
+        preg_match_all('/tests="([0-9]+)"/', $cachedData, $matches);
+        if (isset($matches[1]) === true) {
+            foreach ($matches[1] as $match) {
+                $tests += $match;
+            }
+        }
+
         $failures = ($totalErrors + $totalWarnings);
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<testsuites name="PHP_CodeSniffer '.Config::VERSION.'" tests="'.$this->tests.'" failures="'.$failures.'">'.PHP_EOL;
+        echo '<testsuites name="PHP_CodeSniffer '.Config::VERSION.'" tests="'.$tests.'" failures="'.$failures.'">'.PHP_EOL;
         echo $cachedData;
         echo '</testsuites>'.PHP_EOL;
 

@@ -50,17 +50,6 @@ class Notifysend implements Report
      */
     protected $version = null;
 
-    /**
-     * A record of the last file checked.
-     *
-     * This is used in case we only checked one file and need to print
-     * the name/path of the file. We wont have access to the checked file list
-     * after the run has been completed.
-     *
-     * @var string
-     */
-    private $lastCheckedFile = '';
-
 
     /**
      * Load configuration data.
@@ -107,9 +96,10 @@ class Notifysend implements Report
      */
     public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
     {
-        // We don't need to print anything, but we want this file counted
-        // in the total number of checked files even if it has no errors.
-        $this->lastCheckedFile = $report['filename'];
+        echo $report['filename'].PHP_EOL;
+
+        // We want this file counted in the total number
+        // of checked files even if it has no errors.
         return true;
 
     }//end generateFileReport()
@@ -142,7 +132,9 @@ class Notifysend implements Report
         $interactive=false,
         $toScreen=true
     ) {
-        $msg = $this->generateMessage($totalFiles, $totalErrors, $totalWarnings);
+        $checkedFiles = explode(PHP_EOL, trim($cachedData));
+
+        $msg = $this->generateMessage($checkedFiles, $totalErrors, $totalWarnings);
         if ($msg === null) {
             if ($this->showOk === true) {
                 $this->notifyAllFine();
@@ -157,24 +149,26 @@ class Notifysend implements Report
     /**
      * Generate the error message to show to the user.
      *
-     * @param int $totalFiles    Total number of files processed during the run.
-     * @param int $totalErrors   Total number of errors found during the run.
-     * @param int $totalWarnings Total number of warnings found during the run.
+     * @param string[] $checkedFiles  The files checked during the run.
+     * @param int      $totalErrors   Total number of errors found during the run.
+     * @param int      $totalWarnings Total number of warnings found during the run.
      *
      * @return string Error message or NULL if no error/warning found.
      */
-    protected function generateMessage($totalFiles, $totalErrors, $totalWarnings)
+    protected function generateMessage($checkedFiles, $totalErrors, $totalWarnings)
     {
         if ($totalErrors === 0 && $totalWarnings === 0) {
             // Nothing to print.
             return null;
         }
 
+        $totalFiles = count($checkedFiles);
+
         $msg = '';
         if ($totalFiles > 1) {
             $msg .= 'Checked '.$totalFiles.' files'.PHP_EOL;
         } else {
-            $msg .= $this->lastCheckedFile.PHP_EOL;
+            $msg .= $checkedFiles[0].PHP_EOL;
         }
 
         if ($totalWarnings > 0) {
