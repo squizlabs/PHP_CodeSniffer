@@ -16,6 +16,7 @@ use PHP_CodeSniffer\Files\File;
 class Junit implements Report
 {
 
+
     /**
      * Generate a partial report for a single processed file.
      *
