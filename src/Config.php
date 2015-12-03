@@ -989,7 +989,6 @@ class Config
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
-        echo '        --no-patch    Do not make use of the "diff" or "patch" programs'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;

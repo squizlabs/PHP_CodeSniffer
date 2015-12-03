@@ -38,7 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - can now set severity, message type and exclude patterns for entire sniff, category or standard
   - can include a single sniff code, which will exclude all other codes from that sniff
     -- if the sniff is already included by an imported standard, set sniff severity to 0 and include the specific message you want
-  - phpcbf no longer uses patch - files are always overwritten
+  - phpcbf no longer uses patch - files are always overwritten (--no-patch option has been removed)
 
   - PHPCS will now look for a phpcs.xml file in parent directories as well as the current directory (request #626)
   - PHPCS will now use a phpcs.xml file even if files are specified on the command line
