@@ -62,6 +62,36 @@ class Runner
         // values the user has set.
         $this->config = new Config();
 
+        // Init the run and load the rulesets to set additional config vars.
+        $this->init();
+
+        // Print a list of sniffs in each of the supplied standards.
+        // We fudge the config here so that each standard is explained in isolation.
+        if ($this->config->explain === true) {
+            $standards = $this->config->standards;
+            foreach ($standards as $standard) {
+                $this->config->standards = array($standard);
+                $ruleset = new Ruleset($this->config);
+                $ruleset->explain();
+            }
+
+            exit(0);
+        }
+
+        // Generate documentation for each of the supplied standards.
+        if ($this->config->generator !== null) {
+            $standards = $this->config->standards;
+            foreach ($standards as $standard) {
+                $this->config->standards = array($standard);
+                $ruleset   = new Ruleset($this->config);
+                $class     = 'PHP_CodeSniffer\Generators\\'.$this->config->generator;
+                $generator = new $class($ruleset);
+                $generator->generate();
+            }
+
+            exit(0);
+        }
+
         // Other report formats don't really make sense in interactive mode
         // so we hard-code the full report here and when outputting.
         if ($this->config->interactive === true) {
@@ -113,6 +143,9 @@ class Runner
         // values the user has set.
         $this->config = new Config();
 
+        // Init the run and load the rulesets to set additional config vars.
+        $this->init();
+
         // Override some of the command line settings that might break the fixes.
         $this->config->verbosity    = 0;
         $this->config->showProgress = false;
@@ -122,96 +155,22 @@ class Runner
         $this->config->cache        = false;
         $this->config->showSources  = false;
         $this->config->reportFile   = null;
-        $this->config->reports      = array();
+        $this->config->reports      = array('cbf' => null);
 
         // If a standard tries to set command line arguments itself, some
         // may be blocked because PHPCBF is running, so stop the script
         // dying if any are found.
         $this->config->dieOnUnknownArg = false;
 
-        if ($this->config->stdin === true) {
-            // They are using STDIN, which can't use diff.
-            $this->config->noPatch = true;
-        }
-
-        if ($this->config->suffix === '' && $this->config->noPatch === false) {
-            // Using the diff/patch tools.
-            $diffFile = getcwd().'/phpcbf-fixed.diff';
-            $this->config->reports = array('diff' => $diffFile);
-            if (file_exists($diffFile) === true) {
-                unlink($diffFile);
-            }
-        } else {
-            // Replace the file without the patch command
-            // or writing to a file with a new suffix.
-            $this->config->reports = array('cbf' => null);
-        }
-
         $numErrors = $this->run();
+        $this->reporter->printReports();
 
-        // Printing the reports will generate the diff file and/or
-        // print output information (depending on if we are patching or not).
-        $toScreen = $this->reporter->printReports();
-
-        if ($this->config->suffix === '' && $this->config->noPatch === false) {
-            if (file_exists($diffFile) === false) {
-                // Nothing to fix.
-                if ($numErrors === 0) {
-                    // And no errors reported.
-                    $exit = 0;
-                } else {
-                    // Errors we can't fix.
-                    $exit = 2;
-                }
-            } else {
-                if (filesize($diffFile) < 10) {
-                    // Empty or bad diff file.
-                    if ($numErrors === 0) {
-                        // And no errors reported.
-                        $exit = 0;
-                    } else {
-                        // Errors we can't fix.
-                        $exit = 2;
-                    }
-                } else {
-                    $cmd    = "patch -p0 -ui \"$diffFile\"";
-                    $output = array();
-                    $retVal = null;
-                    exec($cmd, $output, $retVal);
-
-                    if ($retVal === 0) {
-                        // Everything went well.
-                        $filesPatched = count($output);
-                        echo "Patched $filesPatched file";
-                        if ($filesPatched > 1) {
-                            echo 's';
-                        }
-
-                        echo PHP_EOL;
-                        $exit = 1;
-                    } else {
-                        print_r($output);
-                        echo "Returned: $retVal".PHP_EOL;
-                        $exit = 3;
-                    }
-                }//end if
-
-                unlink($diffFile);
-            }//end if
-        } else {
-            // File are being patched manually, so we can't tell
-            // how many errors were fixed.
-            $exit = 1;
-        }//end if
-
-        if ($exit === 0) {
-            echo 'No fixable errors were found'.PHP_EOL;
-        } else if ($exit === 2) {
-            echo 'PHPCBF could not fix all the errors found'.PHP_EOL;
-        }
-
+        echo PHP_EOL;
         Util\Timing::printRunTime();
-        exit($exit);
+
+        // We can't tell exactly how many errors were fixed, but
+        // we know how many errors were found.
+        exit($numErrors);
 
     }//end runPHPCBF()
 
@@ -238,11 +197,11 @@ class Runner
 
 
     /**
-     * Exits if the minimum requirements of PHP_CodSniffer are not met.
+     * Init the rulesets and other high-level settings.
      *
-     * @return array
+     * @return void
      */
-    private function run()
+    private function init()
     {
         // Ensure this option is enabled or else line endings will not always
         // be detected properly for files created on a Mac with the /r line ending.
@@ -269,37 +228,20 @@ class Runner
         // of PHP_CodeSniffer-specific token type constants.
         $tokens = new Util\Tokens();
 
-        // Print a list of sniffs in each of the supplied standards.
-        // We fudge the config here so that each standard is explained in isolation.
-        if ($this->config->explain === true) {
-            $standards = $this->config->standards;
-            foreach ($standards as $standard) {
-                $this->config->standards = array($standard);
-                $ruleset = new Ruleset($this->config);
-                $ruleset->explain();
-            }
-
-            exit(0);
-        }
-
-        // Generate documentation for each of the supplied standards.
-        if ($this->config->generator !== null) {
-            $standards = $this->config->standards;
-            foreach ($standards as $standard) {
-                $this->config->standards = array($standard);
-                $ruleset   = new Ruleset($this->config);
-                $class     = 'PHP_CodeSniffer\Generators\\'.$this->config->generator;
-                $generator = new $class($ruleset);
-                $generator->generate();
-            }
-
-            exit(0);
-        }
-
         // The ruleset contains all the information about how the files
         // should be checked and/or fixed.
-        $ruleset = new Ruleset($this->config);
+        $this->ruleset = new Ruleset($this->config);
 
+    }//end init()
+
+
+    /**
+     * Performs the run.
+     *
+     * @return int The number of errors and warnings found.
+     */
+    private function run()
+    {
         // The class that manages all reporters for the run.
         $this->reporter = new Reporter($this->config);
 
@@ -320,7 +262,7 @@ class Runner
             $fileContents = stream_get_contents($handle);
             fclose($handle);
 
-            $todo     = array(new DummyFile($fileContents, $ruleset, $this->config));
+            $todo     = array(new DummyFile($fileContents, $this->ruleset, $this->config));
             $numFiles = 1;
         } else {
             if (empty($this->config->files) === true) {
@@ -333,7 +275,7 @@ class Runner
                 echo 'Creating file list... ';
             }
 
-            $todo     = new FileList($this->config, $ruleset);
+            $todo     = new FileList($this->config, $this->ruleset);
             $numFiles = count($todo);
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {

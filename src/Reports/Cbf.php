@@ -39,7 +39,6 @@ class Cbf implements Report
         if ($errors !== 0) {
             if ($phpcsFile->config->stdin === false) {
                 ob_end_clean();
-                $errors    = $phpcsFile->getFixableCount();
                 $startTime = microtime(true);
                 echo "\t=> Fixing file: $errors/$errors violations remaining";
             }
@@ -89,6 +88,13 @@ class Cbf implements Report
 
         ob_start();
 
+        // This output is for the report and not printed to screen.
+        if ($fixed === false) {
+            echo 'E|';
+        } else {
+            echo $errors.'|';
+        }
+
         return $fixed;
 
     }//end generateFileReport()
@@ -121,8 +127,37 @@ class Cbf implements Report
         $interactive=false,
         $toScreen=true
     ) {
-        echo $cachedData;
-        echo "Fixed $totalFiles files".PHP_EOL;
+        $fixed = 0;
+        $fails = 0;
+
+        $errorCounts = explode('|', rtrim($cachedData, '|'));
+        foreach ($errorCounts as $count) {
+            if ($count === 'E') {
+                $fails++;
+            } else {
+                $fixed += $count;
+            }
+        }
+
+        echo PHP_EOL;
+
+        if ($fixed === 0) {
+            echo 'No fixable errors were found';
+        } else {
+            echo "Fixed $fixed errors in $totalFiles file";
+            if ($totalFiles !== 1) {
+                echo 's';
+            }
+        }
+
+        if ($fails > 0) {
+            echo "; failed fixing $fails file";
+            if ($fails !== 1) {
+                echo 's';
+            }
+        }
+
+        echo PHP_EOL;
 
     }//end generate()
 

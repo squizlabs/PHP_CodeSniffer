@@ -69,8 +69,6 @@ class Config
      * int      errorSeverity   The minimum severity an error must have to be displayed.
      * int      warningSeverity The minimum severity a warning must have to be displayed.
      * string   suffix          A suffix to add to fixed files.
-     * bool     noPatch         If TRUE, the fixed files will be replaced directly instead of being patched.
-     *                          Set to TRUE if the environment does not have the patch command available.
      * bool     stdin           Read content from STDIN instead of supplied files.
      *
      * array<string, string>      extensions File extensions that should be checked, and what tokenizer to use.
@@ -110,7 +108,6 @@ class Config
                          'errorSeverity'   => null,
                          'warningSeverity' => null,
                          'suffix'          => null,
-                         'noPatch'         => null,
                          'stdin'           => null,
                         );
 
@@ -184,7 +181,7 @@ class Config
     public function __set($name, $value)
     {
         if (array_key_exists($name, $this->settings) === false) {
-            throw new RuntimeException("cant set $name");
+            throw new RuntimeException("Can't __set() $name; setting doesn't exist");
         }
 
         switch ($name) {
@@ -391,7 +388,6 @@ class Config
         $this->errorSeverity   = 5;
         $this->warningSeverity = 5;
         $this->suffix          = '';
-        $this->noPatch         = false;
         $this->stdin           = false;
 
         $standard = self::getConfigData('default_standard');
@@ -646,10 +642,6 @@ class Config
             $this->cliArgs[($pos + 1)] = '';
             $this->cliArgs[($pos + 2)] = '';
             self::setConfigData($key, $value, true);
-            break;
-        case 'no-patch':
-            $this->noPatch = true;
-            $this->overriddenDefaults['noPatch'] = true;
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
