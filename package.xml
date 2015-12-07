@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #786 : Switch indent issue with short array notation
   - Fixed bug #787 : SpacingAfterDefaultBreak confused by multi-line statements
   - Fixed bug #797 : Parsing CSS url() value breaks further parsing
+  - Fixed bug #805 : Squiz.Commenting.FunctionComment.InvalidTypeHint on Scalar types on PHP7
  </notes>
  <contents>
   <dir name="/">

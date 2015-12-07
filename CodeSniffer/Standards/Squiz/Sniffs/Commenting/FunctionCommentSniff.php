@@ -367,6 +367,16 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                         $suggestedTypeHint = 'callable';
                     } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
                         $suggestedTypeHint = $suggestedName;
+                    } else if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+                        if ($typeName === 'string') {
+                            $suggestedTypeHint = 'string';
+                        } else if ($typeName === 'int' || $typeName === 'integer') {
+                            $suggestedTypeHint = 'int';
+                        } else if ($typeName === 'float') {
+                            $suggestedTypeHint = 'float';
+                        } else if ($typeName === 'bool' || $typeName === 'boolean') {
+                            $suggestedTypeHint = 'bool';
+                        }
                     }
 
                     if ($suggestedTypeHint !== '' && isset($realParams[$pos]) === true) {
