@@ -715,3 +715,16 @@ public function specifiedArray(array $values) {
 public function callableCallback(callable $cb) {
 
 }// end callableCallback()
+
+/**
+ * PHP7 type hints.
+ *
+ * @param string  $name1 Comment.
+ * @param integer $name2 Comment.
+ * @param float   $name3 Comment.
+ * @param boolean $name4 Comment.
+ *
+ * @return void
+ */
+public function myFunction (string $name1, int $name2, float $name3, bool $name4) {
+}
