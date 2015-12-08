@@ -69,7 +69,10 @@ interface Sniff
      *                                        file's token stack where the token
      *                                        was found.
      *
-     * @return void
+     * @return void|int Optionally returns a stack pointer. The sniff will not be
+     *                  called again on the current file until the returned stack
+     *                  pointer is reached. Return (count($tokens) + 1) to skip
+     *                  the rest of the file.
      */
     public function process(File $phpcsFile, $stackPtr);
 
