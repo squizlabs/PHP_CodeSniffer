@@ -31,6 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This file is still only used if no standard is specified on the command line
   - Added support for a phpcs.xml.dist file (request #583)
     -- If both a phpcs.xml and phpcs.xml.dist file are present, the phpcs.xml file will be used
+  - Added support for setting PHP ini values in ruleset.xml files (request #560)
+    -- Setting the value of the new ini tags to name="memory_limit" value="32M" is the same as -d memory_limit=32M
   - Added support for one or more bootstrap files to be run before processing begins
     -- Use the --bootstrap=file,file,file command line argument to include bootstrap files
     -- Ueeful if you want to override some of the high-level settings of PHPCS or PHPCBF
