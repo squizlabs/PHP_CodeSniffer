@@ -88,3 +88,26 @@ if (false === ($parent instanceof Foo) && ($parent instanceof Bar) === false) {
 
 if (false === ($parent instanceof Foo) && $foo) {
 }
+
+while ($var1) {
+}
+
+while ($var1 === TRUE) {
+}
+
+do {
+
+} while ($var1);
+
+do {
+
+} while ($var1 === TRUE);
+
+for ($var1 = 10; $var1; $var1--) {
+}
+
+for ($var1 = 10; $var1 !== 0; $var1--) {
+}
+
+for ($var1 = ($var2 === 10); $var1; $var1--) {
+}

@@ -103,6 +103,8 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
                 T_IF,
                 T_ELSEIF,
                 T_INLINE_THEN,
+                T_WHILE,
+                T_FOR,
                );
 
     }//end register()
@@ -158,6 +160,16 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
 
                 $start = $tokens[$end]['parenthesis_opener'];
             }//end if
+        } else if ($tokens[$stackPtr]['code'] === T_FOR) {
+            if (isset($tokens[$stackPtr]['parenthesis_opener']) === false) {
+                return;
+            }
+
+            $openingBracket = $tokens[$stackPtr]['parenthesis_opener'];
+            $closingBracket = $tokens[$stackPtr]['parenthesis_closer'];
+
+            $start = $phpcsFile->findNext(T_SEMICOLON, $openingBracket, $closingBracket);
+            $end   = $phpcsFile->findNext(T_SEMICOLON, ($start + 1), $closingBracket);
         } else {
             if (isset($tokens[$stackPtr]['parenthesis_opener']) === false) {
                 return;
