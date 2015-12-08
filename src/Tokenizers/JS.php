@@ -692,6 +692,7 @@ class JS extends Tokenizer
                 $cleanBuffer = false;
             }
         }//end for
+
         if (empty($buffer) === false) {
             // Buffer contains whitespace from the end of the file.
             $tokens[] = array(
@@ -843,6 +844,25 @@ class JS extends Tokenizer
                     $stackPtr = $oldStackPtr;
                 }
             }//end if
+
+            // Convert the token after an object operator into a string, in most cases.
+            if ($token['code'] === T_OBJECT_OPERATOR) {
+                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
+                        continue;
+                    }
+
+                    if ($tokens[$i]['code'] !== T_PROTOTYPE
+                        && $tokens[$i]['code'] !== T_LNUMBER
+                        && $tokens[$i]['code'] !== T_DNUMBER
+                    ) {
+                        $tokens[$i]['code'] = T_STRING;
+                        $tokens[$i]['type'] = 'T_STRING';
+                    }
+
+                    break;
+                }
+            }
         }//end for
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {

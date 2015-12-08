@@ -19,3 +19,7 @@ do {
 } while (something);
 
 do i++; while (i < 5);
+
+SomeClass.prototype.switch = function() {
+    // do something
+};

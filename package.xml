@@ -56,6 +56,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #787 : SpacingAfterDefaultBreak confused by multi-line statements
   - Fixed bug #797 : Parsing CSS url() value breaks further parsing
   - Fixed bug #805 : Squiz.Commenting.FunctionComment.InvalidTypeHint on Scalar types on PHP7
+  - Fixed bug #807 : Cannot fix line endings when open PHP tag is not on the first line
+  - Fixed bug #808 : JS tokeniser incorrectly setting some function and class names to control structure tokens
  </notes>
  <contents>
   <dir name="/">
