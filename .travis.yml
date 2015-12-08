@@ -14,6 +14,6 @@ script:
   - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php scripts/phpcs --config-set php_path php; fi
   - phpunit -d date.timezone=Australia/Sydney tests/AllTests.php
   - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np
-  - if [[ $TRAVIS_PHP_VERSION != "hhvm" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
+  - if [[ $TRAVIS_PHP_VERSION != "hhvm" && $TRAVIS_PHP_VERSION != "7.0" ]]; then pear package-validate package.xml; fi
   - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php scripts/build-phar.php; fi
   - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php phpcs.phar CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np; fi
