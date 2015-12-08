@@ -368,6 +368,34 @@ class Ruleset
             }
         }//end foreach
 
+        // Set custom php ini values as CLI args.
+        foreach ($ruleset->{'ini'} as $arg) {
+            if ($this->shouldProcessElement($arg) === false) {
+                continue;
+            }
+
+            if (isset($arg['name']) === false) {
+                continue;
+            }
+
+            $name      = (string) $arg['name'];
+            $argString = $name;
+            if (isset($arg['value']) === true) {
+                $value      = (string) $arg['value'];
+                $argString .= "=$value";
+            } else {
+                $value = 'true';
+            }
+
+            $cliArgs[] = '-d';
+            $cliArgs[] = $argString;
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo str_repeat("\t", $depth);
+                echo "\t=> set PHP ini value $name to $value".PHP_EOL;
+            }
+        }//end foreach
+
         if (empty($this->config->files) === true
             && $rulesetDir === getcwd()
         ) {

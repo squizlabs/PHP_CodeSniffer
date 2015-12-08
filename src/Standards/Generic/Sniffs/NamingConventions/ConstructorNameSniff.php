@@ -88,7 +88,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
 
         $endFunctionIndex = $tokens[$stackPtr]['scope_closer'];
         $startIndex       = $stackPtr;
-        while ($doubleColonIndex = $phpcsFile->findNext(T_DOUBLE_COLON, $startIndex, $endFunctionIndex)) {
+        while (($doubleColonIndex = $phpcsFile->findNext(T_DOUBLE_COLON, $startIndex, $endFunctionIndex)) !== false) {
             if ($tokens[($doubleColonIndex + 1)]['code'] === T_STRING
                 && $tokens[($doubleColonIndex + 1)]['content'] === $parentClassName
             ) {
