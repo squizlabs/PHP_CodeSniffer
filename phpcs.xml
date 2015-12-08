@@ -11,7 +11,5 @@
  <arg name="report" value="summary"/>
  <arg value="np"/>
 
- <ini name="memory_limit" value="64M"/>
-
  <rule ref="PHPCS"/>
 </ruleset>
