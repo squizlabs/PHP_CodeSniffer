@@ -128,6 +128,9 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
+                // Modify the bracket as well to ensure a conflict if the bracket
+                // has been changed in some way by another sniff.
+                $phpcsFile->fixer->replaceToken($openBracket, '(');
                 $phpcsFile->fixer->endChangeset();
             }
         }
@@ -143,6 +146,9 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
 
+                    // Modify the bracket as well to ensure a conflict if the bracket
+                    // has been changed in some way by another sniff.
+                    $phpcsFile->fixer->replaceToken($closeBracket, ')');
                     $phpcsFile->fixer->endChangeset();
                 }
             }
