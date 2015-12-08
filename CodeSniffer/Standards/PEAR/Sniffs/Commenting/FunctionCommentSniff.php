@@ -225,47 +225,52 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $comment   = '';
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = array();
-                preg_match('/([^$&]+)(?:((?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
-
-                $typeLen   = strlen($matches[1]);
-                $type      = trim($matches[1]);
-                $typeSpace = ($typeLen - strlen($type));
-                $typeLen   = strlen($type);
-                if ($typeLen > $maxType) {
-                    $maxType = $typeLen;
-                }
-
-                if (isset($matches[2]) === true) {
-                    $var    = $matches[2];
-                    $varLen = strlen($var);
-                    if ($varLen > $maxVar) {
-                        $maxVar = $varLen;
+                if (preg_match('/([^$&]+)(?:((?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches) ) {
+                    $typeLen = strlen($matches[1]);
+                    $type = trim($matches[1]);
+                    $typeSpace = ($typeLen - strlen($type));
+                    $typeLen = strlen($type);
+                    if ($typeLen > $maxType) {
+                        $maxType = $typeLen;
                     }
 
-                    if (isset($matches[4]) === true) {
-                        $varSpace = strlen($matches[3]);
-                        $comment  = $matches[4];
-
-                        // Any strings until the next tag belong to this comment.
-                        if (isset($tokens[$commentStart]['comment_tags'][($pos + 1)]) === true) {
-                            $end = $tokens[$commentStart]['comment_tags'][($pos + 1)];
-                        } else {
-                            $end = $tokens[$commentStart]['comment_closer'];
+                    if (isset($matches[2]) === true) {
+                        $var = $matches[2];
+                        $varLen = strlen($var);
+                        if ($varLen > $maxVar) {
+                            $maxVar = $varLen;
                         }
 
-                        for ($i = ($tag + 3); $i < $end; $i++) {
-                            if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
-                                $comment .= ' '.$tokens[$i]['content'];
+                        if (isset($matches[4]) === true) {
+                            $varSpace = strlen($matches[3]);
+                            $comment = $matches[4];
+
+                            // Any strings until the next tag belong to this comment.
+                            if (isset($tokens[$commentStart]['comment_tags'][($pos + 1)]) === true) {
+                                $end = $tokens[$commentStart]['comment_tags'][($pos + 1)];
+                            } else {
+                                $end = $tokens[$commentStart]['comment_closer'];
                             }
+
+                            for ($i = ($tag + 3); $i < $end; $i++) {
+                                if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
+                                    $comment .= ' ' . $tokens[$i]['content'];
+                                }
+                            }
+                        } else {
+                            $error = 'Missing parameter comment';
+                            $phpcsFile->addError($error, $tag, 'MissingParamComment');
                         }
+
                     } else {
-                        $error = 'Missing parameter comment';
-                        $phpcsFile->addError($error, $tag, 'MissingParamComment');
-                    }
-                } else {
-                    $error = 'Missing parameter name';
-                    $phpcsFile->addError($error, $tag, 'MissingParamName');
-                }//end if
+                        $error = 'Missing parameter name';
+                        $phpcsFile->addError($error, $tag, 'MissingParamName');
+                    }//end if
+                }
+                else {
+                    $error = 'Parameter syntax wrong';
+                    $phpcsFile->addError($error, $tag, 'MissingParamType');
+                }
             } else {
                 $error = 'Missing parameter type';
                 $phpcsFile->addError($error, $tag, 'MissingParamType');
