@@ -104,7 +104,8 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
                      $found,
                     );
 
-        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'InvalidEOLChar', $data);
+        // Errors are always reported on line 1, no matter where the first PHP tag is.
+        $fix = $phpcsFile->addFixableError($error, 0, 'InvalidEOLChar', $data);
 
         if ($fix === true) {
             $tokens = $phpcsFile->getTokens();
@@ -123,7 +124,7 @@ class Generic_Sniffs_Files_LineEndingsSniff implements PHP_CodeSniffer_Sniff
                 break;
             }
 
-            for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
+            for ($i = 0; $i < $phpcsFile->numTokens; $i++) {
                 if (isset($tokens[($i + 1)]) === false
                     || $tokens[($i + 1)]['line'] > $tokens[$i]['line']
                 ) {
