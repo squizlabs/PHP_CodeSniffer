@@ -848,7 +848,7 @@ class JS extends Tokenizer
             // Convert the token after an object operator into a string, in most cases.
             if ($token['code'] === T_OBJECT_OPERATOR) {
                 for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
-                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
+                    if (isset(Util\Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
                         continue;
                     }
 
