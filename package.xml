@@ -58,6 +58,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #805 : Squiz.Commenting.FunctionComment.InvalidTypeHint on Scalar types on PHP7
   - Fixed bug #807 : Cannot fix line endings when open PHP tag is not on the first line
   - Fixed bug #808 : JS tokeniser incorrectly setting some function and class names to control structure tokens
+  - Fixed bug #809 : PHPCBF can break a require_once statement with a space before the open parenthesis
  </notes>
  <contents>
   <dir name="/">

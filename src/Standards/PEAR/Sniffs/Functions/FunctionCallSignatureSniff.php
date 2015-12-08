@@ -116,6 +116,9 @@ class FunctionCallSignatureSniff implements Sniff
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
+                // Modify the bracket as well to ensure a conflict if the bracket
+                // has been changed in some way by another sniff.
+                $phpcsFile->fixer->replaceToken($openBracket, '(');
                 $phpcsFile->fixer->endChangeset();
             }
         }
@@ -131,6 +134,9 @@ class FunctionCallSignatureSniff implements Sniff
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
 
+                    // Modify the bracket as well to ensure a conflict if the bracket
+                    // has been changed in some way by another sniff.
+                    $phpcsFile->fixer->replaceToken($closeBracket, ')');
                     $phpcsFile->fixer->endChangeset();
                 }
             }
