@@ -808,19 +808,22 @@ class Config
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
-                $ignored = preg_split(
+                $patterns = preg_split(
                     '/(?<=(?<!\\\\)\\\\\\\\),|(?<!\\\\),/',
                     substr($arg, 7)
                 );
+
+                $ignored = array();
                 foreach ($ignored as $pattern) {
                     $pattern = trim($pattern);
                     if ($pattern === '') {
                         continue;
                     }
 
-                    $this->ignored[$pattern] = 'absolute';
+                    $ignored[$pattern] = 'absolute';
                 }
 
+                $this->ignored = $ignored;
                 $this->overriddenDefaults['ignored'] = true;
             } else if (substr($arg, 0, 10) === 'generator='
                 && PHP_CODESNIFFER_CBF === false
