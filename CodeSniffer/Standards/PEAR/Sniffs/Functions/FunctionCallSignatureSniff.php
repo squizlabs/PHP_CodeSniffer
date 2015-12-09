@@ -292,29 +292,40 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         // We need to work out how far indented the function
         // call itself is, so we can work out how far to
         // indent the arguments.
-        for ($i = ($stackPtr - 1); $i >= 0; $i--) {
-            if ($tokens[$i]['line'] !== $tokens[$stackPtr]['line']) {
-                $i++;
-                break;
-            }
-        }
-
-        if ($i <= 0) {
-            $functionIndent = 0;
-        } else if ($tokens[$i]['code'] === T_WHITESPACE) {
-            $functionIndent = strlen($tokens[$i]['content']);
-        } else {
-            $trimmed = ltrim($tokens[$i]['content']);
-            if ($trimmed === '') {
-                if ($tokens[$i]['code'] === T_INLINE_HTML) {
-                    $functionIndent = strlen($tokens[$i]['content']);
-                } else {
-                    $functionIndent = ($tokens[$i]['column'] - 1);
+        $start = $phpcsFile->findStartOfStatement($stackPtr);
+        foreach (array('stackPtr', 'start') as $checkToken) {
+            $x = $$checkToken;
+            for ($i = ($x - 1); $i >= 0; $i--) {
+                if ($tokens[$i]['line'] !== $tokens[$x]['line']) {
+                    $i++;
+                    break;
                 }
-            } else {
-                $functionIndent = (strlen($tokens[$i]['content']) - strlen($trimmed));
             }
-        }
+
+            if ($i <= 0) {
+                $functionIndent = 0;
+            } else if ($tokens[$i]['code'] === T_WHITESPACE) {
+                $functionIndent = strlen($tokens[$i]['content']);
+            } else if ($tokens[$i]['code'] === T_CONSTANT_ENCAPSED_STRING) {
+                $functionIndent = 0;
+            } else {
+                $trimmed = ltrim($tokens[$i]['content']);
+                if ($trimmed === '') {
+                    if ($tokens[$i]['code'] === T_INLINE_HTML) {
+                        $functionIndent = strlen($tokens[$i]['content']);
+                    } else {
+                        $functionIndent = ($tokens[$i]['column'] - 1);
+                    }
+                } else {
+                    $functionIndent = (strlen($tokens[$i]['content']) - strlen($trimmed));
+                }
+            }
+
+            $varName  = $checkToken.'Indent';
+            $$varName = $functionIndent;
+        }//end foreach
+
+        $functionIndent = max($startIndent, $stackPtrIndent);
 
         $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($openBracket + 1), null, true);
         if ($tokens[$next]['line'] === $tokens[$openBracket]['line']) {
