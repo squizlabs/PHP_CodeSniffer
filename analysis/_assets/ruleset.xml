@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="PHPCS Analysis">
  <description>Not a real coding standard; just sniffs that record interesting metrics.</description>
+ <ini name="memory_limit" value="512M"/>
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
  <rule ref="Generic.Files.LineEndings"/>
  <rule ref="Generic.Files.LineLength"/>

@@ -41,13 +41,6 @@ class PHPCSSummaryReport implements Report
      */
     public $recordErrors = false;
 
-    /**
-     * The files that were processed.
-     *
-     * @var string
-     */
-    private $_files = array();
-
 
     /**
      * Generate a partial report for a single processed file.
@@ -74,10 +67,7 @@ class PHPCSSummaryReport implements Report
             $lines = 0;
         }
 
-        $this->_files[$phpcsFile->getFilename()] = array(
-                                                    'tokens' => $phpcsFile->numTokens,
-                                                    'lines'  => $lines,
-                                                    );
+        echo $lines.'|'.$phpcsFile->numTokens.PHP_EOL;
         return true;
 
     }//end generateFileReport()
@@ -113,11 +103,15 @@ class PHPCSSummaryReport implements Report
         $numLines   = 0;
         $numFiles   = 0;
         $totalFiles = 0;
-        foreach ($this->_files as $file => $data) {
+
+        $lines = explode(PHP_EOL, trim($cachedData));
+        foreach ($lines as $line) {
+            $parts = explode('|', $line);
+
             $totalFiles++;
-            $numTokens += $data['tokens'];
-            $numLines  += $data['lines'];
-            if ($data['tokens'] > 0) {
+            $numTokens += $parts[1];
+            $numLines  += $parts[0];
+            if ($parts[1] > 0) {
                 $numFiles++;
             }
         }

@@ -154,9 +154,359 @@
         "extensions": ""
     },
     {
-        "name": "Zend Framework",
-        "url": "zendframework/zf2",
-        "path": "library/Zend",
+        "name": "Zend Framework.authentication",
+        "url": "zendframework/zend-authentication",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.barcode",
+        "url": "zendframework/zend-barcode",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.cache",
+        "url": "zendframework/zend-cache",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.captcha",
+        "url": "zendframework/zend-captcha",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.code",
+        "url": "zendframework/zend-code",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.config",
+        "url": "zendframework/zend-config",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.console",
+        "url": "zendframework/zend-console",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.crypt",
+        "url": "zendframework/zend-crypt",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.db",
+        "url": "zendframework/zend-db",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.debug",
+        "url": "zendframework/zend-debug",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.di",
+        "url": "zendframework/zend-di",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.dom",
+        "url": "zendframework/zend-dom",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.escaper",
+        "url": "zendframework/zend-escaper",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.eventmanager",
+        "url": "zendframework/zend-eventmanager",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.feed",
+        "url": "zendframework/zend-feed",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.file",
+        "url": "zendframework/zend-file",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.filter",
+        "url": "zendframework/zend-filter",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.form",
+        "url": "zendframework/zend-form",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.http",
+        "url": "zendframework/zend-http",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.i18n",
+        "url": "zendframework/zend-i18n",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.i18n-resources",
+        "url": "zendframework/zend-i18n-resources",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.inputfilter",
+        "url": "zendframework/zend-inputfilter",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.json",
+        "url": "zendframework/zend-json",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.loader",
+        "url": "zendframework/zend-loader",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.log",
+        "url": "zendframework/zend-log",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.mail",
+        "url": "zendframework/zend-mail",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.math",
+        "url": "zendframework/zend-math",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.memory",
+        "url": "zendframework/zend-memory",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.mime",
+        "url": "zendframework/zend-mime",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.modulemanager",
+        "url": "zendframework/zend-modulemanager",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.mvc",
+        "url": "zendframework/zend-mvc",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.navigation",
+        "url": "zendframework/zend-navigation",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.paginator",
+        "url": "zendframework/zend-paginator",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.permissions-acl",
+        "url": "zendframework/zend-permissions-acl",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.permissions-rbac",
+        "url": "zendframework/zend-rbac",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.progressbar",
+        "url": "zendframework/zend-progressbar",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.serializer",
+        "url": "zendframework/zend-serializer",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.server",
+        "url": "zendframework/zend-server",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.servicemanager",
+        "url": "zendframework/zend-servicemanager",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.session",
+        "url": "zendframework/zend-session",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.soap",
+        "url": "zendframework/zend-soap",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.stdlib",
+        "url": "zendframework/zend-stdlib",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.tag",
+        "url": "zendframework/zend-tag",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.test",
+        "url": "zendframework/zend-test",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.text",
+        "url": "zendframework/zend-text",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.uri",
+        "url": "zendframework/zend-uri",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.validator",
+        "url": "zendframework/zend-validator",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.version",
+        "url": "zendframework/zend-version",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.view",
+        "url": "zendframework/zend-view",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.xmlrpc",
+        "url": "zendframework/zend-xmlrpc",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "Zend Framework.zendxml",
+        "url": "zendframework/zend-zendxml",
+        "path": "src",
         "ignore": "",
         "extensions": ""
     },
@@ -336,8 +686,64 @@
         "extensions": ""
     },
     {
-        "name": "React",
-        "url": "reactphp/react",
+        "name": "React.child-process",
+        "url": "reactphp/child-process",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "React.dns",
+        "url": "reactphp/dns",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "React.event-loop",
+        "url": "reactphp/event-loop",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "React.http-client",
+        "url": "reactphp/http-client",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "React.http",
+        "url": "reactphp/http",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "React.promise",
+        "url": "reactphp/promise",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "React.socket-client",
+        "url": "reactphp/socket-client",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "React.socket",
+        "url": "reactphp/socket",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "React.stream",
+        "url": "reactphp/stream",
         "path": "src",
         "ignore": "",
         "extensions": ""

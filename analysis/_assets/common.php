@@ -120,7 +120,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
 
         }
     } else {
-        echo "\t* skipping respository update step *".PHP_EOL;
+        echo "\t* skipping repository update step *".PHP_EOL;
     }//end if
 
     if ($runPHPCS === true) {
@@ -128,8 +128,9 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         $infoReportPath    = __DIR__.'/PHPCSInfoReport.php';
         $summaryReportPath = __DIR__.'/PHPCSSummaryReport.php';
         //$cmd  = 'phpcs';
-        $cmd  = 'php /Users/gsherwood/Sites/Projects/PHPCS_ST2/bin/phpcs';
-        $cmd .= ' -d memory_limit=512M '.$checkDir.' --cache --standard='.__DIR__.'/ruleset.xml';
+        $cmd  = 'php /Users/gsherwood/Sites/Projects/PHPCS_ST2/bin/phpcs ';
+        $cmd .= $checkDir.' --cache --standard='.__DIR__.'/ruleset.xml';
+        $cmd .= ' --parallel=50 --no-cache';
         $cmd .= ' --extensions=php,inc,'.$repo->extensions;
         $cmd .= ' --ignore=*/tests/*,'.$repo->ignore;
         $cmd .= ' --runtime-set project '.$repo->url;
