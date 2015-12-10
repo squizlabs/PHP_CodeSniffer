@@ -432,13 +432,6 @@ class File
             echo "\t*** END SNIFF PROCESSING REPORT ***".PHP_EOL;
         }
 
-        // We don't need these any more.
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
-            $this->listenerTimes = null;
-            $this->content       = null;
-            $this->tokens        = null;
-            $this->tokenizer     = null;
-        }
 
     }//end process()
 
