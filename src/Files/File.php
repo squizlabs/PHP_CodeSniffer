@@ -432,7 +432,6 @@ class File
             echo "\t*** END SNIFF PROCESSING REPORT ***".PHP_EOL;
         }
 
-
     }//end process()
 
 
