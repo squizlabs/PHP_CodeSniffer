@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2015-11-24</date>
- <time>08:26:00</time>
+ <date>2015-12-11</date>
+ <time>11:05:00</time>
  <version>
   <release>2.5.0</release>
   <api>2.5.0</api>
@@ -35,7 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Setting the value of the new ini tags to name="memory_limit" value="32M" is the same as -d memory_limit=32M
   - Added support for one or more bootstrap files to be run before processing begins
     -- Use the --bootstrap=file,file,file command line argument to include bootstrap files
-    -- Ueeful if you want to override some of the high-level settings of PHPCS or PHPCBF
+    -- Useful if you want to override some of the high-level settings of PHPCS or PHPCBF
     -- Thanks to John Maguire for the patch
   - Added additional verbose output for CSS tokenizing
   - Squiz ComparisonOperatorUsageSniff now checks FOR, WHILE and DO-WHILE statements
@@ -2359,6 +2359,44 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <changelog>
   <release>
    <version>
+    <release>2.5.0</release>
+    <api>2.5.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2015-12-11</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - PHPCS will now look for a phpcs.xml file in parent directories as well as the current directory (request #626)
+    - PHPCS will now use a phpcs.xml file even if files are specified on the command line
+      -- This file is still only used if no standard is specified on the command line
+    - Added support for a phpcs.xml.dist file (request #583)
+      -- If both a phpcs.xml and phpcs.xml.dist file are present, the phpcs.xml file will be used
+    - Added support for setting PHP ini values in ruleset.xml files (request #560)
+      -- Setting the value of the new ini tags to name="memory_limit" value="32M" is the same as -d memory_limit=32M
+    - Added support for one or more bootstrap files to be run before processing begins
+      -- Use the --bootstrap=file,file,file command line argument to include bootstrap files
+      -- Useful if you want to override some of the high-level settings of PHPCS or PHPCBF
+      -- Thanks to John Maguire for the patch
+    - Added additional verbose output for CSS tokenizing
+    - Squiz ComparisonOperatorUsageSniff now checks FOR, WHILE and DO-WHILE statements
+      -- Thanks to Arnout Boks for the patch
+    - Fixed bug #660 : Syntax checks can fail on Windows with PHP5.6
+    - Fixed bug #784 : $this->trait is seen as a T_TRAIT token
+    - Fixed bug #786 : Switch indent issue with short array notation
+    - Fixed bug #787 : SpacingAfterDefaultBreak confused by multi-line statements
+    - Fixed bug #797 : Parsing CSS url() value breaks further parsing
+    - Fixed bug #805 : Squiz.Commenting.FunctionComment.InvalidTypeHint on Scalar types on PHP7
+    - Fixed bug #807 : Cannot fix line endings when open PHP tag is not on the first line
+    - Fixed bug #808 : JS tokeniser incorrectly setting some function and class names to control structure tokens
+    - Fixed bug #809 : PHPCBF can break a require_once statement with a space before the open parenthesis
+    - Fixed bug #813 : PEAR FunctionCallSignature checks wrong indent when first token on line is part of a multi-line string
+    </notes>
+  </release>
+  <release>
+   <version>
     <release>2.4.0</release>
     <api>2.4.0</api>
    </version>
@@ -2370,12 +2408,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added support for PHP 7 anonymous classes
-      - Anonymous classes are now tokenized as T_ANON_CLASS and ignored by normal class sniffs
+      -- Anonymous classes are now tokenized as T_ANON_CLASS and ignored by normal class sniffs
     - Added support for PHP 7 function return type declarations
-      - Return types are now tokenized as T_RETURN_TYPE
+      -- Return types are now tokenized as T_RETURN_TYPE
     - Fixed tokenizing of the XOR operator, which was incorrectly identified as a power operator (bug #765)
-      - The T_POWER token has been removed and replaced by the T_BITWISE_XOR token
-      - The PHP-supplied T_POW token has been replicated for PHP versions before 5.6
+      -- The T_POWER token has been removed and replaced by the T_BITWISE_XOR token
+      -- The PHP-supplied T_POW token has been replicated for PHP versions before 5.6
     - Traits are now tokenized in PHP versions before 5.4 to make testing easier
     - Improved regular expression detection in JS files
     - PEAR FunctionCallSignatureSniff now properly detects indents in more mixed HTML/PHP code blocks
@@ -2387,7 +2425,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Added more guard code for function declarations with syntax errors
       -- Thanks to Yun Young-jin for the patch
     - Added more guard code for foreach declarations with syntax errors
-        -- Thanks to Johan de Ruijter for the patch
+      -- Thanks to Johan de Ruijter for the patch
     - Added more guard code for class declarations with syntax errors
     - Squiz ArrayDeclarationSniff now has guard code for arrays with syntax errors
     - Generic InlineControlStructureSniff now correctly fixes ELSEIF statements
