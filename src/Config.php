@@ -814,7 +814,7 @@ class Config
                 );
 
                 $ignored = array();
-                foreach ($ignored as $pattern) {
+                foreach ($patterns as $pattern) {
                     $pattern = trim($pattern);
                     if ($pattern === '') {
                         continue;
