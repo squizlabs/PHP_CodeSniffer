@@ -22,7 +22,7 @@ var trendOptions = {
     fontName:"arial",
     fontSize:"11",
     hAxis:{slantedText:false,textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},baselineColor:"transparent",gridlines:{count:12,color:"transparent"}},
-    vAxes:[{gridlines:{count:7},textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},format:"##.##'%'",baseline:"transparent"},{viewWindowMode:"maximized",gridlines:{color:"transparent"},textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},titleTextStyle:{color:"#9F9F9F",fontName:"arial",fontSize:13,italic:false},baseline:"transparent"}],
+    vAxes:[{gridlines:{count:7},textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},format:"##.#'%'",baseline:"transparent"},{viewWindowMode:"maximized",gridlines:{color:"transparent"},textStyle:{color:"#9F9F9F",fontName:"arial",fontSize:11},titleTextStyle:{color:"#9F9F9F",fontName:"arial",fontSize:13,italic:false},baseline:"transparent"}],
     focusTarget:"category",
     tooltip:{textStyle:{fontName:"arial",fontSize:13}},
     pointSize:6,

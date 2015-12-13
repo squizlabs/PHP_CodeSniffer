@@ -44,7 +44,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
 
     if (is_dir($cloneDir) === false) {
         if ($runGit === false) {
-            echo "\t* respository has not been cloned, skipping *".PHP_EOL;
+            echo "\t* repository has not been cloned, skipping *".PHP_EOL;
             return $resultFile;
         }
 
@@ -53,7 +53,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         $cmd = "git clone --recursive $cloneURL $cloneDir";
         echo "\t\tcmd: $cmd".PHP_EOL;
         $output = shell_exec($cmd);
-        echo implode(PHP_EOL, $output);
+        #echo implode(PHP_EOL, $output);
     } else if ($runPHPCS === true && file_exists($resultFile) === true) {
         // Load in old trend values.
         echo "\t=> Loading old trend values from $resultFile".PHP_EOL;
@@ -130,7 +130,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         //$cmd  = 'phpcs';
         $cmd  = 'php /Users/gsherwood/Sites/Projects/PHPCS_ST2/bin/phpcs ';
         $cmd .= $checkDir.' --cache --standard='.__DIR__.'/ruleset.xml';
-        $cmd .= ' --parallel=50 --no-cache';
+        $cmd .= ' --parallel=50';
         $cmd .= ' --extensions=php,inc,'.$repo->extensions;
         $cmd .= ' --ignore=*/tests/*,'.$repo->ignore;
         $cmd .= ' --runtime-set project '.$repo->url;

@@ -7,6 +7,20 @@
         "extensions": ""
     },
     {
+        "name": "GintonicCMS",
+        "url": "gintonicweb/GintonicCMS",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
+        "name": "RadPHP",
+        "url": "radphp/radphp",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
+    },
+    {
         "name": "PHPUnit",
         "url": "sebastianbergmann/phpunit",
         "path": "",
@@ -393,7 +407,7 @@
     },
     {
         "name": "Zend Framework.permissions-rbac",
-        "url": "zendframework/zend-rbac",
+        "url": "zendframework/zend-permissions-rbac",
         "path": "src",
         "ignore": "",
         "extensions": ""
@@ -505,8 +519,8 @@
     },
     {
         "name": "Zend Framework.zendxml",
-        "url": "zendframework/zend-zendxml",
-        "path": "src",
+        "url": "zendframework/zendxml",
+        "path": "library",
         "ignore": "",
         "extensions": ""
     },
@@ -1292,6 +1306,13 @@
         "url": "revive-adserver/revive-adserver",
         "path": "",
         "ignore": "*/lib/,*/etc/*,*/var/*",
+        "extensions": ""
+    },
+    {
+        "name": "pimcore",
+        "url": "pimcore/pimcore",
+        "path": "pimcore",
+        "ignore": "",
         "extensions": ""
     }
 ]
