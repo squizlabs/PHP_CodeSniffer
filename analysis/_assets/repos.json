@@ -887,5 +887,12 @@
         "path": "",
         "ignore": "*/lib/,*/etc/*,*/var/*",
         "extensions": ""
+    },
+    {
+        "name": "QuickAppsCMS",
+        "url": "quickapps/cms",
+        "path": "",
+        "ignore": "*Lib/*,*tests/*,*config/*,*Composer/*,*webroot/*",
+        "extensions": ""
     }
 ]
