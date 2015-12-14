@@ -19,6 +19,13 @@ class Timing
      */
     private static $startTime;
 
+    /**
+     * Used to make sure we only print the run time once per run.
+     *
+     * @var boolean
+     */
+    private static $printed = false;
+
 
     /**
      * Start recording time for the run.
@@ -36,10 +43,18 @@ class Timing
     /**
      * Print information about the run.
      *
+     * @param boolean $force If TRUE, prints the output even if it has
+     *                       already been printed during the run.
+     *
      * @return void
      */
-    public static function printRunTime()
+    public static function printRunTime($force=false)
     {
+        if ($force === false && self::$printed === true) {
+            // A double call.
+            return;
+        }
+
         $time = ((microtime(true) - self::$startTime) * 1000);
 
         if ($time > 60000) {
@@ -57,6 +72,8 @@ class Timing
 
         $mem = round((memory_get_peak_usage(true) / (1024 * 1024)), 2).'Mb';
         echo "Time: $time; Memory: $mem".PHP_EOL.PHP_EOL;
+
+        self::$printed = true;
 
     }//end printRunTime()
 

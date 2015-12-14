@@ -235,12 +235,17 @@ class Cache
     /**
      * Retrieves a single entry from the cache.
      *
-     * @param string $key The key of the data to get.
+     * @param string $key The key of the data to get. If NULL,
+     *                    everything in the cache is returned.
      *
      * @return mixed
      */
-    public static function get($key)
+    public static function get($key=null)
     {
+        if ($key === null) {
+            return self::$cache;
+        }
+
         if (isset(self::$cache[$key]) === true) {
             return self::$cache[$key];
         }
