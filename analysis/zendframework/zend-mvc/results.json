@@ -1873,54 +1873,6 @@
       },
       "winner":1
     },
-    "Use of ELSE IF or ELSEIF":{
-      "total":38,
-      "values":{
-        "elseif":38
-      },
-      "percentages":{
-        "elseif":100
-      },
-      "trends":{
-        "2015-01-01":{
-          "elseif":37
-        },
-        "2015-02-01":{
-          "elseif":37
-        },
-        "2015-03-01":{
-          "elseif":37
-        },
-        "2015-04-01":{
-          "elseif":38
-        },
-        "2015-05-01":{
-          "elseif":38
-        },
-        "2015-06-01":{
-          "elseif":38
-        },
-        "2015-07-01":{
-          "elseif":38
-        },
-        "2015-08-01":{
-          "elseif":38
-        },
-        "2015-09-01":{
-          "elseif":38
-        },
-        "2015-10-01":{
-          "elseif":38
-        },
-        "2015-11-01":{
-          "elseif":38
-        },
-        "2015-12-01":{
-          "elseif":38
-        }
-      },
-      "winner":"elseif"
-    },
     "Spacing before string concat":{
       "total":110,
       "values":{
@@ -2044,6 +1996,54 @@
         }
       },
       "winner":1
+    },
+    "Use of ELSE IF or ELSEIF":{
+      "total":38,
+      "values":{
+        "elseif":38
+      },
+      "percentages":{
+        "elseif":100
+      },
+      "trends":{
+        "2015-01-01":{
+          "elseif":37
+        },
+        "2015-02-01":{
+          "elseif":37
+        },
+        "2015-03-01":{
+          "elseif":37
+        },
+        "2015-04-01":{
+          "elseif":38
+        },
+        "2015-05-01":{
+          "elseif":38
+        },
+        "2015-06-01":{
+          "elseif":38
+        },
+        "2015-07-01":{
+          "elseif":38
+        },
+        "2015-08-01":{
+          "elseif":38
+        },
+        "2015-09-01":{
+          "elseif":38
+        },
+        "2015-10-01":{
+          "elseif":38
+        },
+        "2015-11-01":{
+          "elseif":38
+        },
+        "2015-12-01":{
+          "elseif":38
+        }
+      },
+      "winner":"elseif"
     },
     "Brackets around echoed strings":{
       "total":2,

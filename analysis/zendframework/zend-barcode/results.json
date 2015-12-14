@@ -1704,6 +1704,68 @@
       },
       "winner":1
     },
+    "Array end comma":{
+      "total":16,
+      "values":{
+        "no":7,
+        "yes":9
+      },
+      "percentages":{
+        "no":43.75,
+        "yes":56.25
+      },
+      "trends":{
+        "2015-01-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-02-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-03-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-04-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-05-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-06-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-07-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-08-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-09-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-10-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-11-01":{
+          "no":7,
+          "yes":9
+        },
+        "2015-12-01":{
+          "no":7,
+          "yes":9
+        }
+      },
+      "winner":"yes"
+    },
     "Spacing before string concat":{
       "total":28,
       "values":{
@@ -1814,115 +1876,53 @@
       },
       "winner":1
     },
-    "Array end comma":{
-      "total":16,
+    "Brackets around echoed strings":{
+      "total":2,
       "values":{
-        "no":7,
-        "yes":9
+        "no":2
       },
       "percentages":{
-        "no":43.75,
-        "yes":56.25
+        "no":100
       },
       "trends":{
         "2015-01-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-02-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-03-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-04-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-05-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-06-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-07-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-08-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-09-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-10-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-11-01":{
-          "no":7,
-          "yes":9
+          "no":2
         },
         "2015-12-01":{
-          "no":7,
-          "yes":9
+          "no":2
         }
       },
-      "winner":"yes"
-    },
-    "Use of ELSE IF or ELSEIF":{
-      "total":5,
-      "values":{
-        "elseif":5
-      },
-      "percentages":{
-        "elseif":100
-      },
-      "trends":{
-        "2015-01-01":{
-          "elseif":5
-        },
-        "2015-02-01":{
-          "elseif":5
-        },
-        "2015-03-01":{
-          "elseif":5
-        },
-        "2015-04-01":{
-          "elseif":5
-        },
-        "2015-05-01":{
-          "elseif":5
-        },
-        "2015-06-01":{
-          "elseif":5
-        },
-        "2015-07-01":{
-          "elseif":5
-        },
-        "2015-08-01":{
-          "elseif":5
-        },
-        "2015-09-01":{
-          "elseif":5
-        },
-        "2015-10-01":{
-          "elseif":5
-        },
-        "2015-11-01":{
-          "elseif":5
-        },
-        "2015-12-01":{
-          "elseif":5
-        }
-      },
-      "winner":"elseif"
+      "winner":"no"
     },
     "Private method prefixed with underscore":{
       "total":1,
@@ -1972,53 +1972,53 @@
       },
       "winner":"no"
     },
-    "Brackets around echoed strings":{
-      "total":2,
+    "Use of ELSE IF or ELSEIF":{
+      "total":5,
       "values":{
-        "no":2
+        "elseif":5
       },
       "percentages":{
-        "no":100
+        "elseif":100
       },
       "trends":{
         "2015-01-01":{
-          "no":2
+          "elseif":5
         },
         "2015-02-01":{
-          "no":2
+          "elseif":5
         },
         "2015-03-01":{
-          "no":2
+          "elseif":5
         },
         "2015-04-01":{
-          "no":2
+          "elseif":5
         },
         "2015-05-01":{
-          "no":2
+          "elseif":5
         },
         "2015-06-01":{
-          "no":2
+          "elseif":5
         },
         "2015-07-01":{
-          "no":2
+          "elseif":5
         },
         "2015-08-01":{
-          "no":2
+          "elseif":5
         },
         "2015-09-01":{
-          "no":2
+          "elseif":5
         },
         "2015-10-01":{
-          "no":2
+          "elseif":5
         },
         "2015-11-01":{
-          "no":2
+          "elseif":5
         },
         "2015-12-01":{
-          "no":2
+          "elseif":5
         }
       },
-      "winner":"no"
+      "winner":"elseif"
     },
     "Array keyword case":{
       "total":0,

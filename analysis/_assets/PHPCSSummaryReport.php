@@ -67,7 +67,7 @@ class PHPCSSummaryReport implements Report
             $lines = 0;
         }
 
-        echo $lines.'|'.$phpcsFile->numTokens.PHP_EOL;
+        echo $lines.'|'.$phpcsFile->numTokens.'|'.(int) $phpcsFile->fromCache.PHP_EOL;
         return true;
 
     }//end generateFileReport()
@@ -99,10 +99,10 @@ class PHPCSSummaryReport implements Report
         $interactive=false,
         $toScreen=true
     ) {
-        $numTokens  = 0;
-        $numLines   = 0;
-        $numFiles   = 0;
-        $totalFiles = 0;
+        $numTokens   = 0;
+        $numLines    = 0;
+        $totalFiles  = 0;
+        $cachedFiles = 0;
 
         $lines = explode(PHP_EOL, trim($cachedData));
         foreach ($lines as $line) {
@@ -111,12 +111,13 @@ class PHPCSSummaryReport implements Report
             $totalFiles++;
             $numTokens += $parts[1];
             $numLines  += $parts[0];
-            if ($parts[1] > 0) {
-                $numFiles++;
+
+            if ($parts[2] === '1') {
+                $cachedFiles++;
             }
         }
 
-        echo "Processed $numFiles/$totalFiles files containing $numTokens tokens across $numLines lines".PHP_EOL;
+        echo "Processed $totalFiles files ($cachedFiles cached) containing $numTokens tokens across $numLines lines".PHP_EOL;
         Timing::printRunTime();
 
     }//end generate()

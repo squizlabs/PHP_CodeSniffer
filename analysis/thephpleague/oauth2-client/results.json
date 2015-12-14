@@ -1693,6 +1693,36 @@
       },
       "winner":1
     },
+    "Private method prefixed with underscore":{
+      "total":4,
+      "values":{
+        "no":4
+      },
+      "percentages":{
+        "no":100
+      },
+      "trends":{
+        "2015-07-01":{
+          "no":3
+        },
+        "2015-08-01":{
+          "no":3
+        },
+        "2015-09-01":{
+          "no":3
+        },
+        "2015-10-01":{
+          "no":3
+        },
+        "2015-11-01":{
+          "no":4
+        },
+        "2015-12-01":{
+          "no":4
+        }
+      },
+      "winner":"no"
+    },
     "PHP constant case":{
       "total":15,
       "values":{
@@ -1740,36 +1770,6 @@
         }
       },
       "winner":"lower"
-    },
-    "Private method prefixed with underscore":{
-      "total":4,
-      "values":{
-        "no":4
-      },
-      "percentages":{
-        "no":100
-      },
-      "trends":{
-        "2015-07-01":{
-          "no":3
-        },
-        "2015-08-01":{
-          "no":3
-        },
-        "2015-09-01":{
-          "no":3
-        },
-        "2015-10-01":{
-          "no":3
-        },
-        "2015-11-01":{
-          "no":4
-        },
-        "2015-12-01":{
-          "no":4
-        }
-      },
-      "winner":"no"
     },
     "Spacing after cast statement":{
       "total":4,

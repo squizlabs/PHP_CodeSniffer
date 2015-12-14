@@ -1132,54 +1132,6 @@
       },
       "winner":1
     },
-    "CamelCase method name":{
-      "total":42,
-      "values":{
-        "yes":42
-      },
-      "percentages":{
-        "yes":100
-      },
-      "trends":{
-        "2015-01-01":{
-          "yes":42
-        },
-        "2015-02-01":{
-          "yes":42
-        },
-        "2015-03-01":{
-          "yes":42
-        },
-        "2015-04-01":{
-          "yes":42
-        },
-        "2015-05-01":{
-          "yes":42
-        },
-        "2015-06-01":{
-          "yes":42
-        },
-        "2015-07-01":{
-          "yes":42
-        },
-        "2015-08-01":{
-          "yes":42
-        },
-        "2015-09-01":{
-          "yes":42
-        },
-        "2015-10-01":{
-          "yes":42
-        },
-        "2015-11-01":{
-          "yes":42
-        },
-        "2015-12-01":{
-          "yes":42
-        }
-      },
-      "winner":"yes"
-    },
     "Control structure defined inline":{
       "total":18,
       "values":{
@@ -1323,6 +1275,54 @@
         }
       },
       "winner":0
+    },
+    "CamelCase method name":{
+      "total":42,
+      "values":{
+        "yes":42
+      },
+      "percentages":{
+        "yes":100
+      },
+      "trends":{
+        "2015-01-01":{
+          "yes":42
+        },
+        "2015-02-01":{
+          "yes":42
+        },
+        "2015-03-01":{
+          "yes":42
+        },
+        "2015-04-01":{
+          "yes":42
+        },
+        "2015-05-01":{
+          "yes":42
+        },
+        "2015-06-01":{
+          "yes":42
+        },
+        "2015-07-01":{
+          "yes":42
+        },
+        "2015-08-01":{
+          "yes":42
+        },
+        "2015-09-01":{
+          "yes":42
+        },
+        "2015-10-01":{
+          "yes":42
+        },
+        "2015-11-01":{
+          "yes":42
+        },
+        "2015-12-01":{
+          "yes":42
+        }
+      },
+      "winner":"yes"
     },
     "Space before operator":{
       "total":6,
@@ -1468,53 +1468,53 @@
       },
       "winner":1
     },
-    "Short array syntax used":{
-      "total":4,
+    "PHP constant case":{
+      "total":9,
       "values":{
-        "yes":4
+        "lower":9
       },
       "percentages":{
-        "yes":100
+        "lower":100
       },
       "trends":{
         "2015-01-01":{
-          "yes":4
+          "lower":9
         },
         "2015-02-01":{
-          "yes":4
+          "lower":9
         },
         "2015-03-01":{
-          "yes":4
+          "lower":9
         },
         "2015-04-01":{
-          "yes":4
+          "lower":9
         },
         "2015-05-01":{
-          "yes":4
+          "lower":9
         },
         "2015-06-01":{
-          "yes":4
+          "lower":9
         },
         "2015-07-01":{
-          "yes":4
+          "lower":9
         },
         "2015-08-01":{
-          "yes":4
+          "lower":9
         },
         "2015-09-01":{
-          "yes":4
+          "lower":9
         },
         "2015-10-01":{
-          "yes":4
+          "lower":9
         },
         "2015-11-01":{
-          "yes":4
+          "lower":9
         },
         "2015-12-01":{
-          "yes":4
+          "lower":9
         }
       },
-      "winner":"yes"
+      "winner":"lower"
     },
     "Inline comment style":{
       "total":9,
@@ -1564,53 +1564,53 @@
       },
       "winner":"\/\/ ..."
     },
-    "PHP constant case":{
-      "total":9,
+    "Short array syntax used":{
+      "total":4,
       "values":{
-        "lower":9
+        "yes":4
       },
       "percentages":{
-        "lower":100
+        "yes":100
       },
       "trends":{
         "2015-01-01":{
-          "lower":9
+          "yes":4
         },
         "2015-02-01":{
-          "lower":9
+          "yes":4
         },
         "2015-03-01":{
-          "lower":9
+          "yes":4
         },
         "2015-04-01":{
-          "lower":9
+          "yes":4
         },
         "2015-05-01":{
-          "lower":9
+          "yes":4
         },
         "2015-06-01":{
-          "lower":9
+          "yes":4
         },
         "2015-07-01":{
-          "lower":9
+          "yes":4
         },
         "2015-08-01":{
-          "lower":9
+          "yes":4
         },
         "2015-09-01":{
-          "lower":9
+          "yes":4
         },
         "2015-10-01":{
-          "lower":9
+          "yes":4
         },
         "2015-11-01":{
-          "lower":9
+          "yes":4
         },
         "2015-12-01":{
-          "lower":9
+          "yes":4
         }
       },
-      "winner":"lower"
+      "winner":"yes"
     }
   },
   "project":{

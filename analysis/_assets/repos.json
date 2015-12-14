@@ -143,7 +143,7 @@
         "name": "AWS SDK for PHP",
         "url": "aws/aws-sdk-php",
         "path": "src",
-        "ignore": "",
+        "ignore": "*-\\\\d{4}-\\\\d{2}-\\\\d{2}.php",
         "extensions": ""
     },
     {
@@ -1312,7 +1312,7 @@
         "name": "pimcore",
         "url": "pimcore/pimcore",
         "path": "pimcore",
-        "ignore": "",
+        "ignore": "*/lib/*",
         "extensions": ""
     }
 ]

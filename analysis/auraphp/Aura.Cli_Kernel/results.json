@@ -1338,54 +1338,6 @@
       },
       "winner":"no"
     },
-    "PHP constant case":{
-      "total":3,
-      "values":{
-        "lower":3
-      },
-      "percentages":{
-        "lower":100
-      },
-      "trends":{
-        "2015-01-01":{
-          "lower":3
-        },
-        "2015-02-01":{
-          "lower":3
-        },
-        "2015-03-01":{
-          "lower":3
-        },
-        "2015-04-01":{
-          "lower":3
-        },
-        "2015-05-01":{
-          "lower":3
-        },
-        "2015-06-01":{
-          "lower":3
-        },
-        "2015-07-01":{
-          "lower":3
-        },
-        "2015-08-01":{
-          "lower":3
-        },
-        "2015-09-01":{
-          "lower":3
-        },
-        "2015-10-01":{
-          "lower":3
-        },
-        "2015-11-01":{
-          "lower":3
-        },
-        "2015-12-01":{
-          "lower":3
-        }
-      },
-      "winner":"lower"
-    },
     "Control structure defined inline":{
       "total":10,
       "values":{
@@ -1529,6 +1481,54 @@
         }
       },
       "winner":0
+    },
+    "PHP constant case":{
+      "total":3,
+      "values":{
+        "lower":3
+      },
+      "percentages":{
+        "lower":100
+      },
+      "trends":{
+        "2015-01-01":{
+          "lower":3
+        },
+        "2015-02-01":{
+          "lower":3
+        },
+        "2015-03-01":{
+          "lower":3
+        },
+        "2015-04-01":{
+          "lower":3
+        },
+        "2015-05-01":{
+          "lower":3
+        },
+        "2015-06-01":{
+          "lower":3
+        },
+        "2015-07-01":{
+          "lower":3
+        },
+        "2015-08-01":{
+          "lower":3
+        },
+        "2015-09-01":{
+          "lower":3
+        },
+        "2015-10-01":{
+          "lower":3
+        },
+        "2015-11-01":{
+          "lower":3
+        },
+        "2015-12-01":{
+          "lower":3
+        }
+      },
+      "winner":"lower"
     },
     "Spacing before string concat":{
       "total":5,

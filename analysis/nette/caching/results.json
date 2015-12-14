@@ -853,53 +853,53 @@
       },
       "winner":"yes"
     },
-    "CamelCase method name":{
+    "Function opening brace placement":{
       "total":67,
       "values":{
-        "yes":67
+        "new line":67
       },
       "percentages":{
-        "yes":100
+        "new line":100
       },
       "trends":{
         "2015-01-01":{
-          "yes":96
+          "new line":97
         },
         "2015-02-01":{
-          "yes":96
+          "new line":97
         },
         "2015-03-01":{
-          "yes":96
+          "new line":97
         },
         "2015-04-01":{
-          "yes":96
+          "new line":97
         },
         "2015-05-01":{
-          "yes":98
+          "new line":100
         },
         "2015-06-01":{
-          "yes":98
+          "new line":100
         },
         "2015-07-01":{
-          "yes":98
+          "new line":100
         },
         "2015-08-01":{
-          "yes":98
+          "new line":100
         },
         "2015-09-01":{
-          "yes":93
+          "new line":95
         },
         "2015-10-01":{
-          "yes":67
+          "new line":67
         },
         "2015-11-01":{
-          "yes":67
+          "new line":67
         },
         "2015-12-01":{
-          "yes":67
+          "new line":67
         }
       },
-      "winner":"yes"
+      "winner":"new line"
     },
     "Function has doc comment":{
       "total":74,
@@ -962,54 +962,6 @@
         }
       },
       "winner":"yes"
-    },
-    "Function opening brace placement":{
-      "total":67,
-      "values":{
-        "new line":67
-      },
-      "percentages":{
-        "new line":100
-      },
-      "trends":{
-        "2015-01-01":{
-          "new line":97
-        },
-        "2015-02-01":{
-          "new line":97
-        },
-        "2015-03-01":{
-          "new line":97
-        },
-        "2015-04-01":{
-          "new line":97
-        },
-        "2015-05-01":{
-          "new line":100
-        },
-        "2015-06-01":{
-          "new line":100
-        },
-        "2015-07-01":{
-          "new line":100
-        },
-        "2015-08-01":{
-          "new line":100
-        },
-        "2015-09-01":{
-          "new line":95
-        },
-        "2015-10-01":{
-          "new line":67
-        },
-        "2015-11-01":{
-          "new line":67
-        },
-        "2015-12-01":{
-          "new line":67
-        }
-      },
-      "winner":"new line"
     },
     "Spacing before object operator":{
       "total":224,
@@ -1230,6 +1182,54 @@
         }
       },
       "winner":1
+    },
+    "CamelCase method name":{
+      "total":67,
+      "values":{
+        "yes":67
+      },
+      "percentages":{
+        "yes":100
+      },
+      "trends":{
+        "2015-01-01":{
+          "yes":96
+        },
+        "2015-02-01":{
+          "yes":96
+        },
+        "2015-03-01":{
+          "yes":96
+        },
+        "2015-04-01":{
+          "yes":96
+        },
+        "2015-05-01":{
+          "yes":98
+        },
+        "2015-06-01":{
+          "yes":98
+        },
+        "2015-07-01":{
+          "yes":98
+        },
+        "2015-08-01":{
+          "yes":98
+        },
+        "2015-09-01":{
+          "yes":93
+        },
+        "2015-10-01":{
+          "yes":67
+        },
+        "2015-11-01":{
+          "yes":67
+        },
+        "2015-12-01":{
+          "yes":67
+        }
+      },
+      "winner":"yes"
     },
     "Short array syntax used":{
       "total":29,

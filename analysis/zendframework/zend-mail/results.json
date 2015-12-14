@@ -1685,53 +1685,53 @@
       },
       "winner":"yes"
     },
-    "Use of ELSE IF or ELSEIF":{
-      "total":22,
+    "Array end comma":{
+      "total":1,
       "values":{
-        "elseif":22
+        "yes":"1"
       },
       "percentages":{
-        "elseif":100
+        "yes":100
       },
       "trends":{
         "2015-01-01":{
-          "elseif":24
+          "yes":"1"
         },
         "2015-02-01":{
-          "elseif":24
+          "yes":"1"
         },
         "2015-03-01":{
-          "elseif":24
+          "yes":"1"
         },
         "2015-04-01":{
-          "elseif":24
+          "yes":"1"
         },
         "2015-05-01":{
-          "elseif":24
+          "yes":"1"
         },
         "2015-06-01":{
-          "elseif":22
+          "yes":"1"
         },
         "2015-07-01":{
-          "elseif":22
+          "yes":"1"
         },
         "2015-08-01":{
-          "elseif":22
+          "yes":"1"
         },
         "2015-09-01":{
-          "elseif":22
+          "yes":"1"
         },
         "2015-10-01":{
-          "elseif":22
+          "yes":"1"
         },
         "2015-11-01":{
-          "elseif":22
+          "yes":"1"
         },
         "2015-12-01":{
-          "elseif":22
+          "yes":"1"
         }
       },
-      "winner":"elseif"
+      "winner":"yes"
     },
     "Inline comment style":{
       "total":259,
@@ -1794,54 +1794,6 @@
         }
       },
       "winner":"\/\/ ..."
-    },
-    "Array end comma":{
-      "total":1,
-      "values":{
-        "yes":"1"
-      },
-      "percentages":{
-        "yes":100
-      },
-      "trends":{
-        "2015-01-01":{
-          "yes":"1"
-        },
-        "2015-02-01":{
-          "yes":"1"
-        },
-        "2015-03-01":{
-          "yes":"1"
-        },
-        "2015-04-01":{
-          "yes":"1"
-        },
-        "2015-05-01":{
-          "yes":"1"
-        },
-        "2015-06-01":{
-          "yes":"1"
-        },
-        "2015-07-01":{
-          "yes":"1"
-        },
-        "2015-08-01":{
-          "yes":"1"
-        },
-        "2015-09-01":{
-          "yes":"1"
-        },
-        "2015-10-01":{
-          "yes":"1"
-        },
-        "2015-11-01":{
-          "yes":"1"
-        },
-        "2015-12-01":{
-          "yes":"1"
-        }
-      },
-      "winner":"yes"
     },
     "Spacing after cast statement":{
       "total":52,
@@ -1977,6 +1929,54 @@
         }
       },
       "winner":"no"
+    },
+    "Use of ELSE IF or ELSEIF":{
+      "total":22,
+      "values":{
+        "elseif":22
+      },
+      "percentages":{
+        "elseif":100
+      },
+      "trends":{
+        "2015-01-01":{
+          "elseif":24
+        },
+        "2015-02-01":{
+          "elseif":24
+        },
+        "2015-03-01":{
+          "elseif":24
+        },
+        "2015-04-01":{
+          "elseif":24
+        },
+        "2015-05-01":{
+          "elseif":24
+        },
+        "2015-06-01":{
+          "elseif":22
+        },
+        "2015-07-01":{
+          "elseif":22
+        },
+        "2015-08-01":{
+          "elseif":22
+        },
+        "2015-09-01":{
+          "elseif":22
+        },
+        "2015-10-01":{
+          "elseif":22
+        },
+        "2015-11-01":{
+          "elseif":22
+        },
+        "2015-12-01":{
+          "elseif":22
+        }
+      },
+      "winner":"elseif"
     },
     "Array keyword case":{
       "total":0,

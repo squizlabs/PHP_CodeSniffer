@@ -2074,54 +2074,6 @@
       },
       "winner":"lower"
     },
-    "Constant name case":{
-      "total":3,
-      "values":{
-        "upper":3
-      },
-      "percentages":{
-        "upper":100
-      },
-      "trends":{
-        "2015-01-01":{
-          "upper":3
-        },
-        "2015-02-01":{
-          "upper":3
-        },
-        "2015-03-01":{
-          "upper":3
-        },
-        "2015-04-01":{
-          "upper":3
-        },
-        "2015-05-01":{
-          "upper":3
-        },
-        "2015-06-01":{
-          "upper":3
-        },
-        "2015-07-01":{
-          "upper":3
-        },
-        "2015-08-01":{
-          "upper":3
-        },
-        "2015-09-01":{
-          "upper":3
-        },
-        "2015-10-01":{
-          "upper":3
-        },
-        "2015-11-01":{
-          "upper":3
-        },
-        "2015-12-01":{
-          "upper":3
-        }
-      },
-      "winner":"upper"
-    },
     "Use of ELSE IF or ELSEIF":{
       "total":20,
       "values":{
@@ -2169,6 +2121,54 @@
         }
       },
       "winner":"elseif"
+    },
+    "Constant name case":{
+      "total":3,
+      "values":{
+        "upper":3
+      },
+      "percentages":{
+        "upper":100
+      },
+      "trends":{
+        "2015-01-01":{
+          "upper":3
+        },
+        "2015-02-01":{
+          "upper":3
+        },
+        "2015-03-01":{
+          "upper":3
+        },
+        "2015-04-01":{
+          "upper":3
+        },
+        "2015-05-01":{
+          "upper":3
+        },
+        "2015-06-01":{
+          "upper":3
+        },
+        "2015-07-01":{
+          "upper":3
+        },
+        "2015-08-01":{
+          "upper":3
+        },
+        "2015-09-01":{
+          "upper":3
+        },
+        "2015-10-01":{
+          "upper":3
+        },
+        "2015-11-01":{
+          "upper":3
+        },
+        "2015-12-01":{
+          "upper":3
+        }
+      },
+      "winner":"upper"
     },
     "Array end comma":{
       "total":915,
