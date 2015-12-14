@@ -358,7 +358,7 @@ class Runner
                                     'totalFixable'  => $this->reporter->totalFixable,
                                    );
 
-                    $childCache = Cache::get();
+                    $childCache = Cache::get($path);
 
                     $output  = '<'.'?php'."\n".' $childOutput = ';
                     $output .= var_export($childOutput, true);
@@ -596,19 +596,13 @@ class Runner
                         }
 
                         if (isset($childCache) === true) {
-                            foreach ($childCache as $key => $value) {
-                                if ($key === 'config') {
-                                    continue;
-                                }
-
-                                Cache::set($key, $value);
-                            }
+                            Cache::set($path, $childCache);
                         }
 
                         unlink($procData['out']);
                         unset($childProcs[$path]);
-                    }//end if
-                }//end if
+                    }
+                }
             }//end foreach
         }//end while
 

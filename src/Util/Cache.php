@@ -258,14 +258,19 @@ class Cache
     /**
      * Retrieves a single entry from the cache.
      *
-     * @param string $key   The key of the data to set.
+     * @param string $key   The key of the data to set. If NULL,
+     *                      sets the entire cache.
      * @param mixed  $value The value to set.
      *
      * @return void
      */
     public static function set($key, $value)
     {
-        self::$cache[$key] = $value;
+        if ($key === null) {
+            self::$cache = $value;
+        } else {
+            self::$cache[$key] = $value;
+        }
 
     }//end set()
 
