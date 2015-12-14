@@ -1305,7 +1305,7 @@
         "name": "Revive Adserver",
         "url": "revive-adserver/revive-adserver",
         "path": "",
-        "ignore": "*/lib/,*/etc/*,*/var/*",
+        "ignore": "*/lib/*,*/etc/*,*/var/*",
         "extensions": ""
     },
     {
@@ -1314,5 +1314,12 @@
         "path": "pimcore",
         "ignore": "*/lib/*",
         "extensions": ""
-    }
+    },
+    {
+        "name": "QuickAppsCMS",
+        "url": "quickapps/cms",
+        "path": "",
+        "ignore": "*/Lib/*,*/config/*,*/Composer/*,*/webroot/*",
+        "extensions": ""
+     }
 ]
