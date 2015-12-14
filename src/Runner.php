@@ -347,7 +347,9 @@ class Runner
                     $this->reporter->totalWarnings = 0;
                     $this->reporter->totalFixable  = 0;
 
+                    ob_start();
                     $this->processFile($file);
+                    ob_end_flush();
 
                     $childOutput = array(
                                     'totalFiles'    => $this->reporter->totalFiles,
@@ -484,20 +486,14 @@ class Runner
     {
         if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
             $startTime = microtime(true);
-            $message   = 'Processing '.basename($file->path);
-            if ($this->config->parallel > 1) {
-                echo $message.PHP_EOL;
-            } else {
-                echo $message.' ';
-            }
+            echo 'Processing '.basename($file->path).' ';
         }
 
         try {
             $file->process();
 
-            if ($this->config->parallel === 1
-                && (PHP_CODESNIFFER_VERBOSITY > 0
-                || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false))
+            if (PHP_CODESNIFFER_VERBOSITY > 0
+                || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)
             ) {
                 $timeTaken = ((microtime(true) - $startTime) * 1000);
                 if ($timeTaken < 1000) {

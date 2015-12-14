@@ -463,9 +463,8 @@ class File
             $this->tokens    = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
-            if ($this->config->parallel === 1
-                && (PHP_CODESNIFFER_VERBOSITY > 0
-                || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false))
+            if (PHP_CODESNIFFER_VERBOSITY > 0
+                || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)
             ) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -492,9 +491,8 @@ class File
             $this->addWarningOnLine($error, 1, 'Internal.LineEndings.Mixed');
         }
 
-        if ($this->config->parallel === 1
-            && (PHP_CODESNIFFER_VERBOSITY > 0
-            || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false))
+        if (PHP_CODESNIFFER_VERBOSITY > 0
+            || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)
         ) {
             if ($this->numTokens === 0) {
                 $numLines = 0;
