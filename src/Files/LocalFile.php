@@ -114,6 +114,8 @@ class LocalFile extends File
                 echo "[loaded from cache]... ";
             }
 
+            $this->numTokens = $cache['numTokens'];
+            $this->fromCache = true;
             return;
         }
 
@@ -124,13 +126,11 @@ class LocalFile extends File
         parent::process();
 
         $cache = array(
-                  'hash'         => $hash,
-                  'errors'       => $this->errors,
-                  'warnings'     => $this->warnings,
-                  'metrics'      => $this->metrics,
-                  'errorCount'   => $this->errorCount,
-                  'warningCount' => $this->warningCount,
-                  'fixableCount' => $this->fixableCount,
+                  'hash'      => $hash,
+                  'errors'    => $this->errors,
+                  'warnings'  => $this->warnings,
+                  'metrics'   => $this->metrics,
+                  'numTokens' => $this->numTokens,
                  );
 
         Cache::set($this->path, $cache);

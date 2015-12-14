@@ -76,6 +76,16 @@ class File
     public $tokenizer = null;
 
     /**
+     * Was the file loaded from cache?
+     *
+     * If TRUE, the file was loaded from a local cache.
+     * If FALSE, the file was tokenized and processed fully.
+     *
+     * @var boolean
+     */
+    public $fromCache = false;
+
+    /**
      * The number of tokens in this file.
      *
      * Stored here to save calling count() everywhere.
