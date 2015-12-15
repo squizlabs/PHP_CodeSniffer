@@ -73,7 +73,7 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '2.5.0';
+    const VERSION = '2.5.1';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -705,6 +705,7 @@ class PHP_CodeSniffer
         $cliValues      = $this->cli->getCommandLineValues();
 
         $rulesetDir          = dirname($rulesetPath);
+        $rulesetName         = basename($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
 
         if (is_dir($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs') === true) {
@@ -817,9 +818,7 @@ class PHP_CodeSniffer
             }
         }//end foreach
 
-        if (empty($cliValues['files']) === true
-            && $rulesetDir === getcwd()
-        ) {
+        if (empty($cliValues['files']) === true) {
             // Process hard-coded file paths.
             foreach ($ruleset->{'file'} as $file) {
                 $file      = (string) $file;
