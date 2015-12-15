@@ -879,7 +879,11 @@ class PHP_CodeSniffer_CLI
         if (empty($values['files']) === true) {
             // Check if they are passing in the file contents.
             $handle       = fopen('php://stdin', 'r');
-            $fileContents = stream_get_contents($handle);
+            $fileContents = '';
+            stream_set_blocking($handle, 0);
+            while(($content = fgets($handle)) !== false){
+                $fileContents .= $content;
+            }
             fclose($handle);
 
             if ($fileContents === '') {
@@ -893,7 +897,6 @@ class PHP_CodeSniffer_CLI
                 }
             }
         }
-
         // Interactive runs don't require a final report and it doesn't really
         // matter what the retun value is because we know it isn't being read
         // by a script.
