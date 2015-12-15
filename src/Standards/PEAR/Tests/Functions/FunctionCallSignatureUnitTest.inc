@@ -259,3 +259,19 @@ $this->log(// ...
         ]
     ); ?>
 </div>
+
+<?php
+if (true) {
+    $test = '
+   ' . function_0(
+        $argument_0
+    );
+}
+
+if (true) {
+    $test = '
+   ' . function_0(
+    $argument_0,
+           $argument_1
+    );
+}

@@ -396,9 +396,7 @@ class Ruleset
             }
         }//end foreach
 
-        if (empty($this->config->files) === true
-            && $rulesetDir === getcwd()
-        ) {
+        if (empty($this->config->files) === true) {
             // Process hard-coded file paths.
             foreach ($ruleset->{'file'} as $file) {
                 $file      = (string) $file;
