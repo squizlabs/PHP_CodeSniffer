@@ -358,12 +358,15 @@ class Runner
                                     'totalFixable'  => $this->reporter->totalFixable,
                                    );
 
-                    $childCache = Cache::get($path);
-
                     $output  = '<'.'?php'."\n".' $childOutput = ';
                     $output .= var_export($childOutput, true);
-                    $output .= ";\n\$childCache = ";
-                    $output .= var_export($childCache, true);
+
+                    if ($this->config->cache === true) {
+                        $childCache = Cache::get($path);
+                        $output    .= ";\n\$childCache = ";
+                        $output    .= var_export($childCache, true);
+                    }
+
                     $output .= ";\n?".'>';
                     file_put_contents($childOutFilename, $output);
                     exit($pid);
