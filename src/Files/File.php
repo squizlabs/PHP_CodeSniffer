@@ -188,6 +188,15 @@ class File
      */
     protected $listenerTimes = array();
 
+    /**
+     * A cache of often used config settings to improve performance.
+     *
+     * Storing them here saves 10k+ calls to __get() in the Config class.
+     *
+     * @var array
+     */
+    protected $configCache = array();
+
 
     /**
      * Constructs a file.
@@ -213,6 +222,12 @@ class File
             // Revert to default.
             $this->tokenizerType = 'PHP';
         }
+
+        $this->configCache['cache']           = $this->config->cache;
+        $this->configCache['sniffs']          = $this->config->sniffs;
+        $this->configCache['errorSeverity']   = $this->config->errorSeverity;
+        $this->configCache['warningSeverity'] = $this->config->warningSeverity;
+        $this->configCache['ignorePatterns']  = $this->ruleset->getIgnorePatterns();
 
         /*
             TODO: Is this still needed? We use the cache to speed things up now.
@@ -737,22 +752,23 @@ class File
         }
 
         // Work out which sniff generated the message.
-        if (substr($code, 0, 9) === 'Internal.') {
+        $parts = explode('.', $code);
+        if ($parts[0] === 'Internal') {
             // An internal message.
             $listenerCode = Util\Common::getSniffCode($this->activeListener);
             $sniffCode    = $code;
             $checkCodes   = array($sniffCode);
         } else {
-            if (strpos($code, '.') !== false) {
+            if ($parts[0] !== $code) {
                 // The full message code has been passed in.
                 $sniffCode    = $code;
                 $listenerCode = substr($sniffCode, 0, strrpos($sniffCode, '.'));
             } else {
                 $listenerCode = Util\Common::getSniffCode($this->activeListener);
                 $sniffCode    = $listenerCode.'.'.$code;
+                $parts        = explode('.', $sniffCode);
             }
 
-            $parts      = explode('.', $sniffCode);
             $checkCodes = array(
                            $sniffCode,
                            $parts[0].'.'.$parts[1].'.'.$parts[2],
@@ -762,9 +778,9 @@ class File
         }//end if
 
         // Filter out any messages for sniffs that shouldn't have run.
-        if ($this->config->cache === false
-            && empty($this->config->sniffs) === false
-            && in_array($listenerCode, $this->config->sniffs) === false
+        if ($this->configCache['cache'] === false
+            && empty($this->configCache['sniffs']) === false
+            && in_array($listenerCode, $this->configCache['sniffs']) === false
         ) {
             return false;
         }
@@ -792,16 +808,16 @@ class File
         }
 
         if ($error === true) {
-            $configSeverity = $this->config->errorSeverity;
+            $configSeverity = $this->configCache['errorSeverity'];
             $messageCount   = &$this->errorCount;
             $messages       = &$this->errors;
         } else {
-            $configSeverity = $this->config->warningSeverity;
+            $configSeverity = $this->configCache['warningSeverity'];
             $messageCount   = &$this->warningCount;
             $messages       = &$this->warnings;
         }
 
-        if ($this->config->cache === false && $configSeverity === 0) {
+        if ($this->configCache['cache'] === false && $configSeverity === 0) {
             // Don't bother doing any processing as these messages are just going to
             // be hidden in the reports anyway.
             return false;
@@ -819,14 +835,17 @@ class File
             }
         }
 
-        if ($this->config->cache === false && $configSeverity > $severity) {
+        if ($this->configCache['cache'] === false && $configSeverity > $severity) {
             return false;
         }
 
         // Make sure we are not ignoring this file.
         foreach ($checkCodes as $checkCode) {
-            $patterns = $this->ruleset->getIgnorePatterns($checkCode);
-            foreach ($patterns as $pattern => $type) {
+            if (isset($this->configCache['ignorePatterns'][$checkCode]) === false) {
+                continue;
+            }
+
+            foreach ($this->configCache['ignorePatterns'][$checkCode] as $pattern => $type) {
                 // While there is support for a type of each pattern
                 // (absolute or relative) we don't actually support it here.
                 $replacements = array(

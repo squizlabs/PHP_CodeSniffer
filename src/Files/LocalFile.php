@@ -88,7 +88,7 @@ class LocalFile extends File
             return;
         }
 
-        if ($this->config->cache === false) {
+        if ($this->configCache['cache'] === false) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo PHP_EOL;
             }
@@ -104,9 +104,9 @@ class LocalFile extends File
 
             // Replay the cached errors and warnings to filter out the ones
             // we don't need for this specific run.
-            $this->config->cache = false;
+            $this->configCache['cache'] = false;
             $this->replayErrors($cache['errors'], $cache['warnings']);
-            $this->config->cache = true;
+            $this->configCache['cache'] = true;
 
             if (PHP_CODESNIFFER_VERBOSITY > 0
                 || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)
@@ -137,9 +137,9 @@ class LocalFile extends File
 
         // During caching, we don't filter out errors in any way, so
         // we need to do that manually now by replaying them.
-        $this->config->cache = false;
+        $this->configCache['cache'] = false;
         $this->replayErrors($this->errors, $this->warnings);
-        $this->config->cache = true;
+        $this->configCache['cache'] = true;
 
     }//end process()
 

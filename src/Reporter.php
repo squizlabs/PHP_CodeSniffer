@@ -300,10 +300,6 @@ class Reporter
 
         // Merge errors and warnings.
         foreach ($phpcsFile->getErrors() as $line => $lineErrors) {
-            if (is_array($lineErrors) === false) {
-                continue;
-            }
-
             foreach ($lineErrors as $column => $colErrors) {
                 $newErrors = array();
                 foreach ($colErrors as $data) {
@@ -314,19 +310,15 @@ class Reporter
                                     'fixable'  => $data['fixable'],
                                     'type'     => 'ERROR',
                                    );
-                }//end foreach
+                }
 
                 $errors[$line][$column] = $newErrors;
-            }//end foreach
+            }
 
             ksort($errors[$line]);
         }//end foreach
 
         foreach ($phpcsFile->getWarnings() as $line => $lineWarnings) {
-            if (is_array($lineWarnings) === false) {
-                continue;
-            }
-
             foreach ($lineWarnings as $column => $colWarnings) {
                 $newWarnings = array();
                 foreach ($colWarnings as $data) {
@@ -337,7 +329,7 @@ class Reporter
                                       'fixable'  => $data['fixable'],
                                       'type'     => 'WARNING',
                                      );
-                }//end foreach
+                }
 
                 if (isset($errors[$line]) === false) {
                     $errors[$line] = array();
