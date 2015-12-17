@@ -94,8 +94,10 @@ class Runner
 
         // Other report formats don't really make sense in interactive mode
         // so we hard-code the full report here and when outputting.
+        // We also ensure parallel processing is off because we need to do one file at a time.
         if ($this->config->interactive === true) {
-            $this->config->reports = array('full' => null);
+            $this->config->reports  = array('full' => null);
+            $this->config->parallel = 1;
         }
 
         $numErrors = $this->run();
@@ -311,46 +313,131 @@ class Runner
             $this->config->parallel = 1;
         }
 
-        foreach ($todo as $path => $file) {
-            $currDir = dirname($path);
-            if ($lastDir !== $currDir) {
-                if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
-                    echo 'Changing into directory '.$currDir.PHP_EOL;
+        if ($this->config->parallel === 1) {
+            // Running normally.
+            foreach ($todo as $path => $file) {
+                $currDir = dirname($path);
+                if ($lastDir !== $currDir) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
+                        echo 'Changing into directory '.$currDir.PHP_EOL;
+                    }
+
+                    $lastDir = $currDir;
                 }
 
-                $lastDir = $currDir;
-            }
-
-            if ($this->config->parallel === 1) {
                 $this->processFile($file);
-            } else {
-                if (count($childProcs) === $this->config->parallel) {
-                    $this->processChildProcs($childProcs);
-                    $childProcs = array();
+
+                $numProcessed++;
+
+                if (PHP_CODESNIFFER_VERBOSITY > 0
+                    || $this->config->interactive === true
+                    || $this->config->showProgress === false
+                ) {
+                    continue;
+                }
+
+                // Show progress information.
+                if ($file->ignored === true) {
+                    echo 'S';
+                } else {
+                    $errors   = $file->getErrorCount();
+                    $warnings = $file->getWarningCount();
+                    if ($errors > 0) {
+                        if ($this->config->colors === true) {
+                            echo "\033[31m";
+                        }
+
+                        echo 'E';
+                    } else if ($warnings > 0) {
+                        if ($this->config->colors === true) {
+                            echo "\033[33m";
+                        }
+
+                        echo 'W';
+                    } else {
+                        echo '.';
+                    }
+
+                    if ($this->config->colors === true) {
+                        echo "\033[0m";
+                    }
+                }//end if
+
+                $dots++;
+                if ($dots === 60) {
+                    $padding = ($maxLength - strlen($numProcessed));
+                    echo str_repeat(' ', $padding);
+                    $percent = round(($numProcessed / $numFiles) * 100);
+                    echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
+                    $dots = 0;
+                }
+            }//end foreach
+        } else {
+            // Batching and forking.
+            $numFiles    = count($todo);
+            $numPerBatch = ceil($numFiles / $this->config->parallel);
+
+            for ($batch = 0; $batch < $this->config->parallel; $batch++) {
+                $startAt = ($batch * $numPerBatch);
+                if ($startAt >= $numFiles) {
+                    break;
+                }
+
+                $endAt = ($startAt + $numPerBatch);
+                if ($endAt > $numFiles) {
+                    $endAt = $numFiles;
                 }
 
                 $childOutFilename = tempnam(sys_get_temp_dir(), 'phpcs-child');
-
                 $pid = pcntl_fork();
                 if ($pid === -1) {
                     throw new RuntimeException('Failed to create child process');
                 } else if ($pid !== 0) {
-                    $childProcs[$path] = array(
-                                          'pid' => $pid,
-                                          'out' => $childOutFilename,
-                                         );
+                    $childProcs[] = array(
+                                     'pid' => $pid,
+                                     'out' => $childOutFilename,
+                                    );
                 } else {
+                    // Move forward to the start of the batch.
+                    $todo->rewind();
+                    for ($i = 0; $i < $startAt; $i++) {
+                        $todo->next();
+                    }
+
                     // Reset the reporter to make sure only figures from this
-                    // file are recorded.
+                    // file batch are recorded.
                     $this->reporter->totalFiles    = 0;
                     $this->reporter->totalErrors   = 0;
                     $this->reporter->totalWarnings = 0;
                     $this->reporter->totalFixable  = 0;
 
+                    // Process the files.
+                    $pathsProcessed = array();
                     ob_start();
-                    $this->processFile($file);
-                    ob_end_flush();
+                    for ($i = $startAt; $i < $endAt; $i++) {
+                        $path = $todo->key();
+                        $file = $todo->current();
 
+                        $currDir = dirname($path);
+                        if ($lastDir !== $currDir) {
+                            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
+                                echo 'Changing into directory '.$currDir.PHP_EOL;
+                            }
+
+                            $lastDir = $currDir;
+                        }
+
+                        $this->processFile($file);
+
+                        $pathsProcessed[] = $path;
+                        $todo->next();
+                    }
+
+                    $debugOutput = ob_get_contents();
+                    ob_end_clean();
+
+                    // Write information about the run to the filesystem
+                    // so it can be picked up by the main process.
                     $childOutput = array(
                                     'totalFiles'    => $this->reporter->totalFiles,
                                     'totalErrors'   => $this->reporter->totalErrors,
@@ -360,68 +447,27 @@ class Runner
 
                     $output  = '<'.'?php'."\n".' $childOutput = ';
                     $output .= var_export($childOutput, true);
+                    $output .= ";\n\$debugOutput = ";
+                    $output .= var_export($debugOutput, true);
 
                     if ($this->config->cache === true) {
-                        $childCache = Cache::get($path);
-                        $output    .= ";\n\$childCache = ";
-                        $output    .= var_export($childCache, true);
+                        $childCache = array();
+                        foreach ($pathsProcessed as $path) {
+                            $childCache[$path] = Cache::get($path);
+                        }
+
+                        $output .= ";\n\$childCache = ";
+                        $output .= var_export($childCache, true);
                     }
 
                     $output .= ";\n?".'>';
                     file_put_contents($childOutFilename, $output);
                     exit($pid);
                 }//end if
-            }//end if
+            }//end for
 
-            $numProcessed++;
-
-            if (PHP_CODESNIFFER_VERBOSITY > 0
-                || $this->config->interactive === true
-                || $this->config->showProgress === false
-            ) {
-                continue;
-            }
-
-            // Show progress information.
-            if ($file->ignored === true) {
-                echo 'S';
-            } else {
-                $errors   = $file->getErrorCount();
-                $warnings = $file->getWarningCount();
-                if ($errors > 0) {
-                    if ($this->config->colors === true) {
-                        echo "\033[31m";
-                    }
-
-                    echo 'E';
-                } else if ($warnings > 0) {
-                    if ($this->config->colors === true) {
-                        echo "\033[33m";
-                    }
-
-                    echo 'W';
-                } else {
-                    echo '.';
-                }
-
-                if ($this->config->colors === true) {
-                    echo "\033[0m";
-                }
-            }//end if
-
-            $dots++;
-            if ($dots === 60) {
-                $padding = ($maxLength - strlen($numProcessed));
-                echo str_repeat(' ', $padding);
-                $percent = round(($numProcessed / $numFiles) * 100);
-                echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
-                $dots = 0;
-            }
-        }//end foreach
-
-        if ($this->config->parallel > 1) {
             $this->processChildProcs($childProcs);
-        }
+        }//end if
 
         restore_error_handler();
 
@@ -585,8 +631,13 @@ class Runner
      */
     private function processChildProcs($childProcs)
     {
+        $dots         = 0;
+        $numProcessed = 0;
+        $totalBatches = count($childProcs);
+        $maxLength    = strlen($totalBatches);
+
         while (count($childProcs) > 0) {
-            foreach ($childProcs as $path => $procData) {
+            foreach ($childProcs as $key => $procData) {
                 $res = pcntl_waitpid($procData['pid'], $status, WNOHANG);
                 if ($res === $procData['pid']) {
                     if (file_exists($procData['out']) === true) {
@@ -598,14 +649,51 @@ class Runner
                             $this->reporter->totalFixable  += $childOutput['totalFixable'];
                         }
 
+                        if (isset($debugOutput) === true) {
+                            echo $debugOutput;
+                        }
+
                         if (isset($childCache) === true) {
-                            Cache::set($path, $childCache);
+                            foreach ($childCache as $path => $cache) {
+                                Cache::set($path, $cache);
+                            }
                         }
 
                         unlink($procData['out']);
-                        unset($childProcs[$path]);
-                    }
-                }
+                        unset($childProcs[$key]);
+
+                        $numProcessed++;
+
+                        if ($childOutput['totalErrors'] > 0) {
+                            if ($this->config->colors === true) {
+                                echo "\033[31m";
+                            }
+
+                            echo 'E';
+                        } else if ($childOutput['totalWarnings'] > 0) {
+                            if ($this->config->colors === true) {
+                                echo "\033[33m";
+                            }
+
+                            echo 'W';
+                        } else {
+                            echo '.';
+                        }
+
+                        if ($this->config->colors === true) {
+                            echo "\033[0m";
+                        }
+
+                        $dots++;
+                        if ($dots === 60) {
+                            $padding = ($maxLength - strlen($numProcessed));
+                            echo str_repeat(' ', $padding);
+                            $percent = round(($numProcessed / $totalBatches) * 100);
+                            echo " $numProcessed / $totalBatches ($percent%)".PHP_EOL;
+                            $dots = 0;
+                        }
+                    }//end if
+                }//end if
             }//end foreach
         }//end while
 
