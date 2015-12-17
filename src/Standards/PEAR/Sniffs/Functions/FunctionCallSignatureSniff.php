@@ -342,10 +342,13 @@ class FunctionCallSignatureSniff implements Sniff
 
         // Each line between the parenthesis should be indented n spaces.
         $lastLine = $tokens[$openBracket]['line'];
-        $inArg    = false;
+        $argStart = null;
         $argEnd   = null;
+        $inArg    = false;
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
-            if ($i === $argEnd) {
+            if ($i > $argStart && $i < $argEnd) {
+                $inArg = true;
+            } else {
                 $inArg = false;
             }
 
@@ -442,38 +445,45 @@ class FunctionCallSignatureSniff implements Sniff
                 }//end if
 
                 if ($inArg === false) {
-                    $inArg  = true;
-                    $argEnd = $phpcsFile->findEndOfStatement($nextCode);
+                    $argStart = $nextCode;
+                    $argEnd   = $phpcsFile->findEndOfStatement($nextCode);
                 }
             }//end if
 
-            // A non-exact indent flag means we are within an argument, so we should be
-            // ignoring commas as these are not signaling the end of an argument.
-            if ($inArg === false && $this->allowMultipleArguments === false && $tokens[$i]['code'] === T_COMMA) {
-                // Comma has to be the last token on the line.
+            // If we are within an argument we should be ignoring commas
+            // as these are not signaling the end of an argument.
+            if ($inArg === false && $tokens[$i]['code'] === T_COMMA) {
                 $next = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT), ($i + 1), $closeBracket, true);
-                if ($next !== false
-                    && $tokens[$i]['line'] === $tokens[$next]['line']
-                ) {
-                    $error = 'Only one argument is allowed per line in a multi-line function call';
-                    $fix   = $phpcsFile->addFixableError($error, $next, 'MultipleArguments');
-                    if ($fix === true) {
-                        $phpcsFile->fixer->beginChangeset();
-                        for ($x = ($next - 1); $x > $i; $x--) {
-                            if ($tokens[$x]['code'] !== T_WHITESPACE) {
-                                break;
+                if ($next === false) {
+                    continue;
+                }
+
+                if ($this->allowMultipleArguments === false) {
+                    // Comma has to be the last token on the line.
+                    if ($tokens[$i]['line'] === $tokens[$next]['line']) {
+                        $error = 'Only one argument is allowed per line in a multi-line function call';
+                        $fix   = $phpcsFile->addFixableError($error, $next, 'MultipleArguments');
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($x = ($next - 1); $x > $i; $x--) {
+                                if ($tokens[$x]['code'] !== T_WHITESPACE) {
+                                    break;
+                                }
+
+                                $phpcsFile->fixer->replaceToken($x, '');
                             }
 
-                            $phpcsFile->fixer->replaceToken($x, '');
+                            $phpcsFile->fixer->addContentBefore(
+                                $next,
+                                $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
+                            );
+                            $phpcsFile->fixer->endChangeset();
                         }
-
-                        $phpcsFile->fixer->addContentBefore(
-                            $next,
-                            $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
-                        );
-                        $phpcsFile->fixer->endChangeset();
                     }
-                }
+                }//end if
+
+                $argStart = $next;
+                $argEnd   = $phpcsFile->findEndOfStatement($next);
             }//end if
         }//end for
 

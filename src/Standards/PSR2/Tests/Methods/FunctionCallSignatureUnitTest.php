@@ -26,12 +26,14 @@ class FunctionCallSignatureUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                18 => 3,
-                21 => 1,
-                48 => 1,
-                87 => 1,
-                90 => 1,
-                91 => 1,
+                18  => 3,
+                21  => 1,
+                48  => 1,
+                87  => 1,
+                90  => 1,
+                91  => 1,
+                103 => 1,
+                111 => 1,
                );
 
     }//end getErrorList()
