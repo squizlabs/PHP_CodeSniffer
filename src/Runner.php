@@ -664,6 +664,12 @@ class Runner
 
                         $numProcessed++;
 
+                        if (PHP_CODESNIFFER_VERBOSITY > 0
+                            || $this->config->showProgress === false
+                        ) {
+                            continue;
+                        }
+
                         if ($childOutput['totalErrors'] > 0) {
                             if ($this->config->colors === true) {
                                 echo "\033[31m";
