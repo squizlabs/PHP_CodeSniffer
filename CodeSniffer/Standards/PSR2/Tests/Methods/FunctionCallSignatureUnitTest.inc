@@ -98,3 +98,17 @@ if (array_filter(
 )) {
     // Do something
 }
+
+myFunction(
+    'foo', (object) array(
+        'bar' => function ($x) {
+            return true;
+        },
+        'baz' => false
+    )
+);
+$qux = array_filter(
+    $quux, function ($x) {
+        return $x;
+    }
+);
