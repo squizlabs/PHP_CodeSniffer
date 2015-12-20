@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed bug #820 : PEAR/PSR2 FunctionCallSignature sniffs suggest wrong indent when there are multiple arguments on a line
   - Fixed bug #822 : Ruleset hard-coded file paths are not used if not running from the same directory as the ruleset
+  - Fixed bug #825 : FunctionCallArgumentSpacing sniff complains about more than one space before comment in multi-line function call
  </notes>
  <contents>
   <dir name="/">
@@ -626,6 +627,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="FunctionCallArgumentSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
