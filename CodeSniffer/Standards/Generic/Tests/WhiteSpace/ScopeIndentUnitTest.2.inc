@@ -935,6 +935,18 @@ switch ($foo) {
 		return $param[0][0];
 }
 
+class Test {
+
+	public
+		$foo
+		,$bar
+		,$baz = [ ]
+		;
+
+	public function wtfindent() {
+	}
+}
+
 switch ($x) {
 	case 1:
 		return [1];
