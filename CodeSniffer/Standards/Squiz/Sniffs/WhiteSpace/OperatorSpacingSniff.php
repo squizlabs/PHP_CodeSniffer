@@ -281,6 +281,10 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
             }//end if
         }//end if
 
+        if (isset($tokens[($stackPtr + 1)]) === false) {
+            return;
+        }
+
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error = "Expected 1 space after \"$operator\"; 0 found";
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter');
@@ -290,7 +294,9 @@ class Squiz_Sniffs_WhiteSpace_OperatorSpacingSniff implements PHP_CodeSniffer_Sn
 
             $phpcsFile->recordMetric($stackPtr, 'Space after operator', 0);
         } else {
-            if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
+            if (isset($tokens[($stackPtr + 2)]) === true
+                && $tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']
+            ) {
                 $found = 'newline';
             } else {
                 $found = $tokens[($stackPtr + 1)]['length'];
