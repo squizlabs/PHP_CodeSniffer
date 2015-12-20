@@ -130,7 +130,7 @@ function processRepo($repo, $checkoutDate, $runPHPCS=true, $runGit=true, $sniffs
         //$cmd  = 'phpcs';
         $cmd  = 'php /Users/gsherwood/Sites/Projects/PHPCS_ST2/bin/phpcs ';
         $cmd .= $checkDir.' --cache --standard='.__DIR__.'/ruleset.xml';
-        $cmd .= ' --parallel=100';
+        $cmd .= ' --parallel=30';
         $cmd .= ' --extensions=php,inc,'.$repo->extensions;
         $cmd .= ' --ignore=*/tests/*,'.$repo->ignore;
         $cmd .= ' --runtime-set project '.$repo->url;

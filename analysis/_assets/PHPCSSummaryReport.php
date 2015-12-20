@@ -117,7 +117,7 @@ class PHPCSSummaryReport implements Report
             }
         }
 
-        echo "Processed $totalFiles files ($cachedFiles cached) containing $numTokens tokens across $numLines lines".PHP_EOL;
+        echo "Processed $totalFiles files ($cachedFiles cached) containing $numTokens tokens across $numLines uncached lines".PHP_EOL;
         Timing::printRunTime();
 
     }//end generate()
