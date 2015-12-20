@@ -115,7 +115,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
                 } else {
                     // If there is a newline in the space, then they must be formatting
                     // each argument on a newline, which is valid, so ignore it.
-                    $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($nextSeparator + 1), null, true);
+                    $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextSeparator + 1), null, true);
                     if ($tokens[$next]['line'] === $tokens[$nextSeparator]['line']) {
                         $space = strlen($tokens[($nextSeparator + 1)]['content']);
                         if ($space > 1) {
