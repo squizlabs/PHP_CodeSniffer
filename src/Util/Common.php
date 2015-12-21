@@ -109,6 +109,10 @@ class Common
      */
     public static function stripBasepath($path, $basepath)
     {
+        if (empty($basepath) === true) {
+            return $path;
+        }
+
         $basepathLen = strlen($basepath);
         if (substr($path, 0, $basepathLen) === $basepath) {
             $path = substr($path, $basepathLen);
