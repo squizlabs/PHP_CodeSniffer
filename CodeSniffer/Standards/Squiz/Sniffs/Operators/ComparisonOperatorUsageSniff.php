@@ -170,6 +170,9 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
 
             $start = $phpcsFile->findNext(T_SEMICOLON, $openingBracket, $closingBracket);
             $end   = $phpcsFile->findNext(T_SEMICOLON, ($start + 1), $closingBracket);
+            if ($start === false || $end === false) {
+                return;
+            }
         } else {
             if (isset($tokens[$stackPtr]['parenthesis_opener']) === false) {
                 return;

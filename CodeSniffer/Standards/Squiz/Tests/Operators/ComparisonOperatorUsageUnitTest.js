@@ -54,3 +54,6 @@ for (one = 10; one != 0; one--) {
 
 for (one = 10; one !== 0; one--) {
 }
+
+for (type in types) {
+}

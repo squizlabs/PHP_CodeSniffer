@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
   - Fixed bug #820 : PEAR/PSR2 FunctionCallSignature sniffs suggest wrong indent when there are multiple arguments on a line
   - Fixed bug #822 : Ruleset hard-coded file paths are not used if not running from the same directory as the ruleset
   - Fixed bug #825 : FunctionCallArgumentSpacing sniff complains about more than one space before comment in multi-line function call
