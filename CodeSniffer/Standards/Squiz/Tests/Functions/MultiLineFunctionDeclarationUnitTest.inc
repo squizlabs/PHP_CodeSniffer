@@ -111,3 +111,10 @@ if (array_filter(
 )) {
     // Do something
 }
+
+function foo( // comment
+    $bar,
+    $baz
+) { // comment
+    // ...
+}
