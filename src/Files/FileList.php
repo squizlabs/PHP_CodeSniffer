@@ -101,11 +101,7 @@ class FileList implements \Iterator, \Countable
                     $this->files[$file->getPathname()] = null;
                 }//end foreach
             } else {
-                if ($this->shouldIgnoreFile($path, dirname($path)) === true) {
-                    continue;
-                }
-
-                $this->files[$path] = null;
+                $this->addFile($path);
             }//end if
         }//end foreach
 
@@ -113,6 +109,30 @@ class FileList implements \Iterator, \Countable
         $this->numFiles = count($this->files);
 
     }//end __construct()
+
+
+    /**
+     * Add a file to the list.
+     *
+     * If a file object has already been created, it can be passed here.
+     * If it is left NULL, it will be created when accessed.
+     *
+     * @param string                      $path The path to the file being added.
+     * @param \PHP_CodeSniffer\Files\File $file The file being added.
+     *
+     * @return void
+     */
+    public function addFile($path, $file=null)
+    {
+        if ($path !== 'STDIN'
+            && $this->shouldIgnoreFile($path, dirname($path)) === true
+        ) {
+            return;
+        }
+
+        $this->files[$path] = $file;
+
+    }//end addFile()
 
 
     /**
@@ -230,7 +250,7 @@ class FileList implements \Iterator, \Countable
     /**
      * Get the file that is currently being processed.
      *
-     * @return \PHP_CodeSniffer\Files\LocalFile
+     * @return \PHP_CodeSniffer\Files\File
      */
     function current()
     {

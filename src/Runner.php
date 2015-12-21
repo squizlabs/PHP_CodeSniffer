@@ -265,7 +265,10 @@ class Runner
             $fileContents = stream_get_contents($handle);
             fclose($handle);
 
-            $todo     = array(new DummyFile($fileContents, $this->ruleset, $this->config));
+            $todo  = new FileList($this->config, $this->ruleset);
+            $dummy = new DummyFile($fileContents, $this->ruleset, $this->config);
+            $todo->addFile($dummy->path, $dummy);
+
             $numFiles = 1;
         } else {
             if (empty($this->config->files) === true) {

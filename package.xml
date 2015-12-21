@@ -35,13 +35,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniff codes are no longer optional - use them with addError/Warning/Fixable
   - installed_paths config setting can now point directly to a standard instead of the dir above
   - --report=full,summary,info instead of --report=full --report=summary --report=info
-  - can now set severity, message type and exclude patterns for entire sniff, category or standard
-  - can include a single sniff code, which will exclude all other codes from that sniff
+  - Can now set severity, message type and exclude patterns for entire sniff, category or standard
+  - Can include a single sniff code, which will exclude all other codes from that sniff
     -- if the sniff is already included by an imported standard, set sniff severity to 0 and include the specific message you want
   - phpcbf no longer uses patch - files are always overwritten (--no-patch option has been removed)
-  - added --basepath option to strip a directory from the front of file paths in output (request #470)
+  - Added --basepath option to strip a directory from the front of file paths in output (request #470)
     -- the basepath is absolute or relative to the current directory
     -- to make paths relative to current dir, use --basepath=.
+  - Ignore rules are now checked when using STDIN (request #733)
 
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
   - Fixed bug #794 : PSR2 MultiLineFunctionDeclaration forbids comments after opening parenthesis of a multiline call
