@@ -74,7 +74,7 @@ class Cache
         }
 
         // Go through the core PHPCS code and add those files to the file
-        // hash. This ensure that core PHPCS changes will also invalidate the cache.
+        // hash. This ensures that core PHPCS changes will also invalidate the cache.
         // Note that we ignore sniffs here, and any files that don't affect
         // the outcome of the run.
         $ignore = array(
@@ -162,7 +162,7 @@ class Cache
                 $file     = dirname($file);
                 if ($file === $lastFile) {
                     // Just in case something went wrong,
-                    // we don't want to end up in an inifite loop.
+                    // we don't want to end up in an infinite loop.
                     break;
                 }
             }
