@@ -16,6 +16,7 @@ use PHP_CodeSniffer\Files\FileList;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Files\DummyFile;
 use PHP_CodeSniffer\Util\Cache;
+use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 class Runner
@@ -319,7 +320,7 @@ class Runner
                 $currDir = dirname($path);
                 if ($lastDir !== $currDir) {
                     if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
-                        echo 'Changing into directory '.$currDir.PHP_EOL;
+                        echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
                     }
 
                     $lastDir = $currDir;
@@ -421,7 +422,7 @@ class Runner
                         $currDir = dirname($path);
                         if ($lastDir !== $currDir) {
                             if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
-                                echo 'Changing into directory '.$currDir.PHP_EOL;
+                                echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
                             }
 
                             $lastDir = $currDir;

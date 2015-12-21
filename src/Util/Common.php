@@ -99,6 +99,32 @@ class Common
 
 
     /**
+     * Removes a base path from the front of a file path.
+     *
+     * @param string $path     The path of the file.
+     * @param string $basepath The base path to remove. This should not end
+     *                         with a directory separator.
+     *
+     * @return string
+     */
+    public static function stripBasepath($path, $basepath)
+    {
+        $basepathLen = strlen($basepath);
+        if (substr($path, 0, $basepathLen) === $basepath) {
+            $path = substr($path, $basepathLen);
+        }
+
+        $path = ltrim($path, DIRECTORY_SEPARATOR);
+        if ($path === '') {
+            $path = '.';
+        }
+
+        return $path;
+
+    }//end stripBasepath()
+
+
+    /**
      * Detects the EOL character being used in a string.
      *
      * @param string $contents The contents to check.

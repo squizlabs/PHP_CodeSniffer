@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer;
 use PHP_CodeSniffer\Reports\Report;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Util\Common;
 
 class Reporter
 {
@@ -284,7 +285,7 @@ class Reporter
     public function prepareFileReport(File $phpcsFile)
     {
         $report = array(
-                   'filename' => $phpcsFile->getFilename(),
+                   'filename' => Common::stripBasepath($phpcsFile->getFilename(), $this->config->basepath),
                    'errors'   => $phpcsFile->getErrorCount(),
                    'warnings' => $phpcsFile->getWarningCount(),
                    'fixable'  => $phpcsFile->getFixableCount(),

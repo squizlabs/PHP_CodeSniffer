@@ -51,7 +51,7 @@ class Config
      * bool     interactive     Enable interactive checking mode.
      * bool     parallel        Check files in parallel.
      * bool     cache           Enable the use of the file cache.
-     * bool     colors          Display colous in output.
+     * bool     colors          Display colours in output.
      * bool     explain         Explain the coding standards.
      * bool     local           Process local files in directories only (no recursion).
      * bool     showSources     Show sniff source codes in report output.
@@ -69,6 +69,7 @@ class Config
      * int      errorSeverity   The minimum severity an error must have to be displayed.
      * int      warningSeverity The minimum severity a warning must have to be displayed.
      * string   suffix          A suffix to add to fixed files.
+     * string   basepath        A file system location to strip from the paths of files shown in reports.
      * bool     stdin           Read content from STDIN instead of supplied files.
      *
      * array<string, string>      extensions File extensions that should be checked, and what tokenizer to use.
@@ -104,6 +105,7 @@ class Config
                          'generator'       => null,
                          'bootstrap'       => null,
                          'reports'         => null,
+                         'basepath'        => null,
                          'reportWidth'     => null,
                          'errorSeverity'   => null,
                          'warningSeverity' => null,
@@ -689,27 +691,24 @@ class Config
                     $this->printUsage();
                     exit(2);
                 }
-
-                $dir = dirname($this->reportFile);
-                if (is_dir($dir) === false) {
-                    echo 'ERROR: The specified report file path "'.$this->reportFile.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
-                    $this->printUsage();
-                    exit(2);
-                }
-
-                if ($dir === '.') {
-                    // Passed report file is a filename in the current directory.
-                    $this->reportFile = getcwd().'/'.basename($this->reportFile);
-                } else {
-                    $dir = Util\Common::realpath(getcwd().'/'.$dir);
-                    if ($dir !== false) {
-                        // Report file path is relative.
-                        $this->reportFile = $dir.'/'.basename($this->reportFile);
-                    }
-                }
             } else if (substr($arg, 0, 13) === 'report-width=') {
                 $this->reportWidth = substr($arg, 13);
                 $this->overriddenDefaults['reportWidth'] = true;
+            } else if (substr($arg, 0, 9) === 'basepath=') {
+                $this->basepath = Util\Common::realpath(substr($arg, 9));
+
+                // It may not exist and return false instead.
+                if ($this->basepath === false) {
+                    $this->basepath = substr($arg, 9);
+                }
+
+                $this->overriddenDefaults['basepath'] = true;
+
+                if (is_dir($this->basepath) === false) {
+                    echo 'ERROR: The specified basepath "'.$this->basepath.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
+                    $this->printUsage();
+                    exit(2);
+                }
             } else if ((substr($arg, 0, 7) === 'report=' || substr($arg, 0, 7) === 'report-')) {
                 $reports = array();
 
@@ -924,11 +923,11 @@ class Config
     {
         echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--cache] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
-        echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
+        echo '    [--report-width=<reportWidth>] [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--generator=<generator>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
@@ -946,6 +945,7 @@ class Config
         echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
         echo '        --cache       Cache results between runs'.PHP_EOL;
         echo '        --no-cache    Do not cache results between runs (this is the default)'.PHP_EOL;
+        echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
@@ -983,7 +983,7 @@ class Config
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    [--basepath=<basepath>] [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
@@ -992,6 +992,7 @@ class Config
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
+        echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;

@@ -107,7 +107,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
             } else {
                 if (isset($tokens[$stackPtr]['scope_closer']) === false) {
                     $error = 'Possible parse error: non-abstract method defined as abstract';
-                    $phpcsFile->addWarning($error, $stackPtr);
+                    $phpcsFile->addWarning($error, $stackPtr, 'Internal.ParseError.NonAbstractDefinedAbstract');
                     return;
                 }
 

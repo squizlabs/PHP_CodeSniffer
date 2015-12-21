@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - can include a single sniff code, which will exclude all other codes from that sniff
     -- if the sniff is already included by an imported standard, set sniff severity to 0 and include the specific message you want
   - phpcbf no longer uses patch - files are always overwritten (--no-patch option has been removed)
+  - added --basepath option to strip a directory from the front of file paths in output (request #470)
 
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
   - Fixed bug #820 : PEAR/PSR2 FunctionCallSignature sniffs suggest wrong indent when there are multiple arguments on a line
