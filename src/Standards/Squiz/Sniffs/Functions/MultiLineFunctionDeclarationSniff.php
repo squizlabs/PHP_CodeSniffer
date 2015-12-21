@@ -10,6 +10,7 @@
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions;
 
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions\FunctionDeclarationSniff as PEARFunctionDeclarationSniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
 {
@@ -90,7 +91,7 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
 
         // The open bracket should be the last thing on the line.
         if ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']) {
-            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($openBracket + 1), null, true);
+            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($openBracket + 1), null, true);
             if ($tokens[$next]['line'] !== ($tokens[$openBracket]['line'] + 1)) {
                 $error = 'The first parameter of a multi-line '.$type.' declaration must be on the line after the opening bracket';
                 $fix   = $phpcsFile->addFixableError($error, $next, $errorPrefix.'FirstParamSpacing');
