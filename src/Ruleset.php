@@ -244,7 +244,7 @@ class Ruleset
         $rulesetPath = Util\Common::realpath($rulesetPath);
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo str_repeat("\t", $depth);
-            echo "Processing ruleset $rulesetPath".PHP_EOL;
+            echo 'Processing ruleset '.Util\Common::stripBasepath($rulesetPath, $this->config->basepath).PHP_EOL;
         }
 
         $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
@@ -259,13 +259,14 @@ class Ruleset
         $rulesetDir          = dirname($rulesetPath);
         $this->rulesetDirs[] = $rulesetDir;
 
-        if (is_dir($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs') === true) {
+        $sniffDir = $rulesetDir.DIRECTORY_SEPARATOR.'Sniffs';
+        if (is_dir($sniffDir) === true) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
-                echo "\tAdding sniff files from \"/.../".basename($rulesetDir)."/Sniffs/\" directory".PHP_EOL;
+                echo "\tAdding sniff files from ".Util\Common::stripBasepath($sniffDir, $this->config->basepath).' directory'.PHP_EOL;
             }
 
-            $ownSniffs = $this->expandSniffDirectory($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs', $depth);
+            $ownSniffs = $this->expandSniffDirectory($sniffDir, $depth);
         }
 
         foreach ($ruleset->rule as $rule) {
@@ -517,7 +518,7 @@ class Ruleset
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
-                echo "\t\t=> $path".PHP_EOL;
+                echo "\t\t=> ".Util\Common::stripBasepath($path, $this->config->basepath).PHP_EOL;
             }
 
             $sniffs[] = $path;
@@ -563,7 +564,7 @@ class Ruleset
                 $ref = $realpath;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
-                    echo "\t\t=> $ref".PHP_EOL;
+                    echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
                 }
             }
         }
@@ -576,7 +577,7 @@ class Ruleset
                 $ref = $realpath;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
-                    echo "\t\t=> $ref".PHP_EOL;
+                    echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
                 }
             }
         }
@@ -603,7 +604,7 @@ class Ruleset
                 $ref = $path;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
-                    echo "\t\t=> $ref".PHP_EOL;
+                    echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
                 }
             } else if (is_dir($ref) === false) {
                 // Work out the sniff path.
@@ -663,7 +664,7 @@ class Ruleset
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
-                    echo "\t\t=> $ref".PHP_EOL;
+                    echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
                 }
             }//end if
         }//end if
