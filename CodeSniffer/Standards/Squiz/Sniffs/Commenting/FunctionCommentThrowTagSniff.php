@@ -68,21 +68,25 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
 
         $tokens = $phpcsFile->getTokens();
 
-        $find = array(
-                 T_COMMENT,
-                 T_DOC_COMMENT_CLOSE_TAG,
-                 T_CLASS,
-                 T_FUNCTION,
-                 T_OPEN_TAG,
-                );
+        $find   = PHP_CodeSniffer_Tokens::$methodPrefixes;
+        $find[] = T_WHITESPACE;
 
-        $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1));
-        if ($commentEnd === false) {
-            return;
+        $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1), null, true);
+        if ($tokens[$commentEnd]['code'] === T_COMMENT) {
+            // Inline comments might just be closing comments for
+            // control structures or functions instead of function comments
+            // using the wrong comment type. If there is other code on the line,
+            // assume they relate to that code.
+            $prev = $phpcsFile->findPrevious($find, ($commentEnd - 1), null, true);
+            if ($prev !== false && $tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
+                $commentEnd = $prev;
+            }
         }
 
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
-            // Function doesn't have a comment. Let someone else warn about that.
+        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
+            && $tokens[$commentEnd]['code'] !== T_COMMENT
+        ) {
+            // Function doesn't have a doc comment.
             return;
         }
 
