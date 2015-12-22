@@ -45,6 +45,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Ignore rules are now checked when using STDIN (request #733)
 
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
+  - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
+  - Fixed bug #752 : The missing exception error is reported in first found DocBlock
   - Fixed bug #794 : PSR2 MultiLineFunctionDeclaration forbids comments after opening parenthesis of a multiline call
   - Fixed bug #820 : PEAR/PSR2 FunctionCallSignature sniffs suggest wrong indent when there are multiple arguments on a line
   - Fixed bug #822 : Ruleset hard-coded file paths are not used if not running from the same directory as the ruleset
