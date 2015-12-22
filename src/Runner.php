@@ -101,6 +101,12 @@ class Runner
             $this->config->parallel = 1;
         }
 
+        // Disable caching if we are processing STDIN as we can't be 100%
+        // sure where the file came from or if it will change in the future.
+        if ($this->config->stdin === true) {
+            $this->config->cache = false;
+        }
+
         $numErrors = $this->run();
 
         // Print all the reports for this run.
@@ -482,9 +488,7 @@ class Runner
             echo PHP_EOL.PHP_EOL;
         }
 
-        if ($this->config->cache === true
-            && $this->config->stdin === false
-        ) {
+        if ($this->config->cache === true) {
             Cache::save();
         }
 
