@@ -89,10 +89,6 @@ class LocalFile extends File
         }
 
         if ($this->configCache['cache'] === false) {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo PHP_EOL;
-            }
-
             return parent::process();
         }
 

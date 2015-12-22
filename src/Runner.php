@@ -544,6 +544,9 @@ class Runner
         if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
             $startTime = microtime(true);
             echo 'Processing '.basename($file->path).' ';
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo PHP_EOL;
+            }
         }
 
         try {

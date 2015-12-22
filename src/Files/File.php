@@ -479,7 +479,7 @@ class File
         } catch (TokenizerException $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
             if (PHP_CODESNIFFER_VERBOSITY > 0
-                || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)
+                || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)
             ) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -507,7 +507,7 @@ class File
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 0
-            || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)
+            || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)
         ) {
             if ($this->numTokens === 0) {
                 $numLines = 0;
