@@ -62,16 +62,23 @@ class Squiz_Sniffs_CSS_DuplicateStyleDefinitionSniff implements PHP_CodeSniffer_
         $tokens = $phpcsFile->getTokens();
 
         // Find the content of each style definition name.
-        $end  = $tokens[$stackPtr]['bracket_closer'];
-        $next = $phpcsFile->findNext(T_STYLE, ($stackPtr + 1), $end);
-        if ($next === false) {
-            // Class definition is empty.
-            return;
-        }
-
         $styleNames = array();
 
-        while ($next !== false) {
+        $next = $stackPtr;
+        $end  = $tokens[$stackPtr]['bracket_closer'];
+
+        do {
+            $next = $phpcsFile->findNext(array(T_STYLE, T_OPEN_CURLY_BRACKET), ($next + 1), $end);
+            if ($next === false) {
+                // Class definition is empty.
+                break;
+            }
+
+            if ($tokens[$next]['code'] === T_OPEN_CURLY_BRACKET) {
+                $next = $tokens[$next]['bracket_closer'];
+                continue;
+            }
+
             $name = $tokens[$next]['content'];
             if (isset($styleNames[$name]) === true) {
                 $first = $styleNames[$name];
@@ -81,9 +88,7 @@ class Squiz_Sniffs_CSS_DuplicateStyleDefinitionSniff implements PHP_CodeSniffer_
             } else {
                 $styleNames[$name] = $next;
             }
-
-            $next = $phpcsFile->findNext(T_STYLE, ($next + 1), $end);
-        }//end while
+        } while ($next !== false);
 
     }//end process()
 
