@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Util;
 
 use PHP_CodeSniffer\Autoload;
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Util\Common;
 
 class Cache
@@ -34,11 +35,12 @@ class Cache
     /**
      * Loads existing cache data for the run, if any.
      *
-     * @param \PHP_CodeSniffer\Config $config The config data for the run.
+     * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
+     * @param \PHP_CodeSniffer\Config  $config  The config data for the run.
      *
      * @return void
      */
-    public static function load(Config $config)
+    public static function load(Ruleset $ruleset, Config $config)
     {
         // Look at every loaded sniff class so far and use their file contents
         // to generate a hash for the code used during the run.
@@ -124,11 +126,13 @@ class Cache
         // Along with the code hash, use various settings that can affect
         // the results of a run to create a new hash. This hash will be used
         // in the cache file name.
-        $configData = array(
-                       'tabWidth' => $config->tabWidth,
-                       'encoding' => $config->encoding,
-                       'codeHash' => $codeHash,
-                      );
+        $rulesetHash = md5(var_export($ruleset->ignorePatterns, true).var_export($ruleset->includePatterns, true));
+        $configData  = array(
+                        'tabWidth'    => $config->tabWidth,
+                        'encoding'    => $config->encoding,
+                        'codeHash'    => $codeHash,
+                        'rulesetHash' => $rulesetHash,
+                       );
 
         $configString = implode(',', $configData);
         $cacheHash    = substr(sha1($configString), 0, 12);
@@ -138,6 +142,7 @@ class Cache
             echo "\t\t=> tabWidth: ".$configData['tabWidth'].PHP_EOL;
             echo "\t\t=> encoding: ".$configData['encoding'].PHP_EOL;
             echo "\t\t=> codeHash: ".$configData['codeHash'].PHP_EOL;
+            echo "\t\t=> rulesetHash: ".$configData['rulesetHash'].PHP_EOL;
             echo "\t\t=> cacheHash: $cacheHash".PHP_EOL;
         }
 
