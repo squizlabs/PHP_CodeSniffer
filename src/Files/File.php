@@ -341,6 +341,7 @@ class File
                         $this->fixableCount = 0;
                         return;
                     } else if (strpos($token['content'], '@codingStandardsChangeSetting') !== false) {
+                        // TODO: Make this work for sniffs in any namespace.
                         $start         = strpos($token['content'], '@codingStandardsChangeSetting');
                         $comment       = substr($token['content'], ($start + 30));
                         $parts         = explode(' ', $comment);
@@ -395,6 +396,24 @@ class File
 
                     $pattern = '`'.$pattern.'`i';
                     if (preg_match($pattern, $this->path) === 1) {
+                        $this->ignoredListeners[$class] = true;
+                        continue(2);
+                    }
+                }
+
+                // If the file path does not match one of our include patterns, skip it.
+                // While there is support for a type of each pattern
+                // (absolute or relative) we don't actually support it here.
+                foreach ($listenerData['include'] as $pattern) {
+                    // We assume a / directory separator, as do the exclude rules
+                    // most developers write, so we need a special case for any system
+                    // that is different.
+                    if (DIRECTORY_SEPARATOR === '\\') {
+                        $pattern = str_replace('/', '\\\\', $pattern);
+                    }
+
+                    $pattern = '`'.$pattern.'`i';
+                    if (preg_match($pattern, $this->path) !== 1) {
                         $this->ignoredListeners[$class] = true;
                         continue(2);
                     }
@@ -777,7 +796,8 @@ class File
                           );
         }//end if
 
-        // Filter out any messages for sniffs that shouldn't have run.
+        // Filter out any messages for sniffs that shouldn't have run
+        // due to the use of the --sniffs command line argument.
         if ($this->configCache['cache'] === false
             && empty($this->configCache['sniffs']) === false
             && in_array($listenerCode, $this->configCache['sniffs']) === false

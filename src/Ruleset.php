@@ -40,14 +40,26 @@ class Ruleset
     public $paths = '';
 
     /**
-     * A list of regular expressions used to ignore files and folders.
+     * A list of regular expressions used to ignore specific sniffs for files and folders.
      *
+     * Is also used to set global exclude patterns.
      * The key is the regular expression and the value is the type
      * of ignore pattern (absolute or relative).
      *
      * @var array<string, string>
      */
     public $ignorePatterns = array();
+
+    /**
+     * A list of regular expressions used to include specific sniffs for files and folders.
+     *
+     * The key is the sniff code and the value is an array with
+     * the key being a regular expression and the value is the type
+     * of ignore pattern (absolute or relative).
+     *
+     * @var array<string, array<string, string>>
+     */
+    public $includePatterns = array();
 
     /**
      * An array of sniff objects that are being used to check files.
@@ -891,6 +903,32 @@ class Ruleset
                     echo ': '.(string) $pattern.PHP_EOL;
                 }
             }//end foreach
+
+            // Include patterns.
+            foreach ($rule->{'include-pattern'} as $pattern) {
+                if ($this->shouldProcessElement($pattern) === false) {
+                    continue;
+                }
+
+                if (isset($this->includePatterns[$code]) === false) {
+                    $this->includePatterns[$code] = array();
+                }
+
+                if (isset($pattern['type']) === false) {
+                    $pattern['type'] = 'absolute';
+                }
+
+                $this->includePatterns[$code][(string) $pattern] = (string) $pattern['type'];
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", $depth);
+                    echo "\t\t=> added rule-specific ".(string) $pattern['type'].' include pattern';
+                    if ($code !== $ref) {
+                        echo " for $code";
+                    }
+
+                    echo ': '.(string) $pattern.PHP_EOL;
+                }
+            }//end foreach
         }//end foreach
 
     }//end processRule()
@@ -1028,14 +1066,23 @@ class Ruleset
             $ignorePatterns = array();
             $patterns       = $this->getIgnorePatterns($sniffCode);
             foreach ($patterns as $pattern => $type) {
-                // While there is support for a type of each pattern
-                // (absolute or relative) we don't actually support it here.
                 $replacements = array(
                                  '\\,' => ',',
                                  '*'   => '.*',
                                 );
 
                 $ignorePatterns[] = strtr($pattern, $replacements);
+            }
+
+            $includePatterns = array();
+            $patterns        = $this->getIncludePatterns($sniffCode);
+            foreach ($patterns as $pattern => $type) {
+                $replacements = array(
+                                 '\\,' => ',',
+                                 '*'   => '.*',
+                                );
+
+                $includePatterns[] = strtr($pattern, $replacements);
             }
 
             foreach ($tokens as $token) {
@@ -1049,6 +1096,7 @@ class Ruleset
                                                                   'source'     => $sniffCode,
                                                                   'tokenizers' => $tokenizers,
                                                                   'ignore'     => $ignorePatterns,
+                                                                  'include'    => $includePatterns,
                                                                  );
                 }
             }
@@ -1114,6 +1162,32 @@ class Ruleset
         return array();
 
     }//end getIgnorePatterns()
+
+
+    /**
+     * Gets the array of include patterns.
+     *
+     * Optionally takes a listener to get include patterns specified
+     * for that sniff only.
+     *
+     * @param string $listener The listener to get patterns for. If NULL, all
+     *                         patterns are returned.
+     *
+     * @return array
+     */
+    public function getIncludePatterns($listener=null)
+    {
+        if ($listener === null) {
+            return $this->includePatterns;
+        }
+
+        if (isset($this->includePatterns[$listener]) === true) {
+            return $this->includePatterns[$listener];
+        }
+
+        return array();
+
+    }//end getIncludePatterns()
 
 
 }//end class

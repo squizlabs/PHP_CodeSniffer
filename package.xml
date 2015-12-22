@@ -43,6 +43,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- the basepath is absolute or relative to the current directory
     -- to make paths relative to current dir, use --basepath=.
   - Ignore rules are now checked when using STDIN (request #733)
+  - Added include-pattern tag to include a sniff for specific files and folders only (request #656)
+    -- exact opposite of the exclude-pattern tag
+    -- only useable within sniffs, not globally like exclude-patterns are
 
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
   - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
