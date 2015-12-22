@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionCommentThrowTagSniff extends AbstractScopeSniff
 {
@@ -46,7 +47,7 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
 
         $tokens = $phpcsFile->getTokens();
 
-        $find   = PHP_CodeSniffer_Tokens::$methodPrefixes;
+        $find   = Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;
 
         $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1), null, true);
