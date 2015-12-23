@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Generic LowerCaseKeyword now ensures array type hints are lowercase as well
+    -- Thanks to Mathieu Rochette for the patch
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
   - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
   - Fixed bug #752 : The missing exception error is reported in first found DocBlock
