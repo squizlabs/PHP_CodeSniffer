@@ -40,6 +40,7 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
                 T_HALT_COMPILER,
                 T_ABSTRACT,
                 T_ARRAY,
+                T_ARRAY_HINT,
                 T_AS,
                 T_BREAK,
                 T_CALLABLE,
