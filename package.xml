@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- exact opposite of the exclude-pattern tag
     -- only useable within sniffs, not globally like exclude-patterns are
 
+  - Generic LowerCaseKeyword now ensures array type hints are lowercase as well
+    -- Thanks to Mathieu Rochette for the patch
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
   - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
   - Fixed bug #752 : The missing exception error is reported in first found DocBlock
@@ -54,6 +56,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #820 : PEAR/PSR2 FunctionCallSignature sniffs suggest wrong indent when there are multiple arguments on a line
   - Fixed bug #822 : Ruleset hard-coded file paths are not used if not running from the same directory as the ruleset
   - Fixed bug #825 : FunctionCallArgumentSpacing sniff complains about more than one space before comment in multi-line function call
+  - Fixed bug #828 : Null classname is tokenized as T_NULL instead of T_STRING
   - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
  </notes>
  <contents>

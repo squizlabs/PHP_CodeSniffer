@@ -1204,6 +1204,32 @@ class PHP extends Tokenizer
                     $line = $this->tokens[$i]['line'];
                     echo "\t* token $i on line $line changed from T_ECHO to T_OPEN_TAG_WITH_ECHO".PHP_EOL;
                 }
+            } else if ($this->tokens[$i]['code'] === T_TRUE
+                || $this->tokens[$i]['code'] === T_FALSE
+                || $this->tokens[$i]['code'] === T_NULL
+            ) {
+                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
+                        // Non-whitespace content.
+                        break;
+                    }
+                }
+
+                $context = array(
+                            T_OBJECT_OPERATOR      => true,
+                            T_NS_SEPARATOR         => true,
+                            T_PAAMAYIM_NEKUDOTAYIM => true,
+                           );
+                if (isset($context[$this->tokens[$x]['code']]) === true) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$i]['line'];
+                        $type = $this->tokens[$i]['type'];
+                        echo "\t* token $i on line $line changed from $type to T_STRING".PHP_EOL;
+                    }
+
+                    $this->tokens[$i]['code'] = T_STRING;
+                    $this->tokens[$i]['type'] = 'T_STRING';
+                }
             }//end if
 
             if (($this->tokens[$i]['code'] !== T_CASE
