@@ -1072,6 +1072,32 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $line = $tokens[$i]['line'];
                     echo "\t* token $i on line $line changed from T_ECHO to T_OPEN_TAG_WITH_ECHO".PHP_EOL;
                 }
+            } else if ($tokens[$i]['code'] === T_TRUE
+                || $tokens[$i]['code'] === T_FALSE
+                || $tokens[$i]['code'] === T_NULL
+            ) {
+                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        // Non-whitespace content.
+                        break;
+                    }
+                }
+
+                $context = array(
+                            T_OBJECT_OPERATOR      => true,
+                            T_NS_SEPARATOR         => true,
+                            T_PAAMAYIM_NEKUDOTAYIM => true,
+                           );
+                if (isset($context[$tokens[$x]['code']]) === true) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$i]['line'];
+                        $type = $tokens[$i]['type'];
+                        echo "\t* token $i on line $line changed from $type to T_STRING".PHP_EOL;
+                    }
+
+                    $tokens[$i]['code'] = T_STRING;
+                    $tokens[$i]['type'] = 'T_STRING';
+                }
             }//end if
 
             if (($tokens[$i]['code'] !== T_CASE

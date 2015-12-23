@@ -79,3 +79,5 @@ class MyClass
 var_dump(MyClass::TRUE);
 
 function tRUE() {}
+
+$input->getFilterChain()->attachByName('Null', ['type' => Null::TYPE_STRING]);
