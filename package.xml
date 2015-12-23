@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #822 : Ruleset hard-coded file paths are not used if not running from the same directory as the ruleset
   - Fixed bug #825 : FunctionCallArgumentSpacing sniff complains about more than one space before comment in multi-line function call
   - Fixed bug #828 : Null classname is tokenized as T_NULL instead of T_STRING
+  - Fixed bug #831 : PHPCS freezes in an infinite loop under Windows if no standard is passed
   - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
  </notes>
  <contents>

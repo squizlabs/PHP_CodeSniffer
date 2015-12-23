@@ -1031,8 +1031,9 @@ class PHP_CodeSniffer_CLI
                     return array($default);
                 }
 
+                $lastDir    = $currentDir;
                 $currentDir = dirname($currentDir);
-            } while ($currentDir !== DIRECTORY_SEPARATOR && $currentDir !== '.');
+            } while ($currentDir !== '.' && $currentDir !== $lastDir);
 
             // Try to get the default from the config system.
             $standard = PHP_CodeSniffer::getConfigData('default_standard');
