@@ -296,8 +296,9 @@ class Config
                     }
                 }
 
+                $lastDir    = $currentDir;
                 $currentDir = dirname($currentDir);
-            } while ($currentDir !== DIRECTORY_SEPARATOR && $currentDir !== '.');
+            } while ($currentDir !== '.' && $currentDir !== $lastDir);
         }
 
     }//end __construct()
