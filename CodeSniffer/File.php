@@ -3448,7 +3448,8 @@ class PHP_CodeSniffer_File
 
             // Skip nested statements.
             if (isset($this->_tokens[$i]['scope_closer']) === true
-                && $i === $this->_tokens[$i]['scope_opener']
+                && ($i === $this->_tokens[$i]['scope_opener']
+                || $i === $this->_tokens[$i]['scope_condition'])
             ) {
                 $i = $this->_tokens[$i]['scope_closer'];
             } else if (isset($this->_tokens[$i]['bracket_closer']) === true

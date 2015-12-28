@@ -289,3 +289,10 @@ $qux = array_filter(
         return $x;
     }
 );
+
+array_filter(
+    [1, 2],
+    function ($i) : bool {
+        return $i === 0;
+    }
+);
