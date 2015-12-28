@@ -1921,7 +1921,8 @@ class File
 
             // Skip nested statements.
             if (isset($this->tokens[$i]['scope_closer']) === true
-                && $i === $this->tokens[$i]['scope_opener']
+                && ($i === $this->tokens[$i]['scope_opener']
+                || $i === $this->tokens[$i]['scope_condition'])
             ) {
                 $i = $this->tokens[$i]['scope_closer'];
             } else if (isset($this->tokens[$i]['bracket_closer']) === true
