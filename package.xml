@@ -60,6 +60,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #831 : PHPCS freezes in an infinite loop under Windows if no standard is passed
   - Fixed bug #835 : PEAR.Functions.FunctionCallSignature broken when closure uses return types
   - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
+  - Fixed bug #21010 : Incorrect missing colon detection in CSS when first style is not on new line
  </notes>
  <contents>
   <dir name="/">
