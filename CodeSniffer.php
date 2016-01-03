@@ -1933,7 +1933,7 @@ class PHP_CodeSniffer
         $public=true,
         $strict=true
     ) {
-        if ('' === $string) {
+        if ($string === '') {
             return true;
         }
 
