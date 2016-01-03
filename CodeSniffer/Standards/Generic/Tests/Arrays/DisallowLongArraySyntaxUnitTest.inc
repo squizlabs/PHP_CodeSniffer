@@ -13,3 +13,11 @@ $var = array/*comment*/(1,2,3);
 $var = array;
 
 function foo(array $array) {}
+
+function foo(array $array) use ($foo): array {}
+
+abstract function foo(): array;
+
+abstract function foo(): Foo\Bar;
+
+abstract function foo(): \Foo\Bar;

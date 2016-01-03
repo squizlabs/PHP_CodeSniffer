@@ -917,47 +917,60 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 $tokens[$i]['scope_condition'] = $tokens[$tokens[$i]['scope_opener']]['scope_condition'];
             }
 
-            if ($tokens[$i]['code'] === T_FUNCTION && isset($tokens[$i]['scope_opener']) === true) {
+            if ($tokens[$i]['code'] === T_FUNCTION) {
                 /*
                     Detect functions that are actually closures and
                     assign them a different token.
                 */
 
-                for ($x = ($i + 1); $x < $numTokens; $x++) {
-                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false
-                        && $tokens[$x]['code'] !== T_BITWISE_AND
-                    ) {
-                        break;
-                    }
-                }
-
-                if ($tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
-                    $tokens[$i]['code'] = T_CLOSURE;
-                    $tokens[$i]['type'] = 'T_CLOSURE';
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $line = $tokens[$i]['line'];
-                        echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
-                    }
-
-                    for ($x = ($tokens[$i]['scope_opener'] + 1); $x < $tokens[$i]['scope_closer']; $x++) {
-                        if (isset($tokens[$x]['conditions'][$i]) === false) {
-                            continue;
+                if (isset($tokens[$i]['scope_opener']) === true) {
+                    for ($x = ($i + 1); $x < $numTokens; $x++) {
+                        if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false
+                            && $tokens[$x]['code'] !== T_BITWISE_AND
+                        ) {
+                            break;
                         }
+                    }
 
-                        $tokens[$x]['conditions'][$i] = T_CLOSURE;
+                    if ($tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
+                        $tokens[$i]['code'] = T_CLOSURE;
+                        $tokens[$i]['type'] = 'T_CLOSURE';
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $type = $tokens[$x]['type'];
-                            echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                            $line = $tokens[$i]['line'];
+                            echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
+                        }
+
+                        for ($x = ($tokens[$i]['scope_opener'] + 1); $x < $tokens[$i]['scope_closer']; $x++) {
+                            if (isset($tokens[$x]['conditions'][$i]) === false) {
+                                continue;
+                            }
+
+                            $tokens[$x]['conditions'][$i] = T_CLOSURE;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $type = $tokens[$x]['type'];
+                                echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                            }
                         }
                     }
-                }
+                }//end if
 
                 /*
                     Detect function return values and assign them
                     a special token, because PHP doesn't.
                 */
 
-                for ($x = ($tokens[$i]['scope_opener'] - 1); $x > $i; $x--) {
+                if (isset($tokens[$i]['scope_opener']) === true) {
+                    $tokenAfterReturnTypeHint = $tokens[$i]['scope_opener'];
+                } else {
+                    for ($x = ($tokens[$i]['parenthesis_closer'] + 1); $i < $numTokens; $x++) {
+                        if ($tokens[$x]['code'] === T_SEMICOLON) {
+                            $tokenAfterReturnTypeHint = $x;
+                            break;
+                        }
+                    }
+                }
+
+                for ($x = ($tokenAfterReturnTypeHint - 1); $x > $i; $x--) {
                     if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
                         if ($tokens[$x]['code'] === T_STRING || $tokens[$x]['code'] === T_ARRAY) {
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
