@@ -176,7 +176,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 $leadingZero = false;
                 if ($content{0} === '0') {
                     $content     = '1'.$content;
-                    $leadingZero = false;
+                    $leadingZero = true;
                 }
 
                 $commentTokens = parent::tokenizeString('<?php '.$content.'?>', $eolChar);
