@@ -32,19 +32,6 @@ class Generic_Tests_PHP_SyntaxUnitTest extends AbstractSniffUnitTest
 {
 
     /**
-     * Should this test be skipped for some reason.
-     *
-     * @return void
-     */
-    protected function shouldSkipTest()
-    {
-        $phpPath = PHP_CodeSniffer::getConfigData('php_path');
-        return (is_null($phpPath));
-
-    }//end shouldSkipTest()
-
-
-    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value

@@ -56,7 +56,7 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
     {
         $phpPath = PHP_CodeSniffer::getConfigData('php_path');
         if ($phpPath === null) {
-            return;
+            $phpPath = PHP_BINARY;
         }
 
         $fileName = $phpcsFile->getFilename();
