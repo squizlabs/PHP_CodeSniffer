@@ -34,16 +34,6 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
 
 
     /**
-     * Constructs a PSR1_Sniffs_Methods_CamelCapsMethodNameSniff.
-     */
-    public function __construct()
-    {
-        parent::__construct(array(T_CLASS, T_INTERFACE, T_TRAIT), array(T_FUNCTION), true);
-
-    }//end __construct()
-
-
-    /**
      * Processes the tokens within the scope.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being processed.
@@ -72,7 +62,7 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
         }
 
         $testName = ltrim($methodName, '_');
-        if (PHP_CodeSniffer::isCamelCaps($testName, false, true, false) === false) {
+        if ($testName !== '' && PHP_CodeSniffer::isCamelCaps($testName, false, true, false) === false) {
             $error     = 'Method name "%s" is not in camel caps format';
             $className = $phpcsFile->getDeclarationName($currScope);
             $errorData = array($className.'::'.$methodName);
