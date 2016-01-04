@@ -1933,10 +1933,6 @@ class PHP_CodeSniffer
         $public=true,
         $strict=true
     ) {
-        if ($string === '') {
-            return true;
-        }
-
         // Check the first character first.
         if ($classFormat === false) {
             $legalFirstChar = '';

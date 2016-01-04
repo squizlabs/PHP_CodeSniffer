@@ -145,9 +145,4 @@ class Core_IsCamelCapsTest extends PHPUnit_Framework_TestCase
     }//end testInvalidClassFormatPrivate()
 
 
-    public function testTrueIsReturnedIfStringIsEmpty()
-    {
-        $this->assertTrue(PHP_CodeSniffer::isCamelCaps(''));
-    }
-
 }//end class
