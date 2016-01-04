@@ -57,7 +57,7 @@
         "ext-xmlwriter": "*"
     },
     "require-dev": {
-        "phpunit/PHPUnit": "~4.0"
+        "phpunit/phpunit": "~4.0"
     },
     "bin": [
         "scripts/phpcs",
