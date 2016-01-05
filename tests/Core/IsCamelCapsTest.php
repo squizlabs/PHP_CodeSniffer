@@ -146,3 +146,5 @@ class Core_IsCamelCapsTest extends PHPUnit_Framework_TestCase
 
 
 }//end class
+
+?>

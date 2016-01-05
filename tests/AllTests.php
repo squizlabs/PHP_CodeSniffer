@@ -87,3 +87,5 @@ class PHP_CodeSniffer_AllTests
 
 
 }//end class
+
+?>

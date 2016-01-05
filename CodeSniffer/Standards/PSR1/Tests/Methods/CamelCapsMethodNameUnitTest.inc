@@ -64,3 +64,4 @@ class Foo extends \SoapClient
 
     function __() {}
 }
+?>
