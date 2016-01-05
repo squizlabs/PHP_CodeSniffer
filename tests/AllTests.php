@@ -49,16 +49,6 @@ class PHP_CodeSniffer_AllTests
 
 
     /**
-     * Constructs a PSR1_Sniffs_Methods_CamelCapsMethodNameSniff.
-     */
-    public function __construct()
-    {
-        parent::__construct(array(T_CLASS, T_INTERFACE, T_TRAIT), array(T_FUNCTION), true);
-
-    }//end __construct()
-
-
-    /**
      * Prepare the test runner.
      *
      * @return void
