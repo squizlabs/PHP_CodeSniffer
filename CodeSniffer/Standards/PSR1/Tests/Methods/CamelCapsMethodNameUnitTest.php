@@ -71,3 +71,5 @@ class PSR1_Tests_Methods_CamelCapsMethodNameUnitTest extends AbstractSniffUnitTe
 
 
 }//end class
+
+?>
