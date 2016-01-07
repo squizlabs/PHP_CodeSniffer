@@ -56,31 +56,36 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
     {
         $phpPath = PHP_CodeSniffer::getConfigData('php_path');
         if ($phpPath === null) {
-            // PHP_BINARY is available in PHP 5.4+
-            if (defined('PHP_BINARY')) {
+            // PHP_BINARY is available in PHP 5.4+.
+            if (defined('PHP_BINARY') === true) {
                 $phpPath = PHP_BINARY;
-            }
-            else {
+            } else {
                 // Fallback for old PHP versions that can be removed once PHP
                 // 5.4 is required.
                 $candidates = array(
-                  PHP_BINDIR . '/php',
-                  PHP_BINDIR . '/php.exe',
-                );
+                               PHP_BINDIR.'/php',
+                               PHP_BINDIR.'/php.exe',
+                              );
 
                 foreach ($candidates as $candidate) {
-                    if (file_exists($candidate) && is_executable($candidate)) {
+                    if (file_exists($candidate) === true
+                        && is_executable($candidate) === true
+                    ) {
                         $phpPath = $candidate;
                         break;
                     }
                 }
 
-                if (empty($phpPath)) {
-                    $phpcsFile->addWarning('Unable to check syntax as php_path is not configured', $stackPtr, 'PHPSyntax');
+                if (empty($phpPath) === true) {
+                    $phpcsFile->addWarning(
+                        'Unable to check syntax as php_path is not configured',
+                        $stackPtr,
+                        'PHPSyntax'
+                    );
                     return;
                 }
-            }
-        }
+            }//end if
+        }//end if
 
         $fileName = $phpcsFile->getFilename();
         $cmd      = "$phpPath -l \"$fileName\" 2>&1";
