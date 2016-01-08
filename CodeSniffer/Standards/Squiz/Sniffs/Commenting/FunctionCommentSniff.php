@@ -526,8 +526,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             }//end if
 
             // Param comments must start with a capital letter and end with the full stop.
-            $firstChar = $param['comment']{0};
-            if (preg_match('|\p{Lu}|u', $firstChar) === 0) {
+            if (preg_match('/^\p{Lu}/u', $param['comment']) === 0) {
                 $error = 'Parameter comment must start with a capital letter';
                 $phpcsFile->addError($error, $param['tag'], 'ParamCommentNotCapital');
             }

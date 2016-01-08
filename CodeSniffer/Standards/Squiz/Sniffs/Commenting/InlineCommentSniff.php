@@ -261,7 +261,7 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
         // a non-letter character, throw an error.
         // \p{Lu} : an uppercase letter that has a lowercase variant.
         // \P{L}  : a non-letter character.
-        if (preg_match('/\p{Lu}|\P{L}/u', $commentText[0]) === 0) {
+        if (preg_match('/^(\p{Lu}|\P{L})/u', $commentText) === 0) {
             $error = 'Inline comments must start with a capital letter';
             $phpcsFile->addError($error, $topComment, 'NotCapital');
         }
