@@ -243,18 +243,14 @@ class InlineCommentSniff implements Sniff
             return;
         }
 
-        // If the first character is now uppercase and is not
-        // a non-letter character, throw an error.
-        // \p{Lu} : an uppercase letter that has a lowercase variant.
-        // \P{L}  : a non-letter character.
-        if (preg_match('/\p{Lu}|\P{L}/u', $commentText[0]) === 0) {
+        if (preg_match('/^\p{Ll}/u', $commentText) === 1) {
             $error = 'Inline comments must start with a capital letter';
             $phpcsFile->addError($error, $topComment, 'NotCapital');
         }
 
         // Only check the end of comment character if the start of the comment
         // is a letter, indicating that the comment is just standard text.
-        if (preg_match('/\P{L}/u', $commentText[0]) === 0) {
+        if (preg_match('/^\p{L}/u', $commentText) === 1) {
             $commentCloser   = $commentText[(strlen($commentText) - 1)];
             $acceptedClosers = array(
                                 'full-stops'        => '.',

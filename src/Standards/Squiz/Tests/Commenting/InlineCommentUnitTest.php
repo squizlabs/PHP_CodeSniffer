@@ -42,7 +42,7 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
                        67  => 1,
                        95  => 1,
                        96  => 1,
-                       97  => 2,
+                       97  => 3,
                        118 => 1,
                       );
 

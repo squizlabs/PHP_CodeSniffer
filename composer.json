@@ -21,7 +21,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "3.x-dev"
         }
     },
     "autoload": {
@@ -37,7 +37,7 @@
         "ext-xmlwriter": "*"
     },
     "require-dev": {
-        "phpunit/PHPUnit": "~4.0"
+        "phpunit/phpunit": "~4.0"
     },
     "bin": [
         "bin/phpcs",

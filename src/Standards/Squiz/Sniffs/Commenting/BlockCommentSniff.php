@@ -228,7 +228,7 @@ class BlockCommentSniff implements Sniff
                 }
             }
 
-            if (preg_match('/\p{Lu}|\P{L}/u', $commentText[0]) === 0) {
+            if (preg_match('/^\p{Ll}/u', $commentText) === 1) {
                 $error = 'Block comments must start with a capital letter';
                 $phpcsFile->addError($error, $commentLines[1], 'NoCapital');
             }
