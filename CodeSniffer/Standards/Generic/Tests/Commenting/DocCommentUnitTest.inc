@@ -186,3 +186,7 @@
  * @return boolean
  * @param boolean $bar Blah.
  */
+
+/**
+ * étude des ...
+ */

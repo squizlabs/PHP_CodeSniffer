@@ -69,6 +69,7 @@ class Generic_Tests_Commenting_DocCommentUnitTest extends AbstractSniffUnitTest
                 185 => 2,
                 186 => 1,
                 187 => 2,
+                191 => 1,
                );
 
     }//end getErrorList()
