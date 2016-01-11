@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #828 : Null classname is tokenized as T_NULL instead of T_STRING
   - Fixed bug #831 : PHPCS freezes in an infinite loop under Windows if no standard is passed
   - Fixed bug #835 : PEAR.Functions.FunctionCallSignature broken when closure uses return types
+  - Fixed bug #852 : Generic.Commenting.DocComment not finding errors when long description is omitted
   - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
   - Fixed bug #21010 : Incorrect missing colon detection in CSS when first style is not on new line
   - Fixed bug #21011 : Incorrect error message text when newline found after opening brace

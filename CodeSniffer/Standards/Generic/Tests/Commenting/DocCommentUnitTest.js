@@ -173,3 +173,16 @@
 /**
  * 这是一条测试评论.
  */
+
+/**
+ * I'm a function short-description
+ * @return boolean
+ */
+
+/**
+ * this is a test
+ * @author test
+ * @param boolean $foo blah
+ * @return boolean
+ * @param boolean $bar Blah.
+ */
