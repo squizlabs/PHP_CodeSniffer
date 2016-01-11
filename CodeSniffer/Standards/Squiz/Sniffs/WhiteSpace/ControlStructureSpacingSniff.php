@@ -83,18 +83,20 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
             $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
             $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
             if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
-                $gap   = $tokens[($parenOpener + 1)]['length'];
+                $gap = $tokens[($parenOpener + 1)]['length'];
+
+                if ($gap === 0) {
+                    $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', 'newline');
+                    $gap = 'newline';
+                } else {
+                    $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $gap);
+                }
+
                 $error = 'Expected 0 spaces after opening bracket; %s found';
                 $data  = array($gap);
                 $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
-                }
-
-                if ($gap === 0) {
-                    $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', 'newline');
-                } else {
-                    $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $gap);
                 }
             } else {
                 $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', 0);
