@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The PHP-supplied T_SPACESHIP token has been replicated for PHP versions before 7.0
+  - T_SPACESHIP is now correclty identified as an operator
+    -- Thanks to Alexander Obuhovich for the patch
   - Generic LowerCaseKeyword now ensures array type hints are lowercase as well
     -- Thanks to Mathieu Rochette for the patch
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons

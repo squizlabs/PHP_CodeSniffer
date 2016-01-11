@@ -611,6 +611,28 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
+                Before PHP 7, the <=> operator was tokenized as
+                T_IS_SMALLER_OR_EQUAL followed by T_GREATER_THAN.
+                So look for and combine these tokens in earlier versions.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_IS_SMALLER_OR_EQUAL
+                && isset($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === '>'
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_SPACESHIP;
+                $newToken['type']    = 'T_SPACESHIP';
+                $newToken['content'] = '<=>';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr++;
+                continue;
+            }
+
+            /*
                 Emulate traits in PHP versions less than 5.4.
             */
 
