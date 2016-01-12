@@ -69,6 +69,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         $expected[0] = array(
                         'name'              => '$var',
                         'pass_by_reference' => true,
+                        'variable_length'   => false,
                         'type_hint'         => '',
                        );
 
@@ -98,6 +99,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         $expected[0] = array(
                         'name'              => '$var',
                         'pass_by_reference' => false,
+                        'variable_length'   => false,
                         'type_hint'         => 'array',
                        );
 
@@ -127,12 +129,14 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         $expected[0] = array(
                         'name'              => '$var1',
                         'pass_by_reference' => false,
+                        'variable_length'   => false,
                         'type_hint'         => 'foo',
                        );
 
         $expected[1] = array(
                         'name'              => '$var2',
                         'pass_by_reference' => false,
+                        'variable_length'   => false,
                         'type_hint'         => 'bar',
                        );
 
@@ -162,6 +166,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         $expected[0] = array(
                         'name'              => '$var',
                         'pass_by_reference' => false,
+                        'variable_length'   => false,
                         'type_hint'         => '',
                        );
 
@@ -192,6 +197,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
                         'name'              => '$var1',
                         'default'           => 'self::CONSTANT',
                         'pass_by_reference' => false,
+                        'variable_length'   => false,
                         'type_hint'         => '',
                        );
 
@@ -222,12 +228,14 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
                         'name'              => '$var1',
                         'default'           => '1',
                         'pass_by_reference' => false,
+                        'variable_length'   => false,
                         'type_hint'         => '',
                        );
         $expected[1] = array(
                         'name'              => '$var2',
                         'default'           => "'value'",
                         'pass_by_reference' => false,
+                        'variable_length'   => false,
                         'type_hint'         => '',
                        );
 
