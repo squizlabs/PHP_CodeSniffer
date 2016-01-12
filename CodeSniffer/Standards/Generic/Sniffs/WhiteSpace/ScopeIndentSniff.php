@@ -141,6 +141,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
+        $debug = PHP_CodeSniffer::getConfigData('scope_indent_debug');
+        if ($debug !== null) {
+            $this->_debug = (bool) $debug;
+        }
+
         if ($this->_tabWidth === null) {
             $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
             if (isset($cliValues['tabWidth']) === false || $cliValues['tabWidth'] === 0) {
@@ -1091,9 +1096,18 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
 
                 $currentIndent = ($tokens[$first]['column'] - 1);
-
                 if ($object > 0 || $condition > 0) {
                     $currentIndent += $this->indent;
+                }
+
+                if (isset($tokens[$first]['scope_closer']) === true
+                    && $tokens[$first]['scope_closer'] === $first
+                ) {
+                    if ($this->_debug === true) {
+                        echo "\t* first token is a scope closer *".PHP_EOL;
+                    }
+
+                    $currentIndent -= $this->indent;
                 }
 
                 // Make sure it is divisible by our expected indent.
