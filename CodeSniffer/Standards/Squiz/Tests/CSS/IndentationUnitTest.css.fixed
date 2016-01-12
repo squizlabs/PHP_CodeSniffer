@@ -1,15 +1,12 @@
 body {
-
-        font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     margin: 40px 0 0 0;
-padding: 0;
-  background: #8FB7DB url(diag_lines_bg.gif) top left;
-    
+    padding: 0;
+    background: #8FB7DB url(diag_lines_bg.gif) top left;
 }
 
 td {
     margin: 40px;
-
     padding: 20px;
 }
 
@@ -27,9 +24,9 @@ td {
 @media screen and (max-device-width: 769px) {
 
     header #logo img {
-    max-width: 100%;
+        max-width: 100%;
         padding: 20px;
-         margin: 40px;
+        margin: 40px;
     }
 }
 
@@ -47,10 +44,7 @@ td {
 
 td {
     margin: 40px;
-
     padding: 20px;
-
-
 }
 
 .GUIFileUpload {
@@ -58,10 +52,10 @@ td {
 }
 
 .mortgage-calculator h2 {
-        background: #072237;
-        color: #fff;
-        font-weight: normal;
-        height: 50px;
-        line-height: 50px;
-        padding: 0 0 0 30px;
-    }
+    background: #072237;
+    color: #fff;
+    font-weight: normal;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 0 0 30px;
+}
