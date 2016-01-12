@@ -14,6 +14,13 @@
 
 error_reporting(E_ALL | E_STRICT);
 
+// Installations via Composer: make sure that we autoload all dependencies.
+if (file_exists($a = dirname(__FILE__).'/../../../autoload.php') === true) {
+    include_once $a;
+} else if (file_exists($a = dirname(__FILE__).'/../vendor/autoload.php') === true) {
+    include_once $a;
+}
+
 if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
     include_once dirname(__FILE__).'/../CodeSniffer.php';
 } else {
