@@ -42,6 +42,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #829 : Short array argument not fixed correctly when multiple function arguments are on the same line
   - Fixed bug #831 : PHPCS freezes in an infinite loop under Windows if no standard is passed
   - Fixed bug #835 : PEAR.Functions.FunctionCallSignature broken when closure uses return types
+  - Fixed bug #838 : CSS indentation fixer changes color codes
+    -- Thanks to Klaus Purer for the patch
   - Fixed bug #839 : "__()" method is marked as not camel caps
     -- Thanks to Tim Bezhashvyly for the patch
   - Fixed bug #852 : Generic.Commenting.DocComment not finding errors when long description is omitted
@@ -1888,6 +1890,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="IndentationUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="IndentationUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP" name="IndentationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
