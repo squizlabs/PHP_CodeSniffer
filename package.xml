@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #839 : "__()" method is marked as not camel caps
     -- Thanks to Tim Bezhashvyly for the patch
   - Fixed bug #852 : Generic.Commenting.DocComment not finding errors when long description is omitted
+  - Fixed bug #854 : Return typehints in interfaces are not reported as T_RETURN_TYPE
+    -- Thanks to Jaroslav Hanslík for the patch
   - Fixed bug #855 : Capital letter detection for multibyte strings doesn't work correctly
   - Fixed bug #857 : PSR2.ControlStructure.SwitchDeclaration shouldn't check indent of curly brace closers
   - Fixed bug #859 : Switch statement indention issue when returning function call with closure
