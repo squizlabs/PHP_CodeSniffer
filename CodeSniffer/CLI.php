@@ -21,9 +21,11 @@ if (file_exists($a = dirname(__FILE__).'/../../../autoload.php') === true) {
     include_once $a;
 }
 
-if (is_file(dirname(__FILE__).'/../CodeSniffer.php') === true) {
-    include_once dirname(__FILE__).'/../CodeSniffer.php';
+if (file_exists($a = dirname(__FILE__).'/../CodeSniffer.php') === true) {
+    // Running from a git clone.
+    include_once $a;
 } else {
+    // PEAR installed.
     include_once 'PHP/CodeSniffer.php';
 }
 
