@@ -112,7 +112,8 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                 }
             }
 
-            $opener = $tokens[$nextCase]['scope_opener'];
+            $opener     = $tokens[$nextCase]['scope_opener'];
+            $nextCloser = $tokens[$nextCase]['scope_closer'];
             if ($tokens[$opener]['code'] === T_COLON) {
                 if ($tokens[($opener - 1)]['code'] === T_WHITESPACE) {
                     $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
@@ -152,38 +153,37 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
                         }
                     }
                 }//end if
+
+                if ($tokens[$nextCloser]['scope_condition'] === $nextCase) {
+                    // Only need to check some things once, even if the
+                    // closer is shared between multiple case statements, or even
+                    // the default case.
+                    $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCloser - 1), $nextCase, true);
+                    if ($tokens[$prev]['line'] === $tokens[$nextCloser]['line']) {
+                        $error = 'Terminating statement must be on a line by itself';
+                        $fix   = $phpcsFile->addFixableError($error, $nextCloser, 'BreakNotNewLine');
+                        if ($fix === true) {
+                            $phpcsFile->fixer->addNewLine($prev);
+                            $phpcsFile->fixer->replaceToken($nextCloser, trim($tokens[$nextCloser]['content']));
+                        }
+                    } else {
+                        $diff = ($caseAlignment + $this->indent - $tokens[$nextCloser]['column']);
+                        if ($diff !== 0) {
+                            $error = 'Terminating statement must be indented to the same level as the CASE body';
+                            $fix   = $phpcsFile->addFixableError($error, $nextCloser, 'BreakIndent');
+                            if ($fix === true) {
+                                if ($diff > 0) {
+                                    $phpcsFile->fixer->addContentBefore($nextCloser, str_repeat(' ', $diff));
+                                } else {
+                                    $phpcsFile->fixer->substrToken(($nextCloser - 1), 0, $diff);
+                                }
+                            }
+                        }
+                    }//end if
+                }//end if
             } else {
                 $error = strtoupper($type).' statements must be defined using a colon';
                 $phpcsFile->addError($error, $nextCase, 'WrongOpener'.$type);
-            }//end if
-
-            $nextCloser = $tokens[$nextCase]['scope_closer'];
-            if ($tokens[$nextCloser]['scope_condition'] === $nextCase) {
-                // Only need to check some things once, even if the
-                // closer is shared between multiple case statements, or even
-                // the default case.
-                $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCloser - 1), $nextCase, true);
-                if ($tokens[$prev]['line'] === $tokens[$nextCloser]['line']) {
-                    $error = 'Terminating statement must be on a line by itself';
-                    $fix   = $phpcsFile->addFixableError($error, $nextCloser, 'BreakNotNewLine');
-                    if ($fix === true) {
-                        $phpcsFile->fixer->addNewLine($prev);
-                        $phpcsFile->fixer->replaceToken($nextCloser, trim($tokens[$nextCloser]['content']));
-                    }
-                } else {
-                    $diff = ($caseAlignment + $this->indent - $tokens[$nextCloser]['column']);
-                    if ($diff !== 0) {
-                        $error = 'Terminating statement must be indented to the same level as the CASE body';
-                        $fix   = $phpcsFile->addFixableError($error, $nextCloser, 'BreakIndent');
-                        if ($fix === true) {
-                            if ($diff > 0) {
-                                $phpcsFile->fixer->addContentBefore($nextCloser, str_repeat(' ', $diff));
-                            } else {
-                                $phpcsFile->fixer->substrToken(($nextCloser - 1), 0, $diff);
-                            }
-                        }
-                    }
-                }//end if
             }//end if
 
             // We only want cases from here on in.

@@ -1172,13 +1172,24 @@ class PHP_CodeSniffer_Tokenizers_PHP
             // not whatever it already is. The opener needs to be the opening curly
             // brace so everything matches up.
             $newCloser = $tokens[$x]['bracket_closer'];
-            $tokens[$i]['scope_closer']            = $newCloser;
-            $tokens[$x]['scope_closer']            = $newCloser;
-            $tokens[$i]['scope_opener']            = $x;
-            $tokens[$x]['scope_condition']         = $i;
-            $tokens[$newCloser]['scope_condition'] = $i;
-            $tokens[$newCloser]['scope_opener']    = $x;
-            $tokens[$newCloser]['scope_closer']    = $newCloser;
+            foreach (array($i, $x, $newCloser) as $index) {
+                $tokens[$index]['scope_condition'] = $i;
+                $tokens[$index]['scope_opener']    = $x;
+                $tokens[$index]['scope_closer']    = $newCloser;
+            }
+
+            unset($tokens[$scopeOpener]['scope_condition']);
+            unset($tokens[$scopeOpener]['scope_opener']);
+            unset($tokens[$scopeOpener]['scope_closer']);
+            unset($tokens[$scopeCloser]['scope_condition']);
+            unset($tokens[$scopeCloser]['scope_opener']);
+            unset($tokens[$scopeCloser]['scope_closer']);
+            unset($tokens[$x]['bracket_opener']);
+            unset($tokens[$x]['bracket_closer']);
+            unset($tokens[$newCloser]['bracket_opener']);
+            unset($tokens[$newCloser]['bracket_closer']);
+            $tokens[$scopeCloser]['conditions'][] = $i;
+
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $line      = $tokens[$i]['line'];
                 $tokenType = $tokens[$i]['type'];
