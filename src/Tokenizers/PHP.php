@@ -1304,13 +1304,24 @@ class PHP extends Tokenizer
             // not whatever it already is. The opener needs to be the opening curly
             // brace so everything matches up.
             $newCloser = $this->tokens[$x]['bracket_closer'];
-            $this->tokens[$i]['scope_closer']            = $newCloser;
-            $this->tokens[$x]['scope_closer']            = $newCloser;
-            $this->tokens[$i]['scope_opener']            = $x;
-            $this->tokens[$x]['scope_condition']         = $i;
-            $this->tokens[$newCloser]['scope_condition'] = $i;
-            $this->tokens[$newCloser]['scope_opener']    = $x;
-            $this->tokens[$newCloser]['scope_closer']    = $newCloser;
+            foreach (array($i, $x, $newCloser) as $index) {
+                $this->tokens[$index]['scope_condition'] = $i;
+                $this->tokens[$index]['scope_opener']    = $x;
+                $this->tokens[$index]['scope_closer']    = $newCloser;
+            }
+
+            unset($this->tokens[$scopeOpener]['scope_condition']);
+            unset($this->tokens[$scopeOpener]['scope_opener']);
+            unset($this->tokens[$scopeOpener]['scope_closer']);
+            unset($this->tokens[$scopeCloser]['scope_condition']);
+            unset($this->tokens[$scopeCloser]['scope_opener']);
+            unset($this->tokens[$scopeCloser]['scope_closer']);
+            unset($this->tokens[$x]['bracket_opener']);
+            unset($this->tokens[$x]['bracket_closer']);
+            unset($this->tokens[$newCloser]['bracket_opener']);
+            unset($this->tokens[$newCloser]['bracket_closer']);
+            $this->tokens[$scopeCloser]['conditions'][] = $i;
+
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $line      = $this->tokens[$i]['line'];
                 $tokenType = $this->tokens[$i]['type'];

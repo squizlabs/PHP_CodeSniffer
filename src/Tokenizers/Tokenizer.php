@@ -505,9 +505,8 @@ abstract class Tokenizer
     private function recurseScopeMap($stackPtr, $depth=1, &$ignore=0)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            if ($depth === 1) {
-                echo "\t*** START SCOPE MAP ***".PHP_EOL;
-            }
+            echo str_repeat("\t", $depth);
+            echo "=> Begin scope map recursion at token $stackPtr with depth $depth".PHP_EOL;
 
             $isWin = false;
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {

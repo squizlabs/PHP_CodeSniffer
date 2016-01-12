@@ -66,6 +66,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Tim Bezhashvyly for the patch
   - Fixed bug #852 : Generic.Commenting.DocComment not finding errors when long description is omitted
   - Fixed bug #855 : Capital letter detection for multibyte strings doesn't work correctly
+  - Fixed bug #857 : PSR2.ControlStructure.SwitchDeclaration shouldn't check indent of curly brace closers
   - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
   - Fixed bug #21010 : Incorrect missing colon detection in CSS when first style is not on new line
   - Fixed bug #21011 : Incorrect error message text when newline found after opening brace
