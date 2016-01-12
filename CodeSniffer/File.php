@@ -1886,9 +1886,8 @@ class PHP_CodeSniffer_File
         &$ignore=0
     ) {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            if ($depth === 1) {
-                echo "\t*** START SCOPE MAP ***".PHP_EOL;
-            }
+            echo str_repeat("\t", $depth);
+            echo "=> Begin scope map recursion at token $stackPtr with depth $depth".PHP_EOL;
 
             $isWin = false;
             if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
@@ -2176,10 +2175,11 @@ class PHP_CodeSniffer_File
                         throw new PHP_CodeSniffer_Exception('Maximum nesting level reached; file could not be processed');
                     }
 
+                    $oldDepth = $depth;
                     if ($isShared === true
                         && isset($tokenizer->scopeOpeners[$tokenType]['with'][$currType]) === true
                     ) {
-                        // Don't allow the depth to incremement because this is
+                        // Don't allow the depth to increment because this is
                         // possibly not a true nesting if we are sharing our closer.
                         // This can happen, for example, when a SWITCH has a large
                         // number of CASE statements with the same shared BREAK.
@@ -2195,6 +2195,8 @@ class PHP_CodeSniffer_File
                         ($depth + 1),
                         $ignore
                     );
+
+                    $depth = $oldDepth;
 
                     if (isset($tokenizer->scopeOpeners[$tokenType]['end'][T_CLOSE_CURLY_BRACKET]) === true) {
                         $ignore = $oldIgnore;
