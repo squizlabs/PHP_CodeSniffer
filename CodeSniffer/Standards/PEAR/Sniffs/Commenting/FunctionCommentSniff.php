@@ -225,7 +225,7 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
             $comment   = '';
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = array();
-                preg_match('/([^$&]+)(?:((?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
+                preg_match('/([^$&.]+)(?:((?:\.\.\.)?(?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
 
                 $typeLen   = strlen($matches[1]);
                 $type      = trim($matches[1]);
@@ -283,6 +283,14 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
 
         $realParams  = $phpcsFile->getMethodParameters($stackPtr);
         $foundParams = array();
+
+        // We want to use ... for all variable length arguments, so added
+        // this prefix to the variable name so comparisons are easier.
+        foreach ($realParams as $pos => $param) {
+            if ($param['variable_length'] === true) {
+                $realParams[$pos]['name'] = '...'.$realParams[$pos]['name'];
+            }
+        }
 
         foreach ($params as $pos => $param) {
             if ($param['var'] === '') {

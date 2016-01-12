@@ -297,3 +297,26 @@ class Baz {
 public function completeStep($status, array $array = [Class1::class, 'test'], $note = '') {
     echo 'foo';
 }
+
+/**
+ * Variadic function.
+ *
+ * @param string $name1    Comment.
+ * @param string ...$name2 Comment.
+ *
+ * @return void
+ */
+public function myFunction(string $name1, string ...$name2) {
+}
+
+
+/**
+ * Variadic function.
+ *
+ * @param string $name1 Comment.
+ * @param string $name2 Comment.
+ *
+ * @return void
+ */
+public function myFunction(string $name1, string ...$name2) {
+}

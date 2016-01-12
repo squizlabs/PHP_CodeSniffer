@@ -2729,6 +2729,7 @@ class PHP_CodeSniffer_File
         $defaultStart    = null;
         $paramCount      = 0;
         $passByReference = false;
+        $variableLength  = false;
         $typeHint        = '';
 
         for ($i = ($opener + 1); $i <= $closer; $i++) {
@@ -2756,6 +2757,9 @@ class PHP_CodeSniffer_File
                 break;
             case T_VARIABLE:
                 $currVar = $i;
+                break;
+            case T_ELLIPSIS:
+                $variableLength = true;
                 break;
             case T_ARRAY_HINT:
             case T_CALLABLE:
@@ -2816,11 +2820,13 @@ class PHP_CodeSniffer_File
                 }
 
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;
+                $vars[$paramCount]['variable_length']   = $variableLength;
                 $vars[$paramCount]['type_hint']         = $typeHint;
 
                 // Reset the vars, as we are about to process the next parameter.
                 $defaultStart    = null;
                 $passByReference = false;
+                $variableLength  = false;
                 $typeHint        = '';
 
                 $paramCount++;

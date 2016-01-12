@@ -728,3 +728,26 @@ public function callableCallback(callable $cb) {
  */
 public function myFunction (string $name1, int $name2, float $name3, bool $name4) {
 }
+
+/**
+ * Variadic function.
+ *
+ * @param string $name1    Comment.
+ * @param string ...$name2 Comment.
+ *
+ * @return void
+ */
+public function myFunction(string $name1, string ...$name2) {
+}
+
+
+/**
+ * Variadic function.
+ *
+ * @param string $name1 Comment.
+ * @param string $name2 Comment.
+ *
+ * @return void
+ */
+public function myFunction(string $name1, string ...$name2) {
+}

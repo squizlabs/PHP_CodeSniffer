@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
   - PHP_CodesSniffer now includes the composer autoload.php file, if there is one
     -- Thanks to Klaus Purer for the patch
+  - PEAR and Squiz FunctionComment sniffs now support variadic functions (request #841)
   - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
   - Fixed bug #752 : The missing exception error is reported in first found DocBlock
   - Fixed bug #794 : PSR2 MultiLineFunctionDeclaration forbids comments after opening parenthesis of a multiline call
