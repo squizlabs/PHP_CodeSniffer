@@ -954,6 +954,16 @@ switch ($x) {
         return [2];
 }
 
+switch ($foo) {
+    case self::FOO:
+        return $this->bar($gfoo, function ($id) {
+            return FOO::bar($id);
+        }, $values);
+    case self::BAR:
+        $values = $this->bar($foo, $values);
+        break;
+}
+
 function foo()
 {
     $foo = array(

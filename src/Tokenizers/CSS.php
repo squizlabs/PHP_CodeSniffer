@@ -189,7 +189,7 @@ class CSS extends PHP
                 $leadingZero = false;
                 if ($content{0} === '0') {
                     $content     = '1'.$content;
-                    $leadingZero = false;
+                    $leadingZero = true;
                 }
 
                 $commentTokens = parent::tokenize('<?php '.$content.'?>');

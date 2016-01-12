@@ -112,3 +112,7 @@ $qux = array_filter(
         return $x;
     }
 );
+
+$this->listeners[] = $events->getSharedManager()->attach(
+        'Zend\Mvc\Application', MvcEvent::EVENT_DISPATCH, [$this, 'selectLayout'], 100
+);

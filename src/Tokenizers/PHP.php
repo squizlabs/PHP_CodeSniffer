@@ -1071,47 +1071,60 @@ class PHP extends Tokenizer
                 $this->tokens[$i]['scope_condition'] = $this->tokens[$this->tokens[$i]['scope_opener']]['scope_condition'];
             }
 
-            if ($this->tokens[$i]['code'] === T_FUNCTION && isset($this->tokens[$i]['scope_opener']) === true) {
+            if ($this->tokens[$i]['code'] === T_FUNCTION) {
                 /*
                     Detect functions that are actually closures and
                     assign them a different token.
                 */
 
-                for ($x = ($i + 1); $x < $numTokens; $x++) {
-                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false
-                        && $this->tokens[$x]['code'] !== T_BITWISE_AND
-                    ) {
-                        break;
-                    }
-                }
-
-                if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
-                    $this->tokens[$i]['code'] = T_CLOSURE;
-                    $this->tokens[$i]['type'] = 'T_CLOSURE';
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $line = $this->tokens[$i]['line'];
-                        echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
-                    }
-
-                    for ($x = ($this->tokens[$i]['scope_opener'] + 1); $x < $this->tokens[$i]['scope_closer']; $x++) {
-                        if (isset($this->tokens[$x]['conditions'][$i]) === false) {
-                            continue;
+                if (isset($this->tokens[$i]['scope_opener']) === true) {
+                    for ($x = ($i + 1); $x < $numTokens; $x++) {
+                        if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false
+                            && $this->tokens[$x]['code'] !== T_BITWISE_AND
+                        ) {
+                            break;
                         }
+                    }
 
-                        $this->tokens[$x]['conditions'][$i] = T_CLOSURE;
+                    if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
+                        $this->tokens[$i]['code'] = T_CLOSURE;
+                        $this->tokens[$i]['type'] = 'T_CLOSURE';
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            $type = $this->tokens[$x]['type'];
-                            echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                            $line = $this->tokens[$i]['line'];
+                            echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
+                        }
+
+                        for ($x = ($this->tokens[$i]['scope_opener'] + 1); $x < $this->tokens[$i]['scope_closer']; $x++) {
+                            if (isset($this->tokens[$x]['conditions'][$i]) === false) {
+                                continue;
+                            }
+
+                            $this->tokens[$x]['conditions'][$i] = T_CLOSURE;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $type = $this->tokens[$x]['type'];
+                                echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                            }
                         }
                     }
-                }
+                }//end if
 
                 /*
                     Detect function return values and assign them
                     a special token, because PHP doesn't.
                 */
 
-                for ($x = ($this->tokens[$i]['scope_opener'] - 1); $x > $i; $x--) {
+                if (isset($this->tokens[$i]['scope_opener']) === true) {
+                    $tokenAfterReturnTypeHint = $this->tokens[$i]['scope_opener'];
+                } else {
+                    for ($x = ($this->tokens[$i]['parenthesis_closer'] + 1); $i < $numTokens; $x++) {
+                        if ($this->tokens[$x]['code'] === T_SEMICOLON) {
+                            $tokenAfterReturnTypeHint = $x;
+                            break;
+                        }
+                    }
+                }
+
+                for ($x = ($tokenAfterReturnTypeHint - 1); $x > $i; $x--) {
                     if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
                         if ($this->tokens[$x]['code'] === T_STRING || $this->tokens[$x]['code'] === T_ARRAY) {
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {

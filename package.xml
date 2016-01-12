@@ -53,6 +53,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic LowerCaseKeyword now ensures array type hints are lowercase as well
     -- Thanks to Mathieu Rochette for the patch
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
+  - PHP_CodesSniffer now includes the composer autoload.php file, if there is one
+    -- Thanks to Klaus Purer for the patch
   - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
   - Fixed bug #752 : The missing exception error is reported in first found DocBlock
   - Fixed bug #794 : PSR2 MultiLineFunctionDeclaration forbids comments after opening parenthesis of a multiline call
@@ -60,13 +62,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #822 : Ruleset hard-coded file paths are not used if not running from the same directory as the ruleset
   - Fixed bug #825 : FunctionCallArgumentSpacing sniff complains about more than one space before comment in multi-line function call
   - Fixed bug #828 : Null classname is tokenized as T_NULL instead of T_STRING
+  - Fixed bug #829 : Short array argument not fixed correctly when multiple function arguments are on the same line
   - Fixed bug #831 : PHPCS freezes in an infinite loop under Windows if no standard is passed
   - Fixed bug #835 : PEAR.Functions.FunctionCallSignature broken when closure uses return types
+  - Fixed bug #838 : CSS indentation fixer changes color codes
+    -- Thanks to Klaus Purer for the patch
   - Fixed bug #839 : "__()" method is marked as not camel caps
     -- Thanks to Tim Bezhashvyly for the patch
   - Fixed bug #852 : Generic.Commenting.DocComment not finding errors when long description is omitted
+  - Fixed bug #854 : Return typehints in interfaces are not reported as T_RETURN_TYPE
+    -- Thanks to Jaroslav Hanslík for the patch
   - Fixed bug #855 : Capital letter detection for multibyte strings doesn't work correctly
   - Fixed bug #857 : PSR2.ControlStructure.SwitchDeclaration shouldn't check indent of curly brace closers
+  - Fixed bug #859 : Switch statement indention issue when returning function call with closure
   - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
   - Fixed bug #21010 : Incorrect missing colon detection in CSS when first style is not on new line
   - Fixed bug #21011 : Incorrect error message text when newline found after opening brace
@@ -1907,6 +1915,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="IndentationUnitTest.css" role="test" />
+        <file baseinstalldir="PHP" name="IndentationUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP" name="IndentationUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Config;
 
 class ScopeIndentSniff implements Sniff
 {
@@ -125,6 +126,11 @@ class ScopeIndentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        $debug = Config::getConfigData('scope_indent_debug');
+        if ($debug !== null) {
+            $this->_debug = (bool) $debug;
+        }
+
         if ($this->_tabWidth === null) {
             if (isset($phpcsFile->config->tabWidth) === false || $phpcsFile->config->tabWidth === 0) {
                 // We have no idea how wide tabs are, so assume 4 spaces for fixing.
@@ -1074,9 +1080,18 @@ class ScopeIndentSniff implements Sniff
                 }
 
                 $currentIndent = ($tokens[$first]['column'] - 1);
-
                 if ($object > 0 || $condition > 0) {
                     $currentIndent += $this->indent;
+                }
+
+                if (isset($tokens[$first]['scope_closer']) === true
+                    && $tokens[$first]['scope_closer'] === $first
+                ) {
+                    if ($this->_debug === true) {
+                        echo "\t* first token is a scope closer *".PHP_EOL;
+                    }
+
+                    $currentIndent -= $this->indent;
                 }
 
                 // Make sure it is divisible by our expected indent.
