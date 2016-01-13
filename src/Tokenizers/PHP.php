@@ -1072,6 +1072,25 @@ class PHP extends Tokenizer
             }
 
             if ($this->tokens[$i]['code'] === T_FUNCTION) {
+                // Context sensitive keywords support.
+                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
+                        // Non-whitespace content.
+                        break;
+                    }
+                }
+
+                if (in_array($this->tokens[$x]['code'], array(T_STRING, T_OPEN_PARENTHESIS, T_BITWISE_AND), true) === false) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$x]['line'];
+                        $type = $this->tokens[$x]['type'];
+                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
+                    }
+
+                    $this->tokens[$x]['code'] = T_STRING;
+                    $this->tokens[$x]['type'] = 'T_STRING';
+                }
+
                 /*
                     Detect functions that are actually closures and
                     assign them a different token.
@@ -1106,23 +1125,24 @@ class PHP extends Tokenizer
                             }
                         }
                     }
-                }//end if
 
-                /*
-                    Detect function return values and assign them
-                    a special token, because PHP doesn't.
-                */
-
-                if (isset($this->tokens[$i]['scope_opener']) === true) {
                     $tokenAfterReturnTypeHint = $this->tokens[$i]['scope_opener'];
-                } else {
+                } else if (isset($this->tokens[$i]['parenthesis_closer']) === true) {
                     for ($x = ($this->tokens[$i]['parenthesis_closer'] + 1); $i < $numTokens; $x++) {
                         if ($this->tokens[$x]['code'] === T_SEMICOLON) {
                             $tokenAfterReturnTypeHint = $x;
                             break;
                         }
                     }
-                }
+                } else {
+                    // Probably a syntax error.
+                    continue;
+                }//end if
+
+                /*
+                    Detect function return values and assign them
+                    a special token, because PHP doesn't.
+                */
 
                 for ($x = ($tokenAfterReturnTypeHint - 1); $x > $i; $x--) {
                     if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
@@ -1264,6 +1284,44 @@ class PHP extends Tokenizer
 
                     $this->tokens[$i]['code'] = T_STRING;
                     $this->tokens[$i]['type'] = 'T_STRING';
+                }
+            } else if ($this->tokens[$i]['code'] === T_CONST) {
+                // Context sensitive keywords support.
+                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
+                        // Non-whitespace content.
+                        break;
+                    }
+                }
+
+                if ($this->tokens[$x]['code'] !== T_STRING) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$x]['line'];
+                        $type = $this->tokens[$x]['type'];
+                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
+                    }
+
+                    $this->tokens[$x]['code'] = T_STRING;
+                    $this->tokens[$x]['type'] = 'T_STRING';
+                }
+            } else if ($this->tokens[$i]['code'] === T_PAAMAYIM_NEKUDOTAYIM) {
+                // Context sensitive keywords support.
+                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
+                        // Non-whitespace content.
+                        break;
+                    }
+                }
+
+                if (in_array($this->tokens[$x]['code'], array(T_STRING, T_VARIABLE, T_DOLLAR), true) === false) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$x]['line'];
+                        $type = $this->tokens[$x]['type'];
+                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
+                    }
+
+                    $this->tokens[$x]['code'] = T_STRING;
+                    $this->tokens[$x]['type'] = 'T_STRING';
                 }
             }//end if
 

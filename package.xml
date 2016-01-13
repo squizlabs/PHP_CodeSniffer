@@ -48,7 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- only useable within sniffs, not globally like exclude-patterns are
 
   - The PHP-supplied T_SPACESHIP token has been replicated for PHP versions before 7.0
-  - T_SPACESHIP is now correclty identified as an operator
+  - T_SPACESHIP is now correctly identified as an operator
     -- Thanks to Alexander Obuhovich for the patch
   - Generic LowerCaseKeyword now ensures array type hints are lowercase as well
     -- Thanks to Mathieu Rochette for the patch
@@ -65,6 +65,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #828 : Null classname is tokenized as T_NULL instead of T_STRING
   - Fixed bug #829 : Short array argument not fixed correctly when multiple function arguments are on the same line
   - Fixed bug #831 : PHPCS freezes in an infinite loop under Windows if no standard is passed
+  - Fixed bug #832 : Tokenizer does not support context sensitive parsing
+    -- Thanks to Jaroslav Hanslík for the patch
   - Fixed bug #835 : PEAR.Functions.FunctionCallSignature broken when closure uses return types
   - Fixed bug #838 : CSS indentation fixer changes color codes
     -- Thanks to Klaus Purer for the patch
@@ -76,6 +78,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #855 : Capital letter detection for multibyte strings doesn't work correctly
   - Fixed bug #857 : PSR2.ControlStructure.SwitchDeclaration shouldn't check indent of curly brace closers
   - Fixed bug #859 : Switch statement indention issue when returning function call with closure
+  - Fixed bug #861 : Single-line arrays and function calls can generate incorrect indentation errors
   - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
   - Fixed bug #21010 : Incorrect missing colon detection in CSS when first style is not on new line
   - Fixed bug #21011 : Incorrect error message text when newline found after opening brace

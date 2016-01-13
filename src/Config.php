@@ -683,7 +683,25 @@ class Config
                 // It may not exist and return false instead.
                 if ($this->reportFile === false) {
                     $this->reportFile = substr($arg, 12);
-                }
+
+                    $dir = dirname($this->reportFile);
+                    if (is_dir($dir) === false) {
+                        echo 'ERROR: The specified report file path "'.$this->reportFile.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
+                        $this->printUsage();
+                        exit(2);
+                    }
+
+                    if ($dir === '.') {
+                        // Passed report file is a file in the current directory.
+                        $this->reportFile = getcwd().'/'.basename($this->reportFile);
+                    } else {
+                        $dir = Util\Common::realpath(getcwd().'/'.$dir);
+                        if ($dir !== false) {
+                            // Report file path is relative.
+                            $this->reportFile = $dir.'/'.basename($this->reportFile);
+                        }
+                    }
+                }//end if
 
                 $this->overriddenDefaults['reportFile'] = true;
 

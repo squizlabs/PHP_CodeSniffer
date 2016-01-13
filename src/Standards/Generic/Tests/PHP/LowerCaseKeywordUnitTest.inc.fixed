@@ -14,4 +14,6 @@ for ($var as $var) { exit; }
 if ($a and $b or $c xor $d) { die; } elseif { } else
 goto a;
 function (array $a) {}
+const PRIVATE
+HttpStatus::CONTINUE
 ?>

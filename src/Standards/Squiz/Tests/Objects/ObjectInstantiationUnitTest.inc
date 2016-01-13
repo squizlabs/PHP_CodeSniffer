@@ -12,4 +12,6 @@ throw new MyException($msg);
 function foo() { return new MyClass(); }
 
 $doodad = $x ? new Foo : new Bar;
+
+function new
 ?>

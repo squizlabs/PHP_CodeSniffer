@@ -964,6 +964,26 @@ switch ($foo) {
         break;
 }
 
+$var = array(
+    'long description' =>
+        array(0, 'something'),
+    'another long description' =>
+        array(1, "something else")
+);
+
+$services = array(
+    'service 1' =>
+        Mockery::mock('class 1')
+            ->shouldReceive('setFilter')->once()
+            ->shouldReceive('getNbResults')->atLeast()->once()
+            ->shouldReceive('getSlice')->once()->andReturn(array())
+            ->getMock(),
+    'service 2' =>
+        Mockery::mock('class 2')
+            ->shouldReceive('__invoke')->once()
+            ->getMock()
+);
+
     function foo()
     {
         $foo = array(
