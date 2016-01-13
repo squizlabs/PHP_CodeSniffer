@@ -243,4 +243,9 @@ function bar() {
     };
 }
 
+class HttpStatus
+{
+    const CONTINUE = 100;
+    const SWITCHING_PROTOCOLS = 101;
+}
 ?>

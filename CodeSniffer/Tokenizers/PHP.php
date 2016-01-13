@@ -940,6 +940,25 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             if ($tokens[$i]['code'] === T_FUNCTION) {
+                // Context sensitive keywords support.
+                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        // Non-whitespace content.
+                        break;
+                    }
+                }
+
+                if (in_array($tokens[$x]['code'], array(T_STRING, T_OPEN_PARENTHESIS, T_BITWISE_AND), true) === false) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$x]['line'];
+                        $type = $tokens[$x]['type'];
+                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
+                    }
+
+                    $tokens[$x]['code'] = T_STRING;
+                    $tokens[$x]['type'] = 'T_STRING';
+                }
+
                 /*
                     Detect functions that are actually closures and
                     assign them a different token.
@@ -1133,6 +1152,44 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                     $tokens[$i]['code'] = T_STRING;
                     $tokens[$i]['type'] = 'T_STRING';
+                }
+            } else if ($tokens[$i]['code'] === T_CONST) {
+                // Context sensitive keywords support.
+                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        // Non-whitespace content.
+                        break;
+                    }
+                }
+
+                if ($tokens[$x]['code'] !== T_STRING) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$x]['line'];
+                        $type = $tokens[$x]['type'];
+                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
+                    }
+
+                    $tokens[$x]['code'] = T_STRING;
+                    $tokens[$x]['type'] = 'T_STRING';
+                }
+            } else if ($tokens[$i]['code'] === T_PAAMAYIM_NEKUDOTAYIM) {
+                // Context sensitive keywords support.
+                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        // Non-whitespace content.
+                        break;
+                    }
+                }
+
+                if (in_array($tokens[$x]['code'], array(T_STRING, T_VARIABLE, T_DOLLAR), true) === false) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$x]['line'];
+                        $type = $tokens[$x]['type'];
+                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
+                    }
+
+                    $tokens[$x]['code'] = T_STRING;
+                    $tokens[$x]['type'] = 'T_STRING';
                 }
             }//end if
 
