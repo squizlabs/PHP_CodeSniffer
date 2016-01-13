@@ -974,23 +974,24 @@ class PHP_CodeSniffer_Tokenizers_PHP
                             }
                         }
                     }
-                }//end if
 
-                /*
-                    Detect function return values and assign them
-                    a special token, because PHP doesn't.
-                */
-
-                if (isset($tokens[$i]['scope_opener']) === true) {
                     $tokenAfterReturnTypeHint = $tokens[$i]['scope_opener'];
-                } else {
+                } else if (isset($tokens[$i]['parenthesis_closer']) === true) {
                     for ($x = ($tokens[$i]['parenthesis_closer'] + 1); $i < $numTokens; $x++) {
                         if ($tokens[$x]['code'] === T_SEMICOLON) {
                             $tokenAfterReturnTypeHint = $x;
                             break;
                         }
                     }
-                }
+                } else {
+                    // Probably a syntax error.
+                    continue;
+                }//end if
+
+                /*
+                    Detect function return values and assign them
+                    a special token, because PHP doesn't.
+                */
 
                 for ($x = ($tokenAfterReturnTypeHint - 1); $x > $i; $x--) {
                     if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
