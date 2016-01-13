@@ -628,30 +628,30 @@ class PHP_CodeSniffer_CLI
                 // It may not exist and return false instead.
                 if ($this->values['reportFile'] === false) {
                     $this->values['reportFile'] = substr($arg, 12);
-                }
+
+                    $dir = dirname($this->values['reportFile']);
+                    if (is_dir($dir) === false) {
+                        echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
+                        $this->printUsage();
+                        exit(2);
+                    }
+
+                    if ($dir === '.') {
+                        // Passed report file is a file in the current directory.
+                        $this->values['reportFile'] = getcwd().'/'.basename($this->values['reportFile']);
+                    } else {
+                        $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
+                        if ($dir !== false) {
+                            // Report file path is relative.
+                            $this->values['reportFile'] = $dir.'/'.basename($this->values['reportFile']);
+                        }
+                    }
+                }//end if
 
                 if (is_dir($this->values['reportFile']) === true) {
                     echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" is a directory'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
                     exit(2);
-                }
-
-                $dir = dirname($this->values['reportFile']);
-                if (is_dir($dir) === false) {
-                    echo 'ERROR: The specified report file path "'.$this->values['reportFile'].'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
-                    $this->printUsage();
-                    exit(2);
-                }
-
-                if ($dir === '.') {
-                    // Passed report file is a filename in the current directory.
-                    $this->values['reportFile'] = getcwd().'/'.basename($this->values['reportFile']);
-                } else {
-                    $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
-                    if ($dir !== false) {
-                        // Report file path is relative.
-                        $this->values['reportFile'] = $dir.'/'.basename($this->values['reportFile']);
-                    }
                 }
             } else if (substr($arg, 0, 13) === 'report-width=') {
                 $this->values['reportWidth'] = $this->_validateReportWidth(substr($arg, 13));
