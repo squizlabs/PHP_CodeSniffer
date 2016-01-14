@@ -51,6 +51,7 @@ class Config
      * bool     interactive     Enable interactive checking mode.
      * bool     parallel        Check files in parallel.
      * bool     cache           Enable the use of the file cache.
+     * bool     cacheFile       A file where the cache data should be written
      * bool     colors          Display colours in output.
      * bool     explain         Explain the coding standards.
      * bool     local           Process local files in directories only (no recursion).
@@ -61,7 +62,7 @@ class Config
      * string[] sniffs          The sniffs that should be used for checking.
      *                          If empty, all sniffs in the supplied standards will be used.
      * string[] ignored         Regular expressions used to ignore files and folders during checking.
-     * string   reportFile      A file system location where the report output should be written.
+     * string   reportFile      A file where the report output should be written.
      * string   generator       The documentation generator to use.
      * string[] bootstrap       One of more files to include before the run begins.
      * int      reportWidth     The maximum number of columns that reports should use for output.
@@ -91,6 +92,7 @@ class Config
                          'interactive'     => null,
                          'parallel'        => null,
                          'cache'           => null,
+                         'cacheFile'       => null,
                          'colors'          => null,
                          'explain'         => null,
                          'local'           => null,
@@ -367,6 +369,7 @@ class Config
         $this->verbosity       = 0;
         $this->interactive     = false;
         $this->cache           = false;
+        $this->cacheFile       = null;
         $this->colors          = false;
         $this->explain         = false;
         $this->local           = false;
@@ -659,6 +662,45 @@ class Config
 
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
+            } else if (defined('PHP_CODESNIFFER_IN_TESTS') === false
+                && substr($arg, 0, 6) === 'cache='
+            ) {
+                // Turn caching on.
+                $this->cache = true;
+                $this->overriddenDefaults['cache'] = true;
+
+                $this->cacheFile = Util\Common::realpath(substr($arg, 6));
+
+                // It may not exist and return false instead.
+                if ($this->cacheFile === false) {
+                    $this->cacheFile = substr($arg, 6);
+
+                    $dir = dirname($this->cacheFile);
+                    if (is_dir($dir) === false) {
+                        echo 'ERROR: The specified cache file path "'.$this->cacheFile.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
+                        $this->printUsage();
+                        exit(2);
+                    }
+
+                    if ($dir === '.') {
+                        // Passed report file is a file in the current directory.
+                        $this->cacheFile = getcwd().'/'.basename($this->cacheFile);
+                    } else {
+                        $dir = Util\Common::realpath(getcwd().'/'.$dir);
+                        if ($dir !== false) {
+                            // Report file path is relative.
+                            $this->cacheFile = $dir.'/'.basename($this->cacheFile);
+                        }
+                    }
+                }//end if
+
+                $this->overriddenDefaults['cacheFile'] = true;
+
+                if (is_dir($this->cacheFile) === true) {
+                    echo 'ERROR: The specified cache file path "'.$this->cacheFile.'" is a directory'.PHP_EOL.PHP_EOL;
+                    $this->printUsage();
+                    exit(2);
+                }
             } else if (substr($arg, 0, 10) === 'bootstrap=') {
                 $files     = explode(',', substr($arg, 10));
                 $bootstrap = array();
@@ -675,8 +717,8 @@ class Config
 
                 $this->bootstrap = $bootstrap;
                 $this->overriddenDefaults['bootstrap'] = true;
-            } else if (substr($arg, 0, 12) === 'report-file='
-                && PHP_CODESNIFFER_CBF === false
+            } else if (PHP_CODESNIFFER_CBF === false
+                && substr($arg, 0, 12) === 'report-file='
             ) {
                 $this->reportFile = Util\Common::realpath(substr($arg, 12));
 
@@ -940,7 +982,7 @@ class Config
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--cache] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--cache[=<cacheFile>]] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -964,6 +1006,7 @@ class Config
         echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
         echo '        --cache       Cache results between runs'.PHP_EOL;
         echo '        --no-cache    Do not cache results between runs (this is the default)'.PHP_EOL;
+        echo '        <cacheFile>   Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
