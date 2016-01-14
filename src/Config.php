@@ -715,7 +715,7 @@ class Config
                     $bootstrap[] = $path;
                 }
 
-                $this->bootstrap = $bootstrap;
+                $this->bootstrap = array_merge($this->bootstrap, $bootstrap);
                 $this->overriddenDefaults['bootstrap'] = true;
             } else if (PHP_CODESNIFFER_CBF === false
                 && substr($arg, 0, 12) === 'report-file='
@@ -753,9 +753,17 @@ class Config
                     exit(2);
                 }
             } else if (substr($arg, 0, 13) === 'report-width=') {
+                if (isset($this->overriddenDefaults['reportWidth']) === true) {
+                    break;
+                }
+
                 $this->reportWidth = substr($arg, 13);
                 $this->overriddenDefaults['reportWidth'] = true;
             } else if (substr($arg, 0, 9) === 'basepath=') {
+                if (isset($this->overriddenDefaults['basepath']) === true) {
+                    break;
+                }
+
                 $this->basepath = Util\Common::realpath(substr($arg, 9));
 
                 // It may not exist and return false instead.
