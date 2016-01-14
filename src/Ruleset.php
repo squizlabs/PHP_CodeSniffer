@@ -422,7 +422,13 @@ class Ruleset
         }
 
         if (empty($cliArgs) === false) {
+            // Change the directory so all relative paths are worked
+            // out based on the location of the ruleset instead of
+            // the location of the user.
+            $currentDir = getcwd();
+            chdir($rulesetDir);
             $this->config->setCommandLineValues($cliArgs);
+            chdir($currentDir);
         }
 
         // Process custom sniff config settings.
@@ -582,7 +588,7 @@ class Ruleset
         }
 
         // As sniffs can't begin with a tilde, assume references in
-        // this format at relative to the user's home directory.
+        // this format are relative to the user's home directory.
         if (substr($ref, 0, 2) === '~/') {
             $realpath = Util\Common::realpath($ref);
             if ($realpath !== false) {
