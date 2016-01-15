@@ -906,6 +906,34 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 continue;
             }//end if
 
+            // Short array openers increase the indent level.
+            if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
+                $closer = $tokens[$i]['bracket_closer'];
+                if ($tokens[$i]['line'] === $tokens[$closer]['line']) {
+                    if ($this->_debug === true) {
+                        $line = $tokens[$i]['line'];
+                        $type = $tokens[$i]['type'];
+                        echo "* ignoring single-line $type on line $line".PHP_EOL;
+                    }
+
+                    $i = $closer;
+                    continue;
+                }
+
+                if ($this->_debug === true) {
+                    $line = $tokens[$i]['line'];
+                    echo "Opening short array bracket on line $line".PHP_EOL;
+                }
+
+                $currentIndent += $this->indent;
+
+                if ($this->_debug === true) {
+                    echo "\t=> indent set to $currentIndent".PHP_EOL;
+                }
+
+                continue;
+            }//end if
+
             // Scope openers increase the indent level.
             if (isset($tokens[$i]['scope_condition']) === true
                 && isset($tokens[$i]['scope_opener']) === true
