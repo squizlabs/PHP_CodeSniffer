@@ -34,6 +34,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
   - PHP_CodesSniffer now includes the composer autoload.php file, if there is one
     -- Thanks to Klaus Purer for the patch
+  -- Added error Squiz.Commenting.FunctionComment.ScalarTypeHintMissing for PHP7 only (request #858)
+    -- These errors were previously reported as Squiz.Commenting.FunctionComment.TypeHintMissing on PHP7
+    -- Disable this error message in a ruleset.xml file if your code needs to run on both PHP5 and PHP7
   - PEAR and Squiz FunctionComment sniffs now support variadic functions (request #841)
   - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
   - Fixed bug #752 : The missing exception error is reported in first found DocBlock
