@@ -61,6 +61,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #857 : PSR2.ControlStructure.SwitchDeclaration shouldn't check indent of curly brace closers
   - Fixed bug #859 : Switch statement indention issue when returning function call with closure
   - Fixed bug #861 : Single-line arrays and function calls can generate incorrect indentation errors
+  - Fixed bug #867 : Squiz.Strings.DoubleQuoteUsage broken for some escape codes
+    -- Thanks to Jack Blower for the help with the fix
   - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
   - Fixed bug #21010 : Incorrect missing colon detection in CSS when first style is not on new line
   - Fixed bug #21011 : Incorrect error message text when newline found after opening brace
