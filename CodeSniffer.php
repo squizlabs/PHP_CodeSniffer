@@ -831,7 +831,13 @@ class PHP_CodeSniffer
         }
 
         if (empty($cliArgs) === false) {
+            // Change the directory so all relative paths are worked
+            // out based on the location of the ruleset instead of
+            // the location of the user.
+            $currentDir = getcwd();
+            chdir($rulesetDir);
             $this->cli->setCommandLineValues($cliArgs);
+            chdir($currentDir);
         }
 
         // Process custom sniff config settings.
