@@ -55,6 +55,7 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
                                'set_state'  => true,
                                'clone'      => true,
                                'invoke'     => true,
+                               'debuginfo'  => true,
                               );
 
     /**

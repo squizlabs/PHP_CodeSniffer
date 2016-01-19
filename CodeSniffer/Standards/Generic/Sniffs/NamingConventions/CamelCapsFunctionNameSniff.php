@@ -55,6 +55,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
                                'set_state'  => true,
                                'clone'      => true,
                                'invoke'     => true,
+                               'debuginfo'  => true,
                               );
 
     /**
