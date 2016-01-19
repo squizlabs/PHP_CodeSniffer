@@ -114,4 +114,8 @@ class Foo extends \SoapClient
         // body
     }
 }
-?>
+
+function __debugInfo() {}
+class Foo {
+    function __debugInfo() {}
+}

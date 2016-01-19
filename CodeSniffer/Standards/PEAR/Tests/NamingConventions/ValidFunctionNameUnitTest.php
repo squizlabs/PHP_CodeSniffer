@@ -151,6 +151,7 @@ class PEAR_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSni
                    173 => 1,
                    174 => 1,
                    175 => 1,
+                   207 => 1,
                );
 
         return $errors;

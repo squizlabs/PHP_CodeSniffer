@@ -37,6 +37,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   -- Added error Squiz.Commenting.FunctionComment.ScalarTypeHintMissing for PHP7 only (request #858)
     -- These errors were previously reported as Squiz.Commenting.FunctionComment.TypeHintMissing on PHP7
     -- Disable this error message in a ruleset.xml file if your code needs to run on both PHP5 and PHP7
+  - The PHP 5.6 __debugInfo magic method no longer produces naming convention errors
+    -- Thanks to Michael Nowack for the patch
   - PEAR and Squiz FunctionComment sniffs now support variadic functions (request #841)
   - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
   - Fixed bug #752 : The missing exception error is reported in first found DocBlock
