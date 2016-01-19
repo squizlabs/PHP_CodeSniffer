@@ -379,7 +379,17 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                                       $suggestedTypeHint,
                                       $param['var'],
                                      );
-                            $phpcsFile->addError($error, $stackPtr, 'TypeHintMissing', $data);
+
+                            $errorCode = 'TypeHintMissing';
+                            if ($suggestedTypeHint === 'string'
+                                || $suggestedTypeHint === 'int'
+                                || $suggestedTypeHint === 'float'
+                                || $suggestedTypeHint === 'bool'
+                            ) {
+                                $errorCode = 'Scalar'.$errorCode;
+                            }
+
+                            $phpcsFile->addError($error, $stackPtr, $errorCode, $data);
                         } else if ($typeHint !== substr($suggestedTypeHint, (strlen($typeHint) * -1))) {
                             $error = 'Expected type hint "%s"; found "%s" for %s';
                             $data  = array(
@@ -388,7 +398,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                                       $param['var'],
                                      );
                             $phpcsFile->addError($error, $stackPtr, 'IncorrectTypeHint', $data);
-                        }
+                        }//end if
                     } else if ($suggestedTypeHint === '' && isset($realParams[$pos]) === true) {
                         $typeHint = $realParams[$pos]['type_hint'];
                         if ($typeHint !== '') {

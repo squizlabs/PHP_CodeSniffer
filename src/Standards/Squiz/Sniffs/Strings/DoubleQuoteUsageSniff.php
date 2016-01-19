@@ -88,6 +88,13 @@ class DoubleQuoteUsageSniff implements Sniff
 
         $allowedChars = array(
                          '\0',
+                         '\1',
+                         '\2',
+                         '\3',
+                         '\4',
+                         '\5',
+                         '\6',
+                         '\7',
                          '\n',
                          '\r',
                          '\f',
@@ -95,6 +102,8 @@ class DoubleQuoteUsageSniff implements Sniff
                          '\v',
                          '\x',
                          '\b',
+                         '\e',
+                         '\u',
                          '\'',
                         );
 

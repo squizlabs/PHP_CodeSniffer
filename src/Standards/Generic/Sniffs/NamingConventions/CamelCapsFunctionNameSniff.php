@@ -36,6 +36,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
                                'set_state'  => true,
                                'clone'      => true,
                                'invoke'     => true,
+                               'debuginfo'  => true,
                               );
 
     /**

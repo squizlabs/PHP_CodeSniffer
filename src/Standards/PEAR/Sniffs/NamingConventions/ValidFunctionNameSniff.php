@@ -36,6 +36,7 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
                                'set_state'  => true,
                                'clone'      => true,
                                'invoke'     => true,
+                               'debuginfo'  => true,
                               );
 
     /**

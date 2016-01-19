@@ -23,5 +23,7 @@ there";
 $string = 'Hello
 there';
 
+$string = "\123 \234"."\u123"."\e";
+
 echo "window.location = \"".$url."\";\n";
 echo ""

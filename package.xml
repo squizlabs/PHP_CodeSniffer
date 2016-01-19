@@ -56,6 +56,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
   - PHP_CodesSniffer now includes the composer autoload.php file, if there is one
     -- Thanks to Klaus Purer for the patch
+  -- Added error Squiz.Commenting.FunctionComment.ScalarTypeHintMissing for PHP7 only (request #858)
+    -- These errors were previously reported as Squiz.Commenting.FunctionComment.TypeHintMissing on PHP7
+    -- Disable this error message in a ruleset.xml file if your code needs to run on both PHP5 and PHP7
+  - The PHP 5.6 __debugInfo magic method no longer produces naming convention errors
+    -- Thanks to Michael Nowack for the patch
   - PEAR and Squiz FunctionComment sniffs now support variadic functions (request #841)
   - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
   - Fixed bug #752 : The missing exception error is reported in first found DocBlock
@@ -80,6 +85,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #857 : PSR2.ControlStructure.SwitchDeclaration shouldn't check indent of curly brace closers
   - Fixed bug #859 : Switch statement indention issue when returning function call with closure
   - Fixed bug #861 : Single-line arrays and function calls can generate incorrect indentation errors
+  - Fixed bug #867 : Squiz.Strings.DoubleQuoteUsage broken for some escape codes
+    -- Thanks to Jack Blower for the help with the fix
   - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
   - Fixed bug #21010 : Incorrect missing colon detection in CSS when first style is not on new line
   - Fixed bug #21011 : Incorrect error message text when newline found after opening brace

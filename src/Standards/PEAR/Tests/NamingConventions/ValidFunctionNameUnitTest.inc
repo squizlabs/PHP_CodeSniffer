@@ -203,3 +203,8 @@ class Magic_Case_Test {
 }
 function __autoLoad() {}
 function _() {}
+
+function __debugInfo() {}
+class Foo {
+    function __debugInfo() {}
+}
