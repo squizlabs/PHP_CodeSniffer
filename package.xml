@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2015-12-11</date>
- <time>11:05:00</time>
+ <date>2016-01-20</date>
+ <time>10:19:00</time>
  <version>
   <release>2.5.1</release>
   <api>2.5.1</api>
@@ -2377,6 +2377,62 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>2.5.1</release>
+    <api>2.5.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2016-01-20</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - The PHP-supplied T_SPACESHIP token has been replicated for PHP versions before 7.0
+    - T_SPACESHIP is now correctly identified as an operator
+      -- Thanks to Alexander Obuhovich for the patch
+    - Generic LowerCaseKeyword now ensures array type hints are lowercase as well
+      -- Thanks to Mathieu Rochette for the patch
+    - Squiz ComparisonOperatorUsageSniff no longer hangs on JS FOR loops that don't use semicolons
+    - PHP_CodesSniffer now includes the composer autoload.php file, if there is one
+      -- Thanks to Klaus Purer for the patch
+    -- Added error Squiz.Commenting.FunctionComment.ScalarTypeHintMissing for PHP7 only (request #858)
+      -- These errors were previously reported as Squiz.Commenting.FunctionComment.TypeHintMissing on PHP7
+      -- Disable this error message in a ruleset.xml file if your code needs to run on both PHP5 and PHP7
+    - The PHP 5.6 __debugInfo magic method no longer produces naming convention errors
+      -- Thanks to Michael Nowack for the patch
+    - PEAR and Squiz FunctionComment sniffs now support variadic functions (request #841)
+    - Fixed bug #622 : Wrong detection of Squiz.CSS.DuplicateStyleDefinition with media queries
+    - Fixed bug #752 : The missing exception error is reported in first found DocBlock
+    - Fixed bug #794 : PSR2 MultiLineFunctionDeclaration forbids comments after opening parenthesis of a multiline call
+    - Fixed bug #820 : PEAR/PSR2 FunctionCallSignature sniffs suggest wrong indent when there are multiple arguments on a line
+    - Fixed bug #822 : Ruleset hard-coded file paths are not used if not running from the same directory as the ruleset
+    - Fixed bug #825 : FunctionCallArgumentSpacing sniff complains about more than one space before comment in multi-line function call
+    - Fixed bug #828 : Null classname is tokenized as T_NULL instead of T_STRING
+    - Fixed bug #829 : Short array argument not fixed correctly when multiple function arguments are on the same line
+    - Fixed bug #831 : PHPCS freezes in an infinite loop under Windows if no standard is passed
+    - Fixed bug #832 : Tokenizer does not support context sensitive parsing
+      -- Thanks to Jaroslav Hanslík for the patch
+    - Fixed bug #835 : PEAR.Functions.FunctionCallSignature broken when closure uses return types
+    - Fixed bug #838 : CSS indentation fixer changes color codes
+      -- Thanks to Klaus Purer for the patch
+    - Fixed bug #839 : "__()" method is marked as not camel caps
+      -- Thanks to Tim Bezhashvyly for the patch
+    - Fixed bug #852 : Generic.Commenting.DocComment not finding errors when long description is omitted
+    - Fixed bug #854 : Return typehints in interfaces are not reported as T_RETURN_TYPE
+      -- Thanks to Jaroslav Hanslík for the patch
+    - Fixed bug #855 : Capital letter detection for multibyte strings doesn't work correctly
+    - Fixed bug #857 : PSR2.ControlStructure.SwitchDeclaration shouldn't check indent of curly brace closers
+    - Fixed bug #859 : Switch statement indention issue when returning function call with closure
+    - Fixed bug #861 : Single-line arrays and function calls can generate incorrect indentation errors
+    - Fixed bug #867 : Squiz.Strings.DoubleQuoteUsage broken for some escape codes
+      -- Thanks to Jack Blower for the help with the fix
+    - Fixed bug #21005 : Incorrect indent detection when multiple properties are initialized to arrays
+    - Fixed bug #21010 : Incorrect missing colon detection in CSS when first style is not on new line
+    - Fixed bug #21011 : Incorrect error message text when newline found after opening brace
+    </notes>
+  </release>
   <release>
    <version>
     <release>2.5.0</release>
