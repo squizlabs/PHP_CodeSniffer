@@ -108,4 +108,43 @@ interface Empty_Interface_Doc
 {
 
 }//end interface
+
+//
+// Sample interface comment
+//
+//
+//
+interface Invalid_Comment_Style1
+{
+
+}//end interface
+
+interface No_Comment
+{
+
+}//end interface
+
+/**
+ *
+ *
+ */
+trait Empty_Trait_Doc
+{
+
+}//end trait
+
+//
+// Sample trait comment
+//
+//
+//
+trait Invalid_Comment_Style1
+{
+
+}//end trait
+
+trait No_Comment
+{
+
+}//end trait
 ?>

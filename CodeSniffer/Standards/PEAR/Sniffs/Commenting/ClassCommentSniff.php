@@ -39,6 +39,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         return array(
                 T_CLASS,
                 T_INTERFACE,
+                T_TRAIT,
                );
 
     }//end register()
@@ -68,11 +69,11 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
-            $phpcsFile->addError('Missing class doc comment', $stackPtr, 'Missing');
-            $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'no');
+            $phpcsFile->addError('Missing %s doc comment', $stackPtr, 'Missing', $errorData);
+            $phpcsFile->recordMetric($stackPtr, '%s has doc comment', 'no', array(ucfirst($type)));
             return;
         } else {
-            $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'yes');
+            $phpcsFile->recordMetric($stackPtr, '%s has doc comment', 'yes', array(ucfirst($type)));
         }
 
         // Try and determine if this is a file comment instead of a class comment.
@@ -90,13 +91,13 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
             if ($prevOpen === false) {
                 // This is a comment directly after the first open tag,
                 // so probably a file comment.
-                $phpcsFile->addError('Missing class doc comment', $stackPtr, 'Missing');
+                $phpcsFile->addError('Missing %s doc comment', $stackPtr, 'Missing', $errorData);
                 return;
             }
         }
 
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
-            $phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr, 'WrongStyle');
+            $phpcsFile->addError('You must use "/**" style comments for a %s comment', $stackPtr, 'WrongStyle', $errorData);
             return;
         }
 
