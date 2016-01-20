@@ -70,13 +70,50 @@ class Squiz_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
 
         if ($tokens[$commentStart]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a file comment', $commentStart, 'WrongStyle');
+            $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'yes');
             return ($phpcsFile->numTokens + 1);
         } else if ($commentStart === false || $tokens[$commentStart]['code'] !== T_DOC_COMMENT_OPEN_TAG) {
             $phpcsFile->addError('Missing file doc comment', $stackPtr, 'Missing');
+            $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'no');
             return ($phpcsFile->numTokens + 1);
         }
 
         $commentEnd = $tokens[$commentStart]['comment_closer'];
+
+        $nextToken = $phpcsFile->findNext(
+            T_WHITESPACE,
+            ($commentEnd + 1),
+            null,
+            true
+        );
+
+        $ignore = array(
+                   T_CLASS,
+                   T_INTERFACE,
+                   T_TRAIT,
+                   T_FUNCTION,
+                   T_CLOSURE,
+                   T_PUBLIC,
+                   T_PRIVATE,
+                   T_PROTECTED,
+                   T_FINAL,
+                   T_STATIC,
+                   T_ABSTRACT,
+                   T_CONST,
+                   T_PROPERTY,
+                   T_INCLUDE,
+                   T_INCLUDE_ONCE,
+                   T_REQUIRE,
+                   T_REQUIRE_ONCE,
+                  );
+
+        if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+            $phpcsFile->addError('Missing file doc comment', $stackPtr, 'Missing');
+            $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'no');
+            return ($phpcsFile->numTokens + 1);
+        }
+
+        $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'yes');
 
         // No blank line between the open tag and the file comment.
         if ($tokens[$commentStart]['line'] > ($tokens[$stackPtr]['line'] + 1)) {

@@ -147,13 +147,47 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addError('Missing file doc comment', $errorToken, 'Missing');
             $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'no');
             return ($phpcsFile->numTokens + 1);
-        } else {
-            $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'yes');
         }
 
-        // Check the PHP Version, which should be in some text before the first tag.
         $commentEnd = $tokens[$commentStart]['comment_closer'];
-        $found      = false;
+
+        $nextToken = $phpcsFile->findNext(
+            T_WHITESPACE,
+            ($commentEnd + 1),
+            null,
+            true
+        );
+
+        $ignore = array(
+                   T_CLASS,
+                   T_INTERFACE,
+                   T_TRAIT,
+                   T_FUNCTION,
+                   T_CLOSURE,
+                   T_PUBLIC,
+                   T_PRIVATE,
+                   T_PROTECTED,
+                   T_FINAL,
+                   T_STATIC,
+                   T_ABSTRACT,
+                   T_CONST,
+                   T_PROPERTY,
+                   T_INCLUDE,
+                   T_INCLUDE_ONCE,
+                   T_REQUIRE,
+                   T_REQUIRE_ONCE,
+                  );
+
+        if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+            $phpcsFile->addError('Missing file doc comment', $stackPtr, 'Missing');
+            $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'no');
+            return ($phpcsFile->numTokens + 1);
+        }
+
+        $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'yes');
+
+        // Check the PHP Version, which should be in some text before the first tag.
+        $found = false;
         for ($i = ($commentStart + 1); $i < $commentEnd; $i++) {
             if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG) {
                 break;

@@ -68,28 +68,11 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
             $phpcsFile->addError('Missing class doc comment', $stackPtr, 'Missing');
+            $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'no');
             return;
         }
 
-        // Try and determine if this is a file comment instead of a class comment.
-        // We assume that if this is the first comment after the open PHP tag, then
-        // it is most likely a file comment instead of a class comment.
-        if ($tokens[$commentEnd]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
-            $start = ($tokens[$commentEnd]['comment_opener'] - 1);
-        } else {
-            $start = $phpcsFile->findPrevious(T_COMMENT, ($commentEnd - 1), null, true);
-        }
-
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, $start, null, true);
-        if ($tokens[$prev]['code'] === T_OPEN_TAG) {
-            $prevOpen = $phpcsFile->findPrevious(T_OPEN_TAG, ($prev - 1));
-            if ($prevOpen === false) {
-                // This is a comment directly after the first open tag,
-                // so probably a file comment.
-                $phpcsFile->addError('Missing class doc comment', $stackPtr, 'Missing');
-                return;
-            }
-        }
+        $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'yes');
 
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr, 'WrongStyle');
@@ -102,11 +85,6 @@ class Squiz_Sniffs_Commenting_ClassCommentSniff implements PHP_CodeSniffer_Sniff
         }
 
         $commentStart = $tokens[$commentEnd]['comment_opener'];
-        if ($tokens[$prev]['line'] !== ($tokens[$commentStart]['line'] - 2)) {
-            $error = 'There must be exactly one blank line before the class comment';
-            $phpcsFile->addError($error, $commentStart, 'SpacingBefore');
-        }
-
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             $error = '%s tag is not allowed in class comment';
             $data  = array($tokens[$tag]['content']);

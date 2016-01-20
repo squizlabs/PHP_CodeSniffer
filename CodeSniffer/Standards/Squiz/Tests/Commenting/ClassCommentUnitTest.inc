@@ -1,7 +1,7 @@
 <?php
-/** File doc comment */
+/** Class doc comment */
 
-class No_Comment
+class Comment
 {
 
 }//end class

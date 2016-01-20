@@ -33,6 +33,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This change allows ruleset.xml files to be more portable
   - Squiz InlineCommentSniff now allows docblocks on require(_once) and include(_once) statements
     -- Thanks to Gary Jones for the patch
+  - Squiz and PEAR Class and File sniffs no longer assume the first comment in a file is always a file comment
+    -- phpDocumentor assigns the comment to the file only if it is not followed by a structural element
+    -- These sniffs now follow this same rule
+  - Squiz ClassCommentSniff no longer checks for blank lines before class comments
+    -- Removes the error Squiz.Commenting.ClassComment.SpaceBefore
  </notes>
  <contents>
   <dir name="/">

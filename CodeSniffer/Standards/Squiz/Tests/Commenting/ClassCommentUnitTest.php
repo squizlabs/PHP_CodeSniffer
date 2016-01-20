@@ -40,11 +40,10 @@ class Squiz_Tests_Commenting_ClassCommentUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                4   => 1,
-                15  => 1,
-                31  => 1,
-                39  => 1,
-                54  => 1,
+                2  => 1,
+                15 => 1,
+                31 => 1,
+                54 => 1,
                );
 
     }//end getErrorList()
