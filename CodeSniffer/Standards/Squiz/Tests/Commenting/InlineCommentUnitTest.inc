@@ -117,3 +117,8 @@ echo $foo;
 
 //	Comment here.
 echo $foo;
+
+/**
+ * Comments about the include
+ */
+include_once($blah);
