@@ -61,8 +61,8 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
                 $phpPath = PHP_BINARY;
             } else {
                 return;
-            }//end if
-        }//end if
+            }
+        }
 
         $fileName = $phpcsFile->getFilename();
         $cmd      = "$phpPath -l \"$fileName\" 2>&1";
