@@ -56,8 +56,13 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
     {
         $phpPath = PHP_CodeSniffer::getConfigData('php_path');
         if ($phpPath === null) {
-            return;
-        }
+            // PHP_BINARY is available in PHP 5.4+.
+            if (defined('PHP_BINARY') === true) {
+                $phpPath = PHP_BINARY;
+            } else {
+                return;
+            }//end if
+        }//end if
 
         $fileName = $phpcsFile->getFilename();
         $cmd      = "$phpPath -l \"$fileName\" 2>&1";

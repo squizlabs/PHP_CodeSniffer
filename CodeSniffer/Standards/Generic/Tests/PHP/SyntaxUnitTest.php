@@ -38,6 +38,10 @@ class Generic_Tests_PHP_SyntaxUnitTest extends AbstractSniffUnitTest
      */
     protected function shouldSkipTest()
     {
+        if (defined('PHP_BINARY') === true) {
+            return false;
+        }
+
         $phpPath = PHP_CodeSniffer::getConfigData('php_path');
         return (is_null($phpPath));
 
