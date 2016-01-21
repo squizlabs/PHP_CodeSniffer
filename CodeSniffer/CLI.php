@@ -883,7 +883,19 @@ class PHP_CodeSniffer_CLI
             include $bootstrap;
         }
 
-        $phpcs->processFiles($values['files'], $values['local']);
+        // Check if anything was passed via STDIN. If so,
+        // ignore all other passed files, or files from rulesets,
+        // and just process this content.
+        $read   = array(STDIN);
+        $write  = array();
+        $except = array();
+        $result = stream_select($read, $write, $except, 0);
+        if ($result === 1) {
+            // Something was passed in and waiting on STDIN.
+            $values['files'] = array();
+        } else {
+            $phpcs->processFiles($values['files'], $values['local']);
+        }
 
         if (empty($values['files']) === true) {
             // Check if they are passing in the file contents.

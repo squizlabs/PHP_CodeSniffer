@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, the paths were relative to the directory PHPCS was being run from
     -- Absolute paths are still allowed and work the same way they always have
     -- This change allows ruleset.xml files to be more portable
+  - Content passed via STDIN will now be processed even if files are specified on the command line or in a ruleset
   - Squiz InlineCommentSniff now allows docblocks on require(_once) and include(_once) statements
     -- Thanks to Gary Jones for the patch
   - Squiz and PEAR Class and File sniffs no longer assume the first comment in a file is always a file comment
