@@ -64,7 +64,7 @@ class ClassDefinitionNameSpacingSniff implements Sniff
                       );
         $endTokens += Tokens::$commentTokens;
 
-        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 
         $foundContent = false;
         $currentLine  = $tokens[$prev]['line'];

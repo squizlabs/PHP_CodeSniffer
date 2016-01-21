@@ -179,7 +179,7 @@ class FunctionDeclarationSniff implements Sniff
      *
      * @return void
      */
-    public function isMultiLineDeclaration(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens)
+    public function isMultiLineDeclaration($phpcsFile, $stackPtr, $openBracket, $tokens)
     {
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
         if ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']) {

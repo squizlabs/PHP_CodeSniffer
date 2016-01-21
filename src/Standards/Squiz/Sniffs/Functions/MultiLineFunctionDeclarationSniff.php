@@ -39,7 +39,7 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
      *
      * @return void
      */
-    public function isMultiLineDeclaration(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens)
+    public function isMultiLineDeclaration($phpcsFile, $stackPtr, $openBracket, $tokens)
     {
         $bracketsToCheck = array($stackPtr => $openBracket);
 
@@ -57,7 +57,7 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
         foreach ($bracketsToCheck as $stackPtr => $openBracket) {
             // If the first argument is on a new line, this is a multi-line
             // function declaration, even if there is only one argument.
-            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($openBracket + 1), null, true);
+            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($openBracket + 1), null, true);
             if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
                 return true;
             }
@@ -68,7 +68,7 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
             while ($tokens[$end]['code'] === T_COMMA) {
                 // If the next bit of code is not on the same line, this is a
                 // multi-line function declaration.
-                $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
+                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
                 if ($next === false) {
                     continue(2);
                 }
@@ -82,7 +82,7 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
 
             // We've reached the last argument, so see if the next content
             // (should be the close bracket) is also on the same line.
-            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
+            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
             if ($next !== false && $tokens[$next]['line'] !== $tokens[$end]['line']) {
                 return true;
             }
