@@ -165,7 +165,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
 
     /**
-     * Processes single-line calls.
+     * Determine if this is a multi-line function call.
      *
      * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
      * @param int                  $stackPtr    The position of the current token

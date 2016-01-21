@@ -167,32 +167,52 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
             }//end if
         }//end if
 
-        // Check if this is a single line or multi-line declaration.
-        $singleLine = true;
-        if ($tokens[$openBracket]['line'] === $tokens[$closeBracket]['line']) {
-            // Closures may use the USE keyword and so be multi-line in this way.
-            if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
-                if ($use !== false) {
-                    // If the opening and closing parenthesis of the use statement
-                    // are also on the same line, this is a single line declaration.
-                    $open  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
-                    $close = $tokens[$open]['parenthesis_closer'];
-                    if ($tokens[$open]['line'] !== $tokens[$close]['line']) {
-                        $singleLine = false;
-                    }
-                }
-            }
-        } else {
-            $singleLine = false;
-        }
-
-        if ($singleLine === true) {
-            $this->processSingleLineDeclaration($phpcsFile, $stackPtr, $tokens);
-        } else {
+        if ($this->isMultiLineDeclaration($phpcsFile, $stackPtr, $openBracket, $tokens) === true) {
             $this->processMultiLineDeclaration($phpcsFile, $stackPtr, $tokens);
+        } else {
+            $this->processSingleLineDeclaration($phpcsFile, $stackPtr, $tokens);
         }
 
     }//end process()
+
+
+    /**
+     * Determine if this is a multi-line function declaration.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
+     * @param int                  $stackPtr    The position of the current token
+     *                                          in the stack passed in $tokens.
+     * @param int                  $openBracket The position of the opening bracket
+     *                                          in the stack passed in $tokens.
+     * @param array                $tokens      The stack of tokens that make up
+     *                                          the file.
+     *
+     * @return void
+     */
+    public function isMultiLineDeclaration(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens)
+    {
+        $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
+        if ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']) {
+            return true;
+        }
+
+        // Closures may use the USE keyword and so be multi-line in this way.
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $use = $phpcsFile->findNext(T_USE, ($closeBracket + 1), $tokens[$stackPtr]['scope_opener']);
+            if ($use !== false) {
+                // If the opening and closing parenthesis of the use statement
+                // are also on the same line, this is a single line declaration.
+                $open  = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
+                $close = $tokens[$open]['parenthesis_closer'];
+                if ($tokens[$open]['line'] !== $tokens[$close]['line']) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }//end isMultiLineDeclaration()
 
 
     /**

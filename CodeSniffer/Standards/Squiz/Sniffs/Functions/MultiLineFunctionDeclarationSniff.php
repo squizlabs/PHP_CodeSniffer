@@ -45,6 +45,73 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
 
 
     /**
+     * Determine if this is a multi-line function declaration.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
+     * @param int                  $stackPtr    The position of the current token
+     *                                          in the stack passed in $tokens.
+     * @param int                  $openBracket The position of the opening bracket
+     *                                          in the stack passed in $tokens.
+     * @param array                $tokens      The stack of tokens that make up
+     *                                          the file.
+     *
+     * @return void
+     */
+    public function isMultiLineDeclaration(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $openBracket, $tokens)
+    {
+        $bracketsToCheck = array($stackPtr => $openBracket);
+
+        // Closures may use the USE keyword and so be multi-line in this way.
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $use = $phpcsFile->findNext(T_USE, ($tokens[$openBracket]['parenthesis_closer'] + 1), $tokens[$stackPtr]['scope_opener']);
+            if ($use !== false) {
+                $open = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1));
+                if ($open !== false) {
+                    $bracketsToCheck[$use] = $open;
+                }
+            }
+        }
+
+        foreach ($bracketsToCheck as $stackPtr => $openBracket) {
+            // If the first argument is on a new line, this is a multi-line
+            // function declaration, even if there is only one argument.
+            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($openBracket + 1), null, true);
+            if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
+                return true;
+            }
+
+            $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
+
+            $end = $phpcsFile->findEndOfStatement($openBracket + 1);
+            while ($tokens[$end]['code'] === T_COMMA) {
+                // If the next bit of code is not on the same line, this is a
+                // multi-line function declaration.
+                $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
+                if ($next === false) {
+                    continue(2);
+                }
+
+                if ($tokens[$next]['line'] !== $tokens[$end]['line']) {
+                    return true;
+                }
+
+                $end = $phpcsFile->findEndOfStatement($next);
+            }
+
+            // We've reached the last argument, so see if the next content
+            // (should be the close bracket) is also on the same line.
+            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
+            if ($next !== false && $tokens[$next]['line'] !== $tokens[$end]['line']) {
+                return true;
+            }
+        }//end foreach
+
+        return false;
+
+    }//end isMultiLineDeclaration()
+
+
+    /**
      * Processes multi-line declarations.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.

@@ -60,6 +60,9 @@ class Squiz_Tests_Functions_MultiLineFunctionDeclarationUnitTest extends Abstrac
                        82  => 2,
                        88  => 1,
                        102 => 2,
+                       137 => 1,
+                       141 => 2,
+                       142 => 1,
                       );
         } else {
             $errors = array(
