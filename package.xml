@@ -39,6 +39,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- These sniffs now follow this same rule
   - Squiz ClassCommentSniff no longer checks for blank lines before class comments
     -- Removes the error Squiz.Commenting.ClassComment.SpaceBefore
+  - Renamed Squiz.CSS.Opacity.SpacingAfterPoint to Squiz.CSS.Opacity.DecimalPrecision
+    -- Please update your ruleset if you are referencing this error code directly
  </notes>
  <contents>
   <dir name="/">
