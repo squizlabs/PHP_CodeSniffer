@@ -62,6 +62,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic PHP Syntax sniff now uses PHP_BINARY (if available) to determine the path to PHP if no other path is available
     -- You can still manually set php_path to use a specific binary for testing
     -- Thanks to Andrew Berry for the patch
+  - The PSR2 and Squiz standards now allow multi-line default values in function declarations (request #542)
+    -- Previously, these would automatically make the function a multi-line declaration
   - Squiz InlineCommentSniff now allows docblocks on require(_once) and include(_once) statements
     -- Thanks to Gary Jones for the patch
   - Squiz and PEAR Class and File sniffs no longer assume the first comment in a file is always a file comment
@@ -71,6 +73,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Removes the error Squiz.Commenting.ClassComment.SpaceBefore
   - Renamed Squiz.CSS.Opacity.SpacingAfterPoint to Squiz.CSS.Opacity.DecimalPrecision
     -- Please update your ruleset if you are referencing this error code directly
+  - Squiz CSS IndentationSniff no longer assumes the class opening brace is at the end of a line
+  - Fixed bug #872 : Incorrect detection of blank lines between CSS class names
  </notes>
  <contents>
   <dir name="/">

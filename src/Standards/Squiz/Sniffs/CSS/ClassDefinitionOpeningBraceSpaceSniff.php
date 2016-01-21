@@ -58,9 +58,13 @@ class ClassDefinitionOpeningBraceSpaceSniff implements Sniff
         } else {
             $content = $tokens[($stackPtr - 1)]['content'];
             if ($content !== ' ') {
-                $length = strlen($content);
-                if ($length === 1) {
-                    $length = 'tab';
+                if ($tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line']) {
+                    $length = 'newline';
+                } else {
+                    $length = strlen($content);
+                    if ($length === 1) {
+                        $length = 'tab';
+                    }
                 }
 
                 $error = 'Expected 1 space before opening brace of class definition; %s found';
