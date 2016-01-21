@@ -937,6 +937,11 @@ class Config
      */
     public function processUnknownArgument($arg, $pos)
     {
+        // If we are processing STDIN, don't record any files to check.
+        if ($this->stdin === true) {
+            return;
+        }
+
         // We don't know about any additional switches; just files.
         if ($arg{0} === '-') {
             if ($this->dieOnUnknownArg === false) {

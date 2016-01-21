@@ -80,6 +80,10 @@ class InlineCommentSniff implements Sniff
                        T_ABSTRACT,
                        T_CONST,
                        T_PROPERTY,
+                       T_INCLUDE,
+                       T_INCLUDE_ONCE,
+                       T_REQUIRE,
+                       T_REQUIRE_ONCE,
                       );
 
             if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
