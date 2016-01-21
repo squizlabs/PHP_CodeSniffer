@@ -103,7 +103,10 @@ class Squiz_Sniffs_CSS_IndentationSniff implements PHP_CodeSniffer_Sniff
                 }
             }
 
-            if ($tokens[$i]['column'] !== 1) {
+            if ($tokens[$i]['column'] !== 1
+                || $tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
+                || $tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET
+            ) {
                 continue;
             }
 

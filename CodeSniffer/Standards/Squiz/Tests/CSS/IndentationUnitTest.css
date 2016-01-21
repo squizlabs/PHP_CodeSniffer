@@ -57,6 +57,11 @@ td {
 /*     opacity: 0.25; */
 }
 
+.foo
+{
+    border: none;
+}
+
 .mortgage-calculator h2 {
         background: #072237;
         color: #fff;
