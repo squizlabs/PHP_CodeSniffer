@@ -43,7 +43,12 @@ class SyntaxSniff implements Sniff
     {
         $phpPath = Config::getExecutablePath('php');
         if ($phpPath === null) {
-            return;
+            // PHP_BINARY is available in PHP 5.4+.
+            if (defined('PHP_BINARY') === true) {
+                $phpPath = PHP_BINARY;
+            } else {
+                return;
+            }
         }
 
         $fileName = $phpcsFile->getFilename();

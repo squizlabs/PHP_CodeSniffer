@@ -24,6 +24,10 @@ class SyntaxUnitTest extends AbstractSniffUnitTest
      */
     protected function shouldSkipTest()
     {
+        if (defined('PHP_BINARY') === true) {
+            return false;
+        }
+
         $phpPath = Config::getExecutablePath('php');
         if ($phpPath === null) {
             return true;

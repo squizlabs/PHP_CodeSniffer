@@ -70,7 +70,7 @@ class OpacitySniff implements Sniff
         } else {
             if (strlen($value) > 3) {
                 $error = 'Opacity values must have a single value after the decimal point';
-                $phpcsFile->addError($error, $next, 'SpacingAfterPoint');
+                $phpcsFile->addError($error, $next, 'DecimalPrecision');
             } else if ($value === '0.0' || $value === '1.0') {
                 $error = 'Opacity value does not require decimal point; use %s instead';
                 $data  = array($value{0});
