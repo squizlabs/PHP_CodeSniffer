@@ -1,5 +1,5 @@
 <?php
-
+use some\foo\{ClassA, ClassB, ClassC as C};
 class Test
 {
     public function __construct()
