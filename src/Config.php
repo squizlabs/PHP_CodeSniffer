@@ -72,6 +72,7 @@ class Config
      * string   suffix          A suffix to add to fixed files.
      * string   basepath        A file system location to strip from the paths of files shown in reports.
      * bool     stdin           Read content from STDIN instead of supplied files.
+     * string   stdinContent    Content passed directly to PHPCS on STDIN.
      *
      * array<string, string>      extensions File extensions that should be checked, and what tokenizer to use.
      *                                       E.g., array('inc' => 'PHP');
@@ -113,6 +114,7 @@ class Config
                          'warningSeverity' => null,
                          'suffix'          => null,
                          'stdin'           => null,
+                         'stdinContent'    => null,
                         );
 
     /**
@@ -272,9 +274,11 @@ class Config
             $this->dieOnUnknownArg = $dieOnUnknownArg;
         }
 
+        $checkStdin = false;
         if (empty($cliArgs) === true) {
             $cliArgs = $_SERVER['argv'];
             array_shift($cliArgs);
+            $checkStdin = true;
         }
 
         $this->restoreDefaults();
@@ -301,6 +305,20 @@ class Config
                 $lastDir    = $currentDir;
                 $currentDir = dirname($currentDir);
             } while ($currentDir !== '.' && $currentDir !== $lastDir);
+        }
+
+        // Check for content on STDIN.
+        if ($checkStdin === true) {
+            $handle = fopen('php://stdin', 'r');
+            stream_set_blocking($handle, false);
+            $fileContents = stream_get_contents($handle);
+            fclose($handle);
+            if (trim($fileContents) !== '') {
+                $this->stdin        = true;
+                $this->stdinContent = $fileContents;
+                $this->overriddenDefaults['stdin']        = true;
+                $this->overriddenDefaults['stdinContent'] = true;
+            }
         }
 
     }//end __construct()
@@ -395,6 +413,7 @@ class Config
         $this->warningSeverity = 5;
         $this->suffix          = '';
         $this->stdin           = false;
+        $this->stdinContent    = null;
 
         $standard = self::getConfigData('default_standard');
         if ($standard !== null) {

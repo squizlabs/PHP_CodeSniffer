@@ -267,9 +267,13 @@ class Runner
         }
 
         if ($this->config->stdin === true) {
-            $handle       = fopen('php://stdin', 'r');
-            $fileContents = stream_get_contents($handle);
-            fclose($handle);
+            $fileContents = $this->config->stdinContent;
+            if ($fileContents === null) {
+                $handle = fopen('php://stdin', 'r');
+                stream_set_blocking($handle, true);
+                $fileContents = stream_get_contents($handle);
+                fclose($handle);
+            }
 
             $todo  = new FileList($this->config, $this->ruleset);
             $dummy = new DummyFile($fileContents, $this->ruleset, $this->config);

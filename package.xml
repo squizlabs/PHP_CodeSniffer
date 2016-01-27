@@ -17,13 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2016-01-20</date>
  <time>10:19:00</time>
  <version>
-<<<<<<< HEAD
   <release>3.0.0</release>
   <api>3.0.0</api>
-=======
-  <release>2.6.0</release>
-  <api>2.6.0</api>
->>>>>>> master
  </version>
  <stability>
   <release>stable</release>
@@ -36,7 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Check files in parallel (--parallel=1 for off, --parallel=100 etc) (request #421)
   - Automatic discovery of executable paths (request #571)
     -- Thanks to Sergey Morozov for the patch
-  - Must pass '-' on the cli to check STDIN
+  - Must pass '-' on the cli to have PHPCS wait for STDIN
+    -- Can still pass content on STDIN as normal
   - All sniff errors are now exceptions and caught to stop infinite loops
   - Sniff codes are no longer optional - use them with addError/Warning/Fixable
   - installed_paths config setting can now point directly to a standard instead of the dir above
