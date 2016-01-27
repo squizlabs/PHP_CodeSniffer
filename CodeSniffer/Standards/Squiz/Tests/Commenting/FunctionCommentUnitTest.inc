@@ -610,7 +610,7 @@ public function test()
  */
 public function usesCallable(callable $cb) {
     $cb();
-}
+}//end usesCallable()
 
 /**
  * Creates a map of tokens => line numbers for each token.
@@ -693,3 +693,25 @@ function yieldTest()
         yield $i;
     }
 }
+
+/**
+ * Using "array" as a type hint should satisfy a specified array parameter type.
+ *
+ * @param MyClass[] $values An array of MyClass objects.
+ *
+ * @return void
+ */
+public function specifiedArray(array $values) {
+
+}// end specifiedArray()
+
+/**
+ * Using "callable" as a type hint should satisfy a "callback" parameter type.
+ *
+ * @param callback $cb A callback.
+ *
+ * @return void
+ */
+public function callableCallback(callable $cb) {
+
+}// end callableCallback()

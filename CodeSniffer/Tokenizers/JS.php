@@ -421,7 +421,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
             // Special case for T_DIVIDE which can actually be
             // the start of a regular expression.
-            if ($buffer === $char && $char === '/') {
+            if ($buffer === $char && $char === '/' && $chars[($i + 1)] !== '*') {
                 $regex = $this->getRegexToken(
                     $i,
                     $string,
@@ -735,7 +735,9 @@ class PHP_CodeSniffer_Tokenizers_JS
 
                         // If the substr failed, skip the token as the content
                         // will now be blank.
-                        if ($tokens[$stackPtr]['content'] !== false) {
+                        if ($tokens[$stackPtr]['content'] !== false
+                            && $tokens[$stackPtr]['content'] !== ''
+                        ) {
                             $stackPtr--;
                         }
 

@@ -153,12 +153,6 @@ class PEAR_Tests_NamingConventions_ValidFunctionNameUnitTest extends AbstractSni
                    175 => 1,
                );
 
-        // The trait tests will only work in PHP version where traits exist and
-        // will throw errors in earlier versions.
-        if (version_compare(PHP_VERSION, '5.4.0') < 0) {
-            $errors[196] = 1;
-        }
-
         return $errors;
 
     }//end getErrorList()

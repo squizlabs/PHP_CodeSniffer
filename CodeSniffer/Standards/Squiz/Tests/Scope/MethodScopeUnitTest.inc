@@ -12,10 +12,16 @@ class MyClass
 class Closure_Test {
     public function test() {
         $foo = function() { echo 'foo'; };
+
+        function my_sort() {
+            // ...
+        }
+
+        $a = array();
+        usort($a, 'my_sort');
     }
 }
 
 function test() {
     $foo = function() { echo 'foo'; };
 }
-?>

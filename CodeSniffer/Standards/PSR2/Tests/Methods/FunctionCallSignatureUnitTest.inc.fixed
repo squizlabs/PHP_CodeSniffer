@@ -25,7 +25,7 @@ somefunction2(
 );
 
 // ok
-somefunction3(
+somefunction3(// ...
     $foo,
     $bar,
     [

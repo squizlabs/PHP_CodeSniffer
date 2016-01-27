@@ -167,7 +167,7 @@ switch ($var) {
 }//end switch
 
 /**
- * Comment should be ignored in PHP 5.4.
+ * Comment should be ignored in PHP < 5.4.
  *
  */
 trait MyTrait {

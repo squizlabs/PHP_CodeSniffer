@@ -46,8 +46,26 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $numErrors);
         $this->assertEquals(1, count($errors));
 
-        // Process with suppression.
+        // Process with inline comment suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with block comment suppression.
+        $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/* @codingStandardsIgnoreEnd */';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with a docblock suppression.
+        $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** @codingStandardsIgnoreEnd */';
         $file    = $phpcs->processFile('suppressionTest.php', $content);
 
         $errors    = $file->getErrors();
@@ -86,6 +104,15 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $numErrors);
         $this->assertEquals(1, count($errors));
 
+        // Process with a PHPDoc block suppression.
+        $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** @codingStandardsIgnoreEnd */'.PHP_EOL.'$var = TRUE;';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertEquals(1, count($errors));
+
     }//end testSuppressSomeErrors()
 
 
@@ -110,6 +137,15 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// @codingStandardsIgnoreEnd';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with a PHPDoc block suppression.
+        $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'/** @codingStandardsIgnoreEnd */';
         $file    = $phpcs->processFile('suppressionTest.php', $content);
 
         $warnings    = $file->getWarnings();
@@ -147,7 +183,6 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
         $numErrors = $file->getErrorCount();
         $this->assertEquals(1, $numErrors);
         $this->assertEquals(1, count($errors));
-
     }//end testSuppressLine()
 
 
@@ -220,6 +255,15 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $numErrors);
         $this->assertEquals(0, count($errors));
 
+        // Process with a PhpDoc Block suppression.
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'function myFunction() {'.PHP_EOL.'/** @codingStandardsIgnoreEnd */'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
     }//end testSuppressScope()
 
 
@@ -251,8 +295,17 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(0, $numWarnings);
         $this->assertEquals(0, count($warnings));
 
-        // Process with a Doc Block suppression.
+        // Process with a block comment suppression.
         $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with docblock suppression.
+        $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
         $file    = $phpcs->processFile('suppressionTest.php', $content);
 
         $warnings    = $file->getWarnings();

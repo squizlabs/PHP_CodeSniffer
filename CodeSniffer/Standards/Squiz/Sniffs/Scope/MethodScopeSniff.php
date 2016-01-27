@@ -62,6 +62,11 @@ class Squiz_Sniffs_Scope_MethodScopeSniff extends PHP_CodeSniffer_Standards_Abst
             return;
         }
 
+        if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
+            // Ignore nested functions.
+            return;
+        }
+
         $modifier = null;
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
             if ($tokens[$i]['line'] < $tokens[$stackPtr]['line']) {

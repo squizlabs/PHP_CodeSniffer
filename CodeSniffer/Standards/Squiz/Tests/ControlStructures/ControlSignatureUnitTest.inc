@@ -162,8 +162,36 @@ switch($foo) {
 
 }
 
+if ($foo)  :
+endif;
+
 ?>
 
 <?php while($row = $data->getRow()): ?>
     <p><?= $val ?></p>
 <?php endwhile; ?>
+
+<?php
+if ($foo === 1) {
+    ?>
+    <table><tr><td>
+    <?php
+    echo '2';
+    ?>
+    </td></tr></table>
+    <?php
+}
+
+?>
+<?php foreach($formset['Fieldset'] as $fieldset): ?>
+    <?php foreach($fieldset['Field'] as $field): ?> 
+    <?php endforeach; ?>
+<?php endforeach; ?>
+
+<?php foreach ($formset['Fieldset'] as $fieldset) : ?> hello
+<?php endforeach; ?>
+
+<?php foreach ($formset['Fieldset'] as $fieldset) :
+    ?>
+    hello
+<?php endforeach; ?>

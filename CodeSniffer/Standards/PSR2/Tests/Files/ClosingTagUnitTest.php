@@ -42,13 +42,17 @@ class PSR2_Tests_Files_ClosingTagUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='')
     {
-        if ($testFile !== 'ClosingTagUnitTest.1.inc') {
+        switch ($testFile) {
+        case 'ClosingTagUnitTest.1.inc':
+            return array(11 => 1);
+
+        case 'ClosingTagUnitTest.4.inc':
+        case 'ClosingTagUnitTest.5.inc':
+            return array(1 => 1);
+
+        default:
             return array();
         }
-
-        return array(
-                11 => 1,
-               );
 
     }//end getErrorList()
 

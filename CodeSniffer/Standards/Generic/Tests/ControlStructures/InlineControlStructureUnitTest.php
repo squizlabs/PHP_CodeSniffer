@@ -47,21 +47,27 @@ class Generic_Tests_ControlStructures_InlineControlStructureUnitTest extends Abs
         switch ($testFile) {
         case 'InlineControlStructureUnitTest.inc':
             return array(
-                    3  => 1,
-                    7  => 1,
-                    11 => 1,
-                    13 => 1,
-                    15 => 1,
-                    17 => 1,
-                    23 => 1,
-                    42 => 1,
-                    43 => 1,
-                    45 => 1,
-                    46 => 1,
-                    49 => 1,
-                    62 => 1,
-                    66 => 1,
-                    78 => 1,
+                    3   => 1,
+                    7   => 1,
+                    11  => 1,
+                    13  => 1,
+                    15  => 1,
+                    17  => 1,
+                    23  => 1,
+                    42  => 1,
+                    43  => 1,
+                    45  => 1,
+                    46  => 1,
+                    49  => 1,
+                    62  => 1,
+                    66  => 1,
+                    78  => 1,
+                    120 => 1,
+                    128 => 1,
+                    134 => 1,
+                    142 => 1,
+                    143 => 1,
+                    144 => 1,
                    );
             break;
         case 'InlineControlStructureUnitTest.js':
@@ -71,6 +77,7 @@ class Generic_Tests_ControlStructures_InlineControlStructureUnitTest extends Abs
                     11 => 1,
                     13 => 1,
                     15 => 1,
+                    21 => 1,
                    );
             break;
         default:

@@ -21,7 +21,7 @@ somefunction2($foo, $bar, [
 $baz);
 
 // ok
-somefunction3(
+somefunction3(// ...
     $foo,
     $bar,
     [

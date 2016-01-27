@@ -178,3 +178,13 @@ $test = function ($param) use ($result) {
 $closureWithArgs = function ($arg1, $arg2) {
     // body
 };
+
+class Foo
+{
+//Comments should not affect code
+    public function bar()
+    {
+
+    }
+//Comments should not affect code
+}

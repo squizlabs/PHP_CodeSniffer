@@ -835,6 +835,14 @@ array(
  },
 );
 
+?>
+<script>
+    var foo = <?php echo bar(
+        'baz'
+    ); ?>;
+</script>
+<?php
+
 try {
     echo 'foo';
 } catch (\Exception $e) {
@@ -843,6 +851,95 @@ try {
     if (false) {
         echo 'finally false';
     }
+}
+
+class C0
+{
+     public function m0()
+    {
+    }
+
+    public function m1()
+    {
+    }
+}
+
+namespace Foo {
+
+    use \Foo\Bar;
+    use \Foo\Baz;
+
+    function test() {
+        return true;
+    }
+
+}
+
+declare(ticks=1) {
+echo 'foo';
+}
+
+$a =
+    (
+        $b = 1
+    );
+$c = 2;
+
+$a =
+    [
+        $b => 1,
+    ];
+$c = 2;
+
+class foo
+{
+    public function get()
+    {
+        $foo = ['b' => 'c',
+                'd' => [
+                    ['e' => 'f']
+                    ]];
+        echo '42';
+
+        $foo = array('b' => 'c',
+                'd' => array(
+                    array('e' => 'f')
+                    ));
+        echo '42';
+    }
+}
+
+switch ($foo) {
+    case 1:
+        return array();
+    case 2:
+        return '';
+    case 3:
+        return $function();
+    case 4:
+        return $functionCall($param[0]);
+    case 5:
+        return array() + array(); // Array Merge
+    case 6:
+        // String connect
+        return $functionReturningString('') . $functionReturningString(array());
+    case 7:
+        return functionCall(
+            $withMultiLineParam[0],
+            array(),
+            $functionReturningString(
+                $withMultiLineParam[1]
+            )
+        );
+    case 8:
+        return $param[0][0];
+}
+
+switch ($x) {
+    case 1:
+        return [1];
+    default:
+        return [2];
 }
 
     function foo()

@@ -109,3 +109,20 @@ endif;
 if ($foo):
 elseif ($baz): $foo = 2;
 endif;
+
+?>
+<ul>
+    <?php foreach ($array as $value) : ?>
+        <li><?php echo $value ?></li>
+    <?php endforeach ?>
+</ul>
+<ul>
+    <?php foreach ($array as $value) : ?>
+        <li><?php echo $value ?></li>
+<?php endforeach ?>
+</ul>
+<ul>
+    <?php foreach ($array as $value) : ?>
+        <li><?php echo $value ?></li>
+            <?php endforeach ?>
+</ul>

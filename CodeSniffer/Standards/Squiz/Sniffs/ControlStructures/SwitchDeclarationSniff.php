@@ -195,9 +195,8 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                         $phpcsFile->addError($error, $nextBreak, 'SpacingBeforeBreak');
                     }
 
-                    $breakLine = $tokens[$nextBreak]['line'];
                     $nextLine  = $tokens[$tokens[$stackPtr]['scope_closer']]['line'];
-                    $semicolon = $phpcsFile->findNext(T_SEMICOLON, $nextBreak);
+                    $semicolon = $phpcsFile->findEndOfStatement($nextBreak);
                     for ($i = ($semicolon + 1); $i < $tokens[$stackPtr]['scope_closer']; $i++) {
                         if ($tokens[$i]['type'] !== 'T_WHITESPACE') {
                             $nextLine = $tokens[$i]['line'];
@@ -231,7 +230,7 @@ class Squiz_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeS
                         }//end if
                     } else {
                         // Ensure the BREAK statement is not followed by a blank line.
-                        if ($nextLine !== ($breakLine + 1)) {
+                        if ($nextLine !== ($tokens[$semicolon]['line'] + 1)) {
                             $error = 'Blank lines are not allowed after the DEFAULT case\'s breaking statement';
                             $phpcsFile->addError($error, $nextBreak, 'SpacingAfterDefaultBreak');
                         }

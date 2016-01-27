@@ -56,6 +56,9 @@
         "ext-tokenizer": "*",
         "ext-xmlwriter": "*"
     },
+    "require-dev": {
+        "phpunit/PHPUnit": "~4.0"
+    },
     "bin": [
         "scripts/phpcs",
         "scripts/phpcbf"

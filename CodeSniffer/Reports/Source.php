@@ -177,9 +177,15 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
         echo "\033[0m".str_repeat('-', $width).PHP_EOL;
 
         $fixableSources = 0;
-        $maxSniffWidth  = 37;
+
+        if ($showSources === true) {
+            $maxSniffWidth = ($width - 7);
+        } else {
+            $maxSniffWidth = ($width - 37);
+        }
+
         if ($totalFixable > 0) {
-            $maxSniffWidth += 4;
+            $maxSniffWidth -= 4;
         }
 
         foreach ($this->_sourceCache as $source => $sourceData) {
@@ -196,6 +202,10 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             }
 
             if ($showSources === true) {
+                if ($sourceData['strlen'] > $maxSniffWidth) {
+                    $source = substr($source, 0, $maxSniffWidth);
+                }
+
                 echo $source;
                 if ($totalFixable > 0) {
                     echo str_repeat(' ', ($width - 9 - strlen($source)));
@@ -219,8 +229,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
                 echo $category.str_repeat(' ', (20 - strlen($category)));
 
                 $sniff = $parts[2];
-                if (strlen($sniff) > ($width - $maxSniffWidth)) {
-                    $sniff = substr($sniff, 0, ($width - $maxSniffWidth - strlen($sniff)));
+                if (strlen($sniff) > $maxSniffWidth) {
+                    $sniff = substr($sniff, 0, $maxSniffWidth);
                 }
 
                 if ($totalFixable > 0) {

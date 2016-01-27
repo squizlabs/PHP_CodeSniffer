@@ -273,6 +273,7 @@ class PHP_CodeSniffer_CLI
         $defaults['reportFile']      = null;
         $defaults['generator']       = '';
         $defaults['reports']         = array();
+        $defaults['bootstrap']       = array();
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
 
@@ -321,7 +322,7 @@ class PHP_CodeSniffer_CLI
 
         $reportWidth = PHP_CodeSniffer::getConfigData('report_width');
         if ($reportWidth !== null) {
-            $defaults['reportWidth'] = $reportWidth;
+            $defaults['reportWidth'] = $this->_validateReportWidth($reportWidth);
         } else {
             // Use function defaults.
             $defaults['reportWidth'] = null;
@@ -374,18 +375,6 @@ class PHP_CodeSniffer_CLI
         array_shift($args);
 
         $this->setCommandLineValues($args);
-
-        // Support auto temrinal width.
-        if (isset($this->values['reportWidth']) === true) {
-            if ($this->values['reportWidth'] === 'auto'
-                && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1
-            ) {
-                $this->values['reportWidth'] = (int) $matches[1];
-            } else {
-                $this->values['reportWidth'] = (int) $this->values['reportWidth'];
-            }
-        }
-
         return $this->values;
 
     }//end getCommandLineValues()
@@ -612,6 +601,18 @@ class PHP_CodeSniffer_CLI
                 }
 
                 $this->values['sniffs'] = $sniffs;
+            } else if (substr($arg, 0, 10) === 'bootstrap=') {
+                $files = explode(',', substr($arg, 10));
+                foreach ($files as $file) {
+                    $path = PHP_CodeSniffer::realpath($file);
+                    if ($path === false) {
+                        echo 'ERROR: The specified bootstrap file "'.$file.'" does not exist'.PHP_EOL.PHP_EOL;
+                        $this->printUsage();
+                        exit(2);
+                    }
+
+                    $this->values['bootstrap'][] = $path;
+                }
             } else if (substr($arg, 0, 12) === 'report-file=') {
                 $this->values['reportFile'] = PHP_CodeSniffer::realpath(substr($arg, 12));
 
@@ -644,7 +645,7 @@ class PHP_CodeSniffer_CLI
                     }
                 }
             } else if (substr($arg, 0, 13) === 'report-width=') {
-                $this->values['reportWidth'] = substr($arg, 13);
+                $this->values['reportWidth'] = $this->_validateReportWidth(substr($arg, 13));
             } else if (substr($arg, 0, 7) === 'report='
                 || substr($arg, 0, 7) === 'report-'
             ) {
@@ -794,6 +795,10 @@ class PHP_CodeSniffer_CLI
 
         if ($values['generator'] !== '') {
             $phpcs = new PHP_CodeSniffer($values['verbosity']);
+            if ($values['standard'] === null) {
+                $values['standard'] = $this->validateStandard(null);
+            }
+
             foreach ($values['standard'] as $standard) {
                 $phpcs->generateDocs(
                     $standard,
@@ -862,6 +867,11 @@ class PHP_CodeSniffer_CLI
         if (empty($values['reports']) === true) {
             $values['reports']['full'] = $values['reportFile'];
             $this->values['reports']   = $values['reports'];
+        }
+
+        // Include bootstrap files.
+        foreach ($values['bootstrap'] as $bootstrap) {
+            include $bootstrap;
         }
 
         $phpcs->processFiles($values['files'], $values['local']);
@@ -1007,13 +1017,22 @@ class PHP_CodeSniffer_CLI
     {
         if ($standards === null) {
             // They did not supply a standard to use.
-            // Looks for a ruleset in the current directory.
-            if (empty($this->values['files']) === true) {
-                $default = getcwd().DIRECTORY_SEPARATOR.'phpcs.xml';
+            // Look for a default ruleset in the current directory or higher.
+            $currentDir = getcwd();
+
+            do {
+                $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml';
                 if (is_file($default) === true) {
                     return array($default);
                 }
-            }
+
+                $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml.dist';
+                if (is_file($default) === true) {
+                    return array($default);
+                }
+
+                $currentDir = dirname($currentDir);
+            } while ($currentDir !== DIRECTORY_SEPARATOR && $currentDir !== '.');
 
             // Try to get the default from the config system.
             $standard = PHP_CodeSniffer::getConfigData('default_standard');
@@ -1023,7 +1042,7 @@ class PHP_CodeSniffer_CLI
             }
 
             return array($standard);
-        }
+        }//end if
 
         $cleaned   = array();
         $standards = (array) $standards;
@@ -1162,7 +1181,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] <file> ...'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
@@ -1179,13 +1198,14 @@ class PHP_CodeSniffer_CLI
         echo '        --colors      Use colors in output'.PHP_EOL;
         echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
+        echo '        <bootstrap>   A comma separated list of files to run before processing starts'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '                      e.g., module/php,es/js'.PHP_EOL;
-        echo '        <generator>   The name of a doc generator to use'.PHP_EOL;
-        echo '                      (forces doc generation instead of checking)'.PHP_EOL;
+        echo '        <generator>   Uses either the "HMTL", "Markdown" or "Text" generator'.PHP_EOL;
+        echo '                      (forces documentation generation instead of checking)'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <report>      Print either the "full", "xml", "checkstyle", "csv"'.PHP_EOL;
         echo '                      "json", "emacs", "source", "summary", "diff"'.PHP_EOL;
@@ -1214,7 +1234,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] <file> ...'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
@@ -1224,6 +1244,7 @@ class PHP_CodeSniffer_CLI
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --no-patch    Do not make use of the "diff" or "patch" programs'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
+        echo '        <bootstrap>   A comma separated list of files to run before processing starts'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
@@ -1265,6 +1286,27 @@ class PHP_CodeSniffer_CLI
         }
 
     }//end printInstalledStandards()
+
+
+    /**
+     * Set report width based on terminal width.
+     *
+     * @param int $width The width of the report. If "auto" then will
+     *                   be replaced by the terminal width.
+     *
+     * @return void
+     */
+    private function _validateReportWidth($width)
+    {
+        if ($width === 'auto'
+            && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1
+        ) {
+            return (int) $matches[1];
+        }
+
+        return (int) $width;
+
+    }//end _validateReportWidth()
 
 
 }//end class

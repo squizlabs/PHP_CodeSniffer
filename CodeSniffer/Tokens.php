@@ -35,9 +35,9 @@ define('T_DIVIDE', 'PHPCS_T_DIVIDE');
 define('T_PLUS', 'PHPCS_T_PLUS');
 define('T_MINUS', 'PHPCS_T_MINUS');
 define('T_MODULUS', 'PHPCS_T_MODULUS');
-define('T_POWER', 'PHPCS_T_POWER');
 define('T_BITWISE_AND', 'PHPCS_T_BITWISE_AND');
 define('T_BITWISE_OR', 'PHPCS_T_BITWISE_OR');
+define('T_BITWISE_XOR', 'PHPCS_T_BITWISE_XOR');
 define('T_ARRAY_HINT', 'PHPCS_T_ARRAY_HINT');
 define('T_GREATER_THAN', 'PHPCS_T_GREATER_THAN');
 define('T_LESS_THAN', 'PHPCS_T_LESS_THAN');
@@ -62,6 +62,7 @@ define('T_ASPERAND', 'PHPCS_T_ASPERAND');
 define('T_DOLLAR', 'PHPCS_T_DOLLAR');
 define('T_TYPEOF', 'PHPCS_T_TYPEOF');
 define('T_CLOSURE', 'PHPCS_T_CLOSURE');
+define('T_ANON_CLASS', 'PHPCS_T_ANON_CLASS');
 define('T_BACKTICK', 'PHPCS_T_BACKTICK');
 define('T_START_NOWDOC', 'PHPCS_T_START_NOWDOC');
 define('T_NOWDOC', 'PHPCS_T_NOWDOC');
@@ -71,6 +72,7 @@ define('T_CLOSE_SHORT_ARRAY', 'PHPCS_T_CLOSE_SHORT_ARRAY');
 define('T_GOTO_LABEL', 'PHPCS_T_GOTO_LABEL');
 define('T_BINARY_CAST', 'PHPCS_T_BINARY_CAST');
 define('T_EMBEDDED_PHP', 'PHPCS_T_EMBEDDED_PHP');
+define('T_RETURN_TYPE', 'PHPCS_T_RETURN_TYPE');
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
@@ -122,6 +124,10 @@ if (defined('T_YIELD') === false) {
 // Some PHP 5.6 tokens, replicated for lower versions.
 if (defined('T_ELLIPSIS') === false) {
     define('T_ELLIPSIS', 'PHPCS_T_ELLIPSIS');
+}
+
+if (defined('T_POW') === false) {
+    define('T_POW', 'PHPCS_T_POW');
 }
 
 // Tokens used for parsing doc blocks.
@@ -189,13 +195,14 @@ final class PHP_CodeSniffer_Tokens
 
                                  T_BITWISE_AND         => 8,
                                  T_BITWISE_OR          => 8,
+                                 T_BITWISE_XOR         => 8,
 
                                  T_MULTIPLY            => 5,
                                  T_DIVIDE              => 5,
                                  T_PLUS                => 5,
                                  T_MINUS               => 5,
                                  T_MODULUS             => 5,
-                                 T_POWER               => 5,
+                                 T_POW                 => 5,
 
                                  T_SL                  => 5,
                                  T_SR                  => 5,
@@ -353,9 +360,10 @@ final class PHP_CodeSniffer_Tokens
                                    T_PLUS                     => 1,
                                    T_MINUS                    => 1,
                                    T_MODULUS                  => 1,
-                                   T_POWER                    => 1,
+                                   T_POW                      => 2,
                                    T_BITWISE_AND              => 1,
                                    T_BITWISE_OR               => 1,
+                                   T_BITWISE_XOR              => 1,
                                    T_SL                       => 2,
                                    T_SR                       => 2,
                                    T_SL_EQUAL                 => 3,
@@ -469,6 +477,7 @@ final class PHP_CodeSniffer_Tokens
                                          T_IF       => T_IF,
                                          T_ELSEIF   => T_ELSEIF,
                                          T_CATCH    => T_CATCH,
+                                         T_DECLARE  => T_DECLARE,
                                         );
 
     /**
@@ -486,6 +495,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_IF        => T_IF,
                                    T_SWITCH    => T_SWITCH,
                                    T_CASE      => T_CASE,
+                                   T_DECLARE   => T_DECLARE,
                                    T_DEFAULT   => T_DEFAULT,
                                    T_WHILE     => T_WHILE,
                                    T_ELSE      => T_ELSE,
@@ -537,9 +547,10 @@ final class PHP_CodeSniffer_Tokens
                                 T_MULTIPLY    => T_MULTIPLY,
                                 T_DIVIDE      => T_DIVIDE,
                                 T_MODULUS     => T_MODULUS,
-                                T_POWER       => T_POWER,
+                                T_POW         => T_POW,
                                 T_BITWISE_AND => T_BITWISE_AND,
                                 T_BITWISE_OR  => T_BITWISE_OR,
+                                T_BITWISE_XOR => T_BITWISE_XOR,
                                 T_SL          => T_SL,
                                 T_SR          => T_SR,
                                );

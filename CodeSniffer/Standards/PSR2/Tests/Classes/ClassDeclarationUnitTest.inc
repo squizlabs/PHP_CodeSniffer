@@ -132,3 +132,8 @@ class ClassName implements
 {
     // constants, properties, methods
 }
+
+class C1
+{
+
+} // C1

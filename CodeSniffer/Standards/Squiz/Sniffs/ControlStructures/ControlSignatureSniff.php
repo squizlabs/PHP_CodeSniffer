@@ -128,7 +128,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
                         $phpcsFile->fixer->addContent($closer, ' ');
                     } else {
                         $phpcsFile->fixer->beginChangeset();
-                        $phpcsFile->fixer->addContent($closer, ' {');
+                        $phpcsFile->fixer->addContent($closer, ' '.$tokens[$opener]['content']);
                         $phpcsFile->fixer->replaceToken($opener, '');
 
                         if ($tokens[$opener]['line'] !== $tokens[$closer]['line']) {
@@ -152,13 +152,17 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
             for ($next = ($opener + 1); $next < $phpcsFile->numTokens; $next++) {
                 $code = $tokens[$next]['code'];
 
-                if ($code === T_WHITESPACE || $code === T_CLOSE_TAG) {
+                if ($code === T_WHITESPACE
+                    || ($code === T_INLINE_HTML
+                    && trim($tokens[$next]['content']) === '')
+                ) {
                     continue;
                 }
 
                 // Skip all empty tokens on the same line as the opener.
                 if ($tokens[$next]['line'] === $tokens[$opener]['line']
-                    && isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true
+                    && (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true
+                    || $code === T_CLOSE_TAG)
                 ) {
                     continue;
                 }
@@ -166,27 +170,26 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
                 // We found the first bit of a code, or a comment on the
                 // following line.
                 break;
-            }
+            }//end for
 
-            $found = ($tokens[$next]['line'] - $tokens[$opener]['line']);
-            if ($found !== 1) {
-                $error = 'Expected 1 newline after opening brace; %s found';
-                $data  = array($found);
-                $fix   = $phpcsFile->addFixableError($error, $opener, 'NewlineAfterOpenBrace', $data);
+            if ($tokens[$next]['line'] === $tokens[$opener]['line']) {
+                $error = 'Newline required after opening brace';
+                $fix   = $phpcsFile->addFixableError($error, $opener, 'NewlineAfterOpenBrace');
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($opener + 1); $i < $next; $i++) {
-                        if ($found > 0 && $tokens[$i]['line'] === $tokens[$next]['line']) {
+                        if (trim($tokens[$i]['content']) !== '') {
                             break;
                         }
 
+                        // Remove whitespace.
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
 
                     $phpcsFile->fixer->addContent($opener, $phpcsFile->eolChar);
                     $phpcsFile->fixer->endChangeset();
                 }
-            }
+            }//end if
         } else if ($tokens[$stackPtr]['code'] === T_WHILE) {
             // Zero spaces after parenthesis closer.
             $closer = $tokens[$stackPtr]['parenthesis_closer'];

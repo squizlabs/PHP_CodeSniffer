@@ -485,7 +485,7 @@ class PHP_CodeSniffer_File
         foreach ($this->_tokens as $stackPtr => $token) {
             // Check for ignored lines.
             if ($token['code'] === T_COMMENT
-                || $token['code'] === T_DOC_COMMENT
+                || $token['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $token['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($token['content'], '@codingStandards') !== false) {
@@ -1511,7 +1511,7 @@ class PHP_CodeSniffer_File
                 // There are no tabs in this content, or we aren't replacing them.
                 if ($checkEncoding === true) {
                     // Not using the default encoding, so take a bit more care.
-                    $length = iconv_strlen($tokens[$i]['content'], $encoding);
+                    $length = @iconv_strlen($tokens[$i]['content'], $encoding);
                     if ($length === false) {
                         // String contained invalid characters, so revert to default.
                         $length = strlen($tokens[$i]['content']);
@@ -1545,7 +1545,7 @@ class PHP_CodeSniffer_File
                             $newContent .= $content;
                             if ($checkEncoding === true) {
                                 // Not using the default encoding, so take a bit more care.
-                                $contentLength = iconv_strlen($content, $encoding);
+                                $contentLength = @iconv_strlen($content, $encoding);
                                 if ($contentLength === false) {
                                     // String contained invalid characters, so revert to default.
                                     $contentLength = strlen($content);
@@ -1603,7 +1603,7 @@ class PHP_CodeSniffer_File
             }
 
             if ($tokens[$i]['code'] === T_COMMENT
-                || $tokens[$i]['code'] === T_DOC_COMMENT
+                || $tokens[$i]['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $tokens[$i]['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($tokens[$i]['content'], '@codingStandards') !== false) {
@@ -2083,6 +2083,17 @@ class PHP_CodeSniffer_File
                             $type = $tokens[$stackPtr]['type'];
                             echo str_repeat("\t", $depth);
                             echo "=> Found function before scope opener for $stackPtr:$type, processing manually".PHP_EOL;
+                        }
+
+                        if (isset($tokens[$i]['scope_closer']) === true) {
+                            // We've already processed this closure.
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo str_repeat("\t", $depth);
+                                echo '* already processed, skipping *'.PHP_EOL;
+                            }
+
+                            $i = $tokens[$i]['scope_closer'];
+                            continue;
                         }
 
                         $i = self::_recurseScopeMap(
@@ -2621,13 +2632,15 @@ class PHP_CodeSniffer_File
             return null;
         }
 
+        $content = null;
         for ($i = $stackPtr; $i < $this->numTokens; $i++) {
             if ($this->_tokens[$i]['code'] === T_STRING) {
+                $content = $this->_tokens[$i]['content'];
                 break;
             }
         }
 
-        return $this->_tokens[$i]['content'];
+        return $content;
 
     }//end getDeclarationName()
 
@@ -2717,14 +2730,21 @@ class PHP_CodeSniffer_File
         $typeHint        = '';
 
         for ($i = ($opener + 1); $i <= $closer; $i++) {
-            // Check to see if this token has a parenthesis opener. If it does
-            // its likely to be an array, which might have arguments in it, which
-            // we cause problems in our parsing below, so lets just skip to the
+            // Check to see if this token has a parenthesis or bracket opener. If it does
+            // it's likely to be an array which might have arguments in it. This
+            // could cause problems in our parsing below, so lets just skip to the
             // end of it.
             if (isset($this->_tokens[$i]['parenthesis_opener']) === true) {
                 // Don't do this if it's the close parenthesis for the method.
                 if ($i !== $this->_tokens[$i]['parenthesis_closer']) {
                     $i = ($this->_tokens[$i]['parenthesis_closer'] + 1);
+                }
+            }
+
+            if (isset($this->_tokens[$i]['bracket_opener']) === true) {
+                // Don't do this if it's the close parenthesis for the method.
+                if ($i !== $this->_tokens[$i]['bracket_closer']) {
+                    $i = ($this->_tokens[$i]['bracket_closer'] + 1);
                 }
             }
 
@@ -3101,6 +3121,11 @@ class PHP_CodeSniffer_File
             return true;
         }
 
+        if ($this->_tokens[$tokenBefore]['code'] === T_OPEN_SHORT_ARRAY) {
+            // Inside an array declaration, this is a reference.
+            return true;
+        }
+
         if (isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$this->_tokens[$tokenBefore]['code']]) === true) {
             // This is directly after an assignment. It's a reference. Even if
             // it is part of an operation, the other tests will handle it.
@@ -3354,12 +3379,15 @@ class PHP_CodeSniffer_File
                 return $lastNotEmpty;
             }
 
-            // Skip nested statements.
             if (isset($this->_tokens[$i]['scope_opener']) === true
                 && $i === $this->_tokens[$i]['scope_closer']
             ) {
-                $i = $this->_tokens[$i]['scope_opener'];
-            } else if (isset($this->_tokens[$i]['bracket_opener']) === true
+                // Found the end of the previous scope block.
+                return $lastNotEmpty;
+            }
+
+            // Skip nested statements.
+            if (isset($this->_tokens[$i]['bracket_opener']) === true
                 && $i === $this->_tokens[$i]['bracket_closer']
             ) {
                 $i = $this->_tokens[$i]['bracket_opener'];

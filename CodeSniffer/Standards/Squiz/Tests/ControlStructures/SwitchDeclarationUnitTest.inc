@@ -303,3 +303,15 @@ switch ($foo) {
     default:
     throw new Exception();
 }
+
+switch ($foo) {
+    case 'bar':
+    throw new \Exception(
+        'bar'
+    );
+
+    default:
+    throw new \Exception(
+        'bar'
+    );
+}

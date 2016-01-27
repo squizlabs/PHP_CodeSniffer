@@ -197,3 +197,24 @@ try {
 catch (Exception $e) {
     // Something
 }
+
+if ($foo) {
+
+
+    /**
+     * Comment
+     */
+    function foo() {
+        // Code here
+    }
+
+
+    /**
+     * Comment
+     */
+    class bar() {
+
+    }//end class
+
+
+}

@@ -589,6 +589,51 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
+                Before PHP 5.6, the ** operator was tokenized as two
+                T_MULTIPLY tokens in a row. So look for and combine
+                these tokens in earlier versions.
+            */
+
+            if ($tokenIsArray === false
+                && $token[0] === '*'
+                && isset($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)] === '*'
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_POW;
+                $newToken['type']    = 'T_POW';
+                $newToken['content'] = '**';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr++;
+                continue;
+            }
+
+            /*
+                Emulate traits in PHP versions less than 5.4.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STRING
+                && strtolower($token[1]) === 'trait'
+                && $tokens[($stackPtr - 1)][0] !== T_OBJECT_OPERATOR
+            ) {
+                $finalTokens[$newStackPtr] = array(
+                                              'content' => $token[1],
+                                              'code'    => T_TRAIT,
+                                              'type'    => 'T_TRAIT',
+                                             );
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr changed from T_STRING to T_TRAIT".PHP_EOL;
+                }
+
+                $newStackPtr++;
+                continue;
+            }
+
+            /*
                 PHP doesn't assign a token to goto labels, so we have to.
                 These are just string tokens with a single colon after them. Double
                 colons are already tokenized and so don't interfere with this check.
@@ -666,6 +711,26 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo "\t\t* token $stackPtr changed from T_ELSEIF to T_ELSE/T_WHITESPACE/T_IF".PHP_EOL;
+                }
+
+                $newStackPtr++;
+                continue;
+            }//end if
+
+            /*
+                HHVM 3.5 and 3.6 tokenizes a hashbang line such as #!/usr/bin/php
+                as T_HASHANG while PHP proper uses T_INLINE_HTML.
+            */
+
+            if ($tokenIsArray === true && token_name($token[0]) === 'T_HASHBANG') {
+                $finalTokens[$newStackPtr] = array(
+                                              'content' => $token[1],
+                                              'code'    => T_INLINE_HTML,
+                                              'type'    => 'T_INLINE_HTML',
+                                             );
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr changed from T_HASHBANG to T_INLINE_HTML".PHP_EOL;
                 }
 
                 $newStackPtr++;
@@ -829,7 +894,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
      * braces for scope openers and closers. It also turns some T_FUNCTION tokens
      * into T_CLOSURE when they are not standard function definitions. It also
      * detects short array syntax and converts those square brackets into new tokens.
-     * It also corrects some usage of the static and class keywords.
+     * It also corrects some usage of the static and class keywords. It also
+     * assigns tokens to function return types.
      *
      * @param array  $tokens  The array of tokens to process.
      * @param string $eolChar The EOL character to use for splitting strings.
@@ -851,8 +917,12 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 $tokens[$i]['scope_condition'] = $tokens[$tokens[$i]['scope_opener']]['scope_condition'];
             }
 
-            // Looking for functions that are actually closures.
             if ($tokens[$i]['code'] === T_FUNCTION && isset($tokens[$i]['scope_opener']) === true) {
+                /*
+                    Detect functions that are actually closures and
+                    assign them a different token.
+                */
+
                 for ($x = ($i + 1); $x < $numTokens; $x++) {
                     if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false
                         && $tokens[$x]['code'] !== T_BITWISE_AND
@@ -875,6 +945,63 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         }
 
                         $tokens[$x]['conditions'][$i] = T_CLOSURE;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $tokens[$x]['type'];
+                            echo "\t\t* cleaned $x ($type) *".PHP_EOL;
+                        }
+                    }
+                }
+
+                /*
+                    Detect function return values and assign them
+                    a special token, because PHP doesn't.
+                */
+
+                for ($x = ($tokens[$i]['scope_opener'] - 1); $x > $i; $x--) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        if ($tokens[$x]['code'] === T_STRING || $tokens[$x]['code'] === T_ARRAY) {
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $line = $tokens[$x]['line'];
+                                $type = $tokens[$x]['type'];
+                                echo "\t* token $x on line $line changed from $type to T_RETURN_TYPE".PHP_EOL;
+                            }
+
+                            $tokens[$x]['code'] = T_RETURN_TYPE;
+                            $tokens[$x]['type'] = 'T_RETURN_TYPE';
+                        }
+
+                        break;
+                    }
+                }
+
+                continue;
+            } else if ($tokens[$i]['code'] === T_CLASS && isset($tokens[$i]['scope_opener']) === true) {
+                /*
+                    Detect anonymous classes and assign them a different token.
+                */
+
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        break;
+                    }
+                }
+
+                if ($tokens[$x]['code'] === T_OPEN_PARENTHESIS
+                    || $tokens[$x]['code'] === T_OPEN_CURLY_BRACKET
+                ) {
+                    $tokens[$i]['code'] = T_ANON_CLASS;
+                    $tokens[$i]['type'] = 'T_ANON_CLASS';
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_CLASS to T_ANON_CLASS".PHP_EOL;
+                    }
+
+                    for ($x = ($tokens[$i]['scope_opener'] + 1); $x < $tokens[$i]['scope_closer']; $x++) {
+                        if (isset($tokens[$x]['conditions'][$i]) === false) {
+                            continue;
+                        }
+
+                        $tokens[$x]['conditions'][$i] = T_ANON_CLASS;
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $type = $tokens[$x]['type'];
                             echo "\t\t* cleaned $x ($type) *".PHP_EOL;
@@ -1201,7 +1328,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             $newToken['type'] = 'T_MODULUS';
             break;
         case '^':
-            $newToken['type'] = 'T_POWER';
+            $newToken['type'] = 'T_BITWISE_XOR';
             break;
         case '&':
             $newToken['type'] = 'T_BITWISE_AND';

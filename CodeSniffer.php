@@ -73,7 +73,7 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '2.3.3';
+    const VERSION = '2.5.0';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -861,7 +861,9 @@ class PHP_CodeSniffer
             }
         }//end foreach
 
-        if (empty($cliValues['files']) === true) {
+        if (empty($cliValues['files']) === true
+            && $rulesetDir === getcwd()
+        ) {
             // Process hard-coded file paths.
             foreach ($ruleset->{'file'} as $file) {
                 $file      = (string) $file;
@@ -1357,6 +1359,7 @@ class PHP_CodeSniffer
      *                            listeners to.
      *
      * @return void
+     * @throws PHP_CodeSniffer_Exception If a sniff file path is invalid.
      */
     public function registerSniffs($files, $restrictions)
     {
@@ -1376,6 +1379,11 @@ class PHP_CodeSniffer
             }
 
             $className = substr($file, ($slashPos + 1));
+
+            if (substr_count($className, DIRECTORY_SEPARATOR) !== 3) {
+                throw new PHP_CodeSniffer_Exception("Sniff file $className is not valid; sniff files must be located in a .../StandardName/Sniffs/CategoryName/ directory");
+            }
+
             $className = substr($className, 0, -4);
             $className = str_replace(DIRECTORY_SEPARATOR, '_', $className);
 
@@ -2283,7 +2291,8 @@ class PHP_CodeSniffer
             // Might be an actual ruleset file itself.
             // If it has an XML extension, let's at least try it.
             if (is_file($standard) === true
-                && substr(strtolower($standard), -4) === '.xml'
+                && (substr(strtolower($standard), -4) === '.xml'
+                || substr(strtolower($standard), -9) === '.xml.dist')
             ) {
                 return true;
             }

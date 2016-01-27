@@ -345,22 +345,29 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $newContent = str_replace(' ', '_', $content);
             $newContent = trim($newContent, '_');
             $newContent = preg_replace('/[^A-Za-z_]/', '', $newContent);
-            $nameBits   = explode('_', $newContent);
-            $firstBit   = array_shift($nameBits);
-            $newName    = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
-            foreach ($nameBits as $bit) {
-                if ($bit !== '') {
-                    $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
-                }
-            }
 
-            $error     = 'Package name "%s" is not valid; consider "%s" instead';
-            $validName = trim($newName, '_');
-            $data      = array(
-                          $content,
-                          $validName,
-                         );
-            $phpcsFile->addError($error, $tag, 'InvalidPackage', $data);
+            if ($newContent === '') {
+                $error = 'Package name "%s" is not valid';
+                $data  = array($content);
+                $phpcsFile->addError($error, $tag, 'InvalidPackageValue', $data);
+            } else {
+                $nameBits = explode('_', $newContent);
+                $firstBit = array_shift($nameBits);
+                $newName  = strtoupper($firstBit{0}).substr($firstBit, 1).'_';
+                foreach ($nameBits as $bit) {
+                    if ($bit !== '') {
+                        $newName .= strtoupper($bit{0}).substr($bit, 1).'_';
+                    }
+                }
+
+                $error     = 'Package name "%s" is not valid; consider "%s" instead';
+                $validName = trim($newName, '_');
+                $data      = array(
+                              $content,
+                              $validName,
+                             );
+                $phpcsFile->addError($error, $tag, 'InvalidPackage', $data);
+            }//end if
         }//end foreach
 
     }//end processPackage()
