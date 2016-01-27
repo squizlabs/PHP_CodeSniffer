@@ -818,7 +818,7 @@ class PHP_CodeSniffer
             }
         }//end foreach
 
-        if (empty($cliValues['files']) === true) {
+        if (empty($cliValues['files']) === true && $cliValues['stdin'] === null) {
             // Process hard-coded file paths.
             foreach ($ruleset->{'file'} as $file) {
                 $file      = (string) $file;
