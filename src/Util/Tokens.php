@@ -68,6 +68,8 @@ define('T_GOTO_LABEL', 'PHPCS_T_GOTO_LABEL');
 define('T_BINARY_CAST', 'PHPCS_T_BINARY_CAST');
 define('T_EMBEDDED_PHP', 'PHPCS_T_EMBEDDED_PHP');
 define('T_RETURN_TYPE', 'PHPCS_T_RETURN_TYPE');
+define('T_OPEN_USE_GROUP', 'PHPCS_T_OPEN_USE_GROUP');
+define('T_CLOSE_USE_GROUP', 'PHPCS_T_CLOSE_USE_GROUP');
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {

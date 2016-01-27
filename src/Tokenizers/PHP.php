@@ -459,6 +459,7 @@ class PHP extends Tokenizer
         $lastNotEmptyToken = 0;
 
         $insideInlineIf = array();
+        $insideUseGroup = false;
 
         $commentTokenizer = new Comment();
 
@@ -1028,6 +1029,23 @@ class PHP extends Tokenizer
                 ) {
                     $newToken['code'] = T_STRING;
                     $newToken['type'] = 'T_STRING';
+                }
+
+                // This is a special case for use groups in PHP 7+ where leaving
+                // the curly braces as their normal tokens would confuse
+                // the scope map and sniffs.
+                if ($newToken['code'] === T_OPEN_CURLY_BRACKET
+                    && $finalTokens[$lastNotEmptyToken]['code'] === T_NS_SEPARATOR
+                ) {
+                    $newToken['code'] = T_OPEN_USE_GROUP;
+                    $newToken['type'] = 'T_OPEN_USE_GROUP';
+                    $insideUseGroup   = true;
+                }
+
+                if ($insideUseGroup === true && $newToken['code'] === T_CLOSE_CURLY_BRACKET) {
+                    $newToken['code'] = T_CLOSE_USE_GROUP;
+                    $newToken['type'] = 'T_CLOSE_USE_GROUP';
+                    $insideUseGroup   = false;
                 }
 
                 $finalTokens[$newStackPtr] = $newToken;
