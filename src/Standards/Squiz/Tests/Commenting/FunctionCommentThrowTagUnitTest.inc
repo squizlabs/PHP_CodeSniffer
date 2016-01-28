@@ -268,4 +268,11 @@ class Test
             throw new \RuntimeException('The $this->folderName must be specified before proceeding.');
         }
     }
+
+    /*
+     *
+     */
+    protected function foo()
+    {
+    }
 }

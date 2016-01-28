@@ -111,3 +111,9 @@ for ($var1 = 10; $var1 !== 0; $var1--) {
 
 for ($var1 = ($var2 === 10); $var1; $var1--) {
 }
+
+while (TRUE) {
+}
+
+while (FALSE) {
+}

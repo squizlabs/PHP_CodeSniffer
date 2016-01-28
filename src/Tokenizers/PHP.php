@@ -1146,7 +1146,7 @@ class PHP extends Tokenizer
 
                     $tokenAfterReturnTypeHint = $this->tokens[$i]['scope_opener'];
                 } else if (isset($this->tokens[$i]['parenthesis_closer']) === true) {
-                    for ($x = ($this->tokens[$i]['parenthesis_closer'] + 1); $i < $numTokens; $x++) {
+                    for ($x = ($this->tokens[$i]['parenthesis_closer'] + 1); $x < $numTokens; $x++) {
                         if ($this->tokens[$x]['code'] === T_SEMICOLON) {
                             $tokenAfterReturnTypeHint = $x;
                             break;
