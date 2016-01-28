@@ -49,6 +49,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Renamed Squiz.CSS.Opacity.SpacingAfterPoint to Squiz.CSS.Opacity.DecimalPrecision
     -- Please update your ruleset if you are referencing this error code directly
   - Squiz CSS IndentationSniff no longer assumes the class opening brace is at the end of a line
+  - Squiz FunctionCommentThrowTagSniff now ignores non-docblock comments
   - Fixed bug #872 : Incorrect detection of blank lines between CSS class names
  </notes>
  <contents>

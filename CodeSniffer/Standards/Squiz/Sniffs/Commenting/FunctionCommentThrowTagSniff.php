@@ -73,14 +73,8 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
 
         $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1), null, true);
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
-            // Inline comments might just be closing comments for
-            // control structures or functions instead of function comments
-            // using the wrong comment type. If there is other code on the line,
-            // assume they relate to that code.
-            $prev = $phpcsFile->findPrevious($find, ($commentEnd - 1), null, true);
-            if ($prev !== false && $tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
-                $commentEnd = $prev;
-            }
+            // Function is using the wrong type of comment.
+            return;
         }
 
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
