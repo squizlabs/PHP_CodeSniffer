@@ -1014,7 +1014,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                     $tokenAfterReturnTypeHint = $tokens[$i]['scope_opener'];
                 } else if (isset($tokens[$i]['parenthesis_closer']) === true) {
-                    for ($x = ($tokens[$i]['parenthesis_closer'] + 1); $i < $numTokens; $x++) {
+                    for ($x = ($tokens[$i]['parenthesis_closer'] + 1); $x < $numTokens; $x++) {
                         if ($tokens[$x]['code'] === T_SEMICOLON) {
                             $tokenAfterReturnTypeHint = $x;
                             break;
