@@ -184,6 +184,7 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
 
         $requiredOps = 0;
         $foundOps    = 0;
+        $foundBools  = 0;
 
         for ($i = $start; $i <= $end; $i++) {
             $type = $tokens[$i]['code'];
@@ -199,36 +200,42 @@ class Squiz_Sniffs_Operators_ComparisonOperatorUsageSniff implements PHP_CodeSni
                 $foundOps++;
             }
 
-            if ($phpcsFile->tokenizerType !== 'JS') {
-                if ($tokens[$i]['code'] === T_BOOLEAN_AND || $tokens[$i]['code'] === T_BOOLEAN_OR) {
-                    $requiredOps++;
+            if ($tokens[$i]['code'] === T_TRUE || $tokens[$i]['code'] === T_FALSE) {
+                $foundBools++;
+            }
 
-                    // When the instanceof operator is used with another operator
-                    // like ===, you can get more ops than are required.
-                    if ($foundOps > $requiredOps) {
-                        $foundOps = $requiredOps;
-                    }
+            if ($phpcsFile->tokenizerType !== 'JS'
+                && ($tokens[$i]['code'] === T_BOOLEAN_AND
+                || $tokens[$i]['code'] === T_BOOLEAN_OR)
+            ) {
+                $requiredOps++;
 
-                    // If we get to here and we have not found the right number of
-                    // comparison operators, then we must have had an implicit
-                    // true operation ie. if ($a) instead of the required
-                    // if ($a === true), so let's add an error.
-                    if ($requiredOps !== $foundOps) {
-                        $error = 'Implicit true comparisons prohibited; use === TRUE instead';
-                        $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');
-                        $foundOps++;
-                    }
+                // When the instanceof operator is used with another operator
+                // like ===, you can get more ops than are required.
+                if ($foundOps > $requiredOps) {
+                    $foundOps = $requiredOps;
                 }
-            }//end if
+
+                // If we get to here and we have not found the right number of
+                // comparison operators, then we must have had an implicit
+                // true operation i.e., if ($a) instead of the required
+                // if ($a === true), so let's add an error.
+                if ($requiredOps !== $foundOps) {
+                    $error = 'Implicit true comparisons prohibited; use === TRUE instead';
+                    $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');
+                    $foundOps++;
+                }
+            }
         }//end for
 
         $requiredOps++;
 
-        if ($phpcsFile->tokenizerType !== 'JS') {
-            if ($foundOps < $requiredOps) {
-                $error = 'Implicit true comparisons prohibited; use === TRUE instead';
-                $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');
-            }
+        if ($phpcsFile->tokenizerType !== 'JS'
+            && $foundOps < $requiredOps
+            && ($requiredOps !== $foundBools)
+        ) {
+            $error = 'Implicit true comparisons prohibited; use === TRUE instead';
+            $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');
         }
 
     }//end process()
