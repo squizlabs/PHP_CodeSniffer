@@ -567,6 +567,24 @@ abstract class Tokenizer
                 return $i;
             }
 
+            // Special case for PHP control structures that have no braces.
+            // If we find a curly brace closer before we find the opener,
+            // we're not going to find an opener. That closer probably belongs to
+            // a control structure higher up.
+            if ($opener === null
+                && $ignore === 0
+                && $tokenType === T_CLOSE_CURLY_BRACKET
+                && isset($this->scopeOpeners[$currType]['end'][$tokenType]) === true
+            ) {
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $type = $this->tokens[$stackPtr]['type'];
+                    echo str_repeat("\t", $depth);
+                    echo "=> Found curly brace closer before scope opener for $stackPtr:$type, bailing".PHP_EOL;
+                }
+
+                return ($i - 1);
+            }
+
             if ($opener !== null
                 && (isset($this->tokens[$i]['scope_opener']) === false
                 || $this->scopeOpeners[$this->tokens[$stackPtr]['code']]['shared'] === true)
@@ -718,7 +736,7 @@ abstract class Tokenizer
                         echo "=> Found new opening condition before scope opener for $stackPtr:$type, bailing".PHP_EOL;
                     }
 
-                    return $stackPtr;
+                    return ($i - 1);
                 }//end if
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {

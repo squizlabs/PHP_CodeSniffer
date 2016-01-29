@@ -143,3 +143,15 @@ foreach($stuff as $num) {
 if ($foo) { echo 'foo'; }
 elseif ($bar) { echo 'bar'; }
 else { echo 'baz'; }
+
+switch ($type) {
+    case 1:
+        if ($foo) {
+            return true;
+        } elseif ($baz) {
+            return true; }
+        else {
+            echo 'else';
+        }
+    break;
+}
