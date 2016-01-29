@@ -134,106 +134,109 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
 
         $phpcsFile->recordMetric($stackPtr, 'Control structure defined inline', 'yes');
 
-        if ($fix === true) {
-            $phpcsFile->fixer->beginChangeset();
-            if (isset($tokens[$stackPtr]['parenthesis_closer']) === true) {
-                $closer = $tokens[$stackPtr]['parenthesis_closer'];
-            } else {
-                $closer = $stackPtr;
+        // Stop here if we are not fixing the error.
+        if ($fix !== true) {
+            return;
+        }
+
+        $phpcsFile->fixer->beginChangeset();
+        if (isset($tokens[$stackPtr]['parenthesis_closer']) === true) {
+            $closer = $tokens[$stackPtr]['parenthesis_closer'];
+        } else {
+            $closer = $stackPtr;
+        }
+
+        if ($tokens[($closer + 1)]['code'] === T_WHITESPACE
+            || $tokens[($closer + 1)]['code'] === T_SEMICOLON
+        ) {
+            $phpcsFile->fixer->addContent($closer, ' {');
+        } else {
+            $phpcsFile->fixer->addContent($closer, ' { ');
+        }
+
+        $lastNonEmpty = $closer;
+        for ($end = ($closer + 1); $end < $phpcsFile->numTokens; $end++) {
+            if ($tokens[$end]['code'] === T_SEMICOLON) {
+                break;
             }
 
-            if ($tokens[($closer + 1)]['code'] === T_WHITESPACE
-                || $tokens[($closer + 1)]['code'] === T_SEMICOLON
-            ) {
-                $phpcsFile->fixer->addContent($closer, ' {');
-            } else {
-                $phpcsFile->fixer->addContent($closer, ' { ');
+            if ($tokens[$end]['code'] === T_CLOSE_TAG) {
+                $end = $lastNonEmpty;
+                break;
             }
 
-            $lastNonEmpty = $closer;
-            for ($end = ($closer + 1); $end < $phpcsFile->numTokens; $end++) {
-                if ($tokens[$end]['code'] === T_SEMICOLON) {
-                    break;
-                }
-
-                if ($tokens[$end]['code'] === T_CLOSE_TAG) {
-                    $end = $lastNonEmpty;
-                    break;
-                }
-
-                if (isset($tokens[$end]['scope_opener']) === true) {
-                    $type = $tokens[$end]['code'];
-                    $end  = $tokens[$end]['scope_closer'];
-                    if ($type === T_DO || $type === T_IF || $type === T_ELSEIF) {
-                        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), null, true);
-                        if ($next === false) {
-                            break;
-                        }
-
-                        $nextType = $tokens[$next]['code'];
-
-                        // Let additional conditions loop and find their ending.
-                        if (($type === T_IF
-                            || $type === T_ELSEIF)
-                            && ($nextType === T_ELSEIF
-                            || $nextType === T_ELSE)
-                        ) {
-                            continue;
-                        }
-
-                        // Account for DO... WHILE conditions.
-                        if ($type === T_DO && $nextType === T_WHILE) {
-                            $end = $phpcsFile->findNext(T_SEMICOLON, ($next + 1));
-                        }
-                    }//end if
-
-                    break;
-                }//end if
-
-                if ($tokens[$end]['code'] !== T_WHITESPACE) {
-                    $lastNonEmpty = $end;
-                }
-            }//end for
-
-            $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
-
-            // Account for a comment on the end of the line.
-            for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
-                if (isset($tokens[($endLine + 1)]) === false
-                    || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
-                ) {
-                    break;
-                }
-            }
-
-            if ($tokens[$endLine]['code'] !== T_COMMENT) {
-                $endLine = $end;
-            }
-
-            if ($next !== $end) {
-                if ($endLine !== $end) {
-                    $phpcsFile->fixer->addContent($endLine, '}');
-                } else {
-                    if ($tokens[$end]['code'] !== T_SEMICOLON
-                        && $tokens[$end]['code'] !== T_CLOSE_CURLY_BRACKET
-                    ) {
-                        $phpcsFile->fixer->addContent($end, ';');
+            if (isset($tokens[$end]['scope_opener']) === true) {
+                $type = $tokens[$end]['code'];
+                $end  = $tokens[$end]['scope_closer'];
+                if ($type === T_DO || $type === T_IF || $type === T_ELSEIF) {
+                    $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), null, true);
+                    if ($next === false) {
+                        break;
                     }
 
-                    $phpcsFile->fixer->addContent($end, ' }');
-                }
-            } else {
-                if ($endLine !== $end) {
-                    $phpcsFile->fixer->replaceToken($end, '');
-                    $phpcsFile->fixer->addNewlineBefore($endLine);
-                    $phpcsFile->fixer->addContent($endLine, '}');
-                } else {
-                    $phpcsFile->fixer->replaceToken($end, '}');
-                }
+                    $nextType = $tokens[$next]['code'];
+
+                    // Let additional conditions loop and find their ending.
+                    if (($type === T_IF
+                        || $type === T_ELSEIF)
+                        && ($nextType === T_ELSEIF
+                        || $nextType === T_ELSE)
+                    ) {
+                        continue;
+                    }
+
+                    // Account for DO... WHILE conditions.
+                    if ($type === T_DO && $nextType === T_WHILE) {
+                        $end = $phpcsFile->findNext(T_SEMICOLON, ($next + 1));
+                    }
+                }//end if
+
+                break;
             }//end if
 
-            $phpcsFile->fixer->endChangeset();
+            if ($tokens[$end]['code'] !== T_WHITESPACE) {
+                $lastNonEmpty = $end;
+            }
+        }//end for
+
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
+
+        // Account for a comment on the end of the line.
+        for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
+            if (isset($tokens[($endLine + 1)]) === false
+                || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
+            ) {
+                break;
+            }
+        }
+
+        if ($tokens[$endLine]['code'] !== T_COMMENT) {
+            $endLine = $end;
+        }
+
+        if ($next !== $end) {
+            if ($endLine !== $end) {
+                $phpcsFile->fixer->addContent($endLine, '}');
+            } else {
+                if ($tokens[$end]['code'] !== T_SEMICOLON
+                    && $tokens[$end]['code'] !== T_CLOSE_CURLY_BRACKET
+                ) {
+                    $phpcsFile->fixer->addContent($end, ';');
+                }
+
+                $phpcsFile->fixer->addContent($end, ' }');
+            }
+        } else {
+            if ($endLine !== $end) {
+                $phpcsFile->fixer->replaceToken($end, '');
+                $phpcsFile->fixer->addNewlineBefore($endLine);
+                $phpcsFile->fixer->addContent($endLine, '}');
+            } else {
+                $phpcsFile->fixer->replaceToken($end, '}');
+            }
         }//end if
+
+        $phpcsFile->fixer->endChangeset();
 
     }//end process()
 
