@@ -30,6 +30,13 @@ if (class_exists('PHP_CodeSniffer_Tokenizers_PHP', true) === false) {
 class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 {
 
+    /**
+     * If TRUE, files that appear to be minified will not be processed.
+     *
+     * @var boolean
+     */
+    public $skipMinified = true;
+
 
     /**
      * Creates an array of tokens when given some CSS code.

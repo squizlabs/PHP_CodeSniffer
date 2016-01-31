@@ -1417,7 +1417,9 @@ class PHP_CodeSniffer_File
     {
         // Minified files often have a very large number of characters per line
         // and cause issues when tokenizing.
-        if (get_class($tokenizer) !== 'PHP_CodeSniffer_Tokenizers_PHP') {
+        if (property_exists($tokenizer, 'skipMinified') === true
+            && $tokenizer->skipMinified === true
+        ) {
             $numChars = strlen($string);
             $numLines = (substr_count($string, $eolChar) + 1);
             $average  = ($numChars / $numLines);

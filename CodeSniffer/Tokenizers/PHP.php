@@ -27,6 +27,13 @@ class PHP_CodeSniffer_Tokenizers_PHP
 {
 
     /**
+     * If TRUE, files that appear to be minified will not be processed.
+     *
+     * @var boolean
+     */
+    public $skipMinified = false;
+
+    /**
      * A list of tokens that are allowed to open a scope.
      *
      * This array also contains information about what kind of token the scope
