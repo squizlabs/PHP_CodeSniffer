@@ -85,6 +85,30 @@ abstract class Tokenizer
 
 
     /**
+     * Checks the content to see if it looks minified.
+     *
+     * @param string $content The content to tokenize,
+     * @param string $eolChar The EOL char used in the content.
+     *
+     * @return boolean
+     */
+    protected function isMinifiedContent($content, $eolChar='\n')
+    {
+        // Minified files often have a very large number of characters per line
+        // and cause issues when tokenizing.
+        $numChars = strlen($content);
+        $numLines = (substr_count($content, $eolChar) + 1);
+        $average  = ($numChars / $numLines);
+        if ($average > 100) {
+            return true;
+        }
+
+        return false;
+
+    }//end isMinifiedContent()
+
+
+    /**
      * Gets the array of tokens.
      *
      * @return array

@@ -16,6 +16,7 @@ use PHP_CodeSniffer\Config;
 class JS extends Tokenizer
 {
 
+
     /**
      * A list of tokens that are allowed to open a scope.
      *
@@ -245,12 +246,7 @@ class JS extends Tokenizer
      */
     public function __construct($content, Config $config, $eolChar='\n')
     {
-        // Minified files often have a very large number of characters per line
-        // and cause issues when tokenizing.
-        $numChars = strlen($content);
-        $numLines = (substr_count($content, $eolChar) + 1);
-        $average  = ($numChars / $numLines);
-        if ($average > 100) {
+        if ($this->isMinifiedContent($content, $eolChar) === true) {
             throw new TokenizerException('File appears to be minified and cannot be processed');
         }
 
