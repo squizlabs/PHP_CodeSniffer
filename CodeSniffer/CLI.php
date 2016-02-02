@@ -389,7 +389,11 @@ class PHP_CodeSniffer_CLI
         // Check for content on STDIN.
         $handle = fopen('php://stdin', 'r');
         if (stream_set_blocking($handle, false) === true) {
-            $fileContents = stream_get_contents($handle);
+            $fileContents = '';
+            while (($line = fgets(STDIN)) !== false) {
+                $fileContents .= $line;
+            }
+
             fclose($handle);
             if (trim($fileContents) !== '') {
                 $this->values['stdin'] = $fileContents;
