@@ -79,47 +79,48 @@ class Cache
         // hash. This ensures that core PHPCS changes will also invalidate the cache.
         // Note that we ignore sniffs here, and any files that don't affect
         // the outcome of the run.
-        $ignore = array(
-                   'Standards'  => true,
-                   'Exceptions' => true,
-                   'Reports'    => true,
-                   'Generators' => true,
-                  );
-
         $di = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($installDir),
             0,
             \RecursiveIteratorIterator::CATCH_GET_CHILD
         );
 
-        foreach ($di as $file) {
-            // Skip hidden files.
-            $filename = $file->getFilename();
-            if (substr($filename, 0, 1) === '.') {
-                continue;
-            }
+        $di     = new \RecursiveDirectoryIterator($installDir);
+        $filter = new \RecursiveCallbackFilterIterator(
+            $di,
+            function ($file, $key, $iterator) {
+                // Skip hidden files.
+                $filename = $file->getFilename();
+                if (substr($filename, 0, 1) === '.') {
+                    return false;
+                }
 
-            $filePath = Common::realpath($file->getPathname());
-            if ($filePath === false) {
-                continue;
-            }
+                $filePath = Common::realpath($file->getPathname());
+                if ($filePath === false) {
+                    return false;
+                }
 
-            if (is_dir($filePath) === true) {
-                continue;
-            }
+                if (is_dir($filePath) === true
+                    && ($filename === 'Standards'
+                    || $filename === 'Exceptions'
+                    || $filename === 'Reports'
+                    || $filename === 'Generators')
+                ) {
+                    return false;
+                }
 
-            $dir = substr($filePath, ($installDirLen + 1));
-            $dir = substr($dir, 0, strpos($dir, DIRECTORY_SEPARATOR));
-            if (isset($ignore[$dir]) === true) {
-                continue;
+                return true;
             }
+        );
 
+        $iterator = new \RecursiveIteratorIterator($filter);
+        foreach ($iterator as $file) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo "\t\t=> core file: $file".PHP_EOL;
             }
 
             $codeHash .= md5_file($file);
-        }//end foreach
+        }
 
         $codeHash = md5($codeHash);
 
