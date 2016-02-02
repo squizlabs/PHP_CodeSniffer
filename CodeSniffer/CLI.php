@@ -398,7 +398,7 @@ class PHP_CodeSniffer_CLI
 
         return $this->values;
 
-    }//end getCommandLineValues() 
+    }//end getCommandLineValues()
 
 
     /**
