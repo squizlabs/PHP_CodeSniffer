@@ -311,7 +311,11 @@ class Config
         if ($checkStdin === true) {
             $handle = fopen('php://stdin', 'r');
             if (stream_set_blocking($handle, false) === true) {
-                $fileContents = stream_get_contents($handle);
+                $fileContents = '';
+                while (($line = fgets(STDIN)) !== false) {
+                    $fileContents .= $line;
+                }
+
                 fclose($handle);
                 if (trim($fileContents) !== '') {
                     $this->stdin        = true;
