@@ -310,14 +310,15 @@ class Config
         // Check for content on STDIN.
         if ($checkStdin === true) {
             $handle = fopen('php://stdin', 'r');
-            stream_set_blocking($handle, false);
-            $fileContents = stream_get_contents($handle);
-            fclose($handle);
-            if (trim($fileContents) !== '') {
-                $this->stdin        = true;
-                $this->stdinContent = $fileContents;
-                $this->overriddenDefaults['stdin']        = true;
-                $this->overriddenDefaults['stdinContent'] = true;
+            if (stream_set_blocking($handle, false) === true) {
+                $fileContents = stream_get_contents($handle);
+                fclose($handle);
+                if (trim($fileContents) !== '') {
+                    $this->stdin        = true;
+                    $this->stdinContent = $fileContents;
+                    $this->overriddenDefaults['stdin']        = true;
+                    $this->overriddenDefaults['stdinContent'] = true;
+                }
             }
         }
 
