@@ -44,3 +44,18 @@ $str = 'hello
  * @var int $x
  */
 $x = 1;
+
+?>
+<html>
+    <head>
+		<title>Foo</title>
+	</head>
+	<body>
+		<div>
+    		<div>
+				<div>
+	    		</div>
+    	    </div>
+        </div>
+    </body>
+</html>

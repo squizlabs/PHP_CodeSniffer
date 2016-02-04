@@ -56,6 +56,7 @@ class DisallowTabIndentSniff implements Sniff
 
         $checkTokens = array(
                         T_WHITESPACE             => true,
+                        T_INLINE_HTML            => true,
                         T_DOC_COMMENT_WHITESPACE => true,
                         T_DOC_COMMENT_STRING     => true,
                        );
