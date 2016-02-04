@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Renamed Squiz.CSS.Opacity.SpacingAfterPoint to Squiz.CSS.Opacity.DecimalPrecision
     -- Please update your ruleset if you are referencing this error code directly
   - Fixed PHP tokenizer problem that caused an infinite loop when checking a comment with specific content
+  - Generic Disallow Space and Tab indent sniffs now detect and fix indents inside embedded HTML chunks (request #882)
   - Squiz CSS IndentationSniff no longer assumes the class opening brace is at the end of a line
   - Squiz FunctionCommentThrowTagSniff now ignores non-docblock comments
   - Squiz ComparisonOperatorUsageSniff now allows conditions like while(true)

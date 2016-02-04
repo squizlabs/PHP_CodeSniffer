@@ -84,6 +84,7 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
 
         $checkTokens = array(
                         T_WHITESPACE             => true,
+                        T_INLINE_HTML            => true,
                         T_DOC_COMMENT_WHITESPACE => true,
                        );
 

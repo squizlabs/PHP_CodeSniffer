@@ -71,6 +71,7 @@ class Generic_Sniffs_WhiteSpace_DisallowTabIndentSniff implements PHP_CodeSniffe
 
         $checkTokens = array(
                         T_WHITESPACE             => true,
+                        T_INLINE_HTML            => true,
                         T_DOC_COMMENT_WHITESPACE => true,
                         T_DOC_COMMENT_STRING     => true,
                        );
