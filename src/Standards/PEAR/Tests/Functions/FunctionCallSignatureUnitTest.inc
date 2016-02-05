@@ -296,3 +296,10 @@ array_filter(
         return $i === 0;
     }
 );
+
+foo(array(
+    'callback' => function () {
+        $foo = 'foo';
+        return;
+    },
+));
