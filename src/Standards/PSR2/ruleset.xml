@@ -155,6 +155,21 @@
  The structure body MUST be indented once
  The closing brace MUST be on the next line after the body -->
  <rule ref="Squiz.ControlStructures.ControlSignature"/>
+ <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
+ <!--
+    When 3.0 is released, change this to:
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen" />
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose" />
+ -->
+ <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpaceBeforeCloseBrace">
+  <severity>0</severity>
+ </rule>
+ <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.LineAfterClose">
+  <severity>0</severity>
+ </rule>
+ <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose">
+  <severity>0</severity>
+ </rule>
  <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
  <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
  <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
