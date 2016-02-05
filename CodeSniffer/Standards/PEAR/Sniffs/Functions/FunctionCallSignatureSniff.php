@@ -353,11 +353,21 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         }
 
         // Each line between the parenthesis should be indented n spaces.
-        $lastLine = $tokens[$openBracket]['line'];
+        $lastLine = ($tokens[$openBracket]['line'] - 1);
         $argStart = null;
         $argEnd   = null;
         $inArg    = false;
-        for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
+
+        // Start processing at the first argument.
+        $i = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);
+        if ($tokens[($i - 1)]['code'] === T_WHITESPACE
+            && $tokens[($i - 1)]['line'] === $tokens[$i]['line']
+        ) {
+            // Make sure we check the indent.
+            $i--;
+        }
+
+        for ($i; $i < $closeBracket; $i++) {
             if ($i > $argStart && $i < $argEnd) {
                 $inArg = true;
             } else {
@@ -384,76 +394,80 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     continue;
                 }
 
-                // We changed lines, so this should be a whitespace indent token, but first make
-                // sure it isn't a blank line because we don't need to check indent unless there
-                // is actually some code to indent.
-                if ($tokens[$i]['code'] === T_WHITESPACE) {
-                    $nextCode = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), ($closeBracket + 1), true);
-                    if ($tokens[$nextCode]['line'] !== $lastLine) {
-                        if ($inArg === false) {
-                            $error = 'Empty lines are not allowed in multi-line function calls';
-                            $fix   = $phpcsFile->addFixableError($error, $i, 'EmptyLine');
-                            if ($fix === true) {
-                                $phpcsFile->fixer->replaceToken($i, '');
+                if ($tokens[$i]['line'] !== $tokens[$openBracket]['line']) {
+                    // We changed lines, so this should be a whitespace indent token, but first make
+                    // sure it isn't a blank line because we don't need to check indent unless there
+                    // is actually some code to indent.
+                    if ($tokens[$i]['code'] === T_WHITESPACE) {
+                        $nextCode = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), ($closeBracket + 1), true);
+                        if ($tokens[$nextCode]['line'] !== $lastLine) {
+                            if ($inArg === false) {
+                                $error = 'Empty lines are not allowed in multi-line function calls';
+                                $fix   = $phpcsFile->addFixableError($error, $i, 'EmptyLine');
+                                if ($fix === true) {
+                                    $phpcsFile->fixer->replaceToken($i, '');
+                                }
+                            }
+
+                            continue;
+                        }
+                    } else {
+                        $nextCode = $i;
+                    }
+
+                    if ($tokens[$nextCode]['line'] === $tokens[$closeBracket]['line']) {
+                        // Closing brace needs to be indented to the same level
+                        // as the function call.
+                        $inArg          = false;
+                        $expectedIndent = $functionIndent;
+                    } else {
+                        $expectedIndent = ($functionIndent + $this->indent);
+                    }
+
+                    if ($tokens[$i]['code'] !== T_WHITESPACE
+                        && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE
+                    ) {
+                        // Just check if it is a multi-line block comment. If so, we can
+                        // calculate the indent from the whitespace before the content.
+                        if ($tokens[$i]['code'] === T_COMMENT
+                            && $tokens[($i - 1)]['code'] === T_COMMENT
+                        ) {
+                            $trimmed     = ltrim($tokens[$i]['content']);
+                            $foundIndent = (strlen($tokens[$i]['content']) - strlen($trimmed));
+                        } else {
+                            $foundIndent = 0;
+                        }
+                    } else {
+                        $foundIndent = strlen($tokens[$i]['content']);
+                    }
+
+                    if ($foundIndent < $expectedIndent
+                        || ($inArg === false
+                        && $expectedIndent !== $foundIndent)
+                    ) {
+                        $error = 'Multi-line function call not indented correctly; expected %s spaces but found %s';
+                        $data  = array(
+                                  $expectedIndent,
+                                  $foundIndent,
+                                 );
+
+                        $fix = $phpcsFile->addFixableError($error, $i, 'Indent', $data);
+                        if ($fix === true) {
+                            $padding = str_repeat(' ', $expectedIndent);
+                            if ($foundIndent === 0) {
+                                $phpcsFile->fixer->addContentBefore($i, $padding);
+                            } else {
+                                if ($tokens[$i]['code'] === T_COMMENT) {
+                                    $comment = $padding.ltrim($tokens[$i]['content']);
+                                    $phpcsFile->fixer->replaceToken($i, $comment);
+                                } else {
+                                    $phpcsFile->fixer->replaceToken($i, $padding);
+                                }
                             }
                         }
-
-                        continue;
-                    }
+                    }//end if
                 } else {
                     $nextCode = $i;
-                }
-
-                if ($tokens[$nextCode]['line'] === $tokens[$closeBracket]['line']) {
-                    // Closing brace needs to be indented to the same level
-                    // as the function call.
-                    $inArg          = false;
-                    $expectedIndent = $functionIndent;
-                } else {
-                    $expectedIndent = ($functionIndent + $this->indent);
-                }
-
-                if ($tokens[$i]['code'] !== T_WHITESPACE
-                    && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE
-                ) {
-                    // Just check if it is a multi-line block comment. If so, we can
-                    // calculate the indent from the whitespace before the content.
-                    if ($tokens[$i]['code'] === T_COMMENT
-                        && $tokens[($i - 1)]['code'] === T_COMMENT
-                    ) {
-                        $trimmed     = ltrim($tokens[$i]['content']);
-                        $foundIndent = (strlen($tokens[$i]['content']) - strlen($trimmed));
-                    } else {
-                        $foundIndent = 0;
-                    }
-                } else {
-                    $foundIndent = strlen($tokens[$i]['content']);
-                }
-
-                if ($foundIndent < $expectedIndent
-                    || ($inArg === false
-                    && $expectedIndent !== $foundIndent)
-                ) {
-                    $error = 'Multi-line function call not indented correctly; expected %s spaces but found %s';
-                    $data  = array(
-                              $expectedIndent,
-                              $foundIndent,
-                             );
-
-                    $fix = $phpcsFile->addFixableError($error, $i, 'Indent', $data);
-                    if ($fix === true) {
-                        $padding = str_repeat(' ', $expectedIndent);
-                        if ($foundIndent === 0) {
-                            $phpcsFile->fixer->addContentBefore($i, $padding);
-                        } else {
-                            if ($tokens[$i]['code'] === T_COMMENT) {
-                                $comment = $padding.ltrim($tokens[$i]['content']);
-                                $phpcsFile->fixer->replaceToken($i, $comment);
-                            } else {
-                                $phpcsFile->fixer->replaceToken($i, $padding);
-                            }
-                        }
-                    }
                 }//end if
 
                 if ($inArg === false) {
