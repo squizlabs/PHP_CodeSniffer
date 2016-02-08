@@ -84,6 +84,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #872 : Incorrect detection of blank lines between CSS class names
   - Fixed bug #879 : Generic InlineControlStructureSniff can create parse error when case/if/elseif/else have mixed brace and braceless definitions
   - Fixed bug #883 : PSR2 is not checking for blank lines at the start and end of control structures
+  - Fixed bug #884 : Incorrect indentation notice for anonymous classes
  </notes>
  <contents>
   <dir name="/">

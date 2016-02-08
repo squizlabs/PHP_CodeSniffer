@@ -984,6 +984,16 @@ $services = array(
 			->getMock()
 );
 
+class Foo
+{
+	public function setUp()
+	{
+		$this->foo = new class {
+			public $name = 'Some value';
+		};
+	}
+}
+
 function foo()
 {
 	$foo = array(
