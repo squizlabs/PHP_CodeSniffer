@@ -1326,7 +1326,7 @@
         "name": "Faveo Help-desk",
         "url": "ladybirdweb/faveo-helpdesk",
         "path": "",
-        "ignore": "",
+        "ignore": "*/vendor/*",
         "extensions": ""
-    },
+    }
 ]
