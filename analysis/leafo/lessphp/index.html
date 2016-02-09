@@ -426,14 +426,6 @@
 <div class="historicalChart">
 <div class="chart-trend" id="chart2t" style="width:860px;height:250px;"><div class="placeholder"></div></div>
 </div>
-<div class="historicalEvents">
-<ul>
-<li onmouseover="ct2.setSelection([{row:12,column:null}]);" onmouseout="ct2.setSelection([]);" class="historicalDate"><strong>01 Jan 2016</strong>: there was a 50% swing from <em>yes</em> to <em>no</em>
-<ul>
-</ul>
-</li>
-</ul>
-</div>
 </div>
 </div>
 </div>
@@ -1961,7 +1953,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Tue, 09 Feb 2016 13:13:50 +1100<br/>Using master branch of <a href="https://github.com/leafo/lessphp">leafo/lessphp</a> @ commit <a href="https://github.com/leafo/lessphp/commit/e0fe5c55769951543c4341feeaafa6f425aa6e73">e0fe5c55769951543c4341feeaafa6f425aa6e73</a></div>
+    <div class="footer">Report generated on Tue, 09 Feb 2016 16:08:37 +1100<br/>Using master branch of <a href="https://github.com/leafo/lessphp">leafo/lessphp</a> @ commit <a href="https://github.com/leafo/lessphp/commit/e0fe5c55769951543c4341feeaafa6f425aa6e73">e0fe5c55769951543c4341feeaafa6f425aa6e73</a></div>
 </div>
 
 <script>
@@ -1997,7 +1989,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "files");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-02-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-03-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-04-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-05-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-06-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-07-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-08-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-09-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-10-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-11-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2015-12-01'),0.00,false,'0%',100,false,'100%',2,"2"],[new Date('2016-01-01'),50,true,'50%',50,true,'50%',2,"2"],[new Date('2016-02-01'),50,false,'50%',50,false,'50%',2,"2"]]);
+data.addRows([[new Date('2015-01-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-02-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-03-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-04-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-05-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-06-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-07-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-08-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-09-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-10-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-11-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2015-12-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2016-01-01'),50,false,'50%',50,false,'50%',2,"2"],[new Date('2016-02-01'),50,false,'50%',50,false,'50%',2,"2"]]);
 ct2 = new google.visualization.LineChart(document.getElementById("chart2t"));
 trendOptions.series = {2:itemSeries};
 trendOptions.vAxes[1].title = "files";
