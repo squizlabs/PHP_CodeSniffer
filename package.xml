@@ -48,6 +48,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added include-pattern tag to include a sniff for specific files and folders only (request #656)
     -- exact opposite of the exclude-pattern tag
     -- only useable within sniffs, not globally like exclude-patterns are
+  - Added -m option to stop error messages from being recorded, which saves a lot of memory
+    -- PHPCBF always uses this setting to reduce memory
+    -- Setting $recordErrors in custom reports no longer supported
 
   - Paths used when setting CLI arguments inside ruleset.xml files are now relative to the ruleset location (request #847)
     -- This change only applies to paths within ARG tags, used to set CLI arguments

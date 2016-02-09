@@ -98,11 +98,17 @@ class LocalFile extends File
             // We can't filter metrics, so just load all of them.
             $this->metrics = $cache['metrics'];
 
-            // Replay the cached errors and warnings to filter out the ones
-            // we don't need for this specific run.
-            $this->configCache['cache'] = false;
-            $this->replayErrors($cache['errors'], $cache['warnings']);
-            $this->configCache['cache'] = true;
+            if ($this->configCache['recordErrors'] === true) {
+                // Replay the cached errors and warnings to filter out the ones
+                // we don't need for this specific run.
+                $this->configCache['cache'] = false;
+                $this->replayErrors($cache['errors'], $cache['warnings']);
+                $this->configCache['cache'] = true;
+            } else {
+                $this->errorCount   = $cache['errorCount'];
+                $this->warningCount = $cache['warningCount'];
+                $this->fixableCount = $cache['fixableCount'];
+            }
 
             if (PHP_CODESNIFFER_VERBOSITY > 0
                 || (PHP_CODESNIFFER_CBF === true && empty($this->config->files) === false)
@@ -113,7 +119,7 @@ class LocalFile extends File
             $this->numTokens = $cache['numTokens'];
             $this->fromCache = true;
             return;
-        }
+        }//end if
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo PHP_EOL;
@@ -122,20 +128,25 @@ class LocalFile extends File
         parent::process();
 
         $cache = array(
-                  'hash'      => $hash,
-                  'errors'    => $this->errors,
-                  'warnings'  => $this->warnings,
-                  'metrics'   => $this->metrics,
-                  'numTokens' => $this->numTokens,
+                  'hash'         => $hash,
+                  'errors'       => $this->errors,
+                  'warnings'     => $this->warnings,
+                  'metrics'      => $this->metrics,
+                  'errorCount'   => $this->errorCount,
+                  'warningCount' => $this->warningCount,
+                  'fixableCount' => $this->fixableCount,
+                  'numTokens'    => $this->numTokens,
                  );
 
         Cache::set($this->path, $cache);
 
         // During caching, we don't filter out errors in any way, so
         // we need to do that manually now by replaying them.
-        $this->configCache['cache'] = false;
-        $this->replayErrors($this->errors, $this->warnings);
-        $this->configCache['cache'] = true;
+        if ($this->configCache['recordErrors'] === true) {
+            $this->configCache['cache'] = false;
+            $this->replayErrors($this->errors, $this->warnings);
+            $this->configCache['cache'] = true;
+        }
 
     }//end process()
 

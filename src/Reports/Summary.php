@@ -15,13 +15,6 @@ use PHP_CodeSniffer\Util;
 class Summary implements Report
 {
 
-    /**
-     * TRUE if this report needs error messages instead of just totals.
-     *
-     * @var boolean
-     */
-    public $recordErrors = false;
-
 
     /**
      * Generate a partial report for a single processed file.

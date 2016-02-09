@@ -163,6 +163,7 @@ class Runner
         $this->config->interactive  = false;
         $this->config->cache        = false;
         $this->config->showSources  = false;
+        $this->config->recordErrors = false;
         $this->config->reportFile   = null;
         $this->config->reports      = array('cbf' => null);
 

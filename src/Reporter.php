@@ -297,6 +297,21 @@ class Reporter
             return $report;
         }
 
+        if ($this->config->recordErrors === false) {
+            $message  = 'Errors are not being recorded but this report requires error messages. ';
+            $message .= 'This report will not show the correct information.';
+            $report['messages'][1][1] = array(
+                                         array(
+                                          'message'  => $message,
+                                          'source'   => 'Internal.RecordErrors',
+                                          'severity' => 5,
+                                          'fixable'  => false,
+                                          'type'     => 'ERROR',
+                                         ),
+                                        );
+            return $report;
+        }
+
         $errors = array();
 
         // Merge errors and warnings.

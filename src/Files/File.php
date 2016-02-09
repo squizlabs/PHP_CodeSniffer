@@ -147,13 +147,6 @@ class File
     protected $fixableCount = 0;
 
     /**
-     * If TRUE, record the errors and warnings raised.
-     *
-     * @var boolean
-     */
-    protected $recordErrors = true;
-
-    /**
      * An array of sniffs that are being ignored.
      *
      * @var array
@@ -227,31 +220,8 @@ class File
         $this->configCache['sniffs']          = $this->config->sniffs;
         $this->configCache['errorSeverity']   = $this->config->errorSeverity;
         $this->configCache['warningSeverity'] = $this->config->warningSeverity;
+        $this->configCache['recordErrors']    = $this->config->recordErrors;
         $this->configCache['ignorePatterns']  = $this->ruleset->getIgnorePatterns();
-
-        /*
-            TODO: Is this still needed? We use the cache to speed things up now.
-            Don't record errors if none of the reports are going to show them.
-            if ($this->config->cache === false && $this->config->interactive === false) {
-                $cliValues = $phpcs->config->getCommandLineValues();
-                if (isset($cliValues['showSources']) === true
-                    && $cliValues['showSources'] !== true
-                ) {
-                    $recordErrors = false;
-                    foreach ($cliValues['reports'] as $report => $output) {
-                        $reportClass = $phpcs->reporting->factory($report);
-                        if (property_exists($reportClass, 'recordErrors') === false
-                            || $reportClass->recordErrors === true
-                        ) {
-                            $recordErrors = true;
-                            break;
-                        }
-                    }
-
-                    $this->recordErrors = $recordErrors;
-                }
-            }
-        */
 
     }//end __construct()
 
@@ -446,11 +416,6 @@ class File
                 $this->activeListener = '';
             }//end foreach
         }//end foreach
-
-        if ($this->recordErrors === false) {
-            $this->errors   = array();
-            $this->warnings = array();
-        }
 
         // If short open tags are off but the file being checked uses
         // short open tags, the whole content will be inline HTML
@@ -770,6 +735,13 @@ class File
             return false;
         }
 
+        $includeAll = true;
+        if ($this->configCache['cache'] === false
+            || $this->configCache['recordErrors'] === false
+        ) {
+            $includeAll = false;
+        }
+
         // Work out which sniff generated the message.
         $parts = explode('.', $code);
         if ($parts[0] === 'Internal') {
@@ -798,7 +770,7 @@ class File
 
         // Filter out any messages for sniffs that shouldn't have run
         // due to the use of the --sniffs command line argument.
-        if ($this->configCache['cache'] === false
+        if ($includeAll === false
             && empty($this->configCache['sniffs']) === false
             && in_array($listenerCode, $this->configCache['sniffs']) === false
         ) {
@@ -837,7 +809,7 @@ class File
             $messages       = &$this->warnings;
         }
 
-        if ($this->configCache['cache'] === false && $configSeverity === 0) {
+        if ($includeAll === false && $configSeverity === 0) {
             // Don't bother doing any processing as these messages are just going to
             // be hidden in the reports anyway.
             return false;
@@ -855,7 +827,7 @@ class File
             }
         }
 
-        if ($this->configCache['cache'] === false && $configSeverity > $severity) {
+        if ($includeAll === false && $configSeverity > $severity) {
             return false;
         }
 
@@ -893,12 +865,9 @@ class File
             $this->fixableCount++;
         }
 
-        if ($this->recordErrors === false) {
-            if (isset($messages[$line]) === false) {
-                $messages[$line] = 0;
-            }
-
-            $messages[$line]++;
+        if ($this->configCache['recordErrors'] === false
+            && $includeAll === false
+        ) {
             return true;
         }
 

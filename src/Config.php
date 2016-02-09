@@ -69,6 +69,7 @@ class Config
      *                          Set to "auto" for have this value changed to the width of the terminal.
      * int      errorSeverity   The minimum severity an error must have to be displayed.
      * int      warningSeverity The minimum severity a warning must have to be displayed.
+     * bool     recordErrors    Record the content of error messages as well as error counts.
      * string   suffix          A suffix to add to fixed files.
      * string   basepath        A file system location to strip from the paths of files shown in reports.
      * bool     stdin           Read content from STDIN instead of supplied files.
@@ -112,6 +113,7 @@ class Config
                          'reportWidth'     => null,
                          'errorSeverity'   => null,
                          'warningSeverity' => null,
+                         'recordErrors'    => null,
                          'suffix'          => null,
                          'stdin'           => null,
                          'stdinContent'    => null,
@@ -416,6 +418,7 @@ class Config
         $this->reportWidth     = 'auto';
         $this->errorSeverity   = 5;
         $this->warningSeverity = 5;
+        $this->recordErrors    = true;
         $this->suffix          = '';
         $this->stdin           = false;
         $this->stdinContent    = null;
@@ -537,6 +540,10 @@ class Config
         case 'p' :
             $this->showProgress = true;
             $this->overriddenDefaults['showProgress'] = true;
+            break;
+        case 'm' :
+            $this->recordErrors = false;
+            $this->overriddenDefaults['recordErrors'] = true;
             break;
         case 'd' :
             $ini = explode('=', $this->cliArgs[($pos + 1)]);
@@ -1034,6 +1041,8 @@ class Config
         echo '        -a            Run interactively'.PHP_EOL;
         echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
+        echo '        -m            Stop error messages from being recorded'.PHP_EOL;
+        echo '                      (saves a lot of memory, but stops many reports from being used)'.PHP_EOL;
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
