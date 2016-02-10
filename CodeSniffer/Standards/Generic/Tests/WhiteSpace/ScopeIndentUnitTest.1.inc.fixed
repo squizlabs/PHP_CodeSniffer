@@ -1023,6 +1023,19 @@ if ($foo) {
     }
 }
 
+switch ($parameter) {
+    case null:
+        return [
+            'foo' => in_array(
+                'foo',
+                []
+            ),
+        ];
+
+    default:
+        return [];
+}
+
 function foo()
 {
     $foo = array(

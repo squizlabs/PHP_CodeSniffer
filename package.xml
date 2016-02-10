@@ -63,6 +63,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #883 : PSR2 is not checking for blank lines at the start and end of control structures
   - Fixed bug #884 : Incorrect indentation notice for anonymous classes
   - Fixed bug #889 : Closure inside catch/else/elseif causes indentation error
+  - Fixed bug #890 : Function call inside returned short array value can cause indentation error inside CASE statements
  </notes>
  <contents>
   <dir name="/">
