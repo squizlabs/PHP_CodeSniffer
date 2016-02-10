@@ -107,7 +107,7 @@ class Filter extends \RecursiveFilterIterator
      * Returns an iterator for the current entry.
      *
      * Ensures that the ignore patterns are preserved so they don't have
-     * be generated each time.
+     * to be generated each time.
      *
      * @return \RecursiveIterator
      */
@@ -168,7 +168,7 @@ class Filter extends \RecursiveFilterIterator
 
 
     /**
-     * Checks filtering rules to see if a file should be ignored.
+     * Checks filtering rules to see if a path should be ignored.
      *
      * @param string $path The path to the file or directory being checked.
      *

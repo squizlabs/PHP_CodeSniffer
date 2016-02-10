@@ -75,7 +75,7 @@ abstract class ExactMatch extends Filter
      * Returns an iterator for the current entry.
      *
      * Ensures that the blacklist and whitelist are preserved so they don't have
-     * be generated each time.
+     * to be generated each time.
      *
      * @return \RecursiveIterator
      */
