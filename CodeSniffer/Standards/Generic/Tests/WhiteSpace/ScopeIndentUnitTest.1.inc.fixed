@@ -994,6 +994,35 @@ class Foo
     }
 }
 
+try {
+    foo();
+} catch (\Exception $e) {
+    $foo = function() {
+        return 'foo';
+    }
+
+    if (true) {
+    }
+}
+
+if ($foo) {
+    foo();
+} else if (\Exception $e) {
+    $foo = function() {
+        return 'foo';
+    }
+
+    if (true) {
+    }
+} else {
+    $foo = function() {
+        return 'foo';
+    }
+
+    if (true) {
+    }
+}
+
 function foo()
 {
     $foo = array(

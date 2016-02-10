@@ -1112,7 +1112,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         echo "\t* first token is a scope closer *".PHP_EOL;
                     }
 
-                    $currentIndent -= $this->indent;
+                    if ($condition === 0 || $tokens[$condition]['scope_opener'] < $first) {
+                        $currentIndent -= $this->indent;
+                    } else if ($this->_debug === true) {
+                        echo "\t* ignoring scope closer *".PHP_EOL;
+                    }
                 }
 
                 // Make sure it is divisible by our expected indent.
