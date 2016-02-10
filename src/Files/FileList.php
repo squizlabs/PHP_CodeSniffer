@@ -40,6 +40,13 @@ class FileList implements \Iterator, \Countable
     public $config = null;
 
     /**
+     * The ruleset used for the run.
+     *
+     * @var \PHP_CodeSniffer\Ruleset
+     */
+    public $ruleset = null;
+
+    /**
      * An array of patterns to use for skipping files.
      *
      * @var array
@@ -57,53 +64,28 @@ class FileList implements \Iterator, \Countable
      */
     public function __construct(Config $config, Ruleset $ruleset)
     {
+        $this->ruleset = $ruleset;
+        $this->config  = $config;
 
-        $paths      = $config->files;
-        $local      = $config->local;
-        $extensions = $config->extensions;
-        $ignore     = array_merge($config->ignored, $ruleset->getIgnorePatterns());
-
-        $this->ignorePatterns = $ignore;
-        $this->ruleset        = $ruleset;
-        $this->config         = $config;
-
+        $paths = $config->files;
         foreach ($paths as $path) {
-            if (is_dir($path) === true || Util\Common::isPharFile($path) === true) {
-                if (Util\Common::isPharFile($path) === true) {
+            $isPharFile = Util\Common::isPharFile($path);
+            if (is_dir($path) === true || $isPharFile === true) {
+                if ($isPharFile === true) {
                     $path = 'phar://'.$path;
                 }
 
-                if ($local === true) {
-                    $di = new \DirectoryIterator($path);
-                } else {
-                    $di = new \RecursiveIteratorIterator(
-                        new \RecursiveDirectoryIterator($path),
-                        0,
-                        \RecursiveIteratorIterator::CATCH_GET_CHILD
-                    );
-                }
+                $di       = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
+                $filter   = new \PHP_CodeSniffer\Filters\Filter($di, $path, $config, $ruleset);
+                $iterator = new \RecursiveIteratorIterator($filter);
 
-                foreach ($di as $file) {
-                    // Check if the file exists after all symlinks are resolved.
-                    $filePath = Util\Common::realpath($file->getPathname());
-                    if ($filePath === false) {
-                        continue;
-                    }
-
-                    if (is_dir($filePath) === true) {
-                        continue;
-                    }
-
-                    if ($this->shouldProcessFile($file->getPathname(), $path) === false) {
-                        continue;
-                    }
-
+                foreach ($iterator as $file) {
                     $this->files[$file->getPathname()] = null;
-                }//end foreach
+                }
             } else {
                 $this->addFile($path);
-            }//end if
-        }//end foreach
+            }
+        }
 
         reset($this->files);
         $this->numFiles = count($this->files);
@@ -124,115 +106,21 @@ class FileList implements \Iterator, \Countable
      */
     public function addFile($path, $file=null)
     {
-        if ($path !== 'STDIN'
-            && $this->shouldIgnoreFile($path, dirname($path)) === true
-        ) {
+        // No filtering is done for STDIN.
+        if ($path === 'STDIN') {
+            $this->files[$path] = $file;
             return;
         }
 
-        $this->files[$path] = $file;
+        $di       = new \RecursiveArrayIterator(array($path));
+        $filter   = new \PHP_CodeSniffer\Filters\GitModified($di, $path, $this->config, $this->ruleset);
+        $iterator = new \RecursiveIteratorIterator($filter);
+
+        foreach ($iterator as $path) {
+            $this->files[$path] = $file;
+        }
 
     }//end addFile()
-
-
-    /**
-     * Checks filtering rules to see if a file should be checked.
-     *
-     * Checks both file extension filters and path ignore filters.
-     *
-     * @param string $path    The path to the file being checked.
-     * @param string $basedir The directory to use for relative path checks.
-     *
-     * @return bool
-     */
-    public function shouldProcessFile($path, $basedir)
-    {
-        // Check that the file's extension is one we are checking.
-        // We are strict about checking the extension and we don't
-        // let files through with no extension or that start with a dot.
-        $fileName  = basename($path);
-        $fileParts = explode('.', $fileName);
-        if ($fileParts[0] === $fileName || $fileParts[0] === '') {
-            return false;
-        }
-
-        // Checking multi-part file extensions, so need to create a
-        // complete extension list and make sure one is allowed.
-        $extensions = array();
-        array_shift($fileParts);
-        foreach ($fileParts as $part) {
-            $extensions[implode('.', $fileParts)] = 1;
-            array_shift($fileParts);
-        }
-
-        $matches = array_intersect_key($extensions, $this->config->extensions);
-        if (empty($matches) === true) {
-            return false;
-        }
-
-        // If the file's path matches one of our ignore patterns, skip it.
-        if ($this->shouldIgnoreFile($path, $basedir) === true) {
-            return false;
-        }
-
-        return true;
-
-    }//end shouldProcessFile()
-
-
-    /**
-     * Checks filtering rules to see if a file should be ignored.
-     *
-     * @param string $path    The path to the file being checked.
-     * @param string $basedir The directory to use for relative path checks.
-     *
-     * @return bool
-     */
-    public function shouldIgnoreFile($path, $basedir)
-    {
-        $relativePath = $path;
-        if (strpos($path, $basedir) === 0) {
-            // The +1 cuts off the directory separator as well.
-            $relativePath = substr($path, (strlen($basedir) + 1));
-        }
-
-        foreach ($this->ignorePatterns as $pattern => $type) {
-            // Maintains backwards compatibility in case the ignore pattern does
-            // not have a relative/absolute value.
-            if (is_int($pattern) === true) {
-                $pattern = $type;
-                $type    = 'absolute';
-            }
-
-            $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
-
-            // We assume a / directory separator, as do the exclude rules
-            // most developers write, so we need a special case for any system
-            // that is different.
-            if (DIRECTORY_SEPARATOR === '\\') {
-                $replacements['/'] = '\\\\';
-            }
-
-            $pattern = strtr($pattern, $replacements);
-
-            if ($type === 'relative') {
-                $testPath = $relativePath;
-            } else {
-                $testPath = $path;
-            }
-
-            $pattern = '`'.$pattern.'`i';
-            if (preg_match($pattern, $testPath) === 1) {
-                return true;
-            }
-        }//end foreach
-
-        return false;
-
-    }//end shouldIgnoreFile()
 
 
     /**
