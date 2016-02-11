@@ -1367,7 +1367,7 @@ class PHP extends Tokenizer
                 }
             }
 
-            if ($this->tokens[$x]['code'] === T_CASE) {
+            if ($this->tokens[$x]['code'] === T_CASE || $this->tokens[$x]['code'] === T_DEFAULT) {
                 // Special case for multiple CASE statements that share the same
                 // closer. Because we are going backwards through the file, this next
                 // CASE statement is already fixed, so just use its closer and don't
@@ -1387,7 +1387,7 @@ class PHP extends Tokenizer
             if ($this->tokens[$x]['code'] !== T_OPEN_CURLY_BRACKET
                 || isset($this->tokens[$x]['scope_condition']) === true
             ) {
-                // Not a CASE with a curly brace opener.
+                // Not a CASE/DEFAULT with a curly brace opener.
                 continue;
             }
 

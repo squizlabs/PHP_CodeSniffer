@@ -1060,7 +1060,7 @@ class Config
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '                      e.g., module/php,es/js'.PHP_EOL;
-        echo '        <generator>   Uses either the "HMTL", "Markdown" or "Text" generator'.PHP_EOL;
+        echo '        <generator>   Uses either the "HTML", "Markdown" or "Text" generator'.PHP_EOL;
         echo '                      (forces documentation generation instead of checking)'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <processes>   How many files should be checked simultaneously (default is 1)'.PHP_EOL;
