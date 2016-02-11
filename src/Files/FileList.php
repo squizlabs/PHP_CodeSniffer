@@ -75,8 +75,10 @@ class FileList implements \Iterator, \Countable
                     $path = 'phar://'.$path;
                 }
 
+                $filterClass = $this->getFilterClass();
+
                 $di       = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
-                $filter   = new \PHP_CodeSniffer\Filters\Filter($di, $path, $config, $ruleset);
+                $filter   = new $filterClass($di, $path, $config, $ruleset);
                 $iterator = new \RecursiveIteratorIterator($filter);
 
                 foreach ($iterator as $file) {
@@ -84,8 +86,8 @@ class FileList implements \Iterator, \Countable
                 }
             } else {
                 $this->addFile($path);
-            }
-        }
+            }//end if
+        }//end foreach
 
         reset($this->files);
         $this->numFiles = count($this->files);
@@ -112,8 +114,10 @@ class FileList implements \Iterator, \Countable
             return;
         }
 
+        $filterClass = $this->getFilterClass();
+
         $di       = new \RecursiveArrayIterator(array($path));
-        $filter   = new \PHP_CodeSniffer\Filters\GitModified($di, $path, $this->config, $this->ruleset);
+        $filter   = new $filterClass($di, $path, $this->config, $this->ruleset);
         $iterator = new \RecursiveIteratorIterator($filter);
 
         foreach ($iterator as $path) {
@@ -121,6 +125,37 @@ class FileList implements \Iterator, \Countable
         }
 
     }//end addFile()
+
+
+    /**
+     * Get the class name of the filter being used for the run.
+     *
+     * @return string
+     */
+    private function getFilterClass()
+    {
+        $filterType = $this->config->filter;
+
+        if ($filterType === null) {
+            $filterClass = '\PHP_CodeSniffer\Filters\Filter';
+        } else {
+            if (strpos($filterType, '.') !== false) {
+                // This is a path to a custom filter class.
+                $filename = realpath($filterType);
+                if ($filename === false) {
+                    echo "ERROR: Custom filter \"$filterType\" not found".PHP_EOL;
+                    exit(2);
+                }
+
+                $filterClass = \PHP_CodeSniffer\Autoload::loadFile($filename);
+            } else {
+                $filterClass = '\PHP_CodeSniffer\Filters\\'.$filterType;
+            }
+        }
+
+        return $filterClass;
+
+    }//end getFilterClass()
 
 
     /**

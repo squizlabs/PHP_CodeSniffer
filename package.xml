@@ -29,6 +29,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Caching between runs (--cache, --no-cache and "cache" config var) (request #530)
     -- Use --cache=/path/to/cacheFile to use a specific file
   - Check files in parallel (--parallel=1 for off, --parallel=100 etc) (request #421)
+  - Added support for custom filtering of the file list
+    -- use --filter=/path/to/filter.php to filter the list
+    -- extend \PHP_CodeSniffer\Filters\Filter to also get the basic PHPCS ext/path filtering
+    -- extend \PHP_CodeSniffer\Filters\ExactMatch to get the basic filtering + ability to use blacklists and whitelists
+    -- included filter \PHP_CodeSniffer\Filters\GitModified is a good example of an ExactMatch filter
+    -- use --filter=gitmodified to only check modified and added files in a git repo
   - Automatic discovery of executable paths (request #571)
     -- Thanks to Sergey Morozov for the patch
   - Must pass '-' on the cli to have PHPCS wait for STDIN

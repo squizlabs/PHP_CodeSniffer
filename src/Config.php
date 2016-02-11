@@ -64,6 +64,7 @@ class Config
      * string[] ignored         Regular expressions used to ignore files and folders during checking.
      * string   reportFile      A file where the report output should be written.
      * string   generator       The documentation generator to use.
+     * string   filter          The filter to use for the run.
      * string[] bootstrap       One of more files to include before the run begins.
      * int      reportWidth     The maximum number of columns that reports should use for output.
      *                          Set to "auto" for have this value changed to the width of the terminal.
@@ -107,6 +108,7 @@ class Config
                          'ignored'         => null,
                          'reportFile'      => null,
                          'generator'       => null,
+                         'filter'          => null,
                          'bootstrap'       => null,
                          'reports'         => null,
                          'basepath'        => null,
@@ -413,6 +415,7 @@ class Config
         $this->ignored         = array();
         $this->reportFile      = null;
         $this->generator       = null;
+        $this->filter          = null;
         $this->bootstrap       = array();
         $this->reports         = array('full' => null);
         $this->reportWidth     = 'auto';
@@ -859,6 +862,13 @@ class Config
                 }
 
                 $this->overriddenDefaults['reports'] = true;
+            } else if (substr($arg, 0, 7) === 'filter=') {
+                if (isset($this->overriddenDefaults['filter']) === true) {
+                    break;
+                }
+
+                $this->filter = substr($arg, 7);
+                $this->overriddenDefaults['filter'] = true;
             } else if (substr($arg, 0, 9) === 'standard=') {
                 $standards = trim(substr($arg, 9));
                 if ($standards !== '') {
