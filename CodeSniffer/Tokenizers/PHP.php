@@ -1252,7 +1252,6 @@ class PHP_CodeSniffer_Tokenizers_PHP
                     $oldType = $tokens[$scopeCloser]['type'];
                     $newType = $tokens[$newCloser]['type'];
                     $line    = $tokens[$i]['line'];
-                    print_r($tokens[$i]);
                     echo "\t* token $i (T_CASE) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
                 }
 
