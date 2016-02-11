@@ -134,3 +134,13 @@ switch ($foo) {
         echo 'default';
         break;
 }
+
+switch($foo)
+{
+    case ('foo'):
+    default:
+    {
+        $foo = 'foo';
+        break;
+    }
+}

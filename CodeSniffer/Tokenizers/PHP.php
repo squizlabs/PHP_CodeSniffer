@@ -1241,17 +1241,18 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
             }
 
-            if ($tokens[$x]['code'] === T_CASE) {
+            if ($tokens[$x]['code'] === T_CASE || $tokens[$x]['code'] === T_DEFAULT) {
                 // Special case for multiple CASE statements that share the same
                 // closer. Because we are going backwards through the file, this next
-                // CASE statement is already fixed, so just use its closer and don't
-                // worry about fixing anything.
+                // CASE/DEFAULT statement is already fixed, so just use its closer
+                // and don't worry about fixing anything.
                 $newCloser = $tokens[$x]['scope_closer'];
                 $tokens[$i]['scope_closer'] = $newCloser;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $oldType = $tokens[$scopeCloser]['type'];
                     $newType = $tokens[$newCloser]['type'];
                     $line    = $tokens[$i]['line'];
+                    print_r($tokens[$i]);
                     echo "\t* token $i (T_CASE) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
                 }
 
@@ -1261,7 +1262,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             if ($tokens[$x]['code'] !== T_OPEN_CURLY_BRACKET
                 || isset($tokens[$x]['scope_condition']) === true
             ) {
-                // Not a CASE with a curly brace opener.
+                // Not a CASE/DEFAULT with a curly brace opener.
                 continue;
             }
 
