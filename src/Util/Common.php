@@ -9,6 +9,7 @@
 
 namespace PHP_CodeSniffer\Util;
 
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 class Common
@@ -155,22 +156,43 @@ class Common
      * Replaces invisible characters so they are visible. On non-Windows
      * OSes it will also colour the invisible characters.
      *
-     * @param string $content The content to prepare.
+     * @param string   $content The content to prepare.
+     * @param string[] $exclude A list of characters to leave invisible.
+     *                          Can contain \r, \n, \t and a space.
      *
      * @return string
      */
-    public static function prepareForOutput($content)
+    public static function prepareForOutput($content, $exclude=array())
     {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $content = str_replace("\r", '\r', $content);
-            $content = str_replace("\n", '\n', $content);
-            $content = str_replace("\t", '\t', $content);
+            if (in_array("\r", $exclude) === false) {
+                $content = str_replace("\r", '\r', $content);
+            }
+
+            if (in_array("\n", $exclude) === false) {
+                $content = str_replace("\n", '\n', $content);
+            }
+
+            if (in_array("\t", $exclude) === false) {
+                $content = str_replace("\t", '\t', $content);
+            }
         } else {
-            $content = str_replace("\r", "\033[30;1m\\r\033[0m", $content);
-            $content = str_replace("\n", "\033[30;1m\\n\033[0m", $content);
-            $content = str_replace("\t", "\033[30;1m\\t\033[0m", $content);
-            $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
-        }
+            if (in_array("\r", $exclude) === false) {
+                $content = str_replace("\r", "\033[30;1m\\r\033[0m", $content);
+            }
+
+            if (in_array("\n", $exclude) === false) {
+                $content = str_replace("\n", "\033[30;1m\\n\033[0m", $content);
+            }
+
+            if (in_array("\t", $exclude) === false) {
+                $content = str_replace("\t", "\033[30;1m\\t\033[0m", $content);
+            }
+
+            if (in_array(' ', $exclude) === false) {
+                $content = str_replace(' ', "\033[30;1m·\033[0m", $content);
+            }
+        }//end if
 
         return $content;
 
