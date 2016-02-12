@@ -449,7 +449,7 @@ class File
      *
      * @return void
      */
-    protected function parse()
+    public function parse()
     {
         if (empty($this->tokens) === false) {
             // File has already been parsed.

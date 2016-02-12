@@ -618,7 +618,6 @@ class Runner
                     break(2);
                 case 'q':
                     exit(0);
-                    break;
                 default:
                     // Repopulate the sniffs because some of them save their state
                     // and only clear it when the file changes, but we are rechecking

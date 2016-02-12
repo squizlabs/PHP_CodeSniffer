@@ -199,72 +199,9 @@ abstract class Tokenizer
 
                 $currColumn += $length;
             } else {
-                if (str_replace("\t", '', $this->tokens[$i]['content']) === '') {
-                    // String only contains tabs, so we can shortcut the process.
-                    $numTabs = strlen($this->tokens[$i]['content']);
-
-                    $newContent   = '';
-                    $firstTabSize = ($this->config->tabWidth - ($currColumn % $this->config->tabWidth) + 1);
-                    $length       = ($firstTabSize + ($this->config->tabWidth * ($numTabs - 1)));
-                    $currColumn  += $length;
-                    $newContent   = str_repeat(' ', $length);
-                } else {
-                    // We need to determine the length of each tab.
-                    $tabs = explode("\t", $this->tokens[$i]['content']);
-
-                    $numTabs    = (count($tabs) - 1);
-                    $tabNum     = 0;
-                    $newContent = '';
-                    $length     = 0;
-
-                    foreach ($tabs as $content) {
-                        if ($content !== '') {
-                            $newContent .= $content;
-                            if ($checkEncoding === true) {
-                                // Not using the default encoding, so take a bit more care.
-                                $contentLength = @iconv_strlen($content, $this->config->encoding);
-                                if ($contentLength === false) {
-                                    // String contained invalid characters, so revert to default.
-                                    $contentLength = strlen($content);
-                                }
-                            } else {
-                                $contentLength = strlen($content);
-                            }
-
-                            $currColumn += $contentLength;
-                            $length     += $contentLength;
-                        }
-
-                        // The last piece of content does not have a tab after it.
-                        if ($tabNum === $numTabs) {
-                            break;
-                        }
-
-                        // Process the tab that comes after the content.
-                        $lastCurrColumn = $currColumn;
-                        $tabNum++;
-
-                        // Move the pointer to the next tab stop.
-                        if (($currColumn % $this->config->tabWidth) === 0) {
-                            // This is the first tab, and we are already at a
-                            // tab stop, so this tab counts as a single space.
-                            $currColumn++;
-                        } else {
-                            $currColumn++;
-                            while (($currColumn % $this->config->tabWidth) !== 0) {
-                                $currColumn++;
-                            }
-
-                            $currColumn++;
-                        }
-
-                        $length     += ($currColumn - $lastCurrColumn);
-                        $newContent .= str_repeat(' ', ($currColumn - $lastCurrColumn));
-                    }//end foreach
-                }//end if
-
-                $this->tokens[$i]['orig_content'] = $this->tokens[$i]['content'];
-                $this->tokens[$i]['content']      = $newContent;
+                $this->replaceTabsInToken($this->tokens[$i]);
+                $length      = $this->tokens[$i]['length'];
+                $currColumn += $length;
             }//end if
 
             $this->tokens[$i]['length'] = $length;
@@ -310,6 +247,104 @@ abstract class Tokenizer
         }//end for
 
     }//end createPositionMap()
+
+
+    /**
+     * Replaces tabs in original token content with spaces.
+     *
+     * Each tab can represent between 1 and $config->tabWidth spaces,
+     * so this cannot be a straight string replace. The original content
+     * is placed into an orig_content index and the new token length is also
+     * set in the length index.
+     *
+     * @param array  $token   The token to replace tabs inside.
+     * @param string $prefix  The character to use to represent the start of a tab.
+     * @param string $padding The character to use to represent the end of a tab.
+     *
+     * @return void
+     */
+    public function replaceTabsInToken(&$token, $prefix=' ', $padding=' ')
+    {
+        $checkEncoding = false;
+        if ($this->config->encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
+            $checkEncoding = true;
+        }
+
+        $currColumn = $token['column'];
+        $tabWidth   = $this->config->tabWidth;
+        if ($tabWidth === 0) {
+            $tabWidth = 1;
+        }
+
+        if (str_replace("\t", '', $token['content']) === '') {
+            // String only contains tabs, so we can shortcut the process.
+            $numTabs = strlen($token['content']);
+
+            $newContent   = '';
+            $firstTabSize = ($tabWidth - ($currColumn % $tabWidth) + 1);
+            $length       = ($firstTabSize + ($tabWidth * ($numTabs - 1)));
+            $currColumn  += $length;
+            $newContent   = $prefix.str_repeat($padding, ($length - 1));
+        } else {
+            // We need to determine the length of each tab.
+            $tabs = explode("\t", $token['content']);
+
+            $numTabs    = (count($tabs) - 1);
+            $tabNum     = 0;
+            $newContent = '';
+            $length     = 0;
+
+            foreach ($tabs as $content) {
+                if ($content !== '') {
+                    $newContent .= $content;
+                    if ($checkEncoding === true) {
+                        // Not using the default encoding, so take a bit more care.
+                        $contentLength = @iconv_strlen($content, $this->config->encoding);
+                        if ($contentLength === false) {
+                            // String contained invalid characters, so revert to default.
+                            $contentLength = strlen($content);
+                        }
+                    } else {
+                        $contentLength = strlen($content);
+                    }
+
+                    $currColumn += $contentLength;
+                    $length     += $contentLength;
+                }
+
+                // The last piece of content does not have a tab after it.
+                if ($tabNum === $numTabs) {
+                    break;
+                }
+
+                // Process the tab that comes after the content.
+                $lastCurrColumn = $currColumn;
+                $tabNum++;
+
+                // Move the pointer to the next tab stop.
+                if (($currColumn % $tabWidth) === 0) {
+                    // This is the first tab, and we are already at a
+                    // tab stop, so this tab counts as a single space.
+                    $currColumn++;
+                } else {
+                    $currColumn++;
+                    while (($currColumn % $tabWidth) !== 0) {
+                        $currColumn++;
+                    }
+
+                    $currColumn++;
+                }
+
+                $length     += ($currColumn - $lastCurrColumn);
+                $newContent .= $prefix.str_repeat($padding, ($currColumn - $lastCurrColumn - 1));
+            }//end foreach
+        }//end if
+
+        $token['orig_content'] = $token['content'];
+        $token['content']      = $newContent;
+        $token['length']       = $length;
+
+    }//end replaceTabsInToken()
 
 
     /**
