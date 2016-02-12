@@ -40,12 +40,17 @@ class GitModified extends ExactMatch
         $output = array();
         exec($cmd, $output);
 
+        $basedir = $this->basedir;
+        if (is_dir($basedir) === false) {
+            $basedir = dirname($basedir);
+        }
+
         foreach ($output as $path) {
             $path = Util\Common::realpath($path);
             do {
                 $modified[$path] = true;
                 $path            = dirname($path);
-            } while ($path !== $this->basedir);
+            } while ($path !== $basedir);
         }
 
         return $modified;
