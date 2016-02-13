@@ -45,6 +45,11 @@ class Generic_Sniffs_Files_FileEncodingSniff implements PHP_CodeSniffer_Sniff
      */
     public function register()
     {
+        // Not all PHP installs have the multi byte extension - nothing we can do.
+        if (function_exists('mb_check_encoding') === false) {
+            return array();
+        }
+
         return array(
                 T_INLINE_HTML,
                 T_OPEN_TAG,
@@ -69,11 +74,6 @@ class Generic_Sniffs_Files_FileEncodingSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        // Not all PHP installs have the multi byte extension - nothing we can do.
-        if (function_exists('mb_check_encoding') === false) {
-            return ($phpcsFile->numTokens + 1);
-        }
-
         $fileContent = $phpcsFile->getTokensAsString(0, $phpcsFile->numTokens);
 
         $validEncodingFound = false;
