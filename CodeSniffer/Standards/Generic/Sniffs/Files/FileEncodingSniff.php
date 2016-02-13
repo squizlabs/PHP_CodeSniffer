@@ -15,7 +15,7 @@
 /**
  * Generic_Sniffs_Files_FileEncodingSniff.
  *
- * A simple sniff for detecting BOMs that may corrupt application work.
+ * Validates the encoding of a file against a white list of allowed encodings.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
@@ -24,7 +24,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
- * @see       http://en.wikipedia.org/wiki/Byte_order_mark
  */
 class Generic_Sniffs_Files_FileEncodingSniff implements PHP_CodeSniffer_Sniff
 {
