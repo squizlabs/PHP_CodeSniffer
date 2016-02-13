@@ -56,17 +56,22 @@ class Generic_Sniffs_Files_FileEncodingSniff implements PHP_CodeSniffer_Sniff
     /**
      * Processes this sniff, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
+     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
+     *                                        token was found.
+     * @param int                  $stackPtr  The position in the PHP_CodeSniffer
+     *                                        file's token stack where the token
+     *                                        was found.
      *
-     * @return void
+     * @return void|int Optionally returns a stack pointer. The sniff will not be
+     *                  called again on the current file until the returned stack
+     *                  pointer is reached. Return (count($tokens) + 1) to skip
+     *                  the rest of the file.
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         // Not all PHP installs have the multi byte extension - nothing we can do.
         if (function_exists('mb_check_encoding') === false) {
-            return $phpcsFile->numTokens;
+            return ($phpcsFile->numTokens + 1);
         }
 
         $fileContent = $phpcsFile->getTokensAsString(0, $phpcsFile->numTokens);
@@ -84,7 +89,7 @@ class Generic_Sniffs_Files_FileEncodingSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->addWarning($warning, $stackPtr, 'InvalidEncoding', $data);
         }
 
-        return $phpcsFile->numTokens;
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
