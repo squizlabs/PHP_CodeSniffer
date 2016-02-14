@@ -3242,14 +3242,14 @@ class PHP_CodeSniffer_File
      * @param int       $end     The end position to fail if no token is found.
      *                           if not specified or null, end will default to
      *                           the start of the token stack.
-     * @param bool      $exclude If true, find the next token that are NOT of
+     * @param bool      $exclude If true, find the previous token that are NOT of
      *                           the types specified in $types.
      * @param string    $value   The value that the token(s) must be equal to.
      *                           If value is omitted, tokens with any value will
      *                           be returned.
      * @param bool      $local   If true, tokens outside the current statement
      *                           will not be checked. IE. checking will stop
-     *                           at the next semi-colon found.
+     *                           at the previous semi-colon found.
      *
      * @return int|bool
      * @see    findNext()
