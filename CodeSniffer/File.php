@@ -3229,9 +3229,9 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the position of the next specified token(s).
+     * Returns the position of the previous specified token(s).
      *
-     * If a value is specified, the next token of the specified type(s)
+     * If a value is specified, the previous token of the specified type(s)
      * containing the specified value will be returned.
      *
      * Returns false if no token can be found.
