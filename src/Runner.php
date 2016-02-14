@@ -255,13 +255,6 @@ class Runner
         // The class that manages all reporters for the run.
         $this->reporter = new Reporter($this->config);
 
-        // If using the diff report, cache needs to be disabled
-        // so that errors are properly found and fixed.
-        $reports = $this->config->reports;
-        if (array_key_exists('diff', $reports) === true && $this->config->cache === true) {
-            $this->config->cache = false;
-        }
-
         // Include bootstrap files.
         foreach ($this->config->bootstrap as $bootstrap) {
             include $bootstrap;

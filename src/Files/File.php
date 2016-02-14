@@ -265,6 +265,18 @@ class File
 
 
     /**
+     * Disables caching of this file.
+     *
+     * @return void
+     */
+    function disableCaching()
+    {
+        $this->configCache['cache'] = false;
+
+    }//end disableCaching()
+
+
+    /**
      * Starts the stack traversal and tells listeners when tokens are found.
      *
      * @return void

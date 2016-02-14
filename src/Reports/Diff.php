@@ -37,6 +37,34 @@ class Diff implements Report
             return false;
         }
 
+        $phpcsFile->disableCaching();
+        $tokens = $phpcsFile->getTokens();
+        if (empty($tokens) === true) {
+            if (PHP_CODESNIFFER_VERBOSITY === 1) {
+                $startTime = microtime(true);
+                echo 'DIFF report is parsing '.basename($report['filename']).' ';
+            } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo 'DIFF report is forcing parse of '.$report['filename'].PHP_EOL;
+            }
+
+            $phpcsFile->parse();
+
+            if (PHP_CODESNIFFER_VERBOSITY === 1) {
+                $timeTaken = ((microtime(true) - $startTime) * 1000);
+                if ($timeTaken < 1000) {
+                    $timeTaken = round($timeTaken);
+                    echo "DONE in {$timeTaken}ms";
+                } else {
+                    $timeTaken = round(($timeTaken / 1000), 2);
+                    echo "DONE in $timeTaken secs";
+                }
+
+                echo PHP_EOL;
+            }
+
+            $phpcsFile->fixer->startFile($phpcsFile);
+        }//end if
+
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             ob_end_clean();
             echo "\t*** START FILE FIXING ***".PHP_EOL;
