@@ -129,3 +129,17 @@ endif;
         <li><?php echo $value ?></li>
     <?php endforeach ?>
 </ul>
+<?php
+switch ( $a ) {
+    case 'foo':
+        do {
+            $a = 'b';
+        } while ( $a );
+        return 5;
+
+    case 'bar':
+        foreach ( $a as $b ) {
+            $e = 'b';
+        }
+        return 5;
+}
