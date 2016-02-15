@@ -2129,10 +2129,27 @@ class PHP_CodeSniffer_File
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $type = $tokens[$stackPtr]['type'];
                         echo str_repeat("\t", $depth);
-                        echo "=> Found new opening condition before scope opener for $stackPtr:$type, bailing".PHP_EOL;
+                        echo "=> Found new opening condition before scope opener for $stackPtr:$type, ";
                     }
 
-                    return ($i - 1);
+                    if (($tokens[$stackPtr]['code'] === T_IF
+                        || $tokens[$stackPtr]['code'] === T_ELSEIF
+                        || $tokens[$stackPtr]['code'] === T_ELSE)
+                        && ($tokens[$i]['code'] === T_ELSE
+                        || $tokens[$i]['code'] === T_ELSEIF)
+                    ) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo "continuing".PHP_EOL;
+                        }
+
+                        return ($i - 1);
+                    } else {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo "backtracking".PHP_EOL;
+                        }
+
+                        return $stackPtr;
+                    }
                 }//end if
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
