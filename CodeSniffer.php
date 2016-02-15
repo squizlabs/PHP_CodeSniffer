@@ -704,6 +704,11 @@ class PHP_CodeSniffer
         $excludedSniffs = array();
         $cliValues      = $this->cli->getCommandLineValues();
 
+        // Populate the list of ruleset directories.
+        foreach ($ruleset->rulesetdir as $dir) {
+            self::$rulesetDirs[] = (string) $dir['dir'];
+        }
+
         $rulesetDir          = dirname($rulesetPath);
         $rulesetName         = basename($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
