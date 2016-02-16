@@ -75,6 +75,22 @@ class Cache
             $codeHash .= md5_file($file);
         }
 
+        // Add the content of the used rulesets to the hash so that sniff setting
+        // changes in the ruleset invalidate the cache.
+        $rulesets = $ruleset->paths;
+        sort($rulesets);
+        foreach ($rulesets as $file) {
+            if (substr($file, 0, $standardDirLen) !== $standardDir) {
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t=> external ruleset: $file".PHP_EOL;
+                }
+            } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo "\t\t=> internal ruleset: $file".PHP_EOL;
+            }
+
+            $codeHash .= md5_file($file);
+        }
+
         // Go through the core PHPCS code and add those files to the file
         // hash. This ensures that core PHPCS changes will also invalidate the cache.
         // Note that we ignore sniffs here, and any files that don't affect
