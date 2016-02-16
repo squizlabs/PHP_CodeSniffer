@@ -72,6 +72,16 @@ class Ruleset
     public $sniffs = array();
 
     /**
+     * A mapping of sniff codes to fully qualified class names.
+     *
+     * The key is the sniff code and the value
+     * is the fully qualified name of the sniff class.
+     *
+     * @var array<string, string>
+     */
+    public $sniffCodes = array();
+
+    /**
      * An array of token types and the sniffs that are listening for them.
      *
      * The key is the token name being listened for and the value
@@ -1045,6 +1055,7 @@ class Ruleset
             $this->sniffs[$sniffClass] = new $sniffClass();
 
             $sniffCode = Util\Common::getSniffCode($sniffClass);
+            $this->sniffCodes[$sniffCode] = $sniffClass;
 
             // Set custom properties.
             if (isset($this->ruleset[$sniffCode]['properties']) === true) {

@@ -323,13 +323,17 @@ class File
                         $this->fixableCount = 0;
                         return;
                     } else if (strpos($token['content'], '@codingStandardsChangeSetting') !== false) {
-                        // TODO: Make this work for sniffs in any namespace.
-                        $start         = strpos($token['content'], '@codingStandardsChangeSetting');
-                        $comment       = substr($token['content'], ($start + 30));
-                        $parts         = explode(' ', $comment);
-                        $sniffParts    = explode('.', $parts[0]);
-                        $listenerClass = 'PHP_CodeSniffer\Standards\\'.$sniffParts[0].'\Sniffs\\'.$sniffParts[1].'\\'.$sniffParts[2].'Sniff';
-                        $this->ruleset->setSniffProperty($listenerClass, $parts[1], $parts[2]);
+                        $start      = strpos($token['content'], '@codingStandardsChangeSetting');
+                        $comment    = substr($token['content'], ($start + 30));
+                        $parts      = explode(' ', $comment);
+                        $sniffParts = explode('.', $parts[0]);
+
+                        // If the sniff code is not know to us, it has not been registered in this run.
+                        // But don't throw an error as it could be there for a different standard to use.
+                        if (isset($this->ruleset->sniffCodes[$parts[0]]) === true) {
+                            $listenerClass = $this->ruleset->sniffCodes[$parts[0]];
+                            $this->ruleset->setSniffProperty($listenerClass, $parts[1], $parts[2]);
+                        }
                     }//end if
                 }//end if
             }//end if
