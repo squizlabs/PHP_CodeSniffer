@@ -51,6 +51,10 @@ class ArrayBracketSpacingSniff implements Sniff
         if ($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET) {
             $openBracket = $stackPtr;
         } else {
+            if (isset($tokens[$stackPtr]['bracket_opener']) === false) {
+                return;
+            }
+
             $openBracket = $tokens[$stackPtr]['bracket_opener'];
         }
 

@@ -12,4 +12,4 @@ $array = [
 ];
 
 $array = [];
-?>
+$var = $var[$var[$var]]]; // Syntax error
