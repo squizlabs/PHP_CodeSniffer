@@ -1003,9 +1003,7 @@ class File
      */
     public function getIgnoredLines()
     {
-        // TODO: implement this.
-        exit('not done');
-        return self::$ignoredLines;
+        return $this->tokenizer->ignoredLines;
 
     }//end getIgnoredLines()
 
