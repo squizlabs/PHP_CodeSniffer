@@ -133,7 +133,7 @@ class Code implements Report
             $typeLength = 5;
         }
 
-        $errorPadding  = '| ';
+        $errorPadding  = str_repeat(' ', ($maxLineNumLength + 7));
         $errorPadding .= str_repeat(' ', $typeLength);
         $errorPadding .= ' ';
         if ($report['fixable'] > 0) {
@@ -143,7 +143,7 @@ class Code implements Report
         $errorPaddingLength = strlen($errorPadding);
 
         // The maximum amount of space an error message can use.
-        $maxErrorSpace = ($width - $errorPaddingLength - 1);
+        $maxErrorSpace = ($width - $errorPaddingLength);
         if ($showSources === true) {
             // Account for the chars used to print colors.
             $maxErrorSpace += 8;
@@ -186,7 +186,6 @@ class Code implements Report
         }
 
         echo "\033[0m".PHP_EOL;
-        echo str_repeat('-', $width).PHP_EOL;
 
         foreach ($report['messages'] as $line => $lineErrors) {
             $startLine = max(($line - $surroundingLines), 1);
@@ -198,9 +197,9 @@ class Code implements Report
                 if ($lineTokens[$snippetLine]['start'] === $i) {
                     // Starting a new line.
                     if ($snippetLine === $line) {
-                        $snippet .= '|'."\033[1m".' >> ';
+                        $snippet .= "\033[1m".'>> ';
                     } else {
-                        $snippet .= '|    ';
+                        $snippet .= '   ';
                     }
 
                     $snippet .= str_repeat(' ', ($maxLineNumLength - strlen($snippetLine)));
@@ -257,7 +256,9 @@ class Code implements Report
 
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    echo '| ';
+                    $padding = ($maxLineNumLength - strlen($line));
+                    echo 'LINE '.str_repeat(' ', $padding).$line.': ';
+
                     if ($error['type'] === 'ERROR') {
                         echo "\033[31mERROR\033[0m";
                         if ($report['warnings'] > 0) {
@@ -285,7 +286,6 @@ class Code implements Report
                         $message = "\033[1m".$message."\033[0m".' ('.$error['source'].')';
                     }
 
-                    // The padding that goes on the front of the line.
                     $errorMsg = wordwrap(
                         $message,
                         $maxErrorSpace,
@@ -298,7 +298,6 @@ class Code implements Report
 
             echo str_repeat('-', $width).PHP_EOL;
             echo rtrim($snippet).PHP_EOL;
-            echo str_repeat('-', $width).PHP_EOL;
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
