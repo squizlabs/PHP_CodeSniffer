@@ -394,6 +394,7 @@ class PHP_CodeSniffer_CLI
                 $fileContents .= $line;
             }
 
+            stream_set_blocking($handle, true);
             fclose($handle);
             if (trim($fileContents) !== '') {
                 $this->values['stdin'] = $fileContents;
