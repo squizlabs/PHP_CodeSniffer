@@ -320,6 +320,7 @@ class Config
                     $fileContents .= $line;
                 }
 
+                stream_set_blocking($handle, true);
                 fclose($handle);
                 if (trim($fileContents) !== '') {
                     $this->stdin        = true;
