@@ -101,6 +101,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #887 : Using curly braces for a shared CASE/DEFAULT statement can generate an error in PSR2 SwitchDeclaration
   - Fixed bug #889 : Closure inside catch/else/elseif causes indentation error
   - Fixed bug #890 : Function call inside returned short array value can cause indentation error inside CASE statements
+  - Fixed bug #897 : Generic.Functions.CallTimePassByReference.NotAllowed false positive when short array syntax
  </notes>
  <contents>
   <dir name="/">
