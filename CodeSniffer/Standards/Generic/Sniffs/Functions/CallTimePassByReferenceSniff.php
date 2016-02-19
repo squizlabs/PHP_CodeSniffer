@@ -98,8 +98,18 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
 
         $nextSeparator = $openBracket;
-        while (($nextSeparator = $phpcsFile->findNext(T_VARIABLE, ($nextSeparator + 1), $closeBracket)) !== false) {
+        $find          = array(
+                          T_VARIABLE,
+                          T_OPEN_SHORT_ARRAY,
+                         );
+
+        while (($nextSeparator = $phpcsFile->findNext($find, ($nextSeparator + 1), $closeBracket)) !== false) {
             if (isset($tokens[$nextSeparator]['nested_parenthesis']) === false) {
+                continue;
+            }
+
+            if ($tokens[$nextSeparator]['code'] === T_OPEN_SHORT_ARRAY) {
+                $nextSeparator = $tokens[$nextSeparator]['bracket_closer'];
                 continue;
             }
 
