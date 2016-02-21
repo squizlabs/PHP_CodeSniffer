@@ -35,6 +35,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Files processed with custom tokenizers will no longer be skipped if they appear minified (request #877)
     -- If the custom tokenizer wants minified files skipped, it can set a $skipMinified member var to TRUE
     -- See the included JS and CSS tokenizers for an example
+  - Config vars set in ruleset.xml files are now processed earlier, allowing them to be used during sniff registration
+    -- Among other things, this allows the installed_paths config var to be set in ruleset.xml files
+    -- Thanks to Pieter Frenssen for the patch
   - Generic PHP Syntax sniff now uses PHP_BINARY (if available) to determine the path to PHP if no other path is available
     -- You can still manually set php_path to use a specific binary for testing
     -- Thanks to Andrew Berry for the patch
