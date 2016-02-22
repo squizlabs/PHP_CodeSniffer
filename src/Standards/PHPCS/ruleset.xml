@@ -27,6 +27,7 @@
  <rule ref="Squiz.Commenting.PostStatementComment" />
  <rule ref="Squiz.Commenting.VariableComment" />
  <rule ref="Squiz.Formatting.OperatorBracket" />
+ <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing" />
  <rule ref="Squiz.Operators.ComparisonOperatorUsage" />
  <rule ref="Squiz.PHP.DisallowInlineIf" />
  <rule ref="Squiz.Strings.ConcatenationSpacing" />
