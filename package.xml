@@ -69,6 +69,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #889 : Closure inside catch/else/elseif causes indentation error
   - Fixed bug #890 : Function call inside returned short array value can cause indentation error inside CASE statements
   - Fixed bug #897 : Generic.Functions.CallTimePassByReference.NotAllowed false positive when short array syntax
+  - Fixed bug #900 : Squiz.Functions.FunctionDeclarationArgumentSpacing bug when no space between type hint and argument
  </notes>
  <contents>
   <dir name="/">
@@ -1965,6 +1966,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP" name="FunctionDeclarationArgumentSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionDeclarationArgumentSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="FunctionDeclarationArgumentSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
