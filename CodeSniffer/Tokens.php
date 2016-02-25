@@ -323,6 +323,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_LOGICAL_XOR              => 3,
                                    T_METHOD_C                 => 10,
                                    T_MINUS_EQUAL              => 2,
+                                   T_POW_EQUAL                => 3,
                                    T_MOD_EQUAL                => 2,
                                    T_MUL_EQUAL                => 2,
                                    T_NAMESPACE                => 9,
