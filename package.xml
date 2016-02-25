@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic PHP Syntax sniff now uses PHP_BINARY (if available) to determine the path to PHP if no other path is available
     -- You can still manually set php_path to use a specific binary for testing
     -- Thanks to Andrew Berry for the patch
+  - The PHP-supplied T_POW_EQUAL token has been replicated for PHP versions before 5.6
   - Added support for PHP7 use group declarations (request #878)
     -- New tokens T_OPEN_USE_GROUP and T_CLOSE_USE_GROUP are assigned to the open and close curly braces
   - The PSR2 and Squiz standards now allow multi-line default values in function declarations (request #542)
@@ -70,6 +71,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #890 : Function call inside returned short array value can cause indentation error inside CASE statements
   - Fixed bug #897 : Generic.Functions.CallTimePassByReference.NotAllowed false positive when short array syntax
   - Fixed bug #900 : Squiz.Functions.FunctionDeclarationArgumentSpacing bug when no space between type hint and argument
+  - Fixed bug #902 : T_OR_EQUAL and T_POW_EQUAL are not seen as assignment tokens
  </notes>
  <contents>
   <dir name="/">
