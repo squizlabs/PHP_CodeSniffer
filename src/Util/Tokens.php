@@ -127,6 +127,10 @@ if (defined('T_POW') === false) {
     define('T_POW', 'PHPCS_T_POW');
 }
 
+if (defined('T_POW_EQUAL') === false) {
+    define('T_POW_EQUAL', 'PHPCS_T_POW_EQUAL');
+}
+
 // Some PHP 7 tokens, replicated for lower versions.
 if (defined('T_SPACESHIP') === false) {
     define('T_SPACESHIP', 'PHPCS_T_SPACESHIP');
@@ -230,9 +234,11 @@ final class Tokens
     public static $assignmentTokens = array(
                                        T_EQUAL        => T_EQUAL,
                                        T_AND_EQUAL    => T_AND_EQUAL,
+                                       T_OR_EQUAL     => T_OR_EQUAL,
                                        T_CONCAT_EQUAL => T_CONCAT_EQUAL,
                                        T_DIV_EQUAL    => T_DIV_EQUAL,
                                        T_MINUS_EQUAL  => T_MINUS_EQUAL,
+                                       T_POW_EQUAL    => T_POW_EQUAL,
                                        T_MOD_EQUAL    => T_MOD_EQUAL,
                                        T_MUL_EQUAL    => T_MUL_EQUAL,
                                        T_PLUS_EQUAL   => T_PLUS_EQUAL,

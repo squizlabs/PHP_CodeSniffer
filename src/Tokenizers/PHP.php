@@ -748,6 +748,29 @@ class PHP extends Tokenizer
             }
 
             /*
+                Before PHP 5.6, the **= operator was tokenized as
+                T_MULTIPLY followed by T_MUL_EQUAL. So look for and combine
+                these tokens in earlier versions.
+            */
+
+            if ($tokenIsArray === false
+                && $token[0] === '*'
+                && isset($tokens[($stackPtr + 1)]) === true
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][1] === '*='
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_POW_EQUAL;
+                $newToken['type']    = 'T_POW_EQUAL';
+                $newToken['content'] = '**=';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr++;
+                continue;
+            }
+
+            /*
                 Before PHP 7, the <=> operator was tokenized as
                 T_IS_SMALLER_OR_EQUAL followed by T_GREATER_THAN.
                 So look for and combine these tokens in earlier versions.
