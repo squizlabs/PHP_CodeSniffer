@@ -796,6 +796,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             echo "\t=> Add adjustment of ".$adjustments[$checkToken]." for token $checkToken ($type) on line $line".PHP_EOL;
                         }
                     }
+                } else {
+                    // Assume the change would be applied and continue
+                    // checking indents under this assumption. This gives more
+                    // technically accurate error messages.
+                    $adjustments[$checkToken] = ($checkIndent - $tokenIndent);
                 }//end if
             }//end if
 

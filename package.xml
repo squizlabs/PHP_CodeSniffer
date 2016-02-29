@@ -44,6 +44,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The PHP-supplied T_POW_EQUAL token has been replicated for PHP versions before 5.6
   - Added support for PHP7 use group declarations (request #878)
     -- New tokens T_OPEN_USE_GROUP and T_CLOSE_USE_GROUP are assigned to the open and close curly braces
+  - Generic ScopeIndent sniff now reports errors for every line that needs the indent changed (request #903)
+    -- Previously, it ignored lines that were indented correctly in the context of their block
+    -- This change produces more technically accurate error messages, but is much more verbose
   - The PSR2 and Squiz standards now allow multi-line default values in function declarations (request #542)
     -- Previously, these would automatically make the function a multi-line declaration
   - Squiz InlineCommentSniff now allows docblocks on require(_once) and include(_once) statements
