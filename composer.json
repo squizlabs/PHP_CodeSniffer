@@ -54,7 +54,8 @@
     "require": {
         "php": ">=5.1.2",
         "ext-tokenizer": "*",
-        "ext-xmlwriter": "*"
+        "ext-xmlwriter": "*",
+        "ext-simplexml": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
