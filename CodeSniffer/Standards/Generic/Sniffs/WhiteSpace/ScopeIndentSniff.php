@@ -107,6 +107,19 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     protected $nonIndentingScopes = array();
 
     /**
+     * Does previous PHP block indentation matters for next PHP block?
+     *
+     * If FALSE (default), the PHP block indentation does not affect next
+     * PHP blocks and every T_OPEN tag (new PHP block) resets indentation
+     * to the tag's one. If TRUE, when a PHP block has remaining openend
+     * scopes, to be closed in following PHP blocks, then indentation is
+     * preserved and next PHP block block must match it.
+     *
+     * @var bool
+     */
+    public $observePreviousPhpBlockIndentation = false;
+
+    /**
      * Show debug output for this sniff.
      *
      * @var bool
@@ -164,6 +177,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $openScopes    = array();
         $adjustments   = array();
         $setIndents    = array();
+        $previousPhpBlockIndentation = 0;
 
         $tokens  = $phpcsFile->getTokens();
         $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
@@ -856,6 +870,18 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     $currentIndent += $adjustments[$i];
                 }
 
+                // Verify if we must continue matching indentation from previous PHP block.
+                if ($this->observePreviousPhpBlockIndentation === true) {
+                    // Only if it's bigger than current tag indentation.
+                    if ($previousPhpBlockIndentation > $currentIndent) {
+                        $currentIndent = $previousPhpBlockIndentation;
+                        $previousPhpBlockIndentation = 0;
+                        if ($this->_debug === true) {
+                            echo "\t=> reusing indentation of $currentIndent from previous PHP block".PHP_EOL;
+                        }
+                    }
+                }
+
                 // Make sure it is divisible by our expected indent.
                 $currentIndent  = (int) (ceil($currentIndent / $this->indent) * $this->indent);
                 $setIndents[$i] = $currentIndent;
@@ -874,6 +900,18 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 if ($this->_debug === true) {
                     $line = $tokens[$i]['line'];
                     echo "Close PHP tag found on line $line".PHP_EOL;
+                }
+
+                // Verify if we must save indentation from current PHP block.
+                if ($this->observePreviousPhpBlockIndentation === true) {
+                    $previousPhpBlockIndentation = 0;
+                    // Only if there are opened scopes.
+                    if (empty($openScopes) === false) {
+                        $previousPhpBlockIndentation = $currentIndent;
+                        if ($this->_debug === true) {
+                            echo "\t=> saving indentation of $previousPhpBlockIndentation for use in next PHP block".PHP_EOL;
+                        }
+                    }
                 }
 
                 if ($tokens[$lastOpenTag]['line'] !== $tokens[$i]['line']) {
