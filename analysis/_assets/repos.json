@@ -597,7 +597,7 @@
     {
         "name": "phpDocumentor",
         "url": "phpDocumentor/phpDocumentor2",
-        "path": "src/phpDocumentor",
+        "path": "src",
         "ignore": "",
         "extensions": ""
     },
@@ -1052,7 +1052,7 @@
     {
         "name": "PHP Coding Standards Fixer",
         "url": "fabpot/PHP-CS-Fixer",
-        "path": "Symfony/CS",
+        "path": "",
         "ignore": "",
         "extensions": ""
     },
