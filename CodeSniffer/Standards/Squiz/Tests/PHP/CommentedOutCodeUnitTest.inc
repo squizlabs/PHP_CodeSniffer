@@ -85,3 +85,5 @@ function myFunction()
 // Base config function.
 
 // function ()
+
+// T_STRING is not a function call or not listed in _getFunctionListWithCallableArgument().
