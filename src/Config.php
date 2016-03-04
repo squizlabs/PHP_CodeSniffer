@@ -318,6 +318,7 @@ class Config
                 $fileContents = '';
                 while (($line = fgets(STDIN)) !== false) {
                     $fileContents .= $line;
+                    usleep(10);
                 }
 
                 stream_set_blocking($handle, true);
