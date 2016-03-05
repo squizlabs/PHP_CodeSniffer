@@ -2341,6 +2341,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <pearinstaller>
     <min>1.4.0b1</min>
    </pearinstaller>
+   <extension>
+    <name>tokenizer</name>
+   </extension>
+   <extension>
+    <name>xmlwriter</name>
+   </extension>
+   <extension>
+    <name>simplexml</name>
+   </extension>
   </required>
  </dependencies>
  <phprelease>
