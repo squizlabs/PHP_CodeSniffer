@@ -177,7 +177,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
         $openScopes    = array();
         $adjustments   = array();
         $setIndents    = array();
-        $previousPhpBlockIndentation = 0;
+        $previousPhpBlockIndentation = null;
 
         $tokens  = $phpcsFile->getTokens();
         $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
@@ -872,10 +872,10 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // Verify if we must continue matching indentation from previous PHP block.
                 if ($this->observePreviousPhpBlockIndentation === true) {
-                    // Only if it's bigger than current tag indentation.
-                    if ($previousPhpBlockIndentation > $currentIndent) {
+                    // Only if there is any indentation saved from previous PHP block.
+                    if ($previousPhpBlockIndentation !== null) {
                         $currentIndent = $previousPhpBlockIndentation;
-                        $previousPhpBlockIndentation = 0;
+                        $previousPhpBlockIndentation = null;
                         if ($this->_debug === true) {
                             echo "\t=> reusing indentation of $currentIndent from previous PHP block".PHP_EOL;
                         }
@@ -904,7 +904,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 // Verify if we must save indentation from current PHP block.
                 if ($this->observePreviousPhpBlockIndentation === true) {
-                    $previousPhpBlockIndentation = 0;
+                    $previousPhpBlockIndentation = null;
                     // Only if there are opened scopes.
                     if (empty($openScopes) === false) {
                         $previousPhpBlockIndentation = $currentIndent;

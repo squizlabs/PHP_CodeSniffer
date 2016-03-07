@@ -39,7 +39,7 @@ if ($condition) {
   ?>
 
 <?php
-// And, finally, it does not affect normal operations at all,
+// And, also, it does not affect normal operations at all,
 // adding some picked from ScopeIndentUnitTest.1.inc to confirm
 // everything continues working ok.
 <?php
@@ -241,4 +241,36 @@ if ($a === true || $a === true || $a === true || $a === true ||
     $a === true || $a === true || $a === true || $a === true) {
 
     echo 'hello';
+}
+// Some example from #907 leading to failures on
+// all the PHP indentations with the setting enabled.
+<?php
+if ($foo) {
+    foreach ($bar as $baz) {
+        if ($baz) {
+            ?>
+            <div>
+                <div>
+                    <div>
+<?php
+                    if ($baz > 1) {
+                        echo '1';
+                    }
+?>
+                    </div>
+        <?php
+                    if ($baz > 1) {
+                        echo '2';
+                    }
+        ?>
+                </div>
+                        <?php
+                if ($baz > 1) {
+                    echo '3';
+                }
+                        ?>
+            </div>
+            <?php
+        }
+    }
 }

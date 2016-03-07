@@ -121,6 +121,14 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                     72   => 1,
                     100  => 1,
                     165  => 1,
+                    // Example showing PHP indentation takes always precedence
+                    // and open/close tags are ignored, not matter how they are incorrect.
+                    256  => 1,
+                    258  => 1,
+                    262  => 1,
+                    264  => 1,
+                    268  => 1,
+                    270  => 1,
                    );
         }
 
