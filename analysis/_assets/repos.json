@@ -1329,4 +1329,11 @@
         "ignore": "*/vendor/*",
         "extensions": ""
     }
+    {
+        "name": "Agora Invoicing",
+        "url": "ladybirdweb/agorainvoicing",
+        "path": "",
+        "ignore": "*/vendor/*",
+        "extensions": ""
+    }
 ]
