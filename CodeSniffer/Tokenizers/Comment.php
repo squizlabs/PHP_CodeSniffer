@@ -108,7 +108,6 @@ class PHP_CodeSniffer_Tokenizers_Comment
                 $stackPtr++;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $content = PHP_CodeSniffer::prepareForOutput($space['content']);
-                    $type    = $lineToken['type'];
                     echo "\t\tCreate comment token: T_DOC_COMMENT_WHITESPACE => $content".PHP_EOL;
                 }
 
