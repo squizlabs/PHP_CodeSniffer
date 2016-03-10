@@ -1322,11 +1322,18 @@
         "ignore": "*/Lib/*,*/config/*,*/Composer/*,*/webroot/*",
         "extensions": ""
      },
-     {
+    {
         "name": "Faveo Help-desk",
         "url": "ladybirdweb/faveo-helpdesk",
         "path": "",
         "ignore": "*/vendor/*",
         "extensions": ""
-    }
+    },
+    {
+        "name": "Chamilo",
+        "url": "chamilo/chamilo-lms",
+        "path": "",
+        "ignore": "*/app/*,*/bin/*,*/certificates/*,*/custompages/*,*/documentation/*,*/tests/*,*/web/*",
+        "extensions": ""
+      }
 ]
