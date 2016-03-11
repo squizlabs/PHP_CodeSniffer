@@ -891,6 +891,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                          T_COMMA               => true,
                          T_COLON               => true,
                          T_TYPEOF              => true,
+                         T_INLINE_THEN         => true,
+                         T_INLINE_ELSE         => true,
                         );
 
         $afterTokens = array(
@@ -900,6 +902,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                         ';'      => true,
                         ' '      => true,
                         '.'      => true,
+                        ':'      => true,
                         $eolChar => true,
                        );
 
