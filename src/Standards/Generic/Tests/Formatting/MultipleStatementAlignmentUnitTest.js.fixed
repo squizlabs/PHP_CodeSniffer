@@ -102,3 +102,9 @@ script.onload = function()
 {
     clearTimeout(t);
 };
+
+stream.match(stream.sol() ? /^\s*\/\/.*/ : /^\s+\/\/.*/);
+function() {
+    if (condition)
+        foo = .4
+}
