@@ -102,3 +102,8 @@ script.onload = function()
 {
     clearTimeout(t);
 };
+
+function() {
+    if (condition)
+        foo = .4
+}

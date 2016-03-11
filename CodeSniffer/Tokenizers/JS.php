@@ -821,16 +821,15 @@ class PHP_CodeSniffer_Tokenizers_JS
                 if ($newContent !== '' && $newContent !== '.') {
                     $finalTokens[($newStackPtr - 1)]['content'] = $newContent;
                     if (ctype_digit($newContent) === true) {
-                        $finalTokens[($newStackPtr - 1)]['code']
-                            = constant('T_LNUMBER');
+                        $finalTokens[($newStackPtr - 1)]['code'] = constant('T_LNUMBER');
                         $finalTokens[($newStackPtr - 1)]['type'] = 'T_LNUMBER';
                     } else {
-                        $finalTokens[($newStackPtr - 1)]['code']
-                            = constant('T_DNUMBER');
+                        $finalTokens[($newStackPtr - 1)]['code'] = constant('T_DNUMBER');
                         $finalTokens[($newStackPtr - 1)]['type'] = 'T_DNUMBER';
                     }
 
                     $stackPtr--;
+                    continue;
                 } else {
                     $stackPtr = $oldStackPtr;
                 }
