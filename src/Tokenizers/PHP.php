@@ -1226,6 +1226,8 @@ class PHP extends Tokenizer
 
                 if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS
                     || $this->tokens[$x]['code'] === T_OPEN_CURLY_BRACKET
+                    || $this->tokens[$x]['code'] === T_EXTENDS
+                    || $this->tokens[$x]['code'] === T_IMPLEMENTS
                 ) {
                     $this->tokens[$i]['code'] = T_ANON_CLASS;
                     $this->tokens[$i]['type'] = 'T_ANON_CLASS';
