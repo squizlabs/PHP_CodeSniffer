@@ -1098,6 +1098,8 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 if ($tokens[$x]['code'] === T_OPEN_PARENTHESIS
                     || $tokens[$x]['code'] === T_OPEN_CURLY_BRACKET
+                    || $tokens[$x]['code'] === T_EXTENDS
+                    || $tokens[$x]['code'] === T_IMPLEMENTS
                 ) {
                     $tokens[$i]['code'] = T_ANON_CLASS;
                     $tokens[$i]['type'] = 'T_ANON_CLASS';

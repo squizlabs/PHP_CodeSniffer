@@ -76,6 +76,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #897 : Generic.Functions.CallTimePassByReference.NotAllowed false positive when short array syntax
   - Fixed bug #900 : Squiz.Functions.FunctionDeclarationArgumentSpacing bug when no space between type hint and argument
   - Fixed bug #902 : T_OR_EQUAL and T_POW_EQUAL are not seen as assignment tokens
+  - Fixed bug #910 : Unrecognized "extends" and indentation on anonymous classes
   - Fixed bug #915 : JS Tokenizer generates errors when processing some decimals
  </notes>
  <contents>
