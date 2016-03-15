@@ -1077,7 +1077,7 @@ class Config
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <processes>   How many files should be checked simultaneously (default is 1)'.PHP_EOL;
         echo '        <report>      Print either the "full", "xml", "checkstyle", "csv"'.PHP_EOL;
-        echo '                      "json", "emacs", "source", "summary", "diff"'.PHP_EOL;
+        echo '                      "json", "junit", "emacs", "source", "summary", "diff"'.PHP_EOL;
         echo '                      "svnblame", "gitblame", "hgblame" or "notifysend" report'.PHP_EOL;
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
         echo '        <reportFile>  Write the report to the specified file path'.PHP_EOL;
