@@ -269,10 +269,6 @@ class PHP_CodeSniffer
      */
     public static function autoload($className)
     {
-        if (class_exists($className, false) === true) {
-            return;
-        }
-        
         if (substr($className, 0, 4) === 'PHP_') {
             $newClassName = substr($className, 4);
         } else {
