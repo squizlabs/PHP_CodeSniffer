@@ -269,6 +269,10 @@ class PHP_CodeSniffer
      */
     public static function autoload($className)
     {
+        if (class_exists($className, false) === true) {
+            return;
+        }
+        
         if (substr($className, 0, 4) === 'PHP_') {
             $newClassName = substr($className, 4);
         } else {
@@ -1796,11 +1800,12 @@ class PHP_CodeSniffer
             $reportData  = $this->reporting->prepareFileReport($phpcsFile);
             $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
 
-            if (empty(PHP_CODESNIFFER_EDITOR_PATH)) {
+            if (empty(PHP_CODESNIFFER_EDITOR_PATH) === true) {
                 echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
             } else {
                 echo '<ENTER> to recheck, [s] to skip, [o] to open in editor or [q] to quit : ';
             }
+
             $input = fgets(STDIN);
             $input = trim($input);
 
@@ -1811,7 +1816,7 @@ class PHP_CodeSniffer
                 exit(0);
                 break;
             case 'o':
-                if (false == empty(PHP_CODESNIFFER_EDITOR_PATH)) {
+                if (false === empty(PHP_CODESNIFFER_EDITOR_PATH)) {
                     exec(PHP_CODESNIFFER_EDITOR_PATH.' '.$file);
                 }
                 break;

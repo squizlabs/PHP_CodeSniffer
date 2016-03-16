@@ -725,14 +725,15 @@ class PHP_CodeSniffer_CLI
                 $this->values['warningSeverity'] = (int) substr($arg, 17);
             } else if (substr($arg, 0, 12) === 'editor-path=') {
                 $value = substr($arg, 12);
-                if (preg_match('/^[\'\"]/', $value, $matches)) {
+                if (1 === preg_match('/^[\'\"]/', $value, $matches)) {
                     while (0 === preg_match("/[{$matches[0]}]$/", $value)) {
                         $value .= ' '.$this->_cliArgs[++$pos];
                         $this->_cliArgs[$pos] = '';
                     }
+
                     $value = substr($value, 1, -1);
                 }
-                
+
                 $this->values['editorPath'] = $value;
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
