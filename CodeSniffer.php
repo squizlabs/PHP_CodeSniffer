@@ -380,6 +380,22 @@ class PHP_CodeSniffer
 
 
     /**
+     * Sets the interactive flag.
+     *
+     * @param string $path During interactive session will use this to open invalid files.
+     *
+     * @return void
+     */
+    public function setEditorPath($path)
+    {
+        if (defined('PHP_CODESNIFFER_EDITOR_PATH') === false) {
+            define('PHP_CODESNIFFER_EDITOR_PATH', $path);
+        }
+
+    }//end setEditorPath()
+
+
+    /**
      * Sets an array of file extensions that we will allow checking of.
      *
      * If the extension is one of the defaults, a specific tokenizer
@@ -1780,7 +1796,11 @@ class PHP_CodeSniffer
             $reportData  = $this->reporting->prepareFileReport($phpcsFile);
             $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
 
-            echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
+            if (empty(PHP_CODESNIFFER_EDITOR_PATH)) {
+                echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
+            } else {
+                echo '<ENTER> to recheck, [s] to skip, [o] to open in editor or [q] to quit : ';
+            }
             $input = fgets(STDIN);
             $input = trim($input);
 
@@ -1789,6 +1809,11 @@ class PHP_CodeSniffer
                 break(2);
             case 'q':
                 exit(0);
+                break;
+            case 'o':
+                if (false == empty(PHP_CODESNIFFER_EDITOR_PATH)) {
+                    exec(PHP_CODESNIFFER_EDITOR_PATH.' '.$file);
+                }
                 break;
             default:
                 // Repopulate the sniffs because some of them save their state
