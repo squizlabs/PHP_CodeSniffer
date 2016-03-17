@@ -137,6 +137,13 @@ class PHP_CodeSniffer
     private $_tokenListeners = array();
 
     /**
+     * The editor path / command
+     *
+     * @var string|null
+     */
+    protected $editorPath = null;
+
+    /**
      * An array of rules from the ruleset.xml file.
      *
      * It may be empty, indicating that the ruleset does not override
@@ -377,6 +384,44 @@ class PHP_CodeSniffer
         }
 
     }//end setInteractive()
+
+
+    /**
+     * Sets the editor path / command
+     *
+     * @return string|null
+     */
+    public function getEditorPath()
+    {
+        return $this->editorPath;
+
+    }//end getEditorPath()
+
+
+    /**
+     * Sets the editor path / command
+     *
+     * @param string $path During interactive session will use this to open invalid files.
+     *
+     * @return void
+     */
+    public function setEditorPath($path)
+    {
+        $this->editorPath = $path;
+
+    }//end setEditorPath()
+
+
+    /**
+     * Returns true if the editor path / command was set
+     *
+     * @return boolean
+     */
+    public function isEditorPathSet()
+    {
+        return false === empty($this->editorPath);
+
+    }//end isEditorPathSet()
 
 
     /**
@@ -1780,7 +1825,12 @@ class PHP_CodeSniffer
             $reportData  = $this->reporting->prepareFileReport($phpcsFile);
             $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
 
-            echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
+            if ($this->isEditorPathSet() === true) {
+                echo '<ENTER> to recheck, [s] to skip, [o] to open in editor or [q] to quit : ';
+            } else {
+                echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
+            }
+
             $input = fgets(STDIN);
             $input = trim($input);
 
@@ -1789,6 +1839,11 @@ class PHP_CodeSniffer
                 break(2);
             case 'q':
                 exit(0);
+                break;
+            case 'o':
+                if ($this->isEditorPathSet() === true) {
+                    exec($this->getEditorPath().' '.$file);
+                }
                 break;
             default:
                 // Repopulate the sniffs because some of them save their state

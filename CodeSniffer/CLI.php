@@ -286,6 +286,7 @@ class PHP_CodeSniffer_CLI
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
         $defaults['stdin']           = null;
+        $defaults['editorPath']      = null;
 
         $reportFormat = PHP_CodeSniffer::getConfigData('report_format');
         if ($reportFormat !== null) {
@@ -722,6 +723,18 @@ class PHP_CodeSniffer_CLI
                 $this->values['errorSeverity'] = (int) substr($arg, 15);
             } else if (substr($arg, 0, 17) === 'warning-severity=') {
                 $this->values['warningSeverity'] = (int) substr($arg, 17);
+            } else if (substr($arg, 0, 12) === 'editor-path=') {
+                $value = substr($arg, 12);
+                if (1 === preg_match('/^[\'\"]/', $value, $matches)) {
+                    while ((0 === preg_match("/[{$matches[0]}]$/", $value)) && (isset($this->_cliArgs[++$pos]) === true)) {
+                        $value .= ' '.$this->_cliArgs[$pos];
+                        $this->_cliArgs[$pos] = '';
+                    }
+
+                    $value = substr($value, 1, -1);
+                }
+
+                $this->values['editorPath'] = $value;
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
@@ -865,6 +878,7 @@ class PHP_CodeSniffer_CLI
         $phpcs->setTabWidth($values['tabWidth']);
         $phpcs->setEncoding($values['encoding']);
         $phpcs->setInteractive($values['interactive']);
+        $phpcs->setEditorPath($values['editorPath']);
 
         // Set file extensions if they were specified. Otherwise,
         // let PHP_CodeSniffer decide on the defaults.
@@ -1205,7 +1219,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors] [--no-colors] [--editor-path=<path>]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
