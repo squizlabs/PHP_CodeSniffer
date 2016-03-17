@@ -183,7 +183,7 @@ class Reporter
         }
 
         $reportCache = '';
-        if ($filename !== null) {
+        if ($filename !== null && file_exists($filename) === true) {
             $reportCache = file_get_contents($filename);
         }
 
