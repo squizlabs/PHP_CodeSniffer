@@ -602,7 +602,11 @@ class Runner
 
                 $this->reporter->printReport('full');
 
-                echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
+                if ($this->config->editorPath !== null) {
+                    echo '<ENTER> to recheck, [s] to skip, [o] to open in editor or [q] to quit : ';
+                } else {
+                    echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
+                }
                 $input = fgets(STDIN);
                 $input = trim($input);
 
@@ -611,16 +615,20 @@ class Runner
                     break(2);
                 case 'q':
                     exit(0);
-                default:
-                    // Repopulate the sniffs because some of them save their state
-                    // and only clear it when the file changes, but we are rechecking
-                    // the same file.
-                    $file->ruleset->populateTokenListeners();
-                    $file->reloadContent();
-                    $file->process();
-                    $this->reporter->cacheFileReport($file, $this->config);
+                case 'o':
+                    if ($this->config->editorPath !== null) {
+                        exec($this->config->editorPath.' '.$file->path);
+                    }
                     break;
                 }
+
+                // Repopulate the sniffs because some of them save their state
+                // and only clear it when the file changes, but we are rechecking
+                // the same file.
+                $file->ruleset->populateTokenListeners();
+                $file->reloadContent();
+                $file->process();
+                $this->reporter->cacheFileReport($file, $this->config);
             }//end while
         }//end if
 

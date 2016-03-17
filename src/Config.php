@@ -119,6 +119,7 @@ class Config
                          'suffix'          => null,
                          'stdin'           => null,
                          'stdinContent'    => null,
+                         'editorPath'      => null,
                         );
 
     /**
@@ -916,6 +917,19 @@ class Config
             } else if (substr($arg, 0, 17) === 'warning-severity=') {
                 $this->warningSeverity = (int) substr($arg, 17);
                 $this->overriddenDefaults['warningSeverity'] = true;
+            } else if (substr($arg, 0, 12) === 'editor-path=') {
+                $value = substr($arg, 12);
+                if (1 === preg_match('/^[\'\"]/', $value, $matches)) {
+                    while ((0 === preg_match("/[{$matches[0]}]$/", $value)) && isset($this->cliArgs[++$pos])) {
+                        $value .= ' '.$this->cliArgs[$pos];
+                        $this->cliArgs[$pos] = '';
+                    }
+
+                    $value = substr($value, 1, -1);
+                }
+
+                $this->editorPath = $value;
+                $this->overriddenDefaults['editorPath'] = true;
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
@@ -1044,7 +1058,8 @@ class Config
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--generator=<generator>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--generator=<generator>] [--ignore=<patterns>]  [--editor-path=<path>]'.PHP_EOL;
+        echo '    <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
