@@ -604,6 +604,7 @@ class Runner
                 } else {
                     echo '<ENTER> to recheck, [s] to skip or [q] to quit : ';
                 }
+
                 $input = fgets(STDIN);
                 $input = trim($input);
 
@@ -631,6 +632,7 @@ class Runner
 
         // Clean up the file to save (a lot of) memory.
         $file->cleanUp();
+
     }//end processFile()
 
 
