@@ -428,6 +428,7 @@ class Config
         $this->suffix          = '';
         $this->stdin           = false;
         $this->stdinContent    = null;
+        $this->editorPath      = null;
 
         $standard = self::getConfigData('default_standard');
         if ($standard !== null) {
@@ -481,6 +482,11 @@ class Config
         $showProgress = self::getConfigData('show_progress');
         if ($showProgress !== null) {
             $this->showProgress = (bool) $showProgress;
+        }
+
+        $editorPath = self::getConfigData('editor_path');
+        if ($editorPath !== null) {
+            $this->editoPath = $editorPath;
         }
 
         $colors = self::getConfigData('colors');
@@ -920,7 +926,7 @@ class Config
             } else if (substr($arg, 0, 12) === 'editor-path=') {
                 $value = substr($arg, 12);
                 if (1 === preg_match('/^[\'\"]/', $value, $matches)) {
-                    while ((0 === preg_match("/[{$matches[0]}]$/", $value)) && isset($this->cliArgs[++$pos])) {
+                    while ((0 === preg_match("/[{$matches[0]}]$/", $value)) && (isset($this->cliArgs[++$pos]) === true)) {
                         $value .= ' '.$this->cliArgs[$pos];
                         $this->cliArgs[$pos] = '';
                     }

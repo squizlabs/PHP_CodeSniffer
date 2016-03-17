@@ -582,9 +582,6 @@ class Runner
 
         $this->reporter->cacheFileReport($file, $this->config);
 
-        // Clean up the file to save (a lot of) memory.
-        $file->cleanUp();
-
         if ($this->config->interactive === true) {
             /*
                 Running interactively.
@@ -632,6 +629,8 @@ class Runner
             }//end while
         }//end if
 
+        // Clean up the file to save (a lot of) memory.
+        $file->cleanUp();
     }//end processFile()
 
 
