@@ -726,8 +726,8 @@ class PHP_CodeSniffer_CLI
             } else if (substr($arg, 0, 12) === 'editor-path=') {
                 $value = substr($arg, 12);
                 if (1 === preg_match('/^[\'\"]/', $value, $matches)) {
-                    while (0 === preg_match("/[{$matches[0]}]$/", $value)) {
-                        $value .= ' '.$this->_cliArgs[++$pos];
+                    while ((0 === preg_match("/[{$matches[0]}]$/", $value)) && (isset($this->_cliArgs[++$pos]) === true)) {
+                        $value .= ' '.$this->_cliArgs[$pos];
                         $this->_cliArgs[$pos] = '';
                     }
 
