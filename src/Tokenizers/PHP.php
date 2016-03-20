@@ -639,8 +639,6 @@ class PHP extends Tokenizer
                     $nowdoc = true;
                 }
 
-                $newStackPtr++;
-
                 $tokenContent = '';
                 for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
                     $subTokenIsArray = is_array($tokens[$i]);
@@ -658,7 +656,24 @@ class PHP extends Tokenizer
                     }
                 }
 
+                if ($i === $numTokens) {
+                    // We got to the end of the file and never
+                    // found the closing token, so this probably wasn't
+                    // a heredoc.
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $type = $finalTokens[$newStackPtr]['type'];
+                        echo "\t\t* failed to find the end of the here/nowdoc".PHP_EOL;
+                        echo "\t\t* token $stackPtr changed from $type to T_STRING".PHP_EOL;
+                    }
+
+                    $finalTokens[$newStackPtr]['code'] = T_STRING;
+                    $finalTokens[$newStackPtr]['type'] = 'T_STRING';
+                    $newStackPtr++;
+                    continue;
+                }
+
                 $stackPtr = $i;
+                $newStackPtr++;
 
                 // Convert each line within the heredoc to a
                 // new token, so it conforms with other multiple line tokens.
