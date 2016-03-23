@@ -501,12 +501,11 @@ class PHP_CodeSniffer_File
                         $start   = strpos($token['content'], '@codingStandardsChangeSetting');
                         $comment = substr($token['content'], ($start + 30));
                         $parts   = explode(' ', $comment);
-                        if (count($parts) >= 3) {
-                            $sniffParts = explode('.', $parts[0]);
-                            if (count($sniffParts) >= 3) {
-                                $listenerClass = $sniffParts[0].'_Sniffs_'.$sniffParts[1].'_'.$sniffParts[2].'Sniff';
-                                $this->phpcs->setSniffProperty($listenerClass, $parts[1], $parts[2]);
-                            }
+                        if (count($parts) >= 3
+                            && isset($this->phpcs->sniffCodes[$parts[0]]) === true
+                        ) {
+                            $listenerClass = $this->phpcs->sniffCodes[$parts[0]];
+                            $this->phpcs->setSniffProperty($listenerClass, $parts[1], $parts[2]);
                         }
                     }//end if
                 }//end if

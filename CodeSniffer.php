@@ -130,6 +130,16 @@ class PHP_CodeSniffer
     protected $sniffs = array();
 
     /**
+     * A mapping of sniff codes to fully qualified class names.
+     *
+     * The key is the sniff code and the value
+     * is the fully qualified name of the sniff class.
+     *
+     * @var array<string, string>
+     */
+    public $sniffCodes = array();
+
+    /**
      * The listeners array, indexed by token type.
      *
      * @var array
@@ -1408,6 +1418,7 @@ class PHP_CodeSniffer
             $code = substr($code, 0, -5);
 
             $this->listeners[$listenerClass] = new $listenerClass();
+            $this->sniffCodes[$code]         = $listenerClass;
 
             // Set custom properties.
             if (isset($this->ruleset[$code]['properties']) === true) {

@@ -66,6 +66,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz ComparisonOperatorUsageSniff now allows conditions like while(true)
   - PEAR FunctionCallSignatureSniff (and the Squiz and PSR2 sniffs that use it) now correctly check the first argument
     -- Further fix for bug #698
+  - Fixed bug #791 : codingStandardsChangeSetting settings not working with namespaces
   - Fixed bug #872 : Incorrect detection of blank lines between CSS class names
   - Fixed bug #879 : Generic InlineControlStructureSniff can create parse error when case/if/elseif/else have mixed brace and braceless definitions
   - Fixed bug #883 : PSR2 is not checking for blank lines at the start and end of control structures
