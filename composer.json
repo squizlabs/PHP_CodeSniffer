@@ -1,7 +1,7 @@
 {
     "name": "squizlabs/php_codesniffer",
     "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-    "type": "library",
+    "type": "composer-plugin",
     "keywords": [
         "phpcs",
         "standards"
@@ -22,12 +22,15 @@
     "extra": {
         "branch-alias": {
             "dev-master": "2.x-dev"
-        }
+        },
+        "class": "PHP_CodeSniffer_ComposerPlugin"
     },
     "autoload": {
         "classmap": [
             "CodeSniffer.php",
             "CodeSniffer/CLI.php",
+            "CodeSniffer/ComposerInstaller.php",
+            "CodeSniffer/ComposerPlugin.php",
             "CodeSniffer/Exception.php",
             "CodeSniffer/File.php",
             "CodeSniffer/Fixer.php",
@@ -55,7 +58,8 @@
         "php": ">=5.1.2",
         "ext-tokenizer": "*",
         "ext-xmlwriter": "*",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
+        "composer-plugin-api": "^1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
