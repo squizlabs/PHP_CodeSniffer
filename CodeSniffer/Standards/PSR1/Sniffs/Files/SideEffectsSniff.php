@@ -119,6 +119,11 @@ class PSR1_Sniffs_Files_SideEffectsSniff implements PHP_CodeSniffer_Sniff
                 continue;
             }
 
+            // Ignore shebang.
+            if (substr($tokens[$i]['content'], 0, 2) === '#!') {
+                continue;
+            }
+
             // Ignore entire namespace, declare, const and use statements.
             if ($tokens[$i]['code'] === T_NAMESPACE
                 || $tokens[$i]['code'] === T_USE
