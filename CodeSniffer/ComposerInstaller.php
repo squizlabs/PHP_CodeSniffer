@@ -34,7 +34,7 @@ use Composer\Repository\InstalledRepositoryInterface;
 class PHP_CodeSniffer_ComposerInstaller extends LibraryInstaller
 {
 
-    const EXTRA_KEY      = 'standards';
+    const EXTRA_KEY      = 'phpcs-standards';
     const STANDARDS_PATH = '../php_codesniffer/CodeSniffer/Standards/';
     const TYPE           = 'phpcs-standard';
 
