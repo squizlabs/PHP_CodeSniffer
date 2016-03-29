@@ -56,12 +56,8 @@ class CallTimePassByReferenceSniff implements Sniff
         // within their definitions. For example: function myFunction...
         // "myFunction" is T_STRING but we should skip because it is not a
         // function or method *call*.
-        // Also skip if the return value is being assigned to a variable.
         $prevCode = $tokens[$prev]['code'];
-        if ($prevCode === T_FUNCTION
-            || $prevCode === T_CLASS
-            || isset(Tokens::$assignmentTokens[$prevCode]) === true
-        ) {
+        if ($prevCode === T_FUNCTION || $prevCode === T_CLASS) {
             return;
         }
 
