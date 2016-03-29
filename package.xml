@@ -82,6 +82,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #928 : Endless loop when sniffing a PHP file with a git merge conflict inside a function
   - Fixed bug #937 : Shebang can cause PSR1 SideEffects warning
     -- Thanks to Clay Loveless for the patch
+  - Fixed bug #938 : CallTimePassByReferenceSniff ignores functions with return value
  </notes>
  <contents>
   <dir name="/">
