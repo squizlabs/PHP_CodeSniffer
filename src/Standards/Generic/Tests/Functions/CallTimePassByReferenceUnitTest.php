@@ -31,6 +31,7 @@ class CallTimePassByReferenceUnitTest extends AbstractSniffUnitTest
                 15 => 1,
                 18 => 2,
                 23 => 1,
+                30 => 1,
                );
 
     }//end getErrorList()
