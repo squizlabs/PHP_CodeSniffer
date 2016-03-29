@@ -286,6 +286,7 @@ class PHP_CodeSniffer_CLI
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
         $defaults['stdin']           = null;
+        $defaults['stdinPath']       = '';
 
         $reportFormat = PHP_CodeSniffer::getConfigData('report_format');
         if ($reportFormat !== null) {
@@ -639,6 +640,13 @@ class PHP_CodeSniffer_CLI
                     }
 
                     $this->values['bootstrap'][] = $path;
+                }
+            } else if (substr($arg, 0, 11) === 'stdin-path=') {
+                $this->values['stdinPath'] = PHP_CodeSniffer::realpath(substr($arg, 11));
+
+                // It may not exist and return false instead, so just use whatever they gave us.
+                if ($this->values['stdinPath'] === false) {
+                    $this->values['stdinPath'] = trim(substr($arg, 11));
                 }
             } else if (substr($arg, 0, 12) === 'report-file=') {
                 $this->values['reportFile'] = PHP_CodeSniffer::realpath(substr($arg, 12));
@@ -1205,7 +1213,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--colors] [--no-colors] [--stdin-path=<stdinPath>]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -1228,6 +1236,7 @@ class PHP_CodeSniffer_CLI
         echo '        --colors      Use colors in output'.PHP_EOL;
         echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
+        echo '        <stdinPath>   If processing STDIN, the file path that STDIN will be processed as '.PHP_EOL;
         echo '        <bootstrap>   A comma separated list of files to run before processing starts'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
@@ -1260,7 +1269,7 @@ class PHP_CodeSniffer_CLI
      */
     public function printPHPCBFUsage()
     {
-        echo 'Usage: phpcbf [-nwli] [-d key[=value]]'.PHP_EOL;
+        echo 'Usage: phpcbf [-nwli] [-d key[=value]] [--stdin-path=<stdinPath>]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
@@ -1274,6 +1283,7 @@ class PHP_CodeSniffer_CLI
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --no-patch    Do not make use of the "diff" or "patch" programs'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
+        echo '        <stdinPath>   If processing STDIN, the file path that STDIN will be processed as '.PHP_EOL;
         echo '        <bootstrap>   A comma separated list of files to run before processing starts'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;

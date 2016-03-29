@@ -459,8 +459,11 @@ class PHP_CodeSniffer_File
         // If this is standard input, see if a filename was passed in as well.
         // This is done by including: phpcs_input_file: [file path]
         // as the first line of content.
-        if ($this->_file === 'STDIN' && $contents !== null) {
-            if (substr($contents, 0, 17) === 'phpcs_input_file:') {
+        if ($this->_file === 'STDIN') {
+            $cliValues = $this->phpcs->cli->getCommandLineValues();
+            if ($cliValues['stdinPath'] !== '') {
+                $this->_file = $cliValues['stdinPath'];
+            } else if ($contents !== null && substr($contents, 0, 17) === 'phpcs_input_file:') {
                 $eolPos      = strpos($contents, $this->eolChar);
                 $filename    = trim(substr($contents, 17, ($eolPos - 17)));
                 $contents    = substr($contents, ($eolPos + strlen($this->eolChar)));
