@@ -116,6 +116,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #910 : Unrecognized "extends" and indentation on anonymous classes
   - Fixed bug #915 : JS Tokenizer generates errors when processing some decimals
   - Fixed bug #928 : Endless loop when sniffing a PHP file with a git merge conflict inside a function
+  - Fixed bug #937 : Shebang can cause PSR1 SideEffects warning
+    -- Thanks to Clay Loveless for the patch
  </notes>
  <contents>
   <dir name="/">
@@ -1239,6 +1241,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP" name="SideEffectsUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP" name="SideEffectsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
