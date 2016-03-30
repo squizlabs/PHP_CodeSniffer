@@ -75,6 +75,7 @@ class Config
      * string   basepath        A file system location to strip from the paths of files shown in reports.
      * bool     stdin           Read content from STDIN instead of supplied files.
      * string   stdinContent    Content passed directly to PHPCS on STDIN.
+     * string   stdinPath       The path to use for content passed on STDIN.
      *
      * array<string, string>      extensions File extensions that should be checked, and what tokenizer to use.
      *                                       E.g., array('inc' => 'PHP');
@@ -119,6 +120,7 @@ class Config
                          'suffix'          => null,
                          'stdin'           => null,
                          'stdinContent'    => null,
+                         'stdinPath'       => null,
                         );
 
     /**
@@ -427,6 +429,7 @@ class Config
         $this->suffix          = '';
         $this->stdin           = false;
         $this->stdinContent    = null;
+        $this->stdinPath       = null;
 
         $standard = self::getConfigData('default_standard');
         if ($standard !== null) {
@@ -753,9 +756,16 @@ class Config
 
                 $this->bootstrap = array_merge($this->bootstrap, $bootstrap);
                 $this->overriddenDefaults['bootstrap'] = true;
-            } else if (PHP_CODESNIFFER_CBF === false
-                && substr($arg, 0, 12) === 'report-file='
-            ) {
+            } else if (substr($arg, 0, 11) === 'stdin-path=') {
+                $this->stdinPath = Util\Common::realpath(substr($arg, 11));
+
+                // It may not exist and return false instead, so use whatever they gave us.
+                if ($this->stdinPath === false) {
+                    $this->stdinPath = trim(substr($arg, 11));
+                }
+
+                $this->overriddenDefaults['stdinPath'] = true;
+            } else if (PHP_CODESNIFFER_CBF === false && substr($arg, 0, 12) === 'report-file=') {
                 $this->reportFile = Util\Common::realpath(substr($arg, 12));
 
                 // It may not exist and return false instead.

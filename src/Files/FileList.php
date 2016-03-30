@@ -109,7 +109,10 @@ class FileList implements \Iterator, \Countable
     public function addFile($path, $file=null)
     {
         // No filtering is done for STDIN.
-        if ($path === 'STDIN') {
+        if ($path === 'STDIN'
+            || ($file !== null
+            && get_class($file) === 'PHP_CodeSniffer\Files\DummyFile')
+        ) {
             $this->files[$path] = $file;
             return;
         }

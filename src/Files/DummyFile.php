@@ -49,6 +49,11 @@ class DummyFile extends File
             }
         }
 
+        // The CLI arg overrides anything passed in the content.
+        if ($config->stdinPath !== null) {
+            $path = $config->stdinPath;
+        }
+
         return parent::__construct($path, $ruleset, $config);
 
     }//end __construct()

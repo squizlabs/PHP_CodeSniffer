@@ -68,6 +68,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Absolute paths are still allowed and work the same way they always have
     -- This change allows ruleset.xml files to be more portable
   - Content passed via STDIN will now be processed even if files are specified on the command line or in a ruleset
+  - When passing content via STDIN, you can now specify the file path to use on the command line (request #934)
+    -- This allows sniffs that check file paths to work correctly
+    -- This is the same functionality provided by the phpcs_input_file line, except it is available on the command line
   - Files processed with custom tokenizers will no longer be skipped if they appear minified (request #877)
     -- If the custom tokenizer wants minified files skipped, it can set a $skipMinified member var to TRUE
     -- See the included JS and CSS tokenizers for an example
