@@ -57,9 +57,7 @@ class PEAR_Sniffs_Commenting_ClassCommentSniff extends PEAR_Sniffs_Commenting_Fi
     {
         $this->currentFile = $phpcsFile;
 
-        $tokens    = $phpcsFile->getTokens();
-        $type      = strtolower($tokens[$stackPtr]['content']);
-        $errorData = array($type);
+        $tokens = $phpcsFile->getTokens();
 
         $find   = PHP_CodeSniffer_Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;

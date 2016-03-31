@@ -380,8 +380,6 @@ class PHP_CodeSniffer_CLI
             return $this->values;
         }
 
-        $values = $this->getDefaults();
-
         $args = $_SERVER['argv'];
         array_shift($args);
 

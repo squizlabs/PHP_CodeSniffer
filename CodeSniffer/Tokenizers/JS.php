@@ -1091,7 +1091,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                     }
                 }
             } else if ($tokens[$i]['code'] === T_CLOSE_OBJECT) {
-                $opener = array_pop($classStack);
+                array_pop($classStack);
             } else if ($tokens[$i]['code'] === T_COLON) {
                 // If it is a scope opener, it belongs to a
                 // DEFAULT or CASE statement.

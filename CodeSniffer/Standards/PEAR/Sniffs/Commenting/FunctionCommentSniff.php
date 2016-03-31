@@ -170,7 +170,6 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
     {
         $tokens = $phpcsFile->getTokens();
 
-        $throws = array();
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             if ($tokens[$tag]['content'] !== '@throws') {
                 continue;

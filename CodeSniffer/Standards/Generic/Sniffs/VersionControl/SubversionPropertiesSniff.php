@@ -66,8 +66,6 @@ class Generic_Sniffs_VersionControl_SubversionPropertiesSniff implements PHP_Cod
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
         // Make sure this is the first PHP open tag so we don't process the
         // same file twice.
         $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1));

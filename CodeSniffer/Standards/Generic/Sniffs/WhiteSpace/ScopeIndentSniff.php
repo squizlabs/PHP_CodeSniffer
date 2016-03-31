@@ -735,7 +735,6 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $checkIndent = $currentIndent;
             }
 
-            $adjusted = false;
             if ($checkToken !== null
                 && isset($this->_ignoreIndentationTokens[$tokens[$checkToken]['code']]) === false
                 && (($tokenIndent !== $checkIndent && $exact === true)

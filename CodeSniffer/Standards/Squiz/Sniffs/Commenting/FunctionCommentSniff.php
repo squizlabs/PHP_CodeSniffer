@@ -77,7 +77,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 // Check return type (can be multiple, separated by '|').
                 $typeNames      = explode('|', $content);
                 $suggestedNames = array();
-                foreach ($typeNames as $i => $typeName) {
+                foreach ($typeNames as $typeName) {
                     $suggestedName = PHP_CodeSniffer::suggestType($typeName);
                     if (in_array($suggestedName, $suggestedNames) === false) {
                         $suggestedNames[] = $suggestedName;
@@ -166,7 +166,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
     {
         $tokens = $phpcsFile->getTokens();
 
-        $throws = array();
         foreach ($tokens[$commentStart]['comment_tags'] as $pos => $tag) {
             if ($tokens[$tag]['content'] !== '@throws') {
                 continue;
