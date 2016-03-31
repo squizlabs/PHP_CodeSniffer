@@ -72,12 +72,10 @@ class PSR2_Sniffs_ControlStructures_SwitchDeclarationSniff implements PHP_CodeSn
         $nextCase      = $stackPtr;
         $caseAlignment = ($switch['column'] + $this->indent);
         $caseCount     = 0;
-        $foundDefault  = false;
 
         while (($nextCase = $this->_findNextCase($phpcsFile, ($nextCase + 1), $switch['scope_closer'])) !== false) {
             if ($tokens[$nextCase]['code'] === T_DEFAULT) {
-                $type         = 'default';
-                $foundDefault = true;
+                $type = 'default';
             } else {
                 $type = 'case';
                 $caseCount++;

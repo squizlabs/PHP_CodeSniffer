@@ -117,7 +117,6 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
                     $trimmed   = ltrim($content, ' ');
                     $numSpaces = (strlen($content) - strlen($trimmed));
                     if ($numSpaces < $this->_tabWidth) {
-                        $numTabs = 1;
                         $padding = "\t";
                     } else {
                         $numTabs   = floor($numSpaces / $this->_tabWidth);

@@ -344,7 +344,6 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             }
         }//end if
 
-        $nextToken  = $stackPtr;
         $keyUsed    = false;
         $singleUsed = false;
         $indices    = array();

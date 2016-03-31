@@ -356,7 +356,6 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
         $lastLine = ($tokens[$openBracket]['line'] - 1);
         $argStart = null;
         $argEnd   = null;
-        $inArg    = false;
 
         // Start processing at the first argument.
         $i = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);

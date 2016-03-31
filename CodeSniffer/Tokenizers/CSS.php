@@ -478,7 +478,6 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
             if ($finalTokens[($numTokens - 2)]['content'] === '') {
                 unset($finalTokens[($numTokens - 2)]);
                 $finalTokens = array_values($finalTokens);
-                $numTokens   = count($finalTokens);
             }
         }
 

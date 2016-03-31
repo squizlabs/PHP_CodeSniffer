@@ -142,13 +142,6 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
         $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1), null);
         $this->processBracket($phpcsFile, $openBracket, $tokens, 'use');
 
-        // Also check spacing.
-        if ($tokens[($use - 1)]['code'] === T_WHITESPACE) {
-            $gap = strlen($tokens[($use - 1)]['content']);
-        } else {
-            $gap = 0;
-        }
-
     }//end processMultiLineDeclaration()
 
 

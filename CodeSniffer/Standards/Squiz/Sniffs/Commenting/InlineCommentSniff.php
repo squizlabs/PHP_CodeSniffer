@@ -232,7 +232,6 @@ class Squiz_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Snif
             return;
         }
 
-        $topComment  = $stackPtr;
         $lastComment = $stackPtr;
         while (($topComment = $phpcsFile->findPrevious(array(T_COMMENT), ($lastComment - 1), null, false)) !== false) {
             if ($tokens[$topComment]['line'] !== ($tokens[$lastComment]['line'] - 1)) {

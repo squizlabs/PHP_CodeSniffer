@@ -993,7 +993,6 @@ class PHP_CodeSniffer_File
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
-            $sniff     = $code;
             $sniffCode = $code;
         } else {
             $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
@@ -1141,7 +1140,6 @@ class PHP_CodeSniffer_File
         // Work out which sniff generated the warning.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
-            $sniff     = $code;
             $sniffCode = $code;
         } else {
             $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
@@ -1534,7 +1532,6 @@ class PHP_CodeSniffer_File
                     // String only contains tabs, so we can shortcut the process.
                     $numTabs = strlen($tokens[$i]['content']);
 
-                    $newContent   = '';
                     $firstTabSize = ($tabWidth - ($currColumn % $tabWidth) + 1);
                     $length       = ($firstTabSize + ($tabWidth * ($numTabs - 1)));
                     $currColumn  += $length;
@@ -1829,10 +1826,6 @@ class PHP_CodeSniffer_File
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START SCOPE MAP ***".PHP_EOL;
-            $isWin = false;
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $isWin = true;
-            }
         }
 
         $numTokens = count($tokens);
@@ -1896,11 +1889,6 @@ class PHP_CodeSniffer_File
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo str_repeat("\t", $depth);
             echo "=> Begin scope map recursion at token $stackPtr with depth $depth".PHP_EOL;
-
-            $isWin = false;
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $isWin = true;
-            }
         }
 
         $opener    = null;
