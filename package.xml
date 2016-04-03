@@ -14,7 +14,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2016-01-20</date>
+ <date>2016-04-04</date>
  <time>10:19:00</time>
  <version>
   <release>2.6.0</release>
@@ -2408,6 +2408,80 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>2.6.0</release>
+    <api>2.6.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2016-04-04</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Paths used when setting CLI arguments inside ruleset.xml files are now relative to the ruleset location (request #847)
+      -- This change only applies to paths within ARG tags, used to set CLI arguments
+      -- Previously, the paths were relative to the directory PHPCS was being run from
+      -- Absolute paths are still allowed and work the same way they always have
+      -- This change allows ruleset.xml files to be more portable
+    - Content passed via STDIN will now be processed even if files are specified on the command line or in a ruleset
+    - When passing content via STDIN, you can now specify the file path to use on the command line (request #934)
+      -- This allows sniffs that check file paths to work correctly
+      -- This is the same functionality provided by the phpcs_input_file line, except it is available on the command line
+    - Files processed with custom tokenizers will no longer be skipped if they appear minified (request #877)
+      -- If the custom tokenizer wants minified files skipped, it can set a $skipMinified member var to TRUE
+      -- See the included JS and CSS tokenizers for an example
+    - Config vars set in ruleset.xml files are now processed earlier, allowing them to be used during sniff registration
+      -- Among other things, this allows the installed_paths config var to be set in ruleset.xml files
+      -- Thanks to Pieter Frenssen for the patch
+    - Improved detection of regular expressions in the JS tokenizer
+    - Generic PHP Syntax sniff now uses PHP_BINARY (if available) to determine the path to PHP if no other path is available
+      -- You can still manually set php_path to use a specific binary for testing
+      -- Thanks to Andrew Berry for the patch
+    - The PHP-supplied T_POW_EQUAL token has been replicated for PHP versions before 5.6
+    - Added support for PHP7 use group declarations (request #878)
+      -- New tokens T_OPEN_USE_GROUP and T_CLOSE_USE_GROUP are assigned to the open and close curly braces
+    - Generic ScopeIndent sniff now reports errors for every line that needs the indent changed (request #903)
+      -- Previously, it ignored lines that were indented correctly in the context of their block
+      -- This change produces more technically accurate error messages, but is much more verbose
+    - The PSR2 and Squiz standards now allow multi-line default values in function declarations (request #542)
+      -- Previously, these would automatically make the function a multi-line declaration
+    - Squiz InlineCommentSniff now allows docblocks on require(_once) and include(_once) statements
+      -- Thanks to Gary Jones for the patch
+    - Squiz and PEAR Class and File sniffs no longer assume the first comment in a file is always a file comment
+      -- phpDocumentor assigns the comment to the file only if it is not followed by a structural element
+      -- These sniffs now follow this same rule
+    - Squiz ClassCommentSniff no longer checks for blank lines before class comments
+      -- Removes the error Squiz.Commenting.ClassComment.SpaceBefore
+    - Renamed Squiz.CSS.Opacity.SpacingAfterPoint to Squiz.CSS.Opacity.DecimalPrecision
+      -- Please update your ruleset if you are referencing this error code directly
+    - Fixed PHP tokenizer problem that caused an infinite loop when checking a comment with specific content
+    - Generic Disallow Space and Tab indent sniffs now detect and fix indents inside embedded HTML chunks (request #882)
+    - Squiz CSS IndentationSniff no longer assumes the class opening brace is at the end of a line
+    - Squiz FunctionCommentThrowTagSniff now ignores non-docblock comments
+    - Squiz ComparisonOperatorUsageSniff now allows conditions like while(true)
+    - PEAR FunctionCallSignatureSniff (and the Squiz and PSR2 sniffs that use it) now correctly check the first argument
+      -- Further fix for bug #698
+    - Fixed bug #791 : codingStandardsChangeSetting settings not working with namespaces
+    - Fixed bug #872 : Incorrect detection of blank lines between CSS class names
+    - Fixed bug #879 : Generic InlineControlStructureSniff can create parse error when case/if/elseif/else have mixed brace and braceless definitions
+    - Fixed bug #883 : PSR2 is not checking for blank lines at the start and end of control structures
+    - Fixed bug #884 : Incorrect indentation notice for anonymous classes
+    - Fixed bug #887 : Using curly braces for a shared CASE/DEFAULT statement can generate an error in PSR2 SwitchDeclaration
+    - Fixed bug #889 : Closure inside catch/else/elseif causes indentation error
+    - Fixed bug #890 : Function call inside returned short array value can cause indentation error inside CASE statements
+    - Fixed bug #897 : Generic.Functions.CallTimePassByReference.NotAllowed false positive when short array syntax
+    - Fixed bug #900 : Squiz.Functions.FunctionDeclarationArgumentSpacing bug when no space between type hint and argument
+    - Fixed bug #902 : T_OR_EQUAL and T_POW_EQUAL are not seen as assignment tokens
+    - Fixed bug #910 : Unrecognized "extends" and indentation on anonymous classes
+    - Fixed bug #915 : JS Tokenizer generates errors when processing some decimals
+    - Fixed bug #928 : Endless loop when sniffing a PHP file with a git merge conflict inside a function
+    - Fixed bug #937 : Shebang can cause PSR1 SideEffects warning
+      -- Thanks to Clay Loveless for the patch
+    - Fixed bug #938 : CallTimePassByReferenceSniff ignores functions with return value
+    </notes>
+  </release>
   <release>
    <version>
     <release>2.5.1</release>
