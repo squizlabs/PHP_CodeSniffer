@@ -176,3 +176,7 @@ if ($a <=>$b) {
 
 $a |=  $b;
 $a **=  $b;
+
+$a = +1;
+
+function bar($boo = +1) {}
