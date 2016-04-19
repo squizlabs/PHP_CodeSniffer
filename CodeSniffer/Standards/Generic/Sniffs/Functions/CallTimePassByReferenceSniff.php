@@ -140,6 +140,7 @@ class Generic_Sniffs_Functions_CallTimePassByReferenceSniff implements PHP_CodeS
                 $tokenCode = $tokens[$tokenBefore]['code'];
                 if ($tokenCode === T_VARIABLE
                     || $tokenCode === T_CLOSE_PARENTHESIS
+                    || $tokenCode === T_CLOSE_SQUARE_BRACKET
                     || $tokenCode === T_LNUMBER
                     || isset(PHP_CodeSniffer_Tokens::$assignmentTokens[$tokenCode]) === true
                 ) {
