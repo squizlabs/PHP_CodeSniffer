@@ -63,19 +63,19 @@ class Generic_Sniffs_Formatting_AlphabeticalPropertyNamesSniff implements PHP_Co
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens()[$stackPtr];
+        $tokens = $phpcsFile->getTokens();
 
         // In case we have more than one class/interface/trait
         // per file, we want to reset at the start of each.
-        if ($tokens['code'] !== T_VARIABLE) {
+        if ($tokens[$stackPtr]['code'] !== T_VARIABLE) {
             $this->lastPropertyName = null;
             return;
         }
 
         // We only care about class properties, so ignore global
         // variables (level 0) and method variables (level 2).
-        if ($tokens['level'] === 1) {
-            $propertyName = substr($tokens['content'], 1);
+        if ($tokens[$stackPtr]['level'] === 1) {
+            $propertyName = substr($tokens[$stackPtr]['content'], 1);
             if ($this->lastPropertyName !== null && $propertyName <= $this->lastPropertyName) {
                 $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'Found', [$propertyName]);
             }
