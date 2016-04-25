@@ -116,10 +116,11 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
+
                     $phpcsFile->fixer->endChangeset();
-                }
-            }
-        }
+                }//end if
+            }//end if
+        }//end if
 
         if ($foundLines === 1 || ($this->firstVarException === true && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET)) {
             return;
