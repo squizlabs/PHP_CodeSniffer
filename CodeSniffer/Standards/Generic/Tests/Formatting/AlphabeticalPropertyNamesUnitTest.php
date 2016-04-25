@@ -1,34 +1,32 @@
 <?php
 /**
- * Unit test class for the ObjectOperatorSpacing sniff.
+ * Unit test class for the AlphabeticalPropertyNames sniff.
  *
  * PHP version 5
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @author    Alex Howansky <alex.howansky@gmail.com>
+ * @copyright 2016 Alex Howansky (https://github.com/AlexHowansky)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Unit test class for the ObjectOperatorSpacing sniff.
+ * Unit test class for the SpaceAfterCast sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @author    Alex Howansky <alex.howansky@gmail.com>
+ * @copyright 2016 Alex Howansky (https://github.com/AlexHowansky)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Tests_WhiteSpace_ObjectOperatorSpacingUnitTest extends AbstractSniffUnitTest
+class Generic_Tests_Formatting_AlphabeticalPropertyNamesUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -43,14 +41,11 @@ class Squiz_Tests_WhiteSpace_ObjectOperatorSpacingUnitTest extends AbstractSniff
     public function getErrorList()
     {
         return array(
-                3 => 1,
-                4 => 2,
-                6 => 2,
-                8 => 1,
-                9 => 1,
-                13 => 1,
-                14 => 2,
-                16 => 2,
+                31 => 1,
+                39 => 1,
+                40 => 1,
+                50 => 1,
+                60 => 1,
                );
 
     }//end getErrorList()
