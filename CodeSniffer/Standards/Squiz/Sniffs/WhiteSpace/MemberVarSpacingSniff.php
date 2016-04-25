@@ -126,10 +126,11 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
 
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
+
                     $phpcsFile->fixer->endChangeset();
-                }
-            }
-        }
+                }//end if
+            }//end if
+        }//end if
 
         if ($foundLines === 1 || ($this->firstVarException === true && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET)) {
             return;
