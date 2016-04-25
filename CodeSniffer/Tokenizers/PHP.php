@@ -1005,14 +1005,14 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             if ($tokens[$i]['code'] === T_FUNCTION) {
                 // Context sensitive keywords support.
-                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
                     if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
                         // Non-whitespace content.
                         break;
                     }
                 }
 
-                if (in_array($tokens[$x]['code'], array(T_STRING, T_OPEN_PARENTHESIS, T_BITWISE_AND), true) === false) {
+                if ($x !== $numTokens && in_array($tokens[$x]['code'], array(T_STRING, T_OPEN_PARENTHESIS, T_BITWISE_AND), true) === false) {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $line = $tokens[$x]['line'];
                         $type = $tokens[$x]['type'];
