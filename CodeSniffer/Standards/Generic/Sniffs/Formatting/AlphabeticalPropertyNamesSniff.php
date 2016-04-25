@@ -77,7 +77,7 @@ class Generic_Sniffs_Formatting_AlphabeticalPropertyNamesSniff implements PHP_Co
         if ($tokens[$stackPtr]['level'] === 1) {
             $propertyName = substr($tokens[$stackPtr]['content'], 1);
             if ($this->lastPropertyName !== null && $propertyName <= $this->lastPropertyName) {
-                $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'Found', [$propertyName]);
+                $phpcsFile->addError('Property "%s" is not in alphabetical order.', $stackPtr, 'Found', array($propertyName));
             }
 
             $this->lastPropertyName = $propertyName;
