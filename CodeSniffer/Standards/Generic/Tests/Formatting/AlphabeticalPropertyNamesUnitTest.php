@@ -13,7 +13,7 @@
  */
 
 /**
- * Unit test class for the SpaceAfterCast sniff.
+ * Unit test class for the AlphabeticalPropertyNames sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
