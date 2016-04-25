@@ -26,6 +26,7 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
      */
     public $firstVarException = false;
 
+
     /**
      * Processes the function tokens within the class.
      *
@@ -96,8 +97,8 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
         $prev       = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($first - 1), null, true);
         $foundLines = ($tokens[$first]['line'] - $tokens[$prev]['line'] - 1);
 
-		// Exception to the newline requirement on the first member var after class opener.
-        if($this->firstVarException) {
+        // Exception to the newline requirement on the first member var after class opener.
+        if ($this->firstVarException === true) {
             if ($foundLines > 0 && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET) {
                 $error = 'Expected 0 blank lines before first member var; %s found';
                 $data  = array($foundLines);
@@ -108,18 +109,21 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
                         if ($tokens[$i]['line'] === $tokens[$prev]['line']) {
                             continue;
                         }
+
                         if ($tokens[$i]['line'] === $tokens[$first]['line']) {
                             break;
                         }
+
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
                     $phpcsFile->fixer->endChangeset();
                 }
             }
-		}
-		if ($foundLines === 1 || ($this->firstVarException && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET)) {
-			return;
-		}
+        }
+
+        if ($foundLines === 1 || ($this->firstVarException === true && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET)) {
+            return;
+        }
 
         $error = 'Expected 1 blank line before member var; %s found';
         $data  = array($foundLines);
