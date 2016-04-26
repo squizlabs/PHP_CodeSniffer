@@ -15,4 +15,15 @@ function myFunc($foo)
                     $bar += $foo;
                 };
 }
-?>
+
+// Anon class methods are allowed.
+function test()
+{
+    return new class {
+
+        public function foo()
+        {
+            // do something
+        }
+    };
+}
