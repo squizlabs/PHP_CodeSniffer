@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Konstantin Leboev for the patch
   - Fixed bug #962 : Null coalescing operator (??) not detected as a token
     -- Thanks to Joel Posti for the patch
+  - Fixed bug #973 : Anonymous class declaration and PSR1.Files.SideEffects.FoundWithSymbols
   - Fixed bug #974 : Error when file ends with "function"
  </notes>
  <contents>
