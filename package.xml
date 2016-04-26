@@ -26,12 +26,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The PHP-supplied T_COALESCE token has been replicated for PHP versions before 7.0
   - Fixed bug #943 : Squiz.PHP.InnerFunctions.NotAllowed reported in anonymous classes
   - Fixed bug #951 : InlineIfDeclaration: invalid error produced with UTF-8 string
   - Fixed bug #957 : Operator spacing sniff errors when plus is used as part of a number
     -- Thanks to Klaus Purer for the patch
   - Fixed bug #959 : Call-time pass-by-reference false positive if there is a square bracket before the ampersand
     -- Thanks to Konstantin Leboev for the patch
+  - Fixed bug #962 : Null coalescing operator (??) not detected as a token
+    -- Thanks to Joel Posti for the patch
   - Fixed bug #974 : Error when file ends with "function"
  </notes>
  <contents>
