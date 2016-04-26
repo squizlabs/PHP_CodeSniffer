@@ -403,6 +403,7 @@ class PHP extends Tokenizer
                             T_MODULUS                  => 1,
                             T_POW                      => 2,
                             T_SPACESHIP                => 3,
+                            T_COALESCE                 => 2,
                             T_BITWISE_AND              => 1,
                             T_BITWISE_OR               => 1,
                             T_BITWISE_XOR              => 1,
@@ -788,6 +789,28 @@ class PHP extends Tokenizer
             }
 
             /*
+                Before PHP 7, the ?? operator was tokenized as
+                T_INLINE_THEN followed by T_INLINE_THEN.
+                So look for and combine these tokens in earlier versions.
+            */
+
+            if ($tokenIsArray === false
+                && $token[0] === '?'
+                && isset($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === '?'
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_COALESCE;
+                $newToken['type']    = 'T_COALESCE';
+                $newToken['content'] = '??';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr++;
+                continue;
+            }
+
+            /*
                 Before PHP 7, the <=> operator was tokenized as
                 T_IS_SMALLER_OR_EQUAL followed by T_GREATER_THAN.
                 So look for and combine these tokens in earlier versions.
@@ -1133,11 +1156,17 @@ class PHP extends Tokenizer
 
             if ($this->tokens[$i]['code'] === T_FUNCTION) {
                 // Context sensitive keywords support.
-                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
                     if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
                         // Non-whitespace content.
                         break;
                     }
+                }
+
+                if ($x === $numTokens) {
+                    // We got to the end without finding any more
+                    // non-whitespace content.
+                    continue;
                 }
 
                 if (in_array($this->tokens[$x]['code'], array(T_STRING, T_OPEN_PARENTHESIS, T_BITWISE_AND), true) === false) {

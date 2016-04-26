@@ -176,3 +176,9 @@ if ($a <=>$b) {
 
 $a |=  $b;
 $a **=  $b;
+
+$a = +1;
+
+function bar($boo = +1) {}
+
+$username = $_GET['user']??'nobody';

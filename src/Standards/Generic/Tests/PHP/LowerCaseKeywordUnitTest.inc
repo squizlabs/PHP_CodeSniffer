@@ -14,6 +14,6 @@ For ($var As $var) { Exit; }
 If ($a AND $b OR $c XOR $d) { Die; } ElseIf { } Else
 GOTO a;
 function (Array $a) {}
-const PRIVATE
-HttpStatus::CONTINUE
-?>
+const PRIVATE;
+HttpStatus::CONTINUE;
+function

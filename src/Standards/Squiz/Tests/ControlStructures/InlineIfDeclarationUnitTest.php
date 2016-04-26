@@ -16,6 +16,20 @@ class InlineIfDeclarationUnitTest extends AbstractSniffUnitTest
 
 
     /**
+     * Get a list of CLI values to set befor the file is tested.
+     *
+     * @param string $testFile The name of the file being tested.
+     *
+     * @return array
+     */
+    public function getCliValues($testFile)
+    {
+        return array('--encoding=utf-8');
+
+    }//end getCliValues()
+
+
+    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
