@@ -38,3 +38,5 @@ set('config', function() {
 $config = function() {
     $foo = ($bar === "on") ? "1" : "2";
 };
+
+rand(0, 1) ? 'ěščřžýáí' : NULL;

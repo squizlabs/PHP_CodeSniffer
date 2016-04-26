@@ -89,7 +89,7 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
             return;
         }
 
-        $spaceBefore = ($tokens[$stackPtr]['column'] - ($tokens[$contentBefore]['column'] + strlen($tokens[$contentBefore]['content'])));
+        $spaceBefore = ($tokens[$stackPtr]['column'] - ($tokens[$contentBefore]['column'] + $tokens[$contentBefore]['length']));
         if ($spaceBefore !== 1) {
             $error = 'Inline shorthand IF statement requires 1 space before THEN; %s found';
             $data  = array($spaceBefore);
@@ -108,7 +108,7 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
         $contentBefore = $phpcsFile->findPrevious(T_WHITESPACE, ($inlineElse - 1), null, true);
         $contentAfter  = $phpcsFile->findNext(T_WHITESPACE, ($inlineElse + 1), null, true);
 
-        $spaceBefore = ($tokens[$inlineElse]['column'] - ($tokens[$contentBefore]['column'] + strlen($tokens[$contentBefore]['content'])));
+        $spaceBefore = ($tokens[$inlineElse]['column'] - ($tokens[$contentBefore]['column'] + $tokens[$contentBefore]['length']));
         if ($spaceBefore !== 1) {
             $error = 'Inline shorthand IF statement requires 1 space before ELSE; %s found';
             $data  = array($spaceBefore);
