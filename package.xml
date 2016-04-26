@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #951 : InlineIfDeclaration: invalid error produced with UTF-8 string
   - Fixed bug #957 : Operator spacing sniff errors when plus is used as part of a number
     -- Thanks to Klaus Purer for the patch
+  - Fixed bug #959 : Call-time pass-by-reference false positive if there is a square bracket before the ampersand
+    -- Thanks to Konstantin Leboev for the patch
   - Fixed bug #974 : Error when file ends with "function"
  </notes>
  <contents>
