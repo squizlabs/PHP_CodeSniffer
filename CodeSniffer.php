@@ -857,10 +857,17 @@ class PHP_CodeSniffer
             // Change the directory so all relative paths are worked
             // out based on the location of the ruleset instead of
             // the location of the user.
-            $currentDir = getcwd();
-            chdir($rulesetDir);
+            $inPhar = self::isPharFile($rulesetDir);
+            if ($inPhar === false) {
+                $currentDir = getcwd();
+                chdir($rulesetDir);
+            }
+
             $this->cli->setCommandLineValues($cliArgs);
-            chdir($currentDir);
+
+            if ($inPhar === false) {
+                chdir($currentDir);
+            }
         }
 
         // Process custom ignore pattern rules.
