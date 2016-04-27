@@ -1112,7 +1112,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 for ($x = ($tokenAfterReturnTypeHint - 1); $x > $i; $x--) {
                     if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
-                        if (in_array($tokens[$x]['code'], array(T_STRING, T_ARRAY, T_CALLABLE, T_SELF), true) === true) {
+                        if (in_array($tokens[$x]['code'], array(T_STRING, T_ARRAY, T_CALLABLE, T_SELF, T_PARENT), true) === true) {
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $line = $tokens[$x]['line'];
                                 $type = $tokens[$x]['type'];
