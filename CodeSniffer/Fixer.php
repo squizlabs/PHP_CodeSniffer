@@ -428,6 +428,41 @@ class PHP_CodeSniffer_Fixer
 
 
     /**
+     * Stop recording actions for a changeset, and discard logged changes.
+     *
+     * @return void
+     */
+    public function rollbackChangeset()
+    {
+        $this->_inChangeset = false;
+        $this->_inConflict  = false;
+
+        if (empty($this->_changeset) === false) {
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                $bt = debug_backtrace();
+                if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+                    $sniff = $bt[2]['class'];
+                    $line  = $bt[1]['line'];
+                } else {
+                    $sniff = $bt[1]['class'];
+                    $line  = $bt[0]['line'];
+                }
+
+                $numChanges = count($this->_changeset);
+
+                @ob_end_clean();
+                echo "\t\tR: $sniff (line $line) rolled back the changeset ($numChanges changes)".PHP_EOL;
+                echo "\t=> Changeset rolled back".PHP_EOL;
+                ob_start();
+            }
+
+            $this->_changeset = array();
+        }//end if
+
+    }//end rollbackChangeset()
+
+
+    /**
      * Replace the entire contents of a token.
      *
      * @param int    $stackPtr The position of the token in the token stack.

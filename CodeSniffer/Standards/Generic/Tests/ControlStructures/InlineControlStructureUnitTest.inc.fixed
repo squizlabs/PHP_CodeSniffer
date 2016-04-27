@@ -155,3 +155,12 @@ switch ($type) {
         }
     break;
 }
+
+foreach ($sql as $s) {
+        if (!$this->execute) { echo "<pre>",$s.";\n</pre>"; }
+        else {
+            $ok = $this->connDest->Execute($s);
+            if (!$ok) {
+                if ($this->neverAbort) { $ret = false; }
+                else { return false; } }
+        } }

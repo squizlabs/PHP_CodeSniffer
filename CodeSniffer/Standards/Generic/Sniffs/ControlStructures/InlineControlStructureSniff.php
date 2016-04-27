@@ -154,6 +154,8 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
             $phpcsFile->fixer->addContent($closer, ' { ');
         }
 
+        $fixableScopeOpeners = $this->register();
+
         $lastNonEmpty = $closer;
         for ($end = ($closer + 1); $end < $phpcsFile->numTokens; $end++) {
             if ($tokens[$end]['code'] === T_SEMICOLON) {
@@ -163,6 +165,15 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
             if ($tokens[$end]['code'] === T_CLOSE_TAG) {
                 $end = $lastNonEmpty;
                 break;
+            }
+
+            if (in_array($tokens[$end]['code'], $fixableScopeOpeners) === true
+                && isset($tokens[$end]['scope_opener']) === false
+            ) {
+                // The best way to fix nested inline scopes is middle-out.
+                // So skip this one. It will be detected and fixed on a future loop.
+                $phpcsFile->fixer->rollbackChangeset();
+                return;
             }
 
             if (isset($tokens[$end]['scope_opener']) === true) {
