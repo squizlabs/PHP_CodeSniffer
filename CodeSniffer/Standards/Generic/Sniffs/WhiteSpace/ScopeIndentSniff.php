@@ -100,6 +100,16 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
     private $_ignoreIndentationTokens = array();
 
     /**
+     * List of lines not needing to be checked for indentation.
+     *
+     * Useful to allow Sniffs based on this to easily ignore/skip some
+     * lines from verification.
+     *
+     * @var int[]
+     */
+    public $ignoreLines = array();
+
+    /**
      * Any scope openers that should not cause an indent.
      *
      * @var int[]
@@ -201,6 +211,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             if ($i === false) {
                 // Something has gone very wrong; maybe a parse error.
                 break;
+            }
+
+            if (in_array($tokens[$i]['line'], $this->ignoreLines) === true) {
+                // Lines to ignore.
+                continue;
             }
 
             $checkToken  = null;
