@@ -637,17 +637,19 @@ class PHP_CodeSniffer_CLI
             $files = file($fileList);
             foreach ($files as $inputFile) {
                 $inputFile = trim($inputFile);
-                // skip empty lines
+                // Skip empty lines.
                 if ($inputFile === '') {
                     continue;
                 }
+
                 $realFile = PHP_CodeSniffer::realpath($inputFile);
                 if ($realFile === false) {
                     echo 'ERROR: The specified file "'.$inputFile.'" does not exist'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
                     exit(2);
                 }
-                $this->values['files'][]= $realFile;
+
+                $this->values['files'][] = $realFile;
             }
             break;
         default:
