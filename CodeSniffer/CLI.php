@@ -619,6 +619,46 @@ class PHP_CodeSniffer_CLI
             $this->_cliArgs[($pos + 2)] = '';
             PHP_CodeSniffer::setConfigData($key, $value, true);
             break;
+        case 'file-list':
+            if (isset($this->_cliArgs[($pos + 1)]) === false) {
+                echo 'ERROR: Specifying a file list requires a value'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(0);
+            }
+
+            $file = $this->_cliArgs[($pos + 1)];
+
+            if (file_exists($file) === false) {
+                echo 'File list file "'.$file.'" does not exist'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(2);
+            }
+
+            $fp = fopen($file, 'r');
+            if ($fp === false) {
+                echo 'File "'.$file.'" is not readable'.PHP_EOL.PHP_EOL;
+                $this->printUsage();
+                exit(2);
+            }
+
+            while (!feof($fp)) {
+                $line = trim(fgets($fp));
+                // skip empty lines - if any
+                if ($line === '') {
+                    continue;
+                }
+                $path = PHP_CodeSniffer::realpath($line);
+                if ($path === false) {
+                    fclose($fp);
+                    echo 'ERROR: The specified file "'.$line.'" does not exist'.PHP_EOL.PHP_EOL;
+                    $this->printUsage();
+                    exit(2);
+                }
+                $this->values['files'] []= $path;
+            }
+
+            fclose($fp);
+            break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
                 $sniffs = explode(',', substr($arg, 7));
