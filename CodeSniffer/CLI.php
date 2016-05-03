@@ -626,38 +626,29 @@ class PHP_CodeSniffer_CLI
                 exit(0);
             }
 
-            $file = $this->_cliArgs[($pos + 1)];
+            $fileList = $this->_cliArgs[($pos + 1)];
 
-            if (file_exists($file) === false) {
-                echo 'File list file "'.$file.'" does not exist'.PHP_EOL.PHP_EOL;
+            if (file_exists($fileList) === false) {
+                echo 'File list file "'.$fileList.'" does not exist'.PHP_EOL.PHP_EOL;
                 $this->printUsage();
                 exit(2);
             }
 
-            $fp = fopen($file, 'r');
-            if ($fp === false) {
-                echo 'File "'.$file.'" is not readable'.PHP_EOL.PHP_EOL;
-                $this->printUsage();
-                exit(2);
-            }
-
-            while (!feof($fp)) {
-                $line = trim(fgets($fp));
-                // skip empty lines - if any
-                if ($line === '') {
+            $files = file($fileList);
+            foreach ($files as $inputFile) {
+                $inputFile = trim($inputFile);
+                // skip empty lines
+                if ($inputFile === '') {
                     continue;
                 }
-                $path = PHP_CodeSniffer::realpath($line);
-                if ($path === false) {
-                    fclose($fp);
-                    echo 'ERROR: The specified file "'.$line.'" does not exist'.PHP_EOL.PHP_EOL;
+                $realFile = PHP_CodeSniffer::realpath($inputFile);
+                if ($realFile === false) {
+                    echo 'ERROR: The specified file "'.$inputFile.'" does not exist'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
                     exit(2);
                 }
-                $this->values['files'] []= $path;
+                $this->values['files'][]= $realFile;
             }
-
-            fclose($fp);
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
