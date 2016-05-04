@@ -1254,7 +1254,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] <file> ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] [--file-list=<fileList>] <file> ...'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
@@ -1293,6 +1293,8 @@ class PHP_CodeSniffer_CLI
         echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
         echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
+        echo '        <fileList>    File containing a list of files to use as input'.PHP_EOL;
+        echo '                      (one file path on each line)'.PHP_EOL;
 
     }//end printPHPCSUsage()
 
@@ -1308,7 +1310,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] <file> ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] [--file-list=<fileList>] <file> ...'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
@@ -1333,6 +1335,8 @@ class PHP_CodeSniffer_CLI
         echo '        <suffix>      Write modified files to a filename using this suffix'.PHP_EOL;
         echo '                      ("diff" and "patch" are not used in this mode)'.PHP_EOL;
         echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
+        echo '        <fileList>    File containing a list of files to use as input'.PHP_EOL;
+        echo '                      (one file path on each line)'.PHP_EOL;
 
     }//end printPHPCBFUsage()
 
