@@ -52,7 +52,7 @@ You will then be able to run PHP_CodeSniffer from the vendor bin directory:
 
 You can also download the PHP\_CodeSniffer source and run the `phpcs` and `phpcbf` commands directly from the Git checkout:
 
-    git clone git://github.com/squizlabs/PHP_CodeSniffer.git
+    git clone https://github.com/squizlabs/PHP_CodeSniffer.git
     cd PHP_CodeSniffer
     php scripts/phpcs -h
     php scripts/phpcbf -h
