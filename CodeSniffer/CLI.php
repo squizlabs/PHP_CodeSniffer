@@ -1081,7 +1081,7 @@ class PHP_CodeSniffer_CLI
                 $standard = 'PEAR';
             }
 
-            return array($standard);
+            return explode(',', $standard);
         }//end if
 
         $cleaned   = array();
