@@ -173,6 +173,10 @@ $test = function ($param) use ($result) {
     return null;
 }
 
+$test = function ($param) use ($result) : Something {
+    return null;
+};
+
 // @codingStandardsChangeSetting Generic.Functions.OpeningFunctionBraceBsdAllman checkClosures 0
 
 $closureWithArgs = function ($arg1, $arg2) {
@@ -187,4 +191,8 @@ class Foo
 
     }
 //Comments should not affect code
+}
+
+function myFunction() : Something {
+    return null;
 }

@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
 {
@@ -91,8 +92,9 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
             $error = 'Opening brace should be on the same line as the declaration';
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnNewLine');
             if ($fix === true) {
+                $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($openingBrace - 1), $closeBracket, true);
                 $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->addContent($closeBracket, ' {');
+                $phpcsFile->fixer->addContent($prev, ' {');
                 $phpcsFile->fixer->replaceToken($openingBrace, '');
                 $phpcsFile->fixer->endChangeset();
             }

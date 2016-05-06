@@ -134,6 +134,12 @@ class SideEffectsSniff implements Sniff
                 continue;
             }
 
+            // Ignore anon classes.
+            if ($tokens[$i]['code'] === T_ANON_CLASS) {
+                $i = $tokens[$i]['scope_closer'];
+                continue;
+            }
+
             // Detect and skip over symbols.
             if (isset($symbols[$tokens[$i]['code']]) === true
                 && isset($tokens[$i]['scope_closer']) === true
