@@ -107,8 +107,9 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
             $error = 'Opening brace should be on the same line as the declaration';
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnNewLine');
             if ($fix === true) {
+                $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($openingBrace - 1), $closeBracket, true);
                 $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->addContent($closeBracket, ' {');
+                $phpcsFile->fixer->addContent($prev, ' {');
                 $phpcsFile->fixer->replaceToken($openingBrace, '');
                 $phpcsFile->fixer->endChangeset();
             }
