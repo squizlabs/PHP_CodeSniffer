@@ -813,10 +813,12 @@ class PHP_CodeSniffer_File
         $severity=0,
         $fixable=false
     ) {
-        if ($stackPtr === null) {
-            $line   = 1;
-            $column = 1;
-        } else {
+        
+        // Assign defualt values
+        $line   = 1;
+        $column = 1;
+        
+        if ($stackPtr !== null) {
             $line   = $this->_tokens[$stackPtr]['line'];
             $column = $this->_tokens[$stackPtr]['column'];
         }
