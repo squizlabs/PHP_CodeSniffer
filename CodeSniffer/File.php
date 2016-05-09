@@ -817,7 +817,7 @@ class PHP_CodeSniffer_File
             $line   = 1;
             $column = 1;
         } else {
-            $line   = $this->_tokens[$stackPtr]['line'];
+            $line = $this->_tokens[$stackPtr]['line'];
             if (isset($this->_tokens[$stackPtr]['orig_column']) === true) {
                 $column = $this->_tokens[$stackPtr]['orig_column'];
             } else {
@@ -855,7 +855,7 @@ class PHP_CodeSniffer_File
             $line   = 1;
             $column = 1;
         } else {
-            $line   = $this->_tokens[$stackPtr]['line'];
+            $line = $this->_tokens[$stackPtr]['line'];
             if (isset($this->_tokens[$stackPtr]['orig_column']) === true) {
                 $column = $this->_tokens[$stackPtr]['orig_column'];
             } else {
