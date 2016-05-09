@@ -1330,6 +1330,13 @@
         "extensions": ""
     },
     {
+        "name": "Agora Invoicing",
+        "url": "ladybirdweb/agorainvoicing",
+        "path": "",
+        "ignore": "*/vendor/*",
+        "extensions": ""
+    },
+    {
         "name": "Chamilo",
         "url": "chamilo/chamilo-lms",
         "path": "",
