@@ -818,7 +818,11 @@ class PHP_CodeSniffer_File
             $column = 1;
         } else {
             $line   = $this->_tokens[$stackPtr]['line'];
-            $column = $this->_tokens[$stackPtr]['column'];
+            if (isset($this->_tokens[$stackPtr]['orig_column']) === true) {
+                $column = $this->_tokens[$stackPtr]['orig_column'];
+            } else {
+                $column = $this->_tokens[$stackPtr]['column'];
+            }
         }
 
         return $this->_addError($error, $line, $column, $code, $data, $severity, $fixable);
@@ -852,7 +856,11 @@ class PHP_CodeSniffer_File
             $column = 1;
         } else {
             $line   = $this->_tokens[$stackPtr]['line'];
-            $column = $this->_tokens[$stackPtr]['column'];
+            if (isset($this->_tokens[$stackPtr]['orig_column']) === true) {
+                $column = $this->_tokens[$stackPtr]['orig_column'];
+            } else {
+                $column = $this->_tokens[$stackPtr]['column'];
+            }
         }
 
         return $this->_addWarning($warning, $line, $column, $code, $data, $severity, $fixable);
@@ -1482,6 +1490,7 @@ class PHP_CodeSniffer_File
         $tokenizerType = get_class($tokenizer);
         $ignoring      = false;
         $inTests       = defined('PHP_CODESNIFFER_IN_TESTS');
+        $tabLines      = [];
 
         $checkEncoding = false;
         if ($encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
@@ -1505,6 +1514,10 @@ class PHP_CodeSniffer_File
         for ($i = 0; $i < $numTokens; $i++) {
             $tokens[$i]['line']   = $lineNumber;
             $tokens[$i]['column'] = $currColumn;
+
+            if (isset($tabLines[$lineNumber]) === true) {
+                $tokens[$i]['orig_column'] = ($currColumn + $tabLines[$lineNumber]);
+            }
 
             if ($tokenizerType === 'PHP_CodeSniffer_Tokenizers_PHP'
                 && isset(PHP_CodeSniffer_Tokens::$knownLengths[$tokens[$i]['code']]) === true
@@ -1596,6 +1609,14 @@ class PHP_CodeSniffer_File
 
                 $tokens[$i]['orig_content'] = $tokens[$i]['content'];
                 $tokens[$i]['content']      = $newContent;
+
+                $tabDiff = (strlen($tokens[$i]['orig_content']) - strlen($tokens[$i]['content']));
+
+                if (isset($tabLines[$lineNumber]) === true) {
+                    $tabLines[$lineNumber] += $tabDiff;
+                } else {
+                    $tabLines[$lineNumber] = $tabDiff;
+                }
             }//end if
 
             $tokens[$i]['length'] = $length;
