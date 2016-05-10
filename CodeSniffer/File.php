@@ -1490,7 +1490,7 @@ class PHP_CodeSniffer_File
         $tokenizerType = get_class($tokenizer);
         $ignoring      = false;
         $inTests       = defined('PHP_CODESNIFFER_IN_TESTS');
-        $tabLines      = [];
+        $tabLines      = array();
 
         $checkEncoding = false;
         if ($encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
