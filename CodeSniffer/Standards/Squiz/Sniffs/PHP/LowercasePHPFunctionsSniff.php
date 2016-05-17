@@ -30,6 +30,25 @@
 class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * String -> int hash map of all php built in function names
+     *
+     * @var array
+     */
+    private $_builtInFunctions;
+
+
+    /**
+     * Construct the LowercasePHPFunctionSniff
+     */
+    public function __construct()
+    {
+
+        $allFunctions            = get_defined_functions();
+        $this->_builtInFunctions = array_flip($allFunctions['internal']);
+
+    }//end __construct()
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -98,7 +117,7 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
         // PHP_CodeSniffer can possibly include user defined functions
         // through the use of vendor/autoload.php.
         $content = $tokens[$stackPtr]['content'];
-        if ($this->isBuiltInFunction($content) === false) {
+        if (isset($this->_builtInFunctions[strtolower($content)]) === false) {
             return;
         }
 
@@ -116,24 +135,6 @@ class Squiz_Sniffs_PHP_LowercasePHPFunctionsSniff implements PHP_CodeSniffer_Sni
         }
 
     }//end process()
-
-
-    /**
-     * Determine whether the functionName in question is a built-in
-     * (or extension-provided) function.
-     *
-     * @param string $functionName Name of the function to check
-     *
-     * @return bool
-     */
-    protected function isBuiltInFunction($functionName)
-    {
-
-        $functions    = get_defined_functions();
-        $functionName = strtolower($functionName);
-        return in_array($functionName, $functions['internal']);
-
-    }//end isBuiltInFunction()
 
 
 }//end class
