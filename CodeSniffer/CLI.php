@@ -382,6 +382,7 @@ class PHP_CodeSniffer_CLI
             return $this->values;
         }
 
+        // @FIMXE: $values is un-used. Should this be $this->values?
         $values = $this->getDefaults();
 
         $args = $_SERVER['argv'];
