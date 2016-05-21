@@ -993,7 +993,6 @@ class PHP_CodeSniffer_File
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
-            $sniff     = $code;
             $sniffCode = $code;
         } else {
             $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
@@ -1141,7 +1140,6 @@ class PHP_CodeSniffer_File
         // Work out which sniff generated the warning.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
-            $sniff     = $code;
             $sniffCode = $code;
         } else {
             $parts = explode('_', str_replace('\\', '_', $this->_activeListener));
@@ -1321,7 +1319,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the number of successes recorded.
+     * Returns the number of successes recorded. Currently not in use.
      *
      * @return int
      */
@@ -1829,10 +1827,6 @@ class PHP_CodeSniffer_File
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START SCOPE MAP ***".PHP_EOL;
-            $isWin = false;
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $isWin = true;
-            }
         }
 
         $numTokens = count($tokens);
@@ -1896,11 +1890,6 @@ class PHP_CodeSniffer_File
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo str_repeat("\t", $depth);
             echo "=> Begin scope map recursion at token $stackPtr with depth $depth".PHP_EOL;
-
-            $isWin = false;
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $isWin = true;
-            }
         }
 
         $opener    = null;
