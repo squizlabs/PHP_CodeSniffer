@@ -1336,7 +1336,7 @@ class PHP_CodeSniffer_CLI
      * @param int $width The width of the report. If "auto" then will
      *                   be replaced by the terminal width.
      *
-     * @return void
+     * @return int
      */
     private function _validateReportWidth($width)
     {
