@@ -1319,7 +1319,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the number of successes recorded. Currently not in use.
+     * Returns the number of successes recorded.
      *
      * @return int
      */
