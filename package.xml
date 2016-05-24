@@ -46,7 +46,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #973 : Anonymous class declaration and PSR1.Files.SideEffects.FoundWithSymbols
   - Fixed bug #974 : Error when file ends with "function"
   - Fixed bug #979 : Anonymous function with return type hint is not refactored as expected
-  - Fixed bug #893 : Squiz.WhiteSpace.MemberVarSpacing.AfterComment fails to fix error when comment is not a docblock
+  - Fixed bug #983 : Squiz.WhiteSpace.MemberVarSpacing.AfterComment fails to fix error when comment is not a docblock
+  - Fixed bug #1010 : Squiz NonExectuableCode sniff does not detect boolean OR
+    -- Thanks to Derek Henderson for the patch
  </notes>
  <contents>
   <dir name="/">
