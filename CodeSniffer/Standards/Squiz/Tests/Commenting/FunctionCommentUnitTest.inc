@@ -781,8 +781,7 @@ public function myFunction() {
 /**
  * Return description function + mixed return.
  *
- * @return boolean|int This is a description.
+ * @return mixed This is a description.
  */
 public function myFunction() {
-    return 5;
 }

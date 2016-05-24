@@ -51,7 +51,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Derek Henderson for the patch
   - Fixed bug #1015 : The Squiz.Commenting.FunctionComment sniff doesn't allow description in @return tag
     -- Thanks to Alexander Obuhovich for the patch
-  - Fixed bug #1018 : The Squiz.Commenting.FunctionComment sniff doesn't detect incorrect types when @return tag has description
  </notes>
  <contents>
   <dir name="/">

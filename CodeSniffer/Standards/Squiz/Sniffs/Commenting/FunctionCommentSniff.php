@@ -75,12 +75,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 $phpcsFile->addError($error, $return, 'MissingReturnType');
             } else {
                 // Check return type (can be multiple, separated by '|').
-                // Support both a return type and a description. The return type
-                // is anything up to the first space.
-                $returnParts = explode(' ', $content, 2);
-                $returnType  = $returnParts[0];
-
-                $typeNames      = explode('|', $returnType);
+                $typeNames      = explode('|', $content);
                 $suggestedNames = array();
                 foreach ($typeNames as $i => $typeName) {
                     $suggestedName = PHP_CodeSniffer::suggestType($typeName);
@@ -90,17 +85,22 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 }
 
                 $suggestedType = implode('|', $suggestedNames);
-                if ($returnType !== $suggestedType) {
+                if ($content !== $suggestedType) {
                     $error = 'Expected "%s" but found "%s" for function return type';
                     $data  = array(
                               $suggestedType,
-                              $returnType,
+                              $content,
                              );
                     $fix   = $phpcsFile->addFixableError($error, $return, 'InvalidReturn', $data);
                     if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($return + 2), $suggestedType);
                     }
                 }
+
+                // Support both a return type and a description. The return type
+                // is anything up to the first space.
+                $returnParts = explode(' ', $content, 2);
+                $returnType  = $returnParts[0];
 
                 // If the return type is void, make sure there is
                 // no return statement in the function.
