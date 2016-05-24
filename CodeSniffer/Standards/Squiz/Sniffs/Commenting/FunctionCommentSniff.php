@@ -97,8 +97,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                     }
                 }
 
-                // Ignores description, that might come after return type.
-                list($returnType,) = explode(' ', $content, 2);
+                // Support both a return type and a description. The return type
+                // is anything up to the first space.
+                $returnParts = explode(' ', $content, 2);
+                $returnType  = $returnParts[0];
 
                 // If the return type is void, make sure there is
                 // no return statement in the function.

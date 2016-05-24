@@ -49,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #983 : Squiz.WhiteSpace.MemberVarSpacing.AfterComment fails to fix error when comment is not a docblock
   - Fixed bug #1010 : Squiz NonExectuableCode sniff does not detect boolean OR
     -- Thanks to Derek Henderson for the patch
+  - Fixed bug #1015 : The Squiz.Commenting.FunctionComment sniff doesn't allow description in @return tag
+    -- Thanks to Alexander Obuhovich for the patch
  </notes>
  <contents>
   <dir name="/">
