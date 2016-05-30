@@ -51,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Derek Henderson for the patch
   - Fixed bug #1015 : The Squiz.Commenting.FunctionComment sniff doesn't allow description in @return tag
     -- Thanks to Alexander Obuhovich for the patch
+  - Fixed bug #1022 : Duplicate spaces after opening bracket error with PSR2 standard
   - Fixed bug #1025 : Syntax error in JS file can cause undefined index for parenthesis_closer
  </notes>
  <contents>
