@@ -463,6 +463,13 @@ abstract class Tokenizer
             }//end switch
         }//end for
 
+        // Cleanup for any openers that we didn't find closers for.
+        // This typically means there was a syntax error breaking things.
+        foreach ($openers as $opener) {
+            unset($this->tokens[$opener]['parenthesis_opener']);
+            unset($this->tokens[$opener]['parenthesis_owner']);
+        }
+
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** END TOKEN MAP ***".PHP_EOL;
         }
@@ -517,10 +524,6 @@ abstract class Tokenizer
     {
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START SCOPE MAP ***".PHP_EOL;
-            $isWin = false;
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $isWin = true;
-            }
         }
 
         for ($i = 0; $i < $this->numTokens; $i++) {
@@ -566,11 +569,6 @@ abstract class Tokenizer
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo str_repeat("\t", $depth);
             echo "=> Begin scope map recursion at token $stackPtr with depth $depth".PHP_EOL;
-
-            $isWin = false;
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $isWin = true;
-            }
         }
 
         $opener    = null;

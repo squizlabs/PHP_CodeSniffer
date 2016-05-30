@@ -147,4 +147,8 @@ class Foo
 
     private $bar;
 
+    //  here comes the comment
+
+    private $caseStudy = null;
+
 }

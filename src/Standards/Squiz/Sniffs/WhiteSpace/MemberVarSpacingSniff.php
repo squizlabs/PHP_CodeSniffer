@@ -47,6 +47,12 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
                     $fix   = $phpcsFile->addFixableError($error, $prev, 'AfterComment', $data);
                     if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
+                        // Inline comments have the newline included in the content but
+                        // docblock do not.
+                        if ($tokens[$prev]['code'] === T_COMMENT) {
+                            $phpcsFile->fixer->replaceToken($prev, rtrim($tokens[$prev]['content']));
+                        }
+
                         for ($i = ($prev + 1); $i <= $stackPtr; $i++) {
                             if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
                                 break;

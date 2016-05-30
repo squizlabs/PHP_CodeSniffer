@@ -51,7 +51,7 @@ class NonExecutableCodeSniff implements Sniff
         // If this token is preceded with an "or", it only relates to one line
         // and should be ignored. For example: fopen() or die().
         $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-        if ($tokens[$prev]['code'] === T_LOGICAL_OR) {
+        if ($tokens[$prev]['code'] === T_LOGICAL_OR || $tokens[$prev]['code'] === T_BOOLEAN_OR) {
             return;
         }
 

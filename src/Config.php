@@ -433,7 +433,7 @@ class Config
 
         $standard = self::getConfigData('default_standard');
         if ($standard !== null) {
-            $this->standards = array($standard);
+            $this->standards = explode(',', $standard);
         }
 
         $reportFormat = self::getConfigData('report_format');
