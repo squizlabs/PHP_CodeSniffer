@@ -1761,6 +1761,13 @@ class PHP_CodeSniffer_File
             }//end switch
         }//end for
 
+        // Cleanup for any openers that we didn't find closers for.
+        // This typically means there was a syntax error breaking things.
+        foreach ($openers as $opener) {
+            unset($tokens[$opener]['parenthesis_opener']);
+            unset($tokens[$opener]['parenthesis_owner']);
+        }
+
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** END TOKEN MAP ***".PHP_EOL;
         }
