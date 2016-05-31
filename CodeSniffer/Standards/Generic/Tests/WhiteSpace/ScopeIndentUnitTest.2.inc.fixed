@@ -1062,6 +1062,27 @@ $framework = api::read_framework($params['id']);
 self::validate_context($framework->get_context());
 $output = $PAGE->get_renderer('tool_lp');
 
+class Test123
+{
+	protected static
+		$prop1 = [
+			'testA' => 123,
+		],
+		$prop2 = [
+			'testB' => 456,
+		],
+
+	protected static
+		$prop3 = array(
+			'testA' => 123,
+		),
+		$prop4 = array(
+			'testB' => 456,
+		),
+
+	protected static $prop5;
+}
+
 function foo()
 {
 	$foo = array(

@@ -285,7 +285,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         $first--;
                     }
 
-                    $prev = $phpcsFile->findStartOfStatement($first);
+                    $prev = $phpcsFile->findStartOfStatement($first, T_COMMA);
                     if ($prev !== $first) {
                         // This is not the start of the statement.
                         if ($this->_debug === true) {
@@ -295,7 +295,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         }
 
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
-                        $prev  = $phpcsFile->findStartOfStatement($first);
+                        $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
                         if ($this->_debug === true) {
                             $line = $tokens[$first]['line'];
@@ -391,7 +391,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         $first--;
                     }
 
-                    $prev = $phpcsFile->findStartOfStatement($first);
+                    $prev = $phpcsFile->findStartOfStatement($first, T_COMMA);
                     if ($prev !== $first) {
                         // This is not the start of the statement.
                         if ($this->_debug === true) {
@@ -401,7 +401,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         }
 
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
-                        $prev  = $phpcsFile->findStartOfStatement($first);
+                        $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
                         if ($this->_debug === true) {
                             $line = $tokens[$first]['line'];

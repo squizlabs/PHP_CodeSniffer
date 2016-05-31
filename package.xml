@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed bug #945 : Incorrect indent behavior using deep-nested function and arrays
   - Fixed bug #961 : Two anonymous functions passed as function/method arguments cause indentation false positive
+  - Fixed bug #1026 : Arrays in comma delimited class properties cause ScopeIndent to increase indent
  </notes>
  <contents>
   <dir name="/">
