@@ -154,10 +154,10 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                 823  => 1,
                 858  => 1,
                 879  => 1,
-                1056 => 1,
-                1061 => 1,
-                1063 => 1,
-                1066 => 1,
+                1065 => 1,
+                1070 => 1,
+                1072 => 1,
+                1075 => 1,
                );
 
     }//end getErrorList()

@@ -1053,6 +1053,15 @@ class SomeClass
     }
 }
 
+$params = self::validate_parameters(self::read_competency_framework_parameters(),
+                                    array(
+                                        'id' => $id,
+                                    ));
+
+$framework = api::read_framework($params['id']);
+self::validate_context($framework->get_context());
+$output = $PAGE->get_renderer('tool_lp');
+
     function foo()
     {
         $foo = array(

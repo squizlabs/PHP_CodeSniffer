@@ -253,6 +253,18 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                 $parenOpener = $tokens[$parenCloser]['parenthesis_opener'];
                 if ($tokens[$parenCloser]['line'] !== $tokens[$parenOpener]['line']) {
+                    if (isset($tokens[$parenCloser]['nested_parenthesis']) === true
+                        && empty($tokens[$parenCloser]['nested_parenthesis']) === false
+                    ) {
+                        end($tokens[$parenCloser]['nested_parenthesis']);
+                        $parenOpener = key($tokens[$parenCloser]['nested_parenthesis']);
+                        if ($this->_debug === true) {
+                            $line = $tokens[$parens]['line'];
+                            echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
+                            echo "\t* using parenthesis *".PHP_EOL;
+                        }
+                    }
+
                     $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $parenOpener, true);
                     $checkIndent = ($tokens[$first]['column'] - 1);
                     if (isset($adjustments[$first]) === true) {
