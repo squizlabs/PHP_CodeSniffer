@@ -14,7 +14,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2016-04-04</date>
+ <date>2016-05-31</date>
  <time>10:19:00</time>
  <version>
   <release>3.0.0</release>
@@ -62,32 +62,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- PHPCBF always uses this setting to reduce memory
     -- Setting $recordErrors in custom reports no longer supported
 
-  - The PHP-supplied T_COALESCE token has been replicated for PHP versions before 7.0
-  - Function return types of self, parent and callable are now tokenized as T_RETURN_TYPE
-    -- Thanks to Jaroslav Hanslík for the patch
-  - The default_standard config setting now allows multiple standards to be listed, like on the command line
-    -- Thanks to Michael Mayer for the patch
-  - Installations done via composer now only include the composer autoloader for PHP 5.3.2+ (request #942)
-  - Added a rollbackChangeset() method to the Fixer class to purposely rollback the active changeset
-  - Fixed bug #940 : Auto-fixing issue encountered with inconsistent use of braces
-  - Fixed bug #943 : Squiz.PHP.InnerFunctions.NotAllowed reported in anonymous classes
-  - Fixed bug #944 : PHP warning when running the latest phar
-  - Fixed bug #951 : InlineIfDeclaration: invalid error produced with UTF-8 string
-  - Fixed bug #957 : Operator spacing sniff errors when plus is used as part of a number
-    -- Thanks to Klaus Purer for the patch
-  - Fixed bug #959 : Call-time pass-by-reference false positive if there is a square bracket before the ampersand
-    -- Thanks to Konstantin Leboev for the patch
-  - Fixed bug #962 : Null coalescing operator (??) not detected as a token
-    -- Thanks to Joel Posti for the patch
-  - Fixed bug #973 : Anonymous class declaration and PSR1.Files.SideEffects.FoundWithSymbols
-  - Fixed bug #974 : Error when file ends with "function"
-  - Fixed bug #979 : Anonymous function with return type hint is not refactored as expected
-  - Fixed bug #983 : Squiz.WhiteSpace.MemberVarSpacing.AfterComment fails to fix error when comment is not a docblock
-  - Fixed bug #1010 : Squiz NonExectuableCode sniff does not detect boolean OR
-    -- Thanks to Derek Henderson for the patch
-  - Fixed bug #1015 : The Squiz.Commenting.FunctionComment sniff doesn't allow description in @return tag
-    -- Thanks to Alexander Obuhovich for the patch
-  - Fixed bug #1025 : Syntax error in JS file can cause undefined index for parenthesis_closer
+  - Fixed bug #945 : Incorrect indent behavior using deep-nested function and arrays
+  - Fixed bug #961 : Two anonymous functions passed as function/method arguments cause indentation false positive
+  - Fixed bug #1026 : Arrays in comma delimited class properties cause ScopeIndent to increase indent
  </notes>
  <contents>
   <dir name="/">
@@ -2410,6 +2387,47 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>2.6.1</release>
+    <api>2.6.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2016-05-31</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - The PHP-supplied T_COALESCE token has been replicated for PHP versions before 7.0
+    - Function return types of self, parent and callable are now tokenized as T_RETURN_TYPE
+      -- Thanks to Jaroslav Hanslík for the patch
+    - The default_standard config setting now allows multiple standards to be listed, like on the command line
+      -- Thanks to Michael Mayer for the patch
+    - Installations done via composer now only include the composer autoloader for PHP 5.3.2+ (request #942)
+    - Added a rollbackChangeset() method to the Fixer class to purposely rollback the active changeset
+    - Fixed bug #940 : Auto-fixing issue encountered with inconsistent use of braces
+    - Fixed bug #943 : Squiz.PHP.InnerFunctions.NotAllowed reported in anonymous classes
+    - Fixed bug #944 : PHP warning when running the latest phar
+    - Fixed bug #951 : InlineIfDeclaration: invalid error produced with UTF-8 string
+    - Fixed bug #957 : Operator spacing sniff errors when plus is used as part of a number
+      -- Thanks to Klaus Purer for the patch
+    - Fixed bug #959 : Call-time pass-by-reference false positive if there is a square bracket before the ampersand
+      -- Thanks to Konstantin Leboev for the patch
+    - Fixed bug #962 : Null coalescing operator (??) not detected as a token
+      -- Thanks to Joel Posti for the patch
+    - Fixed bug #973 : Anonymous class declaration and PSR1.Files.SideEffects.FoundWithSymbols
+    - Fixed bug #974 : Error when file ends with "function"
+    - Fixed bug #979 : Anonymous function with return type hint is not refactored as expected
+    - Fixed bug #983 : Squiz.WhiteSpace.MemberVarSpacing.AfterComment fails to fix error when comment is not a docblock
+    - Fixed bug #1010 : Squiz NonExectuableCode sniff does not detect boolean OR
+      -- Thanks to Derek Henderson for the patch
+    - Fixed bug #1015 : The Squiz.Commenting.FunctionComment sniff doesn't allow description in @return tag
+      -- Thanks to Alexander Obuhovich for the patch
+    - Fixed bug #1022 : Duplicate spaces after opening bracket error with PSR2 standard
+    - Fixed bug #1025 : Syntax error in JS file can cause undefined index for parenthesis_closer
+    </notes>
+  </release>
   <release>
    <version>
     <release>2.6.0</release>

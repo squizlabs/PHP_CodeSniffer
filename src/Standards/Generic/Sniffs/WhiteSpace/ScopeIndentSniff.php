@@ -237,6 +237,18 @@ class ScopeIndentSniff implements Sniff
 
                 $parenOpener = $tokens[$parenCloser]['parenthesis_opener'];
                 if ($tokens[$parenCloser]['line'] !== $tokens[$parenOpener]['line']) {
+                    if (isset($tokens[$parenCloser]['nested_parenthesis']) === true
+                        && empty($tokens[$parenCloser]['nested_parenthesis']) === false
+                    ) {
+                        end($tokens[$parenCloser]['nested_parenthesis']);
+                        $parenOpener = key($tokens[$parenCloser]['nested_parenthesis']);
+                        if ($this->_debug === true) {
+                            $line = $tokens[$parens]['line'];
+                            echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
+                            echo "\t* using parenthesis *".PHP_EOL;
+                        }
+                    }
+
                     $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $parenOpener, true);
                     $checkIndent = ($tokens[$first]['column'] - 1);
                     if (isset($adjustments[$first]) === true) {
@@ -257,7 +269,7 @@ class ScopeIndentSniff implements Sniff
                         $first--;
                     }
 
-                    $prev = $phpcsFile->findStartOfStatement($first);
+                    $prev = $phpcsFile->findStartOfStatement($first, T_COMMA);
                     if ($prev !== $first) {
                         // This is not the start of the statement.
                         if ($this->_debug === true) {
@@ -267,7 +279,7 @@ class ScopeIndentSniff implements Sniff
                         }
 
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
-                        $prev  = $phpcsFile->findStartOfStatement($first);
+                        $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
                         if ($this->_debug === true) {
                             $line = $tokens[$first]['line'];
@@ -363,7 +375,7 @@ class ScopeIndentSniff implements Sniff
                         $first--;
                     }
 
-                    $prev = $phpcsFile->findStartOfStatement($first);
+                    $prev = $phpcsFile->findStartOfStatement($first, T_COMMA);
                     if ($prev !== $first) {
                         // This is not the start of the statement.
                         if ($this->_debug === true) {
@@ -373,7 +385,7 @@ class ScopeIndentSniff implements Sniff
                         }
 
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
-                        $prev  = $phpcsFile->findStartOfStatement($first);
+                        $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
                         if ($this->_debug === true) {
                             $line = $tokens[$first]['line'];
@@ -913,13 +925,13 @@ class ScopeIndentSniff implements Sniff
                 }
 
                 // Make sure it is divisible by our expected indent.
-                $currentIndent      = (int) (floor($currentIndent / $this->indent) * $this->indent);
-                $setIndents[$first] = $currentIndent;
+                $currentIndent = (int) (floor($currentIndent / $this->indent) * $this->indent);
                 $i = $tokens[$i]['scope_opener'];
+                $setIndents[$i] = $currentIndent;
 
                 if ($this->_debug === true) {
-                    $type = $tokens[$first]['type'];
-                    echo "\t=> indent set to $currentIndent by token $first ($type)".PHP_EOL;
+                    $type = $tokens[$i]['type'];
+                    echo "\t=> indent set to $currentIndent by token $i ($type)".PHP_EOL;
                 }
 
                 continue;
@@ -1136,7 +1148,7 @@ class ScopeIndentSniff implements Sniff
                     }
 
                     if ($condition === 0 || $tokens[$condition]['scope_opener'] < $first) {
-                        $currentIndent -= $this->indent;
+                        $currentIndent = $setIndents[$first];
                     } else if ($this->_debug === true) {
                         echo "\t* ignoring scope closer *".PHP_EOL;
                     }
