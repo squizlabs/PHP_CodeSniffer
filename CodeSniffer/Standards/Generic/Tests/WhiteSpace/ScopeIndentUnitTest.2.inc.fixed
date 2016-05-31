@@ -1036,6 +1036,23 @@ switch ($parameter) {
 		return [];
 }
 
+class SomeClass
+{
+	public function someFunc()
+	{
+		a(function () {
+			echo "a";
+		})->b(function () {
+			echo "b";
+		});
+
+		if (true) {
+			echo "c";
+		}
+		echo "d";
+	}
+}
+
 function foo()
 {
 	$foo = array(

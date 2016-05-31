@@ -929,13 +929,13 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 }
 
                 // Make sure it is divisible by our expected indent.
-                $currentIndent      = (int) (floor($currentIndent / $this->indent) * $this->indent);
-                $setIndents[$first] = $currentIndent;
+                $currentIndent = (int) (floor($currentIndent / $this->indent) * $this->indent);
                 $i = $tokens[$i]['scope_opener'];
+                $setIndents[$i] = $currentIndent;
 
                 if ($this->_debug === true) {
-                    $type = $tokens[$first]['type'];
-                    echo "\t=> indent set to $currentIndent by token $first ($type)".PHP_EOL;
+                    $type = $tokens[$i]['type'];
+                    echo "\t=> indent set to $currentIndent by token $i ($type)".PHP_EOL;
                 }
 
                 continue;
@@ -1152,7 +1152,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
 
                     if ($condition === 0 || $tokens[$condition]['scope_opener'] < $first) {
-                        $currentIndent -= $this->indent;
+                        $currentIndent = $setIndents[$first];
                     } else if ($this->_debug === true) {
                         echo "\t* ignoring scope closer *".PHP_EOL;
                     }
