@@ -153,3 +153,8 @@ class Base
         };
     }
 }
+
+class A extends B
+    implements C
+{
+}

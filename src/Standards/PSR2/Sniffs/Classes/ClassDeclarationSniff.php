@@ -319,6 +319,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
             } else if ($tokens[($className - 1)]['code'] !== T_NS_SEPARATOR
                 || $tokens[($className - 2)]['code'] !== T_STRING
             ) {
+                // Not part of a longer fully qualified class name.
                 if ($tokens[($className - 1)]['code'] === T_COMMA
                     || ($tokens[($className - 1)]['code'] === T_NS_SEPARATOR
                     && $tokens[($className - 2)]['code'] === T_COMMA)
@@ -352,7 +353,8 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                 }//end if
             }//end if
 
-            if ($tokens[($className + 1)]['code'] !== T_NS_SEPARATOR
+            if ($checkingImplements === true
+                && $tokens[($className + 1)]['code'] !== T_NS_SEPARATOR
                 && $tokens[($className + 1)]['code'] !== T_COMMA
             ) {
                 if ($i !== ($classCount - 1)) {

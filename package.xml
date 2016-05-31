@@ -64,6 +64,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
 
   - Fixed bug #945 : Incorrect indent behavior using deep-nested function and arrays
   - Fixed bug #961 : Two anonymous functions passed as function/method arguments cause indentation false positive
+  - Fixed bug #1023 : PSR2.Classes.ClassDeclaration fails if class extends base class and "implements" is on trailing line
   - Fixed bug #1026 : Arrays in comma delimited class properties cause ScopeIndent to increase indent
  </notes>
  <contents>
