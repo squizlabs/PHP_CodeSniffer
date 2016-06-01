@@ -325,3 +325,7 @@ function test() : array
 {
     return [];
 }
+
+$fields = [
+           'id'    => ['type' => 'INT'],
+           'value' => ['type' => 'VARCHAR']];
