@@ -259,8 +259,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                         end($tokens[$parenCloser]['nested_parenthesis']);
                         $parenOpener = key($tokens[$parenCloser]['nested_parenthesis']);
                         if ($this->_debug === true) {
-                            $line = $tokens[$parens]['line'];
-                            echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
+                            $line = $tokens[$parenOpener]['line'];
+                            echo "\t* token has nested parenthesis $parenOpener on line $line *".PHP_EOL;
                             echo "\t* using parenthesis *".PHP_EOL;
                         }
                     }
