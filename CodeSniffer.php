@@ -715,7 +715,6 @@ class PHP_CodeSniffer
         $cliValues      = $this->cli->getCommandLineValues();
 
         $rulesetDir          = dirname($rulesetPath);
-        $rulesetName         = basename($rulesetPath);
         self::$rulesetDirs[] = $rulesetDir;
 
         if (is_dir($rulesetDir.DIRECTORY_SEPARATOR.'Sniffs') === true) {
