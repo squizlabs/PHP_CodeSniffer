@@ -1262,7 +1262,7 @@
     {
         "name": "Nette Tester: enjoyable unit testing",
         "url": "nette/tester",
-        "path": "Tester",
+        "path": "",
         "ignore": "",
         "extensions": ""
     },
