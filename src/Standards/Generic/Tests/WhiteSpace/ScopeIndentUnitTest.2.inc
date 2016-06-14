@@ -1083,6 +1083,32 @@ class Test123
 	protected static $prop5;
 }
 
+$foo = foo(
+	function () {
+		$foo->debug(
+			$a,
+			$b
+		);
+
+		if ($a) {
+			$b = $a;
+		}
+	}
+);
+
+$foo = foo(
+	function () {
+		$foo->debug(
+			$a,
+			$b
+	);
+
+		if ($a) {
+			$b = $a;
+		}
+	}
+);
+
 	function foo()
 	{
 		$foo = array(

@@ -246,6 +246,8 @@ class MultipleStatementAlignmentSniff implements Sniff
             return $stackPtr;
         }
 
+        $numAssignments = count($assignments);
+
         $errorGenerated = false;
         foreach ($assignments as $assignment => $data) {
             if ($data['found'] === $data['expected']) {
@@ -266,7 +268,7 @@ class MultipleStatementAlignmentSniff implements Sniff
                 }
             }
 
-            if (count($assignments) === 1) {
+            if ($numAssignments === 1) {
                 $type  = 'Incorrect';
                 $error = 'Equals sign not aligned correctly; expected %s but found %s';
             } else {
@@ -297,10 +299,12 @@ class MultipleStatementAlignmentSniff implements Sniff
             }
         }//end foreach
 
-        if ($errorGenerated === true) {
-            $phpcsFile->recordMetric($stackPtr, 'Adjacent assignments aligned', 'no');
-        } else {
-            $phpcsFile->recordMetric($stackPtr, 'Adjacent assignments aligned', 'yes');
+        if ($numAssignments > 1) {
+            if ($errorGenerated === true) {
+                $phpcsFile->recordMetric($stackPtr, 'Adjacent assignments aligned', 'no');
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Adjacent assignments aligned', 'yes');
+            }
         }
 
         if ($stopped !== null) {

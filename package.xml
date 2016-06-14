@@ -66,6 +66,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #961 : Two anonymous functions passed as function/method arguments cause indentation false positive
   - Fixed bug #1023 : PSR2.Classes.ClassDeclaration fails if class extends base class and "implements" is on trailing line
   - Fixed bug #1026 : Arrays in comma delimited class properties cause ScopeIndent to increase indent
+  - Fixed bug #1028 : Squiz ArrayDeclaration incorrectly fixes multi-line array where end bracket is not on a new line
+  - Fixed bug #1036 : Adjacent assignments aligned analysis statement wrong
  </notes>
  <contents>
   <dir name="/">
