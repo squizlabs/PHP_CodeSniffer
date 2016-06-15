@@ -1229,14 +1229,14 @@
       "winner":"upper"
     },
     "Adjacent assignments aligned":{
-      "total":106,
+      "total":23,
       "values":{
         "no":8,
-        "yes":98
+        "yes":15
       },
       "percentages":{
-        "no":7.55,
-        "yes":92.45
+        "no":34.78,
+        "yes":65.22
       },
       "trends":{
         "2015-01-01":{

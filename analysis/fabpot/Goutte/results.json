@@ -1473,14 +1473,12 @@
       "winner":"yes"
     },
     "Adjacent assignments aligned":{
-      "total":28,
+      "total":3,
       "values":{
-        "no":"3",
-        "yes":"25"
+        "no":"3"
       },
       "percentages":{
-        "no":10.71,
-        "yes":89.29
+        "no":100
       },
       "trends":{
         "2015-01-01":{
@@ -1538,7 +1536,7 @@
           "no":"3"
         }
       },
-      "winner":"yes"
+      "winner":"no"
     },
     "Space after operator":{
       "total":53,
