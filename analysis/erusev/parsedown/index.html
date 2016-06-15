@@ -543,6 +543,14 @@
 <div class="historicalChart">
 <div class="chart-trend" id="chart4t" style="width:860px;height:250px;"><div class="placeholder"></div></div>
 </div>
+<div class="historicalEvents">
+<ul>
+<li onmouseover="ct4.setSelection([{row:1,column:null}]);" onmouseout="ct4.setSelection([]);" class="historicalDate"><strong>01 Feb 2015</strong>: there was a 17.27% swing from <em>no</em> to <em>yes</em>
+<ul>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -1828,7 +1836,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Fri, 10 Jun 2016 13:11:15 +1000<br/>Using master branch of <a href="https://github.com/erusev/parsedown">erusev/parsedown</a> @ commit <a href="https://github.com/erusev/parsedown/commit/490a8f35a4163f59230f53c34f1fbb22a864c01e">490a8f35a4163f59230f53c34f1fbb22a864c01e</a></div>
+    <div class="footer">Report generated on Wed, 15 Jun 2016 11:30:36 +1000<br/>Using master branch of <a href="https://github.com/erusev/parsedown">erusev/parsedown</a> @ commit <a href="https://github.com/erusev/parsedown/commit/490a8f35a4163f59230f53c34f1fbb22a864c01e">490a8f35a4163f59230f53c34f1fbb22a864c01e</a></div>
 </div>
 
 <script>
@@ -1898,7 +1906,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "assignment blocks");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),11.22,false,'11.22%',88.78,false,'88.78%',205,"205"],[new Date('2015-02-01'),10.43,false,'10.43%',89.57,false,'89.57%',211,"211"],[new Date('2015-03-01'),10.48,false,'10.48%',89.52,false,'89.52%',210,"210"],[new Date('2015-04-01'),10.48,false,'10.48%',89.52,false,'89.52%',210,"210"],[new Date('2015-05-01'),10.48,false,'10.48%',89.52,false,'89.52%',210,"210"],[new Date('2015-06-01'),10.48,false,'10.48%',89.52,false,'89.52%',210,"210"],[new Date('2015-07-01'),10.63,false,'10.63%',89.37,false,'89.37%',207,"207"],[new Date('2015-08-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2015-09-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2015-10-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2015-11-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2015-12-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2016-01-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2016-02-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2016-03-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2016-04-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2016-05-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"],[new Date('2016-06-01'),10.58,false,'10.58%',89.42,false,'89.42%',208,"208"]]);
+data.addRows([[new Date('2015-01-01'),27.27,false,'27.27%',72.73,false,'72.73%',11,"11"],[new Date('2015-02-01'),10,true,'10%',90,true,'90%',10,"10"],[new Date('2015-03-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2015-04-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2015-05-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2015-06-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2015-07-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2015-08-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2015-09-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2015-10-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2015-11-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2015-12-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2016-01-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2016-02-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2016-03-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2016-04-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2016-05-01'),10,false,'10%',90,false,'90%',10,"10"],[new Date('2016-06-01'),10,false,'10%',90,false,'90%',10,"10"]]);
 ct4 = new google.visualization.LineChart(document.getElementById("chart4t"));
 trendOptions.series = {2:itemSeries};
 trendOptions.vAxes[1].title = "assignment blocks";

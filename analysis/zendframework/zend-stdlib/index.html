@@ -596,6 +596,18 @@
 <div class="historicalChart">
 <div class="chart-trend" id="chart5t" style="width:860px;height:250px;"><div class="placeholder"></div></div>
 </div>
+<div class="historicalEvents">
+<ul>
+<li onmouseover="ct5.setSelection([{row:3,column:null}]);" onmouseout="ct5.setSelection([]);" class="historicalDate"><strong>01 Apr 2015</strong>: there was a 5.25% swing from <em>no</em> to <em>yes</em>
+<ul>
+</ul>
+</li>
+<li onmouseover="ct5.setSelection([{row:9,column:null}]);" onmouseout="ct5.setSelection([]);" class="historicalDate"><strong>01 Oct 2015</strong>: there was a 12.49% swing from <em>no</em> to <em>yes</em>
+<ul>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -1845,7 +1857,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Fri, 10 Jun 2016 13:11:17 +1000<br/>Using master branch of <a href="https://github.com/zendframework/zend-stdlib">zendframework/zend-stdlib</a> @ commit <a href="https://github.com/zendframework/zend-stdlib/commit/b460309e780e23b7ba45c8f971349c67c4afc16c">b460309e780e23b7ba45c8f971349c67c4afc16c</a></div>
+    <div class="footer">Report generated on Wed, 15 Jun 2016 11:30:37 +1000<br/>Using master branch of <a href="https://github.com/zendframework/zend-stdlib">zendframework/zend-stdlib</a> @ commit <a href="https://github.com/zendframework/zend-stdlib/commit/b460309e780e23b7ba45c8f971349c67c4afc16c">b460309e780e23b7ba45c8f971349c67c4afc16c</a></div>
 </div>
 
 <script>
@@ -1935,7 +1947,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "assignment blocks");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),6.52,false,'6.52%',93.48,false,'93.48%',322,"322"],[new Date('2015-02-01'),6.52,false,'6.52%',93.48,false,'93.48%',322,"322"],[new Date('2015-03-01'),6.52,false,'6.52%',93.48,false,'93.48%',322,"322"],[new Date('2015-04-01'),5.74,false,'5.74%',94.26,false,'94.26%',366,"366"],[new Date('2015-05-01'),5.74,false,'5.74%',94.26,false,'94.26%',366,"366"],[new Date('2015-06-01'),5.74,false,'5.74%',94.26,false,'94.26%',366,"366"],[new Date('2015-07-01'),5.77,false,'5.77%',94.23,false,'94.23%',364,"364"],[new Date('2015-08-01'),5.77,false,'5.77%',94.23,false,'94.23%',364,"364"],[new Date('2015-09-01'),5.77,false,'5.77%',94.23,false,'94.23%',364,"364"],[new Date('2015-10-01'),4.72,false,'4.72%',95.28,false,'95.28%',233,"233"],[new Date('2015-11-01'),4.72,false,'4.72%',95.28,false,'95.28%',233,"233"],[new Date('2015-12-01'),4.72,false,'4.72%',95.28,false,'95.28%',233,"233"],[new Date('2016-01-01'),4.72,false,'4.72%',95.28,false,'95.28%',233,"233"],[new Date('2016-02-01'),4.72,false,'4.72%',95.28,false,'95.28%',233,"233"],[new Date('2016-03-01'),4.15,false,'4.15%',95.85,false,'95.85%',217,"217"],[new Date('2016-04-01'),4.15,false,'4.15%',95.85,false,'95.85%',217,"217"],[new Date('2016-05-01'),4.15,false,'4.15%',95.85,false,'95.85%',217,"217"],[new Date('2016-06-01'),4.15,false,'4.15%',95.85,false,'95.85%',217,"217"]]);
+data.addRows([[new Date('2015-01-01'),36.73,false,'36.73%',63.27,false,'63.27%',49,"49"],[new Date('2015-02-01'),36.73,false,'36.73%',63.27,false,'63.27%',49,"49"],[new Date('2015-03-01'),36.73,false,'36.73%',63.27,false,'63.27%',49,"49"],[new Date('2015-04-01'),31.48,true,'31.48%',68.52,true,'68.52%',54,"54"],[new Date('2015-05-01'),31.48,false,'31.48%',68.52,false,'68.52%',54,"54"],[new Date('2015-06-01'),31.48,false,'31.48%',68.52,false,'68.52%',54,"54"],[new Date('2015-07-01'),30.91,false,'30.91%',69.09,false,'69.09%',55,"55"],[new Date('2015-08-01'),30.91,false,'30.91%',69.09,false,'69.09%',55,"55"],[new Date('2015-09-01'),30.91,false,'30.91%',69.09,false,'69.09%',55,"55"],[new Date('2015-10-01'),18.42,true,'18.42%',81.58,true,'81.58%',38,"38"],[new Date('2015-11-01'),18.42,false,'18.42%',81.58,false,'81.58%',38,"38"],[new Date('2015-12-01'),18.42,false,'18.42%',81.58,false,'81.58%',38,"38"],[new Date('2016-01-01'),18.42,false,'18.42%',81.58,false,'81.58%',38,"38"],[new Date('2016-02-01'),18.42,false,'18.42%',81.58,false,'81.58%',38,"38"],[new Date('2016-03-01'),20,false,'20%',80,false,'80%',35,"35"],[new Date('2016-04-01'),20,false,'20%',80,false,'80%',35,"35"],[new Date('2016-05-01'),20,false,'20%',80,false,'80%',35,"35"],[new Date('2016-06-01'),20,false,'20%',80,false,'80%',35,"35"]]);
 ct5 = new google.visualization.LineChart(document.getElementById("chart5t"));
 trendOptions.series = {2:itemSeries};
 trendOptions.vAxes[1].title = "assignment blocks";
@@ -2354,7 +2366,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "operators");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),100,false,'100%',622,"622"],[new Date('2015-02-01'),100,false,'100%',622,"622"],[new Date('2015-03-01'),100,false,'100%',622,"622"],[new Date('2015-04-01'),100,false,'100%',714,"714"],[new Date('2015-05-01'),100,false,'100%',714,"714"],[new Date('2015-06-01'),100,false,'100%',714,"714"],[new Date('2015-07-01'),100,false,'100%',712,"712"],[new Date('2015-08-01'),100,false,'100%',712,"712"],[new Date('2015-09-01'),100,false,'100%',712,"712"],[new Date('2015-10-01'),100,false,'100%',494,"494"],[new Date('2015-11-01'),100,false,'100%',494,"494"],[new Date('2015-12-01'),100,false,'100%',494,"494"],[new Date('2016-01-01'),100,false,'100%',494,"494"],[new Date('2016-02-01'),100,false,'100%',494,"494"],[new Date('2016-03-01'),100,false,'100%',467,"467"],[new Date('2016-04-01'),100,false,'100%',467,"467"],[new Date('2016-05-01'),100,false,'100%',469,"469"],[new Date('2016-06-01'),100,false,'100%',469,"469"]]);
+data.addRows([[new Date('2015-01-01'),100,false,'100%',623,"623"],[new Date('2015-02-01'),100,false,'100%',623,"623"],[new Date('2015-03-01'),100,false,'100%',623,"623"],[new Date('2015-04-01'),100,false,'100%',715,"715"],[new Date('2015-05-01'),100,false,'100%',715,"715"],[new Date('2015-06-01'),100,false,'100%',715,"715"],[new Date('2015-07-01'),100,false,'100%',713,"713"],[new Date('2015-08-01'),100,false,'100%',713,"713"],[new Date('2015-09-01'),100,false,'100%',713,"713"],[new Date('2015-10-01'),100,false,'100%',495,"495"],[new Date('2015-11-01'),100,false,'100%',495,"495"],[new Date('2015-12-01'),100,false,'100%',495,"495"],[new Date('2016-01-01'),100,false,'100%',495,"495"],[new Date('2016-02-01'),100,false,'100%',495,"495"],[new Date('2016-03-01'),100,false,'100%',467,"467"],[new Date('2016-04-01'),100,false,'100%',467,"467"],[new Date('2016-05-01'),100,false,'100%',469,"469"],[new Date('2016-06-01'),100,false,'100%',469,"469"]]);
 ct33 = new google.visualization.LineChart(document.getElementById("chart33t"));
 perfectTrendOptions.series = {1:itemSeries};
 perfectTrendOptions.vAxes[1].title = "operators";

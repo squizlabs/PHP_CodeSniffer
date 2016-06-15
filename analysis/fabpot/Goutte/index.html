@@ -1771,7 +1771,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Fri, 10 Jun 2016 13:11:15 +1000<br/>Using master branch of <a href="https://github.com/fabpot/Goutte">fabpot/Goutte</a> @ commit <a href="https://github.com/fabpot/Goutte/commit/3cbc6ed222422a28400e470050f14928a153207e">3cbc6ed222422a28400e470050f14928a153207e</a></div>
+    <div class="footer">Report generated on Wed, 15 Jun 2016 11:30:36 +1000<br/>Using master branch of <a href="https://github.com/fabpot/Goutte">fabpot/Goutte</a> @ commit <a href="https://github.com/fabpot/Goutte/commit/3cbc6ed222422a28400e470050f14928a153207e">3cbc6ed222422a28400e470050f14928a153207e</a></div>
 </div>
 
 <script>
@@ -1841,11 +1841,11 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "assignment blocks");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),10,false,'10%',90,false,'90%',20,"20"],[new Date('2015-02-01'),10,false,'10%',90,false,'90%',20,"20"],[new Date('2015-03-01'),10,false,'10%',90,false,'90%',20,"20"],[new Date('2015-04-01'),10,false,'10%',90,false,'90%',20,"20"],[new Date('2015-05-01'),10,false,'10%',90,false,'90%',20,"20"],[new Date('2015-06-01'),10,false,'10%',90,false,'90%',20,"20"],[new Date('2015-07-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2015-08-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2015-09-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2015-10-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2015-11-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2015-12-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2016-01-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2016-02-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2016-03-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2016-04-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2016-05-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"],[new Date('2016-06-01'),10.71,false,'10.71%',89.29,false,'89.29%',28,"28"]]);
+data.addRows([[new Date('2015-01-01'),100,false,'100%',0.00,false,'0%',2,"2"],[new Date('2015-02-01'),100,false,'100%',0.00,false,'0%',2,"2"],[new Date('2015-03-01'),100,false,'100%',0.00,false,'0%',2,"2"],[new Date('2015-04-01'),100,false,'100%',0.00,false,'0%',2,"2"],[new Date('2015-05-01'),100,false,'100%',0.00,false,'0%',2,"2"],[new Date('2015-06-01'),100,false,'100%',0.00,false,'0%',2,"2"],[new Date('2015-07-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2015-08-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2015-09-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2015-10-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2015-11-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2015-12-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2016-01-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2016-02-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2016-03-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2016-04-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2016-05-01'),100,false,'100%',0.00,false,'0%',3,"3"],[new Date('2016-06-01'),100,false,'100%',0.00,false,'0%',3,"3"]]);
 ct4 = new google.visualization.LineChart(document.getElementById("chart4t"));
-trendOptions.series = {2:itemSeries};
-trendOptions.vAxes[1].title = "assignment blocks";
-ct4.draw(data, trendOptions);
+perfectTrendOptions.series = {2:itemSeries};
+perfectTrendOptions.vAxes[1].title = "assignment blocks";
+ct4.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart5()}, 10);}
 function drawChart5() {
 var data = new google.visualization.DataTable();

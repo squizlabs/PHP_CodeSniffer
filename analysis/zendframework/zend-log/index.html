@@ -740,6 +740,14 @@
 <div class="historicalChart">
 <div class="chart-trend" id="chart7t" style="width:860px;height:250px;"><div class="placeholder"></div></div>
 </div>
+<div class="historicalEvents">
+<ul>
+<li onmouseover="ct7.setSelection([{row:14,column:null}]);" onmouseout="ct7.setSelection([]);" class="historicalDate"><strong>01 Mar 2016</strong>: there was a 3.13% swing from <em>no</em> to <em>yes</em>
+<ul>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -1868,7 +1876,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Fri, 10 Jun 2016 13:11:16 +1000<br/>Using master branch of <a href="https://github.com/zendframework/zend-log">zendframework/zend-log</a> @ commit <a href="https://github.com/zendframework/zend-log/commit/245ba83f8a48ccb6a2360cb4eb97e58a5ef2f4fc">245ba83f8a48ccb6a2360cb4eb97e58a5ef2f4fc</a></div>
+    <div class="footer">Report generated on Wed, 15 Jun 2016 11:30:37 +1000<br/>Using master branch of <a href="https://github.com/zendframework/zend-log">zendframework/zend-log</a> @ commit <a href="https://github.com/zendframework/zend-log/commit/245ba83f8a48ccb6a2360cb4eb97e58a5ef2f4fc">245ba83f8a48ccb6a2360cb4eb97e58a5ef2f4fc</a></div>
 </div>
 
 <script>
@@ -2001,7 +2009,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "assignment blocks");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),2.76,false,'2.76%',97.24,false,'97.24%',290,"290"],[new Date('2015-02-01'),2.76,false,'2.76%',97.24,false,'97.24%',290,"290"],[new Date('2015-03-01'),2.76,false,'2.76%',97.24,false,'97.24%',290,"290"],[new Date('2015-04-01'),2.95,false,'2.95%',97.05,false,'97.05%',305,"305"],[new Date('2015-05-01'),2.95,false,'2.95%',97.05,false,'97.05%',305,"305"],[new Date('2015-06-01'),2.95,false,'2.95%',97.05,false,'97.05%',305,"305"],[new Date('2015-07-01'),2.94,false,'2.94%',97.06,false,'97.06%',306,"306"],[new Date('2015-08-01'),2.82,false,'2.82%',97.18,false,'97.18%',319,"319"],[new Date('2015-09-01'),2.82,false,'2.82%',97.18,false,'97.18%',319,"319"],[new Date('2015-10-01'),2.82,false,'2.82%',97.18,false,'97.18%',319,"319"],[new Date('2015-11-01'),2.82,false,'2.82%',97.18,false,'97.18%',319,"319"],[new Date('2015-12-01'),2.82,false,'2.82%',97.18,false,'97.18%',319,"319"],[new Date('2016-01-01'),2.82,false,'2.82%',97.18,false,'97.18%',319,"319"],[new Date('2016-02-01'),2.82,false,'2.82%',97.18,false,'97.18%',319,"319"],[new Date('2016-03-01'),2.74,false,'2.74%',97.26,false,'97.26%',329,"329"],[new Date('2016-04-01'),2.74,false,'2.74%',97.26,false,'97.26%',329,"329"],[new Date('2016-05-01'),2.99,false,'2.99%',97.01,false,'97.01%',335,"335"],[new Date('2016-06-01'),2.99,false,'2.99%',97.01,false,'97.01%',335,"335"]]);
+data.addRows([[new Date('2015-01-01'),26.67,false,'26.67%',73.33,false,'73.33%',30,"30"],[new Date('2015-02-01'),26.67,false,'26.67%',73.33,false,'73.33%',30,"30"],[new Date('2015-03-01'),26.67,false,'26.67%',73.33,false,'73.33%',30,"30"],[new Date('2015-04-01'),29.03,false,'29.03%',70.97,false,'70.97%',31,"31"],[new Date('2015-05-01'),29.03,false,'29.03%',70.97,false,'70.97%',31,"31"],[new Date('2015-06-01'),29.03,false,'29.03%',70.97,false,'70.97%',31,"31"],[new Date('2015-07-01'),29.03,false,'29.03%',70.97,false,'70.97%',31,"31"],[new Date('2015-08-01'),28.13,false,'28.13%',71.88,false,'71.88%',32,"32"],[new Date('2015-09-01'),28.13,false,'28.13%',71.88,false,'71.88%',32,"32"],[new Date('2015-10-01'),28.13,false,'28.13%',71.88,false,'71.88%',32,"32"],[new Date('2015-11-01'),28.13,false,'28.13%',71.88,false,'71.88%',32,"32"],[new Date('2015-12-01'),28.13,false,'28.13%',71.88,false,'71.88%',32,"32"],[new Date('2016-01-01'),28.13,false,'28.13%',71.88,false,'71.88%',32,"32"],[new Date('2016-02-01'),28.13,false,'28.13%',71.88,false,'71.88%',32,"32"],[new Date('2016-03-01'),25,true,'25%',75,true,'75%',32,"32"],[new Date('2016-04-01'),25,false,'25%',75,false,'75%',32,"32"],[new Date('2016-05-01'),27.27,false,'27.27%',72.73,false,'72.73%',33,"33"],[new Date('2016-06-01'),27.27,false,'27.27%',72.73,false,'72.73%',33,"33"]]);
 ct7 = new google.visualization.LineChart(document.getElementById("chart7t"));
 trendOptions.series = {2:itemSeries};
 trendOptions.vAxes[1].title = "assignment blocks";
@@ -2035,7 +2043,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "operators");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),0.97,false,'0.97%',99.03,false,'99.03%',618,"618"],[new Date('2015-02-01'),0.97,false,'0.97%',99.03,false,'99.03%',618,"618"],[new Date('2015-03-01'),0.97,false,'0.97%',99.03,false,'99.03%',618,"618"],[new Date('2015-04-01'),0.92,false,'0.92%',99.08,false,'99.08%',655,"655"],[new Date('2015-05-01'),0.92,false,'0.92%',99.08,false,'99.08%',655,"655"],[new Date('2015-06-01'),0.92,false,'0.92%',99.08,false,'99.08%',655,"655"],[new Date('2015-07-01'),0.91,false,'0.91%',99.09,false,'99.09%',656,"656"],[new Date('2015-08-01'),0.87,false,'0.87%',99.13,false,'99.13%',690,"690"],[new Date('2015-09-01'),0.87,false,'0.87%',99.13,false,'99.13%',690,"690"],[new Date('2015-10-01'),0.87,false,'0.87%',99.13,false,'99.13%',690,"690"],[new Date('2015-11-01'),0.87,false,'0.87%',99.13,false,'99.13%',690,"690"],[new Date('2015-12-01'),0.87,false,'0.87%',99.13,false,'99.13%',690,"690"],[new Date('2016-01-01'),0.87,false,'0.87%',99.13,false,'99.13%',690,"690"],[new Date('2016-02-01'),0.87,false,'0.87%',99.13,false,'99.13%',690,"690"],[new Date('2016-03-01'),0.79,false,'0.79%',99.21,false,'99.21%',764,"764"],[new Date('2016-04-01'),0.79,false,'0.79%',99.21,false,'99.21%',764,"764"],[new Date('2016-05-01'),0.77,false,'0.77%',99.23,false,'99.23%',780,"780"],[new Date('2016-06-01'),0.77,false,'0.77%',99.23,false,'99.23%',780,"780"]]);
+data.addRows([[new Date('2015-01-01'),0.97,false,'0.97%',99.03,false,'99.03%',620,"620"],[new Date('2015-02-01'),0.97,false,'0.97%',99.03,false,'99.03%',620,"620"],[new Date('2015-03-01'),0.97,false,'0.97%',99.03,false,'99.03%',620,"620"],[new Date('2015-04-01'),0.91,false,'0.91%',99.09,false,'99.09%',657,"657"],[new Date('2015-05-01'),0.91,false,'0.91%',99.09,false,'99.09%',657,"657"],[new Date('2015-06-01'),0.91,false,'0.91%',99.09,false,'99.09%',657,"657"],[new Date('2015-07-01'),0.91,false,'0.91%',99.09,false,'99.09%',658,"658"],[new Date('2015-08-01'),0.87,false,'0.87%',99.13,false,'99.13%',692,"692"],[new Date('2015-09-01'),0.87,false,'0.87%',99.13,false,'99.13%',692,"692"],[new Date('2015-10-01'),0.87,false,'0.87%',99.13,false,'99.13%',692,"692"],[new Date('2015-11-01'),0.87,false,'0.87%',99.13,false,'99.13%',692,"692"],[new Date('2015-12-01'),0.87,false,'0.87%',99.13,false,'99.13%',692,"692"],[new Date('2016-01-01'),0.87,false,'0.87%',99.13,false,'99.13%',692,"692"],[new Date('2016-02-01'),0.87,false,'0.87%',99.13,false,'99.13%',692,"692"],[new Date('2016-03-01'),0.79,false,'0.79%',99.21,false,'99.21%',764,"764"],[new Date('2016-04-01'),0.79,false,'0.79%',99.21,false,'99.21%',764,"764"],[new Date('2016-05-01'),0.77,false,'0.77%',99.23,false,'99.23%',780,"780"],[new Date('2016-06-01'),0.77,false,'0.77%',99.23,false,'99.23%',780,"780"]]);
 ct9 = new google.visualization.LineChart(document.getElementById("chart9t"));
 trendOptions.series = {2:itemSeries};
 trendOptions.vAxes[1].title = "operators";

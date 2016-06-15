@@ -1337,8 +1337,13 @@
 <th>Method</th>
 <th>Use</th>
 </tr>
+<tr title="0 operators">
+<td class="key" style="background-color:#2D3F50"><span class="screenHide">0</span></td>
+<td class="result">0</td>
+<td class="value">0%</td>
+</tr>
 <tr title="20 operators">
-<td class="key keyPopular" style="background-color:#2D3F50" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
+<td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">1 - Most popular method</span></td>
 <td class="result">1</td>
 <td class="value">100%</td>
 </tr>
@@ -1351,6 +1356,14 @@
 <div class="tag">Historical</div>
 <div class="historicalChart">
 <div class="chart-trend" id="chart27t" style="width:860px;height:250px;"><div class="placeholder"></div></div>
+</div>
+<div class="historicalEvents">
+<ul>
+<li onmouseover="ct27.setSelection([{row:10,column:null}]);" onmouseout="ct27.setSelection([]);" class="historicalDate"><strong>01 Nov 2015</strong>: there was a 5% swing from <em>0</em> to <em>1</em>
+<ul>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -1682,7 +1695,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Fri, 10 Jun 2016 13:11:16 +1000<br/>Using master branch of <a href="https://github.com/zendframework/zend-escaper">zendframework/zend-escaper</a> @ commit <a href="https://github.com/zendframework/zend-escaper/commit/37227d6b709c5db0ba6f94b4f6aee779964ac71d">37227d6b709c5db0ba6f94b4f6aee779964ac71d</a></div>
+    <div class="footer">Report generated on Wed, 15 Jun 2016 11:30:37 +1000<br/>Using master branch of <a href="https://github.com/zendframework/zend-escaper">zendframework/zend-escaper</a> @ commit <a href="https://github.com/zendframework/zend-escaper/commit/37227d6b709c5db0ba6f94b4f6aee779964ac71d">37227d6b709c5db0ba6f94b4f6aee779964ac71d</a></div>
 </div>
 
 <script>
@@ -2069,16 +2082,19 @@ window.setTimeout(function(){drawChart27()}, 10);}
 function drawChart27() {
 var data = new google.visualization.DataTable();
 data.addColumn("date", "Date");
+data.addColumn('number', '0');
+data.addColumn({type:'boolean',role:'emphasis'});
+data.addColumn({type:'string',role:'tooltip'});
 data.addColumn('number', '1');
 data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "operators");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),100,false,'100%',19,"19"],[new Date('2015-02-01'),100,false,'100%',19,"19"],[new Date('2015-03-01'),100,false,'100%',19,"19"],[new Date('2015-04-01'),100,false,'100%',19,"19"],[new Date('2015-05-01'),100,false,'100%',19,"19"],[new Date('2015-06-01'),100,false,'100%',19,"19"],[new Date('2015-07-01'),100,false,'100%',19,"19"],[new Date('2015-08-01'),100,false,'100%',19,"19"],[new Date('2015-09-01'),100,false,'100%',19,"19"],[new Date('2015-10-01'),100,false,'100%',19,"19"],[new Date('2015-11-01'),100,false,'100%',20,"20"],[new Date('2015-12-01'),100,false,'100%',20,"20"],[new Date('2016-01-01'),100,false,'100%',20,"20"],[new Date('2016-02-01'),100,false,'100%',20,"20"],[new Date('2016-03-01'),100,false,'100%',20,"20"],[new Date('2016-04-01'),100,false,'100%',20,"20"],[new Date('2016-05-01'),100,false,'100%',20,"20"],[new Date('2016-06-01'),100,false,'100%',20,"20"]]);
+data.addRows([[new Date('2015-01-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-02-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-03-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-04-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-05-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-06-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-07-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-08-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-09-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-10-01'),5,false,'5%',95,false,'95%',20,"20"],[new Date('2015-11-01'),0.00,true,'0%',100,true,'100%',20,"20"],[new Date('2015-12-01'),0.00,false,'0%',100,false,'100%',20,"20"],[new Date('2016-01-01'),0.00,false,'0%',100,false,'100%',20,"20"],[new Date('2016-02-01'),0.00,false,'0%',100,false,'100%',20,"20"],[new Date('2016-03-01'),0.00,false,'0%',100,false,'100%',20,"20"],[new Date('2016-04-01'),0.00,false,'0%',100,false,'100%',20,"20"],[new Date('2016-05-01'),0.00,false,'0%',100,false,'100%',20,"20"],[new Date('2016-06-01'),0.00,false,'0%',100,false,'100%',20,"20"]]);
 ct27 = new google.visualization.LineChart(document.getElementById("chart27t"));
-perfectTrendOptions.series = {1:itemSeries};
-perfectTrendOptions.vAxes[1].title = "operators";
-ct27.draw(data, perfectTrendOptions);
+trendOptions.series = {2:itemSeries};
+trendOptions.vAxes[1].title = "operators";
+ct27.draw(data, trendOptions);
 window.setTimeout(function(){drawChart28()}, 10);}
 function drawChart28() {
 var data = new google.visualization.DataTable();
@@ -2172,7 +2188,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "assignment blocks");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),100,false,'100%',26,"26"],[new Date('2015-02-01'),100,false,'100%',26,"26"],[new Date('2015-03-01'),100,false,'100%',26,"26"],[new Date('2015-04-01'),100,false,'100%',26,"26"],[new Date('2015-05-01'),100,false,'100%',26,"26"],[new Date('2015-06-01'),100,false,'100%',26,"26"],[new Date('2015-07-01'),100,false,'100%',26,"26"],[new Date('2015-08-01'),100,false,'100%',26,"26"],[new Date('2015-09-01'),100,false,'100%',26,"26"],[new Date('2015-10-01'),100,false,'100%',26,"26"],[new Date('2015-11-01'),100,false,'100%',26,"26"],[new Date('2015-12-01'),100,false,'100%',26,"26"],[new Date('2016-01-01'),100,false,'100%',26,"26"],[new Date('2016-02-01'),100,false,'100%',26,"26"],[new Date('2016-03-01'),100,false,'100%',26,"26"],[new Date('2016-04-01'),100,false,'100%',26,"26"],[new Date('2016-05-01'),100,false,'100%',26,"26"],[new Date('2016-06-01'),100,false,'100%',26,"26"]]);
+data.addRows([[new Date('2015-01-01'),100,false,'100%',4,"4"],[new Date('2015-02-01'),100,false,'100%',4,"4"],[new Date('2015-03-01'),100,false,'100%',4,"4"],[new Date('2015-04-01'),100,false,'100%',4,"4"],[new Date('2015-05-01'),100,false,'100%',4,"4"],[new Date('2015-06-01'),100,false,'100%',4,"4"],[new Date('2015-07-01'),100,false,'100%',4,"4"],[new Date('2015-08-01'),100,false,'100%',4,"4"],[new Date('2015-09-01'),100,false,'100%',4,"4"],[new Date('2015-10-01'),100,false,'100%',4,"4"],[new Date('2015-11-01'),100,false,'100%',4,"4"],[new Date('2015-12-01'),100,false,'100%',4,"4"],[new Date('2016-01-01'),100,false,'100%',4,"4"],[new Date('2016-02-01'),100,false,'100%',4,"4"],[new Date('2016-03-01'),100,false,'100%',4,"4"],[new Date('2016-04-01'),100,false,'100%',4,"4"],[new Date('2016-05-01'),100,false,'100%',4,"4"],[new Date('2016-06-01'),100,false,'100%',4,"4"]]);
 ct34 = new google.visualization.LineChart(document.getElementById("chart34t"));
 perfectTrendOptions.series = {1:itemSeries};
 perfectTrendOptions.vAxes[1].title = "assignment blocks";
@@ -2186,7 +2202,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "operators");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),100,false,'100%',54,"54"],[new Date('2015-02-01'),100,false,'100%',54,"54"],[new Date('2015-03-01'),100,false,'100%',54,"54"],[new Date('2015-04-01'),100,false,'100%',54,"54"],[new Date('2015-05-01'),100,false,'100%',54,"54"],[new Date('2015-06-01'),100,false,'100%',54,"54"],[new Date('2015-07-01'),100,false,'100%',54,"54"],[new Date('2015-08-01'),100,false,'100%',54,"54"],[new Date('2015-09-01'),100,false,'100%',54,"54"],[new Date('2015-10-01'),100,false,'100%',54,"54"],[new Date('2015-11-01'),100,false,'100%',55,"55"],[new Date('2015-12-01'),100,false,'100%',55,"55"],[new Date('2016-01-01'),100,false,'100%',55,"55"],[new Date('2016-02-01'),100,false,'100%',55,"55"],[new Date('2016-03-01'),100,false,'100%',55,"55"],[new Date('2016-04-01'),100,false,'100%',55,"55"],[new Date('2016-05-01'),100,false,'100%',55,"55"],[new Date('2016-06-01'),100,false,'100%',55,"55"]]);
+data.addRows([[new Date('2015-01-01'),100,false,'100%',55,"55"],[new Date('2015-02-01'),100,false,'100%',55,"55"],[new Date('2015-03-01'),100,false,'100%',55,"55"],[new Date('2015-04-01'),100,false,'100%',55,"55"],[new Date('2015-05-01'),100,false,'100%',55,"55"],[new Date('2015-06-01'),100,false,'100%',55,"55"],[new Date('2015-07-01'),100,false,'100%',55,"55"],[new Date('2015-08-01'),100,false,'100%',55,"55"],[new Date('2015-09-01'),100,false,'100%',55,"55"],[new Date('2015-10-01'),100,false,'100%',55,"55"],[new Date('2015-11-01'),100,false,'100%',55,"55"],[new Date('2015-12-01'),100,false,'100%',55,"55"],[new Date('2016-01-01'),100,false,'100%',55,"55"],[new Date('2016-02-01'),100,false,'100%',55,"55"],[new Date('2016-03-01'),100,false,'100%',55,"55"],[new Date('2016-04-01'),100,false,'100%',55,"55"],[new Date('2016-05-01'),100,false,'100%',55,"55"],[new Date('2016-06-01'),100,false,'100%',55,"55"]]);
 ct35 = new google.visualization.LineChart(document.getElementById("chart35t"));
 perfectTrendOptions.series = {1:itemSeries};
 perfectTrendOptions.vAxes[1].title = "operators";

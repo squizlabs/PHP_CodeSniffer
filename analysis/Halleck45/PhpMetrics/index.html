@@ -777,6 +777,14 @@
 <div class="historicalChart">
 <div class="chart-trend" id="chart8t" style="width:860px;height:250px;"><div class="placeholder"></div></div>
 </div>
+<div class="historicalEvents">
+<ul>
+<li onmouseover="ct8.setSelection([{row:11,column:null}]);" onmouseout="ct8.setSelection([]);" class="historicalDate"><strong>01 Dec 2015</strong>: there was a 5.12% swing from <em>no</em> to <em>yes</em>
+<ul>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -2075,7 +2083,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Fri, 10 Jun 2016 13:11:16 +1000<br/>Using master branch of <a href="https://github.com/Halleck45/PhpMetrics">Halleck45/PhpMetrics</a> @ commit <a href="https://github.com/Halleck45/PhpMetrics/commit/f910038fd9c49ee42b7b585bff83c02b6cba452b">f910038fd9c49ee42b7b585bff83c02b6cba452b</a></div>
+    <div class="footer">Report generated on Wed, 15 Jun 2016 11:30:36 +1000<br/>Using master branch of <a href="https://github.com/Halleck45/PhpMetrics">Halleck45/PhpMetrics</a> @ commit <a href="https://github.com/Halleck45/PhpMetrics/commit/f910038fd9c49ee42b7b585bff83c02b6cba452b">f910038fd9c49ee42b7b585bff83c02b6cba452b</a></div>
 </div>
 
 <script>
@@ -2219,7 +2227,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "assignment blocks");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),18.28,false,'18.28%',81.72,false,'81.72%',476,"476"],[new Date('2015-02-01'),18.16,false,'18.16%',81.84,false,'81.84%',479,"479"],[new Date('2015-03-01'),18.16,false,'18.16%',81.84,false,'81.84%',479,"479"],[new Date('2015-04-01'),18.37,false,'18.37%',81.63,false,'81.63%',479,"479"],[new Date('2015-05-01'),18.37,false,'18.37%',81.63,false,'81.63%',479,"479"],[new Date('2015-06-01'),18.37,false,'18.37%',81.63,false,'81.63%',479,"479"],[new Date('2015-07-01'),18.37,false,'18.37%',81.63,false,'81.63%',479,"479"],[new Date('2015-08-01'),18.37,false,'18.37%',81.63,false,'81.63%',479,"479"],[new Date('2015-09-01'),18.33,false,'18.33%',81.67,false,'81.67%',480,"480"],[new Date('2015-10-01'),18.33,false,'18.33%',81.67,false,'81.67%',480,"480"],[new Date('2015-11-01'),18.33,false,'18.33%',81.67,false,'81.67%',480,"480"],[new Date('2015-12-01'),17.73,false,'17.73%',82.27,false,'82.27%',519,"519"],[new Date('2016-01-01'),17.6,false,'17.6%',82.4,false,'82.4%',591,"591"],[new Date('2016-02-01'),17.6,false,'17.6%',82.4,false,'82.4%',591,"591"],[new Date('2016-03-01'),17.57,false,'17.57%',82.43,false,'82.43%',592,"592"],[new Date('2016-04-01'),17.44,false,'17.44%',82.56,false,'82.56%',602,"602"],[new Date('2016-05-01'),17.31,false,'17.31%',82.69,false,'82.69%',595,"595"],[new Date('2016-06-01'),17.31,false,'17.31%',82.69,false,'82.69%',595,"595"]]);
+data.addRows([[new Date('2015-01-01'),87.88,false,'87.88%',12.12,false,'12.12%',99,"99"],[new Date('2015-02-01'),87.88,false,'87.88%',12.12,false,'12.12%',99,"99"],[new Date('2015-03-01'),87.88,false,'87.88%',12.12,false,'12.12%',99,"99"],[new Date('2015-04-01'),88,false,'88%',12,false,'12%',100,"100"],[new Date('2015-05-01'),88,false,'88%',12,false,'12%',100,"100"],[new Date('2015-06-01'),88,false,'88%',12,false,'12%',100,"100"],[new Date('2015-07-01'),88,false,'88%',12,false,'12%',100,"100"],[new Date('2015-08-01'),88,false,'88%',12,false,'12%',100,"100"],[new Date('2015-09-01'),88,false,'88%',12,false,'12%',100,"100"],[new Date('2015-10-01'),88,false,'88%',12,false,'12%',100,"100"],[new Date('2015-11-01'),88,false,'88%',12,false,'12%',100,"100"],[new Date('2015-12-01'),82.88,true,'82.88%',17.12,true,'17.12%',111,"111"],[new Date('2016-01-01'),83.87,false,'83.87%',16.13,false,'16.13%',124,"124"],[new Date('2016-02-01'),83.87,false,'83.87%',16.13,false,'16.13%',124,"124"],[new Date('2016-03-01'),83.87,false,'83.87%',16.13,false,'16.13%',124,"124"],[new Date('2016-04-01'),84.68,false,'84.68%',15.32,false,'15.32%',124,"124"],[new Date('2016-05-01'),85.12,false,'85.12%',14.88,false,'14.88%',121,"121"],[new Date('2016-06-01'),85.12,false,'85.12%',14.88,false,'14.88%',121,"121"]]);
 ct8 = new google.visualization.LineChart(document.getElementById("chart8t"));
 trendOptions.series = {2:itemSeries};
 trendOptions.vAxes[1].title = "assignment blocks";

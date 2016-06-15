@@ -1807,7 +1807,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Fri, 10 Jun 2016 13:11:16 +1000<br/>Using master branch of <a href="https://github.com/thephpleague/fractal">thephpleague/fractal</a> @ commit <a href="https://github.com/thephpleague/fractal/commit/d2be7f6a5b770c28272f575d48ae48bb73b35a31">d2be7f6a5b770c28272f575d48ae48bb73b35a31</a></div>
+    <div class="footer">Report generated on Wed, 15 Jun 2016 11:30:37 +1000<br/>Using master branch of <a href="https://github.com/thephpleague/fractal">thephpleague/fractal</a> @ commit <a href="https://github.com/thephpleague/fractal/commit/d2be7f6a5b770c28272f575d48ae48bb73b35a31">d2be7f6a5b770c28272f575d48ae48bb73b35a31</a></div>
 </div>
 
 <script>
@@ -1877,11 +1877,11 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "assignment blocks");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),14.43,false,'14.43%',85.57,false,'85.57%',97,"97"],[new Date('2015-02-01'),14.43,false,'14.43%',85.57,false,'85.57%',97,"97"],[new Date('2015-03-01'),14.43,false,'14.43%',85.57,false,'85.57%',97,"97"],[new Date('2015-04-01'),14.14,false,'14.14%',85.86,false,'85.86%',99,"99"],[new Date('2015-05-01'),15.31,false,'15.31%',84.69,false,'84.69%',98,"98"],[new Date('2015-06-01'),15.15,false,'15.15%',84.85,false,'84.85%',99,"99"],[new Date('2015-07-01'),15.15,false,'15.15%',84.85,false,'84.85%',99,"99"],[new Date('2015-08-01'),15.15,false,'15.15%',84.85,false,'84.85%',99,"99"],[new Date('2015-09-01'),14.73,false,'14.73%',85.27,false,'85.27%',129,"129"],[new Date('2015-10-01'),15.5,false,'15.5%',84.5,false,'84.5%',129,"129"],[new Date('2015-11-01'),15.5,false,'15.5%',84.5,false,'84.5%',129,"129"],[new Date('2015-12-01'),15.94,false,'15.94%',84.06,false,'84.06%',138,"138"],[new Date('2016-01-01'),15.94,false,'15.94%',84.06,false,'84.06%',138,"138"],[new Date('2016-02-01'),15.94,false,'15.94%',84.06,false,'84.06%',138,"138"],[new Date('2016-03-01'),15.94,false,'15.94%',84.06,false,'84.06%',138,"138"],[new Date('2016-04-01'),14.47,false,'14.47%',85.53,false,'85.53%',152,"152"],[new Date('2016-05-01'),14.47,false,'14.47%',85.53,false,'85.53%',152,"152"],[new Date('2016-06-01'),14.47,false,'14.47%',85.53,false,'85.53%',152,"152"]]);
+data.addRows([[new Date('2015-01-01'),100,false,'100%',0.00,false,'0%',14,"14"],[new Date('2015-02-01'),100,false,'100%',0.00,false,'0%',14,"14"],[new Date('2015-03-01'),100,false,'100%',0.00,false,'0%',14,"14"],[new Date('2015-04-01'),100,false,'100%',0.00,false,'0%',14,"14"],[new Date('2015-05-01'),100,false,'100%',0.00,false,'0%',15,"15"],[new Date('2015-06-01'),100,false,'100%',0.00,false,'0%',15,"15"],[new Date('2015-07-01'),100,false,'100%',0.00,false,'0%',15,"15"],[new Date('2015-08-01'),100,false,'100%',0.00,false,'0%',15,"15"],[new Date('2015-09-01'),100,false,'100%',0.00,false,'0%',19,"19"],[new Date('2015-10-01'),100,false,'100%',0.00,false,'0%',20,"20"],[new Date('2015-11-01'),100,false,'100%',0.00,false,'0%',20,"20"],[new Date('2015-12-01'),100,false,'100%',0.00,false,'0%',22,"22"],[new Date('2016-01-01'),100,false,'100%',0.00,false,'0%',22,"22"],[new Date('2016-02-01'),100,false,'100%',0.00,false,'0%',22,"22"],[new Date('2016-03-01'),100,false,'100%',0.00,false,'0%',22,"22"],[new Date('2016-04-01'),100,false,'100%',0.00,false,'0%',22,"22"],[new Date('2016-05-01'),100,false,'100%',0.00,false,'0%',22,"22"],[new Date('2016-06-01'),100,false,'100%',0.00,false,'0%',22,"22"]]);
 ct4 = new google.visualization.LineChart(document.getElementById("chart4t"));
-trendOptions.series = {2:itemSeries};
-trendOptions.vAxes[1].title = "assignment blocks";
-ct4.draw(data, trendOptions);
+perfectTrendOptions.series = {2:itemSeries};
+perfectTrendOptions.vAxes[1].title = "assignment blocks";
+ct4.draw(data, perfectTrendOptions);
 window.setTimeout(function(){drawChart5()}, 10);}
 function drawChart5() {
 var data = new google.visualization.DataTable();

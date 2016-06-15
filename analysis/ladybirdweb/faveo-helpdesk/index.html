@@ -596,14 +596,6 @@
 <div class="historicalChart">
 <div class="chart-trend" id="chart5t" style="width:860px;height:250px;"><div class="placeholder"></div></div>
 </div>
-<div class="historicalEvents">
-<ul>
-<li onmouseover="ct5.setSelection([{row:2,column:null}]);" onmouseout="ct5.setSelection([]);" class="historicalDate"><strong>01 Mar 2016</strong>: there was a 7.59% swing from <em>no</em> to <em>yes</em>
-<ul>
-</ul>
-</li>
-</ul>
-</div>
 </div>
 </div>
 </div>
@@ -2420,7 +2412,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Fri, 10 Jun 2016 13:11:16 +1000<br/>Using master branch of <a href="https://github.com/ladybirdweb/faveo-helpdesk">ladybirdweb/faveo-helpdesk</a> @ commit <a href="https://github.com/ladybirdweb/faveo-helpdesk/commit/418fbbce7527b14a85510254a4c6eb176c2d5078">418fbbce7527b14a85510254a4c6eb176c2d5078</a></div>
+    <div class="footer">Report generated on Wed, 15 Jun 2016 11:30:36 +1000<br/>Using master branch of <a href="https://github.com/ladybirdweb/faveo-helpdesk">ladybirdweb/faveo-helpdesk</a> @ commit <a href="https://github.com/ladybirdweb/faveo-helpdesk/commit/418fbbce7527b14a85510254a4c6eb176c2d5078">418fbbce7527b14a85510254a4c6eb176c2d5078</a></div>
 </div>
 
 <script>
@@ -2507,7 +2499,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "assignment blocks");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2016-01-01'),42.03,false,'42.03%',57.97,false,'57.97%',1499,"1,499"],[new Date('2016-02-01'),39.84,false,'39.84%',60.16,false,'60.16%',1855,"1,855"],[new Date('2016-03-01'),32.25,true,'32.25%',67.75,true,'67.75%',3119,"3,119"],[new Date('2016-04-01'),31.66,false,'31.66%',68.34,false,'68.34%',3339,"3,339"],[new Date('2016-05-01'),30.26,false,'30.26%',69.74,false,'69.74%',3381,"3,381"],[new Date('2016-06-01'),30.25,false,'30.25%',69.75,false,'69.75%',3382,"3,382"]]);
+data.addRows([[new Date('2016-01-01'),93.34,false,'93.34%',6.66,false,'6.66%',661,"661"],[new Date('2016-02-01'),92.36,false,'92.36%',7.64,false,'7.64%',785,"785"],[new Date('2016-03-01'),90.74,false,'90.74%',9.26,false,'9.26%',1091,"1,091"],[new Date('2016-04-01'),90.91,false,'90.91%',9.09,false,'9.09%',1144,"1,144"],[new Date('2016-05-01'),90.39,false,'90.39%',9.61,false,'9.61%',1113,"1,113"],[new Date('2016-06-01'),90.39,false,'90.39%',9.61,false,'9.61%',1113,"1,113"]]);
 ct5 = new google.visualization.LineChart(document.getElementById("chart5t"));
 trendOptions.series = {2:itemSeries};
 trendOptions.vAxes[1].title = "assignment blocks";
