@@ -15,6 +15,25 @@ use PHP_CodeSniffer\Files\File;
 class LowercasePHPFunctionsSniff implements Sniff
 {
 
+    /**
+     * String -> int hash map of all php built in function names
+     *
+     * @var array
+     */
+    private $builtInFunctions;
+
+
+    /**
+     * Construct the LowercasePHPFunctionSniff
+     */
+    public function __construct()
+    {
+
+        $allFunctions           = get_defined_functions();
+        $this->builtInFunctions = array_flip($allFunctions['internal']);
+
+    }//end __construct()
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -80,11 +99,10 @@ class LowercasePHPFunctionsSniff implements Sniff
         }
 
         // Make sure it is an inbuilt PHP function.
-        // PHP_CodeSniffer doesn't include/require any files, so no
-        // user defined global functions can exist, except for
-        // PHP_CodeSniffer ones.
+        // PHP_CodeSniffer can possibly include user defined functions
+        // through the use of vendor/autoload.php.
         $content = $tokens[$stackPtr]['content'];
-        if (function_exists($content) === false) {
+        if (isset($this->builtInFunctions[strtolower($content)]) === false) {
             return;
         }
 
