@@ -473,11 +473,9 @@ class PHP_CodeSniffer_CLI
         case '?':
             $this->printUsage();
             exit(0);
-            break;
         case 'i' :
             $this->printInstalledStandards();
             exit(0);
-            break;
         case 'v' :
             if (isset($this->values['verbosity']) === false) {
                 $this->values['verbosity'] = 1;
