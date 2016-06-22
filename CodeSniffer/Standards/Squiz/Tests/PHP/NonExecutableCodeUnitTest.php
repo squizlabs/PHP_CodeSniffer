@@ -81,11 +81,11 @@ class Squiz_Tests_PHP_NonExecutableCodeUnitTest extends AbstractSniffUnitTest
                 153 => 1,
                 166 => 1,
                 180 => 1,
-                222 => 1,
-                223 => 1,
-                224 => 1,
-                225 => 2,
-                229 => 1,
+                232 => 1,
+                233 => 1,
+                234 => 1,
+                235 => 2,
+                239 => 1,
                );
 
     }//end getWarningList()

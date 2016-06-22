@@ -111,19 +111,19 @@ class Squiz_Sniffs_PHP_NonExecutableCodeSniff implements PHP_CodeSniffer_Sniff
             $owner = $tokens[$stackPtr]['scope_condition'];
             if ($tokens[$owner]['code'] === T_CASE || $tokens[$owner]['code'] === T_DEFAULT) {
                 // This token closes the scope of a CASE or DEFAULT statement
-                // so any code between this token and the next CASE, DEFAULT or
+                // so any code between this statement and the next CASE, DEFAULT or
                 // end of SWITCH token will not be executable.
+                $end  = $phpcsFile->findEndOfStatement($stackPtr);
                 $next = $phpcsFile->findNext(
                     array(
                      T_CASE,
                      T_DEFAULT,
                      T_CLOSE_CURLY_BRACKET,
                     ),
-                    ($stackPtr + 1)
+                    ($end + 1)
                 );
 
                 if ($next !== false) {
-                    $end      = $phpcsFile->findNext(array(T_SEMICOLON), ($stackPtr + 1));
                     $lastLine = $tokens[$end]['line'];
                     for ($i = ($stackPtr + 1); $i < $next; $i++) {
                         if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
