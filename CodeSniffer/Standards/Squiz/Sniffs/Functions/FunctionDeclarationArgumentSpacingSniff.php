@@ -311,7 +311,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                     $nextToken++;
                 }
 
-                if ($nextToken !== $nextParam) {
+                if ($tokens[$nextToken]['code'] !== T_ELLIPSIS && $nextToken !== $nextParam) {
                     // There was a type hint, so check the spacing between
                     // the hint and the variable as well.
                     $hint = $tokens[$nextToken]['content'];
