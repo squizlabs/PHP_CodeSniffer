@@ -680,7 +680,7 @@ function generateReport($results, $repo=null)
         $title     = 'Analysis of Coding Conventions';
         $heading   = 'Analysis of Coding Conventions';
         $assetPath = '';
-        $reportURL = 'http://squizlabs.github.io/PHP_CodeSniffer/analysis';
+        $reportURL = 'https://squizlabs.github.io/PHP_CodeSniffer/analysis';
 
         $gradeDescription = 'Across all '.$GLOBALS['num_repos'].' projects, '.$GLOBALS['grades'][$repo]['score'].'% of the source code conforms to the same coding conventions';
     } else {
@@ -704,7 +704,7 @@ function generateReport($results, $repo=null)
         $title     = $GLOBALS['repoList'][$repo].' - Analysis of Coding Conventions';
         $heading   = 'Analysis of Coding Conventions for <span class="repoName"><a href="https://github.com/'.$repo.'">'.$GLOBALS['repoList'][$repo].'</a></span>';
         $assetPath = '../../';
-        $reportURL = 'http://squizlabs.github.io/PHP_CodeSniffer/analysis/'.$repo;
+        $reportURL = 'https://squizlabs.github.io/PHP_CodeSniffer/analysis/'.$repo;
 
         $gradeDescription = $GLOBALS['grades'][$repo]['score'].'% of the project\'s source code conforms to the same coding conventions';
     }//end if
