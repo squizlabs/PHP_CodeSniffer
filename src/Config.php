@@ -520,11 +520,9 @@ class Config
         case '?':
             $this->printUsage();
             exit(0);
-            break;
         case 'i' :
             Util\Standards::printInstalledStandards();
             exit(0);
-            break;
         case 'v' :
             $this->verbosity++;
             $this->overriddenDefaults['verbosity'] = true;
