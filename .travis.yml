@@ -12,7 +12,7 @@ matrix:
 
 script:
   - php scripts/phpcs --config-set php_path php
-  - phpunit -d date.timezone=Australia/Sydney tests/AllTests.php $PHPUNIT_FLAGS
+  - phpunit -d date.timezone=Australia/Sydney $PHPUNIT_FLAGS
   - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np
   - if [ $TRAVIS_PHP_VERSION != "7.0" ]; then pear package-validate package.xml; fi
   - php scripts/build-phar.php
