@@ -9,12 +9,6 @@ PHP\_CodeSniffer is a set of two PHP scripts; the main `phpcs` script that token
 
 [![Join the chat at https://gitter.im/squizlabs/PHP_CodeSniffer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/squizlabs/PHP_CodeSniffer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Requirements
-------------
-
-PHP\_CodeSniffer requires PHP version 5.1.2 or greater, although individual sniffs may have additional requirements such as external applications and scripts. See the [Configuration Options manual page](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options) for a list of these requirements.
-
-The SVN pre-commit hook requires PHP version 5.2.4 or greater due to its use of the vertical whitespace character.
 
 Installation
 ------------
@@ -40,11 +34,7 @@ Make sure you have `~/.composer/vendor/bin/` in your PATH.
 Or alternatively, include a dependency for `squizlabs/php_codesniffer` in your `composer.json` file. For example:
 
 ```json
-{
-    "require-dev": {
-        "squizlabs/php_codesniffer": "2.*"
-    }
-}
+composer require squizlabs/php_codesniffer
 ```
 
 You will then be able to run PHP_CodeSniffer from the vendor bin directory:
