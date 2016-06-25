@@ -1,29 +1,14 @@
 {
-    "name": "squizlabs/php_codesniffer",
+    "name": "symplify/php7_codesniffer",
     "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-    "type": "library",
-    "keywords": ["phpcs", "standards"],
-    "homepage": "http://www.squizlabs.com/php-codesniffer",
-    "license": "BSD-3-Clause",
+    "keywords": ["phpcs", "standards", "php7", "code sniffer"],
+    "license": "MIT",
     "authors": [
+        { "name": "Tomáš Votruba", "email": "tomas.vot@gmail.com" },
         { "name": "Greg Sherwood", "role": "lead" }
     ],
     "support": {
-        "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
-        "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki",
-        "source": "https://github.com/squizlabs/PHP_CodeSniffer"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.x-dev"
-        }
-    },
-    "autoload": {
-        "psr-4": {
-            "PHP_CodeSniffer\\": "src",
-            "PHP_CodeSniffer\\Tests\\": "tests"
-        },
-        "files": ["autoload.php"]
+        "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
     },
     "require": {
         "php": "^5.6|^7.0",
@@ -33,6 +18,13 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHP_CodeSniffer\\": "src",
+            "PHP_CodeSniffer\\Tests\\": "tests"
+        },
+        "files": ["autoload.php"]
     },
     "bin": [
         "bin/phpcs",
