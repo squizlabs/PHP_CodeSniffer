@@ -69,24 +69,7 @@ class FileList implements \Iterator, \Countable
 
         $paths = $config->files;
         foreach ($paths as $path) {
-            $isPharFile = Util\Common::isPharFile($path);
-            if (is_dir($path) === true || $isPharFile === true) {
-                if ($isPharFile === true) {
-                    $path = 'phar://'.$path;
-                }
-
-                $filterClass = $this->getFilterClass();
-
-                $di       = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
-                $filter   = new $filterClass($di, $path, $config, $ruleset);
-                $iterator = new \RecursiveIteratorIterator($filter);
-
-                foreach ($iterator as $file) {
-                    $this->files[$file->getPathname()] = null;
-                }
-            } else {
-                $this->addFile($path);
-            }//end if
+            $this->addFile($path);
         }//end foreach
 
         reset($this->files);
