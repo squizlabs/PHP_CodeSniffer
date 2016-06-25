@@ -74,7 +74,7 @@ class MySource_Sniffs_Objects_CreateWidgetTypeCallbackSniff implements PHP_CodeS
 
         $function = $phpcsFile->findNext(array(T_WHITESPACE, T_COLON), ($create + 1), null, true);
         if ($tokens[$function]['code'] !== T_FUNCTION) {
-            continue;
+            return;
         }
 
         $start = ($tokens[$function]['scope_opener'] + 1);
