@@ -3,17 +3,23 @@ sudo: false
 language: php
 
 php:
-  - 5.4
-  - 5.5
   - 5.6
-  - 7.0
-  - hhvm
+
+matrix:
+  include:
+    - php: 7.0
+      env: PHPUNIT_FLAGS="--coverage-clover coverage.clover"
+
+
+before_script:
+  - composer install
 
 script:
-  - composer install
-  - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php bin/phpcs --config-set php_path php; fi
-  - phpunit -d date.timezone=Australia/Sydney tests/AllTests.php
+  - php bin/phpcs --config-set php_path php
+  - phpunit -d date.timezone=Australia/Sydney $PHPUNIT_FLAGS
   - php bin/phpcs
-  #- if [[ $TRAVIS_PHP_VERSION != "hhvm" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
-  - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php scripts/build-phar.php; fi
-  - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php phpcs.phar; fi
+  - php scripts/build-phar.php
+  - php phpcs.phar
+
+after_script:
+  - if [[ "$PHPUNIT_FLAGS" != "" ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi

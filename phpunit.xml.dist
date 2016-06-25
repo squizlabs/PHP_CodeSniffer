@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit>
+<phpunit
+    colors="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    convertErrorsToExceptions="true"
+    syntaxCheck="true"
+    verbose="true"
+>
     <testsuites>
         <testsuite name="PHP_CodeSniffer Test Suite">
             <file>tests/AllTests.php</file>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">CodeSniffer</directory>
+            <file>CodeSniffer.php</file>
+        </whitelist>
+    </filter>
 </phpunit>
