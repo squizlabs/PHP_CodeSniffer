@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
+    bootstrap="tests/bootstrap.php"
     colors="true"
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
@@ -8,14 +9,13 @@
     verbose="true"
 >
     <testsuites>
-        <testsuite name="PHP_CodeSniffer Test Suite">
-            <file>tests/AllTests.php</file>
+        <testsuite>
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">CodeSniffer</directory>
-            <file>CodeSniffer.php</file>
+            <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
 </phpunit>
