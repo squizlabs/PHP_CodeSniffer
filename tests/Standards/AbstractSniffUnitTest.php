@@ -16,9 +16,7 @@ namespace PHP_CodeSniffer\Tests\Standards;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\LocalFile;
-use PHP_CodeSniffer\RuntimeException;
 use PHP_CodeSniffer\Util\Common;
-use PHP_CodeSniffer\Autoload;
 
 abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 {
@@ -138,7 +136,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
                 $this->setCliValues($filename, $config);
                 $phpcsFile = new LocalFile($testFile, $ruleset, $config);
                 $phpcsFile->process();
-            } catch (RuntimeException $e) {
+            } catch (\RuntimeException $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());
             }
 
@@ -191,11 +189,11 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
         $expectedWarnings = $this->getWarningList(basename($testFile));
 
         if (is_array($expectedErrors) === false) {
-            throw new RuntimeException('getErrorList() must return an array');
+            throw new \RuntimeException('getErrorList() must return an array');
         }
 
         if (is_array($expectedWarnings) === false) {
-            throw new RuntimeException('getWarningList() must return an array');
+            throw new \RuntimeException('getWarningList() must return an array');
         }
 
         /*

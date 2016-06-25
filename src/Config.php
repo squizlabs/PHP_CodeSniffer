@@ -148,6 +148,13 @@ class Config
     private $overriddenDefaults = array();
 
     /**
+     * Unknown arguments
+     *
+     * @var array<mixed>
+     */
+    private $values = array();
+
+    /**
      * Config file data that has been loaded for the run.
      *
      * @var array<string, string>

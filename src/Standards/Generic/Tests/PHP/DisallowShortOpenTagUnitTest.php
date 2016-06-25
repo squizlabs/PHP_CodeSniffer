@@ -25,19 +25,7 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        $option = (boolean) ini_get('short_open_tag');
-        if ($option === true || defined('HHVM_VERSION') === true) {
-            return array(
-                    4 => 1,
-                    5 => 1,
-                   );
-        } else if (version_compare(PHP_VERSION, '5.4.0RC1') >= 0) {
-            // Shorthand echo is always available from PHP 5.4.0 but needed the
-            // short_open_tag ini var to be set for versions before this.
-            return array(4 => 1);
-        }
-
-        return array();
+        return array(4 => 1);
 
     }//end getErrorList()
 

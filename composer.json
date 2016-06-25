@@ -20,8 +20,8 @@
     },
     "autoload": {
         "psr-4": {
-            "PHP_CodeSniffer\\": "src/",
-            "PHP_CodeSniffer\\Tests\\": "tests/"
+            "PHP_CodeSniffer\\": "src",
+            "PHP_CodeSniffer\\Tests\\": "tests"
         },
         "files": ["autoload.php"]
     },
