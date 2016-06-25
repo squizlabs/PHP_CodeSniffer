@@ -9,7 +9,6 @@
 
 namespace PHP_CodeSniffer\Tests\Standards;
 
-use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Util\Standards;
 use PHP_CodeSniffer\Autoload;
 
@@ -26,8 +25,6 @@ if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
 }
 
 require_once __DIR__.'/../../autoload.php';
-
-$tokens = new Tokens();
 
 class AllSniffs
 {
@@ -59,10 +56,6 @@ class AllSniffs
         $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = array();
 
         $suite = new \PHPUnit_Framework_TestSuite('PHP CodeSniffer Standards');
-
-        /*
-            $isInstalled = !is_file(dirname(__FILE__).'/../../CodeSniffer.php');
-        */
 
         $installedPaths = Standards::getInstalledStandardPaths();
         foreach ($installedPaths as $path) {
