@@ -16,18 +16,6 @@ class OneTraitPerFileUnitTest extends AbstractSniffUnitTest
 
 
     /**
-     * Should this test be skipped for some reason.
-     *
-     * @return bool
-     */
-    protected function shouldSkipTest()
-    {
-        return version_compare(PHP_VERSION, '5.4.0', '<');
-
-    }//end shouldSkipTest()
-
-
-    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value

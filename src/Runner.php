@@ -52,7 +52,6 @@ class Runner
     public function runPHPCS()
     {
         Util\Timing::startTiming();
-        Runner::checkRequirements();
 
         if (defined('PHP_CODESNIFFER_CBF') === false) {
             define('PHP_CODESNIFFER_CBF', false);
@@ -145,7 +144,6 @@ class Runner
         }
 
         Util\Timing::startTiming();
-        Runner::checkRequirements();
 
         // Creating the Config object populates it with all required settings
         // based on the CLI arguments provided to the script and any config
@@ -183,27 +181,6 @@ class Runner
         exit($numErrors);
 
     }//end runPHPCBF()
-
-
-    /**
-     * Exits if the minimum requirements of PHP_CodSniffer are not met.
-     *
-     * @return array
-     */
-    public function checkRequirements()
-    {
-        // Check the PHP version.
-        if (version_compare(PHP_VERSION, '5.4.0') === -1) {
-            echo 'ERROR: PHP_CodeSniffer requires PHP version 5.4.0 or greater.'.PHP_EOL;
-            exit(2);
-        }
-
-        if (extension_loaded('tokenizer') === false) {
-            echo 'ERROR: PHP_CodeSniffer requires the tokenizer extension to be enabled.'.PHP_EOL;
-            exit(2);
-        }
-
-    }//end checkRequirements()
 
 
     /**

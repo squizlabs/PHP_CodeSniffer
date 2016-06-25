@@ -619,14 +619,6 @@ class Ruleset
         } else {
             // See if this is a whole standard being referenced.
             $path = Util\Standards::getInstalledStandardPath($ref);
-            if (Util\Common::isPharFile($path) === true && strpos($path, 'ruleset.xml') === false) {
-                // If the ruleset exists inside the phar file, use it.
-                if (file_exists($path.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
-                    $path = $path.DIRECTORY_SEPARATOR.'ruleset.xml';
-                } else {
-                    $path = null;
-                }
-            }
 
             if ($path !== null) {
                 $ref = $path;
@@ -658,15 +650,7 @@ class Ruleset
                 $newRef  = false;
                 $stdPath = Util\Standards::getInstalledStandardPath($stdName);
                 if ($stdPath !== null && $path !== '') {
-                    if (Util\Common::isPharFile($stdPath) === true
-                        && strpos($stdPath, 'ruleset.xml') === false
-                    ) {
-                        // Phar files can only return the directory,
-                        // since ruleset can be omitted if building one standard.
-                        $newRef = Util\Common::realpath($stdPath.$path);
-                    } else {
-                        $newRef = Util\Common::realpath(dirname($stdPath).$path);
-                    }
+                    $newRef = Util\Common::realpath(dirname($stdPath).$path);
                 }
 
                 if ($newRef === false) {

@@ -34,24 +34,6 @@ class Common
 
 
     /**
-     * Return TRUE if the path is a PHAR file.
-     *
-     * @param string $path The path to use.
-     *
-     * @return mixed
-     */
-    public static function isPharFile($path)
-    {
-        if (strpos($path, 'phar://') === 0) {
-            return true;
-        }
-
-        return false;
-
-    }//end isPharFile()
-
-
-    /**
      * CodeSniffer alternative for realpath.
      *
      * Allows for PHAR support.
@@ -71,30 +53,7 @@ class Common
         }
 
         // No extra work needed if this is not a phar file.
-        if (self::isPharFile($path) === false) {
-            return realpath($path);
-        }
-
-        // Before trying to break down the file path,
-        // check if it exists first because it will mostly not
-        // change after running the below code.
-        if (file_exists($path) === true) {
-            return $path;
-        }
-
-        $phar  = \Phar::running(false);
-        $extra = str_replace('phar://'.$phar, '', $path);
-        $path  = realpath($phar);
-        if ($path === false) {
-            return false;
-        }
-
-        $path = 'phar://'.$path.$extra;
-        if (file_exists($path) === true) {
-            return $path;
-        }
-
-        return false;
+        return realpath($path);
 
     }//end realpath()
 

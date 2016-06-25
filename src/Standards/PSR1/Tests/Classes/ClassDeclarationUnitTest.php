@@ -31,14 +31,10 @@ class ClassDeclarationUnitTest extends AbstractSniffUnitTest
             return array();
         }
 
-        if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
-            return array(
-                    2 => 1,
-                    3 => 2,
-                   );
-        } else {
-            return array(3 => 1);
-        }
+        return array(
+                2 => 1,
+                3 => 2,
+               );
 
     }//end getErrorList()
 
