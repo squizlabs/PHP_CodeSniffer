@@ -146,7 +146,6 @@ class Cache
         $rulesetHash = md5(var_export($ruleset->ignorePatterns, true).var_export($ruleset->includePatterns, true));
         $configData  = array(
                         'tabWidth'     => $config->tabWidth,
-                        'encoding'     => $config->encoding,
                         'recordErrors' => $config->recordErrors,
                         'codeHash'     => $codeHash,
                         'rulesetHash'  => $rulesetHash,
@@ -158,7 +157,6 @@ class Cache
         if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\tGenerating cache key data".PHP_EOL;
             echo "\t\t=> tabWidth: ".$configData['tabWidth'].PHP_EOL;
-            echo "\t\t=> encoding: ".$configData['encoding'].PHP_EOL;
             echo "\t\t=> recordErrors: ".(int) $configData['recordErrors'].PHP_EOL;
             echo "\t\t=> codeHash: ".$configData['codeHash'].PHP_EOL;
             echo "\t\t=> rulesetHash: ".$configData['rulesetHash'].PHP_EOL;

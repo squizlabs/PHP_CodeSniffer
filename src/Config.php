@@ -58,7 +58,6 @@ class Config
      * bool     showSources     Show sniff source codes in report output.
      * bool     showProgress    Show basic progress information while running.
      * int      tabWidth        How many spaces each tab is worth.
-     * string   encoding        The encoding of the files being checked.
      * string[] sniffs          The sniffs that should be used for checking.
      *                          If empty, all sniffs in the supplied standards will be used.
      * string[] ignored         Regular expressions used to ignore files and folders during checking.
@@ -103,7 +102,6 @@ class Config
                          'showSources'     => null,
                          'showProgress'    => null,
                          'tabWidth'        => null,
-                         'encoding'        => null,
                          'extensions'      => null,
                          'sniffs'          => null,
                          'ignored'         => null,
@@ -415,7 +413,6 @@ class Config
         $this->showProgress    = false;
         $this->parallel        = 1;
         $this->tabWidth        = 0;
-        $this->encoding        = 'utf-8';
         $this->extensions      = array(
                                   'php' => 'PHP',
                                   'inc' => 'PHP',
@@ -443,11 +440,6 @@ class Config
         $tabWidth = self::getConfigData('tab_width');
         if ($tabWidth !== null) {
             $this->tabWidth = (int) $tabWidth;
-        }
-
-        $encoding = self::getConfigData('encoding');
-        if ($encoding !== null) {
-            $this->encoding = strtolower($encoding);
         }
 
         $severity = self::getConfigData('severity');
@@ -853,9 +845,6 @@ class Config
             ) {
                 $this->generator = substr($arg, 10);
                 $this->overriddenDefaults['generator'] = true;
-            } else if (substr($arg, 0, 9) === 'encoding=') {
-                $this->encoding = strtolower(substr($arg, 9));
-                $this->overriddenDefaults['encoding'] = true;
             } else if (substr($arg, 0, 10) === 'tab-width=') {
                 $this->tabWidth = (int) substr($arg, 10);
                 $this->overriddenDefaults['tabWidth'] = true;
@@ -954,7 +943,7 @@ class Config
         echo '    [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--parallel=<processes>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--generator=<generator>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
@@ -978,7 +967,6 @@ class Config
         echo '        <cacheFile>   Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
-        echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
@@ -1013,7 +1001,7 @@ class Config
         echo 'Usage: phpcbf [-nwli] [-d key[=value]]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
-        echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
+        echo '    [--tab-width=<tabWidth>] [--parallel=<processes>]'.PHP_EOL;
         echo '    [--basepath=<basepath>] [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
@@ -1025,7 +1013,6 @@ class Config
         echo '        --version     Print version information'.PHP_EOL;
         echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
-        echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;

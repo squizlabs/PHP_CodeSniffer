@@ -154,11 +154,6 @@ abstract class Tokenizer
         $ignoring   = false;
         $inTests    = defined('Symplify\PHP7_CodeSniffer_IN_TESTS');
 
-        $checkEncoding = false;
-        if ($this->config->encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
-            $checkEncoding = true;
-        }
-
         $this->tokensWithTabs = array(
                                  T_WHITESPACE               => true,
                                  T_COMMENT                  => true,
@@ -185,17 +180,7 @@ abstract class Tokenizer
                 || isset($this->tokensWithTabs[$this->tokens[$i]['code']]) === false
                 || strpos($this->tokens[$i]['content'], "\t") === false
             ) {
-                // There are no tabs in this content, or we aren't replacing them.
-                if ($checkEncoding === true) {
-                    // Not using the default encoding, so take a bit more care.
-                    $length = @iconv_strlen($this->tokens[$i]['content'], $this->config->encoding);
-                    if ($length === false) {
-                        // String contained invalid characters, so revert to default.
-                        $length = strlen($this->tokens[$i]['content']);
-                    }
-                } else {
-                    $length = strlen($this->tokens[$i]['content']);
-                }
+                $length = strlen($this->tokens[$i]['content']);
 
                 $currColumn += $length;
             } else {
@@ -265,11 +250,6 @@ abstract class Tokenizer
      */
     public function replaceTabsInToken(&$token, $prefix=' ', $padding=' ')
     {
-        $checkEncoding = false;
-        if ($this->config->encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
-            $checkEncoding = true;
-        }
-
         $currColumn = $token['column'];
         $tabWidth   = $this->config->tabWidth;
         if ($tabWidth === 0) {
@@ -297,16 +277,7 @@ abstract class Tokenizer
             foreach ($tabs as $content) {
                 if ($content !== '') {
                     $newContent .= $content;
-                    if ($checkEncoding === true) {
-                        // Not using the default encoding, so take a bit more care.
-                        $contentLength = @iconv_strlen($content, $this->config->encoding);
-                        if ($contentLength === false) {
-                            // String contained invalid characters, so revert to default.
-                            $contentLength = strlen($content);
-                        }
-                    } else {
-                        $contentLength = strlen($content);
-                    }
+                    $contentLength = strlen($content);
 
                     $currColumn += $contentLength;
                     $length     += $contentLength;
