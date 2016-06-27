@@ -297,10 +297,6 @@ class File
 
         $this->fixer->startFile($this);
 
-        if (PHP_CodeSniffer_VERBOSITY > 2) {
-            echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
-        }
-
         $foundCode        = false;
         $listenerIgnoreTo = array();
         $inTests          = defined('Symplify\PHP7_CodeSniffer_IN_TESTS');
@@ -340,12 +336,6 @@ class File
                     }//end if
                 }//end if
             }//end if
-
-            if (PHP_CodeSniffer_VERBOSITY > 2) {
-                $type    = $token['type'];
-                $content = Util\Common::prepareForOutput($token['content']);
-                echo "\t\tProcess token $stackPtr: $type => $content".PHP_EOL;
-            }
 
             if ($token['code'] !== T_INLINE_HTML) {
                 $foundCode = true;
@@ -410,26 +400,9 @@ class File
 
                 $this->activeListener = $class;
 
-                if (PHP_CodeSniffer_VERBOSITY > 2) {
-                    $startTime = microtime(true);
-                    echo "\t\t\tProcessing ".$this->activeListener.'... ';
-                }
-
                 $ignoreTo = $this->ruleset->sniffs[$class]->process($this, $stackPtr);
                 if ($ignoreTo !== null) {
                     $listenerIgnoreTo[$this->activeListener] = $ignoreTo;
-                }
-
-                if (PHP_CodeSniffer_VERBOSITY > 2) {
-                    $timeTaken = (microtime(true) - $startTime);
-                    if (isset($this->listenerTimes[$this->activeListener]) === false) {
-                        $this->listenerTimes[$this->activeListener] = 0;
-                    }
-
-                    $this->listenerTimes[$this->activeListener] += $timeTaken;
-
-                    $timeTaken = round(($timeTaken), 4);
-                    echo "DONE in $timeTaken seconds".PHP_EOL;
                 }
 
                 $this->activeListener = '';
@@ -445,19 +418,6 @@ class File
                 $error = 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.';
                 $this->addWarning($error, null, 'Internal.NoCodeFound');
             }
-        }
-
-        if (PHP_CodeSniffer_VERBOSITY > 2) {
-            echo "\t*** END TOKEN PROCESSING ***".PHP_EOL;
-            echo "\t*** START SNIFF PROCESSING REPORT ***".PHP_EOL;
-
-            asort($this->listenerTimes, SORT_NUMERIC);
-            $this->listenerTimes = array_reverse($this->listenerTimes, true);
-            foreach ($this->listenerTimes as $listener => $timeTaken) {
-                echo "\t$listener: ".round(($timeTaken), 4).' secs'.PHP_EOL;
-            }
-
-            echo "\t*** END SNIFF PROCESSING REPORT ***".PHP_EOL;
         }
 
     }//end process()
