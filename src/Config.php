@@ -424,12 +424,10 @@ class Config
                                  );
         $this->sniffs          = array();
         $this->ignored         = array();
-        $this->reportFile      = null;
         $this->generator       = null;
         $this->filter          = null;
         $this->bootstrap       = array();
         $this->reports         = array('full' => null);
-        $this->reportWidth     = 'auto';
         $this->errorSeverity   = 5;
         $this->warningSeverity = 5;
         $this->recordErrors    = true;
@@ -441,11 +439,6 @@ class Config
         $standard = self::getConfigData('default_standard');
         if ($standard !== null) {
             $this->standards = explode(',', $standard);
-        }
-
-        $reportFormat = self::getConfigData('report_format');
-        if ($reportFormat !== null) {
-            $this->reports = array($reportFormat => null);
         }
 
         $tabWidth = self::getConfigData('tab_width');
@@ -480,11 +473,6 @@ class Config
             if ($showWarnings === false) {
                 $this->warningSeverity = 0;
             }
-        }
-
-        $reportWidth = self::getConfigData('report_width');
-        if ($reportWidth !== null) {
-            $this->reportWidth = $reportWidth;
         }
 
         $showProgress = self::getConfigData('show_progress');
@@ -770,46 +758,6 @@ class Config
                 }
 
                 $this->overriddenDefaults['stdinPath'] = true;
-            } else if (PHP_CodeSniffer_CBF === false && substr($arg, 0, 12) === 'report-file=') {
-                $this->reportFile = Util\Common::realpath(substr($arg, 12));
-
-                // It may not exist and return false instead.
-                if ($this->reportFile === false) {
-                    $this->reportFile = substr($arg, 12);
-
-                    $dir = dirname($this->reportFile);
-                    if (is_dir($dir) === false) {
-                        echo 'ERROR: The specified report file path "'.$this->reportFile.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
-                        $this->printUsage();
-                        exit(2);
-                    }
-
-                    if ($dir === '.') {
-                        // Passed report file is a file in the current directory.
-                        $this->reportFile = getcwd().'/'.basename($this->reportFile);
-                    } else {
-                        $dir = Util\Common::realpath(getcwd().'/'.$dir);
-                        if ($dir !== false) {
-                            // Report file path is relative.
-                            $this->reportFile = $dir.'/'.basename($this->reportFile);
-                        }
-                    }
-                }//end if
-
-                $this->overriddenDefaults['reportFile'] = true;
-
-                if (is_dir($this->reportFile) === true) {
-                    echo 'ERROR: The specified report file path "'.$this->reportFile.'" is a directory'.PHP_EOL.PHP_EOL;
-                    $this->printUsage();
-                    exit(2);
-                }
-            } else if (substr($arg, 0, 13) === 'report-width=') {
-                if (isset($this->overriddenDefaults['reportWidth']) === true) {
-                    break;
-                }
-
-                $this->reportWidth = substr($arg, 13);
-                $this->overriddenDefaults['reportWidth'] = true;
             } else if (substr($arg, 0, 9) === 'basepath=') {
                 if (isset($this->overriddenDefaults['basepath']) === true) {
                     break;
@@ -829,56 +777,6 @@ class Config
                     $this->printUsage();
                     exit(2);
                 }
-            } else if ((substr($arg, 0, 7) === 'report=' || substr($arg, 0, 7) === 'report-')) {
-                $reports = array();
-
-                if ($arg[6] === '-') {
-                    // This is a report with file output.
-                    $split = strpos($arg, '=');
-                    if ($split === false) {
-                        $report = substr($arg, 7);
-                        $output = null;
-                    } else {
-                        $report = substr($arg, 7, ($split - 7));
-                        $output = substr($arg, ($split + 1));
-                        if ($output === false) {
-                            $output = null;
-                        } else {
-                            $dir = dirname($output);
-                            if ($dir === '.') {
-                                // Passed report file is a filename in the current directory.
-                                $output = getcwd().'/'.basename($output);
-                            } else {
-                                $dir = Util\Common::realpath(getcwd().'/'.$dir);
-                                if ($dir !== false) {
-                                    // Report file path is relative.
-                                    $output = $dir.'/'.basename($output);
-                                }
-                            }
-                        }//end if
-                    }//end if
-
-                    $reports[$report] = $output;
-                } else {
-                    // This is a single report.
-                    if (isset($this->overriddenDefaults['reports']) === true) {
-                        break;
-                    }
-
-                    $reportNames = explode(',', substr($arg, 7));
-                    foreach ($reportNames as $report) {
-                        $reports[$report] = null;
-                    }
-                }//end if
-
-                // Remove the default value so the CLI value overrides it.
-                if (isset($this->overriddenDefaults['reports']) === false) {
-                    $this->reports = $reports;
-                } else {
-                    $this->reports = array_merge($this->reports, $reports);
-                }
-
-                $this->overriddenDefaults['reports'] = true;
             } else if (substr($arg, 0, 7) === 'filter=') {
                 if (isset($this->overriddenDefaults['filter']) === true) {
                     break;
@@ -1054,8 +952,7 @@ class Config
     public function printPHPCSUsage()
     {
         echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--cache[=<cacheFile>]] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
-        echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
-        echo '    [--report-width=<reportWidth>] [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
+        echo '    [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;

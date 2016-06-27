@@ -162,7 +162,6 @@ class Runner
         $this->config->cache        = false;
         $this->config->showSources  = false;
         $this->config->recordErrors = false;
-        $this->config->reportFile   = null;
         $this->config->reports      = array('cbf' => null);
 
         // If a standard tries to set command line arguments itself, some
