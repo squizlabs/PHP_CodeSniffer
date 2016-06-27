@@ -1,3 +1,0 @@
-<?php
-trait MyTrait {}
-?>
