@@ -184,9 +184,9 @@ class PHP_CodeSniffer
      */
     public static $allowedTypes = array(
                                    'array',
-                                   'boolean',
+                                   'bool',
                                    'float',
-                                   'integer',
+                                   'int',
                                    'mixed',
                                    'object',
                                    'string',
