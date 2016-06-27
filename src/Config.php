@@ -424,7 +424,6 @@ class Config
                                  );
         $this->sniffs          = array();
         $this->ignored         = array();
-        $this->generator       = null;
         $this->filter          = null;
         $this->bootstrap       = array();
         $this->reports         = array('full' => null);
