@@ -43,3 +43,26 @@ echo 'hi';
 
 <?php
 // This is another really long comment that is going to go well over 100 characters, with no closing php tag after it.
+
+/**
+ * Does something cool, blah blah, not so long line.
+ *
+ * We're using Wilson scoring because blah blah, see:
+ * http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval
+ */
+
+// Go here:
+// http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval
+
+# http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval
+
+if ($foo) {
+    if ($bar) {
+        if ($baz) {
+            // Next line can be broken:
+            // foo bar baz http://en.wikipedia.org/wiki/Binomial_proportion#blahblahblahblah
+            // But this one is just too long to break with this indent:
+            // foo bar baz http://en.wikipedia.org/wiki/Binomial_proportion#blahblahblahblahblah
+        }
+    }
+}

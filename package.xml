@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Generic LineLength sniff no longer errors for comments that cannot be broken out onto a new line (request #766)
+    -- A typical case is a comment that contains a very long URL
+    -- The comment is ignored if putting the URL on a indented new comment line would be longer than the allowed length
   - Settings extensions in a ruleset no longer causes PHP notices during unit testing
     -- Thanks to Klaus Purer for the patch
   - Fixed bug #908 : PSR2 standard is not checking that closing brace is on line following the body

@@ -68,6 +68,7 @@ class Generic_Tests_Files_LineLengthUnitTest extends AbstractSniffUnitTest
                 24 => 1,
                 29 => 1,
                 37 => 1,
+                63 => 1,
                );
 
     }//end getWarningList()
