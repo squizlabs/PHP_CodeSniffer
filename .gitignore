@@ -1,5 +1,2 @@
-/CodeSniffer.conf
-/phpcs.xml
-/phpunit.xml
 /vendor/
 composer.lock

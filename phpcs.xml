@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer">
+ <description>The coding standard for PHP_CodeSniffer itself.</description>
+
+ <file>autoload.php</file>
+ <file>bin</file>
+ <file>src</file>
+ <file>tests</file>
+
+ <exclude-pattern>*/Standards/*/Tests/*.(inc|css|js)</exclude-pattern>
+
+ <arg name="report" value="summary"/>
+ <arg name="basepath" value="."/>
+ <arg value="np"/>
+
+ <rule ref="PHPCS"/>
+</ruleset>
