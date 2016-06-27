@@ -10,16 +10,18 @@
 namespace PHP_CodeSniffer\Tests\Core\File;
 
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\DummyFile;
+use PHPUnit\Framework\TestCase;
 
-class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
+class GetMethodParametersTest extends TestCase
 {
 
     /**
      * The PHP_CodeSniffer_File object containing parsed contents of this file.
      *
-     * @var PHP_CodeSniffer_File
+     * @var File
      */
     private $phpcsFile;
 

@@ -80,8 +80,7 @@ class Autoload
             return self::$loadedClasses[$path];
         }
 
-        $classes    = get_declared_classes();
-        $interfaces = get_declared_interfaces();
+        $classes = get_declared_classes();
 
         include $path;
 
