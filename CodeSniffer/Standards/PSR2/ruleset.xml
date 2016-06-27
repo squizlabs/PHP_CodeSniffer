@@ -109,6 +109,7 @@
  <!-- checked in Methods/MethodDeclarationSniff -->
 
  <!-- Method names MUST NOT be declared with a space after the method name. The opening brace MUST go on its own line, and the closing brace MUST go on the next line following the body. There MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. -->
+ <!-- checked in Methods/FunctionClosingBraceSniff -->
  <rule ref="Squiz.Functions.FunctionDeclaration"/>
  <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
 

@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Michael Butler for the patch
   - Settings extensions in a ruleset no longer causes PHP notices during unit testing
     -- Thanks to Klaus Purer for the patch
+  - Fixed bug #908 : PSR2 standard is not checking that closing brace is on line following the body
   - Fixed bug #945 : Incorrect indent behavior using deep-nested function and arrays
   - Fixed bug #961 : Two anonymous functions passed as function/method arguments cause indentation false positive
   - Fixed bug #1007 : Squiz Unreachable code detection is not working properly with a closure inside a case
