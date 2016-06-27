@@ -605,73 +605,6 @@ class Config
             $this->cache = false;
             $this->overriddenDefaults['cache'] = true;
             break;
-        case 'config-set':
-            if (isset($this->cliArgs[($pos + 1)]) === false
-                || isset($this->cliArgs[($pos + 2)]) === false
-            ) {
-                echo 'ERROR: Setting a config option requires a name and value'.PHP_EOL.PHP_EOL;
-                $this->printUsage();
-                exit(0);
-            }
-
-            $key     = $this->cliArgs[($pos + 1)];
-            $value   = $this->cliArgs[($pos + 2)];
-            $current = self::getConfigData($key);
-
-            try {
-                $this->setConfigData($key, $value);
-            } catch (Exception $e) {
-                echo $e->getMessage().PHP_EOL;
-                exit(2);
-            }
-
-            if ($current === null) {
-                echo "Config value \"$key\" added successfully".PHP_EOL;
-            } else {
-                echo "Config value \"$key\" updated successfully; old value was \"$current\"".PHP_EOL;
-            }
-            exit(0);
-        case 'config-delete':
-            if (isset($this->cliArgs[($pos + 1)]) === false) {
-                echo 'ERROR: Deleting a config option requires the name of the option'.PHP_EOL.PHP_EOL;
-                $this->printUsage();
-                exit(0);
-            }
-
-            $key     = $this->cliArgs[($pos + 1)];
-            $current = self::getConfigData($key);
-            if ($current === null) {
-                echo "Config value \"$key\" has not been set".PHP_EOL;
-            } else {
-                try {
-                    $this->setConfigData($key, null);
-                } catch (Exception $e) {
-                    echo $e->getMessage().PHP_EOL;
-                    exit(2);
-                }
-
-                echo "Config value \"$key\" removed successfully; old value was \"$current\"".PHP_EOL;
-            }
-            exit(0);
-        case 'config-show':
-            $data = self::getAllConfigData();
-            $this->printConfigData($data);
-            exit(0);
-        case 'runtime-set':
-            if (isset($this->cliArgs[($pos + 1)]) === false
-                || isset($this->cliArgs[($pos + 2)]) === false
-            ) {
-                echo 'ERROR: Setting a runtime config option requires a name and value'.PHP_EOL.PHP_EOL;
-                $this->printUsage();
-                exit(0);
-            }
-
-            $key   = $this->cliArgs[($pos + 1)];
-            $value = $this->cliArgs[($pos + 2)];
-            $this->cliArgs[($pos + 1)] = '';
-            $this->cliArgs[($pos + 2)] = '';
-            self::setConfigData($key, $value, true);
-            break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
                 $sniffs = explode(',', substr($arg, 7));
@@ -942,7 +875,6 @@ class Config
         echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--cache[=<cacheFile>]] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
         echo '    [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
-        echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--parallel=<processes>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--generator=<generator>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
