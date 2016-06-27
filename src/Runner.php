@@ -78,20 +78,6 @@ class Runner
             exit(0);
         }
 
-        // Generate documentation for each of the supplied standards.
-        if ($this->config->generator !== null) {
-            $standards = $this->config->standards;
-            foreach ($standards as $standard) {
-                $this->config->standards = array($standard);
-                $ruleset   = new Ruleset($this->config);
-                $class     = 'Symplify\PHP7_CodeSniffer\Generators\\'.$this->config->generator;
-                $generator = new $class($ruleset);
-                $generator->generate();
-            }
-
-            exit(0);
-        }
-
         // Other report formats don't really make sense in interactive mode
         // so we hard-code the full report here and when outputting.
         // We also ensure parallel processing is off because we need to do one file at a time.
@@ -156,7 +142,6 @@ class Runner
         // Override some of the command line settings that might break the fixes.
         $this->config->verbosity    = 0;
         $this->config->showProgress = false;
-        $this->config->generator    = null;
         $this->config->explain      = false;
         $this->config->interactive  = false;
         $this->config->cache        = false;

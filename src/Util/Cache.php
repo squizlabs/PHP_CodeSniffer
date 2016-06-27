@@ -119,8 +119,7 @@ class Cache
                 if (is_dir($filePath) === true
                     && ($filename === 'Standards'
                     || $filename === 'Exceptions'
-                    || $filename === 'Reports'
-                    || $filename === 'Generators')
+                    || $filename === 'Reports')
                 ) {
                     return false;
                 }

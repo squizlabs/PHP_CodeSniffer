@@ -18,18 +18,9 @@ class Config
 {
 
     /**
-     * The current version.
-     *
      * @var string
      */
     const VERSION = '3.0.0';
-
-    /**
-     * Package stability; either stable, beta or alpha.
-     *
-     * @var string
-     */
-    const STABILITY = 'alpha';
 
     /**
      * An array of settings that PHPCS and PHPCBF accept.
@@ -60,7 +51,6 @@ class Config
      *                          If empty, all sniffs in the supplied standards will be used.
      * string[] ignored         Regular expressions used to ignore files and folders during checking.
      * string   reportFile      A file where the report output should be written.
-     * string   generator       The documentation generator to use.
      * string   filter          The filter to use for the run.
      * string[] bootstrap       One of more files to include before the run begins.
      * int      reportWidth     The maximum number of columns that reports should use for output.
@@ -101,7 +91,6 @@ class Config
                          'sniffs'          => null,
                          'ignored'         => null,
                          'reportFile'      => null,
-                         'generator'       => null,
                          'filter'          => null,
                          'bootstrap'       => null,
                          'reports'         => null,
@@ -572,8 +561,7 @@ class Config
             $this->printUsage();
             exit(0);
         case 'version':
-            echo 'Symplify\PHP7_CodeSniffer version '.self::VERSION.' ('.self::STABILITY.') ';
-            echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
+            echo 'Symplify\PHP7_CodeSniffer version '.self::VERSION;
             exit(0);
         case 'cache':
             if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false) {
@@ -714,11 +702,6 @@ class Config
 
                 $this->ignored = $ignored;
                 $this->overriddenDefaults['ignored'] = true;
-            } else if (substr($arg, 0, 10) === 'generator='
-                && PHP_CodeSniffer_CBF === false
-            ) {
-                $this->generator = substr($arg, 10);
-                $this->overriddenDefaults['generator'] = true;
             } else if (substr($arg, 0, 10) === 'tab-width=') {
                 $this->tabWidth = (int) substr($arg, 10);
                 $this->overriddenDefaults['tabWidth'] = true;
@@ -817,11 +800,10 @@ class Config
         echo '    [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--parallel=<processes>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--generator=<generator>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
-        echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
         echo '        -a            Run interactively'.PHP_EOL;
         echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
@@ -865,7 +847,6 @@ class Config
         echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
-        echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
