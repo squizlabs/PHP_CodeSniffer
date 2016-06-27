@@ -1231,6 +1231,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="FunctionCallSignatureSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="FunctionClosingBraceSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="MethodDeclarationSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1297,6 +1300,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="FunctionCallSignatureUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="FunctionClosingBraceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="FunctionClosingBraceUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="FunctionClosingBraceUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="MethodDeclarationUnitTest.inc" role="test" />
