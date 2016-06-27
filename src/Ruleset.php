@@ -6,13 +6,13 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer;
+namespace Symplify\PHP7_CodeSniffer;
 
-use PHP_CodeSniffer\Util;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
+use Symplify\PHP7_CodeSniffer\Util;
+use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
 class Ruleset
 {
@@ -67,7 +67,7 @@ class Ruleset
      * The key is the fully qualified name of the sniff class
      * and the value is the sniff object.
      *
-     * @var array<string, \PHP_CodeSniffer\Sniff>
+     * @var array<string, \Symplify\PHP7_CodeSniffer\Sniff>
      */
     public $sniffs = array();
 
@@ -87,7 +87,7 @@ class Ruleset
      * The key is the token name being listened for and the value
      * is the sniff object.
      *
-     * @var array<int, \PHP_CodeSniffer\Sniff>
+     * @var array<int, \Symplify\PHP7_CodeSniffer\Sniff>
      */
     public $tokenListeners = array();
 
@@ -111,7 +111,7 @@ class Ruleset
     /**
      * The config data for the run.
      *
-     * @var \PHP_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Config
      */
     private $config = null;
 
@@ -119,7 +119,7 @@ class Ruleset
     /**
      * Initialise the ruleset that the run will use.
      *
-     * @param \PHP_CodeSniffer\Config $config The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Config $config The config data for the run.
      *
      * @return void
      */
@@ -158,9 +158,9 @@ class Ruleset
                 $this->paths[] = $standard;
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY === 1) {
+            if (PHP_CodeSniffer_VERBOSITY === 1) {
                 echo "Registering sniffs in the $standardName standard... ";
-                if (count($config->standards) > 1 || PHP_CODESNIFFER_VERBOSITY > 2) {
+                if (count($config->standards) > 1 || PHP_CodeSniffer_VERBOSITY > 2) {
                     echo PHP_EOL;
                 }
             }
@@ -171,14 +171,14 @@ class Ruleset
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {
             $parts     = explode('.', strtolower($sniffCode));
-            $sniffName = 'php_codesniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $sniffName = 'Symplify\PHP7_CodeSniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
             $sniffRestrictions[$sniffName] = true;
         }
 
         $this->registerSniffs($sniffs, $sniffRestrictions);
         $this->populateTokenListeners();
 
-        if (PHP_CODESNIFFER_VERBOSITY === 1) {
+        if (PHP_CodeSniffer_VERBOSITY === 1) {
             $numSniffs = count($this->sniffs);
             echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
         }
@@ -264,7 +264,7 @@ class Ruleset
     public function processRuleset($rulesetPath, $depth=0)
     {
         $rulesetPath = Util\Common::realpath($rulesetPath);
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo str_repeat("\t", $depth);
             echo 'Processing ruleset '.Util\Common::stripBasepath($rulesetPath, $this->config->basepath).PHP_EOL;
         }
@@ -283,7 +283,7 @@ class Ruleset
 
         $sniffDir = $rulesetDir.DIRECTORY_SEPARATOR.'Sniffs';
         if (is_dir($sniffDir) === true) {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\tAdding sniff files from ".Util\Common::stripBasepath($sniffDir, $this->config->basepath).' directory'.PHP_EOL;
             }
@@ -298,7 +298,7 @@ class Ruleset
             }
 
             $this->setConfigData((string) $config['name'], (string) $config['value'], true);
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t=> set config value ".(string) $config['name'].': '.(string) $config['value'].PHP_EOL;
             }
@@ -311,7 +311,7 @@ class Ruleset
                 continue;
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\tProcessing rule \"".$rule['ref'].'"'.PHP_EOL;
             }
@@ -329,7 +329,7 @@ class Ruleset
                     // This sniff code has already been turned off, but now
                     // it is being explicitly included again, so turn it back on.
                     $this->ruleset[(string) $rule['ref']]['severity'] = 5;
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\t* disabling sniff exclusion for specific message code *".PHP_EOL;
                         echo str_repeat("\t", $depth);
@@ -341,7 +341,7 @@ class Ruleset
                     // the sniff, except this one.
                     $this->ruleset[$sniffCode]['severity']            = 0;
                     $this->ruleset[(string) $rule['ref']]['severity'] = 5;
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\tExcluding sniff \"".$sniffCode.'" except for "'.$parts[3].'"'.PHP_EOL;
                     }
@@ -354,7 +354,7 @@ class Ruleset
                         continue;
                     }
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo str_repeat("\t", $depth);
                         echo "\t\tExcluding rule \"".$exclude['name'].'"'.PHP_EOL;
                     }
@@ -364,7 +364,7 @@ class Ruleset
                     $parts = explode('.', $exclude['name']);
                     if (count($parts) === 4) {
                         $this->ruleset[(string) $exclude['name']]['severity'] = 0;
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             echo str_repeat("\t", $depth);
                             echo "\t\t=> severity set to 0".PHP_EOL;
                         }
@@ -398,7 +398,7 @@ class Ruleset
 
             $cliArgs[] = $argString;
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t=> set command line value $argString".PHP_EOL;
             }
@@ -426,7 +426,7 @@ class Ruleset
             $cliArgs[] = '-d';
             $cliArgs[] = $argString;
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t=> set PHP ini value $name to $value".PHP_EOL;
             }
@@ -437,7 +437,7 @@ class Ruleset
             foreach ($ruleset->{'file'} as $file) {
                 $file      = (string) $file;
                 $cliArgs[] = $file;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t=> added \"$file\" to the file list".PHP_EOL;
                 }
@@ -465,7 +465,7 @@ class Ruleset
             }
 
             $this->ignorePatterns[(string) $pattern] = (string) $pattern['type'];
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t=> added global ".(string) $pattern['type'].' ignore pattern: '.(string) $pattern.PHP_EOL;
             }
@@ -474,7 +474,7 @@ class Ruleset
         $includedSniffs = array_unique(array_merge($ownSniffs, $includedSniffs));
         $excludedSniffs = array_unique($excludedSniffs);
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             $included = count($includedSniffs);
             $excluded = count($excludedSniffs);
             echo str_repeat("\t", $depth);
@@ -544,7 +544,7 @@ class Ruleset
                 continue;
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> ".Util\Common::stripBasepath($path, $this->config->basepath).PHP_EOL;
             }
@@ -574,7 +574,7 @@ class Ruleset
         // Ignore internal sniffs codes as they are used to only
         // hide and change internal messages.
         if (substr($ref, 0, 9) === 'Internal.') {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t* ignoring internal sniff code *".PHP_EOL;
             }
@@ -590,7 +590,7 @@ class Ruleset
             $realpath = Util\Common::realpath($rulesetDir.'/'.$ref);
             if ($realpath !== false) {
                 $ref = $realpath;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
                 }
@@ -603,7 +603,7 @@ class Ruleset
             $realpath = Util\Common::realpath($ref);
             if ($realpath !== false) {
                 $ref = $realpath;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
                 }
@@ -622,7 +622,7 @@ class Ruleset
 
             if ($path !== null) {
                 $ref = $path;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
                 }
@@ -674,7 +674,7 @@ class Ruleset
                     $ref = $newRef;
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
                 }
@@ -684,7 +684,7 @@ class Ruleset
         if (is_dir($ref) === true) {
             if (is_file($ref.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
                 // We are referencing an external coding standard.
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t* rule is referencing a standard using directory name; processing *".PHP_EOL;
                 }
@@ -692,7 +692,7 @@ class Ruleset
                 return $this->processRuleset($ref.DIRECTORY_SEPARATOR.'ruleset.xml', ($depth + 2));
             } else {
                 // We are referencing a whole directory of sniffs.
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t* rule is referencing a directory of sniffs *".PHP_EOL;
                     echo str_repeat("\t", $depth);
@@ -712,7 +712,7 @@ class Ruleset
                 return array($ref);
             } else {
                 // Assume an external ruleset.xml file.
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t* rule is referencing a standard using ruleset path; processing *".PHP_EOL;
                 }
@@ -763,7 +763,7 @@ class Ruleset
                 }
 
                 $this->ruleset[$code]['severity'] = (int) $rule->severity;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> severity set to ".(int) $rule->severity;
                     if ($code !== $ref) {
@@ -788,7 +788,7 @@ class Ruleset
                 }
 
                 $this->ruleset[$code]['type'] = $type;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> message type set to ".(string) $rule->type;
                     if ($code !== $ref) {
@@ -808,7 +808,7 @@ class Ruleset
                 }
 
                 $this->ruleset[$code]['message'] = (string) $rule->message;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> message set to ".(string) $rule->message;
                     if ($code !== $ref) {
@@ -854,7 +854,7 @@ class Ruleset
                         }
 
                         $this->ruleset[$code]['properties'][$name] = $values;
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             echo str_repeat("\t", $depth);
                             echo "\t\t=> array property \"$name\" set to \"$value\"";
                             if ($code !== $ref) {
@@ -865,7 +865,7 @@ class Ruleset
                         }
                     } else {
                         $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             echo str_repeat("\t", $depth);
                             echo "\t\t=> property \"$name\" set to \"".(string) $prop['value'].'"';
                             if ($code !== $ref) {
@@ -893,7 +893,7 @@ class Ruleset
                 }
 
                 $this->ignorePatterns[$code][(string) $pattern] = (string) $pattern['type'];
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> added rule-specific ".(string) $pattern['type'].' ignore pattern';
                     if ($code !== $ref) {
@@ -919,7 +919,7 @@ class Ruleset
                 }
 
                 $this->includePatterns[$code][(string) $pattern] = (string) $pattern['type'];
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", $depth);
                     echo "\t\t=> added rule-specific ".(string) $pattern['type'].' include pattern';
                     if ($code !== $ref) {
@@ -950,14 +950,14 @@ class Ruleset
             return true;
         }
 
-        if (PHP_CODESNIFFER_CBF === true
+        if (PHP_CodeSniffer_CBF === true
             && isset($element['phpcbf-only']) === true
             && (string) $element['phpcbf-only'] === 'true'
         ) {
             return true;
         }
 
-        if (PHP_CODESNIFFER_CBF === false
+        if (PHP_CodeSniffer_CBF === false
             && isset($element['phpcs-only']) === true
             && (string) $element['phpcs-only'] === 'true'
         ) {
@@ -1013,7 +1013,7 @@ class Ruleset
 
             $listeners[$className] = $className;
 
-            if (PHP_CODESNIFFER_VERBOSITY > 2) {
+            if (PHP_CodeSniffer_VERBOSITY > 2) {
                 echo "Registered $className".PHP_EOL;
             }
         }//end foreach
@@ -1024,7 +1024,7 @@ class Ruleset
 
 
     /**
-     * Populates the array of PHP_CodeSniffer_Sniff's for this file.
+     * Populates the array of Symplify\PHP7_CodeSniffer_Sniff's for this file.
      *
      * @return void
      * @throws RuntimeException If sniff registration fails.

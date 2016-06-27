@@ -1,17 +1,17 @@
 <?php
 /**
- * JUnit report for PHP_CodeSniffer.
+ * JUnit report for Symplify\PHP7_CodeSniffer.
  *
  * @author    Oleg Lobach <oleg@lobach.info>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Reports;
+namespace Symplify\PHP7_CodeSniffer\Reports;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Files\File;
 
 class Junit implements Report
 {
@@ -25,7 +25,7 @@ class Junit implements Report
      * its data should be counted in the grand totals.
      *
      * @param array                 $report      Prepared report data.
-     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
+     * @param \Symplify\PHP7_CodeSniffer\File $phpcsFile   The file being reported on.
      * @param bool                  $showSources Show sources?
      * @param int                   $width       Maximum allowed line width.
      *
@@ -120,7 +120,7 @@ class Junit implements Report
 
         $failures = ($totalErrors + $totalWarnings);
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<testsuites name="PHP_CodeSniffer '.Config::VERSION.'" tests="'.$tests.'" failures="'.$failures.'">'.PHP_EOL;
+        echo '<testsuites name="Symplify\PHP7_CodeSniffer '.Config::VERSION.'" tests="'.$tests.'" failures="'.$failures.'">'.PHP_EOL;
         echo $cachedData;
         echo '</testsuites>'.PHP_EOL;
 

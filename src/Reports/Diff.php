@@ -1,16 +1,16 @@
 <?php
 /**
- * Diff report for PHP_CodeSniffer.
+ * Diff report for Symplify\PHP7_CodeSniffer.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Reports;
+namespace Symplify\PHP7_CodeSniffer\Reports;
 
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Util;
 
 class Diff implements Report
 {
@@ -24,7 +24,7 @@ class Diff implements Report
      * its data should be counted in the grand totals.
      *
      * @param array                 $report      Prepared report data.
-     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
+     * @param \Symplify\PHP7_CodeSniffer\File $phpcsFile   The file being reported on.
      * @param bool                  $showSources Show sources?
      * @param int                   $width       Maximum allowed line width.
      *
@@ -40,16 +40,16 @@ class Diff implements Report
         $phpcsFile->disableCaching();
         $tokens = $phpcsFile->getTokens();
         if (empty($tokens) === true) {
-            if (PHP_CODESNIFFER_VERBOSITY === 1) {
+            if (PHP_CodeSniffer_VERBOSITY === 1) {
                 $startTime = microtime(true);
                 echo 'DIFF report is parsing '.basename($report['filename']).' ';
-            } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo 'DIFF report is forcing parse of '.$report['filename'].PHP_EOL;
             }
 
             $phpcsFile->parse();
 
-            if (PHP_CODESNIFFER_VERBOSITY === 1) {
+            if (PHP_CodeSniffer_VERBOSITY === 1) {
                 $timeTaken = ((microtime(true) - $startTime) * 1000);
                 if ($timeTaken < 1000) {
                     $timeTaken = round($timeTaken);
@@ -65,12 +65,12 @@ class Diff implements Report
             $phpcsFile->fixer->startFile($phpcsFile);
         }//end if
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             ob_end_clean();
             echo "\t*** START FILE FIXING ***".PHP_EOL;
         }
 
-        if (PHP_CODESNIFFER_CBF === true) {
+        if (PHP_CodeSniffer_CBF === true) {
             ob_end_clean();
             $startTime = microtime(true);
             echo "\t=> Fixing file: $errors/$errors violations remaining";
@@ -78,7 +78,7 @@ class Diff implements Report
 
         $fixed = $phpcsFile->fixer->fixFile();
 
-        if (PHP_CODESNIFFER_CBF === true) {
+        if (PHP_CodeSniffer_CBF === true) {
             if ($fixed === false) {
                 echo "\033[31mERROR\033[0m";
             } else {
@@ -97,7 +97,7 @@ class Diff implements Report
             ob_start();
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t*** END FILE FIXING ***".PHP_EOL;
             ob_start();
         }
@@ -106,7 +106,7 @@ class Diff implements Report
             return false;
         }
 
-        if (PHP_CODESNIFFER_CBF === true) {
+        if (PHP_CodeSniffer_CBF === true) {
             // Diff without colours.
             $diff = $phpcsFile->fixer->generateDiff(null, false);
         } else {

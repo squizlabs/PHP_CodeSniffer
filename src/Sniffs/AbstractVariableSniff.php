@@ -10,13 +10,13 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Sniffs;
+namespace Symplify\PHP7_CodeSniffer\Sniffs;
 
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
 abstract class AbstractVariableSniff extends AbstractScopeSniff
 {
@@ -36,9 +36,9 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     private $_functionOpen = false;
 
     /**
-     * The current PHP_CodeSniffer file that we are processing.
+     * The current Symplify\PHP7_CodeSniffer file that we are processing.
      *
-     * @var PHP_CodeSniffer_File
+     * @var Symplify\PHP7_CodeSniffer_File
      */
     protected $currentFile = null;
 
@@ -67,9 +67,9 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
 
 
     /**
-     * Processes the token in the specified PHP_CodeSniffer_File.
+     * Processes the token in the specified Symplify\PHP7_CodeSniffer_File.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     * @param Symplify\PHP7_CodeSniffer_File $phpcsFile The Symplify\PHP7_CodeSniffer file where this
      *                                        token was found.
      * @param int                  $stackPtr  The position where the token was found.
      * @param array                $currScope The current scope opener token.
@@ -143,7 +143,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     /**
      * Processes the token outside the scope in the file.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     * @param Symplify\PHP7_CodeSniffer_File $phpcsFile The Symplify\PHP7_CodeSniffer file where this
      *                                        token was found.
      * @param int                  $stackPtr  The position where the token was found.
      *
@@ -171,7 +171,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     /**
      * Called to process class member vars.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     * @param Symplify\PHP7_CodeSniffer_File $phpcsFile The Symplify\PHP7_CodeSniffer file where this
      *                                        token was found.
      * @param int                  $stackPtr  The position where the token was found.
      *
@@ -183,7 +183,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     /**
      * Called to process normal member vars.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     * @param Symplify\PHP7_CodeSniffer_File $phpcsFile The Symplify\PHP7_CodeSniffer file where this
      *                                        token was found.
      * @param int                  $stackPtr  The position where the token was found.
      *
@@ -198,7 +198,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      * Note that there may be more than one variable in the string, which will
      * result only in one call for the string or one call per line for heredocs.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where this
+     * @param Symplify\PHP7_CodeSniffer_File $phpcsFile The Symplify\PHP7_CodeSniffer file where this
      *                                        token was found.
      * @param int                  $stackPtr  The position where the double quoted
      *                                        string was found.

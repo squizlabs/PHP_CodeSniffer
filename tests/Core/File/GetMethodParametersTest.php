@@ -1,25 +1,25 @@
 <?php
 /**
- * Tests for the \PHP_CodeSniffer\Files\File:getMethodParameters method.
+ * Tests for the \Symplify\PHP7_CodeSniffer\Files\File:getMethodParameters method.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core\File;
+namespace Symplify\PHP7_CodeSniffer\Tests\Core\File;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Files\DummyFile;
+use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Ruleset;
+use Symplify\PHP7_CodeSniffer\Files\DummyFile;
 use PHPUnit\Framework\TestCase;
 
 class GetMethodParametersTest extends TestCase
 {
 
     /**
-     * The PHP_CodeSniffer_File object containing parsed contents of this file.
+     * The Symplify\PHP7_CodeSniffer_File object containing parsed contents of this file.
      *
      * @var File
      */
@@ -27,7 +27,7 @@ class GetMethodParametersTest extends TestCase
 
 
     /**
-     * Initialize & tokenize PHP_CodeSniffer_File with code from this file.
+     * Initialize & tokenize Symplify\PHP7_CodeSniffer_File with code from this file.
      *
      * Methods used for these tests can be found at the bottom of
      * this file.

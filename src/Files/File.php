@@ -4,17 +4,17 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Files;
+namespace Symplify\PHP7_CodeSniffer\Files;
 
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Fixer;
-use PHP_CodeSniffer\Util;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Exceptions\TokenizerException;
+use Symplify\PHP7_CodeSniffer\Ruleset;
+use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Fixer;
+use Symplify\PHP7_CodeSniffer\Util;
+use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
+use Symplify\PHP7_CodeSniffer\Exceptions\TokenizerException;
 
 class File
 {
@@ -36,14 +36,14 @@ class File
     /**
      * The config data for the run.
      *
-     * @var \PHP_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Config
      */
     public $config = null;
 
     /**
      * The ruleset used for the run.
      *
-     * @var \PHP_CodeSniffer\Ruleset
+     * @var \Symplify\PHP7_CodeSniffer\Ruleset
      */
     public $ruleset = null;
 
@@ -64,14 +64,14 @@ class File
     /**
      * The Fixer object to control fixing errors.
      *
-     * @var \PHP_CodeSniffer\Fixer
+     * @var \Symplify\PHP7_CodeSniffer\Fixer
      */
     public $fixer = null;
 
     /**
      * The tokenizer being used for this file.
      *
-     * @var \PHP_CodeSniffer\Tokenizers\Tokenizer
+     * @var \Symplify\PHP7_CodeSniffer\Tokenizers\Tokenizer
      */
     public $tokenizer = null;
 
@@ -163,7 +163,7 @@ class File
     /**
      * An array of sniffs listening to this file's processing.
      *
-     * @var \PHP_CodeSniffer\Sniffs\Sniff[]
+     * @var \Symplify\PHP7_CodeSniffer\Sniffs\Sniff[]
      */
     protected $listeners = array();
 
@@ -195,8 +195,8 @@ class File
      * Constructs a file.
      *
      * @param string                   $path    The absolute path to the file to process.
-     * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
-     * @param \PHP_CodeSniffer\Config  $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Config  $config  The config data for the run.
      *
      * @return void
      */
@@ -297,13 +297,13 @@ class File
 
         $this->fixer->startFile($this);
 
-        if (PHP_CODESNIFFER_VERBOSITY > 2) {
+        if (PHP_CodeSniffer_VERBOSITY > 2) {
             echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
         }
 
         $foundCode        = false;
         $listenerIgnoreTo = array();
-        $inTests          = defined('PHP_CODESNIFFER_IN_TESTS');
+        $inTests          = defined('Symplify\PHP7_CodeSniffer_IN_TESTS');
 
         // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
@@ -341,7 +341,7 @@ class File
                 }//end if
             }//end if
 
-            if (PHP_CODESNIFFER_VERBOSITY > 2) {
+            if (PHP_CodeSniffer_VERBOSITY > 2) {
                 $type    = $token['type'];
                 $content = Util\Common::prepareForOutput($token['content']);
                 echo "\t\tProcess token $stackPtr: $type => $content".PHP_EOL;
@@ -410,7 +410,7 @@ class File
 
                 $this->activeListener = $class;
 
-                if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                if (PHP_CodeSniffer_VERBOSITY > 2) {
                     $startTime = microtime(true);
                     echo "\t\t\tProcessing ".$this->activeListener.'... ';
                 }
@@ -420,7 +420,7 @@ class File
                     $listenerIgnoreTo[$this->activeListener] = $ignoreTo;
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 2) {
+                if (PHP_CodeSniffer_VERBOSITY > 2) {
                     $timeTaken = (microtime(true) - $startTime);
                     if (isset($this->listenerTimes[$this->activeListener]) === false) {
                         $this->listenerTimes[$this->activeListener] = 0;
@@ -447,7 +447,7 @@ class File
             }
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 2) {
+        if (PHP_CodeSniffer_VERBOSITY > 2) {
             echo "\t*** END TOKEN PROCESSING ***".PHP_EOL;
             echo "\t*** START SNIFF PROCESSING REPORT ***".PHP_EOL;
 
@@ -476,16 +476,16 @@ class File
         }
 
         try {
-            $tokenizerClass  = 'PHP_CodeSniffer\Tokenizers\\'.$this->tokenizerType;
+            $tokenizerClass  = 'Symplify\PHP7_CodeSniffer\Tokenizers\\'.$this->tokenizerType;
             $this->tokenizer = new $tokenizerClass($this->content, $this->config, $this->eolChar);
             $this->tokens    = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
-            if (PHP_CODESNIFFER_VERBOSITY > 0
-                || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)
+            if (PHP_CodeSniffer_VERBOSITY > 0
+                || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)
             ) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo PHP_EOL;
                 }
             }
@@ -509,8 +509,8 @@ class File
             $this->addWarningOnLine($error, 1, 'Internal.LineEndings.Mixed');
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0
-            || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)
+        if (PHP_CodeSniffer_VERBOSITY > 0
+            || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)
         ) {
             if ($this->numTokens === 0) {
                 $numLines = 0;
@@ -519,7 +519,7 @@ class File
             }
 
             echo "[$this->tokenizerType => $this->numTokens tokens in $numLines lines]... ";
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo PHP_EOL;
             }
         }
@@ -915,7 +915,7 @@ class File
                                        'fixable'  => $fixable,
                                       );
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1
+        if (PHP_CodeSniffer_VERBOSITY > 1
             && $this->fixer->enabled === true
             && $fixable === true
         ) {
@@ -1071,7 +1071,7 @@ class File
      *
      * @return string|null The name of the class, interface or function.
      *                     or NULL if the function is a closure.
-     * @throws PHP_CodeSniffer_Exception If the specified token is not of type
+     * @throws Symplify\PHP7_CodeSniffer_Exception If the specified token is not of type
      *                                   T_FUNCTION, T_CLASS or T_INTERFACE.
      */
     public function getDeclarationName($stackPtr)
@@ -1111,7 +1111,7 @@ class File
      *                      declared the class, interface or function.
      *
      * @return boolean
-     * @throws PHP_CodeSniffer_Exception If the specified token is not of type
+     * @throws Symplify\PHP7_CodeSniffer_Exception If the specified token is not of type
      *                                   T_FUNCTION
      */
     public function isAnonymousFunction($stackPtr)
@@ -1169,7 +1169,7 @@ class File
      *                      to acquire the parameters for.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the specified $stackPtr is not of
+     * @throws Symplify\PHP7_CodeSniffer_Exception If the specified $stackPtr is not of
      *                                   type T_FUNCTION.
      */
     public function getMethodParameters($stackPtr)
@@ -1318,7 +1318,7 @@ class File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the specified position is not a
+     * @throws Symplify\PHP7_CodeSniffer_Exception If the specified position is not a
      *                                   T_FUNCTION token.
      */
     public function getMethodProperties($stackPtr)
@@ -1405,7 +1405,7 @@ class File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the specified position is not a
+     * @throws Symplify\PHP7_CodeSniffer_Exception If the specified position is not a
      *                                   T_VARIABLE token, or if the position is not
      *                                   a class member variable.
      */
@@ -1504,7 +1504,7 @@ class File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the specified position is not a
+     * @throws Symplify\PHP7_CodeSniffer_Exception If the specified position is not a
      *                                   T_CLASS token.
      */
     public function getClassProperties($stackPtr)

@@ -4,15 +4,15 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer;
+namespace Symplify\PHP7_CodeSniffer;
 
-use PHP_CodeSniffer\Reports\Report;
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Util\Common;
+use Symplify\PHP7_CodeSniffer\Reports\Report;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
+use Symplify\PHP7_CodeSniffer\Util\Common;
 
 class Reporter
 {
@@ -20,7 +20,7 @@ class Reporter
     /**
      * The config data for the run.
      *
-     * @var \PHP_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Config
      */
     public $config = null;
 
@@ -81,7 +81,7 @@ class Reporter
      * output file (or a temp file if none is specified) initialised by
      * clearing the current contents.
      *
-     * @param \PHP_CodeSniffer\Config $config The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Config $config The config data for the run.
      *
      * @return void
      * @throws RuntimeException If a report is not available.
@@ -107,12 +107,12 @@ class Reporter
 
                 $reportClassName = Autoload::loadFile($filename);
             } else {
-                $reportClassName = 'PHP_CodeSniffer\Reports\\'.$type;
+                $reportClassName = 'Symplify\PHP7_CodeSniffer\Reports\\'.$type;
             }
 
             $reportClass = new $reportClassName();
             if (false === ($reportClass instanceof Report)) {
-                throw new RuntimeException('Class "'.$reportClassName.'" must implement the "PHP_CodeSniffer\Report" interface.');
+                throw new RuntimeException('Class "'.$reportClassName.'" must implement the "Symplify\PHP7_CodeSniffer\Report" interface.');
             }
 
             $this->reports[$type] = array(
@@ -207,7 +207,7 @@ class Reporter
         }
 
         if ($reportFile !== null) {
-            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+            if (PHP_CodeSniffer_VERBOSITY > 0) {
                 echo $generatedReport;
             }
 
@@ -229,7 +229,7 @@ class Reporter
      * assigned to each report. This content may be an intermediate report format
      * and not reflect the final report output.
      *
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file that has been processed.
+     * @param \Symplify\PHP7_CodeSniffer\Files\File $phpcsFile The file that has been processed.
      *
      * @return void
      */
@@ -278,7 +278,7 @@ class Reporter
     /**
      * Generate summary information to be used during report generation.
      *
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file that has been processed.
+     * @param \Symplify\PHP7_CodeSniffer\Files\File $phpcsFile The file that has been processed.
      *
      * @return array
      */

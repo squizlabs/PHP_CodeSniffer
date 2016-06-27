@@ -1,15 +1,12 @@
 {
     "name": "symplify/php7_codesniffer",
-    "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+    "description": "PHP7_CodeSniffer tokenizes PHP files and detects violations of a defined set of coding standards.",
     "keywords": ["phpcs", "standards", "php7", "code sniffer"],
     "license": "MIT",
     "authors": [
         { "name": "Tomáš Votruba", "email": "tomas.vot@gmail.com" },
-        { "name": "Greg Sherwood", "role": "lead" }
+        { "name": "Greg Sherwood" }
     ],
-    "support": {
-        "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
-    },
     "require": {
         "php": "^5.6|^7.0",
         "ext-tokenizer": "*",
@@ -22,10 +19,9 @@
     },
     "autoload": {
         "psr-4": {
-            "PHP_CodeSniffer\\": "src",
-            "PHP_CodeSniffer\\Tests\\": "tests"
-        },
-        "files": ["autoload.php"]
+            "Symplify\\PHP7_CodeSniffer\\": "src",
+            "Symplify\\PHP7_CodeSniffer\\Tests\\": "tests"
+        }
     },
     "bin": [
         "bin/phpcs",

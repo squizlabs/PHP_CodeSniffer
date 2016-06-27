@@ -4,14 +4,14 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tokenizers;
+namespace Symplify\PHP7_CodeSniffer\Tokenizers;
 
-use PHP_CodeSniffer\Util;
-use PHP_CodeSniffer\Exceptions\TokenizerException;
-use PHP_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Util;
+use Symplify\PHP7_CodeSniffer\Exceptions\TokenizerException;
+use Symplify\PHP7_CodeSniffer\Config;
 
 class JS extends Tokenizer
 {
@@ -238,7 +238,7 @@ class JS extends Tokenizer
      * Pre-checks the content to see if it looks minified.
      *
      * @param string                  $content The content to tokenize,
-     * @param \PHP_CodeSniffer\Config $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Config $config  The config data for the run.
      * @param string                  $eolChar The EOL char used in the content.
      *
      * @return void
@@ -267,7 +267,7 @@ class JS extends Tokenizer
      */
     public function tokenize($string)
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t*** START JS TOKENIZING ***".PHP_EOL;
         }
 
@@ -303,7 +303,7 @@ class JS extends Tokenizer
         for ($i = 0; $i < $numChars; $i++) {
             $char = $chars[$i];
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 $content       = Util\Common::prepareForOutput($char);
                 $bufferContent = Util\Common::prepareForOutput($buffer);
 
@@ -328,7 +328,7 @@ class JS extends Tokenizer
                                  'content' => str_replace("\n", $this->eolChar, $buffer),
                                 );
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($buffer);
                         echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
                     }
@@ -349,7 +349,7 @@ class JS extends Tokenizer
                                  'content' => str_replace("\n", $this->eolChar, $buffer),
                                 );
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($buffer);
                         echo "\t=> Added token T_STRING ($content)".PHP_EOL;
                     }
@@ -381,7 +381,7 @@ class JS extends Tokenizer
                                      'content' => str_replace("\n", $this->eolChar, $buffer).$char,
                                     );
 
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             echo "\t\t* found end of string *".PHP_EOL;
                             $content = Util\Common::prepareForOutput($buffer.$char);
                             echo "\t=> Added token T_CONSTANT_ENCAPSED_STRING ($content)".PHP_EOL;
@@ -398,7 +398,7 @@ class JS extends Tokenizer
                     $stringChar      = $i;
                     $preStringBuffer = $buffer;
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo "\t\t* looking for string closer *".PHP_EOL;
                     }
                 }//end if
@@ -416,7 +416,7 @@ class JS extends Tokenizer
                     $stringChar      = null;
                     $char            = $chars[$i];
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo "\t\t* found newline before end of string, bailing *".PHP_EOL;
                     }
                 }
@@ -449,7 +449,7 @@ class JS extends Tokenizer
                                  'content' => $regex['content'],
                                 );
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($regex['content']);
                         echo "\t=> Added token T_REGULAR_EXPRESSION ($content)".PHP_EOL;
                     }
@@ -476,7 +476,7 @@ class JS extends Tokenizer
                     // to look ahead at the next chars to see if this is
                     // actually part of a larger token. For example,
                     // FOR and FOREACH.
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo "\t\t* buffer possibly contains token, looking ahead $lookAheadLength chars *".PHP_EOL;
                     }
 
@@ -488,7 +488,7 @@ class JS extends Tokenizer
 
                         $charBuffer .= $chars[($i + $x)];
 
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             $content = Util\Common::prepareForOutput($charBuffer);
                             echo "\t\t=> Looking ahead $x chars => $content".PHP_EOL;
                         }
@@ -504,11 +504,11 @@ class JS extends Tokenizer
                                 && $newType === 'T_DOC_COMMENT'
                                 && $chars[($i + $x + 1)] === '/'
                             ) {
-                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                if (PHP_CodeSniffer_VERBOSITY > 1) {
                                     echo "\t\t* look ahead ignored T_DOC_COMMENT, continuing *".PHP_EOL;
                                 }
                             } else {
-                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                if (PHP_CodeSniffer_VERBOSITY > 1) {
                                     echo "\t\t* look ahead found more specific token ($newType), ignoring $i *".PHP_EOL;
                                 }
 
@@ -520,7 +520,7 @@ class JS extends Tokenizer
                 }//end if
 
                 if ($matchedToken === false) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 1 && $lookAheadLength > 0) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1 && $lookAheadLength > 0) {
                         echo "\t\t* look ahead found nothing *".PHP_EOL;
                     }
 
@@ -531,7 +531,7 @@ class JS extends Tokenizer
                                  'content' => $buffer,
                                 );
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($buffer);
                         echo "\t=> Added token $value ($content)".PHP_EOL;
                     }
@@ -550,13 +550,13 @@ class JS extends Tokenizer
                                  'content' => $newContent,
                                 );
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput(substr($buffer, 0, -1));
                         echo "\t=> Added token T_STRING ($content)".PHP_EOL;
                     }
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo "\t\t* char is token, looking ahead ".($maxTokenLength - 1).' chars *'.PHP_EOL;
                 }
 
@@ -572,7 +572,7 @@ class JS extends Tokenizer
 
                     $charBuffer .= $chars[($i + $x)];
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($charBuffer);
                         echo "\t\t=> Looking ahead $x chars => $content".PHP_EOL;
                     }
@@ -580,7 +580,7 @@ class JS extends Tokenizer
                     if (isset($this->tokenValues[strtolower($charBuffer)]) === true) {
                         // We've found something larger that matches
                         // so we can ignore this char.
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             $type = $this->tokenValues[strtolower($charBuffer)];
                             echo "\t\t* look ahead found more specific token ($type), ignoring $i *".PHP_EOL;
                         }
@@ -598,7 +598,7 @@ class JS extends Tokenizer
                                  'content' => $char,
                                 );
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo "\t\t* look ahead found nothing *".PHP_EOL;
                         $content = Util\Common::prepareForOutput($char);
                         echo "\t=> Added token $value ($content)".PHP_EOL;
@@ -619,7 +619,7 @@ class JS extends Tokenizer
                 if (isset($chars[($i - 2)]) === true && $chars[($i - 2)] === '\\') {
                     $lastToken   = array_pop($tokens);
                     $lastContent = $lastToken['content'];
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $value   = $this->tokenValues[strtolower($lastContent)];
                         $content = Util\Common::prepareForOutput($lastContent);
                         echo "\t=> Removed token $value ($content)".PHP_EOL;
@@ -636,7 +636,7 @@ class JS extends Tokenizer
                                      'content' => $lastChar,
                                     );
 
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             $content = Util\Common::prepareForOutput($lastChar);
                             echo "\t=> Added token $value ($content)".PHP_EOL;
                         }
@@ -645,7 +645,7 @@ class JS extends Tokenizer
                     // We have started a comment.
                     $inComment = $buffer;
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo "\t\t* looking for end of comment *".PHP_EOL;
                     }
                 }//end if
@@ -661,7 +661,7 @@ class JS extends Tokenizer
                     }
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     if ($inComment === '') {
                         echo "\t\t* found end of comment *".PHP_EOL;
                     }
@@ -674,7 +674,7 @@ class JS extends Tokenizer
                                  'content' => str_replace("\n", $this->eolChar, $buffer),
                                 );
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($buffer);
                         echo "\t=> Added token T_STRING ($content)".PHP_EOL;
                     }
@@ -697,7 +697,7 @@ class JS extends Tokenizer
                          'content' => str_replace("\n", $this->eolChar, $buffer),
                         );
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 $content = Util\Common::prepareForOutput($buffer);
                 echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
             }
@@ -860,7 +860,7 @@ class JS extends Tokenizer
             }
         }//end for
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t*** END TOKENIZING ***".PHP_EOL;
         }
 
@@ -924,7 +924,7 @@ class JS extends Tokenizer
         }
 
         // This is probably a regular expression, so look for the end of it.
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t* token possibly starts a regular expression *".PHP_EOL;
         }
 
@@ -951,7 +951,7 @@ class JS extends Tokenizer
         }
 
         if ($chars[$next] !== '/') {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo "\t* could not find end of regular expression *".PHP_EOL;
             }
 
@@ -966,7 +966,7 @@ class JS extends Tokenizer
         }
 
         $regexEnd = $next;
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t* found end of regular expression at token $regexEnd *".PHP_EOL;
         }
 
@@ -983,7 +983,7 @@ class JS extends Tokenizer
         }
 
         if (isset($afterTokens[$chars[$next]]) === false) {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo "\t* tokens after regular expression do not look correct *".PHP_EOL;
             }
 
@@ -1016,7 +1016,7 @@ class JS extends Tokenizer
      */
     public function processAdditional()
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t*** START ADDITIONAL JS PROCESSING ***".PHP_EOL;
         }
 
@@ -1024,7 +1024,7 @@ class JS extends Tokenizer
         $classStack = array();
 
         for ($i = 0; $i < $numTokens; $i++) {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 $type    = $this->tokens[$i]['type'];
                 $content = Util\Common::prepareForOutput($this->tokens[$i]['content']);
 
@@ -1043,7 +1043,7 @@ class JS extends Tokenizer
                 if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
                     $this->tokens[$i]['code'] = T_CLOSURE;
                     $this->tokens[$i]['type'] = 'T_CLOSURE';
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $line = $this->tokens[$i]['line'];
                         echo str_repeat("\t", count($classStack));
                         echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
@@ -1055,7 +1055,7 @@ class JS extends Tokenizer
                         }
 
                         $this->tokens[$x]['conditions'][$i] = T_CLOSURE;
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             $type = $this->tokens[$x]['type'];
                             echo str_repeat("\t", count($classStack));
                             echo "\t\t* cleaned $x ($type) *".PHP_EOL;
@@ -1075,7 +1075,7 @@ class JS extends Tokenizer
                 $this->tokens[$closer]['code'] = T_CLOSE_OBJECT;
                 $this->tokens[$closer]['type'] = 'T_CLOSE_OBJECT';
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo str_repeat("\t", count($classStack));
                     echo "\t* token $i converted from T_OPEN_CURLY_BRACKET to T_OBJECT *".PHP_EOL;
                     echo str_repeat("\t", count($classStack));
@@ -1085,7 +1085,7 @@ class JS extends Tokenizer
                 for ($x = ($i + 1); $x < $closer; $x++) {
                     $this->tokens[$x]['conditions'][$i] = T_OBJECT;
                     ksort($this->tokens[$x]['conditions'], SORT_NUMERIC);
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         $type = $this->tokens[$x]['type'];
                         echo str_repeat("\t", count($classStack));
                         echo "\t\t* added T_OBJECT condition to $x ($type) *".PHP_EOL;
@@ -1106,7 +1106,7 @@ class JS extends Tokenizer
                         $this->tokens[$i]['code'] = T_INLINE_ELSE;
                         $this->tokens[$i]['type'] = 'T_INLINE_ELSE';
 
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             echo str_repeat("\t", count($classStack));
                             echo "\t* token $i converted from T_COLON to T_INLINE_THEN *".PHP_EOL;
                         }
@@ -1134,7 +1134,7 @@ class JS extends Tokenizer
                     $this->tokens[$label]['code'] = T_PROPERTY;
                     $this->tokens[$label]['type'] = 'T_PROPERTY';
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo str_repeat("\t", count($classStack));
                         echo "\t* token $label converted from T_STRING to T_PROPERTY *".PHP_EOL;
                     }
@@ -1142,7 +1142,7 @@ class JS extends Tokenizer
                     $this->tokens[$label]['code'] = T_LABEL;
                     $this->tokens[$label]['type'] = 'T_LABEL';
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo str_repeat("\t", count($classStack));
                         echo "\t* token $label converted from T_STRING to T_LABEL *".PHP_EOL;
                     }
@@ -1150,7 +1150,7 @@ class JS extends Tokenizer
             }//end if
         }//end for
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t*** END ADDITIONAL JS PROCESSING ***".PHP_EOL;
         }
 

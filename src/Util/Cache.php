@@ -4,15 +4,15 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Util;
+namespace Symplify\PHP7_CodeSniffer\Util;
 
-use PHP_CodeSniffer\Autoload;
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Util\Common;
+use Symplify\PHP7_CodeSniffer\Autoload;
+use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Ruleset;
+use Symplify\PHP7_CodeSniffer\Util\Common;
 
 class Cache
 {
@@ -35,8 +35,8 @@ class Cache
     /**
      * Loads existing cache data for the run, if any.
      *
-     * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
-     * @param \PHP_CodeSniffer\Config  $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Config  $config  The config data for the run.
      *
      * @return void
      */
@@ -46,7 +46,7 @@ class Cache
         // to generate a hash for the code used during the run.
         // At this point, the loaded class list contains the core PHPCS code
         // and all sniffs that have been loaded as part of the run.
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo PHP_EOL."\tGenerating loaded file list for code hash".PHP_EOL;
         }
 
@@ -65,10 +65,10 @@ class Cache
                     continue;
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo "\t\t=> external file: $file".PHP_EOL;
                 }
-            } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo "\t\t=> internal sniff: $file".PHP_EOL;
             }
 
@@ -81,10 +81,10 @@ class Cache
         sort($rulesets);
         foreach ($rulesets as $file) {
             if (substr($file, 0, $standardDirLen) !== $standardDir) {
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo "\t\t=> external ruleset: $file".PHP_EOL;
                 }
-            } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo "\t\t=> internal ruleset: $file".PHP_EOL;
             }
 
@@ -131,7 +131,7 @@ class Cache
 
         $iterator = new \RecursiveIteratorIterator($filter);
         foreach ($iterator as $file) {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo "\t\t=> core file: $file".PHP_EOL;
             }
 
@@ -155,7 +155,7 @@ class Cache
         $configString = implode(',', $configData);
         $cacheHash    = substr(sha1($configString), 0, 12);
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\tGenerating cache key data".PHP_EOL;
             echo "\t\t=> tabWidth: ".$configData['tabWidth'].PHP_EOL;
             echo "\t\t=> encoding: ".$configData['encoding'].PHP_EOL;
@@ -171,7 +171,7 @@ class Cache
             // Determine the common paths for all files being checked.
             // We can use this to locate an existing cache file, or to
             // determine where to create a new one.
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo "\tChecking possible cache file paths".PHP_EOL;
             }
 
@@ -215,7 +215,7 @@ class Cache
                     $cacheFile = $testFile;
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo "\t\t=> $testFile".PHP_EOL;
                     echo "\t\t\t * based on shared location: $file *".PHP_EOL;
                 }
@@ -233,7 +233,7 @@ class Cache
         }//end if
 
         self::$path = $cacheFile;
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t=> Using cache file: ".self::$path.PHP_EOL;
         }
 
@@ -243,11 +243,11 @@ class Cache
             // Verify the contents of the cache file.
             if (self::$cache['config'] !== $configData) {
                 self::$cache = array();
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo "\t* cache was invalid and has been cleared *".PHP_EOL;
                 }
             }
-        } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        } else if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t* cache file does not exist *".PHP_EOL;
         }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * CBF report for PHP_CodeSniffer.
+ * CBF report for Symplify\PHP7_CodeSniffer.
  *
  * This report implements the various auto-fixing features of the
  * PHPCBF script and is not intended (or allowed) to be selected as a
@@ -8,12 +8,12 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Reports;
+namespace Symplify\PHP7_CodeSniffer\Reports;
 
-use PHP_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Files\File;
 
 class Cbf implements Report
 {
@@ -27,7 +27,7 @@ class Cbf implements Report
      * its data should be counted in the grand totals.
      *
      * @param array                 $report      Prepared report data.
-     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
+     * @param \Symplify\PHP7_CodeSniffer\File $phpcsFile   The file being reported on.
      * @param bool                  $showSources Show sources?
      * @param int                   $width       Maximum allowed line width.
      *

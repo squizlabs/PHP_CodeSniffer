@@ -1,17 +1,17 @@
 <?php
 /**
- * Version control report base class for PHP_CodeSniffer.
+ * Version control report base class for Symplify\PHP7_CodeSniffer.
  *
  * @author    Ben Selby <benmatselby@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Reports;
+namespace Symplify\PHP7_CodeSniffer\Reports;
 
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Timing;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Util\Timing;
 
 abstract class VersionControl implements Report
 {
@@ -32,7 +32,7 @@ abstract class VersionControl implements Report
      * its data should be counted in the grand totals.
      *
      * @param array                 $report      Prepared report data.
-     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
+     * @param \Symplify\PHP7_CodeSniffer\File $phpcsFile   The file being reported on.
      * @param bool                  $showSources Show sources?
      * @param int                   $width       Maximum allowed line width.
      *
@@ -93,7 +93,7 @@ abstract class VersionControl implements Report
 
             if (isset($authorCache[$author]) === false) {
                 // This author doesn't have any errors.
-                if (PHP_CODESNIFFER_VERBOSITY === 0) {
+                if (PHP_CodeSniffer_VERBOSITY === 0) {
                     continue;
                 }
 

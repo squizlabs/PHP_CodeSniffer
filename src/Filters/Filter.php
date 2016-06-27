@@ -4,14 +4,14 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Filters;
+namespace Symplify\PHP7_CodeSniffer\Filters;
 
-use PHP_CodeSniffer\Util;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Util;
+use Symplify\PHP7_CodeSniffer\Ruleset;
+use Symplify\PHP7_CodeSniffer\Config;
 
 class Filter extends \RecursiveFilterIterator
 {
@@ -25,14 +25,14 @@ class Filter extends \RecursiveFilterIterator
     /**
      * The config data for the run.
      *
-     * @var \PHP_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Config
      */
     protected $config = null;
 
     /**
      * The ruleset used for the run.
      *
-     * @var \PHP_CodeSniffer\Ruleset
+     * @var \Symplify\PHP7_CodeSniffer\Ruleset
      */
     protected $ruleset = null;
 
@@ -56,8 +56,8 @@ class Filter extends \RecursiveFilterIterator
      *
      * @param \RecursiveIterator       $iterator The iterator we are using to get file paths.
      * @param string                   $basedir  The top-level path we are filtering.
-     * @param \PHP_CodeSniffer\Config  $config   The config data for the run.
-     * @param \PHP_CodeSniffer\Ruleset $ruleset  The ruleset used for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Config  $config   The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset  The ruleset used for the run.
      *
      * @return void
      */

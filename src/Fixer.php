@@ -7,13 +7,13 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer;
+namespace Symplify\PHP7_CodeSniffer;
 
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Common;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Util\Common;
 
 class Fixer
 {
@@ -39,7 +39,7 @@ class Fixer
     /**
      * The file being fixed.
      *
-     * @var \PHP_CodeSniffer\Files\File
+     * @var \Symplify\PHP7_CodeSniffer\Files\File
      */
     private $currentFile = null;
 
@@ -109,7 +109,7 @@ class Fixer
     /**
      * Starts fixing a new file.
      *
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being fixed.
+     * @param \Symplify\PHP7_CodeSniffer\Files\File $phpcsFile The file being fixed.
      *
      * @return void
      */
@@ -159,7 +159,7 @@ class Fixer
             // Only needed once file content has changed.
             $contents = $this->getContents();
 
-            if (PHP_CODESNIFFER_VERBOSITY > 2) {
+            if (PHP_CodeSniffer_VERBOSITY > 2) {
                 @ob_end_clean();
                 echo '---START FILE CONTENT---'.PHP_EOL;
                 $lines = explode($this->currentFile->eolChar, $contents);
@@ -181,7 +181,7 @@ class Fixer
 
             $this->loops++;
 
-            if (PHP_CODESNIFFER_CBF === true && $stdin === false) {
+            if (PHP_CodeSniffer_CBF === true && $stdin === false) {
                 echo "\r".str_repeat(' ', 80)."\r";
                 echo "\t=> Fixing file: $this->_numFixes/$fixable violations remaining [made $this->loops pass";
                 if ($this->loops > 1) {
@@ -194,7 +194,7 @@ class Fixer
             if ($this->_numFixes === 0 && $this->_inConflict === false) {
                 // Nothing left to do.
                 break;
-            } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo "\t* fixed $this->_numFixes violations, starting loop ".($this->loops + 1).' *'.PHP_EOL;
             }
         }//end while
@@ -202,7 +202,7 @@ class Fixer
         $this->enabled = false;
 
         if ($this->_numFixes > 0) {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 @ob_end_clean();
                 echo "\t*** Reached maximum number of loops with $this->_numFixes violations left unfixed ***".PHP_EOL;
                 ob_start();
@@ -242,7 +242,7 @@ class Fixer
 
         // We must use something like shell_exec() because whitespace at the end
         // of lines is critical to diff files.
-        $cmd  = "diff -u -L\"$filename\" -LPHP_CodeSniffer \"$filename\" \"$tempName\"";
+        $cmd  = "diff -u -L\"$filename\" -LSymplify\PHP7_CodeSniffer \"$filename\" \"$tempName\"";
         $diff = shell_exec($cmd);
 
         fclose($fixedFile);
@@ -345,7 +345,7 @@ class Fixer
             return false;
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             $bt    = debug_backtrace();
             $sniff = $bt[1]['class'];
             $line  = $bt[0]['line'];
@@ -391,12 +391,12 @@ class Fixer
                 $this->revertToken($stackPtr);
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 @ob_end_clean();
                 echo "\t=> Changeset failed to apply".PHP_EOL;
                 ob_start();
             }
-        } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        } else if (PHP_CodeSniffer_VERBOSITY > 1) {
             $fixes = count($this->_changeset);
             @ob_end_clean();
             echo "\t=> Changeset ended: $fixes changes applied".PHP_EOL;
@@ -419,9 +419,9 @@ class Fixer
         $this->_inConflict  = false;
 
         if (empty($this->_changeset) === false) {
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 $bt = debug_backtrace();
-                if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+                if ($bt[1]['class'] === 'Symplify\PHP7_CodeSniffer_Fixer') {
                     $sniff = $bt[2]['class'];
                     $line  = $bt[1]['line'];
                 } else {
@@ -465,7 +465,7 @@ class Fixer
                 $indent .= "\t";
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 @ob_end_clean();
                 echo "$indent* token $stackPtr has already been modified, skipping *".PHP_EOL;
                 ob_start();
@@ -474,9 +474,9 @@ class Fixer
             return false;
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             $bt = debug_backtrace();
-            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+            if ($bt[1]['class'] === 'Symplify\PHP7_CodeSniffer_Fixer') {
                 $sniff = $bt[2]['class'];
                 $line  = $bt[1]['line'];
             } else {
@@ -499,7 +499,7 @@ class Fixer
         if ($this->_inChangeset === true) {
             $this->_changeset[$stackPtr] = $content;
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 @ob_end_clean();
                 echo "\t\tQ: $sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
                 ob_start();
@@ -518,7 +518,7 @@ class Fixer
             if ($this->_oldTokenValues[$stackPtr]['prev'] === $content
                 && $this->_oldTokenValues[$stackPtr]['loop'] === ($this->loops - 1)
             ) {
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     $indent = "\t";
                     if (empty($this->_changeset) === false) {
                         $indent .= "\t";
@@ -533,12 +533,12 @@ class Fixer
 
                 if ($this->_oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
                     $this->_inConflict = true;
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo "$indent**** ignoring all changes until next loop ****".PHP_EOL;
                     }
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     ob_start();
                 }
 
@@ -554,7 +554,7 @@ class Fixer
         $this->_tokens[$stackPtr]      = $content;
         $this->_numFixes++;
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             $indent = "\t";
             if (empty($this->_changeset) === false) {
                 $indent .= "\tA: ";
@@ -583,9 +583,9 @@ class Fixer
             return false;
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             $bt = debug_backtrace();
-            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+            if ($bt[1]['class'] === 'Symplify\PHP7_CodeSniffer_Fixer') {
                 $sniff = $bt[2]['class'];
                 $line  = $bt[1]['line'];
             } else {
@@ -609,7 +609,7 @@ class Fixer
         unset($this->_fixedTokens[$stackPtr]);
         $this->_numFixes--;
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             $indent = "\t";
             if (empty($this->_changeset) === false) {
                 $indent .= "\tR: ";
