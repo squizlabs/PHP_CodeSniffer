@@ -214,11 +214,6 @@ class Runner
         // The class that manages all reporters for the run.
         $this->reporter = new Reporter($this->config);
 
-        // Include bootstrap files.
-        foreach ($this->config->bootstrap as $bootstrap) {
-            include $bootstrap;
-        }
-
         if ($this->config->stdin === true) {
             $fileContents = $this->config->stdinContent;
             if ($fileContents === null) {

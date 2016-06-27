@@ -401,7 +401,6 @@ class Config
         $this->sniffs          = array();
         $this->ignored         = array();
         $this->filter          = null;
-        $this->bootstrap       = array();
         $this->reports         = array('full' => null);
         $this->errorSeverity   = 5;
         $this->warningSeverity = 5;
@@ -578,22 +577,6 @@ class Config
 
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
-            } else if (substr($arg, 0, 10) === 'bootstrap=') {
-                $files     = explode(',', substr($arg, 10));
-                $bootstrap = array();
-                foreach ($files as $file) {
-                    $path = Util\Common::realpath($file);
-                    if ($path === false) {
-                        echo 'ERROR: The specified bootstrap file "'.$file.'" does not exist'.PHP_EOL.PHP_EOL;
-                        $this->printUsage();
-                        exit(2);
-                    }
-
-                    $bootstrap[] = $path;
-                }
-
-                $this->bootstrap = array_merge($this->bootstrap, $bootstrap);
-                $this->overriddenDefaults['bootstrap'] = true;
             } else if (substr($arg, 0, 11) === 'stdin-path=') {
                 $this->stdinPath = Util\Common::realpath(substr($arg, 11));
 
