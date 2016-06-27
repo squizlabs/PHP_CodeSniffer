@@ -51,8 +51,6 @@ class Config
      * bool     interactive     Enable interactive checking mode.
      * bool     parallel        Check files in parallel.
      * bool     cache           Enable the use of the file cache.
-     * bool     cacheFile       A file where the cache data should be written
-     * bool     colors          Display colours in output.
      * bool     explain         Explain the coding standards.
      * bool     local           Process local files in directories only (no recursion).
      * bool     showSources     Show sniff source codes in report output.
@@ -94,9 +92,6 @@ class Config
                          'verbosity'       => null,
                          'interactive'     => null,
                          'parallel'        => null,
-                         'cache'           => null,
-                         'cacheFile'       => null,
-                         'colors'          => null,
                          'explain'         => null,
                          'local'           => null,
                          'showSources'     => null,
@@ -404,9 +399,7 @@ class Config
         $this->standards       = array('PEAR');
         $this->verbosity       = 0;
         $this->interactive     = false;
-        $this->cache           = false;
-        $this->cacheFile       = null;
-        $this->colors          = false;
+        $this->colors          = true;
         $this->explain         = false;
         $this->local           = false;
         $this->showSources     = false;
@@ -469,11 +462,6 @@ class Config
         $showProgress = self::getConfigData('show_progress');
         if ($showProgress !== null) {
             $this->showProgress = (bool) $showProgress;
-        }
-
-        $colors = self::getConfigData('colors');
-        if ($colors !== null) {
-            $this->colors = (bool) $colors;
         }
 
         if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false) {
@@ -587,14 +575,6 @@ class Config
             echo 'Symplify\PHP7_CodeSniffer version '.self::VERSION.' ('.self::STABILITY.') ';
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
-        case 'colors':
-            $this->colors = true;
-            $this->overriddenDefaults['colors'] = true;
-            break;
-        case 'no-colors':
-            $this->colors = false;
-            $this->overriddenDefaults['colors'] = true;
-            break;
         case 'cache':
             if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false) {
                 $this->cache = true;
@@ -618,45 +598,6 @@ class Config
 
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
-            } else if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false
-                && substr($arg, 0, 6) === 'cache='
-            ) {
-                // Turn caching on.
-                $this->cache = true;
-                $this->overriddenDefaults['cache'] = true;
-
-                $this->cacheFile = Util\Common::realpath(substr($arg, 6));
-
-                // It may not exist and return false instead.
-                if ($this->cacheFile === false) {
-                    $this->cacheFile = substr($arg, 6);
-
-                    $dir = dirname($this->cacheFile);
-                    if (is_dir($dir) === false) {
-                        echo 'ERROR: The specified cache file path "'.$this->cacheFile.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
-                        $this->printUsage();
-                        exit(2);
-                    }
-
-                    if ($dir === '.') {
-                        // Passed report file is a file in the current directory.
-                        $this->cacheFile = getcwd().'/'.basename($this->cacheFile);
-                    } else {
-                        $dir = Util\Common::realpath(getcwd().'/'.$dir);
-                        if ($dir !== false) {
-                            // Report file path is relative.
-                            $this->cacheFile = $dir.'/'.basename($this->cacheFile);
-                        }
-                    }
-                }//end if
-
-                $this->overriddenDefaults['cacheFile'] = true;
-
-                if (is_dir($this->cacheFile) === true) {
-                    echo 'ERROR: The specified cache file path "'.$this->cacheFile.'" is a directory'.PHP_EOL.PHP_EOL;
-                    $this->printUsage();
-                    exit(2);
-                }
             } else if (substr($arg, 0, 10) === 'bootstrap=') {
                 $files     = explode(',', substr($arg, 10));
                 $bootstrap = array();
@@ -872,7 +813,7 @@ class Config
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--cache[=<cacheFile>]] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
         echo '    [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--parallel=<processes>]'.PHP_EOL;
@@ -892,28 +833,14 @@ class Config
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
-        echo '        --colors      Use colors in output'.PHP_EOL;
-        echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
-        echo '        --cache       Cache results between runs'.PHP_EOL;
-        echo '        --no-cache    Do not cache results between runs (this is the default)'.PHP_EOL;
-        echo '        <cacheFile>   Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '                      e.g., module/php,es/js'.PHP_EOL;
-        echo '        <generator>   Uses either the "HTML", "Markdown" or "Text" generator'.PHP_EOL;
-        echo '                      (forces documentation generation instead of checking)'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <processes>   How many files should be checked simultaneously (default is 1)'.PHP_EOL;
-        echo '        <report>      Print either the "full", "xml", "checkstyle", "csv"'.PHP_EOL;
-        echo '                      "json", "junit", "emacs", "source", "summary", "diff"'.PHP_EOL;
-        echo '                      "svnblame", "gitblame", "hgblame" or "notifysend" report'.PHP_EOL;
-        echo '                      (the "full" report is printed by default)'.PHP_EOL;
-        echo '        <reportFile>  Write the report to the specified file path'.PHP_EOL;
-        echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
-        echo '                      or set to "auto" to use current screen width, where supported'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
