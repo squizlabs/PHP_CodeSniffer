@@ -26,14 +26,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Squiz LowercasePHPFunctionsSniff now uses the internal function list so it can ignore included global functions
-    -- This can happen if functions are defined by calling vendor/autoload.php
-    -- Thanks to Michael Butler for the patch
   - Settings extensions in a ruleset no longer causes PHP notices during unit testing
     -- Thanks to Klaus Purer for the patch
   - Fixed bug #908 : PSR2 standard is not checking that closing brace is on line following the body
   - Fixed bug #945 : Incorrect indent behavior using deep-nested function and arrays
   - Fixed bug #961 : Two anonymous functions passed as function/method arguments cause indentation false positive
+  - Fixed bug #1005 : Using global composer vendor autoload breaks PHP lowercase built-in function sniff
+    -- Thanks to Michael Butler for the patch
   - Fixed bug #1007 : Squiz Unreachable code detection is not working properly with a closure inside a case
   - Fixed bug #1023 : PSR2.Classes.ClassDeclaration fails if class extends base class and "implements" is on trailing line
   - Fixed bug #1026 : Arrays in comma delimited class properties cause ScopeIndent to increase indent
