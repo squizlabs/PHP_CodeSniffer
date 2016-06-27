@@ -78,12 +78,6 @@ class Runner
             exit(0);
         }
 
-        // Other report formats don't really make sense in interactive mode
-        // so we hard-code the full report here and when outputting.
-        if ($this->config->interactive === true) {
-            $this->config->reports  = array('full' => null);
-        }
-
         // Disable caching if we are processing STDIN as we can't be 100%
         // sure where the file came from or if it will change in the future.
         if ($this->config->stdin === true) {
@@ -100,8 +94,7 @@ class Runner
         // in something like an XML report. If we are printing to screen,
         // the report types would have already worked out who should
         // print the timer info.
-        if ($this->config->interactive === false
-            && ($toScreen === false
+        if (($toScreen === false
             || (($this->reporter->totalErrors + $this->reporter->totalWarnings) === 0 && $this->config->showProgress === true))
         ) {
             Util\Timing::printRunTime();
@@ -141,7 +134,6 @@ class Runner
         $this->config->verbosity    = 0;
         $this->config->showProgress = false;
         $this->config->explain      = false;
-        $this->config->interactive  = false;
         $this->config->cache        = false;
         $this->config->showSources  = false;
         $this->config->recordErrors = false;

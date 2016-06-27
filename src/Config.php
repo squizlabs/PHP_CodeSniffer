@@ -385,7 +385,6 @@ class Config
         $this->files           = array();
         $this->standards       = array('PEAR');
         $this->verbosity       = 0;
-        $this->interactive     = false;
         $this->colors          = true;
         $this->explain         = false;
         $this->local           = false;
@@ -488,10 +487,6 @@ class Config
         case 's' :
             $this->showSources = true;
             $this->overriddenDefaults['showSources'] = true;
-            break;
-        case 'a' :
-            $this->interactive = true;
-            $this->overriddenDefaults['interactive'] = true;
             break;
         case 'e':
             $this->explain = true;
