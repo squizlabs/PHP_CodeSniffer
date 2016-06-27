@@ -2,9 +2,6 @@ sudo: false
 
 language: php
 
-php:
-  - 5.6
-
 matrix:
   include:
     - php: 7.0
@@ -15,8 +12,7 @@ before_script:
   - composer install
 
 script:
-  - php bin/phpcs --config-set php_path php
-  - phpunit -d date.timezone=Australia/Sydney $PHPUNIT_FLAGS
+  - phpunit $PHPUNIT_FLAGS
   - php bin/phpcs
 
 after_script:
