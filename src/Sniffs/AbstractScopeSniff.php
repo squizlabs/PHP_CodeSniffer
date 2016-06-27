@@ -4,14 +4,14 @@
  *
  * Below is a test that listens to methods that exist only within classes:
  * <code>
- * class ClassScopeTest extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+ * class ClassScopeTest extends Symplify\PHP7_CodeSniffer_Standards_AbstractScopeSniff
  * {
  *     public function __construct()
  *     {
  *         parent::__construct(array(T_CLASS), array(T_FUNCTION));
  *     }
  *
- *     protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $)
+ *     protected function processTokenWithinScope(Symplify\PHP7_CodeSniffer_File $phpcsFile, $)
  *     {
  *         $className = $phpcsFile->getDeclarationName($currScope);
  *         echo 'encountered a method within class '.$className;
@@ -21,13 +21,13 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Sniffs;
+namespace Symplify\PHP7_CodeSniffer\Sniffs;
 
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
 abstract class AbstractScopeSniff implements Sniff
 {
@@ -65,8 +65,8 @@ abstract class AbstractScopeSniff implements Sniff
      *                               the scope, by calling the
      *                               processTokenOutsideScope method.
      *
-     * @see    PHP_CodeSniffer.getValidScopeTokeners()
-     * @throws PHP_CodeSniffer_Exception If the specified tokens array is empty.
+     * @see    Symplify\PHP7_CodeSniffer.getValidScopeTokeners()
+     * @throws Symplify\PHP7_CodeSniffer_Exception If the specified tokens array is empty.
      */
     public function __construct(
         array $scopeTokens,
@@ -117,7 +117,7 @@ abstract class AbstractScopeSniff implements Sniff
     /**
      * Processes the tokens that this test is listening for.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param Symplify\PHP7_CodeSniffer_File $phpcsFile The file where this token was found.
      * @param int                  $stackPtr  The position in the stack where this
      *                                        token was found.
      *
@@ -147,7 +147,7 @@ abstract class AbstractScopeSniff implements Sniff
      * Processes a token that is found within the scope that this test is
      * listening to.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param Symplify\PHP7_CodeSniffer_File $phpcsFile The file where this token was found.
      * @param int                  $stackPtr  The position in the stack where this
      *                                        token was found.
      * @param int                  $currScope The position in the tokens array that
@@ -163,7 +163,7 @@ abstract class AbstractScopeSniff implements Sniff
      * Processes a token that is found within the scope that this test is
      * listening to.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
+     * @param Symplify\PHP7_CodeSniffer_File $phpcsFile The file where this token was found.
      * @param int                  $stackPtr  The position in the stack where this
      *                                        token was found.
      *

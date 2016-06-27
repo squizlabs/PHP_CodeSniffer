@@ -1,16 +1,16 @@
 <?php
 /**
- * Full report for PHP_CodeSniffer.
+ * Full report for Symplify\PHP7_CodeSniffer.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Reports;
+namespace Symplify\PHP7_CodeSniffer\Reports;
 
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Util;
 
 class Code implements Report
 {
@@ -24,7 +24,7 @@ class Code implements Report
      * its data should be counted in the grand totals.
      *
      * @param array                 $report      Prepared report data.
-     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
+     * @param \Symplify\PHP7_CodeSniffer\File $phpcsFile   The file being reported on.
      * @param bool                  $showSources Show sources?
      * @param int                   $width       Maximum allowed line width.
      *
@@ -43,16 +43,16 @@ class Code implements Report
         $file   = $report['filename'];
         $tokens = $phpcsFile->getTokens();
         if (empty($tokens) === true) {
-            if (PHP_CODESNIFFER_VERBOSITY === 1) {
+            if (PHP_CodeSniffer_VERBOSITY === 1) {
                 $startTime = microtime(true);
                 echo 'CODE report is parsing '.basename($file).' ';
-            } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo "CODE report is forcing parse of $file".PHP_EOL;
             }
 
             $phpcsFile->parse();
 
-            if (PHP_CODESNIFFER_VERBOSITY === 1) {
+            if (PHP_CodeSniffer_VERBOSITY === 1) {
                 $timeTaken = ((microtime(true) - $startTime) * 1000);
                 if ($timeTaken < 1000) {
                     $timeTaken = round($timeTaken);

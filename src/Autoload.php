@@ -1,20 +1,20 @@
 <?php
 /**
- * Autoloads files for PHP_CodeSniffer and tracks what has been loaded.
+ * Autoloads files for Symplify\PHP7_CodeSniffer and tracks what has been loaded.
  *
  * Due to different namespaces being used for custom coding standards,
  * the autoloader keeps track of what class is loaded after a file is included,
  * even if the file is ultimately included by another autoloader (such as composer).
  *
- * This allows PHP_CodeSniffer to request the class name after loading a class
+ * This allows Symplify\PHP7_CodeSniffer to request the class name after loading a class
  * when it only knows the filename, without having to parse the file to find it.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer;
+namespace Symplify\PHP7_CodeSniffer;
 
 class Autoload
 {
@@ -37,7 +37,7 @@ class Autoload
     /**
      * Loads a class.
      *
-     * This method only loads classes that exist in the PHP_CodeSniffer namespace.
+     * This method only loads classes that exist in the Symplify\PHP7_CodeSniffer namespace.
      * All other classes are ignored and loaded by subsequent autoloaders.
      *
      * @param string $class The name of the class to load.
@@ -49,8 +49,8 @@ class Autoload
         $ds   = DIRECTORY_SEPARATOR;
         $path = null;
 
-        if (substr($class, 0, 16) === 'PHP_CodeSniffer\\') {
-            if (substr($class, 0, 22) === 'PHP_CodeSniffer\Tests\\') {
+        if (substr($class, 0, 16) === 'Symplify\PHP7_CodeSniffer\\') {
+            if (substr($class, 0, 22) === 'Symplify\PHP7_CodeSniffer\Tests\\') {
                 $path = __DIR__ . $ds .$ds.substr(str_replace('\\', $ds, $class), 22).'.php';
             } else {
                 $path = __DIR__ . $ds .$ds.substr(str_replace('\\', $ds, $class), 16).'.php';

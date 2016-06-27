@@ -1,45 +1,45 @@
 <?php
 /**
- * Checkstyle report for PHP_CodeSniffer.
+ * Checkstyle report for Symplify\PHP7_CodeSniffer.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Reports;
+namespace Symplify\PHP7_CodeSniffer\Reports;
 
-use PHP_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Files\File;
 
 /**
- * Csv report for PHP_CodeSniffer.
+ * Csv report for Symplify\PHP7_CodeSniffer.
  *
  * PHP version 5
  *
  * @category  PHP
- * @package   PHP_CodeSniffer
+ * @package   Symplify\PHP7_CodeSniffer
  * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2009-2014 SQLI <www.sqli.com>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @link      http://pear.php.net/package/Symplify\PHP7_CodeSniffer
  */
 
 /**
- * Csv report for PHP_CodeSniffer.
+ * Csv report for Symplify\PHP7_CodeSniffer.
  *
  * PHP version 5
  *
  * @category  PHP
- * @package   PHP_CodeSniffer
+ * @package   Symplify\PHP7_CodeSniffer
  * @author    Gabriele Santini <gsantini@sqli.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2009-2014 SQLI <www.sqli.com>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @link      http://pear.php.net/package/Symplify\PHP7_CodeSniffer
  */
 class Csv implements Report
 {
@@ -53,7 +53,7 @@ class Csv implements Report
      * its data should be counted in the grand totals.
      *
      * @param array                 $report      Prepared report data.
-     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
+     * @param \Symplify\PHP7_CodeSniffer\File $phpcsFile   The file being reported on.
      * @param bool                  $showSources Show sources?
      * @param int                   $width       Maximum allowed line width.
      *

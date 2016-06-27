@@ -6,14 +6,14 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Files;
+namespace Symplify\PHP7_CodeSniffer\Files;
 
-use PHP_CodeSniffer\Util;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Util;
+use Symplify\PHP7_CodeSniffer\Ruleset;
+use Symplify\PHP7_CodeSniffer\Config;
 
 class FileList implements \Iterator, \Countable
 {
@@ -35,14 +35,14 @@ class FileList implements \Iterator, \Countable
     /**
      * The config data for the run.
      *
-     * @var \PHP_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Config
      */
     public $config = null;
 
     /**
      * The ruleset used for the run.
      *
-     * @var \PHP_CodeSniffer\Ruleset
+     * @var \Symplify\PHP7_CodeSniffer\Ruleset
      */
     public $ruleset = null;
 
@@ -57,8 +57,8 @@ class FileList implements \Iterator, \Countable
     /**
      * Constructs a file list and loads in an array of file paths to process.
      *
-     * @param \PHP_CodeSniffer\Config  $config  The config data for the run.
-     * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Config  $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class FileList implements \Iterator, \Countable
      * If it is left NULL, it will be created when accessed.
      *
      * @param string                      $path The path to the file being added.
-     * @param \PHP_CodeSniffer\Files\File $file The file being added.
+     * @param \Symplify\PHP7_CodeSniffer\Files\File $file The file being added.
      *
      * @return void
      */
@@ -94,7 +94,7 @@ class FileList implements \Iterator, \Countable
         // No filtering is done for STDIN.
         if ($path === 'STDIN'
             || ($file !== null
-            && get_class($file) === 'PHP_CodeSniffer\Files\DummyFile')
+            && get_class($file) === 'Symplify\PHP7_CodeSniffer\Files\DummyFile')
         ) {
             $this->files[$path] = $file;
             return;
@@ -123,7 +123,7 @@ class FileList implements \Iterator, \Countable
         $filterType = $this->config->filter;
 
         if ($filterType === null) {
-            $filterClass = '\PHP_CodeSniffer\Filters\Filter';
+            $filterClass = '\Symplify\PHP7_CodeSniffer\Filters\Filter';
         } else {
             if (strpos($filterType, '.') !== false) {
                 // This is a path to a custom filter class.
@@ -133,9 +133,9 @@ class FileList implements \Iterator, \Countable
                     exit(2);
                 }
 
-                $filterClass = \PHP_CodeSniffer\Autoload::loadFile($filename);
+                $filterClass = \Symplify\PHP7_CodeSniffer\Autoload::loadFile($filename);
             } else {
-                $filterClass = '\PHP_CodeSniffer\Filters\\'.$filterType;
+                $filterClass = '\Symplify\PHP7_CodeSniffer\Filters\\'.$filterType;
             }
         }
 
@@ -159,7 +159,7 @@ class FileList implements \Iterator, \Countable
     /**
      * Get the file that is currently being processed.
      *
-     * @return \PHP_CodeSniffer\Files\File
+     * @return \Symplify\PHP7_CodeSniffer\Files\File
      */
     function current()
     {

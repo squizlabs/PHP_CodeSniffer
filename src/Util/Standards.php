@@ -4,12 +4,12 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Util;
+namespace Symplify\PHP7_CodeSniffer\Util;
 
-use PHP_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Config;
 
 class Standards
 {
@@ -53,7 +53,7 @@ class Standards
      *                                coding standard will be included
      *                                if installed.
      * @param string  $standardsDir   A specific directory to look for standards
-     *                                in. If not specified, PHP_CodeSniffer will
+     *                                in. If not specified, Symplify\PHP7_CodeSniffer will
      *                                look in its default locations.
      *
      * @return array

@@ -1,16 +1,16 @@
 <?php
 /**
- * Summary report for PHP_CodeSniffer.
+ * Summary report for Symplify\PHP7_CodeSniffer.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Reports;
+namespace Symplify\PHP7_CodeSniffer\Reports;
 
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Util;
 
 class Summary implements Report
 {
@@ -24,7 +24,7 @@ class Summary implements Report
      * its data should be counted in the grand totals.
      *
      * @param array                 $report      Prepared report data.
-     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
+     * @param \Symplify\PHP7_CodeSniffer\File $phpcsFile   The file being reported on.
      * @param bool                  $showSources Show sources?
      * @param int                   $width       Maximum allowed line width.
      *
@@ -32,7 +32,7 @@ class Summary implements Report
      */
     public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
     {
-        if (PHP_CODESNIFFER_VERBOSITY === 0
+        if (PHP_CodeSniffer_VERBOSITY === 0
             && $report['errors'] === 0
             && $report['warnings'] === 0
         ) {

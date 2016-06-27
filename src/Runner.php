@@ -7,17 +7,17 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer;
+namespace Symplify\PHP7_CodeSniffer;
 
-use PHP_CodeSniffer\Files\FileList;
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Files\DummyFile;
-use PHP_CodeSniffer\Util\Cache;
-use PHP_CodeSniffer\Util\Common;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
+use Symplify\PHP7_CodeSniffer\Files\FileList;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Files\DummyFile;
+use Symplify\PHP7_CodeSniffer\Util\Cache;
+use Symplify\PHP7_CodeSniffer\Util\Common;
+use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
 class Runner
 {
@@ -25,21 +25,21 @@ class Runner
     /**
      * The config data for the run.
      *
-     * @var \PHP_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Config
      */
     public $config = null;
 
     /**
      * The ruleset used for the run.
      *
-     * @var \PHP_CodeSniffer\Ruleset
+     * @var \Symplify\PHP7_CodeSniffer\Ruleset
      */
     public $ruleset = null;
 
     /**
      * The reporter used for generating reports after the run.
      *
-     * @var \PHP_CodeSniffer\Reporter
+     * @var \Symplify\PHP7_CodeSniffer\Reporter
      */
     public $reporter = null;
 
@@ -53,8 +53,8 @@ class Runner
     {
         Util\Timing::startTiming();
 
-        if (defined('PHP_CODESNIFFER_CBF') === false) {
-            define('PHP_CODESNIFFER_CBF', false);
+        if (defined('PHP_CodeSniffer_CBF') === false) {
+            define('PHP_CodeSniffer_CBF', false);
         }
 
         // Creating the Config object populates it with all required settings
@@ -84,7 +84,7 @@ class Runner
             foreach ($standards as $standard) {
                 $this->config->standards = array($standard);
                 $ruleset   = new Ruleset($this->config);
-                $class     = 'PHP_CodeSniffer\Generators\\'.$this->config->generator;
+                $class     = 'Symplify\PHP7_CodeSniffer\Generators\\'.$this->config->generator;
                 $generator = new $class($ruleset);
                 $generator->generate();
             }
@@ -139,8 +139,8 @@ class Runner
      */
     public function runPHPCBF()
     {
-        if (defined('PHP_CODESNIFFER_CBF') === false) {
-            define('PHP_CODESNIFFER_CBF', true);
+        if (defined('PHP_CodeSniffer_CBF') === false) {
+            define('PHP_CodeSniffer_CBF', true);
         }
 
         Util\Timing::startTiming();
@@ -207,12 +207,12 @@ class Runner
 
         // Saves passing the Config object into other objects that only need
         // the verbostity flag for deubg output.
-        if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
-            define('PHP_CODESNIFFER_VERBOSITY', $this->config->verbosity);
+        if (defined('PHP_CodeSniffer_VERBOSITY') === false) {
+            define('PHP_CodeSniffer_VERBOSITY', $this->config->verbosity);
         }
 
         // Create this class so it is autoloaded and sets up a bunch
-        // of PHP_CodeSniffer-specific token type constants.
+        // of Symplify\PHP7_CodeSniffer-specific token type constants.
         $tokens = new Util\Tokens();
 
         // The ruleset contains all the information about how the files
@@ -258,25 +258,25 @@ class Runner
                 exit(0);
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+            if (PHP_CodeSniffer_VERBOSITY > 0) {
                 echo 'Creating file list... ';
             }
 
             $todo     = new FileList($this->config, $this->ruleset);
             $numFiles = count($todo);
 
-            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+            if (PHP_CodeSniffer_VERBOSITY > 0) {
                 echo "DONE ($numFiles files in queue)".PHP_EOL;
             }
 
             if ($this->config->cache === true) {
-                if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                if (PHP_CodeSniffer_VERBOSITY > 0) {
                     echo 'Loading cache... ';
                 }
 
                 Cache::load($this->ruleset, $this->config);
 
-                if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                if (PHP_CodeSniffer_VERBOSITY > 0) {
                     $size = Cache::getSize();
                     echo "DONE ($size files in cache)".PHP_EOL;
                 }
@@ -294,7 +294,7 @@ class Runner
 
         // If verbosity is too high, turn off parallelism so the
         // debug output is clean.
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             $this->config->parallel = 1;
         }
 
@@ -303,7 +303,7 @@ class Runner
             foreach ($todo as $path => $file) {
                 $currDir = dirname($path);
                 if ($lastDir !== $currDir) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
+                    if (PHP_CodeSniffer_VERBOSITY > 0 || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)) {
                         echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
                     }
 
@@ -314,7 +314,7 @@ class Runner
 
                 $numProcessed++;
 
-                if (PHP_CODESNIFFER_VERBOSITY > 0
+                if (PHP_CodeSniffer_VERBOSITY > 0
                     || $this->config->interactive === true
                     || $this->config->showProgress === false
                 ) {
@@ -405,7 +405,7 @@ class Runner
 
                         $currDir = dirname($path);
                         if ($lastDir !== $currDir) {
-                            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
+                            if (PHP_CodeSniffer_VERBOSITY > 0 || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)) {
                                 echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
                             }
 
@@ -456,7 +456,7 @@ class Runner
 
         restore_error_handler();
 
-        if (PHP_CODESNIFFER_VERBOSITY === 0
+        if (PHP_CodeSniffer_VERBOSITY === 0
             && $this->config->interactive === false
             && $this->config->showProgress === true
         ) {
@@ -514,16 +514,16 @@ class Runner
     /**
      * Processes a single file, including checking and fixing.
      *
-     * @param \PHP_CodeSniffer\Files\File $file The file to be processed.
+     * @param \Symplify\PHP7_CodeSniffer\Files\File $file The file to be processed.
      *
      * @return void
      */
     private function processFile($file)
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
+        if (PHP_CodeSniffer_VERBOSITY > 0 || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)) {
             $startTime = microtime(true);
             echo 'Processing '.basename($file->path).' ';
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo PHP_EOL;
             }
         }
@@ -531,8 +531,8 @@ class Runner
         try {
             $file->process();
 
-            if (PHP_CODESNIFFER_VERBOSITY > 0
-                || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)
+            if (PHP_CodeSniffer_VERBOSITY > 0
+                || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)
             ) {
                 $timeTaken = ((microtime(true) - $startTime) * 1000);
                 if ($timeTaken < 1000) {
@@ -543,7 +543,7 @@ class Runner
                     echo "DONE in $timeTaken secs";
                 }
 
-                if (PHP_CODESNIFFER_CBF === true) {
+                if (PHP_CodeSniffer_CBF === true) {
                     $errors = $file->getFixableCount();
                     echo " ($errors fixable violations)".PHP_EOL;
                 } else {
@@ -649,7 +649,7 @@ class Runner
 
                         $numProcessed++;
 
-                        if (PHP_CODESNIFFER_VERBOSITY > 0
+                        if (PHP_CodeSniffer_VERBOSITY > 0
                             || $this->config->showProgress === false
                         ) {
                             continue;

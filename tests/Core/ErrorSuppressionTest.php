@@ -1,17 +1,17 @@
 <?php
 /**
- * Tests for PHP_CodeSniffer error suppression tags.
+ * Tests for Symplify\PHP7_CodeSniffer error suppression tags.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core;
+namespace Symplify\PHP7_CodeSniffer\Tests\Core;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Files\DummyFile;
+use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Ruleset;
+use Symplify\PHP7_CodeSniffer\Files\DummyFile;
 use PHPUnit\Framework\TestCase;
 
 class ErrorSuppressionTest extends TestCase
@@ -247,7 +247,7 @@ class ErrorSuppressionTest extends TestCase
     public function testSuppressScope()
     {
         return;
-        $phpcs = new PHP_CodeSniffer();
+        $phpcs = new Symplify\PHP7_CodeSniffer();
         $phpcs->initStandard('PEAR', array('PEAR.NamingConventions.ValidVariableName'));
 
         // Process without suppression.

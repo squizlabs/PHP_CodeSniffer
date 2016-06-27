@@ -1,14 +1,14 @@
 <?php
 /**
- * Git blame report for PHP_CodeSniffer.
+ * Git blame report for Symplify\PHP7_CodeSniffer.
  *
  * @author    Ben Selby <benmatselby@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Reports;
+namespace Symplify\PHP7_CodeSniffer\Reports;
 
 class Gitblame extends VersionControl
 {
@@ -66,7 +66,7 @@ class Gitblame extends VersionControl
     {
         $cwd = getcwd();
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+        if (PHP_CodeSniffer_VERBOSITY > 0) {
             echo 'Getting GIT blame info for '.basename($filename).'... ';
         }
 
@@ -99,7 +99,7 @@ class Gitblame extends VersionControl
         $rawContent = stream_get_contents($handle);
         fclose($handle);
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+        if (PHP_CodeSniffer_VERBOSITY > 0) {
             echo 'DONE'.PHP_EOL;
         }
 

@@ -8,12 +8,12 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Generators;
+namespace Symplify\PHP7_CodeSniffer\Generators;
 
-use PHP_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Config;
 
 class HTML extends Generator
 {
@@ -169,7 +169,7 @@ class HTML extends Generator
         $errorLevel = error_reporting(0);
         echo '  <div class="tag-line">';
         echo 'Documentation generated on '.date('r');
-        echo ' by <a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP_CodeSniffer '.Config::VERSION.'</a>';
+        echo ' by <a href="https://github.com/squizlabs/Symplify\PHP7_CodeSniffer">Symplify\PHP7_CodeSniffer '.Config::VERSION.'</a>';
         echo '</div>'.PHP_EOL;
         error_reporting($errorLevel);
 

@@ -4,14 +4,14 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tokenizers;
+namespace Symplify\PHP7_CodeSniffer\Tokenizers;
 
-use PHP_CodeSniffer\Util;
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Exceptions\TokenizerException;
+use Symplify\PHP7_CodeSniffer\Util;
+use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Exceptions\TokenizerException;
 
 class CSS extends PHP
 {
@@ -23,7 +23,7 @@ class CSS extends PHP
      * Pre-checks the content to see if it looks minified.
      *
      * @param string                  $content The content to tokenize,
-     * @param \PHP_CodeSniffer\Config $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Config $config  The config data for the run.
      * @param string                  $eolChar The EOL char used in the content.
      *
      * @return void
@@ -51,7 +51,7 @@ class CSS extends PHP
      */
     public function tokenize($string)
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t*** START CSS TOKENIZING 1ST PASS ***".PHP_EOL;
         }
 
@@ -95,7 +95,7 @@ class CSS extends PHP
                 $token['code'] = T_STRING;
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 $type    = $token['type'];
                 $content = Util\Common::prepareForOutput($token['content']);
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
@@ -118,7 +118,7 @@ class CSS extends PHP
                     }
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo "\t\t=> Found embedded PHP code: ";
                     $cleanContent = Util\Common::prepareForOutput($content);
                     echo $cleanContent.PHP_EOL;
@@ -260,7 +260,7 @@ class CSS extends PHP
             $newStackPtr++;
         }//end for
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t*** END CSS TOKENIZING 1ST PASS ***".PHP_EOL;
             echo "\t*** START CSS TOKENIZING 2ND PASS ***".PHP_EOL;
         }
@@ -277,7 +277,7 @@ class CSS extends PHP
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
             $token = $finalTokens[$stackPtr];
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+            if (PHP_CodeSniffer_VERBOSITY > 1) {
                 $type    = $token['type'];
                 $content = Util\Common::prepareForOutput($token['content']);
                 echo "\tProcess token $stackPtr: $type => $content".PHP_EOL;
@@ -290,7 +290,7 @@ class CSS extends PHP
                 // opening curly bracket could be indeed the start of a style
                 // definition.
                 if ($asperandStart === true) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         if ($inStyleDef === true) {
                             echo "\t\t* style definition closed *".PHP_EOL;
                         }
@@ -304,13 +304,13 @@ class CSS extends PHP
                     $asperandStart = false;
                 } else {
                     $inStyleDef = true;
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo "\t\t* style definition opened *".PHP_EOL;
                     }
                 }
                 break;
             case T_CLOSE_CURLY_BRACKET:
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     if ($inStyleDef === true) {
                         echo "\t\t* style definition closed *".PHP_EOL;
                     }
@@ -330,7 +330,7 @@ class CSS extends PHP
                     if ($finalTokens[($stackPtr - 1)]['code'] === T_STRING) {
                         $newContent = $finalTokens[($stackPtr - 1)]['content'].'-'.$finalTokens[($stackPtr + 1)]['content'];
 
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             echo "\t\t* token is a string joiner; ignoring this and previous token".PHP_EOL;
                             $old = Util\Common::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
                             $new = Util\Common::prepareForOutput($newContent);
@@ -348,7 +348,7 @@ class CSS extends PHP
                     }
                 } else if ($finalTokens[($stackPtr + 1)]['code'] === T_LNUMBER) {
                     // They can also be used to provide negative numbers.
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         echo "\t\t* token is part of a negative number; adding content to next token and ignoring *".PHP_EOL;
                         $content = Util\Common::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
                         echo "\t\t=> token ".($stackPtr + 1)." content changed from \"$content\" to \"-$content\"".PHP_EOL;
@@ -371,7 +371,7 @@ class CSS extends PHP
                     }
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     $type = $finalTokens[$x]['type'];
                     echo "\t\t=> token $x changed from $type to T_STYLE".PHP_EOL;
                 }
@@ -404,7 +404,7 @@ class CSS extends PHP
                         continue;
                     }
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    if (PHP_CodeSniffer_VERBOSITY > 1) {
                         for ($i = ($stackPtr + 1); $i <= $y; $i++) {
                             $type    = $finalTokens[$i]['type'];
                             $content = Util\Common::prepareForOutput($finalTokens[$i]['content']);
@@ -422,7 +422,7 @@ class CSS extends PHP
                         }
 
                         $newContent .= $finalTokens[$i]['content'];
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             $content = Util\Common::prepareForOutput($finalTokens[$i]['content']);
                             echo "\t\t=> token $i added to URL string and ignored: $content".PHP_EOL;
                         }
@@ -441,7 +441,7 @@ class CSS extends PHP
 
                     if ($newContent !== '') {
                         $finalTokens[($x + 1)]['content'] .= $newContent;
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        if (PHP_CodeSniffer_VERBOSITY > 1) {
                             $content = Util\Common::prepareForOutput($finalTokens[($x + 1)]['content']);
                             echo "\t\t=> token content changed to: $content".PHP_EOL;
                         }
@@ -451,7 +451,7 @@ class CSS extends PHP
                 break;
             case T_ASPERAND:
                 $asperandStart = true;
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                if (PHP_CodeSniffer_VERBOSITY > 1) {
                     echo "\t\t* at-rule definition opened *".PHP_EOL;
                 }
                 break;
@@ -483,7 +483,7 @@ class CSS extends PHP
             }
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+        if (PHP_CodeSniffer_VERBOSITY > 1) {
             echo "\t*** END CSS TOKENIZING 2ND PASS ***".PHP_EOL;
         }
 

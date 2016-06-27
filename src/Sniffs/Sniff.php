@@ -1,20 +1,20 @@
 <?php
 /**
- * Represents a PHP_CodeSniffer sniff for sniffing coding standards.
+ * Represents a Symplify\PHP7_CodeSniffer sniff for sniffing coding standards.
  *
  * A sniff registers what token types it wishes to listen for, then, when
- * PHP_CodeSniffer encounters that token, the sniff is invoked and passed
+ * Symplify\PHP7_CodeSniffer encounters that token, the sniff is invoked and passed
  * information about where the token was found in the stack, and the
- * PHP_CodeSniffer file in which the token was found.
+ * Symplify\PHP7_CodeSniffer file in which the token was found.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Sniffs;
+namespace Symplify\PHP7_CodeSniffer\Sniffs;
 
-use PHP_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Files\File;
 
 interface Sniff
 {
@@ -56,16 +56,16 @@ interface Sniff
      * </code>
      *
      * If the sniff discovers an anomaly in the code, they can raise an error
-     * by calling addError() on the PHP_CodeSniffer_File object, specifying an error
+     * by calling addError() on the Symplify\PHP7_CodeSniffer_File object, specifying an error
      * message and the position of the offending token:
      *
      * <code>
      *    $phpcsFile->addError('Encountered an error', $stackPtr);
      * </code>
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
+     * @param Symplify\PHP7_CodeSniffer_File $phpcsFile The Symplify\PHP7_CodeSniffer file where the
      *                                        token was found.
-     * @param int                  $stackPtr  The position in the PHP_CodeSniffer
+     * @param int                  $stackPtr  The position in the Symplify\PHP7_CodeSniffer
      *                                        file's token stack where the token
      *                                        was found.
      *

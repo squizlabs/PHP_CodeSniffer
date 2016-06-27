@@ -7,12 +7,12 @@
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer;
+namespace Symplify\PHP7_CodeSniffer;
 
-use PHP_CodeSniffer\Exceptions\RuntimeException;
+use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
 class Config
 {
@@ -279,7 +279,7 @@ class Config
      */
     public function __construct(array $cliArgs=array(), $dieOnUnknownArg=true)
     {
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+        if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === true) {
             // Let everything through during testing so that we can
             // make use of PHPUnit command line arguments as well.
             $this->dieOnUnknownArg = false;
@@ -497,7 +497,7 @@ class Config
             $this->colors = (bool) $colors;
         }
 
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+        if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false) {
             $cache = self::getConfigData('cache');
             if ($cache !== null) {
                 $this->cache = (bool) $cache;
@@ -605,7 +605,7 @@ class Config
             $this->printUsage();
             exit(0);
         case 'version':
-            echo 'PHP_CodeSniffer version '.self::VERSION.' ('.self::STABILITY.') ';
+            echo 'Symplify\PHP7_CodeSniffer version '.self::VERSION.' ('.self::STABILITY.') ';
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
         case 'colors':
@@ -617,7 +617,7 @@ class Config
             $this->overriddenDefaults['colors'] = true;
             break;
         case 'cache':
-            if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+            if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false) {
                 $this->cache = true;
                 $this->overriddenDefaults['cache'] = true;
             }
@@ -706,7 +706,7 @@ class Config
 
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
-            } else if (defined('PHP_CODESNIFFER_IN_TESTS') === false
+            } else if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false
                 && substr($arg, 0, 6) === 'cache='
             ) {
                 // Turn caching on.
@@ -770,7 +770,7 @@ class Config
                 }
 
                 $this->overriddenDefaults['stdinPath'] = true;
-            } else if (PHP_CODESNIFFER_CBF === false && substr($arg, 0, 12) === 'report-file=') {
+            } else if (PHP_CodeSniffer_CBF === false && substr($arg, 0, 12) === 'report-file=') {
                 $this->reportFile = Util\Common::realpath(substr($arg, 12));
 
                 // It may not exist and return false instead.
@@ -952,7 +952,7 @@ class Config
                 $this->ignored = $ignored;
                 $this->overriddenDefaults['ignored'] = true;
             } else if (substr($arg, 0, 10) === 'generator='
-                && PHP_CODESNIFFER_CBF === false
+                && PHP_CodeSniffer_CBF === false
             ) {
                 $this->generator = substr($arg, 10);
                 $this->overriddenDefaults['generator'] = true;
@@ -1037,7 +1037,7 @@ class Config
      */
     public function printUsage()
     {
-        if (PHP_CODESNIFFER_CBF === true) {
+        if (PHP_CodeSniffer_CBF === true) {
             $this->printPHPCBFUsage();
         } else {
             $this->printPHPCSUsage();
@@ -1233,7 +1233,7 @@ class Config
             ) {
                 // If data_dir was replaced, this is a PEAR install and we can
                 // use the PEAR data dir to store the conf file.
-                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+                $configFile = '@data_dir@/Symplify\PHP7_CodeSniffer/CodeSniffer.conf';
             }
 
             if (is_file($configFile) === true
@@ -1285,7 +1285,7 @@ class Config
 
         $configFile = dirname(__FILE__).'/../CodeSniffer.conf';
         if (is_file($configFile) === false) {
-            $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+            $configFile = '@data_dir@/Symplify\PHP7_CodeSniffer/CodeSniffer.conf';
         }
 
         if (is_file($configFile) === false) {

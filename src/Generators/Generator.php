@@ -1,20 +1,20 @@
 <?php
 /**
- * The base class for all PHP_CodeSniffer documentation generators.
+ * The base class for all Symplify\PHP7_CodeSniffer documentation generators.
  *
  * Documentation generators are used to print documentation about code sniffs
  * in a standard.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Generators;
+namespace Symplify\PHP7_CodeSniffer\Generators;
 
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Autoload;
-use PHP_CodeSniffer\Util\Common;
+use Symplify\PHP7_CodeSniffer\Ruleset;
+use Symplify\PHP7_CodeSniffer\Autoload;
+use Symplify\PHP7_CodeSniffer\Util\Common;
 
 abstract class Generator
 {
@@ -22,7 +22,7 @@ abstract class Generator
     /**
      * The ruleset used for the run.
      *
-     * @var \PHP_CodeSniffer\Ruleset
+     * @var \Symplify\PHP7_CodeSniffer\Ruleset
      */
     public $ruleset = null;
 
@@ -37,7 +37,7 @@ abstract class Generator
     /**
      * Constructs a doc generator.
      *
-     * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
      *
      * @see generate()
      */

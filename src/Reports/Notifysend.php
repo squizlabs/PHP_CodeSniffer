@@ -1,6 +1,6 @@
 <?php
 /**
- * Notify-send report for PHP_CodeSniffer.
+ * Notify-send report for Symplify\PHP7_CodeSniffer.
  *
  * Supported configuration parameters:
  * - notifysend_path    - Full path to notify-send cli command
@@ -11,13 +11,13 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2012-2014 Christian Weiske
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Reports;
+namespace Symplify\PHP7_CodeSniffer\Reports;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Files\File;
 
 class Notifysend implements Report
 {
@@ -88,7 +88,7 @@ class Notifysend implements Report
      * its data should be counted in the grand totals.
      *
      * @param array                 $report      Prepared report data.
-     * @param \PHP_CodeSniffer\File $phpcsFile   The file being reported on.
+     * @param \Symplify\PHP7_CodeSniffer\File $phpcsFile   The file being reported on.
      * @param bool                  $showSources Show sources?
      * @param int                   $width       Maximum allowed line width.
      *
