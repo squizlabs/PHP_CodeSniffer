@@ -106,9 +106,9 @@ class MultiLineConditionSniff implements Sniff
         // Each line between the parenthesis should be indented 4 spaces
         // and start with an operator, unless the line is inside a
         // function call, in which case it is ignored.
-        $lastLine = $tokens[$openBracket]['line'];
+        $prevLine = $tokens[$openBracket]['line'];
         for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
-            if ($tokens[$i]['line'] !== $lastLine) {
+            if ($tokens[$i]['line'] !== $prevLine) {
                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
                     $next = $phpcsFile->findNext(T_WHITESPACE, $i, null, true);
                     if ($next !== $closeBracket) {
@@ -140,7 +140,7 @@ class MultiLineConditionSniff implements Sniff
                 }//end if
 
                 if ($tokens[$i]['code'] === T_COMMENT) {
-                    $lastLine = $tokens[$i]['line'];
+                    $prevLine = $tokens[$i]['line'];
                     continue;
                 }
 
@@ -169,8 +169,8 @@ class MultiLineConditionSniff implements Sniff
                     }
                 }
 
-                if ($tokens[$i]['line'] !== $tokens[$closeBracket]['line']) {
-                    $next = $phpcsFile->findNext(Tokens::$emptyTokens, $i, null, true);
+                $next = $phpcsFile->findNext(Tokens::$emptyTokens, $i, null, true);
+                if ($next !== $closeBracket) {
                     if (isset(Tokens::$booleanOperators[$tokens[$next]['code']]) === false) {
                         $error = 'Each line in a multi-line IF statement must begin with a boolean operator';
                         $fix   = $phpcsFile->addFixableError($error, $i, 'StartWithBoolean');
@@ -190,7 +190,7 @@ class MultiLineConditionSniff implements Sniff
                     }
                 }//end if
 
-                $lastLine = $tokens[$i]['line'];
+                $prevLine = $tokens[$i]['line'];
             }//end if
 
             if ($tokens[$i]['code'] === T_STRING) {
@@ -199,7 +199,7 @@ class MultiLineConditionSniff implements Sniff
                     // This is a function call, so skip to the end as they
                     // have their own indentation rules.
                     $i        = $tokens[$next]['parenthesis_closer'];
-                    $lastLine = $tokens[$i]['line'];
+                    $prevLine = $tokens[$i]['line'];
                     continue;
                 }
             }
