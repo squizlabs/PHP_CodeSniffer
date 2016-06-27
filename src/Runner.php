@@ -80,10 +80,8 @@ class Runner
 
         // Other report formats don't really make sense in interactive mode
         // so we hard-code the full report here and when outputting.
-        // We also ensure parallel processing is off because we need to do one file at a time.
         if ($this->config->interactive === true) {
             $this->config->reports  = array('full' => null);
-            $this->config->parallel = 1;
         }
 
         // Disable caching if we are processing STDIN as we can't be 100%
@@ -276,167 +274,64 @@ class Runner
         // Turn all sniff errors into exceptions.
         set_error_handler(array($this, 'handleErrors'));
 
-        // If verbosity is too high, turn off parallelism so the
-        // debug output is clean.
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $this->config->parallel = 1;
-        }
-
-        if ($this->config->parallel === 1) {
-            // Running normally.
-            foreach ($todo as $path => $file) {
-                $currDir = dirname($path);
-                if ($lastDir !== $currDir) {
-                    if (PHP_CodeSniffer_VERBOSITY > 0 || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)) {
-                        echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
-                    }
-
-                    $lastDir = $currDir;
+        // Running normally.
+        foreach ($todo as $path => $file) {
+            $currDir = dirname($path);
+            if ($lastDir !== $currDir) {
+                if (PHP_CodeSniffer_VERBOSITY > 0 || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)) {
+                    echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
                 }
 
-                $this->processFile($file);
+                $lastDir = $currDir;
+            }
 
-                $numProcessed++;
+            $this->processFile($file);
 
-                if (PHP_CodeSniffer_VERBOSITY > 0
-                    || $this->config->interactive === true
-                    || $this->config->showProgress === false
-                ) {
-                    continue;
-                }
+            $numProcessed++;
 
-                // Show progress information.
-                if ($file->ignored === true) {
-                    echo 'S';
-                } else {
-                    $errors   = $file->getErrorCount();
-                    $warnings = $file->getWarningCount();
-                    if ($errors > 0) {
-                        if ($this->config->colors === true) {
-                            echo "\033[31m";
-                        }
+            if (PHP_CodeSniffer_VERBOSITY > 0
+                || $this->config->interactive === true
+                || $this->config->showProgress === false
+            ) {
+                continue;
+            }
 
-                        echo 'E';
-                    } else if ($warnings > 0) {
-                        if ($this->config->colors === true) {
-                            echo "\033[33m";
-                        }
-
-                        echo 'W';
-                    } else {
-                        echo '.';
-                    }
-
+            // Show progress information.
+            if ($file->ignored === true) {
+                echo 'S';
+            } else {
+                $errors   = $file->getErrorCount();
+                $warnings = $file->getWarningCount();
+                if ($errors > 0) {
                     if ($this->config->colors === true) {
-                        echo "\033[0m";
+                        echo "\033[31m";
                     }
-                }//end if
 
-                $dots++;
-                if ($dots === 60) {
-                    $padding = ($maxLength - strlen($numProcessed));
-                    echo str_repeat(' ', $padding);
-                    $percent = round(($numProcessed / $numFiles) * 100);
-                    echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
-                    $dots = 0;
-                }
-            }//end foreach
-        } else {
-            // Batching and forking.
-            $numFiles    = count($todo);
-            $numPerBatch = ceil($numFiles / $this->config->parallel);
+                    echo 'E';
+                } else if ($warnings > 0) {
+                    if ($this->config->colors === true) {
+                        echo "\033[33m";
+                    }
 
-            for ($batch = 0; $batch < $this->config->parallel; $batch++) {
-                $startAt = ($batch * $numPerBatch);
-                if ($startAt >= $numFiles) {
-                    break;
-                }
-
-                $endAt = ($startAt + $numPerBatch);
-                if ($endAt > $numFiles) {
-                    $endAt = $numFiles;
-                }
-
-                $childOutFilename = tempnam(sys_get_temp_dir(), 'phpcs-child');
-                $pid = pcntl_fork();
-                if ($pid === -1) {
-                    throw new RuntimeException('Failed to create child process');
-                } else if ($pid !== 0) {
-                    $childProcs[] = array(
-                                     'pid' => $pid,
-                                     'out' => $childOutFilename,
-                                    );
+                    echo 'W';
                 } else {
-                    // Move forward to the start of the batch.
-                    $todo->rewind();
-                    for ($i = 0; $i < $startAt; $i++) {
-                        $todo->next();
-                    }
+                    echo '.';
+                }
 
-                    // Reset the reporter to make sure only figures from this
-                    // file batch are recorded.
-                    $this->reporter->totalFiles    = 0;
-                    $this->reporter->totalErrors   = 0;
-                    $this->reporter->totalWarnings = 0;
-                    $this->reporter->totalFixable  = 0;
+                if ($this->config->colors === true) {
+                    echo "\033[0m";
+                }
+            }//end if
 
-                    // Process the files.
-                    $pathsProcessed = array();
-                    ob_start();
-                    for ($i = $startAt; $i < $endAt; $i++) {
-                        $path = $todo->key();
-                        $file = $todo->current();
-
-                        $currDir = dirname($path);
-                        if ($lastDir !== $currDir) {
-                            if (PHP_CodeSniffer_VERBOSITY > 0 || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)) {
-                                echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
-                            }
-
-                            $lastDir = $currDir;
-                        }
-
-                        $this->processFile($file);
-
-                        $pathsProcessed[] = $path;
-                        $todo->next();
-                    }
-
-                    $debugOutput = ob_get_contents();
-                    ob_end_clean();
-
-                    // Write information about the run to the filesystem
-                    // so it can be picked up by the main process.
-                    $childOutput = array(
-                                    'totalFiles'    => $this->reporter->totalFiles,
-                                    'totalErrors'   => $this->reporter->totalErrors,
-                                    'totalWarnings' => $this->reporter->totalWarnings,
-                                    'totalFixable'  => $this->reporter->totalFixable,
-                                   );
-
-                    $output  = '<'.'?php'."\n".' $childOutput = ';
-                    $output .= var_export($childOutput, true);
-                    $output .= ";\n\$debugOutput = ";
-                    $output .= var_export($debugOutput, true);
-
-                    if ($this->config->cache === true) {
-                        $childCache = array();
-                        foreach ($pathsProcessed as $path) {
-                            $childCache[$path] = Cache::get($path);
-                        }
-
-                        $output .= ";\n\$childCache = ";
-                        $output .= var_export($childCache, true);
-                    }
-
-                    $output .= ";\n?".'>';
-                    file_put_contents($childOutFilename, $output);
-                    exit($pid);
-                }//end if
-            }//end for
-
-            $this->processChildProcs($childProcs);
-        }//end if
+            $dots++;
+            if ($dots === 60) {
+                $padding = ($maxLength - strlen($numProcessed));
+                echo str_repeat(' ', $padding);
+                $percent = round(($numProcessed / $numFiles) * 100);
+                echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
+                $dots = 0;
+            }
+        }//end foreach
 
         restore_error_handler();
 
