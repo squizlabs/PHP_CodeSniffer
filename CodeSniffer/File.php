@@ -867,8 +867,8 @@ class PHP_CodeSniffer_File
      * @param int    $line     The line on which the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the error message.
-     * @param int    $severity The severity level for this error. A value of 0 will be converted into the default severity level.
-     *                          will be converted into the default severity level.
+     * @param int    $severity The severity level for this error. A value of 0
+     *                         will be converted into the default severity level.
      *
      * @return boolean
      */
@@ -891,8 +891,8 @@ class PHP_CodeSniffer_File
      * @param int    $line     The line on which the warning occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the warning message.
-     * @param int    $severity The severity level for this warning. A value of 0 will be converted into the default severity level.
-     *                          will be converted into the default severity level.
+     * @param int    $severity The severity level for this warning. A value of 0
+     *                         will be converted into the default severity level.
      *
      * @return boolean
      */
