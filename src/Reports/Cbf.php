@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * CBF report for Symplify\PHP7_CodeSniffer.
  *

@@ -160,7 +160,7 @@ class Ruleset
 
             if (PHP_CodeSniffer_VERBOSITY === 1) {
                 echo "Registering sniffs in the $standardName standard... ";
-                if (count($config->standards) > 1 || PHP_CodeSniffer_VERBOSITY > 2) {
+                if (count($config->standards) > 1) {
                     echo PHP_EOL;
                 }
             }
@@ -1012,10 +1012,6 @@ class Ruleset
             }
 
             $listeners[$className] = $className;
-
-            if (PHP_CodeSniffer_VERBOSITY > 2) {
-                echo "Registered $className".PHP_EOL;
-            }
         }//end foreach
 
         $this->sniffs = $listeners;

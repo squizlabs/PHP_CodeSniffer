@@ -10,6 +10,7 @@
 namespace Symplify\PHP7_CodeSniffer\Util;
 
 use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\SniffFinder\StandardFinder;
 
 class Standards
 {
@@ -117,32 +118,47 @@ class Standards
      */
     public static function isInstalledStandard($standard)
     {
-        $path = self::getInstalledStandardPath($standard);
-        if ($path !== null && strpos($path, 'ruleset.xml') !== false) {
+        $standards = (new StandardFinder())->getStandards();
+
+        if (isset($standards[$standard])) {
             return true;
-        } else {
-            // This could be a custom standard, installed outside our
-            // standards directory.
-            $standard = Common::realPath($standard);
-
-            // Might be an actual ruleset file itUtil.
-            // If it has an XML extension, let's at least try it.
-            if (is_file($standard) === true
-                && (substr(strtolower($standard), -4) === '.xml'
-                || substr(strtolower($standard), -9) === '.xml.dist')
-            ) {
-                return true;
-            }
-
-            // If it is a directory with a ruleset.xml file in it,
-            // it is a standard.
-            $ruleset = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.'ruleset.xml';
-            if (is_file($ruleset) === true) {
-                return true;
-            }
-        }//end if
+        }
 
         return false;
+//        var_dump($standard);
+//        var_dump($standards);
+//
+//        $ruleset = $standardFinder->getRulesetPathForStandardName($standard);
+//        var_dump($ruleset);
+//        die;
+//
+//
+//        $path = self::getInstalledStandardPath($standard);
+//        if ($path !== null && strpos($path, 'ruleset.xml') !== false) {
+//            return true;
+//        } else {
+//            // This could be a custom standard, installed outside our
+//            // standards directory.
+//            $standard = Common::realPath($standard);
+//
+//            // Might be an actual ruleset file itUtil.
+//            // If it has an XML extension, let's at least try it.
+//            if (is_file($standard) === true
+//                && (substr(strtolower($standard), -4) === '.xml'
+//                || substr(strtolower($standard), -9) === '.xml.dist')
+//            ) {
+//                return true;
+//            }
+//
+//            // If it is a directory with a ruleset.xml file in it,
+//            // it is a standard.
+//            $ruleset = rtrim($standard, ' /\\').DIRECTORY_SEPARATOR.'ruleset.xml';
+//            if (is_file($ruleset) === true) {
+//                return true;
+//            }
+//        }//end if
+//
+//        return false;
 
     }//end isInstalledStandard()
 
