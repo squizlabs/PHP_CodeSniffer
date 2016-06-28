@@ -152,7 +152,6 @@ abstract class Tokenizer
         $lineNumber = 1;
         $eolLen     = (strlen($this->eolChar) * -1);
         $ignoring   = false;
-        $inTests    = defined('Symplify\PHP7_CodeSniffer_IN_TESTS');
 
         $this->tokensWithTabs = array(
                                  T_WHITESPACE               => true,
@@ -203,7 +202,6 @@ abstract class Tokenizer
 
             if ($this->tokens[$i]['code'] === T_COMMENT
                 || $this->tokens[$i]['code'] === T_DOC_COMMENT_TAG
-                || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($this->tokens[$i]['content'], '@codingStandards') !== false) {
                     if ($ignoring === false
