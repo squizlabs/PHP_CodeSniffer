@@ -77,15 +77,11 @@ class Cbf implements Report
         }
 
         if ($fixed === true) {
-            $newFilename = $report['filename'].$phpcsFile->config->suffix;
+            $newFilename = $report['filename'];
             $newContent  = $phpcsFile->fixer->getContents();
             file_put_contents($newFilename, $newContent);
 
-            if ($newFilename === $report['filename']) {
-                echo "\t=> File was overwritten".PHP_EOL;
-            } else {
-                echo "\t=> Fixed file written to ".basename($newFilename).PHP_EOL;
-            }
+            echo "\t=> File was overwritten".PHP_EOL;
         }
 
         ob_start();
