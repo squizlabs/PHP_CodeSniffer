@@ -196,7 +196,6 @@ class Reporter
             $this->totalFixable,
             $this->config->showSources,
             $this->config->reportWidth,
-            $this->config->interactive,
             $toScreen
         );
         $generatedReport = ob_get_contents();

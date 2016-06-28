@@ -159,20 +159,6 @@ class Fixer
             // Only needed once file content has changed.
             $contents = $this->getContents();
 
-            if (PHP_CodeSniffer_VERBOSITY > 2) {
-                @ob_end_clean();
-                echo '---START FILE CONTENT---'.PHP_EOL;
-                $lines = explode($this->currentFile->eolChar, $contents);
-                $max   = strlen(count($lines));
-                foreach ($lines as $lineNum => $line) {
-                    $lineNum++;
-                    echo str_pad($lineNum, $max, ' ', STR_PAD_LEFT).'|'.$line.PHP_EOL;
-                }
-
-                echo '--- END FILE CONTENT ---'.PHP_EOL;
-                ob_start();
-            }
-
             $this->_inConflict = false;
             $this->currentFile->ruleset->populateTokenListeners();
             $this->currentFile->setContent($contents);
