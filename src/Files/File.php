@@ -299,7 +299,6 @@ class File
 
         $foundCode        = false;
         $listenerIgnoreTo = array();
-        $inTests          = defined('Symplify\PHP7_CodeSniffer_IN_TESTS');
 
         // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
@@ -307,7 +306,6 @@ class File
             // Check for ignored lines.
             if ($token['code'] === T_COMMENT
                 || $token['code'] === T_DOC_COMMENT_TAG
-                || ($inTests === true && $token['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($token['content'], '@codingStandards') !== false) {
                     if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {

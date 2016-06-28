@@ -104,16 +104,6 @@ class Config
                         );
 
     /**
-     * Whether or not to kill the process when an unknown command line arg is found.
-     *
-     * If FALSE, arguments that are not command line options or file/directory paths
-     * will be ignored and execution will continue.
-     *
-     * @var boolean
-     */
-    public $dieOnUnknownArg;
-
-    /**
      * The current command line arguments we are processing.
      *
      * @var string[]
@@ -252,21 +242,11 @@ class Config
      * Creates a Config object and populates it with command line values.
      *
      * @param array $cliArgs         An array of values gathered from CLI args.
-     * @param bool  $dieOnUnknownArg Whether or not to kill the process when an
-     *                               unknown command line arg is found.
      *
      * @return void
      */
-    public function __construct(array $cliArgs=array(), $dieOnUnknownArg=true)
+    public function __construct(array $cliArgs=array())
     {
-        if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === true) {
-            // Let everything through during testing so that we can
-            // make use of PHPUnit command line arguments as well.
-            $this->dieOnUnknownArg = false;
-        } else {
-            $this->dieOnUnknownArg = $dieOnUnknownArg;
-        }
-
         $checkStdin = false;
         if (empty($cliArgs) === true) {
             $cliArgs = $_SERVER['argv'];
@@ -447,14 +427,6 @@ class Config
         if ($showProgress !== null) {
             $this->showProgress = (bool) $showProgress;
         }
-
-        if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false) {
-            $cache = self::getConfigData('cache');
-            if ($cache !== null) {
-                $this->cache = (bool) $cache;
-            }
-        }
-
     }//end restoreDefaults()
 
 
@@ -522,11 +494,7 @@ class Config
             }
             break;
         default:
-            if ($this->dieOnUnknownArg === false) {
-                $this->values[$arg] = $arg;
-            } else {
-                $this->processUnknownArgument('-'.$arg, $pos);
-            }
+            $this->processUnknownArgument('-'.$arg, $pos);
         }//end switch
 
     }//end processShortArgument()
@@ -550,10 +518,8 @@ class Config
             echo 'Symplify\PHP7_CodeSniffer version '.self::VERSION;
             exit(0);
         case 'cache':
-            if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false) {
-                $this->cache = true;
-                $this->overriddenDefaults['cache'] = true;
-            }
+            $this->cache = true;
+            $this->overriddenDefaults['cache'] = true;
             break;
         case 'no-cache':
             $this->cache = false;
@@ -673,18 +639,7 @@ class Config
                 $this->tabWidth = (int) substr($arg, 10);
                 $this->overriddenDefaults['tabWidth'] = true;
             } else {
-                if ($this->dieOnUnknownArg === false) {
-                    $eqPos = strpos($arg, '=');
-                    if ($eqPos === false) {
-                        $this->values[$arg] = $arg;
-                    } else {
-                        $value = substr($arg, ($eqPos + 1));
-                        $arg   = substr($arg, 0, $eqPos);
-                        $this->values[$arg] = $value;
-                    }
-                } else {
-                    $this->processUnknownArgument('--'.$arg, $pos);
-                }
+                $this->processUnknownArgument('--'.$arg, $pos);
             }//end if
 
             break;
@@ -712,10 +667,6 @@ class Config
 
         // We don't know about any additional switches; just files.
         if ($arg{0} === '-') {
-            if ($this->dieOnUnknownArg === false) {
-                return;
-            }
-
             echo "ERROR: option \"$arg\" not known".PHP_EOL.PHP_EOL;
             $this->printUsage();
             exit(2);
@@ -723,10 +674,6 @@ class Config
 
         $file = Util\Common::realpath($arg);
         if (file_exists($file) === false) {
-            if ($this->dieOnUnknownArg === false) {
-                return;
-            }
-
             echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
             $this->printUsage();
             exit(2);
