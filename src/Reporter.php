@@ -1,10 +1,8 @@
 <?php
-/**
- * Manages reporting of errors and warnings.
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+
+/*
+ * This file is part of Symplify
+ * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
 namespace Symplify\PHP7_CodeSniffer;
@@ -14,13 +12,11 @@ use Symplify\PHP7_CodeSniffer\Files\File;
 use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 use Symplify\PHP7_CodeSniffer\Util\Common;
 
-class Reporter
+final class Reporter
 {
 
     /**
-     * The config data for the run.
-     *
-     * @var \Symplify\PHP7_CodeSniffer\Config
+     * @var Config
      */
     public $config = null;
 
@@ -81,7 +77,7 @@ class Reporter
      * output file (or a temp file if none is specified) initialised by
      * clearing the current contents.
      *
-     * @param \Symplify\PHP7_CodeSniffer\Config $config The config data for the run.
+     * @param Config $config The config data for the run.
      *
      * @return void
      * @throws RuntimeException If a report is not available.
@@ -195,7 +191,6 @@ class Reporter
             $this->totalWarnings,
             $this->totalFixable,
             $this->config->showSources,
-            $this->config->reportWidth,
             $toScreen
         );
         $generatedReport = ob_get_contents();
@@ -247,7 +242,7 @@ class Reporter
             $reportClass = $report['class'];
 
             ob_start();
-            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $this->config->showSources, $this->config->reportWidth);
+            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $this->config->showSources);
             if ($result === true) {
                 $errorsShown = true;
             }
