@@ -476,25 +476,6 @@ final class Config
                 }
 
                 $this->overriddenDefaults['stdinPath'] = true;
-            } else if (substr($arg, 0, 9) === 'basepath=') {
-                if (isset($this->overriddenDefaults['basepath']) === true) {
-                    break;
-                }
-
-                $this->basepath = Util\Common::realpath(substr($arg, 9));
-
-                // It may not exist and return false instead.
-                if ($this->basepath === false) {
-                    $this->basepath = substr($arg, 9);
-                }
-
-                $this->overriddenDefaults['basepath'] = true;
-
-                if (is_dir($this->basepath) === false) {
-                    echo 'ERROR: The specified basepath "'.$this->basepath.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
-                    $this->printUsage();
-                    exit(2);
-                }
             } else if (substr($arg, 0, 7) === 'filter=') {
                 if (isset($this->overriddenDefaults['filter']) === true) {
                     break;
@@ -640,13 +621,12 @@ final class Config
     public function printPHPCSUsage()
     {
         echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
-        echo '    [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
+        echo '    [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
-        echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
         echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
@@ -657,7 +637,6 @@ final class Config
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
-        echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
@@ -684,15 +663,13 @@ final class Config
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>]'.PHP_EOL;
-        echo '    [--basepath=<basepath>] [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
-        echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
-        echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
