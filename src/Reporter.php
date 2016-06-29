@@ -196,21 +196,9 @@ final class Reporter
         $generatedReport = ob_get_contents();
         ob_end_clean();
 
-        if ($this->config->colors !== true || $reportFile !== null) {
-            $generatedReport = preg_replace('`\033\[[0-9;]+m`', '', $generatedReport);
-        }
-
-        if ($reportFile !== null) {
-            if (PHP_CodeSniffer_VERBOSITY > 0) {
-                echo $generatedReport;
-            }
-
-            file_put_contents($reportFile, $generatedReport.PHP_EOL);
-        } else {
-            echo $generatedReport;
-            if ($filename !== null && file_exists($filename) === true) {
-                unlink($filename);
-            }
+        echo $generatedReport;
+        if ($filename !== null && file_exists($filename) === true) {
+            unlink($filename);
         }
 
     }//end printReport()
@@ -224,8 +212,6 @@ final class Reporter
      * and not reflect the final report output.
      *
      * @param \Symplify\PHP7_CodeSniffer\Files\File $phpcsFile The file that has been processed.
-     *
-     * @return void
      */
     public function cacheFileReport(File $phpcsFile)
     {
@@ -254,7 +240,6 @@ final class Reporter
                 // Using a temp file.
                 file_put_contents($this->tmpFiles[$type], $generatedReport, FILE_APPEND);
             } else {
-                $flags = FILE_APPEND;
                 file_put_contents($report['output'], $generatedReport, FILE_APPEND);
             }//end if
         }//end foreach
@@ -271,8 +256,6 @@ final class Reporter
 
     /**
      * Generate summary information to be used during report generation.
-     *
-     * @param \Symplify\PHP7_CodeSniffer\Files\File $phpcsFile The file that has been processed.
      *
      * @return array
      */

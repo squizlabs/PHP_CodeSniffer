@@ -130,14 +130,6 @@ final class Config
     private static $configData = null;
 
     /**
-     * Automatically discovered executable utility paths.
-     *
-     * @var array<string, string>
-     */
-    private static $executablePaths = array();
-
-
-    /**
      * Get the value of an inaccessible property.
      *
      * @param string $name The name of the property.
@@ -691,9 +683,6 @@ final class Config
      */
     public static function getConfigData($key)
     {
-        var_dump($key);
-        die;
-        
         $phpCodeSnifferConfig = self::getAllConfigData();
 
         if ($phpCodeSnifferConfig === null) {
@@ -707,42 +696,5 @@ final class Config
         return $phpCodeSnifferConfig[$key];
 
     }//end getConfigData()
-
-
-    /**
-     * Get the path to an executable utility.
-     *
-     * @param string $name The name of the executable utility.
-     *
-     * @return string|null
-     * @see    getConfigData()
-     */
-    public static function getExecutablePath($name)
-    {
-        $data = self::getConfigData($name.'_path');
-        if ($data !== null) {
-            return $data;
-        }
-
-        if (array_key_exists($name, self::$executablePaths) === true) {
-            return self::$executablePaths[$name];
-        }
-
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $cmd = 'where '.escapeshellarg($name).' 2> nul';
-        } else {
-            $cmd = 'which '.escapeshellarg($name);
-        }
-
-        $result = exec($cmd, $output, $retVal);
-        if ($retVal !== 0) {
-            $result = null;
-        }
-
-        self::$executablePaths[$name] = $result;
-        return $result;
-
-    }//end getExecutablePath()
-
 
 }//end class

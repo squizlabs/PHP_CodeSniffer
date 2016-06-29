@@ -290,24 +290,17 @@ class Runner
                 $errors   = $file->getErrorCount();
                 $warnings = $file->getWarningCount();
                 if ($errors > 0) {
-                    if ($this->config->colors === true) {
-                        echo "\033[31m";
-                    }
-
+                    echo "\033[31m";
                     echo 'E';
                 } else if ($warnings > 0) {
-                    if ($this->config->colors === true) {
-                        echo "\033[33m";
-                    }
+                    echo "\033[33m";
 
                     echo 'W';
                 } else {
                     echo '.';
                 }
 
-                if ($this->config->colors === true) {
-                    echo "\033[0m";
-                }
+                echo "\033[0m";
             }//end if
 
             $dots++;
@@ -522,24 +515,18 @@ class Runner
                         }
 
                         if ($childOutput['totalErrors'] > 0) {
-                            if ($this->config->colors === true) {
-                                echo "\033[31m";
-                            }
+                            echo "\033[31m";
 
                             echo 'E';
                         } else if ($childOutput['totalWarnings'] > 0) {
-                            if ($this->config->colors === true) {
-                                echo "\033[33m";
-                            }
+                            echo "\033[33m";
 
                             echo 'W';
                         } else {
                             echo '.';
                         }
 
-                        if ($this->config->colors === true) {
-                            echo "\033[0m";
-                        }
+                        echo "\033[0m";
 
                         $dots++;
                         if ($dots === 60) {

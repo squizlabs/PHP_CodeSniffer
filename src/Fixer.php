@@ -208,11 +208,10 @@ class Fixer
      * @param string  $filePath Optional file path to diff the file against.
      *                          If not specified, the original version of the
      *                          file will be used.
-     * @param boolean $colors   Print colored output or not.
      *
      * @return string
      */
-    public function generateDiff($filePath=null, $colors=true)
+    public function generateDiff($filePath=null)
     {
         if ($filePath === null) {
             $filePath = $this->currentFile->getFilename();
@@ -234,10 +233,6 @@ class Fixer
         fclose($fixedFile);
         if (is_file($tempName) === true) {
             unlink($tempName);
-        }
-
-        if ($colors === false) {
-            return $diff;
         }
 
         $diffLines = explode(PHP_EOL, $diff);
