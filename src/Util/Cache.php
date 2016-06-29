@@ -144,7 +144,6 @@ class Cache
         // in the cache file name.
         $rulesetHash = md5(var_export($ruleset->ignorePatterns, true).var_export($ruleset->includePatterns, true));
         $configData  = array(
-                        'tabWidth'     => $config->tabWidth,
                         'recordErrors' => $config->recordErrors,
                         'codeHash'     => $codeHash,
                         'rulesetHash'  => $rulesetHash,

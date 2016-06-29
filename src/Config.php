@@ -44,7 +44,6 @@ final class Config
      * bool     local           Process local files in directories only (no recursion).
      * bool     showSources     Show sniff source codes in report output.
      * bool     showProgress    Show basic progress information while running.
-     * int      tabWidth        How many spaces each tab is worth.
      * string[] sniffs          The sniffs that should be used for checking.
      *                          If empty, all sniffs in the supplied standards will be used.
      * string[] ignored         Regular expressions used to ignore files and folders during checking.
@@ -333,7 +332,6 @@ final class Config
         $this->local           = false;
         $this->showSources     = false;
         $this->showProgress    = false;
-        $this->tabWidth        = 0;
         $this->extensions      = array(
                                   'php' => 'PHP',
                                   'inc' => 'PHP',
@@ -530,9 +528,6 @@ final class Config
 
                 $this->ignored = $ignored;
                 $this->overriddenDefaults['ignored'] = true;
-            } else if (substr($arg, 0, 10) === 'tab-width=') {
-                $this->tabWidth = (int) substr($arg, 10);
-                $this->overriddenDefaults['tabWidth'] = true;
             } else {
                 $this->processUnknownArgument('--'.$arg, $pos);
             }//end if

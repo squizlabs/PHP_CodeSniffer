@@ -175,8 +175,7 @@ abstract class Tokenizer
                 // There are no tabs in the tokens we know the length of.
                 $length      = $this->knownLengths[$this->tokens[$i]['code']];
                 $currColumn += $length;
-            } else if ($this->config->tabWidth === 0
-                || isset($this->tokensWithTabs[$this->tokens[$i]['code']]) === false
+            } else if (isset($this->tokensWithTabs[$this->tokens[$i]['code']]) === false
                 || strpos($this->tokens[$i]['content'], "\t") === false
             ) {
                 $length = strlen($this->tokens[$i]['content']);
@@ -235,11 +234,6 @@ abstract class Tokenizer
     /**
      * Replaces tabs in original token content with spaces.
      *
-     * Each tab can represent between 1 and $config->tabWidth spaces,
-     * so this cannot be a straight string replace. The original content
-     * is placed into an orig_content index and the new token length is also
-     * set in the length index.
-     *
      * @param array  $token   The token to replace tabs inside.
      * @param string $prefix  The character to use to represent the start of a tab.
      * @param string $padding The character to use to represent the end of a tab.
@@ -249,10 +243,8 @@ abstract class Tokenizer
     public function replaceTabsInToken(&$token, $prefix=' ', $padding=' ')
     {
         $currColumn = $token['column'];
-        $tabWidth   = $this->config->tabWidth;
-        if ($tabWidth === 0) {
-            $tabWidth = 1;
-        }
+
+        $tabWidth = 1;
 
         if (str_replace("\t", '', $token['content']) === '') {
             // String only contains tabs, so we can shortcut the process.
