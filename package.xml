@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The comment is ignored if putting the URL on a indented new comment line would be longer than the allowed length
   - Settings extensions in a ruleset no longer causes PHP notices during unit testing
     -- Thanks to Klaus Purer for the patch
+  - Version control reports now show which errors are fixable if you are showing sources
   - Fixed bug #908 : PSR2 standard is not checking that closing brace is on line following the body
   - Fixed bug #945 : Incorrect indent behavior using deep-nested function and arrays
   - Fixed bug #961 : Two anonymous functions passed as function/method arguments cause indentation false positive
@@ -44,6 +45,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1028 : Squiz ArrayDeclaration incorrectly fixes multi-line array where end bracket is not on a new line
   - Fixed bug #1034 : Squiz FunctionDeclarationArgumentSpacing gives incorrect error when first arg is a variadic
   - Fixed bug #1036 : Adjacent assignments aligned analysis statement wrong
+  - Fixed bug #1049 : Version control reports can show notices when the report width is very small
   - Fixed bug #21050 : PEAR MultiLineCondition sniff suppresses errors on last condition line
  </notes>
  <contents>
