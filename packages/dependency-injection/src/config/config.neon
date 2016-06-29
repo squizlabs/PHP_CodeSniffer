@@ -1,0 +1,2 @@
+extensions:
+    - Symplify\PHP7_CodeSniffer\DependencyInjection\DI\Php7CodeSnifferExtension

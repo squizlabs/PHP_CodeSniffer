@@ -1,0 +1,4 @@
+services:
+    - Symplify\PHP7_CodeSniffer\Console\CodeSnifferApplication
+    - Symplify\PHP7_CodeSniffer\Console\Command\CheckCommand
+    - Symplify\PHP7_CodeSniffer\Console\Command\FixCommand
