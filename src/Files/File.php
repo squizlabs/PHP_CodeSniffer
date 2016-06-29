@@ -209,12 +209,8 @@ class File
 
         $parts     = explode('.', $path);
         $extension = array_pop($parts);
-        if (isset($config->extensions[$extension]) === true) {
-            $this->tokenizerType = $config->extensions[$extension];
-        } else {
-            // Revert to default.
-            $this->tokenizerType = 'PHP';
-        }
+
+        $this->tokenizerType = 'PHP';
 
         $this->configCache['cache']           = $this->config->cache;
         $this->configCache['sniffs']          = $this->config->sniffs;

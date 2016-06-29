@@ -54,21 +54,10 @@ final class Config
      * int      errorSeverity   The minimum severity an error must have to be displayed.
      * int      warningSeverity The minimum severity a warning must have to be displayed.
      * bool     recordErrors    Record the content of error messages as well as error counts.
-     * string   suffix          A suffix to add to fixed files.
      * string   basepath        A file system location to strip from the paths of files shown in reports.
      * bool     stdin           Read content from STDIN instead of supplied files.
      * string   stdinContent    Content passed directly to PHPCS on STDIN.
      * string   stdinPath       The path to use for content passed on STDIN.
-     *
-     * array<string, string>      extensions File extensions that should be checked, and what tokenizer to use.
-     *                                       E.g., array('inc' => 'PHP');
-     * array<string, string|null> reports    The reports to use for printing output after the run.
-     *                                       The format of the array is:
-     *                                           array(
-     *                                            'reportName1' => 'outputFile',
-     *                                            'reportName2' => null,
-     *                                           );
-     *                                       If the array value is NULL, the report will be written to the screen.
      *
      * @var array<string, mixed>
      */
@@ -81,8 +70,7 @@ final class Config
                          'local'           => null,
                          'showSources'     => null,
                          'showProgress'    => null,
-                         'tabWidth'        => null,
-                         'extensions'      => null,
+                         'extensions'      => ['php' => 'PHP'],
                          'sniffs'          => null,
                          'ignored'         => null,
                          'reportFile'      => null,
@@ -94,7 +82,6 @@ final class Config
                          'errorSeverity'   => null,
                          'warningSeverity' => null,
                          'recordErrors'    => null,
-                         'suffix'          => null,
                          'stdin'           => null,
                          'stdinContent'    => null,
                          'stdinPath'       => null,
@@ -332,12 +319,7 @@ final class Config
         $this->local           = false;
         $this->showSources     = false;
         $this->showProgress    = false;
-        $this->extensions      = array(
-                                  'php' => 'PHP',
-                                  'inc' => 'PHP',
-                                  'js'  => 'JS',
-                                  'css' => 'CSS',
-                                 );
+        $this->extensions      = array('php' => 'PHP');
         $this->sniffs          = array();
         $this->ignored         = array();
         $this->filter          = null;
@@ -476,27 +458,6 @@ final class Config
                 }
 
                 $this->overriddenDefaults['standards'] = true;
-            } else if (substr($arg, 0, 11) === 'extensions=') {
-                $extensions    = explode(',', substr($arg, 11));
-                $newExtensions = array();
-                foreach ($extensions as $ext) {
-                    $slash = strpos($ext, '/');
-                    if ($slash !== false) {
-                        // They specified the tokenizer too.
-                        list($ext, $tokenizer) = explode('/', $ext);
-                        $newExtensions[$ext]   = strtoupper($tokenizer);
-                        continue;
-                    }
-
-                    if (isset($this->extensions[$ext]) === true) {
-                        $newExtensions[$ext] = $this->extensions[$ext];
-                    } else {
-                        $newExtensions[$ext] = 'PHP';
-                    }
-                }
-
-                $this->extensions = $newExtensions;
-                $this->overriddenDefaults['extensions'] = true;
             } else if (substr($arg, 0, 9) === 'severity=') {
                 $this->errorSeverity   = (int) substr($arg, 9);
                 $this->warningSeverity = $this->errorSeverity;
@@ -601,10 +562,9 @@ final class Config
     public function printPHPCSUsage()
     {
         echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
-        echo '    [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
@@ -618,16 +578,11 @@ final class Config
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
-        echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
-        echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
-        echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
-        echo '                      e.g., module/php,es/js'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
-        echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
 
     }//end printPHPCSUsage()
 
@@ -640,10 +595,9 @@ final class Config
     public function printPHPCBFUsage()
     {
         echo 'Usage: phpcbf [-nwli] [-d key[=value]]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
-        echo '    [--tab-width=<tabWidth>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
@@ -651,18 +605,11 @@ final class Config
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
-        echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
-        echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
-        echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
-        echo '                      e.g., module/php,es/js'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to fix an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
-        echo '        <suffix>      Write modified files to a filename using this suffix'.PHP_EOL;
-        echo '                      ("diff" and "patch" are not used in this mode)'.PHP_EOL;
-        echo '        <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
 
     }//end printPHPCBFUsage()
 
