@@ -127,7 +127,7 @@ class Ruleset
     {
         // Ignore sniff restrictions if caching is on.
         $restrictions = array();
-        $exclusions = array();
+        $exclusions   = array();
         if ($config->cache === false) {
             $restrictions = $config->sniffs;
             $exclusions   = $config->exclude;

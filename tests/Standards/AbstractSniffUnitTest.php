@@ -123,7 +123,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
             $sniffClassName = str_replace('\Tests\\', '\Sniffs\\', $sniffClassName);
 
             $restrictions = array(strtolower($sniffClassName) => true);
-            $ruleset->registerSniffs(array($sniffFile), $restrictions);
+            $ruleset->registerSniffs(array($sniffFile), $restrictions, array());
             $ruleset->populateTokenListeners();
         } else {
             $ruleset = new Ruleset($config);
