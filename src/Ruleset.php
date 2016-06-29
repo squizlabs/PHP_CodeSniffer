@@ -359,9 +359,6 @@ class Ruleset
                         echo "\t\tExcluding rule \"".$exclude['name'].'"'.PHP_EOL;
                     }
 
-                    // Check if a single code is being excluded, which is a shortcut
-                    // for setting the severity of the message to 0.
-                    $parts = explode('.', $exclude['name']);
                     $excludedSniffs = array_merge(
                         $excludedSniffs,
                         $this->expandRulesetReference($exclude['name'], $rulesetDir, ($depth + 1))
@@ -393,34 +390,6 @@ class Ruleset
             if (PHP_CodeSniffer_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t=> set command line value $argString".PHP_EOL;
-            }
-        }//end foreach
-
-        // Set custom php ini values as CLI args.
-        foreach ($ruleset->{'ini'} as $arg) {
-            if ($this->shouldProcessElement($arg) === false) {
-                continue;
-            }
-
-            if (isset($arg['name']) === false) {
-                continue;
-            }
-
-            $name      = (string) $arg['name'];
-            $argString = $name;
-            if (isset($arg['value']) === true) {
-                $value      = (string) $arg['value'];
-                $argString .= "=$value";
-            } else {
-                $value = 'true';
-            }
-
-            $cliArgs[] = '-d';
-            $cliArgs[] = $argString;
-
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t=> set PHP ini value $name to $value".PHP_EOL;
             }
         }//end foreach
 

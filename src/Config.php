@@ -373,15 +373,6 @@ final class Config
             $this->recordErrors = false;
             $this->overriddenDefaults['recordErrors'] = true;
             break;
-        case 'd' :
-            $ini = explode('=', $this->cliArgs[($pos + 1)]);
-            $this->cliArgs[($pos + 1)] = '';
-            if (isset($ini[1]) === true) {
-                ini_set($ini[0], $ini[1]);
-            } else {
-                ini_set($ini[0], true);
-            }
-            break;
         default:
             $this->processUnknownArgument('-'.$arg, $pos);
         }//end switch
@@ -534,7 +525,7 @@ final class Config
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepvi]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
@@ -567,7 +558,7 @@ final class Config
      */
     public function printPHPCBFUsage()
     {
-        echo 'Usage: phpcbf [-nwli] [-d key[=value]]'.PHP_EOL;
+        echo 'Usage: phpcbf [-nwli]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
