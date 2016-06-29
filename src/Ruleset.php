@@ -158,13 +158,6 @@ class Ruleset
                 $this->paths[] = $standard;
             }
 
-            if (PHP_CodeSniffer_VERBOSITY === 1) {
-                echo "Registering sniffs in the $standardName standard... ";
-                if (count($config->standards) > 1) {
-                    echo PHP_EOL;
-                }
-            }
-
             $sniffs = array_merge($sniffs, $this->processRuleset($standard));
         }//end foreach
 
@@ -264,10 +257,6 @@ class Ruleset
     public function processRuleset($rulesetPath, $depth=0)
     {
         $rulesetPath = Util\Common::realpath($rulesetPath);
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo str_repeat("\t", $depth);
-            echo 'Processing ruleset '.Util\Common::stripBasepath($rulesetPath, $this->config->basepath).PHP_EOL;
-        }
 
         $ruleset = simplexml_load_file($rulesetPath);
         if ($ruleset === false) {
@@ -289,19 +278,6 @@ class Ruleset
             }
 
             $ownSniffs = $this->expandSniffDirectory($sniffDir, $depth);
-        }
-
-        // Process custom sniff config settings.
-        foreach ($ruleset->{'config'} as $config) {
-            if ($this->shouldProcessElement($config) === false) {
-                continue;
-            }
-
-            $this->setConfigData((string) $config['name'], (string) $config['value'], true);
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t=> set config value ".(string) $config['name'].': '.(string) $config['value'].PHP_EOL;
-            }
         }
 
         foreach ($ruleset->rule as $rule) {
@@ -329,22 +305,12 @@ class Ruleset
                     // This sniff code has already been turned off, but now
                     // it is being explicitly included again, so turn it back on.
                     $this->ruleset[(string) $rule['ref']]['severity'] = 5;
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        echo str_repeat("\t", $depth);
-                        echo "\t\t* disabling sniff exclusion for specific message code *".PHP_EOL;
-                        echo str_repeat("\t", $depth);
-                        echo "\t\t=> severity set to 5".PHP_EOL;
-                    }
                 } else if (empty($newSniffs) === false) {
                     // Including a sniff that hasn't been included higher up, but
                     // only including a single message from it. So turn off all messages in
                     // the sniff, except this one.
                     $this->ruleset[$sniffCode]['severity']            = 0;
                     $this->ruleset[(string) $rule['ref']]['severity'] = 5;
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        echo str_repeat("\t", $depth);
-                        echo "\t\tExcluding sniff \"".$sniffCode.'" except for "'.$parts[3].'"'.PHP_EOL;
-                    }
                 }//end if
             }//end if
 
@@ -387,10 +353,6 @@ class Ruleset
 
             $cliArgs[] = $argString;
 
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t=> set command line value $argString".PHP_EOL;
-            }
         }//end foreach
 
         if (empty($this->config->files) === true) {
@@ -426,10 +388,6 @@ class Ruleset
             }
 
             $this->ignorePatterns[(string) $pattern] = (string) $pattern['type'];
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t=> added global ".(string) $pattern['type'].' ignore pattern: '.(string) $pattern.PHP_EOL;
-            }
         }
 
         $includedSniffs = array_unique(array_merge($ownSniffs, $includedSniffs));
@@ -505,11 +463,6 @@ class Ruleset
                 continue;
             }
 
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t\t=> ".Util\Common::stripBasepath($path, $this->config->basepath).PHP_EOL;
-            }
-
             $sniffs[] = $path;
         }//end foreach
 
@@ -551,10 +504,6 @@ class Ruleset
             $realpath = Util\Common::realpath($rulesetDir.'/'.$ref);
             if ($realpath !== false) {
                 $ref = $realpath;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
-                }
             }
         }
 
@@ -583,10 +532,6 @@ class Ruleset
 
             if ($path !== null) {
                 $ref = $path;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
-                }
             } else if (is_dir($ref) === false) {
                 // Work out the sniff path.
                 $sepPos = strpos($ref, DIRECTORY_SEPARATOR);
@@ -645,11 +590,6 @@ class Ruleset
         if (is_dir($ref) === true) {
             if (is_file($ref.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
                 // We are referencing an external coding standard.
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t* rule is referencing a standard using directory name; processing *".PHP_EOL;
-                }
-
                 return $this->processRuleset($ref.DIRECTORY_SEPARATOR.'ruleset.xml', ($depth + 2));
             } else {
                 // We are referencing a whole directory of sniffs.
@@ -673,11 +613,6 @@ class Ruleset
                 return array($ref);
             } else {
                 // Assume an external ruleset.xml file.
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t* rule is referencing a standard using ruleset path; processing *".PHP_EOL;
-                }
-
                 return $this->processRuleset($ref, ($depth + 2));
             }
         }//end if
@@ -749,15 +684,6 @@ class Ruleset
                 }
 
                 $this->ruleset[$code]['type'] = $type;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> message type set to ".(string) $rule->type;
-                    if ($code !== $ref) {
-                        echo " for $code";
-                    }
-
-                    echo PHP_EOL;
-                }
             }//end if
 
             // Custom message.
@@ -815,15 +741,6 @@ class Ruleset
                         }
 
                         $this->ruleset[$code]['properties'][$name] = $values;
-                        if (PHP_CodeSniffer_VERBOSITY > 1) {
-                            echo str_repeat("\t", $depth);
-                            echo "\t\t=> array property \"$name\" set to \"$value\"";
-                            if ($code !== $ref) {
-                                echo " for $code";
-                            }
-
-                            echo PHP_EOL;
-                        }
                     } else {
                         $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
                         if (PHP_CodeSniffer_VERBOSITY > 1) {
@@ -854,15 +771,6 @@ class Ruleset
                 }
 
                 $this->ignorePatterns[$code][(string) $pattern] = (string) $pattern['type'];
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> added rule-specific ".(string) $pattern['type'].' ignore pattern';
-                    if ($code !== $ref) {
-                        echo " for $code";
-                    }
-
-                    echo ': '.(string) $pattern.PHP_EOL;
-                }
             }//end foreach
 
             // Include patterns.

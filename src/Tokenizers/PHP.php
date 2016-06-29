@@ -447,14 +447,6 @@ class PHP extends Tokenizer
      */
     protected function tokenize($string)
     {
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo "\t*** START PHP TOKENIZING ***".PHP_EOL;
-            $isWin = false;
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $isWin = true;
-            }
-        }
-
         $tokens      = @token_get_all($string);
         $finalTokens = array();
 
@@ -508,13 +500,6 @@ class PHP extends Tokenizer
                     && $tokens[($stackPtr + 1)][1][0] === "\n"
                 ) {
                     $token[1] .= "\n";
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        if ($isWin === true) {
-                            echo '\n';
-                        } else {
-                            echo "\033[30;1m\\n\033[0m";
-                        }
-                    }
 
                     if ($tokens[($stackPtr + 1)][1] === "\n") {
                         // This token's content has been merged into the previous,
@@ -661,11 +646,6 @@ class PHP extends Tokenizer
                     // We got to the end of the file and never
                     // found the closing token, so this probably wasn't
                     // a heredoc.
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        $type = $finalTokens[$newStackPtr]['type'];
-                        echo "\t\t* failed to find the end of the here/nowdoc".PHP_EOL;
-                        echo "\t\t* token $stackPtr changed from $type to T_STRING".PHP_EOL;
-                    }
 
                     $finalTokens[$newStackPtr]['code'] = T_STRING;
                     $finalTokens[$newStackPtr]['type'] = 'T_STRING';
@@ -916,10 +896,6 @@ class PHP extends Tokenizer
             }//end if
         }//end for
 
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo "\t*** END PHP TOKENIZING ***".PHP_EOL;
-        }
-
         return $finalTokens;
 
     }//end tokenize()
@@ -968,12 +944,6 @@ class PHP extends Tokenizer
                 }
 
                 if (in_array($this->tokens[$x]['code'], array(T_STRING, T_OPEN_PARENTHESIS, T_BITWISE_AND), true) === false) {
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        $line = $this->tokens[$x]['line'];
-                        $type = $this->tokens[$x]['type'];
-                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
-                    }
-
                     $this->tokens[$x]['code'] = T_STRING;
                     $this->tokens[$x]['type'] = 'T_STRING';
                 }
@@ -1006,10 +976,6 @@ class PHP extends Tokenizer
                             }
 
                             $this->tokens[$x]['conditions'][$i] = T_CLOSURE;
-                            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                                $type = $this->tokens[$x]['type'];
-                                echo "\t\t* cleaned $x ($type) *".PHP_EOL;
-                            }
                         }
                     }
 
@@ -1073,10 +1039,6 @@ class PHP extends Tokenizer
                 ) {
                     $this->tokens[$i]['code'] = T_ANON_CLASS;
                     $this->tokens[$i]['type'] = 'T_ANON_CLASS';
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        $line = $this->tokens[$i]['line'];
-                        echo "\t* token $i on line $line changed from T_CLASS to T_ANON_CLASS".PHP_EOL;
-                    }
 
                     for ($x = ($this->tokens[$i]['scope_opener'] + 1); $x < $this->tokens[$i]['scope_closer']; $x++) {
                         if (isset($this->tokens[$x]['conditions'][$i]) === false) {
@@ -1118,12 +1080,6 @@ class PHP extends Tokenizer
                     $closer = $this->tokens[$i]['bracket_closer'];
                     $this->tokens[$closer]['code'] = T_CLOSE_SHORT_ARRAY;
                     $this->tokens[$closer]['type'] = 'T_CLOSE_SHORT_ARRAY';
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        $line = $this->tokens[$i]['line'];
-                        echo "\t* token $i on line $line changed from T_OPEN_SQUARE_BRACKET to T_OPEN_SHORT_ARRAY".PHP_EOL;
-                        $line = $this->tokens[$closer]['line'];
-                        echo "\t* token $closer on line $line changed from T_CLOSE_SQUARE_BRACKET to T_CLOSE_SHORT_ARRAY".PHP_EOL;
-                    }
                 }
 
                 continue;
@@ -1150,10 +1106,6 @@ class PHP extends Tokenizer
                 $this->tokens[$i]['code'] = T_OPEN_TAG_WITH_ECHO;
                 $this->tokens[$i]['type'] = 'T_OPEN_TAG_WITH_ECHO';
 
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    $line = $this->tokens[$i]['line'];
-                    echo "\t* token $i on line $line changed from T_ECHO to T_OPEN_TAG_WITH_ECHO".PHP_EOL;
-                }
             } else if ($this->tokens[$i]['code'] === T_TRUE
                 || $this->tokens[$i]['code'] === T_FALSE
                 || $this->tokens[$i]['code'] === T_NULL
@@ -1190,11 +1142,6 @@ class PHP extends Tokenizer
                 }
 
                 if ($this->tokens[$x]['code'] !== T_STRING) {
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        $line = $this->tokens[$x]['line'];
-                        $type = $this->tokens[$x]['type'];
-                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
-                    }
 
                     $this->tokens[$x]['code'] = T_STRING;
                     $this->tokens[$x]['type'] = 'T_STRING';
@@ -1249,12 +1196,6 @@ class PHP extends Tokenizer
                 // worry about fixing anything.
                 $newCloser = $this->tokens[$x]['scope_closer'];
                 $this->tokens[$i]['scope_closer'] = $newCloser;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    $oldType = $this->tokens[$scopeCloser]['type'];
-                    $newType = $this->tokens[$newCloser]['type'];
-                    $line    = $this->tokens[$i]['line'];
-                    echo "\t* token $i (T_CASE) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
-                }
 
                 continue;
             }
@@ -1309,36 +1250,11 @@ class PHP extends Tokenizer
                         $oldConditions = $this->tokens[$x]['conditions'];
                         unset($this->tokens[$x]['conditions'][$num]);
 
-                        if (PHP_CodeSniffer_VERBOSITY > 1) {
-                            $type     = $this->tokens[$x]['type'];
-                            $oldConds = '';
-                            foreach ($oldConditions as $condition) {
-                                $oldConds .= token_name($condition).',';
-                            }
-
-                            $oldConds = rtrim($oldConds, ',');
-
-                            $newConds = '';
-                            foreach ($this->tokens[$x]['conditions'] as $condition) {
-                                $newConds .= token_name($condition).',';
-                            }
-
-                            $newConds = rtrim($newConds, ',');
-
-                            echo "\t\t* cleaned $x ($type) *".PHP_EOL;
-                            echo "\t\t\t=> conditions changed from $oldConds to $newConds".PHP_EOL;
-                        }
-
                         break;
                     }//end if
                 }//end foreach
             }//end for
         }//end for
-
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo "\t*** END ADDITIONAL PHP PROCESSING ***".PHP_EOL;
-        }
-
     }//end processAdditional()
 
 

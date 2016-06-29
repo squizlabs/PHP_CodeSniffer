@@ -29,10 +29,6 @@ class Comment
      */
     public function tokenizeString($string, $eolChar, $stackPtr)
     {
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo "\t\t*** START COMMENT TOKENIZING ***".PHP_EOL;
-        }
-
         $tokens   = array();
         $numChars = strlen($string);
 
@@ -94,10 +90,6 @@ class Comment
             if ($space !== null) {
                 $tokens[$stackPtr] = $space;
                 $stackPtr++;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    $content = Util\Common::prepareForOutput($space['content']);
-                    echo "\t\tCreate comment token: T_DOC_COMMENT_WHITESPACE => $content".PHP_EOL;
-                }
 
                 $char += strlen($space['content']);
                 if ($char === $numChars) {
@@ -129,11 +121,6 @@ class Comment
             $lineTokens = $this->processLine($string, $eolChar, $char, $numChars);
             foreach ($lineTokens as $lineToken) {
                 $tokens[$stackPtr] = $lineToken;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    $content = Util\Common::prepareForOutput($lineToken['content']);
-                    $type    = $lineToken['type'];
-                    echo "\t\tCreate comment token: $type => $content".PHP_EOL;
-                }
 
                 if ($lineToken['code'] === T_DOC_COMMENT_TAG) {
                     $tokens[$openPtr]['comment_tags'][] = $stackPtr;
@@ -145,14 +132,6 @@ class Comment
 
         $tokens[$stackPtr] = $closeTag;
         $tokens[$openPtr]['comment_closer'] = $stackPtr;
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $content = Util\Common::prepareForOutput($closeTag['content']);
-            echo "\t\tCreate comment token: T_DOC_COMMENT_CLOSE_TAG => $content".PHP_EOL;
-        }
-
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo "\t\t*** END COMMENT TOKENIZING ***".PHP_EOL;
-        }
 
         return $tokens;
 

@@ -46,9 +46,6 @@ class Cache
         // to generate a hash for the code used during the run.
         // At this point, the loaded class list contains the core PHPCS code
         // and all sniffs that have been loaded as part of the run.
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo PHP_EOL."\tGenerating loaded file list for code hash".PHP_EOL;
-        }
 
         $codeHash = '';
         $classes  = array_keys(Autoload::getLoadedClasses());
@@ -80,14 +77,6 @@ class Cache
         $rulesets = $ruleset->paths;
         sort($rulesets);
         foreach ($rulesets as $file) {
-            if (substr($file, 0, $standardDirLen) !== $standardDir) {
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo "\t\t=> external ruleset: $file".PHP_EOL;
-                }
-            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo "\t\t=> internal ruleset: $file".PHP_EOL;
-            }
-
             $codeHash .= md5_file($file);
         }
 
@@ -152,15 +141,6 @@ class Cache
         $configString = implode(',', $configData);
         $cacheHash    = substr(sha1($configString), 0, 12);
 
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo "\tGenerating cache key data".PHP_EOL;
-            echo "\t\t=> tabWidth: ".$configData['tabWidth'].PHP_EOL;
-            echo "\t\t=> recordErrors: ".(int) $configData['recordErrors'].PHP_EOL;
-            echo "\t\t=> codeHash: ".$configData['codeHash'].PHP_EOL;
-            echo "\t\t=> rulesetHash: ".$configData['rulesetHash'].PHP_EOL;
-            echo "\t\t=> cacheHash: $cacheHash".PHP_EOL;
-        }
-
         // Determine the common paths for all files being checked.
         // We can use this to locate an existing cache file, or to
         // determine where to create a new one.
@@ -208,11 +188,6 @@ class Cache
                 $cacheFile = $testFile;
             }
 
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo "\t\t=> $testFile".PHP_EOL;
-                echo "\t\t\t * based on shared location: $file *".PHP_EOL;
-            }
-
             if (file_exists($testFile) === true) {
                 $cacheFile = $testFile;
                 break;
@@ -235,12 +210,7 @@ class Cache
             // Verify the contents of the cache file.
             if (self::$cache['config'] !== $configData) {
                 self::$cache = array();
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo "\t* cache was invalid and has been cleared *".PHP_EOL;
-                }
             }
-        } else if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo "\t* cache file does not exist *".PHP_EOL;
         }
 
         self::$cache['config'] = $configData;

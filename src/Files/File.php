@@ -433,14 +433,6 @@ class File
             $this->tokens    = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
-            if (PHP_CodeSniffer_VERBOSITY > 0
-                || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)
-            ) {
-                echo "[$this->tokenizerType => tokenizer error]... ";
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo PHP_EOL;
-                }
-            }
 
             return;
         }
@@ -460,22 +452,6 @@ class File
             $error = 'File has mixed line endings; this may cause incorrect results';
             $this->addWarningOnLine($error, 1, 'Internal.LineEndings.Mixed');
         }
-
-        if (PHP_CodeSniffer_VERBOSITY > 0
-            || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)
-        ) {
-            if ($this->numTokens === 0) {
-                $numLines = 0;
-            } else {
-                $numLines = $this->tokens[($this->numTokens - 1)]['line'];
-            }
-
-            echo "[$this->tokenizerType => $this->numTokens tokens in $numLines lines]... ";
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo PHP_EOL;
-            }
-        }
-
     }//end parse()
 
 

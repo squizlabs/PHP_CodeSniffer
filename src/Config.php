@@ -312,7 +312,6 @@ final class Config
     {
         $this->files           = array();
         $this->standards       = array('PEAR');
-        $this->verbosity       = 0;
         $this->explain         = false;
         $this->local           = false;
         $this->showSources     = false;

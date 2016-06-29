@@ -43,13 +43,6 @@ class Code implements Report
         $file   = $report['filename'];
         $tokens = $phpcsFile->getTokens();
         if (empty($tokens) === true) {
-            if (PHP_CodeSniffer_VERBOSITY === 1) {
-                $startTime = microtime(true);
-                echo 'CODE report is parsing '.basename($file).' ';
-            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo "CODE report is forcing parse of $file".PHP_EOL;
-            }
-
             $phpcsFile->parse();
 
             if (PHP_CodeSniffer_VERBOSITY === 1) {

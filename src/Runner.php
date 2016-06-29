@@ -131,7 +131,6 @@ class Runner
         $this->init();
 
         // Override some of the command line settings that might break the fixes.
-        $this->config->verbosity    = 0;
         $this->config->showProgress = false;
         $this->config->explain      = false;
         $this->config->cache        = false;
@@ -179,12 +178,6 @@ class Runner
             }
         }
 
-        // Saves passing the Config object into other objects that only need
-        // the verbostity flag for deubg output.
-        if (defined('PHP_CodeSniffer_VERBOSITY') === false) {
-            define('PHP_CodeSniffer_VERBOSITY', $this->config->verbosity);
-        }
-
         // Create this class so it is autoloaded and sets up a bunch
         // of Symplify\PHP7_CodeSniffer-specific token type constants.
         $tokens = new Util\Tokens();
@@ -227,28 +220,11 @@ class Runner
                 exit(0);
             }
 
-            if (PHP_CodeSniffer_VERBOSITY > 0) {
-                echo 'Creating file list... ';
-            }
-
             $todo     = new FileList($this->config, $this->ruleset);
             $numFiles = count($todo);
 
-            if (PHP_CodeSniffer_VERBOSITY > 0) {
-                echo "DONE ($numFiles files in queue)".PHP_EOL;
-            }
-
             if ($this->config->cache === true) {
-                if (PHP_CodeSniffer_VERBOSITY > 0) {
-                    echo 'Loading cache... ';
-                }
-
                 Cache::load($this->ruleset, $this->config);
-
-                if (PHP_CodeSniffer_VERBOSITY > 0) {
-                    $size = Cache::getSize();
-                    echo "DONE ($size files in cache)".PHP_EOL;
-                }
             }
         }//end if
 
@@ -275,13 +251,6 @@ class Runner
             $this->processFile($file);
 
             $numProcessed++;
-
-            if (PHP_CodeSniffer_VERBOSITY > 0
-                || $this->config->interactive === true
-                || $this->config->showProgress === false
-            ) {
-                continue;
-            }
 
             // Show progress information.
             if ($file->ignored === true) {
@@ -379,12 +348,9 @@ class Runner
      */
     private function processFile($file)
     {
-        if (PHP_CodeSniffer_VERBOSITY > 0 || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)) {
+        if (PHP_CodeSniffer_CBF === true && $this->config->stdin === false) {
             $startTime = microtime(true);
             echo 'Processing '.basename($file->path).' ';
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo PHP_EOL;
-            }
         }
 
         try {
@@ -508,9 +474,7 @@ class Runner
 
                         $numProcessed++;
 
-                        if (PHP_CodeSniffer_VERBOSITY > 0
-                            || $this->config->showProgress === false
-                        ) {
+                        if ($this->config->showProgress === false) {
                             continue;
                         }
 

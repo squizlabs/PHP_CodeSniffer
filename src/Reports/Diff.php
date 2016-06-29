@@ -40,13 +40,6 @@ class Diff implements Report
         $phpcsFile->disableCaching();
         $tokens = $phpcsFile->getTokens();
         if (empty($tokens) === true) {
-            if (PHP_CodeSniffer_VERBOSITY === 1) {
-                $startTime = microtime(true);
-                echo 'DIFF report is parsing '.basename($report['filename']).' ';
-            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo 'DIFF report is forcing parse of '.$report['filename'].PHP_EOL;
-            }
-
             $phpcsFile->parse();
 
             if (PHP_CodeSniffer_VERBOSITY === 1) {
@@ -64,11 +57,6 @@ class Diff implements Report
 
             $phpcsFile->fixer->startFile($phpcsFile);
         }//end if
-
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            ob_end_clean();
-            echo "\t*** START FILE FIXING ***".PHP_EOL;
-        }
 
         if (PHP_CodeSniffer_CBF === true) {
             ob_end_clean();

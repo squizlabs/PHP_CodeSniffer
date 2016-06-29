@@ -180,20 +180,12 @@ class Fixer
             if ($this->_numFixes === 0 && $this->_inConflict === false) {
                 // Nothing left to do.
                 break;
-            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo "\t* fixed $this->_numFixes violations, starting loop ".($this->loops + 1).' *'.PHP_EOL;
             }
         }//end while
 
         $this->enabled = false;
 
         if ($this->_numFixes > 0) {
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                @ob_end_clean();
-                echo "\t*** Reached maximum number of loops with $this->_numFixes violations left unfixed ***".PHP_EOL;
-                ob_start();
-            }
-
             return false;
         }
 
@@ -371,17 +363,6 @@ class Fixer
             foreach ($applied as $stackPtr) {
                 $this->revertToken($stackPtr);
             }
-
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                @ob_end_clean();
-                echo "\t=> Changeset failed to apply".PHP_EOL;
-                ob_start();
-            }
-        } else if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $fixes = count($this->_changeset);
-            @ob_end_clean();
-            echo "\t=> Changeset ended: $fixes changes applied".PHP_EOL;
-            ob_start();
         }
 
         $this->_changeset = array();
@@ -446,12 +427,6 @@ class Fixer
                 $indent .= "\t";
             }
 
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                @ob_end_clean();
-                echo "$indent* token $stackPtr has already been modified, skipping *".PHP_EOL;
-                ob_start();
-            }
-
             return false;
         }
 
@@ -479,13 +454,6 @@ class Fixer
 
         if ($this->_inChangeset === true) {
             $this->_changeset[$stackPtr] = $content;
-
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                @ob_end_clean();
-                echo "\t\tQ: $sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
-                ob_start();
-            }
-
             return true;
         }
 
@@ -514,9 +482,6 @@ class Fixer
 
                 if ($this->_oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
                     $this->_inConflict = true;
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        echo "$indent**** ignoring all changes until next loop ****".PHP_EOL;
-                    }
                 }
 
                 if (PHP_CodeSniffer_VERBOSITY > 1) {
@@ -534,17 +499,6 @@ class Fixer
         $this->_fixedTokens[$stackPtr] = $this->_tokens[$stackPtr];
         $this->_tokens[$stackPtr]      = $content;
         $this->_numFixes++;
-
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $indent = "\t";
-            if (empty($this->_changeset) === false) {
-                $indent .= "\tA: ";
-            }
-
-            @ob_end_clean();
-            echo "$indent$sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
-            ob_start();
-        }
 
         return true;
 
@@ -589,17 +543,6 @@ class Fixer
         $this->_tokens[$stackPtr] = $this->_fixedTokens[$stackPtr];
         unset($this->_fixedTokens[$stackPtr]);
         $this->_numFixes--;
-
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $indent = "\t";
-            if (empty($this->_changeset) === false) {
-                $indent .= "\tR: ";
-            }
-
-            @ob_end_clean();
-            echo "$indent$sniff (line $line) reverted token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
-            ob_start();
-        }
 
         return true;
 

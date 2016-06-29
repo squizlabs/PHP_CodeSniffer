@@ -48,10 +48,6 @@ class LocalFile extends File
 
             if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
                 // We are ignoring the whole file.
-                if (PHP_CodeSniffer_VERBOSITY > 0) {
-                    echo 'Ignoring '.basename($path).PHP_EOL;
-                }
-
                 $this->ignored = true;
                 return;
             }
@@ -110,20 +106,10 @@ class LocalFile extends File
                 $this->fixableCount = $cache['fixableCount'];
             }
 
-            if (PHP_CodeSniffer_VERBOSITY > 0
-                || (PHP_CodeSniffer_CBF === true && empty($this->config->files) === false)
-            ) {
-                echo "[loaded from cache]... ";
-            }
-
             $this->numTokens = $cache['numTokens'];
             $this->fromCache = true;
             return;
         }//end if
-
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo PHP_EOL;
-        }
 
         parent::process();
 
