@@ -241,7 +241,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
                     }
 
                     $line = str_repeat(' ', (5 - strlen($count))).$count;
-                    echo '         '.$source.str_repeat(' ', ($width - 14 - strlen($source))).$line.PHP_EOL;
+                    echo '         '.$source.str_repeat(' ', max(0, ($width - 14 - strlen($source)))).$line.PHP_EOL;
                 }
             }
         }//end foreach
