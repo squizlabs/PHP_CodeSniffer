@@ -130,7 +130,7 @@ class Source implements Report
                     $parts[2] = $sniff;
                 }//end if
 
-                $maxLength = max($maxLength, $sniff);
+                $maxLength = max($maxLength, strlen($sniff));
 
                 $sources[$source] = array(
                                      'count'   => 1,
@@ -204,7 +204,7 @@ class Source implements Report
             }
 
             if ($showSources === true) {
-                if ($sourceData['strlen'] > $maxSniffWidth) {
+                if (strlen($source) > $maxSniffWidth) {
                     $source = substr($source, 0, $maxSniffWidth);
                 }
 
@@ -251,8 +251,8 @@ class Source implements Report
             echo 'S';
         }
 
-        echo ' WERE FOUND IN '.count($this->sourceCache).' SOURCE';
-        if (count($this->sourceCache) !== 1) {
+        echo ' WERE FOUND IN '.count($sources).' SOURCE';
+        if (count($sources) !== 1) {
             echo 'S';
         }
 
