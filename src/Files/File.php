@@ -218,6 +218,7 @@ class File
 
         $this->configCache['cache']           = $this->config->cache;
         $this->configCache['sniffs']          = $this->config->sniffs;
+        $this->configCache['exclude']         = $this->config->exclude;
         $this->configCache['errorSeverity']   = $this->config->errorSeverity;
         $this->configCache['warningSeverity'] = $this->config->warningSeverity;
         $this->configCache['recordErrors']    = $this->config->recordErrors;
@@ -790,8 +791,10 @@ class File
         // Filter out any messages for sniffs that shouldn't have run
         // due to the use of the --sniffs command line argument.
         if ($includeAll === false
-            && empty($this->configCache['sniffs']) === false
-            && in_array($listenerCode, $this->configCache['sniffs']) === false
+            && ((empty($this->configCache['sniffs']) === false
+            && in_array($listenerCode, $this->configCache['sniffs']) === false)
+            || (empty($this->configCache['exclude']) === false
+            && in_array($listenerCode, $this->configCache['exclude']) === true))
         ) {
             return false;
         }

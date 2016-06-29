@@ -61,6 +61,8 @@ class Config
      * string   encoding        The encoding of the files being checked.
      * string[] sniffs          The sniffs that should be used for checking.
      *                          If empty, all sniffs in the supplied standards will be used.
+     * string[] exclude         The sniffs that should be excluded from checking.
+     *                          If empty, all sniffs in the supplied standards will be used.
      * string[] ignored         Regular expressions used to ignore files and folders during checking.
      * string   reportFile      A file where the report output should be written.
      * string   generator       The documentation generator to use.
@@ -106,6 +108,7 @@ class Config
                          'encoding'        => null,
                          'extensions'      => null,
                          'sniffs'          => null,
+                         'exclude'         => null,
                          'ignored'         => null,
                          'reportFile'      => null,
                          'generator'       => null,
@@ -416,6 +419,7 @@ class Config
                                   'css' => 'CSS',
                                  );
         $this->sniffs          = array();
+        $this->exclude         = array();
         $this->ignored         = array();
         $this->reportFile      = null;
         $this->generator       = null;
@@ -699,6 +703,18 @@ class Config
 
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
+            } else if (substr($arg, 0, 8) === 'exclude=') {
+                $sniffs = explode(',', substr($arg, 8));
+                foreach ($sniffs as $sniff) {
+                    if (substr_count($sniff, '.') !== 2) {
+                        echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
+                        $this->printUsage();
+                        exit(2);
+                    }
+                }
+
+                $this->exclude = $sniffs;
+                $this->overriddenDefaults['exclude'] = true;
             } else if (defined('PHP_CODESNIFFER_IN_TESTS') === false
                 && substr($arg, 0, 6) === 'cache='
             ) {
@@ -1051,8 +1067,9 @@ class Config
         echo '    [--report-width=<reportWidth>] [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--generator=<generator>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] '.PHP_EOL;
+        echo '    [--encoding=<encoding>] [--parallel=<processes>] [--generator=<generator>]'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
@@ -1091,7 +1108,7 @@ class Config
         echo '        <reportFile>  Write the report to the specified file path'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
         echo '                      or set to "auto" to use current screen width, where supported'.PHP_EOL;
-        echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
+        echo '        <sniffs>      A comma separated list of sniff codes to include or exclude from checking'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
@@ -1108,7 +1125,7 @@ class Config
     public function printPHPCBFUsage()
     {
         echo 'Usage: phpcbf [-nwli] [-d key[=value]]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
         echo '    [--basepath=<basepath>] [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
@@ -1129,7 +1146,7 @@ class Config
         echo '                      e.g., module/php,es/js'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <processes>   How many files should be fixed simultaneously (default is 1)'.PHP_EOL;
-        echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
+        echo '        <sniffs>      A comma separated list of sniff codes to include or exclude from fixing'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to fix an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;

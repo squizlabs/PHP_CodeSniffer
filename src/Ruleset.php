@@ -127,8 +127,10 @@ class Ruleset
     {
         // Ignore sniff restrictions if caching is on.
         $restrictions = array();
+        $exclusions = array();
         if ($config->cache === false) {
             $restrictions = $config->sniffs;
+            $exclusions   = $config->exclude;
         }
 
         $this->config = $config;
@@ -175,7 +177,14 @@ class Ruleset
             $sniffRestrictions[$sniffName] = true;
         }
 
-        $this->registerSniffs($sniffs, $sniffRestrictions);
+        $sniffExclusions = array();
+        foreach ($exclusions as $sniffCode) {
+            $parts     = explode('.', strtolower($sniffCode));
+            $sniffName = 'php_codesniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $sniffExclusions[$sniffName] = true;
+        }
+
+        $this->registerSniffs($sniffs, $sniffRestrictions, $sniffExclusions);
         $this->populateTokenListeners();
 
         if (PHP_CODESNIFFER_VERBOSITY === 1) {
@@ -991,10 +1000,12 @@ class Ruleset
      * @param array $files        Paths to the sniff files to register.
      * @param array $restrictions The sniff class names to restrict the allowed
      *                            listeners to.
+     * @param array $exclusions   The sniff class names to exclude from the
+     *                            listeners list.
      *
      * @return void
      */
-    public function registerSniffs($files, $restrictions)
+    public function registerSniffs($files, $restrictions, $exclusions)
     {
         $listeners = array();
 
@@ -1017,6 +1028,14 @@ class Ruleset
             // to see if this sniff is allowed.
             if (empty($restrictions) === false
                 && isset($restrictions[strtolower($className)]) === false
+            ) {
+                continue;
+            }
+
+            // If they have specified a list of sniffs to exclude, check
+            // to see if this sniff is allowed.
+            if (empty($exclusions) === false
+                && isset($exclusions[strtolower($className)]) === true
             ) {
                 continue;
             }
