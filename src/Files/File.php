@@ -214,8 +214,6 @@ class File
 
         $this->configCache['cache']           = $this->config->cache;
         $this->configCache['sniffs']          = $this->config->sniffs;
-        $this->configCache['errorSeverity']   = $this->config->errorSeverity;
-        $this->configCache['warningSeverity'] = $this->config->warningSeverity;
         $this->configCache['recordErrors']    = $this->config->recordErrors;
         $this->configCache['ignorePatterns']  = $this->ruleset->getIgnorePatterns();
 
@@ -527,7 +525,6 @@ class File
         $stackPtr,
         $code,
         $data=array(),
-        $severity=0,
         $fixable=false
     ) {
         if ($stackPtr === null) {
@@ -538,7 +535,7 @@ class File
             $column = $this->tokens[$stackPtr]['column'];
         }
 
-        return $this->addMessage(true, $error, $line, $column, $code, $data, $severity, $fixable);
+        return $this->addMessage(true, $error, $line, $column, $code, $data, $fixable);
 
     }//end addError()
 
@@ -561,7 +558,6 @@ class File
         $stackPtr,
         $code,
         $data=array(),
-        $severity=0,
         $fixable=false
     ) {
         if ($stackPtr === null) {
@@ -572,7 +568,7 @@ class File
             $column = $this->tokens[$stackPtr]['column'];
         }
 
-        return $this->addMessage(false, $warning, $line, $column, $code, $data, $severity, $fixable);
+        return $this->addMessage(false, $warning, $line, $column, $code, $data, $fixable);
 
     }//end addWarning()
 
@@ -593,10 +589,9 @@ class File
         $error,
         $line,
         $code,
-        $data=array(),
-        $severity=0
+        $data=array()
     ) {
-        return $this->addMessage(true, $error, $line, 1, $code, $data, $severity, false);
+        return $this->addMessage(true, $error, $line, 1, $code, $data, false);
 
     }//end addErrorOnLine()
 
@@ -617,10 +612,9 @@ class File
         $warning,
         $line,
         $code,
-        $data=array(),
-        $severity=0
+        $data=array()
     ) {
-        return $this->addMessage(false, $warning, $line, 1, $code, $data, $severity, false);
+        return $this->addMessage(false, $warning, $line, 1, $code, $data, false);
 
     }//end addWarningOnLine()
 
@@ -643,10 +637,9 @@ class File
         $error,
         $stackPtr,
         $code,
-        $data=array(),
-        $severity=0
+        $data=array()
     ) {
-        $recorded = $this->addError($error, $stackPtr, $code, $data, $severity, true);
+        $recorded = $this->addError($error, $stackPtr, $code, $data, true);
         if ($recorded === true && $this->fixer->enabled === true) {
             return true;
         }
@@ -674,10 +667,9 @@ class File
         $warning,
         $stackPtr,
         $code,
-        $data=array(),
-        $severity=0
+        $data=array()
     ) {
-        $recorded = $this->addWarning($warning, $stackPtr, $code, $data, $severity, true);
+        $recorded = $this->addWarning($warning, $stackPtr, $code, $data, true);
         if ($recorded === true && $this->fixer->enabled === true) {
             return true;
         }
@@ -702,7 +694,7 @@ class File
      *
      * @return boolean
      */
-    protected function addMessage($error, $message, $line, $column, $code, $data, $severity, $fixable)
+    protected function addMessage($error, $message, $line, $column, $code, $data, $fixable)
     {
         if (isset($this->tokenizer->ignoredLines[$line]) === true) {
             return false;
@@ -773,35 +765,11 @@ class File
         }
 
         if ($error === true) {
-            $configSeverity = $this->configCache['errorSeverity'];
             $messageCount   = &$this->errorCount;
             $messages       = &$this->errors;
         } else {
-            $configSeverity = $this->configCache['warningSeverity'];
             $messageCount   = &$this->warningCount;
             $messages       = &$this->warnings;
-        }
-
-        if ($includeAll === false && $configSeverity === 0) {
-            // Don't bother doing any processing as these messages are just going to
-            // be hidden in the reports anyway.
-            return false;
-        }
-
-        if ($severity === 0) {
-            $severity = 5;
-        }
-
-        foreach ($checkCodes as $checkCode) {
-            // Make sure we are interested in this severity level.
-            if (isset($this->ruleset->ruleset[$checkCode]['severity']) === true) {
-                $severity = $this->ruleset->ruleset[$checkCode]['severity'];
-                break;
-            }
-        }
-
-        if ($includeAll === false && $configSeverity > $severity) {
-            return false;
         }
 
         // Make sure we are not ignoring this file.
@@ -865,7 +833,6 @@ class File
                                        'message'  => $message,
                                        'source'   => $sniffCode,
                                        'listener' => $this->activeListener,
-                                       'severity' => $severity,
                                        'fixable'  => $fixable,
                                       );
 

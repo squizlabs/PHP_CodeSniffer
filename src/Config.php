@@ -51,8 +51,6 @@ final class Config
      * string   filter          The filter to use for the run.
      * string[] bootstrap       One of more files to include before the run begins.
      *                          Set to "auto" for have this value changed to the width of the terminal.
-     * int      errorSeverity   The minimum severity an error must have to be displayed.
-     * int      warningSeverity The minimum severity a warning must have to be displayed.
      * bool     recordErrors    Record the content of error messages as well as error counts.
      * string   basepath        A file system location to strip from the paths of files shown in reports.
      * bool     stdin           Read content from STDIN instead of supplied files.
@@ -324,8 +322,6 @@ final class Config
         $this->ignored         = array();
         $this->filter          = null;
         $this->reports         = array('full' => null);
-        $this->errorSeverity   = 5;
-        $this->warningSeverity = 5;
         $this->recordErrors    = true;
         $this->stdin           = false;
         $this->stdinContent    = null;
@@ -384,18 +380,6 @@ final class Config
                 ini_set($ini[0], $ini[1]);
             } else {
                 ini_set($ini[0], true);
-            }
-            break;
-        case 'n' :
-            if (isset($this->overriddenDefaults['warningSeverity']) === false) {
-                $this->warningSeverity = 0;
-                $this->overriddenDefaults['warningSeverity'] = true;
-            }
-            break;
-        case 'w' :
-            if (isset($this->overriddenDefaults['warningSeverity']) === false) {
-                $this->warningSeverity = $this->errorSeverity;
-                $this->overriddenDefaults['warningSeverity'] = true;
             }
             break;
         default:
@@ -458,17 +442,6 @@ final class Config
                 }
 
                 $this->overriddenDefaults['standards'] = true;
-            } else if (substr($arg, 0, 9) === 'severity=') {
-                $this->errorSeverity   = (int) substr($arg, 9);
-                $this->warningSeverity = $this->errorSeverity;
-                $this->overriddenDefaults['errorSeverity']   = true;
-                $this->overriddenDefaults['warningSeverity'] = true;
-            } else if (substr($arg, 0, 15) === 'error-severity=') {
-                $this->errorSeverity = (int) substr($arg, 15);
-                $this->overriddenDefaults['errorSeverity'] = true;
-            } else if (substr($arg, 0, 17) === 'warning-severity=') {
-                $this->warningSeverity = (int) substr($arg, 17);
-                $this->overriddenDefaults['warningSeverity'] = true;
             } else if (substr($arg, 0, 7) === 'ignore=') {
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
