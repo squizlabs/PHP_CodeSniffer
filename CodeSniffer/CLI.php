@@ -280,6 +280,7 @@ class PHP_CodeSniffer_CLI
         $defaults['showSources']     = false;
         $defaults['extensions']      = array();
         $defaults['sniffs']          = array();
+        $defaults['exclude']         = array();
         $defaults['ignored']         = array();
         $defaults['reportFile']      = null;
         $defaults['generator']       = '';
@@ -627,6 +628,17 @@ class PHP_CodeSniffer_CLI
                 }
 
                 $this->values['sniffs'] = $sniffs;
+            } else if (substr($arg, 0, 8) === 'exclude=') {
+                $sniffs = explode(',', substr($arg, 8));
+                foreach ($sniffs as $sniff) {
+                    if (substr_count($sniff, '.') !== 2) {
+                        echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
+                        $this->printUsage();
+                        exit(2);
+                    }
+                }
+
+                $this->values['exclude'] = $sniffs;
             } else if (substr($arg, 0, 10) === 'bootstrap=') {
                 $files = explode(',', substr($arg, 10));
                 foreach ($files as $file) {
@@ -869,7 +881,7 @@ class PHP_CodeSniffer_CLI
 
         $phpcs = new PHP_CodeSniffer($values['verbosity'], null, null, null);
         $phpcs->setCli($this);
-        $phpcs->initStandard($values['standard'], $values['sniffs']);
+        $phpcs->initStandard($values['standard'], $values['sniffs'], $values['exclude']);
         $values = $this->values;
 
         $phpcs->setTabWidth($values['tabWidth']);
@@ -1220,7 +1232,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] <file> ...'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
@@ -1255,7 +1267,7 @@ class PHP_CodeSniffer_CLI
         echo '        <reportFile>  Write the report to the specified file path'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
         echo '                      or set to "auto" to use current screen width, where supported'.PHP_EOL;
-        echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
+        echo '        <sniffs>      A comma separated list of sniff codes to include or exclude during checking'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
@@ -1272,7 +1284,7 @@ class PHP_CodeSniffer_CLI
     public function printPHPCBFUsage()
     {
         echo 'Usage: phpcbf [-nwli] [-d key[=value]] [--stdin-path=<stdinPath>]'.PHP_EOL;
-        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
+        echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] <file> ...'.PHP_EOL;
@@ -1293,7 +1305,7 @@ class PHP_CodeSniffer_CLI
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '                      e.g., module/php,es/js'.PHP_EOL;
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
-        echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
+        echo '        <sniffs>      A comma separated list of sniff codes to include or exclude during fixing'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <severity>    The minimum severity required to fix an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
