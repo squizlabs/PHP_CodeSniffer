@@ -272,12 +272,6 @@ final class Config
     public function processShortArgument($arg, $pos)
     {
         switch ($arg) {
-        case 'h':
-            $this->printUsage();
-            exit(0);
-        case 'i' :
-            Util\Standards::printInstalledStandards();
-            exit(0);
         case 's' :
             $this->showSources = true;
             $this->overriddenDefaults['showSources'] = true;
@@ -301,9 +295,6 @@ final class Config
     public function processLongArgument($arg, $pos)
     {
         switch ($arg) {
-        case 'help':
-            $this->printUsage();
-            exit(0);
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
                 $sniffs = explode(',', substr($arg, 7));
@@ -395,8 +386,6 @@ final class Config
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    <file> - ...'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
-        echo '        -i            Show a list of installed coding standards'.PHP_EOL;
-        echo '        --help        Print this help message'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
@@ -415,8 +404,6 @@ final class Config
         echo 'Usage: phpcbf '.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    <file> - ...'.PHP_EOL;
-        echo '        -i            Show a list of installed coding standards'.PHP_EOL;
-        echo '        --help        Print this help message'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
