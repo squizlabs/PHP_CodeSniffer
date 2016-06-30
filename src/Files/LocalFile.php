@@ -17,16 +17,7 @@ class LocalFile extends File
 {
 
 
-    /**
-     * Creates a LocalFile object and sets the content.
-     *
-     * @param string                   $path    The absolute path to the file.
-     * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
-     * @param \Symplify\PHP7_CodeSniffer\Config  $config  The config data for the run.
-     *
-     * @return void
-     */
-    public function __construct($path, Ruleset $ruleset, Config $config)
+    public function __construct(string $path, Ruleset $ruleset, Config $config)
     {
         $path = trim($path);
         if (is_readable($path) === false) {

@@ -172,69 +172,6 @@ class Ruleset
         $this->populateTokenListeners();
     }//end __construct()
 
-
-    /**
-     * Prints a report showing the sniffs contained in a standard.
-     *
-     * @return void
-     */
-    public function explain()
-    {
-        $sniffs = array_keys($this->sniffs);
-        sort($sniffs);
-
-        ob_start();
-
-        $lastStandard = null;
-        $lastCount    = '';
-        $sniffCount   = count($sniffs);
-
-        // Add a dummy entry to the end so we loop
-        // one last time and clear the output buffer.
-        $sniffs[] = '';
-
-        echo PHP_EOL."The $this->name standard contains $sniffCount sniffs".PHP_EOL;
-
-        ob_start();
-
-        foreach ($sniffs as $i => $sniff) {
-            if ($i === $sniffCount) {
-                $currentStandard = null;
-            } else {
-                $parts = explode('\\', $sniff);
-
-                $currentStandard = $parts[2];
-                if ($lastStandard === null) {
-                    $lastStandard = $currentStandard;
-                }
-            }
-
-            if ($currentStandard !== $lastStandard) {
-                $sniffList = ob_get_contents();
-                ob_end_clean();
-
-                echo PHP_EOL.$lastStandard.' ('.$lastCount.' sniffs)'.PHP_EOL;
-                echo str_repeat('-', (strlen($lastStandard.$lastCount) + 10));
-                echo PHP_EOL;
-                echo $sniffList;
-
-                $lastStandard = $parts[2];
-                $lastCount    = 0;
-
-                if ($currentStandard === null) {
-                    break;
-                }
-
-                ob_start();
-            }
-
-            echo '  '.$parts[2].'.'.$parts[4].'.'.substr($parts[5], 0, -5).PHP_EOL;
-            $lastCount++;
-        }//end foreach
-
-    }//end explain()
-
-
     /**
      * Processes a single ruleset and returns a list of the sniffs it represents.
      *

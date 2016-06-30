@@ -13,6 +13,3 @@ $codeSnifferApplication = $container->getByType(Symplify\PHP7_CodeSniffer\Consol
 
 // 3. run it!
 $codeSnifferApplication->run();
-
-//$runner = new Symplify\PHP7_CodeSniffer\Runner();
-//$runner->runPHPCBF();

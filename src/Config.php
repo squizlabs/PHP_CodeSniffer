@@ -39,20 +39,11 @@ final class Config
      *                          1: basic output for files being checked
      *                          2: ruleset and file parsing output
      *                          3: sniff execution output
-     * bool     interactive     Enable interactive checking mode.
-     * bool     explain         Explain the coding standards.
-     * bool     local           Process local files in directories only (no recursion).
      * bool     showSources     Show sniff source codes in report output.
      * bool     showProgress    Show basic progress information while running.
      * string[] sniffs          The sniffs that should be used for checking.
      *                          If empty, all sniffs in the supplied standards will be used.
-     * string[] ignored         Regular expressions used to ignore files and folders during checking.
-     * string   reportFile      A file where the report output should be written.
-     * string   filter          The filter to use for the run.
-     * string[] bootstrap       One of more files to include before the run begins.
-     *                          Set to "auto" for have this value changed to the width of the terminal.
      * bool     recordErrors    Record the content of error messages as well as error counts.
-     * string   basepath        A file system location to strip from the paths of files shown in reports.
      *
      * @var array<string, mixed>
      */
@@ -60,22 +51,17 @@ final class Config
                          'files'           => null,
                          'standards'       => null,
                          'verbosity'       => null,
-                         'interactive'     => null,
-                         'explain'         => null,
-                         'local'           => null,
                          'showSources'     => null,
                          'showProgress'    => null,
                          'extensions'      => ['php' => 'PHP'],
                          'sniffs'          => null,
-                         'ignored'         => null,
                          'reportFile'      => null,
-                         'filter'          => null,
                          'bootstrap'       => null,
                          'reports'         => null,
                          'basepath'        => null,
                          'reportWidth'     => null,
                          'recordErrors'    => null,
-                         'cache'       => true
+                         'cache'       => true,
                         );
 
     /**
@@ -269,14 +255,10 @@ final class Config
     {
         $this->files           = array();
         $this->standards       = array('PEAR');
-        $this->explain         = false;
-        $this->local           = false;
         $this->showSources     = false;
         $this->showProgress    = false;
         $this->extensions      = array('php' => 'PHP');
         $this->sniffs          = array();
-        $this->ignored         = array();
-        $this->filter          = null;
         $this->reports         = array('full' => null);
         $this->recordErrors    = true;
 
@@ -296,27 +278,14 @@ final class Config
     {
         switch ($arg) {
         case 'h':
-        case '?':
             $this->printUsage();
             exit(0);
         case 'i' :
             Util\Standards::printInstalledStandards();
             exit(0);
-        case 'v' :
-            $this->verbosity++;
-            $this->overriddenDefaults['verbosity'] = true;
-            break;
-        case 'l' :
-            $this->local = true;
-            $this->overriddenDefaults['local'] = true;
-            break;
         case 's' :
             $this->showSources = true;
             $this->overriddenDefaults['showSources'] = true;
-            break;
-        case 'e':
-            $this->explain = true;
-            $this->overriddenDefaults['explain'] = true;
             break;
         case 'p' :
             $this->showProgress = true;
@@ -363,13 +332,6 @@ final class Config
 
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
-            } else if (substr($arg, 0, 7) === 'filter=') {
-                if (isset($this->overriddenDefaults['filter']) === true) {
-                    break;
-                }
-
-                $this->filter = substr($arg, 7);
-                $this->overriddenDefaults['filter'] = true;
             } else if (substr($arg, 0, 9) === 'standard=') {
                 $standards = trim(substr($arg, 9));
                 if ($standards !== '') {
@@ -377,26 +339,6 @@ final class Config
                 }
 
                 $this->overriddenDefaults['standards'] = true;
-            } else if (substr($arg, 0, 7) === 'ignore=') {
-                // Split the ignore string on commas, unless the comma is escaped
-                // using 1 or 3 slashes (\, or \\\,).
-                $patterns = preg_split(
-                    '/(?<=(?<!\\\\)\\\\\\\\),|(?<!\\\\),/',
-                    substr($arg, 7)
-                );
-
-                $ignored = array();
-                foreach ($patterns as $pattern) {
-                    $pattern = trim($pattern);
-                    if ($pattern === '') {
-                        continue;
-                    }
-
-                    $ignored[$pattern] = 'absolute';
-                }
-
-                $this->ignored = $ignored;
-                $this->overriddenDefaults['ignored'] = true;
             } else {
                 $this->processUnknownArgument('--'.$arg, $pos);
             }//end if
@@ -464,20 +406,17 @@ final class Config
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi]'.PHP_EOL;
+        echo 'Usage: phpcs '.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
-        echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    <file> - ...'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
-        echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
         echo '        -m            Stop error messages from being recorded'.PHP_EOL;
         echo '                      (saves a lot of memory, but stops many reports from being used)'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
-        echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
-        echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
@@ -492,15 +431,13 @@ final class Config
      */
     public function printPHPCBFUsage()
     {
-        echo 'Usage: phpcbf [-nwli]'.PHP_EOL;
+        echo 'Usage: phpcbf '.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
-        echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    <file> - ...'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
-        echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
-        echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;

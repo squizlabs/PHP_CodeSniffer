@@ -65,19 +65,6 @@ class Runner
         // Init the run and load the rulesets to set additional config vars.
         $this->init();
 
-        // Print a list of sniffs in each of the supplied standards.
-        // We fudge the config here so that each standard is explained in isolation.
-        if ($this->config->explain === true) {
-            $standards = $this->config->standards;
-            foreach ($standards as $standard) {
-                $this->config->standards = array($standard);
-                $ruleset = new Ruleset($this->config);
-                $ruleset->explain();
-            }
-
-            exit(0);
-        }
-
         $numErrors = $this->run();
 
         // Print all the reports for this run.
@@ -100,15 +87,10 @@ class Runner
             exit(1);
         }
 
-    }//end runPHPCS()
+    }
 
 
-    /**
-     * Run the PHPCBF script.
-     *
-     * @return array
-     */
-    public function runPHPCBF()
+    public function runPHPCBF() : array
     {
         if (defined('PHP_CodeSniffer_CBF') === false) {
             define('PHP_CodeSniffer_CBF', true);

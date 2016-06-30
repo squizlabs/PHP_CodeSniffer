@@ -48,13 +48,6 @@ class File
     public $ruleset = null;
 
     /**
-     * If TRUE, the entire file is being ignored.
-     *
-     * @var string
-     */
-    public $ignored = false;
-
-    /**
      * The EOL character this file uses.
      *
      * @var string
