@@ -77,8 +77,6 @@ final class Config
                          'reports'         => null,
                          'basepath'        => null,
                          'reportWidth'     => null,
-                         'errorSeverity'   => null,
-                         'warningSeverity' => null,
                          'recordErrors'    => null,
                          'stdin'           => null,
                          'stdinContent'    => null,
@@ -526,11 +524,9 @@ final class Config
     public function printPHPCSUsage()
     {
         echo 'Usage: phpcs [-nwlsaepvi]'.PHP_EOL;
-        echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
-        echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
         echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
@@ -544,7 +540,6 @@ final class Config
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
-        echo '        <severity>    The minimum severity required to display an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
 
     }//end printPHPCSUsage()
@@ -559,10 +554,8 @@ final class Config
     {
         echo 'Usage: phpcbf [-nwli]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
-        echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
-        echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
@@ -571,7 +564,6 @@ final class Config
         echo '        <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
-        echo '        <severity>    The minimum severity required to fix an error or warning'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
 
     }//end printPHPCBFUsage()

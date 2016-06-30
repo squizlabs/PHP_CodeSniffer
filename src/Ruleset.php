@@ -281,23 +281,6 @@ class Ruleset
             $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
 
             $parts = explode('.', $rule['ref']);
-            if (count($parts) === 4) {
-                $sniffCode = $parts[0].'.'.$parts[1].'.'.$parts[2];
-                if (isset($this->ruleset[$sniffCode]['severity']) === true
-                    && $this->ruleset[$sniffCode]['severity'] === 0
-                ) {
-                    // This sniff code has already been turned off, but now
-                    // it is being explicitly included again, so turn it back on.
-                    $this->ruleset[(string) $rule['ref']]['severity'] = 5;
-                } else if (empty($newSniffs) === false) {
-                    // Including a sniff that hasn't been included higher up, but
-                    // only including a single message from it. So turn off all messages in
-                    // the sniff, except this one.
-                    $this->ruleset[$sniffCode]['severity']            = 0;
-                    $this->ruleset[(string) $rule['ref']]['severity'] = 5;
-                }//end if
-            }//end if
-
             if (isset($rule->exclude) === true) {
                 foreach ($rule->exclude as $exclude) {
                     if ($this->shouldProcessElement($exclude) === false) {

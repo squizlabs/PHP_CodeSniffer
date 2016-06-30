@@ -281,7 +281,6 @@ final class Reporter
                                          array(
                                           'message'  => $message,
                                           'source'   => 'Internal.RecordErrors',
-                                          'severity' => 5,
                                           'fixable'  => false,
                                           'type'     => 'ERROR',
                                          ),
@@ -299,7 +298,6 @@ final class Reporter
                     $newErrors[] = array(
                                     'message'  => $data['message'],
                                     'source'   => $data['source'],
-                                    'severity' => $data['severity'],
                                     'fixable'  => $data['fixable'],
                                     'type'     => 'ERROR',
                                    );
@@ -318,7 +316,6 @@ final class Reporter
                     $newWarnings[] = array(
                                       'message'  => $data['message'],
                                       'source'   => $data['source'],
-                                      'severity' => $data['severity'],
                                       'fixable'  => $data['fixable'],
                                       'type'     => 'WARNING',
                                      );

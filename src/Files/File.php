@@ -490,8 +490,6 @@ class File
      * @param int     $stackPtr The stack position where the error occurred.
      * @param string  $code     A violation code unique to the sniff message.
      * @param array   $data     Replacements for the error message.
-     * @param int     $severity The severity level for this error. A value of 0
-     *                          will be converted into the default severity level.
      * @param boolean $fixable  Can the error be fixed by the sniff?
      *
      * @return boolean
@@ -523,8 +521,6 @@ class File
      * @param int     $stackPtr The stack position where the error occurred.
      * @param string  $code     A violation code unique to the sniff message.
      * @param array   $data     Replacements for the warning message.
-     * @param int     $severity The severity level for this warning. A value of 0
-     *                          will be converted into the default severity level.
      * @param boolean $fixable  Can the warning be fixed by the sniff?
      *
      * @return boolean
@@ -556,8 +552,6 @@ class File
      * @param int    $line     The line on which the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the error message.
-     * @param int    $severity The severity level for this error. A value of 0
-     *                         will be converted into the default severity level.
      *
      * @return boolean
      */
@@ -579,8 +573,6 @@ class File
      * @param int    $line     The line on which the warning occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the warning message.
-     * @param int    $severity The severity level for this warning. A value of 0 will
-     *                         will be converted into the default severity level.
      *
      * @return boolean
      */
@@ -604,8 +596,6 @@ class File
      * @param int    $stackPtr The stack position where the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the error message.
-     * @param int    $severity The severity level for this error. A value of 0
-     *                         will be converted into the default severity level.
      *
      * @return boolean
      */
@@ -634,8 +624,6 @@ class File
      * @param int    $stackPtr The stack position where the error occurred.
      * @param string $code     A violation code unique to the sniff message.
      * @param array  $data     Replacements for the warning message.
-     * @param int    $severity The severity level for this warning. A value of 0
-     *                         will be converted into the default severity level.
      *
      * @return boolean
      */
@@ -664,8 +652,6 @@ class File
      * @param int     $column   The column at which the message occurred.
      * @param string  $code     A violation code unique to the sniff message.
      * @param array   $data     Replacements for the message.
-     * @param int     $severity The severity level for this message. A value of 0
-     *                          will be converted into the default severity level.
      * @param boolean $fixable  Can the problem be fixed by the sniff?
      *
      * @return boolean

@@ -168,7 +168,6 @@ class LocalFile extends File
                         $column,
                         $error['source'],
                         array(),
-                        $error['severity'],
                         $error['fixable']
                     );
                 }
@@ -186,7 +185,6 @@ class LocalFile extends File
                         $column,
                         $error['source'],
                         array(),
-                        $error['severity'],
                         $error['fixable']
                     );
                 }
