@@ -51,11 +51,6 @@ class Comment
         $openPtr = $stackPtr;
         $stackPtr++;
 
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $content = Util\Common::prepareForOutput($openTag);
-            echo "\t\tCreate comment token: T_DOC_COMMENT_OPEN_TAG => $content".PHP_EOL;
-        }
-
         /*
             Strip off the close tag so it doesn't interfere with any
             of our comment line processing. The token will be added to the
@@ -111,10 +106,6 @@ class Comment
                                      );
 
                 $stackPtr++;
-
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo "\t\tCreate comment token: T_DOC_COMMENT_STAR => *".PHP_EOL;
-                }
             }
 
             // Now we are ready to process the actual content of the line.

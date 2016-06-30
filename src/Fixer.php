@@ -371,24 +371,6 @@ class Fixer
         $this->_inConflict  = false;
 
         if (empty($this->_changeset) === false) {
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                $bt = debug_backtrace();
-                if ($bt[1]['class'] === 'Symplify\PHP7_CodeSniffer_Fixer') {
-                    $sniff = $bt[2]['class'];
-                    $line  = $bt[1]['line'];
-                } else {
-                    $sniff = $bt[1]['class'];
-                    $line  = $bt[0]['line'];
-                }
-
-                $numChanges = count($this->_changeset);
-
-                @ob_end_clean();
-                echo "\t\tR: $sniff (line $line) rolled back the changeset ($numChanges changes)".PHP_EOL;
-                echo "\t=> Changeset rolled back".PHP_EOL;
-                ob_start();
-            }
-
             $this->_changeset = array();
         }//end if
 
@@ -435,19 +417,6 @@ class Fixer
             if ($this->_oldTokenValues[$stackPtr]['prev'] === $content
                 && $this->_oldTokenValues[$stackPtr]['loop'] === ($this->loops - 1)
             ) {
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    $indent = "\t";
-                    if (empty($this->_changeset) === false) {
-                        $indent .= "\t";
-                    }
-
-                    $loop = $this->_oldTokenValues[$stackPtr]['loop'];
-
-                    @ob_end_clean();
-                    echo "$indent**** $sniff (line $line) has possible conflict with another sniff on loop $loop; caused by the following change ****".PHP_EOL;
-                    echo "$indent**** replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\" ****".PHP_EOL;
-                }
-
                 if ($this->_oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
                     $this->_inConflict = true;
                 }
@@ -481,28 +450,6 @@ class Fixer
         if (isset($this->_fixedTokens[$stackPtr]) === false) {
             return false;
         }
-
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $bt = debug_backtrace();
-            if ($bt[1]['class'] === 'Symplify\PHP7_CodeSniffer_Fixer') {
-                $sniff = $bt[2]['class'];
-                $line  = $bt[1]['line'];
-            } else {
-                $sniff = $bt[1]['class'];
-                $line  = $bt[0]['line'];
-            }
-
-            $tokens     = $this->currentFile->getTokens();
-            $type       = $tokens[$stackPtr]['type'];
-            $oldContent = Common::prepareForOutput($this->_tokens[$stackPtr]);
-            $newContent = Common::prepareForOutput($this->_fixedTokens[$stackPtr]);
-            if (trim($this->_tokens[$stackPtr]) === '' && isset($tokens[($stackPtr + 1)]) === true) {
-                // Add some context for whitespace only changes.
-                $append      = Common::prepareForOutput($this->_tokens[($stackPtr + 1)]);
-                $oldContent .= $append;
-                $newContent .= $append;
-            }
-        }//end if
 
         $this->_tokens[$stackPtr] = $this->_fixedTokens[$stackPtr];
         unset($this->_fixedTokens[$stackPtr]);

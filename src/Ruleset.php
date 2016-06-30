@@ -266,11 +266,6 @@ class Ruleset
 
         $sniffDir = $rulesetDir.DIRECTORY_SEPARATOR.'Sniffs';
         if (is_dir($sniffDir) === true) {
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\tAdding sniff files from ".Util\Common::stripBasepath($sniffDir, $this->config->basepath).' directory'.PHP_EOL;
-            }
-
             $ownSniffs = $this->expandSniffDirectory($sniffDir, $depth);
         }
 
@@ -307,11 +302,6 @@ class Ruleset
                 foreach ($rule->exclude as $exclude) {
                     if ($this->shouldProcessElement($exclude) === false) {
                         continue;
-                    }
-
-                    if (PHP_CodeSniffer_VERBOSITY > 1) {
-                        echo str_repeat("\t", $depth);
-                        echo "\t\tExcluding rule \"".$exclude['name'].'"'.PHP_EOL;
                     }
 
                     $excludedSniffs = array_merge(
@@ -377,13 +367,6 @@ class Ruleset
 
         $includedSniffs = array_unique(array_merge($ownSniffs, $includedSniffs));
         $excludedSniffs = array_unique($excludedSniffs);
-
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $included = count($includedSniffs);
-            $excluded = count($excludedSniffs);
-            echo str_repeat("\t", $depth);
-            echo "=> Ruleset processing complete; included $included sniffs and excluded $excluded".PHP_EOL;
-        }
 
         // Merge our own sniff list with our externally included
         // sniff list, but filter out any excluded sniffs.
@@ -493,10 +476,6 @@ class Ruleset
             $realpath = Util\Common::realpath($ref);
             if ($realpath !== false) {
                 $ref = $realpath;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
-                }
             }
         }
 
@@ -568,13 +547,6 @@ class Ruleset
                 return $this->processRuleset($ref.DIRECTORY_SEPARATOR.'ruleset.xml', ($depth + 2));
             } else {
                 // We are referencing a whole directory of sniffs.
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t* rule is referencing a directory of sniffs *".PHP_EOL;
-                    echo str_repeat("\t", $depth);
-                    echo "\t\tAdding sniff files from directory".PHP_EOL;
-                }
-
                 return $this->expandSniffDirectory($ref, ($depth + 1));
             }
         } else {
@@ -650,15 +622,6 @@ class Ruleset
                 }
 
                 $this->ruleset[$code]['message'] = (string) $rule->message;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> message set to ".(string) $rule->message;
-                    if ($code !== $ref) {
-                        echo " for $code";
-                    }
-
-                    echo PHP_EOL;
-                }
             }
 
             // Custom properties.
@@ -734,15 +697,6 @@ class Ruleset
                 }
 
                 $this->includePatterns[$code][(string) $pattern] = (string) $pattern['type'];
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> added rule-specific ".(string) $pattern['type'].' include pattern';
-                    if ($code !== $ref) {
-                        echo " for $code";
-                    }
-
-                    echo ': '.(string) $pattern.PHP_EOL;
-                }
             }//end foreach
         }//end foreach
 

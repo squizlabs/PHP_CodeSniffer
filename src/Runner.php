@@ -78,7 +78,6 @@ class Runner
             exit(0);
         }
 
-        // Disable caching if we are processing STDIN as we can't be 100%
         // sure where the file came from or if it will change in the future.
         if ($this->config->stdin === true) {
             $this->config->cache = false;
@@ -166,6 +165,7 @@ class Runner
         // Ensure this option is enabled or else line endings will not always
         // be detected properly for files created on a Mac with the /r line ending.
         ini_set('auto_detect_line_endings', true);
+
 
         // Check that the standards are valid.
         foreach ($this->config->standards as $standard) {
@@ -279,13 +279,6 @@ class Runner
         }//end foreach
 
         restore_error_handler();
-
-        if (PHP_CodeSniffer_VERBOSITY === 0
-            && $this->config->interactive === false
-            && $this->config->showProgress === true
-        ) {
-            echo PHP_EOL.PHP_EOL;
-        }
 
         if ($this->config->cache === true) {
             Cache::save();

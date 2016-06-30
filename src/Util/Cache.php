@@ -61,12 +61,6 @@ class Cache
                     // We are only interested in sniffs here.
                     continue;
                 }
-
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo "\t\t=> external file: $file".PHP_EOL;
-                }
-            } else if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo "\t\t=> internal sniff: $file".PHP_EOL;
             }
 
             $codeHash .= md5_file($file);
@@ -119,10 +113,6 @@ class Cache
 
         $iterator = new \RecursiveIteratorIterator($filter);
         foreach ($iterator as $file) {
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo "\t\t=> core file: $file".PHP_EOL;
-            }
-
             $codeHash .= md5_file($file);
         }
 
@@ -144,9 +134,6 @@ class Cache
         // Determine the common paths for all files being checked.
         // We can use this to locate an existing cache file, or to
         // determine where to create a new one.
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo "\tChecking possible cache file paths".PHP_EOL;
-        }
 
         $paths = array();
         foreach ($config->files as $file) {
@@ -200,9 +187,6 @@ class Cache
         }
 
         self::$path = $cacheFile;
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            echo "\t=> Using cache file: ".self::$path.PHP_EOL;
-        }
 
         if (file_exists(self::$path) === true) {
             self::$cache = json_decode(file_get_contents(self::$path), true);

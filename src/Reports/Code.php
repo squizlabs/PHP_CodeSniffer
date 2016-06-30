@@ -44,20 +44,6 @@ class Code implements Report
         $tokens = $phpcsFile->getTokens();
         if (empty($tokens) === true) {
             $phpcsFile->parse();
-
-            if (PHP_CodeSniffer_VERBOSITY === 1) {
-                $timeTaken = ((microtime(true) - $startTime) * 1000);
-                if ($timeTaken < 1000) {
-                    $timeTaken = round($timeTaken);
-                    echo "DONE in {$timeTaken}ms";
-                } else {
-                    $timeTaken = round(($timeTaken / 1000), 2);
-                    echo "DONE in $timeTaken secs";
-                }
-
-                echo PHP_EOL;
-            }
-
             $tokens = $phpcsFile->getTokens();
         }//end if
 

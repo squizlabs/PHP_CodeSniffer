@@ -83,6 +83,7 @@ final class Config
                          'stdin'           => null,
                          'stdinContent'    => null,
                          'stdinPath'       => null,
+                         'cache'       => true
                         );
 
     /**
