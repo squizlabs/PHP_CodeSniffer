@@ -43,5 +43,3 @@ $var = (object)  $var2;
 $var = (unset) $var2;
 $var = (unset)$var2;
 $var = (unset)  $var2;
-
-?>
