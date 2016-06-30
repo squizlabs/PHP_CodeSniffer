@@ -241,10 +241,6 @@ class Runner
         foreach ($todo as $path => $file) {
             $currDir = dirname($path);
             if ($lastDir !== $currDir) {
-                if (PHP_CodeSniffer_VERBOSITY > 0 || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)) {
-                    echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
-                }
-
                 $lastDir = $currDir;
             }
 
@@ -355,28 +351,6 @@ class Runner
 
         try {
             $file->process();
-
-            if (PHP_CodeSniffer_VERBOSITY > 0
-                || (PHP_CodeSniffer_CBF === true && $this->config->stdin === false)
-            ) {
-                $timeTaken = ((microtime(true) - $startTime) * 1000);
-                if ($timeTaken < 1000) {
-                    $timeTaken = round($timeTaken);
-                    echo "DONE in {$timeTaken}ms";
-                } else {
-                    $timeTaken = round(($timeTaken / 1000), 2);
-                    echo "DONE in $timeTaken secs";
-                }
-
-                if (PHP_CodeSniffer_CBF === true) {
-                    $errors = $file->getFixableCount();
-                    echo " ($errors fixable violations)".PHP_EOL;
-                } else {
-                    $errors   = $file->getErrorCount();
-                    $warnings = $file->getWarningCount();
-                    echo " ($errors errors, $warnings warnings)".PHP_EOL;
-                }
-            }
         } catch (\Exception $e) {
             $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
             $file->addErrorOnLine($error, 1, 'Internal.Exception');

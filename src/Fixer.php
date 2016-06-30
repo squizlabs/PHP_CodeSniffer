@@ -318,16 +318,6 @@ class Fixer
             return false;
         }
 
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $bt    = debug_backtrace();
-            $sniff = $bt[1]['class'];
-            $line  = $bt[0]['line'];
-
-            @ob_end_clean();
-            echo "\t=> Changeset started by $sniff (line $line)".PHP_EOL;
-            ob_start();
-        }
-
         $this->_changeset   = array();
         $this->_inChangeset = true;
 
@@ -430,28 +420,6 @@ class Fixer
             return false;
         }
 
-        if (PHP_CodeSniffer_VERBOSITY > 1) {
-            $bt = debug_backtrace();
-            if ($bt[1]['class'] === 'Symplify\PHP7_CodeSniffer_Fixer') {
-                $sniff = $bt[2]['class'];
-                $line  = $bt[1]['line'];
-            } else {
-                $sniff = $bt[1]['class'];
-                $line  = $bt[0]['line'];
-            }
-
-            $tokens     = $this->currentFile->getTokens();
-            $type       = $tokens[$stackPtr]['type'];
-            $oldContent = Common::prepareForOutput($this->_tokens[$stackPtr]);
-            $newContent = Common::prepareForOutput($content);
-            if (trim($this->_tokens[$stackPtr]) === '' && isset($this->_tokens[($stackPtr + 1)]) === true) {
-                // Add some context for whitespace only changes.
-                $append      = Common::prepareForOutput($this->_tokens[($stackPtr + 1)]);
-                $oldContent .= $append;
-                $newContent .= $append;
-            }
-        }//end if
-
         if ($this->_inChangeset === true) {
             $this->_changeset[$stackPtr] = $content;
             return true;
@@ -482,10 +450,6 @@ class Fixer
 
                 if ($this->_oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
                     $this->_inConflict = true;
-                }
-
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    ob_start();
                 }
 
                 return false;

@@ -170,12 +170,6 @@ class Ruleset
 
         $this->registerSniffs($sniffs, $sniffRestrictions);
         $this->populateTokenListeners();
-
-        if (PHP_CodeSniffer_VERBOSITY === 1) {
-            $numSniffs = count($this->sniffs);
-            echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
-        }
-
     }//end __construct()
 
 
@@ -287,11 +281,6 @@ class Ruleset
                 continue;
             }
 
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\tProcessing rule \"".$rule['ref'].'"'.PHP_EOL;
-            }
-
             $expandedSniffs = $this->expandRulesetReference($rule['ref'], $rulesetDir, $depth);
             $newSniffs      = array_diff($expandedSniffs, $includedSniffs);
             $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
@@ -360,10 +349,6 @@ class Ruleset
             foreach ($ruleset->{'file'} as $file) {
                 $file      = (string) $file;
                 $cliArgs[] = $file;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t=> added \"$file\" to the file list".PHP_EOL;
-                }
             }
         }
 
@@ -488,11 +473,6 @@ class Ruleset
         // Ignore internal sniffs codes as they are used to only
         // hide and change internal messages.
         if (substr($ref, 0, 9) === 'Internal.') {
-            if (PHP_CodeSniffer_VERBOSITY > 1) {
-                echo str_repeat("\t", $depth);
-                echo "\t\t* ignoring internal sniff code *".PHP_EOL;
-            }
-
             return array();
         }
 
@@ -579,11 +559,6 @@ class Ruleset
                 } else {
                     $ref = $newRef;
                 }
-
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> ".Util\Common::stripBasepath($ref, $this->config->basepath).PHP_EOL;
-                }
             }//end if
         }//end if
 
@@ -650,26 +625,6 @@ class Ruleset
         }
 
         foreach ($todo as $code) {
-            // Custom severity.
-            if (isset($rule->severity) === true
-                && $this->shouldProcessElement($rule->severity) === true
-            ) {
-                if (isset($this->ruleset[$code]) === false) {
-                    $this->ruleset[$code] = array();
-                }
-
-                $this->ruleset[$code]['severity'] = (int) $rule->severity;
-                if (PHP_CodeSniffer_VERBOSITY > 1) {
-                    echo str_repeat("\t", $depth);
-                    echo "\t\t=> severity set to ".(int) $rule->severity;
-                    if ($code !== $ref) {
-                        echo " for $code";
-                    }
-
-                    echo PHP_EOL;
-                }
-            }
-
             // Custom message type.
             if (isset($rule->type) === true
                 && $this->shouldProcessElement($rule->type) === true
@@ -743,15 +698,6 @@ class Ruleset
                         $this->ruleset[$code]['properties'][$name] = $values;
                     } else {
                         $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
-                        if (PHP_CodeSniffer_VERBOSITY > 1) {
-                            echo str_repeat("\t", $depth);
-                            echo "\t\t=> property \"$name\" set to \"".(string) $prop['value'].'"';
-                            if ($code !== $ref) {
-                                echo " for $code";
-                            }
-
-                            echo PHP_EOL;
-                        }
                     }//end if
                 }//end foreach
             }//end if

@@ -812,15 +812,6 @@ class File
                                        'fixable'  => $fixable,
                                       );
 
-        if (PHP_CodeSniffer_VERBOSITY > 1
-            && $this->fixer->enabled === true
-            && $fixable === true
-        ) {
-            @ob_end_clean();
-            echo "\tE: [Line $line] $message ($sniffCode)".PHP_EOL;
-            ob_start();
-        }
-
         return true;
 
     }//end addMessage()
