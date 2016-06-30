@@ -147,7 +147,7 @@ class FileList implements \Iterator, \Countable
                 $filename = realpath($filterType);
                 if ($filename === false) {
                     echo "ERROR: Custom filter \"$filterType\" not found".PHP_EOL;
-                    exit(2);
+                    exit(3);
                 }
 
                 $filterClass = \PHP_CodeSniffer\Autoload::loadFile($filename);

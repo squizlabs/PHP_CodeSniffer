@@ -87,14 +87,14 @@ class Hgblame extends VersionControl
             chdir($location);
         } else {
             echo 'ERROR: Could not locate .hg directory '.PHP_EOL.PHP_EOL;
-            exit(2);
+            exit(3);
         }
 
         $command = 'hg blame -u -d -v "'.$filename.'" 2>&1';
         $handle  = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
-            exit(2);
+            exit(3);
         }
 
         $rawContent = stream_get_contents($handle);

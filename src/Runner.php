@@ -125,9 +125,14 @@ class Runner
         }
 
         if ($numErrors === 0) {
+            // No errors found.
             exit(0);
-        } else {
+        } else if ($this->reporter->totalFixable === 0) {
+            // Errors found, but none of them can be fixed by PHPCBF.
             exit(1);
+        } else {
+            // Errors found, and some can be fixed by PHPCBF.
+            exit(2);
         }
 
     }//end runPHPCS()
@@ -195,12 +200,12 @@ class Runner
         // Check the PHP version.
         if (version_compare(PHP_VERSION, '5.4.0') === -1) {
             echo 'ERROR: PHP_CodeSniffer requires PHP version 5.4.0 or greater.'.PHP_EOL;
-            exit(2);
+            exit(3);
         }
 
         if (extension_loaded('tokenizer') === false) {
             echo 'ERROR: PHP_CodeSniffer requires the tokenizer extension to be enabled.'.PHP_EOL;
-            exit(2);
+            exit(3);
         }
 
     }//end checkRequirements()
@@ -224,7 +229,7 @@ class Runner
                 // out by letting them know which standards are installed.
                 echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
                 Util\Standards::printInstalledStandards();
-                exit(2);
+                exit(3);
             }
         }
 

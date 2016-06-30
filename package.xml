@@ -61,6 +61,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added -m option to stop error messages from being recorded, which saves a lot of memory
     -- PHPCBF always uses this setting to reduce memory
     -- Setting $recordErrors in custom reports no longer supported
+  - Exit code 2 now used to indicate fixable errors were found (request #930)
+    -- Exit code 3 now used for general script execution errors
+    -- Exit code 1 used to indicate that coding standard errors were found, but none are fixable
+    -- Exit code 0 is unchanged and continues to mean no coding standard errors found
 
   - Added a new --exclude CLI argument to exclude a list of sniffs from checking and fixing (request #904)
     -- Accepts the same sniff codes as the --sniffs command line argument, but provides the opposite functionality

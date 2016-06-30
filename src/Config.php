@@ -640,7 +640,7 @@ class Config
                 $this->setConfigData($key, $value);
             } catch (Exception $e) {
                 echo $e->getMessage().PHP_EOL;
-                exit(2);
+                exit(3);
             }
 
             if ($current === null) {
@@ -665,7 +665,7 @@ class Config
                     $this->setConfigData($key, null);
                 } catch (Exception $e) {
                     echo $e->getMessage().PHP_EOL;
-                    exit(2);
+                    exit(3);
                 }
 
                 echo "Config value \"$key\" removed successfully; old value was \"$current\"".PHP_EOL;
@@ -697,7 +697,7 @@ class Config
                     if (substr_count($sniff, '.') !== 2) {
                         echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
-                        exit(2);
+                        exit(3);
                     }
                 }
 
@@ -709,7 +709,7 @@ class Config
                     if (substr_count($sniff, '.') !== 2) {
                         echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
-                        exit(2);
+                        exit(3);
                     }
                 }
 
@@ -732,7 +732,7 @@ class Config
                     if (is_dir($dir) === false) {
                         echo 'ERROR: The specified cache file path "'.$this->cacheFile.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
-                        exit(2);
+                        exit(3);
                     }
 
                     if ($dir === '.') {
@@ -752,7 +752,7 @@ class Config
                 if (is_dir($this->cacheFile) === true) {
                     echo 'ERROR: The specified cache file path "'.$this->cacheFile.'" is a directory'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
-                    exit(2);
+                    exit(3);
                 }
             } else if (substr($arg, 0, 10) === 'bootstrap=') {
                 $files     = explode(',', substr($arg, 10));
@@ -762,7 +762,7 @@ class Config
                     if ($path === false) {
                         echo 'ERROR: The specified bootstrap file "'.$file.'" does not exist'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
-                        exit(2);
+                        exit(3);
                     }
 
                     $bootstrap[] = $path;
@@ -790,7 +790,7 @@ class Config
                     if (is_dir($dir) === false) {
                         echo 'ERROR: The specified report file path "'.$this->reportFile.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
                         $this->printUsage();
-                        exit(2);
+                        exit(3);
                     }
 
                     if ($dir === '.') {
@@ -810,7 +810,7 @@ class Config
                 if (is_dir($this->reportFile) === true) {
                     echo 'ERROR: The specified report file path "'.$this->reportFile.'" is a directory'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
-                    exit(2);
+                    exit(3);
                 }
             } else if (substr($arg, 0, 13) === 'report-width=') {
                 if (isset($this->overriddenDefaults['reportWidth']) === true) {
@@ -836,7 +836,7 @@ class Config
                 if (is_dir($this->basepath) === false) {
                     echo 'ERROR: The specified basepath "'.$this->basepath.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
                     $this->printUsage();
-                    exit(2);
+                    exit(3);
                 }
             } else if ((substr($arg, 0, 7) === 'report=' || substr($arg, 0, 7) === 'report-')) {
                 $reports = array();
@@ -1017,7 +1017,7 @@ class Config
 
             echo "ERROR: option \"$arg\" not known".PHP_EOL.PHP_EOL;
             $this->printUsage();
-            exit(2);
+            exit(3);
         }
 
         $file = Util\Common::realpath($arg);
@@ -1028,7 +1028,7 @@ class Config
 
             echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
             $this->printUsage();
-            exit(2);
+            exit(3);
         } else {
             $files       = $this->files;
             $files[]     = $file;

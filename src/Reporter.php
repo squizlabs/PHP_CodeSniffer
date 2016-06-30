@@ -102,7 +102,7 @@ class Reporter
                 $filename = realpath($type);
                 if ($filename === false) {
                     echo "ERROR: Custom report \"$type\" not found".PHP_EOL;
-                    exit(2);
+                    exit(3);
                 }
 
                 $reportClassName = Autoload::loadFile($filename);

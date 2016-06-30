@@ -86,14 +86,14 @@ class Gitblame extends VersionControl
             chdir($location);
         } else {
             echo 'ERROR: Could not locate .git directory '.PHP_EOL.PHP_EOL;
-            exit(2);
+            exit(3);
         }
 
         $command = 'git blame --date=short "'.$filename.'" 2>&1';
         $handle  = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
-            exit(2);
+            exit(3);
         }
 
         $rawContent = stream_get_contents($handle);

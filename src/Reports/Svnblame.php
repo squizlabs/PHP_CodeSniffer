@@ -58,7 +58,7 @@ class Svnblame extends VersionControl
         $handle  = popen($command, 'r');
         if ($handle === false) {
             echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
-            exit(2);
+            exit(3);
         }
 
         $rawContent = stream_get_contents($handle);
