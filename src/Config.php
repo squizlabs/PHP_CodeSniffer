@@ -14,7 +14,7 @@ namespace Symplify\PHP7_CodeSniffer;
 
 use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
-class Config
+final class Config
 {
 
     /**
@@ -40,7 +40,6 @@ class Config
      *                          2: ruleset and file parsing output
      *                          3: sniff execution output
      * bool     interactive     Enable interactive checking mode.
-     * bool     cache           Enable the use of the file cache.
      * bool     explain         Explain the coding standards.
      * bool     local           Process local files in directories only (no recursion).
      * bool     showSources     Show sniff source codes in report output.
@@ -52,7 +51,6 @@ class Config
      * string   reportFile      A file where the report output should be written.
      * string   filter          The filter to use for the run.
      * string[] bootstrap       One of more files to include before the run begins.
-     * int      reportWidth     The maximum number of columns that reports should use for output.
      *                          Set to "auto" for have this value changed to the width of the terminal.
      * int      errorSeverity   The minimum severity an error must have to be displayed.
      * int      warningSeverity The minimum severity a warning must have to be displayed.
@@ -101,17 +99,10 @@ class Config
                          'stdin'           => null,
                          'stdinContent'    => null,
                          'stdinPath'       => null,
-                        );
 
-    /**
-     * Whether or not to kill the process when an unknown command line arg is found.
-     *
-     * If FALSE, arguments that are not command line options or file/directory paths
-     * will be ignored and execution will continue.
-     *
-     * @var boolean
-     */
-    public $dieOnUnknownArg;
+                            'colors' => true,
+                            'cache' => true,
+                        );
 
     /**
      * The current command line arguments we are processing.
@@ -184,14 +175,6 @@ class Config
         }
 
         switch ($name) {
-        case 'reportWidth' :
-            // Support auto terminal width.
-            if ($value === 'auto' && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1) {
-                $value = (int) $matches[1];
-            } else {
-                $value = (int) $value;
-            }
-            break;
         case 'standards' :
             $cleaned = array();
 
@@ -252,21 +235,11 @@ class Config
      * Creates a Config object and populates it with command line values.
      *
      * @param array $cliArgs         An array of values gathered from CLI args.
-     * @param bool  $dieOnUnknownArg Whether or not to kill the process when an
-     *                               unknown command line arg is found.
      *
      * @return void
      */
-    public function __construct(array $cliArgs=array(), $dieOnUnknownArg=true)
+    public function __construct(array $cliArgs=array())
     {
-        if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === true) {
-            // Let everything through during testing so that we can
-            // make use of PHPUnit command line arguments as well.
-            $this->dieOnUnknownArg = false;
-        } else {
-            $this->dieOnUnknownArg = $dieOnUnknownArg;
-        }
-
         $checkStdin = false;
         if (empty($cliArgs) === true) {
             $cliArgs = $_SERVER['argv'];
@@ -274,31 +247,13 @@ class Config
             $checkStdin = true;
         }
 
+        // set default report width
+        if (preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1) {
+            $this->reportWidth = (int) $matches[1];
+        }
+
         $this->restoreDefaults();
         $this->setCommandLineValues($cliArgs);
-
-        if (isset($this->overriddenDefaults['standards']) === false
-            && Config::getConfigData('default_standard') === null
-        ) {
-            // They did not supply a standard to use.
-            // Look for a default ruleset in the current directory or higher.
-            $currentDir = getcwd();
-
-            do {
-                $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml';
-                if (is_file($default) === true) {
-                    $this->standards = array($default);
-                } else {
-                    $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml.dist';
-                    if (is_file($default) === true) {
-                        $this->standards = array($default);
-                    }
-                }
-
-                $lastDir    = $currentDir;
-                $currentDir = dirname($currentDir);
-            } while ($currentDir !== '.' && $currentDir !== $lastDir);
-        }
 
         // Check for content on STDIN.
         if ($checkStdin === true) {
@@ -385,7 +340,6 @@ class Config
         $this->files           = array();
         $this->standards       = array('PEAR');
         $this->verbosity       = 0;
-        $this->colors          = true;
         $this->explain         = false;
         $this->local           = false;
         $this->showSources     = false;
@@ -404,58 +358,12 @@ class Config
         $this->errorSeverity   = 5;
         $this->warningSeverity = 5;
         $this->recordErrors    = true;
-        $this->suffix          = '';
         $this->stdin           = false;
         $this->stdinContent    = null;
         $this->stdinPath       = null;
 
-        $standard = self::getConfigData('default_standard');
-        if ($standard !== null) {
-            $this->standards = explode(',', $standard);
-        }
-
-        $tabWidth = self::getConfigData('tab_width');
-        if ($tabWidth !== null) {
-            $this->tabWidth = (int) $tabWidth;
-        }
-
-        $severity = self::getConfigData('severity');
-        if ($severity !== null) {
-            $this->errorSeverity   = (int) $severity;
-            $this->warningSeverity = (int) $severity;
-        }
-
-        $severity = self::getConfigData('error_severity');
-        if ($severity !== null) {
-            $this->errorSeverity = (int) $severity;
-        }
-
-        $severity = self::getConfigData('warning_severity');
-        if ($severity !== null) {
-            $this->warningSeverity = (int) $severity;
-        }
-
-        $showWarnings = self::getConfigData('show_warnings');
-        if ($showWarnings !== null) {
-            $showWarnings = (bool) $showWarnings;
-            if ($showWarnings === false) {
-                $this->warningSeverity = 0;
-            }
-        }
-
-        $showProgress = self::getConfigData('show_progress');
-        if ($showProgress !== null) {
-            $this->showProgress = (bool) $showProgress;
-        }
-
-        if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false) {
-            $cache = self::getConfigData('cache');
-            if ($cache !== null) {
-                $this->cache = (bool) $cache;
-            }
-        }
-
-    }//end restoreDefaults()
+        $this->standards = array('PSR2');
+    }
 
 
     /**
@@ -522,11 +430,7 @@ class Config
             }
             break;
         default:
-            if ($this->dieOnUnknownArg === false) {
-                $this->values[$arg] = $arg;
-            } else {
-                $this->processUnknownArgument('-'.$arg, $pos);
-            }
+            $this->processUnknownArgument('-'.$arg, $pos);
         }//end switch
 
     }//end processShortArgument()
@@ -549,16 +453,6 @@ class Config
         case 'version':
             echo 'Symplify\PHP7_CodeSniffer version '.self::VERSION;
             exit(0);
-        case 'cache':
-            if (defined('Symplify\PHP7_CodeSniffer_IN_TESTS') === false) {
-                $this->cache = true;
-                $this->overriddenDefaults['cache'] = true;
-            }
-            break;
-        case 'no-cache':
-            $this->cache = false;
-            $this->overriddenDefaults['cache'] = true;
-            break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
                 $sniffs = explode(',', substr($arg, 7));
@@ -581,25 +475,6 @@ class Config
                 }
 
                 $this->overriddenDefaults['stdinPath'] = true;
-            } else if (substr($arg, 0, 9) === 'basepath=') {
-                if (isset($this->overriddenDefaults['basepath']) === true) {
-                    break;
-                }
-
-                $this->basepath = Util\Common::realpath(substr($arg, 9));
-
-                // It may not exist and return false instead.
-                if ($this->basepath === false) {
-                    $this->basepath = substr($arg, 9);
-                }
-
-                $this->overriddenDefaults['basepath'] = true;
-
-                if (is_dir($this->basepath) === false) {
-                    echo 'ERROR: The specified basepath "'.$this->basepath.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
-                    $this->printUsage();
-                    exit(2);
-                }
             } else if (substr($arg, 0, 7) === 'filter=') {
                 if (isset($this->overriddenDefaults['filter']) === true) {
                     break;
@@ -635,9 +510,6 @@ class Config
 
                 $this->extensions = $newExtensions;
                 $this->overriddenDefaults['extensions'] = true;
-            } else if (substr($arg, 0, 7) === 'suffix=') {
-                $this->suffix = explode(',', substr($arg, 7));
-                $this->overriddenDefaults['suffix'] = true;
             } else if (substr($arg, 0, 9) === 'severity=') {
                 $this->errorSeverity   = (int) substr($arg, 9);
                 $this->warningSeverity = $this->errorSeverity;
@@ -673,18 +545,7 @@ class Config
                 $this->tabWidth = (int) substr($arg, 10);
                 $this->overriddenDefaults['tabWidth'] = true;
             } else {
-                if ($this->dieOnUnknownArg === false) {
-                    $eqPos = strpos($arg, '=');
-                    if ($eqPos === false) {
-                        $this->values[$arg] = $arg;
-                    } else {
-                        $value = substr($arg, ($eqPos + 1));
-                        $arg   = substr($arg, 0, $eqPos);
-                        $this->values[$arg] = $value;
-                    }
-                } else {
-                    $this->processUnknownArgument('--'.$arg, $pos);
-                }
+                $this->processUnknownArgument('--'.$arg, $pos);
             }//end if
 
             break;
@@ -712,10 +573,6 @@ class Config
 
         // We don't know about any additional switches; just files.
         if ($arg{0} === '-') {
-            if ($this->dieOnUnknownArg === false) {
-                return;
-            }
-
             echo "ERROR: option \"$arg\" not known".PHP_EOL.PHP_EOL;
             $this->printUsage();
             exit(2);
@@ -723,10 +580,6 @@ class Config
 
         $file = Util\Common::realpath($arg);
         if (file_exists($file) === false) {
-            if ($this->dieOnUnknownArg === false) {
-                return;
-            }
-
             echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
             $this->printUsage();
             exit(2);
@@ -764,25 +617,22 @@ class Config
     public function printPHPCSUsage()
     {
         echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]]'.PHP_EOL;
-        echo '    [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
+        echo '    [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
-        echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
-        echo '        -a            Run interactively'.PHP_EOL;
         echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
         echo '        -m            Stop error messages from being recorded'.PHP_EOL;
         echo '                      (saves a lot of memory, but stops many reports from being used)'.PHP_EOL;
-        echo '        -v[v][v]      Print verbose output'.PHP_EOL;
+        echo '        -v[v]         Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
-        echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
@@ -809,15 +659,13 @@ class Config
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>]'.PHP_EOL;
-        echo '    [--basepath=<basepath>] [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
         echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
-        echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
-        echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
@@ -846,6 +694,9 @@ class Config
      */
     public static function getConfigData($key)
     {
+        var_dump($key);
+        die;
+        
         $phpCodeSnifferConfig = self::getAllConfigData();
 
         if ($phpCodeSnifferConfig === null) {
