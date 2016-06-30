@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Settings extensions in a ruleset no longer causes PHP notices during unit testing
     -- Thanks to Klaus Purer for the patch
   - Version control reports now show which errors are fixable if you are showing sources
+  - Added a new sniff to enforce a single space after a NOT operator (request #1051)
+    -- Include in a ruleset using the code Generic.Formatting.SpaceAfterNot
   - Fixed bug #908 : PSR2 standard is not checking that closing brace is on line following the body
   - Fixed bug #945 : Incorrect indent behavior using deep-nested function and arrays
   - Fixed bug #961 : Two anonymous functions passed as function/method arguments cause indentation false positive
@@ -378,6 +380,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="SpaceAfterCastSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
+        <file baseinstalldir="PHP" name="SpaceAfterNotSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP" name="CallTimePassByReferenceSniff.php" role="php">
@@ -636,6 +641,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="SpaceAfterCastUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="SpaceAfterCastUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="SpaceAfterNotUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SpaceAfterNotUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="SpaceAfterNotUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="SpaceAfterNotUnitTest.js.fixed" role="test" />
+        <file baseinstalldir="PHP" name="SpaceAfterNotUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
