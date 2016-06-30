@@ -34,10 +34,8 @@ final class Config
      *                          2: ruleset and file parsing output
      *                          3: sniff execution output
      * bool     showSources     Show sniff source codes in report output.
-     * bool     showProgress    Show basic progress information while running.
      * string[] sniffs          The sniffs that should be used for checking.
      *                          If empty, all sniffs in the supplied standards will be used.
-     * bool     recordErrors    Record the content of error messages as well as error counts.
      *
      * @var array<string, mixed>
      */
@@ -46,15 +44,13 @@ final class Config
                          'standards'       => null,
                          'verbosity'       => null,
                          'showSources'     => null,
-                         'showProgress'    => null,
+
                          'extensions'      => ['php' => 'PHP'],
                          'sniffs'          => null,
                          'reportFile'      => null,
                          'bootstrap'       => null,
                          'reports'         => null,
-                         'basepath'        => null,
                          'reportWidth'     => null,
-                         'recordErrors'    => null,
                          'cache'       => true,
                         );
 
@@ -85,6 +81,16 @@ final class Config
      * @var array<string, string>
      */
     private static $configData = null;
+
+    /**
+     * @var bool
+     */
+    private $recordErrors = true;
+
+    /**
+     * @var bool
+     */
+    public $showProgress = true;
 
     /**
      * Get the value of an inaccessible property.
@@ -240,17 +246,12 @@ final class Config
     }//end setCommandLineValues()
 
 
-    /**
-     * Restore default values for all possible command line arguments.
-     *
-     * @return array
-     */
     public function restoreDefaults()
     {
         $this->files           = array();
         $this->standards       = array('PEAR');
         $this->showSources     = false;
-        $this->showProgress    = false;
+        $this->showProgress    = true;
         $this->extensions      = array('php' => 'PHP');
         $this->sniffs          = array();
         $this->reports         = array('full' => null);
@@ -281,13 +282,6 @@ final class Config
             $this->showSources = true;
             $this->overriddenDefaults['showSources'] = true;
             break;
-        case 'p' :
-            $this->showProgress = true;
-            $this->overriddenDefaults['showProgress'] = true;
-            break;
-        case 'm' :
-            $this->recordErrors = false;
-            $this->overriddenDefaults['recordErrors'] = true;
             break;
         default:
             $this->processUnknownArgument('-'.$arg, $pos);
@@ -401,9 +395,6 @@ final class Config
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    <file> - ...'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
-        echo '        -p            Show progress of the run'.PHP_EOL;
-        echo '        -m            Stop error messages from being recorded'.PHP_EOL;
-        echo '                      (saves a lot of memory, but stops many reports from being used)'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;

@@ -111,7 +111,6 @@ class Runner
         $this->config->explain      = false;
         $this->config->cache        = false;
         $this->config->showSources  = false;
-        $this->config->recordErrors = false;
         $this->config->reports      = array('cbf' => null);
 
         // If a standard tries to set command line arguments itself, some
@@ -399,10 +398,7 @@ class Runner
 
                         $numProcessed++;
 
-                        if ($this->config->showProgress === false) {
-                            continue;
-                        }
-
+                        // show progress
                         if ($childOutput['totalErrors'] > 0) {
                             echo "\033[31m";
 
