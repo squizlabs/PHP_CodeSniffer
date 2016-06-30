@@ -535,7 +535,6 @@ final class Config
         echo '        -p            Show progress of the run'.PHP_EOL;
         echo '        -m            Stop error messages from being recorded'.PHP_EOL;
         echo '                      (saves a lot of memory, but stops many reports from being used)'.PHP_EOL;
-        echo '        -v[v]         Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
