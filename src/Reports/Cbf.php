@@ -39,22 +39,11 @@ class Cbf implements Report
     {
         $errors = $phpcsFile->getFixableCount();
         if ($errors !== 0) {
-            if ($phpcsFile->config->stdin === false) {
-                ob_end_clean();
-                $startTime = microtime(true);
-                echo "\t=> Fixing file: $errors/$errors violations remaining";
-            }
+            ob_end_clean();
+            $startTime = microtime(true);
+            echo "\t=> Fixing file: $errors/$errors violations remaining";
 
             $fixed = $phpcsFile->fixer->fixFile();
-        }
-
-        if ($phpcsFile->config->stdin === true) {
-            // Replacing STDIN, so output current file to STDOUT
-            // even if nothing was fixed. Exit here because we
-            // can't process any more than 1 file in this setup.
-            echo $phpcsFile->fixer->getContents();
-            ob_end_flush();
-            exit(1);
         }
 
         if ($errors === 0) {

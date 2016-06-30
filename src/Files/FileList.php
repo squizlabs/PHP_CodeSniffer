@@ -91,15 +91,6 @@ class FileList implements \Iterator, \Countable
      */
     public function addFile($path, $file=null)
     {
-        // No filtering is done for STDIN.
-        if ($path === 'STDIN'
-            || ($file !== null
-            && get_class($file) === 'Symplify\PHP7_CodeSniffer\Files\DummyFile')
-        ) {
-            $this->files[$path] = $file;
-            return;
-        }
-
         $filterClass = $this->getFilterClass();
 
         $di       = new \RecursiveArrayIterator(array($path));

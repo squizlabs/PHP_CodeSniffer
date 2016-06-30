@@ -53,9 +53,6 @@ final class Config
      *                          Set to "auto" for have this value changed to the width of the terminal.
      * bool     recordErrors    Record the content of error messages as well as error counts.
      * string   basepath        A file system location to strip from the paths of files shown in reports.
-     * bool     stdin           Read content from STDIN instead of supplied files.
-     * string   stdinContent    Content passed directly to PHPCS on STDIN.
-     * string   stdinPath       The path to use for content passed on STDIN.
      *
      * @var array<string, mixed>
      */
@@ -78,9 +75,6 @@ final class Config
                          'basepath'        => null,
                          'reportWidth'     => null,
                          'recordErrors'    => null,
-                         'stdin'           => null,
-                         'stdinContent'    => null,
-                         'stdinPath'       => null,
                          'cache'       => true
                         );
 
@@ -212,13 +206,6 @@ final class Config
      */
     public function __construct(array $cliArgs=array())
     {
-        $checkStdin = false;
-        if (empty($cliArgs) === true) {
-            $cliArgs = $_SERVER['argv'];
-            array_shift($cliArgs);
-            $checkStdin = true;
-        }
-
         // set default report width
         if (preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1) {
             $this->reportWidth = (int) $matches[1];
@@ -226,28 +213,6 @@ final class Config
 
         $this->restoreDefaults();
         $this->setCommandLineValues($cliArgs);
-
-        // Check for content on STDIN.
-        if ($checkStdin === true) {
-            $handle = fopen('php://stdin', 'r');
-            if (stream_set_blocking($handle, false) === true) {
-                $fileContents = '';
-                while (($line = fgets(STDIN)) !== false) {
-                    $fileContents .= $line;
-                    usleep(10);
-                }
-
-                stream_set_blocking($handle, true);
-                fclose($handle);
-                if (trim($fileContents) !== '') {
-                    $this->stdin        = true;
-                    $this->stdinContent = $fileContents;
-                    $this->overriddenDefaults['stdin']        = true;
-                    $this->overriddenDefaults['stdinContent'] = true;
-                }
-            }
-        }
-
     }//end __construct()
 
 
@@ -270,13 +235,6 @@ final class Config
             }
 
             if ($arg{0} === '-') {
-                if ($arg === '-') {
-                    // Asking to read from STDIN.
-                    $this->stdin = true;
-                    $this->overriddenDefaults['stdin'] = true;
-                    continue;
-                }
-
                 if ($arg === '--') {
                     // Empty argument, ignore it.
                     continue;
@@ -321,9 +279,6 @@ final class Config
         $this->filter          = null;
         $this->reports         = array('full' => null);
         $this->recordErrors    = true;
-        $this->stdin           = false;
-        $this->stdinContent    = null;
-        $this->stdinPath       = null;
 
         $this->standards = array('PSR2');
     }
@@ -408,15 +363,6 @@ final class Config
 
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
-            } else if (substr($arg, 0, 11) === 'stdin-path=') {
-                $this->stdinPath = Util\Common::realpath(substr($arg, 11));
-
-                // It may not exist and return false instead, so use whatever they gave us.
-                if ($this->stdinPath === false) {
-                    $this->stdinPath = trim(substr($arg, 11));
-                }
-
-                $this->overriddenDefaults['stdinPath'] = true;
             } else if (substr($arg, 0, 7) === 'filter=') {
                 if (isset($this->overriddenDefaults['filter']) === true) {
                     break;
@@ -473,11 +419,6 @@ final class Config
      */
     public function processUnknownArgument($arg, $pos)
     {
-        // If we are processing STDIN, don't record any files to check.
-        if ($this->stdin === true) {
-            return;
-        }
-
         // We don't know about any additional switches; just files.
         if ($arg{0} === '-') {
             echo "ERROR: option \"$arg\" not known".PHP_EOL.PHP_EOL;
@@ -526,7 +467,6 @@ final class Config
         echo 'Usage: phpcs [-nwlsaepvi]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
-        echo '        -             Check STDIN instead of local files and directories'.PHP_EOL;
         echo '        -s            Show sniff codes in all reports'.PHP_EOL;
         echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
@@ -555,7 +495,6 @@ final class Config
         echo 'Usage: phpcbf [-nwli]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>]'.PHP_EOL;
         echo '    [--ignore=<patterns>] <file> - ...'.PHP_EOL;
-        echo '        -             Fix STDIN instead of local files and directories'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;

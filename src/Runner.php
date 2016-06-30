@@ -78,11 +78,6 @@ class Runner
             exit(0);
         }
 
-        // sure where the file came from or if it will change in the future.
-        if ($this->config->stdin === true) {
-            $this->config->cache = false;
-        }
-
         $numErrors = $this->run();
 
         // Print all the reports for this run.
@@ -190,43 +185,25 @@ class Runner
 
 
     /**
-     * Performs the run.
-     *
      * @return int The number of errors and warnings found.
      */
-    private function run()
+    private function run() : int
     {
         // The class that manages all reporters for the run.
         $this->reporter = new Reporter($this->config);
 
-        if ($this->config->stdin === true) {
-            $fileContents = $this->config->stdinContent;
-            if ($fileContents === null) {
-                $handle = fopen('php://stdin', 'r');
-                stream_set_blocking($handle, true);
-                $fileContents = stream_get_contents($handle);
-                fclose($handle);
-            }
+        if (empty($this->config->files) === true) {
+            echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
+            $this->config->printUsage();
+            exit(0);
+        }
 
-            $todo  = new FileList($this->config, $this->ruleset);
-            $dummy = new DummyFile($fileContents, $this->ruleset, $this->config);
-            $todo->addFile($dummy->path, $dummy);
+        $todo = new FileList($this->config, $this->ruleset);
+        $numFiles = count($todo);
 
-            $numFiles = 1;
-        } else {
-            if (empty($this->config->files) === true) {
-                echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
-                $this->config->printUsage();
-                exit(0);
-            }
-
-            $todo     = new FileList($this->config, $this->ruleset);
-            $numFiles = count($todo);
-
-            if ($this->config->cache === true) {
-                Cache::load($this->ruleset, $this->config);
-            }
-        }//end if
+        if ($this->config->cache === true) {
+            Cache::load($this->ruleset, $this->config);
+        }
 
         $numProcessed = 0;
         $dots         = 0;
@@ -337,8 +314,7 @@ class Runner
      */
     private function processFile($file)
     {
-        if (PHP_CodeSniffer_CBF === true && $this->config->stdin === false) {
-            $startTime = microtime(true);
+        if (PHP_CodeSniffer_CBF === true) {
             echo 'Processing '.basename($file->path).' ';
         }
 

@@ -37,7 +37,6 @@ class DummyFile extends File
         // See if a filename was defined in the content.
         // This is done by including: phpcs_input_file: [file path]
         // as the first line of content.
-        $path = 'STDIN';
         if ($content !== null) {
             if (substr($content, 0, 17) === 'phpcs_input_file:') {
                 $eolPos   = strpos($content, $this->eolChar);
@@ -47,11 +46,6 @@ class DummyFile extends File
 
                 $this->setContent($content);
             }
-        }
-
-        // The CLI arg overrides anything passed in the content.
-        if ($config->stdinPath !== null) {
-            $path = $config->stdinPath;
         }
 
         return parent::__construct($path, $ruleset, $config);

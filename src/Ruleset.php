@@ -280,7 +280,6 @@ class Ruleset
             $newSniffs      = array_diff($expandedSniffs, $includedSniffs);
             $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
 
-            $parts = explode('.', $rule['ref']);
             if (isset($rule->exclude) === true) {
                 foreach ($rule->exclude as $exclude) {
                     if ($this->shouldProcessElement($exclude) === false) {
