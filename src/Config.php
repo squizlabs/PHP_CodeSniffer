@@ -1,13 +1,8 @@
 <?php
-/**
- * Stores the configuration used to run PHPCS and PHPCBF.
- *
- * Parses the command line to determine user supplied values
- * and provides functions to access data stored in config files.
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+
+/*
+ * This file is part of Symplify
+ * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
 namespace Symplify\PHP7_CodeSniffer;
@@ -16,7 +11,6 @@ use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
 final class Config
 {
-
     /**
      * @var string
      */
@@ -316,9 +310,6 @@ final class Config
         case 'help':
             $this->printUsage();
             exit(0);
-        case 'version':
-            echo 'Symplify\PHP7_CodeSniffer version '.self::VERSION;
-            exit(0);
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
                 $sniffs = explode(',', substr($arg, 7));
@@ -415,7 +406,6 @@ final class Config
         echo '                      (saves a lot of memory, but stops many reports from being used)'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
-        echo '        --version     Print version information'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
@@ -436,7 +426,6 @@ final class Config
         echo '    <file> - ...'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
-        echo '        --version     Print version information'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;

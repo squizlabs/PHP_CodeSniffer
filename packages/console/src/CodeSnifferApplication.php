@@ -8,8 +8,15 @@
 namespace Symplify\PHP7_CodeSniffer\Console;
 
 use Symfony\Component\Console\Application;
+use Symplify\PHP7_CodeSniffer\Config;
 
 final class CodeSnifferApplication extends Application
 {
-
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct()
+    {
+        parent::__construct('PHP 7 Code Sniffer', Config::VERSION);
+    }
 }
