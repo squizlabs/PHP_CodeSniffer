@@ -72,9 +72,12 @@ abstract class VersionControl implements Report
                     if ($showSources === true) {
                         $source = $error['source'];
                         if (isset($sourceCache[$author][$source]) === false) {
-                            $sourceCache[$author][$source] = 1;
+                            $sourceCache[$author][$source] = array(
+                                                              'count'   => 1,
+                                                              'fixable' => $error['fixable'],
+                                                             );
                         } else {
-                            $sourceCache[$author][$source]++;
+                            $sourceCache[$author][$source]['count']++;
                         }
                     }
                 }
@@ -116,8 +119,10 @@ abstract class VersionControl implements Report
         }
 
         foreach ($sourceCache as $author => $sources) {
-            foreach ($sources as $source => $errors) {
-                echo "SOURCE>>$author>>$source>>$errors".PHP_EOL;
+            foreach ($sources as $source => $sourceData) {
+                $count   = $sourceData['count'];
+                $fixable = (int) $sourceData['fixable'];
+                echo "SOURCE>>$author>>$source>>$count>>$fixable".PHP_EOL;
             }
         }
 
@@ -197,9 +202,12 @@ abstract class VersionControl implements Report
                 }
 
                 if (isset($sourceCache[$parts[1]][$parts[2]]) === false) {
-                    $sourceCache[$parts[1]][$parts[2]] = $parts[3];
+                    $sourceCache[$parts[1]][$parts[2]] = array(
+                                                          'count'   => $parts[3],
+                                                          'fixable' => (bool) $parts[4],
+                                                         );
                 } else {
-                    $sourceCache[$parts[1]][$parts[2]] += $parts[3];
+                    $sourceCache[$parts[1]][$parts[2]]['count'] += $parts[3];
                 }
                 break;
             default:
@@ -212,7 +220,7 @@ abstract class VersionControl implements Report
         foreach ($authorCache as $author => $count) {
             $maxLength = max($maxLength, strlen($author));
             if ($showSources === true && isset($sourceCache[$author]) === true) {
-                foreach ($sourceCache[$author] as $source => $count) {
+                foreach ($sourceCache[$author] as $source => $sourceData) {
                     if ($source === 'count') {
                         continue;
                     }
@@ -237,6 +245,16 @@ abstract class VersionControl implements Report
         }
 
         echo "\033[0m";
+
+        if ($showSources === true) {
+            $maxSniffWidth = ($width - 15);
+
+            if ($totalFixable > 0) {
+                $maxSniffWidth -= 4;
+            }
+        }
+
+        $fixableSources = 0;
 
         foreach ($authorCache as $author => $count) {
             if ($praiseCache[$author]['good'] === 0) {
@@ -264,15 +282,43 @@ abstract class VersionControl implements Report
                 asort($errors);
                 $errors = array_reverse($errors);
 
-                foreach ($errors as $source => $count) {
+                foreach ($errors as $source => $sourceData) {
                     if ($source === 'count') {
                         continue;
                     }
 
+                    $count = $sourceData['count'];
+
+                    $srcLength = strlen($source);
+                    if ($srcLength > $maxSniffWidth) {
+                        $source = substr($source, 0, $maxSniffWidth);
+                    }
+
                     $line = str_repeat(' ', (5 - strlen($count))).$count;
-                    echo '         '.$source.str_repeat(' ', ($width - 14 - strlen($source))).$line.PHP_EOL;
-                }
-            }
+
+                    echo '         ';
+                    if ($totalFixable > 0) {
+                        echo '[';
+                        if ($sourceData['fixable'] === true) {
+                            echo 'x';
+                            $fixableSources++;
+                        } else {
+                            echo ' ';
+                        }
+
+                        echo '] ';
+                    }
+
+                    echo $source;
+                    if ($totalFixable > 0) {
+                        echo str_repeat(' ', ($width - 18 - strlen($source)));
+                    } else {
+                        echo str_repeat(' ', ($width - 14 - strlen($source)));
+                    }
+
+                    echo $line.PHP_EOL;
+                }//end foreach
+            }//end if
         }//end foreach
 
         echo str_repeat('-', $width).PHP_EOL;
@@ -289,8 +335,13 @@ abstract class VersionControl implements Report
         echo "\033[0m";
 
         if ($totalFixable > 0) {
-            echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
-            echo "\033[1mPHPCBF CAN FIX $totalFixable OF THESE SNIFF VIOLATIONS AUTOMATICALLY\033[0m";
+            if ($showSources === true) {
+                echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
+                echo "\033[1mPHPCBF CAN FIX THE $fixableSources MARKED SOURCES AUTOMATICALLY ($totalFixable VIOLATIONS IN TOTAL)\033[0m";
+            } else {
+                echo PHP_EOL.str_repeat('-', $width).PHP_EOL;
+                echo "\033[1mPHPCBF CAN FIX $totalFixable OF THESE SNIFF VIOLATIONS AUTOMATICALLY\033[0m";
+            }
         }
 
         echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
