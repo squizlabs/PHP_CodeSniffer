@@ -26,9 +26,9 @@ class SpaceAfterNotUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                2  => 2,
-                4  => 2,
-                5  => 1,
+                2 => 2,
+                4 => 2,
+                5 => 1,
                );
 
     }//end getErrorList()
