@@ -10,6 +10,7 @@ services:
     - Symplify\PHP7_CodeSniffer\Runner
 
     # tokenizer
+    - Symplify\PHP7_CodeSniffer\Util\Tokens
     - Symfony\Component\EventDispatcher\EventDispatcher
     - Symplify\PHP7_CodeSniffer\Tokenizer\EventSubscriber\SetupTokensOnConsoleCommandRunEventSubscriber
 

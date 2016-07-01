@@ -35,13 +35,6 @@ final class Config
     ];
 
     /**
-     * Unknown arguments
-     *
-     * @var array<mixed>
-     */
-    private $values = array();
-
-    /**
      * @var bool
      */
     private $recordErrors = true;
@@ -51,24 +44,10 @@ final class Config
      */
     public $showProgress = true;
 
-//    /**
-//     * Get the value of an inaccessible property.
-//     *
-//     * @param string $name The name of the property.
-//     *
-//     * @return mixed
-//     * @throws RuntimeException If the setting name is invalid.
-//     */
-//    public function __get($name)
-//    {
-//        if (array_key_exists($name, $this->settings) === false) {
-//            throw new RuntimeException("ERROR: unable to get value of property \"$name\"");
-//        }
-//
-//        return $this->settings[$name];
-//
-//    }//end __get()
-
+    /**
+     * @var array
+     */
+    private $standards = ['PSR2'];
 
 //    /**
 //     * Set the value of an inaccessible property.
@@ -81,10 +60,6 @@ final class Config
 //     */
 //    public function __set($name, $value)
 //    {
-//        if (array_key_exists($name, $this->settings) === false) {
-//            throw new RuntimeException("Can't __set() $name; setting doesn't exist");
-//        }
-//
 //        switch ($name) {
 //        case 'standards' :
 //            $cleaned = array();
@@ -112,35 +87,6 @@ final class Config
 //        $this->settings[$name] = $value;
 //
 //    }//end __set()
-
-
-//    /**
-//     * Check if the value of an inaccessible property is set.
-//     *
-//     * @param string $name The name of the property.
-//     *
-//     * @return bool
-//     */
-//    public function __isset($name)
-//    {
-//        return isset($this->settings[$name]);
-//
-//    }//end __isset()
-
-//
-//    /**
-//     * Unset the value of an inaccessible property.
-//     *
-//     * @param string $name The name of the property.
-//     *
-//     * @return void
-//     */
-//    public function __unset($name)
-//    {
-//        $this->settings[$name] = null;
-//
-//    }//end __unset()
-
 
     /**
      * Creates a Config object and populates it with command line values.
@@ -226,11 +172,6 @@ final class Config
     }//end processUnknownArgument()
 
 
-    /**
-     * Prints out the usage information for this script.
-     *
-     * @return void
-     */
     public function printUsage()
     {
         if (PHP_CodeSniffer_CBF === true) {
@@ -238,15 +179,8 @@ final class Config
         } else {
             $this->printPHPCSUsage();
         }
+    }
 
-    }//end printUsage()
-
-
-    /**
-     * Prints out the usage information for PHPCS.
-     *
-     * @return void
-     */
     public function printPHPCSUsage()
     {
         echo 'Usage: phpcs '.PHP_EOL;
@@ -257,15 +191,8 @@ final class Config
         echo '        <sniffs>      A comma separated list of sniff codes to limit the check to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
+    }
 
-    }//end printPHPCSUsage()
-
-
-    /**
-     * Prints out the usage information for PHPCBF.
-     *
-     * @return void
-     */
     public function printPHPCBFUsage()
     {
         echo 'Usage: phpcbf '.PHP_EOL;
@@ -275,33 +202,11 @@ final class Config
         echo '        <sniffs>      A comma separated list of sniff codes to limit the fixes to'.PHP_EOL;
         echo '                      (all sniffs must be part of the specified standard)'.PHP_EOL;
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
+    }
 
-    }//end printPHPCBFUsage()
-
-
-    /**
-     * Get a single config value.
-     *
-     * @param string $key The name of the config value.
-     *
-     * @return string|null
-     * @see    setConfigData()
-     * @see    getAllConfigData()
-     */
-    public static function getConfigData($key)
+    public function getStandards() : array
     {
-        $phpCodeSnifferConfig = self::getAllConfigData();
-
-        if ($phpCodeSnifferConfig === null) {
-            return null;
-        }
-
-        if (isset($phpCodeSnifferConfig[$key]) === false) {
-            return null;
-        }
-
-        return $phpCodeSnifferConfig[$key];
-
-    }//end getConfigData()
+        return $this->standards;
+    }
 
 }//end class

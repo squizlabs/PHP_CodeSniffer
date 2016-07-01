@@ -1,10 +1,8 @@
 <?php
-/**
- * Stores weightings and groupings of tokens.
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+
+/*
+ * This file is part of Symplify
+ * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
 namespace Symplify\PHP7_CodeSniffer\Util;
@@ -70,75 +68,6 @@ define('T_EMBEDDED_PHP', 'PHPCS_T_EMBEDDED_PHP');
 define('T_RETURN_TYPE', 'PHPCS_T_RETURN_TYPE');
 define('T_OPEN_USE_GROUP', 'PHPCS_T_OPEN_USE_GROUP');
 define('T_CLOSE_USE_GROUP', 'PHPCS_T_CLOSE_USE_GROUP');
-
-// Some PHP 5.3 tokens, replicated for lower versions.
-if (defined('T_NAMESPACE') === false) {
-    define('T_NAMESPACE', 'PHPCS_T_NAMESPACE');
-}
-
-if (defined('T_NS_C') === false) {
-    define('T_NS_C', 'PHPCS_T_NS_C');
-}
-
-if (defined('T_NS_SEPARATOR') === false) {
-    define('T_NS_SEPARATOR', 'PHPCS_T_NS_SEPARATOR');
-}
-
-if (defined('T_GOTO') === false) {
-    define('T_GOTO', 'PHPCS_T_GOTO');
-}
-
-if (defined('T_DIR') === false) {
-    define('T_DIR', 'PHPCS_T_DIR');
-}
-
-// Some PHP 5.4 tokens, replicated for lower versions.
-if (defined('T_TRAIT') === false) {
-    define('T_TRAIT', 'PHPCS_T_TRAIT');
-}
-
-if (defined('T_TRAIT_C') === false) {
-    define('T_TRAIT_C', 'PHPCS_T_TRAIT_C');
-}
-
-if (defined('T_INSTEADOF') === false) {
-    define('T_INSTEADOF', 'PHPCS_T_INSTEADOF');
-}
-
-if (defined('T_CALLABLE') === false) {
-    define('T_CALLABLE', 'PHPCS_T_CALLABLE');
-}
-
-// Some PHP 5.5 tokens, replicated for lower versions.
-if (defined('T_FINALLY') === false) {
-    define('T_FINALLY', 'PHPCS_T_FINALLY');
-}
-
-if (defined('T_YIELD') === false) {
-    define('T_YIELD', 'PHPCS_T_YIELD');
-}
-
-// Some PHP 5.6 tokens, replicated for lower versions.
-if (defined('T_ELLIPSIS') === false) {
-    define('T_ELLIPSIS', 'PHPCS_T_ELLIPSIS');
-}
-
-if (defined('T_POW') === false) {
-    define('T_POW', 'PHPCS_T_POW');
-}
-
-if (defined('T_POW_EQUAL') === false) {
-    define('T_POW_EQUAL', 'PHPCS_T_POW_EQUAL');
-}
-
-// Some PHP 7 tokens, replicated for lower versions.
-if (defined('T_SPACESHIP') === false) {
-    define('T_SPACESHIP', 'PHPCS_T_SPACESHIP');
-}
-
-if (defined('T_COALESCE') === false) {
-    define('T_COALESCE', 'PHPCS_T_COALESCE');
-}
 
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
@@ -553,10 +482,8 @@ final class Tokens
      *
      * @param array<int, int> $tokens The token types to get the highest weighted
      *                                type for.
-     *
-     * @return int The highest weighted token.
      */
-    public static function getHighestWeightedToken(array $tokens)
+    public static function getHighestWeightedToken(array $tokens) : int
     {
         $highest     = -1;
         $highestType = false;
@@ -577,8 +504,7 @@ final class Tokens
         }
 
         return $highestType;
-
-    }//end getHighestWeightedToken()
+    }
 
 
 }//end class
