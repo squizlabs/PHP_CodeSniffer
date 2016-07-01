@@ -1,6 +1,7 @@
 {
     "name": "symplify/php7-codesniffer/dependency-injection",
     "require": {
+        "php": "^7.0",
         "nette/bootstrap": "^2.4",
         "nette/di": "^2.4",
         "nette/utils": "^2.4",

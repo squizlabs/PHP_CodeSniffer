@@ -19,3 +19,6 @@ services:
 
     # standards, rulesets and sniffs
     - Symplify\PHP7_CodeSniffer\SniffFinder\StandardFinder
+
+    # configuration
+    - Symplify\PHP7_CodeSniffer\Configuration\ConfigurationResolver

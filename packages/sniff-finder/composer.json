@@ -1,6 +1,7 @@
 {
     "name": "symplify/php7-codesniffer/sniff-finder",
     "require": {
+        "php": "^7.0",
         "symfony/finder": "^3.0"
     },
     "autoload": {

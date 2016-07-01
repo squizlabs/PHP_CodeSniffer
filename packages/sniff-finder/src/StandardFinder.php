@@ -7,7 +7,7 @@
 
 namespace Symplify\PHP7_CodeSniffer\SniffFinder;
 
-use Composer\Autoload\ClassLoader;
+use Exception;
 use Symfony\Component\Finder\Finder;
 use Symplify\PHP7_CodeSniffer\SniffFinder\Composer\VendorDirProvider;
 
@@ -19,16 +19,25 @@ final class StandardFinder
     private $rulesets = [];
 
     /**
-     * @param string $standardName
-     * @return string
+     * @param string[] $names
+     * @return string[]
      */
-    public function getRulesetPathForStandardName($standardName)
+    public function getRulesetPathsForStandardNames(array $names) : array
+    {
+        $rulesetPaths = [];
+        foreach ($names as $name) {
+            $rulesetPaths[$name] = $this->getRulesetPathForStandardName($name);
+        }
+        return $rulesetPaths;
+    }
+
+    public function getRulesetPathForStandardName(string $standardName) : string
     {
         if (isset($this->getStandards()[$standardName])) {
             return $this->getStandards()[$standardName];
         }
 
-        throw new \Exception(
+        throw new Exception(
             sprintf(
                 'Ruleset for standard "%s" was not found. Found standards are: %s.',
                 $standardName,
@@ -59,7 +68,7 @@ final class StandardFinder
     /**
      * @return string[]
      */
-    private function findRulesetFiles()
+    private function findRulesetFiles() : array
     {
         $installedStandards = (new Finder())->files()
             ->in(VendorDirProvider::provide())

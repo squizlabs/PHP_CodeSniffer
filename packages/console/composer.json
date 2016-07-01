@@ -1,6 +1,7 @@
 {
     "name": "symplify/php7-codesniffer/console",
     "require": {
+        "php": "^7.0",
         "symfony/console": "^3.0"
     },
     "autoload": {
