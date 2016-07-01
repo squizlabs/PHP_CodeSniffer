@@ -63,17 +63,16 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
             return;
         }
 
-        // Find the position where the current function scope ends.
-        $currScopeEnd = 0;
-        if (isset($tokens[$currScope]['scope_closer']) === true) {
-            $currScopeEnd = $tokens[$currScope]['scope_closer'];
-        }
+        $currScopeEnd = $tokens[$currScope]['scope_closer'];
 
         // Find all the exception type token within the current scope.
         $throwTokens = array();
         $currPos     = $stackPtr;
-        if ($currScopeEnd !== 0) {
-            while ($currPos < $currScopeEnd && $currPos !== false) {
+        $foundThrows = false;
+        while ($currPos < $currScopeEnd && $currPos !== false) {
+            if ($phpcsFile->hasCondition($currPos, T_CLOSURE) === false) {
+                $foundThrows = true;
+
                 /*
                     If we can't find a NEW, we are probably throwing
                     a variable, so we ignore it, but they still need to
@@ -115,10 +114,14 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
                         }
                     }//end if
                 }//end if
+            }//end if
 
-                $currPos = $phpcsFile->findNext(T_THROW, ($currPos + 1), $currScopeEnd);
-            }//end while
-        }//end if
+            $currPos = $phpcsFile->findNext(T_THROW, ($currPos + 1), $currScopeEnd);
+        }//end while
+
+        if ($foundThrows === false) {
+            return;
+        }
 
         // Only need one @throws tag for each type of exception thrown.
         $throwTokens = array_unique($throwTokens);

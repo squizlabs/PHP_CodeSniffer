@@ -275,4 +275,14 @@ class Test
     protected function foo()
     {
     }
+
+    /**
+     * @return Closure
+     */
+    public function getStuff()
+    {
+        return function () {
+            throw new RuntimeException("bam!");
+        };
+    }
 }
