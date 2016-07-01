@@ -349,6 +349,13 @@ class PHP_CodeSniffer_CLI
             $defaults['showProgress'] = (bool) $showProgress;
         }
 
+        $quiet = PHP_CodeSniffer::getConfigData('quiet');
+        if ($quiet === null) {
+            $defaults['quiet'] = false;
+        } else {
+            $defaults['quiet'] = (bool) $quiet;
+        }
+
         $colors = PHP_CodeSniffer::getConfigData('colors');
         if ($colors === null) {
             $defaults['colors'] = false;
@@ -478,6 +485,11 @@ class PHP_CodeSniffer_CLI
             $this->printInstalledStandards();
             exit(0);
         case 'v' :
+            if ($this->values['quiet'] === true) {
+                // Ignore when quiet mode is enabled.
+                break;
+            }
+
             if (isset($this->values['verbosity']) === false) {
                 $this->values['verbosity'] = 1;
             } else {
@@ -497,7 +509,18 @@ class PHP_CodeSniffer_CLI
             $this->values['explain'] = true;
             break;
         case 'p' :
+            if ($this->values['quiet'] === true) {
+                // Ignore when quiet mode is enabled.
+                break;
+            }
+
             $this->values['showProgress'] = true;
+            break;
+        case 'q' :
+            // Quiet mode disables a few other settings as well.
+            $this->values['quiet']        = true;
+            $this->values['showProgress'] = false;
+            $this->values['verbosity']    = 0;
             break;
         case 'd' :
             $ini = explode('=', $this->_cliArgs[($pos + 1)]);
@@ -1242,6 +1265,7 @@ class PHP_CodeSniffer_CLI
         echo '        -a            Run interactively'.PHP_EOL;
         echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
+        echo '        -q            Quiet mode; disables progress and verbose output'.PHP_EOL;
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
