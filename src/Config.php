@@ -62,13 +62,6 @@ final class Config
     private $cliArgs = array();
 
     /**
-     * Command line values that the user has supplied directly.
-     *
-     * @var array<string, TRUE>
-     */
-    private $overriddenDefaults = array();
-
-    /**
      * Unknown arguments
      *
      * @var array<mixed>
@@ -274,7 +267,6 @@ final class Config
         switch ($arg) {
         case 's' :
             $this->showSources = true;
-            $this->overriddenDefaults['showSources'] = true;
             break;
             break;
         default:
@@ -307,14 +299,11 @@ final class Config
                 }
 
                 $this->sniffs = $sniffs;
-                $this->overriddenDefaults['sniffs'] = true;
             } else if (substr($arg, 0, 9) === 'standard=') {
                 $standards = trim(substr($arg, 9));
                 if ($standards !== '') {
                     $this->standards = explode(',', $standards);
                 }
-
-                $this->overriddenDefaults['standards'] = true;
             } else {
                 $this->processUnknownArgument('--'.$arg, $pos);
             }//end if
@@ -353,7 +342,6 @@ final class Config
             $files       = $this->files;
             $files[]     = $file;
             $this->files = $files;
-            $this->overriddenDefaults['files'] = true;
         }
 
     }//end processUnknownArgument()

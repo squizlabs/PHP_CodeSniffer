@@ -21,21 +21,17 @@ final class Runner
     /**
      * @var Config
      */
-    public $config = null;
+    public $config;
 
     /**
-     * The ruleset used for the run.
-     *
-     * @var \Symplify\PHP7_CodeSniffer\Ruleset
+     * @var Ruleset
      */
-    public $ruleset = null;
+    public $ruleset;
 
     /**
-     * The reporter used for generating reports after the run.
-     *
-     * @var \Symplify\PHP7_CodeSniffer\Reporter
+     * @var Reporter
      */
-    public $reporter = null;
+    public $reporter;
 
     public function __construct(Config $config)
     {
@@ -43,20 +39,11 @@ final class Runner
     }
 
     /**
-     * Run the PHPCS script.
-     *
      * @return array
      */
     public function runPHPCS()
     {
-        // Creating the Config object populates it with all required settings
-        // based on the CLI arguments provided to the script and any config
-        // values the user has set.
-        $addHocConfig = new Config();
-
-        dump($this->config, $addHocConfig);
-        dump($this->config == $addHocConfig);
-
+        dump($this->config);
 
         die;
 
