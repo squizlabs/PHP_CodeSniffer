@@ -13,7 +13,14 @@ use Symfony\Component\Console\Input\InputOption;
 
 abstract class AbstractCommand extends Command
 {
-    protected function addCommonArgumentsAndOptions()
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->addCommonArgumentsAndOptions();
+    }
+
+    private function addCommonArgumentsAndOptions()
     {
         $this->addArgument('source', InputArgument::REQUIRED, 'One or more files or directories to process');
         $this->addOption('standard', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'The name(s) of the coding standard to use', ['psr2']);

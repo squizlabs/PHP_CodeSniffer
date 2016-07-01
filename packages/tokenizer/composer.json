@@ -1,11 +1,11 @@
 {
-    "name": "symplify/php7-codesniffer/sniff-finder",
+    "name": "symplify/php7-codesniffer/tokenizer",
     "require": {
-        "symfony/finder": "^3.0"
+        "symfony/event-dispatcher": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "Symplify\\PHP7_CodeSniffer\\SniffFinder\\": "src"
+            "Symplify\\PHP7_CodeSniffer\\Tokenizer\\": "src"
         }
     }
 }

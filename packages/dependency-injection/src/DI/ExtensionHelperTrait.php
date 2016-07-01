@@ -7,54 +7,24 @@
 
 namespace Symplify\PHP7_CodeSniffer\DependencyInjection\DI;
 
-use Nette\DI\CompilerExtension;
+use Nette\DI\ContainerBuilder;
 use Nette\DI\ServiceDefinition;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class Php7CodeSnifferExtension extends CompilerExtension
+/**
+ * @method ContainerBuilder getContainerBuilder()
+ */
+trait ExtensionHelperTrait
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function loadConfiguration()
+    private function addServicesToCollector(string $collectorClass, string $collectedClass, string $adderMethodName)
     {
-        $this->loadServicesFromConfig();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function beforeCompile()
-    {
-        $this->loadConsoleCommandsToConsoleApplication();
-        $this->loadEventSubscribersToEventDispatcher();
-    }
-
-    private function loadServicesFromConfig()
-    {
+        $collectorDefinition = $this->getDefinitionByType($collectorClass);
         $containerBuilder = $this->getContainerBuilder();
-        $config = $this->loadFromFile(__DIR__ . '/../config/services.neon');
-        $this->compiler->parseServices($containerBuilder, $config);
-    }
 
-    private function loadConsoleCommandsToConsoleApplication()
-    {
-        $consoleApplication = $this->getDefinitionByType(Application::class);
-        $containerBuilder = $this->getContainerBuilder();
-        foreach ($containerBuilder->findByType(Command::class) as $definition) {
-            $consoleApplication->addSetup('add', ['@'.$definition->getClass()]);
-        }
-    }
-
-    private function loadEventSubscribersToEventDispatcher()
-    {
-        $eventDispatcher = $this->getDefinitionByType(EventDispatcherInterface::class);
-        $containerBuilder = $this->getContainerBuilder();
-        foreach ($containerBuilder->findByType(EventSubscriberInterface::class) as $definition) {
-            $eventDispatcher->addSetup('addSubscriber', ['@'.$definition->getClass()]);
+        foreach ($containerBuilder->findByType($collectedClass) as $definition) {
+            $collectorDefinition->addSetup(
+                $adderMethodName,
+                ['@'.$definition->getClass()]
+            );
         }
     }
 
@@ -62,6 +32,7 @@ final class Php7CodeSnifferExtension extends CompilerExtension
     {
         $containerBuilder = $this->getContainerBuilder();
         $definitionName = $containerBuilder->getByType($type);
+
         return $containerBuilder->getDefinition($definitionName);
     }
 }

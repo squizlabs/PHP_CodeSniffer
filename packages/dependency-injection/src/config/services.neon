@@ -6,7 +6,15 @@ services:
     - Symplify\PHP7_CodeSniffer\Console\Command\FixCommand
     - Symplify\PHP7_CodeSniffer\Console\Command\ListCommand
 
+    # runner
+    - Symplify\PHP7_CodeSniffer\Runner
+
+    # tokenizer
+    - Symfony\Component\EventDispatcher\EventDispatcher
+    - Symplify\PHP7_CodeSniffer\Tokenizer\EventSubscriber\SetupTokensOnConsoleCommandRunEventSubscriber
+
     - Symplify\PHP7_CodeSniffer\Config
     - Symplify\PHP7_CodeSniffer\Ruleset
 
+    # standards, rulesets and sniffs
     - Symplify\PHP7_CodeSniffer\SniffFinder\StandardFinder

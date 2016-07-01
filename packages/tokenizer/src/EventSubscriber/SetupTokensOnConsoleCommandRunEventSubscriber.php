@@ -5,8 +5,10 @@
  * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
+namespace Symplify\PHP7_CodeSniffer\Tokenizer\EventSubscriber;
 
-class SetupTokensOnConsoleCommandRunEventSubscriber
+final class SetupTokensOnConsoleCommandRunEventSubscriber
 {
-
+    
+    
 }

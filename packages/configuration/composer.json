@@ -1,11 +1,11 @@
 {
-    "name": "symplify/php7-codesniffer/console",
+    "name": "symplify/php7-codesniffer/configuration",
     "require": {
-        "symfony/console": "^3.0"
+        "symfony/options-resolver": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "Symplify\\PHP7_CodeSniffer\\Console\\": "src"
+            "Symplify\\PHP7_CodeSniffer\\Configuration\\": "src"
         }
     }
 }

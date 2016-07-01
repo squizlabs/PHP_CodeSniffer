@@ -1,20 +1,15 @@
 <?php
-/**
- * Timing functions for the run.
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+
+/*
+ * This file is part of Symplify
+ * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
 namespace Symplify\PHP7_CodeSniffer\Util;
 
-class Timing
+final class Timing
 {
-
     /**
-     * The start time of the run.
-     *
      * @var float
      */
     private static $startTime;
@@ -22,33 +17,17 @@ class Timing
     /**
      * Used to make sure we only print the run time once per run.
      *
-     * @var boolean
+     * @var bool
      */
     private static $printed = false;
 
 
-    /**
-     * Start recording time for the run.
-     *
-     * @return void
-     */
     public static function startTiming()
     {
-
         self::$startTime = microtime(true);
+    }
 
-    }//end startTiming()
-
-
-    /**
-     * Print information about the run.
-     *
-     * @param boolean $force If TRUE, prints the output even if it has
-     *                       already been printed during the run.
-     *
-     * @return void
-     */
-    public static function printRunTime($force=false)
+    public static function printRunTime(bool $force = false)
     {
         if ($force === false && self::$printed === true) {
             // A double call.
@@ -74,8 +53,5 @@ class Timing
         echo "Time: $time; Memory: $mem".PHP_EOL.PHP_EOL;
 
         self::$printed = true;
-
-    }//end printRunTime()
-
-
-}//end class
+    }
+}

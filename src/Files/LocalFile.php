@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A local file represents a chunk of text has a file system location.
  *

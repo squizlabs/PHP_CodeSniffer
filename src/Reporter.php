@@ -215,12 +215,6 @@ final class Reporter
      */
     public function cacheFileReport(File $phpcsFile)
     {
-        if (isset($this->config->reports) === false) {
-            // This happens during unit testing, or any time someone just wants
-            // the error data and not the printed report.
-            return;
-        }
-
         $reportData  = $this->prepareFileReport($phpcsFile);
         $errorsShown = false;
 
