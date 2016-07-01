@@ -22,9 +22,13 @@ final class Cbf implements Report
     /**
      * {@inheritdoc}
      */
-    public function generateFileReport(array $report, File $phpcsFile, bool $showSources=false, int $width=80) : bool
+    public function generateFileReport(array $report, File $phpcsFile, int $width = 80) : bool
     {
         $errors = $phpcsFile->getFixableCount();
+        if ($errors === 0) {
+            return false;
+        }
+
         if ($errors !== 0) {
             ob_end_clean();
             $startTime = microtime(true);
@@ -33,23 +37,10 @@ final class Cbf implements Report
             $fixed = $phpcsFile->fixer->fixFile();
         }
 
-        if ($errors === 0) {
-            return false;
-        }
-
         if ($fixed === false) {
             echo 'ERROR';
         } else {
             echo 'DONE';
-        }
-
-        $timeTaken = ((microtime(true) - $startTime) * 1000);
-        if ($timeTaken < 1000) {
-            $timeTaken = round($timeTaken);
-            echo " in {$timeTaken}ms".PHP_EOL;
-        } else {
-            $timeTaken = round(($timeTaken / 1000), 2);
-            echo " in $timeTaken secs".PHP_EOL;
         }
 
         if ($fixed === true) {
@@ -70,25 +61,10 @@ final class Cbf implements Report
         }
 
         return $fixed;
-
-    }//end generateFileReport()
-
+    }
 
     /**
-     * Prints a summary of fixed files.
-     *
-     * @param string $cachedData    Any partial report data that was returned from
-     *                              generateFileReport during the run.
-     * @param int    $totalFiles    Total number of files processed during the run.
-     * @param int    $totalErrors   Total number of errors found during the run.
-     * @param int    $totalWarnings Total number of warnings found during the run.
-     * @param int    $totalFixable  Total number of problems that can be fixed.
-     * @param bool   $showSources   Show sources?
-     * @param int    $width         Maximum allowed line width.
-     * @param bool   $interactive   Are we running in interactive mode?
-     * @param bool   $toScreen      Is the report being printed to screen?
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function generate(
         $cachedData,
@@ -96,10 +72,8 @@ final class Cbf implements Report
         $totalErrors,
         $totalWarnings,
         $totalFixable,
-        $showSources=false,
-        $width=80,
-        $interactive=false,
-        $toScreen=true
+        $width = 80,
+        $toScreen = true
     ) {
         $fixed = 0;
         $fails = 0;
@@ -132,8 +106,5 @@ final class Cbf implements Report
         }
 
         echo PHP_EOL;
-
-    }//end generate()
-
-
-}//end class
+    }
+}

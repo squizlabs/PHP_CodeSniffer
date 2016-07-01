@@ -12,6 +12,7 @@ namespace Symplify\PHP7_CodeSniffer\Files;
 use Symplify\PHP7_CodeSniffer\Ruleset;
 use Symplify\PHP7_CodeSniffer\Config;
 use Symplify\PHP7_CodeSniffer\Fixer;
+use Symplify\PHP7_CodeSniffer\Tokenizers\PHP;
 use Symplify\PHP7_CodeSniffer\Util;
 use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 use Symplify\PHP7_CodeSniffer\Exceptions\TokenizerException;
@@ -207,7 +208,6 @@ class File
 
         $this->configCache['cache']           = $this->config->cache;
         $this->configCache['sniffs']          = $this->config->sniffs;
-        $this->configCache['recordErrors']    = $this->config->recordErrors;
         $this->configCache['ignorePatterns']  = $this->ruleset->getIgnorePatterns();
 
     }//end __construct()
@@ -421,8 +421,7 @@ class File
         }
 
         try {
-            $tokenizerClass  = 'Symplify\PHP7_CodeSniffer\Tokenizers\\'.$this->tokenizerType;
-            $this->tokenizer = new $tokenizerClass($this->content, $this->config, $this->eolChar);
+            $this->tokenizer = new PHP($this->content, $this->config, $this->eolChar);
             $this->tokens    = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
@@ -656,11 +655,6 @@ class File
         }
 
         $includeAll = true;
-        if ($this->configCache['cache'] === false
-            || $this->configCache['recordErrors'] === false
-        ) {
-            $includeAll = false;
-        }
 
         // Work out which sniff generated the message.
         $parts = explode('.', $code);
@@ -759,12 +753,6 @@ class File
         $messageCount++;
         if ($fixable === true) {
             $this->fixableCount++;
-        }
-
-        if ($this->configCache['recordErrors'] === false
-            && $includeAll === false
-        ) {
-            return true;
         }
 
         // Work out the error message.

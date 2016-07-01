@@ -1,12 +1,8 @@
 <?php
-/**
- * Stores the rules used to check and fix files.
- *
- * A ruleset object directly maps to a ruleset XML file.
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+
+/*
+ * This file is part of Symplify
+ * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
 namespace Symplify\PHP7_CodeSniffer;
@@ -14,9 +10,8 @@ namespace Symplify\PHP7_CodeSniffer;
 use Symplify\PHP7_CodeSniffer\Util;
 use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
-class Ruleset
+final class Ruleset
 {
-
     /**
      * The name of the coding standard being used.
      *
@@ -38,17 +33,6 @@ class Ruleset
      * @var string[]
      */
     public $paths = '';
-
-    /**
-     * A list of regular expressions used to ignore specific sniffs for files and folders.
-     *
-     * Is also used to set global exclude patterns.
-     * The key is the regular expression and the value is the type
-     * of ignore pattern (absolute or relative).
-     *
-     * @var array<string, string>
-     */
-    public $ignorePatterns = array();
 
     /**
      * A list of regular expressions used to include specific sniffs for files and folders.
@@ -106,35 +90,22 @@ class Ruleset
      *
      * @var string[]
      */
-    protected $rulesetDirs = array();
+    protected $rulesetDirs = [];
 
     /**
-     * The config data for the run.
-     *
-     * @var \Symplify\PHP7_CodeSniffer\Config
+     * @var Config
      */
-    private $config = null;
+    private $config;
 
-
-    /**
-     * Initialise the ruleset that the run will use.
-     *
-     * @param \Symplify\PHP7_CodeSniffer\Config $config The config data for the run.
-     *
-     * @return void
-     */
     public function __construct(Config $config)
     {
         // Ignore sniff restrictions if caching is on.
-        $restrictions = array();
-        if ($config->cache === false) {
-            $restrictions = $config->sniffs;
-        }
+        $restrictions = [];
 
         $this->config = $config;
 
         $sniffs = array();
-        foreach ($config->standards as $standard) {
+        foreach ($config->getStandards() as $standard) {
             $installed = Util\Standards::getInstalledStandardPath($standard);
             if ($installed === null) {
                 $standard = Util\Common::realpath($standard);
@@ -146,6 +117,9 @@ class Ruleset
             } else {
                 $standard = $installed;
             }
+
+            dump($standard);
+            die;
 
             $ruleset = simplexml_load_file($standard);
             if ($ruleset !== false) {
@@ -160,6 +134,9 @@ class Ruleset
 
             $sniffs = array_merge($sniffs, $this->processRuleset($standard));
         }//end foreach
+
+        dump($sniffs);
+        die;
 
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {
@@ -233,44 +210,6 @@ class Ruleset
             $this->processRule($rule, $newSniffs, $depth);
         }//end foreach
 
-        // Process custom command line arguments.
-        $cliArgs = array();
-        foreach ($ruleset->{'arg'} as $arg) {
-            if ($this->shouldProcessElement($arg) === false) {
-                continue;
-            }
-
-            if (isset($arg['name']) === true) {
-                $argString = '--'.(string) $arg['name'];
-                if (isset($arg['value']) === true) {
-                    $argString .= '='.(string) $arg['value'];
-                }
-            } else {
-                $argString = '-'.(string) $arg['value'];
-            }
-
-            $cliArgs[] = $argString;
-
-        }//end foreach
-
-        if (empty($this->config->files) === true) {
-            // Process hard-coded file paths.
-            foreach ($ruleset->{'file'} as $file) {
-                $file      = (string) $file;
-                $cliArgs[] = $file;
-            }
-        }
-
-        if (empty($cliArgs) === false) {
-            // Change the directory so all relative paths are worked
-            // out based on the location of the ruleset instead of
-            // the location of the user.
-            $currentDir = getcwd();
-            chdir($rulesetDir);
-            $this->config->setCommandLineValues($cliArgs);
-            chdir($currentDir);
-        }
-
         // Process custom ignore pattern rules.
         foreach ($ruleset->{'exclude-pattern'} as $pattern) {
             if ($this->shouldProcessElement($pattern) === false) {
@@ -280,8 +219,6 @@ class Ruleset
             if (isset($pattern['type']) === false) {
                 $pattern['type'] = 'absolute';
             }
-
-            $this->ignorePatterns[(string) $pattern] = (string) $pattern['type'];
         }
 
         $includedSniffs = array_unique(array_merge($ownSniffs, $includedSniffs));
@@ -582,40 +519,6 @@ class Ruleset
                         $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
                     }//end if
                 }//end foreach
-            }//end if
-
-            // Ignore patterns.
-            foreach ($rule->{'exclude-pattern'} as $pattern) {
-                if ($this->shouldProcessElement($pattern) === false) {
-                    continue;
-                }
-
-                if (isset($this->ignorePatterns[$code]) === false) {
-                    $this->ignorePatterns[$code] = array();
-                }
-
-                if (isset($pattern['type']) === false) {
-                    $pattern['type'] = 'absolute';
-                }
-
-                $this->ignorePatterns[$code][(string) $pattern] = (string) $pattern['type'];
-            }//end foreach
-
-            // Include patterns.
-            foreach ($rule->{'include-pattern'} as $pattern) {
-                if ($this->shouldProcessElement($pattern) === false) {
-                    continue;
-                }
-
-                if (isset($this->includePatterns[$code]) === false) {
-                    $this->includePatterns[$code] = array();
-                }
-
-                if (isset($pattern['type']) === false) {
-                    $pattern['type'] = 'absolute';
-                }
-
-                $this->includePatterns[$code][(string) $pattern] = (string) $pattern['type'];
             }//end foreach
         }//end foreach
 
@@ -733,7 +636,7 @@ class Ruleset
             }
 
             $tokenizers = array();
-            $vars       = get_class_vars($sniffClass);
+            $vars = get_class_vars($sniffClass);
             if (isset($vars['supportedTokenizers']) === true) {
                 foreach ($vars['supportedTokenizers'] as $tokenizer) {
                     $tokenizers[$tokenizer] = $tokenizer;
@@ -748,28 +651,6 @@ class Ruleset
                 throw new RuntimeException($msg);
             }
 
-            $ignorePatterns = array();
-            $patterns       = $this->getIgnorePatterns($sniffCode);
-            foreach ($patterns as $pattern => $type) {
-                $replacements = array(
-                                 '\\,' => ',',
-                                 '*'   => '.*',
-                                );
-
-                $ignorePatterns[] = strtr($pattern, $replacements);
-            }
-
-            $includePatterns = array();
-            $patterns        = $this->getIncludePatterns($sniffCode);
-            foreach ($patterns as $pattern => $type) {
-                $replacements = array(
-                                 '\\,' => ',',
-                                 '*'   => '.*',
-                                );
-
-                $includePatterns[] = strtr($pattern, $replacements);
-            }
-
             foreach ($tokens as $token) {
                 if (isset($this->tokenListeners[$token]) === false) {
                     $this->tokenListeners[$token] = array();
@@ -780,8 +661,6 @@ class Ruleset
                                                                   'class'      => $sniffClass,
                                                                   'source'     => $sniffCode,
                                                                   'tokenizers' => $tokenizers,
-                                                                  'ignore'     => $ignorePatterns,
-                                                                  'include'    => $includePatterns,
                                                                  );
                 }
             }
@@ -821,58 +700,6 @@ class Ruleset
         $this->sniffs[$sniffClass]->$name = $value;
 
     }//end setSniffProperty()
-
-
-    /**
-     * Gets the array of ignore patterns.
-     *
-     * Optionally takes a listener to get ignore patterns specified
-     * for that sniff only.
-     *
-     * @param string $listener The listener to get patterns for. If NULL, all
-     *                         patterns are returned.
-     *
-     * @return array
-     */
-    public function getIgnorePatterns($listener=null)
-    {
-        if ($listener === null) {
-            return $this->ignorePatterns;
-        }
-
-        if (isset($this->ignorePatterns[$listener]) === true) {
-            return $this->ignorePatterns[$listener];
-        }
-
-        return array();
-
-    }//end getIgnorePatterns()
-
-
-    /**
-     * Gets the array of include patterns.
-     *
-     * Optionally takes a listener to get include patterns specified
-     * for that sniff only.
-     *
-     * @param string $listener The listener to get patterns for. If NULL, all
-     *                         patterns are returned.
-     *
-     * @return array
-     */
-    public function getIncludePatterns($listener=null)
-    {
-        if ($listener === null) {
-            return $this->includePatterns;
-        }
-
-        if (isset($this->includePatterns[$listener]) === true) {
-            return $this->includePatterns[$listener];
-        }
-
-        return array();
-
-    }//end getIncludePatterns()
 
 
 }//end class

@@ -7,38 +7,10 @@
 
 namespace Symplify\PHP7_CodeSniffer;
 
+use Exception;
+
 final class Config
 {
-    /**
-     * @var string
-     */
-    const VERSION = '3.0.0';
-
-    /**
-     * This array is not meant to be accessed directly. Instead, use the settings
-     * as if they are class member vars so the __get() and __set() magic methods
-     * can be used to validate the values. For example, to set the verbosity level to
-     * level 2, use $this->verbosity = 2; insteas of accessing this property directly.
-     *
-     * @var array<string, mixed>
-     */
-    private $settings = [
-        'files'           => null,
-        'standards'       => ['PSR2'],
-        'showSources'     => true,
-        'recordErrors'     => true,
-        'extensions'      => ['php' => 'PHP'],
-        'sniffs'          => null,
-        'reports'       => ['full' => null],
-        'reportWidth'     => null,
-        'cache'       => true,
-    ];
-
-    /**
-     * @var bool
-     */
-    private $recordErrors = true;
-
     /**
      * @var bool
      */
@@ -49,57 +21,26 @@ final class Config
      */
     private $standards = ['PSR2'];
 
-//    /**
-//     * Set the value of an inaccessible property.
-//     *
-//     * @param string $name  The name of the property.
-//     * @param mixed  $value The value of the property.
-//     *
-//     * @return void
-//     * @throws RuntimeException If the setting name is invalid.
-//     */
-//    public function __set($name, $value)
-//    {
-//        switch ($name) {
-//        case 'standards' :
-//            $cleaned = array();
-//
-//            // Check if the standard name is valid, or if the case is invalid.
-//            $installedStandards = Util\Standards::getInstalledStandards();
-//            foreach ($value as $standard) {
-//                foreach ($installedStandards as $validStandard) {
-//                    if (strtolower($standard) === strtolower($validStandard)) {
-//                        $standard = $validStandard;
-//                        break;
-//                    }
-//                }
-//
-//                $cleaned[] = $standard;
-//            }
-//
-//            $value = $cleaned;
-//            break;
-//        default :
-//            // No validation required.
-//            break;
-//        }//end switch
-//
-//        $this->settings[$name] = $value;
-//
-//    }//end __set()
-
     /**
-     * Creates a Config object and populates it with command line values.
-     *
-     * @param array $cliArgs         An array of values gathered from CLI args.
+     * @var int
      */
-    public function __construct(array $cliArgs = [])
+    private $reportWidth;
+
+    public function setStandards(array $standards)
     {
-        // set default report width
-        if (preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1) {
-            $this->reportWidth = (int) $matches[1];
-        }
+        $this->ensureStandardsAreValid($standards);
+        $this->standards = $standards;
     }
+
+    public function getStandards() : array
+    {
+        foreach ($this->standards as $standard) {
+            // todo: include rulesets!
+            dump(123);
+        }
+        return $this->standards;
+    }
+
 
     /**
      * Processes a long (--example) command line argument.
@@ -204,9 +145,20 @@ final class Config
         echo '        <standard>    The name or path of the coding standard to use'.PHP_EOL;
     }
 
-    public function getStandards() : array
+    /**
+     * @throws Exception
+     */
+    private function ensureStandardsAreValid(array $standards)
     {
-        return $this->standards;
+        foreach ($standards as $standard) {
+            if (Util\Standards::isInstalledStandard($standard) === false) {
+                throw new Exception(
+                    sprintf(
+                        'The "%s" coding standard is not installed.',
+                        $standard
+                    )
+                );
+            }
+        }
     }
-
-}//end class
+}

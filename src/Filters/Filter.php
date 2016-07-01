@@ -48,11 +48,6 @@ class Filter extends \RecursiveFilterIterator
 
 
     /**
-     * Check whether the current element of the iterator is acceptable.
-     *
-     * Files are checked for allowed extensions and ignore patterns.
-     * Directories are checked for ignore patterns only.
-     *
      * @return bool
      */
     public function accept()
@@ -100,12 +95,11 @@ class Filter extends \RecursiveFilterIterator
             array_shift($fileParts);
         }
 
-        $matches = array_intersect_key($extensions, $this->config->extensions);
+        $matches = array_intersect_key($extensions, ['php']);
         if (empty($matches) === true) {
             return false;
         }
 
         return true;
-
-    }//end shouldProcessFile()
-}//end class
+    }
+}

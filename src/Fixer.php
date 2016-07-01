@@ -1,47 +1,30 @@
 <?php
-/**
- * A helper class for fixing errors.
- *
- * Provides helper functions that act upon a token array and modify the file
- * content.
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+
+/*
+ * This file is part of Symplify
+ * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
 namespace Symplify\PHP7_CodeSniffer;
 
 use Symplify\PHP7_CodeSniffer\Files\File;
-use Symplify\PHP7_CodeSniffer\Util\Common;
 
-class Fixer
+final class Fixer
 {
-
     /**
-     * Is the fixer enabled and fixing a file?
-     *
-     * Sniffs should check this value to ensure they are not
-     * doing extra processing to prepare for a fix when fixing is
-     * not required.
-     *
-     * @var boolean
+     * @var bool
      */
     public $enabled = false;
 
     /**
-     * The number of times we have looped over a file.
-     *
-     * @var integer
+     * @var int
      */
     public $loops = 0;
 
     /**
-     * The file being fixed.
-     *
-     * @var \Symplify\PHP7_CodeSniffer\Files\File
+     * @var File
      */
-    private $currentFile = null;
+    private $currentFile;
 
     /**
      * The list of tokens that make up the file contents.
@@ -52,7 +35,7 @@ class Fixer
      *
      * @var array<int, string>
      */
-    private $_tokens = array();
+    private $tokens = array();
 
     /**
      * A list of tokens that have already been fixed.
@@ -72,7 +55,7 @@ class Fixer
      *
      * @var array<int, string>
      */
-    private $_oldTokenValues = array();
+    private $oldTokenValues = array();
 
     /**
      * A list of tokens that have been fixed during a changeset.
@@ -82,62 +65,48 @@ class Fixer
      *
      * @var array
      */
-    private $_changeset = array();
+    private $changeset = [];
 
     /**
      * Is there an open changeset.
      *
      * @var boolean
      */
-    private $_inChangeset = false;
+    private $inChangeset = false;
 
     /**
      * Is the current fixing loop in conflict?
      *
      * @var boolean
      */
-    private $_inConflict = false;
+    private $inConflict = false;
 
     /**
      * The number of fixes that have been performed.
      *
      * @var integer
      */
-    private $_numFixes = 0;
+    private $numFixes = 0;
 
-
-    /**
-     * Starts fixing a new file.
-     *
-     * @param \Symplify\PHP7_CodeSniffer\Files\File $phpcsFile The file being fixed.
-     *
-     * @return void
-     */
-    public function startFile(File $phpcsFile)
+    public function startFile(File $file)
     {
-        $this->currentFile  = $phpcsFile;
-        $this->_numFixes    = 0;
+        $this->currentFile  = $file;
+        $this->numFixes    = 0;
         $this->_fixedTokens = array();
 
-        $tokens        = $phpcsFile->getTokens();
-        $this->_tokens = array();
+        $tokens        = $file->getTokens();
+        $this->tokens = array();
         foreach ($tokens as $index => $token) {
             if (isset($token['orig_content']) === true) {
-                $this->_tokens[$index] = $token['orig_content'];
+                $this->tokens[$index] = $token['orig_content'];
             } else {
-                $this->_tokens[$index] = $token['content'];
+                $this->tokens[$index] = $token['content'];
             }
         }
-
     }//end startFile()
 
 
-    /**
-     * Attempt to fix the file by processing it until no fixes are made.
-     *
-     * @return boolean
-     */
-    public function fixFile()
+    public function fixFile() : bool
     {
         $fixable = $this->currentFile->getFixableCount();
         if ($fixable === 0) {
@@ -154,7 +123,7 @@ class Fixer
             // Only needed once file content has changed.
             $contents = $this->getContents();
 
-            $this->_inConflict = false;
+            $this->inConflict = false;
             $this->currentFile->ruleset->populateTokenListeners();
             $this->currentFile->setContent($contents);
             $this->currentFile->process();
@@ -162,9 +131,9 @@ class Fixer
 
             $this->loops++;
 
-            if (PHP_CodeSniffer_CBF === true && $stdin === false) {
+            if (PHP_CodeSniffer_CBF === true) {
                 echo "\r".str_repeat(' ', 80)."\r";
-                echo "\t=> Fixing file: $this->_numFixes/$fixable violations remaining [made $this->loops pass";
+                echo "\t=> Fixing file: $this->numFixes/$fixable violations remaining [made $this->loops pass";
                 if ($this->loops > 1) {
                     echo 'es';
                 }
@@ -172,22 +141,20 @@ class Fixer
                 echo ']... ';
             }
 
-            if ($this->_numFixes === 0 && $this->_inConflict === false) {
+            if ($this->numFixes === 0 && $this->inConflict === false) {
                 // Nothing left to do.
                 break;
             }
-        }//end while
+        }
 
         $this->enabled = false;
 
-        if ($this->_numFixes > 0) {
+        if ($this->numFixes > 0) {
             return false;
         }
 
         return true;
-
-    }//end fixFile()
-
+    }
 
     /**
      * Generates a text diff of the original file and the new content.
@@ -195,10 +162,8 @@ class Fixer
      * @param string  $filePath Optional file path to diff the file against.
      *                          If not specified, the original version of the
      *                          file will be used.
-     *
-     * @return string
      */
-    public function generateDiff($filePath=null)
+    public function generateDiff(string $filePath = null) : string
     {
         if ($filePath === null) {
             $filePath = $this->currentFile->getFilename();
@@ -214,7 +179,7 @@ class Fixer
 
         // We must use something like shell_exec() because whitespace at the end
         // of lines is critical to diff files.
-        $cmd  = "diff -u -L\"$filename\" -LSymplify\PHP7_CodeSniffer \"$filename\" \"$tempName\"";
+        $cmd  = "diff -u -L\"$filename\" -LSymplify\\PHP7_CodeSniffer \"$filename\" \"$tempName\"";
         $diff = shell_exec($cmd);
 
         fclose($fixedFile);
@@ -247,94 +212,59 @@ class Fixer
         $diff = implode(PHP_EOL, $diff);
 
         return $diff;
-
-    }//end generateDiff()
-
+    }
 
     /**
      * Get a count of fixes that have been performed on the file.
-     *
-     * This value is reset every time a new file is started, or an existing
-     * file is restarted.
-     *
-     * @return int
      */
-    public function getFixCount()
+    public function getFixCount() : int
     {
-        return $this->_numFixes;
-
-    }//end getFixCount()
-
+        return $this->numFixes;
+    }
 
     /**
      * Get the current content of the file, as a string.
-     *
-     * @return string
      */
-    public function getContents()
+    public function getContents() : string
     {
-        $contents = implode($this->_tokens);
+        $contents = implode($this->tokens);
         return $contents;
+    }
 
-    }//end getContents()
-
-
-    /**
-     * Get the current fixed content of a token.
-     *
-     * This function takes changesets into account so should be used
-     * instead of directly accessing the token array.
-     *
-     * @param int $stackPtr The position of the token in the token stack.
-     *
-     * @return string
-     */
-    public function getTokenContent($stackPtr)
+    public function getTokenContent(int $stackPtr) : string
     {
-        if ($this->_inChangeset === true
-            && isset($this->_changeset[$stackPtr]) === true
+        if ($this->inChangeset === true
+            && isset($this->changeset[$stackPtr]) === true
         ) {
-            return $this->_changeset[$stackPtr];
+            return $this->changeset[$stackPtr];
         } else {
-            return $this->_tokens[$stackPtr];
+            return $this->tokens[$stackPtr];
         }
 
     }//end getTokenContent()
 
 
-    /**
-     * Start recording actions for a changeset.
-     *
-     * @return void
-     */
     public function beginChangeset()
     {
-        if ($this->_inConflict === true) {
+        if ($this->inConflict === true) {
             return false;
         }
 
-        $this->_changeset   = array();
-        $this->_inChangeset = true;
+        $this->changeset   = array();
+        $this->inChangeset = true;
+    }
 
-    }//end beginChangeset()
-
-
-    /**
-     * Stop recording actions for a changeset, and apply logged changes.
-     *
-     * @return boolean
-     */
-    public function endChangeset()
+    public function endChangeset() : bool
     {
-        if ($this->_inConflict === true) {
+        if ($this->inConflict === true) {
             return false;
         }
 
-        $this->_inChangeset = false;
+        $this->inChangeset = false;
 
         $success = true;
         $applied = array();
-        foreach ($this->_changeset as $stackPtr => $content) {
+        foreach ($this->changeset as $stackPtr => $content) {
             $success = $this->replaceToken($stackPtr, $content);
             if ($success === false) {
                 break;
@@ -350,10 +280,8 @@ class Fixer
             }
         }
 
-        $this->_changeset = array();
-
-    }//end endChangeset()
-
+        $this->changeset = array();
+    }
 
     /**
      * Stop recording actions for a changeset, and discard logged changes.
@@ -362,11 +290,11 @@ class Fixer
      */
     public function rollbackChangeset()
     {
-        $this->_inChangeset = false;
-        $this->_inConflict  = false;
+        $this->inChangeset = false;
+        $this->inConflict  = false;
 
-        if (empty($this->_changeset) === false) {
-            $this->_changeset = array();
+        if (empty($this->changeset) === false) {
+            $this->changeset = array();
         }//end if
 
     }//end rollbackChangeset()
@@ -375,58 +303,55 @@ class Fixer
     /**
      * Replace the entire contents of a token.
      *
-     * @param int    $stackPtr The position of the token in the token stack.
-     * @param string $content  The new content of the token.
-     *
      * @return bool If the change was accepted.
      */
-    public function replaceToken($stackPtr, $content)
+    public function replaceToken(int $stackPtr, string $content) : bool
     {
-        if ($this->_inConflict === true) {
+        if ($this->inConflict === true) {
             return false;
         }
 
-        if ($this->_inChangeset === false
+        if ($this->inChangeset === false
             && isset($this->_fixedTokens[$stackPtr]) === true
         ) {
             $indent = "\t";
-            if (empty($this->_changeset) === false) {
+            if (empty($this->changeset) === false) {
                 $indent .= "\t";
             }
 
             return false;
         }
 
-        if ($this->_inChangeset === true) {
-            $this->_changeset[$stackPtr] = $content;
+        if ($this->inChangeset === true) {
+            $this->changeset[$stackPtr] = $content;
             return true;
         }
 
-        if (isset($this->_oldTokenValues[$stackPtr]) === false) {
-            $this->_oldTokenValues[$stackPtr] = array(
+        if (isset($this->oldTokenValues[$stackPtr]) === false) {
+            $this->oldTokenValues[$stackPtr] = array(
                                                  'curr' => $content,
-                                                 'prev' => $this->_tokens[$stackPtr],
+                                                 'prev' => $this->tokens[$stackPtr],
                                                  'loop' => $this->loops,
                                                 );
         } else {
-            if ($this->_oldTokenValues[$stackPtr]['prev'] === $content
-                && $this->_oldTokenValues[$stackPtr]['loop'] === ($this->loops - 1)
+            if ($this->oldTokenValues[$stackPtr]['prev'] === $content
+                && $this->oldTokenValues[$stackPtr]['loop'] === ($this->loops - 1)
             ) {
-                if ($this->_oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
-                    $this->_inConflict = true;
+                if ($this->oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
+                    $this->inConflict = true;
                 }
 
                 return false;
             }//end if
 
-            $this->_oldTokenValues[$stackPtr]['prev'] = $this->_oldTokenValues[$stackPtr]['curr'];
-            $this->_oldTokenValues[$stackPtr]['curr'] = $content;
-            $this->_oldTokenValues[$stackPtr]['loop'] = $this->loops;
+            $this->oldTokenValues[$stackPtr]['prev'] = $this->oldTokenValues[$stackPtr]['curr'];
+            $this->oldTokenValues[$stackPtr]['curr'] = $content;
+            $this->oldTokenValues[$stackPtr]['loop'] = $this->loops;
         }//end if
 
-        $this->_fixedTokens[$stackPtr] = $this->_tokens[$stackPtr];
-        $this->_tokens[$stackPtr]      = $content;
-        $this->_numFixes++;
+        $this->_fixedTokens[$stackPtr] = $this->tokens[$stackPtr];
+        $this->tokens[$stackPtr]      = $content;
+        $this->numFixes++;
 
         return true;
 
@@ -434,21 +359,17 @@ class Fixer
 
 
     /**
-     * Reverts the previous fix made to a token.
-     *
-     * @param int $stackPtr The position of the token in the token stack.
-     *
      * @return bool If a change was reverted.
      */
-    public function revertToken($stackPtr)
+    public function revertToken(int $stackPtr) : bool
     {
         if (isset($this->_fixedTokens[$stackPtr]) === false) {
             return false;
         }
 
-        $this->_tokens[$stackPtr] = $this->_fixedTokens[$stackPtr];
+        $this->tokens[$stackPtr] = $this->_fixedTokens[$stackPtr];
         unset($this->_fixedTokens[$stackPtr]);
-        $this->_numFixes--;
+        $this->numFixes--;
 
         return true;
 
@@ -538,8 +459,5 @@ class Fixer
     {
         $current = $this->getTokenContent($stackPtr);
         return $this->replaceToken($stackPtr, $content.$current);
-
-    }//end addContentBefore()
-
-
-}//end class
+    }
+}

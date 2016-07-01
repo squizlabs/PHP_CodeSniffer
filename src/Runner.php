@@ -1,14 +1,10 @@
 <?php
-/**
- * Responsible for running PHPCS and PHPCBF.
- *
- * After creating an object of this class, you probably just want to
- * call runPHPCS() or runPHPCBF().
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+
+/*
+ * This file is part of Symplify
+ * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
+
 
 namespace Symplify\PHP7_CodeSniffer;
 
@@ -16,7 +12,6 @@ use Exception;
 use Symplify\PHP7_CodeSniffer\Files\File;
 use Symplify\PHP7_CodeSniffer\Files\FileList;
 use Symplify\PHP7_CodeSniffer\Util\Cache;
-use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
 final class Runner
 {
@@ -35,9 +30,10 @@ final class Runner
      */
     public $reporter;
 
-    public function __construct(Config $config)
+    public function __construct(Config $config, Ruleset $ruleset)
     {
         $this->config = $config;
+        $this->ruleset = $ruleset;
         $this->ensureLineEndingsAreDetected();
     }
 
@@ -46,8 +42,7 @@ final class Runner
      */
     public function runPHPCS()
     {
-        // Init the run and load the rulesets to set additional config vars.
-        $this->init();
+        dump($this->ruleset);
 
         die;
 
@@ -61,8 +56,8 @@ final class Runner
         // in something like an XML report. If we are printing to screen,
         // the report types would have already worked out who should
         // print the timer info.
-        if (($toScreen === false
-            || (($this->reporter->totalErrors + $this->reporter->totalWarnings) === 0 && $this->config->showProgress === true))
+        if ($toScreen === false
+            || (($this->reporter->totalErrors + $this->reporter->totalWarnings) === 0)
         ) {
             Util\Timing::printRunTime();
         }
@@ -72,7 +67,6 @@ final class Runner
         } else {
             exit(1);
         }
-
     }
 
 
@@ -87,15 +81,11 @@ final class Runner
         // Creating the Config object populates it with all required settings
         // based on the CLI arguments provided to the script and any config
         // values the user has set.
-        $this->config = new Config();
 
         // Init the run and load the rulesets to set additional config vars.
         $this->init();
 
         // Override some of the command line settings that might break the fixes.
-        $this->config->showProgress = false;
-        $this->config->explain      = false;
-        $this->config->cache        = false;
         $this->config->reports      = array('cbf' => null);
 
         $numErrors = $this->run();
@@ -111,33 +101,12 @@ final class Runner
     }//end runPHPCBF()
 
 
-    /**
-     * Init the rulesets and other high-level settings.
-     *
-     * @return void
-     */
-    private function init()
-    {
-
-
-        // Check that the standards are valid.
-        foreach ($this->config->getStandards() as $standard) {
-            if (Util\Standards::isInstalledStandard($standard) === false) {
-                // They didn't select a valid coding standard, so help them
-                // out by letting them know which standards are installed.
-                echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
-                Util\Standards::printInstalledStandards();
-                exit(2);
-            }
-        }
-
-        // The ruleset contains all the information about how the files
-        // should be checked and/or fixed.
-        die;
-
-        $this->ruleset = new Ruleset($this->config);
-    }//end init()
-
+//    private function init()
+//    {
+//        // The ruleset contains all the information about how the files
+//        // should be checked and/or fixed.
+//        $this->ruleset = new Ruleset($this->config);
+//    }
 
     /**
      * @return int The number of errors and warnings found.
@@ -146,13 +115,6 @@ final class Runner
     {
         // The class that manages all reporters for the run.
         $this->reporter = new Reporter($this->config);
-
-        // todo: resolve in command running
-        if (empty($this->config->files) === true) {
-            echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
-            $this->config->printUsage();
-            exit(0);
-        }
 
         $todo = new FileList($this->config, $this->ruleset);
         $numFiles = count($todo);
@@ -215,10 +177,6 @@ final class Runner
      */
     private function processFile(File $file)
     {
-        if (PHP_CodeSniffer_CBF === true) {
-            echo 'Processing '.basename($file->path).' ';
-        }
-
         try {
             $file->process();
         } catch (Exception $e) {

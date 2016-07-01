@@ -86,17 +86,11 @@ class LocalFile extends File
             // We can't filter metrics, so just load all of them.
             $this->metrics = $cache['metrics'];
 
-            if ($this->configCache['recordErrors'] === true) {
-                // Replay the cached errors and warnings to filter out the ones
-                // we don't need for this specific run.
-                $this->configCache['cache'] = false;
-                $this->replayErrors($cache['errors'], $cache['warnings']);
-                $this->configCache['cache'] = true;
-            } else {
-                $this->errorCount   = $cache['errorCount'];
-                $this->warningCount = $cache['warningCount'];
-                $this->fixableCount = $cache['fixableCount'];
-            }
+            // Replay the cached errors and warnings to filter out the ones
+            // we don't need for this specific run.
+            $this->configCache['cache'] = false;
+            $this->replayErrors($cache['errors'], $cache['warnings']);
+            $this->configCache['cache'] = true;
 
             $this->numTokens = $cache['numTokens'];
             $this->fromCache = true;
@@ -120,11 +114,9 @@ class LocalFile extends File
 
         // During caching, we don't filter out errors in any way, so
         // we need to do that manually now by replaying them.
-        if ($this->configCache['recordErrors'] === true) {
-            $this->configCache['cache'] = false;
-            $this->replayErrors($this->errors, $this->warnings);
-            $this->configCache['cache'] = true;
-        }
+        $this->configCache['cache'] = false;
+        $this->replayErrors($this->errors, $this->warnings);
+        $this->configCache['cache'] = true;
 
     }//end process()
 
