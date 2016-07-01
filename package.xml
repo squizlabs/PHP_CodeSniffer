@@ -29,6 +29,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Caching between runs (--cache, --no-cache and "cache" config var) (request #530)
     -- Use --cache=/path/to/cacheFile to use a specific file
   - Check files in parallel (--parallel=1 for off, --parallel=100 etc) (request #421)
+  - Default encoding changed from iso-8859-1 to utf-8 (request #760)
+    -- encoding config option still works, but no longer have to set it to get utf-8 strings
+    -- if you are already setting encoding to utf-8 in a ruleset or on CLI, you can remove it
+    -- still need to have the iconv extension installed for utf-8 strings to be processed correctly
   - Added a new "code" report type to show a code snippet for each error (request #419)
     -- The line containing the error is printed, with 2 lines above and below
     -- The location of the errors is underlined in the code

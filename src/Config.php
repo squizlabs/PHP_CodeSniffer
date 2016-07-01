@@ -1092,7 +1092,7 @@ class Config
         echo '        <cacheFile>   Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
-        echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
+        echo '        <encoding>    The encoding of the files being checked (default is utf-8)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to check'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;
@@ -1139,7 +1139,7 @@ class Config
         echo '        --version     Print version information'.PHP_EOL;
         echo '        <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
-        echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;
+        echo '        <encoding>    The encoding of the files being fixed (default is utf-8)'.PHP_EOL;
         echo '        <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
         echo '                      (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                      The type of the file can be specified using: ext/type'.PHP_EOL;

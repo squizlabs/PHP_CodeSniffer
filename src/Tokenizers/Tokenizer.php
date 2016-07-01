@@ -155,7 +155,7 @@ abstract class Tokenizer
         $inTests    = defined('PHP_CODESNIFFER_IN_TESTS');
 
         $checkEncoding = false;
-        if ($this->config->encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
+        if (function_exists('iconv_strlen') === true) {
             $checkEncoding = true;
         }
 
@@ -266,7 +266,7 @@ abstract class Tokenizer
     public function replaceTabsInToken(&$token, $prefix=' ', $padding=' ')
     {
         $checkEncoding = false;
-        if ($this->config->encoding !== 'iso-8859-1' && function_exists('iconv_strlen') === true) {
+        if (function_exists('iconv_strlen') === true) {
             $checkEncoding = true;
         }
 
