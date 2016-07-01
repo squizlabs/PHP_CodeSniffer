@@ -7,18 +7,18 @@
 
 namespace Symplify\PHP7_CodeSniffer\Reporter\Report;
 
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 use Symplify\PHP7_CodeSniffer\Reports\ReportInterface;
 use Symplify\PHP7_CodeSniffer\SniffFinder\Composer\VendorDirProvider;
 
 final class ReportFactory
 {
     /**
-     * @var Config
+     * @var Configuration
      */
     private $config;
 
-    public function __construct(Config $config)
+    public function __construct(Configuration $config)
     {
         $this->config = $config;
     }

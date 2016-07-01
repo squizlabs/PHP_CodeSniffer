@@ -13,7 +13,7 @@ use RecursiveIteratorIterator;
 use Symplify\PHP7_CodeSniffer\Filters\Filter;
 use Symplify\PHP7_CodeSniffer\Util;
 use Symplify\PHP7_CodeSniffer\Ruleset;
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 
 final class FileList implements \Iterator, \Countable
 {
@@ -35,7 +35,7 @@ final class FileList implements \Iterator, \Countable
     /**
      * The config data for the run.
      *
-     * @var \Symplify\PHP7_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Configuration
      */
     public $config = null;
 
@@ -57,12 +57,12 @@ final class FileList implements \Iterator, \Countable
     /**
      * Constructs a file list and loads in an array of file paths to process.
      *
-     * @param \Symplify\PHP7_CodeSniffer\Config  $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Configuration  $config  The config data for the run.
      * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
      *
      * @return void
      */
-    public function __construct(Config $config, Ruleset $ruleset)
+    public function __construct(Configuration $config, Ruleset $ruleset)
     {
         $this->ruleset = $ruleset;
         $this->config  = $config;

@@ -9,6 +9,7 @@ namespace Symplify\PHP7_CodeSniffer\Console\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symplify\PHP7_CodeSniffer\Configuration;
 use Symplify\PHP7_CodeSniffer\Runner;
 
 final class CheckCommand extends AbstractCommand
@@ -18,9 +19,15 @@ final class CheckCommand extends AbstractCommand
      */
     private $runner;
 
-    public function __construct(Runner $runner)
+    /**
+     * @var Configuration
+     */
+    private $configuration;
+
+    public function __construct(Runner $runner, Configuration $configuration)
     {
         $this->runner = $runner;
+        $this->configuration = $configuration;
 
         parent::__construct();
     }
@@ -36,6 +43,8 @@ final class CheckCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->configuration->resolveFromArray($input->getArguments());
+        
         $source = $input->getArgument('source');
 
         $this->runner->runPHPCS();

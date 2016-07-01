@@ -18,7 +18,7 @@ abstract class Tokenizer
     /**
      * The config data for the run.
      *
-     * @var \Symplify\PHP7_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Configuration
      */
     protected $config = null;
 
@@ -55,7 +55,7 @@ abstract class Tokenizer
      * Initialise and run the tokenizer.
      *
      * @param string                         $content The content to tokenize,
-     * @param \Symplify\PHP7_CodeSniffer\Config | null $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Configuration | null $config  The config data for the run.
      * @param string                         $eolChar The EOL char used in the content.
      *
      * @return void

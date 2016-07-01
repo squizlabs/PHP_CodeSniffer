@@ -13,7 +13,7 @@ before_script:
 
 script:
   - phpunit $PHPUNIT_FLAGS
-  - php bin/phpcs
+  - php bin/php7cs
 
 after_script:
   - if [[ "$PHPUNIT_FLAGS" != "" ]]; then wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi

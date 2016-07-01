@@ -9,7 +9,7 @@
 
 namespace Symplify\PHP7_CodeSniffer\Tests\Core;
 
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 use Symplify\PHP7_CodeSniffer\Ruleset;
 use Symplify\PHP7_CodeSniffer\Files\DummyFile;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +25,7 @@ class ErrorSuppressionTest extends TestCase
      */
     public function testSuppressError()
     {
-        $config            = new Config();
+        $config            = new Configuration();
         $config->standards = array('Generic');
         $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
 
@@ -81,7 +81,7 @@ class ErrorSuppressionTest extends TestCase
      */
     public function testSuppressSomeErrors()
     {
-        $config            = new Config();
+        $config            = new Configuration();
         $config->standards = array('Generic');
         $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
 
@@ -127,7 +127,7 @@ class ErrorSuppressionTest extends TestCase
      */
     public function testSuppressWarning()
     {
-        $config            = new Config();
+        $config            = new Configuration();
         $config->standards = array('Generic');
         $config->sniffs    = array('Generic.Commenting.Todo');
 
@@ -173,7 +173,7 @@ class ErrorSuppressionTest extends TestCase
      */
     public function testSuppressLine()
     {
-        $config            = new Config();
+        $config            = new Configuration();
         $config->standards = array('Generic');
         $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
 
@@ -209,7 +209,7 @@ class ErrorSuppressionTest extends TestCase
      */
     public function testNestedSuppressLine()
     {
-        $config            = new Config();
+        $config            = new Configuration();
         $config->standards = array('Generic');
         $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
 
@@ -289,7 +289,7 @@ class ErrorSuppressionTest extends TestCase
      */
     public function testSuppressFile()
     {
-        $config            = new Config();
+        $config            = new Configuration();
         $config->standards = array('Generic');
         $config->sniffs    = array('Generic.Commenting.Todo');
 

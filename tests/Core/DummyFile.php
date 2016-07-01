@@ -15,7 +15,7 @@
 namespace Symplify\PHP7_CodeSniffer\Files;
 
 use Symplify\PHP7_CodeSniffer\Ruleset;
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 
 class DummyFile extends File
 {
@@ -26,11 +26,11 @@ class DummyFile extends File
      *
      * @param string                   $content The content of the file.
      * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
-     * @param \Symplify\PHP7_CodeSniffer\Config  $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Configuration  $config  The config data for the run.
      *
      * @return void
      */
-    public function __construct($content, Ruleset $ruleset, Config $config)
+    public function __construct($content, Ruleset $ruleset, Configuration $config)
     {
         $this->setContent($content);
 

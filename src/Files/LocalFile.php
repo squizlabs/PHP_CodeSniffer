@@ -11,14 +11,14 @@
 namespace Symplify\PHP7_CodeSniffer\Files;
 
 use Symplify\PHP7_CodeSniffer\Ruleset;
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 use Symplify\PHP7_CodeSniffer\Util\Cache;
 
 class LocalFile extends File
 {
 
 
-    public function __construct(string $path, Ruleset $ruleset, Config $config)
+    public function __construct(string $path, Ruleset $ruleset, Configuration $config)
     {
         $path = trim($path);
         if (is_readable($path) === false) {

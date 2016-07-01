@@ -9,7 +9,7 @@
 
 namespace Symplify\PHP7_CodeSniffer\Util;
 
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
 class Common

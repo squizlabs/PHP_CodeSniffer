@@ -9,6 +9,5 @@ namespace Symplify\PHP7_CodeSniffer\Tokenizer\EventSubscriber;
 
 final class SetupTokensOnConsoleCommandRunEventSubscriber
 {
-    
-    
+
 }

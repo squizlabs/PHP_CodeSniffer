@@ -12,13 +12,15 @@ services:
     # reporter
     - Symplify\PHP7_CodeSniffer\Reporter
     - Symplify\PHP7_CodeSniffer\Reporter\Report\ReportFactory
+    -
+        factory: [@Symplify\PHP7_CodeSniffer\Reporter\Report\ReportFactory, "create"]
 
     # tokenizer
     - Symplify\PHP7_CodeSniffer\Util\Tokens
     - Symfony\Component\EventDispatcher\EventDispatcher
     - Symplify\PHP7_CodeSniffer\Tokenizer\EventSubscriber\SetupTokensOnConsoleCommandRunEventSubscriber
 
-    - Symplify\PHP7_CodeSniffer\Config
+    - Symplify\PHP7_CodeSniffer\Configuration
     - Symplify\PHP7_CodeSniffer\Ruleset
 
     # standards, rulesets and sniffs

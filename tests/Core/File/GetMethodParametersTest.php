@@ -9,7 +9,7 @@
 
 namespace Symplify\PHP7_CodeSniffer\Tests\Core\File;
 
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 use Symplify\PHP7_CodeSniffer\Files\File;
 use Symplify\PHP7_CodeSniffer\Ruleset;
 use Symplify\PHP7_CodeSniffer\Files\DummyFile;
@@ -36,7 +36,7 @@ class GetMethodParametersTest extends TestCase
      */
     public function setUp()
     {
-        $config            = new Config();
+        $config            = new Configuration();
         $config->standards = array('Generic');
         $config->sniffs    = array('Generic.None.None');
 

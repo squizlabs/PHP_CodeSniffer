@@ -10,7 +10,7 @@
 namespace Symplify\PHP7_CodeSniffer\Util;
 
 use Symplify\PHP7_CodeSniffer\Autoload;
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 use Symplify\PHP7_CodeSniffer\Ruleset;
 use Symplify\PHP7_CodeSniffer\Util\Common;
 
@@ -36,11 +36,11 @@ class Cache
      * Loads existing cache data for the run, if any.
      *
      * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
-     * @param \Symplify\PHP7_CodeSniffer\Config  $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Configuration  $config  The config data for the run.
      *
      * @return void
      */
-    public static function load(Ruleset $ruleset, Config $config)
+    public static function load(Ruleset $ruleset, Configuration $config)
     {
         // Look at every loaded sniff class so far and use their file contents
         // to generate a hash for the code used during the run.

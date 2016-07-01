@@ -16,7 +16,7 @@ This is essential development tool that ensures your code **remains clean and co
 
 ## Installation
 
-Install via composer:
+Via composer:
 
 ```json
 composer require symplify/php7_codesniffer --dev
@@ -25,8 +25,7 @@ composer require symplify/php7_codesniffer --dev
 You will then be able to run PHP_CodeSniffer from the vendor bin directory:
 
 ```bash
-./vendor/bin/phpcs -h
-./vendor/bin/phpcbf -h
+./vendor/bin/php7cs list
 ```
 
 ## Contributing

@@ -10,7 +10,7 @@ namespace Symplify\PHP7_CodeSniffer\Filters;
 use RecursiveIterator;
 use Symplify\PHP7_CodeSniffer\Util;
 use Symplify\PHP7_CodeSniffer\Ruleset;
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 
 class Filter extends \RecursiveFilterIterator
 {
@@ -24,7 +24,7 @@ class Filter extends \RecursiveFilterIterator
     /**
      * The config data for the run.
      *
-     * @var \Symplify\PHP7_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Configuration
      */
     protected $config = null;
 
@@ -35,7 +35,7 @@ class Filter extends \RecursiveFilterIterator
      */
     protected $ruleset = null;
 
-    public function __construct(RecursiveIterator $iterator, string $basedir, Config $config, Ruleset $ruleset)
+    public function __construct(RecursiveIterator $iterator, string $basedir, Configuration $config, Ruleset $ruleset)
     {
         parent::__construct($iterator);
         $this->basedir = $basedir;

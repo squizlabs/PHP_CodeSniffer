@@ -7,6 +7,7 @@
 
 namespace Symplify\PHP7_CodeSniffer;
 
+use SimpleXMLElement;
 use Symplify\PHP7_CodeSniffer\Util;
 use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
@@ -83,45 +84,40 @@ final class Ruleset
      *
      * @var array<string, mixed>
      */
-    public $ruleset = array();
+    public $ruleset = [];
 
     /**
      * The directories that the processed rulesets are in.
      *
      * @var string[]
      */
-    protected $rulesetDirs = [];
+    private $rulesetDirs = [];
 
     /**
-     * @var Config
+     * @var Configuration
      */
-    private $config;
+    private $configuration;
 
-    public function __construct(Config $config)
+    public function __construct(Configuration $configuration)
     {
-        // Ignore sniff restrictions if caching is on.
-        $restrictions = [];
+        $this->configuration = $configuration;
 
-        $this->config = $config;
 
-        $sniffs = array();
-        foreach ($config->getStandards() as $standard) {
-            $installed = Util\Standards::getInstalledStandardPath($standard);
-            if ($installed === null) {
-                $standard = Util\Common::realpath($standard);
-                if (is_dir($standard) === true
-                    && is_file(Util\Common::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml')) === true
-                ) {
-                    $standard = Util\Common::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml');
-                }
-            } else {
-                $standard = $installed;
-            }
+        $sniffs = [];
+        foreach ($configuration->getStandards() as $name => $rulesetXmlPath) {
+//            $installed = Util\Standards::getInstalledStandardPath($standard);
+//            if ($installed === null) {
+//                $standard = Util\Common::realpath($standard);
+//                if (is_dir($standard) === true
+//                    && is_file(Util\Common::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml')) === true
+//                ) {
+//                    $standard = Util\Common::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml');
+//                }
+//            } else {
+//                $standard = $installed;
+//            }
 
-            dump($standard);
-            die;
-
-            $ruleset = simplexml_load_file($standard);
+            $ruleset = simplexml_load_file($rulesetXmlPath);
             if ($ruleset !== false) {
                 $standardName = (string) $ruleset['name'];
                 if ($this->name !== '') {
@@ -129,7 +125,7 @@ final class Ruleset
                 }
 
                 $this->name   .= $standardName;
-                $this->paths[] = $standard;
+//                $this->paths[] = $standard;
             }
 
             $sniffs = array_merge($sniffs, $this->processRuleset($standard));
@@ -138,16 +134,18 @@ final class Ruleset
         dump($sniffs);
         die;
 
+        // Ignore sniff restrictions if caching is on.
+        $restrictions = [];
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {
-            $parts     = explode('.', strtolower($sniffCode));
+            $parts = explode('.', strtolower($sniffCode));
             $sniffName = 'Symplify\PHP7_CodeSniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
             $sniffRestrictions[$sniffName] = true;
         }
 
         $this->registerSniffs($sniffs, $sniffRestrictions);
         $this->populateTokenListeners();
-    }//end __construct()
+    }
 
     /**
      * Processes a single ruleset and returns a list of the sniffs it represents.
@@ -155,14 +153,10 @@ final class Ruleset
      * Rules founds within the ruleset are processed immediately, but sniff classes
      * are not registered by this method.
      *
-     * @param string $rulesetPath The path to a ruleset XML file.
-     * @param int    $depth       How many nested processing steps we are in. This
-     *                            is only used for debug output.
-     *
      * @return string[]
      * @throws RuntimeException If the ruleset path is invalid.
      */
-    public function processRuleset($rulesetPath, $depth=0)
+    public function processRuleset(string $rulesetPath) : array
     {
         $rulesetPath = Util\Common::realpath($rulesetPath);
 
@@ -180,7 +174,7 @@ final class Ruleset
 
         $sniffDir = $rulesetDir.DIRECTORY_SEPARATOR.'Sniffs';
         if (is_dir($sniffDir) === true) {
-            $ownSniffs = $this->expandSniffDirectory($sniffDir, $depth);
+            $ownSniffs = $this->expandSniffDirectory($sniffDir);
         }
 
         foreach ($ruleset->rule as $rule) {
@@ -190,7 +184,7 @@ final class Ruleset
                 continue;
             }
 
-            $expandedSniffs = $this->expandRulesetReference($rule['ref'], $rulesetDir, $depth);
+            $expandedSniffs = $this->expandRulesetReference($rule['ref'], $rulesetDir);
             $newSniffs      = array_diff($expandedSniffs, $includedSniffs);
             $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
 
@@ -202,12 +196,12 @@ final class Ruleset
 
                     $excludedSniffs = array_merge(
                         $excludedSniffs,
-                        $this->expandRulesetReference($exclude['name'], $rulesetDir, ($depth + 1))
+                        $this->expandRulesetReference($exclude['name'], $rulesetDir)
                     );
                 }//end foreach
             }//end if
 
-            $this->processRule($rule, $newSniffs, $depth);
+            $this->processRule($rule, $newSniffs);
         }//end foreach
 
         // Process custom ignore pattern rules.
@@ -244,12 +238,10 @@ final class Ruleset
      * Expands a directory into a list of sniff files within.
      *
      * @param string $directory The path to a directory.
-     * @param int    $depth     How many nested processing steps we are in. This
-     *                          is only used for debug output.
      *
      * @return array
      */
-    private function expandSniffDirectory($directory, $depth=0)
+    private function expandSniffDirectory($directory)
     {
         $sniffs = array();
 
@@ -291,9 +283,7 @@ final class Ruleset
         }//end foreach
 
         return $sniffs;
-
-    }//end expandSniffDirectory()
-
+    }
 
     /**
      * Expands a ruleset reference into a list of sniff files.
@@ -301,13 +291,11 @@ final class Ruleset
      * @param string $ref        The reference from the ruleset XML file.
      * @param string $rulesetDir The directory of the ruleset XML file, used to
      *                           evaluate relative paths.
-     * @param int    $depth      How many nested processing steps we are in. This
-     *                           is only used for debug output.
      *
      * @return array
      * @throws RuntimeException If the reference is invalid.
      */
-    private function expandRulesetReference($ref, $rulesetDir, $depth=0)
+    private function expandRulesetReference($ref, $rulesetDir)
     {
         // Ignore internal sniffs codes as they are used to only
         // hide and change internal messages.
@@ -400,10 +388,10 @@ final class Ruleset
         if (is_dir($ref) === true) {
             if (is_file($ref.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
                 // We are referencing an external coding standard.
-                return $this->processRuleset($ref.DIRECTORY_SEPARATOR.'ruleset.xml', ($depth + 2));
+                return $this->processRuleset($ref.DIRECTORY_SEPARATOR.'ruleset.xml');
             } else {
                 // We are referencing a whole directory of sniffs.
-                return $this->expandSniffDirectory($ref, ($depth + 1));
+                return $this->expandSniffDirectory($ref);
             }
         } else {
             if (is_file($ref) === false) {
@@ -416,7 +404,7 @@ final class Ruleset
                 return array($ref);
             } else {
                 // Assume an external ruleset.xml file.
-                return $this->processRuleset($ref, ($depth + 2));
+                return $this->processRuleset($ref);
             }
         }//end if
 
@@ -428,13 +416,8 @@ final class Ruleset
      *
      * @param SimpleXMLElement $rule      The rule object from a ruleset XML file.
      * @param string[]         $newSniffs An array of sniffs that got included by this rule.
-     * @param int              $depth     How many nested processing steps we are in.
-     *                                    This is only used for debug output.
-     *
-     * @return void
-     * @throws RuntimeException If rule settings are invalid.
      */
-    private function processRule($rule, $newSniffs, $depth=0)
+    private function processRule(SimpleXMLElement $rule, array $newSniffs)
     {
         $ref  = (string) $rule['ref'];
         $todo = array($ref);

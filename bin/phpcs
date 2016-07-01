@@ -1,7 +1,0 @@
-#!/usr/bin/env php
-<?php
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
-$runner = new Symplify\PHP7_CodeSniffer\Runner();
-$runner->runPHPCS();

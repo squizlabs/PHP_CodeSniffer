@@ -16,7 +16,7 @@ use Symplify\PHP7_CodeSniffer\Util\Cache;
 final class Runner
 {
     /**
-     * @var Config
+     * @var Configuration
      */
     public $config;
 
@@ -30,7 +30,7 @@ final class Runner
      */
     public $reporter;
 
-    public function __construct(Config $config, Ruleset $ruleset)
+    public function __construct(Configuration $config, Ruleset $ruleset)
     {
         $this->config = $config;
         $this->ruleset = $ruleset;
@@ -42,10 +42,6 @@ final class Runner
      */
     public function runPHPCS()
     {
-        dump($this->ruleset);
-
-        die;
-
         $numErrors = $this->run();
 
         // Print all the reports for this run.

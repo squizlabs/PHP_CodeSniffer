@@ -10,7 +10,7 @@
 namespace Symplify\PHP7_CodeSniffer\Files;
 
 use Symplify\PHP7_CodeSniffer\Ruleset;
-use Symplify\PHP7_CodeSniffer\Config;
+use Symplify\PHP7_CodeSniffer\Configuration;
 use Symplify\PHP7_CodeSniffer\Fixer;
 use Symplify\PHP7_CodeSniffer\Tokenizers\PHP;
 use Symplify\PHP7_CodeSniffer\Util;
@@ -37,7 +37,7 @@ class File
     /**
      * The config data for the run.
      *
-     * @var \Symplify\PHP7_CodeSniffer\Config
+     * @var \Symplify\PHP7_CodeSniffer\Configuration
      */
     public $config = null;
 
@@ -190,11 +190,11 @@ class File
      *
      * @param string                   $path    The absolute path to the file to process.
      * @param \Symplify\PHP7_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
-     * @param \Symplify\PHP7_CodeSniffer\Config  $config  The config data for the run.
+     * @param \Symplify\PHP7_CodeSniffer\Configuration  $config  The config data for the run.
      *
      * @return void
      */
-    public function __construct($path, Ruleset $ruleset, Config $config)
+    public function __construct($path, Ruleset $ruleset, Configuration $config)
     {
         $this->path    = $path;
         $this->ruleset = $ruleset;

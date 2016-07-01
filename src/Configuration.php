@@ -7,7 +7,9 @@
 
 namespace Symplify\PHP7_CodeSniffer;
 
-final class Config
+use Symplify\PHP7_CodeSniffer\Configuration\ConfigurationResolver;
+
+final class Configuration
 {
     /**
      * @var array
@@ -24,8 +26,20 @@ final class Config
      */
     private $reportClass;
 
-    public function __construct(array $options)
+    /**
+     * @var ConfigurationResolver
+     */
+    private $configurationResolver;
+
+    public function __construct(ConfigurationResolver $configurationResolver)
     {
+        $this->configurationResolver = $configurationResolver;
+    }
+
+    public function resolveFromArray(array $options)
+    {
+        $options = $this->configurationResolver->resolve($options);
+
         $this->standards = $options['standards'];
         $this->reportWidth = $options['reportWidth'];
         $this->reportClass = $options['reportClass'];
