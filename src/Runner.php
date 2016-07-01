@@ -96,7 +96,6 @@ final class Runner
         $this->config->showProgress = false;
         $this->config->explain      = false;
         $this->config->cache        = false;
-        $this->config->showSources  = false;
         $this->config->reports      = array('cbf' => null);
 
         // If a standard tries to set command line arguments itself, some

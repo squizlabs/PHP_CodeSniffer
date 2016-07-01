@@ -17,7 +17,7 @@ namespace Symplify\PHP7_CodeSniffer\Reports;
 
 use Symplify\PHP7_CodeSniffer\Files\File;
 
-class Cbf implements Report
+final class Cbf implements Report
 {
     /**
      * {@inheritdoc}

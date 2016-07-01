@@ -190,7 +190,6 @@ final class Reporter
             $this->totalErrors,
             $this->totalWarnings,
             $this->totalFixable,
-            $this->config->showSources,
             $toScreen
         );
         $generatedReport = ob_get_contents();
@@ -222,7 +221,7 @@ final class Reporter
             $reportClass = $report['class'];
 
             ob_start();
-            $result = $reportClass->generateFileReport($reportData, $phpcsFile, $this->config->showSources);
+            $result = $reportClass->generateFileReport($reportData, $phpcsFile);
             if ($result === true) {
                 $errorsShown = true;
             }

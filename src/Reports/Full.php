@@ -1,10 +1,8 @@
 <?php
-/**
- * Full report for Symplify\PHP7_CodeSniffer.
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+
+/*
+ * This file is part of Symplify
+ * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
 namespace Symplify\PHP7_CodeSniffer\Reports;
@@ -12,25 +10,12 @@ namespace Symplify\PHP7_CodeSniffer\Reports;
 use Symplify\PHP7_CodeSniffer\Files\File;
 use Symplify\PHP7_CodeSniffer\Util;
 
-class Full implements Report
+final class Full implements Report
 {
-
-
     /**
-     * Generate a partial report for a single processed file.
-     *
-     * Function should return TRUE if it printed or stored data about the file
-     * and FALSE if it ignored the file. Returning TRUE indicates that the file and
-     * its data should be counted in the grand totals.
-     *
-     * @param array                 $report      Prepared report data.
-     * @param \Symplify\PHP7_CodeSniffer\File $phpcsFile   The file being reported on.
-     * @param bool                  $showSources Show sources?
-     * @param int                   $width       Maximum allowed line width.
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
+    public function generateFileReport(array $report, File $phpcsFile, int $width = 80) : bool
     {
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
             // Nothing to print.
@@ -65,9 +50,7 @@ class Full implements Report
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
                     $length = strlen($error['message']);
-                    if ($showSources === true) {
-                        $length += (strlen($error['source']) + 3);
-                    }
+                    $length += (strlen($error['source']) + 3);
 
                     $maxErrorLength = max($maxErrorLength, ($length + 1));
                 }
@@ -114,19 +97,15 @@ class Full implements Report
 
         // The maximum amount of space an error message can use.
         $maxErrorSpace = ($width - $paddingLength - 1);
-        if ($showSources === true) {
-            // Account for the chars used to print colors.
-            $maxErrorSpace += 8;
-        }
+        // Account for the chars used to print colors.
+        $maxErrorSpace += 8;
 
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
                     $message = $error['message'];
                     $message = str_replace("\n", "\n".$paddingLine2, $message);
-                    if ($showSources === true) {
-                        $message = "\033[1m".$message."\033[0m".' ('.$error['source'].')';
-                    }
+                    $message = "\033[1m".$message."\033[0m".' ('.$error['source'].')';
 
                     // The padding that goes on the front of the line.
                     $padding  = ($maxLineNumLength - strlen($line));
@@ -171,25 +150,10 @@ class Full implements Report
 
         echo PHP_EOL;
         return true;
-
-    }//end generateFileReport()
-
+    }
 
     /**
-     * Prints all errors and warnings for each file processed.
-     *
-     * @param string $cachedData    Any partial report data that was returned from
-     *                              generateFileReport during the run.
-     * @param int    $totalFiles    Total number of files processed during the run.
-     * @param int    $totalErrors   Total number of errors found during the run.
-     * @param int    $totalWarnings Total number of warnings found during the run.
-     * @param int    $totalFixable  Total number of problems that can be fixed.
-     * @param bool   $showSources   Show sources?
-     * @param int    $width         Maximum allowed line width.
-     * @param bool   $interactive   Are we running in interactive mode?
-     * @param bool   $toScreen      Is the report being printed to screen?
-     *
-     * @return void
+     * {@inheritdoc}
      */
     public function generate(
         $cachedData,
@@ -197,7 +161,6 @@ class Full implements Report
         $totalErrors,
         $totalWarnings,
         $totalFixable,
-        $showSources=false,
         $width=80,
         $interactive=false,
         $toScreen=true
@@ -211,8 +174,5 @@ class Full implements Report
         if ($toScreen === true && $interactive === false) {
             Util\Timing::printRunTime();
         }
-
-    }//end generate()
-
-
-}//end class
+    }
+}

@@ -21,7 +21,7 @@ interface Report
      * and FALSE if it ignored the file. Returning TRUE indicates that the file and
      * its data should be counted in the grand totals.
      */
-    public function generateFileReport(array  $report, File $phpcsFile, bool $showSources = false, int $width = 80) : bool;
+    public function generateFileReport(array  $report, File $phpcsFile, int $width = 80) : bool;
 
 
     /**
@@ -33,7 +33,6 @@ interface Report
      * @param int    $totalErrors   Total number of errors found during the run.
      * @param int    $totalWarnings Total number of warnings found during the run.
      * @param int    $totalFixable  Total number of problems that can be fixed.
-     * @param bool   $showSources   Show sources?
      * @param int    $width         Maximum allowed line width.
      * @param bool   $interactive   Are we running in interactive mode?
      * @param bool   $toScreen      Is the report being printed to screen?
@@ -46,7 +45,6 @@ interface Report
         $totalErrors,
         $totalWarnings,
         $totalFixable,
-        $showSources=false,
         $width=80,
         $interactive=false,
         $toScreen=true
