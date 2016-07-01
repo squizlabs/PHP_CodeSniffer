@@ -10,9 +10,22 @@ namespace Symplify\PHP7_CodeSniffer\Console\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symplify\PHP7_CodeSniffer\SniffFinder\StandardFinder;
 
 final class ListCommand extends Command
 {
+    /**
+     * @var StandardFinder
+     */
+    private $standardFinder;
+
+    public function __construct(StandardFinder $standardFinder)
+    {
+        $this->standardFinder = $standardFinder;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -27,7 +40,9 @@ final class ListCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->write('eee');
-        // get all coding standrads
+        $standards = $this->standardFinder->getStandards();
+        foreach ($standards as $name => $ruleset) {
+            $output->writeln($name);
+        }
     }
 }
