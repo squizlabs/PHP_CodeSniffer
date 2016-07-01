@@ -72,6 +72,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
 
   - Added a new --exclude CLI argument to exclude a list of sniffs from checking and fixing (request #904)
     -- Accepts the same sniff codes as the --sniffs command line argument, but provides the opposite functionality
+  - Added a new -q command line argument to disable progress and verbose information from being printed (request #969)
+    -- Useful if a coding standard hard-codes progess or verbose output but you want PHPCS to be quiet
   - Generic LineLength sniff no longer errors for comments that cannot be broken out onto a new line (request #766)
     -- A typical case is a comment that contains a very long URL
     -- The comment is ignored if putting the URL on a indented new comment line would be longer than the allowed length

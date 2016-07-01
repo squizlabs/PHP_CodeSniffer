@@ -57,6 +57,7 @@ class Config
      * bool     local           Process local files in directories only (no recursion).
      * bool     showSources     Show sniff source codes in report output.
      * bool     showProgress    Show basic progress information while running.
+     * bool     quiet           Quiet mode; disables progress and verbose output.
      * int      tabWidth        How many spaces each tab is worth.
      * string   encoding        The encoding of the files being checked.
      * string[] sniffs          The sniffs that should be used for checking.
@@ -104,6 +105,7 @@ class Config
                          'local'           => null,
                          'showSources'     => null,
                          'showProgress'    => null,
+                         'quiet'           => null,
                          'tabWidth'        => null,
                          'encoding'        => null,
                          'extensions'      => null,
@@ -409,6 +411,7 @@ class Config
         $this->local           = false;
         $this->showSources     = false;
         $this->showProgress    = false;
+        $this->quiet           = false;
         $this->parallel        = 1;
         $this->tabWidth        = 0;
         $this->encoding        = 'utf-8';
@@ -489,6 +492,11 @@ class Config
             $this->showProgress = (bool) $showProgress;
         }
 
+        $quiet = self::getConfigData('quiet');
+        if ($quiet !== null) {
+            $this->quiet = (bool) $quiet;
+        }
+
         $colors = self::getConfigData('colors');
         if ($colors !== null) {
             $this->colors = (bool) $colors;
@@ -528,6 +536,11 @@ class Config
             Util\Standards::printInstalledStandards();
             exit(0);
         case 'v' :
+            if ($this->quiet === true) {
+                // Ignore when quiet mode is enabled.
+                break;
+            }
+
             $this->verbosity++;
             $this->overriddenDefaults['verbosity'] = true;
             break;
@@ -548,8 +561,21 @@ class Config
             $this->overriddenDefaults['explain'] = true;
             break;
         case 'p' :
+            if ($this->quiet === true) {
+                // Ignore when quiet mode is enabled.
+                break;
+            }
+
             $this->showProgress = true;
             $this->overriddenDefaults['showProgress'] = true;
+            break;
+        case 'q' :
+            // Quiet mode disables a few other settings as well.
+            $this->quiet        = true;
+            $this->showProgress = false;
+            $this->verbosity    = 0;
+
+            $this->overriddenDefaults['quiet'] = true;
             break;
         case 'm' :
             $this->recordErrors = false;
@@ -1062,7 +1088,7 @@ class Config
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepvi] [-d key[=value]] [--cache[=<cacheFile>]] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--cache[=<cacheFile>]] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -1078,6 +1104,7 @@ class Config
         echo '        -a            Run interactively'.PHP_EOL;
         echo '        -e            Explain a standard by showing the sniffs it includes'.PHP_EOL;
         echo '        -p            Show progress of the run'.PHP_EOL;
+        echo '        -q            Quiet mode; disables progress and verbose output'.PHP_EOL;
         echo '        -m            Stop error messages from being recorded'.PHP_EOL;
         echo '                      (saves a lot of memory, but stops many reports from being used)'.PHP_EOL;
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
