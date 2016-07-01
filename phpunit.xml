@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-    bootstrap="tests/bootstrap.php"
+    bootstrap="vendor/autoload.php"
     colors="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    convertErrorsToExceptions="true"
-    syntaxCheck="true"
     verbose="true"
 >
     <testsuites>
         <testsuite>
-            <directory suffix=".php">tests</directory>
+            <directory>packages</directory>
+            <!--<directory>tests</directory>-->
         </testsuite>
     </testsuites>
     <filter>

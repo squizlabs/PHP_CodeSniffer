@@ -16,6 +16,7 @@
         "symplify/php7-codesniffer/configuration": "@dev",
         "symplify/php7-codesniffer/console": "@dev",
         "symplify/php7-codesniffer/dependency-injection": "@dev",
+        "symplify/php7-codesniffer/reporter": "@dev",
         "symplify/php7-codesniffer/sniff-finder": "@dev",
         "symplify/php7-codesniffer/tokenizer": "@dev"
     },
@@ -26,6 +27,7 @@
         { "type": "path", "url": "packages/configuration" },
         { "type": "path", "url": "packages/console" },
         { "type": "path", "url": "packages/dependency-injection" },
+        { "type": "path", "url": "packages/reporter" },
         { "type": "path", "url": "packages/sniff-finder" },
         { "type": "path", "url": "packages/tokenizer" }
     ],

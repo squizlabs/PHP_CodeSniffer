@@ -1,21 +1,21 @@
 <?php
+
 /**
  * Represents a list of files on the file system that are to be checked during the run.
  *
  * File objects are created as needed rather than all at once.
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
 namespace Symplify\PHP7_CodeSniffer\Files;
 
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
+use Symplify\PHP7_CodeSniffer\Filters\Filter;
 use Symplify\PHP7_CodeSniffer\Util;
 use Symplify\PHP7_CodeSniffer\Ruleset;
 use Symplify\PHP7_CodeSniffer\Config;
 
-class FileList implements \Iterator, \Countable
+final class FileList implements \Iterator, \Countable
 {
 
     /**
@@ -74,85 +74,36 @@ class FileList implements \Iterator, \Countable
 
         reset($this->files);
         $this->numFiles = count($this->files);
-
-    }//end __construct()
+    }
 
 
     /**
-     * Add a file to the list.
-     *
      * If a file object has already been created, it can be passed here.
      * If it is left NULL, it will be created when accessed.
-     *
-     * @param string                      $path The path to the file being added.
-     * @param \Symplify\PHP7_CodeSniffer\Files\File $file The file being added.
-     *
-     * @return void
      */
-    public function addFile($path, $file=null)
+    public function addFile(string $path, File $file=null)
     {
-        $filterClass = $this->getFilterClass();
-
-        $di       = new \RecursiveArrayIterator(array($path));
-        $filter   = new $filterClass($di, $path, $this->config, $this->ruleset);
-        $iterator = new \RecursiveIteratorIterator($filter);
+        $di = new RecursiveArrayIterator(array($path));
+        $filter = new Filter($di, $path, $this->config, $this->ruleset);
+        $iterator = new RecursiveIteratorIterator($filter);
 
         foreach ($iterator as $path) {
             $this->files[$path] = $file;
         }
-
-    }//end addFile()
-
-
-    /**
-     * Get the class name of the filter being used for the run.
-     *
-     * @return string
-     */
-    private function getFilterClass()
-    {
-        $filterType = $this->config->filter;
-
-        if ($filterType === null) {
-            $filterClass = '\Symplify\PHP7_CodeSniffer\Filters\Filter';
-        } else {
-            if (strpos($filterType, '.') !== false) {
-                // This is a path to a custom filter class.
-                $filename = realpath($filterType);
-                if ($filename === false) {
-                    echo "ERROR: Custom filter \"$filterType\" not found".PHP_EOL;
-                    exit(2);
-                }
-
-                $filterClass = \Symplify\PHP7_CodeSniffer\Autoload::loadFile($filename);
-            } else {
-                $filterClass = '\Symplify\PHP7_CodeSniffer\Filters\\'.$filterType;
-            }
-        }
-
-        return $filterClass;
-
-    }//end getFilterClass()
-
+    }
 
     /**
      * Rewind the iterator to the first file.
-     *
-     * @return void
      */
-    function rewind()
+    public function rewind()
     {
         reset($this->files);
-
-    }//end rewind()
-
+    }
 
     /**
      * Get the file that is currently being processed.
-     *
-     * @return \Symplify\PHP7_CodeSniffer\Files\File
      */
-    function current()
+    public function current() : File
     {
         $path = key($this->files);
         if ($this->files[$path] === null) {
@@ -160,60 +111,35 @@ class FileList implements \Iterator, \Countable
         }
 
         return $this->files[$path];
-
-    }//end current()
-
+    }
 
     /**
      * Return the file path of the current file being processed.
-     *
-     * @return void
      */
-    function key()
+    public function key()
     {
         return key($this->files);
+    }
 
-    }//end key()
-
-
-    /**
-     * Move forward to the next file.
-     *
-     * @return void
-     */
-    function next()
+    public function next()
     {
         next($this->files);
-
-    }//end next()
-
+    }
 
     /**
      * Checks if current position is valid.
-     *
-     * @return boolean
      */
-    function valid()
+    public function valid() : bool
     {
         if (current($this->files) === false) {
             return false;
         }
 
         return true;
+    }
 
-    }//end valid()
-
-
-    /**
-     * Return the number of files in the list.
-     *
-     * @return integer
-     */
-    function count()
+    public function count() : int
     {
         return $this->numFiles;
-
-    }//end count()
-
-
-}//end class
+    }
+}

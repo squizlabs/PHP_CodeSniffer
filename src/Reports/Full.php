@@ -10,7 +10,7 @@ namespace Symplify\PHP7_CodeSniffer\Reports;
 use Symplify\PHP7_CodeSniffer\Files\File;
 use Symplify\PHP7_CodeSniffer\Util;
 
-final class Full implements Report
+final class Full implements ReportInterface
 {
     /**
      * {@inheritdoc}
@@ -156,14 +156,12 @@ final class Full implements Report
      * {@inheritdoc}
      */
     public function generate(
-        $cachedData,
-        $totalFiles,
-        $totalErrors,
-        $totalWarnings,
-        $totalFixable,
-        $width=80,
-        $interactive=false,
-        $toScreen=true
+        string $cachedData,
+        int $totalFiles,
+        int $totalErrors,
+        int $totalWarnings,
+        int $totalFixable,
+        int $width = 80
     ) {
         if ($cachedData === '') {
             return;
@@ -171,8 +169,6 @@ final class Full implements Report
 
         echo $cachedData;
 
-        if ($toScreen === true && $interactive === false) {
-            Util\Timing::printRunTime();
-        }
+        Util\Timing::printRunTime();
     }
 }

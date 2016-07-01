@@ -1,0 +1,11 @@
+{
+    "name": "symplify/php7-codesniffer/reporter",
+    "require": {
+        "php": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Symplify\\PHP7_CodeSniffer\\Reporter\\": "src"
+        }
+    }
+}

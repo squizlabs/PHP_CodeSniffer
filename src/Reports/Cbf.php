@@ -17,7 +17,7 @@ namespace Symplify\PHP7_CodeSniffer\Reports;
 
 use Symplify\PHP7_CodeSniffer\Files\File;
 
-final class Cbf implements Report
+final class Cbf implements ReportInterface
 {
     /**
      * {@inheritdoc}
@@ -67,13 +67,12 @@ final class Cbf implements Report
      * {@inheritdoc}
      */
     public function generate(
-        $cachedData,
-        $totalFiles,
-        $totalErrors,
-        $totalWarnings,
-        $totalFixable,
-        $width = 80,
-        $toScreen = true
+        string $cachedData,
+        int $totalFiles,
+        int $totalErrors,
+        int $totalWarnings,
+        int $totalFixable,
+        int $width = 80
     ) {
         $fixed = 0;
         $fails = 0;

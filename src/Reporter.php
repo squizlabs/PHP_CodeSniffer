@@ -7,83 +7,37 @@
 
 namespace Symplify\PHP7_CodeSniffer;
 
-use Symplify\PHP7_CodeSniffer\Reports\Report;
-use Symplify\PHP7_CodeSniffer\Files\File;
-use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
-use Symplify\PHP7_CodeSniffer\Util\Common;
+use Symplify\PHP7_CodeSniffer\Reports\ReportInterface;
 
 final class Reporter
 {
-
-    /**
-     * @var Config
-     */
-    public $config = null;
-
-    /**
-     * Total number of files that contain errors or warnings.
-     *
-     * @var integer
-     */
-    public $totalFiles = 0;
-
-    /**
-     * Total number of errors found during the run.
-     *
-     * @var integer
-     */
-    public $totalErrors = 0;
-
-    /**
-     * Total number of warnings found during the run.
-     *
-     * @var integer
-     */
-    public $totalWarnings = 0;
-
-    /**
-     * Total number of errors/warnings that can be fixed.
-     *
-     * @var integer
-     */
-    public $totalFixable = 0;
-
-    /**
-     * When the PHPCS run started.
-     *
-     * @var float
-     */
-    public static $startTime = 0;
-
     /**
      * A cache of report objects.
      *
      * @var array
      */
-    private $reports = array();
+    private $reports = [];
 
     /**
      * A cache of opened temporary files.
      *
      * @var array
      */
-    private $tmpFiles = array();
-
+    private $tmpFiles = [];
 
     /**
-     * Initialise the reporter.
-     *
      * All reports specified in the config will be created and their
      * output file (or a temp file if none is specified) initialised by
      * clearing the current contents.
      *
      * @param Config $config The config data for the run.
-     *
-     * @return void
      * @throws RuntimeException If a report is not available.
      */
-    public function __construct(Config $config)
+    public function __construct(Config $config, ReportInterface $report)
     {
+        dump($report);
+        die;
+        
         $this->config = $config;
 
         foreach ($config->reports as $type => $output) {
@@ -107,7 +61,7 @@ final class Reporter
             }
 
             $reportClass = new $reportClassName();
-            if (false === ($reportClass instanceof Report)) {
+            if (false === ($reportClass instanceof ReportInterface)) {
                 throw new RuntimeException('Class "'.$reportClassName.'" must implement the "Symplify\PHP7_CodeSniffer\Report" interface.');
             }
 

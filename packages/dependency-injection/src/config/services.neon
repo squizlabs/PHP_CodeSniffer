@@ -9,6 +9,10 @@ services:
     # runner
     - Symplify\PHP7_CodeSniffer\Runner
 
+    # reporter
+    - Symplify\PHP7_CodeSniffer\Reporter
+    - Symplify\PHP7_CodeSniffer\Reporter\Report\ReportFactory
+
     # tokenizer
     - Symplify\PHP7_CodeSniffer\Util\Tokens
     - Symfony\Component\EventDispatcher\EventDispatcher

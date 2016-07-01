@@ -83,6 +83,31 @@ final class ConfigurationResolver
 
             return true;
         });
+
+        $this->optionsResolver->setAllowedValues('sniffs', function (array $sniffs) {
+//            $sniffs = explode(',', substr($arg, 7));
+//            foreach ($sniffs as $sniff) {
+//                if (substr_count($sniff, '.') !== 2) {
+//                    // throw exception!
+//                    // echo 'ERROR: The specified sniff code "'.$sniff.'" is invalid'.PHP_EOL.PHP_EOL;
+//                }
+//            }
+
+            return true;
+        });
+
+        $this->optionsResolver->setAllowedValues('source', function ($source) {
+//        $file = Util\Common::realpath($arg);
+//        if (file_exists($file) === false) {
+//            echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
+//            $this->printUsage();
+//            exit(2);
+//        } else {
+//            $this->files[] = $file;
+//        }
+
+            return true;
+        });
     }
 
     private function setNormalizers()
