@@ -11,7 +11,6 @@ use Symplify\PHP7_CodeSniffer\SniffFinder\StandardFinder;
 
 final class Standards
 {
-
     public static function getInstalledStandardPaths() : array
     {
         return (new StandardFinder())->getStandards();
@@ -46,12 +45,4 @@ final class Standards
 
         return null;
     }
-
-    public static function printInstalledStandards()
-    {
-        $installedStandards = self::getInstalledStandards();
-        $installedStandardNames = implode(array_keys($installedStandards), ', ');
-        echo 'The installed coding standards are: '.$installedStandardNames.PHP_EOL;
-    }
-
 }

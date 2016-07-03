@@ -8,6 +8,8 @@
 namespace Symplify\PHP7_CodeSniffer\Configuration;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symplify\PHP7_CodeSniffer\Reports\Cbf;
+use Symplify\PHP7_CodeSniffer\Reports\Full;
 use Symplify\PHP7_CodeSniffer\SniffFinder\SniffFinder;
 use Symplify\PHP7_CodeSniffer\SniffFinder\StandardFinder;
 
@@ -50,7 +52,7 @@ final class ConfigurationResolver
             'source' => null,
             'standards' => ['PSR2'],
             'sniffs' => [],
-            'reports' => ['full' => null],
+            'reportClass' => Full::class,
             'reportWidth' => $this->getDefaultReportWidth()
         ]);
     }
@@ -72,10 +74,11 @@ final class ConfigurationResolver
     {
         $this->optionsResolver->setAllowedValues('standards', function (array $standards) {
             $availableStandards = $this->standardFinder->getStandards();
-            foreach ($standards as $standard) {
-                if (!array_key_exists($standard, $availableStandards)) {
+
+            foreach ($standards as $standardName) {
+                if (!array_key_exists($standardName, $availableStandards)) {
                     throw new \Exception(sprintf(
-                        'Standard "%s" is not supported. Pick one of: %s', $standard,
+                        'Standard "%s" is not supported. Pick one of: %s', $standardName,
                         implode(array_keys($availableStandards), ', ')
                     ));
                 }
@@ -116,11 +119,11 @@ final class ConfigurationResolver
             return $this->standardFinder->getRulesetPathsForStandardNames($standardNames);
         });
 
-        $this->optionsResolver->setNormalizer('reports', function (OptionsResolver $optionsResolver, array $reports) {
+        $this->optionsResolver->setNormalizer('reportClass', function (OptionsResolver $optionsResolver, $reportClass) {
             if ($optionsResolver['isFixer']) {
-               return ['cbf' => null];
+               return Cbf::class;
             }
-            return $reports;
+            return $reportClass;
         });
     }
 }

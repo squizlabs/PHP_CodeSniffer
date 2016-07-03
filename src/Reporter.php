@@ -29,16 +29,10 @@ final class Reporter
      * All reports specified in the config will be created and their
      * output file (or a temp file if none is specified) initialised by
      * clearing the current contents.
-     *
-     * @param Configuration $config The config data for the run.
-     * @throws RuntimeException If a report is not available.
      */
     public function __construct(Configuration $config, ReportInterface $report)
     {
         $this->config = $config;
-
-        dump($report);
-        die;
 
         foreach ($config->reports as $type => $output) {
             $type = ucfirst($type);

@@ -47,6 +47,7 @@ final class Configuration
 
     public function getStandards() : array
     {
+        $this->resolveFromArray([]);
         return $this->standards;
     }
 
@@ -57,6 +58,7 @@ final class Configuration
 
     public function getReportClass() : string
     {
+        $this->resolveFromArray([]);
         return $this->reportClass;
     }
 }

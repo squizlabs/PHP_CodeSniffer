@@ -15,6 +15,10 @@ services:
     -
         factory: [@Symplify\PHP7_CodeSniffer\Reporter\Report\ReportFactory, "create"]
 
+    # ruleset
+    - Symplify\PHP7_CodeSniffer\SniffFinder\RuleReferenceNormalizer
+    - Symplify\PHP7_CodeSniffer\Ruleset\RulesetBuilder
+
     # tokenizer
     - Symplify\PHP7_CodeSniffer\Util\Tokens
     - Symfony\Component\EventDispatcher\EventDispatcher
@@ -25,6 +29,7 @@ services:
 
     # standards, rulesets and sniffs
     - Symplify\PHP7_CodeSniffer\SniffFinder\StandardFinder
+    - Symplify\PHP7_CodeSniffer\SniffFinder\SniffFinder
 
     # configuration
     - Symplify\PHP7_CodeSniffer\Configuration\ConfigurationResolver

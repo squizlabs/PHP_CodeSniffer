@@ -43,13 +43,15 @@ final class CheckCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->configuration->resolveFromArray($input->getArguments());
-        
+        $arguments = $input->getArguments();
+        unset($arguments['command']);
+        $this->configuration->resolveFromArray($arguments);
+
         $source = $input->getArgument('source');
 
         $this->runner->runPHPCS();
         
-        dump($source);
+//        dump($source);
         die;
     }
 }

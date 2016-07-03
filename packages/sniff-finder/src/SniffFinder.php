@@ -9,24 +9,21 @@ namespace Symplify\PHP7_CodeSniffer\SniffFinder;
 
 use Symfony\Component\Finder\Finder;
 use Symplify\PHP7_CodeSniffer\SniffFinder\Composer\VendorDirProvider;
+use Symplify\PHP7_CodeSniffer\SniffFinder\Contract\SniffFinderInterface;
 
-final class SniffFinder
+final class SniffFinder implements SniffFinderInterface
 {
-    public function findSniffsInRuleset(string $rulesetXml) : array
-    {
-
-    }
-    
-    /**
-     * @return string[]
-     */
     public function findAllSniffs() : array
     {
-        $sniffFilesInfo = (new Finder())->files()
-            ->in(VendorDirProvider::provide())
-            ->name('*Sniff.php')
-            ->sortByName();
+        return $this->findSniffsInDirectory(VendorDirProvider::provide());
+    }
 
-        return array_keys(iterator_to_array($sniffFilesInfo));
+    public function findSniffsInDirectory(string $directory) : array
+    {
+        $filesInfo = (new Finder())->files()
+            ->in($directory)
+            ->name('*Sniff.php');
+
+        return array_keys(iterator_to_array($filesInfo));
     }
 }

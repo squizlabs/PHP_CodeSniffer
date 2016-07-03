@@ -30,7 +30,7 @@ final class Runner
      */
     public $reporter;
 
-    public function __construct(Configuration $config, Ruleset $ruleset)
+    public function __construct(Configuration $config, Ruleset $ruleset, Reporter $reporter)
     {
         $this->config = $config;
         $this->ruleset = $ruleset;
@@ -109,9 +109,6 @@ final class Runner
      */
     private function run() : int
     {
-        // The class that manages all reporters for the run.
-        $this->reporter = new Reporter($this->config);
-
         $todo = new FileList($this->config, $this->ruleset);
         $numFiles = count($todo);
 

@@ -1,0 +1,13 @@
+{
+    "name": "symplify/php7-codesniffer/ruleset",
+    "require": {
+        "php": "^7.0",
+        "symplify/php7-codesniffer/sniff-finder": "@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Symplify\\PHP7_CodeSniffer\\Ruleset\\": "src",
+            "Symplify\\PHP7_CodeSniffer\\Ruleset\\Tests\\": "tests"
+        }
+    }
+}
