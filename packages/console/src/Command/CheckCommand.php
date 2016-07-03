@@ -10,6 +10,7 @@ namespace Symplify\PHP7_CodeSniffer\Console\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symplify\PHP7_CodeSniffer\Configuration;
+use Symplify\PHP7_CodeSniffer\Reporter;
 use Symplify\PHP7_CodeSniffer\Runner;
 
 final class CheckCommand extends AbstractCommand
@@ -24,10 +25,16 @@ final class CheckCommand extends AbstractCommand
      */
     private $configuration;
 
-    public function __construct(Runner $runner, Configuration $configuration)
+    /**
+     * @var Reporter
+     */
+    private $reporter;
+
+    public function __construct(Runner $runner, Configuration $configuration, Reporter $reporter)
     {
         $this->runner = $runner;
         $this->configuration = $configuration;
+        $this->reporter = $reporter;
 
         parent::__construct();
     }
@@ -47,11 +54,18 @@ final class CheckCommand extends AbstractCommand
         unset($arguments['command']);
         $this->configuration->resolveFromArray($arguments);
 
-        $source = $input->getArgument('source');
-
         $this->runner->runPHPCS();
+
+        if ($this->reporter->getTotalErrors() + $this->reporter->getTotalWarnings()) {
+            // print errors
+            // add custom style with report writing out
+            $reports = $this->reporter->getReports();
+            $output->write('EEE');
+
+            $output->write('Some errors were found');
+            return 1;
+        }
         
-//        dump($source);
-        die;
+        return 0;
     }
 }

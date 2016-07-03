@@ -31,6 +31,16 @@ final class Configuration
      */
     private $configurationResolver;
 
+    /**
+     * @var string[]
+     */
+    private $sniffs = [];
+
+    /**
+     * @var array
+     */
+    private $source = [];
+
     public function __construct(ConfigurationResolver $configurationResolver)
     {
         $this->configurationResolver = $configurationResolver;
@@ -41,14 +51,20 @@ final class Configuration
         $options = $this->configurationResolver->resolve($options);
 
         $this->standards = $options['standards'];
+        $this->sniffs = $options['sniffs'];
         $this->reportWidth = $options['reportWidth'];
         $this->reportClass = $options['reportClass'];
+        $this->source = $options['source'];
     }
 
     public function getStandards() : array
     {
-        $this->resolveFromArray([]);
         return $this->standards;
+    }
+
+    public function getSniff() : array
+    {
+        return $this->sniffs;
     }
 
     public function getReportWidth() : int
@@ -58,7 +74,11 @@ final class Configuration
 
     public function getReportClass() : string
     {
-        $this->resolveFromArray([]);
         return $this->reportClass;
+    }
+
+    public function getSource() : array
+    {
+        return $this->source;
     }
 }

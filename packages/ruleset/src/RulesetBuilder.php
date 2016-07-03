@@ -53,10 +53,9 @@ final class RulesetBuilder
     {
         $this->cleanCache();
 
-        $rulesetXml = simplexml_load_file($rulesetXmlFile);
-
         $ownSniffs = $this->getOwnSniffsFromRuleset($rulesetXmlFile);
 
+        $rulesetXml = simplexml_load_file($rulesetXmlFile);
         foreach ($rulesetXml->rule as $rule) {
             if (isset($rule['ref']) === false) {
                 continue;
@@ -76,6 +75,11 @@ final class RulesetBuilder
 
         $sniffs = $this->filterOutExcludedSniffs();
         return $this->turnSniffsToFiles($sniffs); // really needed?
+    }
+
+    public function getRuleset() : array
+    {
+        return $this->ruleset;
     }
 
     /**

@@ -15,8 +15,9 @@ final class Full implements ReportInterface
     /**
      * {@inheritdoc}
      */
-    public function generateFileReport(array $report, File $phpcsFile, int $width = 80) : bool
+    public function generateFileReport(array $report, File $file) : bool
     {
+        $width = 80;
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
             // Nothing to print.
             return false;
@@ -155,20 +156,12 @@ final class Full implements ReportInterface
     /**
      * {@inheritdoc}
      */
-    public function generate(
-        string $cachedData,
-        int $totalFiles,
-        int $totalErrors,
-        int $totalWarnings,
-        int $totalFixable,
-        int $width = 80
-    ) {
+    public function generate(string $cachedData, int $totalFiles, int $totalErrors, int $totalWarnings, int $totalFixable)
+    {
         if ($cachedData === '') {
             return;
         }
 
         echo $cachedData;
-
-        Util\Timing::printRunTime();
     }
 }

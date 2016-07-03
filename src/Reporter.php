@@ -7,220 +7,86 @@
 
 namespace Symplify\PHP7_CodeSniffer;
 
-use Symplify\PHP7_CodeSniffer\Reports\ReportInterface;
+use Symplify\PHP7_CodeSniffer\Files\File;
+use Symplify\PHP7_CodeSniffer\Reporter\Report\ReportFactory;
 
 final class Reporter
 {
     /**
-     * A cache of report objects.
-     *
      * @var array
      */
     private $reports = [];
 
     /**
-     * A cache of opened temporary files.
-     *
-     * @var array
+     * @var int
      */
-    private $tmpFiles = [];
+    private $totalErrors = 0;
 
     /**
-     * All reports specified in the config will be created and their
-     * output file (or a temp file if none is specified) initialised by
-     * clearing the current contents.
+     * @var int
      */
-    public function __construct(Configuration $config, ReportInterface $report)
+    private $totalWarnings = 0;
+
+    /**
+     * @var int
+     */
+    private $totalFiles = 0;
+
+    /**
+     * @var int
+     */
+    private $totalFixable = 0;
+
+    public function __construct(Configuration $config)
     {
         $this->config = $config;
+    }
 
-        foreach ($config->reports as $type => $output) {
-            $type = ucfirst($type);
-
-            if ($output === null) {
-                $output = $config->reportFile;
-            }
-
-            if (strpos($type, '.') !== false) {
-                // This is a path to a custom report class.
-                $filename = realpath($type);
-                if ($filename === false) {
-                    echo "ERROR: Custom report \"$type\" not found".PHP_EOL;
-                    exit(2);
-                }
-
-                $reportClassName = Autoload::loadFile($filename);
-            } else {
-                $reportClassName = 'Symplify\PHP7_CodeSniffer\Reports\\'.$type;
-            }
-
-            $reportClass = new $reportClassName();
-            if (false === ($reportClass instanceof ReportInterface)) {
-                throw new RuntimeException('Class "'.$reportClassName.'" must implement the "Symplify\PHP7_CodeSniffer\Report" interface.');
-            }
-
-            $this->reports[$type] = array(
-                                     'output' => $output,
-                                     'class'  => $reportClass,
-                                    );
-
-            if ($output === null) {
-                // Using a temp file.
-                $this->tmpFiles[$type] = tempnam(sys_get_temp_dir(), 'phpcs');
-                file_put_contents($this->tmpFiles[$type], '');
-            } else {
-                file_put_contents($output, '');
-            }
-        }//end foreach
-
-    }//end __construct()
-
-
-    /**
-     * Generates and prints final versions of all reports.
-     *
-     * Returns TRUE if any of the reports output content to the screen
-     * or FALSE if all reports were silently printed to a file.
-     *
-     * @return bool
-     */
-    public function printReports()
+    public function getTotalErrors() : int
     {
-        $toScreen = false;
-        foreach ($this->reports as $type => $report) {
-            if ($report['output'] === null) {
-                $toScreen = true;
-            }
+        return $this->totalErrors;
+    }
 
-            $this->printReport($type);
-        }
-
-        return $toScreen;
-
-    }//end printReports()
-
-
-    /**
-     * Generates and prints a single final report.
-     *
-     * @param string $report The report type to print.
-     *
-     * @return void
-     */
-    public function printReport($report)
+    public function getTotalWarnings() : int
     {
-        $report      = ucfirst($report);
-        $reportClass = $this->reports[$report]['class'];
-        $reportFile  = $this->reports[$report]['output'];
+        return $this->totalWarnings;
+    }
 
-        if ($reportFile !== null) {
-            $filename = $reportFile;
-            $toScreen = false;
-        } else {
-            if (isset($this->tmpFiles[$report]) === true) {
-                $filename = $this->tmpFiles[$report];
-            } else {
-                $filename = null;
-            }
-
-            $toScreen = true;
-        }
-
-        $reportCache = '';
-        if ($filename !== null) {
-            $reportCache = file_get_contents($filename);
-        }
-
-        ob_start();
-        $reportClass->generate(
-            $reportCache,
-            $this->totalFiles,
-            $this->totalErrors,
-            $this->totalWarnings,
-            $this->totalFixable,
-            $toScreen
-        );
-        $generatedReport = ob_get_contents();
-        ob_end_clean();
-
-        echo $generatedReport;
-        if ($filename !== null && file_exists($filename) === true) {
-            unlink($filename);
-        }
-
-    }//end printReport()
-
-
-    /**
-     * Caches the result of a single processed file for all reports.
-     *
-     * The report content that is generated is appended to the output file
-     * assigned to each report. This content may be an intermediate report format
-     * and not reflect the final report output.
-     *
-     * @param \Symplify\PHP7_CodeSniffer\Files\File $phpcsFile The file that has been processed.
-     */
-    public function cacheFileReport(File $phpcsFile)
+    public function cacheFileReport(File $file)
     {
-        $reportData  = $this->prepareFileReport($phpcsFile);
-        $errorsShown = false;
+        $this->reports[] = $reportData = $this->prepareFileReport($file);
 
-        foreach ($this->reports as $type => $report) {
-            $reportClass = $report['class'];
-
-            ob_start();
-            $result = $reportClass->generateFileReport($reportData, $phpcsFile);
-            if ($result === true) {
-                $errorsShown = true;
-            }
-
-            $generatedReport = ob_get_contents();
-            ob_end_clean();
-
-            if ($report['output'] === null) {
-                // Using a temp file.
-                file_put_contents($this->tmpFiles[$type], $generatedReport, FILE_APPEND);
-            } else {
-                file_put_contents($report['output'], $generatedReport, FILE_APPEND);
-            }//end if
-        }//end foreach
-
-        if ($errorsShown === true) {
+        if ($reportData['errors'] || $reportData['warnings']) {
             $this->totalFiles++;
-            $this->totalErrors   += $reportData['errors'];
-            $this->totalWarnings += $reportData['warnings'];
-            $this->totalFixable  += $reportData['fixable'];
         }
-
-    }//end cacheFileReport()
-
+        $this->totalErrors += $reportData['errors'];
+        $this->totalWarnings += $reportData['warnings'];
+        $this->totalFixable  += $reportData['fixable'];
+    }
 
     /**
-     * Generate summary information to be used during report generation.
-     *
      * @return array
      */
-    public function prepareFileReport(File $phpcsFile)
+    private function prepareFileReport(File $file) : array
     {
-        $report = array(
-                   'filename' => Common::stripBasepath($phpcsFile->getFilename(), $this->config->basepath),
-                   'errors'   => $phpcsFile->getErrorCount(),
-                   'warnings' => $phpcsFile->getWarningCount(),
-                   'fixable'  => $phpcsFile->getFixableCount(),
-                   'messages' => array(),
-                  );
+        $report = [
+            'filename' => $file->getFilename(),
+            'errors'  => $file->getErrorCount(),
+            'warnings' => $file->getWarningCount(),
+            'fixable' => $file->getFixableCount(),
+            'messages' => [],
+        ];
 
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
-            // Prefect score!
             return $report;
         }
 
-        $errors = array();
+        $errors = [];
 
         // Merge errors and warnings.
-        foreach ($phpcsFile->getErrors() as $line => $lineErrors) {
+        foreach ($file->getErrors() as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
-                $newErrors = array();
+                $newErrors = [];
                 foreach ($colErrors as $data) {
                     $newErrors[] = array(
                                     'message'  => $data['message'],
@@ -236,7 +102,7 @@ final class Reporter
             ksort($errors[$line]);
         }//end foreach
 
-        foreach ($phpcsFile->getWarnings() as $line => $lineWarnings) {
+        foreach ($file->getWarnings() as $line => $lineWarnings) {
             foreach ($lineWarnings as $column => $colWarnings) {
                 $newWarnings = array();
                 foreach ($colWarnings as $data) {
@@ -268,8 +134,10 @@ final class Reporter
         ksort($errors);
         $report['messages'] = $errors;
         return $report;
+    }
 
-    }//end prepareFileReport()
-
-
-}//end class
+    public function getReports() : array
+    {
+        return $this->reports;
+    }
+}

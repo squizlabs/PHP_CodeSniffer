@@ -7,24 +7,14 @@
 
 namespace Symplify\PHP7_CodeSniffer;
 
-use SimpleXMLElement;
+use Symplify\PHP7_CodeSniffer\Ruleset\RulesetBuilder;
 use Symplify\PHP7_CodeSniffer\SniffFinder\SniffFinder;
+use Symplify\PHP7_CodeSniffer\SniffFinder\SniffProvider;
 use Symplify\PHP7_CodeSniffer\Util;
 use Symplify\PHP7_CodeSniffer\Exceptions\RuntimeException;
 
 final class Ruleset
 {
-    /**
-     * A list of regular expressions used to include specific sniffs for files and folders.
-     *
-     * The key is the sniff code and the value is an array with
-     * the key being a regular expression and the value is the type
-     * of ignore pattern (absolute or relative).
-     *
-     * @var array<string, array<string, string>>
-     */
-    public $includePatterns = array();
-
     /**
      * An array of sniff objects that are being used to check files.
      *
@@ -33,7 +23,7 @@ final class Ruleset
      *
      * @var array<string, \Symplify\PHP7_CodeSniffer\Sniff>
      */
-    private $sniffs = array();
+    private $sniffs = [];
 
     /**
      * A mapping of sniff codes to fully qualified class names.
@@ -43,7 +33,7 @@ final class Ruleset
      *
      * @var array<string, string>
      */
-    public $sniffCodes = array();
+    public $sniffCodes = [];
 
     /**
      * An array of token types and the sniffs that are listening for them.
@@ -53,7 +43,7 @@ final class Ruleset
      *
      * @var array<int, \Symplify\PHP7_CodeSniffer\Sniff>
      */
-    public $tokenListeners = array();
+    public $tokenListeners = [];
 
     /**
      * An array of rules from the ruleset.xml file.
@@ -66,143 +56,27 @@ final class Ruleset
     public $ruleset = [];
 
     /**
-     * The directories that the processed rulesets are in.
-     *
-     * @var string[]
+     * @var SniffProvider
      */
-    private $rulesetDirs = [];
+    private $sniffProvider;
 
-    /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
-     * @var SniffFinder
-     */
-    private $sniffFinder;
-
-    public function __construct(Configuration $configuration, SniffFinder $sniffFinder)
+    public function __construct(SniffProvider $sniffProvider)
     {
-        $this->configuration = $configuration;
-        $this->sniffFinder = $sniffFinder;
+        $this->sniffProvider = $sniffProvider;
+    }
 
-        $sniffs = [];
-        foreach ($configuration->getStandards() as $name => $rulesetXmlPath) {
-            $sniffs = $this->sniffFinder->findSniffsInRuleset($rulesetXmlPath);
-
-//            $ruleset = simplexml_load_file($rulesetXmlPath);
-//            if ($ruleset !== false) {
-//                $standardName = (string) $ruleset['name'];
-//                if ($this->name !== '') {
-//                    $this->name .= ', ';
-//                }
-//
-//                $this->name   .= $standardName;
-//            }
-//
-            $sniffs = array_merge($sniffs, $this->processRuleset($standard));
-        }//end foreach
-
-        // Ignore sniff restrictions if caching is on.
-        $restrictions = [];
-        $sniffRestrictions = array();
-        foreach ($restrictions as $sniffCode) {
-            $parts = explode('.', strtolower($sniffCode));
-            $sniffName = 'Symplify\PHP7_CodeSniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
-            $sniffRestrictions[$sniffName] = true;
-        }
-
-        dump($sniffs);
-        die;
-
-        $this->registerSniffs($sniffs, $sniffRestrictions);
+    public function createSniffList()
+    {
+        $this->registerSniffs($this->sniffProvider->getActiveSniffs(), $this->sniffProvider->getSniffRegistrations());
         $this->populateTokenListeners();
     }
 
     /**
-     * Processes a single ruleset and returns a list of the sniffs it represents.
-     *
-     * Rules founds within the ruleset are processed immediately, but sniff classes
-     * are not registered by this method.
-     *
-     * @return string[]
-     * @throws RuntimeException If the ruleset path is invalid.
-     */
-    public function processRuleset(string $rulesetPath) : array
-    {
-        $ruleset = simplexml_load_file($rulesetPath);
-
-        $ownSniffs      = array();
-        $includedSniffs = array();
-        $excludedSniffs = array();
-
-        $rulesetDir          = dirname($rulesetPath);
-        $this->rulesetDirs[] = $rulesetDir;
-
-        $sniffDir = $rulesetDir.DIRECTORY_SEPARATOR.'Sniffs';
-        if (is_dir($sniffDir) === true) {
-            $ownSniffs = $this->expandSniffDirectory($sniffDir);
-        }
-
-        foreach ($ruleset->rule as $rule) {
-            if (isset($rule['ref']) === false
-                || $this->shouldProcessElement($rule) === false
-            ) {
-                continue;
-            }
-
-            $expandedSniffs = $this->expandRulesetReference($rule['ref'], $rulesetDir);
-            $newSniffs      = array_diff($expandedSniffs, $includedSniffs);
-            $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
-
-            if (isset($rule->exclude) === true) {
-                foreach ($rule->exclude as $exclude) {
-                    if ($this->shouldProcessElement($exclude) === false) {
-                        continue;
-                    }
-
-                    $excludedSniffs = array_merge(
-                        $excludedSniffs,
-                        $this->expandRulesetReference($exclude['name'], $rulesetDir)
-                    );
-                }//end foreach
-            }//end if
-
-            $this->processRule($rule, $newSniffs);
-        }//end foreach
-
-        $includedSniffs = array_unique(array_merge($ownSniffs, $includedSniffs));
-        $excludedSniffs = array_unique($excludedSniffs);
-
-        // Merge our own sniff list with our externally included
-        // sniff list, but filter out any excluded sniffs.
-        $files = array();
-        foreach ($includedSniffs as $sniff) {
-            if (in_array($sniff, $excludedSniffs) === true) {
-                continue;
-            } else {
-                $files[] = Util\Common::realpath($sniff);
-            }
-        }
-
-        return $files;
-
-    }//end processRuleset()
-
-
-    /**
      * Loads and stores sniffs objects used for sniffing files.
-     *
-     * @param array $files        Paths to the sniff files to register.
-     * @param array $restrictions The sniff class names to restrict the allowed
-     *                            listeners to.
-     *
-     * @return void
      */
-    public function registerSniffs($files, $restrictions)
+    public function registerSniffs(array $files, array $restrictions)
     {
-        $listeners = array();
+        $listeners = [];
 
         foreach ($files as $file) {
             // Work out where the position of /StandardName/Sniffs/... is
@@ -329,7 +203,6 @@ final class Ruleset
         }
 
         $this->sniffs[$sniffClass]->$name = $value;
-
     }
 
     /**

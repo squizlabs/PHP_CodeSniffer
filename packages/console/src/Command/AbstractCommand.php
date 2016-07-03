@@ -22,7 +22,7 @@ abstract class AbstractCommand extends Command
 
     private function addCommonArgumentsAndOptions()
     {
-        $this->addArgument('source', InputArgument::REQUIRED, 'One or more files or directories to process');
+        $this->addArgument('source', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'One or more files or directories to process');
         $this->addOption('standard', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'The name(s) of the coding standard to use', ['psr2']);
         $this->addOption('sniffs', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'List of sniff codes to use.');
     }

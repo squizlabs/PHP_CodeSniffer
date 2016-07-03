@@ -28,9 +28,7 @@ final class ReportFactory
      */
     public function create() : ReportInterface
     {
-        dump($this->config->getReportClass());
-        die;
-        
-        return new $this->config->getReportClass();
+        $reportClass = $this->config->getReportClass();
+        return new $reportClass;
     }
 }

@@ -1,28 +1,21 @@
+includes:
+    - services/console.neon
+
 services:
-    - Symplify\PHP7_CodeSniffer\Console\CodeSnifferApplication
-
-    # commands
-    - Symplify\PHP7_CodeSniffer\Console\Command\CheckCommand
-    - Symplify\PHP7_CodeSniffer\Console\Command\FixCommand
-    - Symplify\PHP7_CodeSniffer\Console\Command\ListCommand
-
     # runner
     - Symplify\PHP7_CodeSniffer\Runner
+    - Symplify\PHP7_CodeSniffer\Fixer
 
     # reporter
     - Symplify\PHP7_CodeSniffer\Reporter
     - Symplify\PHP7_CodeSniffer\Reporter\Report\ReportFactory
-    -
-        factory: [@Symplify\PHP7_CodeSniffer\Reporter\Report\ReportFactory, "create"]
 
     # ruleset
-    - Symplify\PHP7_CodeSniffer\SniffFinder\RuleReferenceNormalizer
     - Symplify\PHP7_CodeSniffer\Ruleset\RulesetBuilder
+    - Symplify\PHP7_CodeSniffer\Ruleset\Rule\ReferenceNormalizer
 
     # tokenizer
     - Symplify\PHP7_CodeSniffer\Util\Tokens
-    - Symfony\Component\EventDispatcher\EventDispatcher
-    - Symplify\PHP7_CodeSniffer\Tokenizer\EventSubscriber\SetupTokensOnConsoleCommandRunEventSubscriber
 
     - Symplify\PHP7_CodeSniffer\Configuration
     - Symplify\PHP7_CodeSniffer\Ruleset
@@ -30,6 +23,12 @@ services:
     # standards, rulesets and sniffs
     - Symplify\PHP7_CodeSniffer\SniffFinder\StandardFinder
     - Symplify\PHP7_CodeSniffer\SniffFinder\SniffFinder
+    - Symplify\PHP7_CodeSniffer\SniffFinder\SniffProvider
 
     # configuration
     - Symplify\PHP7_CodeSniffer\Configuration\ConfigurationResolver
+
+    # files
+    - Symplify\PHP7_CodeSniffer\Files\Finder\SourceFinder
+    - Symplify\PHP7_CodeSniffer\Files\File\FileFactory
+    - Symplify\PHP7_CodeSniffer\Files\File\SourceFilesProvider

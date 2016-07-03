@@ -7,6 +7,7 @@
 
 namespace Symplify\PHP7_CodeSniffer\Configuration;
 
+use Exception;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symplify\PHP7_CodeSniffer\Reports\Cbf;
 use Symplify\PHP7_CodeSniffer\Reports\Full;
@@ -77,7 +78,7 @@ final class ConfigurationResolver
 
             foreach ($standards as $standardName) {
                 if (!array_key_exists($standardName, $availableStandards)) {
-                    throw new \Exception(sprintf(
+                    throw new Exception(sprintf(
                         'Standard "%s" is not supported. Pick one of: %s', $standardName,
                         implode(array_keys($availableStandards), ', ')
                     ));
@@ -99,16 +100,14 @@ final class ConfigurationResolver
             return true;
         });
 
-        $this->optionsResolver->setAllowedValues('source', function ($source) {
-//        $file = Util\Common::realpath($arg);
-//        if (file_exists($file) === false) {
-//            echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
-//            $this->printUsage();
-//            exit(2);
-//        } else {
-//            $this->files[] = $file;
-//        }
-
+        $this->optionsResolver->setAllowedValues('source', function (array $source) {
+            foreach ($source as $singleSource) {
+                if (!file_exists($singleSource)) {
+                    throw new Exception(
+                        sprintf('Source "%s" does not exist.', $singleSource)
+                    );
+                }
+            }
             return true;
         });
     }

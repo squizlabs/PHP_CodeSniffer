@@ -19,7 +19,7 @@
         "symplify/php7-codesniffer/reporter": "@dev",
         "symplify/php7-codesniffer/ruleset": "@dev",
         "symplify/php7-codesniffer/sniff-finder": "@dev",
-        "symplify/php7-codesniffer/tokenizer": "@dev"
+        "symplify/php7-codesniffer/files": "@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"
@@ -31,7 +31,7 @@
         { "type": "path", "url": "packages/reporter" },
         { "type": "path", "url": "packages/ruleset" },
         { "type": "path", "url": "packages/sniff-finder" },
-        { "type": "path", "url": "packages/tokenizer" }
+        { "type": "path", "url": "packages/files" }
     ],
     "autoload": {
         "psr-4": {

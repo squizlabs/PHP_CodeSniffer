@@ -1,27 +1,16 @@
 <?php
-/**
- * The base tokenizer class.
- *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/Symplify\PHP7_CodeSniffer/blob/master/licence.txt BSD Licence
+
+/*
+ * This file is part of Symplify
+ * Copyright (c) 2016 Tomas Votruba (http://tomasvotruba.cz).
  */
 
 namespace Symplify\PHP7_CodeSniffer\Tokenizers;
 
-use Symplify\PHP7_CodeSniffer\RuntimeException;
 use Symplify\PHP7_CodeSniffer\Util;
 
 abstract class Tokenizer
 {
-
-    /**
-     * The config data for the run.
-     *
-     * @var \Symplify\PHP7_CodeSniffer\Configuration
-     */
-    protected $config = null;
-
     /**
      * The EOL char used in the content.
      *
@@ -61,16 +50,11 @@ abstract class Tokenizer
      * @return void
      * @throws TokenizerException If the file appears to be minified.
      */
-    public function __construct($content, $config, $eolChar='\n')
+    public function __construct($content, $eolChar='\n')
     {
         $this->eolChar = $eolChar;
 
-        $this->config = $config;
         $this->tokens = $this->tokenize($content);
-
-        if ($config === null) {
-            return;
-        }
 
         $this->createPositionMap();
         $this->createTokenMap();

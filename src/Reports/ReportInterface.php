@@ -18,7 +18,7 @@ interface ReportInterface
      * and FALSE if it ignored the file. Returning TRUE indicates that the file and
      * its data should be counted in the grand totals.
      */
-    public function generateFileReport(array  $report, File $phpcsFile, int $width = 80) : bool;
+    public function generateFileReport(array  $report, File $file) : bool;
 
     /**
      * @param string $cachedData    Any partial report data that was returned from
@@ -27,14 +27,6 @@ interface ReportInterface
      * @param int    $totalErrors   Total number of errors found during the run.
      * @param int    $totalWarnings Total number of warnings found during the run.
      * @param int    $totalFixable  Total number of problems that can be fixed.
-     * @param int    $width         Maximum allowed line width.
      */
-    public function generate(
-        string $cachedData,
-        int $totalFiles,
-        int $totalErrors,
-        int $totalWarnings,
-        int $totalFixable,
-        int $width = 80
-    );
+    public function generate(string $cachedData, int $totalFiles, int $totalErrors, int $totalWarnings, int $totalFixable);
 }

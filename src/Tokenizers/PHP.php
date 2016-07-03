@@ -11,10 +11,8 @@ namespace Symplify\PHP7_CodeSniffer\Tokenizers;
 
 use Symplify\PHP7_CodeSniffer\Util;
 
-class PHP extends Tokenizer
+final class PHP extends Tokenizer
 {
-
-
     /**
      * A list of tokens that are allowed to open a scope.
      *
@@ -1363,8 +1361,5 @@ class PHP extends Tokenizer
 
         self::$_resolveTokenCache[$token] = $newToken;
         return $newToken;
-
-    }//end resolveSimpleToken()
-
-
-}//end class
+    }
+}

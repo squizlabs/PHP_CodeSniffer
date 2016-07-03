@@ -22,9 +22,9 @@ final class Cbf implements ReportInterface
     /**
      * {@inheritdoc}
      */
-    public function generateFileReport(array $report, File $phpcsFile, int $width = 80) : bool
+    public function generateFileReport(array $report, File $file) : bool
     {
-        $errors = $phpcsFile->getFixableCount();
+        $errors = $file->getFixableCount();
         if ($errors === 0) {
             return false;
         }
@@ -34,7 +34,7 @@ final class Cbf implements ReportInterface
             $startTime = microtime(true);
             echo "\t=> Fixing file: $errors/$errors violations remaining";
 
-            $fixed = $phpcsFile->fixer->fixFile();
+            $fixed = $file->fixer->fixFile();
         }
 
         if ($fixed === false) {
@@ -45,7 +45,7 @@ final class Cbf implements ReportInterface
 
         if ($fixed === true) {
             $newFilename = $report['filename'];
-            $newContent  = $phpcsFile->fixer->getContents();
+            $newContent  = $file->fixer->getContents();
             file_put_contents($newFilename, $newContent);
 
             echo "\t=> File was overwritten".PHP_EOL;
@@ -71,8 +71,7 @@ final class Cbf implements ReportInterface
         int $totalFiles,
         int $totalErrors,
         int $totalWarnings,
-        int $totalFixable,
-        int $width = 80
+        int $totalFixable
     ) {
         $fixed = 0;
         $fails = 0;
