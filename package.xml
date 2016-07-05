@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Version control reports now show which errors are fixable if you are showing sources
   - Added a new sniff to enforce a single space after a NOT operator (request #1051)
     -- Include in a ruleset using the code Generic.Formatting.SpaceAfterNot
+  - The Squiz.Commenting.BlockComment sniff now supports tabs for indenting comment lines (request #1056)
   - Fixed bug #790 : Incorrect missing @throws error in methods that use closures
   - Fixed bug #908 : PSR2 standard is not checking that closing brace is on line following the body
   - Fixed bug #945 : Incorrect indent behavior using deep-nested function and arrays
