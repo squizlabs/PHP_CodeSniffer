@@ -120,11 +120,11 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
 
                     $phpcsFile->fixer->endChangeset();
                 }
-
-                // We can return here because there is nothing else to check. All code
-                // below can assume that the array is not empty.
-                return;
             }
+
+            // We can return here because there is nothing else to check. All code
+            // below can assume that the array is not empty.
+            return;
         }
 
         if ($tokens[$arrayStart]['line'] === $tokens[$arrayEnd]['line']) {
