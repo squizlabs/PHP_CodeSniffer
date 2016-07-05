@@ -8,7 +8,6 @@
 
  <exclude-pattern>*/Tests/*</exclude-pattern>
 
- <arg name="report" value="summary"/>
  <arg value="np"/>
 
  <rule ref="PHPCS"/>
