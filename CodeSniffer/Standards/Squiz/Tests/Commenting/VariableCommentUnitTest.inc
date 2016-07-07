@@ -102,7 +102,6 @@ class VariableCommentUnitTest
      */
      $variableCheck = '';
 
-
     /**
      * T_VARIABLE check, var in string and in function.
      *
@@ -145,6 +144,134 @@ class VariableCommentUnitTest
      * @var array(int => string)
      */
      private $_varArrayTypeCheck;
+
+
+    /**
+     * Boolean @var tag Capitalized
+     *
+     * @var     Boolean
+     */
+     public $CapBoolTag = true;
+
+
+    /**
+     * Boolean @var tag Capitalized
+     *
+     * @var     BOOLEAN
+     */
+     public $CapBoolTag2 = true;
+
+
+    /**
+     * Double @var tag Capitalized
+     *
+     * @var     Double
+     */
+     public $CapDoubleTag = 1;
+
+
+    /**
+     * Double @var tag Capitalized
+     *
+     * @var     DOUBLE
+     */
+     public $CapDoubleTag2 = 1;
+
+
+    /**
+     * Real @var tag Capitalized
+     *
+     * @var     Real
+     */
+     public $CapRealTag = 1;
+
+
+    /**
+     * Real @var tag Capitalized
+     *
+     * @var     REAL
+     */
+     public $CapRealTag2 = 1;
+
+
+    /**
+     * Float @var tag Capitalized
+     *
+     * @var     Float
+     */
+     public $CapFloatTag = 1;
+
+
+    /**
+     * Float @var tag Capitalized
+     *
+     * @var     FLOAT
+     */
+     public $CapFloatTag2 = 1;
+
+
+    /**
+     * Int @var tag Capitalized
+     *
+     * @var     Int
+     */
+     public $CapIntTag = 1;
+
+
+    /**
+     * Int @var tag Capitalized
+     *
+     * @var     INT
+     */
+     public $CapIntTag2 = 1;
+
+
+    /**
+     * Integer @var tag Capitalized
+     *
+     * @var     Integer
+     */
+     public $CapIntTag3 = 1;
+
+
+    /**
+     * Integer @var tag Capitalized
+     *
+     * @var     INTEGER
+     */
+     public $CapIntTag4 = 1;
+
+
+    /**
+     * Array @var tag Capitalized
+     *
+     * @var     Array
+     */
+     public $CapVarTag = [];
+
+
+    /**
+     * Array @var tag All Caps
+     *
+     * @var     ARRAY
+     */
+     public $CapVarTag2 = [];
+
+
+    /**
+     * Array @var tag Capitalized
+     *
+     * @var     Array()
+     */
+     public $CapVarTag3 = [];
+
+
+    /**
+     * Array @var tag All Caps
+     *
+     * @var     ARRAY()
+     */
+     public $CapVarTag4 = [];
 
 
      /**
