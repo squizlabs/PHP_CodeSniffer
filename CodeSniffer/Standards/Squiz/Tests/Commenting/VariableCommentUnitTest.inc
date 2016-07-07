@@ -149,7 +149,7 @@ class VariableCommentUnitTest
     /**
      * Boolean @var tag Capitalized
      *
-     * @var     Boolean
+     * @var Boolean
      */
      public $CapBoolTag = true;
 
@@ -157,7 +157,7 @@ class VariableCommentUnitTest
     /**
      * Boolean @var tag Capitalized
      *
-     * @var     BOOLEAN
+     * @var BOOLEAN
      */
      public $CapBoolTag2 = true;
 
@@ -165,7 +165,7 @@ class VariableCommentUnitTest
     /**
      * Double @var tag Capitalized
      *
-     * @var     Double
+     * @var Double
      */
      public $CapDoubleTag = 1;
 
@@ -173,7 +173,7 @@ class VariableCommentUnitTest
     /**
      * Double @var tag Capitalized
      *
-     * @var     DOUBLE
+     * @var DOUBLE
      */
      public $CapDoubleTag2 = 1;
 
@@ -181,7 +181,7 @@ class VariableCommentUnitTest
     /**
      * Real @var tag Capitalized
      *
-     * @var     Real
+     * @var Real
      */
      public $CapRealTag = 1;
 
@@ -189,7 +189,7 @@ class VariableCommentUnitTest
     /**
      * Real @var tag Capitalized
      *
-     * @var     REAL
+     * @var REAL
      */
      public $CapRealTag2 = 1;
 
@@ -197,7 +197,7 @@ class VariableCommentUnitTest
     /**
      * Float @var tag Capitalized
      *
-     * @var     Float
+     * @var Float
      */
      public $CapFloatTag = 1;
 
@@ -205,7 +205,7 @@ class VariableCommentUnitTest
     /**
      * Float @var tag Capitalized
      *
-     * @var     FLOAT
+     * @var FLOAT
      */
      public $CapFloatTag2 = 1;
 
@@ -213,7 +213,7 @@ class VariableCommentUnitTest
     /**
      * Int @var tag Capitalized
      *
-     * @var     Int
+     * @var Int
      */
      public $CapIntTag = 1;
 
@@ -221,7 +221,7 @@ class VariableCommentUnitTest
     /**
      * Int @var tag Capitalized
      *
-     * @var     INT
+     * @var INT
      */
      public $CapIntTag2 = 1;
 
@@ -229,7 +229,7 @@ class VariableCommentUnitTest
     /**
      * Integer @var tag Capitalized
      *
-     * @var     Integer
+     * @var Integer
      */
      public $CapIntTag3 = 1;
 
@@ -237,7 +237,7 @@ class VariableCommentUnitTest
     /**
      * Integer @var tag Capitalized
      *
-     * @var     INTEGER
+     * @var INTEGER
      */
      public $CapIntTag4 = 1;
 
@@ -245,7 +245,7 @@ class VariableCommentUnitTest
     /**
      * Array @var tag Capitalized
      *
-     * @var     Array
+     * @var Array
      */
      public $CapVarTag = [];
 
@@ -253,7 +253,7 @@ class VariableCommentUnitTest
     /**
      * Array @var tag All Caps
      *
-     * @var     ARRAY
+     * @var ARRAY
      */
      public $CapVarTag2 = [];
 
@@ -261,7 +261,7 @@ class VariableCommentUnitTest
     /**
      * Array @var tag Capitalized
      *
-     * @var     Array()
+     * @var Array()
      */
      public $CapVarTag3 = [];
 
@@ -269,7 +269,7 @@ class VariableCommentUnitTest
     /**
      * Array @var tag All Caps
      *
-     * @var     ARRAY()
+     * @var ARRAY()
      */
      public $CapVarTag4 = [];
 
