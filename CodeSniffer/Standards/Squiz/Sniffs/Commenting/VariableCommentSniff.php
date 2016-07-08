@@ -123,9 +123,9 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         if ($varType !== $suggestedType) {
             $error = 'Expected "%s" but found "%s" for @var tag in member variable comment';
             $data  = array(
-                $suggestedType,
-                $varType,
-             );
+                      $suggestedType,
+                      $varType,
+                     );
 
             $fix = $phpcsFile->addFixableError($error, ($foundVar + 2), 'IncorrectVarType', $data);
             if ($fix === true) {
