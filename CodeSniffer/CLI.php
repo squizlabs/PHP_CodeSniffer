@@ -399,7 +399,7 @@ class PHP_CodeSniffer_CLI
         $handle = fopen('php://stdin', 'r');
         if (stream_set_blocking($handle, false) === true) {
             $fileContents = '';
-            while (($line = fgets(STDIN)) !== false) {
+            while (($line = fgets($handle)) !== false) {
                 $fileContents .= $line;
                 usleep(10);
             }
