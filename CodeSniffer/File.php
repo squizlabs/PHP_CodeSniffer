@@ -532,6 +532,7 @@ class PHP_CodeSniffer_File
                 if (isset($this->_ignoredListeners[$listenerData['class']]) === true
                     || (isset($listenerIgnoreTo[$listenerData['class']]) === true
                     && $listenerIgnoreTo[$listenerData['class']] > $stackPtr)
+                    || empty($this->_listeners) === true
                 ) {
                     // This sniff is ignoring past this token, or the whole file.
                     continue;
