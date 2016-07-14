@@ -220,18 +220,32 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             $pattern = $function;
         }
 
+        $replacement = null;
         if ($this->forbiddenFunctions[$pattern] !== null
             && $this->forbiddenFunctions[$pattern] !== 'null'
         ) {
-            $type  .= 'WithAlternative';
-            $data[] = $this->forbiddenFunctions[$pattern];
-            $error .= '; use %s() instead';
+            $type       .= 'WithAlternative';
+            $replacement = $this->forbiddenFunctions[$pattern];
+            $data[]      = $replacement;
+            $error      .= '; use %s() instead';
         }
 
-        if ($this->error === true) {
-            $phpcsFile->addError($error, $stackPtr, $type, $data);
+        if ($replacement === null) {
+            if ($this->error === true) {
+                $phpcsFile->addError($error, $stackPtr, $type, $data);
+            } else {
+                $phpcsFile->addWarning($error, $stackPtr, $type, $data);
+            }
         } else {
-            $phpcsFile->addWarning($error, $stackPtr, $type, $data);
+            if ($this->error === true) {
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, $type, $data);
+            } else {
+                $fix = $phpcsFile->addFixableWarning($error, $stackPtr, $type, $data);
+            }
+
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($stackPtr, $replacement);
+            }
         }
 
     }//end addError()
