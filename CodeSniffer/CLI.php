@@ -426,7 +426,10 @@ class PHP_CodeSniffer_CLI
     public function setCommandLineValues($args)
     {
         if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
-            $this->values = array('stdin' => null);
+            $this->values = array(
+                             'stdin' => null,
+                             'quiet' => true,
+                            );
         } else if (empty($this->values) === true) {
             $this->values = $this->getDefaults();
         }
