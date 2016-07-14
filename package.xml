@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2016-07-14</date>
  <time>09:28:00</time>
  <version>
-  <release>2.6.3</release>
-  <api>2.6.3</api>
+  <release>2.7.0</release>
+  <api>2.7.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
+    -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - Fixed bug #1066 : Undefined index: quiet in CLI.php during unit test run with -v command line arg
  </notes>
  <contents>
@@ -2137,6 +2139,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

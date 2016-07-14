@@ -44,20 +44,13 @@ class Squiz_Tests_WhiteSpace_LanguageConstructSpacingUnitTest extends AbstractSn
     {
         return array(
                 3  => 1,
-                4  => 1,
                 7  => 1,
-                8  => 1,
                 11 => 1,
-                12 => 1,
                 15 => 1,
-                16 => 1,
                 19 => 1,
-                20 => 1,
                 23 => 1,
-                24 => 1,
                 27 => 1,
                 31 => 1,
-                32 => 1,
                );
 
     }//end getErrorList()
