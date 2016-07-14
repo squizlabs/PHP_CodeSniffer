@@ -70,6 +70,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Exit code 1 used to indicate that coding standard errors were found, but none are fixable
     -- Exit code 0 is unchanged and continues to mean no coding standard errors found
 
+  - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
+    -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - Fixed bug #1066 : Undefined index: quiet in CLI.php during unit test run with -v command line arg
  </notes>
  <contents>
@@ -2181,6 +2183,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="LanguageConstructSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
