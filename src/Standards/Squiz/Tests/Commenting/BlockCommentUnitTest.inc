@@ -199,3 +199,24 @@ class Foo
     var $bar = array();
 
 }
+
+class TabTest {
+	public function bar() {
+		/*
+		 * Comment line 1.
+		 * Comment line 2.
+		*/
+
+		if ($foo) {
+			echo 'foo';
+		}
+
+		/* Comment line 1.
+			Comment line 2.
+		*/
+
+		if ($foo) {
+			echo 'foo';
+		}
+	}
+}

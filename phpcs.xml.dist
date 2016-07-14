@@ -9,7 +9,6 @@
 
  <exclude-pattern>*/Standards/*/Tests/*.(inc|css|js)</exclude-pattern>
 
- <arg name="report" value="summary"/>
  <arg name="basepath" value="."/>
  <arg value="np"/>
 
