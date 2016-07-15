@@ -10,6 +10,7 @@
  <exclude-pattern>*/Standards/*/Tests/*.(inc|css|js)</exclude-pattern>
 
  <arg name="basepath" value="."/>
+ <arg name="colors" />
  <arg value="np"/>
 
  <rule ref="PHPCS"/>
