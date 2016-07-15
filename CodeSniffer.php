@@ -194,9 +194,9 @@ class PHP_CodeSniffer
      */
     public static $allowedTypes = array(
                                    'array',
-                                   'boolean',
+                                   'bool',
                                    'float',
-                                   'integer',
+                                   'int',
                                    'mixed',
                                    'object',
                                    'string',
@@ -2092,13 +2092,13 @@ class PHP_CodeSniffer
         } else {
             $lowerVarType = strtolower($varType);
             switch ($lowerVarType) {
-            case 'bool':
-                return 'boolean';
+            case 'boolean':
+                return 'bool';
             case 'double':
             case 'real':
                 return 'float';
-            case 'int':
-                return 'integer';
+            case 'integer':
+                return 'int';
             case 'array()':
                 return 'array';
             }//end switch
