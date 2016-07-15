@@ -37,7 +37,7 @@ class Config
      * This array is not meant to be accessed directly. Instead, use the settings
      * as if they are class member vars so the __get() and __set() magic methods
      * can be used to validate the values. For example, to set the verbosity level to
-     * level 2, use $this->verbosity = 2; insteas of accessing this property directly.
+     * level 2, use $this->verbosity = 2; instead of accessing this property directly.
      *
      * The list of settings are:
      *
