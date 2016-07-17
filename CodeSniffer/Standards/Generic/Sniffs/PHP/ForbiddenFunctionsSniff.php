@@ -102,6 +102,9 @@ class Generic_Sniffs_PHP_ForbiddenFunctionsSniff implements PHP_CodeSniffer_Snif
             }
         }
 
+        $this->forbiddenFunctionNames = array_map('strtolower', $this->forbiddenFunctionNames);
+        $this->forbiddenFunctions     = array_combine($this->forbiddenFunctionNames, $this->forbiddenFunctions);
+
         return array_unique($register);
 
     }//end register()
