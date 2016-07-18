@@ -942,7 +942,7 @@ class PHP extends Tokenizer
 
             /*
                 HHVM 3.5 and 3.6 tokenizes a hashbang line such as #!/usr/bin/php
-                as T_HASHANG while PHP proper uses T_INLINE_HTML.
+                as T_HASHBANG while PHP proper uses T_INLINE_HTML.
             */
 
             if ($tokenIsArray === true && token_name($token[0]) === 'T_HASHBANG') {
