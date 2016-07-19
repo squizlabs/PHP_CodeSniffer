@@ -68,17 +68,20 @@ foreach ($scripts as $script) {
 
         $path = 'src'.substr($fullpath, $srcDirLen);
 
-        $phar->addFile($fullpath, $path);
-        $phar[$path]->compress(Phar::GZ);
+        //$phar->addFile($fullpath, $path);
+        $phar->addFromString($path, php_strip_whitespace($fullpath));
+        #$phar[$path]->compress(Phar::GZ);
     }
 
     // Add autoloader.
-    $phar->addFile(realpath(__DIR__.'/../autoload.php'), 'autoload.php');
-    $phar['autoload.php']->compress(Phar::GZ);
+    //$phar->addFile(realpath(__DIR__.'/../autoload.php'), 'autoload.php');
+    $phar->addFromString('autoload.php', php_strip_whitespace(realpath(__DIR__.'/../autoload.php')));
+    #$phar['autoload.php']->compress(Phar::GZ);
 
     // Add licence file.
-    $phar->addFile(realpath(__DIR__.'/../licence.txt'), 'licence.txt');
-    $phar['licence.txt']->compress(Phar::GZ);
+    //$phar->addFile(realpath(__DIR__.'/../licence.txt'), 'licence.txt');
+    $phar->addFromString('licence.txt', php_strip_whitespace(realpath(__DIR__.'/../licence.txt')));
+    #$phar['licence.txt']->compress(Phar::GZ);
 
     echo 'done'.PHP_EOL;
 
