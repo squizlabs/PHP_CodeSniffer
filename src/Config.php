@@ -640,12 +640,20 @@ class Config
             $this->overriddenDefaults['colors'] = true;
             break;
         case 'cache':
+            if (isset($this->overriddenDefaults['cache']) === true) {
+                break;
+            }
+
             if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
                 $this->cache = true;
                 $this->overriddenDefaults['cache'] = true;
             }
             break;
         case 'no-cache':
+            if (isset($this->overriddenDefaults['cache']) === true) {
+                break;
+            }
+
             $this->cache = false;
             $this->overriddenDefaults['cache'] = true;
             break;
@@ -953,6 +961,10 @@ class Config
                 $this->suffix = explode(',', substr($arg, 7));
                 $this->overriddenDefaults['suffix'] = true;
             } else if (substr($arg, 0, 9) === 'parallel=') {
+                if (isset($this->overriddenDefaults['parallel']) === true) {
+                    break;
+                }
+
                 $this->parallel = max((int) substr($arg, 9), 1);
                 $this->overriddenDefaults['parallel'] = true;
             } else if (substr($arg, 0, 9) === 'severity=') {
