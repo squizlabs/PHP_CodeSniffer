@@ -95,6 +95,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The included PHPCS standard has been removed
     -- All rules are now found inside the phpcs.xml.dist file
     -- Running "phpcs" without any arguments from a git clone will use this ruleset
+  - The included SVN pre-commit hook has been removed
+    -- Hooks for version control systems will no longer be maintained within the PHPCS project
  </notes>
  <contents>
   <dir name="/">
@@ -118,12 +120,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
      <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
     </file>
-    <!--
-    <file baseinstalldir="" name="phpcs-svn-pre-commit" role="script">
-     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
-    </file>
-    -->
    </dir>
    <dir name="tests">
     <dir name="Core">
