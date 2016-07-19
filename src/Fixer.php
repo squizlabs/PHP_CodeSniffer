@@ -52,7 +52,7 @@ class Fixer
      *
      * @var array<int, string>
      */
-    private $_tokens = array();
+    private $tokens = array();
 
     /**
      * A list of tokens that have already been fixed.
@@ -62,7 +62,7 @@ class Fixer
      *
      * @var int[]
      */
-    private $_fixedTokens = array();
+    private $fixedTokens = array();
 
     /**
      * The last value of each fixed token.
@@ -72,7 +72,7 @@ class Fixer
      *
      * @var array<int, string>
      */
-    private $_oldTokenValues = array();
+    private $oldTokenValues = array();
 
     /**
      * A list of tokens that have been fixed during a changeset.
@@ -82,28 +82,28 @@ class Fixer
      *
      * @var array
      */
-    private $_changeset = array();
+    private $changeset = array();
 
     /**
      * Is there an open changeset.
      *
      * @var boolean
      */
-    private $_inChangeset = false;
+    private $inChangeset = false;
 
     /**
      * Is the current fixing loop in conflict?
      *
      * @var boolean
      */
-    private $_inConflict = false;
+    private $inConflict = false;
 
     /**
      * The number of fixes that have been performed.
      *
      * @var integer
      */
-    private $_numFixes = 0;
+    private $numFixes = 0;
 
 
     /**
@@ -115,17 +115,17 @@ class Fixer
      */
     public function startFile(File $phpcsFile)
     {
-        $this->currentFile  = $phpcsFile;
-        $this->_numFixes    = 0;
-        $this->_fixedTokens = array();
+        $this->currentFile = $phpcsFile;
+        $this->numFixes    = 0;
+        $this->fixedTokens = array();
 
-        $tokens        = $phpcsFile->getTokens();
-        $this->_tokens = array();
+        $tokens       = $phpcsFile->getTokens();
+        $this->tokens = array();
         foreach ($tokens as $index => $token) {
             if (isset($token['orig_content']) === true) {
-                $this->_tokens[$index] = $token['orig_content'];
+                $this->tokens[$index] = $token['orig_content'];
             } else {
-                $this->_tokens[$index] = $token['content'];
+                $this->tokens[$index] = $token['content'];
             }
         }
 
@@ -173,7 +173,7 @@ class Fixer
                 ob_start();
             }
 
-            $this->_inConflict = false;
+            $this->inConflict = false;
             $this->currentFile->ruleset->populateTokenListeners();
             $this->currentFile->setContent($contents);
             $this->currentFile->process();
@@ -183,7 +183,7 @@ class Fixer
 
             if (PHP_CODESNIFFER_CBF === true && $stdin === false) {
                 echo "\r".str_repeat(' ', 80)."\r";
-                echo "\t=> Fixing file: $this->_numFixes/$fixable violations remaining [made $this->loops pass";
+                echo "\t=> Fixing file: $this->numFixes/$fixable violations remaining [made $this->loops pass";
                 if ($this->loops > 1) {
                     echo 'es';
                 }
@@ -191,20 +191,20 @@ class Fixer
                 echo ']... ';
             }
 
-            if ($this->_numFixes === 0 && $this->_inConflict === false) {
+            if ($this->numFixes === 0 && $this->inConflict === false) {
                 // Nothing left to do.
                 break;
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\t* fixed $this->_numFixes violations, starting loop ".($this->loops + 1).' *'.PHP_EOL;
+                echo "\t* fixed $this->numFixes violations, starting loop ".($this->loops + 1).' *'.PHP_EOL;
             }
         }//end while
 
         $this->enabled = false;
 
-        if ($this->_numFixes > 0) {
+        if ($this->numFixes > 0) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 @ob_end_clean();
-                echo "\t*** Reached maximum number of loops with $this->_numFixes violations left unfixed ***".PHP_EOL;
+                echo "\t*** Reached maximum number of loops with $this->numFixes violations left unfixed ***".PHP_EOL;
                 ob_start();
             }
 
@@ -293,7 +293,7 @@ class Fixer
      */
     public function getFixCount()
     {
-        return $this->_numFixes;
+        return $this->numFixes;
 
     }//end getFixCount()
 
@@ -305,7 +305,7 @@ class Fixer
      */
     public function getContents()
     {
-        $contents = implode($this->_tokens);
+        $contents = implode($this->tokens);
         return $contents;
 
     }//end getContents()
@@ -323,12 +323,12 @@ class Fixer
      */
     public function getTokenContent($stackPtr)
     {
-        if ($this->_inChangeset === true
-            && isset($this->_changeset[$stackPtr]) === true
+        if ($this->inChangeset === true
+            && isset($this->changeset[$stackPtr]) === true
         ) {
-            return $this->_changeset[$stackPtr];
+            return $this->changeset[$stackPtr];
         } else {
-            return $this->_tokens[$stackPtr];
+            return $this->tokens[$stackPtr];
         }
 
     }//end getTokenContent()
@@ -341,7 +341,7 @@ class Fixer
      */
     public function beginChangeset()
     {
-        if ($this->_inConflict === true) {
+        if ($this->inConflict === true) {
             return false;
         }
 
@@ -355,8 +355,8 @@ class Fixer
             ob_start();
         }
 
-        $this->_changeset   = array();
-        $this->_inChangeset = true;
+        $this->changeset   = array();
+        $this->inChangeset = true;
 
     }//end beginChangeset()
 
@@ -368,15 +368,15 @@ class Fixer
      */
     public function endChangeset()
     {
-        if ($this->_inConflict === true) {
+        if ($this->inConflict === true) {
             return false;
         }
 
-        $this->_inChangeset = false;
+        $this->inChangeset = false;
 
         $success = true;
         $applied = array();
-        foreach ($this->_changeset as $stackPtr => $content) {
+        foreach ($this->changeset as $stackPtr => $content) {
             $success = $this->replaceToken($stackPtr, $content);
             if ($success === false) {
                 break;
@@ -397,13 +397,13 @@ class Fixer
                 ob_start();
             }
         } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $fixes = count($this->_changeset);
+            $fixes = count($this->changeset);
             @ob_end_clean();
             echo "\t=> Changeset ended: $fixes changes applied".PHP_EOL;
             ob_start();
         }
 
-        $this->_changeset = array();
+        $this->changeset = array();
 
     }//end endChangeset()
 
@@ -415,10 +415,10 @@ class Fixer
      */
     public function rollbackChangeset()
     {
-        $this->_inChangeset = false;
-        $this->_inConflict  = false;
+        $this->inChangeset = false;
+        $this->inConflict  = false;
 
-        if (empty($this->_changeset) === false) {
+        if (empty($this->changeset) === false) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $bt = debug_backtrace();
                 if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
@@ -429,7 +429,7 @@ class Fixer
                     $line  = $bt[0]['line'];
                 }
 
-                $numChanges = count($this->_changeset);
+                $numChanges = count($this->changeset);
 
                 @ob_end_clean();
                 echo "\t\tR: $sniff (line $line) rolled back the changeset ($numChanges changes)".PHP_EOL;
@@ -437,7 +437,7 @@ class Fixer
                 ob_start();
             }
 
-            $this->_changeset = array();
+            $this->changeset = array();
         }//end if
 
     }//end rollbackChangeset()
@@ -453,15 +453,15 @@ class Fixer
      */
     public function replaceToken($stackPtr, $content)
     {
-        if ($this->_inConflict === true) {
+        if ($this->inConflict === true) {
             return false;
         }
 
-        if ($this->_inChangeset === false
-            && isset($this->_fixedTokens[$stackPtr]) === true
+        if ($this->inChangeset === false
+            && isset($this->fixedTokens[$stackPtr]) === true
         ) {
             $indent = "\t";
-            if (empty($this->_changeset) === false) {
+            if (empty($this->changeset) === false) {
                 $indent .= "\t";
             }
 
@@ -486,18 +486,18 @@ class Fixer
 
             $tokens     = $this->currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
-            $oldContent = Common::prepareForOutput($this->_tokens[$stackPtr]);
+            $oldContent = Common::prepareForOutput($this->tokens[$stackPtr]);
             $newContent = Common::prepareForOutput($content);
-            if (trim($this->_tokens[$stackPtr]) === '' && isset($this->_tokens[($stackPtr + 1)]) === true) {
+            if (trim($this->tokens[$stackPtr]) === '' && isset($this->tokens[($stackPtr + 1)]) === true) {
                 // Add some context for whitespace only changes.
-                $append      = Common::prepareForOutput($this->_tokens[($stackPtr + 1)]);
+                $append      = Common::prepareForOutput($this->tokens[($stackPtr + 1)]);
                 $oldContent .= $append;
                 $newContent .= $append;
             }
         }//end if
 
-        if ($this->_inChangeset === true) {
-            $this->_changeset[$stackPtr] = $content;
+        if ($this->inChangeset === true) {
+            $this->changeset[$stackPtr] = $content;
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 @ob_end_clean();
@@ -508,31 +508,31 @@ class Fixer
             return true;
         }
 
-        if (isset($this->_oldTokenValues[$stackPtr]) === false) {
-            $this->_oldTokenValues[$stackPtr] = array(
-                                                 'curr' => $content,
-                                                 'prev' => $this->_tokens[$stackPtr],
-                                                 'loop' => $this->loops,
-                                                );
+        if (isset($this->oldTokenValues[$stackPtr]) === false) {
+            $this->oldTokenValues[$stackPtr] = array(
+                                                'curr' => $content,
+                                                'prev' => $this->tokens[$stackPtr],
+                                                'loop' => $this->loops,
+                                               );
         } else {
-            if ($this->_oldTokenValues[$stackPtr]['prev'] === $content
-                && $this->_oldTokenValues[$stackPtr]['loop'] === ($this->loops - 1)
+            if ($this->oldTokenValues[$stackPtr]['prev'] === $content
+                && $this->oldTokenValues[$stackPtr]['loop'] === ($this->loops - 1)
             ) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $indent = "\t";
-                    if (empty($this->_changeset) === false) {
+                    if (empty($this->changeset) === false) {
                         $indent .= "\t";
                     }
 
-                    $loop = $this->_oldTokenValues[$stackPtr]['loop'];
+                    $loop = $this->oldTokenValues[$stackPtr]['loop'];
 
                     @ob_end_clean();
                     echo "$indent**** $sniff (line $line) has possible conflict with another sniff on loop $loop; caused by the following change ****".PHP_EOL;
                     echo "$indent**** replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\" ****".PHP_EOL;
                 }
 
-                if ($this->_oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
-                    $this->_inConflict = true;
+                if ($this->oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
+                    $this->inConflict = true;
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "$indent**** ignoring all changes until next loop ****".PHP_EOL;
                     }
@@ -545,18 +545,18 @@ class Fixer
                 return false;
             }//end if
 
-            $this->_oldTokenValues[$stackPtr]['prev'] = $this->_oldTokenValues[$stackPtr]['curr'];
-            $this->_oldTokenValues[$stackPtr]['curr'] = $content;
-            $this->_oldTokenValues[$stackPtr]['loop'] = $this->loops;
+            $this->oldTokenValues[$stackPtr]['prev'] = $this->oldTokenValues[$stackPtr]['curr'];
+            $this->oldTokenValues[$stackPtr]['curr'] = $content;
+            $this->oldTokenValues[$stackPtr]['loop'] = $this->loops;
         }//end if
 
-        $this->_fixedTokens[$stackPtr] = $this->_tokens[$stackPtr];
-        $this->_tokens[$stackPtr]      = $content;
-        $this->_numFixes++;
+        $this->fixedTokens[$stackPtr] = $this->tokens[$stackPtr];
+        $this->tokens[$stackPtr]      = $content;
+        $this->numFixes++;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $indent = "\t";
-            if (empty($this->_changeset) === false) {
+            if (empty($this->changeset) === false) {
                 $indent .= "\tA: ";
             }
 
@@ -579,7 +579,7 @@ class Fixer
      */
     public function revertToken($stackPtr)
     {
-        if (isset($this->_fixedTokens[$stackPtr]) === false) {
+        if (isset($this->fixedTokens[$stackPtr]) === false) {
             return false;
         }
 
@@ -595,23 +595,23 @@ class Fixer
 
             $tokens     = $this->currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
-            $oldContent = Common::prepareForOutput($this->_tokens[$stackPtr]);
-            $newContent = Common::prepareForOutput($this->_fixedTokens[$stackPtr]);
-            if (trim($this->_tokens[$stackPtr]) === '' && isset($tokens[($stackPtr + 1)]) === true) {
+            $oldContent = Common::prepareForOutput($this->tokens[$stackPtr]);
+            $newContent = Common::prepareForOutput($this->fixedTokens[$stackPtr]);
+            if (trim($this->tokens[$stackPtr]) === '' && isset($tokens[($stackPtr + 1)]) === true) {
                 // Add some context for whitespace only changes.
-                $append      = Common::prepareForOutput($this->_tokens[($stackPtr + 1)]);
+                $append      = Common::prepareForOutput($this->tokens[($stackPtr + 1)]);
                 $oldContent .= $append;
                 $newContent .= $append;
             }
         }//end if
 
-        $this->_tokens[$stackPtr] = $this->_fixedTokens[$stackPtr];
-        unset($this->_fixedTokens[$stackPtr]);
-        $this->_numFixes--;
+        $this->tokens[$stackPtr] = $this->fixedTokens[$stackPtr];
+        unset($this->fixedTokens[$stackPtr]);
+        $this->numFixes--;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $indent = "\t";
-            if (empty($this->_changeset) === false) {
+            if (empty($this->changeset) === false) {
                 $indent .= "\tR: ";
             }
 

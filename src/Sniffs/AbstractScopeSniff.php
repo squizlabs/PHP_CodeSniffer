@@ -37,21 +37,21 @@ abstract class AbstractScopeSniff implements Sniff
      *
      * @var array
      */
-    private $_tokens = array();
+    private $tokens = array();
 
     /**
      * The type of scope opener tokens that this test wishes to listen to.
      *
      * @var string
      */
-    private $_scopeTokens = array();
+    private $scopeTokens = array();
 
     /**
      * True if this test should fire on tokens outside of the scope.
      *
      * @var boolean
      */
-    private $_listenOutside = false;
+    private $listenOutside = false;
 
 
     /**
@@ -90,9 +90,9 @@ abstract class AbstractScopeSniff implements Sniff
             throw new RuntimeException($error);
         }
 
-        $this->_listenOutside = $listenOutside;
-        $this->_scopeTokens   = array_flip($scopeTokens);
-        $this->_tokens        = $tokens;
+        $this->listenOutside = $listenOutside;
+        $this->scopeTokens   = array_flip($scopeTokens);
+        $this->tokens        = $tokens;
 
     }//end __construct()
 
@@ -109,7 +109,7 @@ abstract class AbstractScopeSniff implements Sniff
      */
     final public function register()
     {
-        return $this->_tokens;
+        return $this->tokens;
 
     }//end register()
 
@@ -130,13 +130,13 @@ abstract class AbstractScopeSniff implements Sniff
 
         $foundScope = false;
         foreach ($tokens[$stackPtr]['conditions'] as $scope => $code) {
-            if (isset($this->_scopeTokens[$code]) === true) {
+            if (isset($this->scopeTokens[$code]) === true) {
                 $this->processTokenWithinScope($phpcsFile, $stackPtr, $scope);
                 $foundScope = true;
             }
         }
 
-        if ($this->_listenOutside === true && $foundScope === false) {
+        if ($this->listenOutside === true && $foundScope === false) {
             $this->processTokenOutsideScope($phpcsFile, $stackPtr);
         }
 

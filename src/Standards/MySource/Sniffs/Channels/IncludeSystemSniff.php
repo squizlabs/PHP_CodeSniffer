@@ -21,24 +21,24 @@ class IncludeSystemSniff extends AbstractScopeSniff
      *
      * @var string[]
      */
-    private $_ignore = array(
-                        'self'                      => true,
-                        'static'                    => true,
-                        'parent'                    => true,
-                        'channels'                  => true,
-                        'basesystem'                => true,
-                        'dal'                       => true,
-                        'init'                      => true,
-                        'pdo'                       => true,
-                        'util'                      => true,
-                        'ziparchive'                => true,
-                        'phpunit_framework_assert'  => true,
-                        'abstractmysourceunittest'  => true,
-                        'abstractdatacleanunittest' => true,
-                        'exception'                 => true,
-                        'abstractwidgetwidgettype'  => true,
-                        'domdocument'               => true,
-                       );
+    private $ignore = array(
+                       'self'                      => true,
+                       'static'                    => true,
+                       'parent'                    => true,
+                       'channels'                  => true,
+                       'basesystem'                => true,
+                       'dal'                       => true,
+                       'init'                      => true,
+                       'pdo'                       => true,
+                       'util'                      => true,
+                       'ziparchive'                => true,
+                       'phpunit_framework_assert'  => true,
+                       'abstractmysourceunittest'  => true,
+                       'abstractdatacleanunittest' => true,
+                       'exception'                 => true,
+                       'abstractwidgetwidgettype'  => true,
+                       'domdocument'               => true,
+                      );
 
 
     /**
@@ -80,7 +80,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
         }
 
         $className = $tokens[$classNameToken]['content'];
-        if (isset($this->_ignore[strtolower($className)]) === true) {
+        if (isset($this->ignore[strtolower($className)]) === true) {
             return;
         }
 
@@ -222,7 +222,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
         }
 
         // Some systems are always available.
-        if (isset($this->_ignore[strtolower($className)]) === true) {
+        if (isset($this->ignore[strtolower($className)]) === true) {
             return;
         }
 

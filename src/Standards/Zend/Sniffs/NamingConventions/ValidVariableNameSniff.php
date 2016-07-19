@@ -21,10 +21,10 @@ class ValidVariableNameSniff extends AbstractVariableSniff
      *
      * @var array
      */
-    private $_ignore = array(
-                        T_WHITESPACE,
-                        T_COMMENT,
-                       );
+    private $ignore = array(
+                       T_WHITESPACE,
+                       T_COMMENT,
+                      );
 
 
     /**

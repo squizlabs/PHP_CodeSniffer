@@ -31,32 +31,32 @@ class ComparisonOperatorUsageSniff implements Sniff
      *
      * @var array
      */
-    private static $_validOps = array(
-                                 T_IS_IDENTICAL,
-                                 T_IS_NOT_IDENTICAL,
-                                 T_LESS_THAN,
-                                 T_GREATER_THAN,
-                                 T_IS_GREATER_OR_EQUAL,
-                                 T_IS_SMALLER_OR_EQUAL,
-                                 T_INSTANCEOF,
-                                );
+    private static $validOps = array(
+                                T_IS_IDENTICAL,
+                                T_IS_NOT_IDENTICAL,
+                                T_LESS_THAN,
+                                T_GREATER_THAN,
+                                T_IS_GREATER_OR_EQUAL,
+                                T_IS_SMALLER_OR_EQUAL,
+                                T_INSTANCEOF,
+                               );
 
     /**
      * A list of invalid operators with their alternatives.
      *
      * @var array<int, string>
      */
-    private static $_invalidOps = array(
-                                   'PHP' => array(
-                                             T_IS_EQUAL     => '===',
-                                             T_IS_NOT_EQUAL => '!==',
-                                             T_BOOLEAN_NOT  => '=== FALSE',
-                                            ),
-                                   'JS'  => array(
-                                             T_IS_EQUAL     => '===',
-                                             T_IS_NOT_EQUAL => '!==',
-                                            ),
-                                  );
+    private static $invalidOps = array(
+                                  'PHP' => array(
+                                            T_IS_EQUAL     => '===',
+                                            T_IS_NOT_EQUAL => '!==',
+                                            T_BOOLEAN_NOT  => '=== FALSE',
+                                           ),
+                                  'JS'  => array(
+                                            T_IS_EQUAL     => '===',
+                                            T_IS_NOT_EQUAL => '!==',
+                                           ),
+                                 );
 
 
     /**
@@ -155,15 +155,15 @@ class ComparisonOperatorUsageSniff implements Sniff
 
         for ($i = $start; $i <= $end; $i++) {
             $type = $tokens[$i]['code'];
-            if (in_array($type, array_keys(self::$_invalidOps[$tokenizer])) === true) {
+            if (in_array($type, array_keys(self::$invalidOps[$tokenizer])) === true) {
                 $error = 'Operator %s prohibited; use %s instead';
                 $data  = array(
                           $tokens[$i]['content'],
-                          self::$_invalidOps[$tokenizer][$type],
+                          self::$invalidOps[$tokenizer][$type],
                          );
                 $phpcsFile->addError($error, $i, 'NotAllowed', $data);
                 $foundOps++;
-            } else if (in_array($type, self::$_validOps) === true) {
+            } else if (in_array($type, self::$validOps) === true) {
                 $foundOps++;
             }
 

@@ -30,15 +30,15 @@ class LongConditionClosingCommentSniff implements Sniff
      *
      * @var integer[]
      */
-    private static $_openers = array(
-                                T_SWITCH,
-                                T_IF,
-                                T_FOR,
-                                T_FOREACH,
-                                T_WHILE,
-                                T_TRY,
-                                T_CASE,
-                               );
+    private static $openers = array(
+                               T_SWITCH,
+                               T_IF,
+                               T_FOR,
+                               T_FOREACH,
+                               T_WHILE,
+                               T_TRY,
+                               T_CASE,
+                              );
 
     /**
      * The length that a code block must be before
@@ -84,7 +84,7 @@ class LongConditionClosingCommentSniff implements Sniff
         $endBrace       = $tokens[$stackPtr];
 
         // We are only interested in some code blocks.
-        if (in_array($startCondition['code'], self::$_openers) === false) {
+        if (in_array($startCondition['code'], self::$openers) === false) {
             return;
         }
 

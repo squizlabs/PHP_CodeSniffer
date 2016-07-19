@@ -37,7 +37,7 @@ abstract class AbstractPatternSniff implements Sniff
      *
      * @var array
      */
-    private $_parsedPatterns = array();
+    private $parsedPatterns = array();
 
     /**
      * Tokens that this sniff wishes to process outside of the patterns.
@@ -46,14 +46,14 @@ abstract class AbstractPatternSniff implements Sniff
      * @see registerSupplementary()
      * @see processSupplementary()
      */
-    private $_supplementaryTokens = array();
+    private $supplementaryTokens = array();
 
     /**
      * Positions in the stack where errors have occurred.
      *
      * @var array<int, bool>
      */
-    private $_errorPos = array();
+    private $errorPos = array();
 
 
     /**
@@ -68,7 +68,7 @@ abstract class AbstractPatternSniff implements Sniff
             $this->ignoreComments = $ignoreComments;
         }
 
-        $this->_supplementaryTokens = $this->registerSupplementary();
+        $this->supplementaryTokens = $this->registerSupplementary();
 
     }//end __construct()
 
@@ -102,14 +102,14 @@ abstract class AbstractPatternSniff implements Sniff
                              'pattern_code' => $pattern,
                             );
 
-            if (isset($this->_parsedPatterns[$tokenType]) === false) {
-                $this->_parsedPatterns[$tokenType] = array();
+            if (isset($this->parsedPatterns[$tokenType]) === false) {
+                $this->parsedPatterns[$tokenType] = array();
             }
 
-            $this->_parsedPatterns[$tokenType][] = $patternArray;
+            $this->parsedPatterns[$tokenType][] = $patternArray;
         }//end foreach
 
-        return array_unique(array_merge($listenTypes, $this->_supplementaryTokens));
+        return array_unique(array_merge($listenTypes, $this->supplementaryTokens));
 
     }//end register()
 
@@ -191,13 +191,13 @@ abstract class AbstractPatternSniff implements Sniff
         $file = $phpcsFile->getFilename();
         if ($this->currFile !== $file) {
             // We have changed files, so clean up.
-            $this->_errorPos = array();
-            $this->currFile  = $file;
+            $this->errorPos = array();
+            $this->currFile = $file;
         }
 
         $tokens = $phpcsFile->getTokens();
 
-        if (in_array($tokens[$stackPtr]['code'], $this->_supplementaryTokens) === true) {
+        if (in_array($tokens[$stackPtr]['code'], $this->supplementaryTokens) === true) {
             $this->processSupplementary($phpcsFile, $stackPtr);
         }
 
@@ -205,7 +205,7 @@ abstract class AbstractPatternSniff implements Sniff
 
         // If the type is not set, then it must have been a token registered
         // with registerSupplementary().
-        if (isset($this->_parsedPatterns[$type]) === false) {
+        if (isset($this->parsedPatterns[$type]) === false) {
             return;
         }
 
@@ -213,7 +213,7 @@ abstract class AbstractPatternSniff implements Sniff
 
         // Loop over each pattern that is listening to the current token type
         // that we are processing.
-        foreach ($this->_parsedPatterns[$type] as $patternInfo) {
+        foreach ($this->parsedPatterns[$type] as $patternInfo) {
             // If processPattern returns false, then the pattern that we are
             // checking the code with must not be designed to check that code.
             $errors = $this->processPattern($patternInfo, $phpcsFile, $stackPtr);
@@ -226,9 +226,9 @@ abstract class AbstractPatternSniff implements Sniff
             }
 
             foreach ($errors as $stackPtr => $error) {
-                if (isset($this->_errorPos[$stackPtr]) === false) {
-                    $this->_errorPos[$stackPtr] = true;
-                    $allErrors[$stackPtr]       = $error;
+                if (isset($this->errorPos[$stackPtr]) === false) {
+                    $this->errorPos[$stackPtr] = true;
+                    $allErrors[$stackPtr]      = $error;
                 }
             }
         }

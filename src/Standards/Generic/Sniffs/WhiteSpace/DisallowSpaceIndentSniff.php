@@ -31,7 +31,7 @@ class DisallowSpaceIndentSniff implements Sniff
      *
      * @var integer
      */
-    private $_tabWidth = null;
+    private $tabWidth = null;
 
 
     /**
@@ -57,14 +57,14 @@ class DisallowSpaceIndentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        if ($this->_tabWidth === null) {
+        if ($this->tabWidth === null) {
             if (isset($phpcsFile->config->tabWidth) === false || $phpcsFile->config->tabWidth === 0) {
                 // We have no idea how wide tabs are, so assume 4 spaces for fixing.
                 // It shouldn't really matter because indent checks elsewhere in the
                 // standard should fix things up.
-                $this->_tabWidth = 4;
+                $this->tabWidth = 4;
             } else {
-                $this->_tabWidth = $phpcsFile->config->tabWidth;
+                $this->tabWidth = $phpcsFile->config->tabWidth;
             }
         }
 
@@ -102,12 +102,12 @@ class DisallowSpaceIndentSniff implements Sniff
                 if ($fix === true) {
                     $trimmed   = ltrim($content, ' ');
                     $numSpaces = (strlen($content) - strlen($trimmed));
-                    if ($numSpaces < $this->_tabWidth) {
+                    if ($numSpaces < $this->tabWidth) {
                         $numTabs = 1;
                         $padding = "\t";
                     } else {
-                        $numTabs   = floor($numSpaces / $this->_tabWidth);
-                        $remaining = ($numSpaces - ($numTabs * $this->_tabWidth));
+                        $numTabs   = floor($numSpaces / $this->tabWidth);
+                        $remaining = ($numSpaces - ($numTabs * $this->tabWidth));
                         $padding   = str_repeat("\t", $numTabs).$padding = str_repeat(' ', $remaining);
                     }
 

@@ -432,7 +432,7 @@ class PHP extends Tokenizer
      * @var array
      * @see standardiseToken()
      */
-    private static $_resolveTokenCache = array();
+    private static $resolveTokenCache = array();
 
 
     /**
@@ -1019,8 +1019,8 @@ class PHP extends Tokenizer
 
                 $newToken = null;
                 if ($tokenIsArray === false) {
-                    if (isset(self::$_resolveTokenCache[$token[0]]) === true) {
-                        $newToken = self::$_resolveTokenCache[$token[0]];
+                    if (isset(self::$resolveTokenCache[$token[0]]) === true) {
+                        $newToken = self::$resolveTokenCache[$token[0]];
                     }
                 } else {
                     $cacheKey = null;
@@ -1030,8 +1030,8 @@ class PHP extends Tokenizer
                         $cacheKey = $token[0];
                     }
 
-                    if ($cacheKey !== null && isset(self::$_resolveTokenCache[$cacheKey]) === true) {
-                        $newToken            = self::$_resolveTokenCache[$cacheKey];
+                    if ($cacheKey !== null && isset(self::$resolveTokenCache[$cacheKey]) === true) {
+                        $newToken            = self::$resolveTokenCache[$cacheKey];
                         $newToken['content'] = $token[1];
                     }
                 }
@@ -1555,8 +1555,8 @@ class PHP extends Tokenizer
     public static function standardiseToken($token)
     {
         if (isset($token[1]) === false) {
-            if (isset(self::$_resolveTokenCache[$token[0]]) === true) {
-                return self::$_resolveTokenCache[$token[0]];
+            if (isset(self::$resolveTokenCache[$token[0]]) === true) {
+                return self::$resolveTokenCache[$token[0]];
             }
         } else {
             $cacheKey = null;
@@ -1566,8 +1566,8 @@ class PHP extends Tokenizer
                 $cacheKey = $token[0];
             }
 
-            if ($cacheKey !== null && isset(self::$_resolveTokenCache[$cacheKey]) === true) {
-                $newToken            = self::$_resolveTokenCache[$cacheKey];
+            if ($cacheKey !== null && isset(self::$resolveTokenCache[$cacheKey]) === true) {
+                $newToken            = self::$resolveTokenCache[$cacheKey];
                 $newToken['content'] = $token[1];
                 return $newToken;
             }
@@ -1601,7 +1601,7 @@ class PHP extends Tokenizer
 
             $newToken['code'] = constant($newToken['type']);
 
-            self::$_resolveTokenCache[$cacheKey] = $newToken;
+            self::$resolveTokenCache[$cacheKey] = $newToken;
         } else if ($token[0] === T_CURLY_OPEN) {
             $newToken = array(
                          'code' => T_OPEN_CURLY_BRACKET,
@@ -1613,7 +1613,7 @@ class PHP extends Tokenizer
                          'type' => token_name($token[0]),
                         );
 
-            self::$_resolveTokenCache[$token[0]] = $newToken;
+            self::$resolveTokenCache[$token[0]] = $newToken;
         }//end if
 
         $newToken['content'] = $token[1];
@@ -1724,7 +1724,7 @@ class PHP extends Tokenizer
         $newToken['code']    = constant($newToken['type']);
         $newToken['content'] = $token;
 
-        self::$_resolveTokenCache[$token] = $newToken;
+        self::$resolveTokenCache[$token] = $newToken;
         return $newToken;
 
     }//end resolveSimpleToken()

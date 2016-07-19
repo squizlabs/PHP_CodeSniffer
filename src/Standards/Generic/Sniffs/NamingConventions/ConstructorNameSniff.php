@@ -24,14 +24,14 @@ class ConstructorNameSniff extends AbstractScopeSniff
      *
      * @var string
      */
-    private $_currentClass = '';
+    private $currentClass = '';
 
     /**
      * A list of functions in the current class.
      *
      * @var string[]
      */
-    private $_functionList = array();
+    private $functionList = array();
 
 
     /**
@@ -57,15 +57,15 @@ class ConstructorNameSniff extends AbstractScopeSniff
     protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
         $className = $phpcsFile->getDeclarationName($currScope);
-        if ($className !== $this->_currentClass) {
+        if ($className !== $this->currentClass) {
             $this->loadFunctionNamesInScope($phpcsFile, $currScope);
-            $this->_currentClass = $className;
+            $this->currentClass = $className;
         }
 
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         if (strcasecmp($methodName, $className) === 0) {
-            if (in_array('__construct', $this->_functionList) === false) {
+            if (in_array('__construct', $this->functionList) === false) {
                 $error = 'PHP4 style constructors are not allowed; use "__construct()" instead';
                 $phpcsFile->addError($error, $stackPtr, 'OldStyle');
             }
@@ -128,7 +128,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
      */
     protected function loadFunctionNamesInScope(File $phpcsFile, $currScope)
     {
-        $this->_functionList = array();
+        $this->functionList = array();
         $tokens = $phpcsFile->getTokens();
 
         for ($i = ($tokens[$currScope]['scope_opener'] + 1); $i < $tokens[$currScope]['scope_closer']; $i++) {
@@ -137,7 +137,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
             }
 
             $next = $phpcsFile->findNext(T_STRING, $i);
-            $this->_functionList[] = trim($tokens[$next]['content']);
+            $this->functionList[] = trim($tokens[$next]['content']);
         }
 
     }//end loadFunctionNamesInScope()

@@ -21,7 +21,7 @@ class BlockCommentSniff implements Sniff
      *
      * @var integer
      */
-    private $_tabWidth = null;
+    private $tabWidth = null;
 
 
     /**
@@ -50,12 +50,12 @@ class BlockCommentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        if ($this->_tabWidth === null) {
+        if ($this->tabWidth === null) {
             if (isset($phpcsFile->config->tabWidth) === false || $phpcsFile->config->tabWidth === 0) {
                 // We have no idea how wide tabs are, so assume 4 spaces for fixing.
-                $this->_tabWidth = 4;
+                $this->tabWidth = 4;
             } else {
-                $this->_tabWidth = $phpcsFile->config->tabWidth;
+                $this->tabWidth = $phpcsFile->config->tabWidth;
             }
         }
 
@@ -224,7 +224,7 @@ class BlockCommentSniff implements Sniff
                         && $tokens[$commentLines[1]]['orig_content'][0] === "\t"
                     ) {
                         // Line is indented using tabs.
-                        $padding = str_repeat("\t", floor($starColumn / $this->_tabWidth));
+                        $padding = str_repeat("\t", floor($starColumn / $this->tabWidth));
                     } else {
                         $padding = str_repeat(' ', $starColumn);
                     }
@@ -275,7 +275,7 @@ class BlockCommentSniff implements Sniff
                         && $tokens[$line]['orig_content'][0] === "\t"
                     ) {
                         // Line is indented using tabs.
-                        $padding = str_repeat("\t", floor($starColumn / $this->_tabWidth));
+                        $padding = str_repeat("\t", floor($starColumn / $this->tabWidth));
                     } else {
                         $padding = str_repeat(' ', $starColumn);
                     }
