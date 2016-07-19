@@ -632,10 +632,18 @@ class Config
             echo 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             exit(0);
         case 'colors':
+            if (isset($this->overriddenDefaults['colors']) === true) {
+                break;
+            }
+
             $this->colors = true;
             $this->overriddenDefaults['colors'] = true;
             break;
         case 'no-colors':
+            if (isset($this->overriddenDefaults['colors']) === true) {
+                break;
+            }
+
             $this->colors = false;
             $this->overriddenDefaults['colors'] = true;
             break;
