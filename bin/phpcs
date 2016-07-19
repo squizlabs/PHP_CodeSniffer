@@ -8,6 +8,11 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-require_once __DIR__.'/../autoload.php';
+if (is_file(__DIR__.'/../autoload.php') === true) {
+    include_once __DIR__.'/../autoload.php';
+} else {
+    include_once 'PHP/CodeSniffer/autoload.php';
+}
+
 $runner = new PHP_CodeSniffer\Runner();
 $runner->runPHPCS();
