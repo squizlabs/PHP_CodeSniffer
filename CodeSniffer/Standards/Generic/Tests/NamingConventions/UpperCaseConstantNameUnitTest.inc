@@ -8,6 +8,10 @@ define('VALID_NAME', true);
 define('invalidName', true);
 define("VALID_NAME", true);
 define("invalidName", true);
+define('bar\foo\baz\VALID_NAME_WITH_NAMESPACE', true);
+define('bar\foo\baz\invalidNameWithNamespace', true);
+define("bar\foo\baz\VALID_NAME_WITH_NAMESPACE", true);
+define("bar\foo\baz\invalidNameWithNamespace", true);
 
 class TestClass extends MyClass, YourClass
 {
@@ -27,12 +31,26 @@ class TestClass extends MyClass, YourClass
         print invalidName;
         echo(invalidName);
         print(invalidName);
+        echo constant('VALID_NAME_WITH_NAMESPACE');
+        echo VALID_NAME_WITH_NAMESPACE;
+        print VALID_NAME_WITH_NAMESPACE;
+        echo(VALID_NAME_WITH_NAMESPACE);
+        print(VALID_NAME_WITH_NAMESPACE);
+        echo constant('invalidNameWithNamespace');
+        echo invalidNameWithNamespace;
+        print invalidNameWithNamespace;
+        echo(invalidNameWithNamespace);
+        print(invalidNameWithNamespace);
 
         echo constant("VALID_NAME");
         echo constant("invalidName");
+        echo constant("VALID_NAME_WITH_NAMESPACE");
+        echo constant("invalidNameWithNamespace");
 
         echo 'Hello', VALID_NAME;
         echo 'Hello', invalidName;
+        echo 'Hello', VALID_NAME_WITH_NAMESPACE;
+        echo 'Hello', invalidNameWithNamespace;
 
         // These might look like constants to
         // poorly written code.
