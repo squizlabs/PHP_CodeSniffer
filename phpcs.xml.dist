@@ -11,6 +11,8 @@
 
  <arg name="basepath" value="."/>
  <arg name="colors" />
+ <arg name="cache" />
+ <arg name="parallel" value="75" />
  <arg value="np"/>
 
  <rule ref="PHPCS"/>
