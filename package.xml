@@ -110,20 +110,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <file baseinstalldir="" name="phpcs" role="script">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
     </file>
-    <!--
-    <file baseinstalldir="" name="phpcs-svn-pre-commit" role="script">
-     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
-     <tasks:replace from="@package_version@" to="version" type="package-info" />
-    </file>
     <file baseinstalldir="" name="phpcs.bat" role="script">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
      <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
-     <tasks:replace from="@php_dir@" to="php_dir" type="pear-config" />
     </file>
     <file baseinstalldir="" name="phpcbf.bat" role="script">
      <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
      <tasks:replace from="@bin_dir@" to="bin_dir" type="pear-config" />
-     <tasks:replace from="@php_dir@" to="php_dir" type="pear-config" />
+    </file>
+    <!--
+    <file baseinstalldir="" name="phpcs-svn-pre-commit" role="script">
+     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+     <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     -->
    </dir>
@@ -1508,10 +1506,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <filelist>
    <install as="phpcs" name="bin/phpcs" />
    <install as="phpcbf" name="bin/phpcbf" />
-   <!--
-   <install as="phpcs.bat" name="scripts/phpcs.bat" />
-   <install as="phpcbf.bat" name="scripts/phpcbf.bat" />
-    -->
+   <install as="phpcs.bat" name="bin/phpcs.bat" />
+   <install as="phpcbf.bat" name="bin/phpcbf.bat" />
    <install as="README" name="README.md" />
    <install as="CONTRIBUTING" name="CONTRIBUTING.md" />
    <install as="LICENCE" name="licence.txt" />
@@ -1540,10 +1536,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
-   <!--
-   <ignore name="scripts/phpcs.bat" />
-   <ignore name="scripts/phpcbf.bat" />
-    -->
+   <ignore name="bin/phpcs.bat" />
+   <ignore name="bin/phpcbf.bat" />
   </filelist>
  </phprelease>
  <changelog>
