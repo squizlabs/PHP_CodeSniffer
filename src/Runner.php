@@ -326,6 +326,11 @@ class Runner
             $this->config->parallel = 1;
         }
 
+        // If the PCNTL extension isn't installed, we can't fork.
+        if (function_exists('pcntl_fork') === false) {
+            $this->config->parallel = 1;
+        }
+
         if ($this->config->parallel === 1) {
             // Running normally.
             foreach ($todo as $path => $file) {
