@@ -100,7 +100,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </notes>
  <contents>
   <dir name="/">
-   <file baseinstalldir="PHP/CodeSniffer" name="autoload.php" role="php" />
+   <file baseinstalldir="PHP/CodeSniffer" name="autoload.php" role="php">
+    <tasks:replace from="@test_dir@" to="test_dir" type="pear-config" />
+  </file>
    <file baseinstalldir="PHP/CodeSniffer" name="CodeSniffer.conf.dist" role="data" />
    <file baseinstalldir="PHP/CodeSniffer" name="README.md" role="doc" />
    <file baseinstalldir="PHP/CodeSniffer" name="CONTRIBUTING.md" role="doc" />

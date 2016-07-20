@@ -23,12 +23,19 @@ if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
     define('PHP_CODESNIFFER_VERBOSITY', 0);
 }
 
-require_once __DIR__.'/../autoload.php';
+if (is_file(__DIR__.'/../autoload.php') === true) {
+    include_once __DIR__.'/../autoload.php';
+    include_once 'Core/AllTests.php';
+    include_once 'Standards/AllSniffs.php';
+} else {
+    include_once 'PHP/CodeSniffer/autoload.php';
+    include_once 'CodeSniffer/Core/AllTests.php';
+    include_once 'CodeSniffer/Standards/AllSniffs.php';
+}
+
+require_once 'TestSuite.php';
 
 $tokens = new Tokens();
-
-require_once 'Core/AllTests.php';
-require_once 'Standards/AllSniffs.php';
 
 class PHP_CodeSniffer_AllTests
 {
@@ -54,6 +61,7 @@ class PHP_CodeSniffer_AllTests
     public static function suite()
     {
         $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'] = array();
+        $GLOBALS['PHP_CODESNIFFER_TEST_DIRS']     = array();
 
         // Use a special PHP_CodeSniffer test suite so that we can
         // unset our autoload function after the run.

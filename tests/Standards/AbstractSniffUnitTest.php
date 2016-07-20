@@ -39,6 +39,13 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      */
     public $standardsDir = null;
 
+    /**
+     * The path to the standard's test directory.
+     *
+     * @var string
+     */
+    public $testsDir = null;
+
 
     /**
      * Sets up this unit test.
@@ -49,6 +56,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
     {
         $class = get_class($this);
         $this->standardsDir = $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'][$class];
+        $this->testsDir     = $GLOBALS['PHP_CODESNIFFER_TEST_DIRS'][$class];
 
     }//end setUp()
 
@@ -81,7 +89,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
         $sniffCode = Common::getSniffCode(get_class($this));
         list($standardName, $categoryName, $sniffName) = explode('.', $sniffCode);
 
-        $testFileBase = $this->standardsDir.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR.$categoryName.DIRECTORY_SEPARATOR.$sniffName.'UnitTest.';
+        $testFileBase = $this->testsDir.$categoryName.DIRECTORY_SEPARATOR.$sniffName.'UnitTest.';
 
         // Get a list of all test files to check. These will have the same base
         // name but different extensions. We ignore the .php file as it is the class.

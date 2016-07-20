@@ -51,7 +51,14 @@ class Autoload
 
         if (substr($class, 0, 16) === 'PHP_CodeSniffer\\') {
             if (substr($class, 0, 22) === 'PHP_CodeSniffer\Tests\\') {
-                $path = __DIR__.$ds.'tests'.$ds.substr(str_replace('\\', $ds, $class), 22).'.php';
+                $isInstalled = !is_dir(__DIR__.$ds.'tests');
+                if ($isInstalled === false) {
+                    $path = __DIR__.$ds.'tests';
+                } else {
+                    $path = '@test_dir@'.$ds.'PHP_CodeSniffer'.$ds.'CodeSniffer';
+                }
+
+                $path .= $ds.substr(str_replace('\\', $ds, $class), 22).'.php';
             } else {
                 $path = __DIR__.$ds.'src'.$ds.substr(str_replace('\\', $ds, $class), 16).'.php';
             }

@@ -23,7 +23,11 @@ if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
     define('PHP_CODESNIFFER_VERBOSITY', 0);
 }
 
-require_once __DIR__.'/../../autoload.php';
+if (is_file(__DIR__.'/../../autoload.php') === true) {
+    include_once __DIR__.'/../../autoload.php';
+} else {
+    include_once 'PHP/CodeSniffer/autoload.php';
+}
 
 $tokens = new Tokens();
 
