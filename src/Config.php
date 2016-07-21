@@ -778,12 +778,12 @@ class Config
                     }
 
                     if ($dir === '.') {
-                        // Passed report file is a file in the current directory.
+                        // Passed cache file is a file in the current directory.
                         $this->cacheFile = getcwd().'/'.basename($this->cacheFile);
                     } else {
                         $dir = Util\Common::realpath(getcwd().'/'.$dir);
                         if ($dir !== false) {
-                            // Report file path is relative.
+                            // Cache file path is relative.
                             $this->cacheFile = $dir.'/'.basename($this->cacheFile);
                         }
                     }
