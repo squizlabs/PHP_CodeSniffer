@@ -22,7 +22,7 @@ class Config
      *
      * @var string
      */
-    const VERSION = '3.0.0a1';
+    const VERSION = '3.0.0a2';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -1020,12 +1020,16 @@ class Config
             } else {
                 if ($this->dieOnUnknownArg === false) {
                     $eqPos = strpos($arg, '=');
-                    if ($eqPos === false) {
-                        $this->values[$arg] = $arg;
-                    } else {
-                        $value = substr($arg, ($eqPos + 1));
-                        $arg   = substr($arg, 0, $eqPos);
-                        $this->values[$arg] = $value;
+                    try {
+                        if ($eqPos === false) {
+                            $this->values[$arg] = $arg;
+                        } else {
+                            $value = substr($arg, ($eqPos + 1));
+                            $arg   = substr($arg, 0, $eqPos);
+                            $this->values[$arg] = $value;
+                        }
+                    } catch (RuntimeException $e) {
+                        // Value is not valid, so just ignore it.
                     }
                 } else {
                     $this->processUnknownArgument('--'.$arg, $pos);
