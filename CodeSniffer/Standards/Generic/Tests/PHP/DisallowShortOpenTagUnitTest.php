@@ -45,14 +45,20 @@ class Generic_Tests_PHP_DisallowShortOpenTagUnitTest extends AbstractSniffUnitTe
         $option = (boolean) ini_get('short_open_tag');
         if ($option === true || defined('HHVM_VERSION') === true) {
             return array(
-                    4 => 1,
                     5 => 1,
+                    6 => 1,
+                    7 => 1,
+                    11 => 1,
+                    12 => 1,
+                    13 => 1,
                    );
         } else if (version_compare(PHP_VERSION, '5.4.0RC1') >= 0) {
             // Shorthand echo is always available from PHP 5.4.0 but needed the
             // short_open_tag ini var to be set for versions before this.
             return array(
-                    4 => 1,
+                    5 => 1,
+                    6 => 1,
+                    7 => 1,
                    );
         }
 
