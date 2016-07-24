@@ -27,6 +27,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Running unit tests using --verbose no longer throws errors
+
+  - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
+    -- Thanks to Nikola Kovacs for the patch
  </notes>
  <contents>
   <dir name="/">
@@ -1071,6 +1074,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseClassKeywordsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseClassKeywordsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SelfMemberReferenceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SelfMemberReferenceUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SelfMemberReferenceUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ValidClassNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ValidClassNameUnitTest.php" role="test" />

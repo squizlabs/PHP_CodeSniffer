@@ -46,10 +46,14 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
 
         $calledClassName = ($stackPtr - 1);
         if ($tokens[$calledClassName]['code'] === T_SELF) {
-            if (strtolower($tokens[$calledClassName]['content']) !== $tokens[$calledClassName]['content']) {
+            if ($tokens[$calledClassName]['content'] !== 'self') {
                 $error = 'Must use "self::" for local static member reference; found "%s::"';
                 $data  = array($tokens[$calledClassName]['content']);
-                $phpcsFile->addError($error, $calledClassName, 'IncorrectCase', $data);
+                $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'IncorrectCase', $data);
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken($calledClassName, 'self');
+                }
+
                 return;
             }
         } else if ($tokens[$calledClassName]['code'] === T_STRING) {
