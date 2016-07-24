@@ -6,7 +6,6 @@ function myFunction() {
 
 // Brace should be on same line.
 function myFunction() {
-
 }
 
 // Too many spaces.
@@ -26,7 +25,6 @@ class myClass()
     
     // Brace should be on same line.
     function myFunction() {
-    
     }
     
     // Too many spaces.
@@ -50,7 +48,6 @@ function myFunction($variable1, $variable2,
 // Brace should be on same line.
 function myFunction($variable1, $variable2,
     $variable3, $variable4) {
-
 }
 
 // Too many spaces.
@@ -74,7 +71,6 @@ class myClass()
     // Brace should be on same line.
     function myFunction($variable1, $variable2,
         $variable3, $variable4) {
-    
     }
     
     // Too many spaces.
@@ -101,7 +97,6 @@ function myFunction(
                     $arg5,
                     $arg6
                     ) {
-
 }
 
 function myFunction(
@@ -129,12 +124,10 @@ $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2) {
 };
 
 $test = function ($param) use ($result) {
-
     return null;
 }
 
 $test = function ($param) use ($result) : Something {
-
     return null;
 }
 
@@ -145,12 +138,10 @@ $closureWithArgs = function ($arg1, $arg2){
 };
 
 function myFunction() : Something {
-
     return null;
 }
 
 function myFunction() : Something {
  // Break me
-
     return null;
 }
