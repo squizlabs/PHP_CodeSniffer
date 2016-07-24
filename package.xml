@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
     -- Thanks to Nikola Kovacs for the patch
+  - Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine fix no longer leaves blank line after brace (request #1085)
   - Fixed bug #1066 : Undefined index: quiet in CLI.php during unit test run with -v command line arg
  </notes>
  <contents>

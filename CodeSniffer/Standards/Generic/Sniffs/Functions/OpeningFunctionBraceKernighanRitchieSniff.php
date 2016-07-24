@@ -111,9 +111,26 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->addContent($prev, ' {');
                 $phpcsFile->fixer->replaceToken($openingBrace, '');
+                if ($tokens[($openingBrace + 1)]['code'] === T_WHITESPACE
+                    && $tokens[($openingBrace + 2)]['line'] > $tokens[$openingBrace]['line']
+                ) {
+                    // Brace is followed by a new line, so remove it to ensure we don't
+                    // leave behind a blank line at the top of the block.
+                    $phpcsFile->fixer->replaceToken(($openingBrace + 1), '');
+
+                    if ($tokens[($openingBrace - 1)]['code'] === T_WHITESPACE
+                        && $tokens[($openingBrace - 1)]['line'] === $tokens[$openingBrace]['line']
+                        && $tokens[($openingBrace - 2)]['line'] < $tokens[$openingBrace]['line']
+                    ) {
+                        // Brace is preceeded by indent, so remove it to ensure we don't
+                        // leave behind more indent than is required for the first line.
+                        $phpcsFile->fixer->replaceToken(($openingBrace - 1), '');
+                    }
+                }
+
                 $phpcsFile->fixer->endChangeset();
-            }
-        }
+            }//end if
+        }//end if
 
         $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'same line');
 
