@@ -62,6 +62,8 @@ class Squiz_Tests_PHP_DiscouragedFunctionsUnitTest extends AbstractSniffUnitTest
                 5 => 1,
                 6 => 1,
                 7 => 1,
+                8 => 1,
+                9 => 1,
                );
 
     }//end getWarningList()

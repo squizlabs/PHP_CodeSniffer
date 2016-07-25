@@ -47,6 +47,8 @@ class Squiz_Sniffs_PHP_DiscouragedFunctionsSniff extends Generic_Sniffs_PHP_Forb
                                   'var_export'            => null,
                                   'debug_backtrace'       => null,
                                   'debug_print_backtrace' => null,
+                                  'trigger_error'         => null,
+                                  'set_error_handler'     => null,
                                  );
 
     /**
