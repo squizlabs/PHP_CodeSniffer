@@ -333,8 +333,11 @@ class File
                                 // If the sniff code is not know to us, it has not been registered in this run.
                                 // But don't throw an error as it could be there for a different standard to use.
                                 if (isset($this->ruleset->sniffCodes[$parts[0]]) === true) {
-                                    $listenerClass = $this->ruleset->sniffCodes[$parts[0]];
-                                    $this->ruleset->setSniffProperty($listenerClass, $parts[1], $parts[2]);
+                                    $listenerCode  = array_shift($parts);
+                                    $propertyCode  = array_shift($parts);
+                                    $propertyValue = rtrim(implode(' ', $parts), " */\r\n");
+                                    $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
+                                    $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
                                 }
                             }
                         }

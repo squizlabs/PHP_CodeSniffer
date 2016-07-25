@@ -28,6 +28,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Running unit tests using --verbose no longer throws errors
 
+  - Values set using @codingStandardsChangeSetting comments can now contain spaces
+  - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
+    -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
     -- Thanks to Nikola Kovacs for the patch
   - Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine fix no longer leaves blank line after brace (request #1085)
