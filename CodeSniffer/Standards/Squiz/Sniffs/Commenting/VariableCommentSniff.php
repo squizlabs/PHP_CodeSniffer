@@ -126,7 +126,11 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                       $suggestedType,
                       $varType,
                      );
-            $phpcsFile->addError($error, ($foundVar + 2), 'IncorrectVarType', $data);
+
+            $fix = $phpcsFile->addFixableError($error, ($foundVar + 2), 'IncorrectVarType', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken(($foundVar + 2), $suggestedType);
+            }
         }
 
     }//end processMemberVar()
