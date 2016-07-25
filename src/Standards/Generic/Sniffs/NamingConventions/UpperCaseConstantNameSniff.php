@@ -142,6 +142,13 @@ class UpperCaseConstantNameSniff implements Sniff
             $constName = substr($constName, ($splitPos + 2));
         }
 
+        // Strip namesspace from constant like /foo/bar/CONSTANT.
+        $splitPos = strrpos($constName, '\\');
+        if ($splitPos !== false) {
+            $prefix    = substr($constName, 0, ($splitPos + 1));
+            $constName = substr($constName, ($splitPos + 1));
+        }
+
         if (strtoupper($constName) !== $constName) {
             if (strtolower($constName) === $constName) {
                 $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'lower');
