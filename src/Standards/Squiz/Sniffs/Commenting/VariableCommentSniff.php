@@ -109,7 +109,11 @@ class VariableCommentSniff extends AbstractVariableSniff
                       $suggestedType,
                       $varType,
                      );
-            $phpcsFile->addError($error, ($foundVar + 2), 'IncorrectVarType', $data);
+
+            $fix = $phpcsFile->addFixableError($error, ($foundVar + 2), 'IncorrectVarType', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken(($foundVar + 2), $suggestedType);
+            }
         }
 
     }//end processMemberVar()

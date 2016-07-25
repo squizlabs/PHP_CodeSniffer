@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
     -- Thanks to Nikola Kovacs for the patch
+  - PHPCBF is now able to fix Squiz.Commenting.VariableComment.IncorrectVarType
+    -- Thanks to Walt Sorensen for the patch
   - Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine fix no longer leaves blank line after brace (request #1085)
   - Generic UpperCaseConstantNameSniff now allows lowercase namespaces in constant definitions
     -- Thanks to Daniel Schniepp for the patch
@@ -1120,6 +1122,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="VariableCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="VariableCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="VariableCommentUnitTest.php" role="test" />
        </dir>
        <dir name="ControlStructures">
