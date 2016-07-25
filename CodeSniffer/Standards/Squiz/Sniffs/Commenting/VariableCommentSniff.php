@@ -51,6 +51,7 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
                    T_PRIVATE,
                    T_PROTECTED,
                    T_VAR,
+                   T_STATIC,
                    T_WHITESPACE,
                   );
 

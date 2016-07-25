@@ -329,4 +329,11 @@ class Foo
 
     protected $bar;
 
+    /**
+     * Short description of the member variable.
+     *
+     * @var array
+     */
+     public static $variableName = array();
+
 }
