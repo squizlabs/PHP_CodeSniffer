@@ -80,9 +80,9 @@ class Squiz_Sniffs_Classes_SelfMemberReferenceSniff extends PHP_CodeSniffer_Stan
             // If the class is called with a namespace prefix, build fully qualified
             // namespace calls for both current scope class and requested class.
             if ($tokens[($calledClassName - 1)]['code'] === T_NS_SEPARATOR) {
-                $declarationName         = $this->getDeclarationNameWithNamespace($tokens, $calledClassName);
-                $declarationName         = substr($declarationName, 1);
-                $fullQualifiedClassName  = $this->getNamespaceOfScope($phpcsFile, $currScope);
+                $declarationName        = $this->getDeclarationNameWithNamespace($tokens, $calledClassName);
+                $declarationName        = substr($declarationName, 1);
+                $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
                 if ($fullQualifiedClassName === '\\') {
                     $fullQualifiedClassName = '';
                 } else {
