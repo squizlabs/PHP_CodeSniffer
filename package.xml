@@ -1802,6 +1802,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="LongConditionClosingCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LongConditionClosingCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="LongConditionClosingCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="LongConditionClosingCommentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
