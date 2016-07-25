@@ -45,7 +45,9 @@ class Generic_Tests_NamingConventions_UpperCaseConstantNameUnitTest extends Abst
         return array(
                 8   => 1,
                 10  => 1,
-                15  => 1,
+                12  => 1,
+                14  => 1,
+                19  => 1,
                );
 
     }//end getErrorList()
