@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the ClassDeclaration sniff.
+ * Unit test class for the OpeningBraceSameLine sniff.
  *
  * PHP version 5
  *
@@ -14,7 +14,7 @@
  */
 
 /**
- * Unit test class for the ClassDeclaration sniff.
+ * Unit test class for the OpeningBraceSameLine sniff.
  *
  * A sniff unit test checks a .inc file for expected violations of a single
  * coding standard. Expected errors and warnings are stored in this class.
@@ -28,7 +28,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
+class Generic_Tests_Classes_OpeningBraceSameLineUnitTest extends AbstractSniffUnitTest
 {
 
 

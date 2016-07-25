@@ -1,6 +1,6 @@
 <?php
 /**
- * Generic_Sniffs_Classes_ClassDeclarationSniff.
+ * Generic_Sniffs_Classes_OpeningBraceSameLineSniff.
  *
  * PHP version 5
  *
@@ -14,7 +14,7 @@
  */
 
 /**
- * Generic_Sniffs_Classes_ClassDeclarationSniff.
+ * Generic_Sniffs_Classes_OpeningBraceSameLineSniff.
  *
  * Checks that the opening brace of a class or interface is on the same line
  * as the class declaration.
@@ -30,7 +30,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Generic_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_Classes_OpeningBraceSameLineSniff implements PHP_CodeSniffer_Sniff
 {
 
 
