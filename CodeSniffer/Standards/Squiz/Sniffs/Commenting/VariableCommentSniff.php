@@ -45,14 +45,20 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
      */
     public function processMemberVar(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $tokens       = $phpcsFile->getTokens();
-        $commentToken = array(
-                         T_COMMENT,
-                         T_DOC_COMMENT_CLOSE_TAG,
-                        );
+        $tokens = $phpcsFile->getTokens();
+        $ignore = array(
+                   T_PUBLIC,
+                   T_PRIVATE,
+                   T_PROTECTED,
+                   T_VAR,
+                   T_WHITESPACE,
+                  );
 
-        $commentEnd = $phpcsFile->findPrevious($commentToken, $stackPtr);
-        if ($commentEnd === false) {
+        $commentEnd = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
+        if ($commentEnd === false
+            || ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
+            && $tokens[$commentEnd]['code'] !== T_COMMENT)
+        ) {
             $phpcsFile->addError('Missing member variable doc comment', $stackPtr, 'Missing');
             return;
         }
@@ -60,16 +66,6 @@ class Squiz_Sniffs_Commenting_VariableCommentSniff extends PHP_CodeSniffer_Stand
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a member variable comment', $stackPtr, 'WrongStyle');
             return;
-        } else if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
-            $phpcsFile->addError('Missing member variable doc comment', $stackPtr, 'Missing');
-            return;
-        } else {
-            // Make sure the comment we have found belongs to us.
-            $commentFor = $phpcsFile->findNext(array(T_VARIABLE, T_CLASS, T_INTERFACE), ($commentEnd + 1));
-            if ($commentFor !== $stackPtr) {
-                $phpcsFile->addError('Missing member variable doc comment', $stackPtr, 'Missing');
-                return;
-            }
         }
 
         $commentStart = $tokens[$commentEnd]['comment_opener'];
