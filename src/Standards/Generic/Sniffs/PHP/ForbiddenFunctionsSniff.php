@@ -89,6 +89,9 @@ class ForbiddenFunctionsSniff implements Sniff
             }
         }
 
+        $this->forbiddenFunctionNames = array_map('strtolower', $this->forbiddenFunctionNames);
+        $this->forbiddenFunctions     = array_combine($this->forbiddenFunctionNames, $this->forbiddenFunctions);
+
         return array_unique($register);
 
     }//end register()
@@ -175,7 +178,7 @@ class ForbiddenFunctionsSniff implements Sniff
             }
         }//end if
 
-        $this->addError($phpcsFile, $stackPtr, $function, $pattern);
+        $this->addError($phpcsFile, $stackPtr, $tokens[$stackPtr]['content'], $pattern);
 
     }//end process()
 
@@ -204,7 +207,7 @@ class ForbiddenFunctionsSniff implements Sniff
         }
 
         if ($pattern === null) {
-            $pattern = $function;
+            $pattern = strtolower($function);
         }
 
         if ($this->forbiddenFunctions[$pattern] !== null

@@ -37,6 +37,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set the commentFormat property (default is "//end %s") in your ruleset.xml file to set the format
     -- The placeholder %s will be replaced with the type of condition opener, e.g., "//end foreach"
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic ForbiddenFunctionsSniff now allows forbidden functions to have mixed case
+    -- Previously, it would only do a strtolower comparison
+    -- Error message now shows what case was found in the code and what the correct case should be
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
     -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
