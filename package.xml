@@ -1096,7 +1096,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ValidClassNameUnitTest.php" role="test" />
        </dir>
        <dir name="Commenting">
-<<<<<<< HEAD
         <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.php" role="test" />
