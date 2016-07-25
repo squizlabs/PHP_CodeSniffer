@@ -507,8 +507,11 @@ class PHP_CodeSniffer_File
                         if (count($parts) >= 3
                             && isset($this->phpcs->sniffCodes[$parts[0]]) === true
                         ) {
-                            $listenerClass = $this->phpcs->sniffCodes[$parts[0]];
-                            $this->phpcs->setSniffProperty($listenerClass, $parts[1], $parts[2]);
+                            $listenerCode  = array_shift($parts);
+                            $propertyCode  = array_shift($parts);
+                            $propertyValue = rtrim(implode(' ', $parts), " */\r\n");
+                            $listenerClass = $this->phpcs->sniffCodes[$listenerCode];
+                            $this->phpcs->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
                         }
                     }//end if
                 }//end if
