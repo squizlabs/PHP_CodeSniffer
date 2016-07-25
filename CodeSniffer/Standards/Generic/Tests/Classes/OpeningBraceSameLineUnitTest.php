@@ -52,6 +52,8 @@ class Generic_Tests_Classes_OpeningBraceSameLineUnitTest extends AbstractSniffUn
                 41 => 1,
                 44 => 1,
                 47 => 1,
+                70 => 1,
+                79 => 1,
                );
 
     }//end getErrorList()

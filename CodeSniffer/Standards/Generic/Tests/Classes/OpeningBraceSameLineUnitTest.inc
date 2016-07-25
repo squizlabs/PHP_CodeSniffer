@@ -49,3 +49,33 @@ class Test_Class_Bad_I implements Test_Interface_Bad_C{
 
 // This one should be flagged as a potential parse error.
 class Test_Class_Bad_H
+
+// This is OK.
+class A_Class_With_Really_Long_Name
+    extends Another_Class_With_A_Really_Long_Name {
+
+}
+
+// This is OK too.
+class A_Class_With_Really_Long_Name_2
+    extends Another_Class_With_A_Really_Long_Name
+    implements Some_Interface_With_A_Long_Name,
+          Another_Interface_With_A_Long_Name {
+
+}
+
+// But this is not.
+class A_Class_With_Really_Long_Name_3
+    extends Another_Class_With_A_Really_Long_Name
+	{
+
+}
+
+// Nor is this.
+class A_Class_With_Really_Long_Name_4
+    extends Another_Class_With_A_Really_Long_Name
+    implements Some_Interface_With_A_Long_Name,
+          Another_Interface_With_A_Long_Name
+{
+
+}
