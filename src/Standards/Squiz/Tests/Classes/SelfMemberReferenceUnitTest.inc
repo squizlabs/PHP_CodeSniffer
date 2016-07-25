@@ -72,6 +72,14 @@ class Controller
     }
 }
 
+class Foo
+{
+    public static function bar()
+    {
+        \Foo::baz();
+    }
+}
+
 namespace TYPO3\CMS\Reports;
 
 class Status {
