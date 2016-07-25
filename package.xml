@@ -49,6 +49,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic UpperCaseConstantNameSniff now allows lowercase namespaces in constant definitions
     -- Thanks to Daniel Schniepp for the patch
   - Fixed bug #1066 : Undefined index: quiet in CLI.php during unit test run with -v command line arg
+  - Fixed bug #1072 : Squiz.SelfMemberReference.NotUsed not detected if leading namespace separator is used
  </notes>
  <contents>
   <dir name="/">

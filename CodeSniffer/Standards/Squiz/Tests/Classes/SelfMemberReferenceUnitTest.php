@@ -49,8 +49,9 @@ class Squiz_Tests_Classes_SelfMemberReferenceUnitTest extends AbstractSniffUnitT
                 30  => 1,
                 31  => 1,
                 32  => 2,
-                100 => 1,
-                111 => 1,
+                79  => 1,
+                108 => 1,
+                119 => 1,
                );
 
     }//end getErrorList()
