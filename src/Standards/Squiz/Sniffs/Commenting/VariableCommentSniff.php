@@ -34,6 +34,7 @@ class VariableCommentSniff extends AbstractVariableSniff
                    T_PRIVATE,
                    T_PROTECTED,
                    T_VAR,
+                   T_STATIC,
                    T_WHITESPACE,
                   );
 
