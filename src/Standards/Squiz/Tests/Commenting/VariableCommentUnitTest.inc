@@ -320,4 +320,13 @@ class VariableCommentUnitTest2
 
 }//end class
 
-?>
+
+/*
+ * Class comment
+ */
+class Foo
+{
+
+    protected $bar;
+
+}
