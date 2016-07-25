@@ -29,6 +29,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Running unit tests using --verbose no longer throws errors
 
   - Values set using @codingStandardsChangeSetting comments can now contain spaces
+  - Squiz LongConditionClosingCommentSniff now allows for the length of a code block to be configured
+    -- Set the lineLimit property (default is 20) in your ruleset.xml file to set the code block length
+    -- When the code block length is reached, the sniff will enforce a closing comment after the closing brace
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz LongConditionClosingCommentSniff now allows for the end comment format to be configured
+    -- Set the commentFormat property (default is "//end %s") in your ruleset.xml file to set the format
+    -- The placeholder %s will be replaced with the type of condition opener, e.g., "//end foreach"
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
     -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
@@ -1088,6 +1096,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ValidClassNameUnitTest.php" role="test" />
        </dir>
        <dir name="Commenting">
+<<<<<<< HEAD
         <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.php" role="test" />
@@ -1116,6 +1125,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LongConditionClosingCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LongConditionClosingCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LongConditionClosingCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LongConditionClosingCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.inc" role="test" />

@@ -5,7 +5,7 @@ function long_function()
         // IF statement
         // that does
         // not have
-        // and ELSE
+        // an ELSE
         // block on it
         variable = 'hello';
 
@@ -28,7 +28,7 @@ function long_function()
         // IF statement
         // that does
         // not have
-        // and ELSE
+        // an ELSE
         // block on it
         variable = 'hello';
 
@@ -51,7 +51,7 @@ function long_function()
         // IF statement
         // that does
         // not have
-        // and ELSE
+        // an ELSE
         // block on it
         variable = 'hello';
 
@@ -76,7 +76,7 @@ function long_function()
         // IF statement
         // that does
         // not have
-        // and ELSE
+        // an ELSE
         // block on it
         variable = 'hello';
 
@@ -194,7 +194,7 @@ if (longFunction) {
     // IF statement
     // that does
     // not have
-    // and ELSE
+    // an ELSE
     // block on it
     variable = 'hello';
 
@@ -217,7 +217,7 @@ if (longFunction) {
     // IF statement
     // that does
     // not have
-    // and ELSE
+    // an ELSE
     // block on it
     variable = 'hello';
 
