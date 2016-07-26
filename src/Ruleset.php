@@ -149,7 +149,7 @@ class Ruleset
                 $standard = $installed;
             }
 
-            $ruleset = simplexml_load_file(rawurlencode($standard));
+            $ruleset = simplexml_load_string(file_get_contents($standard));
             if ($ruleset !== false) {
                 $standardName = (string) $ruleset['name'];
                 if ($this->name !== '') {
@@ -278,7 +278,7 @@ class Ruleset
             echo 'Processing ruleset '.Util\Common::stripBasepath($rulesetPath, $this->config->basepath).PHP_EOL;
         }
 
-        $ruleset = simplexml_load_file(rawurlencode($rulesetPath));
+        $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
         if ($ruleset === false) {
             throw new RuntimeException("Ruleset $rulesetPath is not valid");
         }
