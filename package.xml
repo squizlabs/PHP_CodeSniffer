@@ -44,6 +44,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic OpeningBraceSameLineSniff to ensure opening brace of class/interface/trait is on the same line as the declaration
     -- Sniff code is Generic.Classes.OpeningBraceSameLine
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Added Generic BacktickOperatorSniff to ban the use of the backtick operator for running shell commands
+    -- Sniff code is Generic.PHP.BacktickOperator
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
     -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
@@ -219,6 +222,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UpperCaseConstantNameStandard.xml" role="php" />
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP/CodeSniffer" name="BacktickOperatorStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsStandard.xml" role="php" />
@@ -309,6 +313,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UpperCaseConstantNameSniff.php" role="php" />
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP/CodeSniffer" name="BacktickOperatorSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsSniff.php" role="php" />
@@ -483,6 +488,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UpperCaseConstantNameUnitTest.php" role="test" />
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP/CodeSniffer" name="BacktickOperatorUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="BacktickOperatorUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.php" role="test" />
