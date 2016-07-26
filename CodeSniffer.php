@@ -711,7 +711,7 @@ class PHP_CodeSniffer
             echo "Processing ruleset $rulesetPath".PHP_EOL;
         }
 
-        $ruleset = simplexml_load_file($rulesetPath);
+        $ruleset = simplexml_load_file(rawurlencode($rulesetPath));
         if ($ruleset === false) {
             throw new PHP_CodeSniffer_Exception("Ruleset $rulesetPath is not valid");
         }
