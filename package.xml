@@ -189,6 +189,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <dir name="Docs">
        <dir name="Classes">
         <file baseinstalldir="PHP" name="DuplicateClassNameStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="OpeningBraceSameLineStandard.xml" role="php" />
        </dir>
        <dir name="Debug">
         <file baseinstalldir="PHP" name="CSSLintStandard.xml" role="php" />
@@ -281,6 +282,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Classes">
         <file baseinstalldir="PHP" name="DuplicateClassNameSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OpeningBraceSameLineSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>
@@ -497,6 +501,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP" name="DuplicateClassNameUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="OpeningBraceSameLineUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="OpeningBraceSameLineUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="OpeningBraceSameLineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
        </dir>

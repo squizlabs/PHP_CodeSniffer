@@ -1,0 +1,28 @@
+<documentation title="Opening Brace on Same Line">
+    <standard>
+    <![CDATA[
+    The opening brace of a class must be on the same line after the definition and must be the last thing on that line.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Opening brace on the same line.">
+        <![CDATA[
+class Foo <em>{</em>
+}
+        ]]>
+        </code>
+        <code title="Invalid: Opening brace on the next line.">
+        <![CDATA[
+class Foo
+<em>{</em>
+}
+        ]]>
+        </code>
+        <code title="Invalid: Opening brace not last thing on the line.">
+        <![CDATA[
+class Foo {<em> // Start of class.</em>
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
