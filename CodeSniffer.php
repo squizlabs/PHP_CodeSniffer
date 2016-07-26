@@ -548,7 +548,7 @@ class PHP_CodeSniffer
             }
 
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
-                $ruleset = simplexml_load_file($standard);
+                $ruleset = simplexml_load_file(rawurlencode($standard));
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
