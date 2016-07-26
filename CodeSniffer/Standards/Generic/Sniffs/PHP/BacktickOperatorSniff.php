@@ -54,7 +54,7 @@ class Generic_Sniffs_PHP_BacktickOperatorSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $error = 'Use of the backtick operator is strongly discouraged';
+        $error = 'Use of the backtick operator is forbidden';
         $phpcsFile->addError($error, $stackPtr, 'Found');
 
     }//end process()

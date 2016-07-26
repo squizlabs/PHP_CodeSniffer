@@ -42,6 +42,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic OpeningBraceSameLineSniff to ensure opening brace of class/interface/trait is on the same line as the declaration
     -- Sniff code is Generic.Classes.OpeningBraceSameLine
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Added Generic BacktickOperatorSniff to ban the use of the backtick operator for running shell commands
+    -- Sniff code is Generic.PHP.BacktickOperator
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
     -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
@@ -251,6 +254,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="UpperCaseConstantNameStandard.xml" role="php" />
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="BacktickOperatorStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ClosingPHPTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="DeprecatedFunctionsStandard.xml" role="php" />
@@ -427,6 +431,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="BacktickOperatorSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -713,6 +720,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
        </dir>
        <dir name="PHP">
+        <file baseinstalldir="PHP" name="BacktickOperatorUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="BacktickOperatorUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
         <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagUnitTest.php" role="test">
