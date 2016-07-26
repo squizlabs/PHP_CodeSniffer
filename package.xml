@@ -39,6 +39,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, it would only do a strtolower comparison
     -- Error message now shows what case was found in the code and what the correct case should be
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Added Generic OpeningBraceSameLineSniff to ensure opening brace of class/interface/trait is on the same line as the declaration
+    -- Sniff code is Generic.Classes.OpeningBraceSameLine
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
     -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
