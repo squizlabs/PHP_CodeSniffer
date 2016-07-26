@@ -34,7 +34,7 @@ class Generic_Tests_Files_OneTraitPerFileUnitTest extends AbstractSniffUnitTest
      */
     protected function shouldSkipTest()
     {
-        return version_compare(PHP_VERSION, '5.4.0', '<');
+        return (PHP_VERSION_ID < 50400);
 
     }//end shouldSkipTest()
 

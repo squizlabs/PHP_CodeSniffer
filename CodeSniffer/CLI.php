@@ -14,8 +14,15 @@
 
 error_reporting(E_ALL | E_STRICT);
 
+// Make sure version id constant is available.
+if (defined('PHP_VERSION_ID') === false) {
+    $version = explode('.', PHP_VERSION);
+    define('PHP_VERSION_ID', (int) (($version[0] * 10000) + ($version[1] * 100) + $version[2]));
+    unset($version);
+}
+
 // Make sure that we autoload all dependencies if running via Composer.
-if (version_compare(PHP_VERSION, '5.3.2', '>=') === true) {
+if (PHP_VERSION_ID >= 50302) {
     if (file_exists($a = dirname(__FILE__).'/../../../autoload.php') === true) {
         include_once $a;
     } else if (file_exists($a = dirname(__FILE__).'/../vendor/autoload.php') === true) {
@@ -245,7 +252,7 @@ class PHP_CodeSniffer_CLI
     public function checkRequirements()
     {
         // Check the PHP version.
-        if (version_compare(PHP_VERSION, '5.1.2', '<') === true) {
+        if (PHP_VERSION_ID < 50102) {
             echo 'ERROR: PHP_CodeSniffer requires PHP version 5.1.2 or greater.'.PHP_EOL;
             exit(2);
         }

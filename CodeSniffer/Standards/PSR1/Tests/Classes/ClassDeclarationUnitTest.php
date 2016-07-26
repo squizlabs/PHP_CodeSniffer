@@ -46,7 +46,7 @@ class PSR1_Tests_Classes_ClassDeclarationUnitTest extends AbstractSniffUnitTest
             return array();
         }
 
-        if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+        if (PHP_VERSION_ID >= 50300) {
             return array(
                     2 => 1,
                     3 => 2,

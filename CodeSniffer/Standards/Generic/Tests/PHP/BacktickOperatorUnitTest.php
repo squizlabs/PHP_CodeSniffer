@@ -39,7 +39,7 @@ class Generic_Tests_PHP_BacktickOperatorUnitTest extends AbstractSniffUnitTest
      */
     protected function shouldSkipTest()
     {
-        if (version_compare(PHP_VERSION, '5.4.0', '<') === true && ((bool) ini_get('safe_mode')) === true) {
+        if (PHP_VERSION_ID < 50400 && ((bool) ini_get('safe_mode')) === true) {
             return true;
         }
 
