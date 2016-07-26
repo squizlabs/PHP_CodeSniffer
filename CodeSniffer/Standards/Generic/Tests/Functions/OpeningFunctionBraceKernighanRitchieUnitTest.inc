@@ -138,6 +138,15 @@ $test = function ($param) use ($result) : Something
     return null;
 }
 
+$test = function ($param) use ($result): Something {
+    return null;
+}
+
+$test = function ($param) use ($result): Something
+{
+    return null;
+}
+
 // @codingStandardsChangeSetting Generic.Functions.OpeningFunctionBraceKernighanRitchie checkClosures 0
 
 $closureWithArgs = function ($arg1, $arg2){
@@ -150,6 +159,15 @@ function myFunction() : Something
 }
 
 function myFunction() : Something // Break me
+{
+    return null;
+}
+
+function myFunction(): Something {
+    return null;
+}
+
+function myFunction(): Something
 {
     return null;
 }
