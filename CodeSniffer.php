@@ -548,7 +548,7 @@ class PHP_CodeSniffer
             }
 
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
-                $ruleset = simplexml_load_file(rawurlencode($standard));
+                $ruleset = simplexml_load_string(file_get_contents($standard));
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                 }
@@ -711,7 +711,7 @@ class PHP_CodeSniffer
             echo "Processing ruleset $rulesetPath".PHP_EOL;
         }
 
-        $ruleset = simplexml_load_file(rawurlencode($rulesetPath));
+        $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
         if ($ruleset === false) {
             throw new PHP_CodeSniffer_Exception("Ruleset $rulesetPath is not valid");
         }
