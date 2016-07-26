@@ -204,3 +204,23 @@ for (var i = 0; i < 10; i++) {
     var foo = {foo:{'a':'b',
         'c':'d'}};
 }
+
+function arrayobjectmix() {
+    var x = [{
+        "key":"val"
+    }];
+    var y = [
+        'var',
+        {
+            text: "test"
+        },
+        'var2'
+    ];
+    var z = [
+        {
+            text: "test2"
+        }
+    ];
+    call($c[e]);
+}
+

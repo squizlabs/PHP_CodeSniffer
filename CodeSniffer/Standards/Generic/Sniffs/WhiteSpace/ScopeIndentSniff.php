@@ -694,8 +694,12 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
 
                     if ($condition > 0) {
-                        $checkIndent   += $this->indent;
-                        $currentIndent += $this->indent;
+                        $nextToken = $tokens[$checkToken+1];
+                        // indent needed except Object close token is glued to Array close token
+                        if ($nextToken['code'] !== T_CLOSE_SHORT_ARRAY) {
+                            $checkIndent   += $this->indent;
+                            $currentIndent += $this->indent;
+                        }
                         $exact          = true;
                     }
                 } else {
@@ -1042,7 +1046,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
             // JS objects set the indent level.
             if ($phpcsFile->tokenizerType === 'JS'
-                && $tokens[$i]['code'] === T_OBJECT
+                && ($tokens[$i]['code'] === T_OBJECT || $tokens[$i]['code'] === T_OPEN_SHORT_ARRAY)
             ) {
                 $closer = $tokens[$i]['bracket_closer'];
                 if ($tokens[$i]['line'] === $tokens[$closer]['line']) {
