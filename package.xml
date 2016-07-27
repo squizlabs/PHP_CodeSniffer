@@ -56,6 +56,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine fix no longer leaves blank line after brace (request #1085)
   - Generic UpperCaseConstantNameSniff now allows lowercase namespaces in constant definitions
     -- Thanks to Daniel Schniepp for the patch
+  - Squiz DoubleQuoteUsageSniff is now more tolerant of syntax errors caused by mismatched string tokens
   - Fixed bug #1014 : Squiz VariableCommentSniff doesn't always detect a missing comment
   - Fixed bug #1066 : Undefined index: quiet in CLI.php during unit test run with -v command line arg
   - Fixed bug #1072 : Squiz.SelfMemberReference.NotUsed not detected if leading namespace separator is used
