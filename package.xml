@@ -59,6 +59,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1066 : Undefined index: quiet in CLI.php during unit test run with -v command line arg
   - Fixed bug #1072 : Squiz.SelfMemberReference.NotUsed not detected if leading namespace separator is used
   - Fixed bug #1089 : Rulesets cannot be loaded if the path contains urlencoded characters
+  - Fixed bug #1091 : PEAR and Squiz FunctionComment sniffs throw errors for some invalid @param line formats
  </notes>
  <contents>
   <dir name="/">

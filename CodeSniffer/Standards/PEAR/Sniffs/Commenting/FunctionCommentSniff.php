@@ -227,12 +227,14 @@ class PEAR_Sniffs_Commenting_FunctionCommentSniff implements PHP_CodeSniffer_Sni
                 $matches = array();
                 preg_match('/([^$&.]+)(?:((?:\.\.\.)?(?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
 
-                $typeLen   = strlen($matches[1]);
-                $type      = trim($matches[1]);
-                $typeSpace = ($typeLen - strlen($type));
-                $typeLen   = strlen($type);
-                if ($typeLen > $maxType) {
-                    $maxType = $typeLen;
+                if (empty($matches) === false) {
+                    $typeLen   = strlen($matches[1]);
+                    $type      = trim($matches[1]);
+                    $typeSpace = ($typeLen - strlen($type));
+                    $typeLen   = strlen($type);
+                    if ($typeLen > $maxType) {
+                        $maxType = $typeLen;
+                    }
                 }
 
                 if (isset($matches[2]) === true) {
