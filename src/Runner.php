@@ -198,7 +198,7 @@ class Runner
     public function checkRequirements()
     {
         // Check the PHP version.
-        if (version_compare(PHP_VERSION, '5.4.0') === -1) {
+        if (PHP_VERSION_ID < 50400) {
             echo 'ERROR: PHP_CodeSniffer requires PHP version 5.4.0 or greater.'.PHP_EOL;
             exit(3);
         }

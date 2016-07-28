@@ -366,7 +366,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                         $suggestedTypeHint = 'callable';
                     } else if (in_array($typeName, Common::$allowedTypes) === false) {
                         $suggestedTypeHint = $suggestedName;
-                    } else if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
+                    } else if (PHP_VERSION_ID >= 70000) {
                         if ($typeName === 'string') {
                             $suggestedTypeHint = 'string';
                         } else if ($typeName === 'int' || $typeName === 'integer') {
