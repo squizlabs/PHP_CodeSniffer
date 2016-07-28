@@ -27,6 +27,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Values set using @codingStandardsChangeSetting comments can now contain spaces
+  - Sniff unit tests can now specify a list of test files instead of letting the runner pick them (request #1078)
+    -- Useful if a sniff needs to exclude files based on the environment, or is checking filenames
+    -- Override the new getTestFiles() method to specify your own list of test files
   - Squiz LongConditionClosingCommentSniff now allows for the length of a code block to be configured
     -- Set the lineLimit property (default is 20) in your ruleset.xml file to set the code block length
     -- When the code block length is reached, the sniff will enforce a closing comment after the closing brace
