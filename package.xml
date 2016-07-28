@@ -266,6 +266,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="CharacterBeforePHPOpeningTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ClosingPHPTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="DeprecatedFunctionsStandard.xml" role="php" />
+        <file baseinstalldir="PHP" name="DisallowAlternativePHPTagsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="DisallowShortOpenTagStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="ForbiddenFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP" name="LowerCaseConstantStandard.xml" role="php" />
@@ -449,6 +450,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DeprecatedFunctionsSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowAlternativePHPTagsSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowShortOpenTagSniff.php" role="php">
@@ -739,6 +743,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="ClosingPHPTagUnitTest.inc" role="test" />
         <file baseinstalldir="PHP" name="ClosingPHPTagUnitTest.php" role="test">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="DisallowAlternativePHPTagsUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowAlternativePHPTagsUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="DisallowAlternativePHPTagsUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="DisallowAlternativePHPTagsUnitTest.2.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="DisallowAlternativePHPTagsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="DisallowShortOpenTagUnitTest.1.inc" role="test" />

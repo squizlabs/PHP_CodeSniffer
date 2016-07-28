@@ -1,0 +1,6 @@
+<div>
+<?php echo $var; ?>
+<p>Some text <?php echo $var; ?> and some more text</p>
+<?php echo $var . ' and some more text to make sure the snippet works'; ?>
+<p>Some text <?php echo $var ?> and some more text</p>
+</div>
