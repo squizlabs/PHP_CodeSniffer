@@ -785,3 +785,18 @@ public function myFunction() {
  */
 public function myFunction() {
 }
+
+/**
+ * Function comment.
+ *
+ * @param $bar
+ *   Comment here.
+ * @param ...
+ *   Additional arguments here.
+ *
+ * @return
+ *   Return value
+ *
+ */
+function foo($bar) {
+}

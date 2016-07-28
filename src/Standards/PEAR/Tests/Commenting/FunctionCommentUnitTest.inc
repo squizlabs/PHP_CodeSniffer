@@ -320,3 +320,18 @@ public function myFunction(string $name1, string ...$name2) {
  */
 public function myFunction(string $name1, string ...$name2) {
 }
+
+/**
+ * Completely invalid format, but should not cause PHP notices.
+ *
+ * @param $bar
+ *   Comment here.
+ * @param ...
+ *   Additional arguments here.
+ *
+ * @return
+ *   Return value
+ *
+ */
+function foo($bar) {
+}
