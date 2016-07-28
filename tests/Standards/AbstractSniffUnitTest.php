@@ -62,6 +62,40 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 
 
     /**
+     * Get a list of all test files to check.
+     *
+     * These will have the same base as the sniff name but different extensions.
+     * We ignore the .php file as it is the class.
+     *
+     * @param string $testFileBase The base path that the unit tests files will have.
+     *
+     * @return string[]
+     */
+    protected function getTestFiles($testFileBase)
+    {
+        $testFiles = array();
+
+        $dir = substr($testFileBase, 0, strrpos($testFileBase, DIRECTORY_SEPARATOR));
+        $di  = new \DirectoryIterator($dir);
+
+        foreach ($di as $file) {
+            $path = $file->getPathname();
+            if (substr($path, 0, strlen($testFileBase)) === $testFileBase) {
+                if ($path !== $testFileBase.'php' && substr($path, -5) !== 'fixed') {
+                    $testFiles[] = $path;
+                }
+            }
+        }
+
+        // Put them in order.
+        sort($testFiles);
+
+        return $testFiles;
+
+    }//end getTestFiles()
+
+
+    /**
      * Should this test be skipped for some reason.
      *
      * @return void
@@ -91,24 +125,8 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 
         $testFileBase = $this->testsDir.$categoryName.DIRECTORY_SEPARATOR.$sniffName.'UnitTest.';
 
-        // Get a list of all test files to check. These will have the same base
-        // name but different extensions. We ignore the .php file as it is the class.
-        $testFiles = array();
-
-        $dir = substr($testFileBase, 0, strrpos($testFileBase, DIRECTORY_SEPARATOR));
-        $di  = new \DirectoryIterator($dir);
-
-        foreach ($di as $file) {
-            $path = $file->getPathname();
-            if (substr($path, 0, strlen($testFileBase)) === $testFileBase) {
-                if ($path !== $testFileBase.'php' && substr($path, -5) !== 'fixed') {
-                    $testFiles[] = $path;
-                }
-            }
-        }
-
-        // Get them in order.
-        sort($testFiles);
+        // Get a list of all test files to check.
+        $testFiles = $this->getTestFiles($testFileBase);
 
         if (isset($GLOBALS['PHP_CODESNIFFER_CONFIG']) === true) {
             $config = $GLOBALS['PHP_CODESNIFFER_CONFIG'];

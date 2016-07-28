@@ -29,6 +29,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Running unit tests using --verbose no longer throws errors
 
   - Values set using @codingStandardsChangeSetting comments can now contain spaces
+  - Sniff unit tests can now specify a list of test files instead of letting the runner pick them (request #1078)
+    -- Useful if a sniff needs to exclude files based on the environment, or is checking filenames
+    -- Override the new getTestFiles() method to specify your own list of test files
   - Squiz LongConditionClosingCommentSniff now allows for the length of a code block to be configured
     -- Set the lineLimit property (default is 20) in your ruleset.xml file to set the code block length
     -- When the code block length is reached, the sniff will enforce a closing comment after the closing brace
@@ -53,6 +56,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Nikola Kovacs for the patch
   - PHPCBF is now able to fix Squiz.Commenting.VariableComment.IncorrectVarType
     -- Thanks to Walt Sorensen for the patch
+  - PHPCBF is now able to fix Generic.PHP.DisallowShortOpenTag
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine fix no longer leaves blank line after brace (request #1085)
   - Generic UpperCaseConstantNameSniff now allows lowercase namespaces in constant definitions
     -- Thanks to Daniel Schniepp for the patch
@@ -498,7 +503,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsUnitTest.php" role="test" />
