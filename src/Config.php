@@ -1256,7 +1256,7 @@ class Config
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $cmd = 'where '.escapeshellarg($name).' 2> nul';
         } else {
-            $cmd = 'which '.escapeshellarg($name);
+            $cmd = 'which '.escapeshellarg($name).' 2> /dev/null';
         }
 
         $result = exec($cmd, $output, $retVal);
