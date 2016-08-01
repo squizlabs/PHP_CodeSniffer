@@ -65,6 +65,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1072 : Squiz.SelfMemberReference.NotUsed not detected if leading namespace separator is used
   - Fixed bug #1089 : Rulesets cannot be loaded if the path contains urlencoded characters
   - Fixed bug #1091 : PEAR and Squiz FunctionComment sniffs throw errors for some invalid @param line formats
+  - Fixed bug #1095 : Generic LineEndings sniff replaces tabs with spaces with --tab-width is set
  </notes>
  <contents>
   <dir name="/">
@@ -627,6 +628,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         </file>
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.css" role="test" />
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LineEndingsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.js" role="test" />
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />

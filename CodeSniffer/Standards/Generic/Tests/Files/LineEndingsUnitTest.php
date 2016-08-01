@@ -33,6 +33,21 @@ class Generic_Tests_Files_LineEndingsUnitTest extends AbstractSniffUnitTest
 
 
     /**
+     * Get a list of CLI values to set befor the file is tested.
+     *
+     * @param string $testFile The name of the file being tested.
+     *
+     * @return array
+     */
+    public function getCliValues($testFile)
+    {
+        // Tab width setting is only needed for the tabbed file.
+        return array('--tab-width=4');
+
+    }//end getCliValues()
+
+
+    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
