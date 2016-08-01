@@ -74,3 +74,4 @@ function MissingParamTypeInDocBlock(array$a = null, callable$c, \ArrayObject$o, 
 
 function myFunc(...$args) {}
 function myFunc( ...$args) {}
+function myFunc(... $args) {}
