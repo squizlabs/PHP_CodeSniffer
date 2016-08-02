@@ -48,6 +48,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic BacktickOperatorSniff to ban the use of the backtick operator for running shell commands
     -- Sniff code is Generic.PHP.BacktickOperator
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Added Generic DisallowAlternativePHPTagsSniff to ban the use of alternate PHP tags
+    -- Sniff code is Generic.PHP.DisallowAlternativePHPTags
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
     -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
