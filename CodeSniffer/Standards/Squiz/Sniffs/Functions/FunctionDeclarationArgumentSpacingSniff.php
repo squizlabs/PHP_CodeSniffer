@@ -199,7 +199,7 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
             }
 
             $checkToken = ($nextParam - 1);
-            $prev = $phpcsFile->findPrevious(T_WHITESPACE, $checkToken, null, true);
+            $prev       = $phpcsFile->findPrevious(T_WHITESPACE, $checkToken, null, true);
             if ($tokens[$prev]['code'] === T_ELLIPSIS) {
                 $checkToken = ($prev - 1);
             }
