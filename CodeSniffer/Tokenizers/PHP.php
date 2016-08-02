@@ -923,7 +923,6 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 // the parenthesis map clean, so let's tag these tokens as
                 // T_ARRAY_HINT.
                 if ($newToken['code'] === T_ARRAY) {
-                    // Recalculate number of tokens.
                     for ($i = $stackPtr; $i < $numTokens; $i++) {
                         if ($tokens[$i] === '(') {
                             break;
