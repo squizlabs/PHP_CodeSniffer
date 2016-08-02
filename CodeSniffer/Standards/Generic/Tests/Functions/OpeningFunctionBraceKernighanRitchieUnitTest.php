@@ -61,8 +61,10 @@ class Generic_Tests_Functions_OpeningFunctionBraceKernighanRitchieUnitTest exten
                 127 => 1,
                 132 => 1,
                 137 => 1,
-                148 => 1,
+                142 => 1,
                 153 => 1,
+                158 => 1,
+                167 => 1,
                );
 
     }//end getErrorList()

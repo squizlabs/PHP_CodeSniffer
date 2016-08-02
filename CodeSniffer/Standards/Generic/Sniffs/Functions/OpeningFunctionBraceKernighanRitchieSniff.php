@@ -153,23 +153,23 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
             return;
         }
 
-        if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
+        if ($tokens[($openingBrace - 1)]['code'] !== T_WHITESPACE) {
             $length = 0;
-        } else if ($tokens[($closeBracket + 1)]['content'] === "\t") {
+        } else if ($tokens[($openingBrace - 1)]['content'] === "\t") {
             $length = '\t';
         } else {
-            $length = strlen($tokens[($closeBracket + 1)]['content']);
+            $length = strlen($tokens[($openingBrace - 1)]['content']);
         }
 
         if ($length !== 1) {
-            $error = 'Expected 1 space after closing parenthesis; found %s';
+            $error = 'Expected 1 space before opening brace; found %s';
             $data  = array($length);
-            $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'SpaceAfterBracket', $data);
+            $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'SpaceBeforeBrace', $data);
             if ($fix === true) {
                 if ($length === 0 || $length === '\t') {
-                    $phpcsFile->fixer->addContent($closeBracket, ' ');
+                    $phpcsFile->fixer->addContentBefore($openingBrace, ' ');
                 } else {
-                    $phpcsFile->fixer->replaceToken(($closeBracket + 1), ' ');
+                    $phpcsFile->fixer->replaceToken(($openingBrace - 1), ' ');
                 }
             }
         }
