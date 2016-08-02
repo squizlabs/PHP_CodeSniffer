@@ -80,25 +80,25 @@ class Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff implements PHP_CodeSnif
             return;
         }
 
-        if (T_OPEN_TAG === $openTag['code']) {
-            if ('<%' === $content) {
-                $error    = 'ASP style opening tag used; expected "<?php" but found "%s"';
-                $closer   = $this->findClosingTag($phpcsFile, $tokens, $stackPtr, '%>');
-                $error_id = 'ASPOpenTagFound';
-            } else if (false !== strpos($content, '<script ')) {
-                $error    = 'Script style opening tag used; expected "<?php" but found "%s"';
-                $closer   = $this->findClosingTag($phpcsFile, $tokens, $stackPtr, '</script>');
-                $error_id = 'ScriptOpenTagFound';
+        if ($openTag['code'] === T_OPEN_TAG) {
+            if ($content === '<%') {
+                $error     = 'ASP style opening tag used; expected "<?php" but found "%s"';
+                $closer    = $this->findClosingTag($phpcsFile, $tokens, $stackPtr, '%>');
+                $errorCode = 'ASPOpenTagFound';
+            } else if (strpos($content, '<script ') !== false) {
+                $error     = 'Script style opening tag used; expected "<?php" but found "%s"';
+                $closer    = $this->findClosingTag($phpcsFile, $tokens, $stackPtr, '</script>');
+                $errorCode = 'ScriptOpenTagFound';
             }
 
-            if (isset($error, $closer, $error_id) === true) {
+            if (isset($error, $closer, $errorCode) === true) {
                 $data = array($content);
 
-                if (false === $closer) {
-                    $phpcsFile->addError($error, $stackPtr, $error_id, $data);
+                if ($closer === false) {
+                    $phpcsFile->addError($error, $stackPtr, $errorCode, $data);
                 } else {
-                    $fix = $phpcsFile->addFixableError($error, $stackPtr, $error_id, $data);
-                    if (true === $fix) {
+                    $fix = $phpcsFile->addFixableError($error, $stackPtr, $errorCode, $data);
+                    if ($fix === true) {
                         $this->addChangeset($phpcsFile, $tokens, $stackPtr, $closer);
                     }
                 }
@@ -107,7 +107,7 @@ class Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff implements PHP_CodeSnif
             return;
         }//end if
 
-        if (T_OPEN_TAG_WITH_ECHO === $openTag['code'] && '<%=' === $content) {
+        if ($openTag['code'] === T_OPEN_TAG_WITH_ECHO && $content === '<%=') {
             $error   = 'ASP style opening tag used with echo; expected "<?php echo %s ..." but found "%s %s ..."';
             $nextVar = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
             $snippet = $this->getSnippet($tokens[$nextVar]['content']);
@@ -119,11 +119,11 @@ class Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff implements PHP_CodeSnif
 
             $closer = $this->findClosingTag($phpcsFile, $tokens, $stackPtr, '%>');
 
-            if (false === $closer) {
+            if ($closer === false) {
                 $phpcsFile->addError($error, $stackPtr, 'ASPShortOpenTagFound', $data);
             } else {
                 $fix = $phpcsFile->addFixableError($error, $stackPtr, 'ASPShortOpenTagFound', $data);
-                if (true === $fix) {
+                if ($fix === true) {
                     $this->addChangeset($phpcsFile, $tokens, $stackPtr, $closer, true);
                 }
             }
@@ -131,25 +131,27 @@ class Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff implements PHP_CodeSnif
             return;
         }//end if
 
-        // Account for incorrect script open tags. The "(?:<s)?" in the regex is to work-around a bug in PHP 5.2.
-        if (T_INLINE_HTML === $openTag['code'] && 1 === preg_match('`((?:<s)?cript (?:[^>]+)?language=[\'"]?php[\'"]?(?:[^>]+)?>)`i', $content, $match)) {
+        // Account for incorrect script open tags.
+        // The "(?:<s)?" in the regex is to work-around a bug in PHP 5.2.
+        if ($openTag['code'] === T_INLINE_HTML
+            && preg_match('`((?:<s)?cript (?:[^>]+)?language=[\'"]?php[\'"]?(?:[^>]+)?>)`i', $content, $match) === 1
+        ) {
             $error   = 'Script style opening tag used; expected "<?php" but found "%s"';
             $snippet = $this->getSnippet($content, $match[1]);
             $data    = array($match[1].$snippet);
 
             $phpcsFile->addError($error, $stackPtr, 'ScriptOpenTagFound', $data);
-
             return;
         }
 
-        if (T_INLINE_HTML === $openTag['code'] && false === $this->_aspTags) {
-            if (false !== strpos($content, '<%=')) {
+        if ($openTag['code'] === T_INLINE_HTML && $this->_aspTags === false) {
+            if (strpos($content, '<%=') !== false) {
                 $error   = 'Possible use of ASP style short opening tags detected. Needs manual inspection. Found: %s';
                 $snippet = $this->getSnippet($content, '<%=');
                 $data    = array('<%='.$snippet);
 
                 $phpcsFile->addWarning($error, $stackPtr, 'MaybeASPShortOpenTagFound', $data);
-            } else if (false !== strpos($content, '<%')) {
+            } else if (strpos($content, '<%') !== false) {
                 $error   = 'Possible use of ASP style opening tags detected. Needs manual inspection. Found: %s';
                 $snippet = $this->getSnippet($content, '<%');
                 $data    = array('<%'.$snippet);
