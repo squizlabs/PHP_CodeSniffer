@@ -1,0 +1,14 @@
+<div>
+<?php echo $var; ?>
+Some content here.
+<?php
+echo $var;
+?>
+<?php echo $var;?>
+<script type="text/php" language="php">
+echo $var;
+</script>
+<script language='PHP' type='text/php'>
+echo $var;
+</script>
+</div>
