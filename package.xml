@@ -70,6 +70,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1091 : PEAR and Squiz FunctionComment sniffs throw errors for some invalid @param line formats
   - Fixed bug #1092 : PEAR.Functions.ValidDefaultValue should not flag type hinted methods with a NULL default argument
   - Fixed bug #1095 : Generic LineEndings sniff replaces tabs with spaces with --tab-width is set
+  - Fixed bug #1096 : Squiz FunctionDeclarationArgumentSpacing gives incorrect error/fix when variadic operator is followed by a space
  </notes>
  <contents>
   <dir name="/">
