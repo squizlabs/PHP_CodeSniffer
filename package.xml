@@ -68,6 +68,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1072 : Squiz.SelfMemberReference.NotUsed not detected if leading namespace separator is used
   - Fixed bug #1089 : Rulesets cannot be loaded if the path contains urlencoded characters
   - Fixed bug #1091 : PEAR and Squiz FunctionComment sniffs throw errors for some invalid @param line formats
+  - Fixed bug #1092 : PEAR.Functions.ValidDefaultValue should not flag type hinted methods with a NULL default argument
   - Fixed bug #1095 : Generic LineEndings sniff replaces tabs with spaces with --tab-width is set
  </notes>
  <contents>

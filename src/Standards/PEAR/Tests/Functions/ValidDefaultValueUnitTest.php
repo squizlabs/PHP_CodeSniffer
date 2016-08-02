@@ -32,6 +32,7 @@ class ValidDefaultValueUnitTest extends AbstractSniffUnitTest
                 71 => 1,
                 76 => 1,
                 81 => 1,
+                91 => 1,
                );
 
     }//end getErrorList()
