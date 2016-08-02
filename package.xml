@@ -33,6 +33,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniff unit tests can now specify a list of test files instead of letting the runner pick them (request #1078)
     -- Useful if a sniff needs to exclude files based on the environment, or is checking filenames
     -- Override the new getTestFiles() method to specify your own list of test files
+  - Generic OpeningFunctionBraceKernighanRitchieSniff now ignores spacing for function return types
+    -- The sniff code Generic.Functions.OpeningFunctionBraceKernighanRitchie.SpaceAfterBracket has been removed
+    -- Replaced by Generic.Functions.OpeningFunctionBraceKernighanRitchie.SpaceBeforeBrace
+    -- The new error message is slightly clearer as it indicates that a single space is needed before the brace
   - Squiz LongConditionClosingCommentSniff now allows for the length of a code block to be configured
     -- Set the lineLimit property (default is 20) in your ruleset.xml file to set the code block length
     -- When the code block length is reached, the sniff will enforce a closing comment after the closing brace
