@@ -153,7 +153,7 @@ class Generic_Sniffs_Functions_OpeningFunctionBraceKernighanRitchieSniff impleme
             return;
         }
 
-        if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE) {
+        if ($tokens[($closeBracket + 1)]['code'] !== T_WHITESPACE && $tokens[($closeBracket + 1)]['code'] !== T_COLON) {
             $length = 0;
         } else if ($tokens[($closeBracket + 1)]['content'] === "\t") {
             $length = '\t';
