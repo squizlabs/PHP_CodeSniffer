@@ -57,7 +57,9 @@ class PSR2_Tests_Namespaces_UseDeclarationUnitTest extends AbstractSniffUnitTest
         case 'UseDeclarationUnitTest.5.inc':
             return array(
                 5 => 1,
-                7 => 1,
+                6 => 1,
+                8 => 1,
+                14 => 1,
             );
         default:
             return array();

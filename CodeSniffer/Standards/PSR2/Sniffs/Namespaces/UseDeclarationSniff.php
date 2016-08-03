@@ -95,7 +95,14 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
                             $phpcsFile->fixer->replaceToken($i, '');
                         }
 
-                        $phpcsFile->fixer->addContentBefore($next, $baseUse);
+                        if ($tokens[$next]['code'] === T_CONST || $tokens[$next]['code'] === T_FUNCTION) {
+                            $phpcsFile->fixer->addContentBefore($next, 'use ');
+                            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), $closingCurly, true);
+                            $phpcsFile->fixer->addContentBefore($next, str_replace('use ', '', $baseUse));
+                        } else {
+                            $phpcsFile->fixer->addContentBefore($next, $baseUse);
+                        }
+
                         $next = $phpcsFile->findNext(T_COMMA, ($next + 1), $closingCurly);
                         if ($next !== false) {
                             $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar);
