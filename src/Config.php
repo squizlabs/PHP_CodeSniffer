@@ -812,6 +812,26 @@ class Config
 
                 $this->bootstrap = array_merge($this->bootstrap, $bootstrap);
                 $this->overriddenDefaults['bootstrap'] = true;
+            } else if (substr($arg, 0, 10) === 'file-list=') {
+                $fileList = substr($arg, 10);
+                $path     = Util\Common::realpath($fileList);
+                if ($path === false) {
+                    echo 'ERROR: The specified file list "'.$fileList.'" does not exist'.PHP_EOL.PHP_EOL;
+                    $this->printUsage();
+                    exit(3);
+                }
+
+                $files = file($path);
+                foreach ($files as $inputFile) {
+                    $inputFile = trim($inputFile);
+
+                    // Skip empty lines.
+                    if ($inputFile === '') {
+                        continue;
+                    }
+
+                    $this->processFilePath($inputFile);
+                }
             } else if (substr($arg, 0, 11) === 'stdin-path=') {
                 $this->stdinPath = Util\Common::realpath(substr($arg, 11));
 
@@ -1054,11 +1074,6 @@ class Config
      */
     public function processUnknownArgument($arg, $pos)
     {
-        // If we are processing STDIN, don't record any files to check.
-        if ($this->stdin === true) {
-            return;
-        }
-
         // We don't know about any additional switches; just files.
         if ($arg{0} === '-') {
             if ($this->dieOnUnknownArg === false) {
@@ -1070,13 +1085,32 @@ class Config
             exit(3);
         }
 
-        $file = Util\Common::realpath($arg);
+        $this->processFilePath($arg);
+
+    }//end processUnknownArgument()
+
+
+    /**
+     * Processes a file path and add it to the file list.
+     *
+     * @param string $path The path to the file to add.
+     *
+     * @return void
+     */
+    public function processFilePath($path)
+    {
+        // If we are processing STDIN, don't record any files to check.
+        if ($this->stdin === true) {
+            return;
+        }
+
+        $file = Util\Common::realpath($path);
         if (file_exists($file) === false) {
             if ($this->dieOnUnknownArg === false) {
                 return;
             }
 
-            echo 'ERROR: The file "'.$arg.'" does not exist.'.PHP_EOL.PHP_EOL;
+            echo 'ERROR: The file "'.$path.'" does not exist.'.PHP_EOL.PHP_EOL;
             $this->printUsage();
             exit(3);
         } else {
@@ -1086,7 +1120,7 @@ class Config
             $this->overriddenDefaults['files'] = true;
         }
 
-    }//end processUnknownArgument()
+    }//end processFilePath()
 
 
     /**
