@@ -684,6 +684,33 @@ class PHP_CodeSniffer_CLI
 
                     $this->values['bootstrap'][] = $path;
                 }
+            } else if (substr($arg, 0, 10) === 'file-list=') {
+                $fileList = substr($arg, 10);
+                $path     = PHP_CodeSniffer::realpath($fileList);
+                if ($path === false) {
+                    echo 'ERROR: The specified file list "'.$file.'" does not exist'.PHP_EOL.PHP_EOL;
+                    $this->printUsage();
+                    exit(2);
+                }
+
+                $files = file($path);
+                foreach ($files as $inputFile) {
+                    $inputFile = trim($inputFile);
+
+                    // Skip empty lines.
+                    if ($inputFile === '') {
+                        continue;
+                    }
+
+                    $realFile = PHP_CodeSniffer::realpath($inputFile);
+                    if ($realFile === false) {
+                        echo 'ERROR: The specified file "'.$inputFile.'" does not exist'.PHP_EOL.PHP_EOL;
+                        $this->printUsage();
+                        exit(2);
+                    }
+
+                    $this->values['files'][] = $realFile;
+                }
             } else if (substr($arg, 0, 11) === 'stdin-path=') {
                 $this->values['stdinPath'] = PHP_CodeSniffer::realpath(substr($arg, 11));
 
@@ -1266,7 +1293,8 @@ class PHP_CodeSniffer_CLI
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] <file> ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>]'.PHP_EOL;
+        echo '    [--file-list=<fileList>] <file> ...'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
@@ -1284,6 +1312,7 @@ class PHP_CodeSniffer_CLI
         echo '        --colors      Use colors in output'.PHP_EOL;
         echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
+        echo '        <fileList>    A file containing a list of files and/or directories to check (one per line)'.PHP_EOL;
         echo '        <stdinPath>   If processing STDIN, the file path that STDIN will be processed as '.PHP_EOL;
         echo '        <bootstrap>   A comma separated list of files to run before processing starts'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being checked (default is iso-8859-1)'.PHP_EOL;
@@ -1321,7 +1350,8 @@ class PHP_CodeSniffer_CLI
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>] <file> ...'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>]'.PHP_EOL;
+        echo '    [--file-list=<fileList>] <file> ...'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
@@ -1331,6 +1361,7 @@ class PHP_CodeSniffer_CLI
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --no-patch    Do not make use of the "diff" or "patch" programs'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to fix'.PHP_EOL;
+        echo '        <fileList>    A file containing a list of files and/or directories to fix (one per line)'.PHP_EOL;
         echo '        <stdinPath>   If processing STDIN, the file path that STDIN will be processed as '.PHP_EOL;
         echo '        <bootstrap>   A comma separated list of files to run before processing starts'.PHP_EOL;
         echo '        <encoding>    The encoding of the files being fixed (default is iso-8859-1)'.PHP_EOL;

@@ -26,6 +26,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added --file-list command line argument to allow a list of files and directories to be specified in an external file
+    -- Useful is you have a generated list of files to check that would be too long for the command line
+    -- File and directory paths are listed one per line
+    -- Usage is: phpcs --file-list=/path/to/file-list ...
   - Values set using @codingStandardsChangeSetting comments can now contain spaces
   - Sniff unit tests can now specify a list of test files instead of letting the runner pick them (request #1078)
     -- Useful if a sniff needs to exclude files based on the environment, or is checking filenames
