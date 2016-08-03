@@ -2098,7 +2098,7 @@ class File
      *
      * @param int $stackPtr The stack position of the class.
      *
-     * @return string
+     * @return string|false
      */
     public function findExtendedClassName($stackPtr)
     {
@@ -2138,6 +2138,58 @@ class File
         return $name;
 
     }//end findExtendedClassName()
+
+
+    /**
+     * Returns the names of the interfaces that the specified class implements.
+     *
+     * Returns FALSE on error or if there are no implemented interface names.
+     *
+     * @param int $stackPtr The stack position of the class.
+     *
+     * @return array|false
+     */
+    public function findImplementedInterfaceNames($stackPtr)
+    {
+        // Check for the existence of the token.
+        if (isset($this->tokens[$stackPtr]) === false) {
+            return false;
+        }
+
+        if ($this->tokens[$stackPtr]['code'] !== T_CLASS) {
+            return false;
+        }
+
+        if (isset($this->tokens[$stackPtr]['scope_closer']) === false) {
+            return false;
+        }
+
+        $classOpenerIndex = $this->tokens[$stackPtr]['scope_opener'];
+        $implementsIndex  = $this->findNext(T_IMPLEMENTS, $stackPtr, $classOpenerIndex);
+        if ($implementsIndex === false) {
+            return false;
+        }
+
+        $find = array(
+                 T_NS_SEPARATOR,
+                 T_STRING,
+                 T_WHITESPACE,
+                 T_COMMA,
+                );
+
+        $end  = $this->findNext($find, ($implementsIndex + 1), ($classOpenerIndex + 1), true);
+        $name = $this->getTokensAsString(($implementsIndex + 1), ($end - $implementsIndex - 1));
+        $name = trim($name);
+
+        if ($name === '') {
+            return false;
+        } else {
+            $names = explode(',', $name);
+            $names = array_map('trim', $names);
+            return $names;
+        }
+
+    }//end findImplementedInterfaceNames()
 
 
 }//end class
