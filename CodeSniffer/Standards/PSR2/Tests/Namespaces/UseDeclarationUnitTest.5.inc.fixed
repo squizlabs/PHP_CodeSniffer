@@ -1,0 +1,13 @@
+<?php
+namespace MyProject;
+
+use Single\ClassA as A;
+use Grouped\References\ClassB;
+use Grouped\References\ClassC as C;
+use Single\ClassD;
+use Grouped\References\ClassE;
+use Grouped\References\ClassF as F;
+
+class Grouped {
+
+}
