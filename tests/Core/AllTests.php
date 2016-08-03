@@ -34,6 +34,8 @@ $tokens = new Tokens();
 require_once 'IsCamelCapsTest.php';
 require_once 'ErrorSuppressionTest.php';
 require_once 'File/GetMethodParametersTest.php';
+require_once 'File/FindExtendedClassNameTest.php';
+require_once 'File/FindImplementedInterfaceNamesTest.php';
 
 class AllTests
 {
@@ -62,6 +64,8 @@ class AllTests
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\IsCamelCapsTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\ErrorSuppressionTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\GetMethodParametersTest');
+        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\FindExtendedClassNameTest');
+        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\FindImplementedInterfaceNamesTest');
         return $suite;
 
     }//end suite()
