@@ -111,6 +111,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <dir name="tests">
     <dir name="Core">
      <dir name="File">
+      <file baseinstalldir="" name="FindExtendedClassNameTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
+      <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.php" role="test">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
       <file baseinstalldir="" name="GetMethodParametersTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
