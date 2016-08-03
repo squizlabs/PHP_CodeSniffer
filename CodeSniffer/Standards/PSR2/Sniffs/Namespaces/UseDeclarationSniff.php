@@ -76,45 +76,45 @@ class PSR2_Sniffs_Namespaces_UseDeclarationSniff implements PHP_CodeSniffer_Snif
                 if ($tokens[$next]['code'] === T_COMMA) {
                     $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.'use ');
                 } else {
-                    $baseUse = rtrim($phpcsFile->getTokensAsString($stackPtr, $next - $stackPtr));
+                    $baseUse      = rtrim($phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr)));
                     $closingCurly = $phpcsFile->findNext(T_CLOSE_USE_GROUP, ($next + 1));
 
                     $phpcsFile->fixer->beginChangeset();
 
-                    // remove base use statement
+                    // Remove base use statement.
                     for ($i = $stackPtr; $i <= $next; $i++) {
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
 
-                    // convert grouped use statements in full use statements
+                    // Convert grouped use statements into full use statements.
                     do {
-                        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $next + 1, $closingCurly, true);
+                        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), $closingCurly, true);
 
-                        $whitespace = $phpcsFile->findPrevious(T_WHITESPACE, $next - 1, null, true);
-                        for ($i = $whitespace + 1; $i < $next; $i++) {
+                        $whitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
+                        for ($i = ($whitespace + 1); $i < $next; $i++) {
                             $phpcsFile->fixer->replaceToken($i, '');
                         }
 
                         $phpcsFile->fixer->addContentBefore($next, $baseUse);
                         $next = $phpcsFile->findNext(T_COMMA, ($next + 1), $closingCurly);
-                        if ($next) {
-                            $phpcsFile->fixer->replaceToken($next, ';' . $phpcsFile->eolChar);
+                        if ($next !== false) {
+                            $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar);
                         }
                     } while ($next !== false);
 
                     $phpcsFile->fixer->replaceToken($closingCurly, '');
 
-                    // remove any trailing whitespace
-                    $next = $phpcsFile->findNext(T_SEMICOLON, $closingCurly);
-                    $whitespace = $phpcsFile->findPrevious(T_WHITESPACE, $closingCurly - 1, null, true);
-                    for ($i = $whitespace + 1; $i < $next; $i++) {
+                    // Remove any trailing whitespace.
+                    $next       = $phpcsFile->findNext(T_SEMICOLON, $closingCurly);
+                    $whitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingCurly - 1), null, true);
+                    for ($i = ($whitespace + 1); $i < $next; $i++) {
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
 
                     $phpcsFile->fixer->endChangeset();
-                }
-            }
-        }
+                }//end if
+            }//end if
+        }//end if
 
         // Make sure this USE comes after the first namespace declaration.
         $prev = $phpcsFile->findPrevious(T_NAMESPACE, ($stackPtr - 1));
