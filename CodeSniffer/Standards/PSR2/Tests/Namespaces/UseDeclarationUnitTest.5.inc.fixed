@@ -1,0 +1,18 @@
+<?php
+namespace MyProject;
+
+use Single\ClassA as A;
+use Grouped\Classes\ClassB;
+use Grouped\Classes\ClassC as C;
+use const Grouped\Constants\D;
+use const Grouped\Constants\E;
+use Single\ClassF;
+use Grouped\Mixed\ClassG;
+use const Grouped\Mixed\ConstH;
+use function Grouped\Mixed\func_i;
+use Grouped\Mixed\ClassJ as J;
+use function Grouped\Functions\func_k;
+
+class PHP7 {
+
+}
