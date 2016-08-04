@@ -82,6 +82,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1096 : Squiz FunctionDeclarationArgumentSpacing gives incorrect error/fix when variadic operator is followed by a space
   - Fixed bug #1099 : Group use declarations are incorrectly fixed by the PSR2 standard
     -- Thanks to Jason McCreary for the patch
+  - Fixed bug #1101 : Incorrect indent errors when breaking out of PHP inside an IF statement
  </notes>
  <contents>
   <dir name="/">
