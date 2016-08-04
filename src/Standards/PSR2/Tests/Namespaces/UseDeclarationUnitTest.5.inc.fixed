@@ -1,0 +1,32 @@
+<?php
+namespace MyProject;
+
+use Single\ClassA as A;
+use Grouped\Classes\ClassB;
+use Grouped\Classes\ClassC as C;
+use const Grouped\Constants\D;
+use const Grouped\Constants\E;
+use Single\ClassF;
+use Grouped\Mixed\ClassG;
+use const Grouped\Mixed\ConstH;
+use function Grouped\Mixed\func_i;
+use Grouped\Mixed\ClassJ as J;
+use function Grouped\Functions\func_k;
+
+// Some examples from the original RFC.
+use function foo\math\sin;
+use function foo\math\cos;
+use function foo\math\cosh;
+use const foo\math\PI;
+use const foo\math\E;
+use const foo\math\GAMMA;
+use const foo\math\GOLDEN_RATIO;
+use foo\math\Math;
+use const foo\math\PI;
+use function foo\math\sin;
+use function foo\math\cos;
+use function foo\math\cosh;
+
+class PHP7 {
+
+}
