@@ -281,7 +281,7 @@ class ScopeIndentSniff implements Sniff
                     $exact = false;
 
                     if ($condition > 0 && $lastOpenTag > $condition) {
-                        if ($this->_debug === true) {
+                        if ($this->debug === true) {
                             echo "\t* open tag is inside condition; using open tag *".PHP_EOL;
                         }
 
@@ -292,7 +292,7 @@ class ScopeIndentSniff implements Sniff
 
                         $currentIndent = $checkIndent;
 
-                        if ($this->_debug === true) {
+                        if ($this->debug === true) {
                             $type = $tokens[$lastOpenTag]['type'];
                             echo "\t=> checking indent of $checkIndent; main indent set to $currentIndent by token $lastOpenTag ($type)".PHP_EOL;
                         }
