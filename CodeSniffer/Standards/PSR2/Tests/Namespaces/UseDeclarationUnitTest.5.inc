@@ -13,6 +13,11 @@ use Grouped\Mixed\ {
 };
 use function Grouped\Functions\ { func_k };
 
+// Some examples from the original RFC.
+use function foo\math\{ sin, cos, cosh };
+use const foo\math\{ PI, E, GAMMA, GOLDEN_RATIO };
+use foo\math\{ Math, const PI, function sin, function cos, function cosh };
+
 class PHP7 {
 
 }
