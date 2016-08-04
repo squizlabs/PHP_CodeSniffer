@@ -1096,6 +1096,27 @@ $foo = foo(
     }
 );
 
+if (somethingIsTrue()) {
+    ?>
+    <div>
+        <?php
+        $someVar = doSomething(
+            'foobar',
+            true,
+            'foo',
+            'bar'
+        );
+
+        if (somethingElseIsTrue()) {
+            doOneThing();
+        } else {
+            doTheOtherThing();
+        }
+        ?>
+    </div>
+    <?php
+}
+
 $foo = foo(
     function () {
         $foo->debug(
