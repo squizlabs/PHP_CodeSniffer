@@ -15,6 +15,13 @@ use PHP_CodeSniffer\Files\File;
 class ObjectOperatorSpacingSniff implements Sniff
 {
 
+    /**
+     * Allow newlines instead of spaces.
+     *
+     * @var boolean
+     */
+    public $ignoreNewlines = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -63,7 +70,9 @@ class ObjectOperatorSpacingSniff implements Sniff
         $phpcsFile->recordMetric($stackPtr, 'Spacing before object operator', $before);
         $phpcsFile->recordMetric($stackPtr, 'Spacing after object operator', $after);
 
-        if ($before !== 0) {
+        if ($before !== 0
+            && ($before !== 'newline' || $this->ignoreNewlines === false)
+        ) {
             $error = 'Space found before object operator';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Before');
             if ($fix === true) {
@@ -71,7 +80,9 @@ class ObjectOperatorSpacingSniff implements Sniff
             }
         }
 
-        if ($after !== 0) {
+        if ($after !== 0
+            && ($after !== 'newline' || $this->ignoreNewlines === false)
+        ) {
             $error = 'Space found after object operator';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'After');
             if ($fix === true) {
