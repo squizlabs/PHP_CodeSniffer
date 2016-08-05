@@ -90,6 +90,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1099 : Group use declarations are incorrectly fixed by the PSR2 standard
     -- Thanks to Jason McCreary for the patch
   - Fixed bug #1101 : Incorrect indent errors when breaking out of PHP inside an IF statement
+  - Fixed bug #1102 : Squiz.Formatting.OperatorBracket.MissingBrackets faulty bracketing fix
  </notes>
  <contents>
   <dir name="/">
@@ -1276,7 +1277,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorBracketUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OperatorBracketUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorBracketUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OperatorBracketUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorBracketUnitTest.php" role="test" />
        </dir>
        <dir name="Functions">

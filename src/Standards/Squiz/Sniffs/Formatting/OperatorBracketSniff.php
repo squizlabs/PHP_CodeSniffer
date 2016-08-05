@@ -95,6 +95,25 @@ class OperatorBracketSniff implements Sniff
             }
         }//end if
 
+        // Tokens that are allowed inside a bracketed operation.
+        $allowed = array(
+                    T_VARIABLE,
+                    T_LNUMBER,
+                    T_DNUMBER,
+                    T_STRING,
+                    T_WHITESPACE,
+                    T_THIS,
+                    T_SELF,
+                    T_OBJECT_OPERATOR,
+                    T_DOUBLE_COLON,
+                    T_OPEN_SQUARE_BRACKET,
+                    T_CLOSE_SQUARE_BRACKET,
+                    T_MODULUS,
+                    T_NONE,
+                   );
+
+        $allowed += Tokens::$operators;
+
         $lastBracket = false;
         if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
             $parenthesis = array_reverse($tokens[$stackPtr]['nested_parenthesis'], true);
@@ -109,23 +128,8 @@ class OperatorBracketSniff implements Sniff
                 }
 
                 if ($prevCode === T_STRING || $prevCode === T_SWITCH) {
-                    // We allow very simple operations to not be bracketed.
+                    // We allow simple operations to not be bracketed.
                     // For example, ceil($one / $two).
-                    $allowed = array(
-                                T_VARIABLE,
-                                T_LNUMBER,
-                                T_DNUMBER,
-                                T_STRING,
-                                T_WHITESPACE,
-                                T_THIS,
-                                T_SELF,
-                                T_OBJECT_OPERATOR,
-                                T_DOUBLE_COLON,
-                                T_OPEN_SQUARE_BRACKET,
-                                T_CLOSE_SQUARE_BRACKET,
-                                T_MODULUS,
-                               );
-
                     for ($prev = ($stackPtr - 1); $prev > $bracket; $prev--) {
                         if (in_array($tokens[$prev]['code'], $allowed) === true) {
                             continue;
@@ -267,6 +271,7 @@ class OperatorBracketSniff implements Sniff
                     T_MODULUS         => true,
                     T_ISSET           => true,
                     T_ARRAY           => true,
+                    T_NONE            => true,
                    );
 
         // Find the first token in the expression.
