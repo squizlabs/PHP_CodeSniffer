@@ -43,14 +43,14 @@ class Squiz_Tests_WhiteSpace_ObjectOperatorSpacingUnitTest extends AbstractSniff
     public function getErrorList()
     {
         return array(
-                3 => 1,
-                4 => 2,
-                6 => 2,
-                8 => 1,
-                9 => 1,
-                13 => 1,
-                14 => 2,
+                3  => 1,
+                4  => 2,
+                6  => 2,
+                8  => 1,
+                9  => 1,
+                15 => 1,
                 16 => 2,
+                18 => 2,
                );
 
     }//end getErrorList()

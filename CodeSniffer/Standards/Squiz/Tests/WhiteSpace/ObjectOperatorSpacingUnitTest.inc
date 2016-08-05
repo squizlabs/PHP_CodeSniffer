@@ -8,7 +8,9 @@ $this
     ->testThis();
 $this->
     testThis();
+
 // @codingStandardsChangeSetting Squiz.WhiteSpace.ObjectOperatorSpacing ignoreNewlines true
+
 $this->testThis();
 $this-> testThis();
 $this    ->  testThis();
@@ -18,3 +20,5 @@ $this
     ->testThis();
 $this->
     testThis();
+
+// @codingStandardsChangeSetting Squiz.WhiteSpace.ObjectOperatorSpacing ignoreNewlines false
