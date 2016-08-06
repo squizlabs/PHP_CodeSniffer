@@ -1728,11 +1728,14 @@ class PHP_CodeSniffer
             $filePath = $file;
         }
 
-        // Before we go and spend time tokenizing this file, just check
+        $cliValues = $this->cli->getCommandLineValues();
+
+        // If force check not set,
+        // before we go and spend time tokenizing this file, just check
         // to see if there is a tag up top to indicate that the whole
         // file should be ignored. It must be on one of the first two lines.
         $firstContent = $contents;
-        if ($contents === null && is_readable($filePath) === true) {
+        if (isset($cliValues['forceCheck']) === false && $contents === null && is_readable($filePath) === true) {
             $handle = fopen($filePath, 'r');
             stream_set_blocking($handle, true);
             if ($handle !== false) {
@@ -1786,8 +1789,6 @@ class PHP_CodeSniffer
 
             $phpcsFile->addError($error, null);
         }//end try
-
-        $cliValues = $this->cli->getCommandLineValues();
 
         if (PHP_CODESNIFFER_INTERACTIVE === false) {
             // Cache the report data for this file so we can unset it to save memory.
