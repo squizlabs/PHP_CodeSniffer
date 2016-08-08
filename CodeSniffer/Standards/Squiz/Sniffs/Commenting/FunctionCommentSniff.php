@@ -238,6 +238,11 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
      */
     protected function processParams(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
+        $phpVersion = PHP_CodeSniffer::getConfigData('php_version');
+        if ($phpVersion === null) {
+            $phpVersion = PHP_VERSION_ID;
+        }
+
         $tokens = $phpcsFile->getTokens();
 
         $params  = array();
@@ -382,7 +387,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                         $suggestedTypeHint = 'callable';
                     } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
                         $suggestedTypeHint = $suggestedName;
-                    } else if (PHP_VERSION_ID >= 70000) {
+                    } else if ($phpVersion >= 70000) {
                         if ($typeName === 'string') {
                             $suggestedTypeHint = 'string';
                         } else if ($typeName === 'int' || $typeName === 'integer') {
