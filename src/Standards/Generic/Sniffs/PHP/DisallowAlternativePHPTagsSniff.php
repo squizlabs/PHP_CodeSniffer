@@ -13,10 +13,10 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Config;
 
 class DisallowAlternativePHPTagsSniff implements Sniff
 {
-
 
     /**
      * Whether ASP tags are enabled or not.
@@ -24,6 +24,13 @@ class DisallowAlternativePHPTagsSniff implements Sniff
      * @var boolean
      */
     private $aspTags = false;
+
+    /**
+     * The current PHP version.
+     *
+     * @var integer
+     */
+    private $phpVersion = null;
 
 
     /**
@@ -33,7 +40,14 @@ class DisallowAlternativePHPTagsSniff implements Sniff
      */
     public function register()
     {
-        if (PHP_VERSION_ID < 70000) {
+        if ($this->phpVersion === null) {
+            $this->phpVersion = Config::getConfigData('php_version');
+            if ($this->phpVersion === null) {
+                $this->phpVersion = PHP_VERSION_ID;
+            }
+        }
+
+        if ($this->phpVersion < 70000) {
             $this->aspTags = (boolean) ini_get('asp_tags');
         }
 

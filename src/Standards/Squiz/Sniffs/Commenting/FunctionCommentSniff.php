@@ -11,10 +11,18 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff as PEARFunctionCommentSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Util\Common;
 
 class FunctionCommentSniff extends PEARFunctionCommentSniff
 {
+
+    /**
+     * The current PHP version.
+     *
+     * @var integer
+     */
+    private $phpVersion = null;
 
 
     /**
@@ -222,6 +230,13 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
      */
     protected function processParams(File $phpcsFile, $stackPtr, $commentStart)
     {
+        if ($this->phpVersion === null) {
+            $this->phpVersion = Config::getConfigData('php_version');
+            if ($this->phpVersion === null) {
+                $this->phpVersion = PHP_VERSION_ID;
+            }
+        }
+
         $tokens = $phpcsFile->getTokens();
 
         $params  = array();
@@ -366,7 +381,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                         $suggestedTypeHint = 'callable';
                     } else if (in_array($typeName, Common::$allowedTypes) === false) {
                         $suggestedTypeHint = $suggestedName;
-                    } else if (PHP_VERSION_ID >= 70000) {
+                    } else if ($this->phpVersion >= 70000) {
                         if ($typeName === 'string') {
                             $suggestedTypeHint = 'string';
                         } else if ($typeName === 'int' || $typeName === 'integer') {
