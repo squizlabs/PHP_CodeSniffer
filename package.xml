@@ -35,34 +35,31 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Sniff unit tests can now specify a list of test files instead of letting the runner pick them (request #1078)
     -- Useful if a sniff needs to exclude files based on the environment, or is checking filenames
     -- Override the new getTestFiles() method to specify your own list of test files
-  - Generic OpeningFunctionBraceKernighanRitchieSniff now ignores spacing for function return types
+  - Generic.Functions.OpeningFunctionBraceKernighanRitchie now ignores spacing for function return types
     -- The sniff code Generic.Functions.OpeningFunctionBraceKernighanRitchie.SpaceAfterBracket has been removed
     -- Replaced by Generic.Functions.OpeningFunctionBraceKernighanRitchie.SpaceBeforeBrace
     -- The new error message is slightly clearer as it indicates that a single space is needed before the brace
-  - Squiz LongConditionClosingCommentSniff now allows for the length of a code block to be configured
+  - Squiz.Commenting.LongConditionClosingComment now allows for the length of a code block to be configured
     -- Set the lineLimit property (default is 20) in your ruleset.xml file to set the code block length
     -- When the code block length is reached, the sniff will enforce a closing comment after the closing brace
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Squiz LongConditionClosingCommentSniff now allows for the end comment format to be configured
+  - Squiz.Commenting.LongConditionClosingComment now allows for the end comment format to be configured
     -- Set the commentFormat property (default is "//end %s") in your ruleset.xml file to set the format
     -- The placeholder %s will be replaced with the type of condition opener, e.g., "//end foreach"
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic ForbiddenFunctionsSniff now allows forbidden functions to have mixed case
+  - Generic.PHPForbiddenFunctions now allows forbidden functions to have mixed case
     -- Previously, it would only do a strtolower comparison
     -- Error message now shows what case was found in the code and what the correct case should be
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Added Generic OpeningBraceSameLineSniff to ensure opening brace of class/interface/trait is on the same line as the declaration
-    -- Sniff code is Generic.Classes.OpeningBraceSameLine
+  - Added Generic.Classes.OpeningBraceSameLine to ensure opening brace of class/interface/trait is on the same line as the declaration
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Added Generic BacktickOperatorSniff to ban the use of the backtick operator for running shell commands
-    -- Sniff code is Generic.PHP.BacktickOperator
+  - Added Generic.PHP.BacktickOperator to ban the use of the backtick operator for running shell commands
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Added Generic DisallowAlternativePHPTagsSniff to ban the use of alternate PHP tags
-    -- Sniff code is Generic.PHP.DisallowAlternativePHPTags
+  - Added Generic.PHP.DisallowAlternativePHPTags to ban the use of alternate PHP tags
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
     -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
-  - Squiz ObjectOperatorSpacingniff now has a setting to ignore newline characters around object operators
+  - Squiz.WhiteSpace.ObjectOperatorSpacing now has a setting to ignore newline characters around object operators
     -- Default remains FALSE, so newlines are not allowed
     -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
     -- Thanks to Alex Howansky for the patch
@@ -76,6 +73,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic UpperCaseConstantNameSniff now allows lowercase namespaces in constant definitions
     -- Thanks to Daniel Schniepp for the patch
   - Squiz DoubleQuoteUsageSniff is now more tolerant of syntax errors caused by mismatched string tokens
+  - A few sniffs that produce errors based on the current PHP version can now be told to run using a specific PHP version
+    -- Set the php_version config var using --config-set, --runtime-set, or in a ruleset to specify a specific PHP version
+    -- The format of the PHP version is the same as the PHP_VERSION_ID constant (e.g., 50403 for version 5.4.3)
+    -- Supported sniffs are Generic.PHP.DisallowAlternativePHPTags, PSR1.Classes.ClassDeclaration, Squiz.Commenting.FunctionComment
+    -- Thanks to Finlay Beaton for the patch
   - Fixed bug #1014 : Squiz VariableCommentSniff doesn't always detect a missing comment
   - Fixed bug #1066 : Undefined index: quiet in CLI.php during unit test run with -v command line arg
   - Fixed bug #1072 : Squiz.SelfMemberReference.NotUsed not detected if leading namespace separator is used
