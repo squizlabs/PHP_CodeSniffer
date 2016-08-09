@@ -40,6 +40,13 @@ class Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff implements PHP_CodeSnif
      */
     private $_aspTags = false;
 
+    /**
+     * The current PHP version.
+     *
+     * @var integer
+     */
+    private $_phpVersion = null;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -48,7 +55,14 @@ class Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff implements PHP_CodeSnif
      */
     public function register()
     {
-        if (PHP_VERSION_ID < 70000) {
+        if ($this->_phpVersion === null) {
+            $this->_phpVersion = PHP_CodeSniffer::getConfigData('php_version');
+            if ($this->_phpVersion === null) {
+                $this->_phpVersion = PHP_VERSION_ID;
+            }
+        }
+
+        if ($this->_phpVersion < 70000) {
             $this->_aspTags = (boolean) ini_get('asp_tags');
         }
 
