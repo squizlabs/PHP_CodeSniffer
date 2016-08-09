@@ -84,28 +84,28 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
         $lowerClassName = strtolower($tokens[$classPtr]['content']);
         // Check if the referenced class is in the same namespace as the current
         // file. If it is then the use statement is not necessary.
-        $namespacePtr = $phpcsFile->findPrevious([T_NAMESPACE], $stackPtr);
+        $namespacePtr = $phpcsFile->findPrevious(array(T_NAMESPACE), $stackPtr);
         // Check if the use statement does aliasing with the "as" keyword. Aliasing
         // is allowed even in the same namespace.
         $aliasUsed = $phpcsFile->findPrevious(T_AS, ($classPtr - 1), $stackPtr);
         if ($namespacePtr !== false && $aliasUsed === false) {
             $nsEnd           = $phpcsFile->findNext(
-                [
+                array(
                  T_NS_SEPARATOR,
                  T_STRING,
                  T_WHITESPACE,
-                ],
+                ),
                 ($namespacePtr + 1),
                 null,
                 true
             );
             $namespace       = trim($phpcsFile->getTokensAsString(($namespacePtr + 1), ($nsEnd - $namespacePtr - 1)));
-            $useNamespacePtr = $phpcsFile->findNext([T_STRING], ($stackPtr + 1));
+            $useNamespacePtr = $phpcsFile->findNext(array(T_STRING), ($stackPtr + 1));
             $useNamespaceEnd = $phpcsFile->findNext(
-                [
+                array(
                  T_NS_SEPARATOR,
                  T_STRING,
-                ],
+                ),
                 ($useNamespacePtr + 1),
                 null,
                 true
