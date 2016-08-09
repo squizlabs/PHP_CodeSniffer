@@ -27,6 +27,12 @@
  */
 class PSR1_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
 {
+    /**
+     * The current PHP version.
+     *
+     * @var integer
+     */
+    private $_phpVersion = null;
 
 
     /**
@@ -56,9 +62,11 @@ class PSR1_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $phpVersion = PHP_CodeSniffer::getConfigData('php_version');
-        if ($phpVersion === null) {
-            $phpVersion = PHP_VERSION_ID;
+        if ($this->_phpVersion === null) {
+            $this->_phpVersion = PHP_CodeSniffer::getConfigData('php_version');
+            if ($this->_phpVersion === null) {
+                $this->_phpVersion = PHP_VERSION_ID;
+            }
         }
 
         $tokens = $phpcsFile->getTokens();
@@ -77,7 +85,7 @@ class PSR1_Sniffs_Classes_ClassDeclarationSniff implements PHP_CodeSniffer_Sniff
             $phpcsFile->recordMetric($stackPtr, 'One class per file', 'yes');
         }
 
-        if ($phpVersion >= 50300) {
+        if ($this->_phpVersion >= 50300) {
             $namespace = $phpcsFile->findNext(array(T_NAMESPACE, T_CLASS, T_INTERFACE, T_TRAIT), 0);
             if ($tokens[$namespace]['code'] !== T_NAMESPACE) {
                 $error = 'Each %s must be in a namespace of at least one level (a top-level vendor name)';
