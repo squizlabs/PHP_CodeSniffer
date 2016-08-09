@@ -17,6 +17,13 @@ use PHP_CodeSniffer\Config;
 class SyntaxSniff implements Sniff
 {
 
+    /**
+     * The path to the PHP version we are checking with.
+     *
+     * @var string
+     */
+    private $phpPath = null;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -41,18 +48,20 @@ class SyntaxSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $phpPath = Config::getExecutablePath('php');
-        if ($phpPath === null) {
-            // PHP_BINARY is available in PHP 5.4+.
-            if (defined('PHP_BINARY') === true) {
-                $phpPath = PHP_BINARY;
-            } else {
-                return;
+        if ($this->phpPath === null) {
+            $this->phpPath = Config::getExecutablePath('php');
+            if ($this->phpPath === null) {
+                // PHP_BINARY is available in PHP 5.4+.
+                if (defined('PHP_BINARY') === true) {
+                    $this->phpPath = PHP_BINARY;
+                } else {
+                    return;
+                }
             }
         }
 
         $fileName = $phpcsFile->getFilename();
-        $cmd      = "$phpPath -l \"$fileName\" 2>&1";
+        $cmd      = $this->phpPath." -l \"$fileName\" 2>&1";
         $output   = shell_exec($cmd);
 
         $matches = array();
