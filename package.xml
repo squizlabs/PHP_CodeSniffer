@@ -90,6 +90,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Jason McCreary for the patch
   - Fixed bug #1101 : Incorrect indent errors when breaking out of PHP inside an IF statement
   - Fixed bug #1102 : Squiz.Formatting.OperatorBracket.MissingBrackets faulty bracketing fix
+  - Fixed bug #1112 : File docblock not recognized when require_once follows it
  </notes>
  <contents>
   <dir name="/">
