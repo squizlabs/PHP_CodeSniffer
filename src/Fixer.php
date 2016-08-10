@@ -181,7 +181,7 @@ class Fixer
 
             $this->loops++;
 
-            if (PHP_CODESNIFFER_CBF === true && $stdin === false) {
+            if (PHP_CODESNIFFER_CBF === true && PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo "\r".str_repeat(' ', 80)."\r";
                 echo "\t=> Fixing file: $this->numFixes/$fixable violations remaining [made $this->loops pass";
                 if ($this->loops > 1) {

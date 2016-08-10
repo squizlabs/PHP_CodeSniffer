@@ -97,8 +97,9 @@ class Runner
         // so we hard-code the full report here and when outputting.
         // We also ensure parallel processing is off because we need to do one file at a time.
         if ($this->config->interactive === true) {
-            $this->config->reports  = array('full' => null);
-            $this->config->parallel = 1;
+            $this->config->reports     = array('full' => null);
+            $this->config->parallel    = 1;
+            $this->config->showProcess = false;
         }
 
         // Disable caching if we are processing STDIN as we can't be 100%
@@ -157,12 +158,16 @@ class Runner
         // values the user has set.
         $this->config = new Config();
 
+        // When processing STDIN, we can't output anything to the screen
+        // or it will end up mixed in with the file output.
+        if ($this->config->stdin === true) {
+            $this->config->verbosity = 0;
+        }
+
         // Init the run and load the rulesets to set additional config vars.
         $this->init();
 
         // Override some of the command line settings that might break the fixes.
-        $this->config->verbosity    = 0;
-        $this->config->showProgress = false;
         $this->config->generator    = null;
         $this->config->explain      = false;
         $this->config->interactive  = false;
@@ -311,12 +316,6 @@ class Runner
             }
         }//end if
 
-        $numProcessed = 0;
-        $dots         = 0;
-        $maxLength    = strlen($numFiles);
-        $lastDir      = '';
-        $childProcs   = array();
-
         // Turn all sniff errors into exceptions.
         set_error_handler(array($this, 'handleErrors'));
 
@@ -331,12 +330,15 @@ class Runner
             $this->config->parallel = 1;
         }
 
+        $lastDir = '';
+
         if ($this->config->parallel === 1) {
             // Running normally.
+            $numProcessed = 0;
             foreach ($todo as $path => $file) {
                 $currDir = dirname($path);
                 if ($lastDir !== $currDir) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 0) {
                         echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
                     }
 
@@ -346,52 +348,11 @@ class Runner
                 $this->processFile($file);
 
                 $numProcessed++;
-
-                if (PHP_CODESNIFFER_VERBOSITY > 0
-                    || $this->config->interactive === true
-                    || $this->config->showProgress === false
-                ) {
-                    continue;
-                }
-
-                // Show progress information.
-                if ($file->ignored === true) {
-                    echo 'S';
-                } else {
-                    $errors   = $file->getErrorCount();
-                    $warnings = $file->getWarningCount();
-                    if ($errors > 0) {
-                        if ($this->config->colors === true) {
-                            echo "\033[31m";
-                        }
-
-                        echo 'E';
-                    } else if ($warnings > 0) {
-                        if ($this->config->colors === true) {
-                            echo "\033[33m";
-                        }
-
-                        echo 'W';
-                    } else {
-                        echo '.';
-                    }
-
-                    if ($this->config->colors === true) {
-                        echo "\033[0m";
-                    }
-                }//end if
-
-                $dots++;
-                if ($dots === 60) {
-                    $padding = ($maxLength - strlen($numProcessed));
-                    echo str_repeat(' ', $padding);
-                    $percent = round(($numProcessed / $numFiles) * 100);
-                    echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
-                    $dots = 0;
-                }
-            }//end foreach
+                $this->printProgress($file, $numFiles, $numProcessed);
+            }
         } else {
             // Batching and forking.
+            $childProcs  = array();
             $numFiles    = count($todo);
             $numPerBatch = ceil($numFiles / $this->config->parallel);
 
@@ -438,7 +399,7 @@ class Runner
 
                         $currDir = dirname($path);
                         if ($lastDir !== $currDir) {
-                            if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
+                            if (PHP_CODESNIFFER_VERBOSITY > 0) {
                                 echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
                             }
 
@@ -461,6 +422,7 @@ class Runner
                                     'totalErrors'   => $this->reporter->totalErrors,
                                     'totalWarnings' => $this->reporter->totalWarnings,
                                     'totalFixable'  => $this->reporter->totalFixable,
+                                    'totalFixed'    => $this->reporter->totalFixed,
                                    );
 
                     $output  = '<'.'?php'."\n".' $childOutput = ';
@@ -553,7 +515,7 @@ class Runner
      */
     private function processFile($file)
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 0 || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $startTime = microtime(true);
             echo 'Processing '.basename($file->path).' ';
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -564,9 +526,7 @@ class Runner
         try {
             $file->process();
 
-            if (PHP_CODESNIFFER_VERBOSITY > 0
-                || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)
-            ) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 $timeTaken = ((microtime(true) - $startTime) * 1000);
                 if ($timeTaken < 1000) {
                     $timeTaken = round($timeTaken);
@@ -649,10 +609,8 @@ class Runner
      */
     private function processChildProcs($childProcs)
     {
-        $dots         = 0;
         $numProcessed = 0;
         $totalBatches = count($childProcs);
-        $maxLength    = strlen($totalBatches);
 
         while (count($childProcs) > 0) {
             foreach ($childProcs as $key => $procData) {
@@ -665,6 +623,7 @@ class Runner
                             $this->reporter->totalErrors   += $childOutput['totalErrors'];
                             $this->reporter->totalWarnings += $childOutput['totalWarnings'];
                             $this->reporter->totalFixable  += $childOutput['totalFixable'];
+                            $this->reporter->totalFixed    += $childOutput['totalFixed'];
                         }
 
                         if (isset($debugOutput) === true) {
@@ -682,46 +641,125 @@ class Runner
 
                         $numProcessed++;
 
-                        if (PHP_CODESNIFFER_VERBOSITY > 0
-                            || $this->config->showProgress === false
-                        ) {
-                            continue;
-                        }
-
-                        if ($childOutput['totalErrors'] > 0) {
-                            if ($this->config->colors === true) {
-                                echo "\033[31m";
-                            }
-
-                            echo 'E';
-                        } else if ($childOutput['totalWarnings'] > 0) {
-                            if ($this->config->colors === true) {
-                                echo "\033[33m";
-                            }
-
-                            echo 'W';
-                        } else {
-                            echo '.';
-                        }
-
-                        if ($this->config->colors === true) {
-                            echo "\033[0m";
-                        }
-
-                        $dots++;
-                        if ($dots === 60) {
-                            $padding = ($maxLength - strlen($numProcessed));
-                            echo str_repeat(' ', $padding);
-                            $percent = round(($numProcessed / $totalBatches) * 100);
-                            echo " $numProcessed / $totalBatches ($percent%)".PHP_EOL;
-                            $dots = 0;
-                        }
+                        // Fake a processed file so we can print progress output for the batch.
+                        $file = new DummyFile(null, $this->ruleset, $this->config);
+                        $file->setErrorCounts(
+                            $childOutput['totalErrors'],
+                            $childOutput['totalWarnings'],
+                            $childOutput['totalFixable'],
+                            $childOutput['totalFixed']
+                        );
+                        $this->printProgress($file, $totalBatches, $numProcessed);
                     }//end if
                 }//end if
             }//end foreach
         }//end while
 
     }//end processChildProcs()
+
+
+    /**
+     * Print progress information for a single processed file.
+     *
+     * @param File $file         The file that was processed.
+     * @param int  $numFiles     The total number of files to process.
+     * @param int  $numProcessed The number of files that have been processed,
+     *                           including this one.
+     *
+     * @return void
+     */
+    function printProgress($file, $numFiles, $numProcessed)
+    {
+        if (PHP_CODESNIFFER_VERBOSITY > 0
+            || $this->config->showProgress === false
+        ) {
+            return;
+        }
+
+        // Show progress information.
+        if ($file->ignored === true) {
+            echo 'S';
+        } else {
+            $errors   = $file->getErrorCount();
+            $warnings = $file->getWarningCount();
+            $fixable  = $file->getFixableCount();
+            $fixed    = $file->getFixedCount();
+
+            if (PHP_CODESNIFFER_CBF === true) {
+                // Files with fixed errors or warnings are F (green).
+                // Files with unfixable errors or warnings are E (red).
+                // Files with no errors or warnings are . (black).
+                if ($fixable > 0) {
+                    if ($this->config->colors === true) {
+                        echo "\033[31m";
+                    }
+
+                    echo 'E';
+
+                    if ($this->config->colors === true) {
+                        echo "\033[0m";
+                    }
+                } else if ($fixed > 0) {
+                    if ($this->config->colors === true) {
+                        echo "\033[32m";
+                    }
+
+                    echo 'F';
+
+                    if ($this->config->colors === true) {
+                        echo "\033[0m";
+                    }
+                } else {
+                    echo '.';
+                }//end if
+            } else {
+                // Files with errors are E (red).
+                // Files with fixable errors are E (green).
+                // Files with warnings are W (yellow).
+                // Files with fixable warnings are W (green).
+                // Files with no errors or warnings are . (black).
+                if ($errors > 0) {
+                    if ($this->config->colors === true) {
+                        if ($fixable > 0) {
+                            echo "\033[32m";
+                        } else {
+                            echo "\033[31m";
+                        }
+                    }
+
+                    echo 'E';
+
+                    if ($this->config->colors === true) {
+                        echo "\033[0m";
+                    }
+                } else if ($warnings > 0) {
+                    if ($this->config->colors === true) {
+                        if ($fixable > 0) {
+                            echo "\033[32m";
+                        } else {
+                            echo "\033[33m";
+                        }
+                    }
+
+                    echo 'W';
+
+                    if ($this->config->colors === true) {
+                        echo "\033[0m";
+                    }
+                } else {
+                    echo '.';
+                }//end if
+            }//end if
+        }//end if
+
+        if (($numProcessed % 60) === 0) {
+            $padding = (strlen($numFiles) - strlen($numProcessed));
+            echo str_repeat(' ', $padding);
+            $percent = round(($numProcessed / $numFiles) * 100);
+            echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
+        }
+
+    }//end printProgress()
 
 
 }//end class

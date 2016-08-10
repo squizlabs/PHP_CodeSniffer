@@ -26,6 +26,17 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Progress output now shows E and W in green when a file has fixable errors or warnings
+    -- Only supported if colors are enabled
+  - PHPCBF no longer produces verbose output by default (request #699)
+    -- Use the -v command line argument to show verbose fixing output
+    -- Use the -q command line argument to disable verbose information if enabled by default
+  - PHPBF now prints a summary report after fixing files
+    -- Report shows files that were fixed, how many errors were fixed, and how many remain
+  - PHPCBF now supports the -p command line argument to print progress information
+    -- Prints a green F for files where fixes occurred
+    -- Prints a red E for files that could not be fixed due to an error
+    -- Use the -q command line argument to disable progress information if enabled by default
   - Running unit tests using --verbose no longer throws errors
   - Fixed shell error appearing on some systems when trying to find executable paths
 

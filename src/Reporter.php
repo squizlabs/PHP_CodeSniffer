@@ -53,6 +53,13 @@ class Reporter
     public $totalFixable = 0;
 
     /**
+     * Total number of errors/warnings that were fixed.
+     *
+     * @var integer
+     */
+    public $totalFixed = 0;
+
+    /**
      * When the PHPCS run started.
      *
      * @var float
@@ -265,11 +272,19 @@ class Reporter
             }//end if
         }//end foreach
 
-        if ($errorsShown === true) {
+        if ($errorsShown === true || PHP_CODESNIFFER_CBF === true) {
             $this->totalFiles++;
             $this->totalErrors   += $reportData['errors'];
             $this->totalWarnings += $reportData['warnings'];
-            $this->totalFixable  += $reportData['fixable'];
+
+            // When PHPCBF is running, we need to use the fixable error values
+            // after the report has run and fixed what it can.
+            if (PHP_CODESNIFFER_CBF === true) {
+                $this->totalFixable += $phpcsFile->getFixableCount();
+                $this->totalFixed   += $phpcsFile->getFixedCount();
+            } else {
+                $this->totalFixable += $reportData['fixable'];
+            }
         }
 
     }//end cacheFileReport()

@@ -59,4 +59,24 @@ class DummyFile extends File
     }//end __construct()
 
 
+    /**
+     * Set the error, warning, and fixable counts for the file.
+     *
+     * @param int $errorCount   The number of errors found.
+     * @param int $warningCount The number of warnings found.
+     * @param int $fixableCount The number of fixable errors found.
+     * @param int $fixedCount   The number of errors that were fixed.
+     *
+     * @return void
+     */
+    public function setErrorCounts($errorCount, $warningCount, $fixableCount, $fixedCount)
+    {
+        $this->errorCount   = $errorCount;
+        $this->warningCount = $warningCount;
+        $this->fixableCount = $fixableCount;
+        $this->fixedCount   = $fixedCount;
+
+    }//end setErrorCounts()
+
+
 }//end class

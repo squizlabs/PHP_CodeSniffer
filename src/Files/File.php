@@ -147,6 +147,13 @@ class File
     protected $fixableCount = 0;
 
     /**
+     * The total number of errors and warnings that were fixed.
+     *
+     * @var integer
+     */
+    protected $fixedCount = 0;
+
+    /**
      * An array of sniffs that are being ignored.
      *
      * @var array
@@ -236,7 +243,7 @@ class File
      *
      * @return void
      */
-    function setContent($content)
+    public function setContent($content)
     {
         $this->content = $content;
         $this->tokens  = array();
@@ -259,7 +266,7 @@ class File
      *
      * @return void
      */
-    function reloadContent()
+    public function reloadContent()
     {
 
     }//end reloadContent()
@@ -270,7 +277,7 @@ class File
      *
      * @return void
      */
-    function disableCaching()
+    public function disableCaching()
     {
         $this->configCache['cache'] = false;
 
@@ -464,6 +471,8 @@ class File
             echo "\t*** END SNIFF PROCESSING REPORT ***".PHP_EOL;
         }
 
+        $this->fixedCount += $this->fixer->getFixCount();
+
     }//end process()
 
 
@@ -485,9 +494,7 @@ class File
             $this->tokens    = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
-            if (PHP_CODESNIFFER_VERBOSITY > 0
-                || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)
-            ) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo PHP_EOL;
@@ -513,9 +520,7 @@ class File
             $this->addWarningOnLine($error, 1, 'Internal.LineEndings.Mixed');
         }
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0
-            || (PHP_CODESNIFFER_CBF === true && $this->config->stdin === false)
-        ) {
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
             if ($this->numTokens === 0) {
                 $numLines = 0;
             } else {
@@ -555,6 +560,8 @@ class File
         $this->tokens        = null;
         $this->tokenizer     = null;
         $this->fixer         = null;
+        $this->config        = null;
+        $this->ruleset       = null;
 
     }//end cleanUp()
 
@@ -1007,6 +1014,18 @@ class File
         return $this->fixableCount;
 
     }//end getFixableCount()
+
+
+    /**
+     * Returns the number of fixed errors/warnings.
+     *
+     * @return int
+     */
+    public function getFixedCount()
+    {
+        return $this->fixedCount;
+
+    }//end getFixedCount()
 
 
     /**
