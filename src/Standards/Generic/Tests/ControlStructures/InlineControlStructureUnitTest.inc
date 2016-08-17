@@ -163,3 +163,21 @@ foreach ($sql as $s)
                 if ($this->neverAbort) $ret = false;
                 else return false;
         }
+
+if ($bar)
+    if ($foo) echo 'hi'; // lol
+
+if ($level == 'district')
+    \DB::update(<<<EOD
+some
+text
+here
+EOD
+    );
+
+if ($level == 'district')
+    $var = <<<EOD
+some
+text
+here
+EOD;
