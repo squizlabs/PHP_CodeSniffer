@@ -202,13 +202,27 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                     }
                 }//end if
 
-                break;
+                if ($tokens[$end]['code'] !== T_END_HEREDOC
+                    && $tokens[$end]['code'] !== T_END_NOWDOC
+                ) {
+                    break;
+                }
             }//end if
+
+            if (isset($tokens[$end]['parenthesis_closer']) === true) {
+                $end          = $tokens[$end]['parenthesis_closer'];
+                $lastNonEmpty = $end;
+                continue;
+            }
 
             if ($tokens[$end]['code'] !== T_WHITESPACE) {
                 $lastNonEmpty = $end;
             }
         }//end for
+
+        if ($end === $phpcsFile->numTokens) {
+            $end = $lastNonEmpty;
+        }
 
         $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
 
@@ -227,16 +241,50 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
 
         if ($next !== $end) {
             if ($endLine !== $end) {
-                $phpcsFile->fixer->addContent($endLine, '}');
+                $endToken     = $endLine;
+                $addedContent = '';
             } else {
+                $endToken     = $end;
+                $addedContent = $phpcsFile->eolChar;
+
                 if ($tokens[$end]['code'] !== T_SEMICOLON
                     && $tokens[$end]['code'] !== T_CLOSE_CURLY_BRACKET
                 ) {
-                    $phpcsFile->fixer->addContent($end, ';');
+                    $phpcsFile->fixer->addContent($end, '; ');
+                }
+            }
+
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($endToken + 1), null, true);
+            if ($next !== false
+                && ($tokens[$next]['code'] === T_ELSE
+                || $tokens[$next]['code'] === T_ELSEIF)
+            ) {
+                $phpcsFile->fixer->addContentBefore($next, '} ');
+            } else {
+                $indent = '';
+                for ($first = $stackPtr; $first > 0; $first--) {
+                    if ($first === 1
+                        || $tokens[($first - 1)]['line'] !== $tokens[$first]['line']
+                    ) {
+                        break;
+                    }
                 }
 
-                $phpcsFile->fixer->addContent($end, ' }');
-            }
+                if ($tokens[$first]['code'] === T_WHITESPACE) {
+                    $indent = $tokens[$first]['content'];
+                } else if ($tokens[$first]['code'] === T_INLINE_HTML
+                    || $tokens[$first]['code'] === T_OPEN_TAG
+                ) {
+                    $addedContent = '';
+                }
+
+                $addedContent .= $indent.'}';
+                if ($next !== false && $tokens[$endToken]['code'] === T_COMMENT) {
+                    $addedContent .= $phpcsFile->eolChar;
+                }
+
+                $phpcsFile->fixer->addContent($endToken, $addedContent);
+            }//end if
         } else {
             if ($endLine !== $end) {
                 $phpcsFile->fixer->replaceToken($end, '');

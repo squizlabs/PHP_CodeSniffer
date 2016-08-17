@@ -69,6 +69,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Walt Sorensen for the patch
   - PHPCBF is now able to fix Generic.PHP.DisallowShortOpenTag
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Improved the formatting of the end brace when auto fixing InlineControlStructure errors (request #1121)
   - Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine fix no longer leaves blank line after brace (request #1085)
   - Generic UpperCaseConstantNameSniff now allows lowercase namespaces in constant definitions
     -- Thanks to Daniel Schniepp for the patch
@@ -92,6 +93,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1102 : Squiz.Formatting.OperatorBracket.MissingBrackets faulty bracketing fix
   - Fixed bug #1109 : Wrong scope indent reported in anonymous class
   - Fixed bug #1112 : File docblock not recognized when require_once follows it
+  - Fixed bug #1120 : InlineControlStructureSniff does not handle auto-fixing for control structures that make function calls
  </notes>
  <contents>
   <dir name="/">
