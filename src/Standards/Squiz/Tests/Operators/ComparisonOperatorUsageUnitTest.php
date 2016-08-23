@@ -54,6 +54,9 @@ class ComparisonOperatorUsageUnitTest extends AbstractSniffUnitTest
                     100 => 1,
                     106 => 1,
                     112 => 1,
+                    123 => 1,
+                    127 => 1,
+                    131 => 1,
                    );
             break;
         case 'ComparisonOperatorUsageUnitTest.js':
@@ -66,6 +69,9 @@ class ComparisonOperatorUsageUnitTest extends AbstractSniffUnitTest
                     40 => 1,
                     47 => 1,
                     52 => 1,
+                    63 => 1,
+                    67 => 1,
+                    71 => 1,
                    );
             break;
         default:

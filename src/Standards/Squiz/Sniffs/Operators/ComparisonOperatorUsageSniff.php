@@ -121,7 +121,7 @@ class ComparisonOperatorUsageSniff implements Sniff
 
                 $start = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
             } else {
-                if (isset($tokens[$stackPtr]['parenthesis_opener']) === false) {
+                if (isset($tokens[$end]['parenthesis_opener']) === false) {
                     return;
                 }
 
