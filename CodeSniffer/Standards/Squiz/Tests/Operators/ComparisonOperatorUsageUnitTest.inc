@@ -117,3 +117,15 @@ while (TRUE) {
 
 while (FALSE) {
 }
+
+$var = ($var1 === true) ? $var1 : "foobar";
+
+$var = ($var1 == true) ? $var1 : "foobar";
+
+$var = ($var1 === false) ? $var1 : "foobar";
+
+$var = ($var1 == false) ? $var1 : "foobar";
+
+$var = ($var1 === 0) ? $var1 : "foobar";
+
+$var = ($var1 == 0) ? $var1 : "foobar";

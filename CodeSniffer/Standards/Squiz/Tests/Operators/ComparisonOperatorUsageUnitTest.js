@@ -57,3 +57,15 @@ for (one = 10; one !== 0; one--) {
 
 for (type in types) {
 }
+
+variable = (variable2 === true) ? variable1 : "foobar";
+
+variable = (variable2 == true) ? variable1 : "foobar";
+
+variable = (variable2 === false) ? variable1 : "foobar";
+
+variable = (variable2 == false) ? variable1 : "foobar";
+
+variable = (variable2 === 0) ? variable1 : "foobar";
+
+variable = (variable2 == 0) ? variable1 : "foobar";
