@@ -44,6 +44,7 @@ class Squiz_Tests_Scope_MethodScopeUnitTest extends AbstractSniffUnitTest
     {
         return array(
                 6 => 1,
+                30 => 1,
                );
 
     }//end getErrorList()
