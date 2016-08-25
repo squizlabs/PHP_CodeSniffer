@@ -80,16 +80,11 @@ class Squiz_Sniffs_CSS_DuplicateClassDefinitionSniff implements PHP_CodeSniffer_
                  T_OPEN_TAG,
                 );
 
-        $exclude = array(
-                    T_WHITESPACE,
-                    T_COMMENT,
-                   );
-
         while ($next !== false) {
             $prev = $phpcsFile->findPrevious($find, ($next - 1));
 
             // Check if an inner block was closed.
-            $beforePrev = $phpcsFile->findPrevious($exclude, ($prev - 1), null, true);
+            $beforePrev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($prev - 1), null, true);
             if ($beforePrev !== false
                 && $tokens[$beforePrev]['code'] === T_CLOSE_CURLY_BRACKET
             ) {

@@ -81,6 +81,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The format of the PHP version is the same as the PHP_VERSION_ID constant (e.g., 50403 for version 5.4.3)
     -- Supported sniffs are Generic.PHP.DisallowAlternativePHPTags, PSR1.Classes.ClassDeclaration, Squiz.Commenting.FunctionComment
     -- Thanks to Finlay Beaton for the patch
+  - Fixed bug #985  : Duplicate class definition detection generates false-positives in media queries
+    -- Thanks to Raphael Horber for the patch
   - Fixed bug #1014 : Squiz VariableCommentSniff doesn't always detect a missing comment
   - Fixed bug #1066 : Undefined index: quiet in CLI.php during unit test run with -v command line arg
   - Fixed bug #1072 : Squiz.SelfMemberReference.NotUsed not detected if leading namespace separator is used
