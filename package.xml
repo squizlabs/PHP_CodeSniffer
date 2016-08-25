@@ -63,6 +63,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Default remains FALSE, so newlines are not allowed
     -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
     -- Thanks to Alex Howansky for the patch
+  - Squiz.Scope.MethodScope now sniffs traits as well as classes and interfaces
+    -- Thanks to Jesse Donat for the patch
   - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
     -- Thanks to Nikola Kovacs for the patch
   - PHPCBF is now able to fix Squiz.Commenting.VariableComment.IncorrectVarType
