@@ -292,6 +292,7 @@ class PHP_CodeSniffer_CLI
         $defaults['reportFile']      = null;
         $defaults['generator']       = '';
         $defaults['reports']         = array();
+        $defaults['with-xsl-path']   = '';
         $defaults['bootstrap']       = array();
         $defaults['errorSeverity']   = null;
         $defaults['warningSeverity'] = null;
@@ -749,6 +750,8 @@ class PHP_CodeSniffer_CLI
                     $this->printUsage();
                     exit(2);
                 }
+            } else if (substr($arg, 0, 14) === 'with-xsl-path=') {
+                $this->values['with-xsl-path'] = substr($arg, 14);
             } else if (substr($arg, 0, 13) === 'report-width=') {
                 $this->values['reportWidth'] = $this->_validateReportWidth(substr($arg, 13));
             } else if (substr($arg, 0, 7) === 'report='
@@ -1047,7 +1050,7 @@ class PHP_CodeSniffer_CLI
         $reportWidth
     ) {
         if (empty($reports) === true) {
-            $reports['full'] = $reportFile;
+            $reports[PHP_CodeSniffer_Reporting::REPORT_TYPE_FULL] = $reportFile;
         }
 
         $errors   = 0;
@@ -1288,7 +1291,7 @@ class PHP_CodeSniffer_CLI
     public function printPHPCSUsage()
     {
         echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors] [--stdin-path=<stdinPath>]'.PHP_EOL;
-        echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
+        echo '    [--report=<report>] [--with-xsl-path=<xslFilePath>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
@@ -1327,6 +1330,8 @@ class PHP_CodeSniffer_CLI
         echo '                      "json", "emacs", "source", "summary", "diff", "junit"'.PHP_EOL;
         echo '                      "svnblame", "gitblame", "hgblame" or "notifysend" report'.PHP_EOL;
         echo '                      (the "full" report is printed by default)'.PHP_EOL;
+        echo '        <xslFilePath> Include the specified XSL file in the resulting XML. Available only for XML reports'.PHP_EOL;
+        echo '                      This path should be defined relative to the target output .xml file.'.PHP_EOL;
         echo '        <reportFile>  Write the report to the specified file path'.PHP_EOL;
         echo '        <reportWidth> How many columns wide screen reports should be printed'.PHP_EOL;
         echo '                      or set to "auto" to use current screen width, where supported'.PHP_EOL;
