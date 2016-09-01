@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2016-07-14</date>
- <time>09:28:00</time>
+ <date>2016-09-02</date>
+ <time>09:44:00</time>
  <version>
   <release>2.7.0</release>
   <api>2.7.0</api>
@@ -2488,6 +2488,94 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>2.7.0</release>
+    <api>2.7.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2016-09-02</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Added --file-list command line argument to allow a list of files and directories to be specified in an external file
+      -- Useful is you have a generated list of files to check that would be too long for the command line
+      -- File and directory paths are listed one per line
+      -- Usage is: phpcs --file-list=/path/to/file-list ...
+      -- Thanks to Blotzu for the patch
+    - Values set using @codingStandardsChangeSetting comments can now contain spaces
+    - Sniff unit tests can now specify a list of test files instead of letting the runner pick them (request #1078)
+      -- Useful if a sniff needs to exclude files based on the environment, or is checking filenames
+      -- Override the new getTestFiles() method to specify your own list of test files
+    - Generic.Functions.OpeningFunctionBraceKernighanRitchie now ignores spacing for function return types
+      -- The sniff code Generic.Functions.OpeningFunctionBraceKernighanRitchie.SpaceAfterBracket has been removed
+      -- Replaced by Generic.Functions.OpeningFunctionBraceKernighanRitchie.SpaceBeforeBrace
+      -- The new error message is slightly clearer as it indicates that a single space is needed before the brace
+    - Squiz.Commenting.LongConditionClosingComment now allows for the length of a code block to be configured
+      -- Set the lineLimit property (default is 20) in your ruleset.xml file to set the code block length
+      -- When the code block length is reached, the sniff will enforce a closing comment after the closing brace
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Squiz.Commenting.LongConditionClosingComment now allows for the end comment format to be configured
+      -- Set the commentFormat property (default is "//end %s") in your ruleset.xml file to set the format
+      -- The placeholder %s will be replaced with the type of condition opener, e.g., "//end foreach"
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.PHPForbiddenFunctions now allows forbidden functions to have mixed case
+      -- Previously, it would only do a strtolower comparison
+      -- Error message now shows what case was found in the code and what the correct case should be
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Added Generic.Classes.OpeningBraceSameLine to ensure opening brace of class/interface/trait is on the same line as the declaration
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Added Generic.PHP.BacktickOperator to ban the use of the backtick operator for running shell commands
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Added Generic.PHP.DisallowAlternativePHPTags to ban the use of alternate PHP tags
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
+      -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
+    - Squiz.WhiteSpace.ObjectOperatorSpacing now has a setting to ignore newline characters around object operators
+      -- Default remains FALSE, so newlines are not allowed
+      -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
+      -- Thanks to Alex Howansky for the patch
+    - Squiz.Scope.MethodScope now sniffs traits as well as classes and interfaces
+      -- Thanks to Jesse Donat for the patch
+    - PHPCBF is now able to fix Squiz.SelfMemberReference.IncorrectCase errors
+      -- Thanks to Nikola Kovacs for the patch
+    - PHPCBF is now able to fix Squiz.Commenting.VariableComment.IncorrectVarType
+      -- Thanks to Walt Sorensen for the patch
+    - PHPCBF is now able to fix Generic.PHP.DisallowShortOpenTag
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Improved the formatting of the end brace when auto fixing InlineControlStructure errors (request #1121)
+    - Generic.Functions.OpeningFunctionBraceKernighanRitchie.BraceOnNewLine fix no longer leaves blank line after brace (request #1085)
+    - Generic UpperCaseConstantNameSniff now allows lowercase namespaces in constant definitions
+      -- Thanks to Daniel Schniepp for the patch
+    - Squiz DoubleQuoteUsageSniff is now more tolerant of syntax errors caused by mismatched string tokens
+    - A few sniffs that produce errors based on the current PHP version can now be told to run using a specific PHP version
+      -- Set the php_version config var using --config-set, --runtime-set, or in a ruleset to specify a specific PHP version
+      -- The format of the PHP version is the same as the PHP_VERSION_ID constant (e.g., 50403 for version 5.4.3)
+      -- Supported sniffs are Generic.PHP.DisallowAlternativePHPTags, PSR1.Classes.ClassDeclaration, Squiz.Commenting.FunctionComment
+      -- Thanks to Finlay Beaton for the patch
+    - Fixed bug #985  : Duplicate class definition detection generates false-positives in media queries
+      -- Thanks to Raphael Horber for the patch
+    - Fixed bug #1014 : Squiz VariableCommentSniff doesn't always detect a missing comment
+    - Fixed bug #1066 : Undefined index: quiet in CLI.php during unit test run with -v command line arg
+    - Fixed bug #1072 : Squiz.SelfMemberReference.NotUsed not detected if leading namespace separator is used
+    - Fixed bug #1089 : Rulesets cannot be loaded if the path contains urlencoded characters
+    - Fixed bug #1091 : PEAR and Squiz FunctionComment sniffs throw errors for some invalid @param line formats
+    - Fixed bug #1092 : PEAR.Functions.ValidDefaultValue should not flag type hinted methods with a NULL default argument
+    - Fixed bug #1095 : Generic LineEndings sniff replaces tabs with spaces with --tab-width is set
+    - Fixed bug #1096 : Squiz FunctionDeclarationArgumentSpacing gives incorrect error/fix when variadic operator is followed by a space
+    - Fixed bug #1099 : Group use declarations are incorrectly fixed by the PSR2 standard
+      -- Thanks to Jason McCreary for the patch
+    - Fixed bug #1101 : Incorrect indent errors when breaking out of PHP inside an IF statement
+    - Fixed bug #1102 : Squiz.Formatting.OperatorBracket.MissingBrackets faulty bracketing fix
+    - Fixed bug #1109 : Wrong scope indent reported in anonymous class
+    - Fixed bug #1112 : File docblock not recognized when require_once follows it
+    - Fixed bug #1120 : InlineControlStructureSniff does not handle auto-fixing for control structures that make function calls
+    - Fixed bug #1124 : Squiz.Operators.ComparisonOperatorUsage does not detect bracketed conditions for inline IF statements
+      -- Thanks to Raphael Horber for the patch
+    </notes>
+  </release>
   <release>
    <version>
     <release>2.6.2</release>
