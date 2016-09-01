@@ -2463,6 +2463,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
+   <install as="CodeSniffer/Core/File/FindExtendedClassNameTest.php" name="tests/Core/File/FindExtendedClassNameTest.php" />
+   <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.php" name="tests/Core/File/FindImplementedInterfaceNamesTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
@@ -2480,6 +2482,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
+   <install as="CodeSniffer/Core/File/FindExtendedClassNameTest.php" name="tests/Core/File/FindExtendedClassNameTest.php" />
+   <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.php" name="tests/Core/File/FindImplementedInterfaceNamesTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
