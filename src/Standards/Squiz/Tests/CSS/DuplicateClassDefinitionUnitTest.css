@@ -31,3 +31,40 @@
 
 .YourClass, .MyClass, .OurClass {
 }
+
+
+.ClassAtTopOfMediaBlock {
+}
+
+@media print {
+    .ClassAtTopOfMediaBlock {
+    }
+
+    .ClassInMultipleMediaBlocks {
+    }
+}
+
+.ClassNotAtTopOfMediaBlock {
+}
+
+@media handheld {
+    .SameClassInMediaBlock {
+    }
+
+    .ClassNotAtTopOfMediaBlock {
+    }
+
+    .SameClassInMediaBlock {
+    }
+}
+
+@media braille {
+    .PlaceholderClass {
+    }
+
+    .ClassNotAtTopOfMediaBlock {
+    }
+
+    .ClassInMultipleMediaBlocks {
+    }
+}

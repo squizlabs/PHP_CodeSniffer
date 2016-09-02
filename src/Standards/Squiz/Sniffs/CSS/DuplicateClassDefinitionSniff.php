@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\CSS;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class DuplicateClassDefinitionSniff implements Sniff
 {
@@ -56,14 +57,27 @@ class DuplicateClassDefinitionSniff implements Sniff
             return;
         }
 
+        // Save the class names in a "scope",
+        // to prevent false positives with @media blocks.
+        $scope = 'main';
+
         $find = array(
                  T_CLOSE_CURLY_BRACKET,
+                 T_OPEN_CURLY_BRACKET,
                  T_COMMENT,
                  T_OPEN_TAG,
                 );
 
         while ($next !== false) {
             $prev = $phpcsFile->findPrevious($find, ($next - 1));
+
+            // Check if an inner block was closed.
+            $beforePrev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prev - 1), null, true);
+            if ($beforePrev !== false
+                && $tokens[$beforePrev]['code'] === T_CLOSE_CURLY_BRACKET
+            ) {
+                $scope = 'main';
+            }
 
             // Create a sorted name for the class so we can compare classes
             // even when the individual names are all over the place.
@@ -81,13 +95,16 @@ class DuplicateClassDefinitionSniff implements Sniff
             sort($names);
             $name = implode(',', $names);
 
-            if (isset($classNames[$name]) === true) {
-                $first = $classNames[$name];
+            if ($name{0} === '@') {
+                // Media block has its own "scope".
+                $scope = $name;
+            } else if (isset($classNames[$scope][$name]) === true) {
+                $first = $classNames[$scope][$name];
                 $error = 'Duplicate class definition found; first defined on line %s';
                 $data  = array($tokens[$first]['line']);
                 $phpcsFile->addError($error, $next, 'Found', $data);
             } else {
-                $classNames[$name] = $next;
+                $classNames[$scope][$name] = $next;
             }
 
             $next = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ($next + 1));

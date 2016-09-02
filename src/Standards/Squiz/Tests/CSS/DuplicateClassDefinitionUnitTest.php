@@ -28,6 +28,7 @@ class DuplicateClassDefinitionUnitTest extends AbstractSniffUnitTest
         return array(
                 9  => 1,
                 29 => 1,
+                57 => 1,
                );
 
     }//end getErrorList()

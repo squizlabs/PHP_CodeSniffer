@@ -25,7 +25,10 @@ class MethodScopeUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(6 => 1);
+        return array(
+                6  => 1,
+                30 => 1,
+               );
 
     }//end getErrorList()
 
