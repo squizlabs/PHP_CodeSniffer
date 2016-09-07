@@ -27,6 +27,13 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
 {
 
     /**
+     * How many spaces should precede the colon if using alternative syntax.
+     *
+     * @var int
+     */
+    public $requiredSpacesBeforeColon = 1;
+
+    /**
      * A list of tokenizers this sniff supports.
      *
      * @var array
@@ -77,21 +84,31 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
             return;
         }
 
-        // Single space after the keyword.
-        $found = 1;
-        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-            $found = 0;
-        } else if ($tokens[($stackPtr + 1)]['content'] !== ' ') {
-            if (strpos($tokens[($stackPtr + 1)]['content'], $phpcsFile->eolChar) !== false) {
-                $found = 'newline';
-            } else {
-                $found = strlen($tokens[($stackPtr + 1)]['content']);
-            }
+        $isAlternative = false;
+        if (isset($tokens[$stackPtr]['scope_opener']) === true
+            && $tokens[$tokens[$stackPtr]['scope_opener']]['code'] === T_COLON
+        ) {
+            $isAlternative = true;
         }
 
-        if ($found !== 1) {
-            $error = 'Expected 1 space after %s keyword; %s found';
+        $expectedSpaces = 1;
+        if (isset($tokens[$stackPtr]['parenthesis_closer']) === false && $isAlternative === true) {
+            $expectedSpaces = (int) $this->requiredSpacesBeforeColon;
+        }
+
+        // Single space after the keyword.
+        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            $found = 0;
+        } else if (strpos($tokens[($stackPtr + 1)]['content'], $phpcsFile->eolChar) !== false) {
+            $found = 'newline';
+        } else {
+            $found = strlen($tokens[($stackPtr + 1)]['content']);
+        }
+
+        if ($found !== $expectedSpaces) {
+            $error = 'Expected %s space(s) after %s keyword; %s found';
             $data  = array(
+                      $expectedSpaces,
                       strtoupper($tokens[$stackPtr]['content']),
                       $found,
                      );
@@ -99,9 +116,9 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword', $data);
             if ($fix === true) {
                 if ($found === 0) {
-                    $phpcsFile->fixer->addContent($stackPtr, ' ');
+                    $phpcsFile->fixer->addContent($stackPtr, str_repeat(' ', $expectedSpaces));
                 } else {
-                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), str_repeat(' ', $expectedSpaces));
                 }
             }
         }
@@ -114,29 +131,40 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
             $opener  = $tokens[$stackPtr]['scope_opener'];
             $content = $phpcsFile->getTokensAsString(($closer + 1), ($opener - $closer - 1));
 
-            if ($content !== ' ') {
-                $error = 'Expected 1 space after closing parenthesis; found %s';
-                if (trim($content) === '') {
-                    $found = strlen($content);
-                } else {
-                    $found = '"'.str_replace($phpcsFile->eolChar, '\n', $content).'"';
-                }
+            $expectedSpaces = 1;
+            if ($isAlternative === true) {
+                $expectedSpaces = (int) $this->requiredSpacesBeforeColon;
+            }
 
-                $fix = $phpcsFile->addFixableError($error, $closer, 'SpaceAfterCloseParenthesis', array($found));
+            if (trim($content) === '') {
+                if (strpos($content, $phpcsFile->eolChar) !== false) {
+                    $found = 'newline';
+                } else {
+                    $found = strlen($content);
+                }
+            } else {
+                $found = '"'.str_replace($phpcsFile->eolChar, '\n', $content).'"';
+            }
+
+            if ($found !== $expectedSpaces) {
+                $error = 'Expected %s space(s) after closing parenthesis; found %s';
+
+                $fix = $phpcsFile->addFixableError($error, $closer, 'SpaceAfterCloseParenthesis', array($expectedSpaces, $found));
                 if ($fix === true) {
                     if ($closer === ($opener - 1)) {
-                        $phpcsFile->fixer->addContent($closer, ' ');
+                        $phpcsFile->fixer->addContent($closer, str_repeat(' ', $expectedSpaces));
                     } else {
                         $phpcsFile->fixer->beginChangeset();
+
                         if (trim($content) === '') {
-                            $phpcsFile->fixer->addContent($closer, ' ');
+                            $phpcsFile->fixer->addContent($closer, str_repeat(' ', $expectedSpaces));
                             if ($found !== 0) {
                                 for ($i = ($closer + 1); $i < $opener; $i++) {
                                     $phpcsFile->fixer->replaceToken($i, '');
                                 }
                             }
                         } else {
-                            $phpcsFile->fixer->addContent($closer, ' '.$tokens[$opener]['content']);
+                            $phpcsFile->fixer->addContent($closer, str_repeat(' ', $expectedSpaces).$tokens[$opener]['content']);
                             $phpcsFile->fixer->replaceToken($opener, '');
 
                             if ($tokens[$opener]['line'] !== $tokens[$closer]['line']) {
