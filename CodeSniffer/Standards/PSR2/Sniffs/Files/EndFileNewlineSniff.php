@@ -80,7 +80,8 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         // Go looking for the last non-empty line.
         $lastLine = $tokens[$lastToken]['line'];
         if ($tokens[$lastToken]['code'] === T_WHITESPACE
-            || $tokens[$lastToken]['code'] === T_DOC_COMMENT_WHITESPACE) {
+            || $tokens[$lastToken]['code'] === T_DOC_COMMENT_WHITESPACE
+        ) {
             $lastCode = $phpcsFile->findPrevious(array(T_WHITESPACE, T_DOC_COMMENT_WHITESPACE), ($lastToken - 1), null, true);
         } else {
             $lastCode = $lastToken;
