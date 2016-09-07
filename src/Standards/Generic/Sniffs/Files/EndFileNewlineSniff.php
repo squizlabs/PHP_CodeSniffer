@@ -54,7 +54,7 @@ class EndFileNewlineSniff implements Sniff
         $tokens   = $phpcsFile->getTokens();
         $stackPtr = ($phpcsFile->numTokens - 1);
 
-        if ($phpcsFile->tokenizerType !== 'PHP') {
+        if ($tokens[$stackPtr]['content'] === '') {
             $stackPtr--;
         }
 

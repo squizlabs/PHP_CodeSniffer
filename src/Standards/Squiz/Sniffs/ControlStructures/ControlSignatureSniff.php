@@ -118,21 +118,30 @@ class ControlSignatureSniff implements Sniff
                         $phpcsFile->fixer->addContent($closer, ' ');
                     } else {
                         $phpcsFile->fixer->beginChangeset();
-                        $phpcsFile->fixer->addContent($closer, ' '.$tokens[$opener]['content']);
-                        $phpcsFile->fixer->replaceToken($opener, '');
-
-                        if ($tokens[$opener]['line'] !== $tokens[$closer]['line']) {
-                            $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
-                            if ($tokens[$next]['line'] !== $tokens[$opener]['line']) {
-                                for ($i = ($opener + 1); $i < $next; $i++) {
+                        if (trim($content) === '') {
+                            $phpcsFile->fixer->addContent($closer, ' ');
+                            if ($found !== 0) {
+                                for ($i = ($closer + 1); $i < $opener; $i++) {
                                     $phpcsFile->fixer->replaceToken($i, '');
+                                }
+                            }
+                        } else {
+                            $phpcsFile->fixer->addContent($closer, ' '.$tokens[$opener]['content']);
+                            $phpcsFile->fixer->replaceToken($opener, '');
+
+                            if ($tokens[$opener]['line'] !== $tokens[$closer]['line']) {
+                                $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
+                                if ($tokens[$next]['line'] !== $tokens[$opener]['line']) {
+                                    for ($i = ($opener + 1); $i < $next; $i++) {
+                                        $phpcsFile->fixer->replaceToken($i, '');
+                                    }
                                 }
                             }
                         }
 
                         $phpcsFile->fixer->endChangeset();
-                    }
-                }
+                    }//end if
+                }//end if
             }//end if
         }//end if
 

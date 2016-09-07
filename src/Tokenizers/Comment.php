@@ -73,6 +73,10 @@ class Comment
                      'comment_opener' => $openPtr,
                     );
 
+        if ($closeTag['content'] === false) {
+            $closeTag['content'] = '';
+        }
+
         $string = rtrim($string, '/*');
 
         /*

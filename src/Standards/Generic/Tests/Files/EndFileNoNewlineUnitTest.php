@@ -36,11 +36,10 @@ class EndFileNoNewlineUnitTest extends AbstractSniffUnitTest
             break;
         case 'EndFileNoNewlineUnitTest.2.css':
         case 'EndFileNoNewlineUnitTest.2.js':
+        case 'EndFileNoNewlineUnitTest.6.inc':
             return array(2 => 1);
-            break;
         default:
             return array();
-            break;
         }//end switch
 
     }//end getErrorList()

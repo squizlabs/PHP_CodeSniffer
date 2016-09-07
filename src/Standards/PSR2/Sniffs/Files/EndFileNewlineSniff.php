@@ -47,6 +47,10 @@ class EndFileNewlineSniff implements Sniff
         $tokens    = $phpcsFile->getTokens();
         $lastToken = ($phpcsFile->numTokens - 1);
 
+        if ($tokens[$lastToken]['content'] === '') {
+            $lastToken--;
+        }
+
         // Hard-coding the expected \n in this sniff as it is PSR-2 specific and
         // PSR-2 enforces the use of unix style newlines.
         if (substr($tokens[$lastToken]['content'], -1) !== "\n") {
@@ -62,8 +66,10 @@ class EndFileNewlineSniff implements Sniff
 
         // Go looking for the last non-empty line.
         $lastLine = $tokens[$lastToken]['line'];
-        if ($tokens[$lastToken]['code'] === T_WHITESPACE) {
-            $lastCode = $phpcsFile->findPrevious(T_WHITESPACE, ($lastToken - 1), null, true);
+        if ($tokens[$lastToken]['code'] === T_WHITESPACE
+            || $tokens[$lastToken]['code'] === T_DOC_COMMENT_WHITESPACE
+        ) {
+            $lastCode = $phpcsFile->findPrevious(array(T_WHITESPACE, T_DOC_COMMENT_WHITESPACE), ($lastToken - 1), null, true);
         } else {
             $lastCode = $lastToken;
         }
