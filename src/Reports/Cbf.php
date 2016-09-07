@@ -197,7 +197,7 @@ class Cbf implements Report
                 echo '0      ';
             }
 
-            if ($data['reamining'] !== 0) {
+            if ($remaining !== 0) {
                 echo $remaining;
             } else {
                 echo '0';
