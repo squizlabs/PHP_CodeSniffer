@@ -96,8 +96,7 @@ if ($i == 0) { /* comments are allowed*/
     $i = 1;
 }
 
-if ($i == 0) {
- // this is ok
+if ($i == 0) { // this is ok
     $i = 1;
 }
 
@@ -165,7 +164,7 @@ switch ($foo) {
 
 }
 
-if ($foo) :  
+if ($foo) :
 endif;
 
 ?>
@@ -183,6 +182,10 @@ if ($foo === 1) {
     ?>
     </td></tr></table>
     <?php
+}
+
+if ($test) { /*one space after the bracket*/
+    echo 'true';
 }
 
 ?>

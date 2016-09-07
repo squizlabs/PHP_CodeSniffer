@@ -182,6 +182,10 @@ if ($foo === 1) {
     <?php
 }
 
+if ($test)    { /*one space after the bracket*/
+    echo 'true';
+}
+
 ?>
 <?php foreach($formset['Fieldset'] as $fieldset): ?>
     <?php foreach($fieldset['Field'] as $field): ?> 
