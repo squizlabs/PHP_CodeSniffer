@@ -37,7 +37,6 @@ class EndFileNewlineUnitTest extends AbstractSniffUnitTest
             if (defined('HHVM_VERSION') === true) {
                 return array();
             }
-
             return array(2 => 1);
         default:
             return array();

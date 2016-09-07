@@ -41,14 +41,12 @@ class EndFileNoNewlineUnitTest extends AbstractSniffUnitTest
             if (defined('HHVM_VERSION') === true) {
                 return array(1 => 1);
             }
-
             return array();
         case 'EndFileNoNewlineUnitTest.6.inc':
             // HHVM just removes the entire comment token, as if it was never there.
             if (defined('HHVM_VERSION') === true) {
                 return array(1 => 1);
             }
-
             return array(2 => 1);
         default:
             return array();
