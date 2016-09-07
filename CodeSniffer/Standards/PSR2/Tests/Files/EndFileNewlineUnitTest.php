@@ -47,6 +47,8 @@ class PSR2_Tests_Files_EndFileNewlineUnitTest extends AbstractSniffUnitTest
         case 'EndFileNewlineUnitTest.3.inc':
         case 'EndFileNewlineUnitTest.6.inc':
         case 'EndFileNewlineUnitTest.7.inc':
+        case 'EndFileNewlineUnitTest.9.inc':
+        case 'EndFileNewlineUnitTest.10.inc':
             return array(
                     2 => 1,
                    );

@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis fix now removes unnecessary whitespace
+  - Fixed bug #1141 : Sniffs that check EOF newlines don't detect newlines properly when the last token is a doc block
  </notes>
  <contents>
   <dir name="/">
@@ -573,6 +574,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.css" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -586,6 +589,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.js" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNoNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
@@ -1329,6 +1334,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.7.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.8.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.9.inc" role="test" />
+        <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.10.inc" role="test" />
         <file baseinstalldir="PHP" name="EndFileNewlineUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>

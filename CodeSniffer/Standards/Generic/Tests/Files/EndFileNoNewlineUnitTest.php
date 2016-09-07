@@ -53,6 +53,7 @@ class Generic_Tests_Files_EndFileNoNewlineUnitTest extends AbstractSniffUnitTest
             break;
         case 'EndFileNoNewlineUnitTest.2.css':
         case 'EndFileNoNewlineUnitTest.2.js':
+        case 'EndFileNoNewlineUnitTest.6.inc':
             return array(
                     2 => 1,
                    );
