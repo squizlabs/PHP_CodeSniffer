@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Fixed an undefined var name error that could be produced while running PHPCBF
+  - Made the Runner class easier to use with wrapper scripts
   - Includes all changes from the 2.7.1 release
  </notes>
  <contents>

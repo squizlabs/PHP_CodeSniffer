@@ -55,6 +55,11 @@ class Timing
             return;
         }
 
+        if (self::$startTime === null) {
+            // Timing was never started.
+            return;
+        }
+
         $time = ((microtime(true) - self::$startTime) * 1000);
 
         if ($time > 60000) {
