@@ -54,6 +54,10 @@ class Runner
         Util\Timing::startTiming();
         Runner::checkRequirements();
 
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
+            define('PHP_CODESNIFFER_CBF', false);
+        }
+
         // Creating the Config object populates it with all required settings
         // based on the CLI arguments provided to the script and any config
         // values the user has set.
