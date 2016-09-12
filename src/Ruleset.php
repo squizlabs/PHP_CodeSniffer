@@ -37,7 +37,7 @@ class Ruleset
      *
      * @var string[]
      */
-    public $paths = '';
+    public $paths = array();
 
     /**
      * A list of regular expressions used to ignore specific sniffs for files and folders.
