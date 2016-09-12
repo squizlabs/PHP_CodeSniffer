@@ -88,7 +88,11 @@ class Squiz_Sniffs_Strings_EchoedStringsSniff implements PHP_CodeSniffer_Sniff
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($firstContent, '');
-                $phpcsFile->fixer->replaceToken(($end - 1), '');
+                if ($tokens[($firstContent - 1)]['code'] !== T_WHITESPACE) {
+                    $phpcsFile->fixer->addContent(($firstContent - 1), ' ');
+                }
+
+                $phpcsFile->fixer->replaceToken($prev, '');
                 $phpcsFile->fixer->endChangeset();
             }
         }

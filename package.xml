@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Formatting.OperatorBracket no longer errors for negative array indexes used within a function call
   - Fixed a problem where the content of T_DOC_COMMENT_CLOSE_TAG tokens could sometimes be (boolean) false
   - Fixed bug #1141 : Sniffs that check EOF newlines don't detect newlines properly when the last token is a doc block
+  - Fixed bug #1150 : Squiz.Strings.EchoedStrings does not properly fix bracketed statements
   - Fixed bug #1156 : Generic.Formatting.DisallowMultipleStatements errors when mutliple short echo tags are used on the same line
     -- Thanks to Nikola Kovacs for the patch
  </notes>
@@ -2164,6 +2165,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="EchoedStringsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="EchoedStringsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="EchoedStringsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
