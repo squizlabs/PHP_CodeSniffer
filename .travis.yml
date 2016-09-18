@@ -19,13 +19,13 @@ matrix:
       group: edge # until the next update
 
 before_script:
-  - if [[ ${TRAVIS_PHP_VERSION:0:1} != "7" && $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != "hhv*" ]]; then phpenv config-add php5-testingConfig.ini; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} != "7" && $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != hhv* ]]; then phpenv config-add php5-testingConfig.ini; fi
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" || $TRAVIS_PHP_VERSION == "nightly" ]]; then phpenv config-add php7-testingConfig.ini; fi
 
 script:
-  - if [ $TRAVIS_PHP_VERSION != "hhv*" ]; then php scripts/phpcs --config-set php_path php; fi
+  - if [ $TRAVIS_PHP_VERSION != hhv* ]; then php scripts/phpcs --config-set php_path php; fi
   - phpunit tests/AllTests.php
   - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np
-  - if [[ $TRAVIS_PHP_VERSION != "hhv*" && ${TRAVIS_PHP_VERSION:0:1} != "7" ]]; then pear package-validate package.xml; fi
-  - if [ $TRAVIS_PHP_VERSION != "hhv*" ]; then php scripts/build-phar.php; fi
-  - if [ $TRAVIS_PHP_VERSION != "hhv*" ]; then php phpcs.phar CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np; fi
+  - if [[ $TRAVIS_PHP_VERSION != hhv* && ${TRAVIS_PHP_VERSION:0:1} != "7" ]]; then pear package-validate package.xml; fi
+  - if [ $TRAVIS_PHP_VERSION != hhv* ]; then php scripts/build-phar.php; fi
+  - if [ $TRAVIS_PHP_VERSION != hhv* ]; then php phpcs.phar CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np; fi
