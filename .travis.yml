@@ -14,9 +14,9 @@ php:
 matrix:
   include:
     - php: hhvm
-        sudo: true
-        dist: trusty
-        group: edge # until the next update
+      sudo: true
+      dist: trusty
+      group: edge # until the next update
 
 before_script:
   - if [[ ${TRAVIS_PHP_VERSION:0:1} != "7" && $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != "hhv*" ]]; then phpenv config-add php5-testingConfig.ini; fi
