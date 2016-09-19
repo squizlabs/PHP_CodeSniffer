@@ -1322,6 +1322,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DoubleQuoteUsageUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DoubleQuoteUsageUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EchoedStringsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EchoedStringsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EchoedStringsUnitTest.php" role="test" />
        </dir>
        <dir name="WhiteSpace">

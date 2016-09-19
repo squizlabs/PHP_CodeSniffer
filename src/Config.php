@@ -781,7 +781,13 @@ class Config
                         // Passed cache file is a file in the current directory.
                         $this->cacheFile = getcwd().'/'.basename($this->cacheFile);
                     } else {
-                        $dir = Util\Common::realpath(getcwd().'/'.$dir);
+                        if ($dir{0} === '/') {
+                            // An absolute path.
+                            $dir = Util\Common::realpath($dir);
+                        } else {
+                            $dir = Util\Common::realpath(getcwd().'/'.$dir);
+                        }
+
                         if ($dir !== false) {
                             // Cache file path is relative.
                             $this->cacheFile = $dir.'/'.basename($this->cacheFile);
@@ -859,7 +865,13 @@ class Config
                         // Passed report file is a file in the current directory.
                         $this->reportFile = getcwd().'/'.basename($this->reportFile);
                     } else {
-                        $dir = Util\Common::realpath(getcwd().'/'.$dir);
+                        if ($dir{0} === '/') {
+                            // An absolute path.
+                            $dir = Util\Common::realpath($dir);
+                        } else {
+                            $dir = Util\Common::realpath(getcwd().'/'.$dir);
+                        }
+
                         if ($dir !== false) {
                             // Report file path is relative.
                             $this->reportFile = $dir.'/'.basename($this->reportFile);
@@ -920,7 +932,13 @@ class Config
                                 // Passed report file is a filename in the current directory.
                                 $output = getcwd().'/'.basename($output);
                             } else {
-                                $dir = Util\Common::realpath(getcwd().'/'.$dir);
+                                if ($dir{0} === '/') {
+                                    // An absolute path.
+                                    $dir = Util\Common::realpath($dir);
+                                } else {
+                                    $dir = Util\Common::realpath(getcwd().'/'.$dir);
+                                }
+
                                 if ($dir !== false) {
                                     // Report file path is relative.
                                     $output = $dir.'/'.basename($output);
