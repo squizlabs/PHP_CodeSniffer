@@ -777,7 +777,13 @@ class PHP_CodeSniffer_CLI
                                 // Passed report file is a filename in the current directory.
                                 $output = getcwd().'/'.basename($output);
                             } else {
-                                $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
+                                if ($dir{0} === '/') {
+                                    // An absolute path.
+                                    $dir = PHP_CodeSniffer::realpath($dir);
+                                } else {
+                                    $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
+                                }
+
                                 if ($dir !== false) {
                                     // Report file path is relative.
                                     $output = $dir.'/'.basename($output);
