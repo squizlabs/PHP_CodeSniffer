@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1150 : Squiz.Strings.EchoedStrings does not properly fix bracketed statements
   - Fixed bug #1156 : Generic.Formatting.DisallowMultipleStatements errors when mutliple short echo tags are used on the same line
     -- Thanks to Nikola Kovacs for the patch
+  - Fixed bug #1161 : Absolute report path is treated like a relative path if it also exists within the current directory
  </notes>
  <contents>
   <dir name="/">
