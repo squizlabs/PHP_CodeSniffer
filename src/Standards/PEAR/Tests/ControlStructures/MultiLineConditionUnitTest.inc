@@ -170,6 +170,14 @@ function bar() {
     }
 }
 
+if ($a
+    && foo(
+        'a',
+        'b'
+    )) {
+    return false;
+}
+
 ?>
 <?php foreach ($blah as $boo) : ?>
     <?php if ($foo): ?>
