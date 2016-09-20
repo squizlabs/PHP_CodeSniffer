@@ -36,16 +36,14 @@ require_once dirname(__FILE__).'/AbstractSniffUnitTest.php';
  */
 class PHP_CodeSniffer_Standards_AllSniffs
 {
+
     /**
-     * Error storage.
-     *
-     * Stores the test file path for each test file which either could not be
-     * translated to a corresponding sniff file or where the corresponding
-     * sniff file could not be found.
+     * A list of test file paths without a corresponding sniff file.
      *
      * @var array
      */
-    public static $includeFailures = array();
+    public static $orphanedTests = array();
+
 
     /**
      * Prepare the test runner.
@@ -134,19 +132,16 @@ class PHP_CodeSniffer_Standards_AllSniffs
                         $sniffPath = $origPath.DIRECTORY_SEPARATOR.$parts[0].DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR.$parts[2].DIRECTORY_SEPARATOR.$parts[3];
                         $sniffPath = substr($sniffPath, 0, -8).'Sniff.php';
 
-                        if(file_exists($sniffPath)) {
+                        if (file_exists($sniffPath) === true) {
                             include_once $sniffPath;
-
                             include_once $filePath;
                             $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'][$className] = $path;
                             $suite->addTestSuite($className);
+                        } else {
+                            self::$orphanedTests[] = $filePath;
                         }
-                        else {
-                            self::$includeFailures[] = $filePath;
-                        }
-                    }
-                    else {
-                        self::$includeFailures[] = $filePath;
+                    } else {
+                        self::$orphanedTests[] = $filePath;
                     }
                 }//end foreach
             }//end foreach
