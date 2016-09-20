@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Developers of custom standards with custom test runners can now have their standards ignored by the built-in test runner
     -- Set the value of an environment variable called PHPCS_IGNORE_TESTS with a comma separated list of your standard names
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #1138 : PEAR.ControlStructures.MultiLineCondition.Alignment not detected if closing brace is first token on line
   - Fixed bug #1141 : Sniffs that check EOF newlines don't detect newlines properly when the last token is a doc block
   - Fixed bug #1150 : Squiz.Strings.EchoedStrings does not properly fix bracketed statements
   - Fixed bug #1156 : Generic.Formatting.DisallowMultipleStatements errors when multiple short echo tags are used on the same line

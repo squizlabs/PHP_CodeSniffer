@@ -162,6 +162,14 @@ if ($IPP->errorCode() == 401
     return false;
 }
 
+function bar() {
+    if ($a
+        && $b
+) {
+        return false;
+    }
+}
+
 ?>
 <?php foreach ($blah as $boo) : ?>
     <?php if ($foo): ?>

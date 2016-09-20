@@ -119,7 +119,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
         // and start with an operator, unless the line is inside a
         // function call, in which case it is ignored.
         $prevLine = $tokens[$openBracket]['line'];
-        for ($i = ($openBracket + 1); $i < $closeBracket; $i++) {
+        for ($i = ($openBracket + 1); $i <= $closeBracket; $i++) {
             if ($tokens[$i]['line'] !== $prevLine) {
                 if ($tokens[$i]['line'] === $tokens[$closeBracket]['line']) {
                     $next = $phpcsFile->findNext(T_WHITESPACE, $i, null, true);
