@@ -67,6 +67,14 @@ class AllSniffs
 
         $isInstalled = !is_file(__DIR__.'/../../autoload.php');
 
+        // Optionally allow for ignoring the tests for one or more standards.
+        $ignoreTestsForStandards = getenv('PHPCS_IGNORE_TESTS');
+        if ($ignoreTestsForStandards === false) {
+            $ignoreTestsForStandards = array();
+        } else {
+            $ignoreTestsForStandards = explode(',', $ignoreTestsForStandards);
+        }
+
         $installedPaths = Standards::getInstalledStandardPaths();
 
         foreach ($installedPaths as $path) {
@@ -82,6 +90,10 @@ class AllSniffs
             }
 
             foreach ($standards as $standard) {
+                if (in_array($standard, $ignoreTestsForStandards) === true) {
+                    continue;
+                }
+
                 $standardDir = $path.DIRECTORY_SEPARATOR.$standard;
                 $testsDir    = $testPath.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
 
