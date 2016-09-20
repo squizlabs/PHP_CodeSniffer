@@ -52,10 +52,11 @@ class MultiLineConditionUnitTest extends AbstractSniffUnitTest
                    125 => 1,
                    145 => 2,
                    153 => 2,
+                   168 => 1,
                   );
 
         if ($testFile === 'MultiLineConditionUnitTest.inc') {
-            $errors[167] = 1;
+            $errors[175] = 1;
         }
 
         return $errors;
