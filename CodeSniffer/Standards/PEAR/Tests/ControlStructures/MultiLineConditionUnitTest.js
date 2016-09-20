@@ -169,3 +169,11 @@ function bar() {
         return false;
     }
 }
+
+if (a
+    && foo(
+        'a',
+        'b'
+    )) {
+    return false;
+}
