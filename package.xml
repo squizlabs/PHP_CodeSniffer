@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis fix now removes unnecessary whitespace
   - Squiz.Formatting.OperatorBracket no longer errors for negative array indexes used within a function call
+  - Squiz.PHP.EmbeddedPhp no longer expects a semicolon after statements that are only opening a scope
   - Fixed a problem where the content of T_DOC_COMMENT_CLOSE_TAG tokens could sometimes be (boolean) false
   - Developers of custom standards with custom test runners can now have their standards ignored by the built-in test runner
     -- Set the value of an environment variable called PHPCS_IGNORE_TESTS with a comma separated list of your standard names
