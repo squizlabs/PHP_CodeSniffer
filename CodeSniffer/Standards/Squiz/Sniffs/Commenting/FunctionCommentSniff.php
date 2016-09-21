@@ -74,6 +74,19 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
         if ($isSpecialMethod === true) {
             return;
         }
+        
+        // Skip if function comment contains inheritDoc
+        for ($i=0; $i < 10; $i++) {
+            if (! isset($tokens[$commentStart+$i])) {
+                break;
+            }
+
+            $tokenContent = strtolower($tokens[$commentStart+$i]['content']);
+
+            if (strstr($tokenContent, '{@inheritdoc')) {
+                return;
+            }
+        }
 
         if ($return !== null) {
             $content = $tokens[($return + 2)]['content'];
