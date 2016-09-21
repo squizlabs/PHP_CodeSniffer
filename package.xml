@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed an undefined var name error that could be produced while running PHPCBF
   - Made the Runner class easier to use with wrapper scripts
   - Includes all changes from the 2.7.1 release
+  - Fixed bug #1167 : 3.0.0RC1 PHAR does not work with PEAR standard
  </notes>
  <contents>
   <dir name="/">
