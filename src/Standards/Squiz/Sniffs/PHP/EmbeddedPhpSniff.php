@@ -341,13 +341,18 @@ class EmbeddedPhpSniff implements Sniff
         }
 
         $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($closeTag - 1), $stackPtr, true);
-        if ($tokens[$prev]['code'] !== T_SEMICOLON) {
+        if ((isset($tokens[$prev]['scope_opener']) === false
+            || $tokens[$prev]['scope_opener'] !== $prev)
+            && (isset($tokens[$prev]['scope_closer']) === false
+            || $tokens[$prev]['scope_closer'] !== $prev)
+            && $tokens[$prev]['code'] !== T_SEMICOLON
+        ) {
             $error = 'Inline PHP statement must end with a semicolon';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSemicolon');
             if ($fix === true) {
                 $phpcsFile->fixer->addContent($prev, ';');
             }
-        } else {
+        } else if ($tokens[$prev]['code'] === T_SEMICOLON) {
             $statementCount = 1;
             for ($i = ($stackPtr + 1); $i < $prev; $i++) {
                 if ($tokens[$i]['code'] === T_SEMICOLON) {

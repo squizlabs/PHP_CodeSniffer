@@ -104,3 +104,6 @@ function foo()
 ?>
 
 </html>
+
+<?php if ($foo) { ?>
+<?php } ?>
