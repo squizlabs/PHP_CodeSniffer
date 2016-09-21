@@ -21,8 +21,6 @@ if (ini_get('phar.readonly') === '1') {
     exit(1);
 }
 
-#require_once __DIR__.'/../CodeSniffer.php';
-
 $scripts = array(
             'phpcs',
             'phpcbf',
@@ -68,20 +66,14 @@ foreach ($scripts as $script) {
 
         $path = 'src'.substr($fullpath, $srcDirLen);
 
-        //$phar->addFile($fullpath, $path);
         $phar->addFromString($path, php_strip_whitespace($fullpath));
-        #$phar[$path]->compress(Phar::GZ);
     }
 
     // Add autoloader.
-    //$phar->addFile(realpath(__DIR__.'/../autoload.php'), 'autoload.php');
     $phar->addFromString('autoload.php', php_strip_whitespace(realpath(__DIR__.'/../autoload.php')));
-    #$phar['autoload.php']->compress(Phar::GZ);
 
     // Add licence file.
-    //$phar->addFile(realpath(__DIR__.'/../licence.txt'), 'licence.txt');
     $phar->addFromString('licence.txt', php_strip_whitespace(realpath(__DIR__.'/../licence.txt')));
-    #$phar['licence.txt']->compress(Phar::GZ);
 
     echo 'done'.PHP_EOL;
 
