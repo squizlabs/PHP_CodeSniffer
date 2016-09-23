@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1156 : Generic.Formatting.DisallowMultipleStatements errors when multiple short echo tags are used on the same line
     -- Thanks to Nikola Kovacs for the patch
   - Fixed bug #1161 : Absolute report path is treated like a relative path if it also exists within the current directory
+  - Fixed bug #1170 : Javascript regular expression literal not recognized after comparison operator
  </notes>
  <contents>
   <dir name="/">
