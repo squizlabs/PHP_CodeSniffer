@@ -36,7 +36,6 @@ class FindImplementedInterfaceNamesTest extends \PHPUnit_Framework_TestCase
     {
         $config            = new Config();
         $config->standards = array('Generic');
-        $config->sniffs    = array('Generic.None.None');
 
         $ruleset = new Ruleset($config);
 
