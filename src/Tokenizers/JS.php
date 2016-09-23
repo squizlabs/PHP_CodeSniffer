@@ -885,6 +885,9 @@ class JS extends Tokenizer
     {
         $beforeTokens = array(
                          T_EQUAL               => true,
+                         T_IS_NOT_EQUAL        => true,
+                         T_IS_IDENTICAL        => true,
+                         T_IS_NOT_IDENTICAL    => true,
                          T_OPEN_PARENTHESIS    => true,
                          T_OPEN_SQUARE_BRACKET => true,
                          T_RETURN              => true,
