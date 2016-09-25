@@ -533,7 +533,7 @@ class PHP_CodeSniffer
         // be detected properly for files created on a Mac with the /r line ending.
         ini_set('auto_detect_line_endings', true);
 
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true && empty($restrictions) === false) {
             // Should be one standard and one sniff being tested at a time.
             $installed = $this->getInstalledStandardPath($standards[0]);
             if ($installed !== null) {
