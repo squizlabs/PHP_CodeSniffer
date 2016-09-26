@@ -506,13 +506,19 @@ class PHP_CodeSniffer_File
                 if (strpos($token['content'], '@codingStandards') !== false) {
                     if ($token['code'] === T_DOC_COMMENT_TAG) {
                         $tokenType = $token['content'];
-                        $tokenPtr = $this->findNext([T_DOC_COMMENT_WHITESPACE], $stackPtr + 1, null, true);
+                        $tokenPtr = $this->findNext(array(T_DOC_COMMENT_WHITESPACE), $stackPtr + 1, null, true);
                         $tokenContent = $this->_tokens[$tokenPtr]['content'];
                     }
                     else {
                         $parts  = explode(' ', ltrim($token['content'], '/ '), 2);
-                        $tokenType = $parts[0];
-                        $tokenContent = $parts[1];
+
+                        if (count($parts) == 2) {
+                            $tokenType = $parts[0];
+                            $tokenContent = $parts[1];
+                        } else {
+                            $tokenType = null;
+                            $tokenContent = $token['content'];
+                        }
                     }
 
                     if (strpos($tokenType, '@codingStandardsIgnoreFile') !== false) {
