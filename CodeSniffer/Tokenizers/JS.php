@@ -250,10 +250,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
 
     /**
-     * Creates an array of tokens when given some PHP code.
-     *
-     * Starts by using token_get_all() but does a lot of extra processing
-     * to insert information about the context of the token.
+     * Creates an array of tokens when given some JS code.
      *
      * @param string $string  The string to tokenize.
      * @param string $eolChar The EOL character to use for splitting strings.
