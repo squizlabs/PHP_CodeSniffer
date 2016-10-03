@@ -153,11 +153,9 @@ class Ruleset
             $standardPaths[] = $standard;
         }
 
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true && empty($restrictions) === false) {
             // Should be one standard and one sniff being tested at a time.
-            if (empty($restrictions) === false) {
-                $sniffs = $this->expandRulesetReference($restrictions[0], dirname($standardPaths[0]));
-            }
+            $sniffs = $this->expandRulesetReference($restrictions[0], dirname($standardPaths[0]));
         } else {
             foreach ($standardPaths as $standard) {
                 $ruleset = simplexml_load_string(file_get_contents($standard));
