@@ -181,3 +181,6 @@ some
 text
 here
 EOD;
+
+if ($a && $a === Foo::VARIABLE && ($a === Foo::METHOD || $a === Foo::FUNCTION))
+    echo 'hi';
