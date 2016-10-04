@@ -45,6 +45,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1161 : Absolute report path is treated like a relative path if it also exists within the current directory
   - Fixed bug #1170 : Javascript regular expression literal not recognized after comparison operator
   - Fixed bug #1180 : Class constant named FUNCTION is incorrectly tokenized
+  - Fixed bug #1181 : Squiz.Operators.IncrementDecrementUsage.NoBrackets false positive when incrementing properties
+    -- Thanks to Jürgen Henge-Ernst for the patch
  </notes>
  <contents>
   <dir name="/">
