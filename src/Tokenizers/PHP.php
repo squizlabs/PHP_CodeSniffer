@@ -1077,7 +1077,8 @@ class PHP extends Tokenizer
 
                 // This is a special case for the PHP 5.5 classname::class syntax
                 // where "class" should be T_STRING instead of T_CLASS.
-                if ($newToken['code'] === T_CLASS
+                if (($newToken['code'] === T_CLASS
+                    || $newToken['code'] === T_FUNCTION)
                     && $finalTokens[($newStackPtr - 1)]['code'] === T_DOUBLE_COLON
                 ) {
                     $newToken['code'] = T_STRING;

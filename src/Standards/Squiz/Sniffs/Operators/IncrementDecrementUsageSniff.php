@@ -72,7 +72,10 @@ class IncrementDecrementUsageSniff implements Sniff
 
         // Work out where the variable is so we know where to
         // start looking for other operators.
-        if ($tokens[($stackPtr - 1)]['code'] === T_VARIABLE) {
+        if ($tokens[($stackPtr - 1)]['code'] === T_VARIABLE
+            || ($tokens[($stackPtr - 1)]['code'] === T_STRING
+            && $tokens[($stackPtr - 2)]['code'] === T_OBJECT_OPERATOR)
+        ) {
             $start = ($stackPtr + 1);
         } else {
             $start = ($stackPtr + 2);
