@@ -37,5 +37,4 @@ $var = (1 + $var);
 $expected[$i]['sort_order'] = ($i + 1);
 $expected[($i + 1)]['sort_order'] = ($i + 1);
 
-$id = $id . ($this->i++) . $id;
-?>
+$id = $id.($this->i++).$id;
