@@ -210,18 +210,26 @@ class InlineControlStructureSniff implements Sniff
             $end = $lastNonEmpty;
         }
 
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
 
-        // Account for a comment on the end of the line.
-        for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
-            if (isset($tokens[($endLine + 1)]) === false
-                || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
-            ) {
-                break;
+        if ($next === false || $tokens[$next]['line'] !== $tokens[$end]['line']) {
+            // Looks for completely empty statements.
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
+
+            // Account for a comment on the end of the line.
+            for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
+                if (isset($tokens[($endLine + 1)]) === false
+                    || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
+                ) {
+                    break;
+                }
             }
-        }
 
-        if ($tokens[$endLine]['code'] !== T_COMMENT) {
+            if ($tokens[$endLine]['code'] !== T_COMMENT) {
+                $endLine = $end;
+            }
+        } else {
+            $next    = ($end + 1);
             $endLine = $end;
         }
 
