@@ -47,6 +47,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1180 : Class constant named FUNCTION is incorrectly tokenized
   - Fixed bug #1181 : Squiz.Operators.IncrementDecrementUsage.NoBrackets false positive when incrementing properties
     -- Thanks to Jürgen Henge-Ernst for the patch
+  - Fixed bug #1190 : phpcbf on if/else with trailing comment generates erroneous code
  </notes>
  <contents>
   <dir name="/">
