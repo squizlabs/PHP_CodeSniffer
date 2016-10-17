@@ -233,6 +233,13 @@ class PHP_CodeSniffer_File
     private $_ignoredCodes = array();
 
     /**
+     * An array of rules to ignore for a given token range
+     *
+     * @var array()
+     */
+    private $_ignoredRulesForLines = array();
+
+    /**
      * The total number of errors raised.
      *
      * @var int
@@ -513,6 +520,8 @@ class PHP_CodeSniffer_File
                             $listenerClass = $this->phpcs->sniffCodes[$listenerCode];
                             $this->phpcs->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
                         }
+                    } else if (strpos($token['content'], '@codingStandardsIgnoreRule') !== false) {
+                        $this->_addIgnoreRule($token, $stackPtr);
                     }//end if
                 }//end if
             }//end if
@@ -993,6 +1002,14 @@ class PHP_CodeSniffer_File
             return false;
         }
 
+        if (isset($this->_ignoredRulesForLines[$this->_activeListener]) === true) {
+            foreach ($this->_ignoredRulesForLines[$this->_activeListener] as list($lineFrom, $lineTo)) {
+                if ($line >= $lineFrom && $line <= $lineTo) {
+                    return false;
+                }
+            }
+        }
+
         // Work out which sniff generated the error.
         if (substr($code, 0, 9) === 'Internal.') {
             // Any internal message.
@@ -1138,6 +1155,14 @@ class PHP_CodeSniffer_File
     {
         if (isset(self::$_ignoredLines[$line]) === true) {
             return false;
+        }
+
+        if (isset($this->_ignoredRulesForLines[$this->_activeListener]) === true) {
+            foreach ($this->_ignoredRulesForLines[$this->_activeListener] as list($lineFrom, $lineTo)) {
+                if ($line >= $lineFrom && $line <= $lineTo) {
+                    return false;
+                }
+            }
         }
 
         // Work out which sniff generated the warning.
@@ -1632,8 +1657,12 @@ class PHP_CodeSniffer_File
                         self::$_ignoredLines[($tokens[$i]['line'] + 1)] = true;
                         // Ignore this comment too.
                         self::$_ignoredLines[$tokens[$i]['line']] = true;
+                    } else if ($ignoring === false
+                        && strpos($tokens[$i]['content'], '@codingStandardsIgnoreRule') !== false
+                    ) {
+                        self::$_ignoredLines[$tokens[$i]['line']] = true;
                     }
-                }
+                }//end if
             }//end if
 
             if ($ignoring === true) {
@@ -2642,6 +2671,49 @@ class PHP_CodeSniffer_File
         }
 
     }//end _createLevelMap()
+
+
+    /**
+     * Adds a rule to be ignored if the given token is followed by a function declaration
+     *
+     * @param array $token    The document tag token for the ignore rule
+     * @param int   $stackPtr The stack position where the token was found
+     *
+     * @return void
+     */
+    private function _addIgnoreRule($token, $stackPtr)
+    {
+        $ignoredTokens = PHP_CodeSniffer_Tokens::$emptyTokens;
+        $nextTokenPtr  = $this->findNext($ignoredTokens, ($stackPtr + 1), null, true, null, true);
+        $ruleNameRegex = '/@codingStandardsIgnoreRule\s*\(\s*([^)\s]++)\s*\)/i';
+
+        if ($nextTokenPtr === false || preg_match($ruleNameRegex, $token['content'], $matches) === 0) {
+            return;
+        }
+
+        $rule = $matches[1];
+        if (strpos($rule, '.') !== false) {
+            // Convert rule name to class name.
+            $rule = explode('.', $rule);
+            array_splice($rule, 1, 0, array('Sniffs'));
+            $rule = implode('_', $rule).'Sniff';
+        }
+
+        $scopeOpenerPtr = $this->findFirstOnLine(PHP_CodeSniffer_Tokens::$scopeOpeners, $nextTokenPtr);
+        if ($scopeOpenerPtr === false) {
+            $token = $this->_tokens[$nextTokenPtr];
+            $range = array_fill(0, 2, $token['line']);
+        } else {
+            $token = $this->_tokens[$scopeOpenerPtr];
+            $range = array(
+                      $token['line'],
+                      $this->_tokens[$token['scope_closer']]['line'],
+                     );
+        }
+
+        $this->_ignoredRulesForLines[$rule][] = $range;
+
+    }//end _addIgnoreRule()
 
 
     /**

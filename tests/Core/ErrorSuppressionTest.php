@@ -315,6 +315,43 @@ class Core_ErrorSuppressionTest extends PHPUnit_Framework_TestCase
 
     }//end testSuppressFile()
 
+    public function testSuppressRule()
+    {
+        $phpcs = new PHP_CodeSniffer();
+        $phpcs->initStandard('Generic', array('Generic.Commenting.Todo'));
+
+        // Process without suppression.
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'function foo() {'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = $phpcs->processFile('ruleNonSuppressionTest.php', $content);
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(1, $numWarnings);
+        $this->assertEquals(1, count($warnings));
+
+        // Process with inline comment suppression
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'// @codingStandardsIgnoreRule(Generic.Commenting.Todo)'.PHP_EOL.'function foo() {'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = $phpcs->processFile('ruleSuppressionTest.php', $content);
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with multiline comment suppression
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'/*'.PHP_EOL.'* @codingStandardsIgnoreRule(Generic.Commenting.Todo)'.PHP_EOL.'*/'.PHP_EOL.'function foo() {'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = $phpcs->processFile('ruleSuppressionTest.php', $content);
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with docblock suppression
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'/**'.PHP_EOL.'* @codingStandardsIgnoreRule(Generic.Commenting.Todo)'.PHP_EOL.'*/'.PHP_EOL.'function foo() {'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = $phpcs->processFile('ruleSuppressionTest.php', $content);
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+    }//end testSuppressRule()
 
 }//end class
 
