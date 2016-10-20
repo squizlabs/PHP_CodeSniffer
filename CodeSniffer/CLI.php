@@ -277,26 +277,27 @@ class PHP_CodeSniffer_CLI
         }
 
         // The default values for config settings.
-        $defaults['files']           = array();
-        $defaults['standard']        = null;
-        $defaults['verbosity']       = 0;
-        $defaults['interactive']     = false;
-        $defaults['colors']          = false;
-        $defaults['explain']         = false;
-        $defaults['local']           = false;
-        $defaults['showSources']     = false;
-        $defaults['extensions']      = array();
-        $defaults['sniffs']          = array();
-        $defaults['exclude']         = array();
-        $defaults['ignored']         = array();
-        $defaults['reportFile']      = null;
-        $defaults['generator']       = '';
-        $defaults['reports']         = array();
-        $defaults['bootstrap']       = array();
-        $defaults['errorSeverity']   = null;
-        $defaults['warningSeverity'] = null;
-        $defaults['stdin']           = null;
-        $defaults['stdinPath']       = '';
+        $defaults['files']            = array();
+        $defaults['standard']         = null;
+        $defaults['verbosity']        = 0;
+        $defaults['interactive']      = false;
+        $defaults['colors']           = false;
+        $defaults['explain']          = false;
+        $defaults['local']            = false;
+        $defaults['showSources']      = false;
+        $defaults['extensions']       = array();
+        $defaults['sniffs']           = array();
+        $defaults['exclude']          = array();
+        $defaults['ignored']          = array();
+        $defaults['reportFile']       = null;
+        $defaults['generator']        = '';
+        $defaults['reports']          = array();
+        $defaults['bootstrap']        = array();
+        $defaults['errorSeverity']    = null;
+        $defaults['warningSeverity']  = null;
+        $defaults['stdin']            = null;
+        $defaults['stdinPath']        = '';
+        $defaults['shortScalarTypes'] = false;
 
         $reportFormat = PHP_CodeSniffer::getConfigData('report_format');
         if ($reportFormat !== null) {
@@ -547,6 +548,9 @@ class PHP_CodeSniffer_CLI
         case 'w' :
             $this->values['warningSeverity'] = null;
             break;
+        case 't' :
+            $this->values['shortScalarTypes'] = true;
+            break;
         default:
             if ($this->dieOnUnknownArg === false) {
                 $this->values[$arg] = $arg;
@@ -648,6 +652,9 @@ class PHP_CodeSniffer_CLI
             $this->_cliArgs[($pos + 1)] = '';
             $this->_cliArgs[($pos + 2)] = '';
             PHP_CodeSniffer::setConfigData($key, $value, true);
+            break;
+        case 'short-scalar-types':
+            $this->values['shortScalarTypes'] = true;
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
@@ -953,6 +960,7 @@ class PHP_CodeSniffer_CLI
 
         $phpcs = new PHP_CodeSniffer($values['verbosity'], null, null, null);
         $phpcs->setCli($this);
+        $phpcs->configure($this->values);
         $phpcs->initStandard($values['standard'], $values['sniffs'], $values['exclude']);
         $values = $this->values;
 
@@ -1299,14 +1307,14 @@ class PHP_CodeSniffer_CLI
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors] [--stdin-path=<stdinPath>]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepqvit] [-d key[=value]] [--colors] [--no-colors] [--stdin-path=<stdinPath>]'.PHP_EOL;
         echo '    [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
         echo '    [--report-width=<reportWidth>] [--generator=<generator>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>]'.PHP_EOL;
-        echo '    [--file-list=<fileList>] <file> ...'.PHP_EOL;
+        echo '    [--file-list=<fileList>] [--short-scalar-types] <file> ...'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Print both warnings and errors (this is the default)'.PHP_EOL;
@@ -1319,6 +1327,7 @@ class PHP_CodeSniffer_CLI
         echo '        -v[v][v]      Print verbose output'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
+        echo '        -s            Use short scalar type hints'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --colors      Use colors in output'.PHP_EOL;
@@ -1358,17 +1367,18 @@ class PHP_CodeSniffer_CLI
      */
     public function printPHPCBFUsage()
     {
-        echo 'Usage: phpcbf [-nwli] [-d key[=value]] [--stdin-path=<stdinPath>]'.PHP_EOL;
+        echo 'Usage: phpcbf [-nwlist] [-d key[=value]] [--stdin-path=<stdinPath>]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--tab-width=<tabWidth>] [--encoding=<encoding>]'.PHP_EOL;
         echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>]'.PHP_EOL;
-        echo '    [--file-list=<fileList>] <file> ...'.PHP_EOL;
+        echo '    [--file-list=<fileList>] [--short-scalar-types] <file> ...'.PHP_EOL;
         echo '        -n            Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
         echo '        -w            Fix both warnings and errors (on by default)'.PHP_EOL;
         echo '        -l            Local directory only, no recursion'.PHP_EOL;
         echo '        -i            Show a list of installed coding standards'.PHP_EOL;
         echo '        -d            Set the [key] php.ini value to [value] or [true] if value is omitted'.PHP_EOL;
+        echo '        -t            Use short scalar type hints'.PHP_EOL;
         echo '        --help        Print this help message'.PHP_EOL;
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --no-patch    Do not make use of the "diff" or "patch" programs'.PHP_EOL;
