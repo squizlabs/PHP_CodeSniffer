@@ -280,7 +280,10 @@ class ScopeIndentSniff implements Sniff
 
                     $exact = false;
 
-                    if ($condition > 0 && $lastOpenTag > $condition) {
+                    $lastOpenTagConditions = array_keys($tokens[$lastOpenTag]['conditions']);
+                    $lastOpenTagCondition  = array_pop($lastOpenTagConditions);
+
+                    if ($condition > 0 && $lastOpenTagCondition === $condition) {
                         if ($this->debug === true) {
                             echo "\t* open tag is inside condition; using open tag *".PHP_EOL;
                         }
