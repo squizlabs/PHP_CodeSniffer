@@ -123,7 +123,7 @@ class Core_File_FindNextTest extends PHPUnit_Framework_TestCase
             $comment + 2,
             null,
             false,
-            ['strpos', 'stripos'],
+            array('strpos', 'stripos'),
             true
         );
         $this->assertSame('stripos', $tokens[$found]['content']);

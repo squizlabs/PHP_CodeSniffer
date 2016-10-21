@@ -120,8 +120,8 @@ class Core_File_FindFirstOnLineTest extends PHPUnit_Framework_TestCase
             T_STRING,
             $comment - 2,
             false,
-            ['strpos', 'stripos']
-        );
+            array('strpos', 'stripos')
+    );
         $this->assertSame('stripos', $tokens[$found]['content']);
     }
 }

@@ -114,7 +114,7 @@ class Core_File_FindPreviousTest extends PHPUnit_Framework_TestCase
             $comment - 2,
             null,
             false,
-            ['strpos', 'stripos']
+            array('strpos', 'stripos')
         );
         $this->assertSame('stripos', $tokens[$found]['content']);
     }
