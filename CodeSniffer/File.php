@@ -3303,12 +3303,13 @@ class PHP_CodeSniffer_File
             if ($found === true) {
                 if ($value === null) {
                     return $i;
-                } elseif ($this->_tokens[$i]['content'] === $value) {
+                } else if ($this->_tokens[$i]['content'] === $value) {
                     return $i;
-                } elseif (is_array($value) && in_array($this->_tokens[$i]['content'], $value)) {
-                    return$i;
+                } else if (is_array($value) === true
+                    && in_array($this->_tokens[$i]['content'], $value) === true
+                ) {
+                    return $i;
                 }
-
             }
 
             if ($local === true) {
@@ -3388,9 +3389,11 @@ class PHP_CodeSniffer_File
             if ($found === true) {
                 if ($value === null) {
                     return $i;
-                } elseif ($this->_tokens[$i]['content'] === $value) {
+                } else if ($this->_tokens[$i]['content'] === $value) {
                     return $i;
-                } elseif (is_array($value) && in_array($this->_tokens[$i]['content'], $value)) {
+                } else if (is_array($value) === true
+                    && in_array($this->_tokens[$i]['content'], $value) === true
+                ) {
                     return $i;
                 }
             }
@@ -3594,9 +3597,11 @@ class PHP_CodeSniffer_File
             if ($found === true) {
                 if ($value === null) {
                     $foundToken = $i;
-                } elseif ($this->_tokens[$i]['content'] === $value) {
+                } else if ($this->_tokens[$i]['content'] === $value) {
                     $foundToken = $i;
-                } elseif (is_array($value) && in_array($this->_tokens[$i]['content'], $value)) {
+                } else if (is_array($value) === true
+                    && in_array($this->_tokens[$i]['content'], $value) === true
+                ) {
                     $foundToken = $i;
                 }
             }
