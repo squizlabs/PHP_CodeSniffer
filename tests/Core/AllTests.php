@@ -22,6 +22,9 @@ require_once 'ErrorSuppressionTest.php';
 require_once 'File/GetMethodParametersTest.php';
 require_once 'File/FindExtendedClassNameTest.php';
 require_once 'File/FindImplementedInterfaceNamesTest.php';
+require_once 'File/FindFirstOnLineTest.php';
+require_once 'File/FindNextTest.php';
+require_once 'File/FindPreviousTest.php';
 
 if (is_file(dirname(__FILE__).'/../../CodeSniffer.php') === true) {
     // We are not installed.
@@ -74,6 +77,9 @@ class PHP_CodeSniffer_Core_AllTests
         $suite->addTestSuite('Core_File_GetMethodParametersTest');
         $suite->addTestSuite('Core_File_FindExtendedClassNameTest');
         $suite->addTestSuite('Core_File_FindImplementedInterfaceNamesTest');
+        $suite->addTestSuite('Core_File_FindFirstOnLineTest');
+        $suite->addTestSuite('Core_File_FindNextTest');
+        $suite->addTestSuite('Core_File_FindPreviousTest');
         return $suite;
 
     }//end suite()
