@@ -3258,20 +3258,21 @@ class PHP_CodeSniffer_File
      *
      * Returns false if no token can be found.
      *
-     * @param int|array $types   The type(s) of tokens to search for.
-     * @param int       $start   The position to start searching from in the
-     *                           token stack.
-     * @param int       $end     The end position to fail if no token is found.
-     *                           if not specified or null, end will default to
-     *                           the start of the token stack.
-     * @param bool      $exclude If true, find the previous token that are NOT of
-     *                           the types specified in $types.
-     * @param string    $value   The value that the token(s) must be equal to.
-     *                           If value is omitted, tokens with any value will
-     *                           be returned.
-     * @param bool      $local   If true, tokens outside the current statement
-     *                           will not be checked. IE. checking will stop
-     *                           at the previous semi-colon found.
+     * @param int|array    $types   The type(s) of tokens to search for.
+     * @param int          $start   The position to start searching from in the
+     *                              token stack.
+     * @param int          $end     The end position to fail if no token is found.
+     *                              if not specified or null, end will default to
+     *                              the start of the token stack.
+     * @param bool         $exclude If true, find the previous token that are NOT of
+     *                              the types specified in $types.
+     * @param string|array $value   The value or an array of possible values
+     *                              that the token(s) must be equal to.
+     *                              If value is omitted, tokens with any value will
+     *                              be returned.
+     * @param bool         $local   If true, tokens outside the current statement
+     *                              will not be checked. IE. checking will stop
+     *                              at the previous semi-colon found.
      *
      * @return int|bool
      * @see    findNext()
@@ -3302,9 +3303,12 @@ class PHP_CodeSniffer_File
             if ($found === true) {
                 if ($value === null) {
                     return $i;
-                } else if ($this->_tokens[$i]['content'] === $value) {
+                } elseif ($this->_tokens[$i]['content'] === $value) {
                     return $i;
+                } elseif (is_array($value) && in_array($this->_tokens[$i]['content'], $value)) {
+                    return$i;
                 }
+
             }
 
             if ($local === true) {
@@ -3339,20 +3343,21 @@ class PHP_CodeSniffer_File
      *
      * Returns false if no token can be found.
      *
-     * @param int|array $types   The type(s) of tokens to search for.
-     * @param int       $start   The position to start searching from in the
-     *                           token stack.
-     * @param int       $end     The end position to fail if no token is found.
-     *                           if not specified or null, end will default to
-     *                           the end of the token stack.
-     * @param bool      $exclude If true, find the next token that is NOT of
-     *                           a type specified in $types.
-     * @param string    $value   The value that the token(s) must be equal to.
-     *                           If value is omitted, tokens with any value will
-     *                           be returned.
-     * @param bool      $local   If true, tokens outside the current statement
-     *                           will not be checked. i.e., checking will stop
-     *                           at the next semi-colon found.
+     * @param int|array    $types   The type(s) of tokens to search for.
+     * @param int          $start   The position to start searching from in the
+     *                              token stack.
+     * @param int          $end     The end position to fail if no token is found.
+     *                              if not specified or null, end will default to
+     *                              the end of the token stack.
+     * @param bool         $exclude If true, find the next token that is NOT of
+     *                              a type specified in $types.
+     * @param string|array $value   The value or an array of possible values
+     *                              that the token(s) must be equal to.
+     *                              If value is omitted, tokens with any value will
+     *                              be returned.
+     * @param bool         $local   If true, tokens outside the current statement
+     *                              will not be checked. i.e., checking will stop
+     *                              at the next semi-colon found.
      *
      * @return int|bool
      * @see    findPrevious()
@@ -3383,7 +3388,9 @@ class PHP_CodeSniffer_File
             if ($found === true) {
                 if ($value === null) {
                     return $i;
-                } else if ($this->_tokens[$i]['content'] === $value) {
+                } elseif ($this->_tokens[$i]['content'] === $value) {
+                    return $i;
+                } elseif (is_array($value) && in_array($this->_tokens[$i]['content'], $value)) {
                     return $i;
                 }
             }
@@ -3543,15 +3550,16 @@ class PHP_CodeSniffer_File
      *
      * Returns false if no token can be found.
      *
-     * @param int|array $types   The type(s) of tokens to search for.
-     * @param int       $start   The position to start searching from in the
-     *                           token stack. The first token matching on
-     *                           this line before this token will be returned.
-     * @param bool      $exclude If true, find the token that is NOT of
-     *                           the types specified in $types.
-     * @param string    $value   The value that the token must be equal to.
-     *                           If value is omitted, tokens with any value will
-     *                           be returned.
+     * @param int|array    $types   The type(s) of tokens to search for.
+     * @param int          $start   The position to start searching from in the
+     *                              token stack. The first token matching on
+     *                              this line before this token will be returned.
+     * @param bool         $exclude If true, find the token that is NOT of
+     *                              the types specified in $types.
+     * @param string|array $value   The value or an array of possible values
+     *                              that the token(s) must be equal to.
+     *                              If value is omitted, tokens with any value will
+     *                              be returned.
      *
      * @return int | bool
      */
@@ -3586,7 +3594,9 @@ class PHP_CodeSniffer_File
             if ($found === true) {
                 if ($value === null) {
                     $foundToken = $i;
-                } else if ($this->_tokens[$i]['content'] === $value) {
+                } elseif ($this->_tokens[$i]['content'] === $value) {
+                    $foundToken = $i;
+                } elseif (is_array($value) && in_array($this->_tokens[$i]['content'], $value)) {
                     $foundToken = $i;
                 }
             }
