@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The unit test runner now loads the test sniff outside of the standard's ruleset so that exclude rules do not get applied
     -- This may have caused problems when testing custom sniffs inside custom standards
     -- Also makes the unit tests runs a little faster
+  - The SVN pre-commit hook now works correctly when installed via composer
+    -- Thanks to Sergey for the patch
   - Fixed bug #1135 : PEAR.ControlStructures.MultiLineCondition.CloseBracketNewLine not detected if preceded by multiline function call
   - Fixed bug #1138 : PEAR.ControlStructures.MultiLineCondition.Alignment not detected if closing brace is first token on line
   - Fixed bug #1141 : Sniffs that check EOF newlines don't detect newlines properly when the last token is a doc block
@@ -68,7 +70,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
     </file>
     <file baseinstalldir="" name="phpcs-svn-pre-commit" role="script">
-     <tasks:replace from="@php_bin@" to="php_bin" type="pear-config" />
+     <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
      <tasks:replace from="@package_version@" to="version" type="package-info" />
     </file>
     <file baseinstalldir="" name="phpcs.bat" role="script">
