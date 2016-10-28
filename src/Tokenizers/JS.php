@@ -521,7 +521,14 @@ class JS extends Tokenizer
                         echo "\t\t* look ahead found nothing *".PHP_EOL;
                     }
 
-                    $value    = $this->tokenValues[strtolower($buffer)];
+                    $value = $this->tokenValues[strtolower($buffer)];
+
+                    if ($value === 'T_FUNCTION' && $buffer !== 'function') {
+                        // The function keyword needs to be all lowercase or else
+                        // it is just a function called "Function".
+                        $value = 'T_STRING';
+                    }
+
                     $tokens[] = array(
                                  'code'    => constant($value),
                                  'type'    => $value,
