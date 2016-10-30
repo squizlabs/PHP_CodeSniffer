@@ -3503,6 +3503,7 @@ class PHP_CodeSniffer_File
                 if ($this->_tokens[$i]['code'] === T_CLOSE_PARENTHESIS
                     || $this->_tokens[$i]['code'] === T_CLOSE_SQUARE_BRACKET
                     || $this->_tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET
+                    || $this->_tokens[$i]['code'] === T_CLOSE_SHORT_ARRAY
                     || $this->_tokens[$i]['code'] === T_OPEN_TAG
                     || $this->_tokens[$i]['code'] === T_CLOSE_TAG
                 ) {

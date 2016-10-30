@@ -52,6 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1188 : Generic.WhiteSpace.ScopeIndent issues with inline HTML and multi-line function signatures
   - Fixed bug #1190 : phpcbf on if/else with trailing comment generates erroneous code
   - Fixed bug #1191 : Javascript sniffer fails with function called "Function"
+  - Fixed bug #1203 : Inconsistent behavior of PHP_CodeSniffer_File::findEndOfStatement
  </notes>
  <contents>
   <dir name="/">
