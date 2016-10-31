@@ -1947,6 +1947,7 @@ class File
                 if ($this->tokens[$i]['code'] === T_CLOSE_PARENTHESIS
                     || $this->tokens[$i]['code'] === T_CLOSE_SQUARE_BRACKET
                     || $this->tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET
+                    || $this->tokens[$i]['code'] === T_CLOSE_SHORT_ARRAY
                     || $this->tokens[$i]['code'] === T_OPEN_TAG
                     || $this->tokens[$i]['code'] === T_CLOSE_TAG
                 ) {
