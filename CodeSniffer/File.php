@@ -1159,7 +1159,8 @@ class PHP_CodeSniffer_File
         }
 
         if (isset($this->_ignoredRulesForLines[$this->_activeListener]) === true) {
-            foreach ($this->_ignoredRulesForLines[$this->_activeListener] as list($lineFrom, $lineTo)) {
+            foreach ($this->_ignoredRulesForLines[$this->_activeListener] as $ignoredLinesRange) {
+                list($lineFrom, $lineTo) = $ignoredLinesRange;
                 if ($line >= $lineFrom && $line <= $lineTo) {
                     return false;
                 }
