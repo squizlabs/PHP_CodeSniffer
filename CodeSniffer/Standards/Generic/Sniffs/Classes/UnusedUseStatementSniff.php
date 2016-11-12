@@ -99,8 +99,16 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
                 null,
                 true
             );
-            $namespace       = trim($phpcsFile->getTokensAsString(($namespacePtr + 1), ($nsEnd - $namespacePtr - 1)));
-            $useNamespacePtr = $phpcsFile->findNext(array(T_STRING), ($stackPtr + 1));
+            $namespace       = trim(
+                $phpcsFile->getTokensAsString(
+                    ($namespacePtr + 1),
+                    ($nsEnd - $namespacePtr - 1)
+                )
+            );
+            $useNamespacePtr = $phpcsFile->findNext(
+                array(T_STRING),
+                ($stackPtr + 1)
+            );
             $useNamespaceEnd = $phpcsFile->findNext(
                 array(
                  T_NS_SEPARATOR,
@@ -110,7 +118,13 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
                 null,
                 true
             );
-            $use_namespace   = rtrim($phpcsFile->getTokensAsString($useNamespacePtr, ($useNamespaceEnd - $useNamespacePtr - 1)), '\\');
+            $use_namespace   = rtrim(
+                $phpcsFile->getTokensAsString(
+                    $useNamespacePtr,
+                    ($useNamespaceEnd - $useNamespacePtr - 1)
+                ),
+                '\\'
+            );
             if (strcasecmp($namespace, $use_namespace) === 0) {
                 $classUsed = false;
             }
@@ -124,17 +138,21 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
                     null,
                     true
                 );
-                // If a backslash is used before the class name then this is some other
-                // use statement.
-                if ($tokens[$beforeUsage]['code'] !== T_USE && $tokens[$beforeUsage]['code'] !== T_NS_SEPARATOR) {
+                // If a backslash is used before the class name then this is some
+                // other use statement.
+                if ($tokens[$beforeUsage]['code'] !== T_USE
+                    && $tokens[$beforeUsage]['code'] !== T_NS_SEPARATOR
+                ) {
                     return;
                 }
 
                 // Trait use statement within a class.
-                if ($tokens[$beforeUsage]['code'] === T_USE && empty($tokens[$beforeUsage]['conditions']) === false) {
+                if ($tokens[$beforeUsage]['code'] === T_USE
+                    && empty($tokens[$beforeUsage]['conditions']) === false
+                ) {
                     return;
                 }
-            }
+            }//end if
 
             $classUsed = $phpcsFile->findNext(T_STRING, ($classUsed + 1));
         }//end while
@@ -149,7 +167,9 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
             }
 
             // Also remove whitespace after the semicolon (new lines).
-            while (isset($tokens[$i]) === true && $tokens[$i]['code'] === T_WHITESPACE) {
+            while (isset($tokens[$i]) === true
+                   && $tokens[$i]['code'] === T_WHITESPACE
+            ) {
                 $phpcsFile->fixer->replaceToken($i, '');
                 if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false) {
                     break;
@@ -159,7 +179,7 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
             }
 
             $phpcsFile->fixer->endChangeset();
-        }
+        }//end if
 
     }//end process()
 
