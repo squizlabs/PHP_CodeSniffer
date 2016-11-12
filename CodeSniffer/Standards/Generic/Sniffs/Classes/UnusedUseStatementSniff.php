@@ -81,7 +81,8 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
         // insensitive, that's why we cannot search for the exact class name string
         // and need to iterate over all T_STRING tokens in the file.
         $classUsed      = $phpcsFile->findNext(T_STRING, ($classPtr + 1));
-        $lowerClassName = strtolower($tokens[$classPtr]['content']);
+        $className      = $tokens[$classPtr]['content'];
+        $lowerClassName = strtolower($className);
         // Check if the referenced class is in the same namespace as the current
         // file. If it is then the use statement is not necessary.
         $namespacePtr = $phpcsFile->findPrevious(array(T_NAMESPACE), $stackPtr);
@@ -157,7 +158,7 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
             $classUsed = $phpcsFile->findNext(T_STRING, ($classUsed + 1));
         }//end while
 
-        $warning = 'Unused use statement';
+        $warning = "Unused use statement: $className";
         $fix     = $phpcsFile->addFixableWarning($warning, $stackPtr, 'UnusedUse');
         if ($fix === true) {
             // Remove the whole use statement line.
