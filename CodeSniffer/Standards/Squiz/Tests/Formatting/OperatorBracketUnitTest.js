@@ -112,3 +112,5 @@ if (something === true
 ) {
     return false;
 }
+
+if (true === /^\d*\.?\d*$/.test(input)) return true;

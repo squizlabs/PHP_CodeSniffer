@@ -736,7 +736,13 @@ class PHP_CodeSniffer_CLI
                         // Passed report file is a file in the current directory.
                         $this->values['reportFile'] = getcwd().'/'.basename($this->values['reportFile']);
                     } else {
-                        $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
+                        if ($dir{0} === '/') {
+                            // An absolute path.
+                            $dir = PHP_CodeSniffer::realpath($dir);
+                        } else {
+                            $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
+                        }
+
                         if ($dir !== false) {
                             // Report file path is relative.
                             $this->values['reportFile'] = $dir.'/'.basename($this->values['reportFile']);
@@ -771,7 +777,13 @@ class PHP_CodeSniffer_CLI
                                 // Passed report file is a filename in the current directory.
                                 $output = getcwd().'/'.basename($output);
                             } else {
-                                $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
+                                if ($dir{0} === '/') {
+                                    // An absolute path.
+                                    $dir = PHP_CodeSniffer::realpath($dir);
+                                } else {
+                                    $dir = PHP_CodeSniffer::realpath(getcwd().'/'.$dir);
+                                }
+
                                 if ($dir !== false) {
                                     // Report file path is relative.
                                     $output = $dir.'/'.basename($output);

@@ -355,13 +355,18 @@ class Squiz_Sniffs_PHP_EmbeddedPhpSniff implements PHP_CodeSniffer_Sniff
         }
 
         $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($closeTag - 1), $stackPtr, true);
-        if ($tokens[$prev]['code'] !== T_SEMICOLON) {
+        if ((isset($tokens[$prev]['scope_opener']) === false
+            || $tokens[$prev]['scope_opener'] !== $prev)
+            && (isset($tokens[$prev]['scope_closer']) === false
+            || $tokens[$prev]['scope_closer'] !== $prev)
+            && $tokens[$prev]['code'] !== T_SEMICOLON
+        ) {
             $error = 'Inline PHP statement must end with a semicolon';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSemicolon');
             if ($fix === true) {
                 $phpcsFile->fixer->addContent($prev, ';');
             }
-        } else {
+        } else if ($tokens[$prev]['code'] === T_SEMICOLON) {
             $statementCount = 1;
             for ($i = ($stackPtr + 1); $i < $prev; $i++) {
                 if ($tokens[$i]['code'] === T_SEMICOLON) {

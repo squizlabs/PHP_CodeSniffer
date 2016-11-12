@@ -40,6 +40,7 @@ declare(encoding='utf-8');
 * @package    ''
 * @subpackage !!
 */
+require_once '/some/path.php';
 ?>
 <?php
 /**

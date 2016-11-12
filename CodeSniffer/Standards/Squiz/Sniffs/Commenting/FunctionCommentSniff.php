@@ -32,6 +32,13 @@ if (class_exists('PEAR_Sniffs_Commenting_FunctionCommentSniff', true) === false)
 class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commenting_FunctionCommentSniff
 {
 
+    /**
+     * The current PHP version.
+     *
+     * @var integer
+     */
+    private $_phpVersion = null;
+
 
     /**
      * Process the return comment of this function comment.
@@ -238,6 +245,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
      */
     protected function processParams(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
+        if ($this->_phpVersion === null) {
+            $this->_phpVersion = PHP_CodeSniffer::getConfigData('php_version');
+            if ($this->_phpVersion === null) {
+                $this->_phpVersion = PHP_VERSION_ID;
+            }
+        }
+
         $tokens = $phpcsFile->getTokens();
 
         $params  = array();
@@ -382,7 +396,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                         $suggestedTypeHint = 'callable';
                     } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
                         $suggestedTypeHint = $suggestedName;
-                    } else if (PHP_VERSION_ID >= 70000) {
+                    } else if ($this->_phpVersion >= 70000) {
                         if ($typeName === 'string') {
                             $suggestedTypeHint = 'string';
                         } else if ($typeName === 'int' || $typeName === 'integer') {

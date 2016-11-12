@@ -73,7 +73,7 @@ class PHP_CodeSniffer
      *
      * @var string
      */
-    const VERSION = '2.7.0';
+    const VERSION = '2.7.1';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -533,13 +533,13 @@ class PHP_CodeSniffer
         // be detected properly for files created on a Mac with the /r line ending.
         ini_set('auto_detect_line_endings', true);
 
-        $sniffs = array();
-        foreach ($standards as $standard) {
-            $installed = $this->getInstalledStandardPath($standard);
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true && empty($restrictions) === false) {
+            // Should be one standard and one sniff being tested at a time.
+            $installed = $this->getInstalledStandardPath($standards[0]);
             if ($installed !== null) {
                 $standard = $installed;
             } else {
-                $standard = self::realpath($standard);
+                $standard = self::realpath($standards[0]);
                 if (is_dir($standard) === true
                     && is_file(self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml')) === true
                 ) {
@@ -547,20 +547,37 @@ class PHP_CodeSniffer
                 }
             }
 
-            if (PHP_CODESNIFFER_VERBOSITY === 1) {
-                $ruleset = simplexml_load_string(file_get_contents($standard));
-                if ($ruleset !== false) {
-                    $standardName = (string) $ruleset['name'];
+            $sniffs = $this->_expandRulesetReference($restrictions[0], dirname($standard));
+        } else {
+            $sniffs = array();
+            foreach ($standards as $standard) {
+                $installed = $this->getInstalledStandardPath($standard);
+                if ($installed !== null) {
+                    $standard = $installed;
+                } else {
+                    $standard = self::realpath($standard);
+                    if (is_dir($standard) === true
+                        && is_file(self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml')) === true
+                    ) {
+                        $standard = self::realpath($standard.DIRECTORY_SEPARATOR.'ruleset.xml');
+                    }
                 }
 
-                echo "Registering sniffs in the $standardName standard... ";
-                if (count($standards) > 1 || PHP_CODESNIFFER_VERBOSITY > 2) {
-                    echo PHP_EOL;
-                }
-            }
+                if (PHP_CODESNIFFER_VERBOSITY === 1) {
+                    $ruleset = simplexml_load_string(file_get_contents($standard));
+                    if ($ruleset !== false) {
+                        $standardName = (string) $ruleset['name'];
+                    }
 
-            $sniffs = array_merge($sniffs, $this->processRuleset($standard));
-        }//end foreach
+                    echo "Registering sniffs in the $standardName standard... ";
+                    if (count($standards) > 1 || PHP_CODESNIFFER_VERBOSITY > 2) {
+                        echo PHP_EOL;
+                    }
+                }
+
+                $sniffs = array_merge($sniffs, $this->processRuleset($standard));
+            }//end foreach
+        }//end if
 
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {

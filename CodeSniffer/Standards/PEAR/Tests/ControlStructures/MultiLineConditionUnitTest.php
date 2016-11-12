@@ -69,10 +69,12 @@ class PEAR_Tests_ControlStructures_MultiLineConditionUnitTest extends AbstractSn
                    125 => 1,
                    145 => 2,
                    153 => 2,
+                   168 => 1,
+                   177 => 1,
                   );
 
         if ($testFile === 'MultiLineConditionUnitTest.inc') {
-            $errors[167] = 1;
+            $errors[183] = 1;
         }
 
         return $errors;

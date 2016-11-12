@@ -67,7 +67,7 @@ class Generic_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
         $tokens   = $phpcsFile->getTokens();
         $stackPtr = ($phpcsFile->numTokens - 1);
 
-        if ($phpcsFile->tokenizerType !== 'PHP') {
+        if ($tokens[$stackPtr]['content'] === '') {
             $stackPtr--;
         }
 

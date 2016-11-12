@@ -96,8 +96,7 @@ if (i == 0) { /* comments are allowed*/
     i = 1;
 }
 
-if (i == 0) {
- // this is ok
+if (i == 0) { // this is ok
     i = 1;
 }
 

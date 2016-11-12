@@ -54,8 +54,11 @@ class Generic_Sniffs_Formatting_DisallowMultipleStatementsSniff implements PHP_C
     {
         $tokens = $phpcsFile->getTokens();
 
-        $prev = $phpcsFile->findPrevious(array(T_SEMICOLON, T_OPEN_TAG), ($stackPtr - 1));
-        if ($prev === false || $tokens[$prev]['code'] === T_OPEN_TAG) {
+        $prev = $phpcsFile->findPrevious(array(T_SEMICOLON, T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO), ($stackPtr - 1));
+        if ($prev === false
+            || $tokens[$prev]['code'] === T_OPEN_TAG
+            || $tokens[$prev]['code'] === T_OPEN_TAG_WITH_ECHO
+        ) {
             $phpcsFile->recordMetric($stackPtr, 'Multiple statements on same line', 'no');
             return;
         }

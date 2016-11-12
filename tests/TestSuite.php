@@ -41,6 +41,17 @@ class PHP_CodeSniffer_TestSuite extends PHPUnit_Framework_TestSuite
      */
     public function run(PHPUnit_Framework_TestResult $result=null, $filter=false)
     {
+        // Report on any test files that had no corresponding sniff file.
+        if (empty(PHP_CodeSniffer_Standards_AllSniffs::$orphanedTests) === false) {
+            echo PHP_EOL;
+            echo 'IMPORTANT: No corresponding sniff files were found for the following test files:'.PHP_EOL.PHP_EOL;
+            foreach (PHP_CodeSniffer_Standards_AllSniffs::$orphanedTests as $path) {
+                echo "- $path".PHP_EOL;
+            }
+
+            echo PHP_EOL.PHP_EOL;
+        }
+
         $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = array();
         $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = array();
 

@@ -46,13 +46,16 @@ class Generic_Tests_Files_EndFileNewlineUnitTest extends AbstractSniffUnitTest
         case 'EndFileNewlineUnitTest.3.inc':
         case 'EndFileNewlineUnitTest.3.js':
         case 'EndFileNewlineUnitTest.3.css':
-            return array(
-                    2 => 1,
-                   );
-            break;
+            return array(2 => 1);
+        case 'EndFileNewlineUnitTest.4.inc':
+            // HHVM just removes the entire comment token, as if it was never there.
+            if (defined('HHVM_VERSION') === true) {
+                return array();
+            }
+
+            return array(2 => 1);
         default:
             return array();
-            break;
         }//end switch
 
     }//end getErrorList()

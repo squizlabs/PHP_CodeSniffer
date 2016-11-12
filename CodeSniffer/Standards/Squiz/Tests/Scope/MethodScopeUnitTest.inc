@@ -25,3 +25,10 @@ class Closure_Test {
 function test() {
     $foo = function() { echo 'foo'; };
 }
+
+trait Trait_Test {
+	function func1() {}
+	public function func1() {}
+	private function func1() {}
+	protected function func1() {}
+}

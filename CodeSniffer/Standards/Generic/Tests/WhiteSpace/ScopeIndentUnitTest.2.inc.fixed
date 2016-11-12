@@ -1117,6 +1117,37 @@ if (somethingIsTrue()) {
 	<?php
 }
 
+$foo = [
+		new class() implements Bar {
+
+			public static function foo(): string
+			{
+				return 'foo';
+			}
+		},
+];
+
+$foo = [
+		function () {
+			if ($foo) {
+				return 'foo';
+			}
+		},
+];
+
+class Test {
+
+	public function a() {
+		?>a<?php
+	}
+
+	public function b(
+		$a
+	) {
+		echo $a;
+	}
+}
+
 $foo = foo(
 	function () {
 		$foo->debug(
