@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Makes it a lot easier to find and read the error message that was printed
   - Includes all changes from the 2.7.1 release
   - Fixed bug #1167 : 3.0.0RC1 PHAR does not work with PEAR standard
+  - Fixed bug #1208 : Excluding files doesn't work when using STDIN with a filename specified
  </notes>
  <contents>
   <dir name="/">
