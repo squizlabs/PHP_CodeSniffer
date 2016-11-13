@@ -61,18 +61,23 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
             return;
         }
 
-        // Seek to the end of the statement and get the string before the semi colon.
+        // Seek to the semicolon at the end of the statement...
         $semiColon = $phpcsFile->findEndOfStatement($stackPtr);
         if ($tokens[$semiColon]['code'] !== T_SEMICOLON) {
             return;
         }
 
+        // ... then find the T_STRING containing the name of the class being used by
+        // seeking backwards from the semicolon until reaching a non-empty token.
         $classPtr = $phpcsFile->findPrevious(
             PHP_CodeSniffer_Tokens::$emptyTokens,
             ($semiColon - 1),
             null,
             true
         );
+
+        // If we haven't found a T_STRING then this wasn't a syntactically valid use
+        // statement so we ignore it.
         if ($tokens[$classPtr]['code'] !== T_STRING) {
             return;
         }
