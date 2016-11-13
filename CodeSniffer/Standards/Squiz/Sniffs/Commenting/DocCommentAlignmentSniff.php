@@ -87,6 +87,7 @@ class Squiz_Sniffs_Commenting_DocCommentAlignmentSniff implements PHP_CodeSniffe
                       T_PROPERTY  => true,
                       T_OBJECT    => true,
                       T_PROTOTYPE => true,
+                      T_VAR       => true,
                      );
 
         if (isset($ignore[$tokens[$nextToken]['code']]) === false) {
