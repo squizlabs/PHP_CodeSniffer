@@ -679,6 +679,30 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
+                Tokens after a double colon may be look like scope openers,
+                such as when writing code like Foo::NAMESAPCE, but they are
+                only ever variables or strings.
+            */
+
+            if ($stackPtr > 1
+                && $tokens[($stackPtr - 1)][0] === T_PAAMAYIM_NEKUDOTAYIM
+                && $tokenIsArray === true
+                && $token[0] !== T_STRING
+                && $token[0] !== T_VARIABLE
+                && $token[0] !== T_DOLLAR
+                && isset(PHP_CodeSniffer_Tokens::$emptyTokens[$token[0]]) === false
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_STRING;
+                $newToken['type']    = 'T_STRING';
+                $newToken['content'] = $token[1];
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                continue;
+            }
+
+            /*
                 Before PHP 7, the <=> operator was tokenized as
                 T_IS_SMALLER_OR_EQUAL followed by T_GREATER_THAN.
                 So look for and combine these tokens in earlier versions.
@@ -1263,25 +1287,6 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 }
 
                 if ($tokens[$x]['code'] !== T_STRING) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $line = $tokens[$x]['line'];
-                        $type = $tokens[$x]['type'];
-                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
-                    }
-
-                    $tokens[$x]['code'] = T_STRING;
-                    $tokens[$x]['type'] = 'T_STRING';
-                }
-            } else if ($tokens[$i]['code'] === T_PAAMAYIM_NEKUDOTAYIM) {
-                // Context sensitive keywords support.
-                for ($x = ($i + 1); $i < $numTokens; $x++) {
-                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
-                        // Non-whitespace content.
-                        break;
-                    }
-                }
-
-                if (in_array($tokens[$x]['code'], array(T_STRING, T_VARIABLE, T_DOLLAR), true) === false) {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $line = $tokens[$x]['line'];
                         $type = $tokens[$x]['type'];
