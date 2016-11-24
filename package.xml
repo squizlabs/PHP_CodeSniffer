@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1191 : Javascript sniffer fails with function called "Function"
   - Fixed bug #1203 : Inconsistent behavior of PHP_CodeSniffer_File::findEndOfStatement
   - Fixed bug #1218 : CASE conditions using class constants named NAMESPACE/INTERFACE/TRAIT etc are incorrectly tokenized
+  - Fixed bug #1221 : Indented function call with multiple closure arguments can cause scope indent error
  </notes>
  <contents>
   <dir name="/">
