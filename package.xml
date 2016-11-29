@@ -55,6 +55,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1203 : Inconsistent behavior of PHP_CodeSniffer_File::findEndOfStatement
   - Fixed bug #1218 : CASE conditions using class constants named NAMESPACE/INTERFACE/TRAIT etc are incorrectly tokenized
   - Fixed bug #1221 : Indented function call with multiple closure arguments can cause scope indent error
+  - Fixed bug #1224 : PHPCBF fails to fix code with heredoc/nowdoc as first argument to a function
  </notes>
  <contents>
   <dir name="/">

@@ -93,3 +93,11 @@ $b = foo(
     "3", // this is a comment
     "4"
 );
+
+var_dump(
+    <<<TEXT
+foo
+TEXT
+    ,
+    'bar'
+);
