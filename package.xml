@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2016-09-02</date>
- <time>09:44:00</time>
+ <date>2016-11-30</date>
+ <time>15:01:00</time>
  <version>
   <release>2.7.1</release>
   <api>2.7.1</api>
@@ -2458,6 +2458,50 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>2.7.1</release>
+    <api>2.7.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2016-11-30</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis fix now removes unnecessary whitespace
+    - Squiz.Formatting.OperatorBracket no longer errors for negative array indexes used within a function call
+    - Squiz.PHP.EmbeddedPhp no longer expects a semicolon after statements that are only opening a scope
+    - Fixed a problem where the content of T_DOC_COMMENT_CLOSE_TAG tokens could sometimes be (boolean) false
+    - Developers of custom standards with custom test runners can now have their standards ignored by the built-in test runner
+      -- Set the value of an environment variable called PHPCS_IGNORE_TESTS with a comma separated list of your standard names
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - The unit test runner now loads the test sniff outside of the standard's ruleset so that exclude rules do not get applied
+      -- This may have caused problems when testing custom sniffs inside custom standards
+      -- Also makes the unit tests runs a little faster
+    - The SVN pre-commit hook now works correctly when installed via composer
+      -- Thanks to Sergey for the patch
+    - Fixed bug #1135 : PEAR.ControlStructures.MultiLineCondition.CloseBracketNewLine not detected if preceded by multiline function   call
+    - Fixed bug #1138 : PEAR.ControlStructures.MultiLineCondition.Alignment not detected if closing brace is first token on line
+    - Fixed bug #1141 : Sniffs that check EOF newlines don't detect newlines properly when the last token is a doc block
+    - Fixed bug #1150 : Squiz.Strings.EchoedStrings does not properly fix bracketed statements
+    - Fixed bug #1156 : Generic.Formatting.DisallowMultipleStatements errors when multiple short echo tags are used on the same line
+      -- Thanks to Nikola Kovacs for the patch
+    - Fixed bug #1161 : Absolute report path is treated like a relative path if it also exists within the current directory
+    - Fixed bug #1170 : Javascript regular expression literal not recognized after comparison operator
+    - Fixed bug #1180 : Class constant named FUNCTION is incorrectly tokenized
+    - Fixed bug #1181 : Squiz.Operators.IncrementDecrementUsage.NoBrackets false positive when incrementing properties
+      -- Thanks to Jürgen Henge-Ernst for the patch
+    - Fixed bug #1188 : Generic.WhiteSpace.ScopeIndent issues with inline HTML and multi-line function signatures
+    - Fixed bug #1190 : phpcbf on if/else with trailing comment generates erroneous code
+    - Fixed bug #1191 : Javascript sniffer fails with function called "Function"
+    - Fixed bug #1203 : Inconsistent behavior of PHP_CodeSniffer_File::findEndOfStatement
+    - Fixed bug #1218 : CASE conditions using class constants named NAMESPACE/INTERFACE/TRAIT etc are incorrectly tokenized
+    - Fixed bug #1221 : Indented function call with multiple closure arguments can cause scope indent error
+    - Fixed bug #1224 : PHPCBF fails to fix code with heredoc/nowdoc as first argument to a function
+    </notes>
+  </release>
   <release>
    <version>
     <release>2.7.0</release>
