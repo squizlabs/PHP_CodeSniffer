@@ -202,6 +202,8 @@ class PHP_CodeSniffer_Tokenizers_JS
                               ':'         => 'T_COLON',
                               '<'         => 'T_LESS_THAN',
                               '>'         => 'T_GREATER_THAN',
+                              '<<'        => 'T_SL',
+                              '>>'        => 'T_SR',
                               '<='        => 'T_IS_SMALLER_OR_EQUAL',
                               '>='        => 'T_IS_GREATER_OR_EQUAL',
                               '!'         => 'T_BOOLEAN_NOT',
