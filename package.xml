@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Includes all changes from the 2.7.2 release
   - Fixed bug #1233 : Can't set config data inside ruleset.xml file
  </notes>
  <contents>
