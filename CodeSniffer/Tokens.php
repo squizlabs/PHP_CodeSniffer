@@ -75,6 +75,8 @@ define('T_EMBEDDED_PHP', 'PHPCS_T_EMBEDDED_PHP');
 define('T_RETURN_TYPE', 'PHPCS_T_RETURN_TYPE');
 define('T_OPEN_USE_GROUP', 'PHPCS_T_OPEN_USE_GROUP');
 define('T_CLOSE_USE_GROUP', 'PHPCS_T_CLOSE_USE_GROUP');
+define('T_ZSR', 'PHPCS_T_ZSR');
+define('T_ZSR_EQUAL', 'PHPCS_T_ZSR_EQUAL');
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
