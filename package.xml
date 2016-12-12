@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2016-11-30</date>
  <time>15:21:00</time>
  <version>
-  <release>3.0.0RC2</release>
-  <api>3.0.0RC2</api>
+  <release>3.0.0RC3</release>
+  <api>3.0.0RC3</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,13 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed an undefined var name error that could be produced while running PHPCBF
-  - Made the Runner class easier to use with wrapper scripts
-  - Full usage information is no longer printed when a usage error is encountered (request #1186)
-    -- Makes it a lot easier to find and read the error message that was printed
-  - Includes all changes from the 2.7.1 release
-  - Fixed bug #1167 : 3.0.0RC1 PHAR does not work with PEAR standard
-  - Fixed bug #1208 : Excluding files doesn't work when using STDIN with a filename specified
+  - Fixed bug #1233 : Can't set config data inside ruleset.xml file
  </notes>
  <contents>
   <dir name="/">
