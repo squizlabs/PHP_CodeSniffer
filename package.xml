@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Fixed bug #1230 : JS tokeniser incorrectly tokenises bitwise shifts as comparison
+    -- Thanks to Ryan McCue for the patch
  </notes>
  <contents>
   <dir name="/">
