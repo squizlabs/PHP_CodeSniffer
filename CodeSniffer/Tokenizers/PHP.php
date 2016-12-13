@@ -680,7 +680,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             /*
                 Tokens after a double colon may be look like scope openers,
-                such as when writing code like Foo::NAMESAPCE, but they are
+                such as when writing code like Foo::NAMESPACE, but they are
                 only ever variables or strings.
             */
 
@@ -701,6 +701,28 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 $newStackPtr++;
                 continue;
+            }
+
+            /*
+                The string-like token after a function keyword should always be
+                tokenized as T_STRING even if it appears to be a different token,
+                such as when writing code like: function default(): foo
+                so go forward and change the token type before it is processed.
+            */
+
+            if ($tokenIsArray === true && $token[0] === T_FUNCTION) {
+                for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
+                    if (is_array($tokens[$x]) === false
+                        || isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                    ) {
+                        // Non-empty content.
+                        break;
+                    }
+                }
+
+                if ($x < $numTokens && is_array($tokens[$x]) === true) {
+                    $tokens[$x][0] = T_STRING;
+                }
             }
 
             /*
@@ -1052,31 +1074,6 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             if ($tokens[$i]['code'] === T_FUNCTION) {
-                // Context sensitive keywords support.
-                for ($x = ($i + 1); $x < $numTokens; $x++) {
-                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
-                        // Non-whitespace content.
-                        break;
-                    }
-                }
-
-                if ($x === $numTokens) {
-                    // We got to the end without finding any more
-                    // non-whitespace content.
-                    continue;
-                }
-
-                if (in_array($tokens[$x]['code'], array(T_STRING, T_OPEN_PARENTHESIS, T_BITWISE_AND), true) === false) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $line = $tokens[$x]['line'];
-                        $type = $tokens[$x]['type'];
-                        echo "\t* token $x on line $line changed from $type to T_STRING".PHP_EOL;
-                    }
-
-                    $tokens[$x]['code'] = T_STRING;
-                    $tokens[$x]['type'] = 'T_STRING';
-                }
-
                 /*
                     Detect functions that are actually closures and
                     assign them a different token.

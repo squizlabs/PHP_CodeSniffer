@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1230 : JS tokeniser incorrectly tokenises bitwise shifts as comparison
     -- Thanks to Ryan McCue for the patch
   - Fixed bug #1237 : Uninitialized string offset in PHP Tokenizer on PHP 5.2
+  - Fixed bug #1239 : Warning when static method name is 'default'
  </notes>
  <contents>
   <dir name="/">

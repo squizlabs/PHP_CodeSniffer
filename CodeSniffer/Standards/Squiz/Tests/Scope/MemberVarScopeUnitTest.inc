@@ -13,4 +13,10 @@ class foo
 qux
 BAZ;
 }
-?>
+
+class Foo {
+    public static function default(): ObjectA
+    {
+        return new self(1);
+    }
+}//end class
