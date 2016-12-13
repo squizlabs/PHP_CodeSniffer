@@ -685,7 +685,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
             */
 
             if ($stackPtr > 1
-                && $tokens[($stackPtr - 1)][0] === T_PAAMAYIM_NEKUDOTAYIM
+                && (isset($tokens[($stackPtr - 1)][0]) === true && $tokens[($stackPtr - 1)][0] === T_PAAMAYIM_NEKUDOTAYIM)
                 && $tokenIsArray === true
                 && $token[0] !== T_STRING
                 && $token[0] !== T_VARIABLE
