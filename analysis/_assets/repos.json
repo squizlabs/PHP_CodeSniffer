@@ -1349,5 +1349,12 @@
         "path": "src",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "Slackbot",
+        "url": "iranianpep/slackbot",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
     }
 ]
