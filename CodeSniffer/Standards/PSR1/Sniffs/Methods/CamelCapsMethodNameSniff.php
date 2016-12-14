@@ -52,7 +52,7 @@ class PSR1_Sniffs_Methods_CamelCapsMethodNameSniff extends Generic_Sniffs_Naming
         }
 
         // Ignore magic methods.
-        if (preg_match('|^__|', $methodName) !== 0) {
+        if (preg_match('|^__[^_]|', $methodName) !== 0) {
             $magicPart = strtolower(substr($methodName, 2));
             if (isset($this->magicMethods[$magicPart]) === true
                 || isset($this->methodsDoubleUnderscore[$magicPart]) === true
