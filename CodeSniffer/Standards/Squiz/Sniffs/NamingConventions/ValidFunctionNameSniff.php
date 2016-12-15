@@ -55,7 +55,7 @@ class Squiz_Sniffs_NamingConventions_ValidFunctionNameSniff extends PEAR_Sniffs_
         $errorData = array($functionName);
 
         // Does this function claim to be magical?
-        if (preg_match('|^__|', $functionName) !== 0) {
+        if (preg_match('|^__[^_]|', $functionName) !== 0) {
             $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
             $phpcsFile->addError($error, $stackPtr, 'DoubleUnderscore', $errorData);
             return;
