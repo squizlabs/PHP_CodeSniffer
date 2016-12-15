@@ -1365,13 +1365,22 @@ class Config
     public static function setConfigData($key, $value, $temp=false)
     {
         if ($temp === false) {
-            $configFile = dirname(__FILE__).'/../CodeSniffer.conf';
-            if (is_file($configFile) === false
-                && strpos('@data_dir@', '@data_dir') === false
-            ) {
-                // If data_dir was replaced, this is a PEAR install and we can
-                // use the PEAR data dir to store the conf file.
-                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+            $path = '';
+            if (is_callable('\Phar::running') === true) {
+                $path = \Phar::running(false);
+            }
+
+            if ($path !== '') {
+                $configFile = dirname($path).'/CodeSniffer.conf';
+            } else {
+                $configFile = dirname(__DIR__).'/CodeSniffer.conf';
+                if (is_file($configFile) === false
+                    && strpos('@data_dir@', '@data_dir') === false
+                ) {
+                    // If data_dir was replaced, this is a PEAR install and we can
+                    // use the PEAR data dir to store the conf file.
+                    $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+                }
             }
 
             if (is_file($configFile) === true
@@ -1380,7 +1389,7 @@ class Config
                 $error = 'Config file '.$configFile.' is not writable';
                 throw new RuntimeException($error);
             }
-        }
+        }//end if
 
         $phpCodeSnifferConfig = self::getAllConfigData();
 
@@ -1421,9 +1430,20 @@ class Config
             return self::$configData;
         }
 
-        $configFile = dirname(__FILE__).'/../CodeSniffer.conf';
-        if (is_file($configFile) === false) {
-            $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+        $path = '';
+        if (is_callable('\Phar::running') === true) {
+            $path = \Phar::running(false);
+        }
+
+        if ($path !== '') {
+            $configFile = dirname($path).'/CodeSniffer.conf';
+        } else {
+            $configFile = dirname(__DIR__).'/CodeSniffer.conf';
+            if (is_file($configFile) === false
+                && strpos('@data_dir@', '@data_dir') === false
+            ) {
+                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
+            }
         }
 
         if (is_file($configFile) === false) {

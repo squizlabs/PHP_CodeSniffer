@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Includes all changes from the 2.7.2 release
   - Fixed bug #1233 : Can't set config data inside ruleset.xml file
+  - Fixed bug #1241 : CodeSniffer.conf not working with 3.x PHAR file
  </notes>
  <contents>
   <dir name="/">
