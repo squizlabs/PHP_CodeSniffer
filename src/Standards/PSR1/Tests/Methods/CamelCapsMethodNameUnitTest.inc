@@ -64,4 +64,10 @@ class Foo extends \SoapClient
 
     function __() {}
 }
+
+function ___tripleUnderscore() {} // Ok.
+
+class triple {
+    public function ___tripleUnderscore() {} // Ok.
+}
 ?>

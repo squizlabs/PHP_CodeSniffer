@@ -119,3 +119,9 @@ function __debugInfo() {}
 class Foo {
     function __debugInfo() {}
 }
+
+function ___tripleUnderscore() {} // Ok.
+
+class triple {
+    public function ___tripleUnderscore() {} // Ok.
+}
