@@ -126,7 +126,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         $errorData = array($className.'::'.$methodName);
 
         // Is this a magic method. i.e., is prefixed with "__" ?
-        if (preg_match('|^__|', $methodName) !== 0) {
+        if (preg_match('|^__[^_]|', $methodName) !== 0) {
             $magicPart = strtolower(substr($methodName, 2));
             if (isset($this->magicMethods[$magicPart]) === false
                 && isset($this->methodsDoubleUnderscore[$magicPart]) === false
@@ -194,7 +194,7 @@ class Generic_Sniffs_NamingConventions_CamelCapsFunctionNameSniff extends PHP_Co
         $errorData = array($functionName);
 
         // Is this a magic function. i.e., it is prefixed with "__".
-        if (preg_match('|^__|', $functionName) !== 0) {
+        if (preg_match('|^__[^_]|', $functionName) !== 0) {
             $magicPart = strtolower(substr($functionName, 2));
             if (isset($this->magicFunctions[$magicPart]) === false) {
                  $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
