@@ -40,7 +40,7 @@ Or alternatively, include a dependency for `squizlabs/php_codesniffer` in your `
 ```json
 {
     "require-dev": {
-        "squizlabs/php_codesniffer": "2.*"
+        "squizlabs/php_codesniffer": "3.*"
     }
 }
 ```
