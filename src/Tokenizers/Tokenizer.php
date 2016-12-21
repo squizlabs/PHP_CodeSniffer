@@ -611,7 +611,9 @@ abstract class Tokenizer
             // scope tokens. E.g., if (1) 1; 1 ? (1 ? 1 : 1) : 1;
             // If an IF statement below this one has an opener but no
             // keyword, the opener will be incorrectly assigned to this IF statement.
-            if (($currType === T_IF || $currType === T_ELSE)
+            // The same case also applies to USE statements, which don't have to have
+            // openers, so a following USE statement can cause an incorrect brace match.
+            if (($currType === T_IF || $currType === T_ELSE || $currType === T_USE)
                 && $opener === null
                 && $this->tokens[$i]['code'] === T_SEMICOLON
             ) {
