@@ -1942,6 +1942,8 @@ class PHP_CodeSniffer_File
             // scope tokens. E.g., if (1) 1; 1 ? (1 ? 1 : 1) : 1;
             // If an IF statement below this one has an opener but no
             // keyword, the opener will be incorrectly assigned to this IF statement.
+            // The same case also applies to USE statements, which don't have to have
+            // openers, so a following USE statement can cause an incorrect brace match.
             if (($currType === T_IF || $currType === T_ELSE || $currType === T_USE)
                 && $opener === null
                 && $tokens[$i]['code'] === T_SEMICOLON
