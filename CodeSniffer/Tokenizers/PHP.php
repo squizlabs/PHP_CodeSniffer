@@ -923,14 +923,27 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                 T_PAAMAYIM_NEKUDOTAYIM => true,
                                );
                     if (isset($context[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
-                        $finalTokens[$newStackPtr] = array(
-                                                      'content' => $token[1],
-                                                      'code'    => T_STRING,
-                                                      'type'    => 'T_STRING',
-                                                     );
+                        // Special case for syntax like: return new self
+                        // where self should not be a string.
+                        if ($finalTokens[$lastNotEmptyToken]['code'] === T_NEW
+                            && strtolower($token[1]) === 'self'
+                        ) {
+                            $finalTokens[$newStackPtr] = array(
+                                                          'content' => $token[1],
+                                                          'code'    => T_SELF,
+                                                          'type'    => 'T_SELF',
+                                                         );
+                        } else {
+                            $finalTokens[$newStackPtr] = array(
+                                                          'content' => $token[1],
+                                                          'code'    => T_STRING,
+                                                          'type'    => 'T_STRING',
+                                                         );
+                        }
+
                         $newStackPtr++;
                         continue;
-                    }
+                    }//end if
                 }//end if
 
                 $newToken = null;
