@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The Internal.NoCodeFound error is no longer generated for content sourced from STDIN
+    -- This should stop some Git hooks generating errors because PHPCS is trying to process the refs passed on STDIN
   - Squiz.Commenting.DocCommentAlignment now checks comments on class properties defined using the VAR keyword
     -- Thanks to Klaus Purer for the patch
   - Fixed bug #1230 : JS tokeniser incorrectly tokenises bitwise shifts as comparison
