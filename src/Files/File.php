@@ -450,7 +450,10 @@ class File
         // If short open tags are off but the file being checked uses
         // short open tags, the whole content will be inline HTML
         // and nothing will be checked. So try and handle this case.
-        if ($foundCode === false && $this->tokenizerType === 'PHP') {
+        // We don't show this error for STDIN because we can't be sure the content
+        // actually came directly from the user. It could be something like
+        // refs from a Git pre-push hook.
+        if ($foundCode === false && $this->tokenizerType === 'PHP' && $this->path !== 'STDIN') {
             $shortTags = (bool) ini_get('short_open_tag');
             if ($shortTags === false) {
                 $error = 'No PHP code was found in this file and short open tags are not allowed by this install of PHP. This file may be using short open tags but PHP does not allow them.';
