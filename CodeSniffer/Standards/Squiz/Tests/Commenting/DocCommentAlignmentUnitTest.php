@@ -42,43 +42,29 @@ class Squiz_Tests_Commenting_DocCommentAlignmentUnitTest extends AbstractSniffUn
      *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='')
+    public function getErrorList($testFile='DocCommentAlignmentUnitTest.inc')
     {
-        switch ($testFile) {
-        case 'DocCommentAlignmentUnitTest.inc':
-            return array(
-                    3  => 1,
-                    11 => 1,
-                    17 => 1,
-                    18 => 1,
-                    19 => 1,
-                    23 => 2,
-                    24 => 1,
-                    25 => 2,
-                    26 => 1,
-                    32 => 1,
-                    33 => 1,
-                    38 => 1,
-                    39 => 1,
-                    75 => 1,
+        $errors = array(
+                   3  => 1,
+                   11 => 1,
+                   17 => 1,
+                   18 => 1,
+                   19 => 1,
+                   23 => 2,
+                   24 => 1,
+                   25 => 2,
+                   26 => 1,
+                   32 => 1,
+                   33 => 1,
+                   38 => 1,
+                   39 => 1,
                   );
-        default:
-            return array(
-                    3  => 1,
-                    11 => 1,
-                    17 => 1,
-                    18 => 1,
-                    19 => 1,
-                    23 => 2,
-                    24 => 1,
-                    25 => 2,
-                    26 => 1,
-                    32 => 1,
-                    33 => 1,
-                    38 => 1,
-                    39 => 1,
-                  );
+
+        if ($testFile === 'DocCommentAlignmentUnitTest.inc') {
+            $errors[75] = 1;
         }
+
+        return $errors;
 
     }//end getErrorList()
 
