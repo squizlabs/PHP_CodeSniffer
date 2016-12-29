@@ -87,6 +87,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => true,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'raw'               => '&$var',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -117,6 +118,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'array',
+                        'raw'               => 'array $var',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -147,6 +149,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'foo',
+                        'raw'               => 'foo $var1',
                        );
 
         $expected[1] = array(
@@ -154,6 +157,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'bar',
+                        'raw'               => 'bar $var2',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -163,6 +167,37 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             null,
             false,
             '/* testTypeHint */'
+        );
+
+        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $this->assertSame($expected, $found);
+
+    }//end testTypeHint()
+
+
+    /**
+     * Verify self type hint parsing.
+     *
+     * @return void
+     */
+    public function testSelfTypeHint()
+    {
+        $expected    = array();
+        $expected[0] = array(
+                        'name'              => '$var',
+                        'pass_by_reference' => false,
+                        'variable_length'   => false,
+                        'type_hint'         => 'self',
+                        'raw'               => 'self $var',
+                       );
+
+        $start    = ($this->_phpcsFile->numTokens - 1);
+        $function = $this->_phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testSelfTypeHint */'
         );
 
         $found = $this->_phpcsFile->getMethodParameters(($function + 2));
@@ -184,6 +219,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'raw'               => '$var',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -215,6 +251,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'raw'               => '$var1=self::CONSTANT',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -246,6 +283,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'raw'               => '$var1=1',
                        );
         $expected[1] = array(
                         'name'              => '$var2',
@@ -253,6 +291,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'raw'               => "\$var2='value'",
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -279,6 +318,9 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
 /* testSingleDefaultValue */ function defaultValue($var1=self::CONSTANT) {}
 /* testDefaultValues */ function defaultValues($var1=1, $var2='value') {}
 /* testTypeHint */ function typeHint(foo $var1, bar $var2) {}
+class MyClass {
+/* testSelfTypeHint */ function typeSelfHint(self $var) {}
+}
 // @codingStandardsIgnoreEnd
 
 ?>
