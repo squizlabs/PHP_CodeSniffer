@@ -2774,6 +2774,7 @@ class PHP_CodeSniffer_File
         $passByReference = false;
         $variableLength  = false;
         $typeHint        = '';
+        $nullableType    = false;
 
         for ($i = ($opener + 1); $i <= $closer; $i++) {
             // Check to see if this token has a parenthesis or bracket opener. If it does
@@ -2806,7 +2807,7 @@ class PHP_CodeSniffer_File
                 break;
             case T_ARRAY_HINT:
             case T_CALLABLE:
-                $typeHint = $this->_tokens[$i]['content'];
+                $typeHint .= $this->_tokens[$i]['content'];
                 break;
             case T_STRING:
                 // This is a string, so it may be a type hint, but it could
@@ -2843,6 +2844,12 @@ class PHP_CodeSniffer_File
                     $typeHint .= $this->_tokens[$i]['content'];
                 }
                 break;
+            case T_INLINE_THEN:
+                if ($defaultStart === null) {
+                    $nullableType = true;
+                    $typeHint    .= $this->_tokens[$i]['content'];
+                }
+                break;
             case T_CLOSE_PARENTHESIS:
             case T_COMMA:
                 // If it's null, then there must be no parameters for this
@@ -2865,12 +2872,14 @@ class PHP_CodeSniffer_File
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;
                 $vars[$paramCount]['variable_length']   = $variableLength;
                 $vars[$paramCount]['type_hint']         = $typeHint;
+                $vars[$paramCount]['nullable_type']     = $nullableType;
 
                 // Reset the vars, as we are about to process the next parameter.
                 $defaultStart    = null;
                 $passByReference = false;
                 $variableLength  = false;
                 $typeHint        = '';
+                $nullableType    = false;
 
                 $paramCount++;
                 break;
