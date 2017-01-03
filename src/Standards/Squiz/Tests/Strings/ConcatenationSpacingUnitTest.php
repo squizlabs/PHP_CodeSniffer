@@ -31,12 +31,17 @@ class ConcatenationSpacingUnitTest extends AbstractSniffUnitTest
                 6  => 1,
                 9  => 1,
                 10 => 1,
-                14 => 5,
-                16 => 1,
-                17 => 1,
-                18 => 1,
-                34 => 2,
-                36 => 1,
+                12 => 1,
+                13 => 1,
+                14 => 1,
+                15 => 1,
+                16 => 5,
+                20 => 5,
+                22 => 1,
+                23 => 1,
+                24 => 1,
+                40 => 2,
+                42 => 1,
                );
 
     }//end getErrorList()
