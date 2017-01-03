@@ -90,6 +90,7 @@ class CSS extends PHP
                 || $token['code'] === T_FOR
                 || $token['code'] === T_FOREACH
                 || $token['code'] === T_WHILE
+                || $token['code'] === T_DEC
             ) {
                 $token['type'] = 'T_STRING';
                 $token['code'] = T_STRING;
@@ -445,6 +446,28 @@ class CSS extends PHP
                             $content = Util\Common::prepareForOutput($finalTokens[($x + 1)]['content']);
                             echo "\t\t=> token content changed to: $content".PHP_EOL;
                         }
+                    }
+                } else if ($finalTokens[$stackPtr]['content'][0] === '-'
+                    && $finalTokens[($stackPtr + 1)]['code'] === T_STRING
+                ) {
+                    if ($finalTokens[($stackPtr - 1)]['code'] === T_STRING) {
+                        $newContent = $finalTokens[($stackPtr - 1)]['content'].$finalTokens[$stackPtr]['content'].$finalTokens[($stackPtr + 1)]['content'];
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo "\t\t* token is a string joiner; ignoring this and previous token".PHP_EOL;
+                            $old = PHP_CodeSniffer::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
+                            $new = PHP_CodeSniffer::prepareForOutput($newContent);
+                            echo "\t\t=> token ".($stackPtr + 1)." content changed from \"$old\" to \"$new\"".PHP_EOL;
+                        }
+
+                        $finalTokens[($stackPtr + 1)]['content'] = $newContent;
+                        unset($finalTokens[$stackPtr]);
+                        unset($finalTokens[($stackPtr - 1)]);
+                    } else {
+                        $newContent = $finalTokens[$stackPtr]['content'].$finalTokens[($stackPtr + 1)]['content'];
+
+                        $finalTokens[($stackPtr + 1)]['content'] = $newContent;
+                        unset($finalTokens[$stackPtr]);
                     }
                 }//end if
 
