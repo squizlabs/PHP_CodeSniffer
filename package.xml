@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1245 : SELF is not recognised as T_SELF token in: return new self
   - Fixed bug #1246 : A mix of USE statements with and without braces can cause the tokenizer to mismatch brace tokens
     -- Thanks to Michał Bundyra for the patch
+  - Fixed bug #1257 : Double dash in CSS class name can lead to "Named colours are forbidden" false positives
  </notes>
  <contents>
   <dir name="/">

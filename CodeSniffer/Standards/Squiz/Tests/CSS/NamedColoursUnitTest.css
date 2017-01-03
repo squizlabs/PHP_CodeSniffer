@@ -11,3 +11,15 @@
     background: yellow url(diag_lines_bg.gif) top left;
     text-shadow: 0 1px 0 white;
 }
+
+.something--white {
+    border: 0;
+}
+
+.something--------------white {
+    border: 0;
+}
+
+.-white {
+    border: 0;
+}
