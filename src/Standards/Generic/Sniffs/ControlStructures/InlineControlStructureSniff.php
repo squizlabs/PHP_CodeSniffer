@@ -165,7 +165,7 @@ class InlineControlStructureSniff implements Sniff
             if (isset($tokens[$end]['scope_opener']) === true) {
                 $type = $tokens[$end]['code'];
                 $end  = $tokens[$end]['scope_closer'];
-                if ($type === T_DO || $type === T_IF || $type === T_ELSEIF) {
+                if ($type === T_DO || $type === T_IF || $type === T_ELSEIF || $type === T_TRY) {
                     $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
                     if ($next === false) {
                         break;
@@ -185,6 +185,11 @@ class InlineControlStructureSniff implements Sniff
                     // Account for DO... WHILE conditions.
                     if ($type === T_DO && $nextType === T_WHILE) {
                         $end = $phpcsFile->findNext(T_SEMICOLON, ($next + 1));
+                    }
+
+                    // Account for TRY... CATCH statements.
+                    if ($type === T_TRY && $nextType === T_CATCH) {
+                        $end = $tokens[$next]['scope_closer'];
                     }
                 }//end if
 
