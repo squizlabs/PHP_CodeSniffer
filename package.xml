@@ -58,8 +58,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <dir name="tests">
     <dir name="Core">
      <dir name="File">
+      <file baseinstalldir="" name="FindExtendedClassNameTest.inc" role="test" />
       <file baseinstalldir="" name="FindExtendedClassNameTest.php" role="test" />
+      <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.inc" role="test" />
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.php" role="test" />
+      <file baseinstalldir="" name="GetMethodParametersTest.inc" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.php" role="test" />
      </dir>
      <file baseinstalldir="" name="AllTests.php" role="test" />

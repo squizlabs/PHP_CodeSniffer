@@ -17,7 +17,7 @@ class FindImplementedInterfaceNamesTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * The PHP_CodeSniffer_File object containing parsed contents of this file.
+     * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
      *
      * @var PHP_CodeSniffer_File
      */
@@ -25,10 +25,10 @@ class FindImplementedInterfaceNamesTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * Initialize & tokenize PHP_CodeSniffer_File with code from this file.
+     * Initialize & tokenize PHP_CodeSniffer_File with code from the test case file.
      *
-     * Methods used for these tests can be found at the bottom of
-     * this file.
+     * Methods used for these tests can be found in a test case file in the same
+     * directory and with the same name, using the .inc extension.
      *
      * @return void
      */
@@ -39,7 +39,8 @@ class FindImplementedInterfaceNamesTest extends \PHPUnit_Framework_TestCase
 
         $ruleset = new Ruleset($config);
 
-        $this->phpcsFile = new DummyFile(file_get_contents(__FILE__), $ruleset, $config);
+        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
+        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
         $this->phpcsFile->process();
 
     }//end setUp()
@@ -168,12 +169,3 @@ class FindImplementedInterfaceNamesTest extends \PHPUnit_Framework_TestCase
 
 
 }//end class
-
-// @codingStandardsIgnoreStart
-interface testFIINInterface2 {}
-/* testInterface */ interface testFIINInterface {}
-/* testImplementedClass */ class testFIINImplementedClass implements testFIINInterface {}
-/* testMultiImplementedClass */ class testFIINMultiImplementedClass implements testFIINInterface, testFIINInterface2 {}
-/* testNamespacedClass */ class testFIINNamespacedClass implements \PHP_CodeSniffer\Tests\Core\File\testFIINInterface {}
-/* testNonImplementedClass */ class testFIINNonImplementedClass {}
-// @codingStandardsIgnoreEnd

@@ -17,7 +17,7 @@ class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * The PHP_CodeSniffer_File object containing parsed contents of this file.
+     * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
      *
      * @var PHP_CodeSniffer_File
      */
@@ -25,10 +25,10 @@ class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * Initialize & tokenize PHP_CodeSniffer_File with code from this file.
+     * Initialize & tokenize PHP_CodeSniffer_File with code from the test case file.
      *
-     * Methods used for these tests can be found at the bottom of
-     * this file.
+     * Methods used for these tests can be found in a test case file in the same
+     * directory and with the same name, using the .inc extension.
      *
      * @return void
      */
@@ -39,7 +39,8 @@ class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
 
         $ruleset = new Ruleset($config);
 
-        $this->phpcsFile = new DummyFile(file_get_contents(__FILE__), $ruleset, $config);
+        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
+        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
         $this->phpcsFile->process();
 
     }//end setUp()
@@ -146,11 +147,3 @@ class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
 
 
 }//end class
-
-// @codingStandardsIgnoreStart
-class testFECNClass {}
-/* testExtendedClass */ class testFECNExtendedClass extends testFECNClass {}
-/* testNamespacedClass */ class testFECNNamespacedClass extends \PHP_CodeSniffer\Tests\Core\File\testFECNClass {}
-/* testNonExtendedClass */ class testFECNNonExtendedClass {}
-/* testInterface */ interface testFECNInterface {}
-// @codingStandardsIgnoreEnd
