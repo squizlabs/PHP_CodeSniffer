@@ -84,10 +84,10 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
         $expected    = array();
         $expected[0] = array(
                         'name'              => '$var',
+                        'content'           => '&$var',
                         'pass_by_reference' => true,
                         'variable_length'   => false,
                         'type_hint'         => '',
-                        'raw'               => '&$var',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -115,10 +115,10 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
         $expected    = array();
         $expected[0] = array(
                         'name'              => '$var',
+                        'content'           => 'array $var',
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'array',
-                        'raw'               => 'array $var',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -146,18 +146,18 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
         $expected    = array();
         $expected[0] = array(
                         'name'              => '$var1',
+                        'content'           => 'foo $var1',
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'foo',
-                        'raw'               => 'foo $var1',
                        );
 
         $expected[1] = array(
                         'name'              => '$var2',
+                        'content'           => 'bar $var2',
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'bar',
-                        'raw'               => 'bar $var2',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -185,10 +185,10 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
         $expected    = array();
         $expected[0] = array(
                         'name'              => '$var',
+                        'content'           => 'self $var',
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'self',
-                        'raw'               => 'self $var',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -216,10 +216,10 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
         $expected    = array();
         $expected[0] = array(
                         'name'              => '$var',
+                        'content'           => '$var',
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
-                        'raw'               => '$var',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -247,11 +247,11 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
         $expected    = array();
         $expected[0] = array(
                         'name'              => '$var1',
+                        'content'           => '$var1=self::CONSTANT',
                         'default'           => 'self::CONSTANT',
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
-                        'raw'               => '$var1=self::CONSTANT',
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -279,19 +279,19 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
         $expected    = array();
         $expected[0] = array(
                         'name'              => '$var1',
+                        'content'           => '$var1=1',
                         'default'           => '1',
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
-                        'raw'               => '$var1=1',
                        );
         $expected[1] = array(
                         'name'              => '$var2',
+                        'content'           => "\$var2='value'",
                         'default'           => "'value'",
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
-                        'raw'               => "\$var2='value'",
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);

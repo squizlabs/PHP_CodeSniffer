@@ -2743,8 +2743,9 @@ class PHP_CodeSniffer_File
      * <code>
      *   0 => array(
      *         'name'              => '$var',  // The variable name.
-     *         'pass_by_reference' => false,   // Passed by reference.
-     *         'type_hint'         => string,  // Type hint for array or custom type
+     *         'content'           => string,  // The full content of the variable definition.
+     *         'pass_by_reference' => false,   // Is the variable passed by reference?
+     *         'type_hint'         => string,  // The type hint for the variable.
      *        )
      * </code>
      *
@@ -2860,8 +2861,9 @@ class PHP_CodeSniffer_File
                     continue;
                 }
 
-                $vars[$paramCount]         = array();
-                $vars[$paramCount]['name'] = $this->_tokens[$currVar]['content'];
+                $vars[$paramCount]            = array();
+                $vars[$paramCount]['name']    = $this->_tokens[$currVar]['content'];
+                $vars[$paramCount]['content'] = trim($this->getTokensAsString($paramStart, ($i - $paramStart)));
 
                 if ($defaultStart !== null) {
                     $vars[$paramCount]['default']
@@ -2871,12 +2873,9 @@ class PHP_CodeSniffer_File
                         );
                 }
 
-                $rawContent = trim($this->getTokensAsString($paramStart, ($i - $paramStart)));
-
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;
                 $vars[$paramCount]['variable_length']   = $variableLength;
                 $vars[$paramCount]['type_hint']         = $typeHint;
-                $vars[$paramCount]['raw'] = $rawContent;
 
                 // Reset the vars, as we are about to process the next parameter.
                 $defaultStart    = null;
