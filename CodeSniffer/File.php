@@ -2744,8 +2744,9 @@ class PHP_CodeSniffer_File
      *   0 => array(
      *         'name'              => '$var',  // The variable name.
      *         'content'           => string,  // The full content of the variable definition.
-     *         'pass_by_reference' => false,   // Is the variable passed by reference?
+     *         'pass_by_reference' => boolean, // Is the variable passed by reference?
      *         'type_hint'         => string,  // The type hint for the variable.
+     *         'nullable_type'     => boolean, // Is the variable using a nullable type?
      *        )
      * </code>
      *
@@ -2776,6 +2777,7 @@ class PHP_CodeSniffer_File
         $passByReference = false;
         $variableLength  = false;
         $typeHint        = '';
+        $nullableType    = false;
 
         for ($i = $paramStart; $i <= $closer; $i++) {
             // Check to see if this token has a parenthesis or bracket opener. If it does
@@ -2808,7 +2810,7 @@ class PHP_CodeSniffer_File
                 break;
             case T_ARRAY_HINT:
             case T_CALLABLE:
-                $typeHint = $this->_tokens[$i]['content'];
+                $typeHint .= $this->_tokens[$i]['content'];
                 break;
             case T_SELF:
             case T_PARENT:
@@ -2853,6 +2855,12 @@ class PHP_CodeSniffer_File
                     $typeHint .= $this->_tokens[$i]['content'];
                 }
                 break;
+            case T_INLINE_THEN:
+                if ($defaultStart === null) {
+                    $nullableType = true;
+                    $typeHint    .= $this->_tokens[$i]['content'];
+                }
+                break;
             case T_CLOSE_PARENTHESIS:
             case T_COMMA:
                 // If it's null, then there must be no parameters for this
@@ -2876,6 +2884,7 @@ class PHP_CodeSniffer_File
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;
                 $vars[$paramCount]['variable_length']   = $variableLength;
                 $vars[$paramCount]['type_hint']         = $typeHint;
+                $vars[$paramCount]['nullable_type']     = $nullableType;
 
                 // Reset the vars, as we are about to process the next parameter.
                 $defaultStart    = null;
@@ -2883,6 +2892,7 @@ class PHP_CodeSniffer_File
                 $passByReference = false;
                 $variableLength  = false;
                 $typeHint        = '';
+                $nullableType    = false;
 
                 $paramCount++;
                 break;

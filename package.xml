@@ -31,7 +31,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.DocCommentAlignment now checks comments on class properties defined using the VAR keyword
     -- Thanks to Klaus Purer for the patch
   - The getMethodParamethers() method now recognises "self" as a valid type hint
-    -- The return array also contains a new "content" index contining the raw content of the param definition
+    -- The return array now contains a new "content" index containing the raw content of the param definition
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - The getMethodParamethers() method now supports nullable types
+    -- The return array now contains a new "nullable_type" index set to true or false for each method param
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1230 : JS tokeniser incorrectly tokenises bitwise shifts as comparison
     -- Thanks to Ryan McCue for the patch
@@ -81,12 +84,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <dir name="tests">
     <dir name="Core">
      <dir name="File">
+      <file baseinstalldir="" name="FindExtendedClassNameTest.inc" role="test" />
       <file baseinstalldir="" name="FindExtendedClassNameTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
+      <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.inc" role="test" />
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>
+      <file baseinstalldir="" name="GetMethodParametersTest.inc" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.php" role="test">
        <tasks:replace from="@package_version@" to="version" type="package-info" />
       </file>

@@ -26,12 +26,14 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
+ *
+ * @group utilityMethods
  */
 class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * The PHP_CodeSniffer_File object containing parsed contents of this file.
+     * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
      *
      * @var PHP_CodeSniffer_File
      */
@@ -39,24 +41,25 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
 
 
     /**
-     * Initialize & tokenize PHP_CodeSniffer_File with code from this file.
+     * Initialize & tokenize PHP_CodeSniffer_File with code from the test case file.
      *
-     * Methods used for these tests can be found at the bottom of
-     * this file.
+     * Methods used for these tests can be found in a test case file in the same
+     * directory and with the same name, using the .inc extension.
      *
      * @return void
      */
     public function setUp()
     {
+        $pathToTestcases  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
         $phpcs            = new PHP_CodeSniffer();
         $this->_phpcsFile = new PHP_CodeSniffer_File(
-            __FILE__,
+            $pathToTestcases,
             array(),
             array(),
             $phpcs
         );
 
-        $contents = file_get_contents(__FILE__);
+        $contents = file_get_contents($pathToTestcases);
         $this->_phpcsFile->start($contents);
 
     }//end setUp()
@@ -88,6 +91,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => true,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'nullable_type'     => false,
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -119,6 +123,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'array',
+                        'nullable_type'     => false,
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -150,6 +155,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'foo',
+                        'nullable_type'     => false,
                        );
 
         $expected[1] = array(
@@ -158,6 +164,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'bar',
+                        'nullable_type'     => false,
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -189,6 +196,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'self',
+                        'nullable_type'     => false
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -207,6 +215,47 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * Verify nullable type hint parsing.
+     *
+     * @return void
+     */
+    public function testNullableTypeHint()
+    {
+        $expected    = array();
+        $expected[0] = array(
+                        'name'              => '$var1',
+                        'content'           => '?int $var1',
+                        'pass_by_reference' => false,
+                        'variable_length'   => false,
+                        'type_hint'         => '?int',
+                        'nullable_type'     => true,
+                       );
+
+        $expected[1] = array(
+                        'name'              => '$var2',
+                        'content'           => '?\bar $var2',
+                        'pass_by_reference' => false,
+                        'variable_length'   => false,
+                        'type_hint'         => '?\bar',
+                        'nullable_type'     => true,
+                       );
+
+        $start    = ($this->_phpcsFile->numTokens - 1);
+        $function = $this->_phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testNullableTypeHint */'
+        );
+
+        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $this->assertSame($expected, $found);
+
+    }//end testNullableTypeHint()
+
+
+    /**
      * Verify variable.
      *
      * @return void
@@ -220,6 +269,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'nullable_type'     => false,
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -252,6 +302,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'nullable_type'     => false,
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -284,6 +335,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'nullable_type'     => false,
                        );
         $expected[1] = array(
                         'name'              => '$var2',
@@ -292,6 +344,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => '',
+                        'nullable_type'     => false,
                        );
 
         $start    = ($this->_phpcsFile->numTokens - 1);
@@ -311,16 +364,3 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
 
 }//end class
 
-// @codingStandardsIgnoreStart
-/* testPassByReference */ function passByReference(&$var) {}
-/* testArrayHint */ function arrayHint(array $var) {}
-/* testVariable */ function variable($var) {}
-/* testSingleDefaultValue */ function defaultValue($var1=self::CONSTANT) {}
-/* testDefaultValues */ function defaultValues($var1=1, $var2='value') {}
-/* testTypeHint */ function typeHint(foo $var1, bar $var2) {}
-class MyClass {
-/* testSelfTypeHint */ function typeSelfHint(self $var) {}
-}
-// @codingStandardsIgnoreEnd
-
-?>
