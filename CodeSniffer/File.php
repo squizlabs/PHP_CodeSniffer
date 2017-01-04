@@ -2769,13 +2769,14 @@ class PHP_CodeSniffer_File
 
         $vars            = array();
         $currVar         = null;
+        $paramStart      = ($opener + 1);
         $defaultStart    = null;
         $paramCount      = 0;
         $passByReference = false;
         $variableLength  = false;
         $typeHint        = '';
 
-        for ($i = ($opener + 1); $i <= $closer; $i++) {
+        for ($i = $paramStart; $i <= $closer; $i++) {
             // Check to see if this token has a parenthesis or bracket opener. If it does
             // it's likely to be an array which might have arguments in it. This
             // could cause problems in our parsing below, so lets just skip to the
@@ -2807,6 +2808,14 @@ class PHP_CodeSniffer_File
             case T_ARRAY_HINT:
             case T_CALLABLE:
                 $typeHint = $this->_tokens[$i]['content'];
+                break;
+            case T_SELF:
+            case T_PARENT:
+            case T_STATIC:
+                // Self is valid, the others invalid, but were probably intended as type hints.
+                if (isset($defaultStart) === false) {
+                    $typeHint .= $this->_tokens[$i]['content'];
+                }
                 break;
             case T_STRING:
                 // This is a string, so it may be a type hint, but it could
@@ -2862,12 +2871,16 @@ class PHP_CodeSniffer_File
                         );
                 }
 
+                $rawContent = trim($this->getTokensAsString($paramStart, ($i - $paramStart)));
+
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;
                 $vars[$paramCount]['variable_length']   = $variableLength;
                 $vars[$paramCount]['type_hint']         = $typeHint;
+                $vars[$paramCount]['raw'] = $rawContent;
 
                 // Reset the vars, as we are about to process the next parameter.
                 $defaultStart    = null;
+                $paramStart      = ($i + 1);
                 $passByReference = false;
                 $variableLength  = false;
                 $typeHint        = '';
