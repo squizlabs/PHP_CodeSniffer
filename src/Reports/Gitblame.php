@@ -66,29 +66,7 @@ class Gitblame extends VersionControl
     {
         $cwd = getcwd();
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'Getting GIT blame info for '.basename($filename).'... ';
-        }
-
-        $fileParts = explode(DIRECTORY_SEPARATOR, $filename);
-        $found     = false;
-        $location  = '';
-        while (empty($fileParts) === false) {
-            array_pop($fileParts);
-            $location = implode($fileParts, DIRECTORY_SEPARATOR);
-            if (is_dir($location.DIRECTORY_SEPARATOR.'.git') === true) {
-                $found = true;
-                break;
-            }
-        }
-
-        if ($found === true) {
-            chdir($location);
-        } else {
-            echo 'ERROR: Could not locate .git directory '.PHP_EOL.PHP_EOL;
-            exit(3);
-        }
-
+        chdir(dirname($filename));
         $command = 'git blame --date=short "'.$filename.'" 2>&1';
         $handle  = popen($command, 'r');
         if ($handle === false) {
@@ -98,10 +76,6 @@ class Gitblame extends VersionControl
 
         $rawContent = stream_get_contents($handle);
         fclose($handle);
-
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'DONE'.PHP_EOL;
-        }
 
         $blames = explode("\n", $rawContent);
         chdir($cwd);

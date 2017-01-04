@@ -50,10 +50,6 @@ class Svnblame extends VersionControl
      */
     protected function getBlameContent($filename)
     {
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'Getting SVN blame info for '.basename($filename).'... ';
-        }
-
         $command = 'svn blame "'.$filename.'" 2>&1';
         $handle  = popen($command, 'r');
         if ($handle === false) {
@@ -63,10 +59,6 @@ class Svnblame extends VersionControl
 
         $rawContent = stream_get_contents($handle);
         fclose($handle);
-
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'DONE'.PHP_EOL;
-        }
 
         $blames = explode("\n", $rawContent);
 
