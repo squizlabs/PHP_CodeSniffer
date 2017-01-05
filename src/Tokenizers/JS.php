@@ -63,6 +63,13 @@ class JS extends Tokenizer
                                            'shared' => false,
                                            'with'   => array(),
                                           ),
+                            T_CLASS    => array(
+                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
+                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
+                                           'strict' => true,
+                                           'shared' => false,
+                                           'with'   => array(),
+                                          ),
                             T_FUNCTION => array(
                                            'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
                                            'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
@@ -144,6 +151,7 @@ class JS extends Tokenizer
      * @var array
      */
     protected $tokenValues = array(
+                              'class'     => 'T_CLASS',
                               'function'  => 'T_FUNCTION',
                               'prototype' => 'T_PROTOTYPE',
                               'try'       => 'T_TRY',
@@ -1059,7 +1067,7 @@ class JS extends Tokenizer
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $line = $this->tokens[$i]['line'];
                         echo str_repeat("\t", count($classStack));
-                        echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE".PHP_EOL;
+                        echo "\t* token $i on line $line changed from T_FUNCTION to T_CLOSURE *".PHP_EOL;
                     }
 
                     for ($x = ($this->tokens[$i]['scope_opener'] + 1); $x < $this->tokens[$i]['scope_closer']; $x++) {
@@ -1080,6 +1088,66 @@ class JS extends Tokenizer
             } else if ($this->tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
                 && isset($this->tokens[$i]['scope_condition']) === false
             ) {
+                $condition = end($this->tokens[$i]['conditions']);
+                reset($this->tokens[$i]['conditions']);
+                if ($condition === T_CLASS) {
+                    // Possibly an ES6 method. To be classified as one, the previous
+                    // non-empty tokens need to be a set of parenthesis, and then a string
+                    // (the method name).
+                    for ($parenCloser = ($i - 1); $parenCloser > 0; $parenCloser--) {
+                        if (isset(Util\Tokens::$emptyTokens[$this->tokens[$parenCloser]['code']]) === false) {
+                            break;
+                        }
+                    }
+
+                    if ($this->tokens[$parenCloser]['code'] === T_CLOSE_PARENTHESIS) {
+                        $parenOpener = $this->tokens[$parenCloser]['parenthesis_opener'];
+                        for ($name = ($parenOpener - 1); $name > 0; $name--) {
+                            if (isset(Util\Tokens::$emptyTokens[$this->tokens[$name]['code']]) === false) {
+                                break;
+                            }
+                        }
+
+                        if ($this->tokens[$name]['code'] === T_STRING) {
+                            // We found a method name.
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $line = $this->tokens[$name]['line'];
+                                echo str_repeat("\t", count($classStack));
+                                echo "\t* token $name on line $line changed from T_STRING to T_FUNCTION *".PHP_EOL;
+                            }
+
+                            $closer = $this->tokens[$i]['bracket_closer'];
+
+                            $this->tokens[$name]['code'] = T_FUNCTION;
+                            $this->tokens[$name]['type'] = 'T_FUNCTION';
+
+                            foreach (array($name, $i, $closer) as $token) {
+                                $this->tokens[$token]['scope_condition']    = $name;
+                                $this->tokens[$token]['scope_opener']       = $i;
+                                $this->tokens[$token]['scope_closer']       = $closer;
+                                $this->tokens[$token]['parenthesis_opener'] = $parenOpener;
+                                $this->tokens[$token]['parenthesis_closer'] = $parenCloser;
+                                $this->tokens[$token]['parenthesis_owner']  = $name;
+                            }
+
+                            $this->tokens[$parenOpener]['parenthesis_owner'] = $name;
+                            $this->tokens[$parenCloser]['parenthesis_owner'] = $name;
+
+                            for ($x = ($i + 1); $x < $closer; $x++) {
+                                $this->tokens[$x]['conditions'][$name] = T_FUNCTION;
+                                ksort($this->tokens[$x]['conditions'], SORT_NUMERIC);
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    $type = $this->tokens[$x]['type'];
+                                    echo str_repeat("\t", count($classStack));
+                                    echo "\t\t* added T_FUNCTION condition to $x ($type) *".PHP_EOL;
+                                }
+                            }
+
+                            continue;
+                        }//end if
+                    }//end if
+                }//end if
+
                 $classStack[] = $i;
 
                 $closer = $this->tokens[$i]['bracket_closer'];

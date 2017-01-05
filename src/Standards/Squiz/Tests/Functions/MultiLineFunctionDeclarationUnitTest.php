@@ -64,6 +64,7 @@ class MultiLineFunctionDeclarationUnitTest extends AbstractSniffUnitTest
                        36 => 1,
                        43 => 2,
                        48 => 1,
+                       65 => 1,
                       );
         }//end if
 

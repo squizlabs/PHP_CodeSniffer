@@ -1114,6 +1114,14 @@ class File
         }
 
         if ($tokenCode === T_FUNCTION
+            && strtolower($this->tokens[$stackPtr]['content']) !== 'function'
+        ) {
+            // This is a function declared without the "function" keyword.
+            // So this token is the function name.
+            return $this->tokens[$stackPtr]['content'];
+        }
+
+        if ($tokenCode === T_FUNCTION
             && $this->isAnonymousFunction($stackPtr) === true
         ) {
             return null;
@@ -1151,6 +1159,11 @@ class File
 
         if (isset($this->tokens[$stackPtr]['parenthesis_opener']) === false) {
             // Something is not right with this function.
+            return false;
+        }
+
+        if (strtolower($this->tokens[$stackPtr]['content']) !== 'function') {
+            // This is a function declared without the "function" keyword.
             return false;
         }
 

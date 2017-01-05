@@ -19,6 +19,16 @@ class FunctionDeclarationSniff implements Sniff
 {
 
     /**
+     * A list of tokenizers this sniff supports.
+     *
+     * @var array
+     */
+    public $supportedTokenizers = array(
+                                   'PHP',
+                                   'JS',
+                                  );
+
+    /**
      * The number of spaces code should be indented.
      *
      * @var integer
@@ -65,27 +75,29 @@ class FunctionDeclarationSniff implements Sniff
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
 
-        // Must be one space after the FUNCTION keyword.
-        if ($tokens[($stackPtr + 1)]['content'] === $phpcsFile->eolChar) {
-            $spaces = 'newline';
-        } else if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
-            $spaces = strlen($tokens[($stackPtr + 1)]['content']);
-        } else {
-            $spaces = 0;
-        }
+        if (strtolower($tokens[$stackPtr]['content']) === 'function') {
+            // Must be one space after the FUNCTION keyword.
+            if ($tokens[($stackPtr + 1)]['content'] === $phpcsFile->eolChar) {
+                $spaces = 'newline';
+            } else if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
+                $spaces = strlen($tokens[($stackPtr + 1)]['content']);
+            } else {
+                $spaces = 0;
+            }
 
-        if ($spaces !== 1) {
-            $error = 'Expected 1 space after FUNCTION keyword; %s found';
-            $data  = array($spaces);
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterFunction', $data);
-            if ($fix === true) {
-                if ($spaces === 0) {
-                    $phpcsFile->fixer->addContent($stackPtr, ' ');
-                } else {
-                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+            if ($spaces !== 1) {
+                $error = 'Expected 1 space after FUNCTION keyword; %s found';
+                $data  = array($spaces);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterFunction', $data);
+                if ($fix === true) {
+                    if ($spaces === 0) {
+                        $phpcsFile->fixer->addContent($stackPtr, ' ');
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                    }
                 }
             }
-        }
+        }//end if
 
         // Must be one space before the opening parenthesis. For closures, this is
         // enforced by the first check because there is no content between the keywords

@@ -26,6 +26,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added support for ES6 class declarations
+    -- Previously, these class were tokenized as JS objects but are now tokenzied as normal T_CLASS structures
+  - Added support for ES6 method declarations, where the "function" keyword is not used
+    -- Previously, these methods were tokenized as JS objects (fixes bug #1251)
+    -- The name of the ES6 method is now assigned the T_FUNCTION keyword and treated like a normal function
+    -- Custom sniffs that support JS and listen for T_FUNCTION tokens can't assume the token represents the word "function"
+    -- Check the contents of the token first, or use $phpcsFile->getDeclarationName($stackPtr) if you just want its name
+    -- There is no change for custom sniffs that only check PHP code
   - Includes all changes from the 2.7.2 release
   - Fixed an issue where excluding a file using a @codingStandardsIgnoreFile comment would produce errors
     -- For PHPCS, it would show empty files being processed
@@ -736,6 +744,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCallSignatureUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarationUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarationUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarationUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ValidDefaultValueUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ValidDefaultValueUnitTest.php" role="test" />

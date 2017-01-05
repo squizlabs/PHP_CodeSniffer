@@ -204,3 +204,29 @@ for (var i = 0; i < 10; i++) {
     var foo = {foo:{'a':'b',
         'c':'d'}};
 }
+
+class TestOk
+{
+    destroy()
+    {
+        setTimeout(a, 1000);
+
+        if (typeof self.callbackOnClose === "function") {
+            self.callbackOnClose();
+        }
+    }
+}
+
+class TestBad
+{
+    destroy()
+    {
+        setTimeout(function () {
+            return;
+        }, 1000);
+
+        if (typeof self.callbackOnClose === "function") {
+            self.callbackOnClose();
+        }
+    }
+}
