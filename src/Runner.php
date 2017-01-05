@@ -340,6 +340,10 @@ class Runner
             // Running normally.
             $numProcessed = 0;
             foreach ($todo as $path => $file) {
+                if ($file->ignored === true) {
+                    continue;
+                }
+
                 $currDir = dirname($path);
                 if ($lastDir !== $currDir) {
                     if (PHP_CODESNIFFER_VERBOSITY > 0) {
@@ -401,6 +405,10 @@ class Runner
                         $path = $todo->key();
                         $file = $todo->current();
 
+                        if ($file->ignored === true) {
+                            continue;
+                        }
+
                         $currDir = dirname($path);
                         if ($lastDir !== $currDir) {
                             if (PHP_CODESNIFFER_VERBOSITY > 0) {
@@ -414,7 +422,7 @@ class Runner
 
                         $pathsProcessed[] = $path;
                         $todo->next();
-                    }
+                    }//end for
 
                     $debugOutput = ob_get_contents();
                     ob_end_clean();

@@ -27,6 +27,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Includes all changes from the 2.7.2 release
+  - Fixed an issue where excluding a file using a @codingStandardsIgnoreFile comment would produce errors
+    -- For PHPCS, it would show empty files being processed
+    -- For PHPCBF, it would produce a PHP error
   - Fixed bug #1233 : Can't set config data inside ruleset.xml file
   - Fixed bug #1241 : CodeSniffer.conf not working with 3.x PHAR file
  </notes>
