@@ -560,7 +560,10 @@ class Fixer
                 $indent .= "\tA: ";
             }
 
-            @ob_end_clean();
+            if (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+
             echo "$indent$sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
             ob_start();
         }
