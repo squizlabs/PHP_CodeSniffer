@@ -52,8 +52,8 @@ You can also download the PHP\_CodeSniffer source and run the `phpcs` and `phpcb
 
     git clone https://github.com/squizlabs/PHP_CodeSniffer.git
     cd PHP_CodeSniffer
-    php scripts/phpcs -h
-    php scripts/phpcbf -h
+    php bin/phpcs -h
+    php bin/phpcbf -h
 
 Documentation
 -------------
