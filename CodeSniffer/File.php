@@ -1538,7 +1538,6 @@ class PHP_CodeSniffer_File
                     // String only contains tabs, so we can shortcut the process.
                     $numTabs = strlen($tokens[$i]['content']);
 
-                    $newContent   = '';
                     $firstTabSize = ($tabWidth - ($currColumn % $tabWidth) + 1);
                     $length       = ($firstTabSize + ($tabWidth * ($numTabs - 1)));
                     $currColumn  += $length;

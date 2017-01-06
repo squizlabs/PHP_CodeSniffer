@@ -114,7 +114,6 @@ class PHP_CodeSniffer_Reporting
             $reportClassName = substr($reportClassName, 0, strpos($reportClassName, '.'));
             include_once $filename;
         } else {
-            $filename        = $type.'.php';
             $reportClassName = 'PHP_CodeSniffer_Reports_'.$type;
             if (class_exists($reportClassName, true) === false) {
                 echo 'ERROR: Report type "'.$type.'" not found'.PHP_EOL;

@@ -65,8 +65,8 @@ class PHP_CodeSniffer_Reports_Source implements PHP_CodeSniffer_Report
             return false;
         }
 
-        foreach ($report['messages'] as $line => $lineErrors) {
-            foreach ($lineErrors as $column => $colErrors) {
+        foreach ($report['messages'] as $lineErrors) {
+            foreach ($lineErrors as $colErrors) {
                 foreach ($colErrors as $error) {
                     $source = $error['source'];
                     if (isset($this->_sourceCache[$source]) === false) {

@@ -50,8 +50,6 @@ class Squiz_Sniffs_Classes_ClassDeclarationSniff extends PSR2_Sniffs_Classes_Cla
         // We want all the errors from the PSR2 standard, plus some of our own.
         parent::process($phpcsFile, $stackPtr);
 
-        $tokens = $phpcsFile->getTokens();
-
         // Check that this is the only class or interface in the file.
         $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE), ($stackPtr + 1));
         if ($nextClass !== false) {

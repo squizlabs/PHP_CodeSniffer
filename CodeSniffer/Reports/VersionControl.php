@@ -100,7 +100,7 @@ abstract class PHP_CodeSniffer_Reports_VersionControl implements PHP_CodeSniffer
 
             $this->_praiseCache[$author]['bad']++;
 
-            foreach ($lineErrors as $column => $colErrors) {
+            foreach ($lineErrors as $colErrors) {
                 foreach ($colErrors as $error) {
                     $this->_authorCache[$author]++;
 

@@ -65,10 +65,6 @@ class Squiz_Sniffs_Scope_StaticThisUsageSniff extends PHP_CodeSniffer_Standards_
             return;
         }
 
-        $functionName = $function['content'];
-        $classOpener  = $tokens[$currScope]['scope_condition'];
-        $className    = $tokens[($classOpener + 2)]['content'];
-
         $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
         if ($methodProps['is_static'] === true) {

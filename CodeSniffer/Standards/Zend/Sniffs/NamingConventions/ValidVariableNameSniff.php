@@ -34,16 +34,6 @@ if (class_exists('PHP_CodeSniffer_Standards_AbstractVariableSniff', true) === fa
 class Zend_Sniffs_NamingConventions_ValidVariableNameSniff extends PHP_CodeSniffer_Standards_AbstractVariableSniff
 {
 
-    /**
-     * Tokens to ignore so that we can find a DOUBLE_COLON.
-     *
-     * @var array
-     */
-    private $_ignore = array(
-                        T_WHITESPACE,
-                        T_COMMENT,
-                       );
-
 
     /**
      * Processes this test, when one of its tokens is encountered.

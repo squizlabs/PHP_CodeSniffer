@@ -696,7 +696,6 @@ abstract class PHP_CodeSniffer_Standards_AbstractPatternSniff implements PHP_Cod
                         ($next - $stackPtr)
                     );
 
-                    $diff = ($next - $stackPtr);
                     $lastAddedStackPtr = ($next - 1);
                 }
 

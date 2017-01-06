@@ -218,7 +218,6 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         // Function names can be in two parts; the package name and
         // the function name.
         $packagePart   = '';
-        $camelCapsPart = '';
         $underscorePos = strrpos($functionName, '_');
         if ($underscorePos === false) {
             $camelCapsPart = $functionName;
@@ -279,7 +278,6 @@ class PEAR_Sniffs_NamingConventions_ValidFunctionNameSniff extends PHP_CodeSniff
         }
 
         if ($validName === false) {
-            $newName = rtrim($newPackagePart, '_').'_'.$newCamelCapsPart;
             if ($newPackagePart === '') {
                 $newName = $newCamelCapsPart;
             } else {

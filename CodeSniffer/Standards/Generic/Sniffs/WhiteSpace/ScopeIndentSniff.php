@@ -158,12 +158,11 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
             }
         }
 
-        $currentIndent = 0;
-        $lastOpenTag   = $stackPtr;
-        $lastCloseTag  = null;
-        $openScopes    = array();
-        $adjustments   = array();
-        $setIndents    = array();
+        $lastOpenTag  = $stackPtr;
+        $lastCloseTag = null;
+        $openScopes   = array();
+        $adjustments  = array();
+        $setIndents   = array();
 
         $tokens  = $phpcsFile->getTokens();
         $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
@@ -811,7 +810,6 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $checkIndent = $currentIndent;
             }
 
-            $adjusted = false;
             if ($checkToken !== null
                 && isset($this->_ignoreIndentationTokens[$tokens[$checkToken]['code']]) === false
                 && (($tokenIndent !== $checkIndent && $exact === true)
@@ -1167,7 +1165,6 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                     }
 
                     $prev      = $object;
-                    $parens    = 0;
                     $condition = 0;
                 } else if ($condition > 0) {
                     if ($this->_debug === true) {
@@ -1176,7 +1173,6 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
 
                     $prev   = $condition;
                     $object = 0;
-                    $parens = 0;
                 }//end if
 
                 if ($prev === false) {

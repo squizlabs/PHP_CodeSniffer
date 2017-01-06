@@ -1266,8 +1266,6 @@ class PHP_CodeSniffer
                     $value  = (string) $prop['value'];
                     $values = array();
                     foreach (explode(',', $value) as $val) {
-                        $v = '';
-
                         list($k,$v) = explode('=>', $val.'=>');
                         if ($v !== '') {
                             $values[$k] = $v;
@@ -1748,7 +1746,6 @@ class PHP_CodeSniffer
         // Before we go and spend time tokenizing this file, just check
         // to see if there is a tag up top to indicate that the whole
         // file should be ignored. It must be on one of the first two lines.
-        $firstContent = $contents;
         if ($contents === null && is_readable($filePath) === true) {
             $handle = fopen($filePath, 'r');
             stream_set_blocking($handle, true);

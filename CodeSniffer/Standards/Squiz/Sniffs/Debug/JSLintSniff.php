@@ -69,7 +69,7 @@ class Squiz_Sniffs_Debug_JSLintSniff implements PHP_CodeSniffer_Sniff
         }
 
         $cmd = "$rhinoPath \"$jslintPath\" \"$fileName\"";
-        $msg = exec($cmd, $output, $retval);
+        exec($cmd, $output, $retval);
 
         if (is_array($output) === true) {
             foreach ($output as $finding) {

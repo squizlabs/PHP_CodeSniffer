@@ -200,7 +200,6 @@ class Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff implements PHP_CodeSn
 
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
-                    $i = ($scopeCloser - 1);
                     for ($i = ($scopeCloser - 1); $i > $lastContent; $i--) {
                         if ($tokens[$i]['line'] === $tokens[$scopeCloser]['line']) {
                             continue;
