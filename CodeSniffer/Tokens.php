@@ -22,6 +22,7 @@ define('T_CLOSE_SQUARE_BRACKET', 'PHPCS_T_CLOSE_SQUARE_BRACKET');
 define('T_OPEN_PARENTHESIS', 'PHPCS_T_OPEN_PARENTHESIS');
 define('T_CLOSE_PARENTHESIS', 'PHPCS_T_CLOSE_PARENTHESIS');
 define('T_COLON', 'PHPCS_T_COLON');
+define('T_NULLABLE', 'PHPCS_T_NULLABLE');
 define('T_STRING_CONCAT', 'PHPCS_T_STRING_CONCAT');
 define('T_INLINE_THEN', 'PHPCS_T_INLINE_THEN');
 define('T_INLINE_ELSE', 'PHPCS_T_INLINE_ELSE');
@@ -367,6 +368,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_OPEN_PARENTHESIS         => 1,
                                    T_CLOSE_PARENTHESIS        => 1,
                                    T_COLON                    => 1,
+                                   T_NULLABLE                 => 1,
                                    T_STRING_CONCAT            => 1,
                                    T_INLINE_THEN              => 1,
                                    T_INLINE_ELSE              => 1,

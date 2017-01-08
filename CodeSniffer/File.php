@@ -2855,7 +2855,7 @@ class PHP_CodeSniffer_File
                     $typeHint .= $this->_tokens[$i]['content'];
                 }
                 break;
-            case T_INLINE_THEN:
+            case T_NULLABLE:
                 if ($defaultStart === null) {
                     $nullableType = true;
                     $typeHint    .= $this->_tokens[$i]['content'];
