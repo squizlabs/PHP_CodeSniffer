@@ -500,6 +500,8 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
                 // Check earliest-latest year order.
                 if ($matches[3] !== '') {
                     if ($matches[3] !== '-') {
+                        var_dump($content);
+                        var_dump($matches);
                         $error = 'A hyphen must be used between the earliest and latest year';
                         $phpcsFile->addError($error, $tag, 'CopyrightHyphen');
                     }
