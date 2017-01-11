@@ -201,6 +201,7 @@ class JS extends Tokenizer
                               '>>>='      => 'T_ZSR_EQUAL',
                               '<='        => 'T_IS_SMALLER_OR_EQUAL',
                               '>='        => 'T_IS_GREATER_OR_EQUAL',
+                              '=>'        => 'T_DOUBLE_ARROW',
                               '!'         => 'T_BOOLEAN_NOT',
                               '||'        => 'T_BOOLEAN_OR',
                               '&&'        => 'T_BOOLEAN_AND',
