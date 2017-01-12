@@ -50,7 +50,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1253 : Generic.ControlStructures.InlineControlStructure fix creates syntax error fixing if-try/catch
   - Fixed bug #1257 : Double dash in CSS class name can lead to "Named colours are forbidden" false positives
   - Fixed bug #1265 : ES6 arrow function raises unexpected operator spacing errors
-  - Fixed bug #1267 : Fixer incorrectly handles filepath
+  - Fixed bug #1267 : Fixer incorrectly handles filepaths with repeated dir names
+    -- Thanks to Sergey Ovchinnikov for the patch
  </notes>
  <contents>
   <dir name="/">
