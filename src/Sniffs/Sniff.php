@@ -63,7 +63,7 @@ interface Sniff
      *    $phpcsFile->addError('Encountered an error', $stackPtr);
      * </code>
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
+     * @param File $phpcsFile The PHP_CodeSniffer file where the
      *                                        token was found.
      * @param int                  $stackPtr  The position in the PHP_CodeSniffer
      *                                        file's token stack where the token
