@@ -59,6 +59,7 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
                     103 => 1,
                     104 => 3,
                     118 => 1,
+                    121 => 1,
                    );
         default:
             return array();

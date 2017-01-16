@@ -747,7 +747,12 @@ class JS extends Tokenizer
             if ($token['code'] === T_COMMENT || $token['code'] === T_DOC_COMMENT) {
                 $newContent   = '';
                 $tokenContent = $token['content'];
-                $endContent   = $this->commentTokens[$tokenContent];
+
+                $endContent = null;
+                if (isset($this->commentTokens[$tokenContent]) === true) {
+                    $endContent = $this->commentTokens[$tokenContent];
+                }
+
                 while ($tokenContent !== $endContent) {
                     if ($endContent === null
                         && strpos($tokenContent, $this->eolChar) !== false
@@ -1088,6 +1093,7 @@ class JS extends Tokenizer
                 continue;
             } else if ($this->tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
                 && isset($this->tokens[$i]['scope_condition']) === false
+                && isset($this->tokens[$i]['bracket_closer']) === true
             ) {
                 $condition = end($this->tokens[$i]['conditions']);
                 reset($this->tokens[$i]['conditions']);

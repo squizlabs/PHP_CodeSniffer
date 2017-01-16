@@ -232,8 +232,13 @@ class Fixer
             $filePath = $this->currentFile->getFilename();
         }
 
-        $cwd      = getcwd().DIRECTORY_SEPARATOR;
-        $filename = str_replace($cwd, '', $filePath);
+        $cwd = getcwd().DIRECTORY_SEPARATOR;
+        if (strpos($filePath, $cwd) === 0) {
+            $filename = substr($filePath, strlen($cwd));
+        } else {
+            $filename = $filePath;
+        }
+
         $contents = $this->getContents();
 
         $tempName  = tempnam(sys_get_temp_dir(), 'phpcs-fixer');
