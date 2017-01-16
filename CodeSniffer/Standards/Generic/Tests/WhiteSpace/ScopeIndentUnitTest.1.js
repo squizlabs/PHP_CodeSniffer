@@ -204,3 +204,10 @@ for (var i = 0; i < 10; i++) {
     var foo = {foo:{'a':'b',
         'c':'d'}};
 }
+
+( function( $ ) {
+    foo(function( value ) {
+            value.bind( function( newval ) {
+                    $( '#bar' ).html( newval );
+            } );
+    } )( jQuery );

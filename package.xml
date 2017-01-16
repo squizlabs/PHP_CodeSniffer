@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The getMethodParamethers() method now supports nullable types
     -- The return array now contains a new "nullable_type" index set to true or false for each method param
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Added more guard code for JS files with syntax errors (request #1271 and request #1272)
   - Fixed bug #1230 : JS tokeniser incorrectly tokenises bitwise shifts as comparison
     -- Thanks to Ryan McCue for the patch
   - Fixed bug #1237 : Uninitialized string offset in PHP Tokenizer on PHP 5.2

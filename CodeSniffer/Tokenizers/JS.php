@@ -734,7 +734,12 @@ class PHP_CodeSniffer_Tokenizers_JS
             if ($token['code'] === T_COMMENT || $token['code'] === T_DOC_COMMENT) {
                 $newContent   = '';
                 $tokenContent = $token['content'];
-                $endContent   = $this->commentTokens[$tokenContent];
+
+                $endContent = null;
+                if (isset($this->commentTokens[$tokenContent]) === true) {
+                    $endContent = $this->commentTokens[$tokenContent];
+                }
+
                 while ($tokenContent !== $endContent) {
                     if ($endContent === null
                         && strpos($tokenContent, $eolChar) !== false
@@ -1079,6 +1084,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                 continue;
             } else if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
                 && isset($tokens[$i]['scope_condition']) === false
+                && isset($tokens[$i]['bracket_closer']) === true
             ) {
                 $classStack[] = $i;
 
