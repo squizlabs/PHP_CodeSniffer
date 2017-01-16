@@ -188,9 +188,24 @@ class Runner
         echo PHP_EOL;
         Util\Timing::printRunTime();
 
-        // We can't tell exactly how many errors were fixed, but
-        // we know how many errors were found.
-        exit($numErrors);
+        if ($this->reporter->totalFixed === 0) {
+            // Nothing was fixed by PHPCBF.
+            if ($this->reporter->totalFixable === 0) {
+                // Nothing found that could be fixed.
+                exit(0);
+            } else {
+                // Something failed to fix.
+                exit(2);
+            }
+        }
+
+        if ($this->reporter->totalFixable === 0) {
+            // PHPCBF fixed all fixable errors.
+            exit(1);
+        }
+
+        // PHPCBF fixed some fixable errors, but others failed to fix.
+        exit(2);
 
     }//end runPHPCBF()
 
@@ -397,6 +412,7 @@ class Runner
                     $this->reporter->totalErrors   = 0;
                     $this->reporter->totalWarnings = 0;
                     $this->reporter->totalFixable  = 0;
+                    $this->reporter->totalFixed    = 0;
 
                     // Process the files.
                     $pathsProcessed = array();
