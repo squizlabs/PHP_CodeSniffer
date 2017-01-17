@@ -136,6 +136,11 @@ class DisallowMultipleAssignmentsSniff implements Sniff
                 return;
             }
 
+            if ($tokens[$i]['code'] === T_OPEN_TAG) {
+                // We reached the end of the code block.
+                return;
+            }
+
             if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
                 $prevLine = $tokens[$i]['line'];
                 break;
