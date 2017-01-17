@@ -29,13 +29,13 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
     /**
      * Determine if this is a multi-line function declaration.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
-     * @param int                  $stackPtr    The position of the current token
-     *                                          in the stack passed in $tokens.
-     * @param int                  $openBracket The position of the opening bracket
-     *                                          in the stack passed in $tokens.
-     * @param array                $tokens      The stack of tokens that make up
-     *                                          the file.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile   The file being scanned.
+     * @param int                         $stackPtr    The position of the current token
+     *                                                 in the stack passed in $tokens.
+     * @param int                         $openBracket The position of the opening bracket
+     *                                                 in the stack passed in $tokens.
+     * @param array                       $tokens      The stack of tokens that make up
+     *                                                 the file.
      *
      * @return void
      */
@@ -96,11 +96,11 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
     /**
      * Processes multi-line declarations.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
-     *                                        in the stack passed in $tokens.
-     * @param array                $tokens    The stack of tokens that make up
-     *                                        the file.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack passed in $tokens.
+     * @param array                       $tokens    The stack of tokens that make up
+     *                                               the file.
      *
      * @return void
      */
@@ -137,13 +137,13 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
     /**
      * Processes the contents of a single set of brackets.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile   The file being scanned.
-     * @param int                  $openBracket The position of the open bracket
-     *                                          in the stack passed in $tokens.
-     * @param array                $tokens      The stack of tokens that make up
-     *                                          the file.
-     * @param string               $type        The type of the token the brackets
-     *                                          belong to (function or use).
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile   The file being scanned.
+     * @param int                         $openBracket The position of the open bracket
+     *                                                 in the stack passed in $tokens.
+     * @param array                       $tokens      The stack of tokens that make up
+     *                                                 the file.
+     * @param string                      $type        The type of the token the brackets
+     *                                                 belong to (function or use).
      *
      * @return void
      */

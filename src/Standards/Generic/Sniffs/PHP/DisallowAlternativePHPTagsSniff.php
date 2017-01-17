@@ -63,9 +63,9 @@ class DisallowAlternativePHPTagsSniff implements Sniff
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
-     *                                        in the stack passed in $tokens.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack passed in $tokens.
      *
      * @return void
      */
@@ -195,11 +195,11 @@ class DisallowAlternativePHPTagsSniff implements Sniff
     /**
      * Try and find a matching PHP closing tag.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param array                $tokens    The token stack.
-     * @param int                  $stackPtr  The position of the current token
-     *                                        in the stack passed in $tokens.
-     * @param string               $content   The expected content of the closing tag to match the opener.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param array                       $tokens    The token stack.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack passed in $tokens.
+     * @param string                      $content   The expected content of the closing tag to match the opener.
      *
      * @return int|false Pointer to the position in the stack for the closing tag or false if not found.
      */
@@ -219,11 +219,11 @@ class DisallowAlternativePHPTagsSniff implements Sniff
     /**
      * Add a changeset to replace the alternative PHP tags.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile       The file being scanned.
-     * @param array                $tokens          The token stack.
-     * @param int                  $openTagPointer  Stack pointer to the PHP open tag.
-     * @param int                  $closeTagPointer Stack pointer to the PHP close tag.
-     * @param bool                 $echo            Whether to add 'echo' or not.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile       The file being scanned.
+     * @param array                       $tokens          The token stack.
+     * @param int                         $openTagPointer  Stack pointer to the PHP open tag.
+     * @param int                         $closeTagPointer Stack pointer to the PHP close tag.
+     * @param bool                        $echo            Whether to add 'echo' or not.
      *
      * @return void
      */

@@ -67,8 +67,8 @@ abstract class Generator
      * Retrieves the title of the sniff from the DOMNode supplied.
      *
      * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                     It represents the "documentation" tag in the XML
-     *                     standard file.
+     *                      It represents the "documentation" tag in the XML
+     *                      standard file.
      *
      * @return string
      */
@@ -107,8 +107,8 @@ abstract class Generator
      * Doc generators must implement this function to produce output.
      *
      * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                     It represents the "documentation" tag in the XML
-     *                     standard file.
+     *                      It represents the "documentation" tag in the XML
+     *                      standard file.
      *
      * @return void
      * @see    generate()

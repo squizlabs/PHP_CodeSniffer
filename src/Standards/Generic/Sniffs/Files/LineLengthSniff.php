@@ -51,9 +51,9 @@ class LineLengthSniff implements Sniff
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token in
+     *                                               the stack passed in $tokens.
      *
      * @return int
      */
@@ -77,9 +77,9 @@ class LineLengthSniff implements Sniff
     /**
      * Checks if a line is too long.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param array                $tokens    The token stack.
-     * @param int                  $stackPtr  The first token on the next line.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param array                       $tokens    The token stack.
+     * @param int                         $stackPtr  The first token on the next line.
      *
      * @return null|false
      */

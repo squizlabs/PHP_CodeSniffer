@@ -31,9 +31,9 @@ class IncludeOwnSystemSniff implements Sniff
     /**
      * Processes this sniff, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token in
+     *                                               the stack passed in $tokens.
      *
      * @return void
      */
@@ -77,10 +77,10 @@ class IncludeOwnSystemSniff implements Sniff
     /**
      * Determines the included class name from given token.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
-     * @param array                $tokens    The array of file tokens.
-     * @param int                  $stackPtr  The position in the tokens array of the
-     *                                        potentially included class.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param array                       $tokens    The array of file tokens.
+     * @param int                         $stackPtr  The position in the tokens array of the
+     *                                               potentially included class.
      *
      * @return string
      */

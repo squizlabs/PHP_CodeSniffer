@@ -19,8 +19,8 @@ class Text extends Generator
      * Process the documentation for a single sniff.
      *
      * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                     It represents the "documentation" tag in the XML
-     *                     standard file.
+     *                      It represents the "documentation" tag in the XML
+     *                      standard file.
      *
      * @return void
      */
@@ -43,8 +43,8 @@ class Text extends Generator
      * Prints the title area for a single sniff.
      *
      * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                     It represents the "documentation" tag in the XML
-     *                     standard file.
+     *                      It represents the "documentation" tag in the XML
+     *                      standard file.
      *
      * @return void
      */

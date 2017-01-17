@@ -100,9 +100,9 @@ class ForbiddenFunctionsSniff implements Sniff
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token in
+     *                                               the stack passed in $tokens.
      *
      * @return void
      */
@@ -186,11 +186,11 @@ class ForbiddenFunctionsSniff implements Sniff
     /**
      * Generates the error or warning for this sniff.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the forbidden function
-     *                                        in the token array.
-     * @param string               $function  The name of the forbidden function.
-     * @param string               $pattern   The pattern used for the match.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the forbidden function
+     *                                               in the token array.
+     * @param string                      $function  The name of the forbidden function.
+     * @param string                      $pattern   The pattern used for the match.
      *
      * @return void
      */

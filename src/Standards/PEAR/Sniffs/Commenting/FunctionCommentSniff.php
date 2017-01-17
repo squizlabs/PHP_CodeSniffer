@@ -32,9 +32,9 @@ class FunctionCommentSniff implements Sniff
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token
-     *                                        in the stack passed in $tokens.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack passed in $tokens.
      *
      * @return void
      */
@@ -98,10 +98,10 @@ class FunctionCommentSniff implements Sniff
     /**
      * Process the return comment of this function comment.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
-     * @param int                  $stackPtr     The position of the current token
-     *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile    The file being scanned.
+     * @param int                         $stackPtr     The position of the current token
+     *                                                  in the stack passed in $tokens.
+     * @param int                         $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
@@ -147,10 +147,10 @@ class FunctionCommentSniff implements Sniff
     /**
      * Process any throw tags that this function comment has.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
-     * @param int                  $stackPtr     The position of the current token
-     *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile    The file being scanned.
+     * @param int                         $stackPtr     The position of the current token
+     *                                                  in the stack passed in $tokens.
+     * @param int                         $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
@@ -187,10 +187,10 @@ class FunctionCommentSniff implements Sniff
     /**
      * Process the function parameter comments.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile    The file being scanned.
-     * @param int                  $stackPtr     The position of the current token
-     *                                           in the stack passed in $tokens.
-     * @param int                  $commentStart The position in the stack where the comment started.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile    The file being scanned.
+     * @param int                         $stackPtr     The position of the current token
+     *                                                  in the stack passed in $tokens.
+     * @param int                         $commentStart The position in the stack where the comment started.
      *
      * @return void
      */
@@ -426,7 +426,10 @@ class FunctionCommentSniff implements Sniff
                     }
 
                     $error = 'Parameter comment not aligned correctly; expected %s spaces but found %s';
-                    $data  = array($expected, $found);
+                    $data  = array(
+                              $expected,
+                              $found,
+                             );
                     $fix   = $phpcsFile->addFixableError($error, $commentToken, 'ParamCommentAlignment', $data);
                     if ($fix === true) {
                         $padding = str_repeat(' ', $expected);
@@ -436,8 +439,8 @@ class FunctionCommentSniff implements Sniff
                             $phpcsFile->fixer->addContentBefore($commentToken, $padding);
                         }
                     }
-                }
-            }
+                }//end foreach
+            }//end if
         }//end foreach
 
         $realNames = array();

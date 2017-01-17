@@ -57,7 +57,7 @@ abstract class AbstractPatternSniff implements Sniff
 
 
     /**
-     * Constructs a PHP_CodeSniffer_Standards_AbstractPatternSniff.
+     * Constructs a AbstractPatternSniff.
      *
      * @param boolean $ignoreComments If true, comments will be ignored.
      */
@@ -154,8 +154,7 @@ abstract class AbstractPatternSniff implements Sniff
      *
      * @return int The position in the pattern that this test should register
      *             as the listener.
-     * @throws PHP_CodeSniffer_Exception If we could not determine a token
-     *                                         to listen for.
+     * @throws RuntimeException If we could not determine a token to listen for.
      */
     private function getListenerTokenPos($pattern)
     {
@@ -177,11 +176,11 @@ abstract class AbstractPatternSniff implements Sniff
     /**
      * Processes the test.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where the
-     *                                        token occurred.
-     * @param int                  $stackPtr  The position in the tokens stack
-     *                                        where the listening token type was
-     *                                        found.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The PHP_CodeSniffer file where the
+     *                                               token occurred.
+     * @param int                         $stackPtr  The position in the tokens stack
+     *                                               where the listening token type
+     *                                               was found.
      *
      * @return void
      * @see    register()
@@ -243,14 +242,14 @@ abstract class AbstractPatternSniff implements Sniff
     /**
      * Processes the pattern and verifies the code at $stackPtr.
      *
-     * @param array                $patternInfo Information about the pattern used
-     *                                          for checking, which includes are
-     *                                          parsed token representation of the
-     *                                          pattern.
-     * @param PHP_CodeSniffer_File $phpcsFile   The PHP_CodeSniffer file where the
-     *                                          token occurred.
-     * @param int                  $stackPtr    The position in the tokens stack where
-     *                                          the listening token type was found.
+     * @param array                       $patternInfo Information about the pattern used
+     *                                                 for checking, which includes are
+     *                                                 parsed token representation of the
+     *                                                 pattern.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile   The PHP_CodeSniffer file where the
+     *                                                 token occurred.
+     * @param int                         $stackPtr    The position in the tokens stack where
+     *                                                 the listening token type was found.
      *
      * @return array
      */
@@ -746,10 +745,10 @@ abstract class AbstractPatternSniff implements Sniff
      /**
       * Processes any tokens registered with registerSupplementary().
       *
-      * @param PHP_CodeSniffer_File $phpcsFile The PHP_CodeSniffer file where to
-      *                                        process the skip.
-      * @param int                  $stackPtr  The position in the tokens stack to
-      *                                        process.
+      * @param \PHP_CodeSniffer\Files\File $phpcsFile The PHP_CodeSniffer file where to
+      *                                               process the skip.
+      * @param int                         $stackPtr  The position in the tokens stack to
+      *                                               process.
       *
       * @return void
       * @see    registerSupplementary()
