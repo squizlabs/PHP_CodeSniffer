@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1265 : ES6 arrow function raises unexpected operator spacing errors
   - Fixed bug #1267 : Fixer incorrectly handles filepaths with repeated dir names
     -- Thanks to Sergey Ovchinnikov for the patch
+  - Fixed bug #1276 : Commenting.FunctionComment.InvalidReturnVoid conditional issue with anonymous classes
   - Fixed bug #1277 : Squiz.PHP.DisallowMultipleAssignments.Found error when var assignment is on the same line as an open tag
  </notes>
  <contents>
