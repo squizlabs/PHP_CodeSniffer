@@ -151,6 +151,11 @@ class Squiz_Sniffs_PHP_DisallowMultipleAssignmentsSniff implements PHP_CodeSniff
                 return;
             }
 
+            if ($tokens[$i]['code'] === T_OPEN_TAG) {
+                // We reached the end of the code block.
+                return;
+            }
+
             if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
                 $prevLine = $tokens[$i]['line'];
                 break;
