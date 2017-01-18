@@ -87,7 +87,7 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
                 $phpcsFile->addError($error, $param['token'], 'NotAtEnd');
                 return;
             }
-        }
+        }//end foreach
 
     }//end process()
 
