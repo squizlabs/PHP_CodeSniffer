@@ -54,6 +54,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1252 : Squiz.Strings.ConcatenationSpacing fix creates syntax error when joining a number to a string
   - Fixed bug #1253 : Generic.ControlStructures.InlineControlStructure fix creates syntax error fixing if-try/catch
   - Fixed bug #1257 : Double dash in CSS class name can lead to "Named colours are forbidden" false positives
+  - Fixed bug #1260 : Syntax errors not being shown when error_prepend_string is set
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1265 : ES6 arrow function raises unexpected operator spacing errors
   - Fixed bug #1267 : Fixer incorrectly handles filepaths with repeated dir names
     -- Thanks to Sergey Ovchinnikov for the patch
