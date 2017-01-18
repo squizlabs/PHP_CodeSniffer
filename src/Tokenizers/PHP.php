@@ -391,6 +391,7 @@ class PHP extends Tokenizer
                             T_STRING_CONCAT            => 1,
                             T_INLINE_THEN              => 1,
                             T_INLINE_ELSE              => 1,
+                            T_NULLABLE                 => 1,
                             T_NULL                     => 4,
                             T_FALSE                    => 5,
                             T_TRUE                     => 4,
@@ -811,6 +812,33 @@ class PHP extends Tokenizer
             }
 
             /*
+                Convert ? to T_NULLABLE OR T_INLINE_THEN
+            */
+
+            if ($tokenIsArray === false && $token[0] === '?') {
+                $newToken            = array();
+                $newToken['content'] = '?';
+
+                for ($i = ($stackPtr - 1); $i >= 0; $i--) {
+                    if ($tokens[$i][0] === T_FUNCTION) {
+                        $newToken['code'] = T_NULLABLE;
+                        $newToken['type'] = 'T_NULLABLE';
+                        break;
+                    } else if (in_array($tokens[$i][0], array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '{', ';')) === true) {
+                        $newToken['code'] = T_INLINE_THEN;
+                        $newToken['type'] = 'T_INLINE_THEN';
+
+                        $insideInlineIf[] = $stackPtr;
+                        break;
+                    }
+                }
+
+                $finalTokens[$newStackPtr] = $newToken;
+                $newStackPtr++;
+                continue;
+            }//end if
+
+            /*
                 Tokens after a double colon may be look like scope openers,
                 such as when writing code like Foo::NAMESPACE, but they are
                 only ever variables or strings.
@@ -1079,9 +1107,7 @@ class PHP extends Tokenizer
 
                 // Convert colons that are actually the ELSE component of an
                 // inline IF statement.
-                if ($newToken['code'] === T_INLINE_THEN) {
-                    $insideInlineIf[] = $stackPtr;
-                } else if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
+                if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
                     array_pop($insideInlineIf);
                     $newToken['code'] = T_INLINE_ELSE;
                     $newToken['type'] = 'T_INLINE_ELSE';
@@ -1654,9 +1680,6 @@ class PHP extends Tokenizer
             break;
         case '.':
             $newToken['type'] = 'T_STRING_CONCAT';
-            break;
-        case '?':
-            $newToken['type'] = 'T_INLINE_THEN';
             break;
         case ';':
             $newToken['type'] = 'T_SEMICOLON';

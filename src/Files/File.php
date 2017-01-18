@@ -1310,7 +1310,7 @@ class File
                     $typeHint .= $this->tokens[$i]['content'];
                 }
                 break;
-            case T_INLINE_THEN:
+            case T_NULLABLE:
                 if ($defaultStart === null) {
                     $nullableType = true;
                     $typeHint    .= $this->tokens[$i]['content'];
@@ -1325,15 +1325,12 @@ class File
                 }
 
                 $vars[$paramCount]            = array();
+                $vars[$paramCount]['token']   = $currVar;
                 $vars[$paramCount]['name']    = $this->tokens[$currVar]['content'];
                 $vars[$paramCount]['content'] = trim($this->getTokensAsString($paramStart, ($i - $paramStart)));
 
                 if ($defaultStart !== null) {
-                    $vars[$paramCount]['default']
-                        = $this->getTokensAsString(
-                            $defaultStart,
-                            ($i - $defaultStart)
-                        );
+                    $vars[$paramCount]['default'] = trim($this->getTokensAsString($defaultStart, ($i - $defaultStart)));
                 }
 
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;

@@ -85,6 +85,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         );
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
     }//end testPassByReference()
@@ -117,6 +118,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         );
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
     }//end testArrayHint()
@@ -158,6 +160,8 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         );
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
+        unset($found[1]['token']);
         $this->assertSame($expected, $found);
 
     }//end testTypeHint()
@@ -190,6 +194,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         );
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
     }//end testSelfTypeHint()
@@ -231,6 +236,8 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         );
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
+        unset($found[1]['token']);
         $this->assertSame($expected, $found);
 
     }//end testNullableTypeHint()
@@ -263,6 +270,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         );
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
     }//end testVariable()
@@ -296,6 +304,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         );
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
     }//end testSingleDefaultValue()
@@ -338,6 +347,8 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         );
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
+        unset($found[1]['token']);
         $this->assertSame($expected, $found);
 
     }//end testDefaultValues()
