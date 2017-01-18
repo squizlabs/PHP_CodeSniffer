@@ -72,7 +72,7 @@ class ValidDefaultValueSniff implements Sniff
                 $phpcsFile->addError($error, $param['token'], 'NotAtEnd');
                 return;
             }
-        }
+        }//end foreach
 
     }//end process()
 
