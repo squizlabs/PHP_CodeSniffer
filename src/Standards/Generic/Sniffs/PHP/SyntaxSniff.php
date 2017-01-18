@@ -61,11 +61,15 @@ class SyntaxSniff implements Sniff
         }
 
         $fileName = $phpcsFile->getFilename();
-        $cmd      = $this->phpPath." -l \"$fileName\" 2>&1";
-        $output   = shell_exec($cmd);
+        if (defined('HHVM_VERSION') === false) {
+            $cmd = $this->phpPath." -l -d error_prepend_string='' \"$fileName\" 2>&1";
+        } else {
+            $cmd = $this->phpPath." -l \"$fileName\" 2>&1";
+        }
 
+        $output  = shell_exec($cmd);
         $matches = array();
-        if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/', trim($output), $matches) === 1) {
+        if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/m', trim($output), $matches) === 1) {
             $error = trim($matches[1]);
             $line  = (int) $matches[2];
             $phpcsFile->addErrorOnLine("PHP syntax error: $error", $line, 'PHPSyntax');

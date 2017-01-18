@@ -1180,6 +1180,15 @@ $foo = foo(
         return false;
     }
 
+?>
+<?php
+    if (true) {
+    }
+    else if (true) {
+    }
+
+$a = 1;
+
 /*
 $a = array(
     */
