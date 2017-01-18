@@ -2742,6 +2742,7 @@ class PHP_CodeSniffer_File
      *
      * <code>
      *   0 => array(
+     *         'token'             => int,     // The position of the var in the token stack.
      *         'name'              => '$var',  // The variable name.
      *         'content'           => string,  // The full content of the variable definition.
      *         'pass_by_reference' => boolean, // Is the variable passed by reference?
@@ -2870,15 +2871,12 @@ class PHP_CodeSniffer_File
                 }
 
                 $vars[$paramCount]            = array();
+                $vars[$paramCount]['token']   = $currVar;
                 $vars[$paramCount]['name']    = $this->_tokens[$currVar]['content'];
                 $vars[$paramCount]['content'] = trim($this->getTokensAsString($paramStart, ($i - $paramStart)));
 
                 if ($defaultStart !== null) {
-                    $vars[$paramCount]['default']
-                        = $this->getTokensAsString(
-                            $defaultStart,
-                            ($i - $defaultStart)
-                        );
+                    $vars[$paramCount]['default'] = trim($this->getTokensAsString($defaultStart, ($i - $defaultStart)));
                 }
 
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;

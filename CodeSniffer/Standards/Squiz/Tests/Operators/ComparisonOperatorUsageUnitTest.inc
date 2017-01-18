@@ -130,4 +130,4 @@ $var = ($var1 === 0) ? $var1 : "foobar";
 
 $var = ($var1 == 0) ? $var1 : "foobar";
 
-function foo(string $bar, array $baz = [], ?MyClass $object) : MyClass {}
+function foo(string $bar, array $baz, ?MyClass $object) : MyClass {}

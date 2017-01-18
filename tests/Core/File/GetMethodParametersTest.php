@@ -86,6 +86,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
+                        'token'             => 9,
                         'name'              => '$var',
                         'content'           => '&$var',
                         'pass_by_reference' => true,
@@ -118,6 +119,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
+                        'token'             => 24,
                         'name'              => '$var',
                         'content'           => 'array $var',
                         'pass_by_reference' => false,
@@ -150,6 +152,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
+                        'token'             => 89,
                         'name'              => '$var1',
                         'content'           => 'foo $var1',
                         'pass_by_reference' => false,
@@ -159,6 +162,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                        );
 
         $expected[1] = array(
+                        'token'             => 94,
                         'name'              => '$var2',
                         'content'           => 'bar $var2',
                         'pass_by_reference' => false,
@@ -191,6 +195,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
+                        'token'             => 115,
                         'name'              => '$var',
                         'content'           => 'self $var',
                         'pass_by_reference' => false,
@@ -223,6 +228,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
+                        'token'             => 133,
                         'name'              => '$var1',
                         'content'           => '?int $var1',
                         'pass_by_reference' => false,
@@ -232,6 +238,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                        );
 
         $expected[1] = array(
+                        'token'             => 140,
                         'name'              => '$var2',
                         'content'           => '?\bar $var2',
                         'pass_by_reference' => false,
@@ -264,6 +271,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
+                        'token'             => 37,
                         'name'              => '$var',
                         'content'           => '$var',
                         'pass_by_reference' => false,
@@ -296,6 +304,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
+                        'token'             => 50,
                         'name'              => '$var1',
                         'content'           => '$var1=self::CONSTANT',
                         'default'           => 'self::CONSTANT',
@@ -329,6 +338,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
+                        'token'             => 67,
                         'name'              => '$var1',
                         'content'           => '$var1=1',
                         'default'           => '1',
@@ -338,6 +348,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'nullable_type'     => false,
                        );
         $expected[1] = array(
+                        'token'             => 72,
                         'name'              => '$var2',
                         'content'           => "\$var2='value'",
                         'default'           => "'value'",
