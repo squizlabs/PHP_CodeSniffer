@@ -40,7 +40,7 @@ class Generic_Sniffs_Metrics_CyclomaticComplexitySniff implements PHP_CodeSniffe
     public $complexity = 10;
 
     /**
-     * A complexity higer than this value will throw an error.
+     * A complexity higher than this value will throw an error.
      *
      * @var int
      */
