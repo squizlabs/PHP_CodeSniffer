@@ -38,6 +38,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Added more guard code for JS files with syntax errors (request #1271 and request #1272)
   - PEAR.Commenting.FunctionComment fixers now correctly handle multi-line param comments
+  - AbstractVariableSniff now supports anonymous classes
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.NamingConventions.ConstructorName and PEAR.NamingConventions.ValidVariable now support anonymous classes
   - Fixed an error where a nullable type character was detected as an inline then token
     -- A new T_NULLABLE token has been added to represent the ? nullable type character
     -- Thanks to Jaroslav Hanslík for the patch

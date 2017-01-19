@@ -2650,31 +2650,37 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the declaration names for T_CLASS, T_INTERFACE and T_FUNCTION tokens.
+     * Returns the declaration names for classes, interfaces, and functions.
      *
      * @param int $stackPtr The position of the declaration token which
      *                      declared the class, interface or function.
      *
      * @return string|null The name of the class, interface or function.
-     *                     or NULL if the function is a closure.
+     *                     or NULL if the function or class is anonymous.
      * @throws PHP_CodeSniffer_Exception If the specified token is not of type
-     *                                   T_FUNCTION, T_CLASS or T_INTERFACE.
+     *                                   T_FUNCTION, T_CLASS, T_ANON_CLASS,
+     *                                   or T_INTERFACE.
      */
     public function getDeclarationName($stackPtr)
     {
         $tokenCode = $this->_tokens[$stackPtr]['code'];
-        if ($tokenCode !== T_FUNCTION
-            && $tokenCode !== T_CLASS
-            && $tokenCode !== T_INTERFACE
-            && $tokenCode !== T_TRAIT
-        ) {
-            throw new PHP_CodeSniffer_Exception('Token type "'.$this->_tokens[$stackPtr]['type'].'" is not T_FUNCTION, T_CLASS, T_INTERFACE or T_TRAIT');
+
+        if ($tokenCode === T_ANON_CLASS) {
+            return null;
         }
 
         if ($tokenCode === T_FUNCTION
             && $this->isAnonymousFunction($stackPtr) === true
         ) {
             return null;
+        }
+
+        if ($tokenCode !== T_FUNCTION
+            && $tokenCode !== T_CLASS
+            && $tokenCode !== T_INTERFACE
+            && $tokenCode !== T_TRAIT
+        ) {
+            throw new PHP_CodeSniffer_Exception('Token type "'.$this->_tokens[$stackPtr]['type'].'" is not T_FUNCTION, T_CLASS, T_INTERFACE or T_TRAIT');
         }
 
         $content = null;
@@ -3025,6 +3031,7 @@ class PHP_CodeSniffer_File
         $ptr        = array_pop($conditions);
         if (isset($this->_tokens[$ptr]) === false
             || ($this->_tokens[$ptr]['code'] !== T_CLASS
+            && $this->_tokens[$ptr]['code'] !== T_ANON_CLASS
             && $this->_tokens[$ptr]['code'] !== T_TRAIT)
         ) {
             if (isset($this->_tokens[$ptr]) === true
@@ -3708,7 +3715,9 @@ class PHP_CodeSniffer_File
             return false;
         }
 
-        if ($this->_tokens[$stackPtr]['code'] !== T_CLASS) {
+        if ($this->_tokens[$stackPtr]['code'] !== T_CLASS
+            && $this->_tokens[$stackPtr]['code'] !== T_ANON_CLASS
+        ) {
             return false;
         }
 
@@ -3757,7 +3766,9 @@ class PHP_CodeSniffer_File
             return false;
         }
 
-        if ($this->_tokens[$stackPtr]['code'] !== T_CLASS) {
+        if ($this->_tokens[$stackPtr]['code'] !== T_CLASS
+            && $this->_tokens[$stackPtr]['code'] !== T_ANON_CLASS
+        ) {
             return false;
         }
 
