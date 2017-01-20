@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The getMethodParameters() method now supports nullable types
     -- The return array now contains a new "nullable_type" index set to true or false for each method param
     -- Thanks to Juliette Reinders Folmer for the patch
+  - The getMethodParameters() method now supports closures
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Added more guard code for JS files with syntax errors (request #1271 and request #1272)
   - PEAR.Commenting.FunctionComment fixers now correctly handle multi-line param comments
   - AbstractVariableSniff now supports anonymous classes
