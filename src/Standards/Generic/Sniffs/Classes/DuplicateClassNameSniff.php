@@ -20,7 +20,7 @@ class DuplicateClassNameSniff implements Sniff
      *
      * @var array
      */
-    public $foundClasses = array();
+    protected $foundClasses = array();
 
 
     /**

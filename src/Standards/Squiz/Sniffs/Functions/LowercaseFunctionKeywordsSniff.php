@@ -1,6 +1,6 @@
 <?php
 /**
- * Ensures all class keywords are lowercase.
+ * Ensures all function keywords are lowercase.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)

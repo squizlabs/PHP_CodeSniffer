@@ -29,13 +29,13 @@ class ShorthandSizeSniff implements Sniff
      *
      * @var array
      */
-    public $excludeStyles = array(
-                             'background-position'      => 'background-position',
-                             'box-shadow'               => 'box-shadow',
-                             'transform-origin'         => 'transform-origin',
-                             '-webkit-transform-origin' => '-webkit-transform-origin',
-                             '-ms-transform-origin'     => '-ms-transform-origin',
-                            );
+    protected $excludeStyles = array(
+                                'background-position'      => 'background-position',
+                                'box-shadow'               => 'box-shadow',
+                                'transform-origin'         => 'transform-origin',
+                                '-webkit-transform-origin' => '-webkit-transform-origin',
+                                '-ms-transform-origin'     => '-ms-transform-origin',
+                               );
 
 
     /**

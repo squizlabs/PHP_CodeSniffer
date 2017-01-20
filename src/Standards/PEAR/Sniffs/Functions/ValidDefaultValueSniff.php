@@ -24,7 +24,10 @@ class ValidDefaultValueSniff implements Sniff
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return array(
+                T_FUNCTION,
+                T_CLOSURE,
+               );
 
     }//end register()
 

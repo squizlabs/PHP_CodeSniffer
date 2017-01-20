@@ -1333,25 +1333,47 @@ class PHP extends Tokenizer
 
                 continue;
             } else if ($this->tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
-                // Unless there is a variable or a bracket before this token,
-                // it is the start of an array being defined using the short syntax.
-                for ($x = ($i - 1); $x > 0; $x--) {
-                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
-                        break;
-                    }
+                if (isset($this->tokens[$i]['bracket_closer']) === false) {
+                    continue;
                 }
 
-                $allowed = array(
-                            T_CLOSE_CURLY_BRACKET  => T_CLOSE_CURLY_BRACKET,
-                            T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
-                            T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
-                            T_VARIABLE             => T_VARIABLE,
-                            T_STRING               => T_STRING,
-                           );
+                // Unless there is a variable or a bracket before this token,
+                // it is the start of an array being defined using the short syntax.
+                $isShortArray = false;
+                $allowed      = array(
+                                 T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
+                                 T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
+                                 T_VARIABLE             => T_VARIABLE,
+                                 T_OBJECT_OPERATOR      => T_OBJECT_OPERATOR,
+                                 T_STRING               => T_STRING,
+                                );
 
-                if (isset($allowed[$this->tokens[$x]['code']]) === false
-                    && isset($this->tokens[$i]['bracket_closer']) === true
-                ) {
+                for ($x = ($i - 1); $x > 0; $x--) {
+                    // If we hit a scope opener, the statement has ended
+                    // without finding anything, so it's probably an array
+                    // using PHP 7.1 short list syntax.
+                    if (isset($this->tokens[$x]['scope_opener']) === true) {
+                        $isShortArray = true;
+                        break;
+                    }
+
+                    if (isset($this->tokens[$x]['bracket_opener']) === true
+                        && $x > $this->tokens[$x]['bracket_opener']
+                    ) {
+                        $x = $this->tokens[$x]['bracket_opener'];
+                        continue;
+                    }
+
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
+                        if (isset($allowed[$this->tokens[$x]['code']]) === false) {
+                            $isShortArray = true;
+                        }
+
+                        break;
+                    }
+                }//end for
+
+                if ($isShortArray === true) {
                     $this->tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
                     $this->tokens[$i]['type'] = 'T_OPEN_SHORT_ARRAY';
 

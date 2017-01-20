@@ -1092,19 +1092,31 @@ class File
 
 
     /**
-     * Returns the declaration names for T_CLASS, T_INTERFACE and T_FUNCTION tokens.
+     * Returns the declaration names for classes, interfaces, and functions.
      *
      * @param int $stackPtr The position of the declaration token which
      *                      declared the class, interface or function.
      *
      * @return string|null The name of the class, interface or function.
-     *                     or NULL if the function is a closure.
+     *                     or NULL if the function or class is anonymous.
      * @throws PHP_CodeSniffer_Exception If the specified token is not of type
-     *                                   T_FUNCTION, T_CLASS or T_INTERFACE.
+     *                                   T_FUNCTION, T_CLASS, T_ANON_CLASS,
+     *                                   T_TRAIT, or T_INTERFACE.
      */
     public function getDeclarationName($stackPtr)
     {
         $tokenCode = $this->tokens[$stackPtr]['code'];
+
+        if ($tokenCode === T_ANON_CLASS) {
+            return null;
+        }
+
+        if ($tokenCode === T_FUNCTION
+            && $this->isAnonymousFunction($stackPtr) === true
+        ) {
+            return null;
+        }
+
         if ($tokenCode !== T_FUNCTION
             && $tokenCode !== T_CLASS
             && $tokenCode !== T_INTERFACE
@@ -1119,12 +1131,6 @@ class File
             // This is a function declared without the "function" keyword.
             // So this token is the function name.
             return $this->tokens[$stackPtr]['content'];
-        }
-
-        if ($tokenCode === T_FUNCTION
-            && $this->isAnonymousFunction($stackPtr) === true
-        ) {
-            return null;
         }
 
         $content = null;
@@ -1191,7 +1197,7 @@ class File
 
 
     /**
-     * Returns the method parameters for the specified T_FUNCTION token.
+     * Returns the method parameters for the specified function token.
      *
      * Each parameter is in the following format:
      *
@@ -1208,17 +1214,19 @@ class File
      * Parameters with default values have an additional array index of
      * 'default' with the value of the default as a string.
      *
-     * @param int $stackPtr The position in the stack of the T_FUNCTION token
+     * @param int $stackPtr The position in the stack of the function token
      *                      to acquire the parameters for.
      *
      * @return array
      * @throws PHP_CodeSniffer_Exception If the specified $stackPtr is not of
-     *                                   type T_FUNCTION.
+     *                                   type T_FUNCTION or T_CLOSURE.
      */
     public function getMethodParameters($stackPtr)
     {
-        if ($this->tokens[$stackPtr]['code'] !== T_FUNCTION) {
-            throw new TokenizerException('$stackPtr must be of type T_FUNCTION');
+        if ($this->tokens[$stackPtr]['code'] !== T_FUNCTION
+            && $this->tokens[$stackPtr]['code'] !== T_CLOSURE
+        ) {
+            throw new TokenizerException('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
         }
 
         $opener = $this->tokens[$stackPtr]['parenthesis_opener'];
@@ -1479,6 +1487,7 @@ class File
         $ptr        = array_pop($conditions);
         if (isset($this->tokens[$ptr]) === false
             || ($this->tokens[$ptr]['code'] !== T_CLASS
+            && $this->tokens[$ptr]['code'] !== T_ANON_CLASS
             && $this->tokens[$ptr]['code'] !== T_TRAIT)
         ) {
             if (isset($this->tokens[$ptr]) === true
@@ -2162,7 +2171,9 @@ class File
             return false;
         }
 
-        if ($this->tokens[$stackPtr]['code'] !== T_CLASS) {
+        if ($this->tokens[$stackPtr]['code'] !== T_CLASS
+            && $this->tokens[$stackPtr]['code'] !== T_ANON_CLASS
+        ) {
             return false;
         }
 
@@ -2211,7 +2222,9 @@ class File
             return false;
         }
 
-        if ($this->tokens[$stackPtr]['code'] !== T_CLASS) {
+        if ($this->tokens[$stackPtr]['code'] !== T_CLASS
+            && $this->tokens[$stackPtr]['code'] !== T_ANON_CLASS
+        ) {
             return false;
         }
 

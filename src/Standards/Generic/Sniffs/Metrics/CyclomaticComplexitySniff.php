@@ -28,7 +28,7 @@ class CyclomaticComplexitySniff implements Sniff
     public $complexity = 10;
 
     /**
-     * A complexity higer than this value will throw an error.
+     * A complexity higher than this value will throw an error.
      *
      * @var integer
      */

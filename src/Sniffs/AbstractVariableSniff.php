@@ -3,7 +3,7 @@
  * A class to find T_VARIABLE tokens.
  *
  * This class can distinguish between normal T_VARIABLE tokens, and those tokens
- * that represent class members. If a class member is encountered, then then
+ * that represent class members. If a class member is encountered, then the
  * processMemberVar method is called so the extending class can process it. If
  * the token is found to be a normal T_VARIABLE token, then processVariable is
  * called.
@@ -50,6 +50,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     {
         $scopes = array(
                    T_CLASS,
+                   T_ANON_CLASS,
                    T_TRAIT,
                    T_INTERFACE,
                   );
