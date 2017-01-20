@@ -679,33 +679,6 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
-                Convert ? to T_NULLABLE OR T_INLINE_THEN
-            */
-
-            if ($tokenIsArray === false && $token[0] === '?') {
-                $newToken            = array();
-                $newToken['content'] = '?';
-
-                for ($i = ($stackPtr - 1); $i >= 0; $i--) {
-                    if ($tokens[$i][0] === T_FUNCTION) {
-                        $newToken['code'] = T_NULLABLE;
-                        $newToken['type'] = 'T_NULLABLE';
-                        break;
-                    } else if (in_array($tokens[$i][0], array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '{', ';')) === true) {
-                        $newToken['code'] = T_INLINE_THEN;
-                        $newToken['type'] = 'T_INLINE_THEN';
-
-                        $insideInlineIf[] = $stackPtr;
-                        break;
-                    }
-                }
-
-                $finalTokens[$newStackPtr] = $newToken;
-                $newStackPtr++;
-                continue;
-            }//end if
-
-            /*
                 Tokens after a double colon may be look like scope openers,
                 such as when writing code like Foo::NAMESPACE, but they are
                 only ever variables or strings.
@@ -998,7 +971,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 // Convert colons that are actually the ELSE component of an
                 // inline IF statement.
-                if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
+                if ($newToken['code'] === T_INLINE_THEN) {
+                    $insideInlineIf[] = $stackPtr;
+                } else if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
                     array_pop($insideInlineIf);
                     $newToken['code'] = T_INLINE_ELSE;
                     $newToken['type'] = 'T_INLINE_ELSE';
@@ -1113,9 +1088,63 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
             if ($tokens[$i]['code'] === T_FUNCTION) {
                 /*
+                    Convert ? to T_NULLABLE for function parameter type declarations.
+                */
+
+                if (isset($tokens[$i]['parenthesis_opener'], $tokens[$i]['parenthesis_closer']) === true) {
+                    $maybeNullable          = true;
+                    $nestedParenthesisCount = 1;
+
+                    // Which nesting level is the one we are interested in ?
+                    if (isset($tokens[$tokens[$i]['parenthesis_opener']]['nested_parenthesis']) === true) {
+                        $nestedParenthesisCount += count($tokens[$tokens[$i]['parenthesis_opener']]['nested_parenthesis']);
+                    }
+
+                    for ($x = ($tokens[$i]['parenthesis_opener'] + 1); $x < $tokens[$i]['parenthesis_closer']; $x++) {
+                        if ($tokens[$x]['code'] !== T_INLINE_THEN
+                            && $tokens[$x]['code'] !== T_COMMA
+                            && $tokens[$x]['code'] !== T_OPEN_SQUARE_BRACKET
+                        ) {
+                            continue;
+                        }
+
+                        if ($maybeNullable === true && $tokens[$x]['code'] === T_INLINE_THEN) {
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $line = $tokens[$x]['line'];
+                                $type = $tokens[$x]['type'];
+                                echo "\t* token $x on line $line changed from $type to T_NULLABLE".PHP_EOL;
+                            }
+
+                            $tokens[$x]['code'] = T_NULLABLE;
+                            $tokens[$x]['type'] = 'T_NULLABLE';
+
+                            $maybeNullable = false;
+                        } else if ($maybeNullable === false
+                            && $tokens[$x]['code'] === T_OPEN_SQUARE_BRACKET
+                            && (isset($tokens[$x]['bracket_opener']) === true
+                            && $tokens[$x]['bracket_opener'] === $x)
+                            && isset($tokens[$x]['bracket_closer']) === true
+                        ) {
+                            // Potentially short array definition, skip forward to the end.
+                            $x = $tokens[$x]['bracket_closer'];
+                        } else if ($maybeNullable === false
+                            && $tokens[$x]['code'] === T_COMMA
+                            && isset($tokens[$x]['nested_parenthesis']) === true
+                            && count($tokens[$x]['nested_parenthesis']) === $nestedParenthesisCount
+                        ) {
+                            $maybeNullable = true;
+                        }//end if
+                    }//end for
+
+                    unset($maybeNullable, $nestedParenthesisCount);
+                }//end if
+
+                /*
                     Detect functions that are actually closures and
                     assign them a different token.
                 */
+
+                $tokenBeforeReturnTypeHint = $i;
 
                 if (isset($tokens[$i]['scope_opener']) === true) {
                     for ($x = ($i + 1); $x < $numTokens; $x++) {
@@ -1147,9 +1176,14 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         }
                     }
 
+                    if (isset($tokens[$i]['parenthesis_closer']) === true) {
+                        $tokenBeforeReturnTypeHint = $tokens[$i]['parenthesis_closer'];
+                    }
+
                     $tokenAfterReturnTypeHint = $tokens[$i]['scope_opener'];
                 } else if (isset($tokens[$i]['parenthesis_closer']) === true) {
-                    $tokenAfterReturnTypeHint = null;
+                    $tokenBeforeReturnTypeHint = $tokens[$i]['parenthesis_closer'];
+                    $tokenAfterReturnTypeHint  = null;
                     for ($x = ($tokens[$i]['parenthesis_closer'] + 1); $x < $numTokens; $x++) {
                         if ($tokens[$x]['code'] === T_SEMICOLON) {
                             $tokenAfterReturnTypeHint = $x;
@@ -1169,11 +1203,16 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 /*
                     Detect function return values and assign them
                     a special token, because PHP doesn't.
+                    Detect nullable return type indication and assign them
+                    a special token, because PHP doesn't.
                 */
 
-                for ($x = ($tokenAfterReturnTypeHint - 1); $x > $i; $x--) {
+                $hasReturnTypeHint = false;
+                for ($x = ($tokenAfterReturnTypeHint - 1); $x > $tokenBeforeReturnTypeHint; $x--) {
                     if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
-                        if (in_array($tokens[$x]['code'], array(T_STRING, T_ARRAY, T_CALLABLE, T_SELF, T_PARENT), true) === true) {
+                        if ($hasReturnTypeHint === false
+                            && in_array($tokens[$x]['code'], array(T_STRING, T_ARRAY, T_CALLABLE, T_SELF, T_PARENT), true) === true
+                        ) {
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $line = $tokens[$x]['line'];
                                 $type = $tokens[$x]['type'];
@@ -1182,11 +1221,23 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                             $tokens[$x]['code'] = T_RETURN_TYPE;
                             $tokens[$x]['type'] = 'T_RETURN_TYPE';
-                        }
+                            $hasReturnTypeHint  = true;
+                        } else if ($hasReturnTypeHint === true
+                            && $tokens[$x]['code'] === T_INLINE_THEN
+                        ) {
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $line = $tokens[$x]['line'];
+                                $type = $tokens[$x]['type'];
+                                echo "\t* token $x on line $line changed from $type to T_NULLABLE".PHP_EOL;
+                            }
 
-                        break;
-                    }
-                }
+                            $tokens[$x]['code'] = T_NULLABLE;
+                            $tokens[$x]['type'] = 'T_NULLABLE';
+                            break;
+                        }//end if
+                    }//end if
+                }//end for
+                unset($tokenAfterReturnTypeHint, $tokenBeforeReturnTypeHint, $hasReturnTypeHint);
 
                 continue;
             } else if ($tokens[$i]['code'] === T_CLASS && isset($tokens[$i]['scope_opener']) === true) {
@@ -1596,6 +1647,9 @@ class PHP_CodeSniffer_Tokenizers_PHP
             break;
         case '.':
             $newToken['type'] = 'T_STRING_CONCAT';
+            break;
+        case '?':
+            $newToken['type'] = 'T_INLINE_THEN';
             break;
         case ';':
             $newToken['type'] = 'T_SEMICOLON';
