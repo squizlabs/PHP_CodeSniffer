@@ -178,8 +178,8 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
 
                         echo '] ';
                     }
-
-                    echo $errorMsg.PHP_EOL;
+                    
+                    echo str_replace( '<', '&lt;', str_replace( '>', '&gt;', $errorMsg ) ).PHP_EOL;
                 }//end foreach
             }//end foreach
         }//end foreach
