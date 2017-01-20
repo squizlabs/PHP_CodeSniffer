@@ -30,7 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This should stop some Git hooks generating errors because PHPCS is trying to process the refs passed on STDIN
   - Squiz.Commenting.DocCommentAlignment now checks comments on class properties defined using the VAR keyword
     -- Thanks to Klaus Purer for the patch
-  - The getMethodParamethers() method now recognises "self" as a valid type hint
+  - The getMethodParameters() method now recognises "self" as a valid type hint
     -- The return array now contains a new "content" index containing the raw content of the param definition
     -- Thanks to Juliette Reinders Folmer for the patch
   - The getMethodParameters() method now supports nullable types
@@ -41,6 +41,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - AbstractVariableSniff now supports anonymous classes
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.NamingConventions.ConstructorName and PEAR.NamingConventions.ValidVariable now support anonymous classes
+  - Generic.CodeAnalysis.UnusedFunctionParameter and PEAR.Functions.ValidDefaultValue now support closures
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed an error where a nullable type character was detected as an inline then token
     -- A new T_NULLABLE token has been added to represent the ? nullable type character
     -- Thanks to Jaroslav Hanslík for the patch
