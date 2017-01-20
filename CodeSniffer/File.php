@@ -2742,7 +2742,7 @@ class PHP_CodeSniffer_File
 
 
     /**
-     * Returns the method parameters for the specified T_FUNCTION token.
+     * Returns the method parameters for the specified function token.
      *
      * Each parameter is in the following format:
      *
@@ -2760,17 +2760,19 @@ class PHP_CodeSniffer_File
      * Parameters with default values have an additional array index of
      * 'default' with the value of the default as a string.
      *
-     * @param int $stackPtr The position in the stack of the T_FUNCTION token
+     * @param int $stackPtr The position in the stack of the function token
      *                      to acquire the parameters for.
      *
      * @return array
      * @throws PHP_CodeSniffer_Exception If the specified $stackPtr is not of
-     *                                   type T_FUNCTION.
+     *                                   type T_FUNCTION or T_CLOSURE.
      */
     public function getMethodParameters($stackPtr)
     {
-        if ($this->_tokens[$stackPtr]['code'] !== T_FUNCTION) {
-            throw new PHP_CodeSniffer_Exception('$stackPtr must be of type T_FUNCTION');
+        if ($this->_tokens[$stackPtr]['code'] !== T_FUNCTION
+            && $this->_tokens[$stackPtr]['code'] !== T_CLOSURE
+        ) {
+            throw new PHP_CodeSniffer_Exception('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
         }
 
         $opener = $this->_tokens[$stackPtr]['parenthesis_opener'];

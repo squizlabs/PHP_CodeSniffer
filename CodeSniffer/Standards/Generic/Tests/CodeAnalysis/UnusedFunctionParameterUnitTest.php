@@ -57,8 +57,9 @@ class Generic_Tests_CodeAnalysis_UnusedFunctionParameterUnitTest extends Abstrac
     public function getWarningList()
     {
         return array(
-                3 => 1,
-                7 => 1,
+                3  => 1,
+                7  => 1,
+                78 => 1,
                );
 
     }//end getWarningList()
