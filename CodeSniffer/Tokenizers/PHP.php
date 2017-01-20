@@ -1227,25 +1227,47 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 continue;
             } else if ($tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
-                // Unless there is a variable or a bracket before this token,
-                // it is the start of an array being defined using the short syntax.
-                for ($x = ($i - 1); $x > 0; $x--) {
-                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
-                        break;
-                    }
+                if (isset($tokens[$i]['bracket_closer']) === false) {
+                    continue;
                 }
 
-                $allowed = array(
-                            T_CLOSE_CURLY_BRACKET  => T_CLOSE_CURLY_BRACKET,
-                            T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
-                            T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
-                            T_VARIABLE             => T_VARIABLE,
-                            T_STRING               => T_STRING,
-                           );
+                // Unless there is a variable or a bracket before this token,
+                // it is the start of an array being defined using the short syntax.
+                $isShortArray = false;
+                $allowed      = array(
+                                 T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
+                                 T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
+                                 T_VARIABLE             => T_VARIABLE,
+                                 T_OBJECT_OPERATOR      => T_OBJECT_OPERATOR,
+                                 T_STRING               => T_STRING,
+                                );
 
-                if (isset($allowed[$tokens[$x]['code']]) === false
-                    && isset($tokens[$i]['bracket_closer']) === true
-                ) {
+                for ($x = ($i - 1); $x > 0; $x--) {
+                    // If we hit a scope opener, the statement has ended
+                    // without finding anything, so it's probably an array
+                    // using PHP 7.1 short list syntax.
+                    if (isset($tokens[$x]['scope_opener']) === true) {
+                        $isShortArray = true;
+                        break;
+                    }
+
+                    if (isset($tokens[$x]['bracket_opener']) === true
+                        && $x > $tokens[$x]['bracket_opener']
+                    ) {
+                        $x = $tokens[$x]['bracket_opener'];
+                        continue;
+                    }
+
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        if (isset($allowed[$tokens[$x]['code']]) === false) {
+                            $isShortArray = true;
+                        }
+
+                        break;
+                    }
+                }//end for
+
+                if ($isShortArray === true) {
                     $tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
                     $tokens[$i]['type'] = 'T_OPEN_SHORT_ARRAY';
 
