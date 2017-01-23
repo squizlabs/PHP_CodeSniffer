@@ -45,4 +45,24 @@ class Invalid__Name {}
 
 interface Invalid__Name {}
 
-?>
+trait Valid_Name {}
+
+trait invalid_Name {}
+
+trait invalid_name {}
+
+trait Invalid_name {}
+
+trait VALID_Name {}
+
+trait VALID_NAME {}
+
+trait VALID_Name {}
+
+trait ValidName {}
+
+trait _Invalid_Name {}
+
+trait ___ {}
+
+trait Invalid__Name {}
