@@ -40,7 +40,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
     {
         $tokens = PHP_CodeSniffer_Tokens::$functionNameTokens;
 
-        // for calling closures
+        // For calling closures.
         $tokens[] = T_VARIABLE;
 
         return $tokens;
