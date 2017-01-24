@@ -449,7 +449,9 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                 } else if ($finalTokens[$stackPtr]['content'][0] === '-'
                     && $finalTokens[($stackPtr + 1)]['code'] === T_STRING
                 ) {
-                    if ($finalTokens[($stackPtr - 1)]['code'] === T_STRING) {
+                    if (isset($finalTokens[($stackPtr - 1)]) === true
+                        && $finalTokens[($stackPtr - 1)]['code'] === T_STRING
+                    ) {
                         $newContent = $finalTokens[($stackPtr - 1)]['content'].$finalTokens[$stackPtr]['content'].$finalTokens[($stackPtr + 1)]['content'];
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
