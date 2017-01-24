@@ -44,6 +44,7 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
         $tokens[] = T_VARIABLE;
 
         return $tokens;
+
     }//end register()
 
 
