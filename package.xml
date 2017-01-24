@@ -44,6 +44,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - AbstractVariableSniff now supports anonymous classes
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.NamingConventions.ConstructorName and PEAR.NamingConventions.ValidVariable now support anonymous classes
+  - Generic.NamingConventions.CamelCapsFunctionName and PEAR.NamingConventions.ValidFunctionName now support anonymous classes
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.CodeAnalysis.UnusedFunctionParameter and PEAR.Functions.ValidDefaultValue now support closures
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed an error where a nullable type character was detected as an inline then token
