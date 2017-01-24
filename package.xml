@@ -48,6 +48,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.CodeAnalysis.UnusedFunctionParameter and PEAR.Functions.ValidDefaultValue now support closures
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.Functions.FunctionCallArgumentSpacing now supports closures other PHP-provided functions
+    -- Thanks to Algirdas Gurevicius for the patch
   - Fixed an error where a nullable type character was detected as an inline then token
     -- A new T_NULLABLE token has been added to represent the ? nullable type character
     -- Thanks to Jaroslav Hanslík for the patch
