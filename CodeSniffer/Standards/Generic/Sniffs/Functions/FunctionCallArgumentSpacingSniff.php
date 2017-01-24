@@ -38,8 +38,12 @@ class Generic_Sniffs_Functions_FunctionCallArgumentSpacingSniff implements PHP_C
      */
     public function register()
     {
-        return array(T_STRING);
+        $tokens = PHP_CodeSniffer_Tokens::$functionNameTokens;
 
+        // for calling closures
+        $tokens[] = T_VARIABLE;
+
+        return $tokens;
     }//end register()
 
 

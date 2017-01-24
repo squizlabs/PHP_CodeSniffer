@@ -101,3 +101,8 @@ TEXT
     ,
     'bar'
 );
+
+unset($foo, $bar);
+
+$closure($foo, $bar);
+$var = $closure() + $closure($foo, $bar) + self::$closure($foo, $bar);
