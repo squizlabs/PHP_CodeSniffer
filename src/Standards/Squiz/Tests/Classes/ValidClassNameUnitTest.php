@@ -26,13 +26,27 @@ class ValidClassNameUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                9  => 1,
-                10 => 1,
-                14 => 1,
-                15 => 1,
-                20 => 1,
-                30 => 1,
-                32 => 1,
+                9   => 1,
+                10  => 1,
+                14  => 1,
+                15  => 1,
+                20  => 1,
+                30  => 1,
+                32  => 1,
+                57  => 1,
+                58  => 1,
+                62  => 1,
+                63  => 1,
+                68  => 1,
+                78  => 1,
+                80  => 1,
+                97  => 1,
+                98  => 1,
+                102 => 1,
+                103 => 1,
+                108 => 1,
+                118 => 1,
+                120 => 1,
                );
 
     }//end getErrorList()

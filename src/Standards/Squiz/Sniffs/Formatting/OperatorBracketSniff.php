@@ -253,7 +253,7 @@ class OperatorBracketSniff implements Sniff
         $error = 'Arithmetic operation must be bracketed';
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MissingBrackets');
 
-        if ($fix === false || $phpcsFile->fixer->enabled === false) {
+        if ($fix === false) {
             return;
         }
 

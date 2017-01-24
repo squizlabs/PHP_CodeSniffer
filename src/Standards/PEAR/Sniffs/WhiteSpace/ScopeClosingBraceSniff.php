@@ -163,7 +163,7 @@ class ScopeClosingBraceSniff implements Sniff
             }
         }//end if
 
-        if ($fix === true && $phpcsFile->fixer->enabled === true) {
+        if ($fix === true) {
             $spaces = str_repeat(' ', $expectedIndent);
             if ($braceIndent === 0) {
                 $phpcsFile->fixer->addContentBefore($lineStart, $spaces);

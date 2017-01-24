@@ -1285,7 +1285,7 @@ class PHP extends Tokenizer
 
                 for ($x = ($tokenAfterReturnTypeHint - 1); $x > $i; $x--) {
                     if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
-                        if (in_array($this->tokens[$x]['code'], array(T_STRING, T_ARRAY, T_CALLABLE, T_SELF, T_PARENT), true) === true) {
+                        if (in_array($this->tokens[$x]['code'], array(T_STRING, T_ARRAY, T_ARRAY_HINT, T_CALLABLE, T_SELF, T_PARENT), true) === true) {
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $line = $this->tokens[$x]['line'];
                                 $type = $this->tokens[$x]['type'];
