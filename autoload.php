@@ -57,7 +57,9 @@ class Autoload
         // as we need to include all files so we can figure out what
         // the class/interface/trait name is.
         if (self::$composerAutoloader === null) {
-            if (file_exists(__DIR__.'/../../autoload.php') === true) {
+            if (strpos(__DIR__, 'phar://') !== 0
+                && file_exists(__DIR__.'/../../autoload.php') === true
+            ) {
                 self::$composerAutoloader = include_once __DIR__.'/../../autoload.php';
                 self::$composerAutoloader->unregister();
             } else {
@@ -107,9 +109,11 @@ class Autoload
      */
     public static function loadFile($path)
     {
-        $path = realpath($path);
-        if ($path === false) {
-            return false;
+        if (strpos(__DIR__, 'phar://') !== 0) {
+            $path = realpath($path);
+            if ($path === false) {
+                return false;
+            }
         }
 
         if (isset(self::$loadedClasses[$path]) === true) {
