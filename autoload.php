@@ -20,6 +20,13 @@ class Autoload
 {
 
     /**
+     * The composer autoloader.
+     *
+     * @var Composer\Autoload\ClassLoader
+     */
+    private static $composerAutoloader = null;
+
+    /**
      * A mapping of file names to class names.
      *
      * @var array<string, string>
@@ -46,8 +53,20 @@ class Autoload
      */
     public static function load($class)
     {
+        // Include the composer autoloader if there is one, but unregister it
+        // as we need to include all files so we can figure out what
+        // the class/interface/trait name is.
+        if (self::$composerAutoloader === null) {
+            if (file_exists(__DIR__.'/../../autoload.php') === true) {
+                self::$composerAutoloader = include_once __DIR__.'/../../autoload.php';
+                self::$composerAutoloader->unregister();
+            } else {
+                self::$composerAutoloader = false;
+            }
+        }
+
         $ds   = DIRECTORY_SEPARATOR;
-        $path = null;
+        $path = false;
 
         if (substr($class, 0, 16) === 'PHP_CodeSniffer\\') {
             if (substr($class, 0, 22) === 'PHP_CodeSniffer\Tests\\') {
@@ -64,7 +83,12 @@ class Autoload
             }
         }
 
-        if ($path !== null && is_file($path) === true) {
+        // See if the composer autoloader knows where the class is.
+        if ($path === false && self::$composerAutoloader !== false) {
+            $path = self::$composerAutoloader->findFile($class);
+        }
+
+        if ($path !== false && is_file($path) === true) {
             self::loadFile($path);
             return true;
         }
@@ -83,12 +107,18 @@ class Autoload
      */
     public static function loadFile($path)
     {
+        $path = realpath($path);
+        if ($path === false) {
+            return false;
+        }
+
         if (isset(self::$loadedClasses[$path]) === true) {
             return self::$loadedClasses[$path];
         }
 
         $classes    = get_declared_classes();
         $interfaces = get_declared_interfaces();
+        $traits     = get_declared_traits();
 
         include $path;
 
@@ -102,7 +132,17 @@ class Autoload
         }
 
         if ($className === null) {
-            $newClasses = array_diff(get_declared_interfaces(), $classes);
+            $newClasses = array_reverse(array_diff(get_declared_traits(), $classes));
+            foreach ($newClasses as $name) {
+                if (isset(self::$loadedFiles[$name]) === false) {
+                    $className = $name;
+                    break;
+                }
+            }
+        }
+
+        if ($className === null) {
+            $newClasses = array_reverse(array_diff(get_declared_interfaces(), $classes));
             foreach ($newClasses as $name) {
                 if (isset(self::$loadedFiles[$name]) === false) {
                     $className = $name;
@@ -181,7 +221,6 @@ class Autoload
 
 
 }//end class
-
 
 // Register the autoloader before any existing autoloaders to ensure
 // it gets a chance to hear about every autoload request, and record
