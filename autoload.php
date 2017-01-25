@@ -16,217 +16,219 @@
 
 namespace PHP_CodeSniffer;
 
-class Autoload
-{
-
-    /**
-     * The composer autoloader.
-     *
-     * @var Composer\Autoload\ClassLoader
-     */
-    private static $composerAutoloader = null;
-
-    /**
-     * A mapping of file names to class names.
-     *
-     * @var array<string, string>
-     */
-    private static $loadedClasses = array();
-
-    /**
-     * A mapping of class names to file names.
-     *
-     * @var array<string, string>
-     */
-    private static $loadedFiles = array();
-
-
-    /**
-     * Loads a class.
-     *
-     * This method only loads classes that exist in the PHP_CodeSniffer namespace.
-     * All other classes are ignored and loaded by subsequent autoloaders.
-     *
-     * @param string $class The name of the class to load.
-     *
-     * @return bool
-     */
-    public static function load($class)
+if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
+    class Autoload
     {
-        // Include the composer autoloader if there is one, but unregister it
-        // as we need to include all files so we can figure out what
-        // the class/interface/trait name is.
-        if (self::$composerAutoloader === null) {
-            if (strpos(__DIR__, 'phar://') !== 0
-                && file_exists(__DIR__.'/../../autoload.php') === true
-            ) {
-                self::$composerAutoloader = include_once __DIR__.'/../../autoload.php';
-                self::$composerAutoloader->unregister();
-            } else {
-                self::$composerAutoloader = false;
-            }
-        }
 
-        $ds   = DIRECTORY_SEPARATOR;
-        $path = false;
+        /**
+         * The composer autoloader.
+         *
+         * @var Composer\Autoload\ClassLoader
+         */
+        private static $composerAutoloader = null;
 
-        if (substr($class, 0, 16) === 'PHP_CodeSniffer\\') {
-            if (substr($class, 0, 22) === 'PHP_CodeSniffer\Tests\\') {
-                $isInstalled = !is_dir(__DIR__.$ds.'tests');
-                if ($isInstalled === false) {
-                    $path = __DIR__.$ds.'tests';
+        /**
+         * A mapping of file names to class names.
+         *
+         * @var array<string, string>
+         */
+        private static $loadedClasses = array();
+
+        /**
+         * A mapping of class names to file names.
+         *
+         * @var array<string, string>
+         */
+        private static $loadedFiles = array();
+
+
+        /**
+         * Loads a class.
+         *
+         * This method only loads classes that exist in the PHP_CodeSniffer namespace.
+         * All other classes are ignored and loaded by subsequent autoloaders.
+         *
+         * @param string $class The name of the class to load.
+         *
+         * @return bool
+         */
+        public static function load($class)
+        {
+            // Include the composer autoloader if there is one, but unregister it
+            // as we need to include all files so we can figure out what
+            // the class/interface/trait name is.
+            if (self::$composerAutoloader === null) {
+                if (strpos(__DIR__, 'phar://') !== 0
+                    && file_exists(__DIR__.'/../../autoload.php') === true
+                ) {
+                    self::$composerAutoloader = include_once __DIR__.'/../../autoload.php';
+                    self::$composerAutoloader->unregister();
                 } else {
-                    $path = '@test_dir@'.$ds.'PHP_CodeSniffer'.$ds.'CodeSniffer';
+                    self::$composerAutoloader = false;
                 }
-
-                $path .= $ds.substr(str_replace('\\', $ds, $class), 22).'.php';
-            } else {
-                $path = __DIR__.$ds.'src'.$ds.substr(str_replace('\\', $ds, $class), 16).'.php';
             }
-        }
 
-        // See if the composer autoloader knows where the class is.
-        if ($path === false && self::$composerAutoloader !== false) {
-            $path = self::$composerAutoloader->findFile($class);
-        }
+            $ds   = DIRECTORY_SEPARATOR;
+            $path = false;
 
-        if ($path !== false && is_file($path) === true) {
-            self::loadFile($path);
-            return true;
-        }
+            if (substr($class, 0, 16) === 'PHP_CodeSniffer\\') {
+                if (substr($class, 0, 22) === 'PHP_CodeSniffer\Tests\\') {
+                    $isInstalled = !is_dir(__DIR__.$ds.'tests');
+                    if ($isInstalled === false) {
+                        $path = __DIR__.$ds.'tests';
+                    } else {
+                        $path = '@test_dir@'.$ds.'PHP_CodeSniffer'.$ds.'CodeSniffer';
+                    }
 
-        return false;
-
-    }//end load()
-
-
-    /**
-     * Includes a file and tracks what class or interface was loaded as a result.
-     *
-     * @param string $path The path of the file to load.
-     *
-     * @return string The fully qualified name of the class in the loaded file.
-     */
-    public static function loadFile($path)
-    {
-        if (strpos(__DIR__, 'phar://') !== 0) {
-            $path = realpath($path);
-            if ($path === false) {
-                return false;
+                    $path .= $ds.substr(str_replace('\\', $ds, $class), 22).'.php';
+                } else {
+                    $path = __DIR__.$ds.'src'.$ds.substr(str_replace('\\', $ds, $class), 16).'.php';
+                }
             }
-        }
 
-        if (isset(self::$loadedClasses[$path]) === true) {
+            // See if the composer autoloader knows where the class is.
+            if ($path === false && self::$composerAutoloader !== false) {
+                $path = self::$composerAutoloader->findFile($class);
+            }
+
+            if ($path !== false && is_file($path) === true) {
+                self::loadFile($path);
+                return true;
+            }
+
+            return false;
+
+        }//end load()
+
+
+        /**
+         * Includes a file and tracks what class or interface was loaded as a result.
+         *
+         * @param string $path The path of the file to load.
+         *
+         * @return string The fully qualified name of the class in the loaded file.
+         */
+        public static function loadFile($path)
+        {
+            if (strpos(__DIR__, 'phar://') !== 0) {
+                $path = realpath($path);
+                if ($path === false) {
+                    return false;
+                }
+            }
+
+            if (isset(self::$loadedClasses[$path]) === true) {
+                return self::$loadedClasses[$path];
+            }
+
+            $classes    = get_declared_classes();
+            $interfaces = get_declared_interfaces();
+            $traits     = get_declared_traits();
+
+            include $path;
+
+            $className  = null;
+            $newClasses = array_diff(get_declared_classes(), $classes);
+            foreach ($newClasses as $name) {
+                if (isset(self::$loadedFiles[$name]) === false) {
+                    $className = $name;
+                    break;
+                }
+            }
+
+            if ($className === null) {
+                $newClasses = array_reverse(array_diff(get_declared_traits(), $classes));
+                foreach ($newClasses as $name) {
+                    if (isset(self::$loadedFiles[$name]) === false) {
+                        $className = $name;
+                        break;
+                    }
+                }
+            }
+
+            if ($className === null) {
+                $newClasses = array_reverse(array_diff(get_declared_interfaces(), $classes));
+                foreach ($newClasses as $name) {
+                    if (isset(self::$loadedFiles[$name]) === false) {
+                        $className = $name;
+                        break;
+                    }
+                }
+            }
+
+            self::$loadedClasses[$path]    = $className;
+            self::$loadedFiles[$className] = $path;
             return self::$loadedClasses[$path];
-        }
 
-        $classes    = get_declared_classes();
-        $interfaces = get_declared_interfaces();
-        $traits     = get_declared_traits();
+        }//end loadFile()
 
-        include $path;
 
-        $className  = null;
-        $newClasses = array_diff(get_declared_classes(), $classes);
-        foreach ($newClasses as $name) {
-            if (isset(self::$loadedFiles[$name]) === false) {
-                $className = $name;
-                break;
+        /**
+         * Gets the class name for the given file path.
+         *
+         * @param string $path The name of the file.
+         *
+         * @throws \Exception If the file path has not been loaded.
+         * @return string
+         */
+        public static function getLoadedClassName($path)
+        {
+            if (isset(self::$loadedClasses[$path]) === false) {
+                throw new \Exception("Cannot get class name for $path; file has not been included");
             }
-        }
 
-        if ($className === null) {
-            $newClasses = array_reverse(array_diff(get_declared_traits(), $classes));
-            foreach ($newClasses as $name) {
-                if (isset(self::$loadedFiles[$name]) === false) {
-                    $className = $name;
-                    break;
-                }
+            return self::$loadedClasses[$path];
+
+        }//end getLoadedClassName()
+
+
+        /**
+         * Gets the file path for the given class name.
+         *
+         * @param string $class The name of the class.
+         *
+         * @throws \Exception If the class name has not been loaded
+         * @return string
+         */
+        public static function getLoadedFileName($class)
+        {
+            if (isset(self::$loadedFiles[$class]) === false) {
+                throw new \Exception("Cannot get file name for $class; class has not been included");
             }
-        }
 
-        if ($className === null) {
-            $newClasses = array_reverse(array_diff(get_declared_interfaces(), $classes));
-            foreach ($newClasses as $name) {
-                if (isset(self::$loadedFiles[$name]) === false) {
-                    $className = $name;
-                    break;
-                }
-            }
-        }
+            return self::$loadedFiles[$class];
 
-        self::$loadedClasses[$path]    = $className;
-        self::$loadedFiles[$className] = $path;
-        return self::$loadedClasses[$path];
-
-    }//end loadFile()
+        }//end getLoadedFileName()
 
 
-    /**
-     * Gets the class name for the given file path.
-     *
-     * @param string $path The name of the file.
-     *
-     * @throws \Exception If the file path has not been loaded.
-     * @return string
-     */
-    public static function getLoadedClassName($path)
-    {
-        if (isset(self::$loadedClasses[$path]) === false) {
-            throw new \Exception("Cannot get class name for $path; file has not been included");
-        }
+        /**
+         * Gets the mapping of file names to class names.
+         *
+         * @return array<string, string>
+         */
+        public static function getLoadedClasses()
+        {
+            return self::$loadedClasses;
 
-        return self::$loadedClasses[$path];
-
-    }//end getLoadedClassName()
+        }//end getLoadedClasses()
 
 
-    /**
-     * Gets the file path for the given class name.
-     *
-     * @param string $class The name of the class.
-     *
-     * @throws \Exception If the class name has not been loaded
-     * @return string
-     */
-    public static function getLoadedFileName($class)
-    {
-        if (isset(self::$loadedFiles[$class]) === false) {
-            throw new \Exception("Cannot get file name for $class; class has not been included");
-        }
+        /**
+         * Gets the mapping of class names to file names.
+         *
+         * @return array<string, string>
+         */
+        public static function getLoadedFiles()
+        {
+            return self::$loadedFiles;
 
-        return self::$loadedFiles[$class];
-
-    }//end getLoadedFileName()
+        }//end getLoadedFiles()
 
 
-    /**
-     * Gets the mapping of file names to class names.
-     *
-     * @return array<string, string>
-     */
-    public static function getLoadedClasses()
-    {
-        return self::$loadedClasses;
+    }//end class
 
-    }//end getLoadedClasses()
-
-
-    /**
-     * Gets the mapping of class names to file names.
-     *
-     * @return array<string, string>
-     */
-    public static function getLoadedFiles()
-    {
-        return self::$loadedFiles;
-
-    }//end getLoadedFiles()
-
-
-}//end class
-
-// Register the autoloader before any existing autoloaders to ensure
-// it gets a chance to hear about every autoload request, and record
-// the file and class name for it.
-spl_autoload_register(__NAMESPACE__.'\Autoload::load', true, true);
+    // Register the autoloader before any existing autoloaders to ensure
+    // it gets a chance to hear about every autoload request, and record
+    // the file and class name for it.
+    spl_autoload_register(__NAMESPACE__.'\Autoload::load', true, true);
+}//end if
