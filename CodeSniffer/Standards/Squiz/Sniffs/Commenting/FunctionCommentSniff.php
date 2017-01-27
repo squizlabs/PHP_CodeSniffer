@@ -80,9 +80,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
      */
     protected function processReturn(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
-        $this->spacingAfterParamType = (int) $this->spacingAfterParamType;
-        $this->spacingAfterParamName = (int) $this->spacingAfterParamName;
-
         $tokens = $phpcsFile->getTokens();
 
         // Skip constructor and destructor.
@@ -278,6 +275,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
      */
     protected function processParams(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
+        $this->spacingAfterParamType = (int) $this->spacingAfterParamType;
+        $this->spacingAfterParamName = (int) $this->spacingAfterParamName;
+
         if ($this->_phpVersion === null) {
             $this->_phpVersion = PHP_CodeSniffer::getConfigData('php_version');
             if ($this->_phpVersion === null) {
