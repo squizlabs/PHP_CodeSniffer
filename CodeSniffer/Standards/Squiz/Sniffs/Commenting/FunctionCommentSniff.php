@@ -33,6 +33,34 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
 {
 
     /**
+     * The number of spaces after the type of a parameter.
+     *
+     * @var int
+     */
+    public $spacingAfterParamType = 1;
+
+    /**
+     * The number of spaces after the name of a parameter.
+     *
+     * @var int
+     */
+    public $spacingAfterParamName = 1;
+
+    /**
+     * Check that param comments start with a capital letter.
+     *
+     * @var boolean
+     */
+    public $paramCommentCapitalStart = true;
+
+    /**
+     * Check that param comments end with the full stop.
+     *
+     * @var boolean
+     */
+    public $paramCommentFullStop = true;
+
+    /**
      * The current PHP version.
      *
      * @var integer
@@ -52,6 +80,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
      */
     protected function processReturn(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
+        $this->spacingAfterParamType = (int) $this->spacingAfterParamType;
+        $this->spacingAfterParamName = (int) $this->spacingAfterParamName;
+
         $tokens = $phpcsFile->getTokens();
 
         // Skip constructor and destructor.
@@ -459,7 +490,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             $foundParams[] = $param['var'];
 
             // Check number of spaces after the type.
-            $spaces = ($maxType - strlen($param['type']) + 1);
+            $spaces = ($maxType - strlen($param['type']) + $this->spacingAfterParamType);
             if ($param['type_space'] !== $spaces) {
                 $error = 'Expected %s spaces after parameter type; %s found';
                 $data  = array(
@@ -528,7 +559,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             }
 
             // Check number of spaces after the var name.
-            $spaces = ($maxVar - strlen($param['var']) + 1);
+            $spaces = ($maxVar - strlen($param['var']) + $this->spacingAfterParamName);
             if ($param['var_space'] !== $spaces) {
                 $error = 'Expected %s spaces after parameter name; %s found';
                 $data  = array(
@@ -567,15 +598,19 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             }//end if
 
             // Param comments must start with a capital letter and end with the full stop.
-            if (preg_match('/^(\p{Ll}|\P{L})/u', $param['comment']) === 1) {
+            if ($this->paramCommentCapitalStart === true
+                && preg_match('/^(\p{Ll}|\P{L})/u', $param['comment']) === 1
+            ) {
                 $error = 'Parameter comment must start with a capital letter';
                 $phpcsFile->addError($error, $param['tag'], 'ParamCommentNotCapital');
             }
 
-            $lastChar = substr($param['comment'], -1);
-            if ($lastChar !== '.') {
-                $error = 'Parameter comment must end with a full stop';
-                $phpcsFile->addError($error, $param['tag'], 'ParamCommentFullStop');
+            if ($this->paramCommentFullStop === true) {
+                $lastChar = substr($param['comment'], -1);
+                if ($lastChar !== '.') {
+                    $error = 'Parameter comment must end with a full stop';
+                    $phpcsFile->addError($error, $param['tag'], 'ParamCommentFullStop');
+                }
             }
         }//end foreach
 
