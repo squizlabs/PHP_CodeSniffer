@@ -3401,11 +3401,11 @@ class PHP_CodeSniffer_File
     ) {
         $types = (array) $types;
 
-        if ($end === null || $end > $this->numTokens) {
-            $end = $this->numTokens;
+        if ($end === null || $end >= $this->numTokens) {
+            $end = ($this->numTokens - 1);
         }
 
-        for ($i = $start; $i < $end; $i++) {
+        for ($i = $start; $i <= $end; $i++) {
             $found = (bool) $exclude;
             foreach ($types as $type) {
                 if ($this->_tokens[$i]['code'] === $type) {
