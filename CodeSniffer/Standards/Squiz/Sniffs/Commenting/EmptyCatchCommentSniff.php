@@ -57,7 +57,7 @@ class Squiz_Sniffs_Commenting_EmptyCatchCommentSniff implements PHP_CodeSniffer_
         $tokens = $phpcsFile->getTokens();
 
         $scopeStart   = $tokens[$stackPtr]['scope_opener'];
-        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($scopeStart + 1), $tokens[$stackPtr]['scope_closer'], true);
+        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($scopeStart + 1), ($tokens[$stackPtr]['scope_closer'] - 1), true);
 
         if ($firstContent === false) {
             $error = 'Empty CATCH statement must have a comment to explain why the exception is not handled';

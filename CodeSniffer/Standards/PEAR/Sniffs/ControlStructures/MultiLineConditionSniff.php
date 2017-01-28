@@ -231,7 +231,7 @@ class PEAR_Sniffs_ControlStructures_MultiLineConditionSniff implements PHP_CodeS
         // The opening brace needs to be one space away from the closing parenthesis.
         $openBrace = $tokens[$stackPtr]['scope_opener'];
         $next      = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), $openBrace, true);
-        if ($next !== false) {
+        if ($next !== false && $next !== $openBrace) {
             // Probably comments in between tokens, so don't check.
             return;
         }
