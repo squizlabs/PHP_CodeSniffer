@@ -52,12 +52,13 @@ class PSR2_Sniffs_Files_EndFileNewlineSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        if ($phpcsFile->findNext(T_INLINE_HTML, ($stackPtr + 1)) !== false) {
+        $tokens = $phpcsFile->getTokens();
+
+        if (isset($tokens[($stackPtr + 1)]) === true && $phpcsFile->findNext(T_INLINE_HTML, ($stackPtr + 1)) !== false) {
             return ($phpcsFile->numTokens + 1);
         }
 
         // Skip to the end of the file.
-        $tokens    = $phpcsFile->getTokens();
         $lastToken = ($phpcsFile->numTokens - 1);
 
         if ($tokens[$lastToken]['content'] === '') {
