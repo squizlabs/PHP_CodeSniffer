@@ -3405,6 +3405,10 @@ class PHP_CodeSniffer_File
             $end = $this->numTokens;
         }
 
+        if ($start === $end) {
+            ++$end;
+        }
+
         for ($i = $start; $i < $end; $i++) {
             $found = (bool) $exclude;
             foreach ($types as $type) {
