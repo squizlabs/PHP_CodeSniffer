@@ -1,6 +1,6 @@
 <?php
 /**
- * Checks the for unused function parameters.
+ * Checks for unused function parameters.
  *
  * This sniff checks that all function parameters are used in the function body.
  * One exception is made for empty function bodies or function bodies that only
@@ -58,8 +58,16 @@ class UnusedFunctionParameterSniff implements Sniff
             return;
         }
 
-        $params = [];
-        foreach ($phpcsFile->getMethodParameters($stackPtr) as $param) {
+        $implements = false;
+        $classPtr   = $phpcsFile->getCondition($stackPtr, T_CLASS);
+        if ($classPtr !== false) {
+            $implements = $phpcsFile->findImplementedInterfaceNames($classPtr);
+        }
+
+        $params       = [];
+        $methodParams = $phpcsFile->getMethodParameters($stackPtr);
+
+        foreach ($methodParams as $param) {
             $params[$param['name']] = $stackPtr;
         }
 
@@ -87,24 +95,24 @@ class UnusedFunctionParameterSniff implements Sniff
 
             if ($foundContent === false) {
                 // A throw statement as the first content indicates an interface method.
-                if ($code === T_THROW) {
+                if ($code === T_THROW && $implements !== false) {
                     return;
                 }
 
                 // A return statement as the first content indicates an interface method.
                 if ($code === T_RETURN) {
                     $tmp = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
-                    if ($tmp === false) {
+                    if ($tmp === false && $implements !== false) {
                         return;
                     }
 
                     // There is a return.
-                    if ($tokens[$tmp]['code'] === T_SEMICOLON) {
+                    if ($tokens[$tmp]['code'] === T_SEMICOLON && $implements !== false) {
                         return;
                     }
 
                     $tmp = $phpcsFile->findNext(Tokens::$emptyTokens, ($tmp + 1), null, true);
-                    if ($tmp !== false && $tokens[$tmp]['code'] === T_SEMICOLON) {
+                    if ($tmp !== false && $tokens[$tmp]['code'] === T_SEMICOLON && $implements !== false) {
                         // There is a return <token>.
                         return;
                     }

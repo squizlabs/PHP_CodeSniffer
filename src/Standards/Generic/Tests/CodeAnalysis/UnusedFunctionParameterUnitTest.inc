@@ -20,7 +20,7 @@ function foobar($a, &$b) {
     return (preg_match('/foo/', $a, $b) !== 0);
 }
 
-class Foo {
+class Foo implements Bar {
     function barfoo($a, $b) {
         // Empty body means interface method in many cases.
     }
