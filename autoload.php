@@ -62,7 +62,11 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
                     && file_exists(__DIR__.'/../../autoload.php') === true
                 ) {
                     self::$composerAutoloader = include_once __DIR__.'/../../autoload.php';
-                    self::$composerAutoloader->unregister();
+                    if (self::$composerAutoloader instanceof Composer\Autoload\ClassLoader) {
+                        self::$composerAutoloader->unregister();
+                    } else {
+                        self::$composerAutoloader = false;
+                    }
                 } else {
                     self::$composerAutoloader = false;
                 }
