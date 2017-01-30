@@ -33,20 +33,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
 {
 
     /**
-     * The number of spaces after the type of a parameter.
-     *
-     * @var int
-     */
-    public $spacingAfterParamType = 1;
-
-    /**
-     * The number of spaces after the name of a parameter.
-     *
-     * @var int
-     */
-    public $spacingAfterParamName = 1;
-
-    /**
      * The current PHP version.
      *
      * @var integer
@@ -261,9 +247,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
      */
     protected function processParams(PHP_CodeSniffer_File $phpcsFile, $stackPtr, $commentStart)
     {
-        $this->spacingAfterParamType = (int) $this->spacingAfterParamType;
-        $this->spacingAfterParamName = (int) $this->spacingAfterParamName;
-
         if ($this->_phpVersion === null) {
             $this->_phpVersion = PHP_CodeSniffer::getConfigData('php_version');
             if ($this->_phpVersion === null) {
