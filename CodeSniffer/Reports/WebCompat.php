@@ -32,7 +32,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
+class PHP_CodeSniffer_Reports_WebCompat implements PHP_CodeSniffer_Report
 {
 
 
