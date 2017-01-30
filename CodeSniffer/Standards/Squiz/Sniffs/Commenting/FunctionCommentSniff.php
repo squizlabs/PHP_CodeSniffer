@@ -47,20 +47,6 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
     public $spacingAfterParamName = 1;
 
     /**
-     * Check that param comments start with a capital letter.
-     *
-     * @var boolean
-     */
-    public $paramCommentCapitalStart = true;
-
-    /**
-     * Check that param comments end with the full stop.
-     *
-     * @var boolean
-     */
-    public $paramCommentFullStop = true;
-
-    /**
      * The current PHP version.
      *
      * @var integer
@@ -598,19 +584,15 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             }//end if
 
             // Param comments must start with a capital letter and end with the full stop.
-            if ($this->paramCommentCapitalStart === true
-                && preg_match('/^(\p{Ll}|\P{L})/u', $param['comment']) === 1
-            ) {
+            if (preg_match('/^(\p{Ll}|\P{L})/u', $param['comment']) === 1) {
                 $error = 'Parameter comment must start with a capital letter';
                 $phpcsFile->addError($error, $param['tag'], 'ParamCommentNotCapital');
             }
 
-            if ($this->paramCommentFullStop === true) {
-                $lastChar = substr($param['comment'], -1);
-                if ($lastChar !== '.') {
-                    $error = 'Parameter comment must end with a full stop';
-                    $phpcsFile->addError($error, $param['tag'], 'ParamCommentFullStop');
-                }
+            $lastChar = substr($param['comment'], -1);
+            if ($lastChar !== '.') {
+                $error = 'Parameter comment must end with a full stop';
+                $phpcsFile->addError($error, $param['tag'], 'ParamCommentFullStop');
             }
         }//end foreach
 
