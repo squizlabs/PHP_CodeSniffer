@@ -81,8 +81,16 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 $error = 'Return type missing for @return tag in function comment';
                 $phpcsFile->addError($error, $return, 'MissingReturnType');
             } else {
+                // Support both a return type and a description.
+                $split = preg_match('`^((?:\|?(?:array\([^\)]*\)|[\\\\a-z0-9\[\]]+))*)( .*)?`i', $content, $returnParts);
+                if (isset($returnParts[1]) === false) {
+                    return;
+                }
+
+                $returnType = $returnParts[1];
+
                 // Check return type (can be multiple, separated by '|').
-                $typeNames      = explode('|', $content);
+                $typeNames      = explode('|', $returnType);
                 $suggestedNames = array();
                 foreach ($typeNames as $i => $typeName) {
                     $suggestedName = PHP_CodeSniffer::suggestType($typeName);
@@ -92,22 +100,23 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 }
 
                 $suggestedType = implode('|', $suggestedNames);
-                if ($content !== $suggestedType) {
+                if ($returnType !== $suggestedType) {
                     $error = 'Expected "%s" but found "%s" for function return type';
                     $data  = array(
                               $suggestedType,
-                              $content,
+                              $returnType,
                              );
                     $fix   = $phpcsFile->addFixableError($error, $return, 'InvalidReturn', $data);
                     if ($fix === true) {
-                        $phpcsFile->fixer->replaceToken(($return + 2), $suggestedType);
+                        $replacement = $suggestedType;
+                        if (empty($returnParts[2]) === false) {
+                            $replacement .= $returnParts[2];
+                        }
+
+                        $phpcsFile->fixer->replaceToken(($return + 2), $replacement);
+                        unset($replacement);
                     }
                 }
-
-                // Support both a return type and a description. The return type
-                // is anything up to the first space.
-                $returnParts = explode(' ', $content, 2);
-                $returnType  = $returnParts[0];
 
                 // If the return type is void, make sure there is
                 // no return statement in the function.
@@ -139,7 +148,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                             }
                         }
                     }//end if
-                } else if ($returnType !== 'mixed') {
+                } else if ($returnType !== 'mixed' && in_array('void', $typeNames, true) === false) {
                     // If return type is not void, there needs to be a return statement
                     // somewhere in the function that returns something.
                     if (isset($tokens[$stackPtr]['scope_closer']) === true) {
