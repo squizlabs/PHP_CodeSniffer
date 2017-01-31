@@ -511,14 +511,14 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
     /**
      * Check the spacing after the type of a parameter.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param array                $param     The parameter to be checked.
-     * @param int                  $maxType   The maxlength of the longest parameter type.
-     * @param int                  $spacing   The number of spaces to add after the type.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param array                       $param     The parameter to be checked.
+     * @param int                         $maxType   The maxlength of the longest parameter type.
+     * @param int                         $spacing   The number of spaces to add after the type.
      *
      * @return void
      */
-    protected function checkSpacingAfterParamType(PHP_CodeSniffer_File $phpcsFile, $param, $maxType, $spacing = 1)
+    protected function checkSpacingAfterParamType(File $phpcsFile, $param, $maxType, $spacing=1)
     {
         // Check number of spaces after the type.
         $spaces = ($maxType - strlen($param['type']) + $spacing);
@@ -565,14 +565,14 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
     /**
      * Check the spacing after the name of a parameter.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param array                $param     The parameter to be checked.
-     * @param int                  $maxVar    The maxlength of the longest parameter name.
-     * @param int                  $spacing   The number of spaces to add after the type.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param array                       $param     The parameter to be checked.
+     * @param int                         $maxVar    The maxlength of the longest parameter name.
+     * @param int                         $spacing   The number of spaces to add after the type.
      *
      * @return void
      */
-    protected function checkSpacingAfterParamName(PHP_CodeSniffer_File $phpcsFile, $param, $maxVar, $spacing = 1)
+    protected function checkSpacingAfterParamName(File $phpcsFile, $param, $maxVar, $spacing=1)
     {
         // Check number of spaces after the var name.
         $spaces = ($maxVar - strlen($param['var']) + $spacing);
