@@ -22,7 +22,9 @@ class Standards
      */
     public static function getInstalledStandardPaths()
     {
-        $installedPaths = array(dirname(__DIR__).DIRECTORY_SEPARATOR.'Standards');
+        $ds = DIRECTORY_SEPARATOR;
+
+        $installedPaths = array(dirname(dirname(__DIR__)).$ds.'src'.$ds.'Standards');
         $configPaths    = Config::getConfigData('installed_paths');
         if ($configPaths !== null) {
             $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
@@ -31,7 +33,7 @@ class Standards
         $resolvedInstalledPaths = array();
         foreach ($installedPaths as $installedPath) {
             if (substr($installedPath, 0, 1) === '.') {
-                $installedPath = Common::realPath(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.$installedPath);
+                $installedPath = Common::realPath(__DIR__.$ds.'..'.$ds.'..'.$ds.$installedPath);
             }
 
             $resolvedInstalledPaths[] = $installedPath;
