@@ -47,14 +47,15 @@ class Squiz_Tests_WhiteSpace_SemicolonSpacingUnitTest extends AbstractSniffUnitT
         switch ($testFile) {
         case 'SemicolonSpacingUnitTest.inc':
             return array(
-                    3 => 1,
-                    4 => 1,
-                    5 => 2,
-                    6 => 1,
-                    8 => 1,
-                    9 => 1,
+                    3  => 1,
+                    4  => 1,
+                    5  => 2,
+                    6  => 1,
+                    8  => 1,
+                    9  => 1,
                     14 => 1,
                     16 => 1,
+                    18 => 1,
                    );
             break;
         case 'SemicolonSpacingUnitTest.js':
@@ -67,6 +68,7 @@ class Squiz_Tests_WhiteSpace_SemicolonSpacingUnitTest extends AbstractSniffUnitT
                     13 => 1,
                     19 => 1,
                     22 => 1,
+                    25 => 1,
                    );
             break;
         default:

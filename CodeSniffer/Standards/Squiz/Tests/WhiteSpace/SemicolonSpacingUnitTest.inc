@@ -14,3 +14,5 @@ $hello ='foo';
 $sum = $a /* + $b */;
 $sum = $a // + $b
 ;
+$sum = $a /* + $b
+    + $c */ ;

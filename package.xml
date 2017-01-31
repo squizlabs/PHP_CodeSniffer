@@ -55,6 +55,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed an error where a nullable type character was detected as an inline then token
     -- A new T_NULLABLE token has been added to represent the ? nullable type character
     -- Thanks to Jaroslav Hanslík for the patch
+  - Squiz.WhiteSpace.SemicolonSpacing no longer removes comments while fixing the placement of semicolons
+    -- Thanks to Algirdas Gurevicius for the patch
   - Fixed bug #1230 : JS tokeniser incorrectly tokenises bitwise shifts as comparison
     -- Thanks to Ryan McCue for the patch
   - Fixed bug #1237 : Uninitialized string offset in PHP Tokenizer on PHP 5.2
@@ -2287,7 +2289,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.js" role="test" />
+        <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP" name="SemicolonSpacingUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
