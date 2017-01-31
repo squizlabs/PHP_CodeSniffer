@@ -53,6 +53,8 @@ class Squiz_Tests_WhiteSpace_SemicolonSpacingUnitTest extends AbstractSniffUnitT
                     6 => 1,
                     8 => 1,
                     9 => 1,
+                    14 => 1,
+                    16 => 1,
                    );
             break;
         case 'SemicolonSpacingUnitTest.js':
@@ -63,6 +65,8 @@ class Squiz_Tests_WhiteSpace_SemicolonSpacingUnitTest extends AbstractSniffUnitT
                     10 => 2,
                     11 => 1,
                     13 => 1,
+                    19 => 1,
+                    22 => 1,
                    );
             break;
         default:
