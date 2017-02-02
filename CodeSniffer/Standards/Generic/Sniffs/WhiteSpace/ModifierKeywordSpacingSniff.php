@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_WhiteSpace_MethodPrefixSpacingSniff.
+ * Generic_Sniffs_WhiteSpace_ModifierKeywordSpacingSniff.
  *
  * PHP version 5
  *
@@ -14,7 +14,7 @@
  */
 
 /**
- * Squiz_Sniffs_WhiteSpace_MethodPrefixSpacingSniff.
+ * Generic_Sniffs_WhiteSpace_ModifierKeywordSpacingSniff.
  *
  * Ensure there is a single space after the keywords before a method.
  *
@@ -27,7 +27,7 @@
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_WhiteSpace_MethodPrefixSpacingSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_WhiteSpace_ModifierKeywordSpacingSniff implements PHP_CodeSniffer_Sniff
 {
 
 
