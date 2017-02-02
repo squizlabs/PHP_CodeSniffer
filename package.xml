@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2016-11-30</date>
- <time>15:21:00</time>
+ <date>2017-02-02</date>
+ <time>14:50:00</time>
  <version>
   <release>3.0.0RC3</release>
   <api>3.0.0RC3</api>
@@ -1543,6 +1543,40 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>3.0.0RC3</release>
+    <api>3.0.0RC3</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2017-02-02</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Added support for ES6 class declarations
+      -- Previously, these class were tokenized as JS objects but are now tokenzied as normal T_CLASS structures
+    - Added support for ES6 method declarations, where the "function" keyword is not used
+      -- Previously, these methods were tokenized as JS objects (fixes bug #1251)
+      -- The name of the ES6 method is now assigned the T_FUNCTION keyword and treated like a normal function
+      -- Custom sniffs that support JS and listen for T_FUNCTION tokens can't assume the token represents the word   "function"
+      -- Check the contents of the token first, or use $phpcsFile->getDeclarationName($stackPtr) if you just want its name
+      -- There is no change for custom sniffs that only check PHP code
+    - PHPCBF exit codes have been changed so they are now more useful (request #1270)
+      -- Exit code 0 is now used to indicate that no fixable errors were found, and so nothing was fixed
+      -- Exit code 1 is now used to indicate that all fixable errors were fixed correctly
+      -- Exit code 2 is now used to indicate that PHPCBF failed to fix some of the fixable errors it found
+      -- Exit code 3 is now used for general script execution errors
+    - Added PEAR.Commenting.FileComment.ParamCommentAlignment to check alignment of multi-line param comments
+    - Includes all changes from the 2.7.2 release
+    - Fixed an issue where excluding a file using a @codingStandardsIgnoreFile comment would produce errors
+      -- For PHPCS, it would show empty files being processed
+      -- For PHPCBF, it would produce a PHP error
+    - Fixed bug #1233 : Can't set config data inside ruleset.xml file
+    - Fixed bug #1241 : CodeSniffer.conf not working with 3.x PHAR file
+    </notes>
+  </release>
   <release>
    <version>
     <release>3.0.0RC2</release>
