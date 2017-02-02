@@ -10,3 +10,9 @@ $test = $this->testThis()  /* comment here */  ;
 
 $hello ='foo';
 ;
+
+$sum = $a /* + $b */;
+$sum = $a // + $b
+;
+$sum = $a /* + $b
+    + $c */ ;
