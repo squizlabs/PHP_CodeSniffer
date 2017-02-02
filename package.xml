@@ -40,7 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Exit code 2 is now used to indicate that PHPCBF failed to fix some of the fixable errors it found
     -- Exit code 3 is now used for general script execution errors
   - Added PEAR.Commenting.FileComment.ParamCommentAlignment to check alignment of multi-line param comments
-  - Includes all changes from the 2.7.2 release
+  - Includes all changes from the 2.8.0 release
   - Fixed an issue where excluding a file using a @codingStandardsIgnoreFile comment would produce errors
     -- For PHPCS, it would show empty files being processed
     -- For PHPCBF, it would produce a PHP error
@@ -1569,7 +1569,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Exit code 2 is now used to indicate that PHPCBF failed to fix some of the fixable errors it found
       -- Exit code 3 is now used for general script execution errors
     - Added PEAR.Commenting.FileComment.ParamCommentAlignment to check alignment of multi-line param comments
-    - Includes all changes from the 2.7.2 release
+    - Includes all changes from the 2.8.0 release
     - Fixed an issue where excluding a file using a @codingStandardsIgnoreFile comment would produce errors
       -- For PHPCS, it would show empty files being processed
       -- For PHPCBF, it would produce a PHP error
