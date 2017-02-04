@@ -41,6 +41,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
 
     public $constructorScope = false;
 
+
     /**
      * Registers the tokens that this sniff wants to listen for.
      *
@@ -77,13 +78,14 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
 
         if ($this->constructorScope === true) {
             $properties = $phpcsFile->getMethodProperties($stackPtr);
-            if (in_array($properties['scope'], array('private', 'protected'), true) && $methodName === '__construct') {
+            if (in_array($properties['scope'], array('private', 'protected'), true) === true && $methodName === '__construct') {
                 return;
             }
         }
 
         // Get all parameters from method signature.
         $signature = array();
+
         $params = $phpcsFile->getMethodParameters($stackPtr);
         foreach ($params as $param) {
             $signature[] = $param['name'];
