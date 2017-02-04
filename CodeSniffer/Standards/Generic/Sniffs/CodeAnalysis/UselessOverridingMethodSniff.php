@@ -39,6 +39,12 @@
 class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * Set this to true if you want this sniff to exlude constructors
+     * that their scope is private/protected.
+     *
+     * @var bool
+     */
     public $constructorScope = false;
 
 
