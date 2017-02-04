@@ -40,7 +40,7 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
 {
 
     /**
-     * Set this to true if you want this sniff to exlude constructors
+     * Set this to true if you want this sniff to exclude constructors
      * that their scope is private/protected.
      *
      * @var bool
