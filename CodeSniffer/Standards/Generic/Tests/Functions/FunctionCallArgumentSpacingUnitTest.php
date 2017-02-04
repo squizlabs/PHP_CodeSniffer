@@ -57,6 +57,9 @@ class Generic_Tests_Functions_FunctionCallArgumentSpacingUnitTest extends Abstra
                 79 => 1,
                 82 => 1,
                 93 => 1,
+                105 => 1,
+                107 => 1,
+                108 => 2,
                );
 
 

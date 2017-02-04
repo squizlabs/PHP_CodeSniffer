@@ -12,6 +12,13 @@ php:
   - hhvm
   - nightly
 
+matrix:
+  fast_finish: true
+
+  allow_failures:
+    # Allow failures for unstable builds.
+    - php: nightly
+
 before_script:
   - if [[ ${TRAVIS_PHP_VERSION:0:1} != "7" && $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != "hhvm" ]]; then phpenv config-add php5-testingConfig.ini; fi
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" || $TRAVIS_PHP_VERSION == "nightly" ]]; then phpenv config-add php7-testingConfig.ini; fi
@@ -19,7 +26,7 @@ before_script:
 script:
   - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php scripts/phpcs --config-set php_path php; fi
   - phpunit tests/AllTests.php
-  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np
+  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=full -np
   - if [[ $TRAVIS_PHP_VERSION != "hhvm" && ${TRAVIS_PHP_VERSION:0:1} != "7" ]]; then pear package-validate package.xml; fi
   - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php scripts/build-phar.php; fi
-  - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php phpcs.phar CodeSniffer.php CodeSniffer --standard=PHPCS --report=summary -np; fi
+  - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php phpcs.phar CodeSniffer.php CodeSniffer --standard=PHPCS --report=full -np; fi

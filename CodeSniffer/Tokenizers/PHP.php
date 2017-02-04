@@ -679,6 +679,39 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
+                Convert ? to T_NULLABLE OR T_INLINE_THEN
+            */
+
+            if ($tokenIsArray === false && $token[0] === '?') {
+                $newToken            = array();
+                $newToken['content'] = '?';
+
+                for ($i = ($stackPtr - 1); $i >= 0; $i--) {
+                    if (is_array($tokens[$i]) === true) {
+                        $tokenType = $tokens[$i][0];
+                    } else {
+                        $tokenType = $tokens[$i];
+                    }
+
+                    if ($tokenType === T_FUNCTION) {
+                        $newToken['code'] = T_NULLABLE;
+                        $newToken['type'] = 'T_NULLABLE';
+                        break;
+                    } else if (in_array($tokenType, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '{', ';')) === true) {
+                        $newToken['code'] = T_INLINE_THEN;
+                        $newToken['type'] = 'T_INLINE_THEN';
+
+                        $insideInlineIf[] = $stackPtr;
+                        break;
+                    }
+                }
+
+                $finalTokens[$newStackPtr] = $newToken;
+                $newStackPtr++;
+                continue;
+            }//end if
+
+            /*
                 Tokens after a double colon may be look like scope openers,
                 such as when writing code like Foo::NAMESPACE, but they are
                 only ever variables or strings.
@@ -923,14 +956,27 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                 T_PAAMAYIM_NEKUDOTAYIM => true,
                                );
                     if (isset($context[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
-                        $finalTokens[$newStackPtr] = array(
-                                                      'content' => $token[1],
-                                                      'code'    => T_STRING,
-                                                      'type'    => 'T_STRING',
-                                                     );
+                        // Special case for syntax like: return new self
+                        // where self should not be a string.
+                        if ($finalTokens[$lastNotEmptyToken]['code'] === T_NEW
+                            && strtolower($token[1]) === 'self'
+                        ) {
+                            $finalTokens[$newStackPtr] = array(
+                                                          'content' => $token[1],
+                                                          'code'    => T_SELF,
+                                                          'type'    => 'T_SELF',
+                                                         );
+                        } else {
+                            $finalTokens[$newStackPtr] = array(
+                                                          'content' => $token[1],
+                                                          'code'    => T_STRING,
+                                                          'type'    => 'T_STRING',
+                                                         );
+                        }
+
                         $newStackPtr++;
                         continue;
-                    }
+                    }//end if
                 }//end if
 
                 $newToken = null;
@@ -958,9 +1004,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 // Convert colons that are actually the ELSE component of an
                 // inline IF statement.
-                if ($newToken['code'] === T_INLINE_THEN) {
-                    $insideInlineIf[] = $stackPtr;
-                } else if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
+                if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
                     array_pop($insideInlineIf);
                     $newToken['code'] = T_INLINE_ELSE;
                     $newToken['type'] = 'T_INLINE_ELSE';
@@ -1135,7 +1179,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 for ($x = ($tokenAfterReturnTypeHint - 1); $x > $i; $x--) {
                     if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
-                        if (in_array($tokens[$x]['code'], array(T_STRING, T_ARRAY, T_CALLABLE, T_SELF, T_PARENT), true) === true) {
+                        if (in_array($tokens[$x]['code'], array(T_STRING, T_ARRAY, T_ARRAY_HINT, T_CALLABLE, T_SELF, T_PARENT), true) === true) {
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $line = $tokens[$x]['line'];
                                 $type = $tokens[$x]['type'];
@@ -1189,25 +1233,47 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 continue;
             } else if ($tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
-                // Unless there is a variable or a bracket before this token,
-                // it is the start of an array being defined using the short syntax.
-                for ($x = ($i - 1); $x > 0; $x--) {
-                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
-                        break;
-                    }
+                if (isset($tokens[$i]['bracket_closer']) === false) {
+                    continue;
                 }
 
-                $allowed = array(
-                            T_CLOSE_CURLY_BRACKET  => T_CLOSE_CURLY_BRACKET,
-                            T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
-                            T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
-                            T_VARIABLE             => T_VARIABLE,
-                            T_STRING               => T_STRING,
-                           );
+                // Unless there is a variable or a bracket before this token,
+                // it is the start of an array being defined using the short syntax.
+                $isShortArray = false;
+                $allowed      = array(
+                                 T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
+                                 T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
+                                 T_VARIABLE             => T_VARIABLE,
+                                 T_OBJECT_OPERATOR      => T_OBJECT_OPERATOR,
+                                 T_STRING               => T_STRING,
+                                );
 
-                if (isset($allowed[$tokens[$x]['code']]) === false
-                    && isset($tokens[$i]['bracket_closer']) === true
-                ) {
+                for ($x = ($i - 1); $x > 0; $x--) {
+                    // If we hit a scope opener, the statement has ended
+                    // without finding anything, so it's probably an array
+                    // using PHP 7.1 short list syntax.
+                    if (isset($tokens[$x]['scope_opener']) === true) {
+                        $isShortArray = true;
+                        break;
+                    }
+
+                    if (isset($tokens[$x]['bracket_opener']) === true
+                        && $x > $tokens[$x]['bracket_opener']
+                    ) {
+                        $x = $tokens[$x]['bracket_opener'];
+                        continue;
+                    }
+
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
+                        if (isset($allowed[$tokens[$x]['code']]) === false) {
+                            $isShortArray = true;
+                        }
+
+                        break;
+                    }
+                }//end for
+
+                if ($isShortArray === true) {
                     $tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
                     $tokens[$i]['type'] = 'T_OPEN_SHORT_ARRAY';
 
@@ -1536,9 +1602,6 @@ class PHP_CodeSniffer_Tokenizers_PHP
             break;
         case '.':
             $newToken['type'] = 'T_STRING_CONCAT';
-            break;
-        case '?':
-            $newToken['type'] = 'T_INLINE_THEN';
             break;
         case ';':
             $newToken['type'] = 'T_SEMICOLON';

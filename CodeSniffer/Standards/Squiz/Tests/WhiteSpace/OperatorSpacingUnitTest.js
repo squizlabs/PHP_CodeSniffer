@@ -96,3 +96,5 @@ x = x >> y;
 x >>= y;
 x = x >>> y;
 x >>>= y;
+
+var foo = bar.map(baz=> baz.length);

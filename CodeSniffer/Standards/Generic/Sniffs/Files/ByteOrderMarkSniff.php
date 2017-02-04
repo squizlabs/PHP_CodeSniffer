@@ -37,11 +37,11 @@ class Generic_Sniffs_Files_ByteOrderMarkSniff implements PHP_CodeSniffer_Sniff
      *
      * @var array
      */
-    public $bomDefinitions = array(
-                              'UTF-8'       => 'efbbbf',
-                              'UTF-16 (BE)' => 'feff',
-                              'UTF-16 (LE)' => 'fffe',
-                             );
+    protected $bomDefinitions = array(
+                                 'UTF-8'       => 'efbbbf',
+                                 'UTF-16 (BE)' => 'feff',
+                                 'UTF-16 (LE)' => 'fffe',
+                                );
 
 
     /**

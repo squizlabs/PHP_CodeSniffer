@@ -43,10 +43,11 @@ class Squiz_Tests_Arrays_ArrayBracketSpacingUnitTest extends AbstractSniffUnitTe
     public function getErrorList()
     {
         return array(
-                3 => 1,
-                4 => 2,
-                5 => 3,
-                7 => 3,
+                3  => 1,
+                4  => 2,
+                5  => 3,
+                7  => 3,
+                17 => 2,
                );
 
     }//end getErrorList()

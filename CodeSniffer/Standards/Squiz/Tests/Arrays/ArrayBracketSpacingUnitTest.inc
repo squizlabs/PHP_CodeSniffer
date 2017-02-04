@@ -11,5 +11,10 @@ $array = [
     'bar' => 'foo',
 ];
 
+if ($foo) {}
+[$a, $b] = $c;
+
+echo foo()[ 1 ];
+
 $array = [];
 $var = $var[$var[$var]]]; // Syntax error

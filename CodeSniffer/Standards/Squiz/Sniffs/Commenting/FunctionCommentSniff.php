@@ -115,7 +115,9 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                     if (isset($tokens[$stackPtr]['scope_closer']) === true) {
                         $endToken = $tokens[$stackPtr]['scope_closer'];
                         for ($returnToken = $stackPtr; $returnToken < $endToken; $returnToken++) {
-                            if ($tokens[$returnToken]['code'] === T_CLOSURE) {
+                            if ($tokens[$returnToken]['code'] === T_CLOSURE
+                                || $tokens[$returnToken]['code'] === T_ANON_CLASS
+                            ) {
                                 $returnToken = $tokens[$returnToken]['scope_closer'];
                                 continue;
                             }
@@ -457,43 +459,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             $foundParams[] = $param['var'];
 
             // Check number of spaces after the type.
-            $spaces = ($maxType - strlen($param['type']) + 1);
-            if ($param['type_space'] !== $spaces) {
-                $error = 'Expected %s spaces after parameter type; %s found';
-                $data  = array(
-                          $spaces,
-                          $param['type_space'],
-                         );
-
-                $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamType', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->beginChangeset();
-
-                    $content  = $param['type'];
-                    $content .= str_repeat(' ', $spaces);
-                    $content .= $param['var'];
-                    $content .= str_repeat(' ', $param['var_space']);
-                    $content .= $param['commentLines'][0]['comment'];
-                    $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
-
-                    // Fix up the indent of additional comment lines.
-                    foreach ($param['commentLines'] as $lineNum => $line) {
-                        if ($lineNum === 0
-                            || $param['commentLines'][$lineNum]['indent'] === 0
-                        ) {
-                            continue;
-                        }
-
-                        $newIndent = ($param['commentLines'][$lineNum]['indent'] + $spaces - $param['type_space']);
-                        $phpcsFile->fixer->replaceToken(
-                            ($param['commentLines'][$lineNum]['token'] - 1),
-                            str_repeat(' ', $newIndent)
-                        );
-                    }
-
-                    $phpcsFile->fixer->endChangeset();
-                }//end if
-            }//end if
+            $this->checkSpacingAfterParamType($phpcsFile, $param, $maxType);
 
             // Make sure the param name is correct.
             if (isset($realParams[$pos]) === true) {
@@ -526,43 +492,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             }
 
             // Check number of spaces after the var name.
-            $spaces = ($maxVar - strlen($param['var']) + 1);
-            if ($param['var_space'] !== $spaces) {
-                $error = 'Expected %s spaces after parameter name; %s found';
-                $data  = array(
-                          $spaces,
-                          $param['var_space'],
-                         );
-
-                $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamName', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->beginChangeset();
-
-                    $content  = $param['type'];
-                    $content .= str_repeat(' ', $param['type_space']);
-                    $content .= $param['var'];
-                    $content .= str_repeat(' ', $spaces);
-                    $content .= $param['commentLines'][0]['comment'];
-                    $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
-
-                    // Fix up the indent of additional comment lines.
-                    foreach ($param['commentLines'] as $lineNum => $line) {
-                        if ($lineNum === 0
-                            || $param['commentLines'][$lineNum]['indent'] === 0
-                        ) {
-                            continue;
-                        }
-
-                        $newIndent = ($param['commentLines'][$lineNum]['indent'] + $spaces - $param['var_space']);
-                        $phpcsFile->fixer->replaceToken(
-                            ($param['commentLines'][$lineNum]['token'] - 1),
-                            str_repeat(' ', $newIndent)
-                        );
-                    }
-
-                    $phpcsFile->fixer->endChangeset();
-                }//end if
-            }//end if
+            $this->checkSpacingAfterParamName($phpcsFile, $param, $maxVar);
 
             // Param comments must start with a capital letter and end with the full stop.
             if (preg_match('/^(\p{Ll}|\P{L})/u', $param['comment']) === 1) {
@@ -591,6 +521,114 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
         }
 
     }//end processParams()
+
+
+    /**
+     * Check the spacing after the type of a parameter.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param array                $param     The parameter to be checked.
+     * @param int                  $maxType   The maxlength of the longest parameter type.
+     * @param int                  $spacing   The number of spaces to add after the type.
+     *
+     * @return void
+     */
+    protected function checkSpacingAfterParamType(PHP_CodeSniffer_File $phpcsFile, $param, $maxType, $spacing = 1)
+    {
+        // Check number of spaces after the type.
+        $spaces = ($maxType - strlen($param['type']) + $spacing);
+        if ($param['type_space'] !== $spaces) {
+            $error = 'Expected %s spaces after parameter type; %s found';
+            $data  = array(
+                      $spaces,
+                      $param['type_space'],
+                     );
+
+            $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamType', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+
+                $content  = $param['type'];
+                $content .= str_repeat(' ', $spaces);
+                $content .= $param['var'];
+                $content .= str_repeat(' ', $param['var_space']);
+                $content .= $param['commentLines'][0]['comment'];
+                $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
+
+                // Fix up the indent of additional comment lines.
+                foreach ($param['commentLines'] as $lineNum => $line) {
+                    if ($lineNum === 0
+                        || $param['commentLines'][$lineNum]['indent'] === 0
+                    ) {
+                        continue;
+                    }
+
+                    $newIndent = ($param['commentLines'][$lineNum]['indent'] + $spaces - $param['type_space']);
+                    $phpcsFile->fixer->replaceToken(
+                        ($param['commentLines'][$lineNum]['token'] - 1),
+                        str_repeat(' ', $newIndent)
+                    );
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }//end if
+        }//end if
+
+    }//end checkSpacingAfterParamType()
+
+
+    /**
+     * Check the spacing after the name of a parameter.
+     *
+     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
+     * @param array                $param     The parameter to be checked.
+     * @param int                  $maxVar    The maxlength of the longest parameter name.
+     * @param int                  $spacing   The number of spaces to add after the type.
+     *
+     * @return void
+     */
+    protected function checkSpacingAfterParamName(PHP_CodeSniffer_File $phpcsFile, $param, $maxVar, $spacing = 1)
+    {
+        // Check number of spaces after the var name.
+        $spaces = ($maxVar - strlen($param['var']) + $spacing);
+        if ($param['var_space'] !== $spaces) {
+            $error = 'Expected %s spaces after parameter name; %s found';
+            $data  = array(
+                      $spaces,
+                      $param['var_space'],
+                     );
+
+            $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamName', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+
+                $content  = $param['type'];
+                $content .= str_repeat(' ', $param['type_space']);
+                $content .= $param['var'];
+                $content .= str_repeat(' ', $spaces);
+                $content .= $param['commentLines'][0]['comment'];
+                $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
+
+                // Fix up the indent of additional comment lines.
+                foreach ($param['commentLines'] as $lineNum => $line) {
+                    if ($lineNum === 0
+                        || $param['commentLines'][$lineNum]['indent'] === 0
+                    ) {
+                        continue;
+                    }
+
+                    $newIndent = ($param['commentLines'][$lineNum]['indent'] + $spaces - $param['var_space']);
+                    $phpcsFile->fixer->replaceToken(
+                        ($param['commentLines'][$lineNum]['token'] - 1),
+                        str_repeat(' ', $newIndent)
+                    );
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }//end if
+        }//end if
+
+    }//end checkSpacingAfterParamName()
 
 
 }//end class

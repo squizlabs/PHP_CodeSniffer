@@ -117,3 +117,7 @@ console.info(foo);
 
 //	Comment here.
 console.info(foo);
+
+//**
+* invalid comment
+*/

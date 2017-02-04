@@ -800,3 +800,24 @@ public function myFunction() {
  */
 function foo($bar) {
 }
+
+/**
+ * Do something.
+ *
+ * @return void
+ */
+public function someFunc(): void
+{
+    $class = new class
+    {
+        /**
+         * Do something.
+         *
+         * @return string
+         */
+        public function getString(): string
+        {
+            return 'some string';
+        }
+    };
+}

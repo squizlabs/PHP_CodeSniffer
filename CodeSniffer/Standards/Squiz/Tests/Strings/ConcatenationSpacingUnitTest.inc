@@ -9,6 +9,12 @@ $y = '1'
    . '2'
    . '3';
 
+echo 1 . 'test';
+echo 1.1 . 'test';
+echo 'test' . 1;
+echo 'test' . 1.1;
+echo 'test' . 1 . 'test' . 2.2 . 'test'   .   3;
+
 // @codingStandardsChangeSetting Squiz.Strings.ConcatenationSpacing spacing 1
 
 $string = 'Hello'.$there.'. How are'.$you.$going.   "today $okay";

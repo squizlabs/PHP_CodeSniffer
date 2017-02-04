@@ -16,7 +16,7 @@
 /**
  * Squiz_Sniffs_Functions_LowercaseFunctionKeywordsSniff.
  *
- * Ensures all class keywords are lowercase.
+ * Ensures all function keywords are lowercase.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer
