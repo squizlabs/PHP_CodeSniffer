@@ -1,6 +1,6 @@
 <?php
 /**
- * Squiz_Sniffs_WhiteSpace_LanguageConstructSpacingSniff.
+ * Generic_Sniffs_WhiteSpace_LanguageConstructSpacingSniff.
  *
  * PHP version 5
  *
@@ -8,28 +8,29 @@
  * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @author    Marc McIntyre <mmcintyre@squiz.net>
+ * @author    George Mponos <gmponos@gmail.com>
  * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
- * Squiz_Sniffs_WhiteSpace_LanguageConstructSpacingSniff.
+ * Generic_Sniffs_WhiteSpace_LanguageConstructSpacingSniff.
  *
  * Ensures all language constructs (without brackets) contain a
  * single space between themselves and their content.
  *
- * @category   PHP
- * @package    PHP_CodeSniffer
- * @author     Greg Sherwood <gsherwood@squiz.net>
- * @author     Marc McIntyre <mmcintyre@squiz.net>
- * @copyright  2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license    https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version    Release: @package_version@
- * @link       http://pear.php.net/package/PHP_CodeSniffer
- * @deprecated Use Generic_Sniffs_WhiteSpace_LanguageConstructSpacingSniff instead as it contains more language constructs.
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Marc McIntyre <mmcintyre@squiz.net>
+ * @author    George Mponos <gmponos@gmail.com>
+ * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @version   Release: @package_version@
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
-class Squiz_Sniffs_WhiteSpace_LanguageConstructSpacingSniff implements PHP_CodeSniffer_Sniff
+class Generic_Sniffs_WhiteSpace_LanguageConstructSpacingSniff implements PHP_CodeSniffer_Sniff
 {
 
 
@@ -49,6 +50,10 @@ class Squiz_Sniffs_WhiteSpace_LanguageConstructSpacingSniff implements PHP_CodeS
                 T_REQUIRE,
                 T_REQUIRE_ONCE,
                 T_NEW,
+                T_YIELD,
+                T_THROW,
+                T_NAMESPACE,
+                T_USE,
                );
 
     }//end register()
