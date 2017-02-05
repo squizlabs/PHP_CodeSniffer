@@ -113,12 +113,6 @@ class UselessOverridingMethodSniff implements Sniff
             return;
         }
 
-        $validParameterTypes = array(
-                                T_VARIABLE,
-                                T_LNUMBER,
-                                T_CONSTANT_ENCAPSED_STRING,
-                               );
-
         $parameters       = array('');
         $parenthesisCount = 1;
         $count            = count($tokens);
