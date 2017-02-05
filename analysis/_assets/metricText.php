@@ -24,6 +24,14 @@ $metricText = array(
                                                                        'description' => 'Are class names defined using CamelCase?',
                                                                        'items'       => 'classes',
                                                                       ),
+               'Blank lines at start of control structure'         => array(
+                                                                       'description' => 'How many blank lines precede the body of a control structure?',
+                                                                       'items'       => 'control structures',
+                                                                      ),
+               'Blank lines at end of control structure'           => array(
+                                                                       'description' => 'How many blank lines follow the body of a control structure?',
+                                                                       'items'       => 'control structures',
+                                                                      ),
                'Control structure defined inline'                  => array(
                                                                        'description' => 'Are control structures defined inline (without braces)?',
                                                                        'items'       => 'control structures',
