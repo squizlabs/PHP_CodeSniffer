@@ -134,6 +134,9 @@ class ControlStructureSpacingSniff implements Sniff
         if (isset($ignore[$tokens[$firstContent]['code']]) === false
             && $tokens[$firstContent]['line'] >= ($tokens[$scopeOpener]['line'] + 2)
         ) {
+            $gap = ($tokens[$firstContent]['line'] - $tokens[$scopeOpener]['line'] - 1);
+            $phpcsFile->recordMetric($stackPtr, 'Blank lines at start of control structure', $gap);
+
             $error = 'Blank line found at start of control structure';
             $fix   = $phpcsFile->addFixableError($error, $scopeOpener, 'SpacingAfterOpen');
 
@@ -148,7 +151,9 @@ class ControlStructureSpacingSniff implements Sniff
                 $phpcsFile->fixer->addNewline($scopeOpener);
                 $phpcsFile->fixer->endChangeset();
             }
-        }
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Blank lines at start of control structure', 0);
+        }//end if
 
         if ($firstContent !== $scopeCloser) {
             $lastContent = $phpcsFile->findPrevious(
@@ -181,6 +186,9 @@ class ControlStructureSpacingSniff implements Sniff
                     }
                 }
 
+                $gap = ($tokens[$scopeCloser]['line'] - $tokens[$lastContent]['line'] - 1);
+                $phpcsFile->recordMetric($stackPtr, 'Blank lines at end of control structure', $gap);
+
                 $error = 'Blank line found at end of control structure';
                 $fix   = $phpcsFile->addFixableError($error, $errorToken, 'SpacingBeforeClose');
 
@@ -201,6 +209,8 @@ class ControlStructureSpacingSniff implements Sniff
 
                     $phpcsFile->fixer->endChangeset();
                 }
+            } else {
+                $phpcsFile->recordMetric($stackPtr, 'Blank lines at end of control structure', 0);
             }//end if
         }//end if
 
