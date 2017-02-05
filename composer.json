@@ -24,13 +24,6 @@
             "dev-master": "3.x-dev"
         }
     },
-    "autoload": {
-        "psr-4": {
-            "PHP_CodeSniffer\\": "src/",
-            "PHP_CodeSniffer\\Tests\\": "tests/"
-        },
-        "files": ["autoload.php"]
-    },
     "require": {
         "php": ">=5.4.0",
         "ext-tokenizer": "*",

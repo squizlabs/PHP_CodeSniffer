@@ -54,16 +54,17 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
          */
         public static function load($class)
         {
-            // Include the composer autoloader if there is one, but unregister it
-            // as we need to include all files so we can figure out what
-            // the class/interface/trait name is.
+            // Include the composer autoloader if there is one, but re-register it
+            // so this autoloader runs before the composer one as we need to include
+            // all files so we can figure out what the class/interface/trait name is.
             if (self::$composerAutoloader === null) {
                 if (strpos(__DIR__, 'phar://') !== 0
                     && file_exists(__DIR__.'/../../autoload.php') === true
                 ) {
                     self::$composerAutoloader = include __DIR__.'/../../autoload.php';
                     if (self::$composerAutoloader instanceof \Composer\Autoload\ClassLoader) {
-                        self::$composerAutoloader->unregister();
+                        #self::$composerAutoloader->unregister();
+                        #self::$composerAutoloader->register();
                     } else {
                         // Something went wrong, so keep going without the autoloader
                         // although namespaced sniffs might error.
