@@ -63,8 +63,8 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
                 ) {
                     self::$composerAutoloader = include __DIR__.'/../../autoload.php';
                     if (self::$composerAutoloader instanceof \Composer\Autoload\ClassLoader) {
-                        #self::$composerAutoloader->unregister();
-                        #self::$composerAutoloader->register();
+                        self::$composerAutoloader->unregister();
+                        self::$composerAutoloader->register();
                     } else {
                         // Something went wrong, so keep going without the autoloader
                         // although namespaced sniffs might error.
