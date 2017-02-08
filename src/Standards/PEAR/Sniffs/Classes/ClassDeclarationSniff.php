@@ -15,13 +15,6 @@ use PHP_CodeSniffer\Files\File;
 class ClassDeclarationSniff implements Sniff
 {
 
-    /**
-     * The number of spaces code should be indented.
-     *
-     * @var integer
-     */
-    public $indent = 4;
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -123,7 +116,8 @@ class ClassDeclarationSniff implements Sniff
                 $spaces     = strlen($blankSpace);
             }
 
-            $expected = ($tokens[$stackPtr]['level'] * $this->indent);
+            $first    = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr, true);
+            $expected = ($tokens[$first]['column'] - 1);
             if ($spaces !== $expected) {
                 $error = 'Expected %s spaces before opening brace; %s found';
                 $data  = array(

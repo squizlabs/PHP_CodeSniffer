@@ -16,6 +16,13 @@ use PHP_CodeSniffer\Files\File;
 class ClassDeclarationSniff extends PEARClassDeclarationSniff
 {
 
+    /**
+     * The number of spaces code should be indented.
+     *
+     * @var integer
+     */
+    public $indent = 4;
+
 
     /**
      * Processes this test, when one of its tokens is encountered.

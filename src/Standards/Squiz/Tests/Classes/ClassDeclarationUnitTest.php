@@ -27,6 +27,7 @@ class ClassDeclarationUnitTest extends AbstractSniffUnitTest
     {
         return array(
                 5   => 1,
+                6   => 1,
                 10  => 1,
                 15  => 2,
                 18  => 1,
@@ -34,7 +35,6 @@ class ClassDeclarationUnitTest extends AbstractSniffUnitTest
                 23  => 4,
                 24  => 4,
                 27  => 2,
-                28  => 1,
                 30  => 2,
                 34  => 1,
                 35  => 1,
@@ -43,6 +43,7 @@ class ClassDeclarationUnitTest extends AbstractSniffUnitTest
                 45  => 1,
                 48  => 1,
                 50  => 2,
+                51  => 1,
                 55  => 1,
                 59  => 4,
                 63  => 1,
