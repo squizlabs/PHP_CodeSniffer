@@ -432,8 +432,14 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                         if ($tokens[$i]['code'] === T_COMMENT
                             && $tokens[($i - 1)]['code'] === T_COMMENT
                         ) {
-                            $trimmed     = ltrim($tokens[$i]['content']);
-                            $foundIndent = (strlen($tokens[$i]['content']) - strlen($trimmed));
+                            $trimmedLength = strlen(ltrim($tokens[$i]['content']));
+                            if ($trimmedLength === 0) {
+                                // This is a blank comment line, so indenting it is
+                                // pointless.
+                                continue;
+                            }
+
+                            $foundIndent = (strlen($tokens[$i]['content']) - $trimmedLength);
                         } else {
                             $foundIndent = 0;
                         }
