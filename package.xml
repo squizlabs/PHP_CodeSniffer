@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The PHP-supplied T_COALESCE_EQUAL token has been replicated for PHP versions before 7.2
   - Fixed bug #1340 : STDIN file contents not being populated in some cases
     -- Thanks to David Biňovec for the patch
  </notes>

@@ -102,7 +102,8 @@ class Squiz_Tests_WhiteSpace_OperatorSpacingUnitTest extends AbstractSniffUnitTe
                     174 => 1,
                     177 => 1,
                     178 => 1,
-                    184 => 2,
+                    179 => 1,
+                    185 => 2,
                    );
             break;
         case 'OperatorSpacingUnitTest.js':

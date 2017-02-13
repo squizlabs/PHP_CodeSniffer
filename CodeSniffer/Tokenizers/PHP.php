@@ -657,6 +657,42 @@ class PHP_CodeSniffer_Tokenizers_PHP
             }
 
             /*
+                Before PHP 7, the ??= operator was tokenized as
+                T_INLINE_THEN, T_INLINE_THEN, T_EQUAL.
+                Between PHP 7.0 and 7.2, the ??= operator was tokenized as
+                T_COALESCE, T_EQUAL.
+                So look for and combine these tokens in earlier versions.
+            */
+
+            if (($tokenIsArray === false
+                && $token[0] === '?'
+                && isset($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === '?'
+                && isset($tokens[($stackPtr + 2)]) === true
+                && $tokens[($stackPtr + 2)][0] === '=')
+                || ($tokenIsArray === true
+                && $token[0] === T_COALESCE
+                && isset($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === '=')
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_COALESCE_EQUAL;
+                $newToken['type']    = 'T_COALESCE_EQUAL';
+                $newToken['content'] = '??=';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr++;
+
+                if ($tokenIsArray === false) {
+                    // Pre PHP 7.
+                    $stackPtr++;
+                }
+
+                continue;
+            }
+
+            /*
                 Before PHP 7, the ?? operator was tokenized as
                 T_INLINE_THEN followed by T_INLINE_THEN.
                 So look for and combine these tokens in earlier versions.
