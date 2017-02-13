@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-02-02</date>
  <time>14:23:00</time>
  <version>
-  <release>2.8.0</release>
-  <api>2.8.0</api>
+  <release>2.8.1</release>
+  <api>2.8.1</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,61 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - The Internal.NoCodeFound error is no longer generated for content sourced from STDIN
-    -- This should stop some Git hooks generating errors because PHPCS is trying to process the refs passed on STDIN
-  - Squiz.Commenting.DocCommentAlignment now checks comments on class properties defined using the VAR keyword
-    -- Thanks to Klaus Purer for the patch
-  - The getMethodParameters() method now recognises "self" as a valid type hint
-    -- The return array now contains a new "content" index containing the raw content of the param definition
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - The getMethodParameters() method now supports nullable types
-    -- The return array now contains a new "nullable_type" index set to true or false for each method param
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - The getMethodParameters() method now supports closures
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Added more guard code for JS files with syntax errors (request #1271 and request #1272)
-  - Added more guard code for CSS files with syntax errors (request #1304)
-  - PEAR.Commenting.FunctionComment fixers now correctly handle multi-line param comments
-  - AbstractVariableSniff now supports anonymous classes
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.NamingConventions.ConstructorName and PEAR.NamingConventions.ValidVariable now support anonymous classes
-  - Generic.NamingConventions.CamelCapsFunctionName and PEAR.NamingConventions.ValidFunctionName now support anonymous classes
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.CodeAnalysis.UnusedFunctionParameter and PEAR.Functions.ValidDefaultValue now support closures
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - PEAR.NamingConventions.ValidClassName and Squiz.Classes.ValidClassName now support traits
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.Functions.FunctionCallArgumentSpacing now supports closures other PHP-provided functions
-    -- Thanks to Algirdas Gurevicius for the patch
-  - Fixed an error where a nullable type character was detected as an inline then token
-    -- A new T_NULLABLE token has been added to represent the ? nullable type character
-    -- Thanks to Jaroslav Hanslík for the patch
-  - Squiz.WhiteSpace.SemicolonSpacing no longer removes comments while fixing the placement of semicolons
-    -- Thanks to Algirdas Gurevicius for the patch
-  - Fixed bug #1230 : JS tokeniser incorrectly tokenises bitwise shifts as comparison
-    -- Thanks to Ryan McCue for the patch
-  - Fixed bug #1237 : Uninitialized string offset in PHP Tokenizer on PHP 5.2
-  - Fixed bug #1239 : Warning when static method name is 'default'
-  - Fixed bug #1240 : False positive for function names starting with triple underscore
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1245 : SELF is not recognised as T_SELF token in: return new self
-  - Fixed bug #1246 : A mix of USE statements with and without braces can cause the tokenizer to mismatch brace tokens
-    -- Thanks to Michał Bundyra for the patch
-  - Fixed bug #1249 : GitBlame report requires a .git directory
-  - Fixed bug #1252 : Squiz.Strings.ConcatenationSpacing fix creates syntax error when joining a number to a string
-  - Fixed bug #1253 : Generic.ControlStructures.InlineControlStructure fix creates syntax error fixing if-try/catch
-  - Fixed bug #1255 : Inconsistent indentation check results when ELSE on new line
-  - Fixed bug #1257 : Double dash in CSS class name can lead to "Named colours are forbidden" false positives
-  - Fixed bug #1260 : Syntax errors not being shown when error_prepend_string is set
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1264 : Array return type hint is sometimes detected as T_ARRAY_HINT instead of T_RETURN_TYPE
-    -- Thanks to Jaroslav Hanslík for the patch
-  - Fixed bug #1265 : ES6 arrow function raises unexpected operator spacing errors
-  - Fixed bug #1267 : Fixer incorrectly handles filepaths with repeated dir names
-    -- Thanks to Sergey Ovchinnikov for the patch
-  - Fixed bug #1276 : Commenting.FunctionComment.InvalidReturnVoid conditional issue with anonymous classes
-  - Fixed bug #1277 : Squiz.PHP.DisallowMultipleAssignments.Found error when var assignment is on the same line as an open tag
-  - Fixed bug #1284 : Squiz.Arrays.ArrayBracketSpacing.SpaceBeforeBracket false positive match for short list syntax
+  - Fixed bug #1340 : STDIN file contents not being populated in some cases
+    -- Thanks to David Biňovec for the patch
  </notes>
  <contents>
   <dir name="/">
