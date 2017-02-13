@@ -28,7 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - The indent property of PEAR.Classes.ClassDeclaration has been removed
     -- Instead of calculating the indent of the brace, it just ensures the brace is aligned with the class keyword
-    -- Other sniffs can be used to ensure the class itself is indented correctly 
+    -- Other sniffs can be used to ensure the class itself is indented correctly
+  - Includes all changes from the 2.8.1 release
   - Fixed bug #1333 : The new autoloader breaks some frameworks with custom autoloaders
   - Fixed bug #1334 : Undefined offset when explaining standard with custom sniffs
  </notes>
