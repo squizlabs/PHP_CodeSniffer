@@ -105,6 +105,10 @@ if (defined('T_COALESCE') === false) {
     define('T_COALESCE', 'PHPCS_T_COALESCE');
 }
 
+if (defined('T_COALESCE_EQUAL') === false) {
+    define('T_COALESCE_EQUAL', 'PHPCS_T_COALESCE_EQUAL');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');
@@ -164,6 +168,7 @@ final class Tokens
                                  T_POW                 => 5,
                                  T_SPACESHIP           => 5,
                                  T_COALESCE            => 5,
+                                 T_COALESCE_EQUAL      => 5,
 
                                  T_SL                  => 5,
                                  T_SR                  => 5,
@@ -359,19 +364,20 @@ final class Tokens
      * @var array<int, int>
      */
     public static $operators = array(
-                                T_MINUS       => T_MINUS,
-                                T_PLUS        => T_PLUS,
-                                T_MULTIPLY    => T_MULTIPLY,
-                                T_DIVIDE      => T_DIVIDE,
-                                T_MODULUS     => T_MODULUS,
-                                T_POW         => T_POW,
-                                T_SPACESHIP   => T_SPACESHIP,
-                                T_COALESCE    => T_COALESCE,
-                                T_BITWISE_AND => T_BITWISE_AND,
-                                T_BITWISE_OR  => T_BITWISE_OR,
-                                T_BITWISE_XOR => T_BITWISE_XOR,
-                                T_SL          => T_SL,
-                                T_SR          => T_SR,
+                                T_MINUS          => T_MINUS,
+                                T_PLUS           => T_PLUS,
+                                T_MULTIPLY       => T_MULTIPLY,
+                                T_DIVIDE         => T_DIVIDE,
+                                T_MODULUS        => T_MODULUS,
+                                T_POW            => T_POW,
+                                T_SPACESHIP      => T_SPACESHIP,
+                                T_COALESCE       => T_COALESCE,
+                                T_COALESCE_EQUAL => T_COALESCE_EQUAL,
+                                T_BITWISE_AND    => T_BITWISE_AND,
+                                T_BITWISE_OR     => T_BITWISE_OR,
+                                T_BITWISE_XOR    => T_BITWISE_XOR,
+                                T_SL             => T_SL,
+                                T_SR             => T_SR,
                                );
 
     /**
