@@ -27,6 +27,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - The PHP-supplied T_COALESCE_EQUAL token has been replicated for PHP versions before 7.2
+  - Squiz.Commenting.FunctionComment now corrects multi-line param comment padding more accurately
+  - Squiz.Commenting.FunctionComment now properly fixes pipe-seperated param types
+  - Squiz.Commenting.FunctionComment now works correctly when function return types also contain a comment
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1340 : STDIN file contents not being populated in some cases
     -- Thanks to David Biňovec for the patch
   - Fixed bug #1344 : PEAR.Functions.FunctionCallSignatureSniff throws error for blank comment lines
@@ -1838,8 +1842,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="FunctionCommentUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP" name="FunctionCommentUnitTest.1.inc" role="test" />
-        <file baseinstalldir="PHP" name="FunctionCommentUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP" name="FunctionCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="FunctionCommentUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
