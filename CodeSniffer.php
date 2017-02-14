@@ -83,6 +83,21 @@ class PHP_CodeSniffer
     const STABILITY = 'stable';
 
     /**
+     * The data types to be used for variable type checks.
+     *
+     * @var string
+     */
+    const TYPE_ARRAY    = 'array';
+    const TYPE_BOOL     = 'bool';
+    const TYPE_FLOAT    = 'float';
+    const TYPE_INT      = 'int';
+    const TYPE_MIXED    = 'mixed';
+    const TYPE_OBJECT   = 'object';
+    const TYPE_STRING   = 'string';
+    const TYPE_RESOURCE = 'resource';
+    const TYPE_CALLABLE = 'callable';
+
+    /**
      * The file or directory that is currently being processed.
      *
      * @var string
@@ -186,23 +201,6 @@ class PHP_CodeSniffer
                                      'js'  => 'JS',
                                      'css' => 'CSS',
                                     );
-
-    /**
-     * An array of variable types for param/var we will check.
-     *
-     * @var array(string)
-     */
-    public static $allowedTypes = array(
-                                   'array',
-                                   'boolean',
-                                   'float',
-                                   'integer',
-                                   'mixed',
-                                   'object',
-                                   'string',
-                                   'resource',
-                                   'callable',
-                                  );
 
 
     /**
@@ -2094,34 +2092,37 @@ class PHP_CodeSniffer
      * If type is not one of the standard type, it must be a custom type.
      * Returns the correct type name suggestion if type name is invalid.
      *
-     * @param string $varType The variable type to process.
+     * @param string                $varType         The variable type to process.
+     * @param array<string, string> $additionalTypes Additional array of variable types.
      *
      * @return string
+     * @see    getAllowedTypes()
      */
-    public static function suggestType($varType)
+    public static function suggestType($varType, array $additionalTypes=array())
     {
         if ($varType === '') {
             return '';
         }
 
-        if (in_array($varType, self::$allowedTypes) === true) {
+        $allowedTypes = array_merge(self::getAllowedTypes(), $additionalTypes);
+        if (in_array($varType, $allowedTypes) === true) {
             return $varType;
         } else {
             $lowerVarType = strtolower($varType);
             switch ($lowerVarType) {
             case 'bool':
             case 'boolean':
-                return 'boolean';
+                return $allowedTypes[self::TYPE_BOOL];
             case 'double':
             case 'real':
             case 'float':
-                return 'float';
+                return $allowedTypes[self::TYPE_FLOAT];
             case 'int':
             case 'integer':
-                return 'integer';
+                return $allowedTypes[self::TYPE_INT];
             case 'array()':
             case 'array':
-                return 'array';
+                return $allowedTypes[self::TYPE_ARRAY];
             }//end switch
 
             if (strpos($lowerVarType, 'array(') !== false) {
@@ -2140,8 +2141,8 @@ class PHP_CodeSniffer
                         $type2 = $matches[3];
                     }
 
-                    $type1 = self::suggestType($type1);
-                    $type2 = self::suggestType($type2);
+                    $type1 = self::suggestType($type1, $additionalTypes);
+                    $type2 = self::suggestType($type2, $additionalTypes);
                     if ($type2 !== '') {
                         $type2 = ' => '.$type2;
                     }
@@ -2150,7 +2151,7 @@ class PHP_CodeSniffer
                 } else {
                     return 'array';
                 }//end if
-            } else if (in_array($lowerVarType, self::$allowedTypes) === true) {
+            } else if (in_array($lowerVarType, $allowedTypes) === true) {
                 // A valid type, but not lower cased.
                 return $lowerVarType;
             } else {
@@ -2160,6 +2161,32 @@ class PHP_CodeSniffer
         }//end if
 
     }//end suggestType()
+
+
+    /**
+     * Returns an array of variable types for param/var tag.
+     *
+     * The key is the data type and the value is the variable
+     * type which should be used for that data type.
+     *
+     * @return array<string, string>
+     * @see    TYPE_*
+     */
+    public static function getAllowedTypes()
+    {
+        return array(
+                self::TYPE_ARRAY    => 'array',
+                self::TYPE_BOOL     => 'boolean',
+                self::TYPE_FLOAT    => 'float',
+                self::TYPE_INT      => 'integer',
+                self::TYPE_MIXED    => 'mixed',
+                self::TYPE_OBJECT   => 'object',
+                self::TYPE_STRING   => 'string',
+                self::TYPE_RESOURCE => 'resource',
+                self::TYPE_CALLABLE => 'callable',
+               );
+
+    }//end getAllowedTypes()
 
 
     /**
