@@ -1141,6 +1141,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentThrowTagUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentThrowTagUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.inc.fixed" role="test" />
