@@ -68,3 +68,11 @@ function myFunction()
  * @return void
  */
 function myFunction() {}
+
+class MyClass2
+{
+    /**
+     * Some info about the variable here.
+     */
+    var $x;
+}

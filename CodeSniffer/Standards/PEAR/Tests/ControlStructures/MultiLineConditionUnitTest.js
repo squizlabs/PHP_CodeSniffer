@@ -154,3 +154,26 @@ if (foo == 401 || // comment
 {
     return false;
 }
+
+if (IPP.errorCode() == 401
+    // Comment explaining the next condition here.
+    || IPP.errorCode() == 3200
+) {
+    return false;
+}
+
+function bar() {
+    if (a
+        && b
+) {
+        return false;
+    }
+}
+
+if (a
+    && foo(
+        'a',
+        'b'
+    )) {
+    return false;
+}

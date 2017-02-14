@@ -50,6 +50,7 @@ class PEAR_Tests_Functions_ValidDefaultValueUnitTest extends AbstractSniffUnitTe
                 76 => 1,
                 81 => 1,
                 91 => 1,
+                99 => 1,
                );
 
     }//end getErrorList()

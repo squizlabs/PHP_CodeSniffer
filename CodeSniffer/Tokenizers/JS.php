@@ -202,8 +202,15 @@ class PHP_CodeSniffer_Tokenizers_JS
                               ':'         => 'T_COLON',
                               '<'         => 'T_LESS_THAN',
                               '>'         => 'T_GREATER_THAN',
+                              '<<'        => 'T_SL',
+                              '>>'        => 'T_SR',
+                              '>>>'       => 'T_ZSR',
+                              '<<='       => 'T_SL_EQUAL',
+                              '>>='       => 'T_SR_EQUAL',
+                              '>>>='      => 'T_ZSR_EQUAL',
                               '<='        => 'T_IS_SMALLER_OR_EQUAL',
                               '>='        => 'T_IS_GREATER_OR_EQUAL',
+                              '=>'        => 'T_DOUBLE_ARROW',
                               '!'         => 'T_BOOLEAN_NOT',
                               '||'        => 'T_BOOLEAN_OR',
                               '&&'        => 'T_BOOLEAN_AND',
@@ -250,10 +257,7 @@ class PHP_CodeSniffer_Tokenizers_JS
 
 
     /**
-     * Creates an array of tokens when given some PHP code.
-     *
-     * Starts by using token_get_all() but does a lot of extra processing
-     * to insert information about the context of the token.
+     * Creates an array of tokens when given some JS code.
      *
      * @param string $string  The string to tokenize.
      * @param string $eolChar The EOL character to use for splitting strings.
@@ -519,7 +523,14 @@ class PHP_CodeSniffer_Tokenizers_JS
                         echo "\t\t* look ahead found nothing *".PHP_EOL;
                     }
 
-                    $value    = $this->tokenValues[strtolower($buffer)];
+                    $value = $this->tokenValues[strtolower($buffer)];
+
+                    if ($value === 'T_FUNCTION' && $buffer !== 'function') {
+                        // The function keyword needs to be all lowercase or else
+                        // it is just a function called "Function".
+                        $value = 'T_STRING';
+                    }
+
                     $tokens[] = array(
                                  'code'    => constant($value),
                                  'type'    => $value,
@@ -723,7 +734,12 @@ class PHP_CodeSniffer_Tokenizers_JS
             if ($token['code'] === T_COMMENT || $token['code'] === T_DOC_COMMENT) {
                 $newContent   = '';
                 $tokenContent = $token['content'];
-                $endContent   = $this->commentTokens[$tokenContent];
+
+                $endContent = null;
+                if (isset($this->commentTokens[$tokenContent]) === true) {
+                    $endContent = $this->commentTokens[$tokenContent];
+                }
+
                 while ($tokenContent !== $endContent) {
                     if ($endContent === null
                         && strpos($tokenContent, $eolChar) !== false
@@ -881,6 +897,9 @@ class PHP_CodeSniffer_Tokenizers_JS
     {
         $beforeTokens = array(
                          T_EQUAL               => true,
+                         T_IS_NOT_EQUAL        => true,
+                         T_IS_IDENTICAL        => true,
+                         T_IS_NOT_IDENTICAL    => true,
                          T_OPEN_PARENTHESIS    => true,
                          T_OPEN_SQUARE_BRACKET => true,
                          T_RETURN              => true,
@@ -1065,6 +1084,7 @@ class PHP_CodeSniffer_Tokenizers_JS
                 continue;
             } else if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
                 && isset($tokens[$i]['scope_condition']) === false
+                && isset($tokens[$i]['bracket_closer']) === true
             ) {
                 $classStack[] = $i;
 

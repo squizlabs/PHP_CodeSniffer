@@ -1,5 +1,4 @@
 sudo: false
-
 language: php
 
 php:
@@ -12,11 +11,16 @@ php:
   - nightly
 
 matrix:
+  fast_finish: true
   include:
     - php: hhvm
       sudo: true
       dist: trusty
       group: edge # until the next update
+  allow_failures:
+    # Allow failures for unstable builds.
+    - php: nightly
+    - php: hhvm
 
 before_script:
   - if [[ ${TRAVIS_PHP_VERSION:0:1} != "7" && $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != hhv* ]]; then phpenv config-add php5-testingConfig.ini; fi

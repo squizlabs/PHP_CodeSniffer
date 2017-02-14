@@ -39,7 +39,10 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return array(
+                T_FUNCTION,
+                T_CLOSURE,
+               );
 
     }//end register()
 
@@ -64,41 +67,30 @@ class PEAR_Sniffs_Functions_ValidDefaultValueSniff implements PHP_CodeSniffer_Sn
         // If there is a value without a default after this, it is an error.
         $defaultFound = false;
 
-        $nextArg = $argStart;
-        while (($nextArg = $phpcsFile->findNext(T_VARIABLE, ($nextArg + 1), $argEnd)) !== false) {
-            if ($tokens[($nextArg - 1)]['code'] === T_ELLIPSIS) {
+        $params = $phpcsFile->getMethodParameters($stackPtr);
+        foreach ($params as $param) {
+            if ($param['variable_length'] === true) {
                 continue;
             }
 
-            $argHasDefault = false;
-
-            $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($nextArg + 1), null, true);
-            if ($tokens[$next]['code'] === T_EQUAL) {
-                $argHasDefault = true;
-            }
-
-            if ($argHasDefault === false && $defaultFound === true) {
-                $error = 'Arguments with default values must be at the end of the argument list';
-                $phpcsFile->addError($error, $nextArg, 'NotAtEnd');
-                return;
-            }
-
-            if ($argHasDefault === true) {
+            if (array_key_exists('default', $param) === true) {
                 $defaultFound = true;
                 // Check if the arg is type hinted and using NULL for the default.
                 // This does not make the argument optional - it just allows NULL
                 // to be passed in.
-                $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($next + 1), null, true);
-                if ($tokens[$next]['code'] === T_NULL) {
-                    $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($nextArg - 1), null, true);
-                    if ($tokens[$prev]['code'] === T_STRING
-                        || $tokens[$prev]['code'] === T_ARRAY_HINT
-                    ) {
-                        $defaultFound = false;
-                    }
+                if ($param['type_hint'] !== '' && strtolower($param['default']) === 'null') {
+                    $defaultFound = false;
                 }
+
+                continue;
             }
-        }//end while
+
+            if ($defaultFound === true) {
+                $error = 'Arguments with default values must be at the end of the argument list';
+                $phpcsFile->addError($error, $param['token'], 'NotAtEnd');
+                return;
+            }
+        }//end foreach
 
     }//end process()
 

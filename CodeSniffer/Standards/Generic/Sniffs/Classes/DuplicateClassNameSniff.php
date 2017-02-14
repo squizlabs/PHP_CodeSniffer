@@ -31,7 +31,7 @@ class Generic_Sniffs_Classes_DuplicateClassNameSniff implements PHP_CodeSniffer_
      *
      * @var array
      */
-    public $foundClasses = array();
+    protected $foundClasses = array();
 
 
     /**

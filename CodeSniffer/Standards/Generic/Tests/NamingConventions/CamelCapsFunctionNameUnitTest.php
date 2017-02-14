@@ -74,6 +74,9 @@ class Generic_Tests_NamingConventions_CamelCapsFunctionNameUnitTest extends Abst
                    73  => 1,
                    74  => 1,
                    118 => 1,
+                   144 => 1,
+                   146 => 1,
+                   147 => 1,
                   );
 
         return $errors;

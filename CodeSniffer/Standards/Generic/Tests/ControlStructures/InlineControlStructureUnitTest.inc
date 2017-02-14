@@ -181,3 +181,14 @@ some
 text
 here
 EOD;
+
+if ($a && $a === Foo::VARIABLE && ($a === Foo::METHOD || $a === Foo::FUNCTION))
+    echo 'hi';
+
+$out = array_map(function ($test) { if ($test) return 1; else return 2; }, $input); // comment
+
+if (true)
+    try {
+    }
+    catch(Exception $e) {
+    }

@@ -7,10 +7,10 @@ class PHP_CodeSniffer_File
      *
      * long desc here
      *
-     * @param int $stackPtr   The position in @ @unknown the stack of the token
-     *                        that opened the scope
+     * @param int $stackPtr The position in @ @unknown the stack of the token
+     *                      that opened the scope
      * @param int $detph    How many scope levels down we are.
-     * @param int    $index    The index
+     * @param int $index    The index
      * @return
      * @throws
      */
@@ -120,7 +120,7 @@ class PHP_CodeSniffer_File
      * Param not immediate
      *
      * @return
-     * @param   int   $threeSpaces
+     * @param   int     $threeSpaces
      * @param int     $superfluous
      * @param missing
      * @param
@@ -134,9 +134,9 @@ class PHP_CodeSniffer_File
     /**
      * Param not immediate
      *
-     * @param int      $one   comment
-     * @param int      $two   comment
-     * @param string   $three comment
+     * @param int    $one   comment
+     * @param int    $two   comment
+     * @param string $three comment
      *
      * @return void
      */
@@ -341,9 +341,9 @@ function foo($bar) {
  *
  * @param PHP_CodeSniffer\Files\File $phpcsFile The PHP_CodeSniffer file where the
  *                                        token occurred.
- * @param int                        $stackPtr The position in the tokens stack
- *                                    where the listening token type
- *                                           was found.
+ * @param int                        $stackPtr  The position in the tokens stack
+ *                                              where the listening token type
+ *                                              was found.
  *
  * @return void
  * @see    register()

@@ -267,7 +267,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
         $error = 'Arithmetic operation must be bracketed';
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MissingBrackets');
 
-        if ($fix === false || $phpcsFile->fixer->enabled === false) {
+        if ($fix === false) {
             return;
         }
 

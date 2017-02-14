@@ -40,3 +40,4 @@ $obj->$classVar = $prefix.'-'.$type;
 
 $closureWithDefaultParamter = function(array $testArray=array()) {};
 ?>
+<?php $var = false; ?>

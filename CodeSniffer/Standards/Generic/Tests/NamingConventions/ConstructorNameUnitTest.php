@@ -44,6 +44,7 @@ class Generic_Tests_NamingConventions_ConstructorNameUnitTest extends AbstractSn
                 6  => 1,
                 11 => 1,
                 47 => 1,
+                62 => 1,
                );
 
     }//end getErrorList()

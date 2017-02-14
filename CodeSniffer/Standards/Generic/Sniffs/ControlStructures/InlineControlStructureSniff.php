@@ -179,7 +179,7 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
             if (isset($tokens[$end]['scope_opener']) === true) {
                 $type = $tokens[$end]['code'];
                 $end  = $tokens[$end]['scope_closer'];
-                if ($type === T_DO || $type === T_IF || $type === T_ELSEIF) {
+                if ($type === T_DO || $type === T_IF || $type === T_ELSEIF || $type === T_TRY) {
                     $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), null, true);
                     if ($next === false) {
                         break;
@@ -199,6 +199,11 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
                     // Account for DO... WHILE conditions.
                     if ($type === T_DO && $nextType === T_WHILE) {
                         $end = $phpcsFile->findNext(T_SEMICOLON, ($next + 1));
+                    }
+
+                    // Account for TRY... CATCH statements.
+                    if ($type === T_TRY && $nextType === T_CATCH) {
+                        $end = $tokens[$next]['scope_closer'];
                     }
                 }//end if
 
@@ -224,18 +229,26 @@ class Generic_Sniffs_ControlStructures_InlineControlStructureSniff implements PH
             $end = $lastNonEmpty;
         }
 
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), null, true);
 
-        // Account for a comment on the end of the line.
-        for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
-            if (isset($tokens[($endLine + 1)]) === false
-                || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
-            ) {
-                break;
+        if ($next === false || $tokens[$next]['line'] !== $tokens[$end]['line']) {
+            // Looks for completely empty statements.
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
+
+            // Account for a comment on the end of the line.
+            for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
+                if (isset($tokens[($endLine + 1)]) === false
+                    || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
+                ) {
+                    break;
+                }
             }
-        }
 
-        if ($tokens[$endLine]['code'] !== T_COMMENT) {
+            if ($tokens[$endLine]['code'] !== T_COMMENT) {
+                $endLine = $end;
+            }
+        } else {
+            $next    = ($end + 1);
             $endLine = $end;
         }
 

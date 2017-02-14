@@ -47,6 +47,7 @@ class PEAR_Tests_NamingConventions_ValidVariableNameUnitTest extends AbstractSni
                 92 => 1,
                 93 => 1,
                 94 => 1,
+                99 => 1,
                );
 
     }//end getErrorList()

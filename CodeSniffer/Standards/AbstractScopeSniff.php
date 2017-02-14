@@ -101,7 +101,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
         $invalidScopeTokens = array_intersect($scopeTokens, $tokens);
         if (empty($invalidScopeTokens) === false) {
             $invalid = implode(', ', $invalidScopeTokens);
-            $error   = "Scope tokens [$invalid] cant be in the tokens array";
+            $error   = "Scope tokens [$invalid] can't be in the tokens array";
             throw new PHP_CodeSniffer_Exception($error);
         }
 
@@ -179,7 +179,7 @@ abstract class PHP_CodeSniffer_Standards_AbstractScopeSniff implements PHP_CodeS
 
 
     /**
-     * Processes a token that is found within the scope that this test is
+     * Processes a token that is found outside the scope that this test is
      * listening to.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.

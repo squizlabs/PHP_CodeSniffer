@@ -498,13 +498,13 @@ class PEAR_Sniffs_Commenting_FileCommentSniff implements PHP_CodeSniffer_Sniff
             $matches = array();
             if (preg_match('/^([0-9]{4})((.{1})([0-9]{4}))? (.+)$/', $content, $matches) !== 0) {
                 // Check earliest-latest year order.
-                if ($matches[3] !== '') {
+                if ($matches[3] !== '' && $matches[3] !== null) {
                     if ($matches[3] !== '-') {
                         $error = 'A hyphen must be used between the earliest and latest year';
                         $phpcsFile->addError($error, $tag, 'CopyrightHyphen');
                     }
 
-                    if ($matches[4] !== '' && $matches[4] < $matches[1]) {
+                    if ($matches[4] !== '' && $matches[4] !== null && $matches[4] < $matches[1]) {
                         $error = "Invalid year span \"$matches[1]$matches[3]$matches[4]\" found; consider \"$matches[4]-$matches[1]\" instead";
                         $phpcsFile->addWarning($error, $tag, 'InvalidCopyright');
                     }
