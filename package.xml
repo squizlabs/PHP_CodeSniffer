@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1340 : STDIN file contents not being populated in some cases
     -- Thanks to David Biňovec for the patch
   - Fixed bug #1344 : PEAR.Functions.FunctionCallSignatureSniff throws error for blank comment lines
+  - Fixed bug #1350 : Invalid Squiz.Formatting.OperatorBracket error when using namespaces
  </notes>
  <contents>
   <dir name="/">
