@@ -18,14 +18,14 @@ matrix:
     - php: hhvm
 
 before_script:
-  - if [[ ${TRAVIS_PHP_VERSION:0:1} != "7" && $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != "hhv*" ]]; then phpenv config-add php5-testingConfig.ini; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:1} != "7" && $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != hhv* ]]; then phpenv config-add php5-testingConfig.ini; fi
   - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" || $TRAVIS_PHP_VERSION == "nightly" ]]; then phpenv config-add php7-testingConfig.ini; fi
 
 script:
   - composer install
-  - if [[ $TRAVIS_PHP_VERSION != "hhv*" ]]; then php bin/phpcs --config-set php_path php; fi
+  - if [[ $TRAVIS_PHP_VERSION != "hhv* ]]; then php bin/phpcs --config-set php_path php; fi
   - phpunit tests/AllTests.php
   - php bin/phpcs --no-cache --parallel=1
-  - if [[ $TRAVIS_PHP_VERSION != "hhv*" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
-  - if [[ $TRAVIS_PHP_VERSION != "hhv*" ]]; then php scripts/build-phar.php; fi
-  - if [[ $TRAVIS_PHP_VERSION != "hhv*" ]]; then php phpcs.phar; fi
+  - if [[ $TRAVIS_PHP_VERSION != hhv* && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
+  - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then php scripts/build-phar.php; fi
+  - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then php phpcs.phar; fi
