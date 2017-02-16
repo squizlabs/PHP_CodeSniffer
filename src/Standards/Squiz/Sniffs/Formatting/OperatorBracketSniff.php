@@ -120,6 +120,7 @@ class OperatorBracketSniff implements Sniff
                     T_DNUMBER,
                     T_STRING,
                     T_WHITESPACE,
+                    T_NS_SEPARATOR,
                     T_THIS,
                     T_SELF,
                     T_OBJECT_OPERATOR,
