@@ -1,22 +1,19 @@
 sudo: false
 language: php
-
-php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
-  - nightly
+dist: trusty
 
 matrix:
   fast_finish: true
   include:
+    - php: 5.3
+    - php: 5.4
+    - php: 5.5
+    - php: 5.6
+    - php: 7.0
+    - php: 7.1
+    - php: nightly
     - php: hhvm
-      sudo: true
-      dist: trusty
-      group: edge # until the next update
+
   allow_failures:
     # Allow failures for unstable builds.
     - php: nightly
