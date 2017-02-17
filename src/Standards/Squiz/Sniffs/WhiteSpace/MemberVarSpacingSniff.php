@@ -18,13 +18,19 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
 
     /**
-     * The exception to the newline requirement on the first member var after class opener.
-     * false for newline requirement on the first member var after class opener
-     * true for no newline requirement on the first member var after class opener
+     * The number of blank lines between member vars.
      *
-     * @var bool
+     * @var int
      */
-    public $firstVarException = false;
+    public $spacing = 1;
+
+
+    /**
+     * The number of blank lines between the class opener and the first member var.
+     *
+     * @var int
+     */
+    public $firstMemberSpacing = 1;
 
 
     /**
@@ -96,48 +102,34 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
         $prev       = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($first - 1), null, true);
         $foundLines = ($tokens[$first]['line'] - $tokens[$prev]['line'] - 1);
+        $error      = 'Expected %s blank line before member var; %s found';
+        $expected   = $this->spacing;
+        $isFirst    = $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET;
 
-        // Exception to the newline requirement on the first member var after class opener.
-        if ($this->firstVarException === true) {
-            if ($foundLines > 0 && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET) {
-                $error = 'Expected 0 blank lines before first member var; %s found';
-                $data  = array($foundLines);
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'FirstMember', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->beginChangeset();
-                    for ($i = ($prev + 1); $i < $first; $i++) {
-                        if ($tokens[$i]['line'] === $tokens[$prev]['line']) {
-                            continue;
-                        }
+        // We allow specifying a different number of spaces to the first operator.
+        if ($isFirst === true) {
+            $expected = $this->firstMemberSpacing;
+            $error    = 'Expected %s blank lines before first member var; %s found';
+        }
 
-                        if ($tokens[$i]['line'] === $tokens[$first]['line']) {
-                            break;
-                        }
-
-                        $phpcsFile->fixer->replaceToken($i, '');
-                    }
-
-                    $phpcsFile->fixer->endChangeset();
-                }//end if
-            }//end if
-        }//end if
-
-        if ($foundLines === 1 || ($this->firstVarException === true && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET)) {
+        if ($foundLines === $this->spacing || ($isFirst === true && $foundLines === $this->firstMemberSpacing)) {
             return;
         }
 
-        $error = 'Expected 1 blank line before member var; %s found';
-        $data  = array($foundLines);
-        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
+        $data = array(
+                 $expected,
+                 $foundLines,
+                );
+        $fix  = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
         if ($fix === true) {
             $phpcsFile->fixer->beginChangeset();
-            for ($i = ($prev + 1); $i < $first; $i++) {
+            for ($i = ($prev + $expected); $i < $first; $i++) {
                 if ($tokens[$i]['line'] === $tokens[$prev]['line']) {
                     continue;
                 }
 
                 if ($tokens[$i]['line'] === $tokens[$first]['line']) {
-                    $phpcsFile->fixer->addNewline(($i - 1));
+                    $phpcsFile->fixer->addNewline(($i - $expected));
                     break;
                 }
 
