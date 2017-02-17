@@ -116,3 +116,29 @@ $qux = array_filter(
 $this->listeners[] = $events->getSharedManager()->attach(
         'Zend\Mvc\Application', MvcEvent::EVENT_DISPATCH, [$this, 'selectLayout'], 100
 );
+
+// @codingStandardsChangeSetting PSR2.Methods.FunctionCallSignature requiredSpacesBeforeClose 1
+foo('Testing
+    multiline text'
+ );
+
+foo('Testing
+    multiline text: ' // . $text
+ );
+
+foo('Testing
+    multiline text: ' /* . $text */
+ );
+
+foo('Testing
+    multiline text: ' /* . $text */
+    // . $other_text
+ );
+
+foo('Testing
+    multiline text: ' /*
+ . $text
+// . $text2
+ */
+ );
+// @codingStandardsChangeSetting PSR2.Methods.FunctionCallSignature requiredSpacesBeforeClose 0

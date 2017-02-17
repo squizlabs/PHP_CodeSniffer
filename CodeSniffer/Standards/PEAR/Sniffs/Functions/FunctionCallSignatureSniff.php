@@ -242,7 +242,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
 
         // Checking this: $value = my_function(...[*]).
         $spaceBeforeClose = 0;
-        $prev = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($closer - 1), $openBracket, true);
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($closer - 1), $openBracket, true);
         if ($tokens[$prev]['code'] === T_END_HEREDOC || $tokens[$prev]['code'] === T_END_NOWDOC) {
             // Need a newline after these tokens, so ignore this rule.
             return;
@@ -266,10 +266,31 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                 if ($spaceBeforeClose === 0) {
                     $phpcsFile->fixer->addContentBefore($closer, $padding);
                 } else {
-                    $phpcsFile->fixer->replaceToken(($closer - 1), $padding);
-                }
-            }
-        }
+                    $phpcsFile->fixer->beginChangeset();
+                    $prev = ($closer - 1);
+
+                    // We want to jump over any whitespace or inline comment and move the `)` after any other token.
+                    while (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$prev]['code']]) === true) {
+                        if (($tokens[$prev]['code'] === T_COMMENT)
+                            && (strpos($tokens[$prev]['content'], '*/') !== false)
+                        ) {
+                            break;
+                        }
+
+                        $prev--;
+                    }
+
+                    $phpcsFile->fixer->addContent($prev, $padding.')');
+
+                    $prevNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closer - 1), null, true);
+                    for ($i = ($prevNonWhitespace + 1); $i <= $closer; $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+            }//end if
+        }//end if
 
     }//end processSingleLineCall()
 
