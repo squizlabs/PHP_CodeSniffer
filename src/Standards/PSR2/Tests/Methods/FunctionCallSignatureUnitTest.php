@@ -35,6 +35,20 @@ class FunctionCallSignatureUnitTest extends AbstractSniffUnitTest
                 103 => 1,
                 111 => 1,
                 117 => 4,
+                121 => 1,
+                125 => 1,
+                129 => 1,
+                133 => 1,
+                138 => 1,
+                146 => 1,
+                150 => 1,
+                154 => 1,
+                158 => 1,
+                162 => 1,
+                167 => 1,
+                172 => 1,
+                175 => 1,
+                178 => 1,
                );
 
     }//end getErrorList()

@@ -230,7 +230,7 @@ class FunctionCallSignatureSniff implements Sniff
 
         // Checking this: $value = my_function(...[*]).
         $spaceBeforeClose = 0;
-        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($closer - 1), $openBracket, true);
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($closer - 1), $openBracket, true);
         if ($tokens[$prev]['code'] === T_END_HEREDOC || $tokens[$prev]['code'] === T_END_NOWDOC) {
             // Need a newline after these tokens, so ignore this rule.
             return;
@@ -251,13 +251,48 @@ class FunctionCallSignatureSniff implements Sniff
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeCloseBracket', $data);
             if ($fix === true) {
                 $padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
+
                 if ($spaceBeforeClose === 0) {
                     $phpcsFile->fixer->addContentBefore($closer, $padding);
+                } else if ($spaceBeforeClose === 'newline') {
+                    $phpcsFile->fixer->beginChangeset();
+
+                    $closingContent = ')';
+
+                    $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), null, true);
+                    if ($tokens[$next]['code'] === T_SEMICOLON) {
+                        $closingContent .= ';';
+                        for ($i = ($closer + 1); $i <= $next; $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+                    }
+
+                    // We want to jump over any whitespace or inline comment and
+                    // move the closing parenthesis after any other token.
+                    $prev = ($closer - 1);
+                    while (isset(Tokens::$emptyTokens[$tokens[$prev]['code']]) === true) {
+                        if (($tokens[$prev]['code'] === T_COMMENT)
+                            && (strpos($tokens[$prev]['content'], '*/') !== false)
+                        ) {
+                            break;
+                        }
+
+                        $prev--;
+                    }
+
+                    $phpcsFile->fixer->addContent($prev, $padding.$closingContent);
+
+                    $prevNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closer - 1), null, true);
+                    for ($i = ($prevNonWhitespace + 1); $i <= $closer; $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
                 } else {
                     $phpcsFile->fixer->replaceToken(($closer - 1), $padding);
-                }
-            }
-        }
+                }//end if
+            }//end if
+        }//end if
 
     }//end processSingleLineCall()
 
