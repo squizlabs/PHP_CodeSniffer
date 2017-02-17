@@ -57,6 +57,15 @@ class PSR2_Tests_Methods_FunctionCallSignatureUnitTest extends AbstractSniffUnit
                 129 => 1,
                 133 => 1,
                 138 => 1,
+                146 => 1,
+                150 => 1,
+                154 => 1,
+                158 => 1,
+                162 => 1,
+                167 => 1,
+                172 => 1,
+                175 => 1,
+                178 => 1,
                );
 
     }//end getErrorList()

@@ -263,13 +263,25 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeCloseBracket', $data);
             if ($fix === true) {
                 $padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
+
                 if ($spaceBeforeClose === 0) {
                     $phpcsFile->fixer->addContentBefore($closer, $padding);
-                } else {
+                } else if ($spaceBeforeClose === 'newline') {
                     $phpcsFile->fixer->beginChangeset();
-                    $prev = ($closer - 1);
 
-                    // We want to jump over any whitespace or inline comment and move the `)` after any other token.
+                    $closingContent = ')';
+
+                    $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), null, true);
+                    if ($tokens[$next]['code'] === T_SEMICOLON) {
+                        $closingContent .= ';';
+                        for ($i = ($closer + 1); $i <= $next; $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+                    }
+
+                    // We want to jump over any whitespace or inline comment and
+                    // move the closing parenthesis after any other token.
+                    $prev = ($closer - 1);
                     while (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$prev]['code']]) === true) {
                         if (($tokens[$prev]['code'] === T_COMMENT)
                             && (strpos($tokens[$prev]['content'], '*/') !== false)
@@ -280,7 +292,7 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                         $prev--;
                     }
 
-                    $phpcsFile->fixer->addContent($prev, $padding.')');
+                    $phpcsFile->fixer->addContent($prev, $padding.$closingContent);
 
                     $prevNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closer - 1), null, true);
                     for ($i = ($prevNonWhitespace + 1); $i <= $closer; $i++) {
@@ -288,6 +300,8 @@ class PEAR_Sniffs_Functions_FunctionCallSignatureSniff implements PHP_CodeSniffe
                     }
 
                     $phpcsFile->fixer->endChangeset();
+                } else {
+                    $phpcsFile->fixer->replaceToken(($closer - 1), $padding);
                 }//end if
             }//end if
         }//end if

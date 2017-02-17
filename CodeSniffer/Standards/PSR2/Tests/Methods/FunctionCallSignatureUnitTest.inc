@@ -142,3 +142,38 @@ foo('Testing
  */
  );
 // @codingStandardsChangeSetting PSR2.Methods.FunctionCallSignature requiredSpacesBeforeClose 0
+
+foo('Testing
+    multiline text'
+);
+
+foo('Testing
+    multiline text'
+ );
+
+foo('Testing
+    multiline text' // hello
+);
+
+foo('Testing
+    multiline text' /* hello */
+);
+
+foo('Testing
+    multiline text'
+    // hello
+);
+
+foo('Testing
+    multiline text'
+    /* hello */
+);
+
+$var = foo('Testing
+    multiline'
+    // hi
+    ) + foo('Testing
+    multiline'
+    // hi
+    )
+;
