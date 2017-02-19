@@ -24,6 +24,26 @@ class ObjectOperatorIndentSniff implements Sniff
 
 
     /**
+     * Should tabs be used for indenting?
+     *
+     * If TRUE, fixes will be made using tabs instead of spaces.
+     * The size of each tab is important, so it should be specified
+     * using the --tab-width CLI argument.
+     *
+     * @var bool
+     */
+    public $tabIndent = false;
+
+
+    /**
+     * The --tab-width CLI value that is being used.
+     *
+     * @var int
+     */
+    private $_tabWidth = null;
+
+
+    /**
      * Returns an array of tokens this test wants to listen for.
      *
      * @return int[]
@@ -46,6 +66,18 @@ class ObjectOperatorIndentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        if ($this->_tabWidth === null) {
+            $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
+            if (isset($cliValues['tabWidth']) === false || $cliValues['tabWidth'] === 0) {
+                // We have no idea how wide tabs are, so assume 4 spaces for fixing.
+                // It shouldn't really matter because indent checks elsewhere in the
+                // standard should fix things up.
+                $this->_tabWidth = 4;
+            } else {
+                $this->_tabWidth = $cliValues['tabWidth'];
+            }
+        }
+
         $tokens = $phpcsFile->getTokens();
 
         // Make sure this is the first object operator in a chain of them.
@@ -128,22 +160,41 @@ class ObjectOperatorIndentSniff implements Sniff
                     }
 
                     if ($foundIndent !== $requiredIndent) {
-                        $error = 'Object operator not indented correctly; expected %s spaces but found %s';
-                        $data  = array(
-                                  $requiredIndent,
-                                  $foundIndent,
-                                 );
+                        $error = 'Object operator not indented correctly; expected ';
+                        if ($this->tabIndent === true) {
+                            $error .= '%s tabs, found %s';
+                            $data   = array(
+                                       floor($requiredIndent / $this->_tabWidth),
+                                       floor($foundIndent / $this->_tabWidth),
+                                      );
+                        } else {
+                            $error .= '%s spaces but found %s';
+                            $data   = array(
+                                       $requiredIndent,
+                                       $foundIndent,
+                                      );
+                        }
 
                         $fix = $phpcsFile->addFixableError($error, $next, 'Incorrect', $data);
                         if ($fix === true) {
-                            $spaces = str_repeat(' ', $requiredIndent);
+                            $spaces = '';
+                            if ($this->tabIndent === true) {
+                                $numTabs = floor($requiredIndent / $this->_tabWidth);
+                                if ($numTabs > 0) {
+                                    $numSpaces = ($requiredIndent - ($numTabs * $this->_tabWidth));
+                                    $spaces    = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
+                                }
+                            } else if ($requiredIndent > 0) {
+                                $spaces = str_repeat(' ', $requiredIndent);
+                            }
+
                             if ($foundIndent === 0) {
                                 $phpcsFile->fixer->addContentBefore($next, $spaces);
                             } else {
                                 $phpcsFile->fixer->replaceToken(($next - 1), $spaces);
                             }
                         }
-                    }
+                    }//end if
                 }//end if
 
                 // It cant be the last thing on the line either.

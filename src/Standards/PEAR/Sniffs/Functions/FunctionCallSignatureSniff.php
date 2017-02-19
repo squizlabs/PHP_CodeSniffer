@@ -56,6 +56,26 @@ class FunctionCallSignatureSniff implements Sniff
 
 
     /**
+     * Should tabs be used for indenting?
+     *
+     * If TRUE, fixes will be made using tabs instead of spaces.
+     * The size of each tab is important, so it should be specified
+     * using the --tab-width CLI argument.
+     *
+     * @var bool
+     */
+    public $tabIndent = false;
+
+
+    /**
+     * The --tab-width CLI value that is being used.
+     *
+     * @var int
+     */
+    private $_tabWidth = null;
+
+
+    /**
      * Returns an array of tokens this test wants to listen for.
      *
      * @return array
@@ -80,6 +100,19 @@ class FunctionCallSignatureSniff implements Sniff
     {
         $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
+
+        if ($this->_tabWidth === null) {
+            $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
+            if (isset($cliValues['tabWidth']) === false || $cliValues['tabWidth'] === 0) {
+                // We have no idea how wide tabs are, so assume 4 spaces for fixing.
+                // It shouldn't really matter because indent checks elsewhere in the
+                // standard should fix things up.
+                $this->_tabWidth = 4;
+            } else {
+                $this->_tabWidth = $cliValues['tabWidth'];
+            }
+        }
+
         $tokens = $phpcsFile->getTokens();
 
         // Find the next non-empty token.
@@ -474,15 +507,34 @@ class FunctionCallSignatureSniff implements Sniff
                         || ($inArg === false
                         && $expectedIndent !== $foundIndent)
                     ) {
-                        $error = 'Multi-line function call not indented correctly; expected %s spaces but found %s';
-                        $data  = array(
-                                  $expectedIndent,
-                                  $foundIndent,
-                                 );
+                        $error = 'Multi-line function call not indented correctly; expected ';
+                        if ($this->tabIndent === true) {
+                            $error .= '%s tabs, found %s';
+                            $data   = array(
+                                       floor($expectedIndent / $this->_tabWidth),
+                                       floor($foundIndent / $this->_tabWidth),
+                                      );
+                        } else {
+                            $error .= '%s spaces but found %s';
+                            $data   = array(
+                                       $expectedIndent,
+                                       $foundIndent,
+                                      );
+                        }
 
                         $fix = $phpcsFile->addFixableError($error, $i, 'Indent', $data);
                         if ($fix === true) {
-                            $padding = str_repeat(' ', $expectedIndent);
+                            $padding = '';
+                            if ($this->tabIndent === true) {
+                                $numTabs = floor($expectedIndent / $this->_tabWidth);
+                                if ($numTabs > 0) {
+                                    $numSpaces = ($expectedIndent - ($numTabs * $this->_tabWidth));
+                                    $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
+                                }
+                            } else if ($expectedIndent > 0) {
+                                $padding = str_repeat(' ', $expectedIndent);
+                            }
+
                             if ($foundIndent === 0) {
                                 $phpcsFile->fixer->addContentBefore($i, $padding);
                             } else {
@@ -493,7 +545,7 @@ class FunctionCallSignatureSniff implements Sniff
                                     $phpcsFile->fixer->replaceToken($i, $padding);
                                 }
                             }
-                        }
+                        }//end if
                     }//end if
                 } else {
                     $nextCode = $i;
