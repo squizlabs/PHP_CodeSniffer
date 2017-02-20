@@ -1165,7 +1165,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ControlSignatureUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlSignatureUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ElseIfDeclarationUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="ElseIfDeclarationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ElseIfDeclarationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForEachLoopDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForEachLoopDeclarationUnitTest.inc.fixed" role="test" />
@@ -1174,6 +1173,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopDeclarationUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopDeclarationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineIfDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineIfDeclarationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineIfDeclarationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseDeclarationUnitTest.php" role="test" />
