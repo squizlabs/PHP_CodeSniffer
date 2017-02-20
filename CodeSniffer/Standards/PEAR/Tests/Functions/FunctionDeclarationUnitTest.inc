@@ -27,6 +27,12 @@ class MyClass
     ) /** w00t */ {
     }
 
+    public function someMultilineFunctionWithInvalidBrackets($firstParameter='something',
+                                                     $secondParameter='booooo', $third=null, $fourthParameter=false,
+                                                     $fifthParameter=123.12, $sixthParam=true)
+    {
+    }
+
     public function someFunctionWithAVeryLongName2(
         $firstParameter='something', $secondParameter='booooo', $third=null
     ) {
