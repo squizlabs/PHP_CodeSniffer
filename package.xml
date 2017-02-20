@@ -31,6 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.FunctionComment now properly fixes pipe-seperated param types
   - Squiz.Commenting.FunctionComment now works correctly when function return types also contain a comment
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.ControlStructures.InlineIfDeclaration now supports the elvis operator
+    -- As this is not a real PHP operator, it enforces no spaces beteen ? and : when the THEN statement is empty
   - Fixed bug #1340 : STDIN file contents not being populated in some cases
     -- Thanks to David Biňovec for the patch
   - Fixed bug #1344 : PEAR.Functions.FunctionCallSignatureSniff throws error for blank comment lines

@@ -40,3 +40,6 @@ $config = function() {
 };
 
 rand(0, 1) ? 'ěščřžýáí' : NULL;
+
+$c = ($argv[1]) ? : "";
+$filepath = realpath($argv[1]) ?: $argv[1];
