@@ -33,6 +33,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.ControlStructures.InlineIfDeclaration now supports the elvis operator
     -- As this is not a real PHP operator, it enforces no spaces beteen ? and : when the THEN statement is empty
+  - Squiz.ControlStructures.InlineIfDeclaration is now able to fix the spacing errors it reports
   - Fixed bug #1340 : STDIN file contents not being populated in some cases
     -- Thanks to David Biňovec for the patch
   - Fixed bug #1344 : PEAR.Functions.FunctionCallSignatureSniff throws error for blank comment lines

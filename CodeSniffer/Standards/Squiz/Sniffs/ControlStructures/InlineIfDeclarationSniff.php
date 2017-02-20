@@ -92,7 +92,14 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
         if ($spaceBefore !== 1) {
             $error = 'Inline shorthand IF statement requires 1 space before THEN; %s found';
             $data  = array($spaceBefore);
-            $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeThen', $data);
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeThen', $data);
+            if ($fix === true) {
+                if ($spaceBefore === 0) {
+                    $phpcsFile->fixer->addContentBefore($stackPtr, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
+                }
+            }
         }
 
         // If there is no content between the ? and the : operators, then they are
@@ -104,14 +111,22 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
             $inlineElse = $next;
             if ($inlineElse !== ($stackPtr + 1)) {
                 $error = 'Inline shorthand IF statement without THEN statement requires 0 spaces between THEN and ELSE';
-                $phpcsFile->addError($error, $stackPtr, 'ElvisSpacing');
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ElvisSpacing');
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
+                }
             }
         } else {
             $spaceAfter = (($tokens[$contentAfter]['column']) - ($tokens[$stackPtr]['column'] + 1));
             if ($spaceAfter !== 1) {
                 $error = 'Inline shorthand IF statement requires 1 space after THEN; %s found';
                 $data  = array($spaceAfter);
-                $phpcsFile->addError($error, $stackPtr, 'SpacingAfterThen', $data);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterThen', $data);
+                if ($spaceAfter === 0) {
+                    $phpcsFile->fixer->addContent($stackPtr, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                }
             }
 
             // Make sure the ELSE has the correct spacing.
@@ -121,7 +136,14 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
             if ($spaceBefore !== 1) {
                 $error = 'Inline shorthand IF statement requires 1 space before ELSE; %s found';
                 $data  = array($spaceBefore);
-                $phpcsFile->addError($error, $inlineElse, 'SpacingBeforeElse', $data);
+                $fix   = $phpcsFile->addFixableError($error, $inlineElse, 'SpacingBeforeElse', $data);
+                if ($fix === true) {
+                    if ($spaceBefore === 0) {
+                        $phpcsFile->fixer->addContentBefore($inlineElse, ' ');
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($inlineElse - 1), ' ');
+                    }
+                }
             }
         }//end if
 
@@ -130,7 +152,12 @@ class Squiz_Sniffs_ControlStructures_InlineIfDeclarationSniff implements PHP_Cod
         if ($spaceAfter !== 1) {
             $error = 'Inline shorthand IF statement requires 1 space after ELSE; %s found';
             $data  = array($spaceAfter);
-            $phpcsFile->addError($error, $inlineElse, 'SpacingAfterElse', $data);
+            $fix   = $phpcsFile->addFixableError($error, $inlineElse, 'SpacingAfterElse', $data);
+            if ($spaceAfter === 0) {
+                $phpcsFile->fixer->addContent($inlineElse, ' ');
+            } else {
+                $phpcsFile->fixer->replaceToken(($inlineElse + 1), ' ');
+            }
         }
 
     }//end process()
