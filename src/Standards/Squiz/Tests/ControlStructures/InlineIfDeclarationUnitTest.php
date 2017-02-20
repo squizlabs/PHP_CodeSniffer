@@ -50,6 +50,8 @@ class InlineIfDeclarationUnitTest extends AbstractSniffUnitTest
                 13 => 1,
                 20 => 1,
                 24 => 4,
+                44 => 1,
+                47 => 1,
                );
 
     }//end getErrorList()
