@@ -349,6 +349,12 @@ class PEAR_Sniffs_Functions_FunctionDeclarationSniff implements PHP_CodeSniffer_
                 } else if ($tokens[$i]['line'] !== $tokens[($i + 1)]['line']) {
                     // This is an empty line, so don't check the indent.
                     $foundIndent = $expectedIndent;
+
+                    $error = 'Blank lines are not allowed in a multi-line function declaration';
+                    $fix   = $phpcsFile->addFixableError($error, $i, 'EmptyLine');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
                 } else {
                     $foundIndent = strlen($tokens[$i]['content']);
                 }

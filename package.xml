@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - The PHP-supplied T_COALESCE_EQUAL token has been replicated for PHP versions before 7.2
+  - PEAR.Functions.FunctionDeclaration now reports an error for blank lines found inside a function declaration
   - PEAR.Functions.FunctionDeclaration no longer reports indent errors for blank lines in a function declaration
   - Squiz.Functions.MultiLineFunctionDeclaration no longer reports errors for blank lines in a function declaration
     -- It would previously report that only one argument is allowed per line
@@ -45,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1349 : Squiz.Strings.DoubleQuoteUsage.NotRequired message is badly formatted when string contains a CR newline char
     -- Thanks to Algirdas Gurevicius for the patch
   - Fixed bug #1350 : Invalid Squiz.Formatting.OperatorBracket error when using namespaces
+  - Fixed bug #1369 : Empty line in multi-line function declaration cause infinite loop
  </notes>
  <contents>
   <dir name="/">
