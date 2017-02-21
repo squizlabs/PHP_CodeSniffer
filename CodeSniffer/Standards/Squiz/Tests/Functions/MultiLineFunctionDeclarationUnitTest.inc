@@ -152,3 +152,12 @@ function foo(
 ) {
     // body
 }
+
+function foo(
+    $param1,
+
+    $param2,
+
+    $param3,
+) : SomeClass {
+}

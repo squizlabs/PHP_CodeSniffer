@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - The PHP-supplied T_COALESCE_EQUAL token has been replicated for PHP versions before 7.2
   - PEAR.Functions.FunctionDeclaration no longer reports indent errors for blank lines in a function declaration
+  - Squiz.Functions.MultiLineFunctionDeclaration no longer reports errors for blank lines in a function declaration
+    -- It would previously report that only one argument is allowed per line
   - Squiz.Commenting.FunctionComment now corrects multi-line param comment padding more accurately
   - Squiz.Commenting.FunctionComment now properly fixes pipe-seperated param types
   - Squiz.Commenting.FunctionComment now works correctly when function return types also contain a comment

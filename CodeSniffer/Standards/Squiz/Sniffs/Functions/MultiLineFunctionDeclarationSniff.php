@@ -205,7 +205,7 @@ class Squiz_Sniffs_Functions_MultiLineFunctionDeclarationSniff extends PEAR_Snif
             }
 
             $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), null, true);
-            if ($tokens[$next]['line'] !== ($tokens[$i]['line'] + 1)) {
+            if ($tokens[$next]['line'] === $tokens[$i]['line']) {
                 $error = 'Multi-line '.$type.' declarations must define one parameter per line';
                 $fix   = $phpcsFile->addFixableError($error, $next, $errorPrefix.'OneParamPerLine');
                 if ($fix === true) {
