@@ -200,3 +200,12 @@ function foo(
 ): SomeClass // Comment here
 {
 }
+
+function foo(
+    $param1,
+
+    $param2,
+
+    $param3,
+) : SomeClass {
+}
