@@ -185,12 +185,49 @@ class UnusedFunctionParameterSniff implements Sniff
         }//end for
 
         if ($foundContent === true && count($params) > 0) {
-            foreach ($params as $paramName => $position) {
-                $error = 'The method parameter %s is never used';
-                $data  = [$paramName];
-                $phpcsFile->addWarning($error, $position, $errorCode, $data);
+            $error = 'The method parameter %s is never used';
+
+            // If there is only one parameter and it is unused, no need for additional errorcode toggling logic.
+            if ($methodParamsCount === 1) {
+                foreach ($params as $paramName => $position) {
+                    $data = [$paramName];
+                    $phpcsFile->addWarning($error, $position, $errorCode, $data);
+                }
+
+                return;
             }
-        }
+
+            $foundLastUsed = false;
+            $lastIndex     = ($methodParamsCount - 1);
+            $errorInfo     = [];
+            for ($i = $lastIndex; $i >= 0; --$i) {
+                if ($foundLastUsed !== false) {
+                    if (isset($params[$methodParams[$i]['name']]) === true) {
+                        $errorInfo[$methodParams[$i]['name']] = [
+                            'position'  => $params[$methodParams[$i]['name']],
+                            'errorcode' => $errorCode.'BeforeLastUsed',
+                        ];
+                    }
+                } else {
+                    if (isset($params[$methodParams[$i]['name']]) === false) {
+                        $foundLastUsed = true;
+                    } else {
+                        $errorInfo[$methodParams[$i]['name']] = [
+                            'position'  => $params[$methodParams[$i]['name']],
+                            'errorcode' => $errorCode.'AfterLastUsed',
+                        ];
+                    }
+                }
+            }
+
+            if (count($errorInfo) > 0) {
+                $errorInfo = array_reverse($errorInfo);
+                foreach ($errorInfo as $paramName => $info) {
+                    $data = [$paramName];
+                    $phpcsFile->addWarning($error, $info['position'], $info['errorcode'], $data);
+                }
+            }
+        }//end if
 
     }//end process()
 

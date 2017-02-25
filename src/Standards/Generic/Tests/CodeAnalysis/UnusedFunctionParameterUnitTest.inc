@@ -107,3 +107,17 @@ class MyExtendedClass implements SomeInterface {
         return $a * 2;
     }
 }
+
+
+/*
+ * Functions may not use all params passed to them.
+ * Report different violations for params *before* and *after* the last param used.
+ */
+
+function something($a) {
+	return 'foobar';
+}
+
+function myCallback($a, $b, $c, $d) {
+    return $a * $c;
+}
