@@ -83,3 +83,27 @@ function foobar() {
 	return;
 }
 
+
+/*
+ * The function signature of methods in extended classes and implemented
+ * interfaces has to mirror the parent class/interface.
+ * The overloaded method may not use all params.
+ */
+
+class MyClass {
+    public function something($a, $b) {
+        return $a * 2;
+    }
+}
+
+class MyExtendedClass extends SomeClass {
+    public function something($a, $b) {
+        return $a * 2;
+    }
+}
+
+class MyExtendedClass implements SomeInterface {
+    public function something($a, $b) {
+        return $a * 2;
+    }
+}

@@ -58,10 +58,18 @@ class UnusedFunctionParameterSniff implements Sniff
             return;
         }
 
+        $errorCode  = 'Found';
         $implements = false;
+        $extends    = false;
         $classPtr   = $phpcsFile->getCondition($stackPtr, T_CLASS);
         if ($classPtr !== false) {
             $implements = $phpcsFile->findImplementedInterfaceNames($classPtr);
+            $extends    = $phpcsFile->findExtendedClassName($classPtr);
+            if ($extends !== false) {
+                $errorCode .= 'InExtendedClass';
+            } else if ($implements !== false) {
+                $errorCode .= 'InImplementedInterface';
+            }
         }
 
         $params       = [];
@@ -180,7 +188,7 @@ class UnusedFunctionParameterSniff implements Sniff
             foreach ($params as $paramName => $position) {
                 $error = 'The method parameter %s is never used';
                 $data  = [$paramName];
-                $phpcsFile->addWarning($error, $position, 'Found', $data);
+                $phpcsFile->addWarning($error, $position, $errorCode, $data);
             }
         }
 
