@@ -67,6 +67,12 @@ class UnusedFunctionParameterSniff implements Sniff
         $params       = [];
         $methodParams = $phpcsFile->getMethodParameters($stackPtr);
 
+        // Skip when no parameters found.
+        $methodParamsCount = count($methodParams);
+        if ($methodParamsCount === 0) {
+            return;
+        }
+
         foreach ($methodParams as $param) {
             $params[$param['name']] = $stackPtr;
         }

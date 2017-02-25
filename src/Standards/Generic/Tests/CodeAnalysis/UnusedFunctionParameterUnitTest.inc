@@ -78,3 +78,8 @@ function bar($x)
 function ($a, $b) {
     return $a * 2;
 }
+
+function foobar() {
+	return;
+}
+
