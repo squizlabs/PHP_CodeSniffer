@@ -43,7 +43,17 @@ class Generic_Tests_Classes_UnusedUseStatementUnitTest extends AbstractSniffUnit
      */
     public function getErrorList()
     {
-        return array();
+        return array(
+                5 => 1,
+                6 => 1,
+                7 => 1,
+                10 => 1,
+                11 => 1,
+                12 => 1,
+                14 => 1,
+                16 => 1,
+                17 => 1,
+               );
 
     }//end getErrorList()
 
@@ -58,17 +68,7 @@ class Generic_Tests_Classes_UnusedUseStatementUnitTest extends AbstractSniffUnit
      */
     public function getWarningList()
     {
-        return array(
-                5 => 1,
-                6 => 1,
-                7 => 1,
-                10 => 1,
-                11 => 1,
-                12 => 1,
-                14 => 1,
-                16 => 1,
-                17 => 1,
-               );
+        return array();
 
     }//end getWarningList()
 

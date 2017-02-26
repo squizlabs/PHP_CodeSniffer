@@ -163,8 +163,8 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
             $classUsed = $phpcsFile->findNext(T_STRING, ($classUsed + 1));
         }//end while
 
-        $warning = "Unused use statement: $className";
-        $fix     = $phpcsFile->addFixableWarning($warning, $stackPtr, 'UnusedUse');
+        $error = "Unused use statement: $className";
+        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotUsed');
         if ($fix === true) {
             // Remove the whole use statement line.
             $phpcsFile->fixer->beginChangeset();
