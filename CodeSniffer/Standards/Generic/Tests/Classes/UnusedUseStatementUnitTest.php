@@ -55,6 +55,8 @@ class Generic_Tests_Classes_UnusedUseStatementUnitTest extends AbstractSniffUnit
                 17 => 1,
                 20 => 1,
                 26 => 1,
+                27 => 1,
+                28 => 1,
                );
 
     }//end getErrorList()

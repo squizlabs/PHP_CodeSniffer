@@ -24,6 +24,8 @@ use FooNamespace\OnlyUsedInReturnTag;
 use FooNamespace\ImportedAnnotationThatIsUsed;
 use FooNamespace\AnotherUsedAnnotation;
 use FooNamespace\MentionedInDocstringButShouldNotBeUsed;
+use Qux\UsedInBaz;
+use MyNamespace\Depth\AlsoUsedInBaz;
 
 /**
  * Bla.
@@ -90,3 +92,10 @@ class Pum {
   }
 
 }
+
+namespace Baz;
+
+// These references don't work because `use`s are scoped to the namespace block in
+// which they appear; the `use`s from the top of the file aren't in effect here.
+$x = new UsedInBaz;
+$y = new AlsoUsedInBaz;
