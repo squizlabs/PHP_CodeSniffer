@@ -54,7 +54,7 @@ class CSSLintSniff implements Sniff
 
         $fileName = $phpcsFile->getFilename();
 
-        $cmd = $csslintPath.' '.escapeshellarg($fileName);
+        $cmd = escapeshellcmd($csslintPath).' '.escapeshellarg($fileName).' 2>&1';
         exec($cmd, $output, $retval);
 
         if (is_array($output) === false) {

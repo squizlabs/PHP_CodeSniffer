@@ -56,7 +56,10 @@ class JSLintSniff implements Sniff
 
         $fileName = $phpcsFile->getFilename();
 
-        $cmd = "$rhinoPath \"$jslintPath\" \"$fileName\"";
+        $rhinoPath  = escapeshellcmd($rhinoPath);
+        $jslintPath = escapeshellcmd($jslintPath);
+
+        $cmd = "$rhinoPath \"$jslintPath\" ".escapeshellarg($fileName);
         $msg = exec($cmd, $output, $retval);
 
         if (is_array($output) === true) {

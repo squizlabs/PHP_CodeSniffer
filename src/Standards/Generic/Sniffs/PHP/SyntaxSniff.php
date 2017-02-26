@@ -60,11 +60,11 @@ class SyntaxSniff implements Sniff
             }
         }
 
-        $fileName = $phpcsFile->getFilename();
+        $fileName = escapeshellarg($phpcsFile->getFilename());
         if (defined('HHVM_VERSION') === false) {
-            $cmd = $this->phpPath." -l -d error_prepend_string='' \"$fileName\" 2>&1";
+            $cmd = escapeshellcmd($this->phpPath)." -l -d error_prepend_string='' $fileName 2>&1";
         } else {
-            $cmd = $this->phpPath." -l \"$fileName\" 2>&1";
+            $cmd = escapeshellcmd($this->phpPath)." -l $fileName 2>&1";
         }
 
         $output  = shell_exec($cmd);

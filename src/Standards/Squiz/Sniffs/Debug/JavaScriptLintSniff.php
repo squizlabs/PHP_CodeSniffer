@@ -55,7 +55,7 @@ class JavaScriptLintSniff implements Sniff
 
         $fileName = $phpcsFile->getFilename();
 
-        $cmd = '"'.$jslPath.'" -nologo -nofilelisting -nocontext -nosummary -output-format __LINE__:__ERROR__ -process "'.$fileName.'"';
+        $cmd = '"'.escapeshellcmd($jslPath).'" -nologo -nofilelisting -nocontext -nosummary -output-format __LINE__:__ERROR__ -process '.escapeshellarg($fileName);
         $msg = exec($cmd, $output, $retval);
 
         // Variable $exitCode is the last line of $output if no error occurs, on

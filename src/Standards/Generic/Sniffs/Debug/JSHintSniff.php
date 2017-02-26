@@ -57,7 +57,10 @@ class JSHintSniff implements Sniff
 
         $fileName = $phpcsFile->getFilename();
 
-        $cmd = "$rhinoPath \"$jshintPath\" \"$fileName\"";
+        $rhinoPath  = escapeshellcmd($rhinoPath);
+        $jshintPath = escapeshellcmd($jshintPath);
+
+        $cmd = "$rhinoPath \"$jshintPath\" ".escapeshellarg($fileName);
         $msg = exec($cmd, $output, $retval);
 
         if (is_array($output) === true) {

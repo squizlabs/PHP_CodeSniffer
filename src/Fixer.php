@@ -247,7 +247,9 @@ class Fixer
 
         // We must use something like shell_exec() because whitespace at the end
         // of lines is critical to diff files.
-        $cmd  = "diff -u -L\"$filename\" -LPHP_CodeSniffer \"$filename\" \"$tempName\"";
+        $filename = escapeshellarg($filename);
+        $cmd      = "diff -u -L$filename -LPHP_CodeSniffer $filename \"$tempName\"";
+
         $diff = shell_exec($cmd);
 
         fclose($fixedFile);
