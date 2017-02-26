@@ -236,9 +236,7 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 && $tokens[$checkToken]['code'] === T_CLOSE_PARENTHESIS
                 && isset($tokens[$checkToken]['parenthesis_opener']) === true)
                 || ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS
-                && isset($tokens[$i]['parenthesis_opener']) === true
-                && isset($tokens[$i]['parenthesis_owner']) === true
-                && $tokens[$tokens[$i]['parenthesis_owner']]['code'] === T_ARRAY)
+                && isset($tokens[$i]['parenthesis_opener']) === true)
             ) {
                 if ($checkToken !== null) {
                     $parenCloser = $checkToken;
@@ -808,10 +806,26 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                 $checkIndent = (int) (ceil($checkIndent / $this->indent) * $this->indent);
             }
 
-            // Check the line indent.
+            // Special case for ELSE statements that are not on the same
+            // line as the previous IF statements closing brace. They still need
+            // to have the same indent or it will break code after the block.
+            if ($checkToken !== null && $tokens[$checkToken]['code'] === T_ELSE) {
+                $exact = true;
+            }
+
             if ($checkIndent === null) {
                 $checkIndent = $currentIndent;
             }
+
+            /*
+                The indent of the line is checked by the following IF block.
+
+                Up until now, we've just been figuring out what the indent
+                of this line should be.
+
+                After this IF block, we adjust the indent again for
+                the checking of future line.
+            */
 
             $adjusted = false;
             if ($checkToken !== null

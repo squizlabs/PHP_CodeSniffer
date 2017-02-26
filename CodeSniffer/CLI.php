@@ -1013,6 +1013,7 @@ class PHP_CodeSniffer_CLI
                 $this->printUsage();
                 exit(2);
             } else {
+                $this->values['stdin'] = $fileContents;
                 $phpcs->processFile('STDIN', $fileContents);
             }
         }

@@ -243,8 +243,13 @@ class PHP_CodeSniffer_Fixer
             $filePath = $this->_currentFile->getFilename();
         }
 
-        $cwd      = getcwd().DIRECTORY_SEPARATOR;
-        $filename = str_replace($cwd, '', $filePath);
+        $cwd = getcwd().DIRECTORY_SEPARATOR;
+        if (strpos($filePath, $cwd) === 0) {
+            $filename = substr($filePath, strlen($cwd));
+        } else {
+            $filename = $filePath;
+        }
+
         $contents = $this->getContents();
 
         if (function_exists('sys_get_temp_dir') === true) {

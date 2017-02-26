@@ -134,6 +134,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
                     T_DNUMBER,
                     T_STRING,
                     T_WHITESPACE,
+                    T_NS_SEPARATOR,
                     T_THIS,
                     T_SELF,
                     T_OBJECT_OPERATOR,
@@ -267,7 +268,7 @@ class Squiz_Sniffs_Formatting_OperatorBracketSniff implements PHP_CodeSniffer_Sn
         $error = 'Arithmetic operation must be bracketed';
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MissingBrackets');
 
-        if ($fix === false || $phpcsFile->fixer->enabled === false) {
+        if ($fix === false) {
             return;
         }
 

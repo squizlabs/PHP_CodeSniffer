@@ -1135,6 +1135,13 @@ $foo = [
         },
 ];
 
+$foo
+    ->bar(foo(function () {
+    }), foo(function () {
+    }));
+
+echo 'foo';
+
 class Test {
 
     public function a() {
@@ -1172,6 +1179,15 @@ $foo = foo(
 
         return false;
     }
+
+?>
+<?php
+    if (true) {
+    }
+    else if (true) {
+    }
+
+$a = 1;
 
 /*
 $a = array(

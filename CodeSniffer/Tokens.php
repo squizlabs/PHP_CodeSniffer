@@ -22,6 +22,7 @@ define('T_CLOSE_SQUARE_BRACKET', 'PHPCS_T_CLOSE_SQUARE_BRACKET');
 define('T_OPEN_PARENTHESIS', 'PHPCS_T_OPEN_PARENTHESIS');
 define('T_CLOSE_PARENTHESIS', 'PHPCS_T_CLOSE_PARENTHESIS');
 define('T_COLON', 'PHPCS_T_COLON');
+define('T_NULLABLE', 'PHPCS_T_NULLABLE');
 define('T_STRING_CONCAT', 'PHPCS_T_STRING_CONCAT');
 define('T_INLINE_THEN', 'PHPCS_T_INLINE_THEN');
 define('T_INLINE_ELSE', 'PHPCS_T_INLINE_ELSE');
@@ -75,6 +76,8 @@ define('T_EMBEDDED_PHP', 'PHPCS_T_EMBEDDED_PHP');
 define('T_RETURN_TYPE', 'PHPCS_T_RETURN_TYPE');
 define('T_OPEN_USE_GROUP', 'PHPCS_T_OPEN_USE_GROUP');
 define('T_CLOSE_USE_GROUP', 'PHPCS_T_CLOSE_USE_GROUP');
+define('T_ZSR', 'PHPCS_T_ZSR');
+define('T_ZSR_EQUAL', 'PHPCS_T_ZSR_EQUAL');
 
 // Some PHP 5.3 tokens, replicated for lower versions.
 if (defined('T_NAMESPACE') === false) {
@@ -143,6 +146,10 @@ if (defined('T_SPACESHIP') === false) {
 
 if (defined('T_COALESCE') === false) {
     define('T_COALESCE', 'PHPCS_T_COALESCE');
+}
+
+if (defined('T_COALESCE_EQUAL') === false) {
+    define('T_COALESCE_EQUAL', 'PHPCS_T_COALESCE_EQUAL');
 }
 
 // Tokens used for parsing doc blocks.
@@ -220,6 +227,7 @@ final class PHP_CodeSniffer_Tokens
                                  T_POW                 => 5,
                                  T_SPACESHIP           => 5,
                                  T_COALESCE            => 5,
+                                 T_COALESCE_EQUAL      => 5,
 
                                  T_SL                  => 5,
                                  T_SR                  => 5,
@@ -365,6 +373,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_OPEN_PARENTHESIS         => 1,
                                    T_CLOSE_PARENTHESIS        => 1,
                                    T_COLON                    => 1,
+                                   T_NULLABLE                 => 1,
                                    T_STRING_CONCAT            => 1,
                                    T_INLINE_THEN              => 1,
                                    T_INLINE_ELSE              => 1,
@@ -381,6 +390,7 @@ final class PHP_CodeSniffer_Tokens
                                    T_POW                      => 2,
                                    T_SPACESHIP                => 3,
                                    T_COALESCE                 => 2,
+                                   T_COALESCE_EQUAL           => 3,
                                    T_BITWISE_AND              => 1,
                                    T_BITWISE_OR               => 1,
                                    T_BITWISE_XOR              => 1,
@@ -565,19 +575,20 @@ final class PHP_CodeSniffer_Tokens
      * @var array(int)
      */
     public static $operators = array(
-                                T_MINUS       => T_MINUS,
-                                T_PLUS        => T_PLUS,
-                                T_MULTIPLY    => T_MULTIPLY,
-                                T_DIVIDE      => T_DIVIDE,
-                                T_MODULUS     => T_MODULUS,
-                                T_POW         => T_POW,
-                                T_SPACESHIP   => T_SPACESHIP,
-                                T_COALESCE    => T_COALESCE,
-                                T_BITWISE_AND => T_BITWISE_AND,
-                                T_BITWISE_OR  => T_BITWISE_OR,
-                                T_BITWISE_XOR => T_BITWISE_XOR,
-                                T_SL          => T_SL,
-                                T_SR          => T_SR,
+                                T_MINUS          => T_MINUS,
+                                T_PLUS           => T_PLUS,
+                                T_MULTIPLY       => T_MULTIPLY,
+                                T_DIVIDE         => T_DIVIDE,
+                                T_MODULUS        => T_MODULUS,
+                                T_POW            => T_POW,
+                                T_SPACESHIP      => T_SPACESHIP,
+                                T_COALESCE       => T_COALESCE,
+                                T_COALESCE_EQUAL => T_COALESCE_EQUAL,
+                                T_BITWISE_AND    => T_BITWISE_AND,
+                                T_BITWISE_OR     => T_BITWISE_OR,
+                                T_BITWISE_XOR    => T_BITWISE_XOR,
+                                T_SL             => T_SL,
+                                T_SR             => T_SR,
                                );
 
     /**

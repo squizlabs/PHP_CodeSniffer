@@ -49,4 +49,18 @@ class OldClass
 
     }
 }
-?>
+
+foo(new class extends MyClass
+{
+
+    function TestClass() {
+        parent::MyClass();
+        parent::__construct();
+    }
+
+    function __construct() {
+        parent::MyClass();
+        parent::__construct();
+    }
+
+});

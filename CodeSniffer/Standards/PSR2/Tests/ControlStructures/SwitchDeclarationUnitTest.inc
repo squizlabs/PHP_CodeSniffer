@@ -144,3 +144,13 @@ switch($foo)
         break;
     }
 }
+
+switch ($foo) {
+    case Foo::INTERFACE:
+        return self::INTERFACE;
+    case Foo::NAMESPACE:
+        return self::MODULE;
+    case Foo::TRAIT:
+    case Foo::ARRAY:
+        return self::VALUE;
+}

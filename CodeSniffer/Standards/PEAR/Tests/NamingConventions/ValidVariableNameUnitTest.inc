@@ -93,4 +93,9 @@ class a
         $_FieldParser,
         $_key;
 }
-?>
+
+$util->setLogger(
+    new class {
+        private $varName  = 'hello';
+        private $_varName = 'hello';
+});

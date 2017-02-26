@@ -54,7 +54,7 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION), true);
+        parent::__construct(array(T_CLASS, T_ANON_CLASS, T_INTERFACE), array(T_FUNCTION), true);
 
     }//end __construct()
 

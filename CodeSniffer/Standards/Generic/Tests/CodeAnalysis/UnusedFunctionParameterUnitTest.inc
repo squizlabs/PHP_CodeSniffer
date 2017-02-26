@@ -74,3 +74,7 @@ function bar($x)
 {
     return 2 * ${x};
 }
+
+function ($a, $b) {
+    return $a * 2;
+}

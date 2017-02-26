@@ -84,10 +84,6 @@ class PHP_CodeSniffer_Reports_Hgblame extends PHP_CodeSniffer_Reports_VersionCon
     {
         $cwd = getcwd();
 
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'Getting MERCURIAL blame info for '.basename($filename).'... ';
-        }
-
         $fileParts = explode(DIRECTORY_SEPARATOR, $filename);
         $found     = false;
         $location  = '';
@@ -116,10 +112,6 @@ class PHP_CodeSniffer_Reports_Hgblame extends PHP_CodeSniffer_Reports_VersionCon
 
         $rawContent = stream_get_contents($handle);
         fclose($handle);
-
-        if (PHP_CODESNIFFER_VERBOSITY > 0) {
-            echo 'DONE'.PHP_EOL;
-        }
 
         $blames = explode("\n", $rawContent);
         chdir($cwd);

@@ -22,12 +22,14 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @version   Release: @package_version@
  * @link      http://pear.php.net/package/PHP_CodeSniffer
+ *
+ * @group utilityMethods
  */
 class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * The PHP_CodeSniffer_File object containing parsed contents of this file.
+     * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
      *
      * @var PHP_CodeSniffer_File
      */
@@ -35,24 +37,25 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
 
 
     /**
-     * Initialize & tokenize PHP_CodeSniffer_File with code from this file.
+     * Initialize & tokenize PHP_CodeSniffer_File with code from the test case file.
      *
-     * Methods used for these tests can be found at the bottom of
-     * this file.
+     * Methods used for these tests can be found in a test case file in the same
+     * directory and with the same name, using the .inc extension.
      *
      * @return void
      */
     public function setUp()
     {
+        $pathToTestcases  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
         $phpcs            = new PHP_CodeSniffer();
         $this->_phpcsFile = new PHP_CodeSniffer_File(
-            __FILE__,
+            $pathToTestcases,
             array(),
             array(),
             $phpcs
         );
 
-        $contents = file_get_contents(__FILE__);
+        $contents = file_get_contents($pathToTestcases);
         $this->_phpcsFile->start($contents);
 
     }//end setUp()
@@ -181,12 +184,3 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
 
 
 }//end class
-
-// @codingStandardsIgnoreStart
-interface testFIINInterface2 {}
-/* testInterface */ interface testFIINInterface {}
-/* testImplementedClass */ class testFIINImplementedClass implements testFIINInterface {}
-/* testMultiImplementedClass */ class testFIINMultiImplementedClass implements testFIINInterface, testFIINInterface2 {}
-/* testNamespacedClass */ class testFIINNamespacedClass implements \testFIINInterface {}
-/* testNonImplementedClass */ class testFIINNonImplementedClass {}
-// @codingStandardsIgnoreEnd

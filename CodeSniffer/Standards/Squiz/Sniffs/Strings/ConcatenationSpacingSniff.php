@@ -120,7 +120,16 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
             $padding = str_repeat(' ', $this->spacing);
             if ($before !== 'newline' || $this->ignoreNewlines === false) {
                 if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
+                    $phpcsFile->fixer->beginChangeset();
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), $padding);
+                    if ($this->spacing === 0
+                        && ($tokens[($stackPtr - 2)]['code'] === T_LNUMBER
+                        || $tokens[($stackPtr - 2)]['code'] === T_DNUMBER)
+                    ) {
+                        $phpcsFile->fixer->replaceToken(($stackPtr - 2), '('.$tokens[($stackPtr - 2)]['content'].')');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
                 } else if ($this->spacing > 0) {
                     $phpcsFile->fixer->addContent(($stackPtr - 1), $padding);
                 }
@@ -128,12 +137,21 @@ class Squiz_Sniffs_Strings_ConcatenationSpacingSniff implements PHP_CodeSniffer_
 
             if ($after !== 'newline' || $this->ignoreNewlines === false) {
                 if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
+                    $phpcsFile->fixer->beginChangeset();
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), $padding);
+                    if ($this->spacing === 0
+                        && ($tokens[($stackPtr + 2)]['code'] === T_LNUMBER
+                        || $tokens[($stackPtr + 2)]['code'] === T_DNUMBER)
+                    ) {
+                        $phpcsFile->fixer->replaceToken(($stackPtr + 2), '('.$tokens[($stackPtr + 2)]['content'].')');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
                 } else if ($this->spacing > 0) {
                     $phpcsFile->fixer->addContent($stackPtr, $padding);
                 }
             }
-        }
+        }//end if
 
     }//end process()
 
