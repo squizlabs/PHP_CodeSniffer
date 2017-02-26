@@ -19,9 +19,16 @@ use MyNamespace\Depth\SomeClass as CoreSomeClass;
 use SomeNamespace\someFunction;
 use const BlaBlaNamespace\SOME_UNUSED_CONSTANT;
 use const BlubBlubNamespace\CONSTANT_THAT_IS_USED;
+use FooNamespace\OnlyUsedInParamTag;
+use FooNamespace\OnlyUsedInReturnTag;
+use FooNamespace\ImportedAnnotationThatIsUsed;
+use FooNamespace\AnotherUsedAnnotation;
+use FooNamespace\MentionedInDocstringButShouldNotBeUsed;
 
 /**
  * Bla.
+ *
+ * @AnotherUsedAnnotation()
  */
 class Pum {
   use TraitTest;
@@ -29,6 +36,11 @@ class Pum {
 
   /**
    * Description.
+   *
+   * This is a mention of MentionedInDocstringButShouldNotBeUsed but it isn't as
+   * part of any sort of syntactically meaningful PHPDoc construct so the Sniff
+   * should throw an error for MentionedInDocstringButShouldNotBeUsed, not just a
+   * warning.
    */
   protected function test(ActuallyUsed $x, UsedOtherName $y) {
     someFunction();
@@ -59,6 +71,21 @@ class Pum {
    * Renamed class from same namespace.
    */
   protected function test5(CoreSomeClass $x) {
+
+  }
+
+  /**
+   * @param OnlyUsedInParamTag $foo
+   * @return OnlyUsedInReturnTag
+   */
+  protected function test6($foo) {
+
+  }
+
+  /**
+   * @ImportedAnnotationThatIsUsed(qux='baz')
+   */
+  protected function test7() {
 
   }
 
