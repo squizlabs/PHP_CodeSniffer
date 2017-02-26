@@ -67,8 +67,9 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
             return;
         }
 
-        // ... then find the T_STRING containing the name of the class being used by
-        // seeking backwards from the semicolon until reaching a non-empty token.
+        // ... then find the T_STRING containing the name of the class, function, or
+        // constant being used by seeking backwards from the semicolon until
+        // reaching a non-empty token.
         $classPtr = $phpcsFile->findPrevious(
             PHP_CodeSniffer_Tokens::$emptyTokens,
             ($semiColon - 1),
