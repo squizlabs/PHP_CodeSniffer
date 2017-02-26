@@ -68,7 +68,10 @@ class Squiz_Sniffs_Debug_JSLintSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $cmd = "$rhinoPath \"$jslintPath\" \"$fileName\"";
+        $rhinoPath  = escapeshellcmd($rhinoPath);
+        $jslintPath = escapeshellcmd($jslintPath);
+
+        $cmd = "$rhinoPath \"$jslintPath\" ".escapeshellarg($fileName);
         $msg = exec($cmd, $output, $retval);
 
         if (is_array($output) === true) {

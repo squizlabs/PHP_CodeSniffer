@@ -83,8 +83,9 @@ class Generic_Sniffs_Debug_ClosureLinterSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $cmd = "$lintPath --nosummary --notime --unix_mode \"$fileName\"";
-        $msg = exec($cmd, $output, $retval);
+        $lintPath = escapeshellcmd($lintPath);
+        $cmd      = '$lintPath --nosummary --notime --unix_mode '.escapeshellarg($fileName);
+        $msg      = exec($cmd, $output, $retval);
 
         if (is_array($output) === false) {
             return;

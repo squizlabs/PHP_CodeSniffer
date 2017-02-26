@@ -73,11 +73,11 @@ class Generic_Sniffs_PHP_SyntaxSniff implements PHP_CodeSniffer_Sniff
             }
         }
 
-        $fileName = $phpcsFile->getFilename();
+        $fileName = escapeshellarg($phpcsFile->getFilename());
         if (defined('HHVM_VERSION') === false) {
-            $cmd = $this->_phpPath." -l -d error_prepend_string='' \"$fileName\" 2>&1";
+            $cmd = escapeshellcmd($this->_phpPath)." -l -d error_prepend_string='' $fileName 2>&1";
         } else {
-            $cmd = $this->_phpPath." -l \"$fileName\" 2>&1";
+            $cmd = escapeshellcmd($this->_phpPath)." -l $fileName 2>&1";
         }
 
         $output  = shell_exec($cmd);

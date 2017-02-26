@@ -70,7 +70,10 @@ class Generic_Sniffs_Debug_JSHintSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $cmd = "$rhinoPath \"$jshintPath\" \"$fileName\"";
+        $rhinoPath  = escapeshellcmd($rhinoPath);
+        $jshintPath = escapeshellcmd($jshintPath);
+
+        $cmd = "$rhinoPath \"$jshintPath\" ".escapeshellarg($fileName);
         $msg = exec($cmd, $output, $retval);
 
         if (is_array($output) === true) {

@@ -27,6 +27,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - The PHP-supplied T_COALESCE_EQUAL token has been replicated for PHP versions before 7.2
+  - Code that uses shell_exec() and exec() now escapes cmds and args in case PHPCS is being used in a web service
+    -- This changes saves having to do filename and config validation before passing content to PHPCS
+    -- Thanks to Klaus Purer for reporting this
   - PEAR.Functions.FunctionDeclaration now reports an error for blank lines found inside a function declaration
   - PEAR.Functions.FunctionDeclaration no longer reports indent errors for blank lines in a function declaration
   - Squiz.Functions.MultiLineFunctionDeclaration no longer reports errors for blank lines in a function declaration

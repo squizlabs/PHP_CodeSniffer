@@ -63,7 +63,7 @@ class Zend_Sniffs_Debug_CodeAnalyzerSniff implements PHP_CodeSniffer_Sniff
         // In the command, 2>&1 is important because the code analyzer sends its
         // findings to stderr. $output normally contains only stdout, so using 2>&1
         // will pipe even stderr to stdout.
-        $cmd = $analyzerPath.' '.$fileName.' 2>&1';
+        $cmd = escapeshellcmd($analyzerPath).' '.escapeshellarg($fileName).' 2>&1';
 
         // There is the possibility to pass "--ide" as an option to the analyzer.
         // This would result in an output format which would be easier to parse.
