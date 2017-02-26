@@ -8,6 +8,7 @@ use Thing\DifferentName as UsedOtherName;
 use Example\MyUrlHelper;
 use MyNamespace\Depth\SomeClass as CoreSomeClass;
 use SomeNamespace\someFunction;
+use const BlubBlubNamespace\CONSTANT_THAT_IS_USED;
 
 /**
  * Bla.
@@ -27,7 +28,7 @@ class Pum {
    * Description.
    */
   protected function test2(\Thing\NotUsed $x) {
-
+    echo CONSTANT_THAT_IS_USED;
   }
 
   /**

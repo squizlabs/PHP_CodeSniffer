@@ -17,6 +17,8 @@ use MyNamespace\Depth\UnusedSameNamespace;
 use /* I like weird comment placements */ MyNamespace\Depth\AnotherUnusedSameNamespace /* Oh yes I do */;
 use MyNamespace\Depth\SomeClass as CoreSomeClass;
 use SomeNamespace\someFunction;
+use const BlaBlaNamespace\SOME_UNUSED_CONSTANT;
+use const BlubBlubNamespace\CONSTANT_THAT_IS_USED;
 
 /**
  * Bla.
@@ -36,7 +38,7 @@ class Pum {
    * Description.
    */
   protected function test2(\Thing\NotUsed $x) {
-
+    echo CONSTANT_THAT_IS_USED;
   }
 
   /**
