@@ -16,6 +16,7 @@ use Example\MyUrlHelper;
 use MyNamespace\Depth\UnusedSameNamespace;
 use /* I like weird comment placements */ MyNamespace\Depth\AnotherUnusedSameNamespace /* Oh yes I do */;
 use MyNamespace\Depth\SomeClass as CoreSomeClass;
+use SomeNamespace\someFunction;
 
 /**
  * Bla.
@@ -28,7 +29,7 @@ class Pum {
    * Description.
    */
   protected function test(ActuallyUsed $x, UsedOtherName $y) {
-
+    someFunction();
   }
 
   /**
