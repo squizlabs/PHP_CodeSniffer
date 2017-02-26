@@ -84,8 +84,8 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
         }
 
         // Search where the class name is used. PHP treats class names case
-        // insensitive, that's why we cannot search for the exact class name string
-        // and need to iterate over all T_STRING tokens in the file.
+        // insensitive so we cannot search for the exact class name string and need
+        // to iterate over all T_STRING tokens in the file.
         $classUsed      = $phpcsFile->findNext(T_STRING, ($classPtr + 1));
         $className      = $tokens[$classPtr]['content'];
         $lowerClassName = strtolower($className);
