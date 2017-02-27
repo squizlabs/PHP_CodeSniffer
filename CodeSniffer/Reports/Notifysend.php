@@ -82,7 +82,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
     {
         $path = PHP_CodeSniffer::getConfigData('notifysend_path');
         if ($path !== null) {
-            $this->path = $path;
+            $this->path = escapeshellcmd($path);
         }
 
         $timeout = PHP_CodeSniffer::getConfigData('notifysend_timeout');
@@ -246,7 +246,7 @@ class PHP_CodeSniffer_Reports_Notifysend implements PHP_CodeSniffer_Report
      */
     protected function getBasicCommand()
     {
-        $cmd  = escapeshellcmd($this->path);
+        $cmd  = $this->path;
         $cmd .= ' --category dev.validate';
         $cmd .= ' -h int:transient:1';
         $cmd .= ' -t '.(int) $this->timeout;
