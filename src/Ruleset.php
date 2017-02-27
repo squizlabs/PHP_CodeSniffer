@@ -372,6 +372,16 @@ class Ruleset
 
             if (isset($rule->exclude) === true) {
                 foreach ($rule->exclude as $exclude) {
+                    if (isset($exclude['name']) === false) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo "\t\t* ignoring empty exclude rule *".PHP_EOL;
+                            echo "\t\t\t=> ".$exclude->asXML().PHP_EOL;
+                        }
+
+                        continue;
+                    }
+
                     if ($this->shouldProcessElement($exclude) === false) {
                         continue;
                     }
