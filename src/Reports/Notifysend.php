@@ -58,7 +58,7 @@ class Notifysend implements Report
     {
         $path = Config::getExecutablePath('notifysend');
         if ($path !== null) {
-            $this->path = $path;
+            $this->path = escapeshellcmd($path);
         }
 
         $timeout = Config::getConfigData('notifysend_timeout');
@@ -225,7 +225,7 @@ class Notifysend implements Report
      */
     protected function getBasicCommand()
     {
-        $cmd  = escapeshellcmd($this->path);
+        $cmd  = $this->path;
         $cmd .= ' --category dev.validate';
         $cmd .= ' -h int:transient:1';
         $cmd .= ' -t '.(int) $this->timeout;
