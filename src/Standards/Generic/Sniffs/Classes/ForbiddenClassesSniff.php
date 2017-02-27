@@ -59,11 +59,32 @@ class ForbiddenClassesSniff implements Sniff
     private $useStatements = array();
 
     /**
+     * When in a class, pointer position where the class ends
+     *
+     * @var integer
+     */
+    private $inClassUntil = -1;
+
+    /**
      * Configurable list of forbidden classes and the alternatives to be used
      *
      * @var array
      */
     public $forbiddenClasses = array('Foo\Bar\ForbiddenClass' => 'Foo\Bar\AlternativeClass');
+
+    /**
+     * The usages that are forbidden
+     *
+     * @var array
+     */
+    public $usages = array(
+                      'extends',
+                      'implements',
+                      'new',
+                      'static-call',
+                      'trait-use',
+                      'type-hint',
+                     );
 
     /**
      * If true, an error will be thrown; otherwise a warning.
@@ -80,14 +101,34 @@ class ForbiddenClassesSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_NAMESPACE,
-                T_USE,
-                T_NEW,
-                T_DOUBLE_COLON,
-                T_FUNCTION,
-                T_CLOSURE,
-               );
+        $tokens = array(
+                   T_NAMESPACE,
+                   T_USE,
+                   T_CLASS,
+                  );
+
+        if (in_array('extends', $this->usages) === true) {
+            $tokens[] = T_EXTENDS;
+        }
+
+        if (in_array('implements', $this->usages) === true) {
+            $tokens[] = T_IMPLEMENTS;
+        }
+
+        if (in_array('new', $this->usages) === true) {
+            $tokens[] = T_NEW;
+        }
+
+        if (in_array('static-call', $this->usages) === true) {
+            $tokens[] = T_DOUBLE_COLON;
+        }
+
+        if (in_array('type-hint', $this->usages) === true) {
+            $tokens[] = T_FUNCTION;
+            $tokens[] = T_CLOSURE;
+        }
+
+        return $tokens;
 
     }//end register()
 
@@ -112,40 +153,77 @@ class ForbiddenClassesSniff implements Sniff
         }
 
         if ($tokens[$stackPtr]['code'] === T_USE) {
-            $useNamespace = $this->getNextContent($tokens, ($stackPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
+            $notInClass = $stackPtr > $this->inClassUntil;
+            if ($notInClass === true) {
+                // We're outside of a class definition. Use statements are class imports.
+                $useSemiColonPtr = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+                $useStartPtr     = $stackPtr;
+                while (true) {
+                    $useNamespace = $this->getNextContent($tokens, ($useStartPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
 
-            // Check if there is an alias defined for that use statement.
-            $aliasTokenPtr = $phpcsFile->findNext(array_merge(self::$namespaceTokens, array(T_WHITESPACE)), ($stackPtr + 1), null, true);
-            if ($aliasTokenPtr !== false && $tokens[$aliasTokenPtr]['code'] === T_AS) {
-                $alias = $this->getNextContent($tokens, ($aliasTokenPtr + 1), array(T_STRING), array(T_WHITESPACE));
-            } else {
-                $alias            = $useNamespace;
-                $lastBackslashPos = strrpos($useNamespace, '\\');
-                if ($lastBackslashPos !== false) {
-                    // Take the alias from the class path.
-                    $alias = substr($useNamespace, ($lastBackslashPos + 1));
-                }
+                    // Check if there is an alias defined for that use statement.
+                    $aliasTokenPtr = $phpcsFile->findNext(array_merge(self::$namespaceTokens, array(T_WHITESPACE)), ($useStartPtr + 1), null, true);
+                    if ($aliasTokenPtr !== false && $tokens[$aliasTokenPtr]['code'] === T_AS) {
+                        $alias = $this->getNextContent($tokens, ($aliasTokenPtr + 1), array(T_STRING), array(T_WHITESPACE));
+                    } else {
+                        $alias            = $useNamespace;
+                        $lastBackslashPos = strrpos($useNamespace, '\\');
+                        if ($lastBackslashPos !== false) {
+                            // Take the alias from the class path.
+                            $alias = substr($useNamespace, ($lastBackslashPos + 1));
+                        }
+                    }
+
+                    $this->useStatements[$alias] = $useNamespace;
+
+                    // Find start position of the next import statement.
+                    $useStartPtr = $phpcsFile->findNext(T_COMMA, ($useStartPtr + 1));
+                    if ($useStartPtr === false || $useStartPtr >= $useSemiColonPtr) {
+                        break;
+                    }
+                }//end while
+
+                return;
+            }//end if
+
+            if (in_array('trait-use', $this->usages) === true) {
+                // We're in a class definition. Use statements are trait imports.
+                // TODO
+                return;
             }
+        }//end if
 
-            $this->useStatements[$alias] = $useNamespace;
+        // Detect if we're in a class definition. Then, use statements have to be interpreted as Trait imports.
+        if ($tokens[$stackPtr]['code'] === T_CLASS) {
+            $this->inClassUntil = $tokens[$stackPtr]['scope_closer'];
             return;
         }
 
-        if ($tokens[$stackPtr]['code'] === T_NEW) {
+        if (in_array('new', $this->usages) === true && $tokens[$stackPtr]['code'] === T_NEW) {
             $className = $this->getNextContent($tokens, ($stackPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
             $fullyQualifiedClassName = $this->getFullyQualifiedClassName($className);
             $this->checkClassName($phpcsFile, $fullyQualifiedClassName, ($stackPtr + 1));
             return;
         }
 
-        if ($tokens[$stackPtr]['code'] === T_DOUBLE_COLON) {
+        if (in_array('extends', $this->usages) === true && $tokens[$stackPtr]['code'] === T_EXTENDS) {
+            // TODO
+            return;
+        }
+
+        if (in_array('implements', $this->usages) === true && $tokens[$stackPtr]['code'] === T_IMPLEMENTS) {
+            // TODO
+            return;
+        }
+
+        if (in_array('static-call', $this->usages) === true && $tokens[$stackPtr]['code'] === T_DOUBLE_COLON) {
             $className = $this->getPrevContent($tokens, ($stackPtr - 1), self::$namespaceTokens, array(T_WHITESPACE));
             $fullyQualifiedClassName = $this->getFullyQualifiedClassName($className);
             $this->checkClassName($phpcsFile, $fullyQualifiedClassName, ($stackPtr - 1));
             return;
         }
 
-        if ($tokens[$stackPtr]['code'] === T_FUNCTION || $tokens[$stackPtr]['code'] === T_CLOSURE) {
+        if (in_array('type-hint', $this->usages) === true && $tokens[$stackPtr]['code'] === T_FUNCTION || $tokens[$stackPtr]['code'] === T_CLOSURE) {
             $ignoreTokens = Tokens::$emptyTokens;
             // Call by reference.
             $ignoreTokens[] = T_BITWISE_AND;
@@ -161,13 +239,13 @@ class ForbiddenClassesSniff implements Sniff
             }
 
             $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
-            for ($i = ($openBracket + 1); $i <= $closeBracket; $i = ($variablePtr + 1)) {
-                $variablePtr = $phpcsFile->findNext(T_VARIABLE, $i);
-                if ($variablePtr === false || $variablePtr > $closeBracket) {
+            for ($i = ($openBracket + 1); $i <= $closeBracket; $i = ($endOfImportPtr + 1)) {
+                $endOfImportPtr = $phpcsFile->findNext(T_VARIABLE, $i);
+                if ($endOfImportPtr === false || $endOfImportPtr > $closeBracket) {
                     break;
                 }
 
-                $typeHint = $this->getPrevContent($tokens, ($variablePtr - 1), self::$namespaceTokens, array(T_WHITESPACE, T_BITWISE_AND));
+                $typeHint = $this->getPrevContent($tokens, ($endOfImportPtr - 1), self::$namespaceTokens, array(T_WHITESPACE, T_BITWISE_AND));
                 if (strlen($typeHint) > 0) {
                     $fullyQualifiedClassName = $this->getFullyQualifiedClassName($typeHint);
                     $this->checkClassName($phpcsFile, $fullyQualifiedClassName, ($stackPtr - 1));

@@ -27,29 +27,46 @@ class ForbiddenClassesUnitTest extends AbstractSniffUnitTest
     {
 
         return array(
-                14 => 1,
-                15 => 1,
-                16 => 1,
+                // Implements.
+                8  => 5,
+
+                // Trait imports.
+                11 => 5,
+
+                // New instance creation.
                 17 => 1,
                 18 => 1,
-
+                19 => 1,
                 20 => 1,
                 21 => 1,
-                22 => 1,
+
+                // Static calls.
                 23 => 1,
                 24 => 1,
-
+                25 => 1,
                 26 => 1,
                 27 => 1,
-                28 => 1,
+
+                // Type hints (closure).
                 29 => 1,
                 30 => 1,
+                31 => 1,
+                32 => 1,
+                33 => 1,
 
-                47 => 1,
-                48 => 1,
-                49 => 1,
+                // Type hints (methods).
                 50 => 1,
                 51 => 1,
+                52 => 1,
+                53 => 1,
+                54 => 1,
+
+                // Extends.
+                63 => 1,
+                64 => 1,
+                65 => 1,
+                66 => 1,
+                67 => 1,
                );
 
     }//end getErrorList()

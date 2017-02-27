@@ -1,12 +1,15 @@
 <?php
 namespace Foo;
 
-use Foo\Bar\ForbiddenClass;
-use Foo\Bar\ForbiddenClass as ClassAlias;
+use Foo\Bar\ForbiddenClass, Foo\Bar\ForbiddenClass as ClassAlias;
 use Foo as FooAlias;
 
-class Test
+class Test implements
+    \Foo\Bar\ForbiddenClass, Bar\ForbiddenClass, ForbiddenClass, FooAlias\Bar\ForbiddenClass, ClassAlias, // Error
+    Foo\Bar\ForbiddenClass,  \Bar\ForbiddenClass, \ClassAlias // Ok
 {
+    use \Foo\Bar\ForbiddenClass, Bar\ForbiddenClass, ForbiddenClass, FooAlias\Bar\ForbiddenClass, ClassAlias; // Error
+    use Foo\Bar\ForbiddenClass, \Bar\ForbiddenClass, \ClassAlias; // Ok
 
     public static function test()
     {
@@ -31,16 +34,16 @@ class Test
 
         // Ok
         new Foo\Bar\ForbiddenClass();
-        new \Foo\ForbiddenClass();
-        new FooAlias\ClassAlias();
+        new \Bar\ForbiddenClass();
+        new \ClassAlias();
 
         Foo\Bar\ForbiddenClass::method();
-        \Foo\ForbiddenClass::method();
-        FooAlias\ClassAlias::method();
+        \Bar\ForbiddenClass::method();
+        \ClassAlias::method();
 
         function (Foo &$foo, Foo\Bar\ForbiddenClass $foo, $bar) {};
-        function (Foo &$foo, \Foo\ForbiddenClass $foo, $bar) {};
-        function (Foo &$foo, FooAlias\ClassAlias $foo, $bar) {};
+        function (Foo &$foo, \Bar\ForbiddenClass $foo, $bar) {};
+        function (Foo &$foo, \ClassAlias $foo, $bar) {};
     }
 
     // Error
@@ -52,6 +55,18 @@ class Test
 
     // Ok
     public function ok1(Foo &$foo, Foo\Bar\ForbiddenClass $crawler, $bar) {}
-    public function ok2(Foo &$foo, \Foo\ForbiddenClass $crawler, $bar) {}
-    public function ok3(Foo &$foo, FooAlias\ClassAlias $crawler, $bar) {}
+    public function ok2(Foo &$foo, \Bar\ForbiddenClass $crawler, $bar) {}
+    public function ok3(Foo &$foo, \ClassAlias $crawler, $bar) {}
 }
+
+// Error
+class Error1 extends \Foo\Bar\ForbiddenClass {};
+class Error2 extends Bar\ForbiddenClass {};
+class Error3 extends ForbiddenClass {};
+class Error4 extends FooAlias\Bar\ForbiddenClass {};
+class Error5 extends ClassAlias {};
+
+// Failure
+class Ok1 extends Foo\Bar\ForbiddenClass {};
+class Ok2 extends \Bar\ForbiddenClass {};
+class Ok3 extends \ClassAlias {};
