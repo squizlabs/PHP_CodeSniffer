@@ -125,14 +125,14 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
                 null,
                 true
             );
-            $use_namespace   = rtrim(
+            $useNamespace    = rtrim(
                 $phpcsFile->getTokensAsString(
                     $useNamespacePtr,
                     ($useNamespaceEnd - $useNamespacePtr - 1)
                 ),
                 '\\'
             );
-            if (strcasecmp($namespace, $use_namespace) === 0) {
+            if (strcasecmp($namespace, $useNamespace) === 0) {
                 $classUsed = false;
             }
         }//end if
