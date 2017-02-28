@@ -41,23 +41,33 @@ class Generic_Tests_Classes_UnusedUseStatementUnitTest extends AbstractSniffUnit
      *
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList($testFile='')
     {
-        return array(
-                5 => 1,
-                6 => 1,
-                7 => 1,
-                10 => 1,
-                11 => 1,
-                12 => 1,
-                14 => 1,
-                16 => 1,
-                17 => 1,
-                20 => 1,
-                26 => 1,
-                27 => 1,
-                28 => 1,
-               );
+        switch ($testFile) {
+            case 'UnusedUseStatementUnitTest.1.inc':
+                return array(
+                        5 => 1,
+                        6 => 1,
+                        7 => 1,
+                        10 => 1,
+                        11 => 1,
+                        12 => 1,
+                        14 => 1,
+                        16 => 1,
+                        17 => 1,
+                        20 => 1,
+                        26 => 1,
+                        27 => 1,
+                        28 => 1,
+                       );
+            case 'UnusedUseStatementUnitTest.2.inc':
+                return array(
+                        5 => 1,
+                        12 => 1,
+                       );
+            default:
+                return array();
+        }
 
     }//end getErrorList()
 
@@ -70,14 +80,22 @@ class Generic_Tests_Classes_UnusedUseStatementUnitTest extends AbstractSniffUnit
      *
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList($testFile='')
     {
-        return array(
-                22 => 1,
-                23 => 1,
-                24 => 1,
-                25 => 1,
-               );
+        switch ($testFile) {
+            case 'UnusedUseStatementUnitTest.1.inc':
+                return array(
+                    22 => 1,
+                    23 => 1,
+                    24 => 1,
+                    25 => 1,
+                   );
+
+            case 'UnusedUseStatementUnitTest.2.inc':
+                return array();
+            default:
+                return array();
+        }
 
     }//end getWarningList()
 

@@ -1,0 +1,13 @@
+<?php
+
+namespace Widget {
+  use Oof\Bar;
+
+  class Bla extends Bar {}
+}
+
+namespace {
+  use Xuq\Used;
+
+  new Used;
+}
