@@ -9,6 +9,7 @@ use Example\MyUrlHelper;
 use MyNamespace\Depth\SomeClass as CoreSomeClass;
 use SomeNamespace\someFunction;
 use const BlubBlubNamespace\CONSTANT_THAT_IS_USED;
+use Foo\Used;
 
 /**
  * Bla.
@@ -75,6 +76,8 @@ class Pum {
   }
 
 }
+
+new Used;
 
 namespace Baz;
 

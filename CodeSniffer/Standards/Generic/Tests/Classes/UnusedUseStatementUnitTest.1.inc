@@ -26,6 +26,8 @@ use FooNamespace\AnotherUsedAnnotation;
 use FooNamespace\MentionedInDocstringButShouldNotBeUsed;
 use Qux\UsedInBaz;
 use MyNamespace\Depth\AlsoUsedInBaz;
+use Foo\Used; use Foo\UnusedOnSameLine;
+use Bar\FirstUnused; use Bar\SecondUnusedOnSameLine;
 
 /**
  * Bla.
@@ -92,6 +94,8 @@ class Pum {
   }
 
 }
+
+new Used;
 
 namespace Baz;
 

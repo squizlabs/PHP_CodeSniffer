@@ -59,6 +59,8 @@ class Generic_Tests_Classes_UnusedUseStatementUnitTest extends AbstractSniffUnit
                         26 => 1,
                         27 => 1,
                         28 => 1,
+                        29 => 1,
+                        30 => 2,
                        );
             case 'UnusedUseStatementUnitTest.2.inc':
                 return array(
