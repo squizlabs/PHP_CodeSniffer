@@ -56,8 +56,10 @@ class Generic_Sniffs_Classes_UnusedUseStatementSniff implements PHP_CodeSniffer_
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        // Only check use statements in the global scope.
-        if (empty($tokens[$stackPtr]['conditions']) === false) {
+
+        $useStatementIsInGlobalScope     = empty($tokens[$stackPtr]['conditions']);
+        $useStatementIsInBracedNamespace = $tokens[$stackPtr]['conditions'] === [T_NAMESPACE];
+        if ($useStatementIsInGlobalScope === false && $useStatementIsInBracedNamespace === false) {
             return;
         }
 
