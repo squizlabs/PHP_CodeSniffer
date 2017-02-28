@@ -28,6 +28,11 @@ use Qux\UsedInBaz;
 use MyNamespace\Depth\AlsoUsedInBaz;
 use Foo\Used; use Foo\UnusedOnSameLine;
 use Bar\FirstUnused; use Bar\SecondUnusedOnSameLine;
+use somenamespace\orother\{ClassA as A, ClassB, ClassC as C, ClassD};
+use somenamespace\orother\{This, Line, Is as Completely, Unused};
+use function somenamespace\orother\{fn_a, fn_b, fn_c};
+use function somenamespace\orother\{fn_d, fn_e, fn_f};
+use const somenamespace\orother\{ConstA, ConstB, ConstC};
 
 /**
  * Bla.
@@ -96,6 +101,9 @@ class Pum {
 }
 
 new Used;
+new C;
+new ClassD;
+fn_b(fn_d(fn_e(ConstB)));
 
 namespace Baz;
 

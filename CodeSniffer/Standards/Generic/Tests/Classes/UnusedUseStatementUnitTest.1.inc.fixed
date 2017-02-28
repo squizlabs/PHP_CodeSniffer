@@ -10,6 +10,10 @@ use MyNamespace\Depth\SomeClass as CoreSomeClass;
 use SomeNamespace\someFunction;
 use const BlubBlubNamespace\CONSTANT_THAT_IS_USED;
 use Foo\Used;
+use somenamespace\orother\{ClassC as C, ClassD};
+use function somenamespace\orother\fn_b;
+use function somenamespace\orother\{fn_d, fn_e};
+use const somenamespace\orother\ConstB;
 
 /**
  * Bla.
@@ -78,6 +82,9 @@ class Pum {
 }
 
 new Used;
+new C;
+new ClassD;
+fn_b(fn_d(fn_e(ConstB)));
 
 namespace Baz;
 
