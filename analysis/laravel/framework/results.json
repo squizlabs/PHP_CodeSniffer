@@ -14,22 +14,25 @@
         },
         "2017-02-01":{
           "\\n":698
+        },
+        "2017-03-01":{
+          "\\n":698
         }
       },
       "winner":"\\n"
     },
     "Line length":{
-      "total":85998,
+      "total":86843,
       "values":{
-        "121-150":49,
-        "151 or more":25,
-        "80 or less":82945,
-        "81-120":2979
+        "121-150":55,
+        "151 or more":30,
+        "80 or less":83750,
+        "81-120":3008
       },
       "percentages":{
         "121-150":0.06,
         "151 or more":0.03,
-        "80 or less":96.45,
+        "80 or less":96.44,
         "81-120":3.46
       },
       "trends":{
@@ -44,6 +47,12 @@
           "151 or more":25,
           "80 or less":82945,
           "81-120":2979
+        },
+        "2017-03-01":{
+          "121-150":55,
+          "151 or more":30,
+          "80 or less":83750,
+          "81-120":3008
         }
       },
       "winner":"80 or less"
@@ -66,6 +75,10 @@
         "2017-02-01":{
           "no":695,
           "yes":3
+        },
+        "2017-03-01":{
+          "no":695,
+          "yes":3
         }
       },
       "winner":"no"
@@ -84,14 +97,17 @@
         },
         "2017-02-01":{
           "no":698
+        },
+        "2017-03-01":{
+          "no":698
         }
       },
       "winner":"no"
     },
     "Line indent":{
-      "total":80290,
+      "total":81116,
       "values":{
-        "spaces":80290
+        "spaces":81116
       },
       "percentages":{
         "spaces":100
@@ -102,6 +118,9 @@
         },
         "2017-02-01":{
           "spaces":80290
+        },
+        "2017-03-01":{
+          "spaces":81116
         }
       },
       "winner":"spaces"
@@ -119,6 +138,9 @@
           "no":678
         },
         "2017-02-01":{
+          "no":698
+        },
+        "2017-03-01":{
           "no":698
         }
       },
@@ -138,6 +160,9 @@
         },
         "2017-02-01":{
           "no":698
+        },
+        "2017-03-01":{
+          "no":698
         }
       },
       "winner":"no"
@@ -155,6 +180,9 @@
           "1":677
         },
         "2017-02-01":{
+          "1":697
+        },
+        "2017-03-01":{
           "1":697
         }
       },
@@ -174,6 +202,9 @@
         },
         "2017-02-01":{
           ".php":695
+        },
+        "2017-03-01":{
+          ".php":695
         }
       },
       "winner":".php"
@@ -192,14 +223,17 @@
         },
         "2017-02-01":{
           "no":698
+        },
+        "2017-03-01":{
+          "no":698
         }
       },
       "winner":"no"
     },
     "PHP keyword case":{
-      "total":28166,
+      "total":28575,
       "values":{
-        "lower":28166
+        "lower":28575
       },
       "percentages":{
         "lower":100
@@ -210,14 +244,17 @@
         },
         "2017-02-01":{
           "lower":28166
+        },
+        "2017-03-01":{
+          "lower":28575
         }
       },
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":14849,
+      "total":15022,
       "values":{
-        "no":14849
+        "no":15022
       },
       "percentages":{
         "no":100
@@ -228,6 +265,9 @@
         },
         "2017-02-01":{
           "no":14849
+        },
+        "2017-03-01":{
+          "no":15022
         }
       },
       "winner":"no"
@@ -245,6 +285,9 @@
           "new line":675
         },
         "2017-02-01":{
+          "new line":695
+        },
+        "2017-03-01":{
           "new line":695
         }
       },
@@ -268,6 +311,10 @@
         "2017-02-01":{
           "no":576,
           "yes":35
+        },
+        "2017-03-01":{
+          "no":576,
+          "yes":35
         }
       },
       "winner":"no"
@@ -285,6 +332,9 @@
           "yes":675
         },
         "2017-02-01":{
+          "yes":695
+        },
+        "2017-03-01":{
           "yes":695
         }
       },
@@ -304,6 +354,9 @@
         },
         "2017-02-01":{
           "yes":695
+        },
+        "2017-03-01":{
+          "yes":695
         }
       },
       "winner":"yes"
@@ -322,145 +375,9 @@
         },
         "2017-02-01":{
           "yes":695
-        }
-      },
-      "winner":"yes"
-    },
-    "Function opening brace placement":{
-      "total":5328,
-      "values":{
-        "new line":5328
-      },
-      "percentages":{
-        "new line":100
-      },
-      "trends":{
-        "2017-01-01":{
-          "new line":5189,
-          "same line":2
         },
-        "2017-02-01":{
-          "new line":5328
-        }
-      },
-      "winner":"new line"
-    },
-    "Function has doc comment":{
-      "total":5734,
-      "values":{
-        "no":"1",
-        "yes":5733
-      },
-      "percentages":{
-        "no":0.02,
-        "yes":99.98
-      },
-      "trends":{
-        "2017-01-01":{
-          "no":"1",
-          "yes":5594
-        },
-        "2017-02-01":{
-          "no":"1",
-          "yes":5733
-        }
-      },
-      "winner":"yes"
-    },
-    "Spacing before object operator":{
-      "total":11956,
-      "values":{
-        "0":11836,
-        "newline":120
-      },
-      "percentages":{
-        "0":99,
-        "newline":1
-      },
-      "trends":{
-        "2017-01-01":{
-          "0":11691,
-          "newline":107
-        },
-        "2017-02-01":{
-          "0":11836,
-          "newline":120
-        }
-      },
-      "winner":0
-    },
-    "Spacing after object operator":{
-      "total":11956,
-      "values":{
-        "0":11956
-      },
-      "percentages":{
-        "0":100
-      },
-      "trends":{
-        "2017-01-01":{
-          "0":11798
-        },
-        "2017-02-01":{
-          "0":11956
-        }
-      },
-      "winner":0
-    },
-    "Space after operator":{
-      "total":6452,
-      "values":{
-        "newline":4,
-        "1":6448
-      },
-      "percentages":{
-        "newline":0.06,
-        "1":99.94
-      },
-      "trends":{
-        "2017-01-01":{
-          "newline":2,
-          "1":6658
-        },
-        "2017-02-01":{
-          "newline":4,
-          "1":6448
-        }
-      },
-      "winner":1
-    },
-    "CamelCase method name":{
-      "total":5327,
-      "values":{
-        "yes":5327
-      },
-      "percentages":{
-        "yes":100
-      },
-      "trends":{
-        "2017-01-01":{
-          "yes":5191
-        },
-        "2017-02-01":{
-          "yes":5327
-        }
-      },
-      "winner":"yes"
-    },
-    "Short array syntax used":{
-      "total":1722,
-      "values":{
-        "yes":1722
-      },
-      "percentages":{
-        "yes":100
-      },
-      "trends":{
-        "2017-01-01":{
-          "yes":1750
-        },
-        "2017-02-01":{
-          "yes":1722
+        "2017-03-01":{
+          "yes":695
         }
       },
       "winner":"yes"
@@ -483,19 +400,71 @@
         "2017-02-01":{
           "\/* ... *\/":2,
           "\/\/ ...":1894
+        },
+        "2017-03-01":{
+          "\/* ... *\/":2,
+          "\/\/ ...":1894
         }
       },
       "winner":"\/\/ ..."
     },
-    "Spacing before string concat":{
-      "total":991,
+    "Function opening brace placement":{
+      "total":5367,
       "values":{
-        "0":985,
+        "new line":5367
+      },
+      "percentages":{
+        "new line":100
+      },
+      "trends":{
+        "2017-01-01":{
+          "new line":5189,
+          "same line":2
+        },
+        "2017-02-01":{
+          "new line":5328
+        },
+        "2017-03-01":{
+          "new line":5367
+        }
+      },
+      "winner":"new line"
+    },
+    "Function has doc comment":{
+      "total":5775,
+      "values":{
+        "no":"1",
+        "yes":5774
+      },
+      "percentages":{
+        "no":0.02,
+        "yes":99.98
+      },
+      "trends":{
+        "2017-01-01":{
+          "no":"1",
+          "yes":5594
+        },
+        "2017-02-01":{
+          "no":"1",
+          "yes":5733
+        },
+        "2017-03-01":{
+          "no":"1",
+          "yes":5774
+        }
+      },
+      "winner":"yes"
+    },
+    "Spacing before string concat":{
+      "total":1020,
+      "values":{
+        "0":1014,
         "newline":6
       },
       "percentages":{
-        "0":99.39,
-        "newline":0.61
+        "0":99.41,
+        "newline":0.59
       },
       "trends":{
         "2017-01-01":{
@@ -505,19 +474,23 @@
         "2017-02-01":{
           "0":985,
           "newline":6
+        },
+        "2017-03-01":{
+          "0":1014,
+          "newline":6
         }
       },
       "winner":0
     },
     "Spacing after string concat":{
-      "total":991,
+      "total":1020,
       "values":{
-        "0":989,
-        "newline":2
+        "0":1012,
+        "newline":8
       },
       "percentages":{
-        "0":99.8,
-        "newline":0.2
+        "0":99.22,
+        "newline":0.78
       },
       "trends":{
         "2017-01-01":{
@@ -527,32 +500,133 @@
         "2017-02-01":{
           "0":989,
           "newline":2
+        },
+        "2017-03-01":{
+          "0":1012,
+          "newline":8
         }
       },
       "winner":0
     },
-    "PHP constant case":{
-      "total":1622,
+    "Spacing before object operator":{
+      "total":12052,
       "values":{
-        "lower":1622
+        "0":11932,
+        "newline":120
       },
       "percentages":{
-        "lower":100
+        "0":99,
+        "newline":1
       },
       "trends":{
         "2017-01-01":{
-          "lower":1606
+          "0":11691,
+          "newline":107
         },
         "2017-02-01":{
-          "lower":1622
+          "0":11836,
+          "newline":120
+        },
+        "2017-03-01":{
+          "0":11932,
+          "newline":120
         }
       },
-      "winner":"lower"
+      "winner":0
+    },
+    "Spacing after object operator":{
+      "total":12052,
+      "values":{
+        "0":12052
+      },
+      "percentages":{
+        "0":100
+      },
+      "trends":{
+        "2017-01-01":{
+          "0":11798
+        },
+        "2017-02-01":{
+          "0":11956
+        },
+        "2017-03-01":{
+          "0":12052
+        }
+      },
+      "winner":0
+    },
+    "Space after operator":{
+      "total":6700,
+      "values":{
+        "newline":4,
+        "1":6696
+      },
+      "percentages":{
+        "newline":0.06,
+        "1":99.94
+      },
+      "trends":{
+        "2017-01-01":{
+          "newline":2,
+          "1":6658
+        },
+        "2017-02-01":{
+          "newline":4,
+          "1":6448
+        },
+        "2017-03-01":{
+          "newline":4,
+          "1":6696
+        }
+      },
+      "winner":1
+    },
+    "CamelCase method name":{
+      "total":5362,
+      "values":{
+        "yes":5362
+      },
+      "percentages":{
+        "yes":100
+      },
+      "trends":{
+        "2017-01-01":{
+          "yes":5191
+        },
+        "2017-02-01":{
+          "yes":5327
+        },
+        "2017-03-01":{
+          "yes":5362
+        }
+      },
+      "winner":"yes"
+    },
+    "Short array syntax used":{
+      "total":1733,
+      "values":{
+        "yes":1733
+      },
+      "percentages":{
+        "yes":100
+      },
+      "trends":{
+        "2017-01-01":{
+          "yes":1750
+        },
+        "2017-02-01":{
+          "yes":1722
+        },
+        "2017-03-01":{
+          "yes":1733
+        }
+      },
+      "winner":"yes"
     },
     "Spacing after cast statement":{
-      "total":204,
+      "total":206,
       "values":{
-        "1":204
+        "1":206
       },
       "percentages":{
         "1":100
@@ -563,6 +637,218 @@
         },
         "2017-02-01":{
           "1":204
+        },
+        "2017-03-01":{
+          "1":206
+        }
+      },
+      "winner":1
+    },
+    "PHP constant case":{
+      "total":1647,
+      "values":{
+        "lower":1647
+      },
+      "percentages":{
+        "lower":100
+      },
+      "trends":{
+        "2017-01-01":{
+          "lower":1606
+        },
+        "2017-02-01":{
+          "lower":1622
+        },
+        "2017-03-01":{
+          "lower":1647
+        }
+      },
+      "winner":"lower"
+    },
+    "Array end comma":{
+      "total":88,
+      "values":{
+        "no":3,
+        "yes":85
+      },
+      "percentages":{
+        "no":3.41,
+        "yes":96.59
+      },
+      "trends":{
+        "2017-01-01":{
+          "no":"1",
+          "yes":77
+        },
+        "2017-02-01":{
+          "no":3,
+          "yes":84
+        },
+        "2017-03-01":{
+          "no":3,
+          "yes":85
+        }
+      },
+      "winner":"yes"
+    },
+    "Control structure defined inline":{
+      "total":2498,
+      "values":{
+        "no":2498
+      },
+      "percentages":{
+        "no":100
+      },
+      "trends":{
+        "2017-01-01":{
+          "no":2523
+        },
+        "2017-02-01":{
+          "no":2449
+        },
+        "2017-03-01":{
+          "no":2498
+        }
+      },
+      "winner":"no"
+    },
+    "Spaces after control structure open parenthesis":{
+      "total":2409,
+      "values":{
+        "0":2408,
+        "newline":"1"
+      },
+      "percentages":{
+        "0":99.96,
+        "newline":0.04
+      },
+      "trends":{
+        "2017-01-01":{
+          "0":2422,
+          "newline":"1"
+        },
+        "2017-02-01":{
+          "0":2363,
+          "newline":"1"
+        },
+        "2017-03-01":{
+          "0":2408,
+          "newline":"1"
+        }
+      },
+      "winner":0
+    },
+    "Spaces before control structure close parenthesis":{
+      "total":2409,
+      "values":{
+        "0":2409
+      },
+      "percentages":{
+        "0":100
+      },
+      "trends":{
+        "2017-01-01":{
+          "0":2423
+        },
+        "2017-02-01":{
+          "0":2364
+        },
+        "2017-03-01":{
+          "0":2409
+        }
+      },
+      "winner":0
+    },
+    "Blank lines at start of control structure":{
+      "total":2596,
+      "values":{
+        "0":2596
+      },
+      "percentages":{
+        "0":100
+      },
+      "trends":{
+        "2017-01-01":{
+          "0":2619
+        },
+        "2017-02-01":{
+          "0":2547
+        },
+        "2017-03-01":{
+          "0":2596
+        }
+      },
+      "winner":0
+    },
+    "Blank lines at end of control structure":{
+      "total":2596,
+      "values":{
+        "0":2596
+      },
+      "percentages":{
+        "0":100
+      },
+      "trends":{
+        "2017-01-01":{
+          "0":2619
+        },
+        "2017-02-01":{
+          "0":2547
+        },
+        "2017-03-01":{
+          "0":2596
+        }
+      },
+      "winner":0
+    },
+    "Adjacent assignments aligned":{
+      "total":158,
+      "values":{
+        "no":145,
+        "yes":13
+      },
+      "percentages":{
+        "no":91.77,
+        "yes":8.23
+      },
+      "trends":{
+        "2017-01-01":{
+          "no":143,
+          "yes":12
+        },
+        "2017-02-01":{
+          "no":143,
+          "yes":13
+        },
+        "2017-03-01":{
+          "no":145,
+          "yes":13
+        }
+      },
+      "winner":"no"
+    },
+    "Space before operator":{
+      "total":1800,
+      "values":{
+        "newline":148,
+        "1":1652
+      },
+      "percentages":{
+        "newline":8.22,
+        "1":91.78
+      },
+      "trends":{
+        "2017-01-01":{
+          "newline":106,
+          "1":1430
+        },
+        "2017-02-01":{
+          "newline":143,
+          "1":1470
+        },
+        "2017-03-01":{
+          "newline":148,
+          "1":1652
         }
       },
       "winner":1
@@ -581,174 +867,17 @@
         },
         "2017-02-01":{
           "upper":19
+        },
+        "2017-03-01":{
+          "upper":19
         }
       },
       "winner":"upper"
     },
-    "Adjacent assignments aligned":{
-      "total":156,
-      "values":{
-        "no":143,
-        "yes":13
-      },
-      "percentages":{
-        "no":91.67,
-        "yes":8.33
-      },
-      "trends":{
-        "2017-01-01":{
-          "no":143,
-          "yes":12
-        },
-        "2017-02-01":{
-          "no":143,
-          "yes":13
-        }
-      },
-      "winner":"no"
-    },
-    "Control structure defined inline":{
-      "total":2449,
-      "values":{
-        "no":2449
-      },
-      "percentages":{
-        "no":100
-      },
-      "trends":{
-        "2017-01-01":{
-          "no":2523
-        },
-        "2017-02-01":{
-          "no":2449
-        }
-      },
-      "winner":"no"
-    },
-    "Spaces after control structure open parenthesis":{
-      "total":2364,
-      "values":{
-        "0":2363,
-        "newline":"1"
-      },
-      "percentages":{
-        "0":99.96,
-        "newline":0.04
-      },
-      "trends":{
-        "2017-01-01":{
-          "0":2422,
-          "newline":"1"
-        },
-        "2017-02-01":{
-          "0":2363,
-          "newline":"1"
-        }
-      },
-      "winner":0
-    },
-    "Spaces before control structure close parenthesis":{
-      "total":2364,
-      "values":{
-        "0":2364
-      },
-      "percentages":{
-        "0":100
-      },
-      "trends":{
-        "2017-01-01":{
-          "0":2423
-        },
-        "2017-02-01":{
-          "0":2364
-        }
-      },
-      "winner":0
-    },
-    "Blank lines at start of control structure":{
-      "total":2547,
-      "values":{
-        "0":2547
-      },
-      "percentages":{
-        "0":100
-      },
-      "trends":{
-        "2017-01-01":{
-          "0":2619
-        },
-        "2017-02-01":{
-          "0":2547
-        }
-      },
-      "winner":0
-    },
-    "Blank lines at end of control structure":{
-      "total":2547,
-      "values":{
-        "0":2547
-      },
-      "percentages":{
-        "0":100
-      },
-      "trends":{
-        "2017-01-01":{
-          "0":2619
-        },
-        "2017-02-01":{
-          "0":2547
-        }
-      },
-      "winner":0
-    },
-    "Array end comma":{
-      "total":87,
-      "values":{
-        "no":3,
-        "yes":84
-      },
-      "percentages":{
-        "no":3.45,
-        "yes":96.55
-      },
-      "trends":{
-        "2017-01-01":{
-          "no":"1",
-          "yes":77
-        },
-        "2017-02-01":{
-          "no":3,
-          "yes":84
-        }
-      },
-      "winner":"yes"
-    },
-    "Space before operator":{
-      "total":1613,
-      "values":{
-        "newline":143,
-        "1":1470
-      },
-      "percentages":{
-        "newline":8.87,
-        "1":91.13
-      },
-      "trends":{
-        "2017-01-01":{
-          "newline":106,
-          "1":1430
-        },
-        "2017-02-01":{
-          "newline":143,
-          "1":1470
-        }
-      },
-      "winner":1
-    },
     "Use of ELSE IF or ELSEIF":{
-      "total":112,
+      "total":116,
       "values":{
-        "elseif":112
+        "elseif":116
       },
       "percentages":{
         "elseif":100
@@ -759,6 +888,9 @@
         },
         "2017-02-01":{
           "elseif":112
+        },
+        "2017-03-01":{
+          "elseif":116
         }
       },
       "winner":"elseif"
@@ -776,6 +908,9 @@
           ".php":3
         },
         "2017-02-01":{
+          ".php":3
+        },
+        "2017-03-01":{
           ".php":3
         }
       },
@@ -795,14 +930,17 @@
         },
         "2017-02-01":{
           "no":5
+        },
+        "2017-03-01":{
+          "no":5
         }
       },
       "winner":"no"
     },
     "CamelCase function name":{
-      "total":63,
+      "total":64,
       "values":{
-        "no":63
+        "no":64
       },
       "percentages":{
         "no":100
@@ -813,6 +951,9 @@
         },
         "2017-02-01":{
           "no":63
+        },
+        "2017-03-01":{
+          "no":64
         }
       },
       "winner":"no"
@@ -820,6 +961,6 @@
   },
   "project":{
     "path":"laravel\/framework",
-    "commitid":"175c4bffdc0e0549c264d4fce6e325b272cad82b"
+    "commitid":"533ee41f922aea9b127fd872ebbd46ae3a733150"
   }
 }
