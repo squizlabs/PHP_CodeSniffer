@@ -312,14 +312,16 @@ class File
         $foundCode        = false;
         $listenerIgnoreTo = array();
         $inTests          = defined('PHP_CODESNIFFER_IN_TESTS');
+        $checkAnnotations = $this->config->annotations;
 
         // Foreach of the listeners that have registered to listen for this
         // token, get them to process it.
         foreach ($this->tokens as $stackPtr => $token) {
             // Check for ignored lines.
-            if ($token['code'] === T_COMMENT
+            if ($checkAnnotations === true
+                && ($token['code'] === T_COMMENT
                 || $token['code'] === T_DOC_COMMENT_TAG
-                || ($inTests === true && $token['code'] === T_INLINE_HTML)
+                || ($inTests === true && $token['code'] === T_INLINE_HTML))
             ) {
                 if (strpos($token['content'], '@codingStandards') !== false) {
                     if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {

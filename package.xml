@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-03-02</date>
  <time>09:30:00</time>
  <version>
-  <release>3.0.0RC4</release>
-  <api>3.0.0RC4</api>
+  <release>3.0.0RC5</release>
+  <api>3.0.0RC5</api>
  </version>
  <stability>
   <release>beta</release>
@@ -26,14 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - The indent property of PEAR.Classes.ClassDeclaration has been removed
-    -- Instead of calculating the indent of the brace, it just ensures the brace is aligned with the class keyword
-    -- Other sniffs can be used to ensure the class itself is indented correctly
-  - Invalid exclude rules inside a ruleset.xml file are now ignored instead of potentially causing out of memory errors
-    -- Using the -vv command line argument now also shows the invalid exclude rule as XML
-  - Includes all changes from the 2.8.1 release
-  - Fixed bug #1333 : The new autoloader breaks some frameworks with custom autoloaders
-  - Fixed bug #1334 : Undefined offset when explaining standard with custom sniffs
+  - Added an --ignore-annotations command line argument to ignore all @codingStandards annotations in code comments (request #811)
+    -- This allows you to force errors to be shown that would otherwise be ignored by code comments
+    -- Also stop files being able to change sniff properties mid way through processing
  </notes>
  <contents>
   <dir name="/">

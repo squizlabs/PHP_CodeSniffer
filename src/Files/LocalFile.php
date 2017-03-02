@@ -40,20 +40,22 @@ class LocalFile extends File
         // Before we go and spend time tokenizing this file, just check
         // to see if there is a tag up top to indicate that the whole
         // file should be ignored. It must be on one of the first two lines.
-        $handle = fopen($path, 'r');
-        if ($handle !== false) {
-            $firstContent  = fgets($handle);
-            $firstContent .= fgets($handle);
-            fclose($handle);
+        if ($config->annotations === true) {
+            $handle = fopen($path, 'r');
+            if ($handle !== false) {
+                $firstContent  = fgets($handle);
+                $firstContent .= fgets($handle);
+                fclose($handle);
 
-            if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
-                // We are ignoring the whole file.
-                if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                    echo 'Ignoring '.basename($path).PHP_EOL;
+                if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false) {
+                    // We are ignoring the whole file.
+                    if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                        echo 'Ignoring '.basename($path).PHP_EOL;
+                    }
+
+                    $this->ignored = true;
+                    return;
                 }
-
-                $this->ignored = true;
-                return;
             }
         }
 

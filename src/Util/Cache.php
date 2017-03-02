@@ -148,6 +148,7 @@ class Cache
                         'tabWidth'     => $config->tabWidth,
                         'encoding'     => $config->encoding,
                         'recordErrors' => $config->recordErrors,
+                        'annotations'  => $config->annotations,
                         'codeHash'     => $codeHash,
                         'rulesetHash'  => $rulesetHash,
                        );
@@ -160,6 +161,7 @@ class Cache
             echo "\t\t=> tabWidth: ".$configData['tabWidth'].PHP_EOL;
             echo "\t\t=> encoding: ".$configData['encoding'].PHP_EOL;
             echo "\t\t=> recordErrors: ".(int) $configData['recordErrors'].PHP_EOL;
+            echo "\t\t=> annotations: ".(int) $configData['annotations'].PHP_EOL;
             echo "\t\t=> codeHash: ".$configData['codeHash'].PHP_EOL;
             echo "\t\t=> rulesetHash: ".$configData['rulesetHash'].PHP_EOL;
             echo "\t\t=> cacheHash: $cacheHash".PHP_EOL;

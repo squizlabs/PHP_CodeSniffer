@@ -159,6 +159,8 @@ abstract class Tokenizer
             $checkEncoding = true;
         }
 
+        $checkAnnotations = $this->config->annotations;
+
         $this->tokensWithTabs = array(
                                  T_WHITESPACE               => true,
                                  T_COMMENT                  => true,
@@ -216,9 +218,10 @@ abstract class Tokenizer
                 $this->tokens[$i]['length'] += $eolLen;
             }
 
-            if ($this->tokens[$i]['code'] === T_COMMENT
+            if ($checkAnnotations === true
+                && ($this->tokens[$i]['code'] === T_COMMENT
                 || $this->tokens[$i]['code'] === T_DOC_COMMENT_TAG
-                || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML)
+                || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML))
             ) {
                 if (strpos($this->tokens[$i]['content'], '@codingStandards') !== false) {
                     if ($ignoring === false
