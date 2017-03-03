@@ -867,3 +867,55 @@ function returnTypeWithDescriptionD()
 {
 
 }//end returnTypeWithDescriptionD()
+
+/**
+ * No errors expected here.
+ *
+ * @param integer $someInt  Some int.
+ * @param boolean $someBool Some bool.
+ *
+ * @return integer|boolean
+ */
+public function myFunctionA($someInt, $someBool)
+{
+    return $this->var;
+}
+
+/**
+ * Both int and bool are not allowed.
+ *
+ * @param int  $someInt  Some int.
+ * @param bool $someBool Some bool.
+ *
+ * @return int|bool
+ */
+public function myFunctionB($someInt, $someBool)
+{
+    return $this->var;
+}
+
+/**
+ * int is not allowed, boolean should be fine.
+ *
+ * @param int     $someInt  Some int.
+ * @param boolean $someBool Some bool.
+ *
+ * @return int|boolean
+ */
+public function myFunctionC($someInt, $someBool)
+{
+    return $this->var;
+}
+
+/**
+ * bool is not allowed, integer should be fine.
+ *
+ * @param integer $someInt  Some int.
+ * @param bool    $someBool Some bool.
+ *
+ * @return integer|bool
+ */
+public function myFunctionD($someInt, $someBool)
+{
+    return $this->var;
+}

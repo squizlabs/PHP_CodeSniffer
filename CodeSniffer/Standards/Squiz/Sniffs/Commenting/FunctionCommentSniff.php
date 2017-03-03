@@ -33,6 +33,20 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
 {
 
     /**
+     * Use data type int instead of integer.
+     *
+     * @var boolean
+     */
+    public $useIntDataType = false;
+
+    /**
+     * Use data type bool instead of boolean.
+     *
+     * @var boolean
+     */
+    public $useBoolDataType = false;
+
+    /**
      * The current PHP version.
      *
      * @var integer
@@ -93,7 +107,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                 $typeNames      = explode('|', $returnType);
                 $suggestedNames = array();
                 foreach ($typeNames as $i => $typeName) {
-                    $suggestedName = PHP_CodeSniffer::suggestType($typeName);
+                    $suggestedName = $this->suggestType($typeName);
                     if (in_array($suggestedName, $suggestedNames) === false) {
                         $suggestedNames[] = $suggestedName;
                     }
@@ -376,9 +390,10 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
             // Check the param type value.
             $typeNames          = explode('|', $param['type']);
             $suggestedTypeNames = array();
+            $allowedTypes       = array_values($this->getAllowedTypes());
 
             foreach ($typeNames as $typeName) {
-                $suggestedName        = PHP_CodeSniffer::suggestType($typeName);
+                $suggestedName        = $this->suggestType($typeName);
                 $suggestedTypeNames[] = $suggestedName;
 
                 if (count($typeNames) > 1) {
@@ -393,7 +408,13 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                     $suggestedTypeHint = 'callable';
                 } else if (strpos($suggestedName, 'callback') !== false) {
                     $suggestedTypeHint = 'callable';
-                } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
+                } else if (in_array($typeName, $allowedTypes) === false
+                    && $typeName !== 'integer' && $typeName !== 'boolean'
+                    && $typeName !== 'int' && $typeName !== 'bool'
+                ) {
+                    // We have to make sure the param types for integer and boolean values
+                    // do not get interpreted as a custom class name, otherwise an error
+                    // due to a missing type hint will occur.
                     $suggestedTypeHint = $suggestedName;
                 } else if ($this->_phpVersion >= 70000) {
                     if ($typeName === 'string') {
@@ -405,7 +426,7 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                     } else if ($typeName === 'bool' || $typeName === 'boolean') {
                         $suggestedTypeHint = 'bool';
                     }
-                }
+                }//end if
 
                 if ($suggestedTypeHint !== '' && isset($realParams[$pos]) === true) {
                     $typeHint = $realParams[$pos]['type_hint'];
@@ -559,6 +580,43 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
         }
 
     }//end processParams()
+
+
+    /**
+     * Returns a valid variable type for param/var tag.
+     *
+     * @param string $varType The variable type to process.
+     *
+     * @return string
+     * @see    PHP_CodeSniffer::suggestedType()
+     */
+    protected function suggestType($varType)
+    {
+        return PHP_CodeSniffer::suggestType($varType, $this->getAllowedTypes());
+
+    }//end suggestType()
+
+
+    /**
+     * Returns an array of variable types for param/var tag.
+     *
+     * @return array
+     * @see    PHP_CodeSniffer::getAllowedTypes()
+     */
+    protected function getAllowedTypes()
+    {
+        $allowedTypes = PHP_CodeSniffer::getAllowedTypes();
+        if ($this->useIntDataType === true) {
+            $allowedTypes[PHP_CodeSniffer::TYPE_INT] = 'int';
+        }
+
+        if ($this->useBoolDataType === true) {
+            $allowedTypes[PHP_CodeSniffer::TYPE_BOOL] = 'bool';
+        }
+
+        return $allowedTypes;
+
+    }//end getAllowedTypes()
 
 
     /**
