@@ -1539,7 +1539,7 @@ class PHP_CodeSniffer_File
                     $numTabs = strlen($tokens[$i]['content']);
 
                     $newContent   = '';
-                    $firstTabSize = ($tabWidth - ($currColumn % $tabWidth) + 1);
+                    $firstTabSize = ($tabWidth - (($currColumn - 1) % $tabWidth));
                     $length       = ($firstTabSize + ($tabWidth * ($numTabs - 1)));
                     $currColumn  += $length;
                     $newContent   = str_repeat(' ', $length);

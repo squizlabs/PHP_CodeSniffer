@@ -66,3 +66,11 @@ if ($foo) {
         }
     }
 }
+
+/* -------------------------------- 80 chars -------------------------------- */
+$ab	= function () { /* comment */ if ($foo === true) { return (int) $foo; } };
+$ab	= function ()	{ /* comment */ if ($foo === true){ return	(int)$foo; }};
+$ab	= function ()	{ /* comment */ if ($foo === true) { return	(int) $foo; }  };
+	$ab	= function () { /* comment */ if ($foo === true) { return(int) $foo; }};
+	$ab	= function () { /* comment */ if ($foo === true) {	return(int) $foo; }};
+$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab;

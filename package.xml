@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-03-02</date>
  <time>09:12:00</time>
  <version>
-  <release>2.8.1</release>
-  <api>2.8.1</api>
+  <release>2.8.2</release>
+  <api>2.8.2</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,47 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - This release contains a fix for a security advisory related to the improper handling of shell commands
-    -- Uses of shell_exec() and exec() were not escaping filenames and configuration settings in most cases
-    -- A properly crafted filename or configuration option would allow for arbitrary code execution when using some features
-    -- All users are encouraged to upgrade to this version, especially if you are checking 3rd-party code
-       --- e.g., you run PHPCS over libraries that you did not write
-       --- e.g., you provide a web service that runs PHPCS over user-uploaded files or 3rd-party repositories
-       --- e.g., you allow external tool paths to be set by user-defined values
-    -- If you are unable to upgrade but you check 3rd-party code, ensure you are not using the following features:
-       --- The diff report
-       --- The notify-send report
-       --- The Generic.PHP.Syntax sniff
-       --- The Generic.Debug.CSSLint sniff
-       --- The Generic.Debug.ClosureLinter sniff
-       --- The Generic.Debug.JSHint sniff
-       --- The Squiz.Debug.JSLint sniff
-       --- The Squiz.Debug.JavaScriptLint sniff
-       --- The Zend.Debug.CodeAnalyzer sniff
-    -- Thanks to Klaus Purer for the report
-
-
-  - The PHP-supplied T_COALESCE_EQUAL token has been replicated for PHP versions before 7.2
-  - PEAR.Functions.FunctionDeclaration now reports an error for blank lines found inside a function declaration
-  - PEAR.Functions.FunctionDeclaration no longer reports indent errors for blank lines in a function declaration
-  - Squiz.Functions.MultiLineFunctionDeclaration no longer reports errors for blank lines in a function declaration
-    -- It would previously report that only one argument is allowed per line
-  - Squiz.Commenting.FunctionComment now corrects multi-line param comment padding more accurately
-  - Squiz.Commenting.FunctionComment now properly fixes pipe-separated param types
-  - Squiz.Commenting.FunctionComment now works correctly when function return types also contain a comment
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Squiz.ControlStructures.InlineIfDeclaration now supports the elvis operator
-    -- As this is not a real PHP operator, it enforces no spaces between ? and : when the THEN statement is empty
-  - Squiz.ControlStructures.InlineIfDeclaration is now able to fix the spacing errors it reports
-  - Fixed bug #1340 : STDIN file contents not being populated in some cases
-    -- Thanks to David Biňovec for the patch
-  - Fixed bug #1344 : PEAR.Functions.FunctionCallSignatureSniff throws error for blank comment lines
-  - Fixed bug #1347 : PSR2.Methods.FunctionCallSignature strips some comments during fixing
-    -- Thanks to Algirdas Gurevicius for the patch
-  - Fixed bug #1349 : Squiz.Strings.DoubleQuoteUsage.NotRequired message is badly formatted when string contains a CR newline char
-    -- Thanks to Algirdas Gurevicius for the patch
-  - Fixed bug #1350 : Invalid Squiz.Formatting.OperatorBracket error when using namespaces
-  - Fixed bug #1369 : Empty line in multi-line function declaration cause infinite loop
+  - Fixed bug #1373 : Error in tab expansion results in white-space of incorrect size
+    -- Thanks to Mark Clements for the patch
  </notes>
  <contents>
   <dir name="/">
