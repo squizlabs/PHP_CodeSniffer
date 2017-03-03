@@ -114,21 +114,24 @@ class Generic_Sniffs_Debug_ESLintSniff implements PHP_CodeSniffer_Sniff
         // Close, and start working!
         $code = proc_close($proc);
 
-        if ($code > 0) {
-            $data = json_decode($stdout);
-            // Detect errors.
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                $error = 'Unable to run eslint: %s';
-                $phpcsFile->addError($error, $stackPtr, 'CouldNotStart', array($stdout));
-            } else {
-                // Data is a list of files, but we only pass a single one.
-                $messages = $data[0]->messages;
-                foreach ($messages as $error) {
-                    if (empty($error->fatal) === false || $error->severity === 2) {
-                        $phpcsFile->addErrorOnLine($error->message, $error->line, $error->ruleId);
-                    } else {
-                        $phpcsFile->addWarningOnLine($error->message, $error->line, $error->ruleId);
-                    }
+        if ($code <= 0) {
+            // No errors, continue.
+            return ($phpcsFile->numTokens + 1);
+        }
+
+        $data = json_decode($stdout);
+        // Detect errors.
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $error = 'Unable to run eslint: %s';
+            $phpcsFile->addError($error, $stackPtr, 'CouldNotStart', array($stdout));
+        } else {
+            // Data is a list of files, but we only pass a single one.
+            $messages = $data[0]->messages;
+            foreach ($messages as $error) {
+                if (empty($error->fatal) === false || $error->severity === 2) {
+                    $phpcsFile->addErrorOnLine($error->message, $error->line, $error->ruleId);
+                } else {
+                    $phpcsFile->addWarningOnLine($error->message, $error->line, $error->ruleId);
                 }
             }
         }
