@@ -1357,4 +1357,11 @@
         "ignore": "",
         "extensions": ""
     }
+    {
+        "name": "Agora Invoicing",
+        "url": "ladybirdweb/agorainvoicing",
+        "path": "",
+        "ignore": "*/vendor/*",
+        "extensions": ""
+    }
 ]
