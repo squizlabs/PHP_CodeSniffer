@@ -87,12 +87,7 @@ class Generic_Sniffs_Debug_ESLintSniff implements PHP_CodeSniffer_Sniff
             $eslint_options[] = sprintf('--config %s', $config_file);
         }
 
-        $cmd  = sprintf(
-            '"%s" %s "%s"',
-            $eslint_path,
-            implode(' ', $eslint_options),
-            $filename
-        );
+        $cmd  = escapeshellcmd(escapeshellarg($eslint_path).' '.implode(' ', $eslint_options).' '.escapeshellarg($filename));
         $desc = array(
                  0 => array(
                        'pipe',
