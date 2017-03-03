@@ -158,7 +158,8 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 
         $failureMessages = array();
         foreach ($testFiles as $testFile) {
-            $filename = basename($testFile);
+            $filename  = basename($testFile);
+            $oldConfig = $config->getSettings();
 
             try {
                 $this->setCliValues($filename, $config);
@@ -190,6 +191,9 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
                     }
                 }
             }
+
+            // Restore the config.
+            $config->setSettings($oldConfig);
         }//end foreach
 
         if (empty($failureMessages) === false) {

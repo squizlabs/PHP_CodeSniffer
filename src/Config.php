@@ -269,6 +269,32 @@ class Config
 
 
     /**
+     * Get the array of all config settings.
+     *
+     * @return array<string, mixed>
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+
+    }//end getSettings()
+
+
+    /**
+     * Set the array of all config settings.
+     *
+     * @param array<string, mixed> $settings The array of config settings.
+     *
+     * @return void
+     */
+    public function setSettings($settings)
+    {
+        return $this->settings = $settings;
+
+    }//end setSettings()
+
+
+    /**
      * Creates a Config object and populates it with command line values.
      *
      * @param array $cliArgs         An array of values gathered from CLI args.

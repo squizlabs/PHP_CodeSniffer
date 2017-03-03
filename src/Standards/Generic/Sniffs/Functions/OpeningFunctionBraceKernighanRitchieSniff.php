@@ -138,12 +138,20 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
             return;
         }
 
+        // We are looking for tabs, even if they have been replaced, because
+        // we enforce a space here.
+        if (isset($tokens[($openingBrace - 1)]['orig_content']) === true) {
+            $spacing = $tokens[($openingBrace - 1)]['content'];
+        } else {
+            $spacing = $tokens[($openingBrace - 1)]['content'];
+        }
+
         if ($tokens[($openingBrace - 1)]['code'] !== T_WHITESPACE) {
             $length = 0;
-        } else if ($tokens[($openingBrace - 1)]['content'] === "\t") {
+        } else if ($spacing === "\t") {
             $length = '\t';
         } else {
-            $length = strlen($tokens[($openingBrace - 1)]['content']);
+            $length = strlen($spacing);
         }
 
         if ($length !== 1) {

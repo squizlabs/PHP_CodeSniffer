@@ -284,7 +284,7 @@ abstract class Tokenizer
             $numTabs = strlen($token['content']);
 
             $newContent   = '';
-            $firstTabSize = ($tabWidth - ($currColumn % $tabWidth) + 1);
+            $firstTabSize = ($tabWidth - (($currColumn - 1) % $tabWidth));
             $length       = ($firstTabSize + ($tabWidth * ($numTabs - 1)));
             $currColumn  += $length;
             $newContent   = $prefix.str_repeat($padding, ($length - 1));

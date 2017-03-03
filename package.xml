@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added an --ignore-annotations command line argument to ignore all @codingStandards annotations in code comments (request #811)
     -- This allows you to force errors to be shown that would otherwise be ignored by code comments
     -- Also stop files being able to change sniff properties mid way through processing
+  - Includes all changes from the 2.8.2 release
  </notes>
  <contents>
   <dir name="/">
