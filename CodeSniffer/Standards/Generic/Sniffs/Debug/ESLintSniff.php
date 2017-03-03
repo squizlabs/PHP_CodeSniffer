@@ -68,26 +68,26 @@ class Generic_Sniffs_Debug_ESLintSniff implements PHP_CodeSniffer_Sniff
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
         $filename    = $phpcsFile->getFilename();
-        $eslint_path = PHP_CodeSniffer::getConfigData('eslint_path');
-        if ($eslint_path === null) {
+        $eslintPath = PHP_CodeSniffer::getConfigData('eslint_path');
+        if ($eslintPath === null) {
             return;
         }
 
-        $config_file = $this->configFile;
-        if (empty($config_file) === true) {
+        $configFile = $this->configFile;
+        if (empty($configFile) === true) {
             // Attempt to autodetect.
             $candidates = glob('.eslintrc{.js,.yaml,.yml,.json}', GLOB_BRACE);
             if (empty($candidates) === false) {
-                $config_file = $candidates[0];
+                $configFile = $candidates[0];
             }
         }
 
-        $eslint_options = array( '--format json' );
-        if (empty($config_file) === false) {
-            $eslint_options[] = sprintf('--config %s', $config_file);
+        $eslintOptions = array('--format json');
+        if (empty($configFile) === false) {
+            $eslintOptions[] = '--config ' . escapeshellarg($configFile);
         }
 
-        $cmd  = escapeshellcmd(escapeshellarg($eslint_path).' '.implode(' ', $eslint_options).' '.escapeshellarg($filename));
+        $cmd  = escapeshellcmd(escapeshellarg($eslintPath).' '.implode(' ', $eslintOptions).' '.escapeshellarg($filename));
         $desc = array(
                  0 => array(
                        'pipe',
