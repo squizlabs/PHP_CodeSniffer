@@ -67,7 +67,7 @@ class Generic_Sniffs_Debug_ESLintSniff implements PHP_CodeSniffer_Sniff
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
-        $filename    = $phpcsFile->getFilename();
+        $filename   = $phpcsFile->getFilename();
         $eslintPath = PHP_CodeSniffer::getConfigData('eslint_path');
         if ($eslintPath === null) {
             return;
@@ -84,7 +84,7 @@ class Generic_Sniffs_Debug_ESLintSniff implements PHP_CodeSniffer_Sniff
 
         $eslintOptions = array('--format json');
         if (empty($configFile) === false) {
-            $eslintOptions[] = '--config ' . escapeshellarg($configFile);
+            $eslintOptions[] = '--config '.escapeshellarg($configFile);
         }
 
         $cmd  = escapeshellcmd(escapeshellarg($eslintPath).' '.implode(' ', $eslintOptions).' '.escapeshellarg($filename));
