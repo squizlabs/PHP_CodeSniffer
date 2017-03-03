@@ -63,7 +63,6 @@ class Generic_Sniffs_Debug_ESLintSniff implements PHP_CodeSniffer_Sniff
      *                                        the token was found.
      *
      * @return void
-     * @throws PHP_CodeSniffer_Exception If jslint.js could not be run
      */
     public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
     {
