@@ -147,8 +147,8 @@ class ForbiddenClassesSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
-            $this->currentNamespace = $this->getNextContent($tokens, ($stackPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
-            $this->useStatements    = array();
+            list($this->currentNamespace) = $this->getNextContent($tokens, ($stackPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
+            $this->useStatements          = array();
             return;
         }
 
@@ -159,12 +159,12 @@ class ForbiddenClassesSniff implements Sniff
                 $useSemiColonPtr = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
                 $useStartPtr     = $stackPtr;
                 do {
-                    $useNamespace = $this->getNextContent($tokens, ($useStartPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
+                    list($useNamespace) = $this->getNextContent($tokens, ($useStartPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
 
                     // Check if there is an alias defined for that use statement.
                     $aliasTokenPtr = $phpcsFile->findNext(array_merge(self::$namespaceTokens, array(T_WHITESPACE)), ($useStartPtr + 1), null, true);
                     if ($aliasTokenPtr !== false && $tokens[$aliasTokenPtr]['code'] === T_AS) {
-                        $alias = $this->getNextContent($tokens, ($aliasTokenPtr + 1), array(T_STRING), array(T_WHITESPACE));
+                        list($alias) = $this->getNextContent($tokens, ($aliasTokenPtr + 1), array(T_STRING), array(T_WHITESPACE));
                     } else {
                         $alias            = $useNamespace;
                         $lastBackslashPos = strrpos($useNamespace, '\\');
@@ -185,7 +185,17 @@ class ForbiddenClassesSniff implements Sniff
 
             if (in_array('trait-use', $this->usages) === true) {
                 // We're in a class definition. Use statements are trait imports.
-                // TODO
+                $useSemiColonPtr = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+                $useStartPtr     = $stackPtr;
+                do {
+                    list($traitClass, $traitClassPtr) = $this->getNextContent($tokens, ($useStartPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
+                    $fullyQualifiedClassName          = $this->getFullyQualifiedClassName($traitClass);
+                    $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $traitClassPtr);
+
+                    // Find start position of the next trait import statement.
+                    $useStartPtr = $phpcsFile->findNext(T_COMMA, ($useStartPtr + 1));
+                } while ($useStartPtr !== false && $useStartPtr < $useSemiColonPtr);
+
                 return;
             }
         }//end if
@@ -197,28 +207,38 @@ class ForbiddenClassesSniff implements Sniff
         }
 
         if (in_array('new', $this->usages) === true && $tokens[$stackPtr]['code'] === T_NEW) {
-            $className = $this->getNextContent($tokens, ($stackPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
-            $fullyQualifiedClassName = $this->getFullyQualifiedClassName($className);
-            $this->checkClassName($phpcsFile, $fullyQualifiedClassName, ($stackPtr + 1));
+            list($className, $classNamePtr) = $this->getNextContent($tokens, ($stackPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
+            $fullyQualifiedClassName        = $this->getFullyQualifiedClassName($className);
+            $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $classNamePtr);
             return;
         }
 
         if (in_array('extends', $this->usages) === true && $tokens[$stackPtr]['code'] === T_EXTENDS) {
-            $className = $this->getNextContent($tokens, ($stackPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
-            $fullyQualifiedClassName = $this->getFullyQualifiedClassName($className);
-            $this->checkClassName($phpcsFile, $fullyQualifiedClassName, ($stackPtr - 1));
+            list($className, $classNamePtr) = $this->getNextContent($tokens, ($stackPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
+            $fullyQualifiedClassName        = $this->getFullyQualifiedClassName($className);
+            $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $classNamePtr);
             return;
         }
 
         if (in_array('implements', $this->usages) === true && $tokens[$stackPtr]['code'] === T_IMPLEMENTS) {
-            // TODO
+            $implementsEndPtr   = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ($stackPtr + 1));
+            $implementsStartPtr = $stackPtr;
+            do {
+                list($implementsClass, $implementsClassPtr) = $this->getNextContent($tokens, ($implementsStartPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
+                $fullyQualifiedClassName = $this->getFullyQualifiedClassName($implementsClass);
+                $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $implementsClassPtr);
+
+                // Find start position of the next trait-use statement.
+                $implementsStartPtr = $phpcsFile->findNext(T_COMMA, ($implementsStartPtr + 1));
+            } while ($implementsStartPtr !== false && $implementsStartPtr < $implementsEndPtr);
+
             return;
         }
 
         if (in_array('static-call', $this->usages) === true && $tokens[$stackPtr]['code'] === T_DOUBLE_COLON) {
-            $className = $this->getPrevContent($tokens, ($stackPtr - 1), self::$namespaceTokens, array(T_WHITESPACE));
-            $fullyQualifiedClassName = $this->getFullyQualifiedClassName($className);
-            $this->checkClassName($phpcsFile, $fullyQualifiedClassName, ($stackPtr - 1));
+            list($className, $classNamePtr) = $this->getPrevContent($tokens, ($stackPtr - 1), self::$namespaceTokens, array(T_WHITESPACE));
+            $fullyQualifiedClassName        = $this->getFullyQualifiedClassName($className);
+            $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $classNamePtr);
             return;
         }
 
@@ -244,10 +264,10 @@ class ForbiddenClassesSniff implements Sniff
                     break;
                 }
 
-                $typeHint = $this->getPrevContent($tokens, ($endOfTypeHintPtr - 1), self::$namespaceTokens, array(T_WHITESPACE, T_BITWISE_AND));
+                list($typeHint, $typeHintPtr) = $this->getPrevContent($tokens, ($endOfTypeHintPtr - 1), self::$namespaceTokens, array(T_WHITESPACE, T_BITWISE_AND));
                 if (strlen($typeHint) > 0) {
                     $fullyQualifiedClassName = $this->getFullyQualifiedClassName($typeHint);
-                    $this->checkClassName($phpcsFile, $fullyQualifiedClassName, ($stackPtr - 1));
+                    $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $typeHintPtr);
                 }
             }
 
@@ -265,7 +285,7 @@ class ForbiddenClassesSniff implements Sniff
      * @param array $allowedTokens The allowed tokens to retrieve content from.
      * @param array $skipTokens    Tokens to be skipped at the beginning.
      *
-     * @return string
+     * @return array
      */
     private function getPrevContent($tokens, $startPtr, $allowedTokens, $skipTokens)
     {
@@ -276,16 +296,21 @@ class ForbiddenClassesSniff implements Sniff
             }
         }
 
-        $string = '';
+        $stringStartPtr = $i;
+        $string         = '';
         for (; $i >= 0; $i--) {
             if (in_array($tokens[$i]['code'], $allowedTokens) === true) {
-                $string = $tokens[$i]['content'].$string;
+                $string         = $tokens[$i]['content'].$string;
+                $stringStartPtr = $i;
             } else {
                 break;
             }
         }
 
-        return $string;
+        return array(
+                $string,
+                $stringStartPtr,
+               );
 
     }//end getPrevContent()
 
@@ -298,7 +323,7 @@ class ForbiddenClassesSniff implements Sniff
      * @param array $allowedTokens The allowed tokens to retrieve content from.
      * @param array $skipTokens    Tokens to be skipped at the beginning.
      *
-     * @return string
+     * @return array
      */
     private function getNextContent($tokens, $startPtr, $allowedTokens, $skipTokens)
     {
@@ -310,7 +335,8 @@ class ForbiddenClassesSniff implements Sniff
             }
         }
 
-        $string = '';
+        $stringStartPtr = $i;
+        $string         = '';
         for (; $i < $numTokens; $i++) {
             if (in_array($tokens[$i]['code'], $allowedTokens) === true) {
                 $string .= $tokens[$i]['content'];
@@ -319,7 +345,10 @@ class ForbiddenClassesSniff implements Sniff
             }
         }
 
-        return $string;
+        return array(
+                $string,
+                $stringStartPtr,
+               );
 
     }//end getNextContent()
 
