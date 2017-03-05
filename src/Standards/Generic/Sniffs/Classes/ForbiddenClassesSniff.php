@@ -238,13 +238,13 @@ class ForbiddenClassesSniff implements Sniff
             }
 
             $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
-            for ($i = ($openBracket + 1); $i <= $closeBracket; $i = ($endOfImportPtr + 1)) {
-                $endOfImportPtr = $phpcsFile->findNext(T_VARIABLE, $i);
-                if ($endOfImportPtr === false || $endOfImportPtr > $closeBracket) {
+            for ($i = ($openBracket + 1); $i <= $closeBracket; $i = ($endOfTypeHintPtr + 1)) {
+                $endOfTypeHintPtr = $phpcsFile->findNext(T_VARIABLE, $i);
+                if ($endOfTypeHintPtr === false || $endOfTypeHintPtr > $closeBracket) {
                     break;
                 }
 
-                $typeHint = $this->getPrevContent($tokens, ($endOfImportPtr - 1), self::$namespaceTokens, array(T_WHITESPACE, T_BITWISE_AND));
+                $typeHint = $this->getPrevContent($tokens, ($endOfTypeHintPtr - 1), self::$namespaceTokens, array(T_WHITESPACE, T_BITWISE_AND));
                 if (strlen($typeHint) > 0) {
                     $fullyQualifiedClassName = $this->getFullyQualifiedClassName($typeHint);
                     $this->checkClassName($phpcsFile, $fullyQualifiedClassName, ($stackPtr - 1));
