@@ -28,6 +28,17 @@ class ForbiddenClassesSniff implements Sniff
                                       );
 
     /**
+     * Tokens from PHP7 return types
+     *
+     * @var array
+     */
+    private static $returnTypeTokens = array(
+                                        T_NS_SEPARATOR,
+                                        T_STRING,
+                                        T_RETURN_TYPE,
+                                       );
+
+    /**
      * List of native type hints to be excluded when resolving the fully qualified class name
      *
      * @var array
@@ -311,6 +322,14 @@ class ForbiddenClassesSniff implements Sniff
                     $fullyQualifiedClassName = $this->getFullyQualifiedClassName($typeHint);
                     $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $typeHintPtr);
                 }
+            }
+
+            // Check for PHP7 return type hint.
+            $colonTokenPtr = $phpcsFile->findNext(array_merge(self::$namespaceTokens, array(T_WHITESPACE)), ($closeBracket + 1), null, true);
+            if ($colonTokenPtr !== false && $tokens[$colonTokenPtr]['code'] === T_COLON) {
+                list($returnType, $returnTypePtr) = $this->getNextContent($tokens, ($colonTokenPtr + 1), self::$returnTypeTokens, array(T_WHITESPACE));
+                $fullyQualifiedClassName          = $this->getFullyQualifiedClassName($returnType);
+                $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $returnTypePtr);
             }
 
             return;

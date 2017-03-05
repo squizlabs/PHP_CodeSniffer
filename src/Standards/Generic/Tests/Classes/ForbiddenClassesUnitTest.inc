@@ -52,11 +52,11 @@ class Test implements
         FooAlias\Bar\ForbiddenClass::method();
         ClassAlias::method();
 
-        function (Foo &$foo, \Foo\Bar\ForbiddenClass $crawler, $bar) {};
-        function (Foo &$foo, Bar\ForbiddenClass $crawler, $bar) {};
-        function (Foo &$foo, ForbiddenClass $crawler, $bar) {};
-        function (Foo &$foo, FooAlias\Bar\ForbiddenClass $foo, $bar) {};
-        function (Foo &$foo, ClassAlias $foo, $bar) {};
+        function (Foo &$foo, \Foo\Bar\ForbiddenClass $crawler, $bar) : \Foo\Bar\ForbiddenClass {};
+        function (Foo &$foo, Bar\ForbiddenClass $crawler, $bar) : Bar\ForbiddenClass {};
+        function (Foo &$foo, ForbiddenClass $crawler, $bar) : ForbiddenClass {};
+        function (Foo &$foo, FooAlias\Bar\ForbiddenClass $foo, $bar) : FooAlias\Bar\ForbiddenClass {};
+        function (Foo &$foo, ClassAlias $foo, $bar) : ClassAlias {};
 
         // Ok
         new Foo\Bar\ForbiddenClass();
@@ -67,9 +67,9 @@ class Test implements
         \Bar\ForbiddenClass::method();
         \ClassAlias::method();
 
-        function (Foo &$foo, Foo\Bar\ForbiddenClass $foo, $bar) {};
-        function (Foo &$foo, \Bar\ForbiddenClass $foo, $bar) {};
-        function (Foo &$foo, \ClassAlias $foo, $bar) {};
+        function (Foo &$foo, Foo\Bar\ForbiddenClass $foo, $bar) : Foo\Bar\ForbiddenClass {};
+        function (Foo &$foo, \Bar\ForbiddenClass $foo, $bar) : \Bar\ForbiddenClass {};
+        function (Foo &$foo, \ClassAlias $foo, $bar) : \ClassAlias {};
     }
 
     // Error
@@ -80,7 +80,7 @@ class Test implements
      *
      * @return \Foo\Bar\ForbiddenClass
      */
-    public function error1(Foo &$foo, \Foo\Bar\ForbiddenClass $crawler, $bar) {}
+    public function error1(Foo &$foo, \Foo\Bar\ForbiddenClass $crawler, $bar) : \Foo\Bar\ForbiddenClass {}
 
     /**
      * @param Foo $foo
@@ -89,7 +89,7 @@ class Test implements
      *
      * @return Bar\ForbiddenClass
      */
-    public function error2(Foo &$foo, Bar\ForbiddenClass $crawler, $bar) {}
+    public function error2(Foo &$foo, Bar\ForbiddenClass $crawler, $bar) : Bar\ForbiddenClass {}
 
     /**
      * @param Foo $foo
@@ -98,7 +98,7 @@ class Test implements
      *
      * @return ForbiddenClass
      */
-    public function error3(Foo &$foo, ForbiddenClass $crawler, $bar) {}
+    public function error3(Foo &$foo, ForbiddenClass $crawler, $bar) : ForbiddenClass {}
 
     /**
      * @param Foo $foo
@@ -107,7 +107,7 @@ class Test implements
      *
      * @return FooAlias\Bar\ForbiddenClass
      */
-    public function error4(Foo &$foo, FooAlias\Bar\ForbiddenClass $crawler, $bar) {}
+    public function error4(Foo &$foo, FooAlias\Bar\ForbiddenClass $crawler, $bar) : FooAlias\Bar\ForbiddenClass {}
 
     /**
      * @param Foo $foo
@@ -116,7 +116,7 @@ class Test implements
      *
      * @return ClassAlias
      */
-    public function error5(Foo &$foo, ClassAlias $crawler, $bar) {}
+    public function error5(Foo &$foo, ClassAlias $crawler, $bar) : ClassAlias {}
 
     // Ok
     /**
@@ -126,7 +126,7 @@ class Test implements
      *
      * @return Foo\Bar\ForbiddenClass
      */
-    public function ok1(Foo &$foo, Foo\Bar\ForbiddenClass $crawler, $bar) {}
+    public function ok1(Foo &$foo, Foo\Bar\ForbiddenClass $crawler, $bar) : Foo\Bar\ForbiddenClass {}
 
     /**
      * @param Foo $foo
@@ -135,7 +135,7 @@ class Test implements
      *
      * @return \Bar\ForbiddenClass
      */
-    public function ok2(Foo &$foo, \Bar\ForbiddenClass $crawler, $bar) {}
+    public function ok2(Foo &$foo, \Bar\ForbiddenClass $crawler, $bar) : \Bar\ForbiddenClass {}
 
     /**
      * @param Foo $foo
@@ -144,7 +144,7 @@ class Test implements
      *
      * @return \ClassAlias
      */
-    public function ok3(Foo &$foo, \ClassAlias $crawler, $bar) {}
+    public function ok3(Foo &$foo, \ClassAlias $crawler, $bar) : \ClassAlias {}
 }
 
 // Error
