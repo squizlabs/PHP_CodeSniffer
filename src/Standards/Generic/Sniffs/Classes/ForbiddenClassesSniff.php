@@ -158,7 +158,7 @@ class ForbiddenClassesSniff implements Sniff
                 // We're outside of a class definition. Use statements are class imports.
                 $useSemiColonPtr = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
                 $useStartPtr     = $stackPtr;
-                while (true) {
+                do {
                     $useNamespace = $this->getNextContent($tokens, ($useStartPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
 
                     // Check if there is an alias defined for that use statement.
@@ -178,10 +178,7 @@ class ForbiddenClassesSniff implements Sniff
 
                     // Find start position of the next import statement.
                     $useStartPtr = $phpcsFile->findNext(T_COMMA, ($useStartPtr + 1));
-                    if ($useStartPtr === false || $useStartPtr >= $useSemiColonPtr) {
-                        break;
-                    }
-                }//end while
+                } while ($useStartPtr !== false && $useStartPtr < $useSemiColonPtr);
 
                 return;
             }//end if
@@ -207,7 +204,9 @@ class ForbiddenClassesSniff implements Sniff
         }
 
         if (in_array('extends', $this->usages) === true && $tokens[$stackPtr]['code'] === T_EXTENDS) {
-            // TODO
+            $className = $this->getNextContent($tokens, ($stackPtr + 1), self::$namespaceTokens, array(T_WHITESPACE));
+            $fullyQualifiedClassName = $this->getFullyQualifiedClassName($className);
+            $this->checkClassName($phpcsFile, $fullyQualifiedClassName, ($stackPtr - 1));
             return;
         }
 
