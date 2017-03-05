@@ -28,8 +28,7 @@ class ForbiddenClassesSniff implements Sniff
                                       );
 
     /**
-     * List of native type hints to be excluded when resolving the fully qualified
-     * class name
+     * List of native type hints to be excluded when resolving the fully qualified class name
      *
      * @var array
      */
@@ -43,6 +42,44 @@ class ForbiddenClassesSniff implements Sniff
                                        'int',
                                        'string',
                                       );
+
+    /**
+     * List of PHPDoc tags to check for forbidden classes
+     *
+     * @var array
+     */
+    private static $phpDocTags = array(
+                                  '@var',
+                                  '@param',
+                                  '@property',
+                                  '@return',
+                                 );
+
+    /**
+     * List of native types used in PHPDoc
+     *
+     * @var array
+     */
+    private static $phpDocNativeTypes = array(
+                                         'string',
+                                         'integer',
+                                         'int',
+                                         'boolean',
+                                         'bool',
+                                         'float',
+                                         'double',
+                                         'object',
+                                         'mixed',
+                                         'array',
+                                         'resource',
+                                         'void',
+                                         'null',
+                                         'callback',
+                                         'false',
+                                         'true',
+                                         'self',
+                                         'static',
+                                        );
 
     /**
      * Keep track of the current namespace
@@ -84,6 +121,7 @@ class ForbiddenClassesSniff implements Sniff
                       'static-call',
                       'trait-use',
                       'type-hint',
+                      'phpdoc',
                      );
 
     /**
@@ -126,6 +164,10 @@ class ForbiddenClassesSniff implements Sniff
         if (in_array('type-hint', $this->usages) === true) {
             $tokens[] = T_FUNCTION;
             $tokens[] = T_CLOSURE;
+        }
+
+        if (in_array('phpdoc', $this->usages) === true) {
+            $tokens[] = T_DOC_COMMENT_TAG;
         }
 
         return $tokens;
@@ -270,6 +312,36 @@ class ForbiddenClassesSniff implements Sniff
                     $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $typeHintPtr);
                 }
             }
+
+            return;
+        }//end if
+
+        if (in_array('phpdoc', $this->usages) === true && $tokens[$stackPtr]['code'] === T_DOC_COMMENT_TAG) {
+            if (in_array($tokens[$stackPtr]['content'], self::$phpDocTags) !== true) {
+                return;
+            }
+
+            $phpDocStrPtr = ($stackPtr + 2);
+            if ($tokens[$phpDocStrPtr]['code'] === T_DOC_COMMENT_STRING) {
+                preg_match('/^([^$&.\s]+)/', $tokens[$phpDocStrPtr]['content'], $matches);
+                if (isset($matches[1]) === true) {
+                    $phpDocTypes = explode('|', $matches[1]);
+                    foreach ($phpDocTypes as $phpDocType) {
+                        if (in_array($phpDocType, self::$phpDocNativeTypes) === true) {
+                            // Do not check native PHPDoc types.
+                            continue;
+                        }
+
+                        if (substr($phpDocType, -2) === '[]') {
+                            // Get type from array.
+                            $phpDocType = substr($phpDocType, 0, (strlen($phpDocType) - 2));
+                        }
+
+                        $fullyQualifiedClassName = $this->getFullyQualifiedClassName($phpDocType);
+                        $this->checkClassName($phpcsFile, $fullyQualifiedClassName, $phpDocStrPtr);
+                    }
+                }
+            }//end if
 
             return;
         }//end if
