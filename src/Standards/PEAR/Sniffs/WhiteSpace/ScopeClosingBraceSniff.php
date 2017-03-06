@@ -19,7 +19,7 @@ class ScopeClosingBraceSniff implements Sniff
     /**
      * The number of spaces code should be indented.
      *
-     * @var integer
+     * @var int
      */
     public $indent = 4;
 

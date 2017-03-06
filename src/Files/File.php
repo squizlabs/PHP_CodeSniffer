@@ -81,7 +81,7 @@ class File
      * If TRUE, the file was loaded from a local cache.
      * If FALSE, the file was tokenized and processed fully.
      *
-     * @var boolean
+     * @var bool
      */
     public $fromCache = false;
 
@@ -90,7 +90,7 @@ class File
      *
      * Stored here to save calling count() everywhere.
      *
-     * @var integer
+     * @var int
      */
     public $numTokens = 0;
 
@@ -128,28 +128,28 @@ class File
     /**
      * The total number of errors raised.
      *
-     * @var integer
+     * @var int
      */
     protected $errorCount = 0;
 
     /**
      * The total number of warnings raised.
      *
-     * @var integer
+     * @var int
      */
     protected $warningCount = 0;
 
     /**
      * The total number of errors and warnings that can be fixed.
      *
-     * @var integer
+     * @var int
      */
     protected $fixableCount = 0;
 
     /**
      * The total number of errors and warnings that were fixed.
      *
-     * @var integer
+     * @var int
      */
     protected $fixedCount = 0;
 

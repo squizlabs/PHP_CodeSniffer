@@ -29,7 +29,7 @@ class DisallowSpaceIndentSniff implements Sniff
     /**
      * The --tab-width CLI value that is being used.
      *
-     * @var integer
+     * @var int
      */
     private $tabWidth = null;
 

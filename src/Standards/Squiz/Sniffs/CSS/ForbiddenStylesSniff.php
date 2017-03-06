@@ -51,14 +51,14 @@ class ForbiddenStylesSniff implements Sniff
     /**
      * If true, forbidden styles will be considered regular expressions.
      *
-     * @var boolean
+     * @var bool
      */
     protected $patternMatch = false;
 
     /**
      * If true, an error will be thrown; otherwise a warning.
      *
-     * @var boolean
+     * @var bool
      */
     public $error = true;
 

@@ -31,7 +31,7 @@ class DiscouragedFunctionsSniff extends GenericForbiddenFunctionsSniff
     /**
      * If true, an error will be thrown; otherwise a warning.
      *
-     * @var boolean
+     * @var bool
      */
     public $error = false;
 

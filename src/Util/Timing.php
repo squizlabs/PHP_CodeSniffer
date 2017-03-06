@@ -22,7 +22,7 @@ class Timing
     /**
      * Used to make sure we only print the run time once per run.
      *
-     * @var boolean
+     * @var bool
      */
     private static $printed = false;
 

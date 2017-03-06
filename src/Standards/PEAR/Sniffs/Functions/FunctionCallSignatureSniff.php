@@ -29,28 +29,28 @@ class FunctionCallSignatureSniff implements Sniff
     /**
      * The number of spaces code should be indented.
      *
-     * @var integer
+     * @var int
      */
     public $indent = 4;
 
     /**
      * If TRUE, multiple arguments can be defined per line in a multi-line call.
      *
-     * @var boolean
+     * @var bool
      */
     public $allowMultipleArguments = true;
 
     /**
      * How many spaces should follow the opening bracket.
      *
-     * @var integer
+     * @var int
      */
     public $requiredSpacesAfterOpen = 0;
 
     /**
      * How many spaces should precede the closing bracket.
      *
-     * @var integer
+     * @var int
      */
     public $requiredSpacesBeforeClose = 0;
 

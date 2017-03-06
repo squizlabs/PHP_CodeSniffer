@@ -28,7 +28,7 @@ class FileList implements \Iterator, \Countable
     /**
      * The number of files in the list.
      *
-     * @var integer
+     * @var int
      */
     private $numFiles = 0;
 

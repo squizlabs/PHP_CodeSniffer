@@ -18,14 +18,14 @@ class ConcatenationSpacingSniff implements Sniff
     /**
      * The number of spaces before and after a string concat.
      *
-     * @var integer
+     * @var int
      */
     public $spacing = 0;
 
     /**
      * Allow newlines instead of spaces.
      *
-     * @var boolean
+     * @var bool
      */
     public $ignoreNewlines = false;
 

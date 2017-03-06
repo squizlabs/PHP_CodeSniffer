@@ -24,14 +24,14 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     /**
      * The end token of the current function that we are in.
      *
-     * @var integer
+     * @var int
      */
     private $endFunction = -1;
 
     /**
      * TRUE if a function is currently open.
      *
-     * @var boolean
+     * @var bool
      */
     private $functionOpen = false;
 

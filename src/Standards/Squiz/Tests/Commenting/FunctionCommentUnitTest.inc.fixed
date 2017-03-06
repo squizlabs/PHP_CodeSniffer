@@ -7,9 +7,9 @@ class PHP_CodeSniffer_File
      *
      * long desc here
      *
-     * @param boolean $stackPtr The position in @ @unknown the stack of the token
+     * @param bool $stackPtr The position in @ @unknown the stack of the token
      *                            that opened the scope
-     * @param integer $detph    How many scope levels down we are.
+     * @param int $detph    How many scope levels down we are.
      * @param string  $index    The index
      * @return
      * @throws
@@ -120,8 +120,8 @@ class PHP_CodeSniffer_File
      * Param not immediate.
      *
      * @return
-     * @param   integer $threeSpaces
-     * @param integer $superfluous
+     * @param   int $threeSpaces
+     * @param int $superfluous
      * @param miss
      * @param
      */

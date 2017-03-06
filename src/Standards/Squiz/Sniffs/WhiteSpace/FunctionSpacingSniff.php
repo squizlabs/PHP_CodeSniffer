@@ -18,7 +18,7 @@ class FunctionSpacingSniff implements Sniff
     /**
      * The number of blank lines between functions.
      *
-     * @var integer
+     * @var int
      */
     public $spacing = 2;
 

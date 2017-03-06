@@ -131,9 +131,9 @@ class VariableCommentUnitTest
      $emptyVarDoc = '';
 
      /**
-     * Var type checking (int v.s. integer).
+     * Var type checking (integer v.s. int).
      *
-     * @var int
+     * @var integer
      */
      private $_varSimpleTypeCheck;
 

@@ -22,9 +22,9 @@ class Common
      */
     public static $allowedTypes = array(
                                    'array',
-                                   'boolean',
+                                   'bool',
                                    'float',
-                                   'integer',
+                                   'int',
                                    'mixed',
                                    'object',
                                    'string',
@@ -345,14 +345,14 @@ class Common
             switch ($lowerVarType) {
             case 'bool':
             case 'boolean':
-                return 'boolean';
+                return 'bool';
             case 'double':
             case 'real':
             case 'float':
                 return 'float';
             case 'int':
             case 'integer':
-                return 'integer';
+                return 'int';
             case 'array()':
             case 'array':
                 return 'array';

@@ -32,7 +32,7 @@ class MultipleStatementAlignmentSniff implements Sniff
     /**
      * If true, an error will be thrown; otherwise a warning.
      *
-     * @var boolean
+     * @var bool
      */
     public $error = false;
 
@@ -43,7 +43,7 @@ class MultipleStatementAlignmentSniff implements Sniff
      * surrounding assignments exceeds this number, the assignment will be
      * ignored and no errors or warnings will be thrown.
      *
-     * @var integer
+     * @var int
      */
     public $maxPadding = 1000;
 

@@ -18,21 +18,21 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
     /**
      * How many spaces should surround the equals signs.
      *
-     * @var integer
+     * @var int
      */
     public $equalsSpacing = 0;
 
     /**
      * How many spaces should follow the opening bracket.
      *
-     * @var integer
+     * @var int
      */
     public $requiredSpacesAfterOpen = 0;
 
     /**
      * How many spaces should precede the closing bracket.
      *
-     * @var integer
+     * @var int
      */
     public $requiredSpacesBeforeClose = 0;
 
