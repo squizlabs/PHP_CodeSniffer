@@ -131,33 +131,33 @@ class VariableCommentUnitTest
      $emptyVarDoc = '';
 
      /**
-     * Var type checking (int v.s. integer).
+     * Var type checking (integer v.s. int).
      *
-     * @var integer
+     * @var int
      */
      private $_varSimpleTypeCheck;
 
 
      /**
-     * Var type checking (array(int => string) v.s. array(int => string)).
+     * Var type checking (array(integer => string) v.s. array(integer => string)).
      *
-     * @var array(integer => string)
+     * @var array(int => string)
      */
      private $_varArrayTypeCheck;
 
 
     /**
-     * Boolean @var tag Capitalized
+     * Bool @var tag Capitalized
      *
-     * @var boolean
+     * @var bool
      */
      public $CapBoolTag = true;
 
 
     /**
-     * Boolean @var tag Capitalized
+     * Bool @var tag Capitalized
      *
-     * @var boolean
+     * @var bool
      */
      public $CapBoolTag2 = true;
 
@@ -213,7 +213,7 @@ class VariableCommentUnitTest
     /**
      * Int @var tag Capitalized
      *
-     * @var integer
+     * @var int
      */
      public $CapIntTag = 1;
 
@@ -221,7 +221,7 @@ class VariableCommentUnitTest
     /**
      * Int @var tag Capitalized
      *
-     * @var integer
+     * @var int
      */
      public $CapIntTag2 = 1;
 
@@ -229,7 +229,7 @@ class VariableCommentUnitTest
     /**
      * Integer @var tag Capitalized
      *
-     * @var integer
+     * @var int
      */
      public $CapIntTag3 = 1;
 
@@ -237,7 +237,7 @@ class VariableCommentUnitTest
     /**
      * Integer @var tag Capitalized
      *
-     * @var integer
+     * @var int
      */
      public $CapIntTag4 = 1;
 
@@ -283,7 +283,7 @@ class VariableCommentUnitTest
 
 
     /**
-     * @var integer
+     * @var int
      */
      private $_varWithNoShortComment;
 

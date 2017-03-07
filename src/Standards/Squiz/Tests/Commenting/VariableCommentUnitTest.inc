@@ -139,25 +139,25 @@ class VariableCommentUnitTest
 
 
      /**
-     * Var type checking (array(int => string) v.s. array(int => string)).
+     * Var type checking (array(integer => string) v.s. array(integer => string)).
      *
-     * @var array(int => string)
+     * @var array(integer => string)
      */
      private $_varArrayTypeCheck;
 
 
     /**
-     * Boolean @var tag Capitalized
+     * Bool @var tag Capitalized
      *
-     * @var Boolean
+     * @var Bool
      */
      public $CapBoolTag = true;
 
 
     /**
-     * Boolean @var tag Capitalized
+     * Bool @var tag Capitalized
      *
-     * @var BOOLEAN
+     * @var BOOL
      */
      public $CapBoolTag2 = true;
 
@@ -283,7 +283,7 @@ class VariableCommentUnitTest
 
 
     /**
-     * @var integer
+     * @var int
      */
      private $_varWithNoShortComment;
 

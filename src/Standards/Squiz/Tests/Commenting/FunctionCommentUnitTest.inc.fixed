@@ -7,10 +7,10 @@ class PHP_CodeSniffer_File
      *
      * long desc here
      *
-     * @param bool $stackPtr The position in @ @unknown the stack of the token
-     *                            that opened the scope
-     * @param int $detph    How many scope levels down we are.
-     * @param string  $index    The index
+     * @param bool   $stackPtr The position in @ @unknown the stack of the token
+     *                          that opened the scope
+     * @param int    $detph    How many scope levels down we are.
+     * @param string $index    The index
      * @return
      * @throws
      */
@@ -120,8 +120,8 @@ class PHP_CodeSniffer_File
      * Param not immediate.
      *
      * @return
-     * @param   int $threeSpaces
-     * @param int $superfluous
+     * @param   int  $threeSpaces
+     * @param int  $superfluous
      * @param miss
      * @param
      */
@@ -134,9 +134,9 @@ class PHP_CodeSniffer_File
     /**
      * Comments not capitalised.
      *
-     * @param integer $one   comment
-     * @param array   $two   -comment
-     * @param MyClas  $three 0comment
+     * @param int    $one   comment
+     * @param array  $two   -comment
+     * @param MyClas $three 0comment
      *
      * @return void
      */
@@ -190,7 +190,7 @@ public function noReturnOutsideClass()
 /**
  * Missing param comment.
  *
- * @param integer $one comment
+ * @param int $one comment
  *
  * @see     wrong indent
  * @see
@@ -220,14 +220,14 @@ public function missingReturnType()
  * Case-sensitive var type check with multiple return type.
  *
  * @param string  $a1 Comment here.
- * @param boolean $a2 Comment here.
- * @param integer $a3 Comment here.
+ * @param bool    $a2 Comment here.
+ * @param int     $a3 Comment here.
  * @param array   $a4 Comment here.
  * @param float   $a5 Comment here.
  * @param float   $a6 Comment here.
  * @param Myclass $a7 Comment here.
  *
- * @return integer|object|float|array(integer => MyClass)
+ * @return int|object|float|array(int => MyClass)
  */
 public function caseSensitive($a1, $a2, $a3, arRay $a4, $a5, $a6, myclas $a7)
 {
@@ -243,7 +243,7 @@ public function caseSensitive($a1, $a2, $a3, arRay $a4, $a5, $a6, myclas $a7)
  * @param MyClass $a3 Comment here.
  * @param MyClass $a4 Comment here.
  *
- * @return array(integer => MyClass)
+ * @return array(int => MyClass)
  */
 public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
 {
@@ -255,12 +255,12 @@ public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
 /**
  * Mixed variable type separated by a '|'.
  *
- * @param array|string    $a1 Comment here.
- * @param mixed           $a2 Comment here.
- * @param string|array    $a3 Comment here.
- * @param MyClass|integer $a4 Comment here.
+ * @param array|string $a1 Comment here.
+ * @param mixed        $a2 Comment here.
+ * @param string|array $a3 Comment here.
+ * @param MyClass|int  $a4 Comment here.
  *
- * @return boolean
+ * @return bool
  */
 public function mixedType($a1, $a2, $a3, $a4)
 {
@@ -272,16 +272,16 @@ public function mixedType($a1, $a2, $a3, $a4)
 /**
  * Array type.
  *
- * @param array(MyClass)            $a1 OK.
- * @param array                     $a2 Invalid type.
- * @param array                     $a3 Typo.
- * @param array(integer)            $a4 Use 'array(integer)' instead.
- * @param array(integer => integer) $a5 Use 'array(integer => integer)' instead.
- * @param array(integer => boolean) $a6 Use 'array(integer => boolean)' instead.
- * @param array                     $a7 Use 'array' instead.
- * @param string                    $a8 String with unknown type hint.
+ * @param array(MyClass)     $a1 OK.
+ * @param array              $a2 Invalid type.
+ * @param array              $a3 Typo.
+ * @param array(int)         $a4 Use 'array(int)' instead.
+ * @param array(int => int)  $a5 Use 'array(int => int)' instead.
+ * @param array(int => bool) $a6 Use 'array(int => bool)' instead.
+ * @param array              $a7 Use 'array' instead.
+ * @param string             $a8 String with unknown type hint.
  *
- * @return integer
+ * @return int
  */
 public function mixedArrayType($a1, $a2, array $a3, $a4, $a5, $a6, $a7, unknownTypeHint $a8)
 {
@@ -316,7 +316,7 @@ function empty3()
 
 
 /**
- * @return boolean
+ * @return bool
  */
 public function missingShortDescriptionInFunctionComment()
 {
@@ -570,7 +570,7 @@ function test($test)
  * @param string $a2     Comment here.
  * @param string $a2,... Comment here.
  *
- * @return boolean
+ * @return bool
  */
 public function variableArgs($a1, $a2)
 {
@@ -673,7 +673,7 @@ function myFunction() {}
 /**
  * Yield test
  *
- * @return integer
+ * @return int
  */
 function yieldTest()
 {
@@ -719,10 +719,10 @@ public function callableCallback(callable $cb) {
 /**
  * PHP7 type hints.
  *
- * @param string  $name1 Comment.
- * @param integer $name2 Comment.
- * @param float   $name3 Comment.
- * @param boolean $name4 Comment.
+ * @param string $name1 Comment.
+ * @param int    $name2 Comment.
+ * @param float  $name3 Comment.
+ * @param bool   $name4 Comment.
  *
  * @return void
  */
@@ -755,7 +755,7 @@ public function myFunction(string $name1, string ...$name2) {
 /**
  * Return description function + correct type.
  *
- * @return integer This is a description.
+ * @return int This is a description.
  */
 public function myFunction() {
     return 5;
@@ -764,7 +764,7 @@ public function myFunction() {
 /**
  * Return description function + incorrect type.
  *
- * @return integer This is a description.
+ * @return int This is a description.
  */
 public function myFunction() {
     return 5;
@@ -825,7 +825,7 @@ public function someFunc(): void
 /**
  * Return description function + mixed return types.
  *
- * @return boolean|integer This is a description.
+ * @return bool|int This is a description.
  */
 function returnTypeWithDescriptionA()
 {
@@ -837,7 +837,7 @@ function returnTypeWithDescriptionA()
 /**
  * Return description function + mixed return types.
  *
- * @return float|boolean This is a description.
+ * @return float|bool This is a description.
  */
 function returnTypeWithDescriptionB()
 {
@@ -849,7 +849,7 @@ function returnTypeWithDescriptionB()
 /**
  * Return description function + lots of different mixed return types.
  *
- * @return integer|object|string[]|float|boolean|array(integer => MyClass)|callable And here we have a description
+ * @return int|object|string[]|float|bool|array(int => MyClass)|callable And here we have a description
  */
 function returnTypeWithDescriptionC()
 {
@@ -861,7 +861,7 @@ function returnTypeWithDescriptionC()
 /**
  * Return description function + lots of different mixed return types.
  *
- * @return array(integer => boolean)|\OtherVendor\Package\SomeClass2|MyClass[]|void And here we have a description
+ * @return array(int => bool)|\OtherVendor\Package\SomeClass2|MyClass[]|void And here we have a description
  */
 function returnTypeWithDescriptionD()
 {
