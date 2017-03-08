@@ -86,39 +86,17 @@ class Generic_Sniffs_Debug_ESLintSniff implements PHP_CodeSniffer_Sniff
             $eslintOptions[] = '--config '.escapeshellarg($configFile);
         }
 
-        $cmd  = escapeshellcmd(escapeshellarg($eslintPath).' '.implode(' ', $eslintOptions).' '.escapeshellarg($filename));
-        $desc = array(
-                 0 => array(
-                       'pipe',
-                       'r',
-                      ),
-                 1 => array(
-                       'pipe',
-                       'w',
-                      ),
-                 2 => array(
-                       'pipe',
-                       'w',
-                      ),
-                );
-        $proc = proc_open($cmd, $desc, $pipes);
+        $cmd = escapeshellcmd(escapeshellarg($eslintPath).' '.implode(' ', $eslintOptions).' '.escapeshellarg($filename));
 
-        // Ignore stdin.
-        fclose($pipes[0]);
-        $stdout = stream_get_contents($pipes[1]);
-        $stderr = stream_get_contents($pipes[2]);
-        fclose($pipes[1]);
-        fclose($pipes[2]);
-
-        // Close, and start working!
-        $code = proc_close($proc);
+        // Execute!
+        exec($cmd, $stdout, $code);
 
         if ($code <= 0) {
             // No errors, continue.
             return ($phpcsFile->numTokens + 1);
         }
 
-        $data = json_decode($stdout);
+        $data = json_decode(implode("\n", $stdout));
         if (json_last_error() !== JSON_ERROR_NONE) {
             // Ignore any errors.
             return ($phpcsFile->numTokens + 1);
