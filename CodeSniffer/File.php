@@ -681,7 +681,11 @@ class PHP_CodeSniffer_File
         $this->tokenizer = $tokenizer;
 
         if ($contents === null) {
-            $contents = file_get_contents($this->_file);
+            if ($this->tokenizerType === 'JS' || $this->tokenizerType === 'CSS') {
+                $contents = file_get_contents($this->_file, false, null, -1, 100000);
+            } else {
+                $contents = file_get_contents($this->_file);
+            }
         }
 
         try {
