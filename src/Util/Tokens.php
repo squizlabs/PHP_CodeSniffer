@@ -109,6 +109,10 @@ if (defined('T_COALESCE_EQUAL') === false) {
     define('T_COALESCE_EQUAL', 'PHPCS_T_COALESCE_EQUAL');
 }
 
+if (defined('T_YIELD_FROM') === false) {
+    define('T_YIELD_FROM', 'PHPCS_T_YIELD_FROM');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');

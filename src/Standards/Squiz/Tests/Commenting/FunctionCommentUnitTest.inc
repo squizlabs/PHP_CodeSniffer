@@ -867,3 +867,13 @@ function returnTypeWithDescriptionD()
 {
 
 }//end returnTypeWithDescriptionD()
+
+/**
+ * Yield from test
+ *
+ * @return int[]
+ */
+function yieldFromTest()
+{
+    yield from foo();
+}
