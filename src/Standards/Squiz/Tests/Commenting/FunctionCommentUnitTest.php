@@ -115,6 +115,7 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
         // will throw errors in earlier versions.
         if (PHP_VERSION_ID < 50500) {
             $errors[676] = 1;
+            $errors[874] = 1;
         } else {
             $errors[688] = 1;
         }
