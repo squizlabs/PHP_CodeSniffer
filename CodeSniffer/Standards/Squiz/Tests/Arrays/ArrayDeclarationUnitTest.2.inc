@@ -329,3 +329,7 @@ function test() : array
 $fields = [
            'id'    => ['type' => 'INT'],
            'value' => ['type' => 'VARCHAR']];
+
+echo [1][0];
+echo 'PHP'[0];
+echo [1][0, 1, 2]; // not valid code, but should not be picked up here

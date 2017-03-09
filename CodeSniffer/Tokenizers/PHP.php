@@ -1277,11 +1277,12 @@ class PHP_CodeSniffer_Tokenizers_PHP
                 // it is the start of an array being defined using the short syntax.
                 $isShortArray = false;
                 $allowed      = array(
-                                 T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
-                                 T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
-                                 T_VARIABLE             => T_VARIABLE,
-                                 T_OBJECT_OPERATOR      => T_OBJECT_OPERATOR,
-                                 T_STRING               => T_STRING,
+                                 T_CLOSE_SQUARE_BRACKET     => T_CLOSE_SQUARE_BRACKET,
+                                 T_CLOSE_CURLY_BRACKET      => T_CLOSE_CURLY_BRACKET,
+                                 T_CLOSE_PARENTHESIS        => T_CLOSE_PARENTHESIS,
+                                 T_VARIABLE                 => T_VARIABLE,
+                                 T_OBJECT_OPERATOR          => T_OBJECT_OPERATOR,
+                                 T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
                                 );
 
                 for ($x = ($i - 1); $x > 0; $x--) {
@@ -1293,13 +1294,6 @@ class PHP_CodeSniffer_Tokenizers_PHP
                         break;
                     }
 
-                    if (isset($tokens[$x]['bracket_opener']) === true
-                        && $x > $tokens[$x]['bracket_opener']
-                    ) {
-                        $x = $tokens[$x]['bracket_opener'];
-                        continue;
-                    }
-
                     if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === false) {
                         if (isset($allowed[$tokens[$x]['code']]) === false) {
                             $isShortArray = true;
@@ -1307,7 +1301,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                         break;
                     }
-                }//end for
+                }
 
                 if ($isShortArray === true) {
                     $tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
