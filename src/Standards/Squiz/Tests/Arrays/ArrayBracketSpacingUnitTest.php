@@ -31,6 +31,9 @@ class ArrayBracketSpacingUnitTest extends AbstractSniffUnitTest
                 5  => 3,
                 7  => 3,
                 17 => 2,
+                20 => 2,
+                23 => 2,
+                24 => 2,
                );
 
     }//end getErrorList()

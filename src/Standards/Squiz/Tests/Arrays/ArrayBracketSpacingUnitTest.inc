@@ -16,5 +16,12 @@ if ($foo) {}
 
 echo foo()[ 1 ];
 
+echo $this->addedCustomFunctions['nonce'];
+echo $this->deprecated_functions[ $function_name ]['version'];
+
+echo [ 1,2,3 ][0];
+echo [ 1,2,3 ][ 0 ];
+echo 'PHP'[ 0 ];
+
 $array = [];
 $var = $var[$var[$var]]]; // Syntax error
