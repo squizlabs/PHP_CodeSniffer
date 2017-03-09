@@ -1384,11 +1384,12 @@ class PHP extends Tokenizer
                 // it is the start of an array being defined using the short syntax.
                 $isShortArray = false;
                 $allowed      = array(
-                                 T_CLOSE_SQUARE_BRACKET => T_CLOSE_SQUARE_BRACKET,
-                                 T_CLOSE_PARENTHESIS    => T_CLOSE_PARENTHESIS,
-                                 T_VARIABLE             => T_VARIABLE,
-                                 T_OBJECT_OPERATOR      => T_OBJECT_OPERATOR,
-                                 T_STRING               => T_STRING,
+                                 T_CLOSE_SQUARE_BRACKET     => T_CLOSE_SQUARE_BRACKET,
+                                 T_CLOSE_CURLY_BRACKET      => T_CLOSE_CURLY_BRACKET,
+                                 T_CLOSE_PARENTHESIS        => T_CLOSE_PARENTHESIS,
+                                 T_VARIABLE                 => T_VARIABLE,
+                                 T_OBJECT_OPERATOR          => T_OBJECT_OPERATOR,
+                                 T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
                                 );
 
                 for ($x = ($i - 1); $x > 0; $x--) {
@@ -1400,13 +1401,6 @@ class PHP extends Tokenizer
                         break;
                     }
 
-                    if (isset($this->tokens[$x]['bracket_opener']) === true
-                        && $x > $this->tokens[$x]['bracket_opener']
-                    ) {
-                        $x = $this->tokens[$x]['bracket_opener'];
-                        continue;
-                    }
-
                     if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
                         if (isset($allowed[$this->tokens[$x]['code']]) === false) {
                             $isShortArray = true;
@@ -1414,7 +1408,7 @@ class PHP extends Tokenizer
 
                         break;
                     }
-                }//end for
+                }
 
                 if ($isShortArray === true) {
                     $this->tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
