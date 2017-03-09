@@ -1282,6 +1282,7 @@ class PHP_CodeSniffer_Tokenizers_PHP
                                  T_CLOSE_PARENTHESIS        => T_CLOSE_PARENTHESIS,
                                  T_VARIABLE                 => T_VARIABLE,
                                  T_OBJECT_OPERATOR          => T_OBJECT_OPERATOR,
+                                 T_STRING                   => T_STRING,
                                  T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
                                 );
 
