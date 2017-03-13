@@ -222,13 +222,21 @@ class ControlSignatureSniff implements Sniff
             || $tokens[$stackPtr]['code'] === T_ELSEIF
             || $tokens[$stackPtr]['code'] === T_CATCH
         ) {
+            if (isset($tokens[$stackPtr]['scope_opener']) === true
+                && $tokens[$tokens[$stackPtr]['scope_opener']]['code'] === T_COLON
+            ) {
+                // Special case for alternate syntax, where this token is actually
+                // the closer for the previous block, so there is no spacing to check.
+                return;
+            }
+
             $closer = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($closer === false || $tokens[$closer]['code'] !== T_CLOSE_CURLY_BRACKET) {
                 return;
             }
         } else {
             return;
-        }
+        }//end if
 
         // Single space after closing brace.
         $found = 1;
