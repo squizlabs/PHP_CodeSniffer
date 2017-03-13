@@ -204,12 +204,12 @@ if ($test) { /*one space after the bracket*/
 <?php endforeach; ?>
 
 <?php
-$a = 1;
+$a = 1; $b = true;
 if (1 === $a) :
     if ($b) {
         echo 'b';
     } else {
-        $something = 'not b';
+        echo 'not b';
     }
 else :
     echo 'not 1';
