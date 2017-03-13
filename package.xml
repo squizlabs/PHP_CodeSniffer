@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1373 : Error in tab expansion results in white-space of incorrect size
     -- Thanks to Mark Clements for the patch
   - Fixed bug #1381 : Tokenizer: derefencing incorrectly identified as short array
+  - Fixed bug #1387 : Squiz.ControlStructures.ControlSignature does not handle alt syntax when checking space after closing brace
  </notes>
  <contents>
   <dir name="/">

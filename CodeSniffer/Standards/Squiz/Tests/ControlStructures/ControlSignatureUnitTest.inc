@@ -199,3 +199,15 @@ if ($test)    { /*one space after the bracket*/
     ?>
     hello
 <?php endforeach; ?>
+
+<?php
+$a = 1;
+if (1 === $a) :
+    if ($b) {
+        echo 'b';
+    } else {
+        $something = 'not b';
+    }
+else :
+    echo 'not 1';
+endif;
