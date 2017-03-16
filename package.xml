@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+   - Added Generic.Debug.ESLint sniff to run ESLint over JS files and report errors
+      -- Set eslint path using: phpcs --config-set eslint_path /path/to/eslint
+      -- Thanks to Ryan McCue for the contribution
   - Fixed bug #1364 : Yield From values are not recognised as returned values in Squiz FunctionComment sniff
   - Fixed bug #1373 : Error in tab expansion results in white-space of incorrect size
     -- Thanks to Mark Clements for the patch
@@ -326,6 +329,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="CSSLintSniff.php" role="php">
+         <tasks:replace from="@package_version@" to="version" type="package-info" />
+        </file>
+        <file baseinstalldir="PHP" name="ESLintSniff.php" role="php">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="JSHintSniff.php" role="php">
