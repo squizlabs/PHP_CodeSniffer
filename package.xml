@@ -251,6 +251,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Debug">
         <file baseinstalldir="PHP/CodeSniffer" name="ClosureLinterSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="CSSLintSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ESLintSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="JSHintSniff.php" role="php" />
        </dir>
        <dir name="Files">
