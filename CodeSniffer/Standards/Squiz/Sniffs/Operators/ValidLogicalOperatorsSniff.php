@@ -92,6 +92,7 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
                       T_SL_EQUAL,
                       T_SR_EQUAL,
                       T_LOGICAL_XOR,
+                      T_COALESCE,
                       T_COALESCE_EQUAL,
                       T_INLINE_THEN,
                       T_INLINE_ELSE,
@@ -99,10 +100,16 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
 
         $start = $phpcsFile->findStartOfStatement($stackPtr);
         $end   = $phpcsFile->findEndOfStatement($stackPtr);
+
         for ($index = $start; $index <= $end; ++$index) {
+            // Skip checking contents of grouped statements.
+            if ($tokens[$index]['code'] === T_OPEN_PARENTHESIS) {
+                $index = ($phpcsFile->findEndOfStatement($index + 1) + 1);
+            }
+
             if (in_array($tokens[$index]['code'], $blackList, true)) {
                 $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
-                break;
+                return;
             }
         }
 

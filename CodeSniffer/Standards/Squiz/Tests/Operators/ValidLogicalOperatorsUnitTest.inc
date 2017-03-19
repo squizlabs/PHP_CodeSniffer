@@ -25,4 +25,28 @@ if ($a xor $b) {
 
 if ($a XOR $b) {
 }
+
+$c = $a and $b;
+$c += $a and $b;
+$c -= $a and $b;
+$c *= $a and $b;
+$c **= $a and $b;
+$c /= $a and $b;
+$c .= $a and $b;
+$c %= $a and $b;
+$c &= $a and $b;
+$c |= $a and $b;
+$c ^= $a and $b;
+$c ?? $a and $b;
+$c ??= $a and $b;
+$c <<= $a and $b;
+$c >>= $a and $b;
+
+$c = ($a and $b);
+$c = ($a and $c ?? ($c or $d));
+$c = ($a and ($b ?? $c));
+$foo = ($a and ($b ?? $c) ?? $d);
+$foo = ($a and ($b ?? $c) or $d);
+$foo = ($a and ($b ?? $c) or $d ?? $e);
+
 ?>
