@@ -98,6 +98,13 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
                       T_INLINE_ELSE,
                      );
 
+        // Extend blacklist depending on which operator is being processed.
+        if ($tokens[$stackPtr]['code'] === T_LOGICAL_OR) {
+            $blackList[] = T_LOGICAL_XOR;
+        } else if ($tokens[$stackPtr]['code'] === T_LOGICAL_AND) {
+            $blackList[] = T_BOOLEAN_OR;
+        }
+
         $start = $phpcsFile->findStartOfStatement($stackPtr);
         $end   = $phpcsFile->findEndOfStatement($stackPtr);
 

@@ -49,4 +49,8 @@ $foo = ($a and ($b ?? $c) ?? $d);
 $foo = ($a and ($b ?? $c) or $d);
 $foo = ($a and ($b ?? $c) or $d ?? $e);
 
+$foo = ($a and $b || $c);
+$foo = ($a or $b xor $c);
+$foo = ($a and $b or $c);
+
 ?>
