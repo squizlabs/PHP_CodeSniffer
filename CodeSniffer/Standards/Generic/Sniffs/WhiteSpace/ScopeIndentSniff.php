@@ -472,6 +472,8 @@ class Generic_Sniffs_WhiteSpace_ScopeIndentSniff implements PHP_CodeSniffer_Snif
                             $type = $tokens[$first]['type'];
                             echo "\t* amended first token is $first ($type) on line $line *".PHP_EOL;
                         }
+                    } else if ($tokens[$first]['code'] === T_WHITESPACE) {
+                        $first = $phpcsFile->findNext(T_WHITESPACE, ($first + 1), null, true);
                     }
 
                     if (isset($tokens[$first]['scope_closer']) === true

@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Mark Clements for the patch
   - Fixed bug #1381 : Tokenizer: derefencing incorrectly identified as short array
   - Fixed bug #1387 : Squiz.ControlStructures.ControlSignature does not handle alt syntax when checking space after closing brace
+  - Fixed bug #1392 : Scope indent calculated incorrectly when using array destructuring
  </notes>
  <contents>
   <dir name="/">

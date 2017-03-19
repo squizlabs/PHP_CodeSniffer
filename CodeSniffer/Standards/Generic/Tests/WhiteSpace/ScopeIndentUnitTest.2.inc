@@ -1168,6 +1168,20 @@ $foo = foo(
 	}
 );
 
+function test()
+{
+	$array = [];
+	foreach ($array as $data) {
+		[
+			'key1' => $var1,
+			'key2' => $var2,
+		] = $data;
+		foreach ($var1 as $method) {
+			echo $method . $var2;
+		}
+	}
+}
+
 	function foo()
 	{
 		$foo = array(
