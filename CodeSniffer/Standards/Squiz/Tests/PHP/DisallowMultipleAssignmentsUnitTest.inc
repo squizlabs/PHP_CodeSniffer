@@ -30,6 +30,7 @@ class myClass
     private static $_dbh = NULL;
     public $dbh = NULL;
     protected $dbh = NULL;
+    var $dbh = NULL; // Old PHP4 compatible code.
 }
 
 $var = $var2;
