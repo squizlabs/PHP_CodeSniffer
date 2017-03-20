@@ -1092,6 +1092,15 @@ class Config
             } else if (substr($arg, 0, 10) === 'tab-width=') {
                 $this->tabWidth = (int) substr($arg, 10);
                 $this->overriddenDefaults['tabWidth'] = true;
+            } else if (substr($arg, 0, 11) === 'phpVersion=') {
+                $version = substr($arg, 11);
+                if (!version_compare($version, '0.0.1', '>=')) {
+                    $error = 'Version provided by phpVersion is invalid';
+                    throw new RuntimeException($error);
+                }
+                $config = self::getAllConfigData();
+                $config['php_version'] = $version;
+                self::$configData = $config;
             } else {
                 if ($this->dieOnUnknownArg === false) {
                     $eqPos = strpos($arg, '=');
