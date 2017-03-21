@@ -53,11 +53,6 @@ class ClosingDeclarationCommentSniff implements Sniff
                 return;
             }
 
-            // Closures do not require a closing comment.
-            if ($methodProps['is_closure'] === true) {
-                return;
-            }
-
             // If this function is in an interface then we don't require
             // a closing comment.
             if ($phpcsFile->hasCondition($stackPtr, T_INTERFACE) === true) {

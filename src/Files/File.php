@@ -1103,19 +1103,13 @@ class File
      *                     or NULL if the function or class is anonymous.
      * @throws PHP_CodeSniffer_Exception If the specified token is not of type
      *                                   T_FUNCTION, T_CLASS, T_ANON_CLASS,
-     *                                   T_TRAIT, or T_INTERFACE.
+     *                                   T_CLOSURE, T_TRAIT, or T_INTERFACE.
      */
     public function getDeclarationName($stackPtr)
     {
         $tokenCode = $this->tokens[$stackPtr]['code'];
 
-        if ($tokenCode === T_ANON_CLASS) {
-            return null;
-        }
-
-        if ($tokenCode === T_FUNCTION
-            && $this->isAnonymousFunction($stackPtr) === true
-        ) {
+        if ($tokenCode === T_ANON_CLASS || $tokenCode === T_CLOSURE) {
             return null;
         }
 
@@ -1146,56 +1140,6 @@ class File
         return $content;
 
     }//end getDeclarationName()
-
-
-    /**
-     * Check if the token at the specified position is a anonymous function.
-     *
-     * @param int $stackPtr The position of the declaration token which
-     *                      declared the class, interface or function.
-     *
-     * @return boolean
-     * @throws PHP_CodeSniffer_Exception If the specified token is not of type
-     *                                   T_FUNCTION
-     */
-    public function isAnonymousFunction($stackPtr)
-    {
-        $tokenCode = $this->tokens[$stackPtr]['code'];
-        if ($tokenCode !== T_FUNCTION) {
-            throw new TokenizerException('Token type is not T_FUNCTION');
-        }
-
-        if (isset($this->tokens[$stackPtr]['parenthesis_opener']) === false) {
-            // Something is not right with this function.
-            return false;
-        }
-
-        if (strtolower($this->tokens[$stackPtr]['content']) !== 'function') {
-            // This is a function declared without the "function" keyword.
-            return false;
-        }
-
-        $name = false;
-        for ($i = ($stackPtr + 1); $i < $this->numTokens; $i++) {
-            if ($this->tokens[$i]['code'] === T_STRING) {
-                $name = $i;
-                break;
-            }
-        }
-
-        if ($name === false) {
-            // No name found.
-            return true;
-        }
-
-        $open = $this->tokens[$stackPtr]['parenthesis_opener'];
-        if ($name > $open) {
-            return true;
-        }
-
-        return false;
-
-    }//end isAnonymousFunction()
 
 
     /**
@@ -1380,11 +1324,10 @@ class File
      *    'is_abstract'     => false,    // true if the abstract keyword was found.
      *    'is_final'        => false,    // true if the final keyword was found.
      *    'is_static'       => false,    // true if the static keyword was found.
-     *    'is_closure'      => false,    // true if no name is found.
      *   );
      * </code>
      *
-     * @param int $stackPtr The position in the stack of the T_FUNCTION token to
+     * @param int $stackPtr The position in the stack of the function token to
      *                      acquire the properties for.
      *
      * @return array
@@ -1393,28 +1336,38 @@ class File
      */
     public function getMethodProperties($stackPtr)
     {
-        if ($this->tokens[$stackPtr]['code'] !== T_FUNCTION) {
-            throw new TokenizerException('$stackPtr must be of type T_FUNCTION');
+        if ($this->tokens[$stackPtr]['code'] !== T_FUNCTION
+            && $this->tokens[$stackPtr]['code'] !== T_CLOSURE
+        ) {
+            throw new TokenizerException('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
         }
 
-        $valid = array(
-                  T_PUBLIC      => T_PUBLIC,
-                  T_PRIVATE     => T_PRIVATE,
-                  T_PROTECTED   => T_PROTECTED,
-                  T_STATIC      => T_STATIC,
-                  T_FINAL       => T_FINAL,
-                  T_ABSTRACT    => T_ABSTRACT,
-                  T_WHITESPACE  => T_WHITESPACE,
-                  T_COMMENT     => T_COMMENT,
-                  T_DOC_COMMENT => T_DOC_COMMENT,
-                 );
+        if ($this->tokens[$stackPtr]['code'] === T_FUNCTION) {
+            $valid = array(
+                      T_PUBLIC      => T_PUBLIC,
+                      T_PRIVATE     => T_PRIVATE,
+                      T_PROTECTED   => T_PROTECTED,
+                      T_STATIC      => T_STATIC,
+                      T_FINAL       => T_FINAL,
+                      T_ABSTRACT    => T_ABSTRACT,
+                      T_WHITESPACE  => T_WHITESPACE,
+                      T_COMMENT     => T_COMMENT,
+                      T_DOC_COMMENT => T_DOC_COMMENT,
+                     );
+        } else {
+            $valid = array(
+                      T_STATIC      => T_STATIC,
+                      T_WHITESPACE  => T_WHITESPACE,
+                      T_COMMENT     => T_COMMENT,
+                      T_DOC_COMMENT => T_DOC_COMMENT,
+                     );
+        }
 
         $scope          = 'public';
         $scopeSpecified = false;
         $isAbstract     = false;
         $isFinal        = false;
         $isStatic       = false;
-        $isClosure      = $this->isAnonymousFunction($stackPtr);
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
             if (isset($valid[$this->tokens[$i]['code']]) === false) {
@@ -1452,7 +1405,6 @@ class File
                 'is_abstract'     => $isAbstract,
                 'is_final'        => $isFinal,
                 'is_static'       => $isStatic,
-                'is_closure'      => $isClosure,
                );
 
     }//end getMethodProperties()
