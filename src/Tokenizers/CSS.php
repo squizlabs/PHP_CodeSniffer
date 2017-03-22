@@ -78,7 +78,7 @@ class CSS extends PHP
         $numTokens        = count($tokens);
         $multiLineComment = false;
         for ($stackPtr = 1; $stackPtr < $numTokens; $stackPtr++) {
-            if (($stackPtr % 1000) === 0) {
+            if ($stackPtr > 1 && ($stackPtr % 1000) === 0) {
                 $this->checkMemoryUsage();
             }
 

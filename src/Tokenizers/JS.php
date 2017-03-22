@@ -313,7 +313,7 @@ class JS extends Tokenizer
         $chars    = str_split($string);
         $numChars = count($chars);
         for ($i = 0; $i < $numChars; $i++) {
-            if (($i % 1000) === 0) {
+            if ($i > 0 && ($i % 1000) === 0) {
                 $this->checkMemoryUsage();
             }
 

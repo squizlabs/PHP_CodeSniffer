@@ -470,7 +470,7 @@ class PHP extends Tokenizer
         $commentTokenizer = new Comment();
 
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
-            if (($stackPtr % 1000) === 0) {
+            if ($stackPtr > 0 && ($stackPtr % 1000) === 0) {
                 $this->checkMemoryUsage();
             }
 
