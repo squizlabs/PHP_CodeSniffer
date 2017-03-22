@@ -15,6 +15,11 @@
  <arg name="parallel" value="75" />
  <arg value="np"/>
 
+ <!-- Don't hide tokenizer exceptions -->
+ <rule ref="Internal.Tokenizer.Exception">
+  <type>error</type>
+ </rule>
+
  <!-- Include the whole PEAR standard -->
  <rule ref="PEAR">
     <exclude name="PEAR.NamingConventions.ValidFunctionName" />
