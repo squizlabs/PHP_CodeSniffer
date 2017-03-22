@@ -29,6 +29,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added an --ignore-annotations command line argument to ignore all @codingStandards annotations in code comments (request #811)
     -- This allows you to force errors to be shown that would otherwise be ignored by code comments
     -- Also stop files being able to change sniff properties mid way through processing
+  - Tokenizers now detect when they are about to run out of memory and halt processing a file before the limit is reached (request #1273)
+    -- If the limit is reached, this will result in a Internal.Tokenizer.Exception warning for the file
+    -- By default, the tokenizer will use no more than 95% of the available memory when it begins a file
+    -- If you are still hitting memory errors, use the tokenizer_memory_limit config option to change the percentage
+    -- E.g., phpcs --runtime-set tokenizer_memory_limit 90 /path/to/code OR phpcs --config-set tokenizer_memory_limit 90
+    -- Set the tokenizer_memory_limit value to 0 to disable this check
   - The is_closure index has been removed from the return value of File::getMethodProperties()
     -- This value was always false becasue T_FUNCTION tokens are never closures
     -- Closures will have a token type of T_CLOSURE

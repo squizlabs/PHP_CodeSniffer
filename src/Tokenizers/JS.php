@@ -313,6 +313,10 @@ class JS extends Tokenizer
         $chars    = str_split($string);
         $numChars = count($chars);
         for ($i = 0; $i < $numChars; $i++) {
+            if (($i % 1000) === 0) {
+                $this->checkMemoryUsage();
+            }
+
             $char = $chars[$i];
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
