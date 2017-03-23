@@ -29,6 +29,8 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
         $option = (boolean) ini_get('short_open_tag');
         if ($option === true || defined('HHVM_VERSION') === true) {
             $testFiles[] = $testFileBase.'2.inc';
+        } else {
+            $testFiles[] = $testFileBase.'3.inc';
         }
 
         return $testFiles;
@@ -50,6 +52,13 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowShortOpenTagUnitTest.1.inc':
+            if (PHP_VERSION_ID < 50400) {
+                $option = (boolean) ini_get('short_open_tag');
+                if ($option === false) {
+                    // Short open tags are off and PHP isn't doing short echo by default.
+                    return array();
+                }
+            }
             return array(
                     5  => 1,
                     6  => 1,
@@ -75,11 +84,36 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList($testFile='')
     {
-        return array();
+        switch ($testFile) {
+        case 'DisallowShortOpenTagUnitTest.1.inc':
+            if (PHP_VERSION_ID < 50400) {
+                $option = (boolean) ini_get('short_open_tag');
+                if ($option === false) {
+                    // Short open tags are off and PHP isn't doing short echo by default.
+                    return array(
+                            5  => 1,
+                            6  => 1,
+                            7  => 1,
+                            10 => 1,
+                           );
+                }
+            }
+            return array();
+        case 'DisallowShortOpenTagUnitTest.3.inc':
+            return array(
+                    3  => 1,
+                    6  => 1,
+                    11 => 1,
+                   );
+        default:
+            return array();
+        }//end switch
 
     }//end getWarningList()
 

@@ -24,10 +24,17 @@ class DisallowShortOpenTagSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_OPEN_TAG,
-                T_OPEN_TAG_WITH_ECHO,
-               );
+        $targets = array(
+                    T_OPEN_TAG,
+                    T_OPEN_TAG_WITH_ECHO,
+                   );
+
+        $shortOpenTags = (boolean) ini_get('short_open_tag');
+        if ($shortOpenTags === false) {
+            $targets[] = T_INLINE_HTML;
+        }
+
+        return $targets;
 
     }//end register()
 
@@ -43,12 +50,12 @@ class DisallowShortOpenTagSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens  = $phpcsFile->getTokens();
-        $openTag = $tokens[$stackPtr];
+        $tokens = $phpcsFile->getTokens();
+        $token  = $tokens[$stackPtr];
 
-        if ($openTag['content'] === '<?') {
+        if ($token['code'] === T_OPEN_TAG && $token['content'] === '<?') {
             $error = 'Short PHP opening tag used; expected "<?php" but found "%s"';
-            $data  = array($openTag['content']);
+            $data  = array($token['content']);
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->replaceToken($stackPtr, '<?php');
@@ -59,12 +66,12 @@ class DisallowShortOpenTagSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'PHP short open tag used', 'no');
         }
 
-        if ($openTag['code'] === T_OPEN_TAG_WITH_ECHO) {
+        if ($token['code'] === T_OPEN_TAG_WITH_ECHO) {
             $nextVar = $tokens[$phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true)];
             $error   = 'Short PHP opening tag used with echo; expected "<?php echo %s ..." but found "%s %s ..."';
             $data    = array(
                         $nextVar['content'],
-                        $openTag['content'],
+                        $token['content'],
                         $nextVar['content'],
                        );
             $fix     = $phpcsFile->addFixableError($error, $stackPtr, 'EchoFound', $data);
@@ -77,7 +84,79 @@ class DisallowShortOpenTagSniff implements Sniff
             }
         }
 
+        if ($token['code'] === T_INLINE_HTML) {
+            $content     = $token['content'];
+            $openerFound = strpos($content, '<?');
+
+            if ($openerFound === false) {
+                return;
+            }
+
+            $closerFound = false;
+
+            // Inspect current token and subsequent inline HTML token to find a close tag.
+            for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
+                if ($tokens[$i]['code'] !== T_INLINE_HTML) {
+                    break;
+                }
+
+                $closerFound = strrpos($tokens[$i]['content'], '?>');
+                if ($closerFound !== false) {
+                    if ($i !== $stackPtr) {
+                        break;
+                    } else if ($closerFound > $openerFound) {
+                        break;
+                    } else {
+                        $closerFound = false;
+                    }
+                }
+            }
+
+            if ($closerFound !== false) {
+                $error   = 'Possible use of short open tags detected; found: %s';
+                $snippet = $this->getSnippet($content, '<?');
+                $data    = array('<?'.$snippet);
+
+                $phpcsFile->addWarning($error, $stackPtr, 'PossibleFound', $data);
+
+                // Skip forward to the token containing the closer.
+                if (($i - 1) > $stackPtr) {
+                    return $i;
+                }
+            }
+        }//end if
+
     }//end process()
+
+
+    /**
+     * Get a snippet from a HTML token.
+     *
+     * @param string $content The content of the HTML token.
+     * @param string $start   Partial string to use as a starting point for the snippet.
+     * @param int    $length  The target length of the snippet to get. Defaults to 40.
+     *
+     * @return string
+     */
+    protected function getSnippet($content, $start='', $length=40)
+    {
+        $startPos = 0;
+
+        if ($start !== '') {
+            $startPos = strpos($content, $start);
+            if ($startPos !== false) {
+                $startPos += strlen($start);
+            }
+        }
+
+        $snippet = substr($content, $startPos, $length);
+        if ((strlen($content) - $startPos) > $length) {
+            $snippet .= '...';
+        }
+
+        return $snippet;
+
+    }//end getSnippet()
 
 
 }//end class
