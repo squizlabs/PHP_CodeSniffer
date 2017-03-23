@@ -394,18 +394,18 @@ class Squiz_Sniffs_Commenting_FunctionCommentSniff extends PEAR_Sniffs_Commentin
                     $suggestedTypeHint = 'callable';
                 } else if (strpos($suggestedName, 'callback') !== false) {
                     $suggestedTypeHint = 'callable';
-                } else if (in_array($typeName, PHP_CodeSniffer::$allowedTypes) === false) {
+                } else if (in_array($suggestedName, PHP_CodeSniffer::$allowedTypes) === false) {
                     $suggestedTypeHint = $suggestedName;
                 }
 
                 if ($this->_phpVersion >= 70000) {
-                    if ($typeName === 'string') {
+                    if ($suggestedName === 'string') {
                         $suggestedTypeHint = 'string';
-                    } else if ($typeName === 'int' || $typeName === 'integer') {
+                    } else if ($suggestedName === 'int' || $suggestedName === 'integer') {
                         $suggestedTypeHint = 'int';
-                    } else if ($typeName === 'float') {
+                    } else if ($suggestedName === 'float') {
                         $suggestedTypeHint = 'float';
-                    } else if ($typeName === 'bool' || $typeName === 'boolean') {
+                    } else if ($suggestedName === 'bool' || $suggestedName === 'boolean') {
                         $suggestedTypeHint = 'bool';
                     }
                 }

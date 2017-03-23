@@ -38,6 +38,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1387 : Squiz.ControlStructures.ControlSignature does not handle alt syntax when checking space after closing brace
   - Fixed bug #1392 : Scope indent calculated incorrectly when using array destructuring
   - Fixed bug #1394 : integer type hints appearing as TypeHintMissing instead of ScalarTypeHintMissing
+    -- PHP 7 type hints were also being shown when run under PHP 5 in some cases
  </notes>
  <contents>
   <dir name="/">

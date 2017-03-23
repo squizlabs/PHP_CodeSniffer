@@ -46,7 +46,6 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
                    13  => 2,
                    14  => 1,
                    15  => 1,
-                   17  => 2,
                    28  => 1,
                    43  => 1,
                    76  => 1,
@@ -59,7 +58,6 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
                    124 => 2,
                    125 => 1,
                    126 => 1,
-                   128 => 1,
                    137 => 4,
                    138 => 4,
                    139 => 4,
@@ -83,7 +81,7 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
                    226 => 1,
                    227 => 1,
                    230 => 2,
-                   232 => 7,
+                   232 => 2,
                    246 => 1,
                    248 => 4,
                    261 => 1,
@@ -137,9 +135,11 @@ class Squiz_Tests_Commenting_FunctionCommentUnitTest extends AbstractSniffUnitTe
         // Scalar type hints only work from PHP 7 onwards.
         if (PHP_VERSION_ID >= 70000) {
             $errors[17]  = 3;
+            $errors[128] = 1;
             $errors[143] = 3;
             $errors[161] = 2;
             $errors[201] = 1;
+            $errors[232] = 7;
             $errors[363] = 3;
             $errors[377] = 1;
             $errors[575] = 2;
