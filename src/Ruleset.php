@@ -197,9 +197,13 @@ class Ruleset
         $this->registerSniffs($sniffs, $sniffRestrictions, $sniffExclusions);
         $this->populateTokenListeners();
 
+        $numSniffs = count($this->sniffs);
         if (PHP_CODESNIFFER_VERBOSITY === 1) {
-            $numSniffs = count($this->sniffs);
             echo "DONE ($numSniffs sniffs registered)".PHP_EOL;
+        }
+
+        if ($numSniffs === 0) {
+            throw new RuntimeException('No sniffs were registered');
         }
 
     }//end __construct()

@@ -269,7 +269,13 @@ class Runner
 
         // The ruleset contains all the information about how the files
         // should be checked and/or fixed.
-        $this->ruleset = new Ruleset($this->config);
+        try {
+            $this->ruleset = new Ruleset($this->config);
+        } catch (RuntimeException $e) {
+            echo 'ERROR: '.$e->getMessage().PHP_EOL.PHP_EOL;
+            $this->config->printShortUsage();
+            exit(3);
+        }
 
     }//end init()
 

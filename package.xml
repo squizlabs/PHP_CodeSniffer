@@ -29,11 +29,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added an --ignore-annotations command line argument to ignore all @codingStandards annotations in code comments (request #811)
     -- This allows you to force errors to be shown that would otherwise be ignored by code comments
     -- Also stop files being able to change sniff properties mid way through processing
+  - An error is now reported if no sniffs were registered to be run (request #1129)
   - The is_closure index has been removed from the return value of File::getMethodProperties()
     -- This value was always false becasue T_FUNCTION tokens are never closures
     -- Closures will have a token type of T_CLOSURE
   - The File::isAnonymousFunction() method has been removed
-    -- This function always returned false because it only accepted T_FUCNTIOn tokens, which are never closures
+    -- This function always returned false because it only accepted T_FUNCTION tokens, which are never closures
     -- Closures will have a token type of T_CLOSURE
   - Includes all changes from the 2.8.2 release
  </notes>
