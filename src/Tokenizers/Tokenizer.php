@@ -160,7 +160,7 @@ abstract class Tokenizer
             return;
         }
 
-        if (memory_get_usage(true) >= $this->memoryLimit) {
+        if (memory_get_usage(true) > $this->memoryLimit) {
             throw new TokenizerException('Tokenizer ran out of memory while processing the file');
         }
 
