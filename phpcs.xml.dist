@@ -67,6 +67,12 @@
  <rule ref="PSR2.Files.EndFileNewline"/>
  <rule ref="Zend.Files.ClosingTag"/>
 
+ <!-- Check var names, but we don't want leading underscores for private vars -->
+ <rule ref="Squiz.NamingConventions.ValidVariableName" />
+ <rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+  <severity>0</severity>
+ </rule>
+
  <!-- Only one argument per line in multi-line function calls -->
  <rule ref="PEAR.Functions.FunctionCallSignature">
   <properties>

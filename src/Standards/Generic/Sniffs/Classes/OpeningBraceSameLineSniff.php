@@ -43,9 +43,9 @@ class OpeningBraceSameLineSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens           = $phpcsFile->getTokens();
-        $scope_identifier = $phpcsFile->findNext(T_STRING, ($stackPtr + 1));
-        $errorData        = array(strtolower($tokens[$stackPtr]['content']).' '.$tokens[$scope_identifier]['content']);
+        $tokens          = $phpcsFile->getTokens();
+        $scopeIdentifier = $phpcsFile->findNext(T_STRING, ($stackPtr + 1));
+        $errorData       = array(strtolower($tokens[$stackPtr]['content']).' '.$tokens[$scopeIdentifier]['content']);
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
             $error = 'Possible parse error: %s missing opening or closing brace';
