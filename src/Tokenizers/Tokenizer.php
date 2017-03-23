@@ -9,11 +9,8 @@
 
 namespace PHP_CodeSniffer\Tokenizers;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Exceptions\TokenizerException;
+use PHP_CodeSniffer\RuntimeException;
 use PHP_CodeSniffer\Util;
-
 
 abstract class Tokenizer
 {
@@ -53,13 +50,6 @@ abstract class Tokenizer
      */
     public $ignoredLines = array();
 
-    /**
-     * The amount of memory (in bytes) that the tokenizer is allowed to consume.
-     *
-     * @var integer
-     */
-    private $memoryLimit = 0;
-
 
     /**
      * Initialise and run the tokenizer.
@@ -76,35 +66,6 @@ abstract class Tokenizer
         $this->eolChar = $eolChar;
 
         $this->config = $config;
-
-        $tokenizerMemory = Config::getConfigData('tokenizer_memory_limit');
-        if ($tokenizerMemory !== null) {
-            $tokenizerMemory = (int) $tokenizerMemory;
-        } else {
-            $tokenizerMemory = 99;
-        }
-
-        if ($tokenizerMemory > 0) {
-            $memoryLimit = ini_get('memory_limit');
-            if ($memoryLimit !== '-1') {
-                $matches = array();
-                if (preg_match('/^(\d+)(.)$/', $memoryLimit, $matches) === 1) {
-                    if ($matches[2] === 'G') {
-                        $memoryLimit = ($matches[1] * 1024 * 1024 * 1024);
-                    } else if ($matches[2] === 'M') {
-                        $memoryLimit = ($matches[1] * 1024 * 1024);
-                    } else if ($matches[2] === 'K') {
-                        $memoryLimit = ($matches[1] * 1024);
-                    }
-
-                    $startingMemory    = memory_get_usage(true);
-                    $availableMemory   = ($memoryLimit - $startingMemory);
-                    $allowedMemory     = ($availableMemory * ($tokenizerMemory / 100));
-                    $this->memoryLimit = ($startingMemory + $allowedMemory);
-                }
-            }
-        }
-
         $this->tokens = $this->tokenize($content);
 
         if ($config === null) {
@@ -145,26 +106,6 @@ abstract class Tokenizer
         return false;
 
     }//end isMinifiedContent()
-
-
-    /**
-     * Throws an exception if the tokenizer is getting too close to the memory limit.
-     *
-     * @return void
-     * @throws TokenizerException if memory limit is about to be reached.
-     */
-    protected function checkMemoryUsage()
-    {
-        if ($this->memoryLimit === 0) {
-            // No memory limit.
-            return;
-        }
-
-        if (memory_get_usage(true) > $this->memoryLimit) {
-            throw new TokenizerException('Tokenizer ran out of memory while processing the file');
-        }
-
-    }//end checkMemoryUsage()
 
 
     /**

@@ -457,7 +457,6 @@ class Config
         $this->generator       = null;
         $this->filter          = null;
         $this->bootstrap       = array();
-        $this->basepath        = '';
         $this->reports         = array('full' => null);
         $this->reportWidth     = 'auto';
         $this->errorSeverity   = 5;

@@ -78,10 +78,6 @@ class CSS extends PHP
         $numTokens        = count($tokens);
         $multiLineComment = false;
         for ($stackPtr = 1; $stackPtr < $numTokens; $stackPtr++) {
-            if (($stackPtr % 1000) === 0) {
-                $this->checkMemoryUsage();
-            }
-
             $token = $tokens[$stackPtr];
 
             // CSS files don't have lists, breaks etc, so convert these to
