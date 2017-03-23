@@ -46,6 +46,12 @@ class Generic_Tests_PHP_DisallowShortOpenTagUnitTest extends AbstractSniffUnitTe
         $option = (boolean) ini_get('short_open_tag');
         if ($option === true || defined('HHVM_VERSION') === true) {
             $testFiles[] = $testFileBase.'2.inc';
+        } else {
+            $testFiles[] = $testFileBase.'3.inc';
+
+	        if (PHP_VERSION_ID < 50400) {
+	            $testFiles[] = $testFileBase.'4.inc';
+	        }
         }
 
         return $testFiles;
@@ -94,9 +100,22 @@ class Generic_Tests_PHP_DisallowShortOpenTagUnitTest extends AbstractSniffUnitTe
      *
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList($testFile='')
     {
-        return array();
+        switch ($testFile) {
+        case 'DisallowShortOpenTagUnitTest.3.inc':
+            return array(
+                    13 => 1,
+                    16 => 1,
+                    21 => 1,
+                   );
+        case 'DisallowShortOpenTagUnitTest.4.inc':
+            return array(
+                    2 => 1,
+                   );
+        default:
+            return array();
+        }//end switch
 
     }//end getWarningList()
 
