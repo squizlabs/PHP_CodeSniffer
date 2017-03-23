@@ -160,13 +160,13 @@ class Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff implements PHP_CodeSnif
 
         if ($openTag['code'] === T_INLINE_HTML && $this->_aspTags === false) {
             if (strpos($content, '<%=') !== false) {
-                $error   = 'Possible use of ASP style short opening tags detected. Needs manual inspection. Found: %s';
+                $error   = 'Possible use of ASP style short opening tags detected; found: %s';
                 $snippet = $this->getSnippet($content, '<%=');
                 $data    = array('<%='.$snippet);
 
                 $phpcsFile->addWarning($error, $stackPtr, 'MaybeASPShortOpenTagFound', $data);
             } else if (strpos($content, '<%') !== false) {
-                $error   = 'Possible use of ASP style opening tags detected. Needs manual inspection. Found: %s';
+                $error   = 'Possible use of ASP style opening tags detected; found: %s';
                 $snippet = $this->getSnippet($content, '<%');
                 $data    = array('<%'.$snippet);
 
@@ -180,25 +180,25 @@ class Generic_Sniffs_PHP_DisallowAlternativePHPTagsSniff implements PHP_CodeSnif
     /**
      * Get a snippet from a HTML token.
      *
-     * @param string $content  The content of the HTML token.
-     * @param string $start_at Partial string to use as a starting point for the snippet.
-     * @param int    $length   The target length of the snippet to get. Defaults to 40.
+     * @param string $content The content of the HTML token.
+     * @param string $start   Partial string to use as a starting point for the snippet.
+     * @param int    $length  The target length of the snippet to get. Defaults to 40.
      *
      * @return string
      */
-    protected function getSnippet($content, $start_at = '', $length = 40)
+    protected function getSnippet($content, $start='', $length=40)
     {
-        $start_pos = 0;
+        $startPos = 0;
 
-        if ($start_at !== '') {
-            $start_pos = strpos($content, $start_at);
-            if ($start_pos !== false) {
-                $start_pos += strlen($start_at);
+        if ($start !== '') {
+            $startPos = strpos($content, $start);
+            if ($startPos !== false) {
+                $startPos += strlen($start);
             }
         }
 
-        $snippet = substr($content, $start_pos, $length);
-        if ((strlen($content) - $start_pos) > $length) {
+        $snippet = substr($content, $startPos, $length);
+        if ((strlen($content) - $startPos) > $length) {
             $snippet .= '...';
         }
 

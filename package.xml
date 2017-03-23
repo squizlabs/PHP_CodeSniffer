@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic.Debug.ESLint sniff to run ESLint over JS files and report errors
     -- Set eslint path using: phpcs --config-set eslint_path /path/to/eslint
     -- Thanks to Ryan McCue for the contribution
+  - Generic.PHP.DisallowShortOpenTag now warns about possible short open tags even when short_open_tag is set to OFF
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.DisallowMultipleAssignments now ignores PHP4-style member var assignments
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1364 : Yield From values are not recognised as returned values in Squiz FunctionComment sniff
