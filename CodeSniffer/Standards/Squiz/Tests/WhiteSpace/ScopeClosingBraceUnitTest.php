@@ -46,6 +46,7 @@ class Squiz_Tests_WhiteSpace_ScopeClosingBraceUnitTest extends AbstractSniffUnit
                 11 => 1,
                 13 => 1,
                 24 => 1,
+                80 => 1,
                );
 
     }//end getErrorList()

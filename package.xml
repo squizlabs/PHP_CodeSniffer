@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1392 : Scope indent calculated incorrectly when using array destructuring
   - Fixed bug #1394 : integer type hints appearing as TypeHintMissing instead of ScalarTypeHintMissing
     -- PHP 7 type hints were also being shown when run under PHP 5 in some cases
+  - Fixed bug #1405 : Squiz.WhiteSpace.ScopeClosingBrace fails to fix closing brace within indented PHP tags
  </notes>
  <contents>
   <dir name="/">
@@ -2248,6 +2249,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
         <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP" name="ScopeClosingBraceUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
