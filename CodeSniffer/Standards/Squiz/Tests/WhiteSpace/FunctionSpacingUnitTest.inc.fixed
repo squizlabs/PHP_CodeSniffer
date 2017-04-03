@@ -324,3 +324,23 @@ if ($foo) {
 
 
 }
+
+
+if ($foo) {
+
+
+    /**
+     * Comment
+     */
+    function foo() {
+        // Code here
+    }
+
+
+    /**
+     * Comment
+     */
+    function bar() {
+        // Code here
+    }
+}

@@ -283,6 +283,28 @@ function test() {
 
 
 if ($foo) {
+
+
+    /**
+     * Comment
+     */
+    function foo() {
+        // Code here
+    }
+
+
+    /**
+     * Comment
+     */
+    function bar() {
+        // Code here
+    }
+
+
+}
+
+
+if ($foo) {
     /**
      * Comment
      */
