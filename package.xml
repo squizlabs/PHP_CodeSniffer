@@ -494,7 +494,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.3.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsUnitTest.php" role="test" />
@@ -1381,6 +1380,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="PropertyLabelSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="PropertyLabelSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeClosingBraceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ScopeClosingBraceUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeClosingBraceUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeKeywordSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeKeywordSpacingUnitTest.php" role="test" />

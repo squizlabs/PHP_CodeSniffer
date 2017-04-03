@@ -52,7 +52,7 @@ class ScopeClosingBraceSniff implements Sniff
         // as if this is a method with tokens before it (public, static etc)
         // or an if with an else before it, then we need to start the scope
         // checking from there, rather than the current token.
-        $lineStart = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr, true);
+        $lineStart = $phpcsFile->findFirstOnLine(array(T_WHITESPACE, T_INLINE_HTML), $stackPtr, true);
 
         $startColumn = $tokens[$lineStart]['column'];
         $scopeStart  = $tokens[$stackPtr]['scope_opener'];
@@ -71,7 +71,7 @@ class ScopeClosingBraceSniff implements Sniff
         }
 
         // Check now that the closing brace is lined up correctly.
-        $lineStart   = $phpcsFile->findFirstOnLine(T_WHITESPACE, $scopeEnd, true);
+        $lineStart   = $phpcsFile->findFirstOnLine(array(T_WHITESPACE, T_INLINE_HTML), $scopeEnd, true);
         $braceIndent = $tokens[$lineStart]['column'];
         if ($tokens[$stackPtr]['code'] !== T_DEFAULT
             && $tokens[$stackPtr]['code'] !== T_CASE
@@ -87,9 +87,9 @@ class ScopeClosingBraceSniff implements Sniff
             if ($fix === true) {
                 $diff = ($startColumn - $braceIndent);
                 if ($diff > 0) {
-                    $phpcsFile->fixer->addContentBefore($scopeEnd, str_repeat(' ', $diff));
+                    $phpcsFile->fixer->addContentBefore($lineStart, str_repeat(' ', $diff));
                 } else {
-                    $phpcsFile->fixer->substrToken(($scopeEnd - 1), 0, $diff);
+                    $phpcsFile->fixer->substrToken(($lineStart - 1), 0, $diff);
                 }
             }
         }//end if
