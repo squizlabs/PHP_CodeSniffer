@@ -7,10 +7,15 @@ matrix:
   include:
     - php: 5.3
       dist: precise
+    - php: 5.3
+      dist: precise
+      env: CUSTOM_INI=1
     - php: 5.4
     - php: 5.5
     - php: 5.6
     - php: 7.0
+    - php: 7.0
+      env: CUSTOM_INI=1
     - php: 7.1
     - php: nightly
     - php: hhvm
@@ -21,14 +26,14 @@ matrix:
     - php: hhvm
 
 before_script:
-  - if [[ ${TRAVIS_PHP_VERSION:0:1} != "7" && $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != hhv* ]]; then phpenv config-add php5-testingConfig.ini; fi
-  - if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" || $TRAVIS_PHP_VERSION == "nightly" ]]; then phpenv config-add php7-testingConfig.ini; fi
+  - if [[ $CUSTOM_INI == "1" && ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then phpenv config-add php5-testingConfig.ini; fi
+  - if [[ $CUSTOM_INI == "1" ]] && [[ ${TRAVIS_PHP_VERSION:0:1} == "7" || $TRAVIS_PHP_VERSION == "nightly" ]]; then phpenv config-add php7-testingConfig.ini; fi
 
 script:
   - composer install
   - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then php scripts/phpcs --config-set php_path php; fi
   - vendor/bin/phpunit tests/AllTests.php
-  - php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=full -np
-  - if [[ $TRAVIS_PHP_VERSION != hhv* && ${TRAVIS_PHP_VERSION:0:1} != "7" ]]; then pear package-validate package.xml; fi
-  - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then php scripts/build-phar.php; fi
-  - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then php phpcs.phar CodeSniffer.php CodeSniffer --standard=PHPCS --report=full -np; fi
+  - if [[ $CUSTOM_INI != "1" ]]; then php scripts/phpcs CodeSniffer.php CodeSniffer --standard=PHPCS --report=full -np; fi
+  - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != hhv* && ${TRAVIS_PHP_VERSION:0:1} != "7" ]]; then pear package-validate package.xml; fi
+  - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != hhv* ]]; then php scripts/build-phar.php; fi
+  - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != hhv* ]]; then php phpcs.phar CodeSniffer.php CodeSniffer --standard=PHPCS --report=full -np; fi
