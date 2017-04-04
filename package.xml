@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.DisallowMultipleAssignments now ignores PHP4-style member var assignments
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.WhiteSpace.FunctionSpacing now ignores spacing above functions when they are preceded by inline comments
+    -- Stops conflicts between this sniff and comment spacing sniffs
   - Fixed bug #1364 : Yield From values are not recognised as returned values in Squiz FunctionComment sniff
   - Fixed bug #1373 : Error in tab expansion results in white-space of incorrect size
     -- Thanks to Mark Clements for the patch

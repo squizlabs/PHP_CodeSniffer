@@ -153,6 +153,12 @@ class Squiz_Sniffs_WhiteSpace_FunctionSpacingSniff implements PHP_CodeSniffer_Sn
             $currentLine = $tokens[$stackPtr]['line'];
 
             $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, $prevLineToken, null, true);
+            if ($tokens[$prevContent]['code'] === T_COMMENT) {
+                // Ignore comments as they can have different spacing rules, and this
+                // isn't a proper function comment anyway.
+                return;
+            }
+
             if ($tokens[$prevContent]['code'] === T_DOC_COMMENT_CLOSE_TAG
                 && $tokens[$prevContent]['line'] === ($currentLine - 1)
             ) {
