@@ -479,6 +479,7 @@ final class PHP_CodeSniffer_Tokens
                                        T_MULTIPLY => T_MULTIPLY,
                                        T_DIVIDE   => T_DIVIDE,
                                        T_MODULUS  => T_MODULUS,
+                                       T_POW      => T_POW,
                                       );
 
     /**
