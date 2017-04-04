@@ -669,6 +669,19 @@ final class PHP_CodeSniffer_Tokens
                                   );
 
     /**
+     * Tokens that represent text strings.
+     *
+     * @var array(int)
+     */
+    public static $textStringTokens = array(
+                                       T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
+                                       T_DOUBLE_QUOTED_STRING     => T_DOUBLE_QUOTED_STRING,
+                                       T_INLINE_HTML              => T_INLINE_HTML,
+                                       T_HEREDOC                  => T_HEREDOC,
+                                       T_NOWDOC                   => T_NOWDOC,
+                                      );
+
+    /**
      * Tokens that represent brackets and parenthesis.
      *
      * @var array(int)
