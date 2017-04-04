@@ -296,3 +296,7 @@ if ($foo) {
         // Code here
     }
 }
+
+// foo
+function foo() {
+}

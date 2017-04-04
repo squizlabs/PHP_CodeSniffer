@@ -255,6 +255,8 @@ final class Tokens
                                        T_GREATER_THAN        => T_GREATER_THAN,
                                        T_IS_SMALLER_OR_EQUAL => T_IS_SMALLER_OR_EQUAL,
                                        T_IS_GREATER_OR_EQUAL => T_IS_GREATER_OR_EQUAL,
+                                       T_SPACESHIP           => T_SPACESHIP,
+                                       T_COALESCE            => T_COALESCE,
                                       );
 
     /**
@@ -268,6 +270,7 @@ final class Tokens
                                        T_MULTIPLY => T_MULTIPLY,
                                        T_DIVIDE   => T_DIVIDE,
                                        T_MODULUS  => T_MODULUS,
+                                       T_POW      => T_POW,
                                       );
 
     /**

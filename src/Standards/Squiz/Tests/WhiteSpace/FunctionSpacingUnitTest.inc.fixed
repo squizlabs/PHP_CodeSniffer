@@ -324,3 +324,7 @@ if ($foo) {
 
 
 }
+
+// foo
+function foo() {
+}
