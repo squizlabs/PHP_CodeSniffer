@@ -460,7 +460,7 @@ final class Tokens
     /**
      * Tokens that represent text strings.
      *
-     * @var array(int)
+     * @var array<int, int>
      */
     public static $textStringTokens = array(
                                        T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
