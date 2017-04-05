@@ -185,3 +185,5 @@ function bar($boo = +1) {}
 $username = $_GET['user']??'nobody';
 
 function foo(string $bar, array $baz, ?MyClass $object) : MyClass {}
+
+declare(strict_types=1);
