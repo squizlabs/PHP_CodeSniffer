@@ -1,6 +1,6 @@
 <?php
 /**
- * Throws errors if spaces are used for indentation.
+ * Throws errors if spaces are used for indentation other than precision indentation.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
@@ -80,42 +80,85 @@ class DisallowSpaceIndentSniff implements Sniff
                 continue;
             }
 
-            // If tabs are being converted to spaces, the original content
-            // should be used instead of the converted content.
+            // If tabs are being converted to spaces by the tokeniser, the
+            // original content should be checked instead of the converted content.
             if (isset($tokens[$i]['orig_content']) === true) {
                 $content = $tokens[$i]['orig_content'];
             } else {
                 $content = $tokens[$i]['content'];
             }
 
-            if ($content[0] === ' ') {
-                if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
-                    // Ignore file/class-level DocBlock.
+            // If this is an inline HTML token, split the content into
+            // indentation whitespace and the actual HTML/text.
+            $nonWhitespace = '';
+            if ($tokens[$i]['code'] === T_INLINE_HTML && preg_match('`^(\s*)(\S.*)`s', $content, $matches) > 0) {
+                if (isset($matches[1]) === true) {
+                    $content = $matches[1];
+                }
+
+                if (isset($matches[2]) === true) {
+                    $nonWhitespace = $matches[2];
+                }
+            }
+
+            $hasSpaces = strpos($content, ' ');
+            $hasTabs   = strpos($content, "\t");
+
+            if ($hasSpaces === false && $hasTabs === false) {
+                // Empty line.
+                continue;
+            }
+
+            if ($hasSpaces === false && $hasTabs !== false) {
+                // All ok, nothing to do.
+                $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                continue;
+            }
+
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
+                // Ignore file/class-level DocBlock, especially for recording metrics.
+                continue;
+            }
+
+            // OK, by now we know there will be spaces.
+            // We just don't know yet whether they need to be replaced or
+            // are precision indentation, nor whether they are correctly
+            // placed at the end of the whitespace.
+            $trimmed        = str_replace(' ', '', $content);
+            $numSpaces      = (strlen($content) - strlen($trimmed));
+            $numTabs        = (int) floor($numSpaces / $this->tabWidth);
+            $tabAfterSpaces = strpos($content, "\t", $hasSpaces);
+
+            if ($hasTabs === false) {
+                $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
+
+                if ($numTabs === 0) {
+                    // Ignore: precision indentation.
                     continue;
                 }
+            } else {
+                if ($numTabs === 0) {
+                    // Precision indentation.
+                    $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
 
-                // Space are considered ok if they are proceeded by tabs and not followed
-                // by tabs, as is the case with standard docblock comments.
-                $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
-                $error = 'Tabs must be used to indent lines; spaces are not allowed';
-                $fix   = $phpcsFile->addFixableError($error, $i, 'SpacesUsed');
-                if ($fix === true) {
-                    $trimmed   = ltrim($content, ' ');
-                    $numSpaces = (strlen($content) - strlen($trimmed));
-                    if ($numSpaces < $this->tabWidth) {
-                        $numTabs = 1;
-                        $padding = "\t";
-                    } else {
-                        $numTabs   = floor($numSpaces / $this->tabWidth);
-                        $remaining = ($numSpaces - ($numTabs * $this->tabWidth));
-                        $padding   = str_repeat("\t", $numTabs).$padding = str_repeat(' ', $remaining);
+                    if ($tabAfterSpaces === false) {
+                        // Ignore: precision indentation is already at the
+                        // end of the whitespace.
+                        continue;
                     }
-
-                    $phpcsFile->fixer->replaceToken($i, $padding.$trimmed);
+                } else {
+                    $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
                 }
-            } else if ($content[0] === "\t") {
-                $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
             }//end if
+
+            $error = 'Tabs must be used to indent lines; spaces are not allowed';
+            $fix   = $phpcsFile->addFixableError($error, $i, 'SpacesUsed');
+            if ($fix === true) {
+                $remaining = ($numSpaces % $this->tabWidth);
+                $padding   = str_repeat("\t", $numTabs);
+                $padding  .= str_repeat(' ', $remaining);
+                $phpcsFile->fixer->replaceToken($i, $trimmed.$padding.$nonWhitespace);
+            }
         }//end for
 
         // Ignore the rest of the file.

@@ -66,7 +66,7 @@ class DisallowTabIndentSniff implements Sniff
                 continue;
             }
 
-            // If tabs are being converted to spaces by PHPCS, the
+            // If tabs are being converted to spaces by the tokeniser, the
             // original content should be checked instead of the converted content.
             if (isset($tokens[$i]['orig_content']) === true) {
                 $content = $tokens[$i]['orig_content'];

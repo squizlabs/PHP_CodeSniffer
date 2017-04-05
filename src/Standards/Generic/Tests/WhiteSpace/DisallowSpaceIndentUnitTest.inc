@@ -59,3 +59,12 @@ $x = 1;
         </div>
     </body>
 </html>
+
+<?php
+
+		    // Issue #1404
+        	// This is a line with mixed tabs and spaces.
+	    	echo 'And here is another line with mixed tabs and spaces.'
+	        echo 'And another one.'
+    	    echo 'And another one.'
+        	echo 'And another one.'

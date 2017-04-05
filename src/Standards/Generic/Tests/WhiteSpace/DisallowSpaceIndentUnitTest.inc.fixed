@@ -15,13 +15,13 @@ EOF;
 	$correctVar = true;
 
 // Indent with spaces is not allowed
-	$hello = array();
-	$world = '';
+ $hello = array();
+   $world = '';
 // here the indention is mixed with tabs and spaces
 // [tab][space][space][space][tab]return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
-	   	return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
+		   return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
 // [space][space][space][tab]return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
-		return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
+	   return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
 // Doc comments are indent with tabs and one space
 //[tab]/**
 //[tab][space]*
@@ -54,8 +54,17 @@ $x = 1;
 		<div>
 			<div>
 				<div>
-	    		</div>
-		    </div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
+
+<?php
+
+			// Issue #1404
+			// This is a line with mixed tabs and spaces.
+			echo 'And here is another line with mixed tabs and spaces.'
+			echo 'And another one.'
+			echo 'And another one.'
+			echo 'And another one.'

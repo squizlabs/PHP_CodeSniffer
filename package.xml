@@ -36,7 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The File::isAnonymousFunction() method has been removed
     -- This function always returned false because it only accepted T_FUNCTION tokens, which are never closures
     -- Closures will have a token type of T_CLOSURE
-  - Includes all changes from the 2.8.2 release
+  - Includes all changes from the 2.9.0 release
  </notes>
  <contents>
   <dir name="/">
@@ -522,9 +522,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="WhiteSpace">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.css.fixed" role="test" />
