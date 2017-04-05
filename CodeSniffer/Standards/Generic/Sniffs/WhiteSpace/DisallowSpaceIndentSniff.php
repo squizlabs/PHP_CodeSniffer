@@ -94,8 +94,8 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
                 continue;
             }
 
-            // As tabs are being converted to spaces by the Tokenizer, the
-            // original content should be used instead of the converted content.
+            // If tabs are being converted to spaces by the tokeniser, the
+            // original content should be checked instead of the converted content.
             if (isset($tokens[$i]['orig_content']) === true) {
                 $content = $tokens[$i]['orig_content'];
             } else {
@@ -165,15 +165,8 @@ class Generic_Sniffs_WhiteSpace_DisallowSpaceIndentSniff implements PHP_CodeSnif
                 }
             }//end if
 
-            $error     = 'Tabs must be used to indent lines; spaces are not allowed';
-            $errorCode = 'SpacesUsed';
-
-            if ($tabAfterSpaces !== false) {
-                $error     = 'Tabs must be used to indent lines; spaces are only allowed at the end for precision indentation';
-                $errorCode = 'TabsAfterSpaces';
-            }
-
-            $fix = $phpcsFile->addFixableError($error, $i, $errorCode);
+            $error = 'Tabs must be used to indent lines; spaces are not allowed';
+            $fix   = $phpcsFile->addFixableError($error, $i, 'SpacesUsed');
             if ($fix === true) {
                 $remaining = ($numSpaces % $this->_tabWidth);
                 $padding   = str_repeat("\t", $numTabs);

@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-03-02</date>
  <time>09:12:00</time>
  <version>
-  <release>2.8.2</release>
-  <api>2.8.2</api>
+  <release>2.9.0</release>
+  <api>2.9.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -34,6 +34,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - T_SPACESHIP and T_COALESCE are now properly considered comparison operators, and will be checked as such
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.PHP.DisallowShortOpenTag now warns about possible short open tags even when short_open_tag is set to OFF
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.WhiteSpace.DisallowTabIndent now finds and fixes inproper use of spaces anywhere inside the line indent
+    -- Previously, only the first part of the indent was used to determine the indent type
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.DisallowMultipleAssignments now ignores PHP4-style member var assignments
     -- Thanks to Juliette Reinders Folmer for the patch
