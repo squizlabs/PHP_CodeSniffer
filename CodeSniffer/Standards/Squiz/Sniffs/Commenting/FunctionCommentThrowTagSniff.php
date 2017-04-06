@@ -96,8 +96,15 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
 
                 /*
                     If we can't find a NEW, we are probably throwing
-                    a variable, so we ignore it, but they still need to
-                    provide at least one @throws tag, even through we
+                    a variable.
+
+                    If we're throwing the same variable as the exception container
+                    from the nearest 'catch' block, we take that exception, as it is
+                    likely to be a re-throw.
+
+                    If we can't find a matching catch block, or the variable name
+                    is different, it's probably a different variable, so we ignore it,
+                    but they still need to provide at least one @throws tag, even through we
                     don't know the exception class.
                 */
 
@@ -133,6 +140,60 @@ class Squiz_Sniffs_Commenting_FunctionCommentThrowTagSniff extends PHP_CodeSniff
                         } else {
                             $throwTokens[] = $phpcsFile->getTokensAsString($currException, ($endException - $currException));
                         }
+                    }//end if
+                } else if ($tokens[$nextToken]['code'] === T_VARIABLE) {
+                    // Find where the nearest 'catch' block in this scope.
+                    $catch = $phpcsFile->findPrevious(
+                        T_CATCH,
+                        $currPos,
+                        $tokens[$currScope]['scope_opener'],
+                        false,
+                        null,
+                        false
+                    );
+
+                    if ($catch !== false) {
+                        // Get the start of the 'catch' exception.
+                        $currException = $phpcsFile->findNext(
+                            array(
+                             T_NS_SEPARATOR,
+                             T_STRING,
+                            ),
+                            $tokens[$catch]['parenthesis_opener'],
+                            $tokens[$catch]['parenthesis_closer'],
+                            false,
+                            null,
+                            true
+                        );
+
+                        if ($currException !== false) {
+                            // Find the next whitespace (which should be the end of the exception).
+                            $endException = $phpcsFile->findNext(
+                                T_WHITESPACE,
+                                ($currException + 1),
+                                $tokens[$catch]['parenthesis_closer'],
+                                false,
+                                null,
+                                true
+                            );
+
+                            if ($endException !== false) {
+                                // Find the variable that we're catching into.
+                                $thrownVar = $phpcsFile->findNext(
+                                    T_VARIABLE,
+                                    ($endException + 1),
+                                    $tokens[$catch]["parenthesis_closer"],
+                                    false,
+                                    null,
+                                    true
+                                );
+
+                                // Sanity check that the variable that the exception is caught into is the one that's thrown.
+                                if ($tokens[$thrownVar]['content'] === $tokens[$nextToken]['content']) {
+                                    $throwTokens[] = $phpcsFile->getTokensAsString($currException, ($endException - $currException));
+                                }//end if
+                            }//end if
+                        }//end if
                     }//end if
                 }//end if
             }//end if

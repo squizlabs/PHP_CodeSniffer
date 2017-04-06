@@ -192,7 +192,43 @@ class FunctionCommentThrowTagUnitTest
 
     }//end okFunction
 
+    /**
+     * Needs at throws tag for rethrown exception,
+     * even though we have one throws tag.
+     *
+     * @throws PHP_Exception1
+     */
+    public function notOkVariableRethrown()
+    {
+        throw new PHP_Exception1('Error');
 
+        try {
+            // Do something.
+        } catch (PHP_Exception2 $e) {
+            logError();
+            throw $e;
+        }
+
+    }//end notOkVariableRethrown()
+
+    /**
+     * Has correct throws tags for all exceptions
+     *
+     * @throws PHP_Exception1
+     * @throws PHP_Exception2
+     */
+    public function okVariableRethrown()
+    {
+        throw new PHP_Exception1('Error');
+
+        try {
+            // Do something.
+        } catch (PHP_Exception2 $e) {
+            logError();
+            throw $e;
+        }
+
+    }//end okVariableRethrown()
 }//end class
 
 class NamespacedException {
