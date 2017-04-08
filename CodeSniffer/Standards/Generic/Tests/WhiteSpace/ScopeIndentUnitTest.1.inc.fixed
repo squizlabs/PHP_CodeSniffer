@@ -242,14 +242,14 @@ without indenting.
 
 if ($condition) {
     echo 'This is a long
-    string that spans nultiple lines
+    string that spans multiple lines
     with indenting.
     ';
 }
 
 if ($condition) {
     echo 'This is a long
-          string that spans nultiple lines
+          string that spans multiple lines
           with indenting.';
 }
 

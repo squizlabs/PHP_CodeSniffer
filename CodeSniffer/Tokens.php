@@ -724,7 +724,7 @@ final class PHP_CodeSniffer_Tokens
     /**
      * Tokens that represent the names of called functions.
      *
-     * Mostly, these are just strings. But PHP tokeizes some language
+     * Mostly, these are just strings. But PHP tokenizes some language
      * constructs and functions using their own tokens.
      *
      * @var array(int)
