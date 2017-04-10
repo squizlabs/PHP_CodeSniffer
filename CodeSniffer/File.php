@@ -2669,9 +2669,7 @@ class PHP_CodeSniffer_File
             return null;
         }
 
-        if ($tokenCode === T_FUNCTION
-            && $this->isAnonymousFunction($stackPtr) === true
-        ) {
+        if ($tokenCode === T_CLOSURE) {
             return null;
         }
 
