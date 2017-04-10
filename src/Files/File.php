@@ -1094,12 +1094,12 @@ class File
 
 
     /**
-     * Returns the declaration names for classes, interfaces, and functions.
+     * Returns the declaration names for classes, interfaces, traits, and functions.
      *
      * @param int $stackPtr The position of the declaration token which
-     *                      declared the class, interface or function.
+     *                      declared the class, interface, trait, or function.
      *
-     * @return string|null The name of the class, interface or function.
+     * @return string|null The name of the class, interface, trait, or function;
      *                     or NULL if the function or class is anonymous.
      * @throws PHP_CodeSniffer_Exception If the specified token is not of type
      *                                   T_FUNCTION, T_CLASS, T_ANON_CLASS,
