@@ -2653,13 +2653,13 @@ class PHP_CodeSniffer_File
      * Returns the declaration names for classes, interfaces, and functions.
      *
      * @param int $stackPtr The position of the declaration token which
-     *                      declared the class, interface or function.
+     *                      declared the class, interface, trait or function.
      *
      * @return string|null The name of the class, interface or function.
      *                     or NULL if the function or class is anonymous.
      * @throws PHP_CodeSniffer_Exception If the specified token is not of type
      *                                   T_FUNCTION, T_CLASS, T_ANON_CLASS,
-     *                                   or T_INTERFACE.
+     *                                   T_TRAIT or T_INTERFACE.
      */
     public function getDeclarationName($stackPtr)
     {
