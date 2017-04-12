@@ -1152,6 +1152,7 @@ class File
      *         'name'              => '$var',  // The variable name.
      *         'content'           => string,  // The full content of the variable definition.
      *         'pass_by_reference' => boolean, // Is the variable passed by reference?
+     *         'variable_length'   => boolean, // Is the param of variable length through use of `...` ?
      *         'type_hint'         => string,  // The type hint for the variable.
      *         'nullable_type'     => boolean, // Is the variable using a nullable type?
      *        )

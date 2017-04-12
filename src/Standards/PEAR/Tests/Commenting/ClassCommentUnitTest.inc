@@ -108,4 +108,13 @@ interface Empty_Interface_Doc
 {
 
 }//end interface
-?>
+
+
+/**
+ *
+ *
+ */
+trait Empty_Trait_Doc
+{
+
+}//end trait
