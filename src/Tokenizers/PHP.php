@@ -867,7 +867,7 @@ class PHP extends Tokenizer
                         $newToken['code'] = T_NULLABLE;
                         $newToken['type'] = 'T_NULLABLE';
                         break;
-                    } else if (in_array($tokenType, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '{', ';')) === true) {
+                    } else if (in_array($tokenType, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '=', '{', ';')) === true) {
                         $newToken['code'] = T_INLINE_THEN;
                         $newToken['type'] = 'T_INLINE_THEN';
 
