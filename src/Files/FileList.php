@@ -83,6 +83,7 @@ class FileList implements \Iterator, \Countable
 
                 foreach ($iterator as $file) {
                     $this->files[$file->getPathname()] = null;
+                    $this->numFiles++;
                 }
             } else {
                 $this->addFile($path);
@@ -90,7 +91,6 @@ class FileList implements \Iterator, \Countable
         }//end foreach
 
         reset($this->files);
-        $this->numFiles = count($this->files);
 
     }//end __construct()
 
@@ -112,6 +112,7 @@ class FileList implements \Iterator, \Countable
         // has not been specified.
         if ($path === 'STDIN') {
             $this->files[$path] = $file;
+            $this->numFiles++;
             return;
         }
 
@@ -123,6 +124,7 @@ class FileList implements \Iterator, \Countable
 
         foreach ($iterator as $path) {
             $this->files[$path] = $file;
+            $this->numFiles++;
         }
 
     }//end addFile()

@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This allows you to force errors to be shown that would otherwise be ignored by code comments
     -- Also stop files being able to change sniff properties mid way through processing
   - An error is now reported if no sniffs were registered to be run (request #1129)
+  - Fixed an error where STDIN was sometimes not checked when using the --parallel CLI option
   - The is_closure index has been removed from the return value of File::getMethodProperties()
     -- This value was always false becasue T_FUNCTION tokens are never closures
     -- Closures will have a token type of T_CLOSURE
