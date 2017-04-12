@@ -76,7 +76,7 @@ class PSR2_Sniffs_Methods_FunctionCallSignatureSniff extends PEAR_Sniffs_Functio
 
         // We've reached the last argument, so see if the next content
         // (should be the close bracket) is also on the same line.
-        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket, true);
+        $next = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, ($end + 1), $closeBracket + 1, true);
         if ($next !== false && $tokens[$next]['line'] !== $tokens[$end]['line']) {
             return true;
         }
