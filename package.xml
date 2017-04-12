@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.WhiteSpace.DisallowTabIndent now finds and fixes inproper use of spaces anywhere inside the line indent
     -- Previously, only the first part of the indent was used to determine the indent type
     -- Thanks to Juliette Reinders Folmer for the patch
+  - PEAR.Commenting.ClassComment now supports checking of traits as well as classes and interfaces
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Commenting.FunctionCommentThrowTag now supports re-throwing exceptions (request #946)
     -- Thanks to Samuel Levy for the patch
   - Squiz.PHP.DisallowMultipleAssignments now ignores PHP4-style member var assignments
