@@ -98,6 +98,40 @@ class Generic_Tests_WhiteSpace_ScopeIndentUnitTest extends AbstractSniffUnitTest
                    );
         }
 
+        if ($testFile === 'ScopeIndentUnitTest.4.inc') {
+            return array(
+                    7    => 1,
+                    15   => 1,
+                    31   => 1,
+                    32   => 1,
+                    39   => 1,
+                    // These are from ScopeIndentUnitTest.1.inc copy
+                    // to verify they continue behaving the same with
+                    // the setting enabled. (42 lines of displacement).
+                    49   => 1,
+                    52   => 1,
+                    55   => 1,
+                    59   => 1,
+                    62   => 1,
+                    66   => 1,
+                    67   => 1,
+                    69   => 1,
+                    70   => 1,
+                    71   => 1,
+                    72   => 1,
+                    100  => 1,
+                    165  => 1,
+                    // Example showing PHP indentation takes always precedence
+                    // and open/close tags are ignored, not matter how they are incorrect.
+                    256  => 1,
+                    258  => 1,
+                    262  => 1,
+                    264  => 1,
+                    268  => 1,
+                    270  => 1,
+                   );
+        }
+
         return array(
                 7    => 1,
                 10   => 1,
