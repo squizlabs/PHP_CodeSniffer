@@ -33,11 +33,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed an error where STDIN was sometimes not checked when using the --parallel CLI option
   - The is_closure index has been removed from the return value of File::getMethodProperties()
     -- This value was always false becasue T_FUNCTION tokens are never closures
-    -- Closures will have a token type of T_CLOSURE
+    -- Closures have a token type of T_CLOSURE
   - The File::isAnonymousFunction() method has been removed
     -- This function always returned false because it only accepted T_FUNCTION tokens, which are never closures
-    -- Closures will have a token type of T_CLOSURE
+    -- Closures have a token type of T_CLOSURE
   - Includes all changes from the 2.9.0 release
+  - Fixed bug #834 : PSR2.ControlStructures.SwitchDeclaration does not handle if branches with returns
+    -- Thanks to Fabian Wiget for the patch
  </notes>
  <contents>
   <dir name="/">
