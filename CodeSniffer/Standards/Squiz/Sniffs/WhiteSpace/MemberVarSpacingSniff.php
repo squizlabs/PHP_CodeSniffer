@@ -34,6 +34,16 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
 
 
     /**
+     * The exception to the newline requirement on the first member var after class opener.
+     * false for newline requirement on the first member var after class opener
+     * true for no newline requirement on the first member var after class opener
+     *
+     * @var bool
+     */
+    public $firstVarException = false;
+
+
+    /**
      * Processes the function tokens within the class.
      *
      * @param PHP_CodeSniffer_File $phpcsFile The file where this token was found.
@@ -102,7 +112,33 @@ class Squiz_Sniffs_WhiteSpace_MemberVarSpacingSniff extends PHP_CodeSniffer_Stan
 
         $prev       = $phpcsFile->findPrevious(PHP_CodeSniffer_Tokens::$emptyTokens, ($first - 1), null, true);
         $foundLines = ($tokens[$first]['line'] - $tokens[$prev]['line'] - 1);
-        if ($foundLines === 1) {
+
+        // Exception to the newline requirement on the first member var after class opener.
+        if ($this->firstVarException === true) {
+            if ($foundLines > 0 && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET) {
+                $error = 'Expected 0 blank lines before first member var; %s found';
+                $data  = array($foundLines);
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'FirstMember', $data);
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($prev + 1); $i < $first; $i++) {
+                        if ($tokens[$i]['line'] === $tokens[$prev]['line']) {
+                            continue;
+                        }
+
+                        if ($tokens[$i]['line'] === $tokens[$first]['line']) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+            }//end if
+        }//end if
+
+        if ($foundLines === 1 || ($this->firstVarException === true && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET)) {
             return;
         }
 
