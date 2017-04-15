@@ -355,7 +355,9 @@ class Squiz_Sniffs_Functions_FunctionDeclarationArgumentSpacingSniff implements 
                             }
                         }
                     }
-                } else if ($multiLine === false && $gap !== $this->requiredSpacesAfterOpen) {
+                } else if ($multiLine === false && $gap !== $this->requiredSpacesAfterOpen
+                    && ($tokens[$nextToken]['code'] !== T_ELLIPSIS || $nextToken > $whitespace)
+                ) {
                     $error = 'Expected %s spaces between opening bracket and argument "%s"; %s found';
                     $data  = array(
                               $this->requiredSpacesAfterOpen,
