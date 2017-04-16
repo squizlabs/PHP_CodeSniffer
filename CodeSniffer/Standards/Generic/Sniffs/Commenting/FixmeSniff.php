@@ -72,11 +72,16 @@ class Generic_Sniffs_Commenting_FixmeSniff implements PHP_CodeSniffer_Sniff
         if (empty($matches) === false) {
             // Clear whitespace and some common characters not required at
             // the end of a fixme message to make the error more informative.
-            $type         = 'CommentFound';
-            $fixmeMessage = trim($matches[1]);
-            $fixmeMessage = trim($fixmeMessage, '-:[](). ');
-            $error        = 'Comment refers to a FIXME task';
-            $data         = array($fixmeMessage);
+            $fixmeMessage = '';
+            if (false === empty($matches)) {
+                $fixmeMessage = trim($matches[1]);
+                $fixmeMessage = trim($fixmeMessage, '-:[](). ');
+            }//end if
+
+            $type  = 'CommentFound';
+            $error = 'Comment refers to a FIXME task';
+            $data  = array($fixmeMessage);
+
             if ($fixmeMessage !== '') {
                 $type   = 'TaskFound';
                 $error .= ' "%s"';
