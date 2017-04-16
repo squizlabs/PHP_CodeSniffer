@@ -95,7 +95,10 @@ class Generic_Sniffs_Commenting_DocCommentSniff implements PHP_CodeSniffer_Sniff
             $error = 'The close comment tag must be the only content on the line';
             $fix   = $phpcsFile->addFixableError($error, $commentEnd, 'ContentBeforeClose');
             if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->addContentBefore($commentEnd, ' ');
                 $phpcsFile->fixer->addNewlineBefore($commentEnd);
+                $phpcsFile->fixer->endChangeset();
             }
         }
 
