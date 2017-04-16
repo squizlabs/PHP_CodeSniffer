@@ -1356,5 +1356,12 @@
         "path": "src",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "GintonicCMS",
+        "url": "gintonicweb/GintonicCMS",
+        "path": "",
+        "ignore": "",
+        "extensions": ""
     }
 ]
