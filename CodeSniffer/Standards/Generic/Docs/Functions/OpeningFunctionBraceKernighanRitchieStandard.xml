@@ -1,4 +1,5 @@
-<documentation title="Opening Brace in Function Declarations">
+<?xml version="1.0" encoding="UTF-8" ?>
+<documentation title="Opening Brace in Function Declarations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../tests/documentation.xsd">
     <standard>
     <![CDATA[
     Function declarations follow the "Kernighan/Ritchie style". The function brace is on the same line as the function declaration. One space is required between the closing parenthesis and the brace.

@@ -14,11 +14,12 @@
  */
 
 /**
- * Generic_Sniffs_Files_LineLengthSniff.
+ * Checks all lines in the file and shows warnings or errors if they are too long
  *
- * Checks all lines in the file, and throws warnings if they are over 80
- * characters in length and errors if they are over 100. Both these
- * figures can be changed by extending this sniff in your own standard.
+ * Per default, a warning is generated when the line is over 80 characters
+ * and an error is generated when the line is over 100 characters.
+ *
+ * Both these limits can be changed in your standard's ruleset file, or when extending the sniff.
  *
  * @category  PHP
  * @package   PHP_CodeSniffer

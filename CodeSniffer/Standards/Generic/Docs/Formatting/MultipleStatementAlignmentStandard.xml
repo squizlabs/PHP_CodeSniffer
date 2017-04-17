@@ -1,4 +1,23 @@
-<documentation title="Aligning Blocks of Assignments">
+<?xml version="1.0" encoding="UTF-8" ?>
+<documentation title="Aligning Blocks of Assignments" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../tests/documentation.xsd">
+    <properties>
+        <property name="maxPadding" type="integer" default="1000">
+            <description>
+            <![CDATA[
+            The maximum amount of padding before the alignment is ignored.
+
+            If the amount of padding required to align this assignment with the surrounding assignments exceeds this number, the assignment will be ignored and no errors or warnings will be thrown.
+            ]]>
+            </description>
+        </property>
+        <property name="maxPadding" type="boolean" default="false">
+            <description>
+            <![CDATA[
+            If true, multi-line assignments are not checked.
+            ]]>
+            </description>
+        </property>
+    </properties>
     <standard>
     <![CDATA[
       There should be one space on either side of an equals sign used to assign a value to a variable. In the case of a block of related assignments, more space may be inserted to promote readability.
