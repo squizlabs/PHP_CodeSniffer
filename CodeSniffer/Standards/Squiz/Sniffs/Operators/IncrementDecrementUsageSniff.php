@@ -230,7 +230,7 @@ class Squiz_Sniffs_Operators_IncrementDecrementUsageSniff implements PHP_CodeSni
             }
 
             $error .= " operators should be used where possible; found \"$found\" but expected \"$expected\"";
-            $phpcsFile->addError($error, $stackPtr);
+            $phpcsFile->addError($error, $stackPtr, 'Found');
         }//end if
 
     }//end processAssignment()

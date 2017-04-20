@@ -305,7 +305,7 @@ class Squiz_Sniffs_Commenting_BlockCommentSniff implements PHP_CodeSniffer_Sniff
         $content   = trim($tokens[$commentLines[$lastIndex]]['content']);
         if ($content !== '*/' && $content !== '**/') {
             $error = 'Comment closer must be on a new line';
-            $phpcsFile->addError($error, $commentLines[$lastIndex]);
+            $phpcsFile->addError($error, $commentLines[$lastIndex], 'CloserSameLine');
         } else {
             $content      = $tokens[$commentLines[$lastIndex]]['content'];
             $commentText  = ltrim($content);

@@ -1801,7 +1801,7 @@ class PHP_CodeSniffer
                 $this
             );
 
-            $phpcsFile->addError($error, null);
+            $phpcsFile->addError($error, null, 'Internal.Exception');
         }//end try
 
         $cliValues = $this->cli->getCommandLineValues();
