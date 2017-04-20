@@ -350,6 +350,18 @@ class PHP_CodeSniffer_File
 
 
     /**
+     * Sets ruleset property like 'severity'
+     *
+     * @param string $rule The name of the rule to change
+     * @param string $name The name of the property to change
+     * @param mixed $value The value to set
+     */
+    private function setRulesetProperty($rule, $name, $value)
+    {
+        $this->ruleset[(string) $rule][$name] = $value;
+    }//end setRulesetProperty()
+
+    /**
      * Adds a listener to the token stack that listens to the specific tokens.
      *
      * When PHP_CodeSniffer encounters on the the tokens specified in $tokens,
@@ -492,7 +504,24 @@ class PHP_CodeSniffer_File
                 || ($inTests === true && $token['code'] === T_INLINE_HTML)
             ) {
                 if (strpos($token['content'], '@codingStandards') !== false) {
-                    if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
+                    if ($token['code'] === T_DOC_COMMENT_TAG) {
+                        $tokenType = $token['content'];
+                        $tokenPtr = $this->findNext(array(T_DOC_COMMENT_WHITESPACE), $stackPtr + 1, null, true);
+                        $tokenContent = $this->_tokens[$tokenPtr]['content'];
+                    }
+                    else {
+                        $parts  = explode(' ', ltrim($token['content'], '/ '), 2);
+
+                        if (count($parts) == 2) {
+                            $tokenType = $parts[0];
+                            $tokenContent = $parts[1];
+                        } else {
+                            $tokenType = null;
+                            $tokenContent = $token['content'];
+                        }
+                    }
+
+                    if (strpos($tokenType, '@codingStandardsIgnoreFile') !== false) {
                         // Ignoring the whole file, just a little late.
                         $this->_errors       = array();
                         $this->_warnings     = array();
@@ -500,10 +529,8 @@ class PHP_CodeSniffer_File
                         $this->_warningCount = 0;
                         $this->_fixableCount = 0;
                         return;
-                    } else if (strpos($token['content'], '@codingStandardsChangeSetting') !== false) {
-                        $start   = strpos($token['content'], '@codingStandardsChangeSetting');
-                        $comment = substr($token['content'], ($start + 30));
-                        $parts   = explode(' ', $comment);
+                    } else if (strpos($tokenType, '@codingStandardsChangeSetting') !== false) {
+                        $parts   = explode(' ', $tokenContent);
                         if (count($parts) >= 3
                             && isset($this->phpcs->sniffCodes[$parts[0]]) === true
                         ) {
@@ -512,6 +539,15 @@ class PHP_CodeSniffer_File
                             $propertyValue = rtrim(implode(' ', $parts), " */\r\n");
                             $listenerClass = $this->phpcs->sniffCodes[$listenerCode];
                             $this->phpcs->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
+                        }
+                    } else if (strpos($tokenType, '@codingStandardsChangeRule') !== false) {
+                        $parts         = explode(' ', $tokenContent);
+
+                        if (count($parts) >= 3) {
+                            $rulesetName   = array_shift($parts);
+                            $propertyCode  = array_shift($parts);
+                            $propertyValue = rtrim(implode(' ', $parts), " */\r\n");
+                            $this->setRulesetProperty($rulesetName, $propertyCode, $propertyValue);
                         }
                     }//end if
                 }//end if
