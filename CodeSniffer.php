@@ -204,6 +204,13 @@ class PHP_CodeSniffer
                                    'callable',
                                   );
 
+    /**
+     * Flag to configure the use of short scalar types
+     *
+     * @var bool
+     */
+    public static $useShortScalarTypes = false;
+
 
     /**
      * Constructs a PHP_CodeSniffer object.
@@ -314,6 +321,27 @@ class PHP_CodeSniffer
         @include $path;
 
     }//end autoload()
+
+
+    /**
+     * Configure sniffer based in given config values.
+     *
+     * @param array $values The configuration values.
+
+     * @return void
+     */
+    public function configure($values)
+    {
+        if (isset($values['shortScalarTypes']) === true && $values['shortScalarTypes'] === true) {
+            self::$useShortScalarTypes = true;
+
+            self::$allowedTypes[] = 'bool';
+            self::$allowedTypes[] = 'int';
+
+            self::$allowedTypes = array_diff(self::$allowedTypes, array('boolean', 'integer'));
+        }
+
+    }//end configure()
 
 
     /**
@@ -2111,14 +2139,24 @@ class PHP_CodeSniffer
             switch ($lowerVarType) {
             case 'bool':
             case 'boolean':
-                return 'boolean';
+                if (self::$useShortScalarTypes === true) {
+                    return 'bool';
+                } else {
+                    return 'boolean';
+                }
+
             case 'double':
             case 'real':
             case 'float':
                 return 'float';
             case 'int':
             case 'integer':
-                return 'integer';
+                if (self::$useShortScalarTypes === true) {
+                    return 'int';
+                } else {
+                    return 'integer';
+                }
+
             case 'array()':
             case 'array':
                 return 'array';
