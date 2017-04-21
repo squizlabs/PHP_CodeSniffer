@@ -1,4 +1,5 @@
-<documentation title="Constant Names">
+<?xml version="1.0" encoding="UTF-8" ?>
+<documentation title="Constant Names" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../tests/documentation.xsd">
     <standard>
     <![CDATA[
      Constants should always be all-uppercase, with underscores to separate words.

@@ -1,4 +1,5 @@
-<documentation title="PHP Constants">
+<?xml version="1.0" encoding="UTF-8" ?>
+<documentation title="PHP Constants" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../tests/documentation.xsd">
     <standard>
     <![CDATA[
     The <em>true</em>, <em>false</em> and <em>null</em> constants must always be lowercase.

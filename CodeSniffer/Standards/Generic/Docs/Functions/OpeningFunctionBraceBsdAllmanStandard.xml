@@ -1,4 +1,5 @@
-<documentation title="Opening Brace in Function Declarations">
+<?xml version="1.0" encoding="UTF-8" ?>
+<documentation title="Opening Brace in Function Declarations" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../tests/documentation.xsd">
     <standard>
     <![CDATA[
     Function declarations follow the "BSD/Allman style". The function brace is on the line following the function declaration and is indented to the same column as the start of the function declaration.
