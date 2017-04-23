@@ -157,11 +157,28 @@ class PHP_CodeSniffer
     protected $ruleset = array();
 
     /**
+     * An array of simple ignores to use for skipping files.
+     * Must conform to the following syntax:
+     *
+     * (dir/path.php, ./dir/path.php, ^dir/path.php, ^dir/path.php$, ./dir/path.php$, dir, dir/, dir/*, ^dir/*, * /dir/*)
+     *
+     * @var array
+     */
+    protected $globalIgnores = array();
+
+    /**
      * An array of patterns to use for skipping files.
      *
      * @var array
      */
-    protected $ignorePatterns = array();
+    protected $globalIgnorePatterns = array();
+
+    /**
+     * An array of patterns to use for rule based skipping files
+     *
+     * @var array
+     */
+    protected $ruleIgnorePatterns = array();
 
     /**
      * An array of extensions for files we will check.
@@ -425,6 +442,31 @@ class PHP_CodeSniffer
 
     }//end setAllowedFileExtensions()
 
+    /**
+     * Gets the array of ignore patterns.
+     *
+     * Optionally takes a listener to get ignore patterns specified
+     * for that sniff only.
+     *
+     * @param string $listener The listener to get patterns for. If NULL, all
+     *                         patterns are returned.
+     *
+     * @return array
+     */
+    public function getIgnorePatterns($listener=null)
+    {
+        if ($listener === null) {
+            return $this->globalIgnores + $this->globalIgnorePatterns;
+        }
+
+        if (isset($this->ruleIgnorePatterns[$listener]) === true) {
+            return $this->ruleIgnorePatterns[$listener];
+        }
+
+        return array();
+
+    }//end getIgnorePatterns()
+
 
     /**
      * Sets an array of ignore patterns that we use to skip files and folders.
@@ -440,35 +482,65 @@ class PHP_CodeSniffer
      */
     public function setIgnorePatterns(array $patterns)
     {
-        $this->ignorePatterns = $patterns;
+        $this->globalIgnorePatterns = array();
+        $this->globalIgnores = array();
 
+        $this->addIgnorePatterns($patterns);
     }//end setIgnorePatterns()
 
 
     /**
-     * Gets the array of ignore patterns.
+     * Sets an array of ignore patterns that we use to skip files and folders.
      *
-     * Optionally takes a listener to get ignore patterns specified
-     * for that sniff only.
+     * Patterns are not case sensitive.
      *
-     * @param string $listener The listener to get patterns for. If NULL, all
-     *                         patterns are returned.
+     * @param array $patterns An array of ignore patterns. The pattern is the key
+     *                        and the value is either "absolute" or "relative",
+     *                        depending on how the pattern should be applied to a
+     *                        file path.
      *
-     * @return array
+     * @return void
      */
-    public function getIgnorePatterns($listener=null)
+    public function addIgnorePatterns(array $patterns)
     {
-        if ($listener === null) {
-            return $this->ignorePatterns;
+        foreach ($patterns as $pattern => $type) {
+            $this->addIgnorePattern($pattern, $type);
+        }
+    }//end addIgnorePatterns()
+
+
+    /**
+     * Sets a specific ignore patterns
+     *
+     * Check the pattern against the following syntaxes (dir/path.php, ./dir/path.php, ^dir/path.php, ^dir/path.php$, ./dir/path.php$, dir, dir/, dir/*, ^dir/*, * /dir/*)
+     * If matches, add to the global ignores for simpler matching
+     *
+     * @param $pattern
+     * @param $type
+     */
+    protected function addIgnorePattern($pattern, $type)
+    {
+        //If pattern contains [], {}, () it needs regex matching
+        if (preg_match('#[\[\]\(\)\{\}]#', $pattern)) {
+            $this->globalIgnorePatterns[$pattern] = $type;
+            return;
         }
 
-        if (isset($this->ignorePatterns[$listener]) === true) {
-            return $this->ignorePatterns[$listener];
+        //If string contains no regex characters (^[](){}$*), it's a regular ignore
+        if (!preg_match('#[\[\]\(\)\*\$\{\}]#', $pattern)) {
+            $this->globalIgnores[$pattern] = $type;
+            return;
         }
 
-        return array();
+        //Check for starting ^ and/or ending /* or $
+        if (preg_match('#^\^?.*(?:/*)?\$?$#', $pattern)) {
+            $this->globalIgnores[$pattern] = $type;
+            return;
+        }
 
-    }//end getIgnorePatterns()
+        $this->globalIgnorePatterns[$pattern] = $type;
+
+    }//end addIgnorePattern()
 
 
     /**
@@ -903,7 +975,7 @@ class PHP_CodeSniffer
                 $pattern['type'] = 'absolute';
             }
 
-            $this->ignorePatterns[(string) $pattern] = (string) $pattern['type'];
+            $this->addIgnorePattern((string) $pattern, (string) $pattern['type']);
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t=> added global ".(string) $pattern['type'].' ignore pattern: '.(string) $pattern.PHP_EOL;
@@ -1297,15 +1369,15 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            if (isset($this->ignorePatterns[$code]) === false) {
-                $this->ignorePatterns[$code] = array();
+            if (isset($this->ruleIgnorePatterns[$code]) === false) {
+                $this->ruleIgnorePatterns[$code] = array();
             }
 
             if (isset($pattern['type']) === false) {
                 $pattern['type'] = 'absolute';
             }
 
-            $this->ignorePatterns[$code][(string) $pattern] = (string) $pattern['type'];
+            $this->ruleIgnorePatterns[$code][(string) $pattern] = (string) $pattern['type'];
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
                 echo "\t\t=> added sniff-specific ".(string) $pattern['type'].' ignore pattern: '.(string) $pattern.PHP_EOL;
@@ -1566,6 +1638,7 @@ class PHP_CodeSniffer
     public function getFilesToProcess($paths, $local=false)
     {
         $files = array();
+        $root_path = PHP_CodeSniffer::realpath('.');
 
         foreach ($paths as $path) {
             if (is_dir($path) === true || self::isPharFile($path) === true) {
@@ -1573,15 +1646,18 @@ class PHP_CodeSniffer
                     $path = 'phar://'.$path;
                 }
 
-                if ($local === true) {
-                    $di = new DirectoryIterator($path);
-                } else {
-                    $di = new RecursiveIteratorIterator(
-                        new RecursiveDirectoryIterator($path),
-                        0,
-                        RecursiveIteratorIterator::CATCH_GET_CHILD
-                    );
-                }
+                $filter = new PHP_CodeSniffer_ExcludeFilter(
+                    new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS),
+                    $this,
+                    $root_path,
+                    !$local
+                );
+
+                $di = new RecursiveIteratorIterator(
+                    $filter,
+                    RecursiveIteratorIterator::LEAVES_ONLY,
+                    RecursiveIteratorIterator::CATCH_GET_CHILD
+                );
 
                 foreach ($di as $file) {
                     // Check if the file exists after all symlinks are resolved.
@@ -1590,18 +1666,16 @@ class PHP_CodeSniffer
                         continue;
                     }
 
+                    //Skip directories from processing
                     if (is_dir($filePath) === true) {
-                        continue;
-                    }
-
-                    if ($this->shouldProcessFile($file->getPathname(), $path) === false) {
                         continue;
                     }
 
                     $files[] = $file->getPathname();
                 }//end foreach
             } else {
-                if ($this->shouldIgnoreFile($path, dirname($path)) === true) {
+
+                if (!$this->shouldProcessFile($path, $root_path)) {
                     continue;
                 }
 
@@ -1626,6 +1700,11 @@ class PHP_CodeSniffer
      */
     public function shouldProcessFile($path, $basedir)
     {
+        //Don't check directories for extensions
+        if(is_dir($path)){
+            return !$this->shouldIgnoreFile($path, $basedir);
+        }
+
         // Check that the file's extension is one we are checking.
         // We are strict about checking the extension and we don't
         // let files through with no extension or that start with a dot.
@@ -1659,15 +1738,7 @@ class PHP_CodeSniffer
     }//end shouldProcessFile()
 
 
-    /**
-     * Checks filtering rules to see if a file should be ignored.
-     *
-     * @param string $path    The path to the file being checked.
-     * @param string $basedir The directory to use for relative path checks.
-     *
-     * @return bool
-     */
-    public function shouldIgnoreFile($path, $basedir)
+    protected function shouldIgnoreFile($path, $basedir)
     {
         $relativePath = $path;
         if (strpos($path, $basedir) === 0) {
@@ -1675,11 +1746,24 @@ class PHP_CodeSniffer
             $relativePath = substr($path, (strlen($basedir) + 1));
         }
 
-        foreach ($this->ignorePatterns as $pattern => $type) {
-            if (is_array($type) === true) {
-                // A sniff specific ignore pattern.
-                continue;
-            }
+        //Perform some quick index matching for common exclude syntaxs (dir/path.php, ./dir/path.php, ^dir/path.php, ^dir/path.php$, ./dir/path.php$, dir, dir/, dir/*, ^dir/*, */dir/*)
+        if( isset($this->globalIgnores[$relativePath]) ||
+            isset($this->globalIgnores[$relativePath.'/']) ||
+            isset($this->globalIgnores[$relativePath.'/*']) ||
+            isset($this->globalIgnores[$relativePath.'$']) ||
+            isset($this->globalIgnores['^'.$relativePath]) ||
+            isset($this->globalIgnores['^'.$relativePath.'/']) ||
+            isset($this->globalIgnores['^'.$relativePath.'/*']) ||
+            isset($this->globalIgnores['^'.$relativePath.'$']) ||
+            isset($this->globalIgnores['./'.$relativePath]) ||
+            isset($this->globalIgnores['./'.$relativePath.'/']) ||
+            isset($this->globalIgnores['./'.$relativePath.'/*']) ||
+            isset($this->globalIgnores['./'.$relativePath.'$'])
+        ){
+            return true;
+        }
+
+        foreach ($this->globalIgnorePatterns as $pattern => $type) {
 
             // Maintains backwards compatibility in case the ignore pattern does
             // not have a relative/absolute value.
@@ -1689,9 +1773,9 @@ class PHP_CodeSniffer
             }
 
             $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+                '\\,' => ',',
+                '*'   => '.*',
+            );
 
             // We assume a / directory separator, as do the exclude rules
             // most developers write, so we need a special case for any system
