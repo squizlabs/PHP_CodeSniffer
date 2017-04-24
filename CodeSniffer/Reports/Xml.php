@@ -32,7 +32,13 @@
 class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
 {
 
-
+    /**
+     * Relative path to a XSL stylesheet. 
+     * Added to the resulting XML if set as string.
+     * @var null|string $xslPath 
+     */
+    private $xslPath = null;
+    
     /**
      * Generate a partial report for a single processed file.
      *
@@ -122,11 +128,23 @@ class PHP_CodeSniffer_Reports_Xml implements PHP_CodeSniffer_Report
         $toScreen=true
     ) {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
+        if (null !== $this->xslPath) {
+            echo '<?xml-stylesheet type="text/xsl" href="'.$this->xslPath.'"?>'.PHP_EOL;
+        }
         echo '<phpcs version="'.PHP_CodeSniffer::VERSION.'">'.PHP_EOL;
         echo $cachedData;
         echo '</phpcs>'.PHP_EOL;
 
     }//end generate()
+
+    /**
+     * Setter for $this->xslPath
+     * @param null|string $xslPath
+     */
+    public function setXslPath($xslPath)
+    {
+        $this->xslPath = (string) $xslPath;
+    }//end setXslPath()
 
 
 }//end class

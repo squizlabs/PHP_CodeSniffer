@@ -1827,7 +1827,7 @@ class PHP_CodeSniffer
                 continue;
             }
 
-            $reportClass = $this->reporting->factory('full');
+            $reportClass = $this->reporting->factory(PHP_CodeSniffer_Reporting::REPORT_TYPE_FULL);
             $reportData  = $this->reporting->prepareFileReport($phpcsFile);
             $reportClass->generateFileReport($reportData, $phpcsFile, $cliValues['showSources'], $cliValues['reportWidth']);
 

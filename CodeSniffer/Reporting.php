@@ -29,6 +29,34 @@
  */
 class PHP_CodeSniffer_Reporting
 {
+    /** @const REPORT_TYPE_FULL - The 'full' report type */
+    const REPORT_TYPE_FULL       = 'full';
+    /** @const REPORT_TYPE_XML - The 'xml' report type */
+    const REPORT_TYPE_XML        = 'xml';
+    /** @const REPORT_TYPE_CHECKSTYLE - The 'checkstyle' report type */
+    const REPORT_TYPE_CHECKSTYLE = 'checkstyle';
+    /** @const REPORT_TYPE_CSV - The 'csv' report type */
+    const REPORT_TYPE_CSV        = 'csv';
+    /** @const REPORT_TYPE_JSON - The 'json' report type */
+    const REPORT_TYPE_JSON       = 'json';
+    /** @const REPORT_TYPE_EMACS - The 'emacs' report type */
+    const REPORT_TYPE_EMACS      = 'emacs';
+    /** @const REPORT_TYPE_SOURCE - The 'source' report type */
+    const REPORT_TYPE_SOURCE     = 'source';
+    /** @const REPORT_TYPE_SUMMARY - The 'summary' report type */
+    const REPORT_TYPE_SUMMARY    = 'summary';
+    /** @const REPORT_TYPE_DIFF - The 'diff' report type */
+    const REPORT_TYPE_DIFF       = 'diff';
+    /** @const REPORT_TYPE_JUNIT - The 'junit' report type */
+    const REPORT_TYPE_JUNIT      = 'junit';
+    /** @const REPORT_TYPE_SVN_BLAME - The 'svnblame' report type */
+    const REPORT_TYPE_SVN_BLAME  = 'svnblame';
+    /** @const REPORT_TYPE_GIT_BLAME - The 'gitblame' report type */
+    const REPORT_TYPE_GIT_BLAME  = 'gitblame';
+    /** @const REPORT_TYPE_HG_BLAME - The 'hgblame' report type */
+    const REPORT_TYPE_HG_BLAME   = 'hgblame';
+    /** @const REPORT_TYPE_NOTIFYSEND - The 'notifysend' report type */
+    const REPORT_TYPE_NOTIFYSEND = 'notifysend';
 
     /**
      * Total number of files that contain errors or warnings.
@@ -223,8 +251,17 @@ class PHP_CodeSniffer_Reporting
         $reportFile='',
         $reportWidth=80
     ) {
+        /** @var bool $callXslSetter */
+        $callXslSetter = false;
+        if ($cliValues['with-xsl-path'] !== '' && $report == self::REPORT_TYPE_XML) {
+            $callXslSetter = true;
+        }
+
         $reportClass = $this->factory($report);
         $report      = get_class($reportClass);
+        if ($callXslSetter === true) {
+            $reportClass->setXslPath($cliValues['with-xsl-path']);
+        }
 
         if ($reportFile !== null) {
             $filename = $reportFile;
