@@ -73,10 +73,11 @@ class Generic_Sniffs_PHP_DisallowShortOpenTagSniff implements PHP_CodeSniffer_Sn
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
             if ($fix === true) {
                 $correctOpening = '<?php';
-                if (isset($tokens[$stackPtr + 1]) === true && $tokens[$stackPtr + 1]['code'] !== T_WHITESPACE) {
-                    // Avoid creation of invalid open tags like <?phpecho if the original was <?echo
+                if (isset($tokens[($stackPtr + 1)]) === true && $tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+                    // Avoid creation of invalid open tags like <?phpecho if the original was <?echo .
                     $correctOpening .= ' ';
                 }
+
                 $phpcsFile->fixer->replaceToken($stackPtr, $correctOpening);
             }
 
