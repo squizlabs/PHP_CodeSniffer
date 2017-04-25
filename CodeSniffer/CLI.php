@@ -793,6 +793,7 @@ class PHP_CodeSniffer_CLI
                     }//end if
                 } else {
                     // This is a single report.
+                    unset($this->values['reports']['full']);
                     $report = substr($arg, 7);
                     $output = null;
                 }//end if
