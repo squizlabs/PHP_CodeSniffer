@@ -1689,9 +1689,13 @@ class PHP_CodeSniffer
             }
 
             $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+                '\\,' => ',',
+                '*'   => '.*',
+            );
+            
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $replacements[ '/' ] = DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR;
+            }
 
             // We assume a / directory separator, as do the exclude rules
             // most developers write, so we need a special case for any system
