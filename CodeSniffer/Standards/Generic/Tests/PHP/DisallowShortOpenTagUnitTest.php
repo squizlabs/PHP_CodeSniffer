@@ -92,6 +92,7 @@ class Generic_Tests_PHP_DisallowShortOpenTagUnitTest extends AbstractSniffUnitTe
                     2 => 1,
                     3 => 1,
                     4 => 1,
+                    7 => 1
                    );
         default:
             return array();
