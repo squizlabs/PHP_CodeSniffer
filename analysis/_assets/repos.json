@@ -1356,5 +1356,13 @@
         "path": "src",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "OpenEMR",
+        "url": "openemr/openemr",
+        "path": "",
+        "ignore": "*/vendor/*,*/Documentation/*,*/tests/*,*/gacl/*,*/images/*,*/public/assets/*,*/node_modules/*,*/bower_components/*",
+        "extensions": ""
     }
 ]
+
