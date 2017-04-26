@@ -59,6 +59,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- PHP 7 type hints were also being shown when run under PHP 5 in some cases
   - Fixed bug #1405 : Squiz.WhiteSpace.ScopeClosingBrace fails to fix closing brace within indented PHP tags
   - Fixed bug #1421 : Ternaries used in constant scalar expression for param default misidentified by tokenizer
+  - Fixed bug #1431 : PHPCBF can't fix short open tags when they are not followed by a space
+    -- Thanks to Gonçalo Queirós for the patch
  </notes>
  <contents>
   <dir name="/">
