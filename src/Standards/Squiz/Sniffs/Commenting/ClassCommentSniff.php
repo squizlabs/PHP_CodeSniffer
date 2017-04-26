@@ -3,11 +3,12 @@
  * Parses and verifies the class doc comment.
  *
  * Verifies that :
- * - A class doc comment exists.
- * - There is exactly one blank line before the class comment.
- * - There are no blank lines after the class comment.
- * - Short and long descriptions end with a full stop and start with capital letter.
- * - There is a blank line between descriptions.
+ * <ul>
+ *  <li>A class doc comment exists.</li>
+ *  <li>The comment uses the correct docblock style.</li>
+ *  <li>There are no blank lines after the class comment.</li>
+ *  <li>No tags are used in the docblock.</li>
+ * </ul>
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)

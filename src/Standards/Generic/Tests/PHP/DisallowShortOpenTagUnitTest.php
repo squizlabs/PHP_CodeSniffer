@@ -70,6 +70,7 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
                     2 => 1,
                     3 => 1,
                     4 => 1,
+                    7 => 1,
                    );
         default:
             return array();

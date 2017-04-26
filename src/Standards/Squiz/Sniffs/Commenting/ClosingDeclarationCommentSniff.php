@@ -87,12 +87,12 @@ class ClosingDeclarationCommentSniff implements Sniff
             return;
         }
 
-        $error = 'Expected '.$comment;
+        $data = array($comment);
         if (isset($tokens[($closingBracket + 1)]) === false || $tokens[($closingBracket + 1)]['code'] !== T_COMMENT) {
             $next = $phpcsFile->findNext(T_WHITESPACE, ($closingBracket + 1), null, true);
             if (rtrim($tokens[$next]['content']) === $comment) {
                 // The comment isn't really missing; it is just in the wrong place.
-                $fix = $phpcsFile->addFixableError($error.' directly after closing brace', $closingBracket, 'Misplaced');
+                $fix = $phpcsFile->addFixableError('Expected %s directly after closing brace', $closingBracket, 'Misplaced', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($closingBracket + 1); $i < $next; $i++) {
@@ -105,7 +105,7 @@ class ClosingDeclarationCommentSniff implements Sniff
                     $phpcsFile->fixer->endChangeset();
                 }
             } else {
-                $fix = $phpcsFile->addFixableError($error, $closingBracket, 'Missing');
+                $fix = $phpcsFile->addFixableError('Expected %s', $closingBracket, 'Missing', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($closingBracket, '}'.$comment.$phpcsFile->eolChar);
                 }
@@ -115,7 +115,7 @@ class ClosingDeclarationCommentSniff implements Sniff
         }//end if
 
         if (rtrim($tokens[($closingBracket + 1)]['content']) !== $comment) {
-            $fix = $phpcsFile->addFixableError($error, $closingBracket, 'Incorrect');
+            $fix = $phpcsFile->addFixableError('Expected %s', $closingBracket, 'Incorrect', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($closingBracket + 1), $comment.$phpcsFile->eolChar);
             }
