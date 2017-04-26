@@ -11,8 +11,9 @@
       <xs:element name="exclude-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
       <xs:element name="arg" type="argType" maxOccurs="unbounded" minOccurs="0"></xs:element>
       <xs:element name="ini" type="iniType" maxOccurs="unbounded" minOccurs="0"></xs:element>
-      <xs:element name="rule" type="ruleType"></xs:element>
+      <xs:element name="rule" type="ruleType" maxOccurs="unbounded" minOccurs="0"></xs:element>
     </xs:sequence>
+    <xs:attribute name="name" type="xs:string"></xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="patternType">
@@ -54,13 +55,13 @@
 
   <xs:complexType name="ruleType">
     <xs:sequence>
-      <xs:element name="exclude" type="excludeType"></xs:element>
-      <xs:element name="message" type="messageType"></xs:element>
-      <xs:element name="severity" type="severityType"></xs:element>
-      <xs:element name="type" type="typeType"></xs:element>
-      <xs:element name="exclude-pattern" type="patternType"></xs:element>
-      <xs:element name="include-pattern" type="patternType"></xs:element>
-      <xs:element name="properties" type="propertiesType"></xs:element>
+      <xs:element name="exclude" type="excludeType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+      <xs:element name="message" type="messageType" maxOccurs="1" minOccurs="0"></xs:element>
+      <xs:element name="severity" type="severityType" maxOccurs="1" minOccurs="0"></xs:element>
+      <xs:element name="type" type="typeType" maxOccurs="1" minOccurs="0"></xs:element>
+      <xs:element name="exclude-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+      <xs:element name="include-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+      <xs:element name="properties" type="propertiesType" maxOccurs="1" minOccurs="0"></xs:element>
     </xs:sequence>
     <xs:attribute name="ref" type="xs:string" use="required"></xs:attribute>
   </xs:complexType>
