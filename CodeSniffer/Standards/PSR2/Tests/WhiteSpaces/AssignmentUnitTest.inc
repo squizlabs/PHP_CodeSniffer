@@ -1,0 +1,10 @@
+<?php
+
+$foo='bar';
+
+$bar = array(
+    'foo'=>$foo,
+    'bar' => 'bar',
+    'foobar'=> 'foobar',
+    'barfoo' =>'barfoo',
+);
