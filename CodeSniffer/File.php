@@ -2258,7 +2258,7 @@ class PHP_CodeSniffer_File
                         // current scope opener, so it must be a string offset.
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo str_repeat("\t", $depth);
-                            echo '* ignoring curly brace *'.PHP_EOL;
+                            echo '* ignoring curly brace inside condition *'.PHP_EOL;
                         }
 
                         $ignore++;
@@ -2269,15 +2269,21 @@ class PHP_CodeSniffer_File
                             if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === true) {
                                 continue;
                             } else {
-                                // If the first non-whitespace/comment token is a
-                                // variable or object operator then this is an opener
-                                // for a string offset and not a scope.
-                                if ($tokens[$x]['code'] === T_VARIABLE
-                                    || $tokens[$x]['code'] === T_OBJECT_OPERATOR
-                                ) {
+                                // If the first non-whitespace/comment token looks like this
+                                // brace is a string offset, or this brace is mid-way through
+                                // a new statement, it isn't a scope opener.
+                                $disallowed  = PHP_CodeSniffer_Tokens::$assignmentTokens;
+                                $disallowed += array(
+                                                T_VARIABLE         => true,
+                                                T_OBJECT_OPERATOR  => true,
+                                                T_COMMA            => true,
+                                                T_OPEN_PARENTHESIS => true,
+                                               );
+
+                                if (isset($disallowed[$tokens[$x]['code']]) === true) {
                                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                         echo str_repeat("\t", $depth);
-                                        echo '* ignoring curly brace *'.PHP_EOL;
+                                        echo '* ignoring curly brace after condition *'.PHP_EOL;
                                     }
 
                                     $ignore++;
