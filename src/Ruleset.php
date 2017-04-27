@@ -167,6 +167,9 @@ class Ruleset
 
                     $this->name   .= $standardName;
                     $this->paths[] = $standard;
+
+                    // Allow autoloading of custom files inside this standard.
+                    Autoload::addSearchPath(dirname(dirname($standard)));
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY === 1) {

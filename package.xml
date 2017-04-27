@@ -30,6 +30,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This allows you to force errors to be shown that would otherwise be ignored by code comments
     -- Also stop files being able to change sniff properties mid way through processing
   - An error is now reported if no sniffs were registered to be run (request #1129)
+  - The autoloader will now search for files inside the directory of any loaded coding standard
+    -- This allows autoloading of any file inside a custom coding standard without manually requiring them
+    -- Ensure your namespace begins with your coding standard's directory name and follows PSR-4
+    -- e.g., StandardName\Sniffs\CategoryName\AbstractHelper or StandardName\Helpers\StringSniffHelper
   - Fixed an error where STDIN was sometimes not checked when using the --parallel CLI option
   - The is_closure index has been removed from the return value of File::getMethodProperties()
     -- This value was always false becasue T_FUNCTION tokens are never closures

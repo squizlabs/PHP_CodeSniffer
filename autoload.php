@@ -41,6 +41,15 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
          */
         private static $loadedFiles = array();
 
+        /**
+         * A list of additional directories to search during autoloading.
+         *
+         * This is typically a list of coding standard directories.
+         *
+         * @var string[]
+         */
+        private static $searchPaths = array();
+
 
         /**
          * Loads a class.
@@ -96,6 +105,18 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             // See if the composer autoloader knows where the class is.
             if ($path === false && self::$composerAutoloader !== false) {
                 $path = self::$composerAutoloader->findFile($class);
+            }
+
+            // See if the class is inside one of our alternate search paths.
+            if ($path === false) {
+                foreach (self::$searchPaths as $searchPath) {
+                    $path = $searchPath.$ds.str_replace('\\', $ds, $class).'.php';
+                    if (is_file($path) === true) {
+                        break;
+                    }
+
+                    $path = false;
+                }
             }
 
             if ($path !== false && is_file($path) === true) {
@@ -168,6 +189,20 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             return self::$loadedClasses[$path];
 
         }//end loadFile()
+
+
+        /**
+         * Adds a directory to search during autoloading.
+         *
+         * @param string $path The path to the directory to search.
+         *
+         * @return void
+         */
+        public static function addSearchPath($path)
+        {
+            self::$searchPaths[] = $path;
+
+        }//end addSearchPath()
 
 
         /**
