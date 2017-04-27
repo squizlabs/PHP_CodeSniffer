@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PSR2_Sniffs_WhiteSpace_AssignmentSpacingSniff.
+ * PSR2_Sniffs_WhiteSpaces_AssignmentSpacingSniff.
  *
  * PHP version 5
  *
@@ -14,7 +14,7 @@
  */
 
 /**
- * PSR2_Sniffs_WhiteSpace_AssignmentSpacingSniff.
+ * PSR2_Sniffs_WhiteSpaces_AssignmentSpacingSniff.
  *
  * Ensures the assignment operators are surrounded with whitespace.
  *
