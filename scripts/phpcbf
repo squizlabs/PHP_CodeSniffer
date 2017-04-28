@@ -21,3 +21,4 @@ if (is_file(dirname(__FILE__).'/../CodeSniffer/CLI.php') === true) {
 
 $cli = new PHP_CodeSniffer_CLI();
 $cli->runphpcbf();
+
