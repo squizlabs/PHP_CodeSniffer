@@ -1023,8 +1023,10 @@ class PHP_CodeSniffer_File
         }
 
         // Make sure this message type has not been set to "warning".
-        if (isset($this->ruleset[$sniffCode]['type']) === true
-            && $this->ruleset[$sniffCode]['type'] === 'warning'
+        if ((isset($this->ruleset[$sniffCode]['type']) === true
+            && $this->ruleset[$sniffCode]['type'] === 'warning')
+            || (isset($sniff, $this->ruleset[$sniff]['type']) === true
+            && $this->ruleset[$sniff]['type'] === 'warning')
         ) {
             // Pass this off to the warning handler.
             return $this->_addWarning($error, $line, $column, $code, $data, $severity, $fixable);
@@ -1170,8 +1172,10 @@ class PHP_CodeSniffer_File
         }
 
         // Make sure this message type has not been set to "error".
-        if (isset($this->ruleset[$sniffCode]['type']) === true
-            && $this->ruleset[$sniffCode]['type'] === 'error'
+        if ((isset($this->ruleset[$sniffCode]['type']) === true
+            && $this->ruleset[$sniffCode]['type'] === 'error')
+            || (isset($sniff, $this->ruleset[$sniff]['type']) === true
+            && $this->ruleset[$sniff]['type'] === 'error')
         ) {
             // Pass this off to the error handler.
             return $this->_addError($warning, $line, $column, $code, $data, $severity, $fixable);
