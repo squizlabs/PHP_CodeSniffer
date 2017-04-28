@@ -1,12 +1,12 @@
 {
-    "name": "squizlabs/php_codesniffer",
+    "name": "yumalabs/php_codesniffer",
     "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
     "type": "library",
     "keywords": [
         "phpcs",
         "standards"
     ],
-    "homepage": "http://www.squizlabs.com/php-codesniffer",
+    "homepage": "http://www.yumalabs.com/php-codesniffer",
     "license": "BSD-3-Clause",
     "authors": [
         {
@@ -15,9 +15,9 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
-        "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki",
-        "source": "https://github.com/squizlabs/PHP_CodeSniffer"
+        "issues": "https://github.com/yumalabs/PHP_CodeSniffer/issues",
+        "wiki": "https://github.com/yumalabs/PHP_CodeSniffer/wiki",
+        "source": "https://github.com/yumalabs/PHP_CodeSniffer"
     },
     "extra": {
         "branch-alias": {
@@ -48,7 +48,9 @@
             "CodeSniffer/Standards/PSR1/Sniffs/",
             "CodeSniffer/Standards/PSR2/Sniffs/",
             "CodeSniffer/Standards/Squiz/Sniffs/",
-            "CodeSniffer/Standards/Zend/Sniffs/"
+            "CodeSniffer/Standards/Zend/Sniffs/",
+            "CodeSniffer/Standards/YL1Simple/Sniffs/",
+            "CodeSniffer/Standards/YL1Strict/Sniffs"
         ]
     },
     "require": {
