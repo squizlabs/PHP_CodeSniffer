@@ -84,8 +84,11 @@ class Generic_Sniffs_NamingConventions_ConstructorNameSniff extends PHP_CodeSnif
 
         if (strcasecmp($methodName, $className) === 0) {
             if (in_array('__construct', $this->_functionList) === false) {
-                $error = 'PHP4 style constructors are not allowed; use "__construct()" instead';
-                $phpcsFile->addError($error, $stackPtr, 'OldStyle');
+                $error     = 'PHP4 style constructors are not allowed; use "__construct()" instead';
+                $toReplace = $phpcsFile->findNext(T_STRING, $stackPtr);
+                if ($phpcsFile->addFixableError($error, $stackPtr, 'OldStyle') === true) {
+                    $phpcsFile->fixer->replaceToken($toReplace, '__construct');
+                }
             }
         } else if (strcasecmp($methodName, '__construct') !== 0) {
             // Not a constructor.
