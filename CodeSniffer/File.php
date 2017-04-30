@@ -212,6 +212,14 @@ class PHP_CodeSniffer_File
     private $_recordErrors = true;
 
     /**
+     * Force check by disabling of ignoring any code
+     * and of modification of coding standards via special tags.
+     *
+     * @var bool
+     */
+    private static $_forceCheck = false;
+
+    /**
      * An array of lines that are being ignored.
      *
      * @var array()
@@ -330,7 +338,15 @@ class PHP_CodeSniffer_File
 
                 $this->_recordErrors = $recordErrors;
             }
-        }
+
+            if (isset($cliValues['forceCheck']) === true
+                && $cliValues['forceCheck'] === true
+            ) {
+                self::$_forceCheck = true;
+            } else {
+                self::$_forceCheck = false;
+            }
+        }//end if
 
     }//end __construct()
 
@@ -487,9 +503,10 @@ class PHP_CodeSniffer_File
         // token, get them to process it.
         foreach ($this->_tokens as $stackPtr => $token) {
             // Check for ignored lines.
-            if ($token['code'] === T_COMMENT
+            if (self::$_forceCheck === false
+                && ($token['code'] === T_COMMENT
                 || $token['code'] === T_DOC_COMMENT_TAG
-                || ($inTests === true && $token['code'] === T_INLINE_HTML)
+                || ($inTests === true && $token['code'] === T_INLINE_HTML))
             ) {
                 if (strpos($token['content'], '@codingStandards') !== false) {
                     if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
@@ -1614,7 +1631,9 @@ class PHP_CodeSniffer_File
                 $tokens[$i]['length'] += $eolLen;
             }
 
-            if ($tokens[$i]['code'] === T_COMMENT
+            if (self::$_forceCheck === true) {
+                $ignoring = false;
+            } else if ($tokens[$i]['code'] === T_COMMENT
                 || $tokens[$i]['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $tokens[$i]['code'] === T_INLINE_HTML)
             ) {

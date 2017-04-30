@@ -582,6 +582,9 @@ class PHP_CodeSniffer_CLI
         case 'no-colors':
             $this->values['colors'] = false;
             break;
+        case 'force-check':
+            $this->values['forceCheck'] = true;
+            break;
         case 'config-set':
             if (isset($this->_cliArgs[($pos + 1)]) === false
                 || isset($this->_cliArgs[($pos + 2)]) === false
@@ -1306,7 +1309,7 @@ class PHP_CodeSniffer_CLI
         echo '    [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '    [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '    [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--encoding=<encoding>]'.PHP_EOL;
-        echo '    [--extensions=<extensions>] [--ignore=<patterns>] [--bootstrap=<bootstrap>]'.PHP_EOL;
+        echo '    [--extensions=<extensions>] [--force-check] [--ignore=<patterns>] [--bootstrap=<bootstrap>]'.PHP_EOL;
         echo '    [--file-list=<fileList>] <file> ...'.PHP_EOL;
         echo '                      Set runtime value (see --config-set) '.PHP_EOL;
         echo '        -n            Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
@@ -1324,6 +1327,8 @@ class PHP_CodeSniffer_CLI
         echo '        --version     Print version information'.PHP_EOL;
         echo '        --colors      Use colors in output'.PHP_EOL;
         echo '        --no-colors   Do not use colors in output (this is the default)'.PHP_EOL;
+        echo '        --force-check Disable of ignoring any code'.PHP_EOL;
+        echo '                      and of modification of coding standards via special tags'.PHP_EOL;
         echo '        <file>        One or more files and/or directories to check'.PHP_EOL;
         echo '        <fileList>    A file containing a list of files and/or directories to check (one per line)'.PHP_EOL;
         echo '        <stdinPath>   If processing STDIN, the file path that STDIN will be processed as '.PHP_EOL;
