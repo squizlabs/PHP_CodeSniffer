@@ -49,6 +49,7 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
 
     /**
      * Processes this test, when one of its tokens is encountered.
+     * Tokens can get autoreplaced if statements don't contain an operator with a priority between and/or and &&/||
      *
      * @param PHP_CodeSniffer_File $phpcsFile The current file being scanned.
      * @param int                  $stackPtr  The position of the current token in the
@@ -75,7 +76,54 @@ class Squiz_Sniffs_Operators_ValidLogicalOperatorsSniff implements PHP_CodeSniff
                   $operator,
                   $replacements[$operator],
                  );
-        $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
+
+        $blackList = array(
+                      T_EQUAL,
+                      T_PLUS_EQUAL,
+                      T_MINUS_EQUAL,
+                      T_MUL_EQUAL,
+                      T_POW_EQUAL,
+                      T_DIV_EQUAL,
+                      T_CONCAT_EQUAL,
+                      T_MOD_EQUAL,
+                      T_AND_EQUAL,
+                      T_OR_EQUAL,
+                      T_XOR_EQUAL,
+                      T_SL_EQUAL,
+                      T_SR_EQUAL,
+                      T_LOGICAL_XOR,
+                      T_COALESCE,
+                      T_COALESCE_EQUAL,
+                      T_INLINE_THEN,
+                      T_INLINE_ELSE,
+                     );
+
+        // Extend blacklist depending on which operator is being processed.
+        if ($tokens[$stackPtr]['code'] === T_LOGICAL_OR) {
+            $blackList[] = T_LOGICAL_XOR;
+        } else if ($tokens[$stackPtr]['code'] === T_LOGICAL_AND) {
+            $blackList[] = T_BOOLEAN_OR;
+        }
+
+        $start = $phpcsFile->findStartOfStatement($stackPtr);
+        $end   = $phpcsFile->findEndOfStatement($stackPtr);
+
+        for ($index = $start; $index <= $end; ++$index) {
+            // Skip checking contents of grouped statements.
+            if ($tokens[$index]['code'] === T_OPEN_PARENTHESIS) {
+                $index = ($phpcsFile->findEndOfStatement($index + 1) + 1);
+            }
+
+            if (in_array($tokens[$index]['code'], $blackList, true)) {
+                $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
+                return;
+            }
+        }
+
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
+        if ($fix === true) {
+            $phpcsFile->fixer->replaceToken($stackPtr, $replacements[$operator]);
+        }
 
     }//end process()
 
