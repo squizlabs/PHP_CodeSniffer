@@ -1,0 +1,94 @@
+<?php
+
+namespace MyNamespace\Depth;
+
+use Thing\Fail\ActuallyUsed;
+use Test\TraitTest;
+use Thing\DifferentName as UsedOtherName;
+use Example\MyUrlHelper;
+use MyNamespace\Depth\SomeClass as CoreSomeClass;
+use SomeNamespace\someFunction;
+use const BlubBlubNamespace\CONSTANT_THAT_IS_USED;
+use Foo\Used;
+use somenamespace\orother\{ClassC as C, ClassD};
+use function somenamespace\orother\fn_b;
+use function somenamespace\orother\{fn_d, fn_e};
+use const somenamespace\orother\ConstB;
+
+/**
+ * Bla.
+ *
+ * @AnotherUsedAnnotation()
+ */
+class Pum {
+  use TraitTest;
+  use Test\AnotherTrait;
+
+  /**
+   * Description.
+   *
+   * This is a mention of MentionedInDocstringButShouldNotBeUsed but it isn't as
+   * part of any sort of syntactically meaningful PHPDoc construct so the Sniff
+   * should throw an error for MentionedInDocstringButShouldNotBeUsed, not just a
+   * warning.
+   */
+  protected function test(ActuallyUsed $x, UsedOtherName $y) {
+    someFunction();
+  }
+
+  /**
+   * Description.
+   */
+  protected function test2(\Thing\NotUsed $x) {
+    echo CONSTANT_THAT_IS_USED;
+  }
+
+  /**
+   * PHP is not case sensitive.
+   */
+  protected function test3(MyURLHelper $x) {
+
+  }
+
+  /**
+   * Don't need to use classes in the same namespace.
+   */
+  protected function test4(UnusedSameNamespace $x, AnotherUnusedSameNamespace $y) {
+
+  }
+
+  /**
+   * Renamed class from same namespace.
+   */
+  protected function test5(CoreSomeClass $x) {
+
+  }
+
+  /**
+   * @param OnlyUsedInParamTag $foo
+   * @return OnlyUsedInReturnTag
+   */
+  protected function test6($foo) {
+
+  }
+
+  /**
+   * @ImportedAnnotationThatIsUsed(qux='baz')
+   */
+  protected function test7() {
+
+  }
+
+}
+
+new Used;
+new C;
+new ClassD;
+fn_b(fn_d(fn_e(ConstB)));
+
+namespace Baz;
+
+// These references don't work because `use`s are scoped to the namespace block in
+// which they appear; the `use`s from the top of the file aren't in effect here.
+$x = new UsedInBaz;
+$y = new AlsoUsedInBaz;

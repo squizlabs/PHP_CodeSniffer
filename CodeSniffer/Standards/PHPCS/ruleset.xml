@@ -26,6 +26,7 @@
  <rule ref="Squiz.WhiteSpace.FunctionSpacing" />
  <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
  <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
+ <rule ref="Generic.Classes.UnusedUseStatement"/>
  <rule ref="Generic.Commenting.Todo"/>
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
  <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
