@@ -179,7 +179,7 @@ class PHP_CodeSniffer_Reports_Full implements PHP_CodeSniffer_Report
                         echo '] ';
                     }
 
-                    echo $errorMsg.PHP_EOL;
+                    echo htmlspecialchars($errorMsg, ENT_QUOTES, 'UTF-8', false).PHP_EOL;
                 }//end foreach
             }//end foreach
         }//end foreach
