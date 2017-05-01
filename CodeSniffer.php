@@ -880,9 +880,15 @@ class PHP_CodeSniffer
             // Change the directory so all relative paths are worked
             // out based on the location of the ruleset instead of
             // the location of the user.
-            $inPhar = self::isPharFile($rulesetDir);
+            $inPhar     = self::isPharFile($rulesetDir);
+            $currentDir = getcwd();
+
+            // If started from a removed directory, there will be no current directory.
+            if ($currentDir === false) {
+                throw new PHP_CodeSniffer_Exception('Current directory does not exist.');
+            }
+
             if ($inPhar === false) {
-                $currentDir = getcwd();
                 chdir($rulesetDir);
             }
 
