@@ -56,6 +56,7 @@ class PEAR_Tests_WhiteSpace_ScopeClosingBraceUnitTest extends AbstractSniffUnitT
                 127 => 1,
                 135 => 1,
                 141 => 1,
+                146 => 1,
                );
 
     }//end getErrorList()
