@@ -2713,6 +2713,10 @@ class PHP_CodeSniffer_File
     public function isAnonymousFunction($stackPtr)
     {
         $tokenCode = $this->_tokens[$stackPtr]['code'];
+        if ($tokenCode === T_CLOSURE) {
+            return true;
+        }
+
         if ($tokenCode !== T_FUNCTION) {
             throw new PHP_CodeSniffer_Exception('Token type is not T_FUNCTION');
         }
