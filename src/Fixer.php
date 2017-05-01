@@ -25,14 +25,14 @@ class Fixer
      * doing extra processing to prepare for a fix when fixing is
      * not required.
      *
-     * @var boolean
+     * @var bool
      */
     public $enabled = false;
 
     /**
      * The number of times we have looped over a file.
      *
-     * @var integer
+     * @var int
      */
     public $loops = 0;
 
@@ -87,21 +87,21 @@ class Fixer
     /**
      * Is there an open changeset.
      *
-     * @var boolean
+     * @var bool
      */
     private $inChangeset = false;
 
     /**
      * Is the current fixing loop in conflict?
      *
-     * @var boolean
+     * @var bool
      */
     private $inConflict = false;
 
     /**
      * The number of fixes that have been performed.
      *
-     * @var integer
+     * @var int
      */
     private $numFixes = 0;
 

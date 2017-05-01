@@ -49,7 +49,7 @@ abstract class AbstractScopeSniff implements Sniff
     /**
      * True if this test should fire on tokens outside of the scope.
      *
-     * @var boolean
+     * @var bool
      */
     private $listenOutside = false;
 

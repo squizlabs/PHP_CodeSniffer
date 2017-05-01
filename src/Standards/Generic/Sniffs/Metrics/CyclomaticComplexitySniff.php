@@ -23,14 +23,14 @@ class CyclomaticComplexitySniff implements Sniff
     /**
      * A complexity higher than this value will throw a warning.
      *
-     * @var integer
+     * @var int
      */
     public $complexity = 10;
 
     /**
      * A complexity higher than this value will throw an error.
      *
-     * @var integer
+     * @var int
      */
     public $absoluteComplexity = 20;
 

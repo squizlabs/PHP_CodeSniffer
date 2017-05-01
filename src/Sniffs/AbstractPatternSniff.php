@@ -21,7 +21,7 @@ abstract class AbstractPatternSniff implements Sniff
     /**
      * If true, comments will be ignored if they are found in the code.
      *
-     * @var boolean
+     * @var bool
      */
     public $ignoreComments = false;
 

@@ -17,7 +17,7 @@ class ControlSignatureSniff extends AbstractPatternSniff
     /**
      * If true, comments will be ignored if they are found in the code.
      *
-     * @var boolean
+     * @var bool
      */
     public $ignoreComments = true;
 

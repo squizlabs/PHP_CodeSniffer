@@ -7,9 +7,9 @@ class PHP_CodeSniffer_File
      *
      * long desc here
      *
-     * @param bool   $stackPtr   The position in @ @unknown the stack of the token
+     * @param boolean   $stackPtr The position in @ @unknown the stack of the token
      *                             that opened the scope
-     * @param int    $detph    How many scope levels down we are.
+     * @param integer $detph    How many scope levels down we are.
      * @param string    $index    The index
      * @return
      * @throws
@@ -120,8 +120,8 @@ class PHP_CodeSniffer_File
      * Param not immediate.
      *
      * @return
-     * @param   int   $threeSpaces
-     * @param integer $superfluous
+     * @param   integer   $threeSpaces
+     * @param int     $superfluous
      * @param miss
      * @param
      */
@@ -134,7 +134,7 @@ class PHP_CodeSniffer_File
     /**
      * Comments not capitalised.
      *
-     * @param integer  $one    comment
+     * @param int  $one    comment
      * @param array    $two    -comment
      * @param MyClas   $three  0comment
      *
@@ -190,7 +190,7 @@ public function noReturnOutsideClass()
 /**
  * Missing param comment.
  *
- * @param integer $one comment
+ * @param int $one comment
  *
  * @see     wrong indent
  * @see
@@ -243,7 +243,7 @@ public function caseSensitive($a1, $a2, $a3, arRay $a4, $a5, $a6, myclas $a7)
  * @param MyClass $a3 Comment here.
  * @param MyClass $a4 Comment here.
  *
- * @return array(int => MyClass)
+ * @return array(integer => MyClass)
  */
 public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
 {
@@ -255,12 +255,12 @@ public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
 /**
  * Mixed variable type separated by a '|'.
  *
- * @param array|string $a1 Comment here.
- * @param mixed        $a2 Comment here.
- * @param string|array $a3 Comment here.
- * @param MyClass|int  $a4 Comment here.
+ * @param array|string    $a1 Comment here.
+ * @param mixed           $a2 Comment here.
+ * @param string|array    $a3 Comment here.
+ * @param MyClass|integer $a4 Comment here.
  *
- * @return bool
+ * @return boolean
  */
 public function mixedType($a1, $a2, $a3, $a4)
 {
@@ -272,16 +272,16 @@ public function mixedType($a1, $a2, $a3, $a4)
 /**
  * Array type.
  *
- * @param array(MyClass)         $a1 OK.
- * @param array()                $a2 Invalid type.
- * @param array(                 $a3 Typo.
- * @param array(int)             $a4 Use 'array(integer)' instead.
- * @param array(int => integer)  $a5 Use 'array(integer => integer)' instead.
- * @param array(integer => bool) $a6 Use 'array(integer => boolean)' instead.
- * @param aRRay                  $a7 Use 'array' instead.
- * @param string                 $a8 String with unknown type hint.
+ * @param array(MyClass)        $a1 OK.
+ * @param array()               $a2 Invalid type.
+ * @param array(                $a3 Typo.
+ * @param array(integer)        $a4 Use 'array(int)' instead.
+ * @param array(integer => int) $a5 Use 'array(int => int)' instead.
+ * @param array(int => boolean) $a6 Use 'array(int => bool)' instead.
+ * @param aRRay                 $a7 Use 'array' instead.
+ * @param string                $a8 String with unknown type hint.
  *
- * @return int
+ * @return integer
  */
 public function mixedArrayType($a1, $a2, array $a3, $a4, $a5, $a6, $a7, unknownTypeHint $a8)
 {
@@ -316,7 +316,7 @@ function empty3()
 
 
 /**
- * @return boolean
+ * @return bool
  */
 public function missingShortDescriptionInFunctionComment()
 {
@@ -570,7 +570,7 @@ function test($test)
  * @param string $a2     Comment here.
  * @param string $a2,... Comment here.
  *
- * @return boolean
+ * @return bool
  */
 public function variableArgs($a1, $a2)
 {
@@ -673,7 +673,7 @@ function myFunction() {}
 /**
  * Yield test
  *
- * @return integer
+ * @return int
  */
 function yieldTest()
 {
@@ -719,10 +719,10 @@ public function callableCallback(callable $cb) {
 /**
  * PHP7 type hints.
  *
- * @param string  $name1 Comment.
- * @param integer $name2 Comment.
- * @param float   $name3 Comment.
- * @param boolean $name4 Comment.
+ * @param string $name1 Comment.
+ * @param int    $name2 Comment.
+ * @param float  $name3 Comment.
+ * @param bool   $name4 Comment.
  *
  * @return void
  */
@@ -755,7 +755,7 @@ public function myFunction(string $name1, string ...$name2) {
 /**
  * Return description function + correct type.
  *
- * @return integer This is a description.
+ * @return int This is a description.
  */
 public function myFunction() {
     return 5;
@@ -764,7 +764,7 @@ public function myFunction() {
 /**
  * Return description function + incorrect type.
  *
- * @return int This is a description.
+ * @return integer This is a description.
  */
 public function myFunction() {
     return 5;
@@ -825,7 +825,7 @@ public function someFunc(): void
 /**
  * Return description function + mixed return types.
  *
- * @return bool|int This is a description.
+ * @return boolean|integer This is a description.
  */
 function returnTypeWithDescriptionA()
 {

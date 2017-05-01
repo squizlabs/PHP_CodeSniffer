@@ -20,7 +20,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
     /**
      * The current PHP version.
      *
-     * @var integer
+     * @var int
      */
     private $phpVersion = null;
 

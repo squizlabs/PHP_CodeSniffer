@@ -35,7 +35,7 @@ class SuperfluousWhitespaceSniff implements Sniff
      *
      * Blank lines are those that contain only whitespace.
      *
-     * @var boolean
+     * @var bool
      */
     public $ignoreBlankLines = false;
 

@@ -136,7 +136,7 @@ class Config
      * If FALSE, arguments that are not command line options or file/directory paths
      * will be ignored and execution will continue.
      *
-     * @var boolean
+     * @var bool
      */
     public $dieOnUnknownArg;
 

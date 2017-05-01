@@ -25,7 +25,7 @@ class Notifysend implements Report
     /**
      * Notification timeout in milliseconds.
      *
-     * @var integer
+     * @var int
      */
     protected $timeout = 3000;
 
@@ -39,7 +39,7 @@ class Notifysend implements Report
     /**
      * Show "ok, all fine" messages.
      *
-     * @var boolean
+     * @var bool
      */
     protected $showOk = true;
 

@@ -21,14 +21,14 @@ class DisallowAlternativePHPTagsSniff implements Sniff
     /**
      * Whether ASP tags are enabled or not.
      *
-     * @var boolean
+     * @var bool
      */
     private $aspTags = false;
 
     /**
      * The current PHP version.
      *
-     * @var integer
+     * @var int
      */
     private $phpVersion = null;
 

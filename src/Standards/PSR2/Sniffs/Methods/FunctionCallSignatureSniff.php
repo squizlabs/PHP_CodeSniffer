@@ -19,7 +19,7 @@ class FunctionCallSignatureSniff extends PEARFunctionCallSignatureSniff
     /**
      * If TRUE, multiple arguments can be defined per line in a multi-line call.
      *
-     * @var boolean
+     * @var bool
      */
     public $allowMultipleArguments = false;
 

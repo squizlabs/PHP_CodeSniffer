@@ -18,7 +18,7 @@ class ObjectOperatorSpacingSniff implements Sniff
     /**
      * Allow newlines instead of spaces.
      *
-     * @var boolean
+     * @var bool
      */
     public $ignoreNewlines = false;
 

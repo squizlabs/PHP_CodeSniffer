@@ -70,7 +70,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
     /**
      * If TRUE, the string must not have two capital letters next to each other.
      *
-     * @var boolean
+     * @var bool
      */
     public $strict = true;
 

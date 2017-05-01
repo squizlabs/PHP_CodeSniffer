@@ -30,7 +30,7 @@ class CommentedOutCodeSniff implements Sniff
     /**
      * If a comment is more than $maxPercentage% code, a warning will be shown.
      *
-     * @var integer
+     * @var int
      */
     public $maxPercentage = 35;
 

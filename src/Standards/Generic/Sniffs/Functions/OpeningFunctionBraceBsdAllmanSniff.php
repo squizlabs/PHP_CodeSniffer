@@ -18,14 +18,14 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
     /**
      * Should this sniff check function braces?
      *
-     * @var boolean
+     * @var bool
      */
     public $checkFunctions = true;
 
     /**
      * Should this sniff check closure braces?
      *
-     * @var boolean
+     * @var bool
      */
     public $checkClosures = false;
 

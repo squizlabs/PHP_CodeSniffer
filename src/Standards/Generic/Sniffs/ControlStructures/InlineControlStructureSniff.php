@@ -29,7 +29,7 @@ class InlineControlStructureSniff implements Sniff
     /**
      * If true, an error will be thrown; otherwise a warning.
      *
-     * @var boolean
+     * @var bool
      */
     public $error = true;
 

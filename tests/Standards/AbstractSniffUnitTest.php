@@ -28,7 +28,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * Overwrite this attribute in a child class of TestCase.
      * Setting this attribute in setUp() has no effect!
      *
-     * @var boolean
+     * @var bool
      */
     protected $backupGlobals = false;
 

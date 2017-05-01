@@ -44,7 +44,7 @@ class LongConditionClosingCommentSniff implements Sniff
      * The length that a code block must be before
      * requiring a closing comment.
      *
-     * @var integer
+     * @var int
      */
     public $lineLimit = 20;
 
