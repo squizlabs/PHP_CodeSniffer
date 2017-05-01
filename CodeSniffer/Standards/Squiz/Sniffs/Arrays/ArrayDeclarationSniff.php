@@ -166,7 +166,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
                 // Before counting this comma, make sure we are not
                 // at the end of the array.
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), $arrayEnd, true);
-                if ($next !== false) {
+                if ($next !== false && $next !== $arrayEnd) {
                     $valueCount++;
                     $commas[] = $i;
                 } else {
@@ -518,7 +518,7 @@ class Squiz_Sniffs_Arrays_ArrayDeclarationSniff implements PHP_CodeSniffer_Sniff
             $exclude     = PHP_CodeSniffer_Tokens::$emptyTokens;
             $exclude[]   = T_COMMA;
             $nextContent = $phpcsFile->findNext($exclude, ($indices[0]['value'] + 1), $arrayEnd, true);
-            if ($nextContent === false) {
+            if ($nextContent === false || $nextContent === $arrayEnd) {
                 $singleValue = true;
             }
         }
