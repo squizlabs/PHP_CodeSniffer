@@ -140,3 +140,7 @@ switch ( $a ) {
         }
     return 5;
 }
+
+?>
+<?php $_cartQty = $this->getSummaryCount(); ?>
+<div id="minicart" <?php if ($_cartQty == 0): ?>class="empty"<?php endif; ?>>

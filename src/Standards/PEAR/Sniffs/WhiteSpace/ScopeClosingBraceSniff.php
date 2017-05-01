@@ -152,7 +152,7 @@ class ScopeClosingBraceSniff implements Sniff
                 $fix   = $phpcsFile->addFixableError($error, $scopeEnd, 'BreakIndent', $data);
             }
         } else {
-            $expectedIndent = ($startColumn - 1);
+            $expectedIndent = max(0, ($startColumn - 1));
             if ($braceIndent !== $expectedIndent) {
                 $error = 'Closing brace indented incorrectly; expected %s spaces, found %s';
                 $data  = array(
