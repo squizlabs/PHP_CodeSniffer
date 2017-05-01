@@ -39,6 +39,14 @@
 class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_CodeSniffer_Sniff
 {
 
+    /**
+     * Set this to true if you want this sniff to exclude constructors
+     * that their scope is private/protected.
+     *
+     * @var bool
+     */
+    public $constructorScope = false;
+
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -74,9 +82,18 @@ class Generic_Sniffs_CodeAnalysis_UselessOverridingMethodSniff implements PHP_Co
         // Get function name.
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
+        if ($this->constructorScope === true) {
+            $properties = $phpcsFile->getMethodProperties($stackPtr);
+            if (in_array($properties['scope'], array('private', 'protected'), true) === true && $methodName === '__construct') {
+                return;
+            }
+        }
+
         // Get all parameters from method signature.
         $signature = array();
-        foreach ($phpcsFile->getMethodParameters($stackPtr) as $param) {
+
+        $params = $phpcsFile->getMethodParameters($stackPtr);
+        foreach ($params as $param) {
             $signature[] = $param['name'];
         }
 
