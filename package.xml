@@ -14,7 +14,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2017-04-04</date>
+ <date>2017-05-04</date>
  <time>09:30:00</time>
  <version>
   <release>2.9.0</release>
@@ -2496,7 +2496,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <release>stable</release>
     <api>stable</api>
    </stability>
-   <date>2017-04-04</date>
+   <date>2017-05-04</date>
    <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added Generic.Debug.ESLint sniff to run ESLint over JS files and report errors
