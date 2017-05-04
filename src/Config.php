@@ -22,7 +22,7 @@ class Config
      *
      * @var string
      */
-    const VERSION = '3.0.0';
+    const VERSION = '3.0.1';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -1224,11 +1224,11 @@ class Config
     public function printPHPCSUsage()
     {
         echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--cache[=<cacheFile>]] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
-        echo '  [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>] ...'.PHP_EOL;
-        echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--tab-width=<tabWidth>]'.PHP_EOL;
+        echo '  [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>]'.PHP_EOL;
+        echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--stdin-path=<stdinPath>]'.PHP_EOL;
         echo '  [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '  [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '  [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] '.PHP_EOL;
+        echo '  [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '  [--encoding=<encoding>] [--parallel=<processes>] [--generator=<generator>]'.PHP_EOL;
         echo '  [--extensions=<extensions>] [--ignore=<patterns>] [--ignore-annotations] <file> - ...'.PHP_EOL;
         echo PHP_EOL;
@@ -1276,10 +1276,11 @@ class Config
         echo ' <reportFile>   Write the report to the specified file path'.PHP_EOL;
         echo ' <reportWidth>  How many columns wide screen reports should be printed'.PHP_EOL;
         echo '                or set to "auto" to use current screen width, where supported'.PHP_EOL;
+        echo ' <severity>     The minimum severity required to display an error or warning'.PHP_EOL;
         echo ' <sniffs>       A comma separated list of sniff codes to include or exclude from checking'.PHP_EOL;
         echo '                (all sniffs must be part of the specified standard)'.PHP_EOL;
-        echo ' <severity>     The minimum severity required to display an error or warning'.PHP_EOL;
         echo ' <standard>     The name or path of the coding standard to use'.PHP_EOL;
+        echo ' <stdinPath>    If processing STDIN, the file path that STDIN will be processed as'.PHP_EOL;
         echo ' <tabWidth>     The number of spaces each tab represents'.PHP_EOL;
 
     }//end printPHPCSUsage()
@@ -1292,7 +1293,7 @@ class Config
      */
     public function printPHPCBFUsage()
     {
-        echo 'Usage: phpcbf [-nwli] [-d key[=value]] [--ignore-annotations]'.PHP_EOL;
+        echo 'Usage: phpcbf [-nwli] [-d key[=value]] [--ignore-annotations] [--stdin-path=<stdinPath>]'.PHP_EOL;
         echo '  [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '  [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '  [--tab-width=<tabWidth>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
@@ -1323,10 +1324,11 @@ class Config
         echo '               e.g., module/php,es/js'.PHP_EOL;
         echo ' <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo ' <processes>   How many files should be fixed simultaneously (default is 1)'.PHP_EOL;
+        echo ' <severity>    The minimum severity required to fix an error or warning'.PHP_EOL;
         echo ' <sniffs>      A comma separated list of sniff codes to include or exclude from fixing'.PHP_EOL;
         echo '               (all sniffs must be part of the specified standard)'.PHP_EOL;
-        echo ' <severity>    The minimum severity required to fix an error or warning'.PHP_EOL;
         echo ' <standard>    The name or path of the coding standard to use'.PHP_EOL;
+        echo ' <stdinPath>   If processing STDIN, the file path that STDIN will be processed as'.PHP_EOL;
         echo ' <suffix>      Write modified files to a filename using this suffix'.PHP_EOL;
         echo '               ("diff" and "patch" are not used in this mode)'.PHP_EOL;
         echo ' <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
