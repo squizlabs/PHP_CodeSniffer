@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Files\File;
 
 class CamelCapsFunctionNameSniff extends AbstractScopeSniff
@@ -80,7 +81,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS, T_ANON_CLASS, T_INTERFACE, T_TRAIT), array(T_FUNCTION), true);
+        parent::__construct(Tokens::$ooScopeTokens, array(T_FUNCTION), true);
 
     }//end __construct()
 
