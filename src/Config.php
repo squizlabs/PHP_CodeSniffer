@@ -1223,12 +1223,13 @@ class Config
      */
     public function printPHPCSUsage()
     {
-        echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--cache[=<cacheFile>]] [--no-cache] [--colors] [--no-colors]'.PHP_EOL;
+        echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
+        echo '  [--cache[=<cacheFile>]] [--no-cache] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '  [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>]'.PHP_EOL;
         echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--stdin-path=<stdinPath>]'.PHP_EOL;
         echo '  [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '  [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
-        echo '  [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--tab-width=<tabWidth>]'.PHP_EOL;
+        echo '  [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>]'.PHP_EOL;
         echo '  [--encoding=<encoding>] [--parallel=<processes>] [--generator=<generator>]'.PHP_EOL;
         echo '  [--extensions=<extensions>] [--ignore=<patterns>] [--ignore-annotations] <file> - ...'.PHP_EOL;
         echo PHP_EOL;
