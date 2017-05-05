@@ -724,23 +724,60 @@ class PHP_CodeSniffer_Tokenizers_PHP
 
                 for ($i = ($stackPtr - 1); $i >= 0; $i--) {
                     if (is_array($tokens[$i]) === true) {
-                        $tokenType = $tokens[$i][0];
+                        $tokenTypeRightBefore = $tokens[$i][0];
                     } else {
-                        $tokenType = $tokens[$i];
+                        $tokenTypeRightBefore = $tokens[$i];
                     }
 
-                    if ($tokenType === T_FUNCTION) {
-                        $newToken['code'] = T_NULLABLE;
-                        $newToken['type'] = 'T_NULLABLE';
-                        break;
-                    } else if (in_array($tokenType, array(T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '=', '{', ';')) === true) {
-                        $newToken['code'] = T_INLINE_THEN;
-                        $newToken['type'] = 'T_INLINE_THEN';
-
-                        $insideInlineIf[] = $stackPtr;
+                    if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokenTypeRightBefore]) === false) {
                         break;
                     }
                 }
+
+                $tokensRightBeforeNullable = array(
+                                              // Return type hint, e.g. function (): ?string.
+                                              ':',
+                                              // Second and other parameters, e.g. function (?string $foo = null, ?string $boo = null).
+                                              ',',
+                                             );
+
+                if (in_array($tokenTypeRightBefore, $tokensRightBeforeNullable) === true) {
+                     $newToken['code'] = T_NULLABLE;
+                     $newToken['type'] = 'T_NULLABLE';
+                } else {
+                    for ($i = ($stackPtr - 1); $i >= 0; $i--) {
+                        if (is_array($tokens[$i]) === true) {
+                            $tokenType = $tokens[$i][0];
+                        } else {
+                            $tokenType = $tokens[$i];
+                        }
+
+                        $tokensBeforeInlineIf = array(
+                                                 T_OPEN_TAG,
+                                                 T_OPEN_TAG_WITH_ECHO,
+                                                 // Constant, e.g. const FOO = BAR ? 10 : 100.
+                                                 // Property, e.g. private $foo = BAR ? 10 : 100.
+                                                 // Static variable, e.g. static $foo = BAR ? 10 : 100.
+                                                 // Parameter, e.g. function ($foo = BAR ? 10 : 100).
+                                                 '=',
+                                                 '{',
+                                                 ';',
+                                                );
+
+                        // First parameter, e.g. function (?string $foo).
+                        if ($tokenType === T_FUNCTION) {
+                            $newToken['code'] = T_NULLABLE;
+                            $newToken['type'] = 'T_NULLABLE';
+                            break;
+                        } else if (in_array($tokenType, $tokensBeforeInlineIf) === true) {
+                            $newToken['code'] = T_INLINE_THEN;
+                            $newToken['type'] = 'T_INLINE_THEN';
+
+                            $insideInlineIf[] = $stackPtr;
+                            break;
+                        }
+                    }//end for
+                }//end if
 
                 $finalTokens[$newStackPtr] = $newToken;
                 $newStackPtr++;
