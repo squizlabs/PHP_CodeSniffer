@@ -1351,8 +1351,8 @@
         "extensions": ""
     },
     {
-        "name": "Slackbot",
-        "url": "iranianpep/slackbot",
+        "name": "Botonomous",
+        "url": "iranianpep/botonomous",
         "path": "src",
         "ignore": "",
         "extensions": ""
