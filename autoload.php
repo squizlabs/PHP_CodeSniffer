@@ -156,7 +156,7 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             include $path;
 
             $className  = null;
-            $newClasses = array_diff(get_declared_classes(), $classes);
+            $newClasses = array_reverse(array_diff(get_declared_classes(), $classes));
             foreach ($newClasses as $name) {
                 if (isset(self::$loadedFiles[$name]) === false) {
                     $className = $name;
@@ -165,8 +165,8 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             }
 
             if ($className === null) {
-                $newClasses = array_reverse(array_diff(get_declared_traits(), $classes));
-                foreach ($newClasses as $name) {
+                $newTraits = array_reverse(array_diff(get_declared_traits(), $traits));
+                foreach ($newTraits as $name) {
                     if (isset(self::$loadedFiles[$name]) === false) {
                         $className = $name;
                         break;
@@ -175,8 +175,8 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             }
 
             if ($className === null) {
-                $newClasses = array_reverse(array_diff(get_declared_interfaces(), $classes));
-                foreach ($newClasses as $name) {
+                $newInterfaces = array_reverse(array_diff(get_declared_interfaces(), $interfaces));
+                foreach ($newInterfaces as $name) {
                     if (isset(self::$loadedFiles[$name]) === false) {
                         $className = $name;
                         break;
