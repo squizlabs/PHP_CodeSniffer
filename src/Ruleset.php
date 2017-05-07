@@ -115,6 +115,21 @@ class Ruleset
      */
     private $config = null;
 
+    /**
+     * PHPCS native standards.
+     *
+     * @var array<string, bool>
+     */
+    private $nativeStandards = array(
+                                'generic'  => true,
+                                'mysource' => true,
+                                'pear'     => true,
+                                'psr1'     => true,
+                                'psr2'     => true,
+                                'squiz'    => true,
+                                'zend'     => true,
+                               );
+
 
     /**
      * Initialise the ruleset that the run will use.
@@ -186,14 +201,22 @@ class Ruleset
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {
             $parts     = explode('.', strtolower($sniffCode));
-            $sniffName = 'php_codesniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            if (isset($this->nativeStandards[$parts[0]]) === true) {
+                $sniffName = 'php_codesniffer\standards\\'.$sniffName;
+            }
+
             $sniffRestrictions[$sniffName] = true;
         }
 
         $sniffExclusions = array();
         foreach ($exclusions as $sniffCode) {
             $parts     = explode('.', strtolower($sniffCode));
-            $sniffName = 'php_codesniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            if (isset($this->nativeStandards[$parts[0]]) === true) {
+                $sniffName = 'php_codesniffer\standards\\'.$sniffName;
+            }
+
             $sniffExclusions[$sniffName] = true;
         }
 
