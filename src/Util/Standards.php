@@ -164,10 +164,9 @@ class Standards
     {
         $installedPaths = self::getInstalledStandardPaths();
         foreach ($installedPaths as $installedPath) {
-            if (basename($installedPath) === $standard) {
+            $standardPath = $installedPath.DIRECTORY_SEPARATOR.$standard;
+            if (file_exists($standardPath) === false && basename($installedPath) === $standard) {
                 $standardPath = $installedPath;
-            } else {
-                $standardPath = $installedPath.DIRECTORY_SEPARATOR.$standard;
             }
 
             $path = Common::realpath($standardPath.DIRECTORY_SEPARATOR.'ruleset.xml');
