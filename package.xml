@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - PHPCS now stops looking for a phpcs.xml file as soon as one is found, favoring the closest one to the current dir
   - Added missing help text for the --stdin-path CLI option to --help
+  - Fixed bug #1450 : Coding standard located under an installed_path with the same directory name throws an error
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1454 : Squiz.WhiteSpace.OperatorSpacing is not checking spacing on either side of a short ternary operator
     -- Thanks to Mponos George for the patch
  </notes>
