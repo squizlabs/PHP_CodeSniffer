@@ -334,17 +334,19 @@ class Config
                 $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml';
                 if (is_file($default) === true) {
                     $this->standards = array($default);
+                    break;
                 } else {
                     $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml.dist';
                     if (is_file($default) === true) {
                         $this->standards = array($default);
+                        break;
                     }
                 }
 
                 $lastDir    = $currentDir;
                 $currentDir = dirname($currentDir);
             } while ($currentDir !== '.' && $currentDir !== $lastDir);
-        }
+        }//end if
 
         // Check for content on STDIN.
         if ($checkStdin === true) {
