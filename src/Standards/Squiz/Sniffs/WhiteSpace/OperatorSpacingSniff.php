@@ -218,7 +218,8 @@ class OperatorSpacingSniff implements Sniff
         $operator = $tokens[$stackPtr]['content'];
 
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE
-            && (($tokens[($stackPtr - 1)]['code'] === T_INLINE_THEN && $tokens[($stackPtr )]['code'] === T_INLINE_ELSE) === false)
+            && (($tokens[($stackPtr - 1)]['code'] === T_INLINE_THEN
+            && $tokens[($stackPtr )]['code'] === T_INLINE_ELSE) === false)
         ) {
             $error = "Expected 1 space before \"$operator\"; 0 found";
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore');
