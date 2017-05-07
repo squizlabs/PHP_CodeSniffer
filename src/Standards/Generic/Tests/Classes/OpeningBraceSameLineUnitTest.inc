@@ -79,3 +79,13 @@ class A_Class_With_Really_Long_Name_4
 {
 
 }
+
+// While this is ok again.
+class Test_Class_Bad_G /*some comment*/ {
+}
+
+// And this is not.
+class Test_Class_Bad_G
+    /*some comment*/
+{
+}
