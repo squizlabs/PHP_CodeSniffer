@@ -98,15 +98,6 @@ class OperatorSpacingSniff implements Sniff
             }
         }
 
-        // Skip short ternary such as: "$foo = $bar ?: true;".
-        if (($tokens[$stackPtr]['code'] === T_INLINE_THEN
-            && $tokens[($stackPtr + 1)]['code'] === T_INLINE_ELSE)
-            || ($tokens[($stackPtr - 1)]['code'] === T_INLINE_THEN
-            && $tokens[$stackPtr]['code'] === T_INLINE_ELSE)
-        ) {
-                return;
-        }
-
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
             // If it's not a reference, then we expect one space either side of the
             // bitwise operator.
@@ -226,7 +217,9 @@ class OperatorSpacingSniff implements Sniff
 
         $operator = $tokens[$stackPtr]['content'];
 
-        if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
+        if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE
+            && (($tokens[($stackPtr - 1)]['code'] === T_INLINE_THEN && $tokens[($stackPtr )]['code'] === T_INLINE_ELSE) === false)
+        ) {
             $error = "Expected 1 space before \"$operator\"; 0 found";
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore');
             if ($fix === true) {
@@ -274,6 +267,13 @@ class OperatorSpacingSniff implements Sniff
         }
 
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            // Skip short ternary such as: "$foo = $bar ?: true;".
+            if (($tokens[$stackPtr]['code'] === T_INLINE_THEN
+                && $tokens[($stackPtr + 1)]['code'] === T_INLINE_ELSE)
+            ) {
+                return;
+            }
+
             $error = "Expected 1 space after \"$operator\"; 0 found";
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfter');
             if ($fix === true) {
