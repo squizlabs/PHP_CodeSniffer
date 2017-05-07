@@ -192,8 +192,10 @@ function foo($c = ((BAR)?10:100)) {}
 
 $res = $a ?: $b;
 $res = $a ?:  $b;
-$res = $a  ? : $b;
-$res = $a  ? :  $b;
+$res = $a  ?: $b;
+$res = $a  ?:  $b;
+
 $res = $a ? : $b;
+$res = $a ? :  $b;
 $res = $a  ? : $b;
 $res = $a  ? :  $b;
