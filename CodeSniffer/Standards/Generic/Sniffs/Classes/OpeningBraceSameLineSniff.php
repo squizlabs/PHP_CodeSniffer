@@ -74,7 +74,7 @@ class Generic_Sniffs_Classes_OpeningBraceSameLineSniff implements PHP_CodeSniffe
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
 
         // Is the brace on the same line as the class/interface/trait declaration ?
-        $lastClassLineToken = $phpcsFile->findPrevious(T_STRING, ($openingBrace - 1), $stackPtr);
+        $lastClassLineToken = $phpcsFile->findPrevious(T_WHITESPACE, ($openingBrace - 1), $stackPtr, true);
         $lastClassLine      = $tokens[$lastClassLineToken]['line'];
         $braceLine          = $tokens[$openingBrace]['line'];
         $lineDifference     = ($braceLine - $lastClassLine);
