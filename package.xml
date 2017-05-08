@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - PHPCS now stops looking for a phpcs.xml file as soon as one is found, favoring the closest one to the current dir
   - Added missing help text for the --stdin-path CLI option to --help
+  - Fixed bug #1447 : Running the unit tests with a phpunit config file breaks the test suite
+    -- Unknown arguments were not being handled correctly, but are now stored in $config->unknown
   - Fixed bug #1449 : Generic.Classes.OpeningBraceSameLine doesn't detect comment before opening brace
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1450 : Coding standard located under an installed_path with the same directory name throws an error

@@ -91,6 +91,9 @@ class Config
      *                                           );
      *                                       If the array value is NULL, the report will be written to the screen.
      *
+     * string[] unknown Any arguments gathered on the command line that are unknown to us.
+     *                  E.g., using `phpcs -c` will give array('c');
+     *
      * @var array<string, mixed>
      */
     private $settings = array(
@@ -128,13 +131,15 @@ class Config
                          'stdin'           => null,
                          'stdinContent'    => null,
                          'stdinPath'       => null,
+                         'unknown'         => null,
                         );
 
     /**
      * Whether or not to kill the process when an unknown command line arg is found.
      *
      * If FALSE, arguments that are not command line options or file/directory paths
-     * will be ignored and execution will continue.
+     * will be ignored and execution will continue. These values will be stored in
+     * $this->unknown.
      *
      * @var boolean
      */
@@ -468,6 +473,7 @@ class Config
         $this->stdin           = false;
         $this->stdinContent    = null;
         $this->stdinPath       = null;
+        $this->unknown         = array();
 
         $standard = self::getConfigData('default_standard');
         if ($standard !== null) {
@@ -635,7 +641,9 @@ class Config
             break;
         default:
             if ($this->dieOnUnknownArg === false) {
-                $this->values[$arg] = $arg;
+                $unknown       = $this->unknown;
+                $unknown[]     = $arg;
+                $this->unknown = $unknown;
             } else {
                 $this->processUnknownArgument('-'.$arg, $pos);
             }
