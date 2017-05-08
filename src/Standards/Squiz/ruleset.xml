@@ -3,6 +3,7 @@
  <description>The Squiz coding standard.</description>
 
  <!-- Include some specific sniffs -->
+ <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
  <rule ref="Generic.CodeAnalysis.EmptyStatement"/>
  <rule ref="Generic.Commenting.Todo"/>
  <rule ref="Generic.Commenting.DocComment"/>
