@@ -856,11 +856,25 @@ class PHP extends Tokenizer
                 $newToken            = array();
                 $newToken['content'] = '?';
 
+                $prevNonEmpty = null;
                 for ($i = ($stackPtr - 1); $i >= 0; $i--) {
                     if (is_array($tokens[$i]) === true) {
                         $tokenType = $tokens[$i][0];
                     } else {
                         $tokenType = $tokens[$i];
+                    }
+
+                    if ($prevNonEmpty === null
+                        && isset(Util\Tokens::$emptyTokens[$tokenType]) === false
+                    ) {
+                        // Found the previous non-empty token.
+                        if ($tokenType === ':' || $tokenType === ',') {
+                            $newToken['code'] = T_NULLABLE;
+                            $newToken['type'] = 'T_NULLABLE';
+                            break;
+                        }
+
+                        $prevNonEmpty = $tokenType;
                     }
 
                     if ($tokenType === T_FUNCTION) {
@@ -874,7 +888,7 @@ class PHP extends Tokenizer
                         $insideInlineIf[] = $stackPtr;
                         break;
                     }
-                }
+                }//end for
 
                 $finalTokens[$newStackPtr] = $newToken;
                 $newStackPtr++;

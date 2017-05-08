@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCS now stops looking for a phpcs.xml file as soon as one is found, favoring the closest one to the current dir
   - Added missing help text for the --stdin-path CLI option to --help
   - The Squiz standard now enforces short array syntax by default
+  - Fixed bug #1442 : T_NULLABLE detection not working for nullable parameters and return type hints in some cases
   - Fixed bug #1447 : Running the unit tests with a phpunit config file breaks the test suite
     -- Unknown arguments were not being handled correctly, but are now stored in $config->unknown
   - Fixed bug #1449 : Generic.Classes.OpeningBraceSameLine doesn't detect comment before opening brace
