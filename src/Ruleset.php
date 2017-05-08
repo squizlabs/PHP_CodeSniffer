@@ -115,21 +115,6 @@ class Ruleset
      */
     private $config = null;
 
-    /**
-     * PHPCS native standards.
-     *
-     * @var array<string, bool>
-     */
-    private $nativeStandards = array(
-                                'generic'  => true,
-                                'mysource' => true,
-                                'pear'     => true,
-                                'psr1'     => true,
-                                'psr2'     => true,
-                                'squiz'    => true,
-                                'zend'     => true,
-                               );
-
 
     /**
      * Initialise the ruleset that the run will use.
@@ -202,7 +187,7 @@ class Ruleset
         foreach ($restrictions as $sniffCode) {
             $parts     = explode('.', strtolower($sniffCode));
             $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
-            if (isset($this->nativeStandards[$parts[0]]) === true) {
+            if ($this->isNativeStandard($parts[0]) === true) {
                 $sniffName = 'php_codesniffer\standards\\'.$sniffName;
             }
 
@@ -213,7 +198,7 @@ class Ruleset
         foreach ($exclusions as $sniffCode) {
             $parts     = explode('.', strtolower($sniffCode));
             $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
-            if (isset($this->nativeStandards[$parts[0]]) === true) {
+            if ($this->isNativeStandard($parts[0]) === true) {
                 $sniffName = 'php_codesniffer\standards\\'.$sniffName;
             }
 
@@ -1284,6 +1269,29 @@ class Ruleset
         return array();
 
     }//end getIncludePatterns()
+
+
+    /**
+     * Verify whether a standard is native to PHP_Codesniffer or a custom standard.
+     *
+     * @param string $name The lowercase name of a standard.
+     *
+     * @return bool
+     */
+    public function isNativeStandard($name)
+    {
+        static $nativeStandards;
+
+        if (isset($nativeStandards) === false) {
+            $nativeStandards = glob(__DIR__.'/Standards/*', GLOB_ONLYDIR);
+            $nativeStandards = array_map('basename', $nativeStandards);
+            $nativeStandards = array_map('strtolower', $nativeStandards);
+            $nativeStandards = array_flip($nativeStandards);
+        }
+
+        return isset($nativeStandards[$name]);
+
+    }//end isNativeStandard()
 
 
 }//end class
