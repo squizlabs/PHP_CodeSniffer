@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Arguments on the command line now override or merge with those specified in a ruleset.xml file in all cases
   - PHPCS now stops looking for a phpcs.xml file as soon as one is found, favoring the closest one to the current dir
   - Added missing help text for the --stdin-path CLI option to --help
   - The Squiz standard now enforces short array syntax by default
