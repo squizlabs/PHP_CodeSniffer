@@ -442,8 +442,14 @@ class Common
             return $newName;
         }
 
-        $end     = (strlen($newName) - $sniffPos + 1);
-        $start   = strrpos($newName, '\\', ($end * -1));
+        $end   = (strlen($newName) - $sniffPos + 1);
+        $start = strrpos($newName, '\\', ($end * -1));
+
+        if ($start === false) {
+            // Nothing needs to be cleaned.
+            return $newName;
+        }
+
         $newName = substr($newName, ($start + 1));
         return $newName;
 
