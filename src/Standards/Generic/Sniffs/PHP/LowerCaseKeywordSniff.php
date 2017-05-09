@@ -125,7 +125,7 @@ class LowerCaseKeywordSniff implements Sniff
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($stackPtr, strtolower($keyword));
+                $phpcsFile->fixer->replaceToken($stackPtr, $expected);
             }
         } else {
             $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'lower');
