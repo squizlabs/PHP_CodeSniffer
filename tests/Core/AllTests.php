@@ -56,7 +56,7 @@ class AllTests
     /**
      * Add all core unit tests into a test suite.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return \PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {

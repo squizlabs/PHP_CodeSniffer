@@ -11,7 +11,7 @@
  *         parent::__construct(array(T_CLASS), array(T_FUNCTION));
  *     }
  *
- *     protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $)
+ *     protected function processTokenWithinScope(\PHP_CodeSniffer\Files\File $phpcsFile, $)
  *     {
  *         $className = $phpcsFile->getDeclarationName($currScope);
  *         echo 'encountered a method within class '.$className;

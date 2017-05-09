@@ -19,13 +19,13 @@ class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
     /**
      * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
      *
-     * @var PHP_CodeSniffer_File
+     * @var \PHP_CodeSniffer\Files\File
      */
     private $phpcsFile;
 
 
     /**
-     * Initialize & tokenize PHP_CodeSniffer_File with code from the test case file.
+     * Initialize & tokenize \PHP_CodeSniffer\Files\File with code from the test case file.
      *
      * Methods used for these tests can be found in a test case file in the same
      * directory and with the same name, using the .inc extension.
