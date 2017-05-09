@@ -1,36 +1,18 @@
 <?php
 /**
- * Generic_Sniffs_WhiteSpace_LanguageConstructSpacingSniff.
+ * Ensures all language constructs contain a single space between themselves and their content.
  *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @author    George Mponos <gmponos@gmail.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-/**
- * Generic_Sniffs_WhiteSpace_LanguageConstructSpacingSniff.
- *
- * Ensures all language constructs (without brackets) contain a
- * single space between themselves and their content.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @author    Marc McIntyre <mmcintyre@squiz.net>
- * @author    George Mponos <gmponos@gmail.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- */
-class Generic_Sniffs_WhiteSpace_LanguageConstructSpacingSniff implements PHP_CodeSniffer_Sniff
+namespace PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace;
+
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+
+class LanguageConstructSpacingSniff implements Sniff
 {
 
 
@@ -62,13 +44,13 @@ class Generic_Sniffs_WhiteSpace_LanguageConstructSpacingSniff implements PHP_Cod
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param PHP_CodeSniffer_File $phpcsFile The file being scanned.
-     * @param int                  $stackPtr  The position of the current token in
-     *                                        the stack passed in $tokens.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token in
+     *                                               the stack passed in $tokens.
      *
      * @return void
      */
-    public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 

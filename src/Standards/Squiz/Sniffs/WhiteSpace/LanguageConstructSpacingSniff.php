@@ -12,6 +12,9 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 
+/**
+ * @deprecated use the one from Generic {@see \PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\LanguageConstructSpacingSniff}
+ */
 class LanguageConstructSpacingSniff implements Sniff
 {
 
