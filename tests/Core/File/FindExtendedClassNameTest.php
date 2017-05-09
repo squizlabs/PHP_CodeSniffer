@@ -1,31 +1,19 @@
 <?php
 /**
- * Tests for the PHP_CodeSniffer_File:findExtendedClassName method.
+ * Tests for the \PHP_CodeSniffer\Files\File:findExtendedClassName method.
  *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-/**
- * Tests for the PHP_CodeSniffer_File:findExtendedClassName method.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- *
- * @group utilityMethods
- */
-class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
+namespace PHP_CodeSniffer\Tests\Core\File;
+
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Files\DummyFile;
+
+class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -33,7 +21,7 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
      *
      * @var PHP_CodeSniffer_File
      */
-    private $_phpcsFile;
+    private $phpcsFile;
 
 
     /**
@@ -46,17 +34,14 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $pathToTestcases  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
-        $phpcs            = new PHP_CodeSniffer();
-        $this->_phpcsFile = new PHP_CodeSniffer_File(
-            $pathToTestcases,
-            array(),
-            array(),
-            $phpcs
-        );
+        $config            = new Config();
+        $config->standards = array('Generic');
 
-        $contents = file_get_contents($pathToTestcases);
-        $this->_phpcsFile->start($contents);
+        $ruleset = new Ruleset($config);
+
+        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
+        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
+        $this->phpcsFile->process();
 
     }//end setUp()
 
@@ -68,7 +53,7 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset($this->_phpcsFile);
+        unset($this->phpcsFile);
 
     }//end tearDown()
 
@@ -80,8 +65,8 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
      */
     public function testExtendedClass()
     {
-        $start = ($this->_phpcsFile->numTokens - 1);
-        $class = $this->_phpcsFile->findPrevious(
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -89,7 +74,7 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
             '/* testExtendedClass */'
         );
 
-        $found = $this->_phpcsFile->findExtendedClassName(($class + 2));
+        $found = $this->phpcsFile->findExtendedClassName(($class + 2));
         $this->assertSame('testFECNClass', $found);
 
     }//end testExtendedClass()
@@ -102,8 +87,8 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
      */
     public function testNamespacedClass()
     {
-        $start = ($this->_phpcsFile->numTokens - 1);
-        $class = $this->_phpcsFile->findPrevious(
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -111,8 +96,8 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
             '/* testNamespacedClass */'
         );
 
-        $found = $this->_phpcsFile->findExtendedClassName(($class + 2));
-        $this->assertSame('\testFECNClass', $found);
+        $found = $this->phpcsFile->findExtendedClassName(($class + 2));
+        $this->assertSame('\PHP_CodeSniffer\Tests\Core\File\testFECNClass', $found);
 
     }//end testNamespacedClass()
 
@@ -124,8 +109,8 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
      */
     public function testNonExtendedClass()
     {
-        $start = ($this->_phpcsFile->numTokens - 1);
-        $class = $this->_phpcsFile->findPrevious(
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -133,7 +118,7 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
             '/* testNonExtendedClass */'
         );
 
-        $found = $this->_phpcsFile->findExtendedClassName(($class + 2));
+        $found = $this->phpcsFile->findExtendedClassName(($class + 2));
         $this->assertFalse($found);
 
     }//end testNonExtendedClass()
@@ -146,8 +131,8 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
      */
     public function testInterface()
     {
-        $start = ($this->_phpcsFile->numTokens - 1);
-        $class = $this->_phpcsFile->findPrevious(
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -155,7 +140,7 @@ class Core_File_FindExtendedClassNameTest extends PHPUnit_Framework_TestCase
             '/* testInterface */'
         );
 
-        $found = $this->_phpcsFile->findExtendedClassName(($class + 2));
+        $found = $this->phpcsFile->findExtendedClassName(($class + 2));
         $this->assertFalse($found);
 
     }//end testInterface()

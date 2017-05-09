@@ -1,4 +1,7 @@
 <?php
+/* @codingStandardsIgnoreFile */
+
+namespace PHP_CodeSniffer\Tests\Core\File;
 
 class testFECNClass {}
 
@@ -6,7 +9,7 @@ class testFECNClass {}
 class testFECNExtendedClass extends testFECNClass {}
 
 /* testNamespacedClass */
-class testFECNNamespacedClass extends \testFECNClass {}
+class testFECNNamespacedClass extends \PHP_CodeSniffer\Tests\Core\File\testFECNClass {}
 
 /* testNonExtendedClass */
 class testFECNNonExtendedClass {}

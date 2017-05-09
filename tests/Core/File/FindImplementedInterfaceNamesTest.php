@@ -1,31 +1,19 @@
 <?php
 /**
- * Tests for the PHP_CodeSniffer_File:findImplementedInterfaceNames method.
+ * Tests for the \PHP_CodeSniffer\Files\File:findImplementedInterfaceNames method.
  *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-/**
- * Tests for the PHP_CodeSniffer_File:findImplementedInterfaceNames method.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- *
- * @group utilityMethods
- */
-class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_TestCase
+namespace PHP_CodeSniffer\Tests\Core\File;
+
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Files\DummyFile;
+
+class FindImplementedInterfaceNamesTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -33,7 +21,7 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
      *
      * @var PHP_CodeSniffer_File
      */
-    private $_phpcsFile;
+    private $phpcsFile;
 
 
     /**
@@ -46,17 +34,14 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
      */
     public function setUp()
     {
-        $pathToTestcases  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
-        $phpcs            = new PHP_CodeSniffer();
-        $this->_phpcsFile = new PHP_CodeSniffer_File(
-            $pathToTestcases,
-            array(),
-            array(),
-            $phpcs
-        );
+        $config            = new Config();
+        $config->standards = array('Generic');
 
-        $contents = file_get_contents($pathToTestcases);
-        $this->_phpcsFile->start($contents);
+        $ruleset = new Ruleset($config);
+
+        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
+        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
+        $this->phpcsFile->process();
 
     }//end setUp()
 
@@ -68,7 +53,7 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
      */
     public function tearDown()
     {
-        unset($this->_phpcsFile);
+        unset($this->phpcsFile);
 
     }//end tearDown()
 
@@ -80,8 +65,8 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
      */
     public function testImplementedClass()
     {
-        $start = ($this->_phpcsFile->numTokens - 1);
-        $class = $this->_phpcsFile->findPrevious(
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -89,7 +74,7 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
             '/* testImplementedClass */'
         );
 
-        $found = $this->_phpcsFile->findImplementedInterfaceNames(($class + 2));
+        $found = $this->phpcsFile->findImplementedInterfaceNames(($class + 2));
         $this->assertSame(array('testFIINInterface'), $found);
 
     }//end testImplementedClass()
@@ -102,8 +87,8 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
      */
     public function testMultiImplementedClass()
     {
-        $start = ($this->_phpcsFile->numTokens - 1);
-        $class = $this->_phpcsFile->findPrevious(
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -111,7 +96,7 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
             '/* testMultiImplementedClass */'
         );
 
-        $found = $this->_phpcsFile->findImplementedInterfaceNames(($class + 2));
+        $found = $this->phpcsFile->findImplementedInterfaceNames(($class + 2));
         $this->assertSame(array('testFIINInterface', 'testFIINInterface2'), $found);
 
     }//end testMultiImplementedClass()
@@ -124,8 +109,8 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
      */
     public function testNamespacedClass()
     {
-        $start = ($this->_phpcsFile->numTokens - 1);
-        $class = $this->_phpcsFile->findPrevious(
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -133,8 +118,8 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
             '/* testNamespacedClass */'
         );
 
-        $found = $this->_phpcsFile->findImplementedInterfaceNames(($class + 2));
-        $this->assertSame(array('\testFIINInterface'), $found);
+        $found = $this->phpcsFile->findImplementedInterfaceNames(($class + 2));
+        $this->assertSame(array('\PHP_CodeSniffer\Tests\Core\File\testFIINInterface'), $found);
 
     }//end testNamespacedClass()
 
@@ -146,8 +131,8 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
      */
     public function testNonImplementedClass()
     {
-        $start = ($this->_phpcsFile->numTokens - 1);
-        $class = $this->_phpcsFile->findPrevious(
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -155,7 +140,7 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
             '/* testNonImplementedClass */'
         );
 
-        $found = $this->_phpcsFile->findImplementedInterfaceNames(($class + 2));
+        $found = $this->phpcsFile->findImplementedInterfaceNames(($class + 2));
         $this->assertFalse($found);
 
     }//end testNonImplementedClass()
@@ -168,8 +153,8 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
      */
     public function testInterface()
     {
-        $start = ($this->_phpcsFile->numTokens - 1);
-        $class = $this->_phpcsFile->findPrevious(
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -177,7 +162,7 @@ class Core_File_FindImplementedInterfaceNamesTest extends PHPUnit_Framework_Test
             '/* testInterface */'
         );
 
-        $found = $this->_phpcsFile->findImplementedInterfaceNames(($class + 2));
+        $found = $this->phpcsFile->findImplementedInterfaceNames(($class + 2));
         $this->assertFalse($found);
 
     }//end testInterface()

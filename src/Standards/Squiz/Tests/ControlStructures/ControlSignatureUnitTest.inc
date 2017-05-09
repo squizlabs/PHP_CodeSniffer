@@ -1,0 +1,213 @@
+<?php
+$i = 0;
+do {
+    echo $i;
+} while ($i > 0);
+
+do
+{
+    echo $i;
+} while ($i > 0);
+
+do
+{
+    echo $i;
+}
+while ($i > 0);
+
+do { echo $i; } while ($i > 0);
+
+do{
+    echo $i;
+}while($i > 0);
+
+while ($i < 1) {
+    echo $i;
+}
+
+while($i < 1){
+    echo $i;
+}
+
+while ($i < 1) { echo $i; }
+
+for ($i = 1; $i < 1; $i++) {
+    echo $i;
+}
+
+for($i = 1; $i < 1; $i++){
+    echo $i;
+}
+
+for ($i = 1; $i < 1; $i++) { echo $i; }
+
+if ($i == 0) {
+    $i = 1;
+}
+
+if($i == 0){
+    $i = 1;
+}
+
+if ($i == 0) { $i = 1; }
+
+if ($i == 0) {
+    $i = 1;
+} else {
+    $i = 0;
+}
+
+if ($i == 0) {
+    $i = 1;
+}else{
+    $i = 0;
+}
+
+if ($i == 0) { $i = 1; } else { $i = 0; }
+
+if ($i == 0) {
+    $i = 1;
+} else if ($i == 2) {
+    $i = 0;
+}
+
+if ($i == 0) {
+    $i = 1;
+}else   if($i == 2){
+    $i = 0;
+}
+
+if ($i == 0) { $i = 1; } else if ($i == 2) { $i = 0; }
+
+if ($i == 0) { // comments are allowed
+    $i = 1;
+}
+
+if ($i == 0) {// comments are allowed
+    $i = 1;
+}
+
+if ($i == 0) { /* comments are allowed*/
+    $i = 1;
+}
+
+if ($i == 0)
+{ // this is ok
+    $i = 1;
+}
+
+if ($i == 0) /* this is ok */ {
+}
+
+try {
+    $code = 'this';
+} catch (Exception $e) {
+    // Caught!
+}
+
+try { $code = 'this'; } catch (Exception $e) {
+    // Caught!
+}
+
+do { echo $i;
+} while ($i > 0);
+
+if ($i === 0) {
+
+    $i = 1
+}
+
+if ($a) {
+
+}
+elseif ($b) {
+}
+
+foreach ($items as $item) {
+    echo $item;
+}
+
+foreach($items as $item){
+    echo $item;
+}
+
+if ($a && $b) // && $c)
+{
+}
+
+if ($a == 5) :
+    echo "a equals 5";
+    echo "...";
+elseif ($a == 6) :
+    echo "a equals 6";
+    echo "!!!";
+else :
+    echo "a is neither 5 nor 6";
+endif;
+
+try {
+    // try body
+}
+catch (FirstExceptionType $e) {
+    // catch body
+}
+catch (OtherExceptionType $e) {
+    // catch body
+}
+
+switch($foo) {
+
+    case 'bar':
+    break;
+
+}
+
+if ($foo)  :
+endif;
+
+?>
+
+<?php while($row = $data->getRow()): ?>
+    <p><?= $val ?></p>
+<?php endwhile; ?>
+
+<?php
+if ($foo === 1) {
+    ?>
+    <table><tr><td>
+    <?php
+    echo '2';
+    ?>
+    </td></tr></table>
+    <?php
+}
+
+if ($test)    { /*one space after the bracket*/
+    echo 'true';
+}
+
+?>
+<?php foreach($formset['Fieldset'] as $fieldset): ?>
+    <?php foreach($fieldset['Field'] as $field): ?> 
+    <?php endforeach; ?>
+<?php endforeach; ?>
+
+<?php foreach ($formset['Fieldset'] as $fieldset) : ?> hello
+<?php endforeach; ?>
+
+<?php foreach ($formset['Fieldset'] as $fieldset) :
+    ?>
+    hello
+<?php endforeach; ?>
+
+<?php
+$a = 1; $b = true;
+if (1 === $a) :
+    if ($b) {
+        echo 'b';
+    } else {
+        echo 'not b';
+    }
+else :
+    echo 'not 1';
+endif;

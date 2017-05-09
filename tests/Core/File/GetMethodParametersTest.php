@@ -1,35 +1,19 @@
 <?php
 /**
- * Tests for the PHP_CodeSniffer_File:getMethodParameters method.
+ * Tests for the \PHP_CodeSniffer\Files\File:getMethodParameters method.
  *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Anti Veeranna <duke@masendav.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009-2014 SQLI <www.sqli.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
 
-/**
- * Tests for the PHP_CodeSniffer_File:getMethodParameters method.
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    Anti Veeranna <duke@masendav.com>
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2009-2014 SQLI <www.sqli.com>
- * @copyright 2006-2014 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- * @version   Release: @package_version@
- * @link      http://pear.php.net/package/PHP_CodeSniffer
- *
- * @group utilityMethods
- */
-class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
+namespace PHP_CodeSniffer\Tests\Core\File;
+
+use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Ruleset;
+use PHP_CodeSniffer\Files\DummyFile;
+
+class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -37,7 +21,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
      *
      * @var PHP_CodeSniffer_File
      */
-    private $_phpcsFile;
+    private $phpcsFile;
 
 
     /**
@@ -50,17 +34,14 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $pathToTestcases  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
-        $phpcs            = new PHP_CodeSniffer();
-        $this->_phpcsFile = new PHP_CodeSniffer_File(
-            $pathToTestcases,
-            array(),
-            array(),
-            $phpcs
-        );
+        $config            = new Config();
+        $config->standards = array('Generic');
 
-        $contents = file_get_contents($pathToTestcases);
-        $this->_phpcsFile->start($contents);
+        $ruleset = new Ruleset($config);
+
+        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
+        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
+        $this->phpcsFile->process();
 
     }//end setUp()
 
@@ -72,7 +53,7 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
      */
     public function tearDown()
     {
-        unset($this->_phpcsFile);
+        unset($this->phpcsFile);
 
     }//end tearDown()
 
@@ -86,7 +67,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'token'             => 9,
                         'name'              => '$var',
                         'content'           => '&$var',
                         'pass_by_reference' => true,
@@ -95,8 +75,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'nullable_type'     => false,
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -104,7 +84,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testPassByReference */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
     }//end testPassByReference()
@@ -119,7 +100,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'token'             => 24,
                         'name'              => '$var',
                         'content'           => 'array $var',
                         'pass_by_reference' => false,
@@ -128,8 +108,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'nullable_type'     => false,
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -137,7 +117,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testArrayHint */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
     }//end testArrayHint()
@@ -152,7 +133,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'token'             => 89,
                         'name'              => '$var1',
                         'content'           => 'foo $var1',
                         'pass_by_reference' => false,
@@ -162,7 +142,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                        );
 
         $expected[1] = array(
-                        'token'             => 94,
                         'name'              => '$var2',
                         'content'           => 'bar $var2',
                         'pass_by_reference' => false,
@@ -171,8 +150,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'nullable_type'     => false,
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -180,7 +159,9 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testTypeHint */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
+        unset($found[1]['token']);
         $this->assertSame($expected, $found);
 
     }//end testTypeHint()
@@ -195,17 +176,16 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'token'             => 115,
                         'name'              => '$var',
                         'content'           => 'self $var',
                         'pass_by_reference' => false,
                         'variable_length'   => false,
                         'type_hint'         => 'self',
-                        'nullable_type'     => false
+                        'nullable_type'     => false,
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -213,10 +193,11 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testSelfTypeHint */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
-    }//end testTypeHint()
+    }//end testSelfTypeHint()
 
 
     /**
@@ -228,7 +209,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'token'             => 133,
                         'name'              => '$var1',
                         'content'           => '?int $var1',
                         'pass_by_reference' => false,
@@ -238,7 +218,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                        );
 
         $expected[1] = array(
-                        'token'             => 140,
                         'name'              => '$var2',
                         'content'           => '?\bar $var2',
                         'pass_by_reference' => false,
@@ -247,8 +226,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'nullable_type'     => true,
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -256,7 +235,9 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testNullableTypeHint */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
+        unset($found[1]['token']);
         $this->assertSame($expected, $found);
 
     }//end testNullableTypeHint()
@@ -271,7 +252,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'token'             => 37,
                         'name'              => '$var',
                         'content'           => '$var',
                         'pass_by_reference' => false,
@@ -280,8 +260,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'nullable_type'     => false,
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -289,7 +269,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testVariable */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
     }//end testVariable()
@@ -304,7 +285,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'token'             => 50,
                         'name'              => '$var1',
                         'content'           => '$var1=self::CONSTANT',
                         'default'           => 'self::CONSTANT',
@@ -314,8 +294,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'nullable_type'     => false,
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -323,7 +303,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testSingleDefaultValue */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
         $this->assertSame($expected, $found);
 
     }//end testSingleDefaultValue()
@@ -338,7 +319,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
     {
         $expected    = array();
         $expected[0] = array(
-                        'token'             => 67,
                         'name'              => '$var1',
                         'content'           => '$var1=1',
                         'default'           => '1',
@@ -348,7 +328,6 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'nullable_type'     => false,
                        );
         $expected[1] = array(
-                        'token'             => 72,
                         'name'              => '$var2',
                         'content'           => "\$var2='value'",
                         'default'           => "'value'",
@@ -358,8 +337,8 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
                         'nullable_type'     => false,
                        );
 
-        $start    = ($this->_phpcsFile->numTokens - 1);
-        $function = $this->_phpcsFile->findPrevious(
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
@@ -367,11 +346,12 @@ class Core_File_GetMethodParametersTest extends PHPUnit_Framework_TestCase
             '/* testDefaultValues */'
         );
 
-        $found = $this->_phpcsFile->getMethodParameters(($function + 2));
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
+        unset($found[1]['token']);
         $this->assertSame($expected, $found);
 
     }//end testDefaultValues()
 
 
 }//end class
-
