@@ -146,6 +146,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 
             $sniffClassName = substr(get_class($this), 0, -8).'Sniff';
             $sniffClassName = str_replace('\Tests\\', '\Sniffs\\', $sniffClassName);
+            $sniffClassName = Common::cleanSniffClass($sniffClassName);
 
             $restrictions = array(strtolower($sniffClassName) => true);
             $ruleset->registerSniffs(array($sniffFile), $restrictions, array());

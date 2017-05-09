@@ -186,14 +186,14 @@ class Ruleset
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {
             $parts     = explode('.', strtolower($sniffCode));
-            $sniffName = 'php_codesniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
             $sniffRestrictions[$sniffName] = true;
         }
 
         $sniffExclusions = array();
         foreach ($exclusions as $sniffCode) {
             $parts     = explode('.', strtolower($sniffCode));
-            $sniffName = 'php_codesniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
             $sniffExclusions[$sniffName] = true;
         }
 
@@ -1059,12 +1059,13 @@ class Ruleset
                 continue;
             }
 
-            $className = Autoload::loadFile($file);
+            $className   = Autoload::loadFile($file);
+            $compareName = Util\Common::cleanSniffClass($className);
 
             // If they have specified a list of sniffs to restrict to, check
             // to see if this sniff is allowed.
             if (empty($restrictions) === false
-                && isset($restrictions[strtolower($className)]) === false
+                && isset($restrictions[$compareName]) === false
             ) {
                 continue;
             }
@@ -1072,7 +1073,7 @@ class Ruleset
             // If they have specified a list of sniffs to exclude, check
             // to see if this sniff is allowed.
             if (empty($exclusions) === false
-                && isset($exclusions[strtolower($className)]) === true
+                && isset($exclusions[$compareName]) === true
             ) {
                 continue;
             }

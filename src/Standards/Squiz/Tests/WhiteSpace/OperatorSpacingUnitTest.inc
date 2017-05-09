@@ -199,3 +199,5 @@ $res = $a ? : $b;
 $res = $a ? :  $b;
 $res = $a  ? : $b;
 $res = $a  ? :  $b;
+
+function foo(string $a = '', ?string $b = ''): ?string {}

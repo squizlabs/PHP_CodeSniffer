@@ -17,6 +17,7 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Files\DummyFile;
 use PHP_CodeSniffer\Util\Cache;
 use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Standards;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 class Runner
@@ -266,6 +267,12 @@ class Runner
         // Create this class so it is autoloaded and sets up a bunch
         // of PHP_CodeSniffer-specific token type constants.
         $tokens = new Util\Tokens();
+
+        // Allow autoloading of custom files inside installed standards.
+        $installedPaths = Standards::getInstalledStandardPaths();
+        foreach ($installedPaths as $path) {
+            Autoload::addSearchPath($path);
+        }
 
         // The ruleset contains all the information about how the files
         // should be checked and/or fixed.

@@ -781,6 +781,10 @@ class Config
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
+                if (isset($this->overriddenDefaults['sniffs']) === true) {
+                    break;
+                }
+
                 $sniffs = explode(',', substr($arg, 7));
                 foreach ($sniffs as $sniff) {
                     if (substr_count($sniff, '.') !== 2) {
@@ -793,6 +797,10 @@ class Config
                 $this->sniffs = $sniffs;
                 $this->overriddenDefaults['sniffs'] = true;
             } else if (substr($arg, 0, 8) === 'exclude=') {
+                if (isset($this->overriddenDefaults['exclude']) === true) {
+                    break;
+                }
+
                 $sniffs = explode(',', substr($arg, 8));
                 foreach ($sniffs as $sniff) {
                     if (substr_count($sniff, '.') !== 2) {
@@ -807,6 +815,10 @@ class Config
             } else if (defined('PHP_CODESNIFFER_IN_TESTS') === false
                 && substr($arg, 0, 6) === 'cache='
             ) {
+                if ($this->cache === false || isset($this->overriddenDefaults['cacheFile']) === true) {
+                    break;
+                }
+
                 // Turn caching on.
                 $this->cache = true;
                 $this->overriddenDefaults['cache'] = true;
@@ -886,6 +898,10 @@ class Config
                     $this->processFilePath($inputFile);
                 }
             } else if (substr($arg, 0, 11) === 'stdin-path=') {
+                if (isset($this->overriddenDefaults['stdinPath']) === true) {
+                    break;
+                }
+
                 $this->stdinPath = Util\Common::realpath(substr($arg, 11));
 
                 // It may not exist and return false instead, so use whatever they gave us.
@@ -895,6 +911,10 @@ class Config
 
                 $this->overriddenDefaults['stdinPath'] = true;
             } else if (PHP_CODESNIFFER_CBF === false && substr($arg, 0, 12) === 'report-file=') {
+                if (isset($this->overriddenDefaults['reportFile']) === true) {
+                    break;
+                }
+
                 $this->reportFile = Util\Common::realpath(substr($arg, 12));
 
                 // It may not exist and return false instead.
@@ -1030,6 +1050,10 @@ class Config
 
                 $this->overriddenDefaults['standards'] = true;
             } else if (substr($arg, 0, 11) === 'extensions=') {
+                if (isset($this->overriddenDefaults['extensions']) === true) {
+                    break;
+                }
+
                 $extensions    = explode(',', substr($arg, 11));
                 $newExtensions = array();
                 foreach ($extensions as $ext) {
@@ -1051,6 +1075,10 @@ class Config
                 $this->extensions = $newExtensions;
                 $this->overriddenDefaults['extensions'] = true;
             } else if (substr($arg, 0, 7) === 'suffix=') {
+                if (isset($this->overriddenDefaults['suffix']) === true) {
+                    break;
+                }
+
                 $this->suffix = explode(',', substr($arg, 7));
                 $this->overriddenDefaults['suffix'] = true;
             } else if (substr($arg, 0, 9) === 'parallel=') {
@@ -1063,15 +1091,32 @@ class Config
             } else if (substr($arg, 0, 9) === 'severity=') {
                 $this->errorSeverity   = (int) substr($arg, 9);
                 $this->warningSeverity = $this->errorSeverity;
-                $this->overriddenDefaults['errorSeverity']   = true;
-                $this->overriddenDefaults['warningSeverity'] = true;
+                if (isset($this->overriddenDefaults['errorSeverity']) === false) {
+                    $this->overriddenDefaults['errorSeverity'] = true;
+                }
+
+                if (isset($this->overriddenDefaults['warningSeverity']) === false) {
+                    $this->overriddenDefaults['warningSeverity'] = true;
+                }
             } else if (substr($arg, 0, 15) === 'error-severity=') {
+                if (isset($this->overriddenDefaults['errorSeverity']) === true) {
+                    break;
+                }
+
                 $this->errorSeverity = (int) substr($arg, 15);
                 $this->overriddenDefaults['errorSeverity'] = true;
             } else if (substr($arg, 0, 17) === 'warning-severity=') {
+                if (isset($this->overriddenDefaults['warningSeverity']) === true) {
+                    break;
+                }
+
                 $this->warningSeverity = (int) substr($arg, 17);
                 $this->overriddenDefaults['warningSeverity'] = true;
             } else if (substr($arg, 0, 7) === 'ignore=') {
+                if (isset($this->overriddenDefaults['ignored']) === true) {
+                    break;
+                }
+
                 // Split the ignore string on commas, unless the comma is escaped
                 // using 1 or 3 slashes (\, or \\\,).
                 $patterns = preg_split(
@@ -1094,12 +1139,24 @@ class Config
             } else if (substr($arg, 0, 10) === 'generator='
                 && PHP_CODESNIFFER_CBF === false
             ) {
+                if (isset($this->overriddenDefaults['generator']) === true) {
+                    break;
+                }
+
                 $this->generator = substr($arg, 10);
                 $this->overriddenDefaults['generator'] = true;
             } else if (substr($arg, 0, 9) === 'encoding=') {
+                if (isset($this->overriddenDefaults['encoding']) === true) {
+                    break;
+                }
+
                 $this->encoding = strtolower(substr($arg, 9));
                 $this->overriddenDefaults['encoding'] = true;
             } else if (substr($arg, 0, 10) === 'tab-width=') {
+                if (isset($this->overriddenDefaults['tabWidth']) === true) {
+                    break;
+                }
+
                 $this->tabWidth = (int) substr($arg, 10);
                 $this->overriddenDefaults['tabWidth'] = true;
             } else {
