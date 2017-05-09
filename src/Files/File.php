@@ -1101,9 +1101,9 @@ class File
      *
      * @return string|null The name of the class, interface, trait, or function;
      *                     or NULL if the function or class is anonymous.
-     * @throws PHP_CodeSniffer_Exception If the specified token is not of type
-     *                                   T_FUNCTION, T_CLASS, T_ANON_CLASS,
-     *                                   T_CLOSURE, T_TRAIT, or T_INTERFACE.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified token is not of type
+     *                                                      T_FUNCTION, T_CLASS, T_ANON_CLASS,
+     *                                                      T_CLOSURE, T_TRAIT, or T_INTERFACE.
      */
     public function getDeclarationName($stackPtr)
     {
@@ -1165,8 +1165,8 @@ class File
      *                      to acquire the parameters for.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the specified $stackPtr is not of
-     *                                   type T_FUNCTION or T_CLOSURE.
+     * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the specified $stackPtr is not of
+     *                                                        type T_FUNCTION or T_CLOSURE.
      */
     public function getMethodParameters($stackPtr)
     {
@@ -1332,8 +1332,8 @@ class File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the specified position is not a
-     *                                   T_FUNCTION token.
+     * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the specified position is not a
+     *                                                        T_FUNCTION token.
      */
     public function getMethodProperties($stackPtr)
     {
@@ -1428,9 +1428,9 @@ class File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the specified position is not a
-     *                                   T_VARIABLE token, or if the position is not
-     *                                   a class member variable.
+     * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the specified position is not a
+     *                                                        T_VARIABLE token, or if the position is not
+     *                                                        a class member variable.
      */
     public function getMemberProperties($stackPtr)
     {
@@ -1528,8 +1528,8 @@ class File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If the specified position is not a
-     *                                   T_CLASS token.
+     * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the specified position is not a
+     *                                                        T_CLASS token.
      */
     public function getClassProperties($stackPtr)
     {

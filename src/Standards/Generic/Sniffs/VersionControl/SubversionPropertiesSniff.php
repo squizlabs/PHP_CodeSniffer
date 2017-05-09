@@ -9,6 +9,7 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\VersionControl;
 
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 
@@ -119,8 +120,8 @@ class SubversionPropertiesSniff implements Sniff
      * @param string $path The path to return Subversion properties on.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception If Subversion properties file could
-     *                                   not be opened.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If Subversion properties file could
+     *                                                      not be opened.
      */
     protected function getProperties($path)
     {
@@ -138,7 +139,7 @@ class SubversionPropertiesSniff implements Sniff
                 $handle = fopen($path, 'r');
                 if ($handle === false) {
                     $error = 'Error opening file; could not get Subversion properties';
-                    throw new PHP_CodeSniffer_Exception($error);
+                    throw new RuntimeException($error);
                 }
 
                 while (feof($handle) === false) {

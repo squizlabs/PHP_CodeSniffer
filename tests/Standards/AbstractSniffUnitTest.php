@@ -14,11 +14,10 @@
 namespace PHP_CodeSniffer\Tests\Standards;
 
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\LocalFile;
-use PHP_CodeSniffer\RuntimeException;
 use PHP_CodeSniffer\Util\Common;
-use PHP_CodeSniffer\Autoload;
 
 abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 {
@@ -210,7 +209,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * @param \PHP_CodeSniffer\Files\LocalFile $file The file being tested.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
      */
     public function generateFailureMessages(LocalFile $file)
     {
