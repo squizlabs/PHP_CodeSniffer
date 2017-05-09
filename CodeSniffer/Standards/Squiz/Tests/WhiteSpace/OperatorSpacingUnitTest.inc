@@ -189,3 +189,5 @@ function foo(string $bar, array $baz, ?MyClass $object) : MyClass {}
 declare(strict_types=1);
 
 function foo($c = ((BAR)?10:100)) {}
+
+function foo(string $a = '', ?string $b = ''): ?string {}
