@@ -72,7 +72,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The PHP_CodeSniffer file where this
      *                                               token was found.
      * @param int                         $stackPtr  The position where the token was found.
-     * @param string                      $currScope The current scope opener token.
+     * @param int                         $currScope The current scope opener token.
      *
      * @return void
      */
