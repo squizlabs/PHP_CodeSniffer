@@ -16,4 +16,6 @@ GOTO a;
 function (Array $a) {}
 const PRIVATE;
 HttpStatus::CONTINUE;
-function
+function;
+
+YieLD;
