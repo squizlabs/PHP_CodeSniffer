@@ -425,4 +425,35 @@ class Common
     }//end getSniffCode()
 
 
+    /**
+     * Removes project-specific information from a sniff class name.
+     *
+     * @param string $sniffClass The fully qualified sniff class name.
+     *
+     * @return string
+     */
+    public static function cleanSniffClass($sniffClass)
+    {
+        $newName = strtolower($sniffClass);
+
+        $sniffPos = strrpos($newName, '\sniffs\\');
+        if ($sniffPos === false) {
+            // Nothing we can do as it isn't in a known format.
+            return $newName;
+        }
+
+        $end   = (strlen($newName) - $sniffPos + 1);
+        $start = strrpos($newName, '\\', ($end * -1));
+
+        if ($start === false) {
+            // Nothing needs to be cleaned.
+            return $newName;
+        }
+
+        $newName = substr($newName, ($start + 1));
+        return $newName;
+
+    }//end cleanSniffClass()
+
+
 }//end class
