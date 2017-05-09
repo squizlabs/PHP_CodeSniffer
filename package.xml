@@ -31,6 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added missing help text for the --stdin-path CLI option to --help
   - The Squiz standard now enforces short array syntax by default
   - The autoloader is now working correctly with classes created with class_alias()
+  - The autoloader will now search for files inside all directories in the installed_paths config var
+    -- This allows autoloading of files inside included custom coding standards without manually requiring them
   - Fixed bug #1442 : T_NULLABLE detection not working for nullable parameters and return type hints in some cases
   - Fixed bug #1447 : Running the unit tests with a phpunit config file breaks the test suite
     -- Unknown arguments were not being handled correctly, but are now stored in $config->unknown
