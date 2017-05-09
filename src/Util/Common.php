@@ -435,7 +435,14 @@ class Common
     public static function cleanSniffClass($sniffClass)
     {
         $newName = strtolower($sniffClass);
-        $end     = (strlen($newName) - strrpos($newName, '\sniffs\\') + 1);
+
+        $sniffPos = strrpos($newName, '\sniffs\\');
+        if ($sniffPos === false) {
+            // Nothing we can do as it isn't in a known format.
+            return $newName;
+        }
+
+        $end     = (strlen($newName) - $sniffPos + 1);
         $start   = strrpos($newName, '\\', ($end * -1));
         $newName = substr($newName, ($start + 1));
         return $newName;
