@@ -186,14 +186,22 @@ class Ruleset
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {
             $parts     = explode('.', strtolower($sniffCode));
-            $sniffName = 'php_codesniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            if ($this->isNativeStandard($parts[0]) === true) {
+                $sniffName = 'php_codesniffer\standards\\'.$sniffName;
+            }
+
             $sniffRestrictions[$sniffName] = true;
         }
 
         $sniffExclusions = array();
         foreach ($exclusions as $sniffCode) {
             $parts     = explode('.', strtolower($sniffCode));
-            $sniffName = 'php_codesniffer\standards\\'.$parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            if ($this->isNativeStandard($parts[0]) === true) {
+                $sniffName = 'php_codesniffer\standards\\'.$sniffName;
+            }
+
             $sniffExclusions[$sniffName] = true;
         }
 
@@ -1261,6 +1269,29 @@ class Ruleset
         return array();
 
     }//end getIncludePatterns()
+
+
+    /**
+     * Verify whether a standard is native to PHP_Codesniffer or a custom standard.
+     *
+     * @param string $name The lowercase name of a standard.
+     *
+     * @return bool
+     */
+    public function isNativeStandard($name)
+    {
+        static $nativeStandards;
+
+        if (isset($nativeStandards) === false) {
+            $nativeStandards = glob(__DIR__.'/Standards/*', GLOB_ONLYDIR);
+            $nativeStandards = array_map('basename', $nativeStandards);
+            $nativeStandards = array_map('strtolower', $nativeStandards);
+            $nativeStandards = array_flip($nativeStandards);
+        }
+
+        return isset($nativeStandards[$name]);
+
+    }//end isNativeStandard()
 
 
 }//end class
