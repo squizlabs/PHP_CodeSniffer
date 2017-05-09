@@ -2,9 +2,9 @@
 /**
  * Ensures all language constructs contain a single space between themselves and their content.
  *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @author     Greg Sherwood <gsherwood@squiz.net>
+ * @copyright  2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @license    https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @deprecated use the one from Generic {@see \PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace\LanguageConstructSpacingSniff}
  */
 
