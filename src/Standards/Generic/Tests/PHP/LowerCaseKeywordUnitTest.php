@@ -33,7 +33,7 @@ class LowerCaseKeywordUnitTest extends AbstractSniffUnitTest
                 14 => 7,
                 15 => 1,
                 16 => 1,
-                21 => 1,
+                19 => 1,
                );
 
     }//end getErrorList()
