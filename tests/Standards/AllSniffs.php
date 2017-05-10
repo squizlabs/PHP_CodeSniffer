@@ -56,7 +56,7 @@ class AllSniffs
      * Sniff unit tests are found by recursing through the 'Tests' directory
      * of each installed coding standard.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return \PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {

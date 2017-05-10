@@ -56,7 +56,7 @@ interface Sniff
      * </code>
      *
      * If the sniff discovers an anomaly in the code, they can raise an error
-     * by calling addError() on the PHP_CodeSniffer_File object, specifying an error
+     * by calling addError() on the \PHP_CodeSniffer\Files\File object, specifying an error
      * message and the position of the offending token:
      *
      * <code>

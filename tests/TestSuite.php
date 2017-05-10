@@ -16,10 +16,10 @@ class TestSuite extends \PHPUnit_Framework_TestSuite
     /**
      * Runs the tests and collects their result in a TestResult.
      *
-     * @param PHPUnit_Framework_TestResult $result A test result.
-     * @param mixed                        $filter The filter passed to each test.
+     * @param \PHPUnit_Framework_TestResult $result A test result.
+     * @param mixed                         $filter The filter passed to each test.
      *
-     * @return PHPUnit_Framework_TestResult
+     * @return \PHPUnit_Framework_TestResult
      */
     public function run(\PHPUnit_Framework_TestResult $result=null, $filter=false)
     {
