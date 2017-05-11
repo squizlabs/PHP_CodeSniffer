@@ -86,7 +86,7 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
         $prev       = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($first - 1), null, true);
         $foundLines = ($tokens[$first]['line'] - $tokens[$prev]['line'] - 1);
-        if ($foundLines === 1) {
+        if ($foundLines === 1 || ($foundLines === 0 && $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET)) {
             return;
         }
 
