@@ -20,7 +20,7 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
     /**
      * The number of blank lines between member vars.
      *
-     * @var int
+     * @var integer
      */
     public $spacing = 1;
 
@@ -28,7 +28,7 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
     /**
      * The number of blank lines between the class opener and the first member var.
      *
-     * @var int
+     * @var integer
      */
     public $firstMemberSpacing = 1;
 
