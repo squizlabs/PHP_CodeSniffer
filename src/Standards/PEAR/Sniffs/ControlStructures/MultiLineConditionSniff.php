@@ -41,7 +41,7 @@ class MultiLineConditionSniff implements Sniff
      * The size of each tab is important, so it should be specified
      * using the --tab-width CLI argument.
      *
-     * @var bool
+     * @var boolean
      */
     public $tabIndent = false;
 
@@ -49,9 +49,9 @@ class MultiLineConditionSniff implements Sniff
     /**
      * The --tab-width CLI value that is being used.
      *
-     * @var int
+     * @var integer
      */
-    private $_tabWidth = null;
+    private $tabWidth = null;
 
 
     /**
@@ -86,15 +86,14 @@ class MultiLineConditionSniff implements Sniff
             return;
         }
 
-        if ($this->_tabWidth === null) {
-            $cliValues = $phpcsFile->phpcs->cli->getCommandLineValues();
-            if (isset($cliValues['tabWidth']) === false || $cliValues['tabWidth'] === 0) {
+        if ($this->tabWidth === null) {
+            if (isset($phpcsFile->config->tabWidth) === false || $phpcsFile->config->tabWidth === 0) {
                 // We have no idea how wide tabs are, so assume 4 spaces for fixing.
                 // It shouldn't really matter because indent checks elsewhere in the
                 // standard should fix things up.
-                $this->_tabWidth = 4;
+                $this->tabWidth = 4;
             } else {
-                $this->_tabWidth = $cliValues['tabWidth'];
+                $this->tabWidth = $phpcsFile->config->tabWidth;
             }
         }
 
@@ -193,8 +192,8 @@ class MultiLineConditionSniff implements Sniff
                     if ($this->tabIndent === true) {
                         $error .= '%s tabs, found %s';
                         $data   = array(
-                                   floor($expectedIndent / $this->_tabWidth),
-                                   floor($foundIndent / $this->_tabWidth),
+                                   floor($expectedIndent / $this->tabWidth),
+                                   floor($foundIndent / $this->tabWidth),
                                   );
                     } else {
                         $error .= '%s spaces but found %s';
@@ -208,9 +207,9 @@ class MultiLineConditionSniff implements Sniff
                     if ($fix === true) {
                         $spaces = '';
                         if ($this->tabIndent === true) {
-                            $numTabs = floor($expectedIndent / $this->_tabWidth);
+                            $numTabs = floor($expectedIndent / $this->tabWidth);
                             if ($numTabs > 0) {
-                                $numSpaces = ($expectedIndent - ($numTabs * $this->_tabWidth));
+                                $numSpaces = ($expectedIndent - ($numTabs * $this->tabWidth));
                                 $spaces    = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
                             }
                         } else if ($expectedIndent > 0) {
