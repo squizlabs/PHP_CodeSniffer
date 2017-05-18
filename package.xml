@@ -26,6 +26,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - This release contains a fix for a security advisory related to the improper handling of a shell command
+      -- A properly crafted filename would allow for arbitrary code execution when using the --filter=gitmodified command line option
+      -- All version 3 users are encouraged to upgrade to this version, especially if you are checking 3rd-party code
+         --- e.g., you run PHPCS over libraries that you did not write
+         --- e.g., you provide a web service that runs PHPCS over user-uploaded files or 3rd-party repositories
+         --- e.g., you allow external tool paths to be set by user-defined values
+      -- If you are unable to upgrade but you check 3rd-party code, ensure you are not using the Git modified filter
+      -- This advisory does not affect PHP_CodeSniffer version 2.
+      -- Thanks to Sergei Morozov for the report and patch
+
   - Arguments on the command line now override or merge with those specified in a ruleset.xml file in all cases
   - PHPCS now stops looking for a phpcs.xml file as soon as one is found, favoring the closest one to the current dir
   - Added missing help text for the --stdin-path CLI option to --help
