@@ -269,9 +269,9 @@ class Runner
         $tokens = new Util\Tokens();
 
         // Allow autoloading of custom files inside installed standards.
-        $installedPaths = Standards::getInstalledStandardPaths();
-        foreach ($installedPaths as $path) {
-            Autoload::addSearchPath($path);
+        $installedStandards = Standards::getInstalledStandardDetails();
+        foreach ($installedStandards as $name => $details) {
+            Autoload::addSearchPath($details['path'], $details['namespace']);
         }
 
         // The ruleset contains all the information about how the files

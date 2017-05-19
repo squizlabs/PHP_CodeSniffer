@@ -45,6 +45,100 @@ class Standards
 
 
     /**
+     * Get the details of all coding standards installed.
+     *
+     * Coding standards are directories located in the
+     * CodeSniffer/Standards directory. Valid coding standards
+     * include a Sniffs subdirectory.
+     *
+     * The details returned for each standard are:
+     * - path:      the path to the coding standard's main directory
+     * - name:      the name of the coding standard, as sourced from the ruleset.xml file
+     * - namespace: the namespace used by the coding standard, as sourced from the ruleset.xml file
+     *
+     * If you don't need all the details of a coding standard,
+     * use getInstalledStandards() instead as it performs less work to
+     * retrieve coding standard names.
+     *
+     * @param boolean $includeGeneric If true, the special "Generic"
+     *                                coding standard will be included
+     *                                if installed.
+     * @param string  $standardsDir   A specific directory to look for standards
+     *                                in. If not specified, PHP_CodeSniffer will
+     *                                look in its default locations.
+     *
+     * @return array
+     * @see    getInstalledStandards()
+     */
+    public static function getInstalledStandardDetails(
+        $includeGeneric=false,
+        $standardsDir=''
+    ) {
+        $rulesets = array();
+
+        if ($standardsDir === '') {
+            $installedPaths = self::getInstalledStandardPaths();
+        } else {
+            $installedPaths = array($standardsDir);
+        }
+
+        foreach ($installedPaths as $standardsDir) {
+            // Check if the installed dir is actually a standard itself.
+            $csFile = $standardsDir.'/ruleset.xml';
+            if (is_file($csFile) === true) {
+                $rulesets[] = $csFile;
+                continue;
+            }
+
+            $di = new \DirectoryIterator($standardsDir);
+            foreach ($di as $file) {
+                if ($file->isDir() === true && $file->isDot() === false) {
+                    $filename = $file->getFilename();
+
+                    // Ignore the special "Generic" standard.
+                    if ($includeGeneric === false && $filename === 'Generic') {
+                        continue;
+                    }
+
+                    // Valid coding standard dirs include a ruleset.
+                    $csFile = $file->getPathname().'/ruleset.xml';
+                    if (is_file($csFile) === true) {
+                        $rulesets[] = $csFile;
+                    }
+                }
+            }
+        }//end foreach
+
+        $installedStandards = array();
+
+        foreach ($rulesets as $rulesetPath) {
+            $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
+            if ($ruleset === false) {
+                continue;
+            }
+
+            $standardName = (string) $ruleset['name'];
+            $dirname      = basename(dirname($rulesetPath));
+
+            if (isset($ruleset['namespace']) === true) {
+                $namespace = (string) $ruleset['namespace'];
+            } else {
+                $namespace = $dirname;
+            }
+
+            $installedStandards[$dirname] = array(
+                                             'path'      => dirname($rulesetPath),
+                                             'name'      => $standardName,
+                                             'namespace' => $namespace,
+                                            );
+        }//end foreach
+
+        return $installedStandards;
+
+    }//end getInstalledStandardDetails()
+
+
+    /**
      * Get a list of all coding standards installed.
      *
      * Coding standards are directories located in the

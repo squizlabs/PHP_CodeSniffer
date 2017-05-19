@@ -43,6 +43,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The autoloader is now working correctly with classes created with class_alias()
   - The autoloader will now search for files inside all directories in the installed_paths config var
     -- This allows autoloading of files inside included custom coding standards without manually requiring them
+  - You can now specify a namespace for a custom coding standard, used by the autoloader to load non-sniff helper files
+    -- If ommitted, the namespace is assumed to be the same as the directory name containing the ruleset.xml file
+    -- This value does not need to be specified if you are not using helper files
   - Fixed bug #1442 : T_NULLABLE detection not working for nullable parameters and return type hints in some cases
   - Fixed bug #1447 : Running the unit tests with a phpunit config file breaks the test suite
     -- Unknown arguments were not being handled correctly, but are now stored in $config->unknown

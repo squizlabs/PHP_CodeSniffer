@@ -169,7 +169,13 @@ class Ruleset
                     $this->paths[] = $standard;
 
                     // Allow autoloading of custom files inside this standard.
-                    Autoload::addSearchPath(dirname(dirname($standard)));
+                    if (isset($ruleset['namespace']) === true) {
+                        $namespace = (string) $ruleset['namespace'];
+                    } else {
+                        $namespace = basename(dirname($standard));
+                    }
+
+                    Autoload::addSearchPath(dirname($standard), $namespace);
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY === 1) {
