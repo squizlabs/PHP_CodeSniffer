@@ -1,0 +1,31 @@
+<documentation title="Alphabetical Method Names">
+    <standard>
+    <![CDATA[
+    Method names must be declared in alphabetical order.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Methods are declared in alphabetical order.">
+        <![CDATA[
+class Foo
+{
+    public function _a() {}
+    public function a() {}
+    public function b() {}
+    public function c() {}
+}
+        ]]>
+        </code>
+        <code title="Invalid: Methods are not declared in alphabetical order.">
+        <![CDATA[
+class Foo
+{
+    public function a() {}
+    public function _a() {}
+    public function c() {}
+    public function b() {}
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
