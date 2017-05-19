@@ -56,8 +56,8 @@ class Standards
      * - name:      the name of the coding standard, as sourced from the ruleset.xml file
      * - namespace: the namespace used by the coding standard, as sourced from the ruleset.xml file
      *
-     * If you don't need all the details of a coding standard,
-     * use getInstalledStandards() instead as it performs less work to
+     * If you only need the paths to the installed standards,
+     * use getInstalledStandardPaths() instead as it performs less work to
      * retrieve coding standard names.
      *
      * @param boolean $includeGeneric If true, the special "Generic"
@@ -68,7 +68,7 @@ class Standards
      *                                look in its default locations.
      *
      * @return array
-     * @see    getInstalledStandards()
+     * @see    getInstalledStandardPaths()
      */
     public static function getInstalledStandardDetails(
         $includeGeneric=false,
