@@ -33,6 +33,9 @@
     "require-dev": {
         "phpunit/phpunit": "~4.0"
     },
+    "require-dev": {
+        "phpunit/PHPUnit": "~4.0"
+    },
     "bin": [
         "bin/phpcs",
         "bin/phpcbf"
