@@ -52,15 +52,57 @@ class Common
 
 
     /**
-     * CodeSniffer alternative for realpath.
-     *
-     * Allows for PHAR support.
+     * Get absolute path, do not check exsit
      *
      * @param string $path The path to use.
      *
      * @return mixed
      */
-    public static function realpath($path)
+    public static function absolutePath($path)
+    {
+        // Don't prefix absolute paths.
+        if (substr($path, 0, 1) !== '/') {
+            $path = getcwd().'/'.$path;
+        }
+
+        // Replace backslashes with forwardslashes.
+        $path = str_replace('\\', '/', $path);
+        // Combine multiple slashes into a single slash.
+        $path = preg_replace('/\/+/', '/', $path);
+
+        $parts = [];
+
+        foreach (explode('/', $path) as $part) {
+            // Ignore parts that have no value.
+            if (empty($part) === true || $part === '.') continue;
+            if ($part !== '..') {
+                // Cool, we found a new part.
+                array_push($parts, $part);
+            } else if (count($parts) > 0) {
+                // Going back up.
+                array_pop($parts);
+            } else {
+                // Path is outside of the root.
+                return false;
+            }
+        }
+
+        return '/'.implode('/', $parts);
+
+    }//end absolutePath()
+
+
+    /**
+     * CodeSniffer alternative for realpath.
+     *
+     * Allows for PHAR support.
+     *
+     * @param string  $path    The path to use.
+     * @param boolean $isStdin whether the file from STDIN.
+     *
+     * @return mixed
+     */
+    public static function realpath($path, $isStdin=false)
     {
         // Support the path replacement of ~ with the user's home directory.
         if (substr($path, 0, 2) === '~/') {
@@ -72,7 +114,11 @@ class Common
 
         // No extra work needed if this is not a phar file.
         if (self::isPharFile($path) === false) {
-            return realpath($path);
+            if ($isStdin === false) {
+                return realpath($path);
+            } else {
+                return static::absolutePath($path);
+            }
         }
 
         // Before trying to break down the file path,
