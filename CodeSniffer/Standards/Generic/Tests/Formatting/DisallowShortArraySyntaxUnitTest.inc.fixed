@@ -1,0 +1,28 @@
+<?php
+// bad
+$a = array(1, 2, 3);
+$b = array(
+    $a,
+    array(4, 5, 6),
+);
+$b = array(
+    $a,
+    array(4, 5, 6),
+);
+
+array(
+    array( ),
+    array(1),  array(3)
+);
+
+[; // evil syntax error
+// good
+/**
+ * do array foo
+ *
+ * @param array $a
+ */
+function foo (array $a)
+{
+    //do stuff
+}
