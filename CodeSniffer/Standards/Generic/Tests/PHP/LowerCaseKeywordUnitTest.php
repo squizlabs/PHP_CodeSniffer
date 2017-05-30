@@ -48,6 +48,10 @@ class Generic_Tests_PHP_LowerCaseKeywordUnitTest extends AbstractSniffUnitTest
                 14 => 7,
                 15 => 1,
                 16 => 1,
+                19 => 1,
+                20 => 1,
+                24 => 1,
+                27 => 1,
                );
 
     }//end getErrorList()

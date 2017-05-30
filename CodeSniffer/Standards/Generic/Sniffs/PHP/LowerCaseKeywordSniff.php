@@ -48,6 +48,7 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
                 T_CATCH,
                 T_CLASS,
                 T_CLONE,
+                T_CLOSURE,
                 T_CONST,
                 T_CONTINUE,
                 T_DECLARE,
@@ -87,6 +88,7 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
                 T_LOGICAL_XOR,
                 T_NAMESPACE,
                 T_NEW,
+                T_PARENT,
                 T_PRINT,
                 T_PRIVATE,
                 T_PROTECTED,
@@ -94,6 +96,7 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
                 T_REQUIRE,
                 T_REQUIRE_ONCE,
                 T_RETURN,
+                T_SELF,
                 T_STATIC,
                 T_SWITCH,
                 T_THROW,
@@ -103,6 +106,7 @@ class Generic_Sniffs_PHP_LowerCaseKeywordSniff implements PHP_CodeSniffer_Sniff
                 T_USE,
                 T_VAR,
                 T_WHILE,
+                T_YIELD,
                );
 
     }//end register()
