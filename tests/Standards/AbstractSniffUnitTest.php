@@ -16,9 +16,8 @@ namespace PHP_CodeSniffer\Tests\Standards;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\LocalFile;
-use PHP_CodeSniffer\RuntimeException;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Util\Common;
-use PHP_CodeSniffer\Autoload;
 
 abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
 {
@@ -98,7 +97,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
     /**
      * Should this test be skipped for some reason.
      *
-     * @return void
+     * @return boolean
      */
     protected function shouldSkipTest()
     {
@@ -111,7 +110,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * Tests the extending classes Sniff class.
      *
      * @return void
-     * @throws PHPUnit_Framework_Error
+     * @throws \PHPUnit_Framework_Error
      */
     final public function testSniff()
     {
@@ -206,10 +205,10 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
     /**
      * Generate a list of test failures for a given sniffed file.
      *
-     * @param PHP_CodeSniffer_File $file The file being tested.
+     * @param LocalFile $file The file being tested.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception
+     * @throws RuntimeException
      */
     public function generateFailureMessages(LocalFile $file)
     {
@@ -414,7 +413,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      */
     public function setCliValues($filename, $config)
     {
-        return;
+        return [];
 
     }//end setCliValues()
 
@@ -425,7 +424,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @return array<int, int>
+     * @return array(int => int)
      */
     abstract protected function getErrorList();
 
