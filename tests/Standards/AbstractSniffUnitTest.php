@@ -16,7 +16,7 @@ namespace PHP_CodeSniffer\Tests\Standards;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\LocalFile;
-use PHP_CodeSniffer\RuntimeException;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Autoload;
 
