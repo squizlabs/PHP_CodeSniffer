@@ -413,7 +413,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      */
     public function setCliValues($filename, $config)
     {
-        return;
+        return [];
 
     }//end setCliValues()
 
