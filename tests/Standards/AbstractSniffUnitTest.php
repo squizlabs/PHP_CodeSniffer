@@ -110,7 +110,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * Tests the extending classes Sniff class.
      *
      * @return void
-     * @throws PHPUnit_Framework_Error
+     * @throws \PHPUnit_Framework_Error
      */
     final public function testSniff()
     {
@@ -208,7 +208,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * @param LocalFile $file The file being tested.
      *
      * @return array
-     * @throws PHP_CodeSniffer_Exception
+     * @throws RuntimeException
      */
     public function generateFailureMessages(LocalFile $file)
     {
