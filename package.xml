@@ -51,6 +51,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If ommitted, the namespace is assumed to be the same as the directory name containing the ruleset.xml file
     -- The namespace is set in the ruleset tag of the ruleset.xml file
     -- e.g., ruleset name="My Coding Standard" namespace="MyProject\CS\Standard"
+  - Fixed a problem where excluding a message from a custom standard's own sniff would exclude the whole sniff
+    -- This caused some PSR2 errors to be under-reported
   - Fixed bug #1442 : T_NULLABLE detection not working for nullable parameters and return type hints in some cases
   - Fixed bug #1447 : Running the unit tests with a phpunit config file breaks the test suite
     -- Unknown arguments were not being handled correctly, but are now stored in $config->unknown

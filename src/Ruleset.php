@@ -371,14 +371,17 @@ class Ruleset
                         echo "\t\t=> severity set to 5".PHP_EOL;
                     }
                 } else if (empty($newSniffs) === false) {
-                    // Including a sniff that hasn't been included higher up, but
-                    // only including a single message from it. So turn off all messages in
-                    // the sniff, except this one.
-                    $this->ruleset[$sniffCode]['severity']            = 0;
-                    $this->ruleset[(string) $rule['ref']]['severity'] = 5;
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo str_repeat("\t", $depth);
-                        echo "\t\tExcluding sniff \"".$sniffCode.'" except for "'.$parts[3].'"'.PHP_EOL;
+                    $newSniff = $newSniffs[0];
+                    if (in_array($newSniff, $ownSniffs) === false) {
+                        // Including a sniff that hasn't been included higher up, but
+                        // only including a single message from it. So turn off all messages in
+                        // the sniff, except this one.
+                        $this->ruleset[$sniffCode]['severity']            = 0;
+                        $this->ruleset[(string) $rule['ref']]['severity'] = 5;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", $depth);
+                            echo "\t\tExcluding sniff \"".$sniffCode.'" except for "'.$parts[3].'"'.PHP_EOL;
+                        }
                     }
                 }//end if
             }//end if
