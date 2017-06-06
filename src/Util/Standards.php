@@ -175,6 +175,11 @@ class Standards
                 continue;
             }
 
+            if (is_dir($standardsDir) === false) {
+                // Doesn't exist.
+                continue;
+            }
+
             $di = new \DirectoryIterator($standardsDir);
             foreach ($di as $file) {
                 if ($file->isDir() === true && $file->isDot() === false) {
