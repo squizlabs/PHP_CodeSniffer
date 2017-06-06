@@ -77,7 +77,7 @@ class Runner
                 $ruleset->explain();
             }
 
-            exit(0);
+            return 0;
         }
 
         // Generate documentation for each of the supplied standards.
@@ -91,7 +91,7 @@ class Runner
                 $generator->generate();
             }
 
-            exit(0);
+            return 0;
         }
 
         // Other report formats don't really make sense in interactive mode
@@ -128,13 +128,13 @@ class Runner
 
         if ($numErrors === 0) {
             // No errors found.
-            exit(0);
+            return 0;
         } else if ($this->reporter->totalFixable === 0) {
             // Errors found, but none of them can be fixed by PHPCBF.
-            exit(1);
+            return 1;
         } else {
             // Errors found, and some can be fixed by PHPCBF.
-            exit(2);
+            return 2;
         }
 
     }//end runPHPCS()
@@ -193,20 +193,20 @@ class Runner
             // Nothing was fixed by PHPCBF.
             if ($this->reporter->totalFixable === 0) {
                 // Nothing found that could be fixed.
-                exit(0);
+                return 0;
             } else {
                 // Something failed to fix.
-                exit(2);
+                return 2;
             }
         }
 
         if ($this->reporter->totalFixable === 0) {
             // PHPCBF fixed all fixable errors.
-            exit(1);
+            return 1;
         }
 
         // PHPCBF fixed some fixable errors, but others failed to fix.
-        exit(2);
+        return 2;
 
     }//end runPHPCBF()
 

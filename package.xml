@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Arguments on the command line now override or merge with those specified in a ruleset.xml file in all cases
   - PHPCS now stops looking for a phpcs.xml file as soon as one is found, favoring the closest one to the current dir
   - Added missing help text for the --stdin-path CLI option to --help
+  - Runner::runPHPCS() and Runner::runPHPCBF() now return an exit code instead of exiting directly (request #1484)
   - The Squiz standard now enforces short array syntax by default
   - The autoloader is now working correctly with classes created with class_alias()
   - The autoloader will now search for files inside all directories in the installed_paths config var
