@@ -61,6 +61,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1451 : Sniff exclusions/restrictions dont work with custom sniffs unless they use the PHP_CodeSniffer NS
   - Fixed bug #1454 : Squiz.WhiteSpace.OperatorSpacing is not checking spacing on either side of a short ternary operator
     -- Thanks to Mponos George for the patch
+  - Fixed bug #1496 : Squiz.Strings.DoubleQuoteUsage not unescaping dollar sign when fixing
+    -- Thanks to Michał Bundyra for the patch
  </notes>
  <contents>
   <dir name="/">
