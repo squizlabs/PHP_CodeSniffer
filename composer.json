@@ -36,5 +36,10 @@
     "bin": [
         "bin/phpcs",
         "bin/phpcbf"
-    ]
+    ],
+    "scripts": {
+        "tests": "php vendor/bin/phpunit tests/AllTests.php",
+        "phpcs": "php bin/phpcs --no-cache --parallel=1",
+        "phpcbf": "php bin/phpcbf --no-cache --parallel=1"
+    }
 }
