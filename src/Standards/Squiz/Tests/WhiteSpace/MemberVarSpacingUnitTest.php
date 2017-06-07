@@ -26,15 +26,11 @@ class MemberVarSpacingUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                4   => 1,
                 7   => 1,
                 20  => 1,
                 30  => 1,
                 35  => 1,
-                44  => 1,
-                50  => 1,
                 73  => 1,
-                86  => 1,
                 106 => 1,
                 115 => 1,
                 150 => 1,

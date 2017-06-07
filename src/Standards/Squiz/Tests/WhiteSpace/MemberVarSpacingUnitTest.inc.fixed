@@ -1,7 +1,6 @@
 <?php
 class MyClass
 {
-
     public $var1 = 'value';
 
     public $var2 = 'value';
@@ -38,14 +37,12 @@ class MyClass
 
 class MyClass
 {
-
     public $var1 = 'value';
 }//end class
 
 
 interface MyInterface
 {
-
     public $var1 = 'value';
     function myFunction();
 }//end interface
@@ -75,7 +72,6 @@ class MyClass
 
 class MyClass
 {
-
     /**
      * The actions that this wizard step requires.
      *
