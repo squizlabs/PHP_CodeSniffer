@@ -6,7 +6,7 @@
  * and provides functions to access data stored in config files.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2017 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
@@ -318,11 +318,9 @@ class Config
             $this->dieOnUnknownArg = $dieOnUnknownArg;
         }
 
-        $checkStdin = false;
         if (empty($cliArgs) === true) {
             $cliArgs = $_SERVER['argv'];
             array_shift($cliArgs);
-            $checkStdin = true;
         }
 
         $this->restoreDefaults();
@@ -354,23 +352,13 @@ class Config
         }//end if
 
         // Check for content on STDIN.
-        if ($checkStdin === true) {
-            $handle = fopen('php://stdin', 'r');
-            if (stream_set_blocking($handle, false) === true) {
-                $fileContents = '';
-                while (($line = fgets($handle)) !== false) {
-                    $fileContents .= $line;
-                    usleep(10);
-                }
+        if ($this->stdin === true) {
+            $handle       = fopen('php://stdin', 'r');
+            $fileContents = stream_get_contents($handle);
 
-                stream_set_blocking($handle, true);
-                fclose($handle);
-                if (trim($fileContents) !== '') {
-                    $this->stdin        = true;
-                    $this->stdinContent = $fileContents;
-                    $this->overriddenDefaults['stdin']        = true;
-                    $this->overriddenDefaults['stdinContent'] = true;
-                }
+            fclose($handle);
+            if (trim($fileContents) !== '') {
+                $this->stdinContent = $fileContents;
             }
         }
 
