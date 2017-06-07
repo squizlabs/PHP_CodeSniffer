@@ -41,6 +41,12 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      */
     protected $currentFile = null;
 
+    /**
+     * The current scope that we are processing.
+     *
+     * @var int
+     */
+    protected $currentScope;
 
     /**
      * Constructs an AbstractVariableTest.
@@ -78,8 +84,11 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      */
     final protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
-        if ($this->currentFile !== $phpcsFile) {
+        if ($this->currentFile !== $phpcsFile
+            || $this->currentScope !== $currScope
+        ) {
             $this->currentFile  = $phpcsFile;
+            $this->currentScope = $currScope;
             $this->functionOpen = false;
             $this->endFunction  = -1;
         }
