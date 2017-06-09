@@ -129,6 +129,8 @@ class Reporter
 
             if ($output === null) {
                 // Using a temp file.
+                // This needs to be set in the constructor so that all
+                // child procs use the same report file when running in parallel.
                 $this->tmpFiles[$type] = tempnam(sys_get_temp_dir(), 'phpcs');
                 file_put_contents($this->tmpFiles[$type], '');
             } else {
@@ -223,6 +225,7 @@ class Reporter
             echo $generatedReport;
             if ($filename !== null && file_exists($filename) === true) {
                 unlink($filename);
+                unset($this->tmpFiles[$report]);
             }
         }
 
@@ -265,6 +268,14 @@ class Reporter
 
             if ($report['output'] === null) {
                 // Using a temp file.
+                if (isset($this->tmpFiles[$type]) === false) {
+                    // When running in interactive mode, the reporter prints the full
+                    // report many times, which will unlink the temp file. So we need
+                    // to create a new one if it doesn't exist.
+                    $this->tmpFiles[$type] = tempnam(sys_get_temp_dir(), 'phpcs');
+                    file_put_contents($this->tmpFiles[$type], '');
+                }
+
                 file_put_contents($this->tmpFiles[$type], $generatedReport, FILE_APPEND);
             } else {
                 $flags = FILE_APPEND;

@@ -70,6 +70,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1495 : Setting an invalid installed path breaks all commands
   - Fixed bug #1496 : Squiz.Strings.DoubleQuoteUsage not unescaping dollar sign when fixing
     -- Thanks to Michał Bundyra for the patch
+  - Fixed bug #1501 : Interactive mode is broken
  </notes>
  <contents>
   <dir name="/">
