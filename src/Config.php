@@ -1293,12 +1293,13 @@ class Config
         echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
         echo '  [--cache[=<cacheFile>]] [--no-cache] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '  [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>]'.PHP_EOL;
-        echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--stdin-path=<stdinPath>]'.PHP_EOL;
+        echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--bootstrap=<bootstrap>]'.PHP_EOL;
         echo '  [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '  [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '  [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>]'.PHP_EOL;
         echo '  [--encoding=<encoding>] [--parallel=<processes>] [--generator=<generator>]'.PHP_EOL;
-        echo '  [--extensions=<extensions>] [--ignore=<patterns>] [--ignore-annotations] <file> - ...'.PHP_EOL;
+        echo '  [--extensions=<extensions>] [--ignore=<patterns>] [--ignore-annotations]'.PHP_EOL;
+        echo '  [--stdin-path=<stdinPath>] [--file-list=<fileList>] <file> - ...'.PHP_EOL;
         echo PHP_EOL;
         echo ' -     Check STDIN instead of local files and directories'.PHP_EOL;
         echo ' -n    Do not print warnings (shortcut for --warning-severity=0)'.PHP_EOL;
@@ -1327,7 +1328,9 @@ class Config
         echo PHP_EOL;
         echo ' <cacheFile>    Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo ' <basepath>     A path to strip from the front of file paths inside reports'.PHP_EOL;
+        echo ' <bootstrap>    A comma separated list of files to run before processing begins'.PHP_EOL;
         echo ' <file>         One or more files and/or directories to check'.PHP_EOL;
+        echo ' <fileList>     A file containing a list of files and/or directories to check (one per line)'.PHP_EOL;
         echo ' <encoding>     The encoding of the files being checked (default is utf-8)'.PHP_EOL;
         echo ' <extensions>   A comma separated list of file extensions to check'.PHP_EOL;
         echo '                (extension filtering only valid when checking a directory)'.PHP_EOL;
@@ -1361,11 +1364,12 @@ class Config
      */
     public function printPHPCBFUsage()
     {
-        echo 'Usage: phpcbf [-nwli] [-d key[=value]] [--ignore-annotations] [--stdin-path=<stdinPath>]'.PHP_EOL;
+        echo 'Usage: phpcbf [-nwli] [-d key[=value]] [--ignore-annotations] [--bootstrap=<bootstrap>]'.PHP_EOL;
         echo '  [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>] [--suffix=<suffix>]'.PHP_EOL;
         echo '  [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
         echo '  [--tab-width=<tabWidth>] [--encoding=<encoding>] [--parallel=<processes>]'.PHP_EOL;
-        echo '  [--basepath=<basepath>] [--extensions=<extensions>] [--ignore=<patterns>] <file> - ...'.PHP_EOL;
+        echo '  [--basepath=<basepath>] [--extensions=<extensions>] [--ignore=<patterns>]'.PHP_EOL;
+        echo '  [--stdin-path=<stdinPath>] [--file-list=<fileList>] <file> - ...'.PHP_EOL;
         echo PHP_EOL;
         echo ' -     Fix STDIN instead of local files and directories'.PHP_EOL;
         echo ' -n    Do not fix warnings (shortcut for --warning-severity=0)'.PHP_EOL;
@@ -1384,7 +1388,9 @@ class Config
         echo ' --ignore-annotations  Ignore all @codingStandard annotations in code comments'.PHP_EOL;
         echo PHP_EOL;
         echo ' <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
+        echo ' <bootstrap>   A comma separated list of files to run before processing begins'.PHP_EOL;
         echo ' <file>        One or more files and/or directories to fix'.PHP_EOL;
+        echo ' <fileList>    A file containing a list of files and/or directories to fix (one per line)'.PHP_EOL;
         echo ' <encoding>    The encoding of the files being fixed (default is utf-8)'.PHP_EOL;
         echo ' <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
         echo '               (extension filtering only valid when checking a directory)'.PHP_EOL;
