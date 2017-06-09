@@ -1,9 +1,9 @@
 {
   "EOL char":{
-    "total":58168,
+    "total":58202,
     "total_repos":195,
     "values":{
-      "\\n":57789,
+      "\\n":57823,
       "\\r\\n":378,
       "\\r":"1"
     },
@@ -351,22 +351,27 @@
         "\\n":57789,
         "\\r\\n":378,
         "\\r":"1"
+      },
+      "2017-06-01":{
+        "\\n":57823,
+        "\\r\\n":378,
+        "\\r":"1"
       }
     },
     "winner":"\\n"
   },
   "Line length":{
-    "total":9652082,
+    "total":9660667,
     "total_repos":195,
     "values":{
-      "121-150":79346,
-      "151 or more":59505,
-      "80 or less":8918484,
-      "81-120":594747
+      "121-150":79362,
+      "151 or more":59260,
+      "80 or less":8926561,
+      "81-120":595484
     },
     "repos":{
       "80 or less":{
-        "anchorcms\/anchor-cms":93.62,
+        "anchorcms\/anchor-cms":93.6,
         "auraphp\/Aura.Autoload":99.4,
         "auraphp\/Aura.Cli":99.86,
         "auraphp\/Aura.Cli_Kernel":99.8,
@@ -389,7 +394,7 @@
         "auraphp\/Aura.Web":99.87,
         "auraphp\/Aura.Web_Kernel":100,
         "avalanche123\/Imagine":95.06,
-        "aws\/aws-sdk-php":89.91,
+        "aws\/aws-sdk-php":89.77,
         "batopa\/chirp":96.38,
         "bobthecow\/mustache.php":94.19,
         "box-project\/box2":96.49,
@@ -400,17 +405,17 @@
         "chriso\/klein.php":96.36,
         "Codeception\/Codeception":94.1,
         "codeguy\/Slim":94.3,
-        "Codegyre\/Robo":96.77,
-        "composer\/composer":90.29,
+        "Codegyre\/Robo":96.8,
+        "composer\/composer":90.27,
         "concrete5\/concrete5":91.18,
         "contao\/core":92.79,
         "danielstjules\/Stringy":97.43,
-        "doctrine\/doctrine2":92.14,
+        "doctrine\/doctrine2":92.12,
         "dropbox\/dropbox-sdk-php":88.88,
         "drupal\/drupal":94.99,
         "EllisLab\/CodeIgniter":96.65,
         "erusev\/parsedown":96.01,
-        "ezsystems\/ezpublish-kernel":90.58,
+        "ezsystems\/ezpublish-kernel":90.57,
         "fabpot\/Goutte":96.48,
         "fabpot\/PHP-CS-Fixer":94.14,
         "fabpot\/Twig":93.4,
@@ -420,16 +425,16 @@
         "ginatrapani\/ThinkUp":85.35,
         "gintonicweb\/GintonicCMS":98.18,
         "google\/google-api-php-client":96.3,
-        "guzzle\/guzzle":98.06,
+        "guzzle\/guzzle":97.96,
         "Halleck45\/PhpMetrics":96.79,
-        "iranianpep\/botonomous":98.31,
+        "iranianpep\/botonomous":98.08,
         "jackalope\/jackalope":94.18,
-        "joomla\/joomla-cms":93.12,
+        "joomla\/joomla-cms":93.1,
         "KnpLabs\/snappy":92.12,
         "kriswallsmith\/assetic":96.33,
         "kriswallsmith\/Buzz":96.68,
         "ladybirdweb\/agorainvoicing":92.71,
-        "ladybirdweb\/faveo-helpdesk":85,
+        "ladybirdweb\/faveo-helpdesk":85.03,
         "laravel\/framework":96.47,
         "leafo\/lessphp":98.95,
         "magento\/magento2":93.91,
@@ -457,17 +462,17 @@
         "nette\/tokenizer":95.71,
         "nette\/tracy":92.74,
         "nette\/utils":94.21,
-        "nikic\/FastRoute":97.64,
-        "nikic\/PHP-Parser":91.52,
-        "openemr\/openemr":89.06,
+        "nikic\/FastRoute":97.58,
+        "nikic\/PHP-Parser":91.51,
+        "openemr\/openemr":89.08,
         "orno\/route":93.32,
-        "owncloud\/core":95.43,
-        "padraic\/mockery":96.57,
+        "owncloud\/core":95.41,
+        "padraic\/mockery":96.64,
         "pear\/pear-core":93.6,
         "phingofficial\/phing":97.13,
         "phpbb\/phpbb":91.94,
         "phpDocumentor\/phpDocumentor2":94.53,
-        "PHPMailer\/PHPMailer":90.5,
+        "PHPMailer\/PHPMailer":90.48,
         "phpmyadmin\/phpmyadmin":98.07,
         "PHPOffice\/PHPExcel":92,
         "pimcore\/pimcore":95.58,
@@ -476,39 +481,39 @@
         "PrestaShop\/PrestaShop":88.18,
         "propelorm\/Propel":93.84,
         "pyrocms\/pyrocms":88,
-        "quickapps\/cms":93.66,
+        "quickapps\/cms":93.65,
         "radphp\/radphp":97.4,
         "reactphp\/child-process":97.34,
         "reactphp\/dns":95.32,
         "reactphp\/event-loop":97.8,
-        "reactphp\/http":92.59,
-        "reactphp\/http-client":97.59,
+        "reactphp\/http":91.99,
+        "reactphp\/http-client":97.22,
         "reactphp\/promise":94.68,
-        "reactphp\/socket":92.19,
+        "reactphp\/socket":92.11,
         "reactphp\/socket-client":92.37,
-        "reactphp\/stream":95.15,
-        "revive-adserver\/revive-adserver":92.32,
+        "reactphp\/stream":95.14,
+        "revive-adserver\/revive-adserver":92.33,
         "scabbiafw\/scabbia2-fw":95.54,
         "sculpin\/sculpin":95.94,
         "sebastianbergmann\/php-code-coverage":96.78,
-        "sebastianbergmann\/phpunit":96.91,
-        "Seldaek\/monolog":93.28,
-        "silexphp\/Silex":91.71,
+        "sebastianbergmann\/phpunit":96.9,
+        "Seldaek\/monolog":93.32,
+        "silexphp\/Silex":91.67,
         "silverstripe\/silverstripe-framework":92.83,
-        "squizlabs\/PHP_CodeSniffer":90.21,
+        "squizlabs\/PHP_CodeSniffer":90.18,
         "sugarcrm\/sugarcrm_dev":91.85,
-        "swiftmailer\/swiftmailer":96.65,
-        "symfony\/symfony":93.25,
+        "swiftmailer\/swiftmailer":96.57,
+        "symfony\/symfony":93.33,
         "tedivm\/Stash":93.74,
-        "thephpleague\/flysystem":98.03,
+        "thephpleague\/flysystem":97.94,
         "thephpleague\/fractal":97.77,
         "thephpleague\/oauth2-client":98.52,
         "thephpleague\/oauth2-server":94.18,
         "TYPO3\/TYPO3.CMS":87.68,
-        "wikimedia\/mediawiki-core":96.7,
-        "WordPress\/WordPress":89.31,
+        "wikimedia\/mediawiki-core":96.68,
+        "WordPress\/WordPress":89.32,
         "yiisoft\/yii":97.78,
-        "yiisoft\/yii2":84.6,
+        "yiisoft\/yii2":84.63,
         "zendframework\/zend-authentication":93.02,
         "zendframework\/zend-barcode":95.99,
         "zendframework\/zend-cache":95.74,
@@ -526,14 +531,14 @@
         "zendframework\/zend-feed":95.66,
         "zendframework\/zend-file":94.55,
         "zendframework\/zend-filter":94.74,
-        "zendframework\/zend-form":94.26,
+        "zendframework\/zend-form":94.25,
         "zendframework\/zend-http":94.74,
-        "zendframework\/zend-i18n":92.02,
+        "zendframework\/zend-i18n":92.01,
         "zendframework\/zend-i18n-resources":93.75,
-        "zendframework\/zend-inputfilter":94.27,
+        "zendframework\/zend-inputfilter":94.2,
         "zendframework\/zend-json":94.08,
         "zendframework\/zend-loader":94.8,
-        "zendframework\/zend-log":93.52,
+        "zendframework\/zend-log":93.48,
         "zendframework\/zend-mail":93.27,
         "zendframework\/zend-math":96.05,
         "zendframework\/zend-memory":96.47,
@@ -555,7 +560,7 @@
         "zendframework\/zend-test":92.24,
         "zendframework\/zend-text":94.34,
         "zendframework\/zend-uri":97.45,
-        "zendframework\/zend-validator":67.87,
+        "zendframework\/zend-validator":67.92,
         "zendframework\/zend-version":94.92,
         "zendframework\/zend-view":95.9,
         "zendframework\/zend-xmlrpc":94.94,
@@ -737,21 +742,27 @@
         "151 or more":59505,
         "80 or less":8918484,
         "81-120":594747
+      },
+      "2017-06-01":{
+        "121-150":79362,
+        "151 or more":59260,
+        "80 or less":8926561,
+        "81-120":595484
       }
     },
     "winner":"80 or less"
   },
   "Lowercase filename":{
-    "total":58168,
+    "total":58202,
     "total_repos":195,
     "values":{
-      "yes":20450,
-      "no":37718
+      "yes":20456,
+      "no":37746
     },
     "repos":{
       "yes":{
         "anchorcms\/anchor-cms":100,
-        "aws\/aws-sdk-php":57.68,
+        "aws\/aws-sdk-php":58.08,
         "chamilo\/chamilo-lms":55.83,
         "concrete5\/concrete5":99.87,
         "EllisLab\/CodeIgniter":63.8,
@@ -760,7 +771,7 @@
         "ladybirdweb\/agorainvoicing":59.46,
         "leafo\/lessphp":100,
         "moodle\/moodle":98.78,
-        "openemr\/openemr":59.75,
+        "openemr\/openemr":59.43,
         "phpbb\/phpbb":100,
         "PHPMailer\/PHPMailer":93.44,
         "PrestaShop\/PrestaShop":77.3,
@@ -820,13 +831,13 @@
         "google\/google-api-php-client":99.21,
         "guzzle\/guzzle":94.44,
         "Halleck45\/PhpMetrics":100,
-        "iranianpep\/botonomous":97.67,
+        "iranianpep\/botonomous":97.73,
         "jackalope\/jackalope":100,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":99.07,
         "kriswallsmith\/Buzz":100,
         "ladybirdweb\/faveo-helpdesk":51.43,
-        "laravel\/framework":99.58,
+        "laravel\/framework":99.59,
         "magento\/magento2":98.62,
         "michelf\/php-markdown":100,
         "nazariyg\/Phred":93.33,
@@ -854,12 +865,12 @@
         "nikic\/FastRoute":89.47,
         "nikic\/PHP-Parser":99.52,
         "orno\/route":100,
-        "owncloud\/core":85.03,
-        "padraic\/mockery":98.68,
+        "owncloud\/core":85.05,
+        "padraic\/mockery":98.72,
         "pear\/pear-core":71.91,
         "phingofficial\/phing":100,
         "phpDocumentor\/phpDocumentor2":100,
-        "phpmyadmin\/phpmyadmin":57.26,
+        "phpmyadmin\/phpmyadmin":57.74,
         "PHPOffice\/PHPExcel":99.03,
         "pimcore\/pimcore":98.77,
         "piwik\/piwik":86.73,
@@ -885,15 +896,15 @@
         "silverstripe\/silverstripe-framework":98.06,
         "squizlabs\/PHP_CodeSniffer":99.25,
         "sugarcrm\/sugarcrm_dev":67.07,
-        "swiftmailer\/swiftmailer":95.09,
-        "symfony\/symfony":97.1,
+        "swiftmailer\/swiftmailer":94.94,
+        "symfony\/symfony":97.08,
         "tedivm\/Stash":100,
         "thephpleague\/flysystem":100,
         "thephpleague\/fractal":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":100,
-        "TYPO3\/TYPO3.CMS":91.84,
-        "wikimedia\/mediawiki-core":99.83,
+        "TYPO3\/TYPO3.CMS":91.93,
+        "wikimedia\/mediawiki-core":99.84,
         "yiisoft\/yii2":86.3,
         "zendframework\/zend-authentication":100,
         "zendframework\/zend-barcode":100,
@@ -1065,16 +1076,20 @@
       "2017-05-01":{
         "yes":20450,
         "no":37718
+      },
+      "2017-06-01":{
+        "yes":20456,
+        "no":37746
       }
     },
     "winner":"no"
   },
   "PHP short open tag used":{
-    "total":121804,
+    "total":121759,
     "total_repos":195,
     "values":{
-      "no":117164,
-      "yes":4640
+      "no":117121,
+      "yes":4638
     },
     "repos":{
       "no":{
@@ -1171,7 +1186,7 @@
         "nette\/utils":100,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":99.95,
+        "openemr\/openemr":99.96,
         "orno\/route":100,
         "owncloud\/core":100,
         "padraic\/mockery":100,
@@ -1363,17 +1378,21 @@
       "2017-05-01":{
         "no":117164,
         "yes":4640
+      },
+      "2017-06-01":{
+        "no":117121,
+        "yes":4638
       }
     },
     "winner":"no"
   },
   "Line indent":{
-    "total":7629115,
+    "total":7638391,
     "total_repos":195,
     "values":{
-      "mixed":26845,
-      "spaces":5801783,
-      "tabs":1800487
+      "mixed":26878,
+      "spaces":5804064,
+      "tabs":1807449
     },
     "repos":{
       "spaces":{
@@ -1443,13 +1462,13 @@
         "nazariyg\/Phred":100,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":64.08,
+        "openemr\/openemr":64.27,
         "orno\/route":100,
         "padraic\/mockery":100,
         "pear\/pear-core":99.78,
         "phingofficial\/phing":100,
         "phpDocumentor\/phpDocumentor2":100,
-        "PHPMailer\/PHPMailer":99.62,
+        "PHPMailer\/PHPMailer":99.95,
         "phpmyadmin\/phpmyadmin":100,
         "pimcore\/pimcore":100,
         "piwik\/piwik":99.88,
@@ -1468,7 +1487,7 @@
         "reactphp\/socket":100,
         "reactphp\/socket-client":100,
         "reactphp\/stream":100,
-        "revive-adserver\/revive-adserver":92.39,
+        "revive-adserver\/revive-adserver":92.41,
         "scabbiafw\/scabbia2-fw":100,
         "sculpin\/sculpin":100,
         "sebastianbergmann\/php-code-coverage":100,
@@ -1544,7 +1563,7 @@
         "concrete5\/concrete5":95.39,
         "contao\/core":99.83,
         "EllisLab\/CodeIgniter":100,
-        "joomla\/joomla-cms":95.19,
+        "joomla\/joomla-cms":95.15,
         "leafo\/lessphp":99.19,
         "michelf\/php-markdown":100,
         "nette\/application":100,
@@ -1568,12 +1587,12 @@
         "nette\/tokenizer":100,
         "nette\/tracy":100,
         "nette\/utils":100,
-        "owncloud\/core":99.76,
+        "owncloud\/core":99.77,
         "phpbb\/phpbb":99.96,
         "PHPOffice\/PHPExcel":75.6,
         "silverstripe\/silverstripe-framework":99.45,
         "wikimedia\/mediawiki-core":100,
-        "WordPress\/WordPress":99.88
+        "WordPress\/WordPress":99.89
       }
     },
     "trends":{
@@ -1693,16 +1712,21 @@
         "mixed":26845,
         "spaces":5801783,
         "tabs":1800487
+      },
+      "2017-06-01":{
+        "mixed":26878,
+        "spaces":5804064,
+        "tabs":1807449
       }
     },
     "winner":"spaces"
   },
   "File has doc comment":{
-    "total":58167,
+    "total":58201,
     "total_repos":195,
     "values":{
-      "no":13778,
-      "yes":44389
+      "no":13807,
+      "yes":44394
     },
     "repos":{
       "no":{
@@ -1711,7 +1735,7 @@
         "c9s\/Pux":100,
         "cboden\/Ratchet":100,
         "Codeception\/Codeception":99.49,
-        "Codegyre\/Robo":98.77,
+        "Codegyre\/Robo":98.8,
         "concrete5\/concrete5":93.83,
         "danielstjules\/Stringy":100,
         "dropbox\/dropbox-sdk-php":97.87,
@@ -1744,7 +1768,7 @@
         "silverstripe\/silverstripe-framework":87.53,
         "sugarcrm\/sugarcrm_dev":63.81,
         "thephpleague\/flysystem":100,
-        "TYPO3\/TYPO3.CMS":98.87
+        "TYPO3\/TYPO3.CMS":98.91
       },
       "yes":{
         "auraphp\/Aura.Autoload":100,
@@ -1769,7 +1793,7 @@
         "auraphp\/Aura.Web":100,
         "auraphp\/Aura.Web_Kernel":100,
         "avalanche123\/Imagine":100,
-        "aws\/aws-sdk-php":57.56,
+        "aws\/aws-sdk-php":57.95,
         "batopa\/chirp":100,
         "bobthecow\/mustache.php":100,
         "cakephp\/cakephp":100,
@@ -1789,7 +1813,7 @@
         "facebook\/facebook-php-sdk":100,
         "google\/google-api-php-client":99.21,
         "Halleck45\/PhpMetrics":99.25,
-        "joomla\/joomla-cms":98.79,
+        "joomla\/joomla-cms":98.75,
         "kriswallsmith\/assetic":98.15,
         "leafo\/lessphp":100,
         "magento\/magento2":99.98,
@@ -1816,12 +1840,12 @@
         "nette\/tokenizer":100,
         "nette\/tracy":100,
         "nette\/utils":100,
-        "openemr\/openemr":75.2,
+        "openemr\/openemr":74.77,
         "orno\/route":100,
-        "owncloud\/core":95.57,
-        "padraic\/mockery":98.68,
+        "owncloud\/core":95.37,
+        "padraic\/mockery":98.72,
         "pear\/pear-core":89.89,
-        "phingofficial\/phing":93.46,
+        "phingofficial\/phing":93.66,
         "phpbb\/phpbb":93.06,
         "phpDocumentor\/phpDocumentor2":91.43,
         "PHPMailer\/PHPMailer":96.72,
@@ -1841,8 +1865,8 @@
         "Seldaek\/monolog":100,
         "silexphp\/Silex":96.55,
         "squizlabs\/PHP_CodeSniffer":100,
-        "swiftmailer\/swiftmailer":96.93,
-        "symfony\/symfony":97.31,
+        "swiftmailer\/swiftmailer":96.84,
+        "symfony\/symfony":97.28,
         "tedivm\/Stash":100,
         "thephpleague\/fractal":95.45,
         "thephpleague\/oauth2-client":100,
@@ -2021,16 +2045,20 @@
       "2017-05-01":{
         "no":13778,
         "yes":44389
+      },
+      "2017-06-01":{
+        "no":13807,
+        "yes":44394
       }
     },
     "winner":"yes"
   },
   "Declarations and side effects mixed":{
-    "total":58168,
+    "total":58202,
     "total_repos":195,
     "values":{
-      "no":48823,
-      "yes":9345
+      "no":48895,
+      "yes":9307
     },
     "repos":{
       "no":{
@@ -2057,7 +2085,7 @@
         "auraphp\/Aura.Web":100,
         "auraphp\/Aura.Web_Kernel":100,
         "avalanche123\/Imagine":100,
-        "aws\/aws-sdk-php":99.87,
+        "aws\/aws-sdk-php":99.88,
         "batopa\/chirp":100,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":100,
@@ -2068,7 +2096,7 @@
         "chriso\/klein.php":100,
         "Codeception\/Codeception":99.49,
         "codeguy\/Slim":100,
-        "Codegyre\/Robo":99.38,
+        "Codegyre\/Robo":99.4,
         "composer\/composer":97.06,
         "contao\/core":85,
         "danielstjules\/Stringy":100,
@@ -2122,14 +2150,14 @@
         "nette\/utils":100,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":70.87,
+        "openemr\/openemr":71.25,
         "orno\/route":100,
-        "owncloud\/core":98.85,
+        "owncloud\/core":98.86,
         "padraic\/mockery":100,
         "phpbb\/phpbb":78.75,
         "phpDocumentor\/phpDocumentor2":100,
         "PHPMailer\/PHPMailer":91.8,
-        "phpmyadmin\/phpmyadmin":81.54,
+        "phpmyadmin\/phpmyadmin":82.22,
         "PHPOffice\/PHPExcel":78.74,
         "pimcore\/pimcore":99.39,
         "piwik\/piwik":93.67,
@@ -2156,16 +2184,16 @@
         "silexphp\/Silex":100,
         "silverstripe\/silverstripe-framework":90.86,
         "squizlabs\/PHP_CodeSniffer":99.63,
-        "swiftmailer\/swiftmailer":99.39,
-        "symfony\/symfony":97.97,
+        "swiftmailer\/swiftmailer":99.37,
+        "symfony\/symfony":99.49,
         "tedivm\/Stash":100,
         "thephpleague\/flysystem":100,
         "thephpleague\/fractal":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":100,
         "TYPO3\/TYPO3.CMS":100,
-        "wikimedia\/mediawiki-core":97.16,
-        "WordPress\/WordPress":79.81,
+        "wikimedia\/mediawiki-core":97.03,
+        "WordPress\/WordPress":79.9,
         "yiisoft\/yii":95.82,
         "yiisoft\/yii2":99.09,
         "zendframework\/zend-authentication":100,
@@ -2224,8 +2252,8 @@
         "concrete5\/concrete5":60.64,
         "EllisLab\/CodeIgniter":92.02,
         "facebook\/facebook-php-sdk":100,
-        "joomla\/joomla-cms":60.1,
-        "moodle\/moodle":55.33,
+        "joomla\/joomla-cms":60.12,
+        "moodle\/moodle":55.3,
         "pear\/pear-core":73.03,
         "phingofficial\/phing":77.91,
         "revive-adserver\/revive-adserver":52.58,
@@ -2349,17 +2377,21 @@
       "2017-05-01":{
         "no":48823,
         "yes":9345
+      },
+      "2017-06-01":{
+        "no":48895,
+        "yes":9307
       }
     },
     "winner":"no"
   },
   "Number of newlines at EOF":{
-    "total":55448,
+    "total":55483,
     "total_repos":195,
     "values":{
-      "0":3766,
-      "1":50512,
-      "2":901,
+      "0":3767,
+      "1":50555,
+      "2":892,
       "3":234,
       "4":23,
       "5":7,
@@ -2391,7 +2423,7 @@
         "auraphp\/Aura.Web":100,
         "auraphp\/Aura.Web_Kernel":100,
         "avalanche123\/Imagine":100,
-        "aws\/aws-sdk-php":99.37,
+        "aws\/aws-sdk-php":99.38,
         "batopa\/chirp":100,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":100,
@@ -2424,7 +2456,7 @@
         "guzzle\/guzzle":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
-        "joomla\/joomla-cms":97.12,
+        "joomla\/joomla-cms":97.07,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
         "kriswallsmith\/Buzz":94.74,
@@ -2434,7 +2466,7 @@
         "leafo\/lessphp":50,
         "magento\/magento2":100,
         "michelf\/php-markdown":100,
-        "moodle\/moodle":83.34,
+        "moodle\/moodle":83.5,
         "nazariyg\/Phred":100,
         "nette\/application":100,
         "nette\/bootstrap":100,
@@ -2458,16 +2490,16 @@
         "nette\/tracy":100,
         "nette\/utils":100,
         "nikic\/FastRoute":78.95,
-        "nikic\/PHP-Parser":65.87,
-        "openemr\/openemr":71.16,
+        "nikic\/PHP-Parser":66.35,
+        "openemr\/openemr":71.12,
         "orno\/route":100,
-        "owncloud\/core":93.95,
+        "owncloud\/core":93.83,
         "padraic\/mockery":100,
         "phingofficial\/phing":99.59,
         "phpbb\/phpbb":99.71,
         "phpDocumentor\/phpDocumentor2":100,
         "PHPMailer\/PHPMailer":98.33,
-        "phpmyadmin\/phpmyadmin":85.31,
+        "phpmyadmin\/phpmyadmin":87.17,
         "PHPOffice\/PHPExcel":92.27,
         "pimcore\/pimcore":100,
         "piwik\/piwik":80.07,
@@ -2486,7 +2518,7 @@
         "reactphp\/socket":93.33,
         "reactphp\/socket-client":90,
         "reactphp\/stream":100,
-        "revive-adserver\/revive-adserver":60.18,
+        "revive-adserver\/revive-adserver":60,
         "scabbiafw\/scabbia2-fw":100,
         "sculpin\/sculpin":100,
         "sebastianbergmann\/php-code-coverage":100,
@@ -2499,13 +2531,13 @@
         "swiftmailer\/swiftmailer":100,
         "symfony\/symfony":100,
         "tedivm\/Stash":100,
-        "thephpleague\/flysystem":100,
+        "thephpleague\/flysystem":97.83,
         "thephpleague\/fractal":95.45,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":100,
         "TYPO3\/TYPO3.CMS":100,
-        "wikimedia\/mediawiki-core":99.75,
-        "WordPress\/WordPress":96.15,
+        "wikimedia\/mediawiki-core":99.59,
+        "WordPress\/WordPress":96.19,
         "yiisoft\/yii":88.73,
         "yiisoft\/yii2":99.05,
         "zendframework\/zend-authentication":100,
@@ -2857,15 +2889,25 @@
         "5":7,
         "6":4,
         "10":"1"
+      },
+      "2017-06-01":{
+        "0":3767,
+        "1":50555,
+        "2":892,
+        "3":234,
+        "4":23,
+        "5":7,
+        "6":4,
+        "10":"1"
       }
     },
     "winner":1
   },
   "File extension for non-class files":{
-    "total":14577,
+    "total":14579,
     "total_repos":72,
     "values":{
-      ".php":14397,
+      ".php":14399,
       ".inc":118,
       ".module":62
     },
@@ -2909,7 +2951,7 @@
         "nette\/tracy":100,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":97.4,
+        "openemr\/openemr":97.39,
         "owncloud\/core":100,
         "padraic\/mockery":100,
         "pear\/pear-core":100,
@@ -3068,16 +3110,21 @@
         ".php":14397,
         ".inc":118,
         ".module":62
+      },
+      "2017-06-01":{
+        ".php":14399,
+        ".inc":118,
+        ".module":62
       }
     },
     "winner":".php"
   },
   "PHP closing tag at EOF":{
-    "total":58168,
+    "total":58202,
     "total_repos":195,
     "values":{
-      "no":54353,
-      "yes":3815
+      "no":54399,
+      "yes":3803
     },
     "repos":{
       "no":{
@@ -3182,7 +3229,7 @@
         "phpbb\/phpbb":100,
         "phpDocumentor\/phpDocumentor2":100,
         "PHPMailer\/PHPMailer":100,
-        "phpmyadmin\/phpmyadmin":99.59,
+        "phpmyadmin\/phpmyadmin":99.58,
         "PHPOffice\/PHPExcel":100,
         "pimcore\/pimcore":100,
         "piwik\/piwik":99.93,
@@ -3210,7 +3257,7 @@
         "silverstripe\/silverstripe-framework":100,
         "squizlabs\/PHP_CodeSniffer":100,
         "swiftmailer\/swiftmailer":100,
-        "symfony\/symfony":98.32,
+        "symfony\/symfony":98.31,
         "tedivm\/Stash":100,
         "thephpleague\/flysystem":100,
         "thephpleague\/fractal":100,
@@ -3218,7 +3265,7 @@
         "thephpleague\/oauth2-server":100,
         "TYPO3\/TYPO3.CMS":100,
         "wikimedia\/mediawiki-core":100,
-        "WordPress\/WordPress":91.35,
+        "WordPress\/WordPress":91.87,
         "yiisoft\/yii":99.61,
         "yiisoft\/yii2":99.77,
         "zendframework\/zend-authentication":100,
@@ -3275,7 +3322,7 @@
         "zikula\/core":99.76
       },
       "yes":{
-        "openemr\/openemr":51.9,
+        "openemr\/openemr":51.31,
         "revive-adserver\/revive-adserver":86.6,
         "sugarcrm\/sugarcrm_dev":54.53
       }
@@ -3396,17 +3443,21 @@
       "2017-05-01":{
         "no":54353,
         "yes":3815
+      },
+      "2017-06-01":{
+        "no":54399,
+        "yes":3803
       }
     },
     "winner":"no"
   },
   "PHP keyword case":{
-    "total":2804379,
+    "total":2807974,
     "total_repos":195,
     "values":{
-      "lower":2801460,
-      "mixed":667,
-      "upper":2252
+      "lower":2805054,
+      "mixed":666,
+      "upper":2254
     },
     "repos":{
       "lower":{
@@ -3452,7 +3503,7 @@
         "doctrine\/doctrine2":100,
         "dropbox\/dropbox-sdk-php":100,
         "drupal\/drupal":99.97,
-        "EllisLab\/CodeIgniter":96.07,
+        "EllisLab\/CodeIgniter":96.06,
         "erusev\/parsedown":100,
         "ezsystems\/ezpublish-kernel":100,
         "fabpot\/Goutte":99.08,
@@ -3503,7 +3554,7 @@
         "nette\/utils":100,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":99.6,
+        "openemr\/openemr":99.61,
         "orno\/route":100,
         "owncloud\/core":99.97,
         "padraic\/mockery":100,
@@ -3752,16 +3803,21 @@
         "lower":2801460,
         "mixed":667,
         "upper":2252
+      },
+      "2017-06-01":{
+        "lower":2805054,
+        "mixed":666,
+        "upper":2254
       }
     },
     "winner":"lower"
   },
   "Short array syntax used":{
-    "total":492329,
+    "total":496105,
     "total_repos":193,
     "values":{
-      "no":247108,
-      "yes":245221
+      "no":247107,
+      "yes":248998
     },
     "repos":{
       "no":{
@@ -3795,7 +3851,7 @@
         "drupal\/drupal":99.09,
         "EllisLab\/CodeIgniter":100,
         "erusev\/parsedown":100,
-        "ezsystems\/ezpublish-kernel":89.33,
+        "ezsystems\/ezpublish-kernel":89.1,
         "fabpot\/Goutte":72.73,
         "fabpot\/PHP-CS-Fixer":100,
         "fabpot\/Twig":100,
@@ -3810,15 +3866,15 @@
         "kriswallsmith\/Buzz":100,
         "leafo\/lessphp":100,
         "michelf\/php-markdown":100,
-        "moodle\/moodle":95.42,
+        "moodle\/moodle":95.37,
         "nette\/safe-stream":100,
         "nette\/tokenizer":100,
         "nikic\/PHP-Parser":81.37,
-        "openemr\/openemr":99.94,
-        "padraic\/mockery":84.4,
+        "openemr\/openemr":99.43,
+        "padraic\/mockery":84.26,
         "pear\/pear-core":100,
         "phpbb\/phpbb":100,
-        "PHPMailer\/PHPMailer":98.06,
+        "PHPMailer\/PHPMailer":98.08,
         "phpmyadmin\/phpmyadmin":99.86,
         "PHPOffice\/PHPExcel":100,
         "piwik\/piwik":100,
@@ -3829,14 +3885,14 @@
         "reactphp\/child-process":100,
         "reactphp\/dns":100,
         "reactphp\/http":100,
-        "reactphp\/http-client":83.72,
+        "reactphp\/http-client":82.05,
         "reactphp\/socket":100,
         "reactphp\/socket-client":100,
         "reactphp\/stream":100,
         "revive-adserver\/revive-adserver":99.6,
         "sculpin\/sculpin":98.74,
         "sebastianbergmann\/php-code-coverage":100,
-        "silexphp\/Silex":95.16,
+        "silexphp\/Silex":95.97,
         "silverstripe\/silverstripe-framework":100,
         "squizlabs\/PHP_CodeSniffer":100,
         "sugarcrm\/sugarcrm_dev":100,
@@ -3860,7 +3916,7 @@
         "aws\/aws-sdk-php":100,
         "batopa\/chirp":82.76,
         "cakephp\/cakephp":100,
-        "Codegyre\/Robo":95.44,
+        "Codegyre\/Robo":95.53,
         "danielstjules\/Stringy":100,
         "doctrine\/doctrine2":100,
         "fruux\/sabre-dav":100,
@@ -3869,7 +3925,7 @@
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
         "ladybirdweb\/agorainvoicing":57,
-        "ladybirdweb\/faveo-helpdesk":96.8,
+        "ladybirdweb\/faveo-helpdesk":96.81,
         "laravel\/framework":100,
         "magento\/magento2":100,
         "nazariyg\/Phred":99.7,
@@ -3894,7 +3950,7 @@
         "nette\/utils":100,
         "nikic\/FastRoute":100,
         "orno\/route":100,
-        "owncloud\/core":99.04,
+        "owncloud\/core":99.03,
         "phingofficial\/phing":98.86,
         "phpDocumentor\/phpDocumentor2":62.87,
         "pimcore\/pimcore":100,
@@ -4078,15 +4134,19 @@
       "2017-05-01":{
         "no":247108,
         "yes":245221
+      },
+      "2017-06-01":{
+        "no":247107,
+        "yes":248998
       }
     },
-    "winner":"no"
+    "winner":"yes"
   },
   "Array keyword case":{
-    "total":247108,
+    "total":247107,
     "total_repos":96,
     "values":{
-      "lower":246597,
+      "lower":246596,
       "mixed":511
     },
     "repos":{
@@ -4156,7 +4216,7 @@
         "phpbb\/phpbb":100,
         "phpDocumentor\/phpDocumentor2":100,
         "PHPMailer\/PHPMailer":100,
-        "phpmyadmin\/phpmyadmin":99.85,
+        "phpmyadmin\/phpmyadmin":99.86,
         "PHPOffice\/PHPExcel":99.81,
         "piwik\/piwik":99.98,
         "ppi\/framework":100,
@@ -4305,18 +4365,22 @@
       "2017-05-01":{
         "lower":246597,
         "mixed":511
+      },
+      "2017-06-01":{
+        "lower":246596,
+        "mixed":511
       }
     },
     "winner":"lower"
   },
   "Space after operator":{
-    "total":3172402,
+    "total":3181341,
     "total_repos":194,
     "values":{
-      "0":91788,
-      "1":3050432,
-      "2":3168,
-      "newline":24408,
+      "0":91295,
+      "1":3059874,
+      "2":3171,
+      "newline":24397,
       "3":290,
       "5":77,
       "6":59,
@@ -4334,10 +4398,10 @@
       "24":25,
       "28":"3",
       "13":12,
-      "15":112,
+      "15":111,
       "17":"7",
       "18":4,
-      "19":57,
+      "19":56,
       "21":"2",
       "22":2,
       "23":41,
@@ -4380,8 +4444,8 @@
         "chriso\/klein.php":99.81,
         "Codeception\/Codeception":99.44,
         "codeguy\/Slim":100,
-        "Codegyre\/Robo":99.64,
-        "composer\/composer":99.94,
+        "Codegyre\/Robo":99.65,
+        "composer\/composer":99.95,
         "concrete5\/concrete5":93.46,
         "contao\/core":85.17,
         "danielstjules\/Stringy":100,
@@ -4390,13 +4454,13 @@
         "drupal\/drupal":99.73,
         "EllisLab\/CodeIgniter":99.56,
         "erusev\/parsedown":100,
-        "ezsystems\/ezpublish-kernel":98.99,
+        "ezsystems\/ezpublish-kernel":98.98,
         "fabpot\/Goutte":100,
         "fabpot\/PHP-CS-Fixer":99.93,
         "fabpot\/Twig":100,
         "facebook\/facebook-php-sdk":97.71,
         "fruux\/sabre-dav":99.82,
-        "fzaninotto\/Faker":87.05,
+        "fzaninotto\/Faker":87.09,
         "ginatrapani\/ThinkUp":87.91,
         "gintonicweb\/GintonicCMS":100,
         "google\/google-api-php-client":99.56,
@@ -4414,7 +4478,7 @@
         "leafo\/lessphp":97.51,
         "magento\/magento2":99.78,
         "michelf\/php-markdown":95.73,
-        "moodle\/moodle":95.9,
+        "moodle\/moodle":95.91,
         "nazariyg\/Phred":94.13,
         "nette\/application":100,
         "nette\/bootstrap":100,
@@ -4437,12 +4501,12 @@
         "nette\/tokenizer":100,
         "nette\/tracy":100,
         "nette\/utils":100,
-        "nikic\/FastRoute":99.43,
-        "nikic\/PHP-Parser":56.65,
-        "openemr\/openemr":82.91,
+        "nikic\/FastRoute":99.42,
+        "nikic\/PHP-Parser":56.64,
+        "openemr\/openemr":83.29,
         "orno\/route":100,
-        "owncloud\/core":98.33,
-        "padraic\/mockery":98.93,
+        "owncloud\/core":98.34,
+        "padraic\/mockery":98.92,
         "pear\/pear-core":97.2,
         "phingofficial\/phing":99.9,
         "phpbb\/phpbb":93.13,
@@ -4485,7 +4549,7 @@
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":99.7,
         "TYPO3\/TYPO3.CMS":98.71,
-        "wikimedia\/mediawiki-core":99.54,
+        "wikimedia\/mediawiki-core":99.55,
         "WordPress\/WordPress":99.39,
         "yiisoft\/yii":94.08,
         "yiisoft\/yii2":99.75,
@@ -4512,7 +4576,7 @@
         "zendframework\/zend-inputfilter":100,
         "zendframework\/zend-json":100,
         "zendframework\/zend-loader":99.41,
-        "zendframework\/zend-log":99.29,
+        "zendframework\/zend-log":99.3,
         "zendframework\/zend-mail":100,
         "zendframework\/zend-math":98.43,
         "zendframework\/zend-memory":97.85,
@@ -5278,16 +5342,48 @@
         "23":41,
         "31":43,
         "35":16
+      },
+      "2017-06-01":{
+        "0":91295,
+        "1":3059874,
+        "2":3171,
+        "newline":24397,
+        "3":290,
+        "5":77,
+        "6":59,
+        "11":129,
+        "14":23,
+        "27":29,
+        "4":580,
+        "7":105,
+        "9":45,
+        "10":36,
+        "12":287,
+        "8":360,
+        "16":173,
+        "20":89,
+        "24":25,
+        "28":"3",
+        "13":12,
+        "15":111,
+        "17":"7",
+        "18":4,
+        "19":56,
+        "21":"2",
+        "22":2,
+        "23":41,
+        "31":43,
+        "35":16
       }
     },
     "winner":1
   },
   "Multiple statements on same line":{
-    "total":2380299,
+    "total":2382086,
     "total_repos":195,
     "values":{
-      "no":2373623,
-      "yes":6676
+      "no":2375411,
+      "yes":6675
     },
     "repos":{
       "no":{
@@ -5383,13 +5479,13 @@
         "nette\/tracy":99.72,
         "nette\/utils":99.9,
         "nikic\/FastRoute":99.57,
-        "nikic\/PHP-Parser":95.53,
+        "nikic\/PHP-Parser":95.55,
         "openemr\/openemr":99.03,
         "orno\/route":100,
         "owncloud\/core":99.98,
         "padraic\/mockery":100,
         "pear\/pear-core":99.85,
-        "phingofficial\/phing":100,
+        "phingofficial\/phing":99.99,
         "phpbb\/phpbb":99.93,
         "phpDocumentor\/phpDocumentor2":99.58,
         "PHPMailer\/PHPMailer":100,
@@ -5604,16 +5700,20 @@
       "2017-05-01":{
         "no":2373623,
         "yes":6676
+      },
+      "2017-06-01":{
+        "no":2375411,
+        "yes":6675
       }
     },
     "winner":"no"
   },
   "Function opening brace placement":{
-    "total":327376,
+    "total":327783,
     "total_repos":195,
     "values":{
-      "new line":238887,
-      "same line":88489
+      "new line":238989,
+      "same line":88794
     },
     "repos":{
       "new line":{
@@ -5640,7 +5740,7 @@
         "auraphp\/Aura.Web":93.9,
         "auraphp\/Aura.Web_Kernel":76.92,
         "avalanche123\/Imagine":100,
-        "aws\/aws-sdk-php":88.31,
+        "aws\/aws-sdk-php":87.99,
         "batopa\/chirp":100,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":96.91,
@@ -5654,7 +5754,7 @@
         "composer\/composer":100,
         "contao\/core":99.01,
         "danielstjules\/Stringy":100,
-        "doctrine\/doctrine2":99.91,
+        "doctrine\/doctrine2":99.87,
         "dropbox\/dropbox-sdk-php":90.86,
         "EllisLab\/CodeIgniter":100,
         "erusev\/parsedown":100,
@@ -5665,7 +5765,7 @@
         "fzaninotto\/Faker":99.91,
         "gintonicweb\/GintonicCMS":100,
         "google\/google-api-php-client":99.96,
-        "guzzle\/guzzle":87.32,
+        "guzzle\/guzzle":87.38,
         "Halleck45\/PhpMetrics":63.26,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":99.51,
@@ -5699,14 +5799,14 @@
         "nette\/tracy":100,
         "nette\/utils":100,
         "orno\/route":95.83,
-        "padraic\/mockery":98.81,
+        "padraic\/mockery":98.82,
         "pear\/pear-core":99.67,
         "phingofficial\/phing":99.68,
         "phpbb\/phpbb":100,
         "phpDocumentor\/phpDocumentor2":97.48,
         "PHPMailer\/PHPMailer":96.62,
-        "phpmyadmin\/phpmyadmin":87.5,
-        "pimcore\/pimcore":99.93,
+        "phpmyadmin\/phpmyadmin":87.43,
+        "pimcore\/pimcore":99.95,
         "piwik\/piwik":99.93,
         "ppi\/framework":99.6,
         "PrestaShop\/PrestaShop":99.91,
@@ -5717,7 +5817,7 @@
         "reactphp\/child-process":100,
         "reactphp\/dns":100,
         "reactphp\/event-loop":100,
-        "reactphp\/http":97.65,
+        "reactphp\/http":97.7,
         "reactphp\/http-client":100,
         "reactphp\/promise":100,
         "reactphp\/socket":100,
@@ -5730,7 +5830,7 @@
         "sebastianbergmann\/phpunit":100,
         "Seldaek\/monolog":99.8,
         "silexphp\/Silex":100,
-        "squizlabs\/PHP_CodeSniffer":96.4,
+        "squizlabs\/PHP_CodeSniffer":96.28,
         "sugarcrm\/sugarcrm_dev":88.36,
         "swiftmailer\/swiftmailer":100,
         "symfony\/symfony":100,
@@ -5739,9 +5839,9 @@
         "thephpleague\/fractal":99.43,
         "thephpleague\/oauth2-client":97.83,
         "thephpleague\/oauth2-server":90.98,
-        "TYPO3\/TYPO3.CMS":99.56,
+        "TYPO3\/TYPO3.CMS":99.55,
         "yiisoft\/yii":99.82,
-        "yiisoft\/yii2":99.96,
+        "yiisoft\/yii2":99.93,
         "zendframework\/zend-authentication":97.58,
         "zendframework\/zend-barcode":97.78,
         "zendframework\/zend-cache":99.77,
@@ -5788,7 +5888,7 @@
         "zendframework\/zend-test":100,
         "zendframework\/zend-text":100,
         "zendframework\/zend-uri":100,
-        "zendframework\/zend-validator":99.35,
+        "zendframework\/zend-validator":99.36,
         "zendframework\/zend-version":100,
         "zendframework\/zend-view":98.33,
         "zendframework\/zend-xmlrpc":100,
@@ -5808,7 +5908,7 @@
         "moodle\/moodle":98.01,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":69.8,
+        "openemr\/openemr":69.52,
         "owncloud\/core":99.78,
         "PHPOffice\/PHPExcel":62.6,
         "silverstripe\/silverstripe-framework":99.22,
@@ -5932,15 +6032,19 @@
       "2017-05-01":{
         "new line":238887,
         "same line":88489
+      },
+      "2017-06-01":{
+        "new line":238989,
+        "same line":88794
       }
     },
     "winner":"new line"
   },
   "CamelCase function name":{
-    "total":13273,
+    "total":13257,
     "total_repos":39,
     "values":{
-      "no":13273
+      "no":13257
     },
     "repos":{
       "no":{
@@ -6072,16 +6176,19 @@
       },
       "2017-05-01":{
         "no":13273
+      },
+      "2017-06-01":{
+        "no":13257
       }
     },
     "winner":"no"
   },
   "Function has doc comment":{
-    "total":343978,
+    "total":344365,
     "total_repos":195,
     "values":{
-      "no":100931,
-      "yes":243047
+      "no":101051,
+      "yes":243314
     },
     "repos":{
       "no":{
@@ -6097,16 +6204,16 @@
         "kriswallsmith\/Buzz":62.55,
         "leafo\/lessphp":66.67,
         "nette\/neon":50,
-        "openemr\/openemr":64.16,
+        "openemr\/openemr":63.78,
         "piwik\/piwik":53.38,
         "PrestaShop\/PrestaShop":55.69,
         "reactphp\/dns":87.32,
-        "reactphp\/http":56.47,
-        "reactphp\/http-client":94.34,
+        "reactphp\/http":55.17,
+        "reactphp\/http-client":75.93,
         "reactphp\/promise":85,
-        "reactphp\/socket":69.49,
+        "reactphp\/socket":73.53,
         "reactphp\/socket-client":82.14,
-        "reactphp\/stream":73.68,
+        "reactphp\/stream":69.64,
         "revive-adserver\/revive-adserver":78.11,
         "sugarcrm\/sugarcrm_dev":74.98
       },
@@ -6133,7 +6240,7 @@
         "auraphp\/Aura.Web":98.78,
         "auraphp\/Aura.Web_Kernel":96.3,
         "avalanche123\/Imagine":94.63,
-        "aws\/aws-sdk-php":57.76,
+        "aws\/aws-sdk-php":57.33,
         "batopa\/chirp":100,
         "bobthecow\/mustache.php":98.28,
         "box-project\/box2":96.91,
@@ -6142,33 +6249,33 @@
         "chamilo\/chamilo-lms":89.45,
         "chriso\/klein.php":100,
         "codeguy\/Slim":95.03,
-        "Codegyre\/Robo":91.69,
-        "composer\/composer":67.71,
+        "Codegyre\/Robo":90.87,
+        "composer\/composer":67.76,
         "contao\/core":99.28,
         "danielstjules\/Stringy":98.98,
-        "doctrine\/doctrine2":99.63,
+        "doctrine\/doctrine2":99.59,
         "dropbox\/dropbox-sdk-php":84.21,
         "drupal\/drupal":90.53,
         "EllisLab\/CodeIgniter":100,
-        "ezsystems\/ezpublish-kernel":87.82,
+        "ezsystems\/ezpublish-kernel":87.8,
         "fabpot\/PHP-CS-Fixer":83.43,
         "facebook\/facebook-php-sdk":100,
         "fruux\/sabre-dav":100,
-        "fzaninotto\/Faker":65.98,
+        "fzaninotto\/Faker":65.95,
         "ginatrapani\/ThinkUp":65.84,
         "gintonicweb\/GintonicCMS":90.91,
-        "guzzle\/guzzle":69.27,
+        "guzzle\/guzzle":68.95,
         "Halleck45\/PhpMetrics":99.22,
-        "iranianpep\/botonomous":99.67,
+        "iranianpep\/botonomous":99.69,
         "jackalope\/jackalope":95.74,
-        "joomla\/joomla-cms":95.59,
+        "joomla\/joomla-cms":95.58,
         "KnpLabs\/snappy":97.92,
         "ladybirdweb\/agorainvoicing":53.73,
         "ladybirdweb\/faveo-helpdesk":68.35,
         "laravel\/framework":99.9,
         "magento\/magento2":99.99,
         "michelf\/php-markdown":100,
-        "moodle\/moodle":76.17,
+        "moodle\/moodle":76.19,
         "nazariyg\/Phred":98.35,
         "nette\/application":72.63,
         "nette\/bootstrap":65,
@@ -6191,12 +6298,12 @@
         "nette\/tracy":76,
         "nette\/utils":93.73,
         "nikic\/FastRoute":57.14,
-        "nikic\/PHP-Parser":52.62,
+        "nikic\/PHP-Parser":52.92,
         "orno\/route":100,
-        "owncloud\/core":82.01,
-        "padraic\/mockery":61.19,
+        "owncloud\/core":81.99,
+        "padraic\/mockery":61.52,
         "pear\/pear-core":57.85,
-        "phingofficial\/phing":95.1,
+        "phingofficial\/phing":95.08,
         "phpbb\/phpbb":74.42,
         "phpDocumentor\/phpDocumentor2":83.81,
         "PHPMailer\/PHPMailer":90.98,
@@ -6213,23 +6320,23 @@
         "scabbiafw\/scabbia2-fw":100,
         "sculpin\/sculpin":76.52,
         "sebastianbergmann\/php-code-coverage":75.2,
-        "sebastianbergmann\/phpunit":95.05,
+        "sebastianbergmann\/phpunit":95.08,
         "Seldaek\/monolog":71.95,
         "silexphp\/Silex":58.24,
         "silverstripe\/silverstripe-framework":75.18,
         "squizlabs\/PHP_CodeSniffer":100,
-        "swiftmailer\/swiftmailer":94.38,
-        "symfony\/symfony":81.43,
+        "swiftmailer\/swiftmailer":94.19,
+        "symfony\/symfony":81.3,
         "tedivm\/Stash":90.09,
         "thephpleague\/flysystem":97.13,
         "thephpleague\/fractal":98.56,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":98.96,
-        "TYPO3\/TYPO3.CMS":99.9,
-        "wikimedia\/mediawiki-core":71.91,
-        "WordPress\/WordPress":98.63,
+        "TYPO3\/TYPO3.CMS":99.91,
+        "wikimedia\/mediawiki-core":71.52,
+        "WordPress\/WordPress":98.64,
         "yiisoft\/yii":66,
-        "yiisoft\/yii2":98.4,
+        "yiisoft\/yii2":98.41,
         "zendframework\/zend-authentication":100,
         "zendframework\/zend-barcode":99,
         "zendframework\/zend-cache":97.79,
@@ -6400,22 +6507,26 @@
       "2017-05-01":{
         "no":100931,
         "yes":243047
+      },
+      "2017-06-01":{
+        "no":101051,
+        "yes":243314
       }
     },
     "winner":"yes"
   },
   "Spacing before string concat":{
-    "total":425226,
+    "total":425345,
     "total_repos":184,
     "values":{
-      "0":165700,
-      "newline":16395,
-      "1":240283,
+      "0":165512,
+      "newline":16393,
+      "1":240593,
       "2":1328,
       "18":44,
       "24":4,
       "16":32,
-      "3":217,
+      "3":216,
       "4":215,
       "5":178,
       "6":125,
@@ -6472,7 +6583,7 @@
         "auraphp\/Aura.Web":91.67,
         "auraphp\/Aura.Web_Kernel":65.63,
         "avalanche123\/Imagine":65.52,
-        "aws\/aws-sdk-php":53.42,
+        "aws\/aws-sdk-php":53.47,
         "batopa\/chirp":100,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":75.81,
@@ -6486,25 +6597,25 @@
         "concrete5\/concrete5":88.6,
         "contao\/core":59.76,
         "danielstjules\/Stringy":100,
-        "doctrine\/doctrine2":80.03,
+        "doctrine\/doctrine2":80.11,
         "drupal\/drupal":84.98,
         "ezsystems\/ezpublish-kernel":98.51,
         "fruux\/sabre-dav":100,
-        "fzaninotto\/Faker":90.68,
+        "fzaninotto\/Faker":90.77,
         "gintonicweb\/GintonicCMS":100,
         "google\/google-api-php-client":96.27,
-        "guzzle\/guzzle":66.28,
+        "guzzle\/guzzle":67.05,
         "jackalope\/jackalope":53.43,
-        "joomla\/joomla-cms":92.91,
+        "joomla\/joomla-cms":92.97,
         "magento\/magento2":97.46,
         "michelf\/php-markdown":63.7,
-        "moodle\/moodle":54.21,
+        "moodle\/moodle":54.24,
         "nazariyg\/Phred":100,
-        "nette\/application":93.42,
+        "nette\/application":93.51,
         "nette\/bootstrap":68.42,
         "nette\/caching":100,
         "nette\/component-model":100,
-        "nette\/database":94.82,
+        "nette\/database":94.79,
         "nette\/di":97.65,
         "nette\/finder":100,
         "nette\/forms":81.74,
@@ -6522,26 +6633,26 @@
         "nette\/utils":88.98,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":82.62,
-        "openemr\/openemr":57.58,
+        "openemr\/openemr":57.75,
         "orno\/route":100,
-        "owncloud\/core":80.56,
-        "padraic\/mockery":66.05,
+        "owncloud\/core":80.53,
+        "padraic\/mockery":64.78,
         "pear\/pear-core":91.64,
         "phingofficial\/phing":94.69,
         "phpbb\/phpbb":99.49,
         "phpDocumentor\/phpDocumentor2":69.29,
-        "PHPMailer\/PHPMailer":92.99,
-        "phpmyadmin\/phpmyadmin":58.1,
+        "PHPMailer\/PHPMailer":94.49,
+        "phpmyadmin\/phpmyadmin":58.02,
         "PHPOffice\/PHPExcel":48.6,
-        "pimcore\/pimcore":92.16,
+        "pimcore\/pimcore":92.22,
         "piwik\/piwik":90.3,
         "ppi\/framework":60,
         "propelorm\/Propel":89.1,
         "quickapps\/cms":90.91,
         "radphp\/radphp":100,
         "reactphp\/dns":80,
-        "reactphp\/http":94.12,
-        "reactphp\/http-client":60,
+        "reactphp\/http":93.75,
+        "reactphp\/http-client":63.64,
         "reactphp\/socket":100,
         "reactphp\/socket-client":100,
         "reactphp\/stream":100,
@@ -6553,10 +6664,10 @@
         "thephpleague\/flysystem":93.33,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":76.92,
-        "TYPO3\/TYPO3.CMS":93.64,
-        "wikimedia\/mediawiki-core":95.03,
-        "WordPress\/WordPress":96.99,
-        "yiisoft\/yii2":94.7,
+        "TYPO3\/TYPO3.CMS":93.67,
+        "wikimedia\/mediawiki-core":95.04,
+        "WordPress\/WordPress":97,
+        "yiisoft\/yii2":94.74,
         "zendframework\/zend-authentication":81.25,
         "zendframework\/zend-barcode":82.14,
         "zendframework\/zend-cache":92.41,
@@ -6578,7 +6689,7 @@
         "zendframework\/zend-i18n-resources":100,
         "zendframework\/zend-json":59.46,
         "zendframework\/zend-loader":86.27,
-        "zendframework\/zend-log":67.92,
+        "zendframework\/zend-log":66.67,
         "zendframework\/zend-mail":94.51,
         "zendframework\/zend-math":100,
         "zendframework\/zend-memory":100,
@@ -6614,9 +6725,9 @@
       },
       "0":{
         "chamilo\/chamilo-lms":72.27,
-        "composer\/composer":61.86,
+        "composer\/composer":61.76,
         "dropbox\/dropbox-sdk-php":57.94,
-        "EllisLab\/CodeIgniter":88.63,
+        "EllisLab\/CodeIgniter":88.61,
         "erusev\/parsedown":93.44,
         "fabpot\/Goutte":100,
         "fabpot\/PHP-CS-Fixer":94.9,
@@ -6629,20 +6740,20 @@
         "kriswallsmith\/assetic":91.57,
         "kriswallsmith\/Buzz":100,
         "ladybirdweb\/agorainvoicing":81.68,
-        "ladybirdweb\/faveo-helpdesk":85.5,
+        "ladybirdweb\/faveo-helpdesk":85.63,
         "laravel\/framework":99.53,
         "leafo\/lessphp":68.97,
         "nette\/safe-stream":54.55,
         "PrestaShop\/PrestaShop":98.95,
         "pyrocms\/pyrocms":68.19,
         "reactphp\/promise":100,
-        "revive-adserver\/revive-adserver":48.02,
+        "revive-adserver\/revive-adserver":48,
         "sculpin\/sculpin":81.86,
         "Seldaek\/monolog":52.19,
         "silexphp\/Silex":100,
         "squizlabs\/PHP_CodeSniffer":100,
-        "swiftmailer\/swiftmailer":97.14,
-        "symfony\/symfony":96,
+        "swiftmailer\/swiftmailer":97.18,
+        "symfony\/symfony":95.83,
         "thephpleague\/fractal":85.71,
         "yiisoft\/yii":89.52
       }
@@ -8039,18 +8150,66 @@
         "45":"1",
         "48":5,
         "49":"1"
+      },
+      "2017-06-01":{
+        "0":165512,
+        "newline":16393,
+        "1":240593,
+        "2":1328,
+        "18":44,
+        "24":4,
+        "16":32,
+        "3":216,
+        "4":215,
+        "5":178,
+        "6":125,
+        "7":105,
+        "8":103,
+        "9":89,
+        "11":47,
+        "10":58,
+        "12":35,
+        "13":56,
+        "14":20,
+        "15":29,
+        "17":10,
+        "19":11,
+        "20":16,
+        "21":5,
+        "22":4,
+        "23":7,
+        "25":14,
+        "26":2,
+        "27":2,
+        "28":2,
+        "29":3,
+        "30":2,
+        "31":20,
+        "32":9,
+        "33":7,
+        "34":14,
+        "35":3,
+        "36":11,
+        "37":"1",
+        "38":"1",
+        "40":4,
+        "41":7,
+        "43":"1",
+        "45":"1",
+        "48":5,
+        "49":"1"
       }
     },
     "winner":1
   },
   "Spacing after string concat":{
-    "total":425226,
+    "total":425345,
     "total_repos":184,
     "values":{
-      "newline":32166,
-      "0":162596,
-      "1":229726,
-      "2":419,
+      "newline":32151,
+      "0":162433,
+      "1":230025,
+      "2":417,
       "3":35,
       "6":4,
       "12":21,
@@ -8106,7 +8265,7 @@
         "auraphp\/Aura.Web":100,
         "auraphp\/Aura.Web_Kernel":100,
         "avalanche123\/Imagine":65.52,
-        "aws\/aws-sdk-php":98.97,
+        "aws\/aws-sdk-php":99.01,
         "batopa\/chirp":100,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":93.55,
@@ -8120,20 +8279,20 @@
         "concrete5\/concrete5":89.27,
         "contao\/core":62.4,
         "danielstjules\/Stringy":82.35,
-        "doctrine\/doctrine2":83.11,
+        "doctrine\/doctrine2":83.17,
         "drupal\/drupal":86.01,
         "ezsystems\/ezpublish-kernel":85.73,
         "facebook\/facebook-php-sdk":43.24,
         "fruux\/sabre-dav":99.46,
-        "fzaninotto\/Faker":92.55,
+        "fzaninotto\/Faker":92.62,
         "gintonicweb\/GintonicCMS":100,
         "google\/google-api-php-client":91.79,
         "guzzle\/guzzle":100,
         "jackalope\/jackalope":51.96,
-        "joomla\/joomla-cms":95.18,
+        "joomla\/joomla-cms":95.24,
         "magento\/magento2":83.42,
         "michelf\/php-markdown":63.35,
-        "moodle\/moodle":51.67,
+        "moodle\/moodle":51.68,
         "nette\/application":100,
         "nette\/bootstrap":100,
         "nette\/caching":100,
@@ -8156,17 +8315,17 @@
         "nette\/utils":95.28,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":99.32,
-        "openemr\/openemr":45.35,
-        "owncloud\/core":80.51,
-        "padraic\/mockery":82.72,
+        "openemr\/openemr":45.58,
+        "owncloud\/core":80.49,
+        "padraic\/mockery":81.76,
         "pear\/pear-core":73.06,
         "phingofficial\/phing":98.07,
         "phpbb\/phpbb":99.23,
         "phpDocumentor\/phpDocumentor2":80.5,
-        "PHPMailer\/PHPMailer":77.49,
-        "phpmyadmin\/phpmyadmin":98.17,
+        "PHPMailer\/PHPMailer":78.31,
+        "phpmyadmin\/phpmyadmin":98.16,
         "PHPOffice\/PHPExcel":53.81,
-        "pimcore\/pimcore":93.31,
+        "pimcore\/pimcore":93.36,
         "piwik\/piwik":96.4,
         "ppi\/framework":60,
         "propelorm\/Propel":91.82,
@@ -8174,7 +8333,7 @@
         "radphp\/radphp":98.59,
         "reactphp\/dns":80,
         "reactphp\/http":100,
-        "reactphp\/http-client":60,
+        "reactphp\/http-client":63.64,
         "reactphp\/socket":100,
         "reactphp\/socket-client":100,
         "reactphp\/stream":100,
@@ -8185,10 +8344,10 @@
         "thephpleague\/flysystem":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":92.31,
-        "TYPO3\/TYPO3.CMS":97.67,
-        "wikimedia\/mediawiki-core":74.73,
-        "WordPress\/WordPress":91.38,
-        "yiisoft\/yii2":97.31,
+        "TYPO3\/TYPO3.CMS":97.69,
+        "wikimedia\/mediawiki-core":74.88,
+        "WordPress\/WordPress":91.34,
+        "yiisoft\/yii2":97.32,
         "zendframework\/zend-authentication":96.88,
         "zendframework\/zend-barcode":100,
         "zendframework\/zend-cache":99.73,
@@ -8212,7 +8371,7 @@
         "zendframework\/zend-inputfilter":100,
         "zendframework\/zend-json":100,
         "zendframework\/zend-loader":98.04,
-        "zendframework\/zend-log":69.81,
+        "zendframework\/zend-log":68.63,
         "zendframework\/zend-mail":100,
         "zendframework\/zend-math":88.24,
         "zendframework\/zend-memory":100,
@@ -8239,7 +8398,7 @@
       },
       "0":{
         "chamilo\/chamilo-lms":70.28,
-        "composer\/composer":59.64,
+        "composer\/composer":59.55,
         "dropbox\/dropbox-sdk-php":41.12,
         "EllisLab\/CodeIgniter":99.97,
         "erusev\/parsedown":93.44,
@@ -8248,26 +8407,26 @@
         "fabpot\/Twig":99.26,
         "ginatrapani\/ThinkUp":70.16,
         "Halleck45\/PhpMetrics":68.97,
-        "iranianpep\/botonomous":95.56,
+        "iranianpep\/botonomous":95.74,
         "KnpLabs\/snappy":93.33,
         "kriswallsmith\/assetic":94.38,
         "kriswallsmith\/Buzz":100,
         "ladybirdweb\/agorainvoicing":75.98,
-        "ladybirdweb\/faveo-helpdesk":85.16,
-        "laravel\/framework":98.96,
+        "ladybirdweb\/faveo-helpdesk":85.3,
+        "laravel\/framework":98.97,
         "leafo\/lessphp":68.97,
         "nette\/safe-stream":54.55,
         "PrestaShop\/PrestaShop":98.55,
         "pyrocms\/pyrocms":68.1,
         "reactphp\/promise":100,
-        "revive-adserver\/revive-adserver":53.18,
+        "revive-adserver\/revive-adserver":53.21,
         "sculpin\/sculpin":81.37,
         "Seldaek\/monolog":51.46,
         "silexphp\/Silex":100,
         "squizlabs\/PHP_CodeSniffer":100,
         "sugarcrm\/sugarcrm_dev":42.05,
-        "swiftmailer\/swiftmailer":94.92,
-        "symfony\/symfony":96.92,
+        "swiftmailer\/swiftmailer":94.98,
+        "symfony\/symfony":97,
         "thephpleague\/fractal":100,
         "yiisoft\/yii":90.14
       },
@@ -9470,17 +9629,57 @@
         "35":"1",
         "37":"1",
         "43":"1"
+      },
+      "2017-06-01":{
+        "newline":32151,
+        "0":162433,
+        "1":230025,
+        "2":417,
+        "3":35,
+        "6":4,
+        "12":21,
+        "24":2,
+        "5":44,
+        "7":33,
+        "14":4,
+        "16":2,
+        "4":38,
+        "8":20,
+        "10":12,
+        "11":24,
+        "15":8,
+        "26":9,
+        "9":11,
+        "13":7,
+        "17":7,
+        "18":"2",
+        "19":4,
+        "20":3,
+        "21":2,
+        "22":"3",
+        "25":2,
+        "27":6,
+        "28":"2",
+        "29":4,
+        "30":"2",
+        "31":"1",
+        "32":"1",
+        "33":"2",
+        "34":"1",
+        "35":"1",
+        "37":"1",
+        "43":"1"
       }
     },
     "winner":1
   },
   "Inline comment style":{
-    "total":403995,
+    "total":404397,
     "total_repos":187,
     "values":{
-      "# ...":9922,
-      "\/* ... *\/":32799,
-      "\/\/ ...":361274
+      "# ...":10021,
+      "\/* ... *\/":32795,
+      "\/\/ ...":361581
     },
     "repos":{
       "\/\/ ...":{
@@ -9507,38 +9706,38 @@
         "bobthecow\/mustache.php":56.34,
         "box-project\/box2":100,
         "c9s\/Pux":97.09,
-        "cakephp\/cakephp":86.9,
+        "cakephp\/cakephp":87.14,
         "cboden\/Ratchet":68.75,
         "chamilo\/chamilo-lms":86.63,
         "chriso\/klein.php":95.68,
         "Codeception\/Codeception":97.24,
         "codeguy\/Slim":84.87,
         "Codegyre\/Robo":100,
-        "composer\/composer":78.49,
+        "composer\/composer":78.6,
         "concrete5\/concrete5":86.86,
         "contao\/core":99.85,
         "danielstjules\/Stringy":93.33,
-        "doctrine\/doctrine2":69.86,
+        "doctrine\/doctrine2":69.89,
         "dropbox\/dropbox-sdk-php":96.55,
         "drupal\/drupal":95.12,
         "EllisLab\/CodeIgniter":97.88,
-        "ezsystems\/ezpublish-kernel":97.28,
+        "ezsystems\/ezpublish-kernel":97.29,
         "fabpot\/PHP-CS-Fixer":69.67,
         "facebook\/facebook-php-sdk":96.67,
         "fruux\/sabre-dav":97.88,
-        "fzaninotto\/Faker":92.2,
+        "fzaninotto\/Faker":92.23,
         "ginatrapani\/ThinkUp":84.65,
         "google\/google-api-php-client":63.4,
         "guzzle\/guzzle":100,
         "Halleck45\/PhpMetrics":54.3,
-        "iranianpep\/botonomous":71.56,
+        "iranianpep\/botonomous":72.9,
         "jackalope\/jackalope":95.76,
         "joomla\/joomla-cms":97.1,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":52.68,
         "kriswallsmith\/Buzz":100,
         "ladybirdweb\/agorainvoicing":57.21,
-        "ladybirdweb\/faveo-helpdesk":58.83,
+        "ladybirdweb\/faveo-helpdesk":59.03,
         "laravel\/framework":99.89,
         "leafo\/lessphp":98.72,
         "magento\/magento2":64.19,
@@ -9564,17 +9763,17 @@
         "nette\/tracy":85.71,
         "nette\/utils":92.65,
         "nikic\/FastRoute":100,
-        "nikic\/PHP-Parser":87.59,
-        "openemr\/openemr":95.57,
+        "nikic\/PHP-Parser":87.54,
+        "openemr\/openemr":95.49,
         "orno\/route":100,
-        "owncloud\/core":96.94,
-        "padraic\/mockery":89.74,
+        "owncloud\/core":96.88,
+        "padraic\/mockery":92.31,
         "pear\/pear-core":95.56,
-        "phingofficial\/phing":82.08,
+        "phingofficial\/phing":82.12,
         "phpbb\/phpbb":96.52,
         "phpDocumentor\/phpDocumentor2":100,
-        "PHPMailer\/PHPMailer":98.73,
-        "phpmyadmin\/phpmyadmin":84.33,
+        "PHPMailer\/PHPMailer":98.72,
+        "phpmyadmin\/phpmyadmin":84.14,
         "PHPOffice\/PHPExcel":99.14,
         "pimcore\/pimcore":99.66,
         "piwik\/piwik":98.14,
@@ -9592,7 +9791,7 @@
         "reactphp\/socket":100,
         "reactphp\/socket-client":100,
         "reactphp\/stream":100,
-        "revive-adserver\/revive-adserver":65.89,
+        "revive-adserver\/revive-adserver":65.95,
         "scabbiafw\/scabbia2-fw":87.5,
         "sculpin\/sculpin":58.18,
         "sebastianbergmann\/php-code-coverage":78.57,
@@ -9600,18 +9799,18 @@
         "silverstripe\/silverstripe-framework":95,
         "squizlabs\/PHP_CodeSniffer":98.49,
         "sugarcrm\/sugarcrm_dev":79.68,
-        "swiftmailer\/swiftmailer":60.36,
-        "symfony\/symfony":62.73,
+        "swiftmailer\/swiftmailer":60.95,
+        "symfony\/symfony":62.56,
         "tedivm\/Stash":65.09,
         "thephpleague\/flysystem":79.31,
         "thephpleague\/fractal":62.5,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":97.18,
-        "TYPO3\/TYPO3.CMS":85.79,
-        "wikimedia\/mediawiki-core":77.2,
-        "WordPress\/WordPress":76.42,
+        "TYPO3\/TYPO3.CMS":85.78,
+        "wikimedia\/mediawiki-core":77.17,
+        "WordPress\/WordPress":76.11,
         "yiisoft\/yii":90.02,
-        "yiisoft\/yii2":85.84,
+        "yiisoft\/yii2":86.1,
         "zendframework\/zend-authentication":93.62,
         "zendframework\/zend-barcode":85.94,
         "zendframework\/zend-cache":69.58,
@@ -9629,13 +9828,13 @@
         "zendframework\/zend-feed":100,
         "zendframework\/zend-file":92.86,
         "zendframework\/zend-filter":100,
-        "zendframework\/zend-form":97.69,
+        "zendframework\/zend-form":97.78,
         "zendframework\/zend-http":96.81,
-        "zendframework\/zend-i18n":98.39,
+        "zendframework\/zend-i18n":98.51,
         "zendframework\/zend-inputfilter":100,
         "zendframework\/zend-json":100,
         "zendframework\/zend-loader":100,
-        "zendframework\/zend-log":97.26,
+        "zendframework\/zend-log":97.85,
         "zendframework\/zend-mail":95.74,
         "zendframework\/zend-math":92.86,
         "zendframework\/zend-memory":86.21,
@@ -9656,7 +9855,7 @@
         "zendframework\/zend-test":100,
         "zendframework\/zend-text":100,
         "zendframework\/zend-uri":98.11,
-        "zendframework\/zend-validator":96.44,
+        "zendframework\/zend-validator":96.52,
         "zendframework\/zend-version":100,
         "zendframework\/zend-view":96.68,
         "zendframework\/zend-xmlrpc":100,
@@ -9822,16 +10021,21 @@
         "# ...":9922,
         "\/* ... *\/":32799,
         "\/\/ ...":361274
+      },
+      "2017-06-01":{
+        "# ...":10021,
+        "\/* ... *\/":32795,
+        "\/\/ ...":361581
       }
     },
     "winner":"\/\/ ..."
   },
   "Control structure defined inline":{
-    "total":588391,
+    "total":589126,
     "total_repos":194,
     "values":{
-      "no":559028,
-      "yes":29363
+      "no":559789,
+      "yes":29337
     },
     "repos":{
       "no":{
@@ -9889,11 +10093,11 @@
         "ginatrapani\/ThinkUp":99.28,
         "gintonicweb\/GintonicCMS":100,
         "google\/google-api-php-client":100,
-        "guzzle\/guzzle":99.75,
+        "guzzle\/guzzle":99.76,
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
-        "joomla\/joomla-cms":99.03,
+        "joomla\/joomla-cms":99.04,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
         "kriswallsmith\/Buzz":100,
@@ -9903,7 +10107,7 @@
         "leafo\/lessphp":75.98,
         "magento\/magento2":100,
         "michelf\/php-markdown":86.19,
-        "moodle\/moodle":99.21,
+        "moodle\/moodle":99.2,
         "nazariyg\/Phred":100,
         "nette\/application":100,
         "nette\/bootstrap":100,
@@ -9927,10 +10131,10 @@
         "nette\/tracy":100,
         "nette\/utils":100,
         "nikic\/FastRoute":98.44,
-        "nikic\/PHP-Parser":98.48,
-        "openemr\/openemr":81.53,
+        "nikic\/PHP-Parser":98.47,
+        "openemr\/openemr":81.65,
         "orno\/route":100,
-        "owncloud\/core":99.23,
+        "owncloud\/core":99.2,
         "padraic\/mockery":100,
         "pear\/pear-core":99.62,
         "phingofficial\/phing":99.94,
@@ -9975,7 +10179,7 @@
         "thephpleague\/oauth2-server":100,
         "TYPO3\/TYPO3.CMS":100,
         "wikimedia\/mediawiki-core":99.98,
-        "WordPress\/WordPress":68.53,
+        "WordPress\/WordPress":68.69,
         "yiisoft\/yii2":99.82,
         "zendframework\/zend-authentication":100,
         "zendframework\/zend-barcode":100,
@@ -10030,7 +10234,7 @@
         "zikula\/core":99.8
       },
       "yes":{
-        "yiisoft\/yii":62.86
+        "yiisoft\/yii":62.85
       }
     },
     "trends":{
@@ -10149,17 +10353,21 @@
       "2017-05-01":{
         "no":559028,
         "yes":29363
+      },
+      "2017-06-01":{
+        "no":559789,
+        "yes":29337
       }
     },
     "winner":"no"
   },
   "Spaces after control structure open parenthesis":{
-    "total":522920,
+    "total":523603,
     "total_repos":194,
     "values":{
-      "0":480461,
-      "newline":792,
-      "1":41536,
+      "0":480632,
+      "newline":797,
+      "1":42043,
       "2":42,
       "3":68,
       "4":5,
@@ -10194,7 +10402,7 @@
         "auraphp\/Aura.Web":100,
         "auraphp\/Aura.Web_Kernel":100,
         "avalanche123\/Imagine":100,
-        "aws\/aws-sdk-php":99.29,
+        "aws\/aws-sdk-php":99.31,
         "batopa\/chirp":100,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":100,
@@ -10210,10 +10418,10 @@
         "concrete5\/concrete5":97.96,
         "contao\/core":100,
         "danielstjules\/Stringy":100,
-        "doctrine\/doctrine2":85.35,
+        "doctrine\/doctrine2":85.39,
         "dropbox\/dropbox-sdk-php":100,
         "drupal\/drupal":99.69,
-        "EllisLab\/CodeIgniter":79.06,
+        "EllisLab\/CodeIgniter":79.02,
         "erusev\/parsedown":88.79,
         "ezsystems\/ezpublish-kernel":99.22,
         "fabpot\/Goutte":100,
@@ -10229,7 +10437,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
-        "joomla\/joomla-cms":99.55,
+        "joomla\/joomla-cms":99.56,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":99.82,
         "kriswallsmith\/Buzz":100,
@@ -10239,7 +10447,7 @@
         "leafo\/lessphp":99.25,
         "magento\/magento2":100,
         "michelf\/php-markdown":98.63,
-        "moodle\/moodle":99.14,
+        "moodle\/moodle":99.15,
         "nette\/application":100,
         "nette\/bootstrap":100,
         "nette\/caching":100,
@@ -10263,9 +10471,9 @@
         "nette\/utils":100,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":91.06,
+        "openemr\/openemr":91.12,
         "orno\/route":100,
-        "owncloud\/core":98.81,
+        "owncloud\/core":98.83,
         "padraic\/mockery":100,
         "pear\/pear-core":99.86,
         "phingofficial\/phing":99.95,
@@ -10286,7 +10494,7 @@
         "reactphp\/dns":100,
         "reactphp\/event-loop":100,
         "reactphp\/http":100,
-        "reactphp\/http-client":97.5,
+        "reactphp\/http-client":97.78,
         "reactphp\/promise":100,
         "reactphp\/socket":100,
         "reactphp\/socket-client":100,
@@ -10304,13 +10512,13 @@
         "swiftmailer\/swiftmailer":100,
         "symfony\/symfony":99.89,
         "tedivm\/Stash":100,
-        "thephpleague\/flysystem":69.03,
+        "thephpleague\/flysystem":67.74,
         "thephpleague\/fractal":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":93.4,
-        "TYPO3\/TYPO3.CMS":99.31,
+        "TYPO3\/TYPO3.CMS":99.32,
         "yiisoft\/yii":99.86,
-        "yiisoft\/yii2":99.9,
+        "yiisoft\/yii2":99.88,
         "zendframework\/zend-authentication":100,
         "zendframework\/zend-barcode":100,
         "zendframework\/zend-cache":100,
@@ -10365,8 +10573,8 @@
       },
       "1":{
         "nazariyg\/Phred":87.15,
-        "wikimedia\/mediawiki-core":99.52,
-        "WordPress\/WordPress":97.26
+        "wikimedia\/mediawiki-core":99.51,
+        "WordPress\/WordPress":97.27
       }
     },
     "trends":{
@@ -10767,16 +10975,29 @@
         "8":"1",
         "9":"1",
         "11":"1"
+      },
+      "2017-06-01":{
+        "0":480632,
+        "newline":797,
+        "1":42043,
+        "2":42,
+        "3":68,
+        "4":5,
+        "5":"12",
+        "7":"1",
+        "8":"1",
+        "9":"1",
+        "11":"1"
       }
     },
     "winner":0
   },
   "Spaces before control structure close parenthesis":{
-    "total":522920,
+    "total":523603,
     "total_repos":194,
     "values":{
-      "0":484365,
-      "1":38479,
+      "0":484552,
+      "1":38975,
       "2":46,
       "3":8,
       "4":4,
@@ -10859,7 +11080,7 @@
         "leafo\/lessphp":99.25,
         "magento\/magento2":100,
         "michelf\/php-markdown":98.63,
-        "moodle\/moodle":99.08,
+        "moodle\/moodle":99.09,
         "nette\/application":100,
         "nette\/bootstrap":100,
         "nette\/caching":100,
@@ -10883,9 +11104,9 @@
         "nette\/utils":100,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":90.09,
+        "openemr\/openemr":90.14,
         "orno\/route":100,
-        "owncloud\/core":99.47,
+        "owncloud\/core":99.49,
         "padraic\/mockery":100,
         "pear\/pear-core":99.95,
         "phingofficial\/phing":100,
@@ -10986,7 +11207,7 @@
       "1":{
         "nazariyg\/Phred":83.29,
         "wikimedia\/mediawiki-core":96.71,
-        "WordPress\/WordPress":96.62
+        "WordPress\/WordPress":96.64
       }
     },
     "trends":{
@@ -11424,16 +11645,31 @@
         "12":5,
         "14":"1",
         "15":2
+      },
+      "2017-06-01":{
+        "0":484552,
+        "1":38975,
+        "2":46,
+        "3":8,
+        "4":4,
+        "5":3,
+        "6":2,
+        "7":2,
+        "8":"1",
+        "9":2,
+        "12":5,
+        "14":"1",
+        "15":2
       }
     },
     "winner":0
   },
   "Blank lines at start of control structure":{
-    "total":574903,
+    "total":575734,
     "total_repos":194,
     "values":{
-      "0":568668,
-      "1":6186,
+      "0":569504,
+      "1":6181,
       "2":46,
       "3":3
     },
@@ -11489,11 +11725,11 @@
         "fabpot\/Twig":100,
         "facebook\/facebook-php-sdk":100,
         "fruux\/sabre-dav":77.01,
-        "fzaninotto\/Faker":99.8,
+        "fzaninotto\/Faker":99.81,
         "ginatrapani\/ThinkUp":99.56,
         "gintonicweb\/GintonicCMS":100,
         "google\/google-api-php-client":100,
-        "guzzle\/guzzle":98.57,
+        "guzzle\/guzzle":98.59,
         "Halleck45\/PhpMetrics":94.58,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":99.18,
@@ -11502,7 +11738,7 @@
         "kriswallsmith\/assetic":100,
         "kriswallsmith\/Buzz":100,
         "ladybirdweb\/agorainvoicing":97.34,
-        "ladybirdweb\/faveo-helpdesk":98.85,
+        "ladybirdweb\/faveo-helpdesk":98.86,
         "laravel\/framework":100,
         "leafo\/lessphp":100,
         "magento\/magento2":99.99,
@@ -11554,7 +11790,7 @@
         "reactphp\/child-process":100,
         "reactphp\/dns":100,
         "reactphp\/event-loop":100,
-        "reactphp\/http":98.75,
+        "reactphp\/http":100,
         "reactphp\/http-client":100,
         "reactphp\/promise":100,
         "reactphp\/socket":100,
@@ -11578,8 +11814,8 @@
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":100,
         "TYPO3\/TYPO3.CMS":99.93,
-        "wikimedia\/mediawiki-core":99.87,
-        "WordPress\/WordPress":98.43,
+        "wikimedia\/mediawiki-core":99.89,
+        "WordPress\/WordPress":98.44,
         "yiisoft\/yii":99.9,
         "yiisoft\/yii2":99.82,
         "zendframework\/zend-authentication":100,
@@ -11809,16 +12045,22 @@
         "1":6186,
         "2":46,
         "3":3
+      },
+      "2017-06-01":{
+        "0":569504,
+        "1":6181,
+        "2":46,
+        "3":3
       }
     },
     "winner":0
   },
   "Blank lines at end of control structure":{
-    "total":574256,
+    "total":575089,
     "total_repos":194,
     "values":{
-      "0":568532,
-      "1":5600,
+      "0":569364,
+      "1":5601,
       "2":107,
       "3":16,
       "4":"1"
@@ -11864,7 +12106,7 @@
         "concrete5\/concrete5":97.39,
         "contao\/core":99.96,
         "danielstjules\/Stringy":100,
-        "doctrine\/doctrine2":99.52,
+        "doctrine\/doctrine2":99.53,
         "dropbox\/dropbox-sdk-php":100,
         "drupal\/drupal":99.83,
         "EllisLab\/CodeIgniter":99.89,
@@ -11875,11 +12117,11 @@
         "fabpot\/Twig":99.78,
         "facebook\/facebook-php-sdk":99.21,
         "fruux\/sabre-dav":75.41,
-        "fzaninotto\/Faker":99.8,
+        "fzaninotto\/Faker":99.81,
         "ginatrapani\/ThinkUp":99.64,
         "gintonicweb\/GintonicCMS":100,
         "google\/google-api-php-client":99.8,
-        "guzzle\/guzzle":99.76,
+        "guzzle\/guzzle":99.77,
         "Halleck45\/PhpMetrics":98.64,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
@@ -11893,7 +12135,7 @@
         "leafo\/lessphp":98.93,
         "magento\/magento2":100,
         "michelf\/php-markdown":99.36,
-        "moodle\/moodle":97.31,
+        "moodle\/moodle":97.32,
         "nazariyg\/Phred":100,
         "nette\/application":88.98,
         "nette\/bootstrap":100,
@@ -11915,10 +12157,10 @@
         "nette\/tester":87.7,
         "nette\/tokenizer":89.47,
         "nette\/tracy":82.26,
-        "nette\/utils":82.13,
+        "nette\/utils":82.22,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":98.05,
+        "openemr\/openemr":98.07,
         "orno\/route":100,
         "owncloud\/core":98.97,
         "padraic\/mockery":100,
@@ -11965,7 +12207,7 @@
         "thephpleague\/oauth2-server":100,
         "TYPO3\/TYPO3.CMS":99.99,
         "wikimedia\/mediawiki-core":99.74,
-        "WordPress\/WordPress":98.91,
+        "WordPress\/WordPress":98.92,
         "yiisoft\/yii":99.2,
         "yiisoft\/yii2":99.9,
         "zendframework\/zend-authentication":100,
@@ -12224,16 +12466,23 @@
         "2":107,
         "3":16,
         "4":"1"
+      },
+      "2017-06-01":{
+        "0":569364,
+        "1":5601,
+        "2":107,
+        "3":16,
+        "4":"1"
       }
     },
     "winner":0
   },
   "Adjacent assignments aligned":{
-    "total":191918,
+    "total":191954,
     "total_repos":192,
     "values":{
-      "no":156009,
-      "yes":35909
+      "no":156033,
+      "yes":35921
     },
     "repos":{
       "no":{
@@ -12256,7 +12505,7 @@
         "auraphp\/Aura.View":66.67,
         "auraphp\/Aura.Web":66.67,
         "auraphp\/Aura.Web_Kernel":91.67,
-        "aws\/aws-sdk-php":90.65,
+        "aws\/aws-sdk-php":89.56,
         "batopa\/chirp":100,
         "box-project\/box2":93.1,
         "c9s\/Pux":89.19,
@@ -12265,8 +12514,8 @@
         "chriso\/klein.php":77.78,
         "Codeception\/Codeception":67.27,
         "codeguy\/Slim":77.55,
-        "Codegyre\/Robo":86.99,
-        "composer\/composer":88.33,
+        "Codegyre\/Robo":86.75,
+        "composer\/composer":88.27,
         "concrete5\/concrete5":85.79,
         "contao\/core":83.97,
         "danielstjules\/Stringy":87.5,
@@ -12279,25 +12528,25 @@
         "fabpot\/Twig":82.22,
         "facebook\/facebook-php-sdk":88.89,
         "fruux\/sabre-dav":86.87,
-        "fzaninotto\/Faker":84.83,
+        "fzaninotto\/Faker":84.92,
         "ginatrapani\/ThinkUp":93.29,
         "gintonicweb\/GintonicCMS":100,
         "google\/google-api-php-client":58.54,
-        "guzzle\/guzzle":89.29,
+        "guzzle\/guzzle":88.37,
         "Halleck45\/PhpMetrics":85.94,
-        "iranianpep\/botonomous":88.24,
+        "iranianpep\/botonomous":82.35,
         "jackalope\/jackalope":90.74,
-        "joomla\/joomla-cms":55.16,
+        "joomla\/joomla-cms":55.07,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":63.7,
         "kriswallsmith\/Buzz":71.43,
         "ladybirdweb\/agorainvoicing":90.98,
-        "ladybirdweb\/faveo-helpdesk":90.96,
-        "laravel\/framework":91.98,
+        "ladybirdweb\/faveo-helpdesk":90.94,
+        "laravel\/framework":92.07,
         "leafo\/lessphp":86.21,
         "magento\/magento2":90.94,
         "michelf\/php-markdown":66.19,
-        "moodle\/moodle":82.72,
+        "moodle\/moodle":82.71,
         "nazariyg\/Phred":86.62,
         "nette\/application":90.24,
         "nette\/bootstrap":85.71,
@@ -12322,17 +12571,17 @@
         "nette\/utils":84.06,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":88.68,
-        "openemr\/openemr":83.76,
-        "owncloud\/core":87.5,
-        "padraic\/mockery":87.5,
+        "openemr\/openemr":83.75,
+        "owncloud\/core":87.59,
+        "padraic\/mockery":87.14,
         "pear\/pear-core":76.77,
-        "phingofficial\/phing":86.21,
+        "phingofficial\/phing":86.23,
         "phpbb\/phpbb":88.7,
         "phpDocumentor\/phpDocumentor2":56.06,
-        "PHPMailer\/PHPMailer":67.3,
+        "PHPMailer\/PHPMailer":67.42,
         "phpmyadmin\/phpmyadmin":70.86,
         "PHPOffice\/PHPExcel":79.48,
-        "pimcore\/pimcore":83.05,
+        "pimcore\/pimcore":82.88,
         "piwik\/piwik":66.28,
         "ppi\/framework":50,
         "PrestaShop\/PrestaShop":88.3,
@@ -12343,30 +12592,30 @@
         "reactphp\/child-process":75,
         "reactphp\/dns":85.71,
         "reactphp\/event-loop":80.95,
-        "reactphp\/http":96.77,
-        "reactphp\/http-client":92.86,
+        "reactphp\/http":96.88,
+        "reactphp\/http-client":87.5,
         "reactphp\/promise":66.67,
-        "reactphp\/socket":88.89,
+        "reactphp\/socket":94.44,
         "reactphp\/socket-client":81.82,
-        "reactphp\/stream":78.57,
-        "revive-adserver\/revive-adserver":84.76,
+        "reactphp\/stream":76.92,
+        "revive-adserver\/revive-adserver":84.79,
         "scabbiafw\/scabbia2-fw":100,
         "sculpin\/sculpin":95,
         "Seldaek\/monolog":90.85,
-        "silexphp\/Silex":94,
+        "silexphp\/Silex":92.45,
         "silverstripe\/silverstripe-framework":86.91,
         "sugarcrm\/sugarcrm_dev":78.92,
         "swiftmailer\/swiftmailer":89.27,
-        "symfony\/symfony":87.74,
+        "symfony\/symfony":88.04,
         "tedivm\/Stash":90.91,
         "thephpleague\/flysystem":88.24,
         "thephpleague\/fractal":100,
         "thephpleague\/oauth2-server":95.65,
         "TYPO3\/TYPO3.CMS":89.9,
-        "wikimedia\/mediawiki-core":88.13,
-        "WordPress\/WordPress":75.07,
+        "wikimedia\/mediawiki-core":88.16,
+        "WordPress\/WordPress":74.74,
         "yiisoft\/yii":98.03,
-        "yiisoft\/yii2":90.99,
+        "yiisoft\/yii2":91.04,
         "zendframework\/zend-authentication":55.1,
         "zendframework\/zend-config":60,
         "zendframework\/zend-console":70.59,
@@ -12392,12 +12641,12 @@
         "avalanche123\/Imagine":62.18,
         "bobthecow\/mustache.php":62.07,
         "cboden\/Ratchet":70.18,
-        "doctrine\/doctrine2":55.44,
+        "doctrine\/doctrine2":55.58,
         "erusev\/parsedown":90,
         "orno\/route":100,
         "sebastianbergmann\/php-code-coverage":86.25,
         "sebastianbergmann\/phpunit":94.94,
-        "squizlabs\/PHP_CodeSniffer":94.06,
+        "squizlabs\/PHP_CodeSniffer":94.15,
         "thephpleague\/oauth2-client":75,
         "zendframework\/zend-barcode":52.89,
         "zendframework\/zend-cache":84.62,
@@ -12412,7 +12661,7 @@
         "zendframework\/zend-filter":55.81,
         "zendframework\/zend-form":56.14,
         "zendframework\/zend-http":53.33,
-        "zendframework\/zend-i18n":71.93,
+        "zendframework\/zend-i18n":70.69,
         "zendframework\/zend-log":70,
         "zendframework\/zend-math":80.95,
         "zendframework\/zend-modulemanager":86.36,
@@ -12428,7 +12677,7 @@
         "zendframework\/zend-test":51.72,
         "zendframework\/zend-text":90.32,
         "zendframework\/zend-uri":65.22,
-        "zendframework\/zend-validator":74.79,
+        "zendframework\/zend-validator":75,
         "zendframework\/zend-view":62.24,
         "zendframework\/zend-xmlrpc":52
       }
@@ -12549,20 +12798,24 @@
       "2017-05-01":{
         "no":156009,
         "yes":35909
+      },
+      "2017-06-01":{
+        "no":156033,
+        "yes":35921
       }
     },
     "winner":"no"
   },
   "Space before operator":{
-    "total":443264,
+    "total":443320,
     "total_repos":191,
     "values":{
-      "0":94917,
-      "1":342385,
-      "newline":5164,
-      "2":343,
+      "0":94425,
+      "1":342906,
+      "newline":5203,
+      "2":332,
       "16":4,
-      "3":126,
+      "3":125,
       "4":77,
       "5":59,
       "6":29,
@@ -12604,7 +12857,7 @@
         "auraphp\/Aura.SqlSchema":76.47,
         "auraphp\/Aura.Uri":78.79,
         "avalanche123\/Imagine":99.34,
-        "aws\/aws-sdk-php":76.89,
+        "aws\/aws-sdk-php":77.01,
         "batopa\/chirp":77.78,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":98.18,
@@ -12615,15 +12868,15 @@
         "chriso\/klein.php":97.31,
         "Codeception\/Codeception":88.46,
         "codeguy\/Slim":100,
-        "Codegyre\/Robo":98.06,
-        "composer\/composer":99.09,
+        "Codegyre\/Robo":98.13,
+        "composer\/composer":99.04,
         "concrete5\/concrete5":70.95,
         "contao\/core":59.71,
         "danielstjules\/Stringy":100,
-        "doctrine\/doctrine2":80.5,
+        "doctrine\/doctrine2":80.76,
         "dropbox\/dropbox-sdk-php":98.46,
         "drupal\/drupal":97.06,
-        "EllisLab\/CodeIgniter":88.52,
+        "EllisLab\/CodeIgniter":88.51,
         "erusev\/parsedown":76.14,
         "ezsystems\/ezpublish-kernel":96.5,
         "fabpot\/Goutte":100,
@@ -12634,22 +12887,22 @@
         "ginatrapani\/ThinkUp":56.7,
         "gintonicweb\/GintonicCMS":80,
         "google\/google-api-php-client":97.79,
-        "guzzle\/guzzle":79.54,
+        "guzzle\/guzzle":79.92,
         "Halleck45\/PhpMetrics":94.63,
-        "iranianpep\/botonomous":100,
+        "iranianpep\/botonomous":96.97,
         "jackalope\/jackalope":97.09,
-        "joomla\/joomla-cms":96.76,
+        "joomla\/joomla-cms":96.77,
         "KnpLabs\/snappy":96,
         "kriswallsmith\/assetic":90.54,
         "kriswallsmith\/Buzz":100,
-        "ladybirdweb\/faveo-helpdesk":90.81,
-        "laravel\/framework":92.46,
+        "ladybirdweb\/faveo-helpdesk":90.82,
+        "laravel\/framework":92.21,
         "leafo\/lessphp":92.74,
         "magento\/magento2":98.01,
         "michelf\/php-markdown":97.67,
-        "moodle\/moodle":73.57,
+        "moodle\/moodle":73.63,
         "nazariyg\/Phred":70.54,
-        "nette\/application":95.55,
+        "nette\/application":95.56,
         "nette\/bootstrap":61.54,
         "nette\/caching":100,
         "nette\/component-model":100,
@@ -12671,18 +12924,18 @@
         "nette\/tracy":91.23,
         "nette\/utils":95,
         "nikic\/FastRoute":100,
-        "openemr\/openemr":58.22,
+        "openemr\/openemr":58.97,
         "orno\/route":100,
-        "owncloud\/core":92.69,
-        "padraic\/mockery":93.15,
+        "owncloud\/core":92.76,
+        "padraic\/mockery":93.06,
         "pear\/pear-core":96.26,
         "phingofficial\/phing":99.27,
         "phpbb\/phpbb":76.16,
         "phpDocumentor\/phpDocumentor2":77.29,
-        "PHPMailer\/PHPMailer":97.89,
-        "phpmyadmin\/phpmyadmin":89.62,
+        "PHPMailer\/PHPMailer":97.9,
+        "phpmyadmin\/phpmyadmin":89.6,
         "PHPOffice\/PHPExcel":89.42,
-        "pimcore\/pimcore":96.84,
+        "pimcore\/pimcore":96.7,
         "piwik\/piwik":98.24,
         "ppi\/framework":99,
         "PrestaShop\/PrestaShop":95.59,
@@ -12704,21 +12957,21 @@
         "sculpin\/sculpin":91.24,
         "sebastianbergmann\/php-code-coverage":97.42,
         "sebastianbergmann\/phpunit":100,
-        "Seldaek\/monolog":98.25,
+        "Seldaek\/monolog":98.21,
         "silexphp\/Silex":100,
         "silverstripe\/silverstripe-framework":86.06,
         "squizlabs\/PHP_CodeSniffer":100,
-        "swiftmailer\/swiftmailer":98.98,
-        "symfony\/symfony":99.27,
+        "swiftmailer\/swiftmailer":98.96,
+        "symfony\/symfony":99.26,
         "tedivm\/Stash":98.16,
         "thephpleague\/flysystem":97.54,
         "thephpleague\/fractal":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":88.99,
-        "TYPO3\/TYPO3.CMS":97.72,
-        "wikimedia\/mediawiki-core":94.91,
+        "TYPO3\/TYPO3.CMS":97.71,
+        "wikimedia\/mediawiki-core":94.83,
         "WordPress\/WordPress":98.48,
-        "yiisoft\/yii2":99.31,
+        "yiisoft\/yii2":99.3,
         "zendframework\/zend-authentication":100,
         "zendframework\/zend-barcode":97.11,
         "zendframework\/zend-cache":94.43,
@@ -12736,7 +12989,7 @@
         "zendframework\/zend-feed":99.15,
         "zendframework\/zend-file":97.83,
         "zendframework\/zend-filter":97.99,
-        "zendframework\/zend-form":91.07,
+        "zendframework\/zend-form":90.54,
         "zendframework\/zend-http":98.7,
         "zendframework\/zend-i18n":87.56,
         "zendframework\/zend-inputfilter":94.81,
@@ -12764,7 +13017,7 @@
         "zendframework\/zend-test":100,
         "zendframework\/zend-text":99.05,
         "zendframework\/zend-uri":100,
-        "zendframework\/zend-validator":97.06,
+        "zendframework\/zend-validator":97.07,
         "zendframework\/zend-version":100,
         "zendframework\/zend-view":94.1,
         "zendframework\/zend-xmlrpc":100,
@@ -12777,9 +13030,9 @@
         "auraphp\/Aura.Web_Kernel":50
       },
       "0":{
-        "fzaninotto\/Faker":52.23,
+        "fzaninotto\/Faker":51.83,
         "ladybirdweb\/agorainvoicing":69.54,
-        "nikic\/PHP-Parser":74.37,
+        "nikic\/PHP-Parser":74.39,
         "sugarcrm\/sugarcrm_dev":53.52,
         "yiisoft\/yii":90.64
       }
@@ -13814,15 +14067,44 @@
         "29":"6",
         "25":"1",
         "18":"4"
+      },
+      "2017-06-01":{
+        "0":94425,
+        "1":342906,
+        "newline":5203,
+        "2":332,
+        "16":4,
+        "3":125,
+        "4":77,
+        "5":59,
+        "6":29,
+        "7":28,
+        "8":21,
+        "12":4,
+        "11":5,
+        "9":11,
+        "10":15,
+        "13":5,
+        "14":15,
+        "15":10,
+        "17":6,
+        "19":9,
+        "21":3,
+        "22":"8",
+        "24":7,
+        "28":"2",
+        "29":"6",
+        "25":"1",
+        "18":"4"
       }
     },
     "winner":1
   },
   "File extension for class files":{
-    "total":43591,
+    "total":43623,
     "total_repos":195,
     "values":{
-      ".php":43588,
+      ".php":43620,
       ".inc":3
     },
     "repos":{
@@ -14140,16 +14422,20 @@
       "2017-05-01":{
         ".php":43588,
         ".inc":3
+      },
+      "2017-06-01":{
+        ".php":43620,
+        ".inc":3
       }
     },
     "winner":".php"
   },
   "Class opening brace placement":{
-    "total":51567,
+    "total":51599,
     "total_repos":195,
     "values":{
       "new line":39331,
-      "same line":12236
+      "same line":12268
     },
     "repos":{
       "new line":{
@@ -14233,7 +14519,7 @@
         "nette\/tracy":100,
         "nette\/utils":100,
         "nikic\/PHP-Parser":94.69,
-        "openemr\/openemr":59.18,
+        "openemr\/openemr":59.14,
         "orno\/route":100,
         "padraic\/mockery":100,
         "pear\/pear-core":85.37,
@@ -14272,7 +14558,7 @@
         "swiftmailer\/swiftmailer":100,
         "symfony\/symfony":100,
         "tedivm\/Stash":100,
-        "thephpleague\/flysystem":100,
+        "thephpleague\/flysystem":97.83,
         "thephpleague\/fractal":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":100,
@@ -14333,7 +14619,7 @@
         "zikula\/core":99.71
       },
       "same line":{
-        "aws\/aws-sdk-php":54.17,
+        "aws\/aws-sdk-php":54.71,
         "cboden\/Ratchet":100,
         "concrete5\/concrete5":99.63,
         "drupal\/drupal":63.31,
@@ -14344,11 +14630,11 @@
         "ladybirdweb\/agorainvoicing":50.14,
         "leafo\/lessphp":100,
         "michelf\/php-markdown":100,
-        "moodle\/moodle":98.21,
+        "moodle\/moodle":98.22,
         "nikic\/FastRoute":100,
         "owncloud\/core":99.91,
         "silverstripe\/silverstripe-framework":97.57,
-        "wikimedia\/mediawiki-core":99.32,
+        "wikimedia\/mediawiki-core":99.4,
         "WordPress\/WordPress":100
       }
     },
@@ -14468,16 +14754,20 @@
       "2017-05-01":{
         "new line":39331,
         "same line":12236
+      },
+      "2017-06-01":{
+        "new line":39331,
+        "same line":12268
       }
     },
     "winner":"new line"
   },
   "Class has doc comment":{
-    "total":51567,
+    "total":51599,
     "total_repos":195,
     "values":{
-      "no":17374,
-      "yes":34193
+      "no":17394,
+      "yes":34205
     },
     "repos":{
       "no":{
@@ -14487,26 +14777,25 @@
         "Codeception\/Codeception":66.67,
         "concrete5\/concrete5":85.62,
         "danielstjules\/Stringy":50,
-        "fzaninotto\/Faker":92.13,
+        "fzaninotto\/Faker":92.15,
         "gintonicweb\/GintonicCMS":50,
         "google\/google-api-php-client":79.07,
         "kriswallsmith\/Buzz":73.68,
         "ladybirdweb\/agorainvoicing":68.6,
         "ladybirdweb\/faveo-helpdesk":73.24,
-        "laravel\/framework":94.83,
+        "laravel\/framework":94.88,
         "leafo\/lessphp":55.56,
         "magento\/magento2":52.69,
         "nikic\/FastRoute":94.12,
         "nikic\/PHP-Parser":89.86,
         "orno\/route":100,
-        "padraic\/mockery":88,
+        "padraic\/mockery":89.61,
         "reactphp\/dns":95.24,
-        "reactphp\/http-client":50,
         "reactphp\/promise":81.82,
         "reactphp\/stream":55.56,
         "squizlabs\/PHP_CodeSniffer":100,
         "sugarcrm\/sugarcrm_dev":66.38,
-        "thephpleague\/flysystem":84.44,
+        "thephpleague\/flysystem":82.61,
         "thephpleague\/oauth2-server":75,
         "zendframework\/zend-authentication":72.22,
         "zendframework\/zend-cache":78.72,
@@ -14558,7 +14847,7 @@
         "auraphp\/Aura.Web":100,
         "auraphp\/Aura.Web_Kernel":100,
         "avalanche123\/Imagine":77.38,
-        "aws\/aws-sdk-php":93.75,
+        "aws\/aws-sdk-php":93.82,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":100,
         "cakephp\/cakephp":97.53,
@@ -14566,7 +14855,7 @@
         "chamilo\/chamilo-lms":92.73,
         "chriso\/klein.php":100,
         "codeguy\/Slim":90.48,
-        "Codegyre\/Robo":60.49,
+        "Codegyre\/Robo":59.64,
         "composer\/composer":97.89,
         "contao\/core":54.96,
         "doctrine\/doctrine2":97.28,
@@ -14574,7 +14863,7 @@
         "drupal\/drupal":90.41,
         "EllisLab\/CodeIgniter":100,
         "erusev\/parsedown":100,
-        "ezsystems\/ezpublish-kernel":81.23,
+        "ezsystems\/ezpublish-kernel":81.19,
         "fabpot\/Goutte":100,
         "fabpot\/PHP-CS-Fixer":99.57,
         "fabpot\/Twig":99.4,
@@ -14583,9 +14872,9 @@
         "ginatrapani\/ThinkUp":96.52,
         "guzzle\/guzzle":88.24,
         "Halleck45\/PhpMetrics":95.49,
-        "iranianpep\/botonomous":73.81,
+        "iranianpep\/botonomous":74.42,
         "jackalope\/jackalope":100,
-        "joomla\/joomla-cms":98.55,
+        "joomla\/joomla-cms":98.5,
         "KnpLabs\/snappy":80,
         "kriswallsmith\/assetic":93.58,
         "michelf\/php-markdown":100,
@@ -14612,8 +14901,8 @@
         "nette\/tokenizer":100,
         "nette\/tracy":100,
         "nette\/utils":97.56,
-        "openemr\/openemr":69.24,
-        "owncloud\/core":53.02,
+        "openemr\/openemr":69.15,
+        "owncloud\/core":53.17,
         "pear\/pear-core":95.12,
         "phingofficial\/phing":99.18,
         "phpbb\/phpbb":51.46,
@@ -14632,6 +14921,7 @@
         "reactphp\/child-process":100,
         "reactphp\/event-loop":60,
         "reactphp\/http":100,
+        "reactphp\/http-client":60,
         "reactphp\/socket":66.67,
         "reactphp\/socket-client":60,
         "revive-adserver\/revive-adserver":90.75,
@@ -14643,12 +14933,12 @@
         "silexphp\/Silex":91.38,
         "silverstripe\/silverstripe-framework":98.89,
         "swiftmailer\/swiftmailer":100,
-        "symfony\/symfony":95.2,
+        "symfony\/symfony":95.16,
         "tedivm\/Stash":78.13,
         "thephpleague\/fractal":68.18,
         "thephpleague\/oauth2-client":100,
-        "TYPO3\/TYPO3.CMS":98.81,
-        "wikimedia\/mediawiki-core":93.65,
+        "TYPO3\/TYPO3.CMS":98.71,
+        "wikimedia\/mediawiki-core":93.71,
         "WordPress\/WordPress":100,
         "yiisoft\/yii":76.22,
         "yiisoft\/yii2":100,
@@ -14796,15 +15086,19 @@
       "2017-05-01":{
         "no":17374,
         "yes":34193
+      },
+      "2017-06-01":{
+        "no":17394,
+        "yes":34205
       }
     },
     "winner":"yes"
   },
   "One class per file":{
-    "total":51567,
+    "total":51599,
     "total_repos":195,
     "values":{
-      "yes":43591,
+      "yes":43623,
       "no":7976
     },
     "repos":{
@@ -14866,7 +15160,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
-        "joomla\/joomla-cms":96.51,
+        "joomla\/joomla-cms":96.46,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":98.17,
         "kriswallsmith\/Buzz":100,
@@ -14875,7 +15169,7 @@
         "laravel\/framework":100,
         "magento\/magento2":100,
         "michelf\/php-markdown":100,
-        "moodle\/moodle":75.17,
+        "moodle\/moodle":75.18,
         "nazariyg\/Phred":89.23,
         "nette\/application":92.59,
         "nette\/bootstrap":100,
@@ -14900,7 +15194,7 @@
         "nette\/utils":58.54,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":92.75,
+        "openemr\/openemr":92.78,
         "orno\/route":100,
         "owncloud\/core":100,
         "padraic\/mockery":100,
@@ -14938,14 +15232,14 @@
         "silverstripe\/silverstripe-framework":77.65,
         "squizlabs\/PHP_CodeSniffer":100,
         "swiftmailer\/swiftmailer":100,
-        "symfony\/symfony":99.58,
+        "symfony\/symfony":99.63,
         "tedivm\/Stash":100,
         "thephpleague\/flysystem":100,
         "thephpleague\/fractal":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":100,
-        "TYPO3\/TYPO3.CMS":99.11,
-        "wikimedia\/mediawiki-core":89.56,
+        "TYPO3\/TYPO3.CMS":99.06,
+        "wikimedia\/mediawiki-core":89.75,
         "WordPress\/WordPress":100,
         "yiisoft\/yii":73.46,
         "yiisoft\/yii2":100,
@@ -15124,16 +15418,20 @@
       "2017-05-01":{
         "yes":43591,
         "no":7976
+      },
+      "2017-06-01":{
+        "yes":43623,
+        "no":7976
       }
     },
     "winner":"yes"
   },
   "Class defined in namespace":{
-    "total":51567,
+    "total":51599,
     "total_repos":195,
     "values":{
-      "no":20081,
-      "yes":31486
+      "no":20089,
+      "yes":31510
     },
     "repos":{
       "no":{
@@ -15146,12 +15444,12 @@
         "facebook\/facebook-php-sdk":100,
         "ginatrapani\/ThinkUp":93.32,
         "google\/google-api-php-client":100,
-        "joomla\/joomla-cms":94.9,
+        "joomla\/joomla-cms":94.91,
         "ladybirdweb\/agorainvoicing":60.61,
         "leafo\/lessphp":100,
-        "moodle\/moodle":73.03,
+        "moodle\/moodle":73.04,
         "nazariyg\/Phred":100,
-        "openemr\/openemr":84.91,
+        "openemr\/openemr":84.17,
         "pear\/pear-core":100,
         "phingofficial\/phing":100,
         "PHPMailer\/PHPMailer":90.91,
@@ -15164,7 +15462,7 @@
         "silverstripe\/silverstripe-framework":99.78,
         "sugarcrm\/sugarcrm_dev":100,
         "swiftmailer\/swiftmailer":100,
-        "wikimedia\/mediawiki-core":86.69,
+        "wikimedia\/mediawiki-core":86.68,
         "WordPress\/WordPress":100,
         "yiisoft\/yii":100
       },
@@ -15249,8 +15547,8 @@
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
         "orno\/route":100,
-        "owncloud\/core":97.11,
-        "padraic\/mockery":98.67,
+        "owncloud\/core":97.13,
+        "padraic\/mockery":98.7,
         "phpbb\/phpbb":74.35,
         "phpDocumentor\/phpDocumentor2":100,
         "phpmyadmin\/phpmyadmin":100,
@@ -15452,16 +15750,20 @@
       "2017-05-01":{
         "no":20081,
         "yes":31486
+      },
+      "2017-06-01":{
+        "no":20089,
+        "yes":31510
       }
     },
     "winner":"yes"
   },
   "CamelCase class name":{
-    "total":51567,
+    "total":51599,
     "total_repos":195,
     "values":{
-      "no":14060,
-      "yes":37507
+      "no":14052,
+      "yes":37547
     },
     "repos":{
       "no":{
@@ -15479,7 +15781,7 @@
         "revive-adserver\/revive-adserver":50.87,
         "sebastianbergmann\/php-code-coverage":100,
         "sugarcrm\/sugarcrm_dev":81.18,
-        "swiftmailer\/swiftmailer":99.35,
+        "swiftmailer\/swiftmailer":99.33,
         "WordPress\/WordPress":100
       },
       "yes":{
@@ -15515,7 +15817,7 @@
         "chriso\/klein.php":100,
         "Codeception\/Codeception":99.5,
         "codeguy\/Slim":100,
-        "Codegyre\/Robo":88.27,
+        "Codegyre\/Robo":88.55,
         "composer\/composer":100,
         "concrete5\/concrete5":53.09,
         "contao\/core":90.6,
@@ -15569,14 +15871,14 @@
         "nette\/utils":100,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":71.98,
-        "openemr\/openemr":52.05,
+        "openemr\/openemr":52.39,
         "orno\/route":100,
-        "owncloud\/core":97.03,
+        "owncloud\/core":97.05,
         "padraic\/mockery":100,
         "phingofficial\/phing":97.34,
         "phpDocumentor\/phpDocumentor2":97.7,
         "PHPMailer\/PHPMailer":81.82,
-        "phpmyadmin\/phpmyadmin":89.3,
+        "phpmyadmin\/phpmyadmin":90.48,
         "pimcore\/pimcore":100,
         "piwik\/piwik":88.79,
         "ppi\/framework":100,
@@ -15600,14 +15902,14 @@
         "silexphp\/Silex":100,
         "silverstripe\/silverstripe-framework":68.58,
         "squizlabs\/PHP_CodeSniffer":100,
-        "symfony\/symfony":99.95,
+        "symfony\/symfony":100,
         "tedivm\/Stash":100,
         "thephpleague\/flysystem":100,
         "thephpleague\/fractal":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":100,
         "TYPO3\/TYPO3.CMS":100,
-        "wikimedia\/mediawiki-core":98.64,
+        "wikimedia\/mediawiki-core":98.65,
         "yiisoft\/yii":94.9,
         "yiisoft\/yii2":98.64,
         "zendframework\/zend-authentication":100,
@@ -15780,16 +16082,982 @@
       "2017-05-01":{
         "no":14060,
         "yes":37507
+      },
+      "2017-06-01":{
+        "no":14052,
+        "yes":37547
       }
     },
     "winner":"yes"
   },
-  "Spacing before object operator":{
-    "total":1447242,
+  "CamelCase method name":{
+    "total":310710,
+    "total_repos":195,
+    "values":{
+      "no":39040,
+      "yes":271670
+    },
+    "repos":{
+      "yes":{
+        "anchorcms\/anchor-cms":93.61,
+        "auraphp\/Aura.Autoload":100,
+        "auraphp\/Aura.Cli":100,
+        "auraphp\/Aura.Cli_Kernel":100,
+        "auraphp\/Aura.Di":100,
+        "auraphp\/Aura.Dispatcher":100,
+        "auraphp\/Aura.Filter":100,
+        "auraphp\/Aura.Html":100,
+        "auraphp\/Aura.Input":100,
+        "auraphp\/Aura.Intl":100,
+        "auraphp\/Aura.Marshal":100,
+        "auraphp\/Aura.Project_Kernel":100,
+        "auraphp\/Aura.Router":100,
+        "auraphp\/Aura.Session":100,
+        "auraphp\/Aura.Signal":100,
+        "auraphp\/Aura.Sql":100,
+        "auraphp\/Aura.SqlQuery":100,
+        "auraphp\/Aura.SqlSchema":100,
+        "auraphp\/Aura.Uri":100,
+        "auraphp\/Aura.View":100,
+        "auraphp\/Aura.Web":100,
+        "auraphp\/Aura.Web_Kernel":100,
+        "avalanche123\/Imagine":99.58,
+        "aws\/aws-sdk-php":91.26,
+        "batopa\/chirp":100,
+        "bobthecow\/mustache.php":100,
+        "box-project\/box2":98.94,
+        "c9s\/Pux":96.64,
+        "cakephp\/cakephp":99.08,
+        "cboden\/Ratchet":99.12,
+        "chamilo\/chamilo-lms":72.72,
+        "chriso\/klein.php":100,
+        "Codeception\/Codeception":97.87,
+        "codeguy\/Slim":100,
+        "Codegyre\/Robo":99.9,
+        "composer\/composer":99.2,
+        "concrete5\/concrete5":84.21,
+        "contao\/core":95.12,
+        "danielstjules\/Stringy":100,
+        "doctrine\/doctrine2":92.86,
+        "dropbox\/dropbox-sdk-php":98.08,
+        "drupal\/drupal":98.6,
+        "erusev\/parsedown":100,
+        "ezsystems\/ezpublish-kernel":98.56,
+        "fabpot\/Goutte":100,
+        "fabpot\/PHP-CS-Fixer":99.58,
+        "fabpot\/Twig":99.84,
+        "facebook\/facebook-php-sdk":96.83,
+        "fruux\/sabre-dav":91.6,
+        "fzaninotto\/Faker":99.61,
+        "ginatrapani\/ThinkUp":89.59,
+        "gintonicweb\/GintonicCMS":100,
+        "google\/google-api-php-client":99.71,
+        "guzzle\/guzzle":96.51,
+        "Halleck45\/PhpMetrics":99.78,
+        "iranianpep\/botonomous":99.04,
+        "jackalope\/jackalope":97.45,
+        "joomla\/joomla-cms":93.94,
+        "KnpLabs\/snappy":100,
+        "kriswallsmith\/assetic":99.64,
+        "kriswallsmith\/Buzz":100,
+        "ladybirdweb\/agorainvoicing":53.08,
+        "ladybirdweb\/faveo-helpdesk":94.28,
+        "laravel\/framework":100,
+        "leafo\/lessphp":70.92,
+        "magento\/magento2":99.9,
+        "michelf\/php-markdown":56.25,
+        "nazariyg\/Phred":97.87,
+        "nette\/application":100,
+        "nette\/bootstrap":100,
+        "nette\/caching":100,
+        "nette\/component-model":100,
+        "nette\/database":99.43,
+        "nette\/di":100,
+        "nette\/finder":100,
+        "nette\/forms":100,
+        "nette\/http":100,
+        "nette\/latte":98.46,
+        "nette\/mail":100,
+        "nette\/neon":100,
+        "nette\/php-generator":100,
+        "nette\/reflection":100,
+        "nette\/robot-loader":100,
+        "nette\/security":100,
+        "nette\/tester":94.05,
+        "nette\/tokenizer":100,
+        "nette\/tracy":100,
+        "nette\/utils":100,
+        "nikic\/FastRoute":100,
+        "nikic\/PHP-Parser":74.74,
+        "orno\/route":100,
+        "owncloud\/core":94.82,
+        "padraic\/mockery":87.02,
+        "pear\/pear-core":94.61,
+        "phingofficial\/phing":99.38,
+        "phpDocumentor\/phpDocumentor2":99.75,
+        "PHPMailer\/PHPMailer":83.27,
+        "phpmyadmin\/phpmyadmin":91.99,
+        "PHPOffice\/PHPExcel":82,
+        "pimcore\/pimcore":99.66,
+        "piwik\/piwik":97.69,
+        "ppi\/framework":99.56,
+        "PrestaShop\/PrestaShop":95.59,
+        "propelorm\/Propel":97.98,
+        "pyrocms\/pyrocms":78.67,
+        "quickapps\/cms":99.79,
+        "radphp\/radphp":100,
+        "reactphp\/child-process":100,
+        "reactphp\/dns":100,
+        "reactphp\/event-loop":100,
+        "reactphp\/http":100,
+        "reactphp\/http-client":100,
+        "reactphp\/promise":100,
+        "reactphp\/socket":100,
+        "reactphp\/socket-client":100,
+        "reactphp\/stream":100,
+        "revive-adserver\/revive-adserver":98.06,
+        "scabbiafw\/scabbia2-fw":100,
+        "sculpin\/sculpin":100,
+        "sebastianbergmann\/php-code-coverage":100,
+        "sebastianbergmann\/phpunit":99.48,
+        "Seldaek\/monolog":99.77,
+        "silexphp\/Silex":100,
+        "silverstripe\/silverstripe-framework":71.43,
+        "squizlabs\/PHP_CodeSniffer":99.46,
+        "sugarcrm\/sugarcrm_dev":93.7,
+        "swiftmailer\/swiftmailer":98.88,
+        "symfony\/symfony":99.64,
+        "tedivm\/Stash":99.05,
+        "thephpleague\/flysystem":100,
+        "thephpleague\/fractal":100,
+        "thephpleague\/oauth2-client":100,
+        "thephpleague\/oauth2-server":97.21,
+        "TYPO3\/TYPO3.CMS":94.1,
+        "wikimedia\/mediawiki-core":95.22,
+        "yiisoft\/yii":98.31,
+        "yiisoft\/yii2":99.18,
+        "zendframework\/zend-authentication":100,
+        "zendframework\/zend-barcode":100,
+        "zendframework\/zend-cache":100,
+        "zendframework\/zend-captcha":100,
+        "zendframework\/zend-code":99.67,
+        "zendframework\/zend-config":100,
+        "zendframework\/zend-console":99.09,
+        "zendframework\/zend-crypt":99.54,
+        "zendframework\/zend-db":100,
+        "zendframework\/zend-debug":100,
+        "zendframework\/zend-di":100,
+        "zendframework\/zend-dom":100,
+        "zendframework\/zend-escaper":100,
+        "zendframework\/zend-eventmanager":100,
+        "zendframework\/zend-feed":100,
+        "zendframework\/zend-file":100,
+        "zendframework\/zend-filter":100,
+        "zendframework\/zend-form":100,
+        "zendframework\/zend-http":100,
+        "zendframework\/zend-i18n":100,
+        "zendframework\/zend-i18n-resources":100,
+        "zendframework\/zend-inputfilter":100,
+        "zendframework\/zend-json":100,
+        "zendframework\/zend-loader":100,
+        "zendframework\/zend-log":100,
+        "zendframework\/zend-mail":100,
+        "zendframework\/zend-math":100,
+        "zendframework\/zend-memory":100,
+        "zendframework\/zend-mime":100,
+        "zendframework\/zend-modulemanager":100,
+        "zendframework\/zend-mvc":100,
+        "zendframework\/zend-navigation":100,
+        "zendframework\/zend-paginator":100,
+        "zendframework\/zend-permissions-acl":92.59,
+        "zendframework\/zend-permissions-rbac":100,
+        "zendframework\/zend-progressbar":100,
+        "zendframework\/zend-serializer":100,
+        "zendframework\/zend-server":100,
+        "zendframework\/zend-servicemanager":100,
+        "zendframework\/zend-session":100,
+        "zendframework\/zend-soap":95.28,
+        "zendframework\/zend-stdlib":99.44,
+        "zendframework\/zend-tag":93.65,
+        "zendframework\/zend-test":100,
+        "zendframework\/zend-text":100,
+        "zendframework\/zend-uri":100,
+        "zendframework\/zend-validator":98.55,
+        "zendframework\/zend-version":100,
+        "zendframework\/zend-view":98.74,
+        "zendframework\/zend-xmlrpc":98.55,
+        "zendframework\/zendxml":100,
+        "zikula\/core":94.39
+      },
+      "no":{
+        "EllisLab\/CodeIgniter":69.44,
+        "moodle\/moodle":85.78,
+        "nette\/safe-stream":71.43,
+        "openemr\/openemr":55.18,
+        "phpbb\/phpbb":76.78,
+        "WordPress\/WordPress":75.22
+      }
+    },
+    "trends":{
+      "2015-01-01":{
+        "no":39302,
+        "yes":216710
+      },
+      "2015-02-01":{
+        "no":39348,
+        "yes":217812
+      },
+      "2015-03-01":{
+        "no":35554,
+        "yes":210683
+      },
+      "2015-04-01":{
+        "no":35223,
+        "yes":210070
+      },
+      "2015-05-01":{
+        "no":35180,
+        "yes":214638
+      },
+      "2015-06-01":{
+        "no":35269,
+        "yes":214989
+      },
+      "2015-07-01":{
+        "no":35320,
+        "yes":216188
+      },
+      "2015-08-01":{
+        "no":35282,
+        "yes":217397
+      },
+      "2015-09-01":{
+        "no":35368,
+        "yes":241585
+      },
+      "2015-10-01":{
+        "no":35899,
+        "yes":242614
+      },
+      "2015-11-01":{
+        "no":36155,
+        "yes":244451
+      },
+      "2015-12-01":{
+        "no":36007,
+        "yes":245760
+      },
+      "2016-01-01":{
+        "no":36061,
+        "yes":246506
+      },
+      "2016-02-01":{
+        "no":36288,
+        "yes":247318
+      },
+      "2016-03-01":{
+        "no":36632,
+        "yes":249971
+      },
+      "2016-04-01":{
+        "no":36854,
+        "yes":251148
+      },
+      "2016-05-01":{
+        "no":37894,
+        "yes":252513
+      },
+      "2016-06-01":{
+        "no":37356,
+        "yes":253764
+      },
+      "2016-07-01":{
+        "no":38226,
+        "yes":254735
+      },
+      "2016-08-01":{
+        "no":37073,
+        "yes":254982
+      },
+      "2016-09-01":{
+        "no":36876,
+        "yes":255166
+      },
+      "2016-10-01":{
+        "no":36792,
+        "yes":243807
+      },
+      "2016-11-01":{
+        "no":37588,
+        "yes":263972
+      },
+      "2016-12-01":{
+        "no":37755,
+        "yes":264195
+      },
+      "2017-01-01":{
+        "no":37701,
+        "yes":269826
+      },
+      "2017-02-01":{
+        "no":37713,
+        "yes":271424
+      },
+      "2017-03-01":{
+        "no":37754,
+        "yes":271377
+      },
+      "2017-04-01":{
+        "no":38764,
+        "yes":270954
+      },
+      "2017-05-01":{
+        "no":39054,
+        "yes":271275
+      },
+      "2017-06-01":{
+        "no":39040,
+        "yes":271670
+      }
+    },
+    "winner":"yes"
+  },
+  "Private method prefixed with underscore":{
+    "total":10443,
+    "total_repos":131,
+    "values":{
+      "no":9236,
+      "yes":1207
+    },
+    "repos":{
+      "no":{
+        "anchorcms\/anchor-cms":100,
+        "auraphp\/Aura.Filter":100,
+        "avalanche123\/Imagine":100,
+        "aws\/aws-sdk-php":100,
+        "batopa\/chirp":100,
+        "bobthecow\/mustache.php":100,
+        "box-project\/box2":100,
+        "chamilo\/chamilo-lms":91.29,
+        "chriso\/klein.php":100,
+        "Codeception\/Codeception":88.89,
+        "codeguy\/Slim":100,
+        "Codegyre\/Robo":100,
+        "composer\/composer":100,
+        "concrete5\/concrete5":100,
+        "contao\/core":100,
+        "doctrine\/doctrine2":93.78,
+        "dropbox\/dropbox-sdk-php":70.59,
+        "drupal\/drupal":99.8,
+        "ezsystems\/ezpublish-kernel":100,
+        "fabpot\/PHP-CS-Fixer":100,
+        "fruux\/sabre-dav":100,
+        "fzaninotto\/Faker":100,
+        "ginatrapani\/ThinkUp":100,
+        "google\/google-api-php-client":100,
+        "guzzle\/guzzle":100,
+        "Halleck45\/PhpMetrics":100,
+        "iranianpep\/botonomous":100,
+        "jackalope\/jackalope":100,
+        "joomla\/joomla-cms":81.32,
+        "kriswallsmith\/assetic":100,
+        "kriswallsmith\/Buzz":100,
+        "ladybirdweb\/agorainvoicing":100,
+        "ladybirdweb\/faveo-helpdesk":100,
+        "laravel\/framework":100,
+        "moodle\/moodle":86.63,
+        "nette\/application":100,
+        "nette\/caching":100,
+        "nette\/component-model":100,
+        "nette\/database":100,
+        "nette\/di":100,
+        "nette\/finder":100,
+        "nette\/forms":100,
+        "nette\/http":100,
+        "nette\/latte":100,
+        "nette\/mail":100,
+        "nette\/neon":100,
+        "nette\/reflection":100,
+        "nette\/robot-loader":100,
+        "nette\/safe-stream":100,
+        "nette\/security":100,
+        "nette\/tester":97.5,
+        "nette\/tracy":100,
+        "nette\/utils":100,
+        "nikic\/FastRoute":100,
+        "nikic\/PHP-Parser":100,
+        "openemr\/openemr":92.86,
+        "owncloud\/core":99.84,
+        "padraic\/mockery":100,
+        "phingofficial\/phing":88.98,
+        "phpbb\/phpbb":100,
+        "phpDocumentor\/phpDocumentor2":100,
+        "PHPMailer\/PHPMailer":100,
+        "pimcore\/pimcore":100,
+        "piwik\/piwik":99.93,
+        "ppi\/framework":100,
+        "PrestaShop\/PrestaShop":87.7,
+        "propelorm\/Propel":100,
+        "radphp\/radphp":100,
+        "reactphp\/child-process":100,
+        "reactphp\/dns":100,
+        "reactphp\/event-loop":100,
+        "reactphp\/http":100,
+        "reactphp\/http-client":100,
+        "reactphp\/promise":100,
+        "reactphp\/socket":100,
+        "reactphp\/socket-client":100,
+        "reactphp\/stream":100,
+        "revive-adserver\/revive-adserver":100,
+        "sculpin\/sculpin":100,
+        "sebastianbergmann\/php-code-coverage":100,
+        "sebastianbergmann\/phpunit":100,
+        "Seldaek\/monolog":100,
+        "silexphp\/Silex":100,
+        "silverstripe\/silverstripe-framework":90,
+        "squizlabs\/PHP_CodeSniffer":100,
+        "sugarcrm\/sugarcrm_dev":87.61,
+        "swiftmailer\/swiftmailer":100,
+        "symfony\/symfony":100,
+        "tedivm\/Stash":100,
+        "thephpleague\/flysystem":100,
+        "thephpleague\/fractal":100,
+        "thephpleague\/oauth2-client":100,
+        "thephpleague\/oauth2-server":100,
+        "TYPO3\/TYPO3.CMS":100,
+        "wikimedia\/mediawiki-core":100,
+        "yiisoft\/yii":98.31,
+        "yiisoft\/yii2":100,
+        "zendframework\/zend-authentication":100,
+        "zendframework\/zend-barcode":100,
+        "zendframework\/zend-cache":100,
+        "zendframework\/zend-code":100,
+        "zendframework\/zend-config":100,
+        "zendframework\/zend-console":100,
+        "zendframework\/zend-crypt":100,
+        "zendframework\/zend-db":100,
+        "zendframework\/zend-eventmanager":100,
+        "zendframework\/zend-feed":100,
+        "zendframework\/zend-file":100,
+        "zendframework\/zend-form":100,
+        "zendframework\/zend-json":100,
+        "zendframework\/zend-log":100,
+        "zendframework\/zend-mail":100,
+        "zendframework\/zend-memory":100,
+        "zendframework\/zend-mime":50,
+        "zendframework\/zend-modulemanager":100,
+        "zendframework\/zend-mvc":100,
+        "zendframework\/zend-navigation":100,
+        "zendframework\/zend-server":100,
+        "zendframework\/zend-servicemanager":100,
+        "zendframework\/zend-session":100,
+        "zendframework\/zend-test":100,
+        "zendframework\/zend-validator":100,
+        "zendframework\/zend-view":100,
+        "zikula\/core":91.03
+      },
+      "yes":{
+        "magento\/magento2":56.03,
+        "nette\/php-generator":100,
+        "pear\/pear-core":75,
+        "phpmyadmin\/phpmyadmin":99.4,
+        "PHPOffice\/PHPExcel":96.04,
+        "pyrocms\/pyrocms":50.93,
+        "WordPress\/WordPress":85.71
+      }
+    },
+    "trends":{
+      "2015-01-01":{
+        "no":6621,
+        "yes":1855
+      },
+      "2015-02-01":{
+        "no":6699,
+        "yes":1855
+      },
+      "2015-03-01":{
+        "no":6373,
+        "yes":1751
+      },
+      "2015-04-01":{
+        "no":6535,
+        "yes":1581
+      },
+      "2015-05-01":{
+        "no":6628,
+        "yes":1545
+      },
+      "2015-06-01":{
+        "no":6874,
+        "yes":1555
+      },
+      "2015-07-01":{
+        "no":6974,
+        "yes":1555
+      },
+      "2015-08-01":{
+        "no":6991,
+        "yes":1556
+      },
+      "2015-09-01":{
+        "no":7033,
+        "yes":1547
+      },
+      "2015-10-01":{
+        "no":7084,
+        "yes":1543
+      },
+      "2015-11-01":{
+        "no":7179,
+        "yes":1535
+      },
+      "2015-12-01":{
+        "no":7279,
+        "yes":1550
+      },
+      "2016-01-01":{
+        "no":7348,
+        "yes":1554
+      },
+      "2016-02-01":{
+        "no":7459,
+        "yes":1552
+      },
+      "2016-03-01":{
+        "no":7655,
+        "yes":1608
+      },
+      "2016-04-01":{
+        "no":7755,
+        "yes":1605
+      },
+      "2016-05-01":{
+        "no":7839,
+        "yes":1590
+      },
+      "2016-06-01":{
+        "no":7911,
+        "yes":1578
+      },
+      "2016-07-01":{
+        "no":8070,
+        "yes":1579
+      },
+      "2016-08-01":{
+        "no":8172,
+        "yes":1566
+      },
+      "2016-09-01":{
+        "no":8246,
+        "yes":1552
+      },
+      "2016-10-01":{
+        "no":8178,
+        "yes":1542
+      },
+      "2016-11-01":{
+        "no":8755,
+        "yes":1542
+      },
+      "2016-12-01":{
+        "no":8779,
+        "yes":1542
+      },
+      "2017-01-01":{
+        "no":8826,
+        "yes":1541
+      },
+      "2017-02-01":{
+        "no":8914,
+        "yes":1540
+      },
+      "2017-03-01":{
+        "no":9027,
+        "yes":1540
+      },
+      "2017-04-01":{
+        "no":9100,
+        "yes":1549
+      },
+      "2017-05-01":{
+        "no":9199,
+        "yes":1207
+      },
+      "2017-06-01":{
+        "no":9236,
+        "yes":1207
+      }
+    },
+    "winner":"no"
+  },
+  "PHP constant case":{
+    "total":322763,
     "total_repos":194,
     "values":{
-      "0":1418614,
-      "newline":28410,
+      "lower":283467,
+      "upper":39067,
+      "mixed":229
+    },
+    "repos":{
+      "lower":{
+        "anchorcms\/anchor-cms":100,
+        "auraphp\/Aura.Autoload":100,
+        "auraphp\/Aura.Cli":100,
+        "auraphp\/Aura.Cli_Kernel":100,
+        "auraphp\/Aura.Di":100,
+        "auraphp\/Aura.Dispatcher":100,
+        "auraphp\/Aura.Filter":100,
+        "auraphp\/Aura.Html":100,
+        "auraphp\/Aura.Input":100,
+        "auraphp\/Aura.Intl":100,
+        "auraphp\/Aura.Marshal":100,
+        "auraphp\/Aura.Project_Kernel":100,
+        "auraphp\/Aura.Router":100,
+        "auraphp\/Aura.Session":100,
+        "auraphp\/Aura.Signal":100,
+        "auraphp\/Aura.Sql":100,
+        "auraphp\/Aura.SqlQuery":100,
+        "auraphp\/Aura.SqlSchema":100,
+        "auraphp\/Aura.Uri":100,
+        "auraphp\/Aura.View":100,
+        "auraphp\/Aura.Web":100,
+        "auraphp\/Aura.Web_Kernel":100,
+        "avalanche123\/Imagine":100,
+        "batopa\/chirp":100,
+        "bobthecow\/mustache.php":100,
+        "box-project\/box2":100,
+        "c9s\/Pux":100,
+        "cakephp\/cakephp":100,
+        "cboden\/Ratchet":100,
+        "chamilo\/chamilo-lms":95.65,
+        "chriso\/klein.php":100,
+        "Codeception\/Codeception":97.78,
+        "codeguy\/Slim":100,
+        "Codegyre\/Robo":100,
+        "composer\/composer":100,
+        "concrete5\/concrete5":97.86,
+        "contao\/core":100,
+        "danielstjules\/Stringy":100,
+        "doctrine\/doctrine2":100,
+        "dropbox\/dropbox-sdk-php":100,
+        "erusev\/parsedown":100,
+        "ezsystems\/ezpublish-kernel":100,
+        "fabpot\/Goutte":100,
+        "fabpot\/PHP-CS-Fixer":100,
+        "fabpot\/Twig":99.83,
+        "facebook\/facebook-php-sdk":100,
+        "fruux\/sabre-dav":100,
+        "fzaninotto\/Faker":100,
+        "ginatrapani\/ThinkUp":98.68,
+        "gintonicweb\/GintonicCMS":100,
+        "google\/google-api-php-client":100,
+        "guzzle\/guzzle":100,
+        "Halleck45\/PhpMetrics":100,
+        "iranianpep\/botonomous":100,
+        "jackalope\/jackalope":100,
+        "joomla\/joomla-cms":99.48,
+        "KnpLabs\/snappy":100,
+        "kriswallsmith\/assetic":100,
+        "kriswallsmith\/Buzz":100,
+        "ladybirdweb\/agorainvoicing":99.09,
+        "ladybirdweb\/faveo-helpdesk":100,
+        "laravel\/framework":100,
+        "leafo\/lessphp":100,
+        "magento\/magento2":100,
+        "michelf\/php-markdown":100,
+        "moodle\/moodle":98.99,
+        "nazariyg\/Phred":100,
+        "nikic\/FastRoute":100,
+        "nikic\/PHP-Parser":100,
+        "openemr\/openemr":89.32,
+        "orno\/route":100,
+        "owncloud\/core":99.93,
+        "padraic\/mockery":100,
+        "pear\/pear-core":100,
+        "phingofficial\/phing":100,
+        "phpbb\/phpbb":99.22,
+        "phpDocumentor\/phpDocumentor2":100,
+        "PHPMailer\/PHPMailer":99.15,
+        "phpmyadmin\/phpmyadmin":99.88,
+        "PHPOffice\/PHPExcel":54.96,
+        "pimcore\/pimcore":100,
+        "piwik\/piwik":99.64,
+        "ppi\/framework":100,
+        "PrestaShop\/PrestaShop":99.92,
+        "propelorm\/Propel":100,
+        "pyrocms\/pyrocms":96.42,
+        "quickapps\/cms":100,
+        "radphp\/radphp":100,
+        "reactphp\/child-process":100,
+        "reactphp\/dns":100,
+        "reactphp\/event-loop":100,
+        "reactphp\/http":100,
+        "reactphp\/http-client":100,
+        "reactphp\/promise":100,
+        "reactphp\/socket":100,
+        "reactphp\/socket-client":100,
+        "reactphp\/stream":100,
+        "revive-adserver\/revive-adserver":99.94,
+        "scabbiafw\/scabbia2-fw":100,
+        "sculpin\/sculpin":100,
+        "sebastianbergmann\/php-code-coverage":99.29,
+        "sebastianbergmann\/phpunit":100,
+        "Seldaek\/monolog":100,
+        "silexphp\/Silex":100,
+        "silverstripe\/silverstripe-framework":72,
+        "squizlabs\/PHP_CodeSniffer":100,
+        "sugarcrm\/sugarcrm_dev":97.36,
+        "swiftmailer\/swiftmailer":100,
+        "symfony\/symfony":100,
+        "tedivm\/Stash":100,
+        "thephpleague\/flysystem":100,
+        "thephpleague\/fractal":100,
+        "thephpleague\/oauth2-client":100,
+        "thephpleague\/oauth2-server":100,
+        "TYPO3\/TYPO3.CMS":100,
+        "wikimedia\/mediawiki-core":100,
+        "WordPress\/WordPress":100,
+        "yiisoft\/yii":99.77,
+        "yiisoft\/yii2":100,
+        "zendframework\/zend-authentication":100,
+        "zendframework\/zend-barcode":100,
+        "zendframework\/zend-cache":100,
+        "zendframework\/zend-captcha":100,
+        "zendframework\/zend-code":100,
+        "zendframework\/zend-config":100,
+        "zendframework\/zend-console":100,
+        "zendframework\/zend-crypt":100,
+        "zendframework\/zend-db":100,
+        "zendframework\/zend-debug":100,
+        "zendframework\/zend-di":100,
+        "zendframework\/zend-dom":100,
+        "zendframework\/zend-escaper":100,
+        "zendframework\/zend-eventmanager":100,
+        "zendframework\/zend-feed":100,
+        "zendframework\/zend-file":100,
+        "zendframework\/zend-filter":100,
+        "zendframework\/zend-form":100,
+        "zendframework\/zend-http":100,
+        "zendframework\/zend-i18n":100,
+        "zendframework\/zend-inputfilter":100,
+        "zendframework\/zend-json":100,
+        "zendframework\/zend-loader":100,
+        "zendframework\/zend-log":100,
+        "zendframework\/zend-mail":100,
+        "zendframework\/zend-math":100,
+        "zendframework\/zend-memory":100,
+        "zendframework\/zend-mime":100,
+        "zendframework\/zend-modulemanager":100,
+        "zendframework\/zend-mvc":100,
+        "zendframework\/zend-navigation":100,
+        "zendframework\/zend-paginator":100,
+        "zendframework\/zend-permissions-acl":100,
+        "zendframework\/zend-permissions-rbac":100,
+        "zendframework\/zend-progressbar":100,
+        "zendframework\/zend-serializer":100,
+        "zendframework\/zend-server":100,
+        "zendframework\/zend-servicemanager":100,
+        "zendframework\/zend-session":100,
+        "zendframework\/zend-soap":100,
+        "zendframework\/zend-stdlib":100,
+        "zendframework\/zend-tag":100,
+        "zendframework\/zend-test":100,
+        "zendframework\/zend-text":100,
+        "zendframework\/zend-uri":100,
+        "zendframework\/zend-validator":100,
+        "zendframework\/zend-version":100,
+        "zendframework\/zend-view":100,
+        "zendframework\/zend-xmlrpc":100,
+        "zendframework\/zendxml":100,
+        "zikula\/core":100
+      },
+      "upper":{
+        "aws\/aws-sdk-php":75.19,
+        "drupal\/drupal":69.42,
+        "EllisLab\/CodeIgniter":99.8,
+        "nette\/application":100,
+        "nette\/bootstrap":100,
+        "nette\/caching":100,
+        "nette\/component-model":100,
+        "nette\/database":100,
+        "nette\/di":100,
+        "nette\/finder":100,
+        "nette\/forms":99.19,
+        "nette\/http":100,
+        "nette\/latte":100,
+        "nette\/mail":100,
+        "nette\/neon":100,
+        "nette\/php-generator":100,
+        "nette\/reflection":100,
+        "nette\/robot-loader":100,
+        "nette\/safe-stream":100,
+        "nette\/security":100,
+        "nette\/tester":100,
+        "nette\/tokenizer":100,
+        "nette\/tracy":100,
+        "nette\/utils":100
+      }
+    },
+    "trends":{
+      "2015-01-01":{
+        "lower":265577,
+        "mixed":235,
+        "upper":25227
+      },
+      "2015-02-01":{
+        "lower":266936,
+        "mixed":235,
+        "upper":25328
+      },
+      "2015-03-01":{
+        "lower":259497,
+        "mixed":233,
+        "upper":25099
+      },
+      "2015-04-01":{
+        "lower":252478,
+        "mixed":233,
+        "upper":25147
+      },
+      "2015-05-01":{
+        "lower":252957,
+        "mixed":232,
+        "upper":25173
+      },
+      "2015-06-01":{
+        "lower":253334,
+        "mixed":229,
+        "upper":25114
+      },
+      "2015-07-01":{
+        "lower":254089,
+        "mixed":229,
+        "upper":25104
+      },
+      "2015-08-01":{
+        "lower":254920,
+        "mixed":228,
+        "upper":25068
+      },
+      "2015-09-01":{
+        "lower":264906,
+        "upper":30844,
+        "mixed":228
+      },
+      "2015-10-01":{
+        "lower":266110,
+        "upper":31275,
+        "mixed":228
+      },
+      "2015-11-01":{
+        "lower":279554,
+        "upper":21815,
+        "mixed":228
+      },
+      "2015-12-01":{
+        "lower":279718,
+        "upper":15423,
+        "mixed":242
+      },
+      "2016-01-01":{
+        "lower":277888,
+        "upper":13551,
+        "mixed":242
+      },
+      "2016-02-01":{
+        "lower":278716,
+        "upper":14294,
+        "mixed":242
+      },
+      "2016-03-01":{
+        "lower":280204,
+        "upper":15131,
+        "mixed":242
+      },
+      "2016-04-01":{
+        "lower":279651,
+        "upper":18439,
+        "mixed":242
+      },
+      "2016-05-01":{
+        "lower":281186,
+        "upper":18459,
+        "mixed":242
+      },
+      "2016-06-01":{
+        "lower":282750,
+        "upper":18684,
+        "mixed":242
+      },
+      "2016-07-01":{
+        "lower":284142,
+        "upper":19128,
+        "mixed":248
+      },
+      "2016-08-01":{
+        "lower":280888,
+        "upper":19137,
+        "mixed":243
+      },
+      "2016-09-01":{
+        "lower":281593,
+        "upper":19341,
+        "mixed":243
+      },
+      "2016-10-01":{
+        "lower":271990,
+        "upper":20005,
+        "mixed":243
+      },
+      "2016-11-01":{
+        "lower":278916,
+        "upper":33578,
+        "mixed":243
+      },
+      "2016-12-01":{
+        "lower":279462,
+        "upper":35696,
+        "mixed":245
+      },
+      "2017-01-01":{
+        "lower":281814,
+        "upper":35837,
+        "mixed":245
+      },
+      "2017-02-01":{
+        "lower":283561,
+        "upper":37566,
+        "mixed":245
+      },
+      "2017-03-01":{
+        "lower":284830,
+        "upper":38109,
+        "mixed":245
+      },
+      "2017-04-01":{
+        "lower":286395,
+        "upper":38539,
+        "mixed":229
+      },
+      "2017-05-01":{
+        "lower":283606,
+        "upper":38753,
+        "mixed":229
+      },
+      "2017-06-01":{
+        "lower":283467,
+        "upper":39067,
+        "mixed":229
+      }
+    },
+    "winner":"lower"
+  },
+  "Spacing before object operator":{
+    "total":1449386,
+    "total_repos":194,
+    "values":{
+      "0":1420737,
+      "newline":28431,
       "1":218
     },
     "repos":{
@@ -15817,19 +17085,19 @@
         "auraphp\/Aura.Web":100,
         "auraphp\/Aura.Web_Kernel":100,
         "avalanche123\/Imagine":99.52,
-        "aws\/aws-sdk-php":98.19,
+        "aws\/aws-sdk-php":98.17,
         "batopa\/chirp":91.67,
         "bobthecow\/mustache.php":99.14,
         "box-project\/box2":97.25,
         "c9s\/Pux":100,
-        "cakephp\/cakephp":97.78,
+        "cakephp\/cakephp":97.77,
         "cboden\/Ratchet":99.66,
         "chamilo\/chamilo-lms":96.64,
         "chriso\/klein.php":100,
         "Codeception\/Codeception":97.84,
         "codeguy\/Slim":100,
-        "Codegyre\/Robo":97.78,
-        "composer\/composer":97.65,
+        "Codegyre\/Robo":97.85,
+        "composer\/composer":97.66,
         "concrete5\/concrete5":99.99,
         "contao\/core":97.34,
         "danielstjules\/Stringy":99.66,
@@ -15848,16 +17116,16 @@
         "ginatrapani\/ThinkUp":100,
         "gintonicweb\/GintonicCMS":100,
         "google\/google-api-php-client":100,
-        "guzzle\/guzzle":99.33,
+        "guzzle\/guzzle":99.34,
         "Halleck45\/PhpMetrics":90.81,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":99.87,
-        "joomla\/joomla-cms":96.25,
+        "joomla\/joomla-cms":96.26,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":98.22,
         "kriswallsmith\/Buzz":100,
         "ladybirdweb\/agorainvoicing":97.22,
-        "ladybirdweb\/faveo-helpdesk":95.47,
+        "ladybirdweb\/faveo-helpdesk":95.48,
         "laravel\/framework":99,
         "leafo\/lessphp":100,
         "magento\/magento2":97.6,
@@ -15889,14 +17157,14 @@
         "nikic\/PHP-Parser":100,
         "openemr\/openemr":99.61,
         "orno\/route":100,
-        "owncloud\/core":95.77,
-        "padraic\/mockery":97.72,
+        "owncloud\/core":95.78,
+        "padraic\/mockery":97.73,
         "pear\/pear-core":100,
         "phingofficial\/phing":99.61,
         "phpbb\/phpbb":99.35,
         "phpDocumentor\/phpDocumentor2":97.29,
         "PHPMailer\/PHPMailer":100,
-        "phpmyadmin\/phpmyadmin":98.31,
+        "phpmyadmin\/phpmyadmin":98.32,
         "PHPOffice\/PHPExcel":99.69,
         "pimcore\/pimcore":99.93,
         "piwik\/piwik":99.42,
@@ -15904,15 +17172,15 @@
         "PrestaShop\/PrestaShop":99.88,
         "propelorm\/Propel":99.64,
         "pyrocms\/pyrocms":94.09,
-        "quickapps\/cms":87.94,
+        "quickapps\/cms":87.95,
         "radphp\/radphp":95.67,
         "reactphp\/child-process":100,
         "reactphp\/dns":94.09,
         "reactphp\/event-loop":100,
         "reactphp\/http":100,
-        "reactphp\/http-client":98.52,
+        "reactphp\/http-client":99.53,
         "reactphp\/promise":91.67,
-        "reactphp\/socket":97.6,
+        "reactphp\/socket":97.87,
         "reactphp\/socket-client":93.9,
         "reactphp\/stream":100,
         "revive-adserver\/revive-adserver":99.92,
@@ -15925,18 +17193,18 @@
         "silverstripe\/silverstripe-framework":99.04,
         "squizlabs\/PHP_CodeSniffer":100,
         "sugarcrm\/sugarcrm_dev":99.98,
-        "swiftmailer\/swiftmailer":94.54,
-        "symfony\/symfony":94.01,
+        "swiftmailer\/swiftmailer":94.49,
+        "symfony\/symfony":93.97,
         "tedivm\/Stash":100,
         "thephpleague\/flysystem":100,
         "thephpleague\/fractal":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":95.95,
-        "TYPO3\/TYPO3.CMS":94.24,
-        "wikimedia\/mediawiki-core":99.35,
+        "TYPO3\/TYPO3.CMS":94.21,
+        "wikimedia\/mediawiki-core":99.36,
         "WordPress\/WordPress":99.98,
         "yiisoft\/yii":99.29,
-        "yiisoft\/yii2":98.48,
+        "yiisoft\/yii2":98.49,
         "zendframework\/zend-authentication":99.01,
         "zendframework\/zend-barcode":100,
         "zendframework\/zend-cache":100,
@@ -15953,11 +17221,11 @@
         "zendframework\/zend-eventmanager":100,
         "zendframework\/zend-feed":99.9,
         "zendframework\/zend-file":99.24,
-        "zendframework\/zend-filter":99.64,
+        "zendframework\/zend-filter":99.65,
         "zendframework\/zend-form":100,
         "zendframework\/zend-http":99.39,
         "zendframework\/zend-i18n":99.7,
-        "zendframework\/zend-inputfilter":99.01,
+        "zendframework\/zend-inputfilter":99.02,
         "zendframework\/zend-json":100,
         "zendframework\/zend-loader":100,
         "zendframework\/zend-log":100,
@@ -16135,15 +17403,20 @@
         "0":1418614,
         "newline":28410,
         "1":218
+      },
+      "2017-06-01":{
+        "0":1420737,
+        "newline":28431,
+        "1":218
       }
     },
     "winner":0
   },
   "Spacing after object operator":{
-    "total":1447242,
+    "total":1449386,
     "total_repos":194,
     "values":{
-      "0":1446959,
+      "0":1449103,
       "1":244,
       "newline":39
     },
@@ -16490,965 +17763,234 @@
         "0":1446959,
         "1":244,
         "newline":39
+      },
+      "2017-06-01":{
+        "0":1449103,
+        "1":244,
+        "newline":39
       }
     },
     "winner":0
   },
-  "CamelCase method name":{
-    "total":310329,
-    "total_repos":195,
+  "Brackets around echoed strings":{
+    "total":64391,
+    "total_repos":78,
     "values":{
-      "no":39054,
-      "yes":271275
+      "no":63819,
+      "yes":572
     },
     "repos":{
-      "yes":{
-        "anchorcms\/anchor-cms":93.61,
-        "auraphp\/Aura.Autoload":100,
-        "auraphp\/Aura.Cli":100,
-        "auraphp\/Aura.Cli_Kernel":100,
-        "auraphp\/Aura.Di":100,
-        "auraphp\/Aura.Dispatcher":100,
-        "auraphp\/Aura.Filter":100,
-        "auraphp\/Aura.Html":100,
-        "auraphp\/Aura.Input":100,
-        "auraphp\/Aura.Intl":100,
-        "auraphp\/Aura.Marshal":100,
-        "auraphp\/Aura.Project_Kernel":100,
-        "auraphp\/Aura.Router":100,
-        "auraphp\/Aura.Session":100,
-        "auraphp\/Aura.Signal":100,
-        "auraphp\/Aura.Sql":100,
-        "auraphp\/Aura.SqlQuery":100,
-        "auraphp\/Aura.SqlSchema":100,
-        "auraphp\/Aura.Uri":100,
-        "auraphp\/Aura.View":100,
+      "no":{
+        "anchorcms\/anchor-cms":99.85,
         "auraphp\/Aura.Web":100,
-        "auraphp\/Aura.Web_Kernel":100,
-        "avalanche123\/Imagine":99.58,
-        "aws\/aws-sdk-php":91.16,
-        "batopa\/chirp":100,
-        "bobthecow\/mustache.php":100,
-        "box-project\/box2":98.94,
-        "c9s\/Pux":96.64,
-        "cakephp\/cakephp":99.08,
-        "cboden\/Ratchet":99.12,
-        "chamilo\/chamilo-lms":72.72,
-        "chriso\/klein.php":100,
-        "Codeception\/Codeception":97.87,
-        "codeguy\/Slim":100,
-        "Codegyre\/Robo":99.89,
-        "composer\/composer":99.2,
-        "concrete5\/concrete5":84.21,
-        "contao\/core":95.12,
-        "danielstjules\/Stringy":100,
-        "doctrine\/doctrine2":92.85,
-        "dropbox\/dropbox-sdk-php":98.08,
-        "drupal\/drupal":98.6,
-        "erusev\/parsedown":100,
-        "ezsystems\/ezpublish-kernel":98.61,
-        "fabpot\/Goutte":100,
-        "fabpot\/PHP-CS-Fixer":99.58,
-        "fabpot\/Twig":99.84,
-        "facebook\/facebook-php-sdk":96.83,
-        "fruux\/sabre-dav":91.6,
-        "fzaninotto\/Faker":99.61,
-        "ginatrapani\/ThinkUp":89.59,
-        "gintonicweb\/GintonicCMS":100,
-        "google\/google-api-php-client":99.71,
-        "guzzle\/guzzle":96.49,
-        "Halleck45\/PhpMetrics":99.78,
-        "iranianpep\/botonomous":99.32,
-        "jackalope\/jackalope":97.45,
-        "joomla\/joomla-cms":93.94,
-        "KnpLabs\/snappy":100,
-        "kriswallsmith\/assetic":99.64,
-        "kriswallsmith\/Buzz":100,
-        "ladybirdweb\/agorainvoicing":53.08,
-        "ladybirdweb\/faveo-helpdesk":94.28,
-        "laravel\/framework":100,
-        "leafo\/lessphp":70.92,
-        "magento\/magento2":99.9,
-        "michelf\/php-markdown":56.25,
-        "nazariyg\/Phred":97.87,
-        "nette\/application":100,
-        "nette\/bootstrap":100,
-        "nette\/caching":100,
-        "nette\/component-model":100,
-        "nette\/database":99.43,
-        "nette\/di":100,
-        "nette\/finder":100,
-        "nette\/forms":100,
-        "nette\/http":100,
-        "nette\/latte":98.46,
-        "nette\/mail":100,
-        "nette\/neon":100,
-        "nette\/php-generator":100,
-        "nette\/reflection":100,
-        "nette\/robot-loader":100,
-        "nette\/security":100,
-        "nette\/tester":94.05,
-        "nette\/tokenizer":100,
-        "nette\/tracy":100,
-        "nette\/utils":100,
-        "nikic\/FastRoute":100,
-        "nikic\/PHP-Parser":74.83,
-        "orno\/route":100,
-        "owncloud\/core":94.79,
-        "padraic\/mockery":86.92,
-        "pear\/pear-core":94.61,
-        "phingofficial\/phing":99.38,
-        "phpDocumentor\/phpDocumentor2":99.75,
-        "PHPMailer\/PHPMailer":83.27,
-        "phpmyadmin\/phpmyadmin":91.63,
-        "PHPOffice\/PHPExcel":82,
-        "pimcore\/pimcore":99.66,
-        "piwik\/piwik":97.69,
-        "ppi\/framework":99.56,
-        "PrestaShop\/PrestaShop":95.59,
-        "propelorm\/Propel":97.98,
-        "pyrocms\/pyrocms":78.67,
-        "quickapps\/cms":99.79,
-        "radphp\/radphp":100,
-        "reactphp\/child-process":100,
-        "reactphp\/dns":100,
-        "reactphp\/event-loop":100,
-        "reactphp\/http":100,
-        "reactphp\/http-client":100,
-        "reactphp\/promise":100,
-        "reactphp\/socket":100,
-        "reactphp\/socket-client":100,
-        "reactphp\/stream":100,
-        "revive-adserver\/revive-adserver":98.06,
-        "scabbiafw\/scabbia2-fw":100,
-        "sculpin\/sculpin":100,
-        "sebastianbergmann\/php-code-coverage":100,
-        "sebastianbergmann\/phpunit":99.48,
-        "Seldaek\/monolog":99.77,
-        "silexphp\/Silex":100,
-        "silverstripe\/silverstripe-framework":71.43,
-        "squizlabs\/PHP_CodeSniffer":99.46,
-        "sugarcrm\/sugarcrm_dev":93.7,
-        "swiftmailer\/swiftmailer":98.94,
-        "symfony\/symfony":99.64,
-        "tedivm\/Stash":99.05,
-        "thephpleague\/flysystem":100,
-        "thephpleague\/fractal":100,
-        "thephpleague\/oauth2-client":100,
-        "thephpleague\/oauth2-server":97.21,
-        "TYPO3\/TYPO3.CMS":94.1,
-        "wikimedia\/mediawiki-core":95.2,
-        "yiisoft\/yii":98.31,
-        "yiisoft\/yii2":99.18,
-        "zendframework\/zend-authentication":100,
-        "zendframework\/zend-barcode":100,
-        "zendframework\/zend-cache":100,
-        "zendframework\/zend-captcha":100,
-        "zendframework\/zend-code":99.67,
-        "zendframework\/zend-config":100,
-        "zendframework\/zend-console":99.09,
-        "zendframework\/zend-crypt":99.54,
-        "zendframework\/zend-db":100,
-        "zendframework\/zend-debug":100,
-        "zendframework\/zend-di":100,
-        "zendframework\/zend-dom":100,
-        "zendframework\/zend-escaper":100,
-        "zendframework\/zend-eventmanager":100,
-        "zendframework\/zend-feed":100,
-        "zendframework\/zend-file":100,
-        "zendframework\/zend-filter":100,
-        "zendframework\/zend-form":100,
-        "zendframework\/zend-http":100,
-        "zendframework\/zend-i18n":100,
-        "zendframework\/zend-i18n-resources":100,
-        "zendframework\/zend-inputfilter":100,
-        "zendframework\/zend-json":100,
-        "zendframework\/zend-loader":100,
-        "zendframework\/zend-log":100,
-        "zendframework\/zend-mail":100,
-        "zendframework\/zend-math":100,
-        "zendframework\/zend-memory":100,
-        "zendframework\/zend-mime":100,
-        "zendframework\/zend-modulemanager":100,
-        "zendframework\/zend-mvc":100,
-        "zendframework\/zend-navigation":100,
-        "zendframework\/zend-paginator":100,
-        "zendframework\/zend-permissions-acl":92.59,
-        "zendframework\/zend-permissions-rbac":100,
-        "zendframework\/zend-progressbar":100,
-        "zendframework\/zend-serializer":100,
-        "zendframework\/zend-server":100,
-        "zendframework\/zend-servicemanager":100,
-        "zendframework\/zend-session":100,
-        "zendframework\/zend-soap":95.28,
-        "zendframework\/zend-stdlib":99.44,
-        "zendframework\/zend-tag":93.65,
-        "zendframework\/zend-test":100,
-        "zendframework\/zend-text":100,
-        "zendframework\/zend-uri":100,
-        "zendframework\/zend-validator":98.54,
-        "zendframework\/zend-version":100,
-        "zendframework\/zend-view":98.74,
-        "zendframework\/zend-xmlrpc":98.55,
-        "zendframework\/zendxml":100,
-        "zikula\/core":94.39
-      },
-      "no":{
-        "EllisLab\/CodeIgniter":69.44,
-        "moodle\/moodle":85.77,
-        "nette\/safe-stream":71.43,
-        "openemr\/openemr":55.6,
-        "phpbb\/phpbb":76.78,
-        "WordPress\/WordPress":74.85
-      }
-    },
-    "trends":{
-      "2015-01-01":{
-        "no":39302,
-        "yes":216710
-      },
-      "2015-02-01":{
-        "no":39348,
-        "yes":217812
-      },
-      "2015-03-01":{
-        "no":35554,
-        "yes":210683
-      },
-      "2015-04-01":{
-        "no":35223,
-        "yes":210070
-      },
-      "2015-05-01":{
-        "no":35180,
-        "yes":214638
-      },
-      "2015-06-01":{
-        "no":35269,
-        "yes":214989
-      },
-      "2015-07-01":{
-        "no":35320,
-        "yes":216188
-      },
-      "2015-08-01":{
-        "no":35282,
-        "yes":217397
-      },
-      "2015-09-01":{
-        "no":35368,
-        "yes":241585
-      },
-      "2015-10-01":{
-        "no":35899,
-        "yes":242614
-      },
-      "2015-11-01":{
-        "no":36155,
-        "yes":244451
-      },
-      "2015-12-01":{
-        "no":36007,
-        "yes":245760
-      },
-      "2016-01-01":{
-        "no":36061,
-        "yes":246506
-      },
-      "2016-02-01":{
-        "no":36288,
-        "yes":247318
-      },
-      "2016-03-01":{
-        "no":36632,
-        "yes":249971
-      },
-      "2016-04-01":{
-        "no":36854,
-        "yes":251148
-      },
-      "2016-05-01":{
-        "no":37894,
-        "yes":252513
-      },
-      "2016-06-01":{
-        "no":37356,
-        "yes":253764
-      },
-      "2016-07-01":{
-        "no":38226,
-        "yes":254735
-      },
-      "2016-08-01":{
-        "no":37073,
-        "yes":254982
-      },
-      "2016-09-01":{
-        "no":36876,
-        "yes":255166
-      },
-      "2016-10-01":{
-        "no":36792,
-        "yes":243807
-      },
-      "2016-11-01":{
-        "no":37588,
-        "yes":263972
-      },
-      "2016-12-01":{
-        "no":37755,
-        "yes":264195
-      },
-      "2017-01-01":{
-        "no":37701,
-        "yes":269826
-      },
-      "2017-02-01":{
-        "no":37713,
-        "yes":271424
-      },
-      "2017-03-01":{
-        "no":37754,
-        "yes":271377
-      },
-      "2017-04-01":{
-        "no":38764,
-        "yes":270954
-      },
-      "2017-05-01":{
-        "no":39054,
-        "yes":271275
-      }
-    },
-    "winner":"yes"
-  },
-  "Private method prefixed with underscore":{
-    "total":10406,
-    "total_repos":131,
-    "values":{
-      "no":9199,
-      "yes":1207
-    },
-    "repos":{
-      "no":{
-        "anchorcms\/anchor-cms":100,
-        "auraphp\/Aura.Filter":100,
         "avalanche123\/Imagine":100,
         "aws\/aws-sdk-php":100,
-        "batopa\/chirp":100,
-        "bobthecow\/mustache.php":100,
-        "box-project\/box2":100,
-        "chamilo\/chamilo-lms":91.29,
+        "cakephp\/cakephp":100,
+        "chamilo\/chamilo-lms":99.05,
         "chriso\/klein.php":100,
-        "Codeception\/Codeception":88.89,
+        "Codeception\/Codeception":100,
         "codeguy\/Slim":100,
-        "Codegyre\/Robo":100,
         "composer\/composer":100,
-        "concrete5\/concrete5":100,
+        "concrete5\/concrete5":95.85,
         "contao\/core":100,
-        "doctrine\/doctrine2":93.75,
-        "dropbox\/dropbox-sdk-php":70.59,
-        "drupal\/drupal":99.8,
+        "doctrine\/doctrine2":100,
+        "dropbox\/dropbox-sdk-php":100,
+        "drupal\/drupal":100,
+        "EllisLab\/CodeIgniter":100,
         "ezsystems\/ezpublish-kernel":100,
-        "fabpot\/PHP-CS-Fixer":100,
+        "fabpot\/Twig":100,
         "fruux\/sabre-dav":100,
-        "fzaninotto\/Faker":100,
-        "ginatrapani\/ThinkUp":100,
-        "google\/google-api-php-client":100,
-        "guzzle\/guzzle":100,
-        "Halleck45\/PhpMetrics":100,
+        "ginatrapani\/ThinkUp":96.63,
         "iranianpep\/botonomous":100,
-        "jackalope\/jackalope":100,
-        "joomla\/joomla-cms":81.04,
-        "kriswallsmith\/assetic":100,
-        "kriswallsmith\/Buzz":100,
-        "ladybirdweb\/agorainvoicing":100,
-        "ladybirdweb\/faveo-helpdesk":100,
-        "laravel\/framework":100,
-        "moodle\/moodle":86.63,
+        "joomla\/joomla-cms":99.8,
+        "ladybirdweb\/agorainvoicing":94.02,
+        "ladybirdweb\/faveo-helpdesk":99.04,
+        "leafo\/lessphp":100,
+        "magento\/magento2":100,
+        "moodle\/moodle":99.91,
+        "nazariyg\/Phred":100,
         "nette\/application":100,
         "nette\/caching":100,
-        "nette\/component-model":100,
         "nette\/database":100,
-        "nette\/di":100,
-        "nette\/finder":100,
         "nette\/forms":100,
         "nette\/http":100,
-        "nette\/latte":100,
-        "nette\/mail":100,
-        "nette\/neon":100,
-        "nette\/reflection":100,
-        "nette\/robot-loader":100,
-        "nette\/safe-stream":100,
-        "nette\/security":100,
-        "nette\/tester":97.5,
+        "nette\/tester":100,
         "nette\/tracy":100,
-        "nette\/utils":100,
-        "nikic\/FastRoute":100,
-        "nikic\/PHP-Parser":100,
-        "openemr\/openemr":92.57,
-        "owncloud\/core":99.84,
-        "padraic\/mockery":100,
-        "phingofficial\/phing":88.93,
+        "openemr\/openemr":98.59,
+        "owncloud\/core":90.8,
+        "pear\/pear-core":100,
+        "phingofficial\/phing":100,
         "phpbb\/phpbb":100,
         "phpDocumentor\/phpDocumentor2":100,
         "PHPMailer\/PHPMailer":100,
+        "phpmyadmin\/phpmyadmin":99.74,
+        "PHPOffice\/PHPExcel":100,
         "pimcore\/pimcore":100,
-        "piwik\/piwik":99.93,
-        "ppi\/framework":100,
-        "PrestaShop\/PrestaShop":87.7,
+        "piwik\/piwik":100,
+        "PrestaShop\/PrestaShop":99.64,
         "propelorm\/Propel":100,
+        "pyrocms\/pyrocms":99.89,
+        "quickapps\/cms":100,
         "radphp\/radphp":100,
-        "reactphp\/child-process":100,
-        "reactphp\/dns":100,
-        "reactphp\/event-loop":100,
-        "reactphp\/http":100,
-        "reactphp\/http-client":100,
-        "reactphp\/promise":100,
-        "reactphp\/socket":100,
-        "reactphp\/socket-client":100,
-        "reactphp\/stream":100,
-        "revive-adserver\/revive-adserver":100,
+        "revive-adserver\/revive-adserver":99.66,
+        "scabbiafw\/scabbia2-fw":100,
         "sculpin\/sculpin":100,
-        "sebastianbergmann\/php-code-coverage":100,
-        "sebastianbergmann\/phpunit":100,
         "Seldaek\/monolog":100,
-        "silexphp\/Silex":100,
-        "silverstripe\/silverstripe-framework":90,
+        "silverstripe\/silverstripe-framework":100,
         "squizlabs\/PHP_CodeSniffer":100,
-        "sugarcrm\/sugarcrm_dev":87.61,
+        "sugarcrm\/sugarcrm_dev":98.59,
         "swiftmailer\/swiftmailer":100,
         "symfony\/symfony":100,
-        "tedivm\/Stash":100,
-        "thephpleague\/flysystem":100,
-        "thephpleague\/fractal":100,
-        "thephpleague\/oauth2-client":100,
-        "thephpleague\/oauth2-server":100,
         "TYPO3\/TYPO3.CMS":100,
         "wikimedia\/mediawiki-core":100,
-        "yiisoft\/yii":98.31,
+        "WordPress\/WordPress":98.9,
+        "yiisoft\/yii":100,
         "yiisoft\/yii2":100,
-        "zendframework\/zend-authentication":100,
         "zendframework\/zend-barcode":100,
         "zendframework\/zend-cache":100,
-        "zendframework\/zend-code":100,
-        "zendframework\/zend-config":100,
         "zendframework\/zend-console":100,
-        "zendframework\/zend-crypt":100,
-        "zendframework\/zend-db":100,
-        "zendframework\/zend-eventmanager":100,
+        "zendframework\/zend-debug":100,
+        "zendframework\/zend-di":100,
         "zendframework\/zend-feed":100,
-        "zendframework\/zend-file":100,
-        "zendframework\/zend-form":100,
-        "zendframework\/zend-json":100,
-        "zendframework\/zend-log":100,
-        "zendframework\/zend-mail":100,
-        "zendframework\/zend-memory":100,
-        "zendframework\/zend-mime":50,
-        "zendframework\/zend-modulemanager":100,
+        "zendframework\/zend-http":100,
         "zendframework\/zend-mvc":100,
-        "zendframework\/zend-navigation":100,
-        "zendframework\/zend-server":100,
-        "zendframework\/zend-servicemanager":100,
-        "zendframework\/zend-session":100,
-        "zendframework\/zend-test":100,
-        "zendframework\/zend-validator":100,
+        "zendframework\/zend-progressbar":100,
+        "zendframework\/zend-soap":100,
         "zendframework\/zend-view":100,
-        "zikula\/core":91.03
-      },
-      "yes":{
-        "magento\/magento2":56.03,
-        "nette\/php-generator":100,
-        "pear\/pear-core":75,
-        "phpmyadmin\/phpmyadmin":98.81,
-        "PHPOffice\/PHPExcel":96.04,
-        "pyrocms\/pyrocms":50.93,
-        "WordPress\/WordPress":85.71
+        "zendframework\/zend-xmlrpc":100,
+        "zikula\/core":100
       }
     },
     "trends":{
       "2015-01-01":{
-        "no":6621,
-        "yes":1855
+        "no":61928,
+        "yes":442
       },
       "2015-02-01":{
-        "no":6699,
-        "yes":1855
+        "no":62108,
+        "yes":442
       },
       "2015-03-01":{
-        "no":6373,
-        "yes":1751
+        "no":60904,
+        "yes":405
       },
       "2015-04-01":{
-        "no":6535,
-        "yes":1581
+        "no":60110,
+        "yes":396
       },
       "2015-05-01":{
-        "no":6628,
-        "yes":1545
+        "no":59490,
+        "yes":392
       },
       "2015-06-01":{
-        "no":6874,
-        "yes":1555
+        "no":59318,
+        "yes":397
       },
       "2015-07-01":{
-        "no":6974,
-        "yes":1555
+        "no":59305,
+        "yes":397
       },
       "2015-08-01":{
-        "no":6991,
-        "yes":1556
+        "no":59367,
+        "yes":397
       },
       "2015-09-01":{
-        "no":7033,
-        "yes":1547
+        "no":59246,
+        "yes":395
       },
       "2015-10-01":{
-        "no":7084,
-        "yes":1543
+        "no":59400,
+        "yes":395
       },
       "2015-11-01":{
-        "no":7179,
-        "yes":1535
+        "no":59325,
+        "yes":388
       },
       "2015-12-01":{
-        "no":7279,
-        "yes":1550
+        "no":59883,
+        "yes":394
       },
       "2016-01-01":{
-        "no":7348,
-        "yes":1554
+        "no":60165,
+        "yes":395
       },
       "2016-02-01":{
-        "no":7459,
-        "yes":1552
+        "no":60151,
+        "yes":395
       },
       "2016-03-01":{
-        "no":7655,
-        "yes":1608
+        "no":59486,
+        "yes":392
       },
       "2016-04-01":{
-        "no":7755,
-        "yes":1605
+        "no":58693,
+        "yes":390
       },
       "2016-05-01":{
-        "no":7839,
-        "yes":1590
+        "no":58350,
+        "yes":410
       },
       "2016-06-01":{
-        "no":7911,
-        "yes":1578
+        "no":58087,
+        "yes":392
       },
       "2016-07-01":{
-        "no":8070,
-        "yes":1579
+        "no":58490,
+        "yes":406
       },
       "2016-08-01":{
-        "no":8172,
-        "yes":1566
+        "no":58449,
+        "yes":403
       },
       "2016-09-01":{
-        "no":8246,
-        "yes":1552
+        "no":58441,
+        "yes":443
       },
       "2016-10-01":{
-        "no":8178,
-        "yes":1542
+        "no":61891,
+        "yes":535
       },
       "2016-11-01":{
-        "no":8755,
-        "yes":1542
+        "no":62208,
+        "yes":536
       },
       "2016-12-01":{
-        "no":8779,
-        "yes":1542
+        "no":62187,
+        "yes":536
       },
       "2017-01-01":{
-        "no":8826,
-        "yes":1541
+        "no":62466,
+        "yes":537
       },
       "2017-02-01":{
-        "no":8914,
-        "yes":1540
+        "no":62557,
+        "yes":537
       },
       "2017-03-01":{
-        "no":9027,
-        "yes":1540
+        "no":63198,
+        "yes":538
       },
       "2017-04-01":{
-        "no":9100,
-        "yes":1549
+        "no":64510,
+        "yes":542
       },
       "2017-05-01":{
-        "no":9199,
-        "yes":1207
+        "no":63806,
+        "yes":572
+      },
+      "2017-06-01":{
+        "no":63819,
+        "yes":572
       }
     },
     "winner":"no"
   },
-  "PHP constant case":{
-    "total":322588,
-    "total_repos":194,
-    "values":{
-      "lower":283606,
-      "upper":38753,
-      "mixed":229
-    },
-    "repos":{
-      "lower":{
-        "anchorcms\/anchor-cms":100,
-        "auraphp\/Aura.Autoload":100,
-        "auraphp\/Aura.Cli":100,
-        "auraphp\/Aura.Cli_Kernel":100,
-        "auraphp\/Aura.Di":100,
-        "auraphp\/Aura.Dispatcher":100,
-        "auraphp\/Aura.Filter":100,
-        "auraphp\/Aura.Html":100,
-        "auraphp\/Aura.Input":100,
-        "auraphp\/Aura.Intl":100,
-        "auraphp\/Aura.Marshal":100,
-        "auraphp\/Aura.Project_Kernel":100,
-        "auraphp\/Aura.Router":100,
-        "auraphp\/Aura.Session":100,
-        "auraphp\/Aura.Signal":100,
-        "auraphp\/Aura.Sql":100,
-        "auraphp\/Aura.SqlQuery":100,
-        "auraphp\/Aura.SqlSchema":100,
-        "auraphp\/Aura.Uri":100,
-        "auraphp\/Aura.View":100,
-        "auraphp\/Aura.Web":100,
-        "auraphp\/Aura.Web_Kernel":100,
-        "avalanche123\/Imagine":100,
-        "batopa\/chirp":100,
-        "bobthecow\/mustache.php":100,
-        "box-project\/box2":100,
-        "c9s\/Pux":100,
-        "cakephp\/cakephp":100,
-        "cboden\/Ratchet":100,
-        "chamilo\/chamilo-lms":95.65,
-        "chriso\/klein.php":100,
-        "Codeception\/Codeception":97.78,
-        "codeguy\/Slim":100,
-        "Codegyre\/Robo":100,
-        "composer\/composer":100,
-        "concrete5\/concrete5":97.86,
-        "contao\/core":100,
-        "danielstjules\/Stringy":100,
-        "doctrine\/doctrine2":100,
-        "dropbox\/dropbox-sdk-php":100,
-        "erusev\/parsedown":100,
-        "ezsystems\/ezpublish-kernel":100,
-        "fabpot\/Goutte":100,
-        "fabpot\/PHP-CS-Fixer":100,
-        "fabpot\/Twig":99.83,
-        "facebook\/facebook-php-sdk":100,
-        "fruux\/sabre-dav":100,
-        "fzaninotto\/Faker":100,
-        "ginatrapani\/ThinkUp":98.68,
-        "gintonicweb\/GintonicCMS":100,
-        "google\/google-api-php-client":100,
-        "guzzle\/guzzle":100,
-        "Halleck45\/PhpMetrics":100,
-        "iranianpep\/botonomous":100,
-        "jackalope\/jackalope":100,
-        "joomla\/joomla-cms":99.49,
-        "KnpLabs\/snappy":100,
-        "kriswallsmith\/assetic":100,
-        "kriswallsmith\/Buzz":100,
-        "ladybirdweb\/agorainvoicing":99.09,
-        "ladybirdweb\/faveo-helpdesk":100,
-        "laravel\/framework":100,
-        "leafo\/lessphp":100,
-        "magento\/magento2":100,
-        "michelf\/php-markdown":100,
-        "moodle\/moodle":98.99,
-        "nazariyg\/Phred":100,
-        "nikic\/FastRoute":100,
-        "nikic\/PHP-Parser":100,
-        "openemr\/openemr":90.1,
-        "orno\/route":100,
-        "owncloud\/core":99.93,
-        "padraic\/mockery":100,
-        "pear\/pear-core":100,
-        "phingofficial\/phing":100,
-        "phpbb\/phpbb":99.22,
-        "phpDocumentor\/phpDocumentor2":100,
-        "PHPMailer\/PHPMailer":99.16,
-        "phpmyadmin\/phpmyadmin":99.88,
-        "PHPOffice\/PHPExcel":54.96,
-        "pimcore\/pimcore":100,
-        "piwik\/piwik":99.64,
-        "ppi\/framework":100,
-        "PrestaShop\/PrestaShop":99.92,
-        "propelorm\/Propel":100,
-        "pyrocms\/pyrocms":96.42,
-        "quickapps\/cms":100,
-        "radphp\/radphp":100,
-        "reactphp\/child-process":100,
-        "reactphp\/dns":100,
-        "reactphp\/event-loop":100,
-        "reactphp\/http":100,
-        "reactphp\/http-client":100,
-        "reactphp\/promise":100,
-        "reactphp\/socket":100,
-        "reactphp\/socket-client":100,
-        "reactphp\/stream":100,
-        "revive-adserver\/revive-adserver":99.94,
-        "scabbiafw\/scabbia2-fw":100,
-        "sculpin\/sculpin":100,
-        "sebastianbergmann\/php-code-coverage":99.29,
-        "sebastianbergmann\/phpunit":100,
-        "Seldaek\/monolog":100,
-        "silexphp\/Silex":100,
-        "silverstripe\/silverstripe-framework":72,
-        "squizlabs\/PHP_CodeSniffer":100,
-        "sugarcrm\/sugarcrm_dev":97.36,
-        "swiftmailer\/swiftmailer":100,
-        "symfony\/symfony":100,
-        "tedivm\/Stash":100,
-        "thephpleague\/flysystem":100,
-        "thephpleague\/fractal":100,
-        "thephpleague\/oauth2-client":100,
-        "thephpleague\/oauth2-server":100,
-        "TYPO3\/TYPO3.CMS":100,
-        "wikimedia\/mediawiki-core":100,
-        "WordPress\/WordPress":100,
-        "yiisoft\/yii":99.77,
-        "yiisoft\/yii2":100,
-        "zendframework\/zend-authentication":100,
-        "zendframework\/zend-barcode":100,
-        "zendframework\/zend-cache":100,
-        "zendframework\/zend-captcha":100,
-        "zendframework\/zend-code":100,
-        "zendframework\/zend-config":100,
-        "zendframework\/zend-console":100,
-        "zendframework\/zend-crypt":100,
-        "zendframework\/zend-db":100,
-        "zendframework\/zend-debug":100,
-        "zendframework\/zend-di":100,
-        "zendframework\/zend-dom":100,
-        "zendframework\/zend-escaper":100,
-        "zendframework\/zend-eventmanager":100,
-        "zendframework\/zend-feed":100,
-        "zendframework\/zend-file":100,
-        "zendframework\/zend-filter":100,
-        "zendframework\/zend-form":100,
-        "zendframework\/zend-http":100,
-        "zendframework\/zend-i18n":100,
-        "zendframework\/zend-inputfilter":100,
-        "zendframework\/zend-json":100,
-        "zendframework\/zend-loader":100,
-        "zendframework\/zend-log":100,
-        "zendframework\/zend-mail":100,
-        "zendframework\/zend-math":100,
-        "zendframework\/zend-memory":100,
-        "zendframework\/zend-mime":100,
-        "zendframework\/zend-modulemanager":100,
-        "zendframework\/zend-mvc":100,
-        "zendframework\/zend-navigation":100,
-        "zendframework\/zend-paginator":100,
-        "zendframework\/zend-permissions-acl":100,
-        "zendframework\/zend-permissions-rbac":100,
-        "zendframework\/zend-progressbar":100,
-        "zendframework\/zend-serializer":100,
-        "zendframework\/zend-server":100,
-        "zendframework\/zend-servicemanager":100,
-        "zendframework\/zend-session":100,
-        "zendframework\/zend-soap":100,
-        "zendframework\/zend-stdlib":100,
-        "zendframework\/zend-tag":100,
-        "zendframework\/zend-test":100,
-        "zendframework\/zend-text":100,
-        "zendframework\/zend-uri":100,
-        "zendframework\/zend-validator":100,
-        "zendframework\/zend-version":100,
-        "zendframework\/zend-view":100,
-        "zendframework\/zend-xmlrpc":100,
-        "zendframework\/zendxml":100,
-        "zikula\/core":100
-      },
-      "upper":{
-        "aws\/aws-sdk-php":75.24,
-        "drupal\/drupal":69.42,
-        "EllisLab\/CodeIgniter":99.8,
-        "nette\/application":100,
-        "nette\/bootstrap":100,
-        "nette\/caching":100,
-        "nette\/component-model":100,
-        "nette\/database":100,
-        "nette\/di":100,
-        "nette\/finder":100,
-        "nette\/forms":99.19,
-        "nette\/http":100,
-        "nette\/latte":100,
-        "nette\/mail":100,
-        "nette\/neon":100,
-        "nette\/php-generator":100,
-        "nette\/reflection":100,
-        "nette\/robot-loader":100,
-        "nette\/safe-stream":100,
-        "nette\/security":100,
-        "nette\/tester":100,
-        "nette\/tokenizer":100,
-        "nette\/tracy":100,
-        "nette\/utils":100
-      }
-    },
-    "trends":{
-      "2015-01-01":{
-        "lower":265577,
-        "mixed":235,
-        "upper":25227
-      },
-      "2015-02-01":{
-        "lower":266936,
-        "mixed":235,
-        "upper":25328
-      },
-      "2015-03-01":{
-        "lower":259497,
-        "mixed":233,
-        "upper":25099
-      },
-      "2015-04-01":{
-        "lower":252478,
-        "mixed":233,
-        "upper":25147
-      },
-      "2015-05-01":{
-        "lower":252957,
-        "mixed":232,
-        "upper":25173
-      },
-      "2015-06-01":{
-        "lower":253334,
-        "mixed":229,
-        "upper":25114
-      },
-      "2015-07-01":{
-        "lower":254089,
-        "mixed":229,
-        "upper":25104
-      },
-      "2015-08-01":{
-        "lower":254920,
-        "mixed":228,
-        "upper":25068
-      },
-      "2015-09-01":{
-        "lower":264906,
-        "upper":30844,
-        "mixed":228
-      },
-      "2015-10-01":{
-        "lower":266110,
-        "upper":31275,
-        "mixed":228
-      },
-      "2015-11-01":{
-        "lower":279554,
-        "upper":21815,
-        "mixed":228
-      },
-      "2015-12-01":{
-        "lower":279718,
-        "upper":15423,
-        "mixed":242
-      },
-      "2016-01-01":{
-        "lower":277888,
-        "upper":13551,
-        "mixed":242
-      },
-      "2016-02-01":{
-        "lower":278716,
-        "upper":14294,
-        "mixed":242
-      },
-      "2016-03-01":{
-        "lower":280204,
-        "upper":15131,
-        "mixed":242
-      },
-      "2016-04-01":{
-        "lower":279651,
-        "upper":18439,
-        "mixed":242
-      },
-      "2016-05-01":{
-        "lower":281186,
-        "upper":18459,
-        "mixed":242
-      },
-      "2016-06-01":{
-        "lower":282750,
-        "upper":18684,
-        "mixed":242
-      },
-      "2016-07-01":{
-        "lower":284142,
-        "upper":19128,
-        "mixed":248
-      },
-      "2016-08-01":{
-        "lower":280888,
-        "upper":19137,
-        "mixed":243
-      },
-      "2016-09-01":{
-        "lower":281593,
-        "upper":19341,
-        "mixed":243
-      },
-      "2016-10-01":{
-        "lower":271990,
-        "upper":20005,
-        "mixed":243
-      },
-      "2016-11-01":{
-        "lower":278916,
-        "upper":33578,
-        "mixed":243
-      },
-      "2016-12-01":{
-        "lower":279462,
-        "upper":35696,
-        "mixed":245
-      },
-      "2017-01-01":{
-        "lower":281814,
-        "upper":35837,
-        "mixed":245
-      },
-      "2017-02-01":{
-        "lower":283561,
-        "upper":37566,
-        "mixed":245
-      },
-      "2017-03-01":{
-        "lower":284830,
-        "upper":38109,
-        "mixed":245
-      },
-      "2017-04-01":{
-        "lower":286395,
-        "upper":38539,
-        "mixed":229
-      },
-      "2017-05-01":{
-        "lower":283606,
-        "upper":38753,
-        "mixed":229
-      }
-    },
-    "winner":"lower"
-  },
   "Spacing after cast statement":{
-    "total":37317,
-    "total_repos":182,
+    "total":37410,
+    "total_repos":181,
     "values":{
-      "0":22021,
-      "1":15294,
+      "0":22080,
+      "1":15328,
       "8":"1",
       "2":"1"
     },
@@ -17473,12 +18015,12 @@
         "auraphp\/Aura.Web":100,
         "auraphp\/Aura.Web_Kernel":100,
         "avalanche123\/Imagine":100,
-        "aws\/aws-sdk-php":100,
+        "aws\/aws-sdk-php":98.59,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":100,
         "chriso\/klein.php":78.13,
         "codeguy\/Slim":77.78,
-        "composer\/composer":99.33,
+        "composer\/composer":100,
         "concrete5\/concrete5":90.52,
         "contao\/core":55.28,
         "danielstjules\/Stringy":100,
@@ -17494,9 +18036,8 @@
         "google\/google-api-php-client":100,
         "guzzle\/guzzle":100,
         "Halleck45\/PhpMetrics":100,
-        "iranianpep\/botonomous":100,
         "jackalope\/jackalope":94.12,
-        "joomla\/joomla-cms":97.68,
+        "joomla\/joomla-cms":97.67,
         "kriswallsmith\/assetic":100,
         "kriswallsmith\/Buzz":100,
         "ladybirdweb\/agorainvoicing":85.71,
@@ -17522,8 +18063,8 @@
         "nette\/tokenizer":100,
         "nette\/tracy":100,
         "nette\/utils":100,
-        "nikic\/FastRoute":66.67,
-        "nikic\/PHP-Parser":96.67,
+        "nikic\/FastRoute":100,
+        "nikic\/PHP-Parser":96.55,
         "orno\/route":100,
         "padraic\/mockery":100,
         "phingofficial\/phing":94.89,
@@ -17576,7 +18117,7 @@
         "zendframework\/zend-inputfilter":100,
         "zendframework\/zend-json":100,
         "zendframework\/zend-loader":100,
-        "zendframework\/zend-log":95.24,
+        "zendframework\/zend-log":95.45,
         "zendframework\/zend-mail":100,
         "zendframework\/zend-math":100,
         "zendframework\/zend-memory":100,
@@ -17598,7 +18139,7 @@
         "zendframework\/zend-test":100,
         "zendframework\/zend-text":100,
         "zendframework\/zend-uri":100,
-        "zendframework\/zend-validator":97.7,
+        "zendframework\/zend-validator":97.73,
         "zendframework\/zend-view":100,
         "zendframework\/zend-xmlrpc":96.43
       },
@@ -17617,10 +18158,10 @@
         "leafo\/lessphp":100,
         "magento\/magento2":92.25,
         "michelf\/php-markdown":100,
-        "moodle\/moodle":74.7,
+        "moodle\/moodle":74.78,
         "nazariyg\/Phred":100,
         "openemr\/openemr":61.69,
-        "owncloud\/core":67.77,
+        "owncloud\/core":67.9,
         "pear\/pear-core":56.41,
         "PHPMailer\/PHPMailer":100,
         "phpmyadmin\/phpmyadmin":56.96,
@@ -17787,252 +18328,49 @@
       },
       "2017-01-01":{
         "0":22185,
-        "1":15186,
+        "1":15185,
         "8":"1",
         "2":"1"
       },
       "2017-02-01":{
         "0":22288,
-        "1":15302,
+        "1":15301,
         "8":"1",
         "2":"1"
       },
       "2017-03-01":{
         "0":22336,
-        "1":15291,
+        "1":15290,
         "8":"1",
         "2":"1"
       },
       "2017-04-01":{
         "0":22289,
-        "1":15315,
+        "1":15314,
         "8":"1",
         "2":"1"
       },
       "2017-05-01":{
         "0":22021,
-        "1":15294,
+        "1":15293,
+        "8":"1",
+        "2":"1"
+      },
+      "2017-06-01":{
+        "0":22080,
+        "1":15328,
         "8":"1",
         "2":"1"
       }
     },
     "winner":0
   },
-  "Brackets around echoed strings":{
-    "total":64378,
-    "total_repos":78,
-    "values":{
-      "no":63806,
-      "yes":572
-    },
-    "repos":{
-      "no":{
-        "anchorcms\/anchor-cms":99.85,
-        "auraphp\/Aura.Web":100,
-        "avalanche123\/Imagine":100,
-        "aws\/aws-sdk-php":100,
-        "cakephp\/cakephp":100,
-        "chamilo\/chamilo-lms":99.05,
-        "chriso\/klein.php":100,
-        "Codeception\/Codeception":100,
-        "codeguy\/Slim":100,
-        "composer\/composer":100,
-        "concrete5\/concrete5":95.85,
-        "contao\/core":100,
-        "doctrine\/doctrine2":100,
-        "dropbox\/dropbox-sdk-php":100,
-        "drupal\/drupal":100,
-        "EllisLab\/CodeIgniter":100,
-        "ezsystems\/ezpublish-kernel":100,
-        "fabpot\/Twig":100,
-        "fruux\/sabre-dav":100,
-        "ginatrapani\/ThinkUp":96.63,
-        "iranianpep\/botonomous":100,
-        "joomla\/joomla-cms":99.8,
-        "ladybirdweb\/agorainvoicing":94.02,
-        "ladybirdweb\/faveo-helpdesk":99.04,
-        "leafo\/lessphp":100,
-        "magento\/magento2":100,
-        "moodle\/moodle":99.91,
-        "nazariyg\/Phred":100,
-        "nette\/application":100,
-        "nette\/caching":100,
-        "nette\/database":100,
-        "nette\/forms":100,
-        "nette\/http":100,
-        "nette\/tester":100,
-        "nette\/tracy":100,
-        "openemr\/openemr":98.59,
-        "owncloud\/core":90.59,
-        "pear\/pear-core":100,
-        "phingofficial\/phing":100,
-        "phpbb\/phpbb":100,
-        "phpDocumentor\/phpDocumentor2":100,
-        "PHPMailer\/PHPMailer":100,
-        "phpmyadmin\/phpmyadmin":99.74,
-        "PHPOffice\/PHPExcel":100,
-        "pimcore\/pimcore":100,
-        "piwik\/piwik":100,
-        "PrestaShop\/PrestaShop":99.64,
-        "propelorm\/Propel":100,
-        "pyrocms\/pyrocms":99.89,
-        "quickapps\/cms":100,
-        "radphp\/radphp":100,
-        "revive-adserver\/revive-adserver":99.66,
-        "scabbiafw\/scabbia2-fw":100,
-        "sculpin\/sculpin":100,
-        "Seldaek\/monolog":100,
-        "silverstripe\/silverstripe-framework":100,
-        "squizlabs\/PHP_CodeSniffer":100,
-        "sugarcrm\/sugarcrm_dev":98.59,
-        "swiftmailer\/swiftmailer":100,
-        "symfony\/symfony":100,
-        "TYPO3\/TYPO3.CMS":100,
-        "wikimedia\/mediawiki-core":100,
-        "WordPress\/WordPress":98.9,
-        "yiisoft\/yii":100,
-        "yiisoft\/yii2":100,
-        "zendframework\/zend-barcode":100,
-        "zendframework\/zend-cache":100,
-        "zendframework\/zend-console":100,
-        "zendframework\/zend-debug":100,
-        "zendframework\/zend-di":100,
-        "zendframework\/zend-feed":100,
-        "zendframework\/zend-http":100,
-        "zendframework\/zend-mvc":100,
-        "zendframework\/zend-progressbar":100,
-        "zendframework\/zend-soap":100,
-        "zendframework\/zend-view":100,
-        "zendframework\/zend-xmlrpc":100,
-        "zikula\/core":100
-      }
-    },
-    "trends":{
-      "2015-01-01":{
-        "no":61928,
-        "yes":442
-      },
-      "2015-02-01":{
-        "no":62108,
-        "yes":442
-      },
-      "2015-03-01":{
-        "no":60904,
-        "yes":405
-      },
-      "2015-04-01":{
-        "no":60110,
-        "yes":396
-      },
-      "2015-05-01":{
-        "no":59490,
-        "yes":392
-      },
-      "2015-06-01":{
-        "no":59318,
-        "yes":397
-      },
-      "2015-07-01":{
-        "no":59305,
-        "yes":397
-      },
-      "2015-08-01":{
-        "no":59367,
-        "yes":397
-      },
-      "2015-09-01":{
-        "no":59246,
-        "yes":395
-      },
-      "2015-10-01":{
-        "no":59400,
-        "yes":395
-      },
-      "2015-11-01":{
-        "no":59325,
-        "yes":388
-      },
-      "2015-12-01":{
-        "no":59883,
-        "yes":394
-      },
-      "2016-01-01":{
-        "no":60165,
-        "yes":395
-      },
-      "2016-02-01":{
-        "no":60151,
-        "yes":395
-      },
-      "2016-03-01":{
-        "no":59486,
-        "yes":392
-      },
-      "2016-04-01":{
-        "no":58693,
-        "yes":390
-      },
-      "2016-05-01":{
-        "no":58350,
-        "yes":410
-      },
-      "2016-06-01":{
-        "no":58087,
-        "yes":392
-      },
-      "2016-07-01":{
-        "no":58490,
-        "yes":406
-      },
-      "2016-08-01":{
-        "no":58449,
-        "yes":403
-      },
-      "2016-09-01":{
-        "no":58441,
-        "yes":443
-      },
-      "2016-10-01":{
-        "no":61891,
-        "yes":535
-      },
-      "2016-11-01":{
-        "no":62208,
-        "yes":536
-      },
-      "2016-12-01":{
-        "no":62187,
-        "yes":536
-      },
-      "2017-01-01":{
-        "no":62466,
-        "yes":537
-      },
-      "2017-02-01":{
-        "no":62557,
-        "yes":537
-      },
-      "2017-03-01":{
-        "no":63198,
-        "yes":538
-      },
-      "2017-04-01":{
-        "no":64510,
-        "yes":542
-      },
-      "2017-05-01":{
-        "no":63806,
-        "yes":572
-      }
-    },
-    "winner":"no"
-  },
   "Use of ELSE IF or ELSEIF":{
-    "total":28796,
+    "total":28831,
     "total_repos":170,
     "values":{
-      "elseif":21423,
-      "else if":7373
+      "elseif":21467,
+      "else if":7364
     },
     "repos":{
       "elseif":{
@@ -18045,7 +18383,7 @@
         "auraphp\/Aura.SqlQuery":100,
         "auraphp\/Aura.Web":100,
         "avalanche123\/Imagine":100,
-        "aws\/aws-sdk-php":100,
+        "aws\/aws-sdk-php":98.59,
         "batopa\/chirp":100,
         "bobthecow\/mustache.php":100,
         "box-project\/box2":100,
@@ -18057,23 +18395,23 @@
         "Codeception\/Codeception":81.82,
         "codeguy\/Slim":83.33,
         "Codegyre\/Robo":100,
-        "composer\/composer":99.22,
+        "composer\/composer":100,
         "contao\/core":99.42,
         "danielstjules\/Stringy":66.67,
         "drupal\/drupal":93.66,
         "EllisLab\/CodeIgniter":100,
         "erusev\/parsedown":100,
-        "ezsystems\/ezpublish-kernel":99.46,
+        "ezsystems\/ezpublish-kernel":99.47,
         "fabpot\/Goutte":100,
         "fabpot\/PHP-CS-Fixer":100,
         "fabpot\/Twig":100,
         "fruux\/sabre-dav":100,
         "fzaninotto\/Faker":100,
         "ginatrapani\/ThinkUp":58.74,
-        "guzzle\/guzzle":97.06,
+        "guzzle\/guzzle":97.14,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
-        "joomla\/joomla-cms":96.96,
+        "joomla\/joomla-cms":96.98,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
         "kriswallsmith\/Buzz":100,
@@ -18103,13 +18441,13 @@
         "nette\/tracy":100,
         "nette\/utils":100,
         "nikic\/PHP-Parser":87.14,
-        "openemr\/openemr":52.48,
+        "openemr\/openemr":52.76,
         "padraic\/mockery":100,
         "pear\/pear-core":99.58,
         "phingofficial\/phing":99.42,
         "phpDocumentor\/phpDocumentor2":100,
         "PHPMailer\/PHPMailer":100,
-        "phpmyadmin\/phpmyadmin":84.42,
+        "phpmyadmin\/phpmyadmin":84.32,
         "PHPOffice\/PHPExcel":79.1,
         "pimcore\/pimcore":100,
         "piwik\/piwik":83.8,
@@ -18120,7 +18458,7 @@
         "quickapps\/cms":100,
         "radphp\/radphp":100,
         "reactphp\/event-loop":100,
-        "reactphp\/http":75,
+        "reactphp\/http":100,
         "reactphp\/promise":100,
         "revive-adserver\/revive-adserver":85.39,
         "sculpin\/sculpin":100,
@@ -18138,7 +18476,7 @@
         "thephpleague\/oauth2-server":100,
         "TYPO3\/TYPO3.CMS":100,
         "wikimedia\/mediawiki-core":100,
-        "WordPress\/WordPress":95.09,
+        "WordPress\/WordPress":94.95,
         "yiisoft\/yii":96.52,
         "yiisoft\/yii2":98.88,
         "zendframework\/zend-authentication":100,
@@ -18199,9 +18537,9 @@
         "Halleck45\/PhpMetrics":66.67,
         "ladybirdweb\/agorainvoicing":80.77,
         "michelf\/php-markdown":100,
-        "moodle\/moodle":93.02,
+        "moodle\/moodle":93.01,
         "nazariyg\/Phred":100,
-        "owncloud\/core":62.83,
+        "owncloud\/core":62.7,
         "phpbb\/phpbb":99.81,
         "reactphp\/http-client":100,
         "reactphp\/socket":50,
@@ -18326,16 +18664,20 @@
       "2017-05-01":{
         "elseif":21423,
         "else if":7373
+      },
+      "2017-06-01":{
+        "elseif":21467,
+        "else if":7364
       }
     },
     "winner":"elseif"
   },
   "Array end comma":{
-    "total":14110,
+    "total":14121,
     "total_repos":140,
     "values":{
-      "no":7494,
-      "yes":6616
+      "no":7498,
+      "yes":6623
     },
     "repos":{
       "no":{
@@ -18350,36 +18692,35 @@
         "codeguy\/Slim":100,
         "concrete5\/concrete5":95.12,
         "contao\/core":98.79,
-        "danielstjules\/Stringy":87.5,
+        "danielstjules\/Stringy":88,
         "EllisLab\/CodeIgniter":100,
         "google\/google-api-php-client":75,
         "guzzle\/guzzle":80,
         "Halleck45\/PhpMetrics":93.75,
         "leafo\/lessphp":75,
-        "moodle\/moodle":79.78,
+        "moodle\/moodle":79.72,
         "nazariyg\/Phred":100,
         "nette\/di":83.33,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":90,
-        "openemr\/openemr":91.01,
+        "openemr\/openemr":90.65,
         "orno\/route":100,
         "pear\/pear-core":77.1,
         "phingofficial\/phing":84.62,
         "PHPMailer\/PHPMailer":81.82,
-        "phpmyadmin\/phpmyadmin":78.8,
+        "phpmyadmin\/phpmyadmin":78.64,
         "PHPOffice\/PHPExcel":59.57,
         "pimcore\/pimcore":87.5,
         "piwik\/piwik":62.81,
         "ppi\/framework":100,
         "PrestaShop\/PrestaShop":70.18,
         "radphp\/radphp":100,
-        "reactphp\/http-client":50,
-        "revive-adserver\/revive-adserver":78.8,
+        "revive-adserver\/revive-adserver":79.02,
         "sebastianbergmann\/php-code-coverage":100,
         "sebastianbergmann\/phpunit":100,
         "silverstripe\/silverstripe-framework":62.67,
         "TYPO3\/TYPO3.CMS":71.53,
-        "wikimedia\/mediawiki-core":67.81,
+        "wikimedia\/mediawiki-core":67.72,
         "zendframework\/zend-code":75,
         "zendframework\/zend-config":100,
         "zendframework\/zend-di":71.43,
@@ -18415,17 +18756,17 @@
         "fabpot\/Twig":100,
         "facebook\/facebook-php-sdk":100,
         "fruux\/sabre-dav":64.79,
-        "fzaninotto\/Faker":57.55,
+        "fzaninotto\/Faker":57.63,
         "ginatrapani\/ThinkUp":56.47,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":97.67,
-        "joomla\/joomla-cms":55.43,
+        "joomla\/joomla-cms":56.73,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
         "kriswallsmith\/Buzz":100,
         "ladybirdweb\/agorainvoicing":100,
         "ladybirdweb\/faveo-helpdesk":100,
-        "laravel\/framework":95.7,
+        "laravel\/framework":95.74,
         "magento\/magento2":66.41,
         "nette\/application":100,
         "nette\/database":66.67,
@@ -18437,7 +18778,7 @@
         "nette\/tester":66.67,
         "nette\/tracy":88.89,
         "nette\/utils":100,
-        "owncloud\/core":60.61,
+        "owncloud\/core":60,
         "padraic\/mockery":60,
         "phpbb\/phpbb":87.71,
         "phpDocumentor\/phpDocumentor2":83.33,
@@ -18445,17 +18786,18 @@
         "pyrocms\/pyrocms":58.33,
         "quickapps\/cms":68.75,
         "reactphp\/child-process":100,
+        "reactphp\/http-client":66.67,
         "sculpin\/sculpin":75,
         "Seldaek\/monolog":100,
         "silexphp\/Silex":100,
         "squizlabs\/PHP_CodeSniffer":100,
         "sugarcrm\/sugarcrm_dev":68.53,
         "swiftmailer\/swiftmailer":100,
-        "symfony\/symfony":97.88,
+        "symfony\/symfony":98.88,
         "tedivm\/Stash":100,
         "thephpleague\/flysystem":100,
         "thephpleague\/oauth2-client":100,
-        "WordPress\/WordPress":62.5,
+        "WordPress\/WordPress":64,
         "yiisoft\/yii":58.44,
         "yiisoft\/yii2":73.91,
         "zendframework\/zend-authentication":100,
@@ -18599,16 +18941,20 @@
       "2017-05-01":{
         "no":7494,
         "yes":6616
+      },
+      "2017-06-01":{
+        "no":7498,
+        "yes":6623
       }
     },
     "winner":"no"
   },
   "Constant name case":{
-    "total":23610,
+    "total":23624,
     "total_repos":158,
     "values":{
       "lower":209,
-      "upper":21797,
+      "upper":21811,
       "mixed":1604
     },
     "repos":{
@@ -18687,7 +19033,7 @@
         "nette\/utils":100,
         "nikic\/FastRoute":100,
         "nikic\/PHP-Parser":100,
-        "openemr\/openemr":97.93,
+        "openemr\/openemr":97.92,
         "orno\/route":100,
         "owncloud\/core":95.31,
         "padraic\/mockery":100,
@@ -18724,7 +19070,7 @@
         "thephpleague\/flysystem":100,
         "thephpleague\/oauth2-client":100,
         "thephpleague\/oauth2-server":100,
-        "TYPO3\/TYPO3.CMS":88.2,
+        "TYPO3\/TYPO3.CMS":88.22,
         "wikimedia\/mediawiki-core":100,
         "WordPress\/WordPress":100,
         "yiisoft\/yii":100,
@@ -18921,6 +19267,11 @@
       "2017-05-01":{
         "lower":209,
         "upper":21797,
+        "mixed":1604
+      },
+      "2017-06-01":{
+        "lower":209,
+        "upper":21811,
         "mixed":1604
       }
     },
