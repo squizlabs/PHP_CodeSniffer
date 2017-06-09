@@ -52,6 +52,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If ommitted, the namespace is assumed to be the same as the directory name containing the ruleset.xml file
     -- The namespace is set in the ruleset tag of the ruleset.xml file
     -- e.g., ruleset name="My Coding Standard" namespace="MyProject\CS\Standard"
+  - Rulesets can now specify custom autoloaders using the new autoload tag
+    -- Autloaders are included while the ruleset is being processed and before any custom sniffs are included
+    -- Allows for very custom autoloading of helper classes well before the boostrap files are included
   - Fixed a problem where excluding a message from a custom standard's own sniff would exclude the whole sniff
     -- This caused some PSR2 errors to be under-reported
   - Fixed bug #1442 : T_NULLABLE detection not working for nullable parameters and return type hints in some cases

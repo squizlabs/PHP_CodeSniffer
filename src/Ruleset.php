@@ -326,6 +326,30 @@ class Ruleset
             $ownSniffs = $this->expandSniffDirectory($sniffDir, $depth);
         }
 
+        // Included custom autoloaders.
+        foreach ($ruleset->{'autoload'} as $autoload) {
+            if ($this->shouldProcessElement($autoload) === false) {
+                continue;
+            }
+
+            $autoloadPath = (string) $autoload;
+            if (is_file($autoloadPath) === false) {
+                $autoloadPath = Util\Common::realPath(dirname($rulesetPath).DIRECTORY_SEPARATOR.$autoloadPath);
+            }
+
+            if ($autoloadPath === false) {
+                echo 'ERROR: The specified autoload file "'.$autoload.'" does not exist'.PHP_EOL.PHP_EOL;
+                exit(3);
+            }
+
+            include $autoloadPath;
+
+            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                echo str_repeat("\t", $depth);
+                echo "\t=> included autoloader $autoloadPath".PHP_EOL;
+            }
+        }//end foreach
+
         // Process custom sniff config settings.
         foreach ($ruleset->{'config'} as $config) {
             if ($this->shouldProcessElement($config) === false) {
