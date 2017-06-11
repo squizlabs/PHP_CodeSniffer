@@ -428,7 +428,7 @@ class Fixer
         if (empty($this->changeset) === false) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $bt = debug_backtrace();
-                if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+                if ($bt[1]['class'] === 'PHP_CodeSniffer\Fixer') {
                     $sniff = $bt[2]['class'];
                     $line  = $bt[1]['line'];
                 } else {
@@ -483,7 +483,7 @@ class Fixer
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $bt = debug_backtrace();
-            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+            if ($bt[1]['class'] === 'PHP_CodeSniffer\Fixer') {
                 $sniff = $bt[2]['class'];
                 $line  = $bt[1]['line'];
             } else {
@@ -595,7 +595,7 @@ class Fixer
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $bt = debug_backtrace();
-            if ($bt[1]['class'] === 'PHP_CodeSniffer_Fixer') {
+            if ($bt[1]['class'] === 'PHP_CodeSniffer\Fixer') {
                 $sniff = $bt[2]['class'];
                 $line  = $bt[1]['line'];
             } else {
