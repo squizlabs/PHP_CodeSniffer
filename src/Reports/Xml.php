@@ -42,7 +42,7 @@ class Xml implements Report
         }
 
         $out->startElement('file');
-        $out->writeAttribute('name', $report['filename']);
+        $out->writeAttribute('name', utf8_encode($report['filename']));
         $out->writeAttribute('errors', $report['errors']);
         $out->writeAttribute('warnings', $report['warnings']);
         $out->writeAttribute('fixable', $report['fixable']);
