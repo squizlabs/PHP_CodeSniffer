@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Fixed a problem where the source report was not printing the correct number of errors found
+  - Fixed a problem where the --cache=/path/to/cachefile CLI argument was not working
  </notes>
  <contents>
   <dir name="/">
