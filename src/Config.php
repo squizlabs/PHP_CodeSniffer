@@ -815,7 +815,7 @@ class Config
             } else if (defined('PHP_CODESNIFFER_IN_TESTS') === false
                 && substr($arg, 0, 6) === 'cache='
             ) {
-                if ($this->cache === false || isset($this->overriddenDefaults['cacheFile']) === true) {
+                if (isset($this->overriddenDefaults['cacheFile']) === true) {
                     break;
                 }
 
