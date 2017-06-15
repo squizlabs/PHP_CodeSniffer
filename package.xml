@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed a problem where the source report was not printing the correct number of errors found
   - Fixed a problem where the --cache=/path/to/cachefile CLI argument was not working
+  - The code report now gracefully handles tokenizer exceptions
   - The phpcs and phpcbf scripts and now the only places that exit() in the code
     -- This allows for easier usage of core PHPCS functions from external scripts
     -- If you are calling Runner::runPHPCS() or Runner::runPHPCBF() directly, you will get back the full range of exit codes
