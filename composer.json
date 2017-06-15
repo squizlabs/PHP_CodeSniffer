@@ -8,6 +8,11 @@
     ],
     "homepage": "http://www.squizlabs.com/php-codesniffer",
     "license": "BSD-3-Clause",
+    "autoload": {
+        "files": [
+            "autoload.php"
+        ]
+    },
     "authors": [
         {
             "name": "Greg Sherwood",
