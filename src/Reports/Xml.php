@@ -16,6 +16,23 @@ class Xml implements Report
 {
 
 
+	/**
+	 * Checks that the string is UTF-8 encoded, and converts it to UTF-8 if it isn't.
+	 *
+	 * @param string $string String to check and convert
+	 *
+	 * @return string
+	 */
+	private function makeSureStringIsUTF8($string)
+	{
+		if(mb_detect_encoding($string, 'UTF-8', true) === false)
+		{
+			$string	= utf8_encode($string);
+		}
+
+		return $string;
+	}
+
     /**
      * Generate a partial report for a single processed file.
      *
@@ -42,7 +59,7 @@ class Xml implements Report
         }
 
         $out->startElement('file');
-        $out->writeAttribute('name', utf8_encode($report['filename']));
+        $out->writeAttribute('name', $this->makeSureStringIsUTF8($report['filename']));
         $out->writeAttribute('errors', $report['errors']);
         $out->writeAttribute('warnings', $report['warnings']);
         $out->writeAttribute('fixable', $report['fixable']);
