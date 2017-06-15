@@ -28,6 +28,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed a problem where the source report was not printing the correct number of errors found
   - Fixed a problem where the --cache=/path/to/cachefile CLI argument was not working
+  - The phpcs and phpcbf scripts and now the only places that exit() in the code
+    -- This allows for easier usage of core PHPCS functions from external scripts
+    -- If you are calling Runner::runPHPCS() or Runner::runPHPCBF() directly, you will get back the full range of exit codes
+    -- If not, catch the new DeepExitException to get the error message ($e->getMessage()) and exit code ($e->getCode());
  </notes>
  <contents>
   <dir name="/">
@@ -84,6 +88,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <file baseinstalldir="PHP/CodeSniffer" name="Ruleset.php" role="php" />
     <file baseinstalldir="PHP/CodeSniffer" name="Runner.php" role="php" />
     <dir name="Exceptions">
+     <file baseinstalldir="PHP/CodeSniffer" name="DeepExitException.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="RuntimeException.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="TokenizerException.php" role="php" />
     </dir>

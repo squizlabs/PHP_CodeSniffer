@@ -158,7 +158,7 @@ class Ruleset
             $sniffs = $this->expandRulesetReference($restrictions[0], dirname($standardPaths[0]));
         } else {
             foreach ($standardPaths as $standard) {
-                $ruleset = simplexml_load_string(file_get_contents($standard));
+                $ruleset = @simplexml_load_string(file_get_contents($standard));
                 if ($ruleset !== false) {
                     $standardName = (string) $ruleset['name'];
                     if ($this->name !== '') {
@@ -304,7 +304,7 @@ class Ruleset
             echo 'Processing ruleset '.Util\Common::stripBasepath($rulesetPath, $this->config->basepath).PHP_EOL;
         }
 
-        $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
+        $ruleset = @simplexml_load_string(file_get_contents($rulesetPath));
         if ($ruleset === false) {
             throw new RuntimeException("Ruleset $rulesetPath is not valid");
         }
@@ -338,8 +338,7 @@ class Ruleset
             }
 
             if ($autoloadPath === false) {
-                echo 'ERROR: The specified autoload file "'.$autoload.'" does not exist'.PHP_EOL.PHP_EOL;
-                exit(3);
+                throw new RuntimeException('The specified autoload file "'.$autoload.'" does not exist');
             }
 
             include $autoloadPath;

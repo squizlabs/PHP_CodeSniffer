@@ -13,6 +13,7 @@
 
 namespace PHP_CodeSniffer\Reports;
 
+use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util;
 
@@ -51,9 +52,8 @@ class Cbf implements Report
             // Replacing STDIN, so output current file to STDOUT
             // even if nothing was fixed. Exit here because we
             // can't process any more than 1 file in this setup.
-            echo $phpcsFile->fixer->getContents();
-            ob_end_flush();
-            exit(1);
+            $fixedContent = $phpcsFile->fixer->getContents();
+            throw new DeepExitException($fixedContent, 1);
         }
 
         if ($errors === 0) {
