@@ -616,7 +616,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP" name="LineEndingsUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
-        <file baseinstalldir="PHP" name="LineLengthUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP" name="LineLengthUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP" name="LineLengthUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP" name="LineLengthUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP" name="LineLengthUnitTest.php" role="test">
          <tasks:replace from="@package_version@" to="version" type="package-info" />
         </file>
