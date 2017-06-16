@@ -112,6 +112,11 @@ class Generic_Tests_Files_LineLengthUnitTest extends AbstractSniffUnitTest
                     6 => 1,
                    );
             break;
+        case 'LineLengthUnitTest.4.inc':
+            return array(
+                    10 => 1,
+                   );
+            break;
         default:
             return array();
             break;
