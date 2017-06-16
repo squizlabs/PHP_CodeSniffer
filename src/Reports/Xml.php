@@ -16,22 +16,22 @@ class Xml implements Report
 {
 
 
-	/**
-	 * Checks that the string is UTF-8 encoded, and converts it to UTF-8 if it isn't.
-	 *
-	 * @param string $string String to check and convert
-	 *
-	 * @return string
-	 */
-	private function makeSureStringIsUTF8($string)
-	{
-		if(mb_detect_encoding($string, 'UTF-8', true) === false)
-		{
-			$string	= utf8_encode($string);
-		}
+    /**
+     * Checks that the string is UTF-8 encoded, and converts it to UTF-8 if it isn't.
+     *
+     * @param string $string String to check and convert
+     *
+     * @return string
+     */
+    private function makeSureStringIsUTF8($string)
+    {
+        if (mb_detect_encoding($string, 'UTF-8', true) === false) {
+            $string = utf8_encode($string);
+        }
 
-		return $string;
-	}
+        return $string;
+    }//end makeSureStringIsUTF8()
+
 
     /**
      * Generate a partial report for a single processed file.
