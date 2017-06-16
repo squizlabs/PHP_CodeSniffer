@@ -30,6 +30,7 @@ class Xml implements Report
         }
 
         return $string;
+
     }//end makeSureStringIsUTF8()
 
 
