@@ -35,6 +35,13 @@ class LineLengthSniff implements Sniff
      */
     public $absoluteLineLimit = 100;
 
+    /**
+     * Whether or not to ignore comment lines.
+     *
+     * @var boolean
+     */
+    public $ignoreComments = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -114,29 +121,34 @@ class LineLengthSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'Line length', '151 or more');
         }
 
-        // If this is a long comment, check if it can be broken up onto multiple lines.
-        // Some comments contain unbreakable strings like URLs and so it makes sense
-        // to ignore the line length in these cases if the URL would be longer than the max
-        // line length once you indent it to the correct level.
-        if ($lineLength > $this->lineLimit
-            && ($tokens[$stackPtr]['code'] === T_COMMENT
-            || $tokens[$stackPtr]['code'] === T_DOC_COMMENT_STRING)
+        if ($tokens[$stackPtr]['code'] === T_COMMENT
+            || $tokens[$stackPtr]['code'] === T_DOC_COMMENT_STRING
         ) {
-            $oldLength = strlen($tokens[$stackPtr]['content']);
-            $newLength = strlen(ltrim($tokens[$stackPtr]['content'], "/#\t "));
-            $indent    = (($tokens[$stackPtr]['column'] - 1) + ($oldLength - $newLength));
-
-            $nonBreakingLength = $tokens[$stackPtr]['length'];
-
-            $space = strrpos($tokens[$stackPtr]['content'], ' ');
-            if ($space !== false) {
-                $nonBreakingLength -= ($space + 1);
-            }
-
-            if (($nonBreakingLength + $indent) > $this->lineLimit) {
+            if ($this->ignoreComments === true) {
                 return;
             }
-        }
+
+            // If this is a long comment, check if it can be broken up onto multiple lines.
+            // Some comments contain unbreakable strings like URLs and so it makes sense
+            // to ignore the line length in these cases if the URL would be longer than the max
+            // line length once you indent it to the correct level.
+            if ($lineLength > $this->lineLimit) {
+                $oldLength = strlen($tokens[$stackPtr]['content']);
+                $newLength = strlen(ltrim($tokens[$stackPtr]['content'], "/#\t "));
+                $indent    = (($tokens[$stackPtr]['column'] - 1) + ($oldLength - $newLength));
+
+                $nonBreakingLength = $tokens[$stackPtr]['length'];
+
+                $space = strrpos($tokens[$stackPtr]['content'], ' ');
+                if ($space !== false) {
+                    $nonBreakingLength -= ($space + 1);
+                }
+
+                if (($nonBreakingLength + $indent) > $this->lineLimit) {
+                    return;
+                }
+            }
+        }//end if
 
         if ($this->absoluteLineLimit > 0
             && $lineLength > $this->absoluteLineLimit
