@@ -89,7 +89,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
             }
         }
 
-        if ($found !== 1) {
+        if ($found !== 1 && (isset($tokens[$stackPtr]['scope_opener']) === true || $found !== 'newline')) {
             $error = 'Expected 1 space after %s keyword; %s found';
             $data  = array(
                       strtoupper($tokens[$stackPtr]['content']),

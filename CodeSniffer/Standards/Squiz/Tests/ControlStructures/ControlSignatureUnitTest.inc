@@ -211,3 +211,20 @@ if (1 === $a) :
 else :
     echo 'not 1';
 endif;
+
+// Prevent whitespace after keyword fixes for inline control structures.
+if ( 'message' == $severity )
+	$messages .= '	' . $error_message . "<br />\n";
+else
+	$errors .= '	' . $error_message . "<br />\n";
+
+if ( ! is_subdomain_install() )
+	echo '<label for="blogname">' . __( 'Site Name:' ) . '</label>';
+elseif ( $a === $b )
+	echo '<label for="blogname">' . __( 'Site Domain:' ) . '</label>';
+else
+	echo '<label for="blogname">' . __( 'Site Domain:' ) . '</label>';
+
+do
+	$a = $b;
+while ( $a !== $b );
