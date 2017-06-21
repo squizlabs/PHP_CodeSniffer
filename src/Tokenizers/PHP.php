@@ -722,6 +722,27 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                Before PHP 5.5, the yield keyword was tokenized as
+                T_STRING. So look for and change this token in
+                earlier versions.
+            */
+
+            if (PHP_VERSION_ID < 50500
+                && $tokenIsArray === true
+                && $token[0] === T_STRING
+                && strtolower($token[1]) === 'yield'
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_YIELD;
+                $newToken['type']    = 'T_YIELD';
+                $newToken['content'] = $token[1];
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                continue;
+            }//end if
+
+            /*
                 Before PHP 5.6, the ... operator was tokenized as three
                 T_STRING_CONCAT tokens in a row. So look for and combine
                 these tokens in earlier versions.
