@@ -1093,7 +1093,7 @@ class Config
                     break;
                 }
 
-                $this->suffix = explode(',', substr($arg, 7));
+                $this->suffix = substr($arg, 7);
                 $this->overriddenDefaults['suffix'] = true;
             } else if (substr($arg, 0, 9) === 'parallel=') {
                 if (isset($this->overriddenDefaults['parallel']) === true) {
