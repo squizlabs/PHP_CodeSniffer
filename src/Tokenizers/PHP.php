@@ -1345,11 +1345,23 @@ class PHP extends Tokenizer
 
                             $this->tokens[$x]['code'] = T_RETURN_TYPE;
                             $this->tokens[$x]['type'] = 'T_RETURN_TYPE';
-                        }
+
+                            if (array_key_exists('parenthesis_opener', $this->tokens[$x]) === true) {
+                                unset($this->tokens[$x]['parenthesis_opener']);
+                            }
+
+                            if (array_key_exists('parenthesis_closer', $this->tokens[$x]) === true) {
+                                unset($this->tokens[$x]['parenthesis_closer']);
+                            }
+
+                            if (array_key_exists('parenthesis_owner', $this->tokens[$x]) === true) {
+                                unset($this->tokens[$x]['parenthesis_owner']);
+                            }
+                        }//end if
 
                         break;
-                    }
-                }
+                    }//end if
+                }//end for
 
                 continue;
             } else if ($this->tokens[$i]['code'] === T_CLASS && isset($this->tokens[$i]['scope_opener']) === true) {
