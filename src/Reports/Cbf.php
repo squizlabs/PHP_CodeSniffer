@@ -78,8 +78,15 @@ class Cbf implements Report
         }
 
         if ($fixed === true) {
+            // The filename in the report may be truncated due to a basepath setting
+            // but we are using it for writing here and not display,
+            // so find the correct path if basepath is in use.
             $newFilename = $report['filename'].$phpcsFile->config->suffix;
-            $newContent  = $phpcsFile->fixer->getContents();
+            if ($phpcsFile->config->basepath !== null) {
+                $newFilename = $phpcsFile->config->basepath.DIRECTORY_SEPARATOR.$newFilename;
+            }
+
+            $newContent = $phpcsFile->fixer->getContents();
             file_put_contents($newFilename, $newContent);
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
