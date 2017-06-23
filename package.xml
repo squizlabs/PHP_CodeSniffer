@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This allows for easier usage of core PHPCS functions from external scripts
     -- If you are calling Runner::runPHPCS() or Runner::runPHPCBF() directly, you will get back the full range of exit codes
     -- If not, catch the new DeepExitException to get the error message ($e->getMessage()) and exit code ($e->getCode());
+  - Fixed bug #1523 : Fatal error when using the --suffix argument
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1526 : Use of basepath setting can stop PHPCBF being able to write fixed files
  </notes>
  <contents>
