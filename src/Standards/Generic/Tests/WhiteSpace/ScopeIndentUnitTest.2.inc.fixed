@@ -1182,6 +1182,14 @@ function test()
 	}
 }
 
+switch ($a) {
+	case 0:
+		function () {
+		};
+	case 1:
+		break;
+}
+
 function foo()
 {
 	$foo = array(

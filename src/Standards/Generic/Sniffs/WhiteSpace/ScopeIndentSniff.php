@@ -1003,6 +1003,7 @@ class ScopeIndentSniff implements Sniff
 
                 $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $i, true);
                 $currentIndent = (($tokens[$first]['column'] - 1) + $this->indent);
+                $openScopes[$tokens[$i]['scope_closer']] = $tokens[$i]['scope_condition'];
 
                 if (isset($adjustments[$first]) === true) {
                     $currentIndent += $adjustments[$first];
