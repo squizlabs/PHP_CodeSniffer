@@ -1349,7 +1349,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="CastSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CastSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceSpaceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceSpaceUnitTest.inc.fixed" role="test" />
