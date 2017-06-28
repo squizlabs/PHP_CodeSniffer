@@ -529,11 +529,13 @@ class ScopeIndentSniff implements Sniff
                         $padding = '';
                     }
 
-                    if ($checkToken === $i) {
-                        $phpcsFile->fixer->replaceToken($checkToken, $padding.$trimmed);
-                    } else {
-                        // Easier to just replace the entire indent.
-                        $phpcsFile->fixer->replaceToken(($checkToken - 1), $padding);
+                    if ($phpcsFile->fixer->enabled === true) {
+                        if ($checkToken === $i) {
+                            $phpcsFile->fixer->replaceToken($checkToken, $padding.$trimmed);
+                        } else {
+                            // Easier to just replace the entire indent.
+                            $phpcsFile->fixer->replaceToken(($checkToken - 1), $padding);
+                        }
                     }
 
                     if ($this->debug === true) {

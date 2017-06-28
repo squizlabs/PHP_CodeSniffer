@@ -1190,6 +1190,16 @@ switch ($a) {
         break;
 }
 
+class Test
+{
+    public function __construct()
+    {
+        if (false) {
+            echo 0;
+        }
+    }
+}
+
 function foo()
 {
     $foo = array(
