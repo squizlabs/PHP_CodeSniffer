@@ -213,6 +213,16 @@ if ($a && $a === Foo::VARIABLE && ($a === Foo::METHOD || $a === Foo::FUNCTION)) 
 $out = array_map(function ($test) { if ($test) { return 1; } else { return 2;
 } }, $input); // comment
 
+for ($x=0;$x<5;$x++):
+    if ($x) { continue;
+    }
+endfor;
+
+for ($x=0;$x<5;$x++):
+    if ($x) { continue; 
+    } ?> <?php
+endfor;
+
 if (true) {
     try {
     }

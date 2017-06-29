@@ -618,12 +618,19 @@ abstract class Tokenizer
             // openers, so a following USE statement can cause an incorrect brace match.
             if (($currType === T_IF || $currType === T_ELSE || $currType === T_USE)
                 && $opener === null
-                && $this->tokens[$i]['code'] === T_SEMICOLON
+                && ($this->tokens[$i]['code'] === T_SEMICOLON
+                || $this->tokens[$i]['code'] === T_CLOSE_TAG)
             ) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     $type = $this->tokens[$stackPtr]['type'];
                     echo str_repeat("\t", $depth);
-                    echo "=> Found semicolon before scope opener for $stackPtr:$type, bailing".PHP_EOL;
+                    if ($this->tokens[$i]['code'] === T_SEMICOLON) {
+                        $closerType = 'semicolon';
+                    } else {
+                        $closerType = 'close tag';
+                    }
+
+                    echo "=> Found $closerType before scope opener for $stackPtr:$type, bailing".PHP_EOL;
                 }
 
                 return $i;

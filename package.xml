@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If you are calling Runner::runPHPCS() or Runner::runPHPCBF() directly, you will get back the full range of exit codes
     -- If not, catch the new DeepExitException to get the error message ($e->getMessage()) and exit code ($e->getCode());
   - Fixed bug #1478 : Indentation in fallthrough CASE that contains a closure
+  - Fixed bug #1503 : Alternative control structure syntax not always recognized as scoped
   - Fixed bug #1523 : Fatal error when using the --suffix argument
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1526 : Use of basepath setting can stop PHPCBF being able to write fixed files
