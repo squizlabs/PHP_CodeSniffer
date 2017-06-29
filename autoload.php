@@ -67,6 +67,12 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             // so this autoloader runs before the composer one as we need to include
             // all files so we can figure out what the class/interface/trait name is.
             if (self::$composerAutoloader === null) {
+                // Make sure we don't try to load any of Composer's classes
+                // while the autoloader is being setup.
+                if (strpos($class, 'Composer\\') === 0) {
+                    return;
+                }
+
                 if (strpos(__DIR__, 'phar://') !== 0
                     && file_exists(__DIR__.'/../../autoload.php') === true
                 ) {
@@ -82,7 +88,7 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
                 } else {
                     self::$composerAutoloader = false;
                 }
-            }
+            }//end if
 
             $ds   = DIRECTORY_SEPARATOR;
             $path = false;
