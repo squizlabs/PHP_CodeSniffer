@@ -177,3 +177,24 @@ $var = foo('Testing
     // hi
     )
 ;
+
+class Test
+{
+    public function getInstance()
+    {
+        return new static(
+          'arg',
+              'foo'
+        );
+    }
+
+    public function getSelf()
+    {
+        return new self(
+         'a', 'b', 'c'
+        );
+    }
+}
+
+$x = $var('y',
+    'x');
