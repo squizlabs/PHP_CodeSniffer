@@ -519,19 +519,20 @@ final class Tokens
      * @var array<int, int>
      */
     public static $functionNameTokens = array(
-                                         T_STRING       => T_STRING,
-                                         T_EVAL         => T_EVAL,
-                                         T_EXIT         => T_EXIT,
-                                         T_INCLUDE      => T_INCLUDE,
-                                         T_INCLUDE_ONCE => T_INCLUDE_ONCE,
-                                         T_REQUIRE      => T_REQUIRE,
-                                         T_REQUIRE_ONCE => T_REQUIRE_ONCE,
-                                         T_ISSET        => T_ISSET,
-                                         T_UNSET        => T_UNSET,
-                                         T_EMPTY        => T_EMPTY,
-                                         T_SELF         => T_SELF,
-                                         T_STATIC       => T_STATIC,
-                                         T_VARIABLE     => T_VARIABLE,
+                                         T_STRING              => T_STRING,
+                                         T_EVAL                => T_EVAL,
+                                         T_EXIT                => T_EXIT,
+                                         T_INCLUDE             => T_INCLUDE,
+                                         T_INCLUDE_ONCE        => T_INCLUDE_ONCE,
+                                         T_REQUIRE             => T_REQUIRE,
+                                         T_REQUIRE_ONCE        => T_REQUIRE_ONCE,
+                                         T_ISSET               => T_ISSET,
+                                         T_UNSET               => T_UNSET,
+                                         T_EMPTY               => T_EMPTY,
+                                         T_SELF                => T_SELF,
+                                         T_STATIC              => T_STATIC,
+                                         T_VARIABLE            => T_VARIABLE,
+                                         T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
                                         );
 
 

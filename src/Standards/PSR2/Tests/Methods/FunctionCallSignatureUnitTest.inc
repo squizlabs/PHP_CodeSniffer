@@ -198,3 +198,6 @@ class Test
 
 $x = $var('y',
     'x');
+
+$obj->{$x}(1,
+2);
