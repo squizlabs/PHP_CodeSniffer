@@ -313,3 +313,31 @@ foo(
     */
     $e
 );
+
+test(
+        1,2,3,4
+    );
+
+class Test
+{
+    public function getInstance()
+    {
+        return new static(
+          'arg',
+              'foo'
+        );
+    }
+
+    public function getSelf()
+    {
+        return new self(
+         'a','b', 'c'
+        );
+    }
+}
+
+$x = $var('y',
+'x');
+
+$obj->{$x}(1,
+  2);
