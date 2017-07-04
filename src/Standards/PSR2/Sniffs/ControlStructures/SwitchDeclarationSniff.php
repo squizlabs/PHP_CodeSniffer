@@ -89,6 +89,12 @@ class SwitchDeclarationSniff implements Sniff
                 && ($tokens[($nextCase + 1)]['code'] !== T_WHITESPACE
                 || $tokens[($nextCase + 1)]['content'] !== ' ')
             ) {
+                if ($tokens[($nextCase + 1)]['code'] === T_WHITESPACE) {
+                    $phpcsFile->recordMetric($nextCase, 'Spaces following the "case" keyword', $tokens[($nextCase + 1)]['length']);
+                } else {
+                    $phpcsFile->recordMetric($nextCase, 'Spaces following the "case" keyword', 'none');
+                }
+
                 $error = 'CASE keyword must be followed by a single space';
                 $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpacingAfterCase');
                 if ($fix === true) {
@@ -98,17 +104,24 @@ class SwitchDeclarationSniff implements Sniff
                         $phpcsFile->fixer->replaceToken(($nextCase + 1), ' ');
                     }
                 }
+            } else if ($type === 'case') {
+                $phpcsFile->recordMetric($nextCase, 'Spaces following the "case" keyword', 1);
             }
 
             $opener     = $tokens[$nextCase]['scope_opener'];
             $nextCloser = $tokens[$nextCase]['scope_closer'];
             if ($tokens[$opener]['code'] === T_COLON) {
+                $phpcsFile->recordMetric($opener, 'Default/case statement followed by colon', 'yes');
+
                 if ($tokens[($opener - 1)]['code'] === T_WHITESPACE) {
+                    $phpcsFile->recordMetric($opener, 'Spaces before colon after case/default keyword', $tokens[($opener - 1)]['length']);
                     $error = 'There must be no space before the colon in a '.strtoupper($type).' statement';
                     $fix   = $phpcsFile->addFixableError($error, $nextCase, 'SpaceBeforeColon'.strtoupper($type));
                     if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($opener - 1), '');
                     }
+                } else {
+                    $phpcsFile->recordMetric($opener, 'Spaces before colon after case/default keyword', 0);
                 }
 
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
@@ -118,6 +131,8 @@ class SwitchDeclarationSniff implements Sniff
                     // Skip comments on the same line.
                     $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
                 }
+
+                $phpcsFile->recordMetric($opener, 'Blank lines at start of case/default body', ($tokens[$next]['line'] - ($tokens[$opener]['line'] + 1)));
 
                 if ($tokens[$next]['line'] !== ($tokens[$opener]['line'] + 1)) {
                     $error = 'The '.strtoupper($type).' body must start on the line following the statement';
@@ -157,6 +172,7 @@ class SwitchDeclarationSniff implements Sniff
                     } else {
                         $diff = ($caseAlignment + $this->indent - $tokens[$nextCloser]['column']);
                         if ($diff !== 0) {
+                            $phpcsFile->recordMetric($nextCloser, 'Terminating statement aligned with body of case', 'no');
                             $error = 'Terminating statement must be indented to the same level as the CASE body';
                             $fix   = $phpcsFile->addFixableError($error, $nextCloser, 'BreakIndent');
                             if ($fix === true) {
@@ -166,10 +182,13 @@ class SwitchDeclarationSniff implements Sniff
                                     $phpcsFile->fixer->substrToken(($nextCloser - 1), 0, $diff);
                                 }
                             }
+                        } else {
+                            $phpcsFile->recordMetric($nextCloser, 'Terminating statement aligned with body of case', 'yes');
                         }
                     }//end if
                 }//end if
             } else {
+                $phpcsFile->recordMetric($opener, 'Default/case statement followed by colon', 'no');
                 $error = strtoupper($type).' statements must be defined using a colon';
                 $phpcsFile->addError($error, $nextCase, 'WrongOpener'.$type);
             }//end if
@@ -192,11 +211,16 @@ class SwitchDeclarationSniff implements Sniff
                     if ($tokens[$prevCode]['code'] !== T_COMMENT
                         && $this->findNestedTerminator($phpcsFile, ($opener + 1), $nextCode) === false
                     ) {
+                        $phpcsFile->recordMetric($nextCode, 'Case falls through to next', 'yes, without comment');
                         $error = 'There must be a comment when fall-through is intentional in a non-empty case body';
                         $phpcsFile->addError($error, $nextCase, 'TerminatingComment');
+                    } else {
+                        $phpcsFile->recordMetric($nextCode, 'Case falls through to next', 'yes, with comment');
                     }
+                } else {
+                    $phpcsFile->recordMetric($nextCode, 'Case falls through to next', 'no');
                 }
-            }
+            }//end if
         }//end while
 
     }//end process()
