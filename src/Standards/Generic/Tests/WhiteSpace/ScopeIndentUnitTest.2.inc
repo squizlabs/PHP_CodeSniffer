@@ -1200,6 +1200,19 @@ echo 0;
 	}
 }
 
+return [
+	'veryLongKeySoIWantToMakeALineBreak'
+		=> 'veryLonValueSoIWantToMakeALineBreak',
+
+	'someOtherKey' => [
+		'someValue'
+	],
+
+	'arrayWithArraysInThere' => [
+		['Value1', 'Value1']
+	],
+];
+
 	function foo()
 	{
 		$foo = array(

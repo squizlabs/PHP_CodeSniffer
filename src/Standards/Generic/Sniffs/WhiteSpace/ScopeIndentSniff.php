@@ -439,7 +439,7 @@ class ScopeIndentSniff implements Sniff
                         $first--;
                     }
 
-                    $prev = $phpcsFile->findStartOfStatement($first, T_COMMA);
+                    $prev = $phpcsFile->findStartOfStatement($first, array(T_COMMA, T_DOUBLE_ARROW));
                     if ($prev !== $first) {
                         // This is not the start of the statement.
                         if ($this->debug === true) {
@@ -449,7 +449,7 @@ class ScopeIndentSniff implements Sniff
                         }
 
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
-                        $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
+                        $prev  = $phpcsFile->findStartOfStatement($first, array(T_COMMA, T_DOUBLE_ARROW));
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
                         if ($this->debug === true) {
                             $line = $tokens[$first]['line'];
