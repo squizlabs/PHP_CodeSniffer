@@ -106,3 +106,14 @@ unset($foo,$bar);
 
 $closure($foo,$bar);
 $var = $closure() + $closure($foo,$bar) + self::$closure($foo,$bar);
+
+class Test
+{
+    public static function baz($foo, $bar)
+    {
+        $a = new self($foo,$bar);
+        $b = new static($foo,$bar);
+    }
+}
+
+$obj->{$var}($foo,$bar);
