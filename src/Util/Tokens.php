@@ -533,6 +533,7 @@ final class Tokens
                                          T_STATIC              => T_STATIC,
                                          T_VARIABLE            => T_VARIABLE,
                                          T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
+                                         T_CLOSE_PARENTHESIS   => T_CLOSE_PARENTHESIS,
                                         );
 
 
