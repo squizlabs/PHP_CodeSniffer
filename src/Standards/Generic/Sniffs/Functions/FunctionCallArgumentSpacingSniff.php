@@ -24,7 +24,13 @@ class FunctionCallArgumentSpacingSniff implements Sniff
      */
     public function register()
     {
-        return Tokens::$functionNameTokens;
+        $tokens = Tokens::$functionNameTokens;
+
+        $tokens[] = T_VARIABLE;
+        $tokens[] = T_CLOSE_CURLY_BRACKET;
+        $tokens[] = T_CLOSE_PARENTHESIS;
+
+        return $tokens;
 
     }//end register()
 
