@@ -1097,7 +1097,7 @@ abstract class Tokenizer
                 if (empty($conditions) !== true) {
                     $condString = 'conds;';
                     foreach ($conditions as $condition) {
-                        $condString .= token_name($condition).',';
+                        $condString .= Util\Tokens::tokenName($condition).',';
                     }
 
                     echo rtrim($condString, ',').';';
@@ -1158,14 +1158,14 @@ abstract class Tokenizer
                                     $type     = $this->tokens[$x]['type'];
                                     $oldConds = '';
                                     foreach ($oldConditions as $condition) {
-                                        $oldConds .= token_name($condition).',';
+                                        $oldConds .= Util\Tokens::tokenName($condition).',';
                                     }
 
                                     $oldConds = rtrim($oldConds, ',');
 
                                     $newConds = '';
                                     foreach ($this->tokens[$x]['conditions'] as $condition) {
-                                        $newConds .= token_name($condition).',';
+                                        $newConds .= Util\Tokens::tokenName($condition).',';
                                     }
 
                                     $newConds = rtrim($newConds, ',');
@@ -1234,7 +1234,7 @@ abstract class Tokenizer
                             $oldCondition = array_pop($conditions);
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 echo str_repeat("\t", ($level + 1));
-                                echo '* token '.token_name($oldCondition).' removed from conditions array *'.PHP_EOL;
+                                echo '* token '.Util\Tokens::tokenName($oldCondition).' removed from conditions array *'.PHP_EOL;
                             }
 
                             // Make sure this closer actually belongs to us.
@@ -1246,7 +1246,7 @@ abstract class Tokenizer
                                     $badToken = $this->tokens[$oldOpener]['scope_condition'];
 
                                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                        $type = token_name($oldCondition);
+                                        $type = Util\Tokens::tokenName($oldCondition);
                                         echo str_repeat("\t", ($level + 1));
                                         echo "* scope closer was bad, cleaning up $badToken:$type *".PHP_EOL;
                                     }
@@ -1260,14 +1260,14 @@ abstract class Tokenizer
                                             $type     = $this->tokens[$x]['type'];
                                             $oldConds = '';
                                             foreach ($oldConditions as $condition) {
-                                                $oldConds .= token_name($condition).',';
+                                                $oldConds .= Util\Tokens::tokenName($condition).',';
                                             }
 
                                             $oldConds = rtrim($oldConds, ',');
 
                                             $newConds = '';
                                             foreach ($this->tokens[$x]['conditions'] as $condition) {
-                                                $newConds .= token_name($condition).',';
+                                                $newConds .= Util\Tokens::tokenName($condition).',';
                                             }
 
                                             $newConds = rtrim($newConds, ',');

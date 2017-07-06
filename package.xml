@@ -33,6 +33,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This allows for easier usage of core PHPCS functions from external scripts
     -- If you are calling Runner::runPHPCS() or Runner::runPHPCBF() directly, you will get back the full range of exit codes
     -- If not, catch the new DeepExitException to get the error message ($e->getMessage()) and exit code ($e->getCode());
+  - NOWDOC tokens are now considered conditions, just as HEREDOC tokens are
+    -- This makes it easier to find the start and end of a NOWDOC from any token within it
+    -- Thanks to Michał Bundyra for the patch
   - Fixed bug #1465 : Generic.WhiteSpace.ScopeIndent reports incorrect errors when indenting double arrows in short arrays
   - Fixed bug #1478 : Indentation in fallthrough CASE that contains a closure
   - Fixed bug #1503 : Alternative control structure syntax not always recognized as scoped

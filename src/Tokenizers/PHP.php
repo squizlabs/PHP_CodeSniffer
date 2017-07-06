@@ -482,7 +482,7 @@ class PHP extends Tokenizer
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 if ($tokenIsArray === true) {
-                    $type    = token_name($token[0]);
+                    $type    = Util\Tokens::tokenName($token[0]);
                     $content = Util\Common::prepareForOutput($token[1]);
                 } else {
                     $newToken = self::resolveSimpleToken($token[0]);
@@ -1627,14 +1627,14 @@ class PHP extends Tokenizer
                             $type     = $this->tokens[$x]['type'];
                             $oldConds = '';
                             foreach ($oldConditions as $condition) {
-                                $oldConds .= token_name($condition).',';
+                                $oldConds .= Util\Tokens::tokenName($condition).',';
                             }
 
                             $oldConds = rtrim($oldConds, ',');
 
                             $newConds = '';
                             foreach ($this->tokens[$x]['conditions'] as $condition) {
-                                $newConds .= token_name($condition).',';
+                                $newConds .= Util\Tokens::tokenName($condition).',';
                             }
 
                             $newConds = rtrim($newConds, ',');
