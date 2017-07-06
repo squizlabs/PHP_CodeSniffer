@@ -253,6 +253,13 @@ class PHP extends Tokenizer
                                                 'shared' => false,
                                                 'with'   => array(),
                                                ),
+                            T_START_NOWDOC  => array(
+                                                'start'  => array(T_START_NOWDOC => T_START_NOWDOC),
+                                                'end'    => array(T_END_NOWDOC => T_END_NOWDOC),
+                                                'strict' => true,
+                                                'shared' => false,
+                                                'with'   => array(),
+                                               ),
                            );
 
     /**
