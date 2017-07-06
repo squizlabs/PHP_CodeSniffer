@@ -21,14 +21,32 @@ class LowercasePHPFunctionsUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList($testFile='')
     {
-        return [
-            2 => 1,
-            4 => 1,
-        ];
+        switch ($testFile) {
+        case 'LowercasePHPFunctionsUnitTest.1.inc':
+            return [
+                2 => 1,
+                4 => 1,
+            ];
+        case 'LowercasePHPFunctionsUnitTest.2.inc':
+            return [
+                3  => 1,
+                4  => 1,
+                7  => 1,
+                14 => 1,
+                15 => 1,
+                18 => 1,
+                25 => 1,
+                27 => 1,
+            ];
+        default:
+            return [];
+        }//end switch
 
     }//end getErrorList()
 

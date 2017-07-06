@@ -1,0 +1,29 @@
+<?php
+namespace A {
+    use function \max as Min;
+    use function min as Is_Int;
+
+    function Count($arr) {
+        return \count($arr);
+    }
+
+    function Max($a, $b) {
+        return Min($a, $b);
+    }
+
+    $arr = \range(1, 10);
+    $global = \count($arr);
+    $local = Count($arr);
+    $min = Is_Int($global, $local);
+    $isInt = \is_int($global);
+}
+
+namespace B {
+    use function A\Count as CounT;
+    use function A\Max;
+
+    $arr = range(1, 20);
+    $a = CounT($arr);
+    $global = \count($arr);
+    $max = Max($a, 2 * $a);
+}
