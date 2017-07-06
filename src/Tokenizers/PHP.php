@@ -934,7 +934,9 @@ class PHP extends Tokenizer
                 so go forward and change the token type before it is processed.
             */
 
-            if ($tokenIsArray === true && $token[0] === T_FUNCTION) {
+            if ($tokenIsArray === true && $token[0] === T_FUNCTION
+                && $finalTokens[$lastNotEmptyToken]['code'] !== T_USE
+            ) {
                 for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
                     if (is_array($tokens[$x]) === false
                         || isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
