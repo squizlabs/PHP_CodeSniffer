@@ -59,7 +59,10 @@ class ValidLogicalOperatorsSniff implements Sniff
                   $operator,
                   $replacements[$operator],
                  );
-        $phpcsFile->addError($error, $stackPtr, 'NotAllowed', $data);
+        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
+        if ($fix === true) {
+            $phpcsFile->fixer->replaceToken($stackPtr, $replacements[$operator]);
+        }
 
     }//end process()
 
