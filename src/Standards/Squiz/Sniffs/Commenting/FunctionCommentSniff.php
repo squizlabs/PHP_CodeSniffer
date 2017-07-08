@@ -138,8 +138,20 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     // If return type is not void, there needs to be a return statement
                     // somewhere in the function that returns something.
                     if (isset($tokens[$stackPtr]['scope_closer']) === true) {
-                        $endToken    = $tokens[$stackPtr]['scope_closer'];
-                        $returnToken = $phpcsFile->findNext(array(T_RETURN, T_YIELD, T_YIELD_FROM), $stackPtr, $endToken);
+                        $endToken         = $tokens[$stackPtr]['scope_closer'];
+                        $searchFrom       = $stackPtr;
+                        $parentConditions = ($tokens[$endToken]['conditions'] + array($stackPtr => $tokens[$stackPtr]['code']));
+
+                        do {
+                            $returnToken = $phpcsFile->findNext(array(T_RETURN, T_YIELD, T_YIELD_FROM), $searchFrom, $endToken);
+                            if ($returnToken === false) {
+                                break;
+                            }
+
+                            $searchFrom = ($returnToken + 1);
+                            $conditions = array_diff_key($tokens[$returnToken]['conditions'], $parentConditions);
+                        } while (array_intersect($conditions, array(T_CLOSURE, T_FUNCTION)) !== []);
+
                         if ($returnToken === false) {
                             $error = 'Function return type is not void, but function has no return statement';
                             $phpcsFile->addError($error, $return, 'InvalidNoReturn');
@@ -150,7 +162,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                                 $phpcsFile->addError($error, $returnToken, 'InvalidReturnNotVoid');
                             }
                         }
-                    }
+                    }//end if
                 }//end if
             }//end if
         } else {

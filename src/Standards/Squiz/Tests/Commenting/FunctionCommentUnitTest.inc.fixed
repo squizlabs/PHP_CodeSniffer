@@ -898,3 +898,36 @@ function audio(
 {
     return 'test';
 }
+
+/**
+ * Test function
+ *
+ * @return array
+ */
+function returnArrayWithClosure()
+{
+    function () {
+        return;
+    };
+
+    return [];
+}
+
+/**
+ * Test function
+ *
+ * @return array
+ */
+function returnArrayWithAnonymousClass()
+{
+    new class {
+        /**
+         * @return void
+         */
+        public function test() {
+            return;
+        }
+    };
+
+    return [];
+}
