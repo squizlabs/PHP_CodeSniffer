@@ -38,11 +38,14 @@ class LowercasePHPFunctionsUnitTest extends AbstractSniffUnitTest
                 3  => 1,
                 4  => 1,
                 7  => 1,
-                14 => 1,
-                15 => 1,
-                18 => 1,
-                25 => 1,
-                27 => 1,
+                16 => 1,
+                20 => 1,
+                21 => 1,
+                24 => 1,
+                31 => 1,
+                33 => 1,
+                35 => 1,
+                37 => 1,
             ];
         default:
             return [];

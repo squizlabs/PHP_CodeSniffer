@@ -11,19 +11,28 @@ namespace A {
         return Min($a, $b);
     }
 
+    class Test {
+        public static function COunt($a) {
+            return \count($a);
+        }
+    }
+
     $arr = \range(1, 10);
     $global = \count($arr);
     $local = Count($arr);
     $min = Is_Int($global, $local);
     $isInt = \is_int($global);
+    $classCount = Test::COunt($arr);
 }
 
 namespace B {
     use function A\Count as CounT;
     use function A\Max;
+    use function array_keys;
 
     $arr = range(1, 20);
     $a = CounT($arr);
     $global = \count($arr);
     $max = Max($a, 2 * $a);
+    $keys = array_keys($arr);
 }
