@@ -1363,6 +1363,13 @@
         "path": "",
         "ignore": "*/vendor/*,*/Documentation/*,*/tests/*,*/gacl/*,*/images/*,*/public/assets/*,*/node_modules/*,*/bower_components/*",
         "extensions": ""
+    },
+    {
+        "name": "Behat",
+        "url": "Behat/Behat",
+        "path": "src",
+        "ignore": "",
+        "extensions": ""
     }
 ]
 
