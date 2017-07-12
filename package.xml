@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-05-22</date>
  <time>12:41:00</time>
  <version>
-  <release>2.9.1</release>
-  <api>2.9.1</api>
+  <release>2.9.2</release>
+  <api>2.9.2</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,8 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed bug #1442 : T_NULLABLE detection not working for nullable parameters and return type hints in some cases
-  - Fixed bug #1448 : Generic.Classes.OpeningBraceSameLine doesn't detect comment before opening brace
+  - Fixed bug #1549 : Squiz.PHP.EmbeddedPhp fixer conflict with // comment before PHP close tag
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
