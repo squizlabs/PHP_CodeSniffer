@@ -931,3 +931,42 @@ function returnArrayWithAnonymousClass()
 
     return [];
 }
+
+/**
+ * @return void
+ */
+function returnVoidWithClosure()
+{
+    function () {
+        return 1;
+    };
+}
+
+/**
+ * @return void
+ */
+function returnVoidWithAnonymousClass()
+{
+    new class {
+        /**
+         * @return integer
+         */
+        public function test()
+        {
+            return 1;
+        }
+    };
+}
+
+class TestReturnVoid
+{
+    /**
+     * @return void
+     */
+    public function test()
+    {
+        function () {
+            return 4;
+        };
+    }
+}
