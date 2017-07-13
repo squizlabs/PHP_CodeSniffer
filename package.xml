@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - NOWDOC tokens are now considered conditions, just as HEREDOC tokens are
     -- This makes it easier to find the start and end of a NOWDOC from any token within it
     -- Thanks to Michał Bundyra for the patch
+  - Improved the error message when Squiz.ControlStructures.ControlSignature detects a newline after the closing parenthesis
   - Fixed bug #1465 : Generic.WhiteSpace.ScopeIndent reports incorrect errors when indenting double arrows in short arrays
   - Fixed bug #1478 : Indentation in fallthrough CASE that contains a closure
   - Fixed bug #1497 : Fatal error if composer prepend-autoloader is set to false
