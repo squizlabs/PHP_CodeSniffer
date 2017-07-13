@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Michał Bundyra for the patch
   - Fixed bug #1465 : Generic.WhiteSpace.ScopeIndent reports incorrect errors when indenting double arrows in short arrays
   - Fixed bug #1478 : Indentation in fallthrough CASE that contains a closure
+  - Fixed bug #1497 : Fatal error if composer prepend-autoloader is set to false
+    -- Thanks to Kunal Mehta for the patch
   - Fixed bug #1503 : Alternative control structure syntax not always recognized as scoped
   - Fixed bug #1523 : Fatal error when using the --suffix argument
     -- Thanks to Juliette Reinders Folmer for the patch
