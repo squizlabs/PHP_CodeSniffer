@@ -1213,6 +1213,21 @@ return [
     ],
 ];
 
+switch ($sContext) {
+    case 'SOMETHING':
+    case 'CONSTANT':
+        do_something();
+        break;
+    case 'GLOBAL':
+    case 'GLOBAL1':
+        do_something();
+        // Fall through
+    default:
+    {
+        do_something();
+    }
+}
+
     function foo()
     {
         $foo = array(

@@ -1592,18 +1592,6 @@ class PHP extends Tokenizer
                 $this->tokens[$index]['scope_closer']    = $newCloser;
             }
 
-            unset($this->tokens[$scopeOpener]['scope_condition']);
-            unset($this->tokens[$scopeOpener]['scope_opener']);
-            unset($this->tokens[$scopeOpener]['scope_closer']);
-            unset($this->tokens[$scopeCloser]['scope_condition']);
-            unset($this->tokens[$scopeCloser]['scope_opener']);
-            unset($this->tokens[$scopeCloser]['scope_closer']);
-            unset($this->tokens[$x]['bracket_opener']);
-            unset($this->tokens[$x]['bracket_closer']);
-            unset($this->tokens[$newCloser]['bracket_opener']);
-            unset($this->tokens[$newCloser]['bracket_closer']);
-            $this->tokens[$scopeCloser]['conditions'][] = $i;
-
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $line      = $this->tokens[$i]['line'];
                 $tokenType = $this->tokens[$i]['type'];
@@ -1616,6 +1604,45 @@ class PHP extends Tokenizer
                 $newType = $this->tokens[$newCloser]['type'];
                 echo "\t* token $i ($tokenType) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
             }
+
+            if ($this->tokens[$scopeOpener]['scope_condition'] === $i) {
+                unset($this->tokens[$scopeOpener]['scope_condition']);
+                unset($this->tokens[$scopeOpener]['scope_opener']);
+                unset($this->tokens[$scopeOpener]['scope_closer']);
+            }
+
+            if ($this->tokens[$scopeCloser]['scope_condition'] === $i) {
+                unset($this->tokens[$scopeCloser]['scope_condition']);
+                unset($this->tokens[$scopeCloser]['scope_opener']);
+                unset($this->tokens[$scopeCloser]['scope_closer']);
+            } else {
+                // We were using a shared closer. All tokens that were
+                // sharing this closer with us, except for the scope condition
+                // and it's opener, need to now point to the new closer.
+                $condition = $this->tokens[$scopeCloser]['scope_condition'];
+                $start     = ($this->tokens[$condition]['scope_opener'] + 1);
+                for ($y = $start; $y < $scopeCloser; $y++) {
+                    if (isset($this->tokens[$y]['scope_closer']) === true
+                        && $this->tokens[$y]['scope_closer'] === $scopeCloser
+                    ) {
+                        $this->tokens[$y]['scope_closer'] = $newCloser;
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $line      = $this->tokens[$y]['line'];
+                            $tokenType = $this->tokens[$y]['type'];
+                            $oldType   = $this->tokens[$scopeCloser]['type'];
+                            $newType   = $this->tokens[$newCloser]['type'];
+                            echo "\t\t* token $y ($tokenType) on line $line closer changed from $scopeCloser ($oldType) to $newCloser ($newType)".PHP_EOL;
+                        }
+                    }
+                }
+            }//end if
+
+            unset($this->tokens[$x]['bracket_opener']);
+            unset($this->tokens[$x]['bracket_closer']);
+            unset($this->tokens[$newCloser]['bracket_opener']);
+            unset($this->tokens[$newCloser]['bracket_closer']);
+            $this->tokens[$scopeCloser]['conditions'][] = $i;
 
             // Now fix up all the tokens that think they are
             // inside the CASE/DEFAULT statement when they are really outside.
