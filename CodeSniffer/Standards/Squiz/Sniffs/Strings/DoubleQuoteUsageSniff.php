@@ -138,6 +138,7 @@ class Squiz_Sniffs_Strings_DoubleQuoteUsageSniff implements PHP_CodeSniffer_Snif
             $phpcsFile->fixer->beginChangeset();
             $innerContent = substr($workingString, 1, -1);
             $innerContent = str_replace('\"', '"', $innerContent);
+            $innerContent = str_replace('\\$', '$', $innerContent);
             $phpcsFile->fixer->replaceToken($stackPtr, "'$innerContent'");
             while ($lastStringToken !== $stackPtr) {
                 $phpcsFile->fixer->replaceToken($lastStringToken, '');
