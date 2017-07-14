@@ -646,6 +646,10 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 
                     $diff      = ($param['var_space'] - $spaces);
                     $newIndent = ($param['commentLines'][$lineNum]['indent'] - $diff);
+                    if ($newIndent <= 0) {
+                        continue;
+                    }
+
                     $phpcsFile->fixer->replaceToken(
                         ($param['commentLines'][$lineNum]['token'] - 1),
                         str_repeat(' ', $newIndent)
