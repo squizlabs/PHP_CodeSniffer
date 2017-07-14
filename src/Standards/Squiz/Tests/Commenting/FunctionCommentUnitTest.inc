@@ -883,18 +883,18 @@ function yieldFromTest()
  *
  * Generates an audio element to embed sounds
  *
- * @param  mixed  $src                  Either a source string or
+ * @param  mixed $src                  Either a source string or
  * an array of sources.
- * @param  string $unsupportedMessage   The message to display
+ * @param  mixed $unsupportedMessage   The message to display
  * if the media tag is not supported by the browser.
- * @param  string $attributes           HTML attributes.
+ * @param  mixed $attributes           HTML attributes.
  * @return string
  */
 function audio(
     $src,
-    string $unsupportedMessage = '',
-    string $attributes = '',
-): string
+    $unsupportedMessage = '',
+    $attributes = '',
+)
 {
     return 'test';
 }
