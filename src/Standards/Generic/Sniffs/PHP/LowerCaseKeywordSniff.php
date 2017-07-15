@@ -94,6 +94,7 @@ class LowerCaseKeywordSniff implements Sniff
                 T_VAR,
                 T_WHILE,
                 T_YIELD,
+                T_YIELD_FROM,
                );
 
     }//end register()

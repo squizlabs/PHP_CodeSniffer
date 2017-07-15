@@ -18,6 +18,7 @@ const PRIVATE;
 HttpStatus::CONTINUE;
 function ($f) {
     yield $f;
+    yield from fun();
 }
 class X extends Y {
     public function m() {
