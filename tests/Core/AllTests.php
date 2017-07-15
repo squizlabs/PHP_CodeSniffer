@@ -32,6 +32,7 @@ if (is_file(__DIR__.'/../../autoload.php') === true) {
 $tokens = new Tokens();
 
 require_once 'IsCamelCapsTest.php';
+require_once 'ConfigTest.php';
 require_once 'ErrorSuppressionTest.php';
 require_once 'File/GetMethodParametersTest.php';
 require_once 'File/FindExtendedClassNameTest.php';
@@ -62,6 +63,7 @@ class AllTests
     {
         $suite = new \PHPUnit_Framework_TestSuite('PHP CodeSniffer Core');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\IsCamelCapsTest');
+        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\ConfigTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\ErrorSuppressionTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\GetMethodParametersTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\FindExtendedClassNameTest');
