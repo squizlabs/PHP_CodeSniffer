@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - NOWDOC tokens are now considered conditions, just as HEREDOC tokens are
     -- This makes it easier to find the start and end of a NOWDOC from any token within it
     -- Thanks to Michał Bundyra for the patch
+  - Custom autoloaders are now only included once in case multiple standards are using the same one
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Improved tokenizing of fallthrough CASE and DEFAULT statements that share a closing statement and use curly braces
   - Improved the error message when Squiz.ControlStructures.ControlSignature detects a newline after the closing parenthesis
   - Fixed bug #1465 : Generic.WhiteSpace.ScopeIndent reports incorrect errors when indenting double arrows in short arrays
@@ -1600,7 +1602,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- The namespace is set in the ruleset tag of the ruleset.xml file
       -- e.g., ruleset name="My Coding Standard" namespace="MyProject\CS\Standard"
     - Rulesets can now specify custom autoloaders using the new autoload tag
-      -- Autloaders are included while the ruleset is being processed and before any custom sniffs are included
+      -- Autoloaders are included while the ruleset is being processed and before any custom sniffs are included
       -- Allows for very custom autoloading of helper classes well before the boostrap files are included
     - The PEAR standard now includes Squiz.Commenting.DocCommentAlignment
       -- It previously broke comments onto multiple lines, but didn't align them
