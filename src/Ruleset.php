@@ -341,7 +341,7 @@ class Ruleset
                 throw new RuntimeException('The specified autoload file "'.$autoload.'" does not exist');
             }
 
-            include $autoloadPath;
+            include_once $autoloadPath;
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo str_repeat("\t", $depth);
