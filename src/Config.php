@@ -738,7 +738,7 @@ class Config
 
             try {
                 $this->setConfigData($key, $value);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 throw new DeepExitException($e->getMessage().PHP_EOL, 3);
             }
 
@@ -762,7 +762,7 @@ class Config
             } else {
                 try {
                     $this->setConfigData($key, null);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     throw new DeepExitException($e->getMessage().PHP_EOL, 3);
                 }
 
