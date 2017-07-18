@@ -329,9 +329,7 @@ class Config
         $this->restoreDefaults();
         $this->setCommandLineValues($cliArgs);
 
-        if (isset($this->overriddenDefaults['standards']) === false
-            && Config::getConfigData('default_standard') === null
-        ) {
+        if (isset($this->overriddenDefaults['standards']) === false) {
             // They did not supply a standard to use.
             // Look for a default ruleset in the current directory or higher.
             $currentDir = getcwd();
