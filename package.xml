@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-07-18</date>
  <time>11:11:00</time>
  <version>
-  <release>3.0.2</release>
-  <api>3.0.2</api>
+  <release>3.1.0</release>
+  <api>3.1.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,34 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed a problem where the source report was not printing the correct number of errors found
-  - Fixed a problem where the --cache=/path/to/cachefile CLI argument was not working
-  - The code report now gracefully handles tokenizer exceptions
-  - The phpcs and phpcbf scripts and now the only places that exit() in the code
-    -- This allows for easier usage of core PHPCS functions from external scripts
-    -- If you are calling Runner::runPHPCS() or Runner::runPHPCBF() directly, you will get back the full range of exit codes
-    -- If not, catch the new DeepExitException to get the error message ($e->getMessage()) and exit code ($e->getCode());
-  - NOWDOC tokens are now considered conditions, just as HEREDOC tokens are
-    -- This makes it easier to find the start and end of a NOWDOC from any token within it
-    -- Thanks to Michał Bundyra for the patch
-  - Custom autoloaders are now only included once in case multiple standards are using the same one
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Improved tokenizing of fallthrough CASE and DEFAULT statements that share a closing statement and use curly braces
-  - Improved the error message when Squiz.ControlStructures.ControlSignature detects a newline after the closing parenthesis
-  - Fixed bug #1465 : Generic.WhiteSpace.ScopeIndent reports incorrect errors when indenting double arrows in short arrays
-  - Fixed bug #1478 : Indentation in fallthrough CASE that contains a closure
-  - Fixed bug #1497 : Fatal error if composer prepend-autoloader is set to false
-    -- Thanks to Kunal Mehta for the patch
-  - Fixed bug #1503 : Alternative control structure syntax not always recognized as scoped
-  - Fixed bug #1523 : Fatal error when using the --suffix argument
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1526 : Use of basepath setting can stop PHPCBF being able to write fixed files
-  - Fixed bug #1530 : Generic.WhiteSpace.ScopeIndent can increase indent too much for lines within code blocks
-  - Fixed bug #1547 : Wrong token type for backslash in use function
-    -- Thanks to Michał Bundyra for the patch
-  - Fixed bug #1549 : Squiz.PHP.EmbeddedPhp fixer conflict with // comment before PHP close tag
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1560 : Squiz.Commenting.FunctionComment fatal error when fixing additional param comment lines that have no indent
+  - The autoloader will now search for files during unit tests runs from the same locations as during normal phpcs runs
+    -- Allows for easier unit testing of custom standards that use helper classes or custom namespaces
  </notes>
  <contents>
   <dir name="/">

@@ -139,22 +139,26 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
         $config->sniffs    = array($sniffCode);
         $config->ignored   = array();
 
-        if (isset($GLOBALS['PHP_CODESNIFFER_RULESET']) === true) {
-            $ruleset = $GLOBALS['PHP_CODESNIFFER_RULESET'];
-
-            $sniffFile = $this->standardsDir.DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR.$categoryName.DIRECTORY_SEPARATOR.$sniffName.'Sniff.php';
-
-            $sniffClassName = substr(get_class($this), 0, -8).'Sniff';
-            $sniffClassName = str_replace('\Tests\\', '\Sniffs\\', $sniffClassName);
-            $sniffClassName = Common::cleanSniffClass($sniffClassName);
-
-            $restrictions = array(strtolower($sniffClassName) => true);
-            $ruleset->registerSniffs(array($sniffFile), $restrictions, array());
-            $ruleset->populateTokenListeners();
-        } else {
-            $ruleset = new Ruleset($config);
-            $GLOBALS['PHP_CODESNIFFER_RULESET'] = $ruleset;
+        if (isset($GLOBALS['PHP_CODESNIFFER_RULESETS']) === false) {
+            $GLOBALS['PHP_CODESNIFFER_RULESETS'] = array();
         }
+
+        if (isset($GLOBALS['PHP_CODESNIFFER_RULESETS'][$standardName]) === false) {
+            $ruleset = new Ruleset($config);
+            $GLOBALS['PHP_CODESNIFFER_RULESETS'][$standardName] = $ruleset;
+        }
+
+        $ruleset = $GLOBALS['PHP_CODESNIFFER_RULESETS'][$standardName];
+
+        $sniffFile = $this->standardsDir.DIRECTORY_SEPARATOR.'Sniffs'.DIRECTORY_SEPARATOR.$categoryName.DIRECTORY_SEPARATOR.$sniffName.'Sniff.php';
+
+        $sniffClassName = substr(get_class($this), 0, -8).'Sniff';
+        $sniffClassName = str_replace('\Tests\\', '\Sniffs\\', $sniffClassName);
+        $sniffClassName = Common::cleanSniffClass($sniffClassName);
+
+        $restrictions = array(strtolower($sniffClassName) => true);
+        $ruleset->registerSniffs(array($sniffFile), $restrictions, array());
+        $ruleset->populateTokenListeners();
 
         $failureMessages = array();
         foreach ($testFiles as $testFile) {

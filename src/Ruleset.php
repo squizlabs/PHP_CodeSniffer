@@ -153,41 +153,50 @@ class Ruleset
             $standardPaths[] = $standard;
         }
 
-        if (defined('PHP_CODESNIFFER_IN_TESTS') === true && empty($restrictions) === false) {
-            // Should be one standard and one sniff being tested at a time.
-            $sniffs = $this->expandRulesetReference($restrictions[0], dirname($standardPaths[0]));
-        } else {
-            foreach ($standardPaths as $standard) {
-                $ruleset = @simplexml_load_string(file_get_contents($standard));
-                if ($ruleset !== false) {
-                    $standardName = (string) $ruleset['name'];
-                    if ($this->name !== '') {
-                        $this->name .= ', ';
-                    }
-
-                    $this->name   .= $standardName;
-                    $this->paths[] = $standard;
-
-                    // Allow autoloading of custom files inside this standard.
-                    if (isset($ruleset['namespace']) === true) {
-                        $namespace = (string) $ruleset['namespace'];
-                    } else {
-                        $namespace = basename(dirname($standard));
-                    }
-
-                    Autoload::addSearchPath(dirname($standard), $namespace);
+        foreach ($standardPaths as $standard) {
+            $ruleset = @simplexml_load_string(file_get_contents($standard));
+            if ($ruleset !== false) {
+                $standardName = (string) $ruleset['name'];
+                if ($this->name !== '') {
+                    $this->name .= ', ';
                 }
 
-                if (PHP_CODESNIFFER_VERBOSITY === 1) {
-                    echo "Registering sniffs in the $standardName standard... ";
-                    if (count($config->standards) > 1 || PHP_CODESNIFFER_VERBOSITY > 2) {
-                        echo PHP_EOL;
-                    }
+                $this->name   .= $standardName;
+                $this->paths[] = $standard;
+
+                // Allow autoloading of custom files inside this standard.
+                if (isset($ruleset['namespace']) === true) {
+                    $namespace = (string) $ruleset['namespace'];
+                } else {
+                    $namespace = basename(dirname($standard));
                 }
 
-                $sniffs = array_merge($sniffs, $this->processRuleset($standard));
-            }//end foreach
-        }//end if
+                Autoload::addSearchPath(dirname($standard), $namespace);
+            }
+
+            if (defined('PHP_CODESNIFFER_IN_TESTS') === true && empty($restrictions) === false) {
+                // Unit tests use one standard and one sniff at a time.
+                try {
+                    $sniffs = $this->expandRulesetReference($restrictions[0], dirname($standard));
+                } catch (RuntimeException $e) {
+                    // Sniff reference could not be expanded, which probably means this
+                    // is an installed standard. Let the unit test system take care of
+                    // setting the correct sniff for testing.
+                    return;
+                }
+
+                break;
+            }
+
+            if (PHP_CODESNIFFER_VERBOSITY === 1) {
+                echo "Registering sniffs in the $standardName standard... ";
+                if (count($config->standards) > 1 || PHP_CODESNIFFER_VERBOSITY > 2) {
+                    echo PHP_EOL;
+                }
+            }
+
+            $sniffs = array_merge($sniffs, $this->processRuleset($standard));
+        }//end foreach
 
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {

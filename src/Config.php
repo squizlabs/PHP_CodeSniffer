@@ -23,7 +23,7 @@ class Config
      *
      * @var string
      */
-    const VERSION = '3.0.2';
+    const VERSION = '3.1.0';
 
     /**
      * Package stability; either stable, beta or alpha.
