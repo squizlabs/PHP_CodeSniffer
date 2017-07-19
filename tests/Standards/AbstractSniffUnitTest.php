@@ -97,7 +97,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
     /**
      * Should this test be skipped for some reason.
      *
-     * @return void
+     * @return boolean
      */
     protected function shouldSkipTest()
     {
@@ -110,7 +110,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * Tests the extending classes Sniff class.
      *
      * @return void
-     * @throws PHPUnit_Framework_Error
+     * @throws \PHPUnit_Framework_Error
      */
     final public function testSniff()
     {
@@ -414,7 +414,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * @param string                  $filename The name of the file being tested.
      * @param \PHP_CodeSniffer\Config $config   The config data for the run.
      *
-     * @return array
+     * @return void
      */
     public function setCliValues($filename, $config)
     {
@@ -440,7 +440,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
-     * @return array(int => int)
+     * @return array<int, int>
      */
     abstract protected function getWarningList();
 
