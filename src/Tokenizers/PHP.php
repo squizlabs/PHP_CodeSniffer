@@ -543,7 +543,10 @@ class PHP extends Tokenizer
                 Parse doc blocks into something that can be easily iterated over.
             */
 
-            if ($tokenIsArray === true && $token[0] === T_DOC_COMMENT) {
+            if ($tokenIsArray === true
+                && ($token[0] === T_DOC_COMMENT
+                || ($token[0] === T_COMMENT && strpos($token[1], '/**') === 0))
+            ) {
                 $commentTokens = $commentTokenizer->tokenizeString($token[1], $this->eolChar, $newStackPtr);
                 foreach ($commentTokens as $commentToken) {
                     $finalTokens[$newStackPtr] = $commentToken;
