@@ -24,7 +24,6 @@ class LowerCaseKeywordSniff implements Sniff
     public function register()
     {
         return array(
-                T_HALT_COMPILER,
                 T_ABSTRACT,
                 T_ARRAY,
                 T_ARRAY_HINT,
@@ -60,6 +59,7 @@ class LowerCaseKeywordSniff implements Sniff
                 T_FUNCTION,
                 T_GLOBAL,
                 T_GOTO,
+                T_HALT_COMPILER,
                 T_IF,
                 T_IMPLEMENTS,
                 T_INCLUDE,
@@ -90,6 +90,7 @@ class LowerCaseKeywordSniff implements Sniff
                 T_USE,
                 T_VAR,
                 T_WHILE,
+                T_YIELD,
                );
 
     }//end register()
@@ -106,9 +107,10 @@ class LowerCaseKeywordSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens  = $phpcsFile->getTokens();
-        $keyword = $tokens[$stackPtr]['content'];
-        if (strtolower($keyword) !== $keyword) {
+        $tokens   = $phpcsFile->getTokens();
+        $keyword  = $tokens[$stackPtr]['content'];
+        $expected = strtolower($keyword);
+        if ($expected !== $keyword) {
             if ($keyword === strtoupper($keyword)) {
                 $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'upper');
             } else {
@@ -117,13 +119,13 @@ class LowerCaseKeywordSniff implements Sniff
 
             $error = 'PHP keywords must be lowercase; expected "%s" but found "%s"';
             $data  = array(
-                      strtolower($keyword),
+                      $expected,
                       $keyword,
                      );
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($stackPtr, strtolower($keyword));
+                $phpcsFile->fixer->replaceToken($stackPtr, $expected);
             }
         } else {
             $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'lower');

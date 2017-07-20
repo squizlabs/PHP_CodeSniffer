@@ -16,4 +16,8 @@ goto a;
 function (array $a) {}
 const PRIVATE;
 HttpStatus::CONTINUE;
+yield;
+
+// The below line must always stay at the end of this file
+// check commit #88d3f29
 function
