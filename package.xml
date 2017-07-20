@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This change reflects the original intention of the feature
   - Comment tokens that start with /** are now always tokenized as docblocks
     -- Thanks to Michał Bundyra for the patch
+  - The PHP-supplied T_YIELD and T_YIELD_FROM token have been replicated for older PHP versions
+    -- Thanks to Michał Bundyra for the patch
  </notes>
  <contents>
   <dir name="/">
