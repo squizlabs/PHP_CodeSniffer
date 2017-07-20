@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Util;
 
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Util\Standards;
 
 class Common
 {
@@ -416,10 +417,11 @@ class Common
             $sniff = substr($sniff, 0, -8);
         }
 
-        $category = array_pop($parts);
-        $sniffDir = array_pop($parts);
-        $standard = array_pop($parts);
-        $code     = $standard.'.'.$category.'.'.$sniff;
+        $category  = array_pop($parts);
+        $sniffDir  = array_pop($parts);
+        $namespace = implode('\\', $parts);
+        $standard  = Standards::getStandardOfNamespace($namespace);
+        $code      = $standard.'.'.$category.'.'.$sniff;
         return $code;
 
     }//end getSniffCode()
