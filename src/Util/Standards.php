@@ -16,6 +16,15 @@ class Standards
 
 
     /**
+     * Saves the namespaces of the found standards and their short names.
+     * ['Generic' => 'Generic', 'Rhorber\PHPCS\Standard' => 'Rhorber', ...]
+     *
+     * @var array
+     */
+    private static $namespaceStandardArray = null;
+
+
+    /**
      * Get a list paths where standards are installed.
      *
      * @return array
@@ -309,6 +318,33 @@ class Standards
         }
 
     }//end printInstalledStandards()
+
+
+    /**
+     * Returns a standard's name for the given namespace.
+     *
+     * @param string $namespace The namespace to search the standard name for.
+     *
+     * @return string
+     */
+    public static function getStandardOfNamespace($namespace)
+    {
+        if (self::$namespaceStandardArray === null) {
+            $standardDetails = self::getInstalledStandardDetails(true);
+            foreach ($standardDetails as $standardName => $details) {
+                $standardNamespace = $details['namespace'];
+                self::$namespaceStandardArray[$standardNamespace] = $standardName;
+            }
+        }
+
+        if (isset(self::$namespaceStandardArray[$namespace]) === true) {
+            return self::$namespaceStandardArray[$namespace];
+        } else {
+            $parts = explode('\\', $namespace);
+            return array_pop($parts);
+        }
+
+    }//end getStandardOfNamespace()
 
 
 }//end class
