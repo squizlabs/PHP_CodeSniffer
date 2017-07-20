@@ -732,6 +732,72 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                Before PHP 7.0, the "yield from" was tokenized as
+                T_YIELD, T_WHITESPACE and T_STRING. So look for
+                and change this token in earlier versions.
+            */
+
+            if (PHP_VERSION_ID < 70000
+                && PHP_VERSION_ID >= 50500
+                && $tokenIsArray === true
+                && $token[0] === T_YIELD
+                && isset($tokens[($stackPtr + 1)]) === true
+                && isset($tokens[($stackPtr + 2)]) === true
+                && $tokens[($stackPtr + 1)][0] === T_WHITESPACE
+                && $tokens[($stackPtr + 2)][0] === T_STRING
+                && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
+            ) {
+                $newToken            = array();
+                $newToken['code']    = T_YIELD_FROM;
+                $newToken['type']    = 'T_YIELD_FROM';
+                $newToken['content'] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr += 2;
+                continue;
+            }
+
+            /*
+                Before PHP 5.5, the yield keyword was tokenized as
+                T_STRING. So look for and change this token in
+                earlier versions.
+                Checks also if it is just "yield" or "yield from".
+            */
+
+            if (PHP_VERSION_ID < 50500
+                && $tokenIsArray === true
+                && $token[0] === T_STRING
+                && strtolower($token[1]) === 'yield'
+            ) {
+                if (isset($tokens[($stackPtr + 1)]) === true
+                    && isset($tokens[($stackPtr + 2)]) === true
+                    && $tokens[($stackPtr + 1)][0] === T_WHITESPACE
+                    && $tokens[($stackPtr + 2)][0] === T_STRING
+                    && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
+                ) {
+                    $newToken            = array();
+                    $newToken['code']    = T_YIELD_FROM;
+                    $newToken['type']    = 'T_YIELD_FROM';
+                    $newToken['content'] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+                    $finalTokens[$newStackPtr] = $newToken;
+
+                    $newStackPtr++;
+                    $stackPtr += 2;
+                    continue;
+                }
+
+                $newToken            = array();
+                $newToken['code']    = T_YIELD;
+                $newToken['type']    = 'T_YIELD';
+                $newToken['content'] = $token[1];
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                continue;
+            }//end if
+
+            /*
                 Before PHP 5.6, the ... operator was tokenized as three
                 T_STRING_CONCAT tokens in a row. So look for and combine
                 these tokens in earlier versions.

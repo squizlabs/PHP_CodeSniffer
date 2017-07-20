@@ -95,6 +95,7 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
                    548 => 1,
                    641 => 1,
                    669 => 1,
+                   688 => 1,
                    744 => 1,
                    748 => 1,
                    767 => 1,
@@ -111,15 +112,6 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
                    888 => 1,
                    890 => 1,
                   );
-
-        // The yield tests will only work in PHP versions where yield exists and
-        // will throw errors in earlier versions.
-        if (PHP_VERSION_ID < 50500) {
-            $errors[676] = 1;
-            $errors[874] = 1;
-        } else {
-            $errors[688] = 1;
-        }
 
         // Scalar type hints only work from PHP 7 onwards.
         if (PHP_VERSION_ID >= 70000) {
