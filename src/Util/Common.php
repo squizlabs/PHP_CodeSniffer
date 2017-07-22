@@ -444,6 +444,19 @@ class Common
             return $newName;
         }
 
+        // Handle special namespace.
+        $namespace = substr($newName, 0, $sniffPos);
+        $standard  = strtolower(Standards::getStandardOfNamespace($namespace));
+        $newName   = str_replace($namespace, $standard, $newName);
+
+        // Sniff-Pos might have changed.
+        $sniffPos = strrpos($newName, '\sniffs\\');
+        if ($sniffPos === false) {
+            // Nothing we can do as it isn't in a known format.
+            return $newName;
+        }
+
+        // Handle long namespace.
         $end   = (strlen($newName) - $sniffPos + 1);
         $start = strrpos($newName, '\\', ($end * -1));
 

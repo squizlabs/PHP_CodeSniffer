@@ -332,13 +332,14 @@ class Standards
         if (self::$namespaceStandardArray === null) {
             $standardDetails = self::getInstalledStandardDetails(true);
             foreach ($standardDetails as $standardName => $details) {
-                $standardNamespace = $details['namespace'];
+                $standardNamespace = strtolower($details['namespace']);
                 self::$namespaceStandardArray[$standardNamespace] = $standardName;
             }
         }
 
-        if (isset(self::$namespaceStandardArray[$namespace]) === true) {
-            return self::$namespaceStandardArray[$namespace];
+        $lowerNamespace = strtolower($namespace);
+        if (isset(self::$namespaceStandardArray[$lowerNamespace]) === true) {
+            return self::$namespaceStandardArray[$lowerNamespace];
         } else {
             $parts = explode('\\', $namespace);
             return array_pop($parts);
