@@ -42,22 +42,22 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         $varName = ltrim($tokens[$stackPtr]['content'], '$');
 
         $phpReservedVars = array(
-                            '_SERVER',
-                            '_GET',
-                            '_POST',
-                            '_REQUEST',
-                            '_SESSION',
-                            '_ENV',
-                            '_COOKIE',
-                            '_FILES',
-                            'GLOBALS',
-                            'http_response_header',
-                            'HTTP_RAW_POST_DATA',
-                            'php_errormsg',
+                            '_SERVER'              => true,
+                            '_GET'                 => true,
+                            '_POST'                => true,
+                            '_REQUEST'             => true,
+                            '_SESSION'             => true,
+                            '_ENV'                 => true,
+                            '_COOKIE'              => true,
+                            '_FILES'               => true,
+                            'GLOBALS'              => true,
+                            'http_response_header' => true,
+                            'HTTP_RAW_POST_DATA'   => true,
+                            'php_errormsg'         => true,
                            );
 
         // If it's a php reserved var, then its ok.
-        if (in_array($varName, $phpReservedVars) === true) {
+        if (isset($phpReservedVars[$varName]) === true) {
             return;
         }
 

@@ -19,7 +19,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
     /**
      * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
      *
-     * @var PHP_CodeSniffer_File
+     * @var \PHP_CodeSniffer\Files\File
      */
     private $phpcsFile;
 

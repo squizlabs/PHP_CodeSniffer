@@ -11,7 +11,7 @@
  *         parent::__construct(array(T_CLASS), array(T_FUNCTION));
  *     }
  *
- *     protected function processTokenWithinScope(PHP_CodeSniffer_File $phpcsFile, $)
+ *     protected function processTokenWithinScope(\PHP_CodeSniffer\Files\File $phpcsFile, $)
  *     {
  *         $className = $phpcsFile->getDeclarationName($currScope);
  *         echo 'encountered a method within class '.$className;
@@ -66,7 +66,7 @@ abstract class AbstractScopeSniff implements Sniff
      *                               processTokenOutsideScope method.
      *
      * @see    PHP_CodeSniffer.getValidScopeTokeners()
-     * @throws PHP_CodeSniffer_Exception If the specified tokens array is empty.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified tokens array is empty.
      */
     public function __construct(
         array $scopeTokens,

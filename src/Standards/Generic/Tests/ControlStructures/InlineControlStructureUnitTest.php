@@ -63,7 +63,9 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
                     178 => 1,
                     185 => 1,
                     188 => 2,
-                    190 => 1,
+                    191 => 1,
+                    195 => 1,
+                    198 => 1,
                    );
             break;
         case 'InlineControlStructureUnitTest.js':

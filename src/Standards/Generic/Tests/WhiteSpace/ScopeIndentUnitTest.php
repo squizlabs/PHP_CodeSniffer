@@ -21,7 +21,7 @@ class ScopeIndentUnitTest extends AbstractSniffUnitTest
      * @param string                  $testFile The name of the file being tested.
      * @param \PHP_CodeSniffer\Config $config   The config data for the test run.
      *
-     * @return array
+     * @return void
      */
     public function setCliValues($testFile, $config)
     {
@@ -139,14 +139,16 @@ class ScopeIndentUnitTest extends AbstractSniffUnitTest
                 858  => 1,
                 879  => 1,
                 1163 => 1,
-                1185 => 1,
-                1190 => 1,
-                1192 => 1,
-                1195 => 1,
-                1199 => 1,
-                1200 => 1,
-                1201 => 1,
-                1202 => 1,
+                1197 => 1,
+                1198 => 1,
+                1231 => 1,
+                1236 => 1,
+                1238 => 1,
+                1241 => 1,
+                1245 => 1,
+                1246 => 1,
+                1247 => 1,
+                1248 => 1,
                );
 
     }//end getErrorList()

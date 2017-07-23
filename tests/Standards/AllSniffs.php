@@ -56,7 +56,7 @@ class AllSniffs
      * Sniff unit tests are found by recursing through the 'Tests' directory
      * of each installed coding standard.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return \PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {
@@ -75,18 +75,20 @@ class AllSniffs
             $ignoreTestsForStandards = explode(',', $ignoreTestsForStandards);
         }
 
-        $installedPaths = Standards::getInstalledStandardPaths();
+        $installedStandards = Standards::getInstalledStandardDetails();
 
-        foreach ($installedPaths as $path) {
-            $standards = Standards::getInstalledStandards(true, $path);
+        foreach ($installedStandards as $name => $details) {
+            Autoload::addSearchPath($details['path'], $details['namespace']);
+
+            $standards = Standards::getInstalledStandards(true, $details['path']);
 
             // If the test is running PEAR installed, the built-in standards
             // are split into different directories; one for the sniffs and
             // a different file system location for tests.
-            if ($isInstalled === true && is_dir($path.DIRECTORY_SEPARATOR.'Generic') === true) {
+            if ($isInstalled === true && is_dir($details['path'].DIRECTORY_SEPARATOR.'Generic') === true) {
                 $testPath = realpath(__DIR__.'/../../src/Standards');
             } else {
-                $testPath = $path;
+                $testPath = $details['path'];
             }
 
             foreach ($standards as $standard) {
@@ -94,12 +96,12 @@ class AllSniffs
                     continue;
                 }
 
-                $standardDir = $path.DIRECTORY_SEPARATOR.$standard;
+                $standardDir = $details['path'].DIRECTORY_SEPARATOR.$standard;
                 $testsDir    = $testPath.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
 
                 if (is_dir($testsDir) === false) {
                     // Check if the installed path is actually a standard itself.
-                    $standardDir = $path;
+                    $standardDir = $details['path'];
                     $testsDir    = $testPath.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
                     if (is_dir($testsDir) === false) {
                         // No tests for this standard.

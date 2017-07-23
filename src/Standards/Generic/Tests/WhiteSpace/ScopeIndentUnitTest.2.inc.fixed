@@ -1182,6 +1182,52 @@ function test()
 	}
 }
 
+switch ($a) {
+	case 0:
+		function () {
+		};
+	case 1:
+		break;
+}
+
+class Test
+{
+	public function __construct()
+	{
+		if (false) {
+			echo 0;
+		}
+	}
+}
+
+return [
+	'veryLongKeySoIWantToMakeALineBreak'
+		=> 'veryLonValueSoIWantToMakeALineBreak',
+
+	'someOtherKey' => [
+		'someValue'
+	],
+
+	'arrayWithArraysInThere' => [
+		['Value1', 'Value1']
+	],
+];
+
+switch ($sContext) {
+	case 'SOMETHING':
+	case 'CONSTANT':
+		do_something();
+		break;
+	case 'GLOBAL':
+	case 'GLOBAL1':
+		do_something();
+		// Fall through
+	default:
+	{
+		do_something();
+	}
+}
+
 function foo()
 {
 	$foo = array(

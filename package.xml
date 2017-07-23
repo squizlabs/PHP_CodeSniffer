@@ -14,11 +14,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2017-05-04</date>
- <time>10:31:00</time>
+ <date>2017-07-18</date>
+ <time>11:11:00</time>
  <version>
-  <release>3.0.1</release>
-  <api>3.0.1</api>
+  <release>3.1.0</release>
+  <api>3.1.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,23 +26,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Arguments on the command line now override or merge with those specified in a ruleset.xml file in all cases
-  - PHPCS now stops looking for a phpcs.xml file as soon as one is found, favoring the closest one to the current dir
-  - Added missing help text for the --stdin-path CLI option to --help
-  - The Squiz standard now enforces short array syntax by default
-  - The autoloader is now working correctly with classes created with class_alias()
-  - The autoloader will now search for files inside all directories in the installed_paths config var
-    -- This allows autoloading of files inside included custom coding standards without manually requiring them
-  - Fixed bug #1442 : T_NULLABLE detection not working for nullable parameters and return type hints in some cases
-  - Fixed bug #1447 : Running the unit tests with a phpunit config file breaks the test suite
-    -- Unknown arguments were not being handled correctly, but are now stored in $config->unknown
-  - Fixed bug #1449 : Generic.Classes.OpeningBraceSameLine doesn't detect comment before opening brace
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1450 : Coding standard located under an installed_path with the same directory name throws an error
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1451 : Sniff exclusions/restrictions dont work with custom sniffs unless they use the PHP_CodeSniffer NS
-  - Fixed bug #1454 : Squiz.WhiteSpace.OperatorSpacing is not checking spacing on either side of a short ternary operator
-    -- Thanks to Mponos George for the patch
+  - A phpcs.xml or phpcs.xml.dist file now takes precedence over the default_standard config setting
+    -- Thanks to Björn Fischer for the patch
+  - The autoloader will now search for files during unit tests runs from the same locations as during normal phpcs runs
+    -- Allows for easier unit testing of custom standards that use helper classes or custom namespaces
+  - Include patterns for sniffs now use OR logic instead of AND logic
+    -- Previously, a file had to be in each of the include patterns to be processed by a sniff
+    -- Now, a file has to only be in at least one of the patterns
+    -- This change reflects the original intention of the feature
+  - Comment tokens that start with /** are now always tokenized as docblocks
+    -- Thanks to Michał Bundyra for the patch
+  - The PHP-supplied T_YIELD and T_YIELD_FROM token have been replicated for older PHP versions
+    -- Thanks to Michał Bundyra for the patch
  </notes>
  <contents>
   <dir name="/">
@@ -99,6 +94,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <file baseinstalldir="PHP/CodeSniffer" name="Ruleset.php" role="php" />
     <file baseinstalldir="PHP/CodeSniffer" name="Runner.php" role="php" />
     <dir name="Exceptions">
+     <file baseinstalldir="PHP/CodeSniffer" name="DeepExitException.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="RuntimeException.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="TokenizerException.php" role="php" />
     </dir>
@@ -930,6 +926,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.5.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.php" role="test" />
        </dir>
       </dir>
@@ -1355,7 +1353,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="CastSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CastSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceSpaceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceSpaceUnitTest.inc.fixed" role="test" />
@@ -1547,6 +1547,110 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>3.0.2</release>
+    <api>3.0.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2017-07-18</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Fixed a problem where the source report was not printing the correct number of errors found
+    - Fixed a problem where the --cache=/path/to/cachefile CLI argument was not working
+    - The code report now gracefully handles tokenizer exceptions
+    - The phpcs and phpcbf scripts and now the only places that exit() in the code
+      -- This allows for easier usage of core PHPCS functions from external scripts
+      -- If you are calling Runner::runPHPCS() or Runner::runPHPCBF() directly, you will get back the full range of exit codes
+      -- If not, catch the new DeepExitException to get the error message ($e->getMessage()) and exit code ($e->getCode());
+    - NOWDOC tokens are now considered conditions, just as HEREDOC tokens are
+      -- This makes it easier to find the start and end of a NOWDOC from any token within it
+      -- Thanks to Michał Bundyra for the patch
+    - Custom autoloaders are now only included once in case multiple standards are using the same one
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Improved tokenizing of fallthrough CASE and DEFAULT statements that share a closing statement and use curly braces
+    - Improved the error message when Squiz.ControlStructures.ControlSignature detects a newline after the closing parenthesis
+    - Fixed bug #1465 : Generic.WhiteSpace.ScopeIndent reports incorrect errors when indenting double arrows in short arrays
+    - Fixed bug #1478 : Indentation in fallthrough CASE that contains a closure
+    - Fixed bug #1497 : Fatal error if composer prepend-autoloader is set to false
+      -- Thanks to Kunal Mehta for the patch
+    - Fixed bug #1503 : Alternative control structure syntax not always recognized as scoped
+    - Fixed bug #1523 : Fatal error when using the --suffix argument
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #1526 : Use of basepath setting can stop PHPCBF being able to write fixed files
+    - Fixed bug #1530 : Generic.WhiteSpace.ScopeIndent can increase indent too much for lines within code blocks
+    - Fixed bug #1547 : Wrong token type for backslash in use function
+      -- Thanks to Michał Bundyra for the patch
+    - Fixed bug #1549 : Squiz.PHP.EmbeddedPhp fixer conflict with // comment before PHP close tag
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #1560 : Squiz.Commenting.FunctionComment fatal error when fixing additional param comment lines that have no indent
+    </notes>
+  </release>
+  <release>
+   <version>
+    <release>3.0.1</release>
+    <api>3.0.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2017-06-14</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - This release contains a fix for a security advisory related to the improper handling of a shell command
+      -- A properly crafted filename would allow for arbitrary code execution when using the --filter=gitmodified command line option
+      -- All version 3 users are encouraged to upgrade to this version, especially if you are checking 3rd-party code
+         --- e.g., you run PHPCS over libraries that you did not write
+         --- e.g., you provide a web service that runs PHPCS over user-uploaded files or 3rd-party repositories
+         --- e.g., you allow external tool paths to be set by user-defined values
+      -- If you are unable to upgrade but you check 3rd-party code, ensure you are not using the Git modified filter
+      -- This advisory does not affect PHP_CodeSniffer version 2.
+      -- Thanks to Sergei Morozov for the report and patch
+
+    - Arguments on the command line now override or merge with those specified in a ruleset.xml file in all cases
+    - PHPCS now stops looking for a phpcs.xml file as soon as one is found, favoring the closest one to the current dir
+    - Added missing help text for the --stdin-path CLI option to --help
+    - Re-added missing help text for the --file-list and --bootstrap CLI options to --help
+    - Runner::runPHPCS() and Runner::runPHPCBF() now return an exit code instead of exiting directly (request #1484)
+    - The Squiz standard now enforces short array syntax by default
+    - The autoloader is now working correctly with classes created with class_alias()
+    - The autoloader will now search for files inside all directories in the installed_paths config var
+      -- This allows autoloading of files inside included custom coding standards without manually requiring them
+    - You can now specify a namespace for a custom coding standard, used by the autoloader to load non-sniff helper files
+      -- Also used by the autoloader to help other standards directly include sniffs for your standard
+      -- Set the value to the namespace prefix you are using for sniff files (everything up to \Sniffs\)
+      -- e.g., if your namespace format is MyProject\CS\Standard\Sniffs\Category set the namespace to MyProject\CS\Standard
+      -- If ommitted, the namespace is assumed to be the same as the directory name containing the ruleset.xml file
+      -- The namespace is set in the ruleset tag of the ruleset.xml file
+      -- e.g., ruleset name="My Coding Standard" namespace="MyProject\CS\Standard"
+    - Rulesets can now specify custom autoloaders using the new autoload tag
+      -- Autoloaders are included while the ruleset is being processed and before any custom sniffs are included
+      -- Allows for very custom autoloading of helper classes well before the boostrap files are included
+    - The PEAR standard now includes Squiz.Commenting.DocCommentAlignment
+      -- It previously broke comments onto multiple lines, but didn't align them
+    - Fixed a problem where excluding a message from a custom standard's own sniff would exclude the whole sniff
+      -- This caused some PSR2 errors to be under-reported
+    - Fixed bug #1442 : T_NULLABLE detection not working for nullable parameters and return type hints in some cases
+    - Fixed bug #1447 : Running the unit tests with a phpunit config file breaks the test suite
+      -- Unknown arguments were not being handled correctly, but are now stored in $config->unknown
+    - Fixed bug #1449 : Generic.Classes.OpeningBraceSameLine doesn't detect comment before opening brace
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #1450 : Coding standard located under an installed_path with the same directory name throws an error
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #1451 : Sniff exclusions/restrictions dont work with custom sniffs unless they use the PHP_CodeSniffer NS
+    - Fixed bug #1454 : Squiz.WhiteSpace.OperatorSpacing is not checking spacing on either side of a short ternary operator
+      -- Thanks to Mponos George for the patch
+    - Fixed bug #1495 : Setting an invalid installed path breaks all commands
+    - Fixed bug #1496 : Squiz.Strings.DoubleQuoteUsage not unescaping dollar sign when fixing
+      -- Thanks to Michał Bundyra for the patch
+    - Fixed bug #1501 : Interactive mode is broken
+    - Fixed bug #1504 : PSR2.Namespaces.UseDeclaration hangs fixing use statement with no trailing code
+    </notes>
+  </release>
   <release>
    <version>
     <release>3.0.0</release>

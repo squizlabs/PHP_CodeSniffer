@@ -56,8 +56,11 @@ class UseDeclarationSniff implements Sniff
         }
 
         // Only one USE declaration allowed per statement.
-        $next = $phpcsFile->findNext(array(T_COMMA, T_SEMICOLON, T_OPEN_USE_GROUP), ($stackPtr + 1));
-        if ($tokens[$next]['code'] !== T_SEMICOLON) {
+        $next = $phpcsFile->findNext(array(T_COMMA, T_SEMICOLON, T_OPEN_USE_GROUP, T_CLOSE_TAG), ($stackPtr + 1));
+        if ($next !== false
+            && $tokens[$next]['code'] !== T_SEMICOLON
+            && $tokens[$next]['code'] !== T_CLOSE_TAG
+        ) {
             $error = 'There must be one USE keyword per declaration';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
             if ($fix === true) {
@@ -134,10 +137,14 @@ class UseDeclarationSniff implements Sniff
             return;
         }
 
-        $end  = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        if ($end === false) {
+            return;
+        }
+
         $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
 
-        if ($tokens[$next]['code'] === T_CLOSE_TAG) {
+        if ($next === false || $tokens[$next]['code'] === T_CLOSE_TAG) {
             return;
         }
 

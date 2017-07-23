@@ -16,7 +16,6 @@
 namespace PHP_CodeSniffer\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 abstract class AbstractVariableSniff extends AbstractScopeSniff
 {
@@ -38,7 +37,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     /**
      * The current PHP_CodeSniffer file that we are processing.
      *
-     * @var PHP_CodeSniffer_File
+     * @var \PHP_CodeSniffer\Files\File
      */
     protected $currentFile = null;
 
@@ -73,7 +72,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The PHP_CodeSniffer file where this
      *                                               token was found.
      * @param int                         $stackPtr  The position where the token was found.
-     * @param array                       $currScope The current scope opener token.
+     * @param int                         $currScope The current scope opener token.
      *
      * @return void
      */

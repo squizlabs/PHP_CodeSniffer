@@ -56,7 +56,7 @@ class PHP_CodeSniffer_AllTests
     /**
      * Add all PHP_CodeSniffer test suites into a single test suite.
      *
-     * @return PHPUnit_Framework_TestSuite
+     * @return \PHPUnit_Framework_TestSuite
      */
     public static function suite()
     {

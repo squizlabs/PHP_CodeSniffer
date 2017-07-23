@@ -439,7 +439,7 @@ class ScopeIndentSniff implements Sniff
                         $first--;
                     }
 
-                    $prev = $phpcsFile->findStartOfStatement($first, T_COMMA);
+                    $prev = $phpcsFile->findStartOfStatement($first, array(T_COMMA, T_DOUBLE_ARROW));
                     if ($prev !== $first) {
                         // This is not the start of the statement.
                         if ($this->debug === true) {
@@ -449,7 +449,7 @@ class ScopeIndentSniff implements Sniff
                         }
 
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
-                        $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
+                        $prev  = $phpcsFile->findStartOfStatement($first, array(T_COMMA, T_DOUBLE_ARROW));
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
                         if ($this->debug === true) {
                             $line = $tokens[$first]['line'];
@@ -529,11 +529,13 @@ class ScopeIndentSniff implements Sniff
                         $padding = '';
                     }
 
-                    if ($checkToken === $i) {
-                        $phpcsFile->fixer->replaceToken($checkToken, $padding.$trimmed);
-                    } else {
-                        // Easier to just replace the entire indent.
-                        $phpcsFile->fixer->replaceToken(($checkToken - 1), $padding);
+                    if ($phpcsFile->fixer->enabled === true) {
+                        if ($checkToken === $i) {
+                            $phpcsFile->fixer->replaceToken($checkToken, $padding.$trimmed);
+                        } else {
+                            // Easier to just replace the entire indent.
+                            $phpcsFile->fixer->replaceToken(($checkToken - 1), $padding);
+                        }
                     }
 
                     if ($this->debug === true) {
@@ -1003,6 +1005,7 @@ class ScopeIndentSniff implements Sniff
 
                 $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $i, true);
                 $currentIndent = (($tokens[$first]['column'] - 1) + $this->indent);
+                $openScopes[$tokens[$i]['scope_closer']] = $tokens[$i]['scope_condition'];
 
                 if (isset($adjustments[$first]) === true) {
                     $currentIndent += $adjustments[$first];

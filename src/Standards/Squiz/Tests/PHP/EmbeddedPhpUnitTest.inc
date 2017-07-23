@@ -107,3 +107,7 @@ function foo()
 
 <?php if ($foo) { ?>
 <?php } ?>
+
+<?php echo 'oops'; // Something. ?>
+<?php echo 'oops'; // Something.      ?>
+<?php echo 'oops'; // Something.?>

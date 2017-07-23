@@ -9,6 +9,7 @@
  <rule ref="Generic.PHP.DisallowShortOpenTag"/>
  <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
  <rule ref="Generic.Commenting.DocComment"/>
+ <rule ref="Squiz.Commenting.DocCommentAlignment"/>
 
  <!-- Lines can be 85 chars long, but never show errors -->
  <rule ref="Generic.Files.LineLength">
