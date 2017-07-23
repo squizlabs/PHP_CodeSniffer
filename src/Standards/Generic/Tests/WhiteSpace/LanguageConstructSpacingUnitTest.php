@@ -37,13 +37,17 @@ class LanguageConstructSpacingUnitTest extends AbstractSniffUnitTest
                 35 => 1,
                 38 => 1,
                 39 => 1,
-                40 => 2,
+                40 => 1,
                 43 => 1,
-                45 => 1,
-                47 => 1,
+                44 => 1,
+                45 => 2,
+                48 => 1,
+                49 => 1,
                 50 => 1,
                 52 => 1,
-                54 => 1,
+                55 => 1,
+                58 => 1,
+                59 => 1,
                );
 
     }//end getErrorList()

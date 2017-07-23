@@ -34,6 +34,11 @@ return($blah);
 yield $blah;
 yield   $blah;
 
+yield from $test();
+yield from   $test();
+yield   from   $test();
+yield   from $test();
+
 throw new Exception();
 throw  new Exception();
 throw new   Exception();

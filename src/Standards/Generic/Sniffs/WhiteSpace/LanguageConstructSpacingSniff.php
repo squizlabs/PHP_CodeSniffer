@@ -33,6 +33,7 @@ class LanguageConstructSpacingSniff implements Sniff
                 T_REQUIRE_ONCE,
                 T_NEW,
                 T_YIELD,
+                T_YIELD_FROM,
                 T_THROW,
                 T_NAMESPACE,
                 T_USE,
