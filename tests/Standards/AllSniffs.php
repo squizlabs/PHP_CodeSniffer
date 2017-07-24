@@ -75,7 +75,7 @@ class AllSniffs
             $ignoreTestsForStandards = explode(',', $ignoreTestsForStandards);
         }
 
-        $installedStandards = Standards::getInstalledStandardDetails();
+        $installedStandards = Standards::getInstalledStandardDetails(true);
 
         foreach ($installedStandards as $name => $details) {
             Autoload::addSearchPath($details['path'], $details['namespace']);
