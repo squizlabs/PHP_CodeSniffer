@@ -30,3 +30,7 @@ return;
 return $blah;
 return   $blah;
 return($blah);
+
+return	$tab;
+return
+$newLine;

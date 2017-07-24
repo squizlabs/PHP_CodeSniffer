@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util;
 
 class LanguageConstructSpacingSniff implements Sniff
 {
@@ -56,11 +57,10 @@ class LanguageConstructSpacingSniff implements Sniff
         }
 
         if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
-            $content       = $tokens[($stackPtr + 1)]['content'];
-            $contentLength = strlen($content);
-            if ($contentLength !== 1) {
-                $error = 'Language constructs must be followed by a single space; expected 1 space but found %s';
-                $data  = array($contentLength);
+            $content = $tokens[($stackPtr + 1)]['content'];
+            if ($content !== ' ') {
+                $error = 'Language constructs must be followed by a single space; expected 1 space but found "%s"';
+                $data  = array($tokenContent = Util\Common::prepareForOutput($content));
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'IncorrectSingle', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
