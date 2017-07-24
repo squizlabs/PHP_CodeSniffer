@@ -65,7 +65,7 @@ class LanguageConstructSpacingSniff implements Sniff
             $content = $tokens[($stackPtr + 1)]['content'];
             if ($content !== ' ') {
                 $error = 'Language constructs must be followed by a single space; expected 1 space but found "%s"';
-                $data  = array($tokenContent = Util\Common::prepareForOutput($content));
+                $data  = array(Util\Common::prepareForOutput($content));
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'IncorrectSingle', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
