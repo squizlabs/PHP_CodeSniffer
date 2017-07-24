@@ -334,16 +334,19 @@ class Config
             // Look for a default ruleset in the current directory or higher.
             $currentDir = getcwd();
 
+            $defaultFiles = array(
+                             '.phpcs.xml',
+                             '.phpcs.xml.dist',
+                             'phpcs.xml',
+                             'phpcs.xml.dist',
+                            );
+
             do {
-                $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml';
-                if (is_file($default) === true) {
-                    $this->standards = array($default);
-                    break;
-                } else {
-                    $default = $currentDir.DIRECTORY_SEPARATOR.'phpcs.xml.dist';
+                foreach ($defaultFiles as $defaultFilename) {
+                    $default = $currentDir.DIRECTORY_SEPARATOR.$defaultFilename;
                     if (is_file($default) === true) {
                         $this->standards = array($default);
-                        break;
+                        break(2);
                     }
                 }
 
