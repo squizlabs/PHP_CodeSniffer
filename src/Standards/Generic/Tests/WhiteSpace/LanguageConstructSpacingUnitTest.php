@@ -42,11 +42,10 @@ class LanguageConstructSpacingUnitTest extends AbstractSniffUnitTest
                 44 => 1,
                 45 => 2,
                 48 => 1,
-                49 => 1,
                 50 => 1,
                 52 => 1,
                 55 => 1,
-                58 => 1,
+                57 => 1,
                 59 => 1,
                );
 
