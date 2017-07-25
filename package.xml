@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - A phpcs.xml or phpcs.xml.dist file now takes precedence over the default_standard config setting
     -- Thanks to Björn Fischer for the patch
+  - Both phpcs.xml and phpcs.xml.dist files can now be prefixed with a dot (request #1566)
+    -- The order that the files are searched is: .phpcs.xml, .phpcs.xml.dist, phpcs.xml, phpcs.xml.dist
   - The autoloader will now search for files during unit tests runs from the same locations as during normal phpcs runs
     -- Allows for easier unit testing of custom standards that use helper classes or custom namespaces
   - Include patterns for sniffs now use OR logic instead of AND logic
