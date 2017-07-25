@@ -82,6 +82,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="" name="AbstractSniffUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllSniffs.php" role="test" />
     </dir>
+    <file baseinstalldir="" name="bootstrap.php" role="test" />
     <file baseinstalldir="" name="AllTests.php" role="test" />
     <file baseinstalldir="" name="TestSuite.php" role="test" />
    </dir>

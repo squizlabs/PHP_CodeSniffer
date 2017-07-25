@@ -18,8 +18,9 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Util\Common;
+use PHPUnit\Framework\TestCase;
 
-abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractSniffUnitTest extends TestCase
 {
 
     /**
@@ -110,7 +111,7 @@ abstract class AbstractSniffUnitTest extends \PHPUnit_Framework_TestCase
      * Tests the extending classes Sniff class.
      *
      * @return void
-     * @throws \PHPUnit_Framework_Error
+     * @throws \PHPUnit\Framework\Exception
      */
     final public function testSniff()
     {
