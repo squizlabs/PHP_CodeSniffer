@@ -152,3 +152,7 @@ foo(1 + 2 + 3);
 if (empty($foo[-1]) === true) {
     $foo[-1] = 'foo';
 }
+
+try {
+} catch (AException | BException $e) {
+}

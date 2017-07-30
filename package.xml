@@ -41,6 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The PHP-supplied T_YIELD and T_YIELD_FROM token have been replicated for older PHP versions
     -- Thanks to Michał Bundyra for the patch
   - Squiz.Commenting.FunctionCommentThrowTag now supports PHP 7.1 multi catch exceptions
+  - Squiz.Formatting.OperatorBracket no longer throws errors for PHP 7.1 multi catch exceptions
  </notes>
  <contents>
   <dir name="/">
