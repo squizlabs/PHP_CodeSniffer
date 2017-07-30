@@ -133,16 +133,18 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
                         false
                     );
 
-                    $thrownVar = $phpcsFile->findPrevious(
-                        T_VARIABLE,
-                        ($tokens[$catch]['parenthesis_closer'] - 1),
-                        $tokens[$catch]['parenthesis_opener']
-                    );
+                    if ($catch !== false) {
+                        $thrownVar = $phpcsFile->findPrevious(
+                            T_VARIABLE,
+                            ($tokens[$catch]['parenthesis_closer'] - 1),
+                            $tokens[$catch]['parenthesis_opener']
+                        );
 
-                    if ($tokens[$thrownVar]['content'] === $tokens[$nextToken]['content']) {
-                        $exceptions = explode('|', $phpcsFile->getTokensAsString(($tokens[$catch]['parenthesis_opener'] + 1), ($thrownVar - $tokens[$catch]['parenthesis_opener'] - 1)));
-                        foreach ($exceptions as $exception) {
-                            $thrownExceptions[] = trim($exception);
+                        if ($tokens[$thrownVar]['content'] === $tokens[$nextToken]['content']) {
+                            $exceptions = explode('|', $phpcsFile->getTokensAsString(($tokens[$catch]['parenthesis_opener'] + 1), ($thrownVar - $tokens[$catch]['parenthesis_opener'] - 1)));
+                            foreach ($exceptions as $exception) {
+                                $thrownExceptions[] = trim($exception);
+                            }
                         }
                     }
                 }//end if
