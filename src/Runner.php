@@ -149,7 +149,7 @@ class Runner
     /**
      * Run the PHPCBF script.
      *
-     * @return array
+     * @return int
      */
     public function runPHPCBF()
     {
@@ -200,25 +200,18 @@ class Runner
             return $e->getCode();
         }//end try
 
-        if ($this->reporter->totalFixed === 0) {
-            // Nothing was fixed by PHPCBF.
-            if ($this->reporter->totalFixable === 0) {
-                // Nothing found that could be fixed.
-                return 0;
-            } else {
-                // Something failed to fix.
-                return 2;
-            }
+        if ($this->reporter->totalFixable === 0) {
+            // Nothing found that could be fixed.
+            return 0;
         }
 
-        if ($this->reporter->totalFixable === 0) {
+        if ($this->reporter->totalFixed === $this->reporter->totalFixable) {
             // PHPCBF fixed all fixable errors.
             return 1;
         }
 
-        // PHPCBF fixed some fixable errors, but others failed to fix.
+        // Something failed to fix.
         return 2;
-
     }//end runPHPCBF()
 
 
