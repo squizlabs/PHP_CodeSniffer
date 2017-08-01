@@ -932,3 +932,31 @@ foreach ($var as $val) {
 
 // @codingStandardsChangeSetting Squiz.Commenting.LongConditionClosingComment lineLimit 20
 // @codingStandardsChangeSetting Squiz.Commenting.LongConditionClosingComment commentFormat //end %s
+
+try {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+} catch (DALException $e) {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+} catch (ChannelException $e) {
+    // some code here.
+} finally {
+    // some code here.
+}

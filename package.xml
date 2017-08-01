@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Michał Bundyra for the patch
   - Squiz.Commenting.FunctionCommentThrowTag now supports PHP 7.1 multi catch exceptions
   - Squiz.Formatting.OperatorBracket no longer throws errors for PHP 7.1 multi catch exceptions
+  - Squiz.Commenting.LongConditionClosingComment now supports finally statements
  </notes>
  <contents>
   <dir name="/">

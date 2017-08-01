@@ -55,6 +55,7 @@ class LongConditionClosingCommentUnitTest extends AbstractSniffUnitTest
                     811 => 1,
                     897 => 1,
                     931 => 1,
+                    962 => 1,
                    );
             break;
         case 'LongConditionClosingCommentUnitTest.js':
