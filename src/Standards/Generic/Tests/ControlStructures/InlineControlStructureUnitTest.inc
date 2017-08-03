@@ -200,3 +200,9 @@ if (true)
     }
     catch(Exception $e) {
     }
+
+do {
+	$i++;
+}
+// Comment
+while ($i < 10);
