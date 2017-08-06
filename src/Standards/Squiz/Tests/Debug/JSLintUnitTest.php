@@ -63,5 +63,3 @@ class JSLintUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

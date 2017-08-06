@@ -56,5 +56,3 @@ class IncrementDecrementUsageUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>
