@@ -146,4 +146,48 @@ class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
     }//end testInterface()
 
 
+    /**
+     * Test an interface that extends another.
+     *
+     * @return void
+     */
+    public function testExtendedInterface()
+    {
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testInterfaceThatExtendsInterface */'
+        );
+
+        $found = $this->phpcsFile->findExtendedClassName(($class + 2));
+        $this->assertSame('testFECNInterface', $found);
+
+    }//end testExtendedInterface()
+
+
+    /**
+     * Test an interface that extends another, using namespaces.
+     *
+     * @return void
+     */
+    public function testExtendedNamespacedInterface()
+    {
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testInterfaceThatExtendsFQCNInterface */'
+        );
+
+        $found = $this->phpcsFile->findExtendedClassName(($class + 2));
+        $this->assertSame('\PHP_CodeSniffer\Tests\Core\File\testFECNInterface', $found);
+
+    }//end testExtendedNamespacedInterface()
+
+
 }//end class
