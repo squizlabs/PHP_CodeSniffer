@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Michał Bundyra for the patch
   - The PHP-supplied T_YIELD and T_YIELD_FROM token have been replicated for older PHP versions
     -- Thanks to Michał Bundyra for the patch
+  - Added new Generic.CodeAnalysis.AssignmentInCondition sniff to warn about variable assignments inside conditions
+    -- Thanks to Juliette Reinders Folmer for the contribution
   - Squiz.Commenting.FunctionCommentThrowTag now supports PHP 7.1 multi catch exceptions
   - Squiz.Formatting.OperatorBracket no longer throws errors for PHP 7.1 multi catch exceptions
   - Squiz.Commenting.LongConditionClosingComment now supports finally statements
