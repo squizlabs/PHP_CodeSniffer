@@ -1,0 +1,23 @@
+<documentation title="Assignment In Condition">
+    <standard>
+    <![CDATA[
+    Variable assignments should not be made within conditions.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: A variable comparison being executed within a condition.">
+        <![CDATA[
+if (<em>$test === 'abc'</em>) {
+    // Code.
+}
+        ]]>
+        </code>
+        <code title="Invalid: A variable assignment being made within a condition.">
+        <![CDATA[
+if (<em>$test = 'abc'</em>) {
+    // Code.
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

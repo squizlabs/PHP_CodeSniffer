@@ -175,6 +175,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureStandard.xml" role="php" />
        </dir>
        <dir name="CodeAnalysis">
+        <file baseinstalldir="PHP/CodeSniffer" name="AssignmentInConditionStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyStatementStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopShouldBeWhileLoopStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopWithTestFunctionCallStandard.xml" role="php" />
@@ -250,6 +251,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSameLineSniff.php" role="php" />
        </dir>
        <dir name="CodeAnalysis">
+        <file baseinstalldir="PHP/CodeSniffer" name="AssignmentInConditionSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyStatementSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopShouldBeWhileLoopSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopWithTestFunctionCallSniff.php" role="php" />
@@ -356,6 +358,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSameLineUnitTest.php" role="test" />
        </dir>
        <dir name="CodeAnalysis">
+        <file baseinstalldir="PHP/CodeSniffer" name="AssignmentInConditionUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="AssignmentInConditionUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyStatementUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopShouldBeWhileLoopUnitTest.inc" role="test" />
