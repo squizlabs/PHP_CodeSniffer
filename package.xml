@@ -46,6 +46,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added a new PHP_CodeSniffer\Util\Tokens::$ooScopeTokens static member var for quickly checking object scope
     -- Includes T_CLASS, T_ANON_CLASS, T_INTERFACE, and T_TRAIT
     -- Thanks to Juliette Reinders Folmer for the patch
+  - PHP_CodeSniffer\Files\File::findExtendedClassName() now supports extended interfaces
+    -- Thanks to Martin Hujer for the patch
  </notes>
  <contents>
   <dir name="/">
