@@ -83,7 +83,7 @@ class InlineControlStructureSniff implements Sniff
 
         if ($tokens[$stackPtr]['code'] === T_WHILE) {
             // This could be from a DO WHILE, which doesn't have an opening brace.
-            $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            $lastContent = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
                 $brace = $tokens[$lastContent];
                 if (isset($brace['scope_condition']) === true) {
