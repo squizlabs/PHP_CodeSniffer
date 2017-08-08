@@ -1358,7 +1358,6 @@ class Config
         echo ' <fileList>     A file containing a list of files and/or directories to check (one per line)'.PHP_EOL;
         echo ' <encoding>     The encoding of the files being checked (default is utf-8)'.PHP_EOL;
         echo ' <extensions>   A comma separated list of file extensions to check'.PHP_EOL;
-        echo '                (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '                e.g., module/php,es/js'.PHP_EOL;
         echo ' <generator>    Uses either the "HTML", "Markdown" or "Text" generator'.PHP_EOL;
@@ -1418,7 +1417,6 @@ class Config
         echo ' <fileList>    A file containing a list of files and/or directories to fix (one per line)'.PHP_EOL;
         echo ' <encoding>    The encoding of the files being fixed (default is utf-8)'.PHP_EOL;
         echo ' <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
-        echo '               (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '               The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '               e.g., module/php,es/js'.PHP_EOL;
         echo ' <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
