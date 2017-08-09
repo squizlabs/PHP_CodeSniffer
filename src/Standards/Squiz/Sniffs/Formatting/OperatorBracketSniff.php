@@ -121,7 +121,7 @@ class OperatorBracketSniff implements Sniff
             if (isset($tokens[$lastBracket]['parenthesis_owner']) === true
                 && $tokens[$tokens[$lastBracket]['parenthesis_owner']]['code'] === T_CATCH
             ) {
-                // This is a pipe characets inside a catch statement, so it is acting
+                // This is a pipe character inside a catch statement, so it is acting
                 // as an exception type seperator and not an arithmetic operation.
                 return;
             }
@@ -280,6 +280,7 @@ class OperatorBracketSniff implements Sniff
                     T_DNUMBER         => true,
                     T_STRING          => true,
                     T_WHITESPACE      => true,
+                    T_NS_SEPARATOR    => true,
                     T_THIS            => true,
                     T_SELF            => true,
                     T_OBJECT_OPERATOR => true,

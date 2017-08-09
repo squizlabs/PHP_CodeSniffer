@@ -47,6 +47,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.FunctionCommentThrowTag now supports PHP 7.1 multi catch exceptions
   - Squiz.Formatting.OperatorBracket no longer throws errors for PHP 7.1 multi catch exceptions
   - Squiz.Commenting.LongConditionClosingComment now supports finally statements
+  - Squiz.Formatting.OperatorBracket now correctly fixes pipe separated flags
   - Added a new PHP_CodeSniffer\Util\Tokens::$ooScopeTokens static member var for quickly checking object scope
     -- Includes T_CLASS, T_ANON_CLASS, T_INTERFACE, and T_TRAIT
     -- Thanks to Juliette Reinders Folmer for the patch
