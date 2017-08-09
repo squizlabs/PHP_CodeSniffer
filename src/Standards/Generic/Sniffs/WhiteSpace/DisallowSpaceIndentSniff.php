@@ -72,6 +72,7 @@ class DisallowSpaceIndentSniff implements Sniff
             T_WHITESPACE             => true,
             T_INLINE_HTML            => true,
             T_DOC_COMMENT_WHITESPACE => true,
+            T_COMMENT                => true,
         ];
 
         $tokens = $phpcsFile->getTokens();
@@ -90,10 +91,13 @@ class DisallowSpaceIndentSniff implements Sniff
 
             $recordMetrics = true;
 
-            // If this is an inline HTML token, split the content into
-            // indentation whitespace and the actual HTML/text.
+            // If this is an inline HTML token or a subsequent line of a multi-line comment,
+            // split the content into indentation whitespace and the actual HTML/text.
             $nonWhitespace = '';
-            if ($tokens[$i]['code'] === T_INLINE_HTML && preg_match('`^(\s*)(\S.*)`s', $content, $matches) > 0) {
+            if (($tokens[$i]['code'] === T_INLINE_HTML
+                || $tokens[$i]['code'] === T_COMMENT)
+                && preg_match('`^(\s*)(\S.*)`s', $content, $matches) > 0
+            ) {
                 if (isset($matches[1]) === true) {
                     $content = $matches[1];
                 }
@@ -129,8 +133,11 @@ class DisallowSpaceIndentSniff implements Sniff
                 continue;
             }
 
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
-                // Ignore file/class-level docblocks, especially for recording metrics.
+            if (($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE
+                || $tokens[$i]['code'] === T_COMMENT)
+                && $content === ' '
+            ) {
+                // Ignore all non-indented comments, especially for recording metrics.
                 continue;
             }
 
