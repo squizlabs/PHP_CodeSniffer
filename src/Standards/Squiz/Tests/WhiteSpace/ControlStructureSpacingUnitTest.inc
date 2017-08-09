@@ -218,3 +218,23 @@ if ($foo) {
 
 
 }
+
+if (true) { // some comment goes here
+
+    echo 'foo';
+}
+
+if (true) { echo 'foo';
+
+    echo 'foo';
+}
+
+?>
+<?php foreach($formset['Fieldset'] as $fieldset): ?>
+
+    <?php foreach($fieldset['Field'] as $field):
+
+        echo 'foo';
+    ?>
+    <?php endforeach; ?>
+<?php endforeach; ?>
