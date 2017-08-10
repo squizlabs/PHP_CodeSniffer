@@ -19,9 +19,9 @@ EOF;
    $world = '';
 // here the indention is mixed with tabs and spaces
 // [tab][space][space][space][tab]return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
-		   return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
+		return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
 // [space][space][space][tab]return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
-	   return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
+	return "<$name$xmlns$type_str $atts xsi:nil=\"true\"/>";
 // Doc comments are indent with tabs and one space
 //[tab]/**
 //[tab][space]*
