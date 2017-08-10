@@ -72,6 +72,7 @@ class DisallowTabIndentSniff implements Sniff
             T_INLINE_HTML            => true,
             T_DOC_COMMENT_WHITESPACE => true,
             T_DOC_COMMENT_STRING     => true,
+            T_COMMENT                => true,
         ];
 
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
@@ -91,8 +92,11 @@ class DisallowTabIndentSniff implements Sniff
                 continue;
             }
 
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
-                // Ignore file/class-level DocBlock, especially for recording metrics.
+            if (($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE
+                || $tokens[$i]['code'] === T_COMMENT)
+                && $content === ' '
+            ) {
+                // Ignore all non-indented comments, especially for recording metrics.
                 continue;
             }
 
