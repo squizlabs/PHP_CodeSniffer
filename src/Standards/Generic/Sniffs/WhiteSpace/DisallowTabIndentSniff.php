@@ -66,10 +66,7 @@ class DisallowTabIndentSniff implements Sniff
             }
         }
 
-        $tokens    = $phpcsFile->getTokens();
-        $error     = 'Spaces must be used to indent lines; tabs are not allowed';
-        $errorCode = 'TabsUsed';
-
+        $tokens      = $phpcsFile->getTokens();
         $checkTokens = [
             T_WHITESPACE             => true,
             T_INLINE_HTML            => true,
@@ -107,7 +104,9 @@ class DisallowTabIndentSniff implements Sniff
                 $recordMetrics = false;
             }
 
-            $tabFound = false;
+            $tabFound  = false;
+            $error     = 'Spaces must be used to indent lines; tabs are not allowed';
+            $errorCode = 'TabsUsed';
             if ($tokens[$i]['column'] === 1) {
                 if ($content[0] === "\t") {
                     $tabFound = true;
