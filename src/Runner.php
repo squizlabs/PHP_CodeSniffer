@@ -731,7 +731,7 @@ class Runner
 
         // Show progress information.
         if ($file->ignored === true) {
-            echo 'S';
+            fwrite(STDERR, 'S');
         } else {
             $errors   = $file->getErrorCount();
             $warnings = $file->getWarningCount();
@@ -744,26 +744,26 @@ class Runner
                 // Files with no errors or warnings are . (black).
                 if ($fixable > 0) {
                     if ($this->config->colors === true) {
-                        echo "\033[31m";
+                        fwrite(STDERR, "\033[31m");
                     }
 
-                    echo 'E';
+                    fwrite(STDERR, 'E');
 
                     if ($this->config->colors === true) {
-                        echo "\033[0m";
+                        fwrite(STDERR, "\033[0m");
                     }
                 } else if ($fixed > 0) {
                     if ($this->config->colors === true) {
-                        echo "\033[32m";
+                        fwrite(STDERR, "\033[32m");
                     }
 
-                    echo 'F';
+                    fwrite(STDERR, 'F');
 
                     if ($this->config->colors === true) {
-                        echo "\033[0m";
+                        fwrite(STDERR, "\033[0m");
                     }
                 } else {
-                    echo '.';
+                    fwrite(STDERR, '.');
                 }//end if
             } else {
                 // Files with errors are E (red).
@@ -774,42 +774,42 @@ class Runner
                 if ($errors > 0) {
                     if ($this->config->colors === true) {
                         if ($fixable > 0) {
-                            echo "\033[32m";
+                            fwrite(STDERR, "\033[32m");
                         } else {
-                            echo "\033[31m";
+                            fwrite(STDERR, "\033[31m");
                         }
                     }
 
-                    echo 'E';
+                    fwrite(STDERR, 'E');
 
                     if ($this->config->colors === true) {
-                        echo "\033[0m";
+                        fwrite(STDERR, "\033[0m");
                     }
                 } else if ($warnings > 0) {
                     if ($this->config->colors === true) {
                         if ($fixable > 0) {
-                            echo "\033[32m";
+                            fwrite(STDERR, "\033[32m");
                         } else {
-                            echo "\033[33m";
+                            fwrite(STDERR, "\033[33m");
                         }
                     }
 
-                    echo 'W';
+                    fwrite(STDERR, 'W');
 
                     if ($this->config->colors === true) {
-                        echo "\033[0m";
+                        fwrite(STDERR, "\033[0m");
                     }
                 } else {
-                    echo '.';
+                    fwrite(STDERR, '.');
                 }//end if
             }//end if
         }//end if
 
         if (($numProcessed % 60) === 0) {
             $padding = (strlen($numFiles) - strlen($numProcessed));
-            echo str_repeat(' ', $padding);
+            fwrite(STDERR, str_repeat(' ', $padding));
             $percent = round(($numProcessed / $numFiles) * 100);
-            echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
+            fwrite(STDERR, " $numProcessed / $numFiles ($percent%)".PHP_EOL);
         }
 
     }//end printProgress()
