@@ -92,6 +92,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.php" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.inc" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.php" role="test" />
+      <file baseinstalldir="" name="IsReference.inc" role="test" />
+      <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
      </dir>
      <file baseinstalldir="" name="AllTests.php" role="test" />
      <file baseinstalldir="" name="ErrorSuppressionTest.php" role="test" />
@@ -1541,6 +1543,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.inc" name="tests/Core/File/FindImplementedInterfaceNamesTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.inc" name="tests/Core/File/GetMethodParametersTest.inc" />
+   <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
+   <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -1563,6 +1567,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.inc" name="tests/Core/File/FindImplementedInterfaceNamesTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.inc" name="tests/Core/File/GetMethodParametersTest.inc" />
+   <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
+   <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />

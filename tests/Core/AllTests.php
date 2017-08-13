@@ -36,6 +36,7 @@ require_once 'ErrorSuppressionTest.php';
 require_once 'File/GetMethodParametersTest.php';
 require_once 'File/FindExtendedClassNameTest.php';
 require_once 'File/FindImplementedInterfaceNamesTest.php';
+require_once 'File/IsReferenceTest.php';
 
 class AllTests
 {
@@ -66,6 +67,7 @@ class AllTests
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\GetMethodParametersTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\FindExtendedClassNameTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\FindImplementedInterfaceNamesTest');
+        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\IsReferenceTest');
         return $suite;
 
     }//end suite()
