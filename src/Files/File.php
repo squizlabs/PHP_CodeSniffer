@@ -1158,6 +1158,7 @@ class File
      * <code>
      *   0 => array(
      *         'name'              => '$var',  // The variable name.
+     *         'token'             => integer, // The stack pointer to the variable name.
      *         'content'           => string,  // The full content of the variable definition.
      *         'pass_by_reference' => boolean, // Is the variable passed by reference?
      *         'variable_length'   => boolean, // Is the param of variable length through use of `...` ?
@@ -1218,7 +1219,9 @@ class File
 
             switch ($this->tokens[$i]['code']) {
             case T_BITWISE_AND:
-                $passByReference = true;
+                if ($defaultStart === null) {
+                    $passByReference = true;
+                }
                 break;
             case T_VARIABLE:
                 $currVar = $i;
