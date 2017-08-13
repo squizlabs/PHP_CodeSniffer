@@ -210,3 +210,10 @@ $text = preg_replace_callback(
 
 if (true || /* test */ -1 == $b) {}
 $y = 10 + /* test */ -2;
+
+// Issue #1604.
+Hooks::run( 'ParserOptionsRegister', [
+	&self::$defaults,
+	&self::$inCacheKey,
+	&self::$lazyOptions,
+] );
