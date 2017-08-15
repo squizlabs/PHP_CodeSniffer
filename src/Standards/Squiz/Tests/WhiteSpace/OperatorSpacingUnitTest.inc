@@ -201,3 +201,12 @@ $res = $a  ? : $b;
 $res = $a  ? :  $b;
 
 function foo(string $a = '', ?string $b = ''): ?string {}
+
+// Issue #1605.
+$text = preg_replace_callback(
+		self::CHAR_REFS_REGEX,
+		[ 'Sanitizer', 'decodeCharReferencesCallback' ],
+		$text, /* limit */ -1, $count );
+
+if (true || /* test */ -1 == $b) {}
+$y = 10 + /* test */ -2;
