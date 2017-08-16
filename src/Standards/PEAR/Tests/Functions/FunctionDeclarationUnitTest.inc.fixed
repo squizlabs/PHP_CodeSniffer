@@ -51,7 +51,6 @@ function getInstalledStandards(
     $includeGeneric=false,
     $standardsDir=''
 ) {
-
 }
 
 function &testFunction($arg1,
@@ -203,7 +202,6 @@ function foo(
     $param2,
     $param3,
 ): SomeClass { // Comment here
-
 }
 
 function foo(
@@ -211,4 +209,31 @@ function foo(
     $param2,
     $param3,
 ) : SomeClass {
+}
+
+function foo(
+    $var
+) {
+    // body
+}
+
+function foo(
+    $var
+) {
+/* hello */ 
+    // body
+}
+
+function foo(
+    $var
+) {
+echo 'hi';
+    // body
+}
+
+function foo(
+    $var
+) {
+/* hello */ echo 'hi';
+    // body
 }

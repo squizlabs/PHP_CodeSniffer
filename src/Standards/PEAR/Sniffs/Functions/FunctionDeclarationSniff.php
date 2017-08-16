@@ -400,9 +400,31 @@ class FunctionDeclarationSniff implements Sniff
                 $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($opener - 1), $closeBracket, true);
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->addContent($prev, ' {');
-                $phpcsFile->fixer->replaceToken($opener, '');
+
+                // If the opener is on a line by itself, removing it will create
+                // an empty line, so just remove the entire line instead.
+                $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($opener - 1), $closeBracket, true);
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
+
+                if ($tokens[$prev]['line'] < $tokens[$opener]['line']
+                    && $tokens[$next]['line'] > $tokens[$opener]['line']
+                ) {
+                    // Clear the whole line.
+                    for ($i = ($prev + 1); $i < $next; $i++) {
+                        if ($tokens[$i]['line'] === $tokens[$opener]['line']) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+                    }
+                } else {
+                    // Just remove the opener.
+                    $phpcsFile->fixer->replaceToken($opener, '');
+                    if ($tokens[$next]['line'] === $tokens[$opener]['line']) {
+                        $phpcsFile->fixer->replaceToken(($opener + 1), '');
+                    }
+                }
+
                 $phpcsFile->fixer->endChangeset();
-            }
+            }//end if
         } else {
             $prev = $tokens[($opener - 1)];
             if ($prev['code'] !== T_WHITESPACE) {
