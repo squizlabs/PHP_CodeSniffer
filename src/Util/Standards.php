@@ -255,16 +255,26 @@ class Standards
      * CodeSniffer/Standards directory. Valid coding standards
      * include a ruleset.xml file.
      *
-     * @param string $standard The name of the coding standard.
+     * @param string|\SimpleXMLElement $standard The name of the coding standard.
      *
      * @return string|null
      */
     public static function getInstalledStandardPath($standard)
     {
         $installedPaths = self::getInstalledStandardPaths();
+        $standard       = (string) $standard;
+
+        if (strpos($standard, '.') !== false) {
+            return null;
+        }
+
         foreach ($installedPaths as $installedPath) {
             $standardPath = $installedPath.DIRECTORY_SEPARATOR.$standard;
-            if (file_exists($standardPath) === false && basename($installedPath) === $standard) {
+            if (file_exists($standardPath) === false) {
+                if (basename($installedPath) !== (string) $standard) {
+                    continue;
+                }
+
                 $standardPath = $installedPath;
             }
 
@@ -278,7 +288,7 @@ class Standards
                     return $path;
                 }
             }
-        }
+        }//end foreach
 
         return null;
 
