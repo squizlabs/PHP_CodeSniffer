@@ -1561,6 +1561,15 @@ class Config
 
         self::$configData = $phpCodeSnifferConfig;
 
+        // If the installed paths are being set, make sure all known
+        // standards paths are added to the autoloader.
+        if ($key === 'installed_paths') {
+            $installedStandards = Util\Standards::getInstalledStandardDetails();
+            foreach ($installedStandards as $name => $details) {
+                Autoload::addSearchPath($details['path'], $details['namespace']);
+            }
+        }
+
         return true;
 
     }//end setConfigData()
