@@ -12,6 +12,7 @@
 
 namespace PHP_CodeSniffer;
 
+use Exception;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 
@@ -1555,7 +1556,8 @@ class Config
             $output .= "\n?".'>';
 
             if (file_put_contents($configFile, $output) === false) {
-                return false;
+                $error = 'Failed to write to config file '.$configFile;
+                throw new RuntimeException($error);
             }
         }
 
@@ -1609,6 +1611,10 @@ class Config
         }
 
         include $configFile;
+        if (false === isset($phpCodeSnifferConfig)) {
+            $phpCodeSnifferConfig = null;
+        }
+
         self::$configData = $phpCodeSnifferConfig;
         return self::$configData;
 
