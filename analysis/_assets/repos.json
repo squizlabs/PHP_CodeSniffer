@@ -1370,6 +1370,13 @@
         "path": "src",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "Faveo Servicedesk",
+        "url": "ladybirdweb/faveo-servicedesk-community",
+        "path": "",
+        "ignore": "*/vendor/*",
+        "extensions": ""
     }
 ]
 
