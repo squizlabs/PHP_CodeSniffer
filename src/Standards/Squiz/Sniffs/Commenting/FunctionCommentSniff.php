@@ -138,9 +138,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     // If return type is not void, there needs to be a return statement
                     // somewhere in the function that returns something.
                     if (isset($tokens[$stackPtr]['scope_closer']) === true) {
-                        $endToken    = $tokens[$stackPtr]['scope_closer'];
-                        $returnToken = $phpcsFile->findNext(array(T_RETURN, T_YIELD, T_YIELD_FROM), $stackPtr, $endToken);
-
+                        $endToken = $tokens[$stackPtr]['scope_closer'];
                         for ($returnToken = $stackPtr; $returnToken < $endToken; $returnToken++) {
                             if ($tokens[$returnToken]['code'] === T_CLOSURE
                                 || $tokens[$returnToken]['code'] === T_ANON_CLASS
