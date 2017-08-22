@@ -55,6 +55,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - PHP_CodeSniffer\Files\File::findExtendedClassName() now supports extended interfaces
     -- Thanks to Martin Hujer for the patch
+  - Fixed bug #1550 : Squiz.Commenting.FunctionComment false positive when function contains closure
   - Fixed bug #1577 : Generic.InlineControlStructureSniff breaks with a comment between body and condition in do while loops
   - Fixed bug #1581 : Sniffs not loaded when one-standard directories are being registered in installed_paths
   - Fixed bug #1591 : Autoloader failing to load arbitrary files when installed_paths only set via a custom ruleset
