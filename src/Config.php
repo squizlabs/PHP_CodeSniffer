@@ -168,6 +168,13 @@ class Config
     private static $configData = null;
 
     /**
+     * The full path to the config data file that has been loaded.
+     *
+     * @var string
+     */
+    private static $configDataFile = null;
+
+    /**
      * Automatically discovered executable utility paths.
      *
      * @var array<string, string>
@@ -743,10 +750,12 @@ class Config
                 throw new DeepExitException($e->getMessage().PHP_EOL, 3);
             }
 
+            $output = 'Using config file: '.self::$configDataFile.PHP_EOL.PHP_EOL;
+
             if ($current === null) {
-                $output = "Config value \"$key\" added successfully".PHP_EOL;
+                $output .= "Config value \"$key\" added successfully".PHP_EOL;
             } else {
-                $output = "Config value \"$key\" updated successfully; old value was \"$current\"".PHP_EOL;
+                $output .= "Config value \"$key\" updated successfully; old value was \"$current\"".PHP_EOL;
             }
             throw new DeepExitException($output, 0);
         case 'config-delete':
@@ -756,10 +765,12 @@ class Config
                 throw new DeepExitException($error, 3);
             }
 
+            $output = 'Using config file: '.self::$configDataFile.PHP_EOL.PHP_EOL;
+
             $key     = $this->cliArgs[($pos + 1)];
             $current = self::getConfigData($key);
             if ($current === null) {
-                $output = "Config value \"$key\" has not been set".PHP_EOL;
+                $output .= "Config value \"$key\" has not been set".PHP_EOL;
             } else {
                 try {
                     $this->setConfigData($key, null);
@@ -767,12 +778,13 @@ class Config
                     throw new DeepExitException($e->getMessage().PHP_EOL, 3);
                 }
 
-                $output = "Config value \"$key\" removed successfully; old value was \"$current\"".PHP_EOL;
+                $output .= "Config value \"$key\" removed successfully; old value was \"$current\"".PHP_EOL;
             }
             throw new DeepExitException($output, 0);
         case 'config-show':
             ob_start();
             $data = self::getAllConfigData();
+            echo 'Using config file: '.self::$configDataFile.PHP_EOL.PHP_EOL;
             $this->printConfigData($data);
             $output = ob_get_contents();
             ob_end_clean();
@@ -1559,7 +1571,8 @@ class Config
             }
         }
 
-        self::$configData = $phpCodeSnifferConfig;
+        self::$configDataFile = $configFile;
+        self::$configData     = $phpCodeSnifferConfig;
 
         // If the installed paths are being set, make sure all known
         // standards paths are added to the autoloader.
@@ -1609,7 +1622,8 @@ class Config
         }
 
         include $configFile;
-        self::$configData = $phpCodeSnifferConfig;
+        self::$configDataFile = $configFile;
+        self::$configData     = $phpCodeSnifferConfig;
         return self::$configData;
 
     }//end getAllConfigData()
