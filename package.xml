@@ -39,6 +39,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCS will now follow symlinks under the list of checked directories
     -- This previously only worked if you specified the path to a symlink on the command line
   - Output from --config-show, --config-set, and --config-delete now includes the path to the loaded config file
+  - PHPCS now cleanly exits if its config file is not readable
+    -- Previously, a combination of PHP notices and PHPCS errors would be generated
   - Comment tokens that start with /** are now always tokenized as docblocks
     -- Thanks to Michał Bundyra for the patch
   - The PHP-supplied T_YIELD and T_YIELD_FROM token have been replicated for older PHP versions

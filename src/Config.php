@@ -1546,8 +1546,8 @@ class Config
             if (is_file($configFile) === true
                 && is_writable($configFile) === false
             ) {
-                $error = 'Config file '.$configFile.' is not writable';
-                throw new RuntimeException($error);
+                $error = 'ERROR: Config file '.$configFile.' is not writable'.PHP_EOL.PHP_EOL;
+                throw new DeepExitException($error, 3);
             }
         }//end if
 
@@ -1619,6 +1619,11 @@ class Config
         if (is_file($configFile) === false) {
             self::$configData = array();
             return array();
+        }
+
+        if (is_readable($configFile) === false) {
+            $error = 'ERROR: Config file '.$configFile.' is not readable'.PHP_EOL.PHP_EOL;
+            throw new DeepExitException($error, 3);
         }
 
         include $configFile;
