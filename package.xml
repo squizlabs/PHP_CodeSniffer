@@ -53,6 +53,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.LongConditionClosingComment now supports finally statements
   - Squiz.Formatting.OperatorBracket now correctly fixes pipe separated flags
   - Squiz.WhiteSpace.ControlStructureSpacing now ignores comments when checking blank lines at the top of control structures
+  - Squiz.WhiteSpace.ObjectOperatorSpacing now detects and fixes spaces around double colons
+    -- Thanks to Julius Šmatavičius for the patch
   - Added a new PHP_CodeSniffer\Util\Tokens::$ooScopeTokens static member var for quickly checking object scope
     -- Includes T_CLASS, T_ANON_CLASS, T_INTERFACE, and T_TRAIT
     -- Thanks to Juliette Reinders Folmer for the patch
