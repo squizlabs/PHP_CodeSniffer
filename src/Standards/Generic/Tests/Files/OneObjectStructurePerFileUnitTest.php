@@ -1,9 +1,9 @@
 <?php
 /**
- * Unit test class for the OneInterfacePerFile sniff.
+ * Unit test class for the OneObjectStructurePerFile sniff.
  *
- * @author    Andy Grunwald <andygrunwald@gmail.com>
- * @copyright 2010-2014 Andy Grunwald
+ * @author    Mponos George <gmponos@gmail.com>
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 

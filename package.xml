@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Michał Bundyra for the patch
   - Added new Generic.CodeAnalysis.AssignmentInCondition sniff to warn about variable assignments inside conditions
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Added Generic.Files.OneObjectStructurePerFile sniff to ensure there is a single class/interface/trait per file
+    -- Thanks to Mponos George for the contribution
   - PEAR.Functions.FunctionDeclaration now removes a blank line if it creates one by moving the curly brace during fixing
   - Squiz.Commenting.FunctionCommentThrowTag now supports PHP 7.1 multi catch exceptions
   - Squiz.Formatting.OperatorBracket no longer throws errors for PHP 7.1 multi catch exceptions
@@ -303,6 +305,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LowercasedFilenameSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneClassPerFileSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneInterfacePerFileSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OneObjectStructurePerFileSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneTraitPerFileSniff.php" role="php" />
        </dir>
        <dir name="Formatting">
@@ -460,6 +463,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OneClassPerFileUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneInterfacePerFileUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneInterfacePerFileUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OneObjectStructurePerFileUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OneObjectStructurePerFileUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneTraitPerFileUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneTraitPerFileUnitTest.php" role="test" />
        </dir>
