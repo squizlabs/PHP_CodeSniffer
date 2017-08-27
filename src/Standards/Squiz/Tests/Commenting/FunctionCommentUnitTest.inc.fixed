@@ -898,3 +898,75 @@ function audio(
 {
     return 'test';
 }
+
+/**
+ * Test function
+ *
+ * @return array
+ */
+function returnArrayWithClosure()
+{
+    function () {
+        return;
+    };
+
+    return [];
+}
+
+/**
+ * Test function
+ *
+ * @return array
+ */
+function returnArrayWithAnonymousClass()
+{
+    new class {
+        /**
+         * @return void
+         */
+        public function test() {
+            return;
+        }
+    };
+
+    return [];
+}
+
+/**
+ * @return void
+ */
+function returnVoidWithClosure()
+{
+    function () {
+        return 1;
+    };
+}
+
+/**
+ * @return void
+ */
+function returnVoidWithAnonymousClass()
+{
+    new class {
+        /**
+         * @return integer
+         */
+        public function test()
+        {
+            return 1;
+        }
+    };
+}
+
+class TestReturnVoid
+{
+    /**
+     * @return void
+     */
+    public function test()
+    {
+        function () {
+            return 4;
+        };
+    }
+}

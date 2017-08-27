@@ -78,7 +78,7 @@ class FileList implements \Iterator, \Countable
 
                 $filterClass = $this->getFilterClass();
 
-                $di       = new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS);
+                $di       = new \RecursiveDirectoryIterator($path, (\RecursiveDirectoryIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS));
                 $filter   = new $filterClass($di, $path, $config, $ruleset);
                 $iterator = new \RecursiveIteratorIterator($filter);
 

@@ -39,7 +39,6 @@ function getInstalledStandards(
     includeGeneric=false,
     standardsDir=''
 ) {
-
 }
 
 var a = Function('return 1+1');

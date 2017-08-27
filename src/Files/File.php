@@ -2120,6 +2120,7 @@ class File
 
     /**
      * Returns the name of the class that the specified class extends.
+     * (works for classes, anonymous classes and interfaces)
      *
      * Returns FALSE on error or if there is no extended class name.
      *
@@ -2136,6 +2137,7 @@ class File
 
         if ($this->tokens[$stackPtr]['code'] !== T_CLASS
             && $this->tokens[$stackPtr]['code'] !== T_ANON_CLASS
+            && $this->tokens[$stackPtr]['code'] !== T_INTERFACE
         ) {
             return false;
         }

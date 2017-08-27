@@ -169,7 +169,7 @@ class OperatorSpacingSniff implements Sniff
         if ($tokens[$stackPtr]['code'] === T_MINUS || $tokens[$stackPtr]['code'] === T_PLUS) {
             // Check minus spacing, but make sure we aren't just assigning
             // a minus value or returning one.
-            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($tokens[$prev]['code'] === T_RETURN) {
                 // Just returning a negative value; eg. (return -1).
                 return;

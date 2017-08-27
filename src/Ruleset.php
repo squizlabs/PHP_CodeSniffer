@@ -383,7 +383,7 @@ class Ruleset
                 echo "\tProcessing rule \"".$rule['ref'].'"'.PHP_EOL;
             }
 
-            $expandedSniffs = $this->expandRulesetReference($rule['ref'], $rulesetDir, $depth);
+            $expandedSniffs = $this->expandRulesetReference((string) $rule['ref'], $rulesetDir, $depth);
             $newSniffs      = array_diff($expandedSniffs, $includedSniffs);
             $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
 

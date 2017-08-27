@@ -9,11 +9,9 @@ class MyClass
     public static function myFunction() {}
     final public function myFunction() {}
     final public function myFunction() {}
-    abstract private function myFunction() {}
-    abstract private function myFunction() {}
+    abstract private function myFunction();
+    abstract private function myFunction();
     final public static function myFunction() {}
-    abstract final protected static function myFunction() {}
+    abstract final protected static function myFunction();
     public function _() {}
 }
-
-?>

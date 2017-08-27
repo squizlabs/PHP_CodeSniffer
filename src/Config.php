@@ -168,6 +168,13 @@ class Config
     private static $configData = null;
 
     /**
+     * The full path to the config data file that has been loaded.
+     *
+     * @var string
+     */
+    private static $configDataFile = null;
+
+    /**
      * Automatically discovered executable utility paths.
      *
      * @var array<string, string>
@@ -743,10 +750,12 @@ class Config
                 throw new DeepExitException($e->getMessage().PHP_EOL, 3);
             }
 
+            $output = 'Using config file: '.self::$configDataFile.PHP_EOL.PHP_EOL;
+
             if ($current === null) {
-                $output = "Config value \"$key\" added successfully".PHP_EOL;
+                $output .= "Config value \"$key\" added successfully".PHP_EOL;
             } else {
-                $output = "Config value \"$key\" updated successfully; old value was \"$current\"".PHP_EOL;
+                $output .= "Config value \"$key\" updated successfully; old value was \"$current\"".PHP_EOL;
             }
             throw new DeepExitException($output, 0);
         case 'config-delete':
@@ -756,10 +765,12 @@ class Config
                 throw new DeepExitException($error, 3);
             }
 
+            $output = 'Using config file: '.self::$configDataFile.PHP_EOL.PHP_EOL;
+
             $key     = $this->cliArgs[($pos + 1)];
             $current = self::getConfigData($key);
             if ($current === null) {
-                $output = "Config value \"$key\" has not been set".PHP_EOL;
+                $output .= "Config value \"$key\" has not been set".PHP_EOL;
             } else {
                 try {
                     $this->setConfigData($key, null);
@@ -767,12 +778,13 @@ class Config
                     throw new DeepExitException($e->getMessage().PHP_EOL, 3);
                 }
 
-                $output = "Config value \"$key\" removed successfully; old value was \"$current\"".PHP_EOL;
+                $output .= "Config value \"$key\" removed successfully; old value was \"$current\"".PHP_EOL;
             }
             throw new DeepExitException($output, 0);
         case 'config-show':
             ob_start();
             $data = self::getAllConfigData();
+            echo 'Using config file: '.self::$configDataFile.PHP_EOL.PHP_EOL;
             $this->printConfigData($data);
             $output = ob_get_contents();
             ob_end_clean();
@@ -1358,7 +1370,6 @@ class Config
         echo ' <fileList>     A file containing a list of files and/or directories to check (one per line)'.PHP_EOL;
         echo ' <encoding>     The encoding of the files being checked (default is utf-8)'.PHP_EOL;
         echo ' <extensions>   A comma separated list of file extensions to check'.PHP_EOL;
-        echo '                (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '                The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '                e.g., module/php,es/js'.PHP_EOL;
         echo ' <generator>    Uses either the "HTML", "Markdown" or "Text" generator'.PHP_EOL;
@@ -1418,7 +1429,6 @@ class Config
         echo ' <fileList>    A file containing a list of files and/or directories to fix (one per line)'.PHP_EOL;
         echo ' <encoding>    The encoding of the files being fixed (default is utf-8)'.PHP_EOL;
         echo ' <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
-        echo '               (extension filtering only valid when checking a directory)'.PHP_EOL;
         echo '               The type of the file can be specified using: ext/type'.PHP_EOL;
         echo '               e.g., module/php,es/js'.PHP_EOL;
         echo ' <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
@@ -1536,8 +1546,8 @@ class Config
             if (is_file($configFile) === true
                 && is_writable($configFile) === false
             ) {
-                $error = 'Config file '.$configFile.' is not writable';
-                throw new RuntimeException($error);
+                $error = 'ERROR: Config file '.$configFile.' is not writable'.PHP_EOL.PHP_EOL;
+                throw new DeepExitException($error, 3);
             }
         }//end if
 
@@ -1561,7 +1571,17 @@ class Config
             }
         }
 
-        self::$configData = $phpCodeSnifferConfig;
+        self::$configDataFile = $configFile;
+        self::$configData     = $phpCodeSnifferConfig;
+
+        // If the installed paths are being set, make sure all known
+        // standards paths are added to the autoloader.
+        if ($key === 'installed_paths') {
+            $installedStandards = Util\Standards::getInstalledStandardDetails();
+            foreach ($installedStandards as $name => $details) {
+                Autoload::addSearchPath($details['path'], $details['namespace']);
+            }
+        }
 
         return true;
 
@@ -1601,8 +1621,14 @@ class Config
             return array();
         }
 
+        if (is_readable($configFile) === false) {
+            $error = 'ERROR: Config file '.$configFile.' is not readable'.PHP_EOL.PHP_EOL;
+            throw new DeepExitException($error, 3);
+        }
+
         include $configFile;
-        self::$configData = $phpCodeSnifferConfig;
+        self::$configDataFile = $configFile;
+        self::$configData     = $phpCodeSnifferConfig;
         return self::$configData;
 
     }//end getAllConfigData()

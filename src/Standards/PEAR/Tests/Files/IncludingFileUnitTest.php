@@ -65,5 +65,3 @@ class IncludingFileUnitTest extends AbstractSniffUnitTest
 
 
 }//end class
-
-?>

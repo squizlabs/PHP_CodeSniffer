@@ -457,8 +457,8 @@ class CSS extends PHP
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* token is a string joiner; ignoring this and previous token".PHP_EOL;
-                            $old = PHP_CodeSniffer::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
-                            $new = PHP_CodeSniffer::prepareForOutput($newContent);
+                            $old = Util\Common::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
+                            $new = Util\Common::prepareForOutput($newContent);
                             echo "\t\t=> token ".($stackPtr + 1)." content changed from \"$old\" to \"$new\"".PHP_EOL;
                         }
 
