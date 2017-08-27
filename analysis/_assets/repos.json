@@ -1321,10 +1321,17 @@
         "path": "",
         "ignore": "*/Lib/*,*/config/*,*/Composer/*,*/webroot/*",
         "extensions": ""
-     },
+    },
     {
         "name": "Faveo Help-desk",
         "url": "ladybirdweb/faveo-helpdesk",
+        "path": "",
+        "ignore": "*/vendor/*",
+        "extensions": ""
+    },
+    {
+        "name": "Faveo Servicedesk",
+        "url": "ladybirdweb/faveo-servicedesk-community",
         "path": "",
         "ignore": "*/vendor/*",
         "extensions": ""
