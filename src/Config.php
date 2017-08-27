@@ -1567,12 +1567,14 @@ class Config
             $output .= "\n?".'>';
 
             if (file_put_contents($configFile, $output) === false) {
-                return false;
+                $error = 'ERROR: Config file '.$configFile.' could not be written'.PHP_EOL.PHP_EOL;
+                throw new DeepExitException($error, 3);
             }
+
+            self::$configDataFile = $configFile;
         }
 
-        self::$configDataFile = $configFile;
-        self::$configData     = $phpCodeSnifferConfig;
+        self::$configData = $phpCodeSnifferConfig;
 
         // If the installed paths are being set, make sure all known
         // standards paths are added to the autoloader.
