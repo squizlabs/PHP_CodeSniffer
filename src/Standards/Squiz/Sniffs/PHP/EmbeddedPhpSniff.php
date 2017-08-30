@@ -341,31 +341,33 @@ class EmbeddedPhpSniff implements Sniff
         }
 
         $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($closeTag - 1), $stackPtr, true);
-        if ((isset($tokens[$prev]['scope_opener']) === false
-            || $tokens[$prev]['scope_opener'] !== $prev)
-            && (isset($tokens[$prev]['scope_closer']) === false
-            || $tokens[$prev]['scope_closer'] !== $prev)
-            && $tokens[$prev]['code'] !== T_SEMICOLON
-        ) {
-            $error = 'Inline PHP statement must end with a semicolon';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSemicolon');
-            if ($fix === true) {
-                $phpcsFile->fixer->addContent($prev, ';');
-            }
-        } else if ($tokens[$prev]['code'] === T_SEMICOLON) {
-            $statementCount = 1;
-            for ($i = ($stackPtr + 1); $i < $prev; $i++) {
-                if ($tokens[$i]['code'] === T_SEMICOLON) {
-                    $statementCount++;
+        if ($prev !== $stackPtr) {
+            if ((isset($tokens[$prev]['scope_opener']) === false
+                || $tokens[$prev]['scope_opener'] !== $prev)
+                && (isset($tokens[$prev]['scope_closer']) === false
+                || $tokens[$prev]['scope_closer'] !== $prev)
+                && $tokens[$prev]['code'] !== T_SEMICOLON
+            ) {
+                $error = 'Inline PHP statement must end with a semicolon';
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSemicolon');
+                if ($fix === true) {
+                    $phpcsFile->fixer->addContent($prev, ';');
+                }
+            } else if ($tokens[$prev]['code'] === T_SEMICOLON) {
+                $statementCount = 1;
+                for ($i = ($stackPtr + 1); $i < $prev; $i++) {
+                    if ($tokens[$i]['code'] === T_SEMICOLON) {
+                        $statementCount++;
+                    }
+                }
+
+                if ($statementCount > 1) {
+                    $error = 'Inline PHP statement must contain a single statement; %s found';
+                    $data  = array($statementCount);
+                    $phpcsFile->addError($error, $stackPtr, 'MultipleStatements', $data);
                 }
             }
-
-            if ($statementCount > 1) {
-                $error = 'Inline PHP statement must contain a single statement; %s found';
-                $data  = array($statementCount);
-                $phpcsFile->addError($error, $stackPtr, 'MultipleStatements', $data);
-            }
-        }
+        }//end if
 
         $trailingSpace = 0;
         if ($tokens[($closeTag - 1)]['code'] === T_WHITESPACE) {
