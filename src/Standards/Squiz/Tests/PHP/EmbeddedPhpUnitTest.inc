@@ -113,3 +113,5 @@ function foo()
 <?php echo 'oops'; // Something.?>
 
 <?php /* translators: My sites label */ ?>
+<?php /* translators: My sites label */?>
+<?php /* translators: My sites label */      ?>

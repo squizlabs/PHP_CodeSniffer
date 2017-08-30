@@ -308,7 +308,7 @@ class EmbeddedPhpSniff implements Sniff
         }
 
         // Check that there is one, and only one space at the start of the statement.
-        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), ($closeTag - 1), true);
+        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), $closeTag, true);
 
         if ($firstContent === false) {
             $error = 'Empty embedded PHP tag found';
