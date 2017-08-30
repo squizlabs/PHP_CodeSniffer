@@ -14,11 +14,8 @@ EOT;
 function test()
     {
         $arr = array(
-            'a' => 'a'
-<<<<<<< HEAD
-            'b' => 'b'
-=======
-            'c' => 'c'
->>>>>>> master
+            'a' => 'a',
+            'b' => 'b',
+            'c' => 'c',
         );
     }
