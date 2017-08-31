@@ -529,6 +529,8 @@ final class Tokens
                                          T_ISSET        => T_ISSET,
                                          T_UNSET        => T_UNSET,
                                          T_EMPTY        => T_EMPTY,
+                                         T_SELF         => T_SELF,
+                                         T_STATIC       => T_STATIC,
                                         );
 
     /**

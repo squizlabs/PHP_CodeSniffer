@@ -177,3 +177,36 @@ $var = foo('Testing
     // hi
     )
 ;
+
+class Test
+{
+    public function getInstance()
+    {
+        return new static(
+          'arg',
+              'foo'
+        );
+    }
+
+    public function getSelf()
+    {
+        return new self(
+         'a', 'b', 'c'
+        );
+    }
+}
+
+$x = $var('y',
+    'x');
+
+$obj->{$x}(1,
+2);
+
+(function ($a, $b) {
+    return function ($c, $d) use ($a, $b) {
+        echo $a, $b, $c, $d;
+    };
+})(
+  'a','b'
+)('c',
+    'd');

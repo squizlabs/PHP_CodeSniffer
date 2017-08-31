@@ -26,8 +26,9 @@ class FunctionCallArgumentSpacingSniff implements Sniff
     {
         $tokens = Tokens::$functionNameTokens;
 
-        // For calling closures.
         $tokens[] = T_VARIABLE;
+        $tokens[] = T_CLOSE_CURLY_BRACKET;
+        $tokens[] = T_CLOSE_PARENTHESIS;
 
         return $tokens;
 
