@@ -1424,6 +1424,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="MemberVarSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="MemberVarSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ObjectOperatorSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ObjectOperatorSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ObjectOperatorSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingUnitTest.inc.fixed" role="test" />
