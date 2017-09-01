@@ -590,6 +590,22 @@ class ScopeIndentSniff implements Sniff
 
                 if (isset($tokens[$scopeCloser]['scope_condition']) === true) {
                     $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$scopeCloser]['scope_condition'], true);
+                    if ($this->debug === true) {
+                        $line = $tokens[$first]['line'];
+                        $type = $tokens[$first]['type'];
+                        echo "\t* first token is $first ($type) on line $line *".PHP_EOL;
+                    }
+
+                    while ($tokens[$first]['code'] === T_CONSTANT_ENCAPSED_STRING
+                        && $tokens[($first - 1)]['code'] === T_CONSTANT_ENCAPSED_STRING
+                    ) {
+                        $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, ($first - 1), true);
+                        if ($this->debug === true) {
+                            $line = $tokens[$first]['line'];
+                            $type = $tokens[$first]['type'];
+                            echo "\t* found multi-line string; amended first token is $first ($type) on line $line *".PHP_EOL;
+                        }
+                    }
 
                     $currentIndent = ($tokens[$first]['column'] - 1);
                     if (isset($adjustments[$first]) === true) {
@@ -1003,7 +1019,24 @@ class ScopeIndentSniff implements Sniff
                     echo "Open $type on line $line".PHP_EOL;
                 }
 
-                $first         = $phpcsFile->findFirstOnLine(T_WHITESPACE, $i, true);
+                $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $i, true);
+                if ($this->debug === true) {
+                    $line = $tokens[$first]['line'];
+                    $type = $tokens[$first]['type'];
+                    echo "\t* first token is $first ($type) on line $line *".PHP_EOL;
+                }
+
+                while ($tokens[$first]['code'] === T_CONSTANT_ENCAPSED_STRING
+                    && $tokens[($first - 1)]['code'] === T_CONSTANT_ENCAPSED_STRING
+                ) {
+                    $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, ($first - 1), true);
+                    if ($this->debug === true) {
+                        $line = $tokens[$first]['line'];
+                        $type = $tokens[$first]['type'];
+                        echo "\t* found multi-line string; amended first token is $first ($type) on line $line *".PHP_EOL;
+                    }
+                }
+
                 $currentIndent = (($tokens[$first]['column'] - 1) + $this->indent);
                 $openScopes[$tokens[$i]['scope_closer']] = $tokens[$i]['scope_condition'];
 

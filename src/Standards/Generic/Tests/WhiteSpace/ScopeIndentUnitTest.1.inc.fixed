@@ -1228,6 +1228,22 @@ switch ($sContext) {
     }
 }
 
+public function foo()
+{
+    $foo('some
+    long description', function () {
+    });
+
+    $foo('some
+    long
+    description', function () {
+    });
+
+    $foo(
+    'some long description', function () {
+    });
+}
+
 function foo()
 {
     $foo = array(
