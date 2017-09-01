@@ -152,3 +152,63 @@ class Foo
     private $caseStudy = null;
 
 }
+
+// @codingStandardsChangeSetting Squiz.WhiteSpace.MemberVarSpacing spacing 2
+
+class MyClass
+{
+    public $var1 = 'value';
+
+
+    public $var2 = 'value';
+
+    public $var3 = 'value';
+
+}//end class
+
+// @codingStandardsChangeSetting Squiz.WhiteSpace.MemberVarSpacing spacing 1
+// @codingStandardsChangeSetting Squiz.WhiteSpace.MemberVarSpacing spacingBeforeFirst 0
+
+class MyClass
+{
+    public $var1 = 'value';
+
+
+    public $var2 = 'value';
+
+    public $var3 = 'value';
+
+}//end class
+
+class MyClass
+{
+
+    public $var1 = 'value';
+
+    public $var2 = 'value';
+
+    public $var3 = 'value';
+
+}//end class
+
+// @codingStandardsChangeSetting Squiz.WhiteSpace.MemberVarSpacing spacing 0
+
+class MyClass
+{
+    public $var1 = 'value';
+
+    public $var2 = 'value';
+    public $var3 = 'value';
+
+}//end class
+
+interface MyInterface
+{
+
+    /* testing */
+    public $var1 = 'value';
+
+    public $var2 = 'value';
+    public $var3 = 'value';
+
+}//end class

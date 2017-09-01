@@ -52,7 +52,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Function call sniffs now check variable function names and self/static object creation
     -- Specific sniffs are Generic.Functions.FunctionCallArgumentSpacing, PEAR.Functions.FunctionCallSignature, and PSR2.Methods.FunctionCallSignature
     -- Thanks to Michał Bundyra for the patch
-  - Generic.Files.LineLength can now be configure to ignore all comment lines, no matter their length
+  - Generic.Files.LineLength can now be configured to ignore all comment lines, no matter their length
     -- Set the ignoreComments property to TRUE (default is FALSE) in your ruleset.xml file to enable this
     -- Thanks to Juliette Reinders Folmer for the patch
   - PEAR.Functions.FunctionDeclaration now removes a blank line if it creates one by moving the curly brace during fixing
@@ -63,6 +63,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.WhiteSpace.ControlStructureSpacing now ignores comments when checking blank lines at the top of control structures
   - Squiz.WhiteSpace.ObjectOperatorSpacing now detects and fixes spaces around double colons
     -- Thanks to Julius Šmatavičius for the patch
+  - Squiz.WhiteSpace.MemberVarSpacing can now be configured to check any number of blank lines between member vars
+    -- Set the spacing property (default is 1) in your ruleset.xml file to set the spacing
+  - Squiz.WhiteSpace.MemberVarSpacing can now be configured to check a different number of blank lines before the first member var
+    -- Set the spacingBeforeFirst property (default is 1) in your ruleset.xml file to set the spacing
   - Added a new PHP_CodeSniffer\Util\Tokens::$ooScopeTokens static member var for quickly checking object scope
     -- Includes T_CLASS, T_ANON_CLASS, T_INTERFACE, and T_TRAIT
     -- Thanks to Juliette Reinders Folmer for the patch
