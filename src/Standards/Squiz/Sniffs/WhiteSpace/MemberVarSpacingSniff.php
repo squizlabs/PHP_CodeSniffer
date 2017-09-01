@@ -18,6 +18,22 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
 
     /**
+     * The number of blank lines between member vars.
+     *
+     * @var integer
+     */
+    public $spacing = 1;
+
+
+    /**
+     * The number of blank lines between the class opener and the first member var.
+     *
+     * @var integer
+     */
+    public $firstMemberSpacing = 1;
+
+
+    /**
      * Processes the function tokens within the class.
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
@@ -86,22 +102,34 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
         $prev       = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($first - 1), null, true);
         $foundLines = ($tokens[$first]['line'] - $tokens[$prev]['line'] - 1);
-        if ($foundLines === 1) {
+        $error      = 'Expected %s blank line before member var; %s found';
+        $expected   = $this->spacing;
+        $isFirst    = $tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET;
+
+        // We allow specifying a different number of spaces to the first operator.
+        if ($isFirst === true) {
+            $expected = $this->firstMemberSpacing;
+            $error    = 'Expected %s blank lines before first member var; %s found';
+        }
+
+        if ($foundLines === $this->spacing || ($isFirst === true && $foundLines === $this->firstMemberSpacing)) {
             return;
         }
 
-        $error = 'Expected 1 blank line before member var; %s found';
-        $data  = array($foundLines);
-        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
+        $data = array(
+                 $expected,
+                 $foundLines,
+                );
+        $fix  = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
         if ($fix === true) {
             $phpcsFile->fixer->beginChangeset();
-            for ($i = ($prev + 1); $i < $first; $i++) {
+            for ($i = ($prev + $expected); $i < $first; $i++) {
                 if ($tokens[$i]['line'] === $tokens[$prev]['line']) {
                     continue;
                 }
 
                 if ($tokens[$i]['line'] === $tokens[$first]['line']) {
-                    $phpcsFile->fixer->addNewline(($i - 1));
+                    $phpcsFile->fixer->addNewline(($i - $expected));
                     break;
                 }
 
