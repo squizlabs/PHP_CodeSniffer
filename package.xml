@@ -55,6 +55,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.Files.LineLength can now be configured to ignore all comment lines, no matter their length
     -- Set the ignoreComments property to TRUE (default is FALSE) in your ruleset.xml file to enable this
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.PHP.LowerCaseKeyword now checks self, parent, yield, yield from, and closure (function) keywords
+    -- Thanks to Michał Bundyra for the patch
   - PEAR.Functions.FunctionDeclaration now removes a blank line if it creates one by moving the curly brace during fixing
   - Squiz.Commenting.FunctionCommentThrowTag now supports PHP 7.1 multi catch exceptions
   - Squiz.Formatting.OperatorBracket no longer throws errors for PHP 7.1 multi catch exceptions
