@@ -62,6 +62,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Formatting.OperatorBracket no longer throws errors for PHP 7.1 multi catch exceptions
   - Squiz.Commenting.LongConditionClosingComment now supports finally statements
   - Squiz.Formatting.OperatorBracket now correctly fixes pipe separated flags
+  - Squiz.PHP.EmbeddedPhp now properly fixes cases where the only content in an embedded PHP block is a comment
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.ControlStructureSpacing now ignores comments when checking blank lines at the top of control structures
   - Squiz.WhiteSpace.ObjectOperatorSpacing now detects and fixes spaces around double colons
     -- Thanks to Julius Šmatavičius for the patch
