@@ -53,6 +53,11 @@ class ScopeClosingBraceSniff implements Sniff
         // or an if with an else before it, then we need to start the scope
         // checking from there, rather than the current token.
         $lineStart = $phpcsFile->findFirstOnLine(array(T_WHITESPACE, T_INLINE_HTML), $stackPtr, true);
+        while ($tokens[$lineStart]['code'] === T_CONSTANT_ENCAPSED_STRING
+            && $tokens[($lineStart - 1)]['code'] === T_CONSTANT_ENCAPSED_STRING
+        ) {
+            $lineStart = $phpcsFile->findFirstOnLine(array(T_WHITESPACE, T_INLINE_HTML), ($lineStart - 1), true);
+        }
 
         $startColumn = $tokens[$lineStart]['column'];
         $scopeStart  = $tokens[$stackPtr]['scope_opener'];
