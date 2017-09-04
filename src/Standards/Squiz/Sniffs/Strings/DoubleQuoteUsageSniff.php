@@ -73,13 +73,7 @@ class DoubleQuoteUsageSniff implements Sniff
         $skipTo = ($lastStringToken + 1);
 
         // Check if it's a double quoted string.
-        if (strpos($workingString, '"') === false) {
-            return $skipTo;
-        }
-
-        // Make sure it's not a part of a string started in a previous line.
-        // If it is, then we have already checked it.
-        if ($workingString[0] !== '"') {
+        if ($workingString[0] !== '"' || substr($workingString, -1) !== '"') {
             return $skipTo;
         }
 
