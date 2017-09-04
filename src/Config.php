@@ -1378,7 +1378,7 @@ class Config
         echo ' <processes>    How many files should be checked simultaneously (default is 1)'.PHP_EOL;
         echo ' <report>       Print either the "full", "xml", "checkstyle", "csv"'.PHP_EOL;
         echo '                "json", "junit", "emacs", "source", "summary", "diff"'.PHP_EOL;
-        echo '                "svnblame", "gitblame", "hgblame" or "notifysend" report'.PHP_EOL;
+        echo '                "svnblame", "gitblame", "hgblame", "notifysend" or "teamcity" report'.PHP_EOL;
         echo '                (the "full" report is printed by default)'.PHP_EOL;
         echo ' <reportFile>   Write the report to the specified file path'.PHP_EOL;
         echo ' <reportWidth>  How many columns wide screen reports should be printed'.PHP_EOL;

@@ -180,6 +180,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="PHP/CodeSniffer" name="Svnblame.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="VersionControl.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Xml.php" role="php" />
+     <file baseinstalldir="PHP/CodeSniffer" name="Teamcity.php" role="php" />
     </dir>
     <dir name="Sniffs">
      <file baseinstalldir="PHP/CodeSniffer" name="AbstractPatternSniff.php" role="php" />
