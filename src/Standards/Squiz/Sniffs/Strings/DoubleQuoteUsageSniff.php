@@ -49,7 +49,14 @@ class DoubleQuoteUsageSniff implements Sniff
             return;
         }
 
-        $workingString   = $tokens[$stackPtr]['content'];
+        // If tabs are being converted to spaces by the tokeniser, the
+        // original content should be used instead of the converted content.
+        if (isset($tokens[$stackPtr]['orig_content']) === true) {
+            $workingString = $tokens[$stackPtr]['orig_content'];
+        } else {
+            $workingString = $tokens[$stackPtr]['content'];
+        }
+
         $lastStringToken = $stackPtr;
 
         $i = ($stackPtr + 1);
@@ -57,7 +64,12 @@ class DoubleQuoteUsageSniff implements Sniff
             while ($i < $phpcsFile->numTokens
                 && $tokens[$i]['code'] === $tokens[$stackPtr]['code']
             ) {
-                $workingString  .= $tokens[$i]['content'];
+                if (isset($tokens[$i]['orig_content']) === true) {
+                    $workingString .= $tokens[$i]['orig_content'];
+                } else {
+                    $workingString .= $tokens[$i]['content'];
+                }
+
                 $lastStringToken = $i;
                 $i++;
             }
