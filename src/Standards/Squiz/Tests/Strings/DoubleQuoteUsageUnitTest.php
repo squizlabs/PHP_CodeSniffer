@@ -38,6 +38,7 @@ class DoubleQuoteUsageUnitTest extends AbstractSniffUnitTest
                 22 => 1,
                 29 => 1,
                 30 => 1,
+                32 => 1,
                );
 
     }//end getErrorList()
