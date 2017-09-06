@@ -107,10 +107,12 @@ class InlineIfDeclarationSniff implements Sniff
                 $error = 'Inline shorthand IF statement requires 1 space after THEN; %s found';
                 $data  = array($spaceAfter);
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterThen', $data);
-                if ($spaceAfter === 0) {
-                    $phpcsFile->fixer->addContent($stackPtr, ' ');
-                } else {
-                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                if ($fix === true) {
+                    if ($spaceAfter === 0) {
+                        $phpcsFile->fixer->addContent($stackPtr, ' ');
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                    }
                 }
             }
 
@@ -138,10 +140,12 @@ class InlineIfDeclarationSniff implements Sniff
             $error = 'Inline shorthand IF statement requires 1 space after ELSE; %s found';
             $data  = array($spaceAfter);
             $fix   = $phpcsFile->addFixableError($error, $inlineElse, 'SpacingAfterElse', $data);
-            if ($spaceAfter === 0) {
-                $phpcsFile->fixer->addContent($inlineElse, ' ');
-            } else {
-                $phpcsFile->fixer->replaceToken(($inlineElse + 1), ' ');
+            if ($fix === true) {
+                if ($spaceAfter === 0) {
+                    $phpcsFile->fixer->addContent($inlineElse, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken(($inlineElse + 1), ' ');
+                }
             }
         }
 
