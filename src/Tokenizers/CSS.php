@@ -504,7 +504,6 @@ class CSS extends PHP
             if ($finalTokens[($numTokens - 2)]['content'] === '') {
                 unset($finalTokens[($numTokens - 2)]);
                 $finalTokens = array_values($finalTokens);
-                $numTokens   = count($finalTokens);
             }
         }
 

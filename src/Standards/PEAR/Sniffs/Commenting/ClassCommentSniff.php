@@ -45,9 +45,7 @@ class ClassCommentSniff extends FileCommentSniff
     {
         $this->currentFile = $phpcsFile;
 
-        $tokens    = $phpcsFile->getTokens();
-        $type      = strtolower($tokens[$stackPtr]['content']);
-        $errorData = array($type);
+        $tokens = $phpcsFile->getTokens();
 
         $find   = Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;

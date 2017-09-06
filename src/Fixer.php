@@ -145,11 +145,6 @@ class Fixer
             return false;
         }
 
-        $stdin = false;
-        if (empty($this->currentFile->config->files) === true) {
-            $stdin = true;
-        }
-
         $this->enabled = true;
 
         $this->loops = 0;

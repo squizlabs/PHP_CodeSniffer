@@ -59,16 +59,12 @@ class SwitchDeclarationSniff implements Sniff
         $switch        = $tokens[$stackPtr];
         $nextCase      = $stackPtr;
         $caseAlignment = ($switch['column'] + $this->indent);
-        $caseCount     = 0;
-        $foundDefault  = false;
 
         while (($nextCase = $this->findNextCase($phpcsFile, ($nextCase + 1), $switch['scope_closer'])) !== false) {
             if ($tokens[$nextCase]['code'] === T_DEFAULT) {
-                $type         = 'default';
-                $foundDefault = true;
+                $type = 'default';
             } else {
                 $type = 'case';
-                $caseCount++;
             }
 
             if ($tokens[$nextCase]['content'] !== strtolower($tokens[$nextCase]['content'])) {

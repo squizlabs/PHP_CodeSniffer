@@ -54,8 +54,6 @@ class SubversionPropertiesSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
         // Make sure this is the first PHP open tag so we don't process the
         // same file twice.
         $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1));

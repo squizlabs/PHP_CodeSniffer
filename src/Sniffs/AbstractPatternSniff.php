@@ -675,7 +675,6 @@ abstract class AbstractPatternSniff implements Sniff
                         ($next - $stackPtr)
                     );
 
-                    $diff = ($next - $stackPtr);
                     $lastAddedStackPtr = ($next - 1);
                 }
 
