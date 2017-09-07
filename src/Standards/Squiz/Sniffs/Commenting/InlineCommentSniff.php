@@ -278,6 +278,12 @@ class InlineCommentSniff implements Sniff
         // Finally, the line below the last comment cannot be empty if this inline
         // comment is on a line by itself.
         if ($tokens[$previousContent]['line'] < $tokens[$stackPtr]['line']) {
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+            if ($next === false) {
+                // Ignore if the comment is the last non-whitespace token in a file.
+                return;
+            }
+
             $start = false;
             for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
                 if ($tokens[$i]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
@@ -292,7 +298,6 @@ class InlineCommentSniff implements Sniff
             $error = 'There must be no blank line following an inline comment';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfter');
             if ($fix === true) {
-                $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = ($stackPtr + 1); $i < $next; $i++) {
                     if ($tokens[$i]['line'] === $tokens[$next]['line']) {
