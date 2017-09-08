@@ -53,7 +53,7 @@ class RemovedFunctionsUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
             case 'RemovedFunctionsUnitTest.7.0.inc':
-                return array_fill_keys(range(2, 105), 1);
+                return array_fill_keys(range(2, 109), 1);
                 break;
             default:
                 return array();

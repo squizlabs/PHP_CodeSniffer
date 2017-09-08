@@ -39,6 +39,10 @@ class RemovedFunctionsSniff extends ForbiddenFunctionsSniff
     protected $removedFunctions = array(
         70000 => array(
             'ereg' => 'preg_match',
+            'mcrypt_cbc' => 'mcrypt_encrypt',
+            'mcrypt_cfb' => 'mcrypt_encrypt',
+            'mcrypt_ecb' => 'mcrypt_encrypt',
+            'mcrypt_ofb' => 'mcrypt_encrypt',
             'mssql_bind' => null,
             'mssql_close' => null,
             'mssql_connect' => null,

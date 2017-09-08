@@ -1,5 +1,9 @@
 <?php // http://php.net/manual/en/migration70.removed-exts-sapis.php
 ereg();
+mcrypt_cbc();
+mcrypt_cfb();
+mcrypt_ecb();
+mcrypt_ofb();
 mssql_bind();
 mssql_close();
 mssql_connect();
