@@ -58,59 +58,48 @@ class AllSniffs
 
         $installedStandards = Standards::getInstalledStandardDetails(true);
 
-        foreach ($installedStandards as $name => $details) {
+        foreach ($installedStandards as $standard => $details) {
             Autoload::addSearchPath($details['path'], $details['namespace']);
-
-            $standards = Standards::getInstalledStandards(true, $details['path']);
 
             // If the test is running PEAR installed, the built-in standards
             // are split into different directories; one for the sniffs and
             // a different file system location for tests.
-            if ($isInstalled === true && is_dir($details['path'].DIRECTORY_SEPARATOR.'Generic') === true) {
-                $testPath = realpath(__DIR__.'/../../src/Standards');
+            if ($isInstalled === true && is_dir(dirname($details['path']).DIRECTORY_SEPARATOR.'Generic') === true) {
+                $testPath = realpath(__DIR__.'/../../src/Standards/'.$standard);
             } else {
                 $testPath = $details['path'];
             }
 
-            foreach ($standards as $standard) {
-                if (in_array($standard, $ignoreTestsForStandards) === true) {
+            if (in_array($standard, $ignoreTestsForStandards) === true) {
+                continue;
+            }
+
+            $testsDir = $testPath.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
+            if (is_dir($testsDir) === false) {
+                // No tests for this standard.
+                continue;
+            }
+
+            $di = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($testsDir));
+
+            foreach ($di as $file) {
+                // Skip hidden files.
+                if (substr($file->getFilename(), 0, 1) === '.') {
                     continue;
                 }
 
-                $standardDir = $details['path'].DIRECTORY_SEPARATOR.$standard;
-                $testsDir    = $testPath.DIRECTORY_SEPARATOR.$standard.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
-
-                if (is_dir($testsDir) === false) {
-                    // Check if the installed path is actually a standard itself.
-                    $standardDir = $details['path'];
-                    $testsDir    = $testPath.DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR;
-                    if (is_dir($testsDir) === false) {
-                        // No tests for this standard.
-                        continue;
-                    }
+                // Tests must have the extension 'php'.
+                $parts = explode('.', $file);
+                $ext   = array_pop($parts);
+                if ($ext !== 'php') {
+                    continue;
                 }
 
-                $di = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($testsDir));
-
-                foreach ($di as $file) {
-                    // Skip hidden files.
-                    if (substr($file->getFilename(), 0, 1) === '.') {
-                        continue;
-                    }
-
-                    // Tests must have the extension 'php'.
-                    $parts = explode('.', $file);
-                    $ext   = array_pop($parts);
-                    if ($ext !== 'php') {
-                        continue;
-                    }
-
-                    $className = Autoload::loadFile($file->getPathname());
-                    $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'][$className] = $standardDir;
-                    $GLOBALS['PHP_CODESNIFFER_TEST_DIRS'][$className]     = $testsDir;
-                    $suite->addTestSuite($className);
-                }
-            }//end foreach
+                $className = Autoload::loadFile($file->getPathname());
+                $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'][$className] = $details['path'];
+                $GLOBALS['PHP_CODESNIFFER_TEST_DIRS'][$className]     = $testsDir;
+                $suite->addTestSuite($className);
+            }
         }//end foreach
 
         return $suite;

@@ -26,6 +26,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - This release includes a change to support newer versions of PHPUnit (versions 4, 5, and 6 are now supported)
+    -- The custom PHP_CodeSniffer test runner now requires a bootstrap file
+    -- Developers with custom standards using the PHP_CodeSniffer test runner will need to do one of the following:
+       --- run your unit tests from the PHP_CodeSniffer root dir so the bootstrap file is included
+       --- specify the PHP_CodeSniffer bootstrap file on the command line: phpunit --bootstrap=/path/to/phpcs/tests/bootstrap.php
+       --- require the PHP_CodeSniffer bootstrap file from your own bootstrap file
+    -- If you don't run PHP_CodeSniffer unit tests, this change will not affect you
+    -- Thanks to Juliette Reinders Folmer for the patch
+
   - A phpcs.xml or phpcs.xml.dist file now takes precedence over the default_standard config setting
     -- Thanks to Björn Fischer for the patch
   - Both phpcs.xml and phpcs.xml.dist files can now be prefixed with a dot (request #1566)
@@ -98,6 +107,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <file baseinstalldir="PHP/CodeSniffer" name="README.md" role="doc" />
    <file baseinstalldir="PHP/CodeSniffer" name="CONTRIBUTING.md" role="doc" />
    <file baseinstalldir="PHP/CodeSniffer" name="licence.txt" role="doc" />
+   <file baseinstalldir="PHP/CodeSniffer" name="phpunit.xml.dist" role="test" />
    <dir name="bin">
     <file baseinstalldir="" name="phpcbf" role="script">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
@@ -132,8 +142,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="" name="AbstractSniffUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllSniffs.php" role="test" />
     </dir>
-    <file baseinstalldir="" name="bootstrap.php" role="test" />
     <file baseinstalldir="" name="AllTests.php" role="test" />
+    <file baseinstalldir="" name="bootstrap.php" role="test" />
     <file baseinstalldir="" name="TestSuite.php" role="test" />
    </dir>
    <dir name="src">
@@ -1569,8 +1579,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="README" name="README.md" />
    <install as="CONTRIBUTING" name="CONTRIBUTING.md" />
    <install as="LICENCE" name="licence.txt" />
+   <install as="phpunit.xml" name="phpunit.xml.dist" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
+   <install as="tests/bootstrap.php" name="tests/bootstrap.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
@@ -1591,8 +1603,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="README" name="README.md" />
    <install as="CONTRIBUTING" name="CONTRIBUTING.md" />
    <install as="LICENCE" name="licence.txt" />
-   <install as="AllTests.php" name="tests/AllTests.php" />
-   <install as="TestSuite.php" name="tests/TestSuite.php" />
+   <install as="phpunit.xml" name="phpunit.xml.dist" />
+   <install as="tests/AllTests.php" name="tests/AllTests.php" />
+   <install as="tests/bootstrap.php" name="tests/bootstrap.php" />
+   <install as="tests/TestSuite.php" name="tests/TestSuite.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
