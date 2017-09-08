@@ -33,6 +33,13 @@ class DisallowSpaceIndentSniff implements Sniff
      */
     private $tabWidth = null;
 
+    /**
+     * Enable detect and fix indents in embedded HTML
+     *
+     * @var boolean
+     */
+    public $enableInlineHtmlCheck = true;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -70,9 +77,12 @@ class DisallowSpaceIndentSniff implements Sniff
 
         $checkTokens = array(
                         T_WHITESPACE             => true,
-                        T_INLINE_HTML            => true,
                         T_DOC_COMMENT_WHITESPACE => true,
                        );
+
+        if ($this->enableInlineHtmlCheck === true) {
+            $checkTokens[T_INLINE_HTML] = true;
+        }
 
         $tokens = $phpcsFile->getTokens();
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
