@@ -38,6 +38,7 @@ class RemovedFunctionsSniff extends ForbiddenFunctionsSniff
      */
     protected $removedFunctions = array(
         70000 => array(
+            'datefmt_set_timezone_id' => 'IntlDateFormatter::setTimeZoneId',
             'ereg' => 'preg_match',
             'mcrypt_cbc' => 'mcrypt_encrypt',
             'mcrypt_cfb' => 'mcrypt_encrypt',

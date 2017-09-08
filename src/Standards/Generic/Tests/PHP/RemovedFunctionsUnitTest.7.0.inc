@@ -1,4 +1,5 @@
 <?php // http://php.net/manual/en/migration70.removed-exts-sapis.php
+datefmt_set_timezone_id();
 ereg();
 mcrypt_cbc();
 mcrypt_cfb();
