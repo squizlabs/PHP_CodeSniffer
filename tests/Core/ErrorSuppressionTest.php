@@ -12,8 +12,9 @@ namespace PHP_CodeSniffer\Tests\Core;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\DummyFile;
+use PHPUnit\Framework\TestCase;
 
-class ErrorSuppressionTest extends \PHPUnit_Framework_TestCase
+class ErrorSuppressionTest extends TestCase
 {
 
 

@@ -12,8 +12,9 @@ namespace PHP_CodeSniffer\Tests\Core\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\DummyFile;
+use PHPUnit\Framework\TestCase;
 
-class FindImplementedInterfaceNamesTest extends \PHPUnit_Framework_TestCase
+class FindImplementedInterfaceNamesTest extends TestCase
 {
 
     /**

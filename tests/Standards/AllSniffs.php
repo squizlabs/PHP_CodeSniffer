@@ -9,30 +9,11 @@
 
 namespace PHP_CodeSniffer\Tests\Standards;
 
-use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Util\Standards;
 use PHP_CodeSniffer\Autoload;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
-
-if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
-    define('PHP_CODESNIFFER_IN_TESTS', true);
-}
-
-if (defined('PHP_CODESNIFFER_CBF') === false) {
-    define('PHP_CODESNIFFER_CBF', false);
-}
-
-if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
-    define('PHP_CODESNIFFER_VERBOSITY', 0);
-}
-
-if (is_file(__DIR__.'/../../autoload.php') === true) {
-    include_once __DIR__.'/../../autoload.php';
-} else {
-    include_once 'PHP/CodeSniffer/autoload.php';
-}
-
-$tokens = new Tokens();
+use PHPUnit\TextUI\TestRunner;
+use PHPUnit\Framework\TestSuite;
 
 class AllSniffs
 {
@@ -45,7 +26,7 @@ class AllSniffs
      */
     public static function main()
     {
-        \PHPUnit_TextUI_TestRunner::run(self::suite());
+        TestRunner::run(self::suite());
 
     }//end main()
 
@@ -56,14 +37,14 @@ class AllSniffs
      * Sniff unit tests are found by recursing through the 'Tests' directory
      * of each installed coding standard.
      *
-     * @return \PHPUnit_Framework_TestSuite
+     * @return \PHPUnit\Framework\TestSuite
      */
     public static function suite()
     {
         $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = array();
         $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = array();
 
-        $suite = new \PHPUnit_Framework_TestSuite('PHP CodeSniffer Standards');
+        $suite = new TestSuite('PHP CodeSniffer Standards');
 
         $isInstalled = !is_file(__DIR__.'/../../autoload.php');
 
