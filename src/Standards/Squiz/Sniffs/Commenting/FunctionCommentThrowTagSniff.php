@@ -15,6 +15,12 @@ use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionCommentThrowTagSniff extends AbstractScopeSniff
 {
+    /**
+     * If functions without doc comment should be skipped.
+     *
+     * @var boolean
+     */
+    public $skipFunctionsWithoutDocComment = true;
 
 
     /**
@@ -51,16 +57,20 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
         $find[] = T_WHITESPACE;
 
         $commentEnd = $phpcsFile->findPrevious($find, ($currScope - 1), null, true);
-        if ($tokens[$commentEnd]['code'] === T_COMMENT) {
-            // Function is using the wrong type of comment.
-            return;
-        }
+        if ($this->skipFunctionsWithoutDocComment === true) {
+            if ($tokens[$commentEnd]['code'] === T_COMMENT) {
+                // Function is using the wrong type of comment.
+                return;
+            }
 
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
-            && $tokens[$commentEnd]['code'] !== T_COMMENT
-        ) {
-            // Function doesn't have a doc comment.
-            return;
+            if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
+                && $tokens[$commentEnd]['code'] !== T_COMMENT
+            ) {
+                // Function doesn't have a doc comment.
+                return;
+            }
+        } else if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
+            $commentEnd = $currScope;
         }
 
         $currScopeEnd = $tokens[$currScope]['scope_closer'];
@@ -160,21 +170,23 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
         // Only need one @throws tag for each type of exception thrown.
         $thrownExceptions = array_unique($thrownExceptions);
 
-        $throwTags    = array();
-        $commentStart = $tokens[$commentEnd]['comment_opener'];
-        foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
-            if ($tokens[$tag]['content'] !== '@throws') {
-                continue;
-            }
-
-            if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
-                $exception = $tokens[($tag + 2)]['content'];
-                $space     = strpos($exception, ' ');
-                if ($space !== false) {
-                    $exception = substr($exception, 0, $space);
+        $throwTags = array();
+        if ($commentEnd < $currScope) {
+            $commentStart = $tokens[$commentEnd]['comment_opener'];
+            foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
+                if ($tokens[$tag]['content'] !== '@throws') {
+                    continue;
                 }
 
-                $throwTags[$exception] = true;
+                if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
+                    $exception = $tokens[($tag + 2)]['content'];
+                    $space     = strpos($exception, ' ');
+                    if ($space !== false) {
+                        $exception = substr($exception, 0, $space);
+                    }
+
+                    $throwTags[$exception] = true;
+                }
             }
         }
 

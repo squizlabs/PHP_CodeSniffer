@@ -358,3 +358,49 @@ class Test
         };
     }
 }
+
+// @codingStandardsChangeSetting Squiz.Commenting.FunctionCommentThrowTag skipFunctionsWithoutDocComment false
+
+class FunctionsWithoutDocComment
+{
+    public function throwExceptionInClosure()
+    {
+        return function () {
+            throw new \InvalidArgumentException();
+        };
+    }
+
+    public function throwExceptionInAnonymousClass()
+    {
+        return new class {
+            public function x()
+            {
+                throw new \RuntimeException();
+            }
+        };
+    }
+
+    public function caughtException()
+    {
+        try {
+            throw new \Exception();
+        } catch (\Throwable $e) {
+        }
+    }
+
+    public function throwException()
+    {
+        throw new \ErrorException();
+    }
+
+    public function crazyExample()
+    {
+        return function () {
+            return new class {
+                public function x() {
+                    throw new \Exception();
+                }
+            };
+        };
+    }
+}
