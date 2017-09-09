@@ -67,8 +67,6 @@ class Filter extends \RecursiveFilterIterator
      * @param string                   $basedir  The top-level path we are filtering.
      * @param \PHP_CodeSniffer\Config  $config   The config data for the run.
      * @param \PHP_CodeSniffer\Ruleset $ruleset  The ruleset used for the run.
-     *
-     * @return void
      */
     public function __construct($iterator, $basedir, Config $config, Ruleset $ruleset)
     {

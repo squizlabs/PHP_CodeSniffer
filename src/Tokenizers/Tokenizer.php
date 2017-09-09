@@ -79,7 +79,6 @@ abstract class Tokenizer
      * @param \PHP_CodeSniffer\Config | null $config  The config data for the run.
      * @param string                         $eolChar The EOL char used in the content.
      *
-     * @return void
      * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the file appears to be minified.
      */
     public function __construct($content, $config, $eolChar='\n')

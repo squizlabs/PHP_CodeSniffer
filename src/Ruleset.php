@@ -121,7 +121,6 @@ class Ruleset
      *
      * @param \PHP_CodeSniffer\Config $config The config data for the run.
      *
-     * @return void
      */
     public function __construct(Config $config)
     {

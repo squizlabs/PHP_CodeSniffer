@@ -221,8 +221,6 @@ class File
      * @param string                   $path    The absolute path to the file to process.
      * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
      * @param \PHP_CodeSniffer\Config  $config  The config data for the run.
-     *
-     * @return void
      */
     public function __construct($path, Ruleset $ruleset, Config $config)
     {

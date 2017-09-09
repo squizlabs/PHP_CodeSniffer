@@ -313,8 +313,6 @@ class Config
      * @param array $cliArgs         An array of values gathered from CLI args.
      * @param bool  $dieOnUnknownArg Whether or not to kill the process when an
      *                               unknown command line arg is found.
-     *
-     * @return void
      */
     public function __construct(array $cliArgs=[], $dieOnUnknownArg=true)
     {
