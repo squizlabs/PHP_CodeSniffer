@@ -63,9 +63,7 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
                 return;
             }
 
-            if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
-                && $tokens[$commentEnd]['code'] !== T_COMMENT
-            ) {
+            if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
                 // Function doesn't have a doc comment.
                 return;
             }
