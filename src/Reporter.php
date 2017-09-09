@@ -91,7 +91,8 @@ class Reporter
      *
      * @param Config $config The config data for the run.
      *
-     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If a report is not available.
+     * @throws DeepExitException
+     * @throws RuntimeException If a report is not available.
      */
     public function __construct(Config $config)
     {

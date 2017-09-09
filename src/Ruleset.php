@@ -121,6 +121,7 @@ class Ruleset
      *
      * @param Config $config The config data for the run.
      *
+     * @throws RuntimeException If no sniffs are registered.
      */
     public function __construct(Config $config)
     {
