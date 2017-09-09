@@ -80,7 +80,7 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
         $currPos          = $stackPtr;
         $foundThrows      = false;
         while ($currPos < $currScopeEnd && $currPos !== false) {
-            if ($phpcsFile->hasCondition($currPos, T_CLOSURE) === false) {
+            if ($this->isLastScope($tokens[$currPos]['conditions'], $currScope) === true) {
                 $foundThrows = true;
 
                 /*
@@ -239,6 +239,29 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
     {
 
     }//end processTokenOutsideScope()
+
+
+    /**
+     * Check if $scope is the last closure/function/try condition.
+     *
+     * @param array $conditions Conditions of the tag.
+     * @param int   $scope      Scope to check in conditions.
+     *
+     * @return bool
+     */
+    private function isLastScope(array $conditions, $scope)
+    {
+        foreach (array_reverse($conditions, true) as $ptr => $code) {
+            if ($code !== T_FUNCTION && $code !== T_CLOSURE && $code !== T_TRY) {
+                continue;
+            }
+
+            return $ptr === $scope;
+        }
+
+        return false;
+
+    }//end isLastScope()
 
 
 }//end class
