@@ -119,7 +119,7 @@ class Ruleset
     /**
      * Initialise the ruleset that the run will use.
      *
-     * @param \PHP_CodeSniffer\Config $config The config data for the run.
+     * @param Config $config The config data for the run.
      *
      */
     public function __construct(Config $config)

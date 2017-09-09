@@ -89,7 +89,7 @@ class Reporter
      * output file (or a temp file if none is specified) initialised by
      * clearing the current contents.
      *
-     * @param \PHP_CodeSniffer\Config $config The config data for the run.
+     * @param Config $config The config data for the run.
      *
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If a report is not available.
      */

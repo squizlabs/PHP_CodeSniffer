@@ -63,10 +63,10 @@ class Filter extends \RecursiveFilterIterator
     /**
      * Constructs a filter.
      *
-     * @param \RecursiveIterator       $iterator The iterator we are using to get file paths.
-     * @param string                   $basedir  The top-level path we are filtering.
-     * @param \PHP_CodeSniffer\Config  $config   The config data for the run.
-     * @param \PHP_CodeSniffer\Ruleset $ruleset  The ruleset used for the run.
+     * @param \RecursiveIterator $iterator The iterator we are using to get file paths.
+     * @param string             $basedir  The top-level path we are filtering.
+     * @param Config             $config   The config data for the run.
+     * @param Ruleset            $ruleset  The ruleset used for the run.
      */
     public function __construct($iterator, $basedir, Config $config, Ruleset $ruleset)
     {
