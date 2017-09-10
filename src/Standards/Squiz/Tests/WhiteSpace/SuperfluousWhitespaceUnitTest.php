@@ -39,7 +39,7 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
                     23 => 1,
                     28 => 1,
                     33 => 1,
-                    53 => 1,
+                    61 => 1,
                    );
             break;
         case 'SuperfluousWhitespaceUnitTest.1.js':

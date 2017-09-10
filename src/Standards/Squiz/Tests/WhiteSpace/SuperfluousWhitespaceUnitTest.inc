@@ -38,7 +38,7 @@ function myFunction2()
 
 // @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines true
 
-function myFunction2()
+function myFunction3()
 {
     echo 'code here';
     
@@ -47,6 +47,14 @@ function myFunction2()
 }
 
 // @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
+
+function myFunction4()
+{
+    echo "multi    
+    line  
+    string 
+    whitespace ";
+}
 
 // Уберём из системных свойств все кроме информации об услугах
 
