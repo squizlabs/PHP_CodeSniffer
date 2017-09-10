@@ -71,7 +71,8 @@ class ClosureLinterSniff implements Sniff
 
         $fileName = $phpcsFile->getFilename();
 
-        $cmd = '$lintPath --nosummary --notime --unix_mode '.escapeshellarg($fileName);
+        $lintPath = escapeshellcmd($lintPath);
+        $cmd      = $lintPath.' --nosummary --notime --unix_mode '.escapeshellarg($fileName);
         exec($cmd, $output, $retval);
 
         if (is_array($output) === false) {
