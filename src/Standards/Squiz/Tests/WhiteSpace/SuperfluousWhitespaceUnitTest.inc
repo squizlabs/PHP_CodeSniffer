@@ -47,13 +47,28 @@ function myFunction3()
 }
 
 // @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
+ 
+
+// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreMultiLineStrings false
 
 function myFunction4()
 {
     echo "multi    
     line  
-    string 
+    string
     whitespace ";
+    echo 'code here'; 
+}
+
+// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreMultiLineStrings true
+
+function myFunction5()
+{
+    echo "multi    
+    line  
+    string
+    whitespace ";
+    echo 'code here'; 
 }
 
 // Уберём из системных свойств все кроме информации об услугах

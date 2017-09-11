@@ -39,6 +39,15 @@ class SuperfluousWhitespaceSniff implements Sniff
      */
     public $ignoreBlankLines = false;
 
+    /**
+     * If TRUE, whitespace rules are not checked for multi line strings.
+     *
+     * Multi line strings are string definitions that spans multiple lines.
+     *
+     * @var boolean
+     */
+    public $ignoreMultiLineStrings = true;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -54,6 +63,7 @@ class SuperfluousWhitespaceSniff implements Sniff
                 T_COMMENT,
                 T_DOC_COMMENT_WHITESPACE,
                 T_CLOSURE,
+                T_CONSTANT_ENCAPSED_STRING,
                );
 
     }//end register()
@@ -177,6 +187,23 @@ class SuperfluousWhitespaceSniff implements Sniff
                 }
 
                 $phpcsFile->fixer->endChangeset();
+            }
+        } else if($tokens[$stackPtr]['code'] === T_CONSTANT_ENCAPSED_STRING) {
+            // Ignore single line strings.
+            if (strpos($tokens[$stackPtr]['content'], $phpcsFile->eolChar) === false) {
+                return;
+            }
+            // Ignore multi line strings if required.
+            if ($this->ignoreMultiLineStrings === true) {
+                return;
+            }
+
+            $tokenContent = rtrim($tokens[$stackPtr]['content'], $phpcsFile->eolChar);
+            if ($tokenContent !== rtrim($tokenContent)) {
+                $fix = $phpcsFile->addFixableError('Whitespace found at end of string', $stackPtr, 'EndLine');
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken(($stackPtr), rtrim($tokenContent).$phpcsFile->eolChar);
+                }
             }
         } else {
             /*
