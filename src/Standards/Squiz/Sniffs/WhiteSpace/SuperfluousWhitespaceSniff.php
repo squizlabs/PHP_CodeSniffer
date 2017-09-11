@@ -188,11 +188,12 @@ class SuperfluousWhitespaceSniff implements Sniff
 
                 $phpcsFile->fixer->endChangeset();
             }
-        } else if($tokens[$stackPtr]['code'] === T_CONSTANT_ENCAPSED_STRING) {
+        } else if ($tokens[$stackPtr]['code'] === T_CONSTANT_ENCAPSED_STRING) {
             // Ignore single line strings.
             if (strpos($tokens[$stackPtr]['content'], $phpcsFile->eolChar) === false) {
                 return;
             }
+
             // Ignore multi line strings if required.
             if ($this->ignoreMultiLineStrings === true) {
                 return;
