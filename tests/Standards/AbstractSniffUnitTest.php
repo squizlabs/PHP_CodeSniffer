@@ -157,7 +157,7 @@ abstract class AbstractSniffUnitTest extends TestCase
         $sniffClassName = str_replace('\Tests\\', '\Sniffs\\', $sniffClassName);
         $sniffClassName = Common::cleanSniffClass($sniffClassName);
 
-        $restrictions = array(strtolower($sniffClassName) => true);
+        $restrictions = array($sniffClassName => true);
         $ruleset->registerSniffs(array($sniffFile), $restrictions, array());
         $ruleset->populateTokenListeners();
 
