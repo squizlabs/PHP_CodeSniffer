@@ -70,6 +70,11 @@ class Common
             }
         }
 
+        // Check for process substitution
+        if (strpos($path, '/dev/fd') === 0) {
+            return str_replace('/dev/fd', 'php://fd', $path);
+        }
+
         // No extra work needed if this is not a phar file.
         if (self::isPharFile($path) === false) {
             return realpath($path);
