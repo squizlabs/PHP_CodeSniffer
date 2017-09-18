@@ -70,7 +70,7 @@ class Common
             }
         }
 
-        // Check for process substitution
+        // Check for process substitution.
         if (strpos($path, '/dev/fd') === 0) {
             return str_replace('/dev/fd', 'php://fd', $path);
         }
