@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-09-20</date>
  <time>08:44:00</time>
  <version>
-  <release>3.1.0</release>
-  <api>3.1.0</api>
+  <release>3.1.1</release>
+  <api>3.1.1</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,77 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - This release includes a change to support newer versions of PHPUnit (versions 4, 5, and 6 are now supported)
-    -- The custom PHP_CodeSniffer test runner now requires a bootstrap file
-    -- Developers with custom standards using the PHP_CodeSniffer test runner will need to do one of the following:
-       --- run your unit tests from the PHP_CodeSniffer root dir so the bootstrap file is included
-       --- specify the PHP_CodeSniffer bootstrap file on the command line: phpunit --bootstrap=/path/to/phpcs/tests/bootstrap.php
-       --- require the PHP_CodeSniffer bootstrap file from your own bootstrap file
-    -- If you don't run PHP_CodeSniffer unit tests, this change will not affect you
-    -- Thanks to Juliette Reinders Folmer for the patch
-
-  - A phpcs.xml or phpcs.xml.dist file now takes precedence over the default_standard config setting
-    -- Thanks to Björn Fischer for the patch
-  - Both phpcs.xml and phpcs.xml.dist files can now be prefixed with a dot (request #1566)
-    -- The order that the files are searched is: .phpcs.xml, .phpcs.xml.dist, phpcs.xml, phpcs.xml.dist
-  - The autoloader will now search for files during unit tests runs from the same locations as during normal phpcs runs
-    -- Allows for easier unit testing of custom standards that use helper classes or custom namespaces
-  - Include patterns for sniffs now use OR logic instead of AND logic
-    -- Previously, a file had to be in each of the include patterns to be processed by a sniff
-    -- Now, a file has to only be in at least one of the patterns
-    -- This change reflects the original intention of the feature
-  - PHPCS will now follow symlinks under the list of checked directories
-    -- This previously only worked if you specified the path to a symlink on the command line
-  - Output from --config-show, --config-set, and --config-delete now includes the path to the loaded config file
-  - PHPCS now cleanly exits if its config file is not readable
-    -- Previously, a combination of PHP notices and PHPCS errors would be generated
-  - Comment tokens that start with /** are now always tokenized as docblocks
-    -- Thanks to Michał Bundyra for the patch
-  - The PHP-supplied T_YIELD and T_YIELD_FROM token have been replicated for older PHP versions
-    -- Thanks to Michał Bundyra for the patch
-  - Added new Generic.CodeAnalysis.AssignmentInCondition sniff to warn about variable assignments inside conditions
-    -- Thanks to Juliette Reinders Folmer for the contribution
-  - Added Generic.Files.OneObjectStructurePerFile sniff to ensure there is a single class/interface/trait per file
-    -- Thanks to Mponos George for the contribution
-  - Function call sniffs now check variable function names and self/static object creation
-    -- Specific sniffs are Generic.Functions.FunctionCallArgumentSpacing, PEAR.Functions.FunctionCallSignature, and PSR2.Methods.FunctionCallSignature
-    -- Thanks to Michał Bundyra for the patch
-  - Generic.Files.LineLength can now be configured to ignore all comment lines, no matter their length
-    -- Set the ignoreComments property to TRUE (default is FALSE) in your ruleset.xml file to enable this
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.PHP.LowerCaseKeyword now checks self, parent, yield, yield from, and closure (function) keywords
-    -- Thanks to Michał Bundyra for the patch
-  - PEAR.Functions.FunctionDeclaration now removes a blank line if it creates one by moving the curly brace during fixing
-  - Squiz.Commenting.FunctionCommentThrowTag now supports PHP 7.1 multi catch exceptions
-  - Squiz.Formatting.OperatorBracket no longer throws errors for PHP 7.1 multi catch exceptions
-  - Squiz.Commenting.LongConditionClosingComment now supports finally statements
-  - Squiz.Formatting.OperatorBracket now correctly fixes pipe separated flags
-  - Squiz.Formatting.OperatorBracket now correctly fixes statements containing short array syntax
-  - Squiz.PHP.EmbeddedPhp now properly fixes cases where the only content in an embedded PHP block is a comment
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Squiz.WhiteSpace.ControlStructureSpacing now ignores comments when checking blank lines at the top of control structures
-  - Squiz.WhiteSpace.ObjectOperatorSpacing now detects and fixes spaces around double colons
-    -- Thanks to Julius Šmatavičius for the patch
-  - Squiz.WhiteSpace.MemberVarSpacing can now be configured to check any number of blank lines between member vars
-    -- Set the spacing property (default is 1) in your ruleset.xml file to set the spacing
-  - Squiz.WhiteSpace.MemberVarSpacing can now be configured to check a different number of blank lines before the first member var
-    -- Set the spacingBeforeFirst property (default is 1) in your ruleset.xml file to set the spacing
-  - Added a new PHP_CodeSniffer\Util\Tokens::$ooScopeTokens static member var for quickly checking object scope
-    -- Includes T_CLASS, T_ANON_CLASS, T_INTERFACE, and T_TRAIT
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - PHP_CodeSniffer\Files\File::findExtendedClassName() now supports extended interfaces
-    -- Thanks to Martin Hujer for the patch
-  - Fixed bug #1550 : Squiz.Commenting.FunctionComment false positive when function contains closure
-  - Fixed bug #1577 : Generic.InlineControlStructureSniff breaks with a comment between body and condition in do while loops
-  - Fixed bug #1581 : Sniffs not loaded when one-standard directories are being registered in installed_paths
-  - Fixed bug #1591 : Autoloader failing to load arbitrary files when installed_paths only set via a custom ruleset
-  - Fixed bug #1605 : Squiz.WhiteSpace.OperatorSpacing false positive on unary minus after comment
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1615 : Uncaught RuntimeException when phpcbf fails to fix files
-  - Fixed bug #1637 : Generic.WhiteSpaceScopeIndent closure argument indenting incorrect with multi-line strings
-  - Fixed bug #1638 : Squiz.WhiteSpace.ScopeClosingBrace closure argument indenting incorrect with multi-line strings
-  - Fixed bug #1640 : Squiz.Strings.DoubleQuoteUsage replaces tabs with spaces when fixing
-    -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #1669 : Temporary expression proceeded by curly brace is detected as function call
  </notes>
  <contents>
   <dir name="/">

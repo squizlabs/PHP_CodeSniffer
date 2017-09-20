@@ -88,6 +88,13 @@ class FunctionCallSignatureSniff implements Sniff
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
+        if ($tokens[$stackPtr]['code'] === T_CLOSE_CURLY_BRACKET
+            && isset($tokens[$stackPtr]['scope_condition']) === true
+        ) {
+            // Not a function call.
+            return;
+        }
+
         // Find the next non-empty token.
         $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 
