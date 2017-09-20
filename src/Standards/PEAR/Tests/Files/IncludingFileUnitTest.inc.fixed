@@ -81,7 +81,7 @@ function get_some_value()
         if ($var === true) {
         }
     }
-    
+
     if (include_once 'blank.inc') {
         $var = include_once 'blank.inc';
         if ($var === true) {
@@ -94,6 +94,9 @@ $var = include_once 'blank.inc';
 if ($var == false) {
 
 }
+
+require_once 'blank.inc';
+require_once 'blank.inc';
 
 require_once 'blank.inc';
 require_once 'blank.inc';

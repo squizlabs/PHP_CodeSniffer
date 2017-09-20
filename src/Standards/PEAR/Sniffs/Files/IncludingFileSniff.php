@@ -57,10 +57,14 @@ class IncludingFileSniff implements Sniff
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
                 $phpcsFile->fixer->replaceToken($tokens[$nextToken]['parenthesis_closer'], '');
-                if ($tokens[($nextToken - 1)]['code'] !== T_WHITESPACE) {
+                if ($tokens[($nextToken - 1)]['code'] !== T_WHITESPACE && $tokens[($nextToken + 1)]['code'] !== T_WHITESPACE) {
                     $phpcsFile->fixer->replaceToken($nextToken, ' ');
                 } else {
                     $phpcsFile->fixer->replaceToken($nextToken, '');
+                }
+
+                if ($tokens[($tokens[$nextToken]['parenthesis_closer'] - 1)]['code'] === T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken(($tokens[$nextToken]['parenthesis_closer'] - 1), '');
                 }
 
                 $phpcsFile->fixer->endChangeset();
