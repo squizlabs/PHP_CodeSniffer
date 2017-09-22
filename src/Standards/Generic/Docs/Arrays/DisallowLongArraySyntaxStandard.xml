@@ -1,0 +1,23 @@
+<documentation title="Short Array Syntax">
+    <standard>
+    <![CDATA[
+    Short array syntax must be used to define arrays.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Short form of array.">
+        <![CDATA[
+$arr = <em>[</em>
+    'foo' => 'bar',
+<em>]</em>;
+        ]]>
+        </code>
+        <code title="Invalid: Long form of array.">
+        <![CDATA[
+$arr = <em>array(</em>
+    'foo' => 'bar',
+<em>)</em>;
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
