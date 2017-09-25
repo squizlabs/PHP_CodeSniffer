@@ -224,8 +224,8 @@ class File
         }
 
         $this->configCache['cache']           = $this->config->cache;
-        $this->configCache['sniffs']          = $this->config->sniffs;
-        $this->configCache['exclude']         = $this->config->exclude;
+        $this->configCache['sniffs']          = array_map('strtolower', $this->config->sniffs);
+        $this->configCache['exclude']         = array_map('strtolower', $this->config->exclude);
         $this->configCache['errorSeverity']   = $this->config->errorSeverity;
         $this->configCache['warningSeverity'] = $this->config->warningSeverity;
         $this->configCache['recordErrors']    = $this->config->recordErrors;
@@ -815,9 +815,9 @@ class File
         // due to the use of the --sniffs command line argument.
         if ($includeAll === false
             && ((empty($this->configCache['sniffs']) === false
-            && in_array($listenerCode, $this->configCache['sniffs']) === false)
+            && in_array(strtolower($listenerCode), $this->configCache['sniffs']) === false)
             || (empty($this->configCache['exclude']) === false
-            && in_array($listenerCode, $this->configCache['exclude']) === true))
+            && in_array(strtolower($listenerCode), $this->configCache['exclude']) === true))
         ) {
             return false;
         }
