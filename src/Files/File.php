@@ -1158,6 +1158,7 @@ class File
      * <code>
      *   0 => array(
      *         'name'              => '$var',  // The variable name.
+     *         'token'             => integer, // The stack pointer to the variable name.
      *         'content'           => string,  // The full content of the variable definition.
      *         'pass_by_reference' => boolean, // Is the variable passed by reference?
      *         'variable_length'   => boolean, // Is the param of variable length through use of `...` ?
@@ -1218,7 +1219,9 @@ class File
 
             switch ($this->tokens[$i]['code']) {
             case T_BITWISE_AND:
-                $passByReference = true;
+                if ($defaultStart === null) {
+                    $passByReference = true;
+                }
                 break;
             case T_VARIABLE:
                 $currVar = $i;
@@ -1609,7 +1612,7 @@ class File
         }
 
         if ($this->tokens[$tokenBefore]['code'] === T_DOUBLE_ARROW) {
-            // Inside a foreach loop, this is a reference.
+            // Inside a foreach loop or array assignment, this is a reference.
             return true;
         }
 
@@ -1618,14 +1621,20 @@ class File
             return true;
         }
 
-        if ($this->tokens[$tokenBefore]['code'] === T_OPEN_SHORT_ARRAY) {
-            // Inside an array declaration, this is a reference.
-            return true;
-        }
-
         if (isset(Util\Tokens::$assignmentTokens[$this->tokens[$tokenBefore]['code']]) === true) {
             // This is directly after an assignment. It's a reference. Even if
             // it is part of an operation, the other tests will handle it.
+            return true;
+        }
+
+        $tokenAfter = $this->findNext(
+            Util\Tokens::$emptyTokens,
+            ($stackPtr + 1),
+            null,
+            true
+        );
+
+        if ($this->tokens[$tokenAfter]['code'] === T_NEW) {
             return true;
         }
 
@@ -1636,11 +1645,27 @@ class File
                 $owner = $this->tokens[$this->tokens[$lastBracket]['parenthesis_owner']];
                 if ($owner['code'] === T_FUNCTION
                     || $owner['code'] === T_CLOSURE
-                    || $owner['code'] === T_ARRAY
                 ) {
-                    // Inside a function or array declaration, this is a reference.
-                    return true;
-                }
+                    $params = $this->getMethodParameters($this->tokens[$lastBracket]['parenthesis_owner']);
+                    foreach ($params as $param) {
+                        $varToken = $tokenAfter;
+                        if ($param['variable_length'] === true) {
+                            $varToken = $this->findNext(
+                                (Util\Tokens::$emptyTokens + array(T_ELLIPSIS)),
+                                ($stackPtr + 1),
+                                null,
+                                true
+                            );
+                        }
+
+                        if ($param['token'] === $varToken
+                            && $param['pass_by_reference'] === true
+                        ) {
+                            // Function parameter declared to be passed by reference.
+                            return true;
+                        }
+                    }
+                }//end if
             } else {
                 $prev = false;
                 for ($t = ($this->tokens[$lastBracket]['parenthesis_opener'] - 1); $t >= 0; $t--) {
@@ -1651,24 +1676,40 @@ class File
                 }
 
                 if ($prev !== false && $this->tokens[$prev]['code'] === T_USE) {
+                    // Closure use by reference.
                     return true;
                 }
             }//end if
         }//end if
 
-        $tokenAfter = $this->findNext(
-            Util\Tokens::$emptyTokens,
-            ($stackPtr + 1),
-            null,
-            true
-        );
-
-        if ($this->tokens[$tokenAfter]['code'] === T_VARIABLE
-            && ($this->tokens[$tokenBefore]['code'] === T_OPEN_PARENTHESIS
-            || $this->tokens[$tokenBefore]['code'] === T_COMMA)
+        // Pass by reference in function calls and assign by reference in arrays.
+        if ($this->tokens[$tokenBefore]['code'] === T_OPEN_PARENTHESIS
+            || $this->tokens[$tokenBefore]['code'] === T_COMMA
+            || $this->tokens[$tokenBefore]['code'] === T_OPEN_SHORT_ARRAY
         ) {
-            return true;
-        }
+            if ($this->tokens[$tokenAfter]['code'] === T_VARIABLE) {
+                return true;
+            } else {
+                $skip   = Util\Tokens::$emptyTokens;
+                $skip[] = T_NS_SEPARATOR;
+                $skip[] = T_SELF;
+                $skip[] = T_PARENT;
+                $skip[] = T_STATIC;
+                $skip[] = T_STRING;
+                $skip[] = T_NAMESPACE;
+                $skip[] = T_DOUBLE_COLON;
+
+                $nextSignificantAfter = $this->findNext(
+                    $skip,
+                    ($stackPtr + 1),
+                    null,
+                    true
+                );
+                if ($this->tokens[$nextSignificantAfter]['code'] === T_VARIABLE) {
+                    return true;
+                }
+            }//end if
+        }//end if
 
         return false;
 
