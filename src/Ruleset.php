@@ -200,15 +200,15 @@ class Ruleset
 
         $sniffRestrictions = array();
         foreach ($restrictions as $sniffCode) {
-            $parts     = explode('.', strtolower($sniffCode));
-            $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $parts     = explode('.', $sniffCode);
+            $sniffName = $parts[0].'\Sniffs\\'.$parts[1].'\\'.$parts[2].'Sniff';
             $sniffRestrictions[$sniffName] = true;
         }
 
         $sniffExclusions = array();
         foreach ($exclusions as $sniffCode) {
-            $parts     = explode('.', strtolower($sniffCode));
-            $sniffName = $parts[0].'\sniffs\\'.$parts[1].'\\'.$parts[2].'sniff';
+            $parts     = explode('.', $sniffCode);
+            $sniffName = $parts[0].'\Sniffs\\'.$parts[1].'\\'.$parts[2].'Sniff';
             $sniffExclusions[$sniffName] = true;
         }
 
