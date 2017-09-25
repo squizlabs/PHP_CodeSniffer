@@ -123,6 +123,12 @@ echo $foo;
  */
 include_once($blah);
 
+// some comment without capital or full stop
+echo $foo; // An unrelated comment.
+
+// An unrelated comment.
+echo $foo; // some comment without capital or full stop
+
 /*
  * N.B.: The below test line must be the last test in the file.
  * Testing that a new line after an inline comment when it's the last non-whitespace

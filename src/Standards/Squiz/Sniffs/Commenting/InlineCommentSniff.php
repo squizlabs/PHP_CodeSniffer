@@ -211,17 +211,25 @@ class InlineCommentSniff implements Sniff
         // The below section determines if a comment block is correctly capitalised,
         // and ends in a full-stop. It will find the last comment in a block, and
         // work its way up.
-        $nextComment = $phpcsFile->findNext(array(T_COMMENT), ($stackPtr + 1), null, false);
-        if (($nextComment !== false)
-            && (($tokens[$nextComment]['line']) === ($tokens[$stackPtr]['line'] + 1))
+        $nextComment = $phpcsFile->findNext(T_COMMENT, ($stackPtr + 1), null, false);
+        if ($nextComment !== false
+            && $tokens[$nextComment]['line'] === ($tokens[$stackPtr]['line'] + 1)
         ) {
-            return;
+            $nextNonWhitespace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), $nextComment, true);
+            if ($nextNonWhitespace === false) {
+                return;
+            }
         }
 
         $topComment  = $stackPtr;
         $lastComment = $stackPtr;
         while (($topComment = $phpcsFile->findPrevious(array(T_COMMENT), ($lastComment - 1), null, false)) !== false) {
             if ($tokens[$topComment]['line'] !== ($tokens[$lastComment]['line'] - 1)) {
+                break;
+            }
+
+            $nextNonWhitespace = $phpcsFile->findNext(T_WHITESPACE, ($topComment + 1), $lastComment, true);
+            if ($nextNonWhitespace !== false) {
                 break;
             }
 

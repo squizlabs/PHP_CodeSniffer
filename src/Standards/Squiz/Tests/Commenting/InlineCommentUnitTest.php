@@ -44,6 +44,8 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
                        96  => 1,
                        97  => 3,
                        118 => 1,
+                       126 => 2,
+                       130 => 2,
                       );
 
             return $errors;
@@ -60,6 +62,8 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
                     104 => 3,
                     118 => 1,
                     121 => 1,
+                    125 => 2,
+                    129 => 2,
                    );
         default:
             return array();
