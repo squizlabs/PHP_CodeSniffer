@@ -28,7 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed bug #1604 : File::isReference has problems with some bitwise operators and class property references
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1657: "Uninitialized string offset: 0" when sniffing CSS
+  - Fixed bug #1657: Uninitialized string offset: 0 when sniffing CSS
   - Fixed bug #1669 : Temporary expression proceeded by curly brace is detected as function call
  </notes>
  <contents>
@@ -66,7 +66,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.php" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.inc" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.php" role="test" />
-      <file baseinstalldir="" name="IsReference.inc" role="test" />
+      <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
      </dir>
      <file baseinstalldir="" name="AllTests.php" role="test" />
