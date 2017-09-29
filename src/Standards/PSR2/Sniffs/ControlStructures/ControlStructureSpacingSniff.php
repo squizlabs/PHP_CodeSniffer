@@ -24,6 +24,14 @@ class ControlStructureSpacingSniff implements Sniff
     public $requiredSpacesAfterOpen = 0;
 
     /**
+     * Is it OK if the opening bracket is followed by newline?
+     * (may be used in multi-line ifs or catches to improve readability)
+     *
+     * @var boolean
+     */
+    public $newlineAllowedAfterOpen = false;
+
+    /**
      * How many spaces should precede the closing bracket.
      *
      * @var integer
@@ -66,6 +74,7 @@ class ControlStructureSpacingSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $this->requiredSpacesAfterOpen   = (int) $this->requiredSpacesAfterOpen;
+        $this->newlineAllowedAfterOpen   = (bool) $this->newlineAllowedAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
         $tokens = $phpcsFile->getTokens();
 
@@ -88,7 +97,8 @@ class ControlStructureSpacingSniff implements Sniff
 
         $phpcsFile->recordMetric($stackPtr, 'Spaces after control structure open parenthesis', $spaceAfterOpen);
 
-        if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
+        $isAllowedNewline = ($spaceAfterOpen === 'newline' && $this->newlineAllowedAfterOpen);
+        if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen && $isAllowedNewline === false) {
             $error = 'Expected %s spaces after opening bracket; %s found';
             $data  = [
                 $this->requiredSpacesAfterOpen,

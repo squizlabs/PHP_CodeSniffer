@@ -45,3 +45,52 @@ foreach (  $something as $blah => $that  ) {}
 // phpcs:set PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 0
 
 $binary = b"binary string";
+
+// @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing newlineAllowedAfterOpen false
+// false is default
+
+if (
+    $priceWithoutVatFrom === null ||
+    $priceWithoutVatTo === null ||
+    $priceWithVatFrom === null ||
+    $priceWithVatTo === null
+) {
+    return new PriceFilterConfig(0, 0, 0, 0);
+}
+
+try {
+    throw new \Exception();
+} catch (
+    \MyNamespace\FullyQualified\Long\Make\Exception\MakeNotFoundBySlugException |
+    \MyNamespace\FullyQualified\Long\Model\Exception\ModelNotFoundBySlugAndMakeException |
+    \MyNamespace\FullyQualified\Long\ModelLine\Exception\ModelLineNotFoundBySlugAndModelException
+    $e
+) {
+    // ...
+}
+
+// @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing newlineAllowedAfterOpen true
+// newline after opening bracket should be OK here
+
+if (
+    $priceWithoutVatFrom === null ||
+    $priceWithoutVatTo === null ||
+    $priceWithVatFrom === null ||
+    $priceWithVatTo === null
+) {
+    return new PriceFilterConfig(0, 0, 0, 0);
+}
+
+try {
+    throw new \Exception();
+} catch (
+    \MyNamespace\FullyQualified\Long\Make\Exception\MakeNotFoundBySlugException |
+    \MyNamespace\FullyQualified\Long\Model\Exception\ModelNotFoundBySlugAndMakeException |
+    \MyNamespace\FullyQualified\Long\ModelLine\Exception\ModelLineNotFoundBySlugAndModelException
+    $e
+) {
+    // ...
+}
+
+// reset property to default value
+// @codingStandardsChangeSetting PSR2.ControlStructures.ControlStructureSpacing newlineAllowedAfterOpen false
