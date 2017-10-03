@@ -1,0 +1,24 @@
+<documentation title="Lowercase Type Declaration">
+    <standard>
+    <![CDATA[
+    All non-classname based type declarations should be lowercase.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Lowercase type declarations used.">
+        <![CDATA[
+function foo(int $a): float {} {}
+        ]]>
+        </code>
+        <code title="Valid: Mixed case classname based type declarations used.">
+        <![CDATA[
+function foo(MyClass $a): \Baz {}
+        ]]>
+        </code>
+        <code title="Invalid: Non-lowercase type declarations used.">
+        <![CDATA[
+function foo(INT $a): Float {} {}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
