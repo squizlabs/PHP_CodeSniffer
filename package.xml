@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1656 : Using the --sniffs argument has a problem with case sensitivity
   - Fixed bug #1657 : Uninitialized string offset: 0 when sniffing CSS
   - Fixed bug #1669 : Temporary expression proceeded by curly brace is detected as function call
+  - Fixed bug #1681 : Huge arrays are super slow to scan with Squiz.Arrays.ArrayDeclaration sniff
  </notes>
  <contents>
   <dir name="/">

@@ -223,10 +223,14 @@ class ArrayDeclarationSniff implements Sniff
         }//end while
 
         if ($valueCount > 0) {
-            $conditionCheck = $phpcsFile->findPrevious(array(T_OPEN_PARENTHESIS, T_SEMICOLON), ($stackPtr - 1), null, false);
+            $nestedParenthesis = false;
+            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+                $nested            = $tokens[$stackPtr]['nested_parenthesis'];
+                $nestedParenthesis = array_pop($nested);
+            }
 
-            if ($conditionCheck === false
-                || $tokens[$conditionCheck]['line'] !== $tokens[$stackPtr]['line']
+            if ($nestedParenthesis === false
+                || $tokens[$nestedParenthesis]['line'] !== $tokens[$stackPtr]['line']
             ) {
                 $error = 'Array with multiple values cannot be declared on a single line';
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SingleLineNotAllowed');
