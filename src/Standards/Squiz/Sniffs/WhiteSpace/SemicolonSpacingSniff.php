@@ -58,7 +58,25 @@ class SemicolonSpacingSniff implements Sniff
         }
 
         $nonSpace = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 2), null, true);
-        if ($tokens[$nonSpace]['code'] === T_SEMICOLON) {
+
+        // Detect whether this is a semi-colons for a conditions in a `for()` control structure.
+        $forCondition = false;
+        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            $closeParenthesis = end($tokens[$stackPtr]['nested_parenthesis']);
+
+            if (isset($tokens[$closeParenthesis]['parenthesis_owner']) === true) {
+                $owner = $tokens[$closeParenthesis]['parenthesis_owner'];
+
+                if ($tokens[$owner]['code'] === T_FOR) {
+                    $forCondition = true;
+                    $nonSpace     = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 2), null, true);
+                }
+            }
+        }
+
+        if ($tokens[$nonSpace]['code'] === T_SEMICOLON
+            || ($forCondition === true && $nonSpace === $tokens[$owner]['parenthesis_opener'])
+        ) {
             // Empty statement.
             return;
         }
