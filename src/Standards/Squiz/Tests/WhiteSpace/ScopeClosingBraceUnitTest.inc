@@ -10,9 +10,11 @@ class Test
     {
      }
 
-    function test2() {}
+    function test2() {foo();}
 
-    private function _test3()
+    function test3() {}
+
+    private function _test4()
     {
     }
 
@@ -92,6 +94,8 @@ switch ($blah) {
 <?php
 public function foo()
 {
+    $foo('description', function () {});
+
     $foo('some
     long description', function () {
     });
