@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Restored preference of non-dist files over dist files for phpcs.xml and phpcs.xml.dist
+    -- The order that the files are searched is now: .phpcs.xml, phpcs.xml, .phpcs.xml.dist, phpcs.xml.dist
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1604 : File::isReference has problems with some bitwise operators and class property references
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1656 : Using the --sniffs argument has a problem with case sensitivity
