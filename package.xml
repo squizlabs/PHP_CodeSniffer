@@ -1121,6 +1121,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <dir name="Tests">
        <dir name="Arrays">
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayBracketSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayBracketSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayBracketSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayDeclarationUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayDeclarationUnitTest.1.inc.fixed" role="test" />
