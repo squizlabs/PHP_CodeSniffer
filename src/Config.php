@@ -343,8 +343,8 @@ class Config
 
             $defaultFiles = array(
                              '.phpcs.xml',
-                             '.phpcs.xml.dist',
                              'phpcs.xml',
+                             '.phpcs.xml.dist',
                              'phpcs.xml.dist',
                             );
 
