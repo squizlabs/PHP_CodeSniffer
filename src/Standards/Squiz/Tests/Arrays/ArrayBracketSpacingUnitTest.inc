@@ -25,3 +25,4 @@ echo 'PHP'[ 0 ];
 
 $array = [];
 $var = $var[$var[$var]]]; // Syntax error
+$var = $var[$var[$var]; // Syntax error
