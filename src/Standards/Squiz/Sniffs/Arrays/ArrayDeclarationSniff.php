@@ -798,6 +798,14 @@ class ArrayDeclarationSniff implements Sniff
                     continue;
                 }
 
+                if ($tokens[$i]['code'] === T_START_HEREDOC || $tokens[$i]['code'] === T_START_NOWDOC) {
+                    // Here/nowdoc closing tags must not be followed by a comma,
+                    // so it must be on the next line.
+                    $i         = $tokens[$i]['scope_closer'];
+                    $valueLine = ($tokens[$i]['line'] + 1);
+                    continue;
+                }
+
                 if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
                     $i         = $tokens[$i]['bracket_closer'];
                     $valueLine = $tokens[$i]['line'];
@@ -834,17 +842,21 @@ class ArrayDeclarationSniff implements Sniff
 
             // Check that there is no space before the comma.
             if ($nextComma !== false && $tokens[($nextComma - 1)]['code'] === T_WHITESPACE) {
-                $content     = $tokens[($nextComma - 2)]['content'];
-                $spaceLength = $tokens[($nextComma - 1)]['length'];
-                $error       = 'Expected 0 spaces between "%s" and comma; %s found';
-                $data        = array(
-                                $content,
-                                $spaceLength,
-                               );
+                // Here/nowdoc closing tags must have the command on the next line.
+                $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($nextComma - 1), null, true);
+                if ($tokens[$prev]['code'] !== T_END_HEREDOC && $tokens[$prev]['code'] !== T_END_NOWDOC) {
+                    $content     = $tokens[($nextComma - 2)]['content'];
+                    $spaceLength = $tokens[($nextComma - 1)]['length'];
+                    $error       = 'Expected 0 spaces between "%s" and comma; %s found';
+                    $data        = array(
+                                    $content,
+                                    $spaceLength,
+                                   );
 
-                $fix = $phpcsFile->addFixableError($error, $nextComma, 'SpaceBeforeComma', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken(($nextComma - 1), '');
+                    $fix = $phpcsFile->addFixableError($error, $nextComma, 'SpaceBeforeComma', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken(($nextComma - 1), '');
+                    }
                 }
             }
         }//end foreach

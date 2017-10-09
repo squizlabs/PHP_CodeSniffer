@@ -13,6 +13,13 @@ echo 'test'.(1);
 echo 'test'.(1.1);
 echo 'test'.(1).'test'.(2.2).'test'.(3);
 
+get_current_screen()->add_help_tab( array(
+'id'        => <<<EOD
+Here comes some text.
+EOD
+.'</hr>',
+) );
+
 // @codingStandardsChangeSetting Squiz.Strings.ConcatenationSpacing spacing 1
 
 $string = 'Hello' . $there . '. How are' . $you . $going . "today $okay";

@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Stopped some IDEs complaining about testing class aliases
     -- Thanks to Vytautas Stankus for the patch
+  - Fixed bug #1522 : Squiz Arrays.ArrayDeclaration and Strings.ConcatenationSpacing fixers causing parse errors with here/nowdocs
   - Fixed bug #1604 : File::isReference has problems with some bitwise operators and class property references
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1656 : Using the --sniffs argument has a problem with case sensitivity
