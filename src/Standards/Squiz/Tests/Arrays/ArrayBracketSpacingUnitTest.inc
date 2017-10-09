@@ -26,3 +26,6 @@ echo 'PHP'[ 0 ];
 $array = [];
 $var = $var[$var[$var]]]; // Syntax error
 $var = $var[$var[$var]; // Syntax error
+
+$myArray[ /* key start */'key'] = $value;
+$myArray[ /* key start */'key'/* key end */ ] = $value;
