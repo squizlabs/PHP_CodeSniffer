@@ -45,22 +45,11 @@ class ArrayBracketSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // PHP 5.4 introduced a shorthand array declaration syntax, so we need
-        // to ignore the these type of array declarations because this sniff is
-        // only dealing with array usage.
         if ($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET) {
-            $openBracket = $stackPtr;
         } else {
             if (isset($tokens[$stackPtr]['bracket_opener']) === false) {
                 return;
             }
-
-            $openBracket = $tokens[$stackPtr]['bracket_opener'];
-        }
-
-        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($openBracket - 1), null, true);
-        if ($tokens[$prev]['code'] === T_EQUAL) {
-            return;
         }
 
         // Square brackets can not have a space before them.
