@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1657 : Uninitialized string offset: 0 when sniffing CSS
   - Fixed bug #1669 : Temporary expression proceeded by curly brace is detected as function call
   - Fixed bug #1681 : Huge arrays are super slow to scan with Squiz.Arrays.ArrayDeclaration sniff
+  - Fixed bug #1694 : Squiz.Arrays.ArrayBracketSpacing is removing some comments during fixing
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
