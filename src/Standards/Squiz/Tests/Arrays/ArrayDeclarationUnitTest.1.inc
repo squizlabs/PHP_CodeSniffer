@@ -344,3 +344,9 @@ Here comes some text.
 EOD
 ,
                                     ) );
+
+$a = array
+// comment
+( 'a', 'b' );
+
+$a = array /* comment */ ( 'a', 'b' );

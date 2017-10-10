@@ -75,15 +75,21 @@ class ArrayDeclarationSniff implements Sniff
 
             if ($arrayStart !== ($stackPtr + 1)) {
                 $error = 'There must be no space between the "array" keyword and the opening parenthesis';
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword');
 
-                if ($fix === true) {
-                    $phpcsFile->fixer->beginChangeset();
-                    for ($i = ($stackPtr + 1); $i < $arrayStart; $i++) {
-                        $phpcsFile->fixer->replaceToken($i, '');
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), $arrayStart, true);
+                if (isset(Tokens::$commentTokens[$tokens[$next]['code']]) === true) {
+                    // We don't have anywhere to put the comment, so don't attempt to fix it.
+                    $phpcsFile->addError($error, $stackPtr, 'SpaceAfterKeyword');
+                } else {
+                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($stackPtr + 1); $i < $arrayStart; $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
                     }
-
-                    $phpcsFile->fixer->endChangeset();
                 }
             }
         } else {
