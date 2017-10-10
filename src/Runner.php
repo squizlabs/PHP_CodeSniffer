@@ -190,7 +190,7 @@ class Runner
             // dying if any are found.
             $this->config->dieOnUnknownArg = false;
 
-            $numErrors = $this->run();
+            $this->run();
             $this->reporter->printReports();
 
             echo PHP_EOL;
@@ -280,7 +280,7 @@ class Runner
 
         // Create this class so it is autoloaded and sets up a bunch
         // of PHP_CodeSniffer-specific token type constants.
-        $tokens = new Util\Tokens();
+        new Util\Tokens();
 
         // Allow autoloading of custom files inside installed standards.
         $installedStandards = Standards::getInstalledStandardDetails();

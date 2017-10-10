@@ -722,7 +722,6 @@ class PHP extends Tokenizer
                 if ($nowdoc === true) {
                     $finalTokens[$newStackPtr]['code'] = T_END_NOWDOC;
                     $finalTokens[$newStackPtr]['type'] = 'T_END_NOWDOC';
-                    $nowdoc = true;
                 }
 
                 $newStackPtr++;

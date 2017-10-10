@@ -946,8 +946,6 @@ class Ruleset
                         $value  = (string) $prop['value'];
                         $values = array();
                         foreach (explode(',', $value) as $val) {
-                            $v = '';
-
                             list($k,$v) = explode('=>', $val.'=>');
                             if ($v !== '') {
                                 $values[$k] = $v;

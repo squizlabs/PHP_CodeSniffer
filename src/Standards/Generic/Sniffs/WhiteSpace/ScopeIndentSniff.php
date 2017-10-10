@@ -142,12 +142,11 @@ class ScopeIndentSniff implements Sniff
             }
         }
 
-        $currentIndent = 0;
-        $lastOpenTag   = $stackPtr;
-        $lastCloseTag  = null;
-        $openScopes    = array();
-        $adjustments   = array();
-        $setIndents    = array();
+        $lastOpenTag  = $stackPtr;
+        $lastCloseTag = null;
+        $openScopes   = array();
+        $adjustments  = array();
+        $setIndents   = array();
 
         $tokens  = $phpcsFile->getTokens();
         $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
@@ -273,7 +272,6 @@ class ScopeIndentSniff implements Sniff
                         }
 
                         $parenOpener = $condition;
-                        $parens      = 0;
                     }
 
                     $exact = false;
@@ -831,7 +829,6 @@ class ScopeIndentSniff implements Sniff
                 the checking of future line.
             */
 
-            $adjusted = false;
             if ($checkToken !== null
                 && isset($this->ignoreIndentation[$tokens[$checkToken]['code']]) === false
                 && (($tokenIndent !== $checkIndent && $exact === true)
@@ -1205,7 +1202,6 @@ class ScopeIndentSniff implements Sniff
                     }
 
                     $prev      = $object;
-                    $parens    = 0;
                     $condition = 0;
                 } else if ($condition > 0) {
                     if ($this->debug === true) {
@@ -1214,7 +1210,6 @@ class ScopeIndentSniff implements Sniff
 
                     $prev   = $condition;
                     $object = 0;
-                    $parens = 0;
                 }//end if
 
                 if ($prev === false) {
