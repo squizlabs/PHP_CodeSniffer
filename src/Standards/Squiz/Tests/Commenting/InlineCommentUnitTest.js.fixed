@@ -29,12 +29,10 @@ myClass.prototype = {
     load: function(url, callback)
     {
         // Some code here.
-
     }
 };
 
 // some code goes here!
-
 /*
     A longer comment goes here.
     It spans multiple lines!!
@@ -45,13 +43,12 @@ myClass.prototype = {
 // comment!
 code = 'hello';
 
-//This is not valid.
+// This is not valid.
 code = 'hello';
 
-//  Neither is this!
+// Neither is this!
 code = 'hello';
 
-//
 code = 'hello';
 
 /** Neither is this! **/
@@ -99,10 +96,9 @@ mig.Gallery.prototype = {
 };
 
 // Here is some inline example code:
-//     -> One
-//         -> One.One
-//     -> Two
-
+// -> One
+// -> One.One
+// -> Two
 /*
     Here is some inline example code:
         -> One
@@ -115,10 +111,10 @@ var foo = 'foo'; // Var set to foo.
 
 console.info(foo);
 
-//	Comment here.
+// Comment here.
 console.info(foo);
 
-//**
+// **
 * invalid comment
 */
 

@@ -1177,6 +1177,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LongConditionClosingCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LongConditionClosingCommentUnitTest.inc.fixed" role="test" />
