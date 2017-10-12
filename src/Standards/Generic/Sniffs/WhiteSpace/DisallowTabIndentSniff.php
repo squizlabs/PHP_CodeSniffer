@@ -86,8 +86,12 @@ class DisallowTabIndentSniff implements Sniff
             $tabFound = false;
             if ($tokens[$i]['column'] === 1) {
                 if ($content[0] === "\t") {
-                    $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
                     $tabFound = true;
+                    if (strpos($content, ' ') !== false) {
+                        $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                    } else {
+                        $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                    }
                 } else if ($content[0] === ' ') {
                     if (strpos($content, "\t") !== false) {
                         $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
