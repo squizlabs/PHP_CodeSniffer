@@ -68,3 +68,7 @@ $x = 1;
 	        echo 'And another one.'
     	    echo 'And another one.'
         	echo 'And another one.'
+
+// The next line has four spaces. This is a specific test case. Do not remove the spaces.
+    
+$bar = 2;

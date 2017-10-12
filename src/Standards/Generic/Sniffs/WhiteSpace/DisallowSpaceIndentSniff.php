@@ -80,6 +80,16 @@ class DisallowSpaceIndentSniff implements Sniff
                 continue;
             }
 
+            if ($tokens[$i]['code'] === T_WHITESPACE
+                && isset($tokens[($i + 1)]) === true
+                && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
+            ) {
+                // Blank line, ignore.
+                // If needed, the Squiz.WhiteSpace.SuperfluousWhitespace sniff can clean up
+                // superfluous whitespace on the line.
+                continue;
+            }
+
             // If tabs are being converted to spaces by the tokeniser, the
             // original content should be checked instead of the converted content.
             if (isset($tokens[$i]['orig_content']) === true) {
