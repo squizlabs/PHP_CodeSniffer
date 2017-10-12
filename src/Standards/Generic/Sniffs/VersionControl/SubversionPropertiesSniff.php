@@ -56,18 +56,11 @@ class SubversionPropertiesSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Make sure this is the first PHP open tag so we don't process the
-        // same file twice.
-        $prevOpenTag = $phpcsFile->findPrevious(T_OPEN_TAG, ($stackPtr - 1));
-        if ($prevOpenTag !== false) {
-            return;
-        }
-
         $path       = $phpcsFile->getFileName();
         $properties = $this->getProperties($path);
         if ($properties === null) {
             // Not under version control.
-            return;
+            return ($phpcsFile->numTokens + 1);
         }
 
         $allProperties = ($properties + $this->properties);
@@ -108,6 +101,9 @@ class SubversionPropertiesSniff implements Sniff
                 $phpcsFile->addError($error, $stackPtr, 'NoMatch', $data);
             }
         }//end foreach
+
+        // Ignore the rest of the file.
+        return ($phpcsFile->numTokens + 1);
 
     }//end process()
 
