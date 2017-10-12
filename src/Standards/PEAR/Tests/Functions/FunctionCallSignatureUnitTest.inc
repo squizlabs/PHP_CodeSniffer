@@ -213,6 +213,9 @@ function foo()
 test($arg, $arg2);
 test( $arg, $arg2 );
 test(  $arg, $arg2  );
+test();
+test( );
+test(  );
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 0
 // @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 0
 
