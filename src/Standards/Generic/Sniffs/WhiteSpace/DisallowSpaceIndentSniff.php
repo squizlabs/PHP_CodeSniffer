@@ -99,6 +99,12 @@ class DisallowSpaceIndentSniff implements Sniff
                 if (isset($matches[2]) === true) {
                     $nonWhitespace = $matches[2];
                 }
+            } else if (isset($tokens[($i + 1)]) === true
+                && $tokens[$i]['line'] < $tokens[($i + 1)]['line']
+            ) {
+                // There is no content after this whitespace except for a newline.
+                $content       = rtrim($content, "\r\n");
+                $nonWhitespace = $phpcsFile->eolChar;
             }
 
             $hasSpaces = strpos($content, ' ');
@@ -116,7 +122,7 @@ class DisallowSpaceIndentSniff implements Sniff
             }
 
             if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
-                // Ignore file/class-level DocBlock, especially for recording metrics.
+                // Ignore file/class-level docblocks, especially for recording metrics.
                 continue;
             }
 
