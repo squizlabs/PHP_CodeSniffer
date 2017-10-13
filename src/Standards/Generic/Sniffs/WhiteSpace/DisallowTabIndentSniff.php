@@ -83,23 +83,38 @@ class DisallowTabIndentSniff implements Sniff
                 continue;
             }
 
+            $recordMetrics = true;
+            if (isset($tokens[($i + 1)]) === true
+                && $tokens[$i]['line'] < $tokens[($i + 1)]['line']
+            ) {
+                // Don't record metrics for empty lines.
+                $recordMetrics = false;
+            }
+
             $tabFound = false;
             if ($tokens[$i]['column'] === 1) {
                 if ($content[0] === "\t") {
                     $tabFound = true;
-                    if (strpos($content, ' ') !== false) {
-                        $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
-                    } else {
-                        $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                    if ($recordMetrics === true) {
+                        $spacePosition  = strpos($content, ' ');
+                        $tabAfterSpaces = strpos($content, "\t", $spacePosition);
+                        if ($spacePosition !== false && $tabAfterSpaces !== false) {
+                            $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                        } else {
+                            $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                        }
                     }
                 } else if ($content[0] === ' ') {
                     if (strpos($content, "\t") !== false) {
-                        $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                        if ($recordMetrics === true) {
+                            $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                        }
+
                         $tabFound = true;
-                    } else {
+                    } else if ($recordMetrics === true) {
                         $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
                     }
-                }
+                }//end if
             } else {
                 // Look for tabs so we can report and replace, but don't
                 // record any metrics about them because they aren't

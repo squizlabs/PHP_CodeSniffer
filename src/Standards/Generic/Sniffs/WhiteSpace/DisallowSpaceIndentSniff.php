@@ -88,6 +88,8 @@ class DisallowSpaceIndentSniff implements Sniff
                 $content = $tokens[$i]['content'];
             }
 
+            $recordMetrics = true;
+
             // If this is an inline HTML token, split the content into
             // indentation whitespace and the actual HTML/text.
             $nonWhitespace = '';
@@ -105,6 +107,9 @@ class DisallowSpaceIndentSniff implements Sniff
                 // There is no content after this whitespace except for a newline.
                 $content       = rtrim($content, "\r\n");
                 $nonWhitespace = $phpcsFile->eolChar;
+
+                // Don't record metrics for empty lines.
+                $recordMetrics = false;
             }
 
             $hasSpaces = strpos($content, ' ');
@@ -117,7 +122,10 @@ class DisallowSpaceIndentSniff implements Sniff
 
             if ($hasSpaces === false && $hasTabs !== false) {
                 // All ok, nothing to do.
-                $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                if ($recordMetrics === true) {
+                    $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                }
+
                 continue;
             }
 
@@ -136,7 +144,9 @@ class DisallowSpaceIndentSniff implements Sniff
             $tabAfterSpaces = strpos($content, "\t", $hasSpaces);
 
             if ($hasTabs === false) {
-                $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
+                if ($recordMetrics === true) {
+                    $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
+                }
 
                 if ($numTabs === 0) {
                     // Ignore: precision indentation.
@@ -145,14 +155,20 @@ class DisallowSpaceIndentSniff implements Sniff
             } else {
                 if ($numTabs === 0) {
                     // Precision indentation.
-                    $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                    if ($recordMetrics === true) {
+                        if ($tabAfterSpaces !== false) {
+                            $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                        } else {
+                            $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                        }
+                    }
 
                     if ($tabAfterSpaces === false) {
                         // Ignore: precision indentation is already at the
                         // end of the whitespace.
                         continue;
                     }
-                } else {
+                } else if ($recordMetrics === true) {
                     $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
                 }
             }//end if
