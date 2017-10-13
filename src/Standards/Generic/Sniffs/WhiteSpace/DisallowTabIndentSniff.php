@@ -26,6 +26,13 @@ class DisallowTabIndentSniff implements Sniff
                                    'CSS',
                                   );
 
+    /**
+     * The --tab-width CLI value that is being used.
+     *
+     * @var integer
+     */
+    private $tabWidth = null;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -50,6 +57,15 @@ class DisallowTabIndentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        if ($this->tabWidth === null) {
+            if (isset($phpcsFile->config->tabWidth) === false || $phpcsFile->config->tabWidth === 0) {
+                // We have no idea how wide tabs are, so assume 4 spaces for metrics.
+                $this->tabWidth = 4;
+            } else {
+                $this->tabWidth = $phpcsFile->config->tabWidth;
+            }
+        }
+
         $tokens    = $phpcsFile->getTokens();
         $error     = 'Spaces must be used to indent lines; tabs are not allowed';
         $errorCode = 'TabsUsed';
@@ -101,7 +117,15 @@ class DisallowTabIndentSniff implements Sniff
                         if ($spacePosition !== false && $tabAfterSpaces !== false) {
                             $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
                         } else {
-                            $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                            // Check for use of precision spaces.
+                            $trimmed   = str_replace(' ', '', $content);
+                            $numSpaces = (strlen($content) - strlen($trimmed));
+                            $numTabs   = (int) floor($numSpaces / $this->tabWidth);
+                            if ($numTabs === 0) {
+                                $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                            } else {
+                                $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                            }
                         }
                     }
                 } else if ($content[0] === ' ') {
