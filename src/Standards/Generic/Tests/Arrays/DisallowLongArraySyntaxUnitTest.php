@@ -32,6 +32,7 @@ class DisallowLongArraySyntaxUnitTest extends AbstractSniffUnitTest
             7  => 1,
             12 => 1,
             13 => 1,
+            30 => 1,
         ];
 
     }//end getErrorList()
