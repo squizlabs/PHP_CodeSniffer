@@ -139,7 +139,12 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         $tokens      = $phpcsFile->getTokens();
         $varName     = ltrim($tokens[$stackPtr]['content'], '$');
         $memberProps = $phpcsFile->getMemberProperties($stackPtr);
-        $public      = ($memberProps['scope'] === 'public');
+        if (empty($memberProps) === true) {
+            // Exception encountered.
+            return;
+        }
+
+        $public = ($memberProps['scope'] === 'public');
 
         if ($public === true) {
             if (substr($varName, 0, 1) === '_') {
