@@ -89,4 +89,9 @@
    <severity>0</severity>
  </rule>
 
+ <!-- Prevent fixer conflict for conflicting rules. -->
+ <rule ref="Squiz.Commenting.InlineComment">
+  <exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd"/>
+ </rule>
+
 </ruleset>
