@@ -259,3 +259,22 @@ class HttpStatus
     const CONTINUE = 100;
     const SWITCHING_PROTOCOLS = 101;
 }
+
+interface ABC {
+	public function noError($name, $var);
+}
+
+trait Something {
+	function getReturnType() {
+	    echo 'no error';
+	}
+}
+
+$a = new class {
+    public function log($msg)
+    {
+        echo 'no error';
+    }
+};
+
+interface MyInterface {

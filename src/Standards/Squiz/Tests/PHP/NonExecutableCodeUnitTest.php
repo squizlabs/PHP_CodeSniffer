@@ -69,6 +69,7 @@ class NonExecutableCodeUnitTest extends AbstractSniffUnitTest
             234 => 1,
             235 => 2,
             239 => 1,
+            273 => 2,
         ];
 
     }//end getWarningList()
