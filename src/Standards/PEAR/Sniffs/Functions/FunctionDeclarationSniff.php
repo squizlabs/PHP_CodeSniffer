@@ -263,10 +263,12 @@ class FunctionDeclarationSniff implements Sniff
         $functionIndent = 0;
         for ($i = ($stackPtr - 1); $i >= 0; $i--) {
             if ($tokens[$i]['line'] !== $tokens[$stackPtr]['line']) {
-                $i++;
                 break;
             }
         }
+
+        // Move $i back to the line the function is or to 0.
+        $i++;
 
         if ($tokens[$i]['code'] === T_WHITESPACE) {
             $functionIndent = strlen($tokens[$i]['content']);
