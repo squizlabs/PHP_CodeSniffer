@@ -1481,8 +1481,9 @@ class File
      *
      * <code>
      *   array(
-     *    'scope'       => 'public', // public protected or protected
-     *    'is_static'   => false,    // true if the static keyword was found.
+     *    'scope'           => 'public', // public protected or protected.
+     *    'scope_specified' => false,    // true if the scope was explicitely specified.
+     *    'is_static'       => false,    // true if the static keyword was found.
      *   );
      * </code>
      *
