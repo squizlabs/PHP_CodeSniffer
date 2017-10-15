@@ -233,6 +233,7 @@ final class Tokens
         T_SL_EQUAL       => T_SL_EQUAL,
         T_SR_EQUAL       => T_SR_EQUAL,
         T_COALESCE_EQUAL => T_COALESCE_EQUAL,
+        T_ZSR_EQUAL      => T_ZSR_EQUAL,
     ];
 
     /**
