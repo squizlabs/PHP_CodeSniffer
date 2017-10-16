@@ -106,6 +106,12 @@ class a
         $_sheet,
         $_FieldParser,
         $_key;
+
+    private
+        $varN = true,
+        $varO = array( 'a', 'b' ),
+        $varP = 'string',
+        $varQ = 123;
 }
 
 var_dump($http_response_header);
