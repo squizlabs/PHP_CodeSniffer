@@ -42,3 +42,16 @@ if ($geometry instanceof static      || $geometry instanceof static) {
 class MyClass1 {
     use HelloWorld { sayHello as private; }
 }
+
+abstract class Foo
+{
+    public static function getInstance()
+    {
+        return new /* comment */   static();
+    }
+
+    public static function output()
+    {
+        static   /* comment */ :: bar();
+    }
+}

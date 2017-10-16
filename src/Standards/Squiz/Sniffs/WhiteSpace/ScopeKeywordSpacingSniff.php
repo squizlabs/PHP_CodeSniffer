@@ -44,8 +44,8 @@ class ScopeKeywordSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        $prevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 
         if ($tokens[$stackPtr]['code'] === T_STATIC
             && ($tokens[$nextToken]['code'] === T_DOUBLE_COLON
