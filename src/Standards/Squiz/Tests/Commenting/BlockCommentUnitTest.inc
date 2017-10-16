@@ -220,3 +220,10 @@ class TabTest {
 		}
 	}
 }
+
+	/*
+	 * Test distinguishing between two distinct block comments which directly follow each other.
+	 */
+	/*
+     *
+	*/
