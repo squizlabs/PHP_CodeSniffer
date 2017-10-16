@@ -44,19 +44,23 @@ class ScopeKeywordSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[($stackPtr + 1)]) === false) {
+            return;
+        }
+
         $prevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 
         if ($tokens[$stackPtr]['code'] === T_STATIC
-            && ($tokens[$nextToken]['code'] === T_DOUBLE_COLON
+            && (($nextToken === false || $tokens[$nextToken]['code'] === T_DOUBLE_COLON)
             || $tokens[$prevToken]['code'] === T_NEW)
         ) {
-            // Late static binding, e.g., static:: OR new static() usage.
+            // Late static binding, e.g., static:: OR new static() usage or live coding.
             return;
         }
 
         if ($tokens[$prevToken]['code'] === T_AS) {
-            // Trait visibilty change, e.g., "use HelloWorld { sayHello as private; }".
+            // Trait visibility change, e.g., "use HelloWorld { sayHello as private; }".
             return;
         }
 
