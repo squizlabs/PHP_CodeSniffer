@@ -131,7 +131,9 @@ class BlockCommentSniff implements Sniff
             $lastLine       = $tokens[$nextComment]['line'];
             $commentLines[] = $nextComment;
             $commentString .= $tokens[$nextComment]['content'];
-            if ($tokens[$nextComment]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+            if ($tokens[$nextComment]['code'] === T_DOC_COMMENT_CLOSE_TAG
+                || substr($tokens[$nextComment]['content'], -2) === '*/'
+            ) {
                 break;
             }
         }
