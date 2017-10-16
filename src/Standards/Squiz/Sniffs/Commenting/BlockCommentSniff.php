@@ -194,7 +194,8 @@ class BlockCommentSniff implements Sniff
             return;
         }//end if
 
-        $starColumn = ($tokens[$stackPtr]['column'] + 3);
+        $starColumn = $tokens[$stackPtr]['column'];
+        $hasStars   = false;
 
         // Make sure first line isn't blank.
         if (trim($tokens[$commentLines[1]]['content']) === '') {
@@ -208,14 +209,21 @@ class BlockCommentSniff implements Sniff
             $content      = $tokens[$commentLines[1]]['content'];
             $commentText  = ltrim($content);
             $leadingSpace = (strlen($content) - strlen($commentText));
-            if ($leadingSpace !== $starColumn) {
-                $expected = $starColumn.' space';
-                if ($starColumn !== 1) {
-                    $expected .= 's';
+
+            $expected = ($starColumn + 3);
+            if ($commentText[0] === '*') {
+                $expected = $starColumn;
+                $hasStars = true;
+            }
+
+            if ($leadingSpace !== $expected) {
+                $expectedTxt = $expected.' space';
+                if ($expected !== 1) {
+                    $expectedTxt .= 's';
                 }
 
                 $data = [
-                    $expected,
+                    $expectedTxt,
                     $leadingSpace,
                 ];
 
@@ -226,9 +234,9 @@ class BlockCommentSniff implements Sniff
                         && $tokens[$commentLines[1]]['orig_content'][0] === "\t"
                     ) {
                         // Line is indented using tabs.
-                        $padding = str_repeat("\t", floor($starColumn / $this->tabWidth));
+                        $padding = str_repeat("\t", floor($expected / $this->tabWidth));
                     } else {
-                        $padding = str_repeat(' ', $starColumn);
+                        $padding = str_repeat(' ', $expected);
                     }
 
                     $phpcsFile->fixer->replaceToken($commentLines[1], $padding.ltrim($content));
@@ -243,7 +251,6 @@ class BlockCommentSniff implements Sniff
 
         // Check that each line of the comment is indented past the star.
         foreach ($commentLines as $line) {
-            $leadingSpace = (strlen($tokens[$line]['content']) - strlen(ltrim($tokens[$line]['content'])));
             // First and last lines (comment opener and closer) are handled separately.
             if ($line === $commentLines[(count($commentLines) - 1)] || $line === $commentLines[0]) {
                 continue;
@@ -259,14 +266,23 @@ class BlockCommentSniff implements Sniff
                 continue;
             }
 
-            if ($leadingSpace < $starColumn) {
-                $expected = $starColumn.' space';
-                if ($starColumn !== 1) {
-                    $expected .= 's';
+            $commentText  = ltrim($tokens[$line]['content']);
+            $leadingSpace = (strlen($tokens[$line]['content']) - strlen($commentText));
+
+            $expected = ($starColumn + 3);
+            if ($commentText[0] === '*') {
+                $expected = $starColumn;
+                $hasStars = true;
+            }
+
+            if ($leadingSpace < $expected) {
+                $expectedTxt = $expected.' space';
+                if ($expected !== 1) {
+                    $expectedTxt .= 's';
                 }
 
                 $data = [
-                    $expected,
+                    $expectedTxt,
                     $leadingSpace,
                 ];
 
@@ -277,9 +293,9 @@ class BlockCommentSniff implements Sniff
                         && $tokens[$line]['orig_content'][0] === "\t"
                     ) {
                         // Line is indented using tabs.
-                        $padding = str_repeat("\t", floor($starColumn / $this->tabWidth));
+                        $padding = str_repeat("\t", floor($expected / $this->tabWidth));
                     } else {
-                        $padding = str_repeat(' ', $starColumn);
+                        $padding = str_repeat(' ', $expected);
                     }
 
                     $phpcsFile->fixer->replaceToken($line, $padding.ltrim($tokens[$line]['content']));
@@ -297,16 +313,20 @@ class BlockCommentSniff implements Sniff
             $content      = $tokens[$commentLines[$lastIndex]]['content'];
             $commentText  = ltrim($content);
             $leadingSpace = (strlen($content) - strlen($commentText));
-            if ($leadingSpace !== ($tokens[$stackPtr]['column'] - 1)) {
-                $expected = ($tokens[$stackPtr]['column'] - 1);
-                if ($expected === 1) {
-                    $expected .= ' space';
-                } else {
-                    $expected .= ' spaces';
+
+            $expected = ($starColumn - 1);
+            if ($hasStars === true) {
+                $expected = $starColumn;
+            }
+
+            if ($leadingSpace !== $expected) {
+                $expectedTxt = $expected.' space';
+                if ($expected !== 1) {
+                    $expectedTxt .= 's';
                 }
 
                 $data = [
-                    $expected,
+                    $expectedTxt,
                     $leadingSpace,
                 ];
 
