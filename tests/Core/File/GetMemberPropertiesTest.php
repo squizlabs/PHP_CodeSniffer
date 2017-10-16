@@ -187,6 +187,86 @@ class GetMemberPropertiesTest extends TestCase
                 ],
             ],
             [
+                '/* testGroupProtectedStatic 1 */',
+                [
+                    'scope'            => 'protected',
+                    'scope_specified' => true,
+                    'is_static'        => true,
+                ],
+            ],
+            [
+                '/* testGroupProtectedStatic 2 */',
+                [
+                    'scope'            => 'protected',
+                    'scope_specified' => true,
+                    'is_static'        => true,
+                ],
+            ],
+            [
+                '/* testGroupProtectedStatic 3 */',
+                [
+                    'scope'           => 'protected',
+                    'scope_specified' => true,
+                    'is_static'       => true,
+                ],
+            ],
+            [
+                '/* testGroupPrivate 1 */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                ],
+            ],
+            [
+                '/* testGroupPrivate 2 */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                ],
+            ],
+            [
+                '/* testGroupPrivate 3 */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                ],
+            ],
+            [
+                '/* testGroupPrivate 4 */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                ],
+            ],
+            [
+                '/* testGroupPrivate 5 */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                ],
+            ],
+            [
+                '/* testGroupPrivate 6 */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                ],
+            ],
+            [
+                '/* testGroupPrivate 7 */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                ],
+            ],
+            [
                 '/* testInterfaceProperty */',
                 [],
             ],

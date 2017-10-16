@@ -36,6 +36,35 @@ class TestMemberProperties
     /* testNoPrefix */
     $varK = true;
 
+
+    protected static
+        /* testGroupProtectedStatic 1 */
+        $varL,
+        /* testGroupProtectedStatic 2 */
+        $varM,
+        /* testGroupProtectedStatic 3 */
+        $varN;
+
+    private
+        /* testGroupPrivate 1 */
+        $varO = true,
+        /* testGroupPrivate 2 */
+        $varP = array( 'a' => 'a', 'b' => 'b' ),
+        /* testGroupPrivate 3 */
+        $varQ = 'string',
+        /* testGroupPrivate 4 */
+        $varR = 123,
+        /* testGroupPrivate 5 */
+        $varS = ONE / self::THREE,
+        /* testGroupPrivate 6 */
+        $varT = [
+			'a' => 'a',
+			'b' => 'b'
+		],
+        /* testGroupPrivate 7 */
+        $varU = __DIR__ . "/base";
+
+
     /* testMethodParam */
     public function methodName($param) {
         /* testImportedGlobal */
