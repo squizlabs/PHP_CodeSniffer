@@ -82,10 +82,21 @@ class ScopeKeywordSpacingSniff implements Sniff
                 if ($spacing === 0) {
                     $phpcsFile->fixer->addContent($stackPtr, ' ');
                 } else {
+                    $phpcsFile->fixer->beginChangeset();
+
+                    for ($i = ($stackPtr + 2); $i < $phpcsFile->numTokens; $i++) {
+                        if (isset($tokens[$i]) === false || $tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                    $phpcsFile->fixer->endChangeset();
                 }
-            }
-        }
+            }//end if
+        }//end if
 
     }//end process()
 
