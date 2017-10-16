@@ -58,3 +58,27 @@ abstract class Foo
         static   /* comment */ :: bar();
     }
 }
+
+class MyOtherClass
+{
+    public
+        $varK = array( 'a', 'b' );
+
+    protected    $varK,
+        $varL,
+        $varM;
+
+    protected static
+        $varK, $varL, $varM;
+
+    private
+        $varO = true,
+        $varP = array( 'a' => 'a', 'b' => 'b' ),
+        $varQ = 'string',
+        $varR = 123;
+
+    // Intentionally missing a semi-colon for testing.
+    public
+        $varS,
+        $varT
+}

@@ -60,6 +60,23 @@ class ScopeKeywordSpacingSniff implements Sniff
             return;
         }
 
+        if ($nextToken !== false && $tokens[$nextToken]['code'] === T_VARIABLE) {
+            $endOfStatement = $phpcsFile->findNext(T_SEMICOLON, ($nextToken + 1));
+            if ($endOfStatement === false) {
+                // Live coding.
+                return;
+            }
+
+            $multiProperty = $phpcsFile->findNext(T_VARIABLE, ($nextToken + 1), $endOfStatement);
+            if ($multiProperty !== false
+                && $tokens[$stackPtr]['line'] !== $tokens[$nextToken]['line']
+                && $tokens[$nextToken]['line'] !== $tokens[$endOfStatement]['line']
+            ) {
+                // Allow for multiple properties definitions to each be on their own line.
+                return;
+            }
+        }
+
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $spacing = 0;
         } else {
