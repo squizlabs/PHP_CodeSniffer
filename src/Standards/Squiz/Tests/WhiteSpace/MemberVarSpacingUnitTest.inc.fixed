@@ -235,3 +235,21 @@ class phpcsCommentTest {
     public $var1 = 'value';
 
 }
+
+class MyOtherClass
+{
+
+    public
+        $varK = array( 'a', 'b' );
+
+    protected static
+        $varK,
+        $varL,
+        $varM;
+
+    private
+        $varO = true,
+        $varP = array( 'a' => 'a', 'b' => 'b' ),
+        $varQ = 'string',
+        $varR = 123;
+}
