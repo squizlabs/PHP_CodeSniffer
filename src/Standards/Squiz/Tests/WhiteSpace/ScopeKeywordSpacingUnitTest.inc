@@ -38,7 +38,7 @@ abstract class Foo
     }
 }
 
-if ($geometry instanceof static) {
+if ($geometry instanceof static      || $geometry instanceof static) {
     echo 'foo';
 }
 
