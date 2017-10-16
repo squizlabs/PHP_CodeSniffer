@@ -240,7 +240,7 @@ class BlockCommentSniff implements Sniff
                         $padding = str_repeat(' ', $expected);
                     }
 
-                    $phpcsFile->fixer->replaceToken($commentLines[1], $padding.ltrim($content));
+                    $phpcsFile->fixer->replaceToken($commentLines[1], $padding.$commentText);
                 }
             }//end if
 
@@ -300,20 +300,19 @@ class BlockCommentSniff implements Sniff
                         $padding = str_repeat(' ', $expected);
                     }
 
-                    $phpcsFile->fixer->replaceToken($line, $padding.ltrim($tokens[$line]['content']));
+                    $phpcsFile->fixer->replaceToken($line, $padding.$commentText);
                 }
             }//end if
         }//end foreach
 
         // Finally, test the last line is correct.
-        $lastIndex = (count($commentLines) - 1);
-        $content   = trim($tokens[$commentLines[$lastIndex]]['content']);
-        if ($content !== '*/' && $content !== '**/') {
+        $lastIndex   = (count($commentLines) - 1);
+        $content     = $tokens[$commentLines[$lastIndex]]['content'];
+        $commentText = ltrim($content);
+        if ($commentText !== '*/' && $commentText !== '**/') {
             $error = 'Comment closer must be on a new line';
             $phpcsFile->addError($error, $commentLines[$lastIndex], 'CloserSameLine');
         } else {
-            $content      = $tokens[$commentLines[$lastIndex]]['content'];
-            $commentText  = ltrim($content);
             $leadingSpace = (strlen($content) - strlen($commentText));
 
             $expected = ($starColumn - 1);
