@@ -333,8 +333,21 @@ class BlockCommentSniff implements Sniff
                 ];
 
                 $error = 'Last line of comment aligned incorrectly; expected %s but found %s';
-                $phpcsFile->addError($error, $commentLines[$lastIndex], 'LastLineIndent', $data);
-            }
+                $fix   = $phpcsFile->addFixableError($error, $commentLines[$lastIndex], 'LastLineIndent', $data);
+                if ($fix === true) {
+                    if (isset($tokens[$line]['orig_content']) === true
+                        && $tokens[$line]['orig_content'][0] === "\t"
+                    ) {
+                        // Line is indented using tabs.
+                        $padding  = str_repeat("\t", floor($expected / $this->tabWidth));
+                        $padding .= str_repeat(' ', ($expected % $this->tabWidth));
+                    } else {
+                        $padding = str_repeat(' ', $expected);
+                    }
+
+                    $phpcsFile->fixer->replaceToken($commentLines[$lastIndex], $padding.$commentText);
+                }
+            }//end if
         }//end if
 
         // Check that the lines before and after this comment are blank.

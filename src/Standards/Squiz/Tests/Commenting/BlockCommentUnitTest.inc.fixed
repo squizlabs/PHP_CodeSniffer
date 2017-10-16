@@ -42,11 +42,11 @@ $code = 'should not be here';
 
 /*
     Closing comment not aligned
-    */
+*/
 
 /*
     Closing comment not aligned
- */
+*/
 
 // Not allowed
 
@@ -91,7 +91,7 @@ function func()
     /*
         Test
         here
-       */
+    */
 
 }//end func()
 
