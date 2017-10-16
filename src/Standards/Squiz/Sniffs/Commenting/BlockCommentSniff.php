@@ -234,7 +234,8 @@ class BlockCommentSniff implements Sniff
                         && $tokens[$commentLines[1]]['orig_content'][0] === "\t"
                     ) {
                         // Line is indented using tabs.
-                        $padding = str_repeat("\t", floor($expected / $this->tabWidth));
+                        $padding  = str_repeat("\t", floor($expected / $this->tabWidth));
+                        $padding .= str_repeat(' ', ($expected % $this->tabWidth));
                     } else {
                         $padding = str_repeat(' ', $expected);
                     }
@@ -293,7 +294,8 @@ class BlockCommentSniff implements Sniff
                         && $tokens[$line]['orig_content'][0] === "\t"
                     ) {
                         // Line is indented using tabs.
-                        $padding = str_repeat("\t", floor($expected / $this->tabWidth));
+                        $padding  = str_repeat("\t", floor($expected / $this->tabWidth));
+                        $padding .= str_repeat(' ', ($expected % $this->tabWidth));
                     } else {
                         $padding = str_repeat(' ', $expected);
                     }
