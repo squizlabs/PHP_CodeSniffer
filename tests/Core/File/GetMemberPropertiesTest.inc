@@ -73,6 +73,10 @@ class TestMemberProperties
         /* testLocalVariable */
         $localVariable = true;
     }
+
+    /* testPropertyAfterMethod */
+    private static $varV = true;
+
 }
 
 interface Base

@@ -267,6 +267,14 @@ class GetMemberPropertiesTest extends TestCase
                 ],
             ],
             [
+                '/* testPropertyAfterMethod */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => true,
+                ],
+            ],
+            [
                 '/* testInterfaceProperty */',
                 [],
             ],
