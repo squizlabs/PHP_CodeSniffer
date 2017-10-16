@@ -139,7 +139,7 @@ class BlockCommentSniff implements Sniff
         }
 
         $commentText = str_replace($phpcsFile->eolChar, '', $commentString);
-        $commentText = trim($commentText, '/* ');
+        $commentText = trim($commentText, "/* \t");
         if ($commentText === '') {
             $error = 'Empty block comment not allowed';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Empty');
