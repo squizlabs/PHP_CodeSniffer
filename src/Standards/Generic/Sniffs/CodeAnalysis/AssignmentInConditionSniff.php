@@ -150,10 +150,15 @@ class AssignmentInConditionSniff implements Sniff
             }
 
             if ($hasVariable === true) {
+                $errorCode = 'Found';
+                if ($token['code'] === T_WHILE) {
+                    $errorCode = 'FoundInWhileCondition';
+                }
+
                 $phpcsFile->addWarning(
                     'Variable assignment found within a condition. Did you mean to do a comparison ?',
                     $hasAssignment,
-                    'Found'
+                    $errorCode
                 );
             }
 
