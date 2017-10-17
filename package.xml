@@ -352,6 +352,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UnnecessaryStringConcatSniff.php" role="php" />
        </dir>
        <dir name="VersionControl">
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SubversionPropertiesSniff.php" role="php" />
        </dir>
        <dir name="WhiteSpace">
@@ -576,6 +577,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UnnecessaryStringConcatUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnnecessaryStringConcatUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnnecessaryStringConcatUnitTest.php" role="test" />
+       </dir>
+       <dir name="VersionControl">
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.1.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.2.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.php" role="test" />
        </dir>
        <dir name="WhiteSpace">
         <file baseinstalldir="PHP/CodeSniffer" name="ArbitraryParenthesesSpacingUnitTest.inc" role="test" />
