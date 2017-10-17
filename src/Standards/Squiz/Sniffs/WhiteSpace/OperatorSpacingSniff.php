@@ -98,6 +98,14 @@ class OperatorSpacingSniff implements Sniff
             }
         }
 
+        if (isset(Tokens::$gitBoundaryTokens[$tokens[$stackPtr]['code']]) === true) {
+            // Skip git merge boundaries.
+            $endBoundary = $phpcsFile->isMergeConflictBoundary($stackPtr);
+            if ($endBoundary !== false) {
+                return $endBoundary;
+            }
+        }
+
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
             // If it's not a reference, then we expect one space either side of the
             // bitwise operator.
