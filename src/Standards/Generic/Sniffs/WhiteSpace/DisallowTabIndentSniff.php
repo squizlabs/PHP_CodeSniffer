@@ -170,9 +170,9 @@ class DisallowTabIndentSniff implements Sniff
                     // Use the replacement that PHPCS has already done.
                     $phpcsFile->fixer->replaceToken($i, $tokens[$i]['content']);
                 } else {
-                    // Replace tabs with spaces, using an indent of 4 spaces.
+                    // Replace tabs with spaces, using an indent of tabWidth spaces.
                     // Other sniffs can then correct the indent if they need to.
-                    $newContent = str_replace("\t", '    ', $tokens[$i]['content']);
+                    $newContent = str_replace("\t", str_repeat(' ', $this->tabWidth), $tokens[$i]['content']);
                     $phpcsFile->fixer->replaceToken($i, $newContent);
                 }
             }
