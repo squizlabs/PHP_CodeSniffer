@@ -229,3 +229,7 @@ class TabTest {
 	 * Test distinguishing between two distinct block comments which directly follow each other.
 	 */
 	
+
+// Mid-line inline comment style should not be auto-fixed.
+if (true || /* test */ -1 == $b) {}
+$y = 10 + /* test */ -2;

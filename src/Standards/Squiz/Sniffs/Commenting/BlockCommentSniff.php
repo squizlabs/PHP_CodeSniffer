@@ -159,10 +159,17 @@ class BlockCommentSniff implements Sniff
 
         if (count($commentLines) === 1) {
             $error = 'Single line block comment not allowed; use inline ("// text") comment instead';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SingleLine');
-            if ($fix === true) {
-                $comment = '// '.$commentText.$phpcsFile->eolChar;
-                $phpcsFile->fixer->replaceToken($stackPtr, $comment);
+
+            // Only fix comments when they are the last token on a line.
+            $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+            if ($tokens[$stackPtr]['line'] !== $tokens[$nextNonEmpty]['line']) {
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SingleLine');
+                if ($fix === true) {
+                    $comment = '// '.$commentText.$phpcsFile->eolChar;
+                    $phpcsFile->fixer->replaceToken($stackPtr, $comment);
+                }
+            } else {
+                $phpcsFile->addError($error, $stackPtr, 'SingleLine');
             }
 
             return;
