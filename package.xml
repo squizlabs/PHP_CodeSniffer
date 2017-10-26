@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic.PHP.DiscourageGoto to warn about the use of the GOTO language construct
     -- Thanks to Juliette Reinders Folmer for the contribution
   - Squiz.Commenting.FunctionComment now supports nullable type hints
+  - Squiz.WhiteSpace.SemicolonSpacing now ignores semicolons used for empty statements inside FOR conditions
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
