@@ -205,6 +205,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DiscourageGotoStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseConstantStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordStandard.xml" role="php" />
@@ -300,6 +301,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DiscourageGotoSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseConstantSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordSniff.php" role="php" />
@@ -500,6 +502,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DiscourageGotoUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DiscourageGotoUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseConstantUnitTest.inc" role="test" />
