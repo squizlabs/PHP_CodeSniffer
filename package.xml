@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-10-17</date>
  <time>09:38:00</time>
  <version>
-  <release>3.1.1</release>
-  <api>3.1.1</api>
+  <release>3.2.0</release>
+  <api>3.2.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,29 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Restored preference of non-dist files over dist files for phpcs.xml and phpcs.xml.dist
-    -- The order that the files are searched is now: .phpcs.xml, phpcs.xml, .phpcs.xml.dist, phpcs.xml.dist
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Progress output now correctly shows skipped files
-  - Progress output now shows 100% when the file list has finished processing (request #1697)
-  - Stopped some IDEs complaining about testing class aliases
-    -- Thanks to Vytautas Stankus for the patch
-  - Squiz.Commenting.InlineComment incorrectly identified comment blocks in some cases, muting some errors
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1512 : PEAR.Functions.FunctionCallSignature enforces spaces when no arguments if required spaces is not 0
-  - Fixed bug #1522 : Squiz Arrays.ArrayDeclaration and Strings.ConcatenationSpacing fixers causing parse errors with here/nowdocs
-  - Fixed bug #1570 : Squiz.Arrays.ArrayDeclaration fixer removes comments between array keyword and open parentheses
-  - Fixed bug #1604 : File::isReference has problems with some bitwise operators and class property references
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1645 : Squiz.Commenting.InlineComment will fail to fix comments at the end of the file
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1656 : Using the --sniffs argument has a problem with case sensitivity
-  - Fixed bug #1657 : Uninitialized string offset: 0 when sniffing CSS
-  - Fixed bug #1669 : Temporary expression proceeded by curly brace is detected as function call
-  - Fixed bug #1681 : Huge arrays are super slow to scan with Squiz.Arrays.ArrayDeclaration sniff
-  - Fixed bug #1694 : Squiz.Arrays.ArrayBracketSpacing is removing some comments during fixing
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #1702 : Generic.WhiteSpaceDisallowSpaceIndent fixer bug when line only contains superfluous whitespace
+  - Squiz.Commenting.FunctionComment now supports nullable type hints
  </notes>
  <contents>
   <dir name="/">

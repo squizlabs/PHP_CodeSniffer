@@ -379,6 +379,11 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             $suggestedTypeNames = array();
 
             foreach ($typeNames as $typeName) {
+                // Strip nullable operator.
+                if ($typeName[0] === '?') {
+                    $typeName = substr($typeName, 1);
+                }
+
                 $suggestedName        = Common::suggestType($typeName);
                 $suggestedTypeNames[] = $suggestedName;
 
@@ -412,6 +417,10 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 
                 if ($suggestedTypeHint !== '' && isset($realParams[$pos]) === true) {
                     $typeHint = $realParams[$pos]['type_hint'];
+
+                    // Remove namespace prefixes.
+                    $suggestedTypeHint = substr($suggestedTypeHint, (strlen($typeHint) * -1));
+
                     if ($typeHint === '') {
                         $error = 'Type hint "%s" missing for %s';
                         $data  = array(
@@ -429,7 +438,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                         }
 
                         $phpcsFile->addError($error, $stackPtr, $errorCode, $data);
-                    } else if ($typeHint !== substr($suggestedTypeHint, (strlen($typeHint) * -1))) {
+                    } else if ($typeHint !== $suggestedTypeHint && $typeHint !== '?'.$suggestedTypeHint) {
                         $error = 'Expected type hint "%s"; found "%s" for %s';
                         $data  = array(
                                   $suggestedTypeHint,
