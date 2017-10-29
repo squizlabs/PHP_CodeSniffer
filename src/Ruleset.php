@@ -950,9 +950,9 @@ class Ruleset
 
                             list($k,$v) = explode('=>', $val.'=>');
                             if ($v !== '') {
-                                $values[$k] = $v;
+                                $values[trim($k)] = trim($v);
                             } else {
-                                $values[] = $k;
+                                $values[] = trim($k);
                             }
                         }
 
