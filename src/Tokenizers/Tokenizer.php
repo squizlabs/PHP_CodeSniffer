@@ -155,9 +155,6 @@ abstract class Tokenizer
         $inTests    = defined('PHP_CODESNIFFER_IN_TESTS');
 
         $checkEncoding = false;
-        if (function_exists('iconv_strlen') === true) {
-            $checkEncoding = true;
-        }
 
         $checkAnnotations = $this->config->annotations;
 
@@ -188,14 +185,9 @@ abstract class Tokenizer
                 || strpos($this->tokens[$i]['content'], "\t") === false
             ) {
                 // There are no tabs in this content, or we aren't replacing them.
-                if ($checkEncoding === true) {
-                    // Not using the default encoding, so take a bit more care.
-                    $length = @iconv_strlen($this->tokens[$i]['content'], $this->config->encoding);
-                    if ($length === false) {
-                        // String contained invalid characters, so revert to default.
-                        $length = strlen($this->tokens[$i]['content']);
-                    }
-                } else {
+                $length = mb_strlen($this->tokens[$i]['content'], $this->config->encoding);
+                if ($length === false) {
+                    // String contained invalid characters, so revert to default.
                     $length = strlen($this->tokens[$i]['content']);
                 }
 
@@ -269,9 +261,6 @@ abstract class Tokenizer
     public function replaceTabsInToken(&$token, $prefix=' ', $padding=' ')
     {
         $checkEncoding = false;
-        if (function_exists('iconv_strlen') === true) {
-            $checkEncoding = true;
-        }
 
         $currColumn = $token['column'];
         $tabWidth   = $this->config->tabWidth;
@@ -300,14 +289,10 @@ abstract class Tokenizer
             foreach ($tabs as $content) {
                 if ($content !== '') {
                     $newContent .= $content;
-                    if ($checkEncoding === true) {
-                        // Not using the default encoding, so take a bit more care.
-                        $contentLength = @iconv_strlen($content, $this->config->encoding);
-                        if ($contentLength === false) {
-                            // String contained invalid characters, so revert to default.
-                            $contentLength = strlen($content);
-                        }
-                    } else {
+
+                    $contentLength = mb_strlen($content, $this->config->encoding);
+                    if ($contentLength === false) {
+                        // String contained invalid characters, so revert to default.
                         $contentLength = strlen($content);
                     }
 
