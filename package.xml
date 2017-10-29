@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Array properties specified in ruleset files now have their keys and values trimmed
+    -- This saves having to do this in individual sniffs, and stops errors introduced by whitespace in rulesets
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Added Generic.PHP.DiscourageGoto to warn about the use of the GOTO language construct
     -- Thanks to Juliette Reinders Folmer for the contribution
   - Squiz.Commenting.FunctionComment now supports nullable type hints
