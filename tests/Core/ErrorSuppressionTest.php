@@ -42,6 +42,26 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, count($errors));
 
         // Process with inline comment suppression.
+        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// phpcs:enable';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with inline comment suppression mixed case.
+        $content = '<?php '.PHP_EOL.'// PHPCS:Disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// pHPcs:enabLE';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with inline comment suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -52,6 +72,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, count($errors));
 
         // Process with block comment suppression.
+        $content = '<?php '.PHP_EOL.'/* phpcs:disable */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/* phpcs:disable */';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with block comment suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/* @codingStandardsIgnoreEnd */';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -62,6 +92,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, count($errors));
 
         // Process with a docblock suppression.
+        $content = '<?php '.PHP_EOL.'/** phpcs:disable */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** phpcs:enable */';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with a docblock suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** @codingStandardsIgnoreEnd */';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -98,6 +138,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(2, count($errors));
 
         // Process with suppression.
+        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// phpcs:enable'.PHP_EOL.'$var = TRUE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertEquals(1, count($errors));
+
+        // Process with suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd'.PHP_EOL.'$var = TRUE;';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -108,6 +158,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, count($errors));
 
         // Process with a PHPDoc block suppression.
+        $content = '<?php '.PHP_EOL.'/** phpcs:disable */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** phpcs:enable */'.PHP_EOL.'$var = TRUE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertEquals(1, count($errors));
+
+        // Process with a PHPDoc block suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** @codingStandardsIgnoreEnd */'.PHP_EOL.'$var = TRUE;';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -144,6 +204,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, count($warnings));
 
         // Process with suppression.
+        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// @codingStandardsIgnoreEnd';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -154,6 +224,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, count($warnings));
 
         // Process with a docblock suppression.
+        $content = '<?php '.PHP_EOL.'/** phpcs:disable */'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'/** phpcs:enable */';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with a docblock suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'/** @codingStandardsIgnoreEnd */';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -189,8 +269,38 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(2, $numErrors);
         $this->assertEquals(2, count($errors));
 
-        // Process with suppression.
+        // Process with suppression on line before.
+        $content = '<?php '.PHP_EOL.'// phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertEquals(1, count($errors));
+
+        // Process with suppression on line before (deprecated syntax).
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertEquals(1, count($errors));
+
+        // Process with suppression on same line.
+        $content = '<?php '.PHP_EOL.'$var = FALSE; // phpcs:ignore'.PHP_EOL.'$var = FALSE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertEquals(1, count($errors));
+
+        // Process with suppression on same line (deprecated syntax).
+        $content = '<?php '.PHP_EOL.'$var = FALSE; // @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
@@ -216,6 +326,16 @@ class ErrorSuppressionTest extends TestCase
         $ruleset = new Ruleset($config);
 
         // Process with codingStandardsIgnore[Start|End] suppression and no single line suppression.
+        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// phpcs:enable';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with codingStandardsIgnore[Start|End] suppression and no single line suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -227,6 +347,17 @@ class ErrorSuppressionTest extends TestCase
 
         // Process with codingStandardsIgnoreLine suppression
         // nested within codingStandardsIgnore[Start|End] suppression.
+        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'// phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// phpcs:enable';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with codingStandardsIgnoreLine suppression
+        // nested within codingStandardsIgnore[Start|End] suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'// @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -261,6 +392,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, count($errors));
 
         // Process with suppression.
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//phpcs:disable'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//phpcs:enable'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//@codingStandardsIgnoreStart'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//@codingStandardsIgnoreEnd'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -271,6 +412,15 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, count($errors));
 
         // Process with a docblock suppression.
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'/** phpcs:disable */'.PHP_EOL.'function myFunction() {'.PHP_EOL.'/** phpcs:enable */'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = $phpcs->processFile('suppressionTest.php', $content);
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertEquals(0, count($errors));
+
+        // Process with a docblock suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'function myFunction() {'.PHP_EOL.'/** @codingStandardsIgnoreEnd */'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
         $file    = $phpcs->processFile('suppressionTest.php', $content);
 
@@ -306,6 +456,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, count($warnings));
 
         // Process with suppression.
+        $content = '<?php '.PHP_EOL.'// phpcs:ignoreFile'.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'//TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -315,7 +475,47 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, $numWarnings);
         $this->assertEquals(0, count($warnings));
 
+        // Process mixed case.
+        $content = '<?php '.PHP_EOL.'// PHPCS:Ignorefile'.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process late comment.
+        $content = '<?php '.PHP_EOL.'class MyClass {}'.PHP_EOL.'$foo = new MyClass()'.PHP_EOL.'// phpcs:ignoreFile';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process late comment (deprecated syntax).
+        $content = '<?php '.PHP_EOL.'class MyClass {}'.PHP_EOL.'$foo = new MyClass()'.PHP_EOL.'// @codingStandardsIgnoreFile';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
         // Process with a block comment suppression.
+        $content = '<?php '.PHP_EOL.'/* phpcs:ignoreFile */'.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with a block comment suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -326,6 +526,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, count($warnings));
 
         // Process with docblock suppression.
+        $content = '<?php '.PHP_EOL.'/** phpcs:ignoreFile */'.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+        // Process with docblock suppression (deprecated syntax).
         $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();

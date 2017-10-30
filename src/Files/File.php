@@ -322,6 +322,7 @@ class File
                 && ($token['code'] === T_COMMENT
                 || $token['code'] === T_PHPCS_IGNORE_FILE
                 || $token['code'] === T_PHPCS_SET
+                || $token['code'] === T_DOC_COMMENT_STRING
                 || $token['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $token['code'] === T_INLINE_HTML))
             ) {

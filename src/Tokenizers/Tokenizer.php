@@ -220,6 +220,7 @@ abstract class Tokenizer
 
             if ($checkAnnotations === true
                 && ($this->tokens[$i]['code'] === T_COMMENT
+                || $this->tokens[$i]['code'] === T_DOC_COMMENT_STRING
                 || $this->tokens[$i]['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML))
             ) {
@@ -239,10 +240,22 @@ abstract class Tokenizer
                     } else if ($ignoring === false
                         && strpos($commentText, '@codingStandardsIgnoreLine') !== false
                     ) {
-                        $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = true;
-                        // Ignore this comment too.
+                        // If this comment is the only thing on the line, it tells us
+                        // to ignore the following line. If the line contains other content
+                        // then we are just ignoring this one single line.
                         $this->ignoredLines[$this->tokens[$i]['line']] = true;
-                    }
+                        for ($prev = ($i - 1); $prev >= 0; $prev--) {
+                            if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
+                                continue;
+                            }
+
+                            break;
+                        }
+
+                        if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
+                            $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = true;
+                        }
+                    }//end if
                 } else if (substr($commentTextLower, 0, 6) === 'phpcs:') {
                     if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
                         // Ignore standards for lines that change sniff settings.
