@@ -852,6 +852,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="SideEffectsUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SideEffectsUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SideEffectsUnitTest.7.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SideEffectsUnitTest.8.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SideEffectsUnitTest.9.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SideEffectsUnitTest.10.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SideEffectsUnitTest.11.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SideEffectsUnitTest.php" role="test" />
        </dir>
        <dir name="Methods">
