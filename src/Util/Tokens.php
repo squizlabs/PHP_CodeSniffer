@@ -121,6 +121,13 @@ define('T_DOC_COMMENT_OPEN_TAG', 'PHPCS_T_DOC_COMMENT_OPEN_TAG');
 define('T_DOC_COMMENT_CLOSE_TAG', 'PHPCS_T_DOC_COMMENT_CLOSE_TAG');
 define('T_DOC_COMMENT_STRING', 'PHPCS_T_DOC_COMMENT_STRING');
 
+// Tokens used for PHPCS instruction comments.
+define('T_PHPCS_ENABLE', 'PHPCS_T_PHPCS_ENABLE');
+define('T_PHPCS_DISABLE', 'PHPCS_T_PHPCS_DISABLE');
+define('T_PHPCS_SET', 'PHPCS_T_PHPCS_SET');
+define('T_PHPCS_IGNORE', 'PHPCS_T_PHPCS_IGNORE');
+define('T_PHPCS_IGNORE_FILE', 'PHPCS_T_PHPCS_IGNORE_FILE');
+
 final class Tokens
 {
 
@@ -427,6 +434,11 @@ final class Tokens
                                   T_DOC_COMMENT_OPEN_TAG   => T_DOC_COMMENT_OPEN_TAG,
                                   T_DOC_COMMENT_CLOSE_TAG  => T_DOC_COMMENT_CLOSE_TAG,
                                   T_DOC_COMMENT_STRING     => T_DOC_COMMENT_STRING,
+                                  T_PHPCS_ENABLE           => T_PHPCS_ENABLE,
+                                  T_PHPCS_DISABLE          => T_PHPCS_DISABLE,
+                                  T_PHPCS_SET              => T_PHPCS_SET,
+                                  T_PHPCS_IGNORE           => T_PHPCS_IGNORE,
+                                  T_PHPCS_IGNORE_FILE      => T_PHPCS_IGNORE_FILE,
                                  );
 
     /**
@@ -443,6 +455,11 @@ final class Tokens
                                     T_DOC_COMMENT_OPEN_TAG   => T_DOC_COMMENT_OPEN_TAG,
                                     T_DOC_COMMENT_CLOSE_TAG  => T_DOC_COMMENT_CLOSE_TAG,
                                     T_DOC_COMMENT_STRING     => T_DOC_COMMENT_STRING,
+                                    T_PHPCS_ENABLE           => T_PHPCS_ENABLE,
+                                    T_PHPCS_DISABLE          => T_PHPCS_DISABLE,
+                                    T_PHPCS_SET              => T_PHPCS_SET,
+                                    T_PHPCS_IGNORE           => T_PHPCS_IGNORE,
+                                    T_PHPCS_IGNORE_FILE      => T_PHPCS_IGNORE_FILE,
                                    );
 
     /**

@@ -320,11 +320,15 @@ class File
             // Check for ignored lines.
             if ($checkAnnotations === true
                 && ($token['code'] === T_COMMENT
+                || $token['code'] === T_PHPCS_IGNORE_FILE
+                || $token['code'] === T_PHPCS_SET
                 || $token['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $token['code'] === T_INLINE_HTML))
             ) {
-                if (strpos($token['content'], '@codingStandards') !== false) {
-                    if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
+                $commentText      = ltrim($this->tokens[$stackPtr]['content'], ' /*');
+                $commentTextLower = strtolower($commentText);
+                if (strpos($commentText, '@codingStandards') !== false) {
+                    if (strpos($commentText, '@codingStandardsIgnoreFile') !== false) {
                         // Ignoring the whole file, just a little late.
                         $this->errors       = array();
                         $this->warnings     = array();
@@ -332,14 +336,14 @@ class File
                         $this->warningCount = 0;
                         $this->fixableCount = 0;
                         return;
-                    } else if (strpos($token['content'], '@codingStandardsChangeSetting') !== false) {
-                        $start   = strpos($token['content'], '@codingStandardsChangeSetting');
-                        $comment = substr($token['content'], ($start + 30));
+                    } else if (strpos($commentText, '@codingStandardsChangeSetting') !== false) {
+                        $start   = strpos($commentText, '@codingStandardsChangeSetting');
+                        $comment = substr($commentText, ($start + 30));
                         $parts   = explode(' ', $comment);
                         if ($parts >= 3) {
                             $sniffParts = explode('.', $parts[0]);
                             if ($sniffParts >= 3) {
-                                // If the sniff code is not know to us, it has not been registered in this run.
+                                // If the sniff code is not known to us, it has not been registered in this run.
                                 // But don't throw an error as it could be there for a different standard to use.
                                 if (isset($this->ruleset->sniffCodes[$parts[0]]) === true) {
                                     $listenerCode  = array_shift($parts);
@@ -351,6 +355,31 @@ class File
                             }
                         }
                     }//end if
+                } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile') {
+                    // Ignoring the whole file, just a little late.
+                    $this->errors       = array();
+                    $this->warnings     = array();
+                    $this->errorCount   = 0;
+                    $this->warningCount = 0;
+                    $this->fixableCount = 0;
+                    return;
+                } else if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
+                    // Need to maintain case here, to get the correct sniff code.
+                    $parts = explode(' ', substr($commentText, 10));
+                    if ($parts >= 3) {
+                        $sniffParts = explode('.', $parts[0]);
+                        if ($sniffParts >= 3) {
+                            // If the sniff code is not known to us, it has not been registered in this run.
+                            // But don't throw an error as it could be there for a different standard to use.
+                            if (isset($this->ruleset->sniffCodes[$parts[0]]) === true) {
+                                $listenerCode  = array_shift($parts);
+                                $propertyCode  = array_shift($parts);
+                                $propertyValue = rtrim(implode(' ', $parts), " */\r\n");
+                                $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
+                                $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
+                            }
+                        }
+                    }
                 }//end if
             }//end if
 
