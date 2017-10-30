@@ -117,7 +117,7 @@ $this->listeners[] = $events->getSharedManager()->attach(
         'Zend\Mvc\Application', MvcEvent::EVENT_DISPATCH, [$this, 'selectLayout'], 100
 );
 
-// @codingStandardsChangeSetting PSR2.Methods.FunctionCallSignature requiredSpacesBeforeClose 1
+// phpcs:set PSR2.Methods.FunctionCallSignature requiredSpacesBeforeClose 1
 foo('Testing
     multiline text'
  );
@@ -141,7 +141,7 @@ foo('Testing
 // . $text2
  */
  );
-// @codingStandardsChangeSetting PSR2.Methods.FunctionCallSignature requiredSpacesBeforeClose 0
+// phpcs:set PSR2.Methods.FunctionCallSignature requiredSpacesBeforeClose 0
 
 foo('Testing
     multiline text'

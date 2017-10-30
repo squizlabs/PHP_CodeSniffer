@@ -153,7 +153,7 @@ class Foo
 
 }
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.MemberVarSpacing spacing 2
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 2
 
 class MyClass
 {
@@ -166,8 +166,8 @@ class MyClass
 
 }//end class
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.MemberVarSpacing spacing 1
-// @codingStandardsChangeSetting Squiz.WhiteSpace.MemberVarSpacing spacingBeforeFirst 0
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacingBeforeFirst 0
 
 class MyClass
 {
@@ -191,7 +191,7 @@ class MyClass
 
 }//end class
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.MemberVarSpacing spacing 0
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 0
 
 class MyClass
 {

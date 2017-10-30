@@ -159,7 +159,7 @@ function myFunction() {}
 function myFunction()
 {}
 
-// @codingStandardsChangeSetting Generic.Functions.OpeningFunctionBraceBsdAllman checkClosures 1
+// phpcs:set Generic.Functions.OpeningFunctionBraceBsdAllman checkClosures 1
 
 $closureWithArgs = function ($arg1, $arg2) {
     // body
@@ -177,7 +177,7 @@ $test = function ($param) use ($result) : Something {
     return null;
 };
 
-// @codingStandardsChangeSetting Generic.Functions.OpeningFunctionBraceBsdAllman checkClosures 0
+// phpcs:set Generic.Functions.OpeningFunctionBraceBsdAllman checkClosures 0
 
 $closureWithArgs = function ($arg1, $arg2) {
     // body

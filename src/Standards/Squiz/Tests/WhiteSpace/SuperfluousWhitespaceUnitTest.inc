@@ -36,7 +36,7 @@ function myFunction2()
 
 }
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines true
+// phpcs:set Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines true
 
 function myFunction2()
 {
@@ -46,7 +46,7 @@ function myFunction2()
     
 }
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
+// phpcs:set Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
 
 // Уберём из системных свойств все кроме информации об услугах
 

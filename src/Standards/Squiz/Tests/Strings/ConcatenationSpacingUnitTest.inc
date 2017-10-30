@@ -22,7 +22,7 @@ EOD
 . '</hr>',
 ) );
 
-// @codingStandardsChangeSetting Squiz.Strings.ConcatenationSpacing spacing 1
+// phpcs:set Squiz.Strings.ConcatenationSpacing spacing 1
 
 $string = 'Hello'.$there.'. How are'.$you.$going.   "today $okay";
 $string = 'Hello' . $there . '. How are' . $you . $going . "today $okay";
@@ -30,7 +30,7 @@ $string = 'Hello'.$there;
 $string = 'Hello'. $there;
 $string = 'Hello' .$there;
 
-// @codingStandardsChangeSetting Squiz.Strings.ConcatenationSpacing ignoreNewlines true
+// phpcs:set Squiz.Strings.ConcatenationSpacing ignoreNewlines true
 $y = '1'
    . '2'
    . '3';

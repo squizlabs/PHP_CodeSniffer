@@ -1,5 +1,5 @@
-@codingStandardsChangeSetting Generic.WhiteSpace.ScopeIndent tabIndent false
-@codingStandardsChangeSetting Generic.WhiteSpace.ScopeIndent exact true
+phpcs:set Generic.WhiteSpace.ScopeIndent tabIndent false
+phpcs:set Generic.WhiteSpace.ScopeIndent exact true
 <?php
 function test()
 {
