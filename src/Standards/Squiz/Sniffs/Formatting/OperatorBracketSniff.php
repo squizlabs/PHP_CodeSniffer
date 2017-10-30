@@ -265,13 +265,6 @@ class OperatorBracketSniff implements Sniff
      */
     public function addMissingBracketsError($phpcsFile, $stackPtr)
     {
-        $error = 'Arithmetic operation must be bracketed';
-        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MissingBrackets');
-
-        if ($fix === false) {
-            return;
-        }
-
         $tokens = $phpcsFile->getTokens();
 
         $allowed = [
@@ -363,12 +356,21 @@ class OperatorBracketSniff implements Sniff
 
         $after = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($after - 1), null, true);
 
-        // Can only fix this error if both tokens are available for fixing.
-        // Adding one bracket without the other will create parse errors.
-        $phpcsFile->fixer->beginChangeset();
-        $phpcsFile->fixer->replaceToken($before, '('.$tokens[$before]['content']);
-        $phpcsFile->fixer->replaceToken($after, $tokens[$after]['content'].')');
-        $phpcsFile->fixer->endChangeset();
+        $error = 'Arithmetic operation must be bracketed';
+        if ($before === $after || $before === $stackPtr || $after === $stackPtr) {
+            $phpcsFile->addError($error, $stackPtr, 'MissingBrackets');
+            return;
+        }
+
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'MissingBrackets');
+        if ($fix === true) {
+            // Can only fix this error if both tokens are available for fixing.
+            // Adding one bracket without the other will create parse errors.
+            $phpcsFile->fixer->beginChangeset();
+            $phpcsFile->fixer->replaceToken($before, '('.$tokens[$before]['content']);
+            $phpcsFile->fixer->replaceToken($after, $tokens[$after]['content'].')');
+            $phpcsFile->fixer->endChangeset();
+        }
 
     }//end addMissingBracketsError()
 
