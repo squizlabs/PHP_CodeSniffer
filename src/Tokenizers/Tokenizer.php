@@ -151,7 +151,7 @@ abstract class Tokenizer
         $currColumn = 1;
         $lineNumber = 1;
         $eolLen     = (strlen($this->eolChar) * -1);
-        $ignoring   = false;
+        $ignoring   = null;
         $inTests    = defined('PHP_CODESNIFFER_IN_TESTS');
 
         $checkEncoding = false;
@@ -225,38 +225,72 @@ abstract class Tokenizer
                 || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML))
             ) {
                 $commentText      = ltrim($this->tokens[$i]['content'], ' /*');
+                $commentText      = rtrim($commentText, " */\r\n");
                 $commentTextLower = strtolower($commentText);
                 if (strpos($commentText, '@codingStandards') !== false) {
-                    if ($ignoring === false
+                    // If this comment is the only thing on the line, it tells us
+                    // to ignore the following line. If the line contains other content
+                    // then we are just ignoring this one single line.
+                    $ownLine = false;
+                    for ($prev = ($i - 1); $prev >= 0; $prev--) {
+                        if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
+                            continue;
+                        }
+
+                        break;
+                    }
+
+                    if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
+                        $ownLine = true;
+                    }
+
+                    if ($ignoring === null
                         && strpos($commentText, '@codingStandardsIgnoreStart') !== false
                     ) {
-                        $ignoring = true;
-                    } else if ($ignoring === true
+                        $ignoring = array('all' => true);
+                        if ($ownLine === true) {
+                            $this->ignoredLines[$this->tokens[$i]['line']] = array('all' => true);
+                        }
+                    } else if ($ignoring !== null
                         && strpos($commentText, '@codingStandardsIgnoreEnd') !== false
                     ) {
-                        $ignoring = false;
-                        // Ignore this comment too.
-                        $this->ignoredLines[$this->tokens[$i]['line']] = true;
-                    } else if ($ignoring === false
+                        if ($ownLine === true) {
+                            $this->ignoredLines[$this->tokens[$i]['line']] = array('all' => true);
+                        } else {
+                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
+                        }
+
+                        $ignoring = null;
+                    } else if ($ignoring === null
                         && strpos($commentText, '@codingStandardsIgnoreLine') !== false
                     ) {
-                        // If this comment is the only thing on the line, it tells us
-                        // to ignore the following line. If the line contains other content
-                        // then we are just ignoring this one single line.
-                        $this->ignoredLines[$this->tokens[$i]['line']] = true;
-                        for ($prev = ($i - 1); $prev >= 0; $prev--) {
-                            if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
-                                continue;
-                            }
-
-                            break;
+                        $ignoring = array('all' => true);
+                        if ($ownLine === true) {
+                            $this->ignoredLines[$this->tokens[$i]['line']]       = array('all' => true);
+                            $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = $ignoring;
+                        } else {
+                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
                         }
 
-                        if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
-                            $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = true;
-                        }
+                        $ignoring = null;
                     }//end if
                 } else if (substr($commentTextLower, 0, 6) === 'phpcs:') {
+                    // If this comment is the only thing on the line, it tells us
+                    // to ignore the following line. If the line contains other content
+                    // then we are just ignoring this one single line.
+                    $ownLine = false;
+                    for ($prev = ($i - 1); $prev >= 0; $prev--) {
+                        if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
+                            continue;
+                        }
+
+                        break;
+                    }
+
+                    if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
+                        $ownLine = true;
+                    }
+
                     if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
                         // Ignore standards for lines that change sniff settings.
                         $this->ignoredLines[$this->tokens[$i]['line']] = true;
@@ -266,46 +300,103 @@ abstract class Tokenizer
                         // The whole file will be ignored, but at least set the correct token.
                         $this->tokens[$i]['code'] = T_PHPCS_IGNORE_FILE;
                         $this->tokens[$i]['type'] = 'T_PHPCS_IGNORE_FILE';
-                    } else if ($ignoring === false
-                        && substr($commentTextLower, 0, 13) === 'phpcs:disable'
-                    ) {
-                        $ignoring = true;
-                        $this->tokens[$i]['code'] = T_PHPCS_DISABLE;
-                        $this->tokens[$i]['type'] = 'T_PHPCS_DISABLE';
-                    } else if ($ignoring === true
+                    } else if (substr($commentTextLower, 0, 13) === 'phpcs:disable') {
+                        if ($ownLine === true) {
+                            // Completely ignore the comment line.
+                            $this->ignoredLines[$this->tokens[$i]['line']] = array('all' => true);
+                        }
+
+                        if ($ignoring === null) {
+                            $ignoring = array();
+                        }
+
+                        $disabledSniffs = array();
+
+                        $additionalText = substr($commentText, 14);
+                        if ($additionalText === false) {
+                            $ignoring = array('all' => true);
+                        } else {
+                            $parts = explode(',', substr($commentText, 13));
+                            foreach ($parts as $sniffCode) {
+                                $sniffCode = trim($sniffCode);
+                                $disabledSniffs[$sniffCode] = true;
+                                $ignoring[$sniffCode]       = true;
+                            }
+                        }
+
+                        $this->tokens[$i]['code']       = T_PHPCS_DISABLE;
+                        $this->tokens[$i]['type']       = 'T_PHPCS_DISABLE';
+                        $this->tokens[$i]['sniffCodes'] = $disabledSniffs;
+                    } else if ($ignoring !== null
                         && substr($commentTextLower, 0, 12) === 'phpcs:enable'
                     ) {
-                        $ignoring = false;
-                        $this->ignoredLines[$this->tokens[$i]['line']] = true;
-                        $this->tokens[$i]['code'] = T_PHPCS_ENABLE;
-                        $this->tokens[$i]['type'] = 'T_PHPCS_ENABLE';
-                    } else if ($ignoring === false
-                        && substr($commentTextLower, 0, 12) === 'phpcs:ignore'
-                    ) {
-                        // If this comment is the only thing on the line, it tells us
-                        // to ignore the following line. If the line contains other content
-                        // then we are just ignoring this one single line.
-                        $this->ignoredLines[$this->tokens[$i]['line']] = true;
-                        for ($prev = ($i - 1); $prev >= 0; $prev--) {
-                            if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
-                                continue;
+                        $enabledSniffs = array();
+
+                        $additionalText = substr($commentText, 13);
+                        if ($additionalText === false) {
+                            $ignoring = null;
+                        } else {
+                            $parts = explode(',', substr($commentText, 13));
+                            foreach ($parts as $sniffCode) {
+                                $sniffCode = trim($sniffCode);
+                                $enabledSniffs[$sniffCode] = true;
+                                if (isset($ignoring[$sniffCode]) === true) {
+                                    unset($ignoring[$sniffCode]);
+                                }
                             }
 
-                            break;
+                            if (empty($ignoring) === true) {
+                                $ignoring = null;
+                            }
                         }
 
-                        if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
-                            $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = true;
+                        if ($ownLine === true) {
+                            // Completely ignore the comment line.
+                            $this->ignoredLines[$this->tokens[$i]['line']] = array('all' => true);
+                        } else {
+                            // The comment is on the same line as the code it is ignoring,
+                            // so respect the new ignore rules.
+                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
                         }
 
-                        $this->tokens[$i]['code'] = T_PHPCS_IGNORE;
-                        $this->tokens[$i]['type'] = 'T_PHPCS_IGNORE';
+                        $this->tokens[$i]['code']       = T_PHPCS_ENABLE;
+                        $this->tokens[$i]['type']       = 'T_PHPCS_ENABLE';
+                        $this->tokens[$i]['sniffCodes'] = $enabledSniffs;
+                    } else if ($ignoring === null
+                        && substr($commentTextLower, 0, 12) === 'phpcs:ignore'
+                    ) {
+                        $ignoreRules = array();
+
+                        $additionalText = substr($commentText, 13);
+                        if ($additionalText === false) {
+                            $ignoreRules = array('all' => true);
+                        } else {
+                            $parts = explode(',', substr($commentText, 13));
+                            foreach ($parts as $sniffCode) {
+                                $ignoreRules[trim($sniffCode)] = true;
+                            }
+                        }
+
+                        if ($ownLine === true) {
+                            // Completely ignore the comment line, and set the folllowing
+                            // line to include the ignore rules we've set.
+                            $this->ignoredLines[$this->tokens[$i]['line']]       = array('all' => true);
+                            $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = $ignoreRules;
+                        } else {
+                            // The comment is on the same line as the code it is ignoring,
+                            // so respect the ignore rules it set.
+                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoreRules;
+                        }
+
+                        $this->tokens[$i]['code']       = T_PHPCS_IGNORE;
+                        $this->tokens[$i]['type']       = 'T_PHPCS_IGNORE';
+                        $this->tokens[$i]['sniffCodes'] = $ignoreRules;
                     }//end if
                 }//end if
             }//end if
 
-            if ($ignoring === true) {
-                $this->ignoredLines[$this->tokens[$i]['line']] = true;
+            if ($ignoring !== null && isset($this->ignoredLines[$this->tokens[$i]['line']]) === false) {
+                $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
             }
         }//end for
 

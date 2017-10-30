@@ -804,15 +804,9 @@ class File
      */
     protected function addMessage($error, $message, $line, $column, $code, $data, $severity, $fixable)
     {
-        if (isset($this->tokenizer->ignoredLines[$line]) === true) {
+        // Check if this line is ignoring all message codes.
+        if (isset($this->tokenizer->ignoredLines[$line]['all']) === true) {
             return false;
-        }
-
-        $includeAll = true;
-        if ($this->configCache['cache'] === false
-            || $this->configCache['recordErrors'] === false
-        ) {
-            $includeAll = false;
         }
 
         // Work out which sniff generated the message.
@@ -840,6 +834,20 @@ class File
                            $parts[0],
                           );
         }//end if
+
+        // Check if this line is ignoring this specific message.
+        foreach ($checkCodes as $checkCode) {
+            if (isset($this->tokenizer->ignoredLines[$line][$checkCode]) === true) {
+                return false;
+            }
+        }
+
+        $includeAll = true;
+        if ($this->configCache['cache'] === false
+            || $this->configCache['recordErrors'] === false
+        ) {
+            $includeAll = false;
+        }
 
         // Filter out any messages for sniffs that shouldn't have run
         // due to the use of the --sniffs command line argument.

@@ -41,6 +41,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
        --- phpcs:ignore has the token T_PHPCS_IGNORE
        --- phpcs:set has the token T_PHPCS_SET
 
+  - The phpcs:disable and phpcs:ignore comments can now selectively ignore specific sniffs (request #604)
+    -- E.g., phpcs:disable Generic.Commenting.Todo.Found for a specific message
+    -- E.g., phpcs:disable Generic.Commenting.Todo for a whole sniff
+    -- E.g., phpcs:disable Generic.Commenting for a whole category of sniffs
+    -- E.g., phpcs:disable Generic for a whole standard
+    -- Multiple sniff codes can be specified by comma seperating them
+       --- E.g., phpcs:disable Generic.Commenting.Todo,PSR1.Files
   - @codingStandardsIgnoreLine comments now only ignore the following line if they are on a line by themselves
     -- If they are at the end of an existing line, they will only ignore the line they are on
     -- Stops some lines from accidently being ignored
