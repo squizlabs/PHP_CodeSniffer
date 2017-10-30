@@ -21,4 +21,3 @@
     float: left;
 }
 /* phpcs:set Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false */
-
