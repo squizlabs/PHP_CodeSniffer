@@ -68,7 +68,8 @@ class ColonSpacingSniff implements Sniff
             }
         }
 
-        if ($tokens[($stackPtr + 1)]['code'] === T_SEMICOLON) {
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($tokens[$next]['code'] === T_SEMICOLON || $tokens[$next]['code'] === T_STYLE) {
             // Empty style definition, ignore it.
             return;
         }
