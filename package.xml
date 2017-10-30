@@ -45,6 +45,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If they are at the end of an existing line, they will only ignore the line they are on
     -- Stops some lines from accidently being ignored
     -- Same rule applies for the new phpcs:ignore comment syntax
+  - PSR1.Files.SideEffects now respects the new phpcs:disable comment syntax
+    -- The sniff will no longer check any code that is between phpcs:disable and phpcs:enable comments
+    -- The sniff does not support the phpcs:ignore; you must wrap code structures with disable/enable comments
+    -- Previously, there was no way to have this sniff ignore parts of a file
   - Array properties specified in ruleset files now have their keys and values trimmed
     -- This saves having to do this in individual sniffs, and stops errors introduced by whitespace in rulesets
     -- Thanks to Juliette Reinders Folmer for the patch

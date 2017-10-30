@@ -94,6 +94,18 @@ class SideEffectsSniff implements Sniff
         $firstSymbol = null;
         $firstEffect = null;
         for ($i = $start; $i <= $end; $i++) {
+            // Respect phpcs:disable comments.
+            if ($tokens[$i]['code'] === T_PHPCS_DISABLE) {
+                $i = $phpcsFile->findNext(T_PHPCS_ENABLE, $i);
+                if ($i === false) {
+                    // The entire rest of the file is disabled,
+                    // so return what we have so far.
+                    break;
+                }
+
+                continue;
+            }
+
             // Ignore whitespace and comments.
             if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
                 continue;
