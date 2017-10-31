@@ -277,6 +277,13 @@ abstract class Tokenizer
                         $ignoring = null;
                     }//end if
                 } else if (substr($commentTextLower, 0, 6) === 'phpcs:') {
+                    // If there is a comment on the end, strip it off.
+                    $commentStart = strpos($commentTextLower, ' --');
+                    if ($commentStart !== false) {
+                        $commentText      = substr($commentText, 0, $commentStart);
+                        $commentTextLower = strtolower($commentText);
+                    }
+
                     // If this comment is the only thing on the line, it tells us
                     // to ignore the following line. If the line contains other content
                     // then we are just ignoring this one single line.

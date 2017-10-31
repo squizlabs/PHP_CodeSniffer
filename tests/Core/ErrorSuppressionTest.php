@@ -827,4 +827,65 @@ class ErrorSuppressionTest extends TestCase
     }//end testIgnoreSelected()
 
 
+    /**
+     * Test ignoring specific sniffs.
+     *
+     * @return void
+     */
+    public function testCommenting()
+    {
+        $config            = new Config();
+        $config->standards = array('Generic');
+        $config->sniffs    = array(
+                              'Generic.PHP.LowerCaseConstant',
+                              'Generic.Commenting.Todo',
+                             );
+
+        $ruleset = new Ruleset($config);
+
+        // Suppress a single sniff.
+        $content = '<?php '.PHP_EOL.'// phpcs:ignore Generic.Commenting.Todo -- Because reasons'.PHP_EOL.'$var = FALSE; //TODO: write some code'.PHP_EOL.'$var = FALSE; //TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(2, $numErrors);
+        $this->assertEquals(2, count($errors));
+        $this->assertEquals(1, $numWarnings);
+        $this->assertEquals(1, count($warnings));
+
+        // Suppress a single sniff and re-enable.
+        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo --Because reasons'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting.Todo   --  Because reasons'.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertEquals(1, count($errors));
+        $this->assertEquals(1, $numWarnings);
+        $this->assertEquals(1, count($warnings));
+
+        // Suppress a single sniff.
+        $content = '<?php '.PHP_EOL.'/*'.PHP_EOL.'    Disable some checks'.PHP_EOL.'    phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'*/'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertEquals(1, count($errors));
+        $this->assertEquals(0, $numWarnings);
+        $this->assertEquals(0, count($warnings));
+
+    }//end testCommenting()
+
+
 }//end class

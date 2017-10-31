@@ -34,6 +34,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        --- @codingStandardsIgnoreEnd becomes phpcs:enable
        --- @codingStandardsIgnoreLine becomes phpcs:ignore
        --- @codingStandardsChangeSetting becomes phpcs:set
+    -- The new syntax allows for additional developer comments to be added after a -- seperator
+       --- This is useful for describing why a code block is being ignored, or why a setting is being changed
+       --- E.g., phpcs:disable -- This code block must be left as-is.
     -- Comments using the new syntax are assigned new comment token types to allow them to be detected:
        --- phpcs:ignoreFile has the token T_PHPCS_IGNORE_FILE
        --- phpcs:disable has the token T_PHPCS_DISABLE
