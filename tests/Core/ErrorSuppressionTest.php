@@ -871,7 +871,7 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, $numWarnings);
         $this->assertEquals(1, count($warnings));
 
-        // Suppress a single sniff.
+        // Suppress a single sniff using block comments.
         $content = '<?php '.PHP_EOL.'/*'.PHP_EOL.'    Disable some checks'.PHP_EOL.'    phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'*/'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
@@ -884,6 +884,20 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, count($errors));
         $this->assertEquals(0, $numWarnings);
         $this->assertEquals(0, count($warnings));
+
+        // Suppress a single sniff with a multi-line comment.
+        $content = '<?php '.PHP_EOL.'// Turn off a check for the next line of code.'.PHP_EOL.'// phpcs:ignore Generic.Commenting.Todo'.PHP_EOL.'$var = FALSE; //TODO: write some code'.PHP_EOL.'$var = FALSE; //TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(2, $numErrors);
+        $this->assertEquals(2, count($errors));
+        $this->assertEquals(1, $numWarnings);
+        $this->assertEquals(1, count($warnings));
 
     }//end testCommenting()
 
