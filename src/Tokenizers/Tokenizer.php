@@ -232,16 +232,18 @@ abstract class Tokenizer
                     // to ignore the following line. If the line contains other content
                     // then we are just ignoring this one single line.
                     $ownLine = false;
-                    for ($prev = ($i - 1); $prev >= 0; $prev--) {
-                        if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
-                            continue;
+                    if ($i > 0) {
+                        for ($prev = ($i - 1); $prev >= 0; $prev--) {
+                            if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
+                                continue;
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
-
-                    if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
-                        $ownLine = true;
+                        if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
+                            $ownLine = true;
+                        }
                     }
 
                     if ($ignoring === null
@@ -279,16 +281,18 @@ abstract class Tokenizer
                     // to ignore the following line. If the line contains other content
                     // then we are just ignoring this one single line.
                     $ownLine = false;
-                    for ($prev = ($i - 1); $prev >= 0; $prev--) {
-                        if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
-                            continue;
+                    if ($i > 0) {
+                        for ($prev = ($i - 1); $prev >= 0; $prev--) {
+                            if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
+                                continue;
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
-
-                    if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
-                        $ownLine = true;
+                        if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
+                            $ownLine = true;
+                        }
                     }
 
                     if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
