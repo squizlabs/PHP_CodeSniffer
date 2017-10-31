@@ -366,9 +366,7 @@ abstract class Tokenizer
                         $this->tokens[$i]['code']       = T_PHPCS_ENABLE;
                         $this->tokens[$i]['type']       = 'T_PHPCS_ENABLE';
                         $this->tokens[$i]['sniffCodes'] = $enabledSniffs;
-                    } else if ($ignoring === null
-                        && substr($commentTextLower, 0, 12) === 'phpcs:ignore'
-                    ) {
+                    } else if (substr($commentTextLower, 0, 12) === 'phpcs:ignore') {
                         $ignoreRules = array();
 
                         $additionalText = substr($commentText, 13);
@@ -381,6 +379,14 @@ abstract class Tokenizer
                             }
                         }
 
+                        $this->tokens[$i]['code']       = T_PHPCS_IGNORE;
+                        $this->tokens[$i]['type']       = 'T_PHPCS_IGNORE';
+                        $this->tokens[$i]['sniffCodes'] = $ignoreRules;
+
+                        if ($ignoring !== null) {
+                            $ignoreRules += $ignoring;
+                        }
+
                         if ($ownLine === true) {
                             // Completely ignore the comment line, and set the folllowing
                             // line to include the ignore rules we've set.
@@ -391,10 +397,6 @@ abstract class Tokenizer
                             // so respect the ignore rules it set.
                             $this->ignoredLines[$this->tokens[$i]['line']] = $ignoreRules;
                         }
-
-                        $this->tokens[$i]['code']       = T_PHPCS_IGNORE;
-                        $this->tokens[$i]['type']       = 'T_PHPCS_IGNORE';
-                        $this->tokens[$i]['sniffCodes'] = $ignoreRules;
                     }//end if
                 }//end if
             }//end if
