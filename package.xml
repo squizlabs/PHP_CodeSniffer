@@ -27,14 +27,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - This release deprecates the @codingStandards comment syntax used for sending commands to PHP_CodeSniffer
-    -- The existing sytax will continue to work in all version 3 releases, but will be removed in version 4
+    -- The existing syntax will continue to work in all version 3 releases, but will be removed in version 4
     -- The comment formats have been replaced by a shorter syntax:
        --- @codingStandardsIgnoreFile becomes phpcs:ignoreFile
        --- @codingStandardsIgnoreStart becomes phpcs:disable
        --- @codingStandardsIgnoreEnd becomes phpcs:enable
        --- @codingStandardsIgnoreLine becomes phpcs:ignore
        --- @codingStandardsChangeSetting becomes phpcs:set
-    -- The new syntax allows for additional developer comments to be added after a -- seperator
+    -- The new syntax allows for additional developer comments to be added after a -- separator
        --- This is useful for describing why a code block is being ignored, or why a setting is being changed
        --- E.g., phpcs:disable -- This code block must be left as-is.
     -- Comments using the new syntax are assigned new comment token types to allow them to be detected:
@@ -49,11 +49,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- E.g., phpcs:disable Generic.Commenting.Todo for a whole sniff
     -- E.g., phpcs:disable Generic.Commenting for a whole category of sniffs
     -- E.g., phpcs:disable Generic for a whole standard
-    -- Multiple sniff codes can be specified by comma seperating them
+    -- Multiple sniff codes can be specified by comma separating them
        --- E.g., phpcs:disable Generic.Commenting.Todo,PSR1.Files
   - @codingStandardsIgnoreLine comments now only ignore the following line if they are on a line by themselves
     -- If they are at the end of an existing line, they will only ignore the line they are on
-    -- Stops some lines from accidently being ignored
+    -- Stops some lines from accidentally being ignored
     -- Same rule applies for the new phpcs:ignore comment syntax
   - PSR1.Files.SideEffects now respects the new phpcs:disable comment syntax
     -- The sniff will no longer check any code that is between phpcs:disable and phpcs:enable comments
