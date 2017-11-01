@@ -1,4 +1,4 @@
-<?php
+
 if (! someVar || ! x) {}
 if (! someVar || ! x) {}
 if (! foo() && (! x || true)) {}
