@@ -74,11 +74,15 @@ class DisallowSpaceIndentSniff implements Sniff
                         T_DOC_COMMENT_WHITESPACE => true,
                        );
 
-        $tokens = $phpcsFile->getTokens();
+        $tokens        = $phpcsFile->getTokens();
+        $currentIndent = 0;
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['column'] !== 1 || isset($checkTokens[$tokens[$i]['code']]) === false) {
                 continue;
             }
+
+            $previousIndent = $currentIndent;
+            $currentIndent  = 0;
 
             // If tabs are being converted to spaces by the tokeniser, the
             // original content should be checked instead of the converted content.
@@ -126,8 +130,11 @@ class DisallowSpaceIndentSniff implements Sniff
                     $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
                 }
 
+                $currentIndent = strlen($content);
                 continue;
             }
+
+            $currentIndent = $hasSpaces;
 
             if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
                 // Ignore file/class-level docblocks, especially for recording metrics.
@@ -154,11 +161,12 @@ class DisallowSpaceIndentSniff implements Sniff
                 }
             } else {
                 if ($numTabs === 0) {
-                    // Precision indentation.
                     if ($recordMetrics === true) {
                         if ($tabAfterSpaces !== false) {
+                            // Spaces mixed in-between tabs.
                             $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
                         } else {
+                            // Precision indentation.
                             $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
                         }
                     }
@@ -168,17 +176,27 @@ class DisallowSpaceIndentSniff implements Sniff
                         // end of the whitespace.
                         continue;
                     }
-                } else if ($recordMetrics === true) {
-                    $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
-                }
+                } else {
+                    if ($tabAfterSpaces === false) {
+                        if ($currentIndent === $previousIndent) {
+                            // Ignore: alignment consistent with previous indentation.
+                            continue;
+                        }
+                    }
+
+                    if ($recordMetrics === true) {
+                        $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                    }
+                }//end if
             }//end if
+
+            $remaining     = ($numSpaces % $this->tabWidth);
+            $currentIndent = str_repeat("\t", $numTabs);
+            $padding       = $currentIndent.str_repeat(' ', $remaining);
 
             $error = 'Tabs must be used to indent lines; spaces are not allowed';
             $fix   = $phpcsFile->addFixableError($error, $i, 'SpacesUsed');
             if ($fix === true) {
-                $remaining = ($numSpaces % $this->tabWidth);
-                $padding   = str_repeat("\t", $numTabs);
-                $padding  .= str_repeat(' ', $remaining);
                 $phpcsFile->fixer->replaceToken($i, $trimmed.$padding.$nonWhitespace);
             }
         }//end for
