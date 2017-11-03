@@ -121,3 +121,9 @@ console.info(foo);
 //**
 * invalid comment
 */
+
+// some comment without capital or full stop
+console.log(foo); // An unrelated comment.
+
+// An unrelated comment.
+console.log(foo); // some comment without capital or full stop

@@ -73,7 +73,7 @@ y = 1
 + 2
 - 3;
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.OperatorSpacing ignoreNewlines true
+// phpcs:set Squiz.WhiteSpace.OperatorSpacing ignoreNewlines true
 y = 1
   + 2
   - 3;
@@ -85,7 +85,7 @@ y = 1 +
 y = 1
 + 2
 - 3;
-// @codingStandardsChangeSetting Squiz.WhiteSpace.OperatorSpacing ignoreNewlines false
+// phpcs:set Squiz.WhiteSpace.OperatorSpacing ignoreNewlines false
 
 if (true || -1 == b) {
 }

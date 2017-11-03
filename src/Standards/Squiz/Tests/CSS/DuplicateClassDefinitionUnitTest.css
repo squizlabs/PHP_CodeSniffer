@@ -68,3 +68,6 @@
     .ClassInMultipleMediaBlocks {
     }
 }
+
+.foo /* any comment */
+{ color: red; }

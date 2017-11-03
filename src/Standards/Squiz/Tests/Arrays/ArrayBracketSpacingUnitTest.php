@@ -26,14 +26,14 @@ class ArrayBracketSpacingUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return array(
-                3  => 1,
-                4  => 2,
                 5  => 3,
                 7  => 3,
                 17 => 2,
                 20 => 2,
                 23 => 2,
                 24 => 2,
+                30 => 1,
+                31 => 2,
                );
 
     }//end getErrorList()

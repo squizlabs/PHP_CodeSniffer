@@ -45,28 +45,19 @@ class ArrayBracketSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // PHP 5.4 introduced a shorthand array declaration syntax, so we need
-        // to ignore the these type of array declarations because this sniff is
-        // only dealing with array usage.
-        if ($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET) {
-            $openBracket = $stackPtr;
-        } else {
-            if (isset($tokens[$stackPtr]['bracket_opener']) === false) {
-                return;
-            }
-
-            $openBracket = $tokens[$stackPtr]['bracket_opener'];
-        }
-
-        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($openBracket - 1), null, true);
-        if ($tokens[$prev]['code'] === T_EQUAL) {
+        if (($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET
+            && isset($tokens[$stackPtr]['bracket_closer']) === false)
+            || ($tokens[$stackPtr]['code'] === T_CLOSE_SQUARE_BRACKET
+            && isset($tokens[$stackPtr]['bracket_opener']) === false)
+        ) {
+            // Bow out for parse error/during live coding.
             return;
         }
 
         // Square brackets can not have a space before them.
         $prevType = $tokens[($stackPtr - 1)]['code'];
-        if (isset(Tokens::$emptyTokens[$prevType]) === true) {
-            $nonSpace = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 2), null, true);
+        if ($prevType === T_WHITESPACE) {
+            $nonSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 2), null, true);
             $expected = $tokens[$nonSpace]['content'].$tokens[$stackPtr]['content'];
             $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).$tokens[$stackPtr]['content'];
             $error    = 'Space found before square bracket; expected "%s" but found "%s"';
@@ -83,8 +74,8 @@ class ArrayBracketSpacingSniff implements Sniff
         // Open square brackets can't ever have spaces after them.
         if ($tokens[$stackPtr]['code'] === T_OPEN_SQUARE_BRACKET) {
             $nextType = $tokens[($stackPtr + 1)]['code'];
-            if (isset(Tokens::$emptyTokens[$nextType]) === true) {
-                $nonSpace = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 2), null, true);
+            if ($nextType === T_WHITESPACE) {
+                $nonSpace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 2), null, true);
                 $expected = $tokens[$stackPtr]['content'].$tokens[$nonSpace]['content'];
                 $found    = $phpcsFile->getTokensAsString($stackPtr, ($nonSpace - $stackPtr + 1));
                 $error    = 'Space found after square bracket; expected "%s" but found "%s"';

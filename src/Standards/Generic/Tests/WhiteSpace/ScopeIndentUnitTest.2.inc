@@ -1,4 +1,4 @@
-@codingStandardsChangeSetting Generic.WhiteSpace.ScopeIndent tabIndent true
+phpcs:set Generic.WhiteSpace.ScopeIndent tabIndent true
 <meta name="twitter:site" content="<?php echo $metaTagsData['twitter:site']; ?>">
 <?php
 class Test {

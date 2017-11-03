@@ -224,8 +224,8 @@ class File
         }
 
         $this->configCache['cache']           = $this->config->cache;
-        $this->configCache['sniffs']          = $this->config->sniffs;
-        $this->configCache['exclude']         = $this->config->exclude;
+        $this->configCache['sniffs']          = array_map('strtolower', $this->config->sniffs);
+        $this->configCache['exclude']         = array_map('strtolower', $this->config->exclude);
         $this->configCache['errorSeverity']   = $this->config->errorSeverity;
         $this->configCache['warningSeverity'] = $this->config->warningSeverity;
         $this->configCache['recordErrors']    = $this->config->recordErrors;
@@ -320,11 +320,16 @@ class File
             // Check for ignored lines.
             if ($checkAnnotations === true
                 && ($token['code'] === T_COMMENT
+                || $token['code'] === T_PHPCS_IGNORE_FILE
+                || $token['code'] === T_PHPCS_SET
+                || $token['code'] === T_DOC_COMMENT_STRING
                 || $token['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $token['code'] === T_INLINE_HTML))
             ) {
-                if (strpos($token['content'], '@codingStandards') !== false) {
-                    if (strpos($token['content'], '@codingStandardsIgnoreFile') !== false) {
+                $commentText      = ltrim($this->tokens[$stackPtr]['content'], ' /*');
+                $commentTextLower = strtolower($commentText);
+                if (strpos($commentText, '@codingStandards') !== false) {
+                    if (strpos($commentText, '@codingStandardsIgnoreFile') !== false) {
                         // Ignoring the whole file, just a little late.
                         $this->errors       = array();
                         $this->warnings     = array();
@@ -332,14 +337,14 @@ class File
                         $this->warningCount = 0;
                         $this->fixableCount = 0;
                         return;
-                    } else if (strpos($token['content'], '@codingStandardsChangeSetting') !== false) {
-                        $start   = strpos($token['content'], '@codingStandardsChangeSetting');
-                        $comment = substr($token['content'], ($start + 30));
+                    } else if (strpos($commentText, '@codingStandardsChangeSetting') !== false) {
+                        $start   = strpos($commentText, '@codingStandardsChangeSetting');
+                        $comment = substr($commentText, ($start + 30));
                         $parts   = explode(' ', $comment);
                         if ($parts >= 3) {
                             $sniffParts = explode('.', $parts[0]);
                             if ($sniffParts >= 3) {
-                                // If the sniff code is not know to us, it has not been registered in this run.
+                                // If the sniff code is not known to us, it has not been registered in this run.
                                 // But don't throw an error as it could be there for a different standard to use.
                                 if (isset($this->ruleset->sniffCodes[$parts[0]]) === true) {
                                     $listenerCode  = array_shift($parts);
@@ -351,6 +356,31 @@ class File
                             }
                         }
                     }//end if
+                } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile') {
+                    // Ignoring the whole file, just a little late.
+                    $this->errors       = array();
+                    $this->warnings     = array();
+                    $this->errorCount   = 0;
+                    $this->warningCount = 0;
+                    $this->fixableCount = 0;
+                    return;
+                } else if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
+                    // Need to maintain case here, to get the correct sniff code.
+                    $parts = explode(' ', substr($commentText, 10));
+                    if ($parts >= 3) {
+                        $sniffParts = explode('.', $parts[0]);
+                        if ($sniffParts >= 3) {
+                            // If the sniff code is not known to us, it has not been registered in this run.
+                            // But don't throw an error as it could be there for a different standard to use.
+                            if (isset($this->ruleset->sniffCodes[$parts[0]]) === true) {
+                                $listenerCode  = array_shift($parts);
+                                $propertyCode  = array_shift($parts);
+                                $propertyValue = rtrim(implode(' ', $parts), " */\r\n");
+                                $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
+                                $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
+                            }
+                        }
+                    }
                 }//end if
             }//end if
 
@@ -774,15 +804,9 @@ class File
      */
     protected function addMessage($error, $message, $line, $column, $code, $data, $severity, $fixable)
     {
-        if (isset($this->tokenizer->ignoredLines[$line]) === true) {
+        // Check if this line is ignoring all message codes.
+        if (isset($this->tokenizer->ignoredLines[$line]['all']) === true) {
             return false;
-        }
-
-        $includeAll = true;
-        if ($this->configCache['cache'] === false
-            || $this->configCache['recordErrors'] === false
-        ) {
-            $includeAll = false;
         }
 
         // Work out which sniff generated the message.
@@ -811,13 +835,27 @@ class File
                           );
         }//end if
 
+        // Check if this line is ignoring this specific message.
+        foreach ($checkCodes as $checkCode) {
+            if (isset($this->tokenizer->ignoredLines[$line][$checkCode]) === true) {
+                return false;
+            }
+        }
+
+        $includeAll = true;
+        if ($this->configCache['cache'] === false
+            || $this->configCache['recordErrors'] === false
+        ) {
+            $includeAll = false;
+        }
+
         // Filter out any messages for sniffs that shouldn't have run
         // due to the use of the --sniffs command line argument.
         if ($includeAll === false
             && ((empty($this->configCache['sniffs']) === false
-            && in_array($listenerCode, $this->configCache['sniffs']) === false)
+            && in_array(strtolower($listenerCode), $this->configCache['sniffs']) === false)
             || (empty($this->configCache['exclude']) === false
-            && in_array($listenerCode, $this->configCache['exclude']) === true))
+            && in_array(strtolower($listenerCode), $this->configCache['exclude']) === true))
         ) {
             return false;
         }
@@ -1158,6 +1196,7 @@ class File
      * <code>
      *   0 => array(
      *         'name'              => '$var',  // The variable name.
+     *         'token'             => integer, // The stack pointer to the variable name.
      *         'content'           => string,  // The full content of the variable definition.
      *         'pass_by_reference' => boolean, // Is the variable passed by reference?
      *         'variable_length'   => boolean, // Is the param of variable length through use of `...` ?
@@ -1218,7 +1257,9 @@ class File
 
             switch ($this->tokens[$i]['code']) {
             case T_BITWISE_AND:
-                $passByReference = true;
+                if ($defaultStart === null) {
+                    $passByReference = true;
+                }
                 break;
             case T_VARIABLE:
                 $currVar = $i;
@@ -1609,7 +1650,7 @@ class File
         }
 
         if ($this->tokens[$tokenBefore]['code'] === T_DOUBLE_ARROW) {
-            // Inside a foreach loop, this is a reference.
+            // Inside a foreach loop or array assignment, this is a reference.
             return true;
         }
 
@@ -1618,14 +1659,20 @@ class File
             return true;
         }
 
-        if ($this->tokens[$tokenBefore]['code'] === T_OPEN_SHORT_ARRAY) {
-            // Inside an array declaration, this is a reference.
-            return true;
-        }
-
         if (isset(Util\Tokens::$assignmentTokens[$this->tokens[$tokenBefore]['code']]) === true) {
             // This is directly after an assignment. It's a reference. Even if
             // it is part of an operation, the other tests will handle it.
+            return true;
+        }
+
+        $tokenAfter = $this->findNext(
+            Util\Tokens::$emptyTokens,
+            ($stackPtr + 1),
+            null,
+            true
+        );
+
+        if ($this->tokens[$tokenAfter]['code'] === T_NEW) {
             return true;
         }
 
@@ -1636,11 +1683,27 @@ class File
                 $owner = $this->tokens[$this->tokens[$lastBracket]['parenthesis_owner']];
                 if ($owner['code'] === T_FUNCTION
                     || $owner['code'] === T_CLOSURE
-                    || $owner['code'] === T_ARRAY
                 ) {
-                    // Inside a function or array declaration, this is a reference.
-                    return true;
-                }
+                    $params = $this->getMethodParameters($this->tokens[$lastBracket]['parenthesis_owner']);
+                    foreach ($params as $param) {
+                        $varToken = $tokenAfter;
+                        if ($param['variable_length'] === true) {
+                            $varToken = $this->findNext(
+                                (Util\Tokens::$emptyTokens + array(T_ELLIPSIS)),
+                                ($stackPtr + 1),
+                                null,
+                                true
+                            );
+                        }
+
+                        if ($param['token'] === $varToken
+                            && $param['pass_by_reference'] === true
+                        ) {
+                            // Function parameter declared to be passed by reference.
+                            return true;
+                        }
+                    }
+                }//end if
             } else {
                 $prev = false;
                 for ($t = ($this->tokens[$lastBracket]['parenthesis_opener'] - 1); $t >= 0; $t--) {
@@ -1651,24 +1714,40 @@ class File
                 }
 
                 if ($prev !== false && $this->tokens[$prev]['code'] === T_USE) {
+                    // Closure use by reference.
                     return true;
                 }
             }//end if
         }//end if
 
-        $tokenAfter = $this->findNext(
-            Util\Tokens::$emptyTokens,
-            ($stackPtr + 1),
-            null,
-            true
-        );
-
-        if ($this->tokens[$tokenAfter]['code'] === T_VARIABLE
-            && ($this->tokens[$tokenBefore]['code'] === T_OPEN_PARENTHESIS
-            || $this->tokens[$tokenBefore]['code'] === T_COMMA)
+        // Pass by reference in function calls and assign by reference in arrays.
+        if ($this->tokens[$tokenBefore]['code'] === T_OPEN_PARENTHESIS
+            || $this->tokens[$tokenBefore]['code'] === T_COMMA
+            || $this->tokens[$tokenBefore]['code'] === T_OPEN_SHORT_ARRAY
         ) {
-            return true;
-        }
+            if ($this->tokens[$tokenAfter]['code'] === T_VARIABLE) {
+                return true;
+            } else {
+                $skip   = Util\Tokens::$emptyTokens;
+                $skip[] = T_NS_SEPARATOR;
+                $skip[] = T_SELF;
+                $skip[] = T_PARENT;
+                $skip[] = T_STATIC;
+                $skip[] = T_STRING;
+                $skip[] = T_NAMESPACE;
+                $skip[] = T_DOUBLE_COLON;
+
+                $nextSignificantAfter = $this->findNext(
+                    $skip,
+                    ($stackPtr + 1),
+                    null,
+                    true
+                );
+                if ($this->tokens[$nextSignificantAfter]['code'] === T_VARIABLE) {
+                    return true;
+                }
+            }//end if
+        }//end if
 
         return false;
 

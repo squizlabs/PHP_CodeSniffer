@@ -39,6 +39,8 @@ class SemicolonSpacingUnitTest extends AbstractSniffUnitTest
                     14 => 1,
                     16 => 1,
                     18 => 1,
+                    29 => 1,
+                    30 => 2,
                    );
             break;
         case 'SemicolonSpacingUnitTest.js':

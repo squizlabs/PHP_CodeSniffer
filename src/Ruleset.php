@@ -175,9 +175,11 @@ class Ruleset
             }
 
             if (defined('PHP_CODESNIFFER_IN_TESTS') === true && empty($restrictions) === false) {
-                // Unit tests use one standard and one sniff at a time.
+                // In unit tests, only register the sniffs that the test wants and not the entire standard.
                 try {
-                    $sniffs = $this->expandRulesetReference($restrictions[0], dirname($standard));
+                    foreach ($restrictions as $restriction) {
+                        $sniffs = array_merge($sniffs, $this->expandRulesetReference($restriction, dirname($standard)));
+                    }
                 } catch (RuntimeException $e) {
                     // Sniff reference could not be expanded, which probably means this
                     // is an installed standard. Let the unit test system take care of
@@ -950,9 +952,9 @@ class Ruleset
 
                             list($k,$v) = explode('=>', $val.'=>');
                             if ($v !== '') {
-                                $values[$k] = $v;
+                                $values[trim($k)] = trim($v);
                             } else {
-                                $values[] = $k;
+                                $values[] = trim($k);
                             }
                         }
 

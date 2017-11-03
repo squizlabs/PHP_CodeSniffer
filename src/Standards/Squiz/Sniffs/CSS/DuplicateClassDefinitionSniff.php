@@ -64,7 +64,6 @@ class DuplicateClassDefinitionSniff implements Sniff
         $find = array(
                  T_CLOSE_CURLY_BRACKET,
                  T_OPEN_CURLY_BRACKET,
-                 T_COMMENT,
                  T_OPEN_TAG,
                 );
 

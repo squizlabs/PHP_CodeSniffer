@@ -205,7 +205,7 @@ class MyClass
 
 }//end class
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.FunctionSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 1
 
 interface MyInterface
 {
@@ -254,7 +254,7 @@ class MyClass
 
 }//end class
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.FunctionSpacing spacing 2
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 2
 
 // Closures should be ignored.
 preg_replace_callback(

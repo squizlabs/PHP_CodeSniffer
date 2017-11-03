@@ -337,3 +337,16 @@ function test() : array
 $fields = array(
            'id'    => array('type' => 'INT'),
            'value' => array('type' => 'VARCHAR'));
+
+get_current_screen()->add_help_tab( array(
+                                     'id' => <<<EOD
+Here comes some text.
+EOD
+,
+                                    ) );
+
+$a = array
+// comment
+( 'a', 'b' );
+
+$a = array /* comment */ ( 'a', 'b' );

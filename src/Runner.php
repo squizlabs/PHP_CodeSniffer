@@ -381,20 +381,20 @@ class Runner
             // Running normally.
             $numProcessed = 0;
             foreach ($todo as $path => $file) {
-                if ($file->ignored === true) {
-                    continue;
-                }
+                if ($file->ignored === false) {
+                    $currDir = dirname($path);
+                    if ($lastDir !== $currDir) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                            echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
+                        }
 
-                $currDir = dirname($path);
-                if ($lastDir !== $currDir) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                        echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
+                        $lastDir = $currDir;
                     }
 
-                    $lastDir = $currDir;
+                    $this->processFile($file);
+                } else if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                    echo 'Skipping '.basename($file->path).PHP_EOL;
                 }
-
-                $this->processFile($file);
 
                 $numProcessed++;
                 $this->printProgress($file, $numFiles, $numProcessed);
@@ -805,12 +805,18 @@ class Runner
             }//end if
         }//end if
 
-        if (($numProcessed % 60) === 0) {
-            $padding = (strlen($numFiles) - strlen($numProcessed));
-            echo str_repeat(' ', $padding);
-            $percent = round(($numProcessed / $numFiles) * 100);
-            echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
+        $numPerLine = 60;
+        if ($numProcessed !== $numFiles && ($numProcessed % $numPerLine) !== 0) {
+            return;
         }
+
+        $percent = round(($numProcessed / $numFiles) * 100);
+        $padding = (strlen($numFiles) - strlen($numProcessed));
+        if ($numProcessed === $numFiles && $numFiles > $numPerLine) {
+            $padding += ($numPerLine - ($numFiles - (floor($numFiles / $numPerLine) * $numPerLine)));
+        }
+
+        echo str_repeat(' ', $padding)." $numProcessed / $numFiles ($percent%)".PHP_EOL;
 
     }//end printProgress()
 

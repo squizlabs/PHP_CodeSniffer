@@ -32,7 +32,7 @@ function myFunction2()
 
 }
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines true
+// phpcs:set Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines true
 
 function myFunction3()
 {
@@ -42,7 +42,7 @@ function myFunction3()
     
 }
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
+// phpcs:set Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
 
 
 // @codingStandardsChangeSetting Squiz.WhiteSpace.SuperfluousWhitespace ignoreMultiLineStrings false

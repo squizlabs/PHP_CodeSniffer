@@ -23,7 +23,7 @@ class Config
      *
      * @var string
      */
-    const VERSION = '3.1.0';
+    const VERSION = '3.2.0';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -343,8 +343,8 @@ class Config
 
             $defaultFiles = array(
                              '.phpcs.xml',
-                             '.phpcs.xml.dist',
                              'phpcs.xml',
+                             '.phpcs.xml.dist',
                              'phpcs.xml.dist',
                             );
 

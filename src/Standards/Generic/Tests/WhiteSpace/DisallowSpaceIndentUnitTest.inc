@@ -68,3 +68,15 @@ $x = 1;
 	        echo 'And another one.'
     	    echo 'And another one.'
         	echo 'And another one.'
+
+// Spaces after comment.
+    
+$x = 1;
+
+// Mixed tabs and spaces after comment.
+	    
+$x = 1;
+
+// Mixed spaces and tabs after comment.
+    		   
+$x = 1;

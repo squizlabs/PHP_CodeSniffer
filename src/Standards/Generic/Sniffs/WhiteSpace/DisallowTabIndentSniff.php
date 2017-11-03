@@ -26,6 +26,13 @@ class DisallowTabIndentSniff implements Sniff
                                    'CSS',
                                   );
 
+    /**
+     * The --tab-width CLI value that is being used.
+     *
+     * @var integer
+     */
+    private $tabWidth = null;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -50,6 +57,15 @@ class DisallowTabIndentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        if ($this->tabWidth === null) {
+            if (isset($phpcsFile->config->tabWidth) === false || $phpcsFile->config->tabWidth === 0) {
+                // We have no idea how wide tabs are, so assume 4 spaces for metrics.
+                $this->tabWidth = 4;
+            } else {
+                $this->tabWidth = $phpcsFile->config->tabWidth;
+            }
+        }
+
         $tokens    = $phpcsFile->getTokens();
         $error     = 'Spaces must be used to indent lines; tabs are not allowed';
         $errorCode = 'TabsUsed';
@@ -83,19 +99,46 @@ class DisallowTabIndentSniff implements Sniff
                 continue;
             }
 
+            $recordMetrics = true;
+            if (isset($tokens[($i + 1)]) === true
+                && $tokens[$i]['line'] < $tokens[($i + 1)]['line']
+            ) {
+                // Don't record metrics for empty lines.
+                $recordMetrics = false;
+            }
+
             $tabFound = false;
             if ($tokens[$i]['column'] === 1) {
                 if ($content[0] === "\t") {
-                    $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
                     $tabFound = true;
+                    if ($recordMetrics === true) {
+                        $spacePosition  = strpos($content, ' ');
+                        $tabAfterSpaces = strpos($content, "\t", $spacePosition);
+                        if ($spacePosition !== false && $tabAfterSpaces !== false) {
+                            $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                        } else {
+                            // Check for use of precision spaces.
+                            $trimmed   = str_replace(' ', '', $content);
+                            $numSpaces = (strlen($content) - strlen($trimmed));
+                            $numTabs   = (int) floor($numSpaces / $this->tabWidth);
+                            if ($numTabs === 0) {
+                                $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
+                            } else {
+                                $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                            }
+                        }
+                    }
                 } else if ($content[0] === ' ') {
                     if (strpos($content, "\t") !== false) {
-                        $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                        if ($recordMetrics === true) {
+                            $phpcsFile->recordMetric($i, 'Line indent', 'mixed');
+                        }
+
                         $tabFound = true;
-                    } else {
+                    } else if ($recordMetrics === true) {
                         $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
                     }
-                }
+                }//end if
             } else {
                 // Look for tabs so we can report and replace, but don't
                 // record any metrics about them because they aren't

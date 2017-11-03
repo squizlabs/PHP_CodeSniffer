@@ -141,7 +141,7 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
         // We are looking for tabs, even if they have been replaced, because
         // we enforce a space here.
         if (isset($tokens[($openingBrace - 1)]['orig_content']) === true) {
-            $spacing = $tokens[($openingBrace - 1)]['content'];
+            $spacing = $tokens[($openingBrace - 1)]['orig_content'];
         } else {
             $spacing = $tokens[($openingBrace - 1)]['content'];
         }

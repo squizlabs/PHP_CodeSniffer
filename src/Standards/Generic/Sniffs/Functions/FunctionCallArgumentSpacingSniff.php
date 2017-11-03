@@ -61,6 +61,13 @@ class FunctionCallArgumentSpacingSniff implements Sniff
             return;
         }
 
+        if ($tokens[$stackPtr]['code'] === T_CLOSE_CURLY_BRACKET
+            && isset($tokens[$stackPtr]['scope_condition']) === true
+        ) {
+            // Not a function call.
+            return;
+        }
+
         // If the next non-whitespace token after the function or method call
         // is not an opening parenthesis then it cant really be a *call*.
         $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, ($functionName + 1), null, true);

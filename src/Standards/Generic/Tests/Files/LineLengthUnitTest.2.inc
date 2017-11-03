@@ -1,5 +1,5 @@
-@codingStandardsChangeSetting Generic.Files.LineLength lineLimit 75
-@codingStandardsChangeSetting Generic.Files.LineLength absoluteLineLimit 80
+phpcs:set Generic.Files.LineLength lineLimit 75
+phpcs:set Generic.Files.LineLength absoluteLineLimit 80
 <?php
 
 /* This line is fine. This line is fine. */
