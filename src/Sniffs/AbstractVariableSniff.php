@@ -25,16 +25,16 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     /**
      * The end token of the current function that we are in.
      *
-     * @var integer
+     * @var array(integer => integer)
      */
-    private $endFunction = -1;
+    private $endFunction = [];
 
     /**
      * TRUE if a function is currently open.
      *
-     * @var boolean
+     * @var array(integer => boolean)
      */
-    private $functionOpen = false;
+    private $functionOpen = [];
 
     /**
      * The current PHP_CodeSniffer file that we are processing.
@@ -77,20 +77,22 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     {
         if ($this->currentFile !== $phpcsFile) {
             $this->currentFile  = $phpcsFile;
-            $this->functionOpen = false;
-            $this->endFunction  = -1;
+            $this->functionOpen = [];
+            $this->endFunction  = [];
         }
 
         $tokens = $phpcsFile->getTokens();
 
-        if ($stackPtr > $this->endFunction) {
-            $this->functionOpen = false;
+        if (isset($this->endFunction[$currScope]) === false
+            || $stackPtr > $this->endFunction[$currScope]
+        ) {
+            $this->functionOpen[$currScope] = false;
         }
 
         if ($tokens[$stackPtr]['code'] === T_FUNCTION
-            && $this->functionOpen === false
+            && empty($this->functionOpen[$currScope]) === true
         ) {
-            $this->functionOpen = true;
+            $this->functionOpen[$currScope] = true;
 
             $methodProps = $phpcsFile->getMethodProperties($stackPtr);
 
@@ -99,7 +101,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
             if ($methodProps['is_abstract'] === true
                 || $tokens[$currScope]['code'] === T_INTERFACE
             ) {
-                $this->endFunction
+                $this->endFunction[$currScope]
                     = $phpcsFile->findNext(array(T_SEMICOLON), $stackPtr);
             } else {
                 if (isset($tokens[$stackPtr]['scope_closer']) === false) {
@@ -108,7 +110,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
                     return;
                 }
 
-                $this->endFunction = $tokens[$stackPtr]['scope_closer'];
+                $this->endFunction[$currScope] = $tokens[$stackPtr]['scope_closer'];
             }
         }//end if
 
@@ -124,7 +126,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
             return;
         }
 
-        if ($this->functionOpen === true) {
+        if (empty($this->functionOpen[$currScope]) === false) {
             if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
                 $this->processVariable($phpcsFile, $stackPtr);
             }
