@@ -69,6 +69,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.FunctionComment now supports nullable type hints
   - Squiz.WhiteSpace.SemicolonSpacing now ignores semicolons used for empty statements inside FOR conditions
     -- Thanks to Juliette Reinders Folmer for the patch
+  - The AbstractVariableSniff abstract sniff now supports anonymous classes and nested functions
+    -- Also fixes an issue with Squiz.Scope.MemberVarScope where member vars of anonymous classes were not being checked
  </notes>
  <contents>
   <dir name="/">

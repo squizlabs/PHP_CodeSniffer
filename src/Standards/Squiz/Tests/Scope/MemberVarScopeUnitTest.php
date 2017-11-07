@@ -25,7 +25,14 @@ class MemberVarScopeUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(7 => 1);
+        return array(
+                7  => 1,
+                25 => 1,
+                29 => 1,
+                33 => 1,
+                39 => 1,
+                41 => 1,
+               );
 
     }//end getErrorList()
 
