@@ -71,6 +71,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - The AbstractVariableSniff abstract sniff now supports anonymous classes and nested functions
     -- Also fixes an issue with Squiz.Scope.MemberVarScope where member vars of anonymous classes were not being checked
+  - Squiz.ControlStructures.ControlSignature now allows the number of spaces before the colon in alternative syntax to be set
+    -- Override the 'requiredSpacesBeforeColon' setting in a ruleset.xml file to change
+    -- Default remains at 1
+    -- Thanks to Nikola Kovacs for the patch
  </notes>
  <contents>
   <dir name="/">
