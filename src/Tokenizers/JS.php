@@ -709,18 +709,33 @@ class JS extends Tokenizer
         }//end for
 
         if (empty($buffer) === false) {
-            // Buffer contains whitespace from the end of the file.
-            $tokens[] = array(
-                         'code'    => T_WHITESPACE,
-                         'type'    => 'T_WHITESPACE',
-                         'content' => str_replace("\n", $this->eolChar, $buffer),
-                        );
+            if ($inString !== '') {
+                // The string did not end before the end of the file,
+                // which means there was probably a syntax error somewhere.
+                $tokens[] = array(
+                             'code'    => T_STRING,
+                             'type'    => 'T_STRING',
+                             'content' => str_replace("\n", $this->eolChar, $buffer),
+                            );
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $content = Util\Common::prepareForOutput($buffer);
-                echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
-            }
-        }
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $content = Util\Common::prepareForOutput($buffer);
+                    echo "\t=> Added token T_STRING ($content)".PHP_EOL;
+                }
+            } else {
+                // Buffer contains whitespace from the end of the file.
+                $tokens[] = array(
+                             'code'    => T_WHITESPACE,
+                             'type'    => 'T_WHITESPACE',
+                             'content' => str_replace("\n", $this->eolChar, $buffer),
+                            );
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $content = Util\Common::prepareForOutput($buffer);
+                    echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
+                }
+            }//end if
+        }//end if
 
         $tokens[] = array(
                      'code'    => T_CLOSE_TAG,
