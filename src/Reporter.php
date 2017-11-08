@@ -277,10 +277,9 @@ class Reporter
                     file_put_contents($this->tmpFiles[$type], '');
                 }
 
-                file_put_contents($this->tmpFiles[$type], $generatedReport, FILE_APPEND);
+                file_put_contents($this->tmpFiles[$type], $generatedReport, (FILE_APPEND | LOCK_EX));
             } else {
-                $flags = FILE_APPEND;
-                file_put_contents($report['output'], $generatedReport, FILE_APPEND);
+                file_put_contents($report['output'], $generatedReport, (FILE_APPEND | LOCK_EX));
             }//end if
         }//end foreach
 
