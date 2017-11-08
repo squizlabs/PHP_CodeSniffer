@@ -75,6 +75,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Override the 'requiredSpacesBeforeColon' setting in a ruleset.xml file to change
     -- Default remains at 1
     -- Thanks to Nikola Kovacs for the patch
+  - Fixed bug #1731 : Directory exclusions do not work as expected when a single file name is passed to phpcs
  </notes>
  <contents>
   <dir name="/">
