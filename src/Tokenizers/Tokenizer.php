@@ -1159,12 +1159,12 @@ abstract class Tokenizer
             } else if ($opener === null
                 && isset($this->scopeOpeners[$currType]) === true
             ) {
-                // If we still haven't found the opener after 3 lines,
+                // If we still haven't found the opener after 30 lines,
                 // we're not going to find it, unless we know it requires
                 // an opener (in which case we better keep looking) or the last
                 // token was empty (in which case we'll just confirm there is
                 // more code in this file and not just a big comment).
-                if ($this->tokens[$i]['line'] >= ($startLine + 3)
+                if ($this->tokens[$i]['line'] >= ($startLine + 30)
                     && isset(Util\Tokens::$emptyTokens[$this->tokens[($i - 1)]['code']]) === false
                 ) {
                     if ($this->scopeOpeners[$currType]['strict'] === true) {
