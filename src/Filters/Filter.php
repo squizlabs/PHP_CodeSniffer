@@ -81,10 +81,7 @@ class Filter extends \RecursiveFilterIterator
      */
     public function accept()
     {
-        $filePath = Util\Common::realpath($this->current());
-        if ($filePath === false) {
-            return false;
-        }
+        $filePath = $this->current();
 
         if (is_dir($filePath) === true) {
             if ($this->config->local === true) {
