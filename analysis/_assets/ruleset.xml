@@ -3,6 +3,7 @@
  <description>Not a real coding standard; just sniffs that record interesting metrics.</description>
  <ini name="memory_limit" value="512M"/>
  <arg value="m"/>
+ <arg name="parallel" value="50" />
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>
  <rule ref="Generic.Files.LineEndings"/>
  <rule ref="Generic.Files.LineLength"/>

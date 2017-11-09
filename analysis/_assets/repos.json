@@ -7,13 +7,6 @@
         "extensions": ""
     },
     {
-        "name": "GintonicCMS",
-        "url": "gintonicweb/GintonicCMS",
-        "path": "src",
-        "ignore": "",
-        "extensions": ""
-    },
-    {
         "name": "RadPHP",
         "url": "radphp/radphp",
         "path": "src",
