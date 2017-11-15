@@ -470,6 +470,13 @@ class FunctionCallSignatureSniff implements Sniff
                         $expectedIndent = ($functionIndent + $this->indent);
                     }
 
+                    // Make sure the expected indent is divisible by the indent size.
+                    // We round down here because this accounts for times when the
+                    // surrounding code is indented a little too far in, and not correctly
+                    // at a tab stop. Without this, the function will be indented a further
+                    // $indent spaces to the right.
+                    $expectedIndent = (int) (floor($expectedIndent / $this->indent) * $this->indent);
+
                     if ($tokens[$i]['code'] !== T_WHITESPACE
                         && $tokens[$i]['code'] !== T_DOC_COMMENT_WHITESPACE
                     ) {

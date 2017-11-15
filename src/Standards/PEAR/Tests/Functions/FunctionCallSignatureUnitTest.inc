@@ -371,3 +371,11 @@ class Foo
         echo $a, $b, $c, $d;
     };
 })('a','b')('c','d');
+
+function foo()
+{
+     Bar(
+        function () {
+        }
+    );
+}
