@@ -554,6 +554,11 @@ class Runner
      */
     public function handleErrors($code, $message, $file, $line)
     {
+        if ((error_reporting() & $code) === 0) {
+            // This type of error is being muted.
+            return true;
+        }
+
         throw new RuntimeException("$message in $file on line $line");
 
     }//end handleErrors()
