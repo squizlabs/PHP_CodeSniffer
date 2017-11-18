@@ -15,7 +15,7 @@ PHP\_CodeSniffer requires PHP version 5.4.0 or greater, although individual snif
 Installation
 ------------
 
-The easiest way to get started with PHP\_CodeSniffer is to download the [Phar](http://php.net/manual/en/intro.phar.php) files for each of the commands:
+The easiest way to get started with PHP\_CodeSniffer is to [download the Phar files](https://github.com/squizlabs/PHP_CodeSniffer/releases/latest) for each of the commands:
 
     curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
     php phpcs.phar -h
