@@ -68,6 +68,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, STDIN files using fake file paths were excluded from checking
   - Ignore patterns are now checked on symlink target paths instead of symlink source paths
     -- Restores previous behaviour of this feature
+  - The Squiz standard now ensures array keys are indented 4 spaces from the main statement
+    -- Previously, this standard aligned keys 1 space from the start of the array keyword
+  - The Squiz standard now ensures array end braces are aligned with the main statement
+    -- Previously, this standard aligned the close brace with the start of the array keyword
   - Added AbstractArraySniff to make it easier to create sniffs that check array formatting
     -- Allows for checking of single and multi line arrays easily
     -- Provides a parsed structure of the array including positions of keys, values, and double arrows
