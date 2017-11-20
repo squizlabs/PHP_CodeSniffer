@@ -68,6 +68,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, STDIN files using fake file paths were excluded from checking
   - Ignore patterns are now checked on symlink target paths instead of symlink source paths
     -- Restores previous behaviour of this feature
+  - Added AbstractArraySniff to make it easier to create sniffs that check array formatting
+    -- Allows for checking of single and multi line arrays easily
+    -- Provides a parsed structure of the array including positions of keys, values, and double arrows
+  - Added Generic.Arrays.ArrayIndent to enforce a single tab stop indent for array keys in multi-line arrays
+   -- Also ensures the close brace is on a new line and indented to the same level as the original statement
+   -- Allows for the indent size to be set using an "indent" property of the sniff
   - Added Generic.PHP.DiscourageGoto to warn about the use of the GOTO language construct
     -- Thanks to Juliette Reinders Folmer for the contribution
   - Squiz.Commenting.FunctionComment now supports nullable type hints
@@ -287,6 +293,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Sniffs">
        <dir name="Arrays">
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortArraySyntaxSniff.php" role="php" />
        </dir>
@@ -384,6 +391,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Tests">
        <dir name="Arrays">
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.php" role="test" />
