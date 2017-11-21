@@ -147,7 +147,7 @@ class Filter extends \RecursiveFilterIterator
 
         // Checking multi-part file extensions, so need to create a
         // complete extension list and make sure one is allowed.
-        $extensions = array();
+        $extensions = [];
         array_shift($fileParts);
         foreach ($fileParts as $part) {
             $extensions[implode('.', $fileParts)] = 1;
@@ -174,8 +174,8 @@ class Filter extends \RecursiveFilterIterator
     protected function shouldIgnorePath($path)
     {
         if ($this->ignoreFilePatterns === null) {
-            $this->ignoreDirPatterns  = array();
-            $this->ignoreFilePatterns = array();
+            $this->ignoreDirPatterns  = [];
+            $this->ignoreFilePatterns = [];
 
             $ignorePatterns = array_merge($this->config->ignored, $this->ruleset->getIgnorePatterns());
             foreach ($ignorePatterns as $pattern => $type) {
@@ -213,10 +213,10 @@ class Filter extends \RecursiveFilterIterator
                 $type    = 'absolute';
             }
 
-            $replacements = array(
-                             '\\,' => ',',
-                             '*'   => '.*',
-                            );
+            $replacements = [
+                '\\,' => ',',
+                '*'   => '.*',
+            ];
 
             // We assume a / directory separator, as do the exclude rules
             // most developers write, so we need a special case for any system

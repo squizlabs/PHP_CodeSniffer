@@ -23,11 +23,11 @@ class ClassCommentSniff extends FileCommentSniff
      */
     public function register()
     {
-        return array(
-                T_CLASS,
-                T_INTERFACE,
-                T_TRAIT,
-               );
+        return [
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
+        ];
 
     }//end register()
 
@@ -47,7 +47,7 @@ class ClassCommentSniff extends FileCommentSniff
 
         $tokens    = $phpcsFile->getTokens();
         $type      = strtolower($tokens[$stackPtr]['content']);
-        $errorData = array($type);
+        $errorData = [$type];
 
         $find   = Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;
@@ -94,7 +94,7 @@ class ClassCommentSniff extends FileCommentSniff
             $content = $tokens[($tag + 2)]['content'];
             if ((strstr($content, 'Release:') === false)) {
                 $error = 'Invalid version "%s" in doc comment; consider "Release: <package_version>" instead';
-                $data  = array($content);
+                $data  = [$content];
                 $phpcsFile->addWarning($error, $tag, 'InvalidVersion', $data);
             }
         }

@@ -41,8 +41,8 @@ class AllSniffs
      */
     public static function suite()
     {
-        $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = array();
-        $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = array();
+        $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = [];
+        $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = [];
 
         $suite = new TestSuite('PHP CodeSniffer Standards');
 
@@ -51,7 +51,7 @@ class AllSniffs
         // Optionally allow for ignoring the tests for one or more standards.
         $ignoreTestsForStandards = getenv('PHPCS_IGNORE_TESTS');
         if ($ignoreTestsForStandards === false) {
-            $ignoreTestsForStandards = array();
+            $ignoreTestsForStandards = [];
         } else {
             $ignoreTestsForStandards = explode(',', $ignoreTestsForStandards);
         }

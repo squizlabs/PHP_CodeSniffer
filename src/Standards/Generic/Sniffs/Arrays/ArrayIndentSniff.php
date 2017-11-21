@@ -85,10 +85,10 @@ class ArrayIndentSniff extends AbstractArraySniff
             }
 
             $error = 'Array key not indented correctly; expected %s spaces but found %s';
-            $data  = array(
-                      $expectedIndent,
-                      $foundIndent,
-                     );
+            $data  = [
+                $expectedIndent,
+                $foundIndent,
+            ];
             $fix   = $phpcsFile->addFixableError($error, $first, 'KeyIncorrect', $data);
             if ($fix === false) {
                 continue;
@@ -122,10 +122,10 @@ class ArrayIndentSniff extends AbstractArraySniff
         }
 
         $error = 'Array close brace not indented correctly; expected %s spaces but found %s';
-        $data  = array(
-                  $expectedIndent,
-                  $foundIndent,
-                 );
+        $data  = [
+            $expectedIndent,
+            $foundIndent,
+        ];
         $fix   = $phpcsFile->addFixableError($error, $arrayEnd, 'CloseBraceIncorrect', $data);
         if ($fix === false) {
             return;

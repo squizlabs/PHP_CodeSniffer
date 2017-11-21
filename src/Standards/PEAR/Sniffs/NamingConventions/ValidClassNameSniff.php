@@ -23,11 +23,11 @@ class ValidClassNameSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_CLASS,
-                T_INTERFACE,
-                T_TRAIT,
-               );
+        return [
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
+        ];
 
     }//end register()
 
@@ -47,7 +47,7 @@ class ValidClassNameSniff implements Sniff
 
         $className = $phpcsFile->findNext(T_STRING, $stackPtr);
         $name      = trim($tokens[$className]['content']);
-        $errorData = array(ucfirst($tokens[$stackPtr]['content']));
+        $errorData = [ucfirst($tokens[$stackPtr]['content'])];
 
         // Make sure the first letter is a capital.
         if (preg_match('|^[A-Z]|', $name) === 0) {

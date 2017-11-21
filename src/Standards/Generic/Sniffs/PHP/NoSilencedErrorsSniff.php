@@ -37,7 +37,7 @@ class NoSilencedErrorsSniff implements Sniff
      */
     public function register()
     {
-        return array(T_ASPERAND);
+        return [T_ASPERAND];
 
     }//end register()
 

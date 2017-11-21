@@ -25,11 +25,11 @@ class MultiLineAssignmentUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                3 => 1,
-                6 => 1,
-                8 => 1,
-               );
+        return [
+            3 => 1,
+            6 => 1,
+            8 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -44,7 +44,7 @@ class MultiLineAssignmentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

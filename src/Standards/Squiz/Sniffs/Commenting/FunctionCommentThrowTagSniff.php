@@ -22,7 +22,7 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct(array(T_FUNCTION), array(T_THROW));
+        parent::__construct([T_FUNCTION], [T_THROW]);
 
     }//end __construct()
 
@@ -66,7 +66,7 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
         $currScopeEnd = $tokens[$currScope]['scope_closer'];
 
         // Find all the exception type token within the current scope.
-        $thrownExceptions = array();
+        $thrownExceptions = [];
         $currPos          = $stackPtr;
         $foundThrows      = false;
         while ($currPos < $currScopeEnd && $currPos !== false) {
@@ -90,10 +90,10 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
                 $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($currPos + 1), null, true);
                 if ($tokens[$nextToken]['code'] === T_NEW) {
                     $currException = $phpcsFile->findNext(
-                        array(
-                         T_NS_SEPARATOR,
-                         T_STRING,
-                        ),
+                        [
+                            T_NS_SEPARATOR,
+                            T_STRING,
+                        ],
                         $currPos,
                         $currScopeEnd,
                         false,
@@ -103,10 +103,10 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
 
                     if ($currException !== false) {
                         $endException = $phpcsFile->findNext(
-                            array(
-                             T_NS_SEPARATOR,
-                             T_STRING,
-                            ),
+                            [
+                                T_NS_SEPARATOR,
+                                T_STRING,
+                            ],
                             ($currException + 1),
                             $currScopeEnd,
                             true,
@@ -160,7 +160,7 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
         // Only need one @throws tag for each type of exception thrown.
         $thrownExceptions = array_unique($thrownExceptions);
 
-        $throwTags    = array();
+        $throwTags    = [];
         $commentStart = $tokens[$commentEnd]['comment_opener'];
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             if ($tokens[$tag]['content'] !== '@throws') {
@@ -194,10 +194,10 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
         $tagCount    = count($throwTags);
         if ($thrownCount !== $tagCount) {
             $error = 'Expected %s @throws tag(s) in function comment; %s found';
-            $data  = array(
-                      $thrownCount,
-                      $tagCount,
-                     );
+            $data  = [
+                $thrownCount,
+                $tagCount,
+            ];
             $phpcsFile->addError($error, $commentEnd, 'WrongNumber', $data);
             return;
         }
@@ -205,7 +205,7 @@ class FunctionCommentThrowTagSniff extends AbstractScopeSniff
         foreach ($thrownExceptions as $throw) {
             if (isset($throwTags[$throw]) === false) {
                 $error = 'Missing @throws tag for "%s" exception';
-                $data  = array($throw);
+                $data  = [$throw];
                 $phpcsFile->addError($error, $commentEnd, 'Missing', $data);
             }
         }

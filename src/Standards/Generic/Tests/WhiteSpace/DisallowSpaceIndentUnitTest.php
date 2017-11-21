@@ -29,39 +29,39 @@ class DisallowSpaceIndentUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowSpaceIndentUnitTest.inc':
-            return array(
-                    5  => 1,
-                    9  => 1,
-                    15 => 1,
-                    22 => 1,
-                    24 => 1,
-                    30 => 1,
-                    35 => 1,
-                    50 => 1,
-                    55 => 1,
-                    57 => 1,
-                    58 => 1,
-                    59 => 1,
-                    60 => 1,
-                    65 => 1,
-                    66 => 1,
-                    67 => 1,
-                    68 => 1,
-                    69 => 1,
-                    70 => 1,
-                    73 => 1,
-                    77 => 1,
-                    81 => 1,
-                   );
+            return [
+                5  => 1,
+                9  => 1,
+                15 => 1,
+                22 => 1,
+                24 => 1,
+                30 => 1,
+                35 => 1,
+                50 => 1,
+                55 => 1,
+                57 => 1,
+                58 => 1,
+                59 => 1,
+                60 => 1,
+                65 => 1,
+                66 => 1,
+                67 => 1,
+                68 => 1,
+                69 => 1,
+                70 => 1,
+                73 => 1,
+                77 => 1,
+                81 => 1,
+            ];
             break;
         case 'DisallowSpaceIndentUnitTest.js':
-            return array(3 => 1);
+            return [3 => 1];
             break;
         case 'DisallowSpaceIndentUnitTest.css':
-            return array(2 => 1);
+            return [2 => 1];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -78,7 +78,7 @@ class DisallowSpaceIndentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

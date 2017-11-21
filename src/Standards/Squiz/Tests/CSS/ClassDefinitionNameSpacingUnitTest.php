@@ -25,10 +25,10 @@ class ClassDefinitionNameSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                7  => 1,
-                19 => 1,
-               );
+        return [
+            7  => 1,
+            19 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -43,7 +43,7 @@ class ClassDefinitionNameSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

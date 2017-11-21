@@ -25,16 +25,16 @@ class LanguageConstructSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                3  => 1,
-                7  => 1,
-                11 => 1,
-                15 => 1,
-                19 => 1,
-                23 => 1,
-                27 => 1,
-                31 => 1,
-               );
+        return [
+            3  => 1,
+            7  => 1,
+            11 => 1,
+            15 => 1,
+            19 => 1,
+            23 => 1,
+            27 => 1,
+            31 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -49,7 +49,7 @@ class LanguageConstructSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

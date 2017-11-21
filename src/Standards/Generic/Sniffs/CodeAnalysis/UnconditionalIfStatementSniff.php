@@ -41,10 +41,10 @@ class UnconditionalIfStatementSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_IF,
-                T_ELSEIF,
-               );
+        return [
+            T_IF,
+            T_ELSEIF,
+        ];
 
     }//end register()
 

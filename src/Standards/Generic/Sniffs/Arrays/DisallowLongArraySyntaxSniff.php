@@ -23,7 +23,7 @@ class DisallowLongArraySyntaxSniff implements Sniff
      */
     public function register()
     {
-        return array(T_ARRAY);
+        return [T_ARRAY];
 
     }//end register()
 

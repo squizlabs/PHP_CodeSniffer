@@ -25,19 +25,19 @@ class ArrayIndentUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                14 => 1,
-                15 => 1,
-                17 => 1,
-                30 => 1,
-                31 => 1,
-                33 => 1,
-                41 => 1,
-                49 => 1,
-                50 => 1,
-                51 => 1,
-                52 => 1,
-               );
+        return [
+            14 => 1,
+            15 => 1,
+            17 => 1,
+            30 => 1,
+            31 => 1,
+            33 => 1,
+            41 => 1,
+            49 => 1,
+            50 => 1,
+            51 => 1,
+            52 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -52,7 +52,7 @@ class ArrayIndentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

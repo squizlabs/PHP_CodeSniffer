@@ -39,7 +39,7 @@ class JSLintUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -54,10 +54,10 @@ class JSLintUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                1 => 2,
-                2 => 1,
-               );
+        return [
+            1 => 2,
+            2 => 1,
+        ];
 
     }//end getWarningList()
 

@@ -29,14 +29,14 @@ class VariableCommentSniff extends AbstractVariableSniff
     public function processMemberVar(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $ignore = array(
-                   T_PUBLIC,
-                   T_PRIVATE,
-                   T_PROTECTED,
-                   T_VAR,
-                   T_STATIC,
-                   T_WHITESPACE,
-                  );
+        $ignore = [
+            T_PUBLIC,
+            T_PRIVATE,
+            T_PROTECTED,
+            T_VAR,
+            T_STATIC,
+            T_WHITESPACE,
+        ];
 
         $commentEnd = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
         if ($commentEnd === false
@@ -72,7 +72,7 @@ class VariableCommentSniff extends AbstractVariableSniff
                 }
             } else {
                 $error = '%s tag is not allowed in member variable comment';
-                $data  = array($tokens[$tag]['content']);
+                $data  = [$tokens[$tag]['content']];
                 $phpcsFile->addWarning($error, $tag, 'TagNotAllowed', $data);
             }//end if
         }//end foreach
@@ -102,10 +102,10 @@ class VariableCommentSniff extends AbstractVariableSniff
         $suggestedType = Common::suggestType($varType);
         if ($varType !== $suggestedType) {
             $error = 'Expected "%s" but found "%s" for @var tag in member variable comment';
-            $data  = array(
-                      $suggestedType,
-                      $varType,
-                     );
+            $data  = [
+                $suggestedType,
+                $varType,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, ($foundVar + 2), 'IncorrectVarType', $data);
             if ($fix === true) {

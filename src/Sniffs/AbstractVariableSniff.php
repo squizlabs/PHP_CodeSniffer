@@ -30,11 +30,11 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     {
         $scopes = Tokens::$ooScopeTokens;
 
-        $listen = array(
-                   T_VARIABLE,
-                   T_DOUBLE_QUOTED_STRING,
-                   T_HEREDOC,
-                  );
+        $listen = [
+            T_VARIABLE,
+            T_DOUBLE_QUOTED_STRING,
+            T_HEREDOC,
+        ];
 
         parent::__construct($scopes, $listen, true);
 

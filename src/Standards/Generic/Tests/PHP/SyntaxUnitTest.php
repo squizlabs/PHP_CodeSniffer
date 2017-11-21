@@ -48,7 +48,7 @@ class SyntaxUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(3 => 1);
+        return [3 => 1];
 
     }//end getErrorList()
 
@@ -63,7 +63,7 @@ class SyntaxUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

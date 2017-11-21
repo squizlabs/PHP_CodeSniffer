@@ -22,7 +22,7 @@ class MethodScopeSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS, T_INTERFACE, T_TRAIT), array(T_FUNCTION));
+        parent::__construct([T_CLASS, T_INTERFACE, T_TRAIT], [T_FUNCTION]);
 
     }//end __construct()
 
@@ -63,7 +63,7 @@ class MethodScopeSniff extends AbstractScopeSniff
 
         if ($modifier === null) {
             $error = 'Visibility must be declared on method "%s"';
-            $data  = array($methodName);
+            $data  = [$methodName];
             $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
         }
 

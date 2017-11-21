@@ -21,7 +21,7 @@ class ColonSpacingSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
 
     /**
@@ -31,7 +31,7 @@ class ColonSpacingSniff implements Sniff
      */
     public function register()
     {
-        return array(T_COLON);
+        return [T_COLON];
 
     }//end register()
 
@@ -85,7 +85,7 @@ class ColonSpacingSniff implements Sniff
                 $length = strlen($content);
                 if ($length !== 1) {
                     $error = 'Expected 1 space after colon in style definition; %s found';
-                    $data  = array($length);
+                    $data  = [$length];
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'After', $data);
                     if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');

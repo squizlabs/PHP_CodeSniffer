@@ -57,7 +57,7 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
                 $foundLines = ($tokens[$stackPtr]['line'] - $tokens[$prev]['line'] - 1);
                 if ($foundLines > 0) {
                     $error = 'Expected 0 blank lines after member var comment; %s found';
-                    $data  = array($foundLines);
+                    $data  = [$foundLines];
                     $fix   = $phpcsFile->addFixableError($error, $prev, 'AfterComment', $data);
                     if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
@@ -117,10 +117,10 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
             return;
         }
 
-        $data = array(
-                 $spacing,
-                 $foundLines,
-                );
+        $data = [
+            $spacing,
+            $foundLines,
+        ];
 
         $fix = $phpcsFile->addFixableError($errorMsg, $stackPtr, $errorCode, $data);
         if ($fix === true) {

@@ -25,7 +25,7 @@ class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -44,28 +44,28 @@ class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DuplicateClassNameUnitTest.1.inc':
-            return array(
-                    6 => 1,
-                    7 => 1,
-                   );
+            return [
+                6 => 1,
+                7 => 1,
+            ];
             break;
         case 'DuplicateClassNameUnitTest.2.inc':
-            return array(
-                    2 => 1,
-                    3 => 1,
-                   );
+            return [
+                2 => 1,
+                3 => 1,
+            ];
             break;
         case 'DuplicateClassNameUnitTest.5.inc':
-            return array(
-                    3 => 1,
-                    7 => 1,
-                   );
+            return [
+                3 => 1,
+                7 => 1,
+            ];
             break;
         case 'DuplicateClassNameUnitTest.6.inc':
-            return array(10 => 1);
+            return [10 => 1];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 

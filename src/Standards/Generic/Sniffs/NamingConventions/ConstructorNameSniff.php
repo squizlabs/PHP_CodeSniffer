@@ -31,7 +31,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
      *
      * @var string[]
      */
-    private $functionList = array();
+    private $functionList = [];
 
 
     /**
@@ -39,7 +39,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS, T_ANON_CLASS, T_INTERFACE), array(T_FUNCTION), true);
+        parent::__construct([T_CLASS, T_ANON_CLASS, T_INTERFACE], [T_FUNCTION], true);
 
     }//end __construct()
 
@@ -128,7 +128,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
      */
     protected function loadFunctionNamesInScope(File $phpcsFile, $currScope)
     {
-        $this->functionList = array();
+        $this->functionList = [];
         $tokens = $phpcsFile->getTokens();
 
         for ($i = ($tokens[$currScope]['scope_opener'] + 1); $i < $tokens[$currScope]['scope_closer']; $i++) {

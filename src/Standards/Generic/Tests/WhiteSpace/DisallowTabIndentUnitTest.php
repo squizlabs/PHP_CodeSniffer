@@ -44,43 +44,43 @@ class DisallowTabIndentUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowTabIndentUnitTest.inc':
-            return array(
-                    5  => 2,
-                    9  => 1,
-                    15 => 1,
-                    20 => 2,
-                    21 => 1,
-                    22 => 2,
-                    23 => 1,
-                    24 => 2,
-                    31 => 1,
-                    32 => 2,
-                    33 => 2,
-                    41 => 1,
-                    42 => 1,
-                    43 => 1,
-                    44 => 1,
-                    45 => 1,
-                    46 => 1,
-                    47 => 1,
-                    48 => 1,
-                   );
+            return [
+                5  => 2,
+                9  => 1,
+                15 => 1,
+                20 => 2,
+                21 => 1,
+                22 => 2,
+                23 => 1,
+                24 => 2,
+                31 => 1,
+                32 => 2,
+                33 => 2,
+                41 => 1,
+                42 => 1,
+                43 => 1,
+                44 => 1,
+                45 => 1,
+                46 => 1,
+                47 => 1,
+                48 => 1,
+            ];
             break;
         case 'DisallowTabIndentUnitTest.js':
-            return array(
-                    3 => 1,
-                    5 => 1,
-                    6 => 1,
-                   );
+            return [
+                3 => 1,
+                5 => 1,
+                6 => 1,
+            ];
             break;
         case 'DisallowTabIndentUnitTest.css':
-            return array(
-                    1 => 1,
-                    2 => 1,
-                   );
+            return [
+                1 => 1,
+                2 => 1,
+            ];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -97,7 +97,7 @@ class DisallowTabIndentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

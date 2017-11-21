@@ -20,7 +20,7 @@ class NamedColoursSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
 
     /**
@@ -30,25 +30,25 @@ class NamedColoursSniff implements Sniff
      *
      * @var array
      */
-    protected $colourNames = array(
-                              'aqua'    => 'aqua',
-                              'black'   => 'black',
-                              'blue'    => 'blue',
-                              'fuchsia' => 'fuchsia',
-                              'gray'    => 'gray',
-                              'green'   => 'green',
-                              'lime'    => 'lime',
-                              'maroon'  => 'maroon',
-                              'navy'    => 'navy',
-                              'olive'   => 'olive',
-                              'orange'  => 'orange',
-                              'purple'  => 'purple',
-                              'red'     => 'red',
-                              'silver'  => 'silver',
-                              'teal'    => 'teal',
-                              'white'   => 'white',
-                              'yellow'  => 'yellow',
-                             );
+    protected $colourNames = [
+        'aqua'    => 'aqua',
+        'black'   => 'black',
+        'blue'    => 'blue',
+        'fuchsia' => 'fuchsia',
+        'gray'    => 'gray',
+        'green'   => 'green',
+        'lime'    => 'lime',
+        'maroon'  => 'maroon',
+        'navy'    => 'navy',
+        'olive'   => 'olive',
+        'orange'  => 'orange',
+        'purple'  => 'purple',
+        'red'     => 'red',
+        'silver'  => 'silver',
+        'teal'    => 'teal',
+        'white'   => 'white',
+        'yellow'  => 'yellow',
+    ];
 
 
     /**
@@ -58,7 +58,7 @@ class NamedColoursSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STRING);
+        return [T_STRING];
 
     }//end register()
 

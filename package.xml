@@ -68,10 +68,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, STDIN files using fake file paths were excluded from checking
   - Ignore patterns are now checked on symlink target paths instead of symlink source paths
     -- Restores previous behaviour of this feature
-  - The Squiz standard now ensures array keys are indented 4 spaces from the main statement
-    -- Previously, this standard aligned keys 1 space from the start of the array keyword
-  - The Squiz standard now ensures array end braces are aligned with the main statement
-    -- Previously, this standard aligned the close brace with the start of the array keyword
   - Added AbstractArraySniff to make it easier to create sniffs that check array formatting
     -- Allows for checking of single and multi line arrays easily
     -- Provides a parsed structure of the array including positions of keys, values, and double arrows
@@ -90,6 +86,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Default remains at 1
     -- Thanks to Nikola Kovacs for the patch
   - PEAR.Functions.FunctionCallSignature now requires the function keyword to be indented to an exact tab stop
+  - The Squiz standard now ensures array keys are indented 4 spaces from the main statement
+    -- Previously, this standard aligned keys 1 space from the start of the array keyword
+  - The Squiz standard now ensures array end braces are aligned with the main statement
+    -- Previously, this standard aligned the close brace with the start of the array keyword
+  - The standrd for PHP_CodeSniffer itself now enforces short array syntax
+  - The standrd for PHP_CodeSniffer itself now uses the Generic.Arrays/ArrayIndent sniff rules
   - Fixed bug #1462 : Error processing cyrillic strings in Tokenizer
   - Fixed bug #1590 : InlineControlStructure CBF issue while adding braces to an if thats returning a nested function
   - Fixed bug #1718 : Unclosed strings at EOF sometimes tokenized as T_WHITESPACE by the JS tokenizer

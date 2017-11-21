@@ -53,6 +53,7 @@
     <rule ref="Squiz.WhiteSpace.FunctionSpacing" />
     <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Generic.Commenting.Todo"/>
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
     <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
@@ -65,6 +66,21 @@
     <rule ref="PSR2.Methods.MethodDeclaration"/>
     <rule ref="PSR2.Files.EndFileNewline"/>
     <rule ref="Zend.Files.ClosingTag"/>
+
+     <!-- We use custom indent rules for arrays -->
+    <rule ref="Generic.Arrays.ArrayIndent"/>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.KeyNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
+        <severity>0</severity>
+    </rule>
 
     <!-- Check var names, but we don't want leading underscores for private vars -->
     <rule ref="Squiz.NamingConventions.ValidVariableName" />

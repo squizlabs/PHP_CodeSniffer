@@ -21,7 +21,7 @@ class StaticThisUsageSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS), array(T_FUNCTION));
+        parent::__construct([T_CLASS], [T_FUNCTION]);
 
     }//end __construct()
 
@@ -59,7 +59,7 @@ class StaticThisUsageSniff extends AbstractScopeSniff
             }
 
             $thisUsage = $stackPtr;
-            while (($thisUsage = $phpcsFile->findNext(array(T_VARIABLE), ($thisUsage + 1), $tokens[$stackPtr]['scope_closer'], false, '$this')) !== false) {
+            while (($thisUsage = $phpcsFile->findNext([T_VARIABLE], ($thisUsage + 1), $tokens[$stackPtr]['scope_closer'], false, '$this')) !== false) {
                 if ($thisUsage === false) {
                     return;
                 }

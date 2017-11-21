@@ -31,7 +31,7 @@ abstract class Generator
      *
      * @var string[]
      */
-    public $docFiles = array();
+    public $docFiles = [];
 
 
     /**
@@ -45,7 +45,7 @@ abstract class Generator
     {
         $this->ruleset = $ruleset;
 
-        $standardFiles = array();
+        $standardFiles = [];
         foreach ($ruleset->sniffs as $className => $sniffClass) {
             $file    = Autoload::getLoadedFileName($className);
             $docFile = str_replace(

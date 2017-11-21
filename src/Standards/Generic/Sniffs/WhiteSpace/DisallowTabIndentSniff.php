@@ -20,11 +20,11 @@ class DisallowTabIndentSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                   'CSS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+        'CSS',
+    ];
 
     /**
      * The --tab-width CLI value that is being used.
@@ -41,7 +41,7 @@ class DisallowTabIndentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -70,12 +70,12 @@ class DisallowTabIndentSniff implements Sniff
         $error     = 'Spaces must be used to indent lines; tabs are not allowed';
         $errorCode = 'TabsUsed';
 
-        $checkTokens = array(
-                        T_WHITESPACE             => true,
-                        T_INLINE_HTML            => true,
-                        T_DOC_COMMENT_WHITESPACE => true,
-                        T_DOC_COMMENT_STRING     => true,
-                       );
+        $checkTokens = [
+            T_WHITESPACE             => true,
+            T_INLINE_HTML            => true,
+            T_DOC_COMMENT_WHITESPACE => true,
+            T_DOC_COMMENT_STRING     => true,
+        ];
 
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
             if (isset($checkTokens[$tokens[$i]['code']]) === false) {

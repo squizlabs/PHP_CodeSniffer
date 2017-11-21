@@ -21,10 +21,10 @@ class MultiLineConditionSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * The number of spaces code should be indented.
@@ -41,10 +41,10 @@ class MultiLineConditionSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_IF,
-                T_ELSEIF,
-               );
+        return [
+            T_IF,
+            T_ELSEIF,
+        ];
 
     }//end register()
 
@@ -158,10 +158,10 @@ class MultiLineConditionSniff implements Sniff
 
                 if ($expectedIndent !== $foundIndent) {
                     $error = 'Multi-line IF statement not indented correctly; expected %s spaces but found %s';
-                    $data  = array(
-                              $expectedIndent,
-                              $foundIndent,
-                             );
+                    $data  = [
+                        $expectedIndent,
+                        $foundIndent,
+                    ];
 
                     $fix = $phpcsFile->addFixableError($error, $i, 'Alignment', $data);
                     if ($fix === true) {
@@ -241,7 +241,7 @@ class MultiLineConditionSniff implements Sniff
             return;
         }
 
-        $data = array($length);
+        $data = [$length];
         $code = 'SpaceBeforeOpenBrace';
 
         $error = 'There must be a single space between the closing parenthesis and the opening brace of a multi-line IF statement; found ';

@@ -25,25 +25,25 @@ class ConcatenationSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                3  => 5,
-                5  => 1,
-                6  => 1,
-                9  => 1,
-                10 => 1,
-                12 => 1,
-                13 => 1,
-                14 => 1,
-                15 => 1,
-                16 => 5,
-                22 => 1,
-                27 => 5,
-                29 => 1,
-                30 => 1,
-                31 => 1,
-                47 => 2,
-                49 => 1,
-               );
+        return [
+            3  => 5,
+            5  => 1,
+            6  => 1,
+            9  => 1,
+            10 => 1,
+            12 => 1,
+            13 => 1,
+            14 => 1,
+            15 => 1,
+            16 => 5,
+            22 => 1,
+            27 => 5,
+            29 => 1,
+            30 => 1,
+            31 => 1,
+            47 => 2,
+            49 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -58,7 +58,7 @@ class ConcatenationSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

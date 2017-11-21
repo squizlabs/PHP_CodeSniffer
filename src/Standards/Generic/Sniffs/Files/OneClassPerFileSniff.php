@@ -23,7 +23,7 @@ class OneClassPerFileSniff implements Sniff
      */
     public function register()
     {
-        return array(T_CLASS);
+        return [T_CLASS];
 
     }//end register()
 

@@ -25,10 +25,10 @@ class SubversionPropertiesSniff implements Sniff
      *
      * @var array
      */
-    protected $properties = array(
-                             'svn:keywords'  => 'Author Id Revision',
-                             'svn:eol-style' => 'native',
-                            );
+    protected $properties = [
+        'svn:keywords'  => 'Author Id Revision',
+        'svn:eol-style' => 'native',
+    ];
 
 
     /**
@@ -38,7 +38,7 @@ class SubversionPropertiesSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -69,10 +69,10 @@ class SubversionPropertiesSniff implements Sniff
                 && isset($this->properties[$key]) === false
             ) {
                 $error = 'Unexpected Subversion property "%s" = "%s"';
-                $data  = array(
-                          $key,
-                          $properties[$key],
-                         );
+                $data  = [
+                    $key,
+                    $properties[$key],
+                ];
                 $phpcsFile->addError($error, $stackPtr, 'Unexpected', $data);
                 continue;
             }
@@ -81,10 +81,10 @@ class SubversionPropertiesSniff implements Sniff
                 && isset($this->properties[$key]) === true
             ) {
                 $error = 'Missing Subversion property "%s" = "%s"';
-                $data  = array(
-                          $key,
-                          $this->properties[$key],
-                         );
+                $data  = [
+                    $key,
+                    $this->properties[$key],
+                ];
                 $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
                 continue;
             }
@@ -93,11 +93,11 @@ class SubversionPropertiesSniff implements Sniff
                 && $properties[$key] !== $this->properties[$key]
             ) {
                 $error = 'Subversion property "%s" = "%s" does not match "%s"';
-                $data  = array(
-                          $key,
-                          $properties[$key],
-                          $this->properties[$key],
-                         );
+                $data  = [
+                    $key,
+                    $properties[$key],
+                    $this->properties[$key],
+                ];
                 $phpcsFile->addError($error, $stackPtr, 'NoMatch', $data);
             }
         }//end foreach
@@ -121,9 +121,9 @@ class SubversionPropertiesSniff implements Sniff
      */
     protected function getProperties($path)
     {
-        $properties = array();
+        $properties = [];
 
-        $paths   = array();
+        $paths   = [];
         $paths[] = dirname($path).'/.svn/props/'.basename($path).'.svn-work';
         $paths[] = dirname($path).'/.svn/prop-base/'.basename($path).'.svn-base';
 

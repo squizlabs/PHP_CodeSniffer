@@ -23,10 +23,10 @@ class DoubleQuoteUsageSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_CONSTANT_ENCAPSED_STRING,
-                T_DOUBLE_QUOTED_STRING,
-               );
+        return [
+            T_CONSTANT_ENCAPSED_STRING,
+            T_DOUBLE_QUOTED_STRING,
+        ];
 
     }//end register()
 
@@ -83,7 +83,7 @@ class DoubleQuoteUsageSniff implements Sniff
             foreach ($stringTokens as $token) {
                 if (is_array($token) === true && $token[0] === T_VARIABLE) {
                     $error = 'Variable "%s" not allowed in double quoted string; use concatenation instead';
-                    $data  = array($token[1]);
+                    $data  = [$token[1]];
                     $phpcsFile->addError($error, $stackPtr, 'ContainsVar', $data);
                 }
             }
@@ -91,26 +91,26 @@ class DoubleQuoteUsageSniff implements Sniff
             return $skipTo;
         }//end if
 
-        $allowedChars = array(
-                         '\0',
-                         '\1',
-                         '\2',
-                         '\3',
-                         '\4',
-                         '\5',
-                         '\6',
-                         '\7',
-                         '\n',
-                         '\r',
-                         '\f',
-                         '\t',
-                         '\v',
-                         '\x',
-                         '\b',
-                         '\e',
-                         '\u',
-                         '\'',
-                        );
+        $allowedChars = [
+            '\0',
+            '\1',
+            '\2',
+            '\3',
+            '\4',
+            '\5',
+            '\6',
+            '\7',
+            '\n',
+            '\r',
+            '\f',
+            '\t',
+            '\v',
+            '\x',
+            '\b',
+            '\e',
+            '\u',
+            '\'',
+        ];
 
         foreach ($allowedChars as $testChar) {
             if (strpos($workingString, $testChar) !== false) {
@@ -119,7 +119,7 @@ class DoubleQuoteUsageSniff implements Sniff
         }
 
         $error = 'String %s does not require double quotes; use single quotes instead';
-        $data  = array(str_replace(array("\r", "\n"), array('\r', '\n'), $workingString));
+        $data  = [str_replace(["\r", "\n"], ['\r', '\n'], $workingString)];
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotRequired', $data);
 
         if ($fix === true) {

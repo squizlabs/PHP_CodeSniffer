@@ -41,7 +41,7 @@ class MemberVarScopeSniff extends AbstractVariableSniff
 
         if ($modifier === null) {
             $error = 'Scope modifier not specified for member variable "%s"';
-            $data  = array($tokens[$stackPtr]['content']);
+            $data  = [$tokens[$stackPtr]['content']];
             $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
         }
 

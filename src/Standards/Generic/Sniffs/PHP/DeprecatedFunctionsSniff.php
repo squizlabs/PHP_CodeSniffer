@@ -21,7 +21,7 @@ class DeprecatedFunctionsSniff extends ForbiddenFunctionsSniff
      *
      * @var array(string => string|null)
      */
-    public $forbiddenFunctions = array();
+    public $forbiddenFunctions = [];
 
 
     /**
@@ -60,7 +60,7 @@ class DeprecatedFunctionsSniff extends ForbiddenFunctionsSniff
      */
     protected function addError($phpcsFile, $stackPtr, $function, $pattern=null)
     {
-        $data  = array($function);
+        $data  = [$function];
         $error = 'Function %s() has been deprecated';
         $type  = 'Deprecated';
 

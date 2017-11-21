@@ -97,43 +97,43 @@ class Config
      *
      * @var array<string, mixed>
      */
-    private $settings = array(
-                         'files'           => null,
-                         'standards'       => null,
-                         'verbosity'       => null,
-                         'interactive'     => null,
-                         'parallel'        => null,
-                         'cache'           => null,
-                         'cacheFile'       => null,
-                         'colors'          => null,
-                         'explain'         => null,
-                         'local'           => null,
-                         'showSources'     => null,
-                         'showProgress'    => null,
-                         'quiet'           => null,
-                         'annotations'     => null,
-                         'tabWidth'        => null,
-                         'encoding'        => null,
-                         'extensions'      => null,
-                         'sniffs'          => null,
-                         'exclude'         => null,
-                         'ignored'         => null,
-                         'reportFile'      => null,
-                         'generator'       => null,
-                         'filter'          => null,
-                         'bootstrap'       => null,
-                         'reports'         => null,
-                         'basepath'        => null,
-                         'reportWidth'     => null,
-                         'errorSeverity'   => null,
-                         'warningSeverity' => null,
-                         'recordErrors'    => null,
-                         'suffix'          => null,
-                         'stdin'           => null,
-                         'stdinContent'    => null,
-                         'stdinPath'       => null,
-                         'unknown'         => null,
-                        );
+    private $settings = [
+        'files'           => null,
+        'standards'       => null,
+        'verbosity'       => null,
+        'interactive'     => null,
+        'parallel'        => null,
+        'cache'           => null,
+        'cacheFile'       => null,
+        'colors'          => null,
+        'explain'         => null,
+        'local'           => null,
+        'showSources'     => null,
+        'showProgress'    => null,
+        'quiet'           => null,
+        'annotations'     => null,
+        'tabWidth'        => null,
+        'encoding'        => null,
+        'extensions'      => null,
+        'sniffs'          => null,
+        'exclude'         => null,
+        'ignored'         => null,
+        'reportFile'      => null,
+        'generator'       => null,
+        'filter'          => null,
+        'bootstrap'       => null,
+        'reports'         => null,
+        'basepath'        => null,
+        'reportWidth'     => null,
+        'errorSeverity'   => null,
+        'warningSeverity' => null,
+        'recordErrors'    => null,
+        'suffix'          => null,
+        'stdin'           => null,
+        'stdinContent'    => null,
+        'stdinPath'       => null,
+        'unknown'         => null,
+    ];
 
     /**
      * Whether or not to kill the process when an unknown command line arg is found.
@@ -151,14 +151,14 @@ class Config
      *
      * @var string[]
      */
-    private $cliArgs = array();
+    private $cliArgs = [];
 
     /**
      * Command line values that the user has supplied directly.
      *
      * @var array<string, TRUE>
      */
-    private $overriddenDefaults = array();
+    private $overriddenDefaults = [];
 
     /**
      * Config file data that has been loaded for the run.
@@ -179,7 +179,7 @@ class Config
      *
      * @var array<string, string>
      */
-    private static $executablePaths = array();
+    private static $executablePaths = [];
 
 
     /**
@@ -226,7 +226,7 @@ class Config
             }
             break;
         case 'standards' :
-            $cleaned = array();
+            $cleaned = [];
 
             // Check if the standard name is valid, or if the case is invalid.
             $installedStandards = Util\Standards::getInstalledStandards();
@@ -316,7 +316,7 @@ class Config
      *
      * @return void
      */
-    public function __construct(array $cliArgs=array(), $dieOnUnknownArg=true)
+    public function __construct(array $cliArgs=[], $dieOnUnknownArg=true)
     {
         if (defined('PHP_CODESNIFFER_IN_TESTS') === true) {
             // Let everything through during testing so that we can
@@ -341,18 +341,18 @@ class Config
             // Look for a default ruleset in the current directory or higher.
             $currentDir = getcwd();
 
-            $defaultFiles = array(
-                             '.phpcs.xml',
-                             'phpcs.xml',
-                             '.phpcs.xml.dist',
-                             'phpcs.xml.dist',
-                            );
+            $defaultFiles = [
+                '.phpcs.xml',
+                'phpcs.xml',
+                '.phpcs.xml.dist',
+                'phpcs.xml.dist',
+            ];
 
             do {
                 foreach ($defaultFiles as $defaultFilename) {
                     $default = $currentDir.DIRECTORY_SEPARATOR.$defaultFilename;
                     if (is_file($default) === true) {
-                        $this->standards = array($default);
+                        $this->standards = [$default];
                         break(2);
                     }
                 }
@@ -444,8 +444,8 @@ class Config
      */
     public function restoreDefaults()
     {
-        $this->files           = array();
-        $this->standards       = array('PEAR');
+        $this->files           = [];
+        $this->standards       = ['PEAR'];
         $this->verbosity       = 0;
         $this->interactive     = false;
         $this->cache           = false;
@@ -460,21 +460,21 @@ class Config
         $this->parallel        = 1;
         $this->tabWidth        = 0;
         $this->encoding        = 'utf-8';
-        $this->extensions      = array(
-                                  'php' => 'PHP',
-                                  'inc' => 'PHP',
-                                  'js'  => 'JS',
-                                  'css' => 'CSS',
-                                 );
-        $this->sniffs          = array();
-        $this->exclude         = array();
-        $this->ignored         = array();
+        $this->extensions      = [
+            'php' => 'PHP',
+            'inc' => 'PHP',
+            'js'  => 'JS',
+            'css' => 'CSS',
+        ];
+        $this->sniffs          = [];
+        $this->exclude         = [];
+        $this->ignored         = [];
         $this->reportFile      = null;
         $this->generator       = null;
         $this->filter          = null;
-        $this->bootstrap       = array();
+        $this->bootstrap       = [];
         $this->basepath        = null;
-        $this->reports         = array('full' => null);
+        $this->reports         = ['full' => null];
         $this->reportWidth     = 'auto';
         $this->errorSeverity   = 5;
         $this->warningSeverity = 5;
@@ -483,7 +483,7 @@ class Config
         $this->stdin           = false;
         $this->stdinContent    = null;
         $this->stdinPath       = null;
-        $this->unknown         = array();
+        $this->unknown         = [];
 
         $standard = self::getConfigData('default_standard');
         if ($standard !== null) {
@@ -492,7 +492,7 @@ class Config
 
         $reportFormat = self::getConfigData('report_format');
         if ($reportFormat !== null) {
-            $this->reports = array($reportFormat => null);
+            $this->reports = [$reportFormat => null];
         }
 
         $tabWidth = self::getConfigData('tab_width');
@@ -891,7 +891,7 @@ class Config
                 }
             } else if (substr($arg, 0, 10) === 'bootstrap=') {
                 $files     = explode(',', substr($arg, 10));
-                $bootstrap = array();
+                $bootstrap = [];
                 foreach ($files as $file) {
                     $path = Util\Common::realpath($file);
                     if ($path === false) {
@@ -1008,7 +1008,7 @@ class Config
                     throw new DeepExitException($error, 3);
                 }
             } else if ((substr($arg, 0, 7) === 'report=' || substr($arg, 0, 7) === 'report-')) {
-                $reports = array();
+                $reports = [];
 
                 if ($arg[6] === '-') {
                     // This is a report with file output.
@@ -1083,7 +1083,7 @@ class Config
                 }
 
                 $extensions    = explode(',', substr($arg, 11));
-                $newExtensions = array();
+                $newExtensions = [];
                 foreach ($extensions as $ext) {
                     $slash = strpos($ext, '/');
                     if ($slash !== false) {
@@ -1152,7 +1152,7 @@ class Config
                     substr($arg, 7)
                 );
 
-                $ignored = array();
+                $ignored = [];
                 foreach ($patterns as $pattern) {
                     $pattern = trim($pattern);
                     if ($pattern === '') {
@@ -1619,8 +1619,8 @@ class Config
         }
 
         if (is_file($configFile) === false) {
-            self::$configData = array();
-            return array();
+            self::$configData = [];
+            return [];
         }
 
         if (is_readable($configFile) === false) {

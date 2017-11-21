@@ -23,7 +23,7 @@ class DisallowMultipleStatementsSniff implements Sniff
      */
     public function register()
     {
-        return array(T_SEMICOLON);
+        return [T_SEMICOLON];
 
     }//end register()
 
@@ -41,7 +41,7 @@ class DisallowMultipleStatementsSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $prev = $phpcsFile->findPrevious(array(T_SEMICOLON, T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO), ($stackPtr - 1));
+        $prev = $phpcsFile->findPrevious([T_SEMICOLON, T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO], ($stackPtr - 1));
         if ($prev === false
             || $tokens[$prev]['code'] === T_OPEN_TAG
             || $tokens[$prev]['code'] === T_OPEN_TAG_WITH_ECHO

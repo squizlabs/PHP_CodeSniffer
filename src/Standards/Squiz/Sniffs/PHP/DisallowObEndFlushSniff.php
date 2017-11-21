@@ -23,7 +23,7 @@ class DisallowObEndFlushSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STRING);
+        return [T_STRING];
 
     }//end register()
 

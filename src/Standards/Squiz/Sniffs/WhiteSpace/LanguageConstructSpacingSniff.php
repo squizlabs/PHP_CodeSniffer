@@ -23,16 +23,16 @@ class LanguageConstructSpacingSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_ECHO,
-                T_PRINT,
-                T_RETURN,
-                T_INCLUDE,
-                T_INCLUDE_ONCE,
-                T_REQUIRE,
-                T_REQUIRE_ONCE,
-                T_NEW,
-               );
+        return [
+            T_ECHO,
+            T_PRINT,
+            T_RETURN,
+            T_INCLUDE,
+            T_INCLUDE_ONCE,
+            T_REQUIRE,
+            T_REQUIRE_ONCE,
+            T_NEW,
+        ];
 
     }//end register()
 
@@ -60,7 +60,7 @@ class LanguageConstructSpacingSniff implements Sniff
             $contentLength = strlen($content);
             if ($contentLength !== 1) {
                 $error = 'Language constructs must be followed by a single space; expected 1 space but found %s';
-                $data  = array($contentLength);
+                $data  = [$contentLength];
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'IncorrectSingle', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
@@ -68,10 +68,10 @@ class LanguageConstructSpacingSniff implements Sniff
             }
         } else if ($tokens[($stackPtr + 1)]['code'] !== T_OPEN_PARENTHESIS) {
             $error = 'Language constructs must be followed by a single space; expected "%s" but found "%s"';
-            $data  = array(
-                      $tokens[$stackPtr]['content'].' '.$tokens[($stackPtr + 1)]['content'],
-                      $tokens[$stackPtr]['content'].$tokens[($stackPtr + 1)]['content'],
-                     );
+            $data  = [
+                $tokens[$stackPtr]['content'].' '.$tokens[($stackPtr + 1)]['content'],
+                $tokens[$stackPtr]['content'].$tokens[($stackPtr + 1)]['content'],
+            ];
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->addContent($stackPtr, ' ');

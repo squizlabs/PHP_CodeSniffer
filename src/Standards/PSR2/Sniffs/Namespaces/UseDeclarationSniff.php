@@ -24,7 +24,7 @@ class UseDeclarationSniff implements Sniff
      */
     public function register()
     {
-        return array(T_USE);
+        return [T_USE];
 
     }//end register()
 
@@ -56,7 +56,7 @@ class UseDeclarationSniff implements Sniff
         }
 
         // Only one USE declaration allowed per statement.
-        $next = $phpcsFile->findNext(array(T_COMMA, T_SEMICOLON, T_OPEN_USE_GROUP, T_CLOSE_TAG), ($stackPtr + 1));
+        $next = $phpcsFile->findNext([T_COMMA, T_SEMICOLON, T_OPEN_USE_GROUP, T_CLOSE_TAG], ($stackPtr + 1));
         if ($next !== false
             && $tokens[$next]['code'] !== T_SEMICOLON
             && $tokens[$next]['code'] !== T_CLOSE_TAG
@@ -155,7 +155,7 @@ class UseDeclarationSniff implements Sniff
             }
 
             $error = 'There must be one blank line after the last USE statement; %s found;';
-            $data  = array($diff);
+            $data  = [$diff];
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterLastUse', $data);
             if ($fix === true) {
                 if ($diff === 0) {
@@ -199,7 +199,7 @@ class UseDeclarationSniff implements Sniff
         }
 
         // Ignore USE keywords for traits.
-        if ($phpcsFile->hasCondition($stackPtr, array(T_CLASS, T_TRAIT)) === true) {
+        if ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT]) === true) {
             return true;
         }
 

@@ -24,7 +24,7 @@ class DisallowMultipleAssignmentsSniff implements Sniff
      */
     public function register()
     {
-        return array(T_EQUAL);
+        return [T_EQUAL];
 
     }//end register()
 
@@ -43,7 +43,7 @@ class DisallowMultipleAssignmentsSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Ignore default value assignments in function definitions.
-        $function = $phpcsFile->findPrevious(array(T_FUNCTION, T_CLOSURE), ($stackPtr - 1), null, false, null, true);
+        $function = $phpcsFile->findPrevious([T_FUNCTION, T_CLOSURE], ($stackPtr - 1), null, false, null, true);
         if ($function !== false) {
             $opener = $tokens[$function]['parenthesis_opener'];
             $closer = $tokens[$function]['parenthesis_closer'];

@@ -50,7 +50,7 @@ class LineLengthSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -153,18 +153,18 @@ class LineLengthSniff implements Sniff
         if ($this->absoluteLineLimit > 0
             && $lineLength > $this->absoluteLineLimit
         ) {
-            $data = array(
-                     $this->absoluteLineLimit,
-                     $lineLength,
-                    );
+            $data = [
+                $this->absoluteLineLimit,
+                $lineLength,
+            ];
 
             $error = 'Line exceeds maximum limit of %s characters; contains %s characters';
             $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else if ($lineLength > $this->lineLimit) {
-            $data = array(
-                     $this->lineLimit,
-                     $lineLength,
-                    );
+            $data = [
+                $this->lineLimit,
+                $lineLength,
+            ];
 
             $warning = 'Line exceeds %s characters; contains %s characters';
             $phpcsFile->addWarning($warning, $stackPtr, 'TooLong', $data);

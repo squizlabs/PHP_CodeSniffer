@@ -78,14 +78,14 @@ class Info implements Report
             return;
         }
 
-        $metrics = array();
+        $metrics = [];
         foreach ($lines as $line) {
             $parts  = explode('>>', $line);
             $metric = $parts[0];
             $value  = $parts[1];
             $count  = $parts[2];
             if (isset($metrics[$metric]) === false) {
-                $metrics[$metric] = array();
+                $metrics[$metric] = [];
             }
 
             if (isset($metrics[$metric][$value]) === false) {

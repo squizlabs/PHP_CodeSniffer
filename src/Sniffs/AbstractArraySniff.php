@@ -24,10 +24,10 @@ abstract class AbstractArraySniff implements Sniff
      */
     final public function register()
     {
-        return array(
-                T_ARRAY,
-                T_OPEN_SHORT_ARRAY,
-               );
+        return [
+            T_ARRAY,
+            T_OPEN_SHORT_ARRAY,
+        ];
 
     }//end register()
 
@@ -78,7 +78,7 @@ abstract class AbstractArraySniff implements Sniff
         }
 
         $keyUsed = false;
-        $indices = array();
+        $indices = [];
 
         for ($checkToken = ($stackPtr + 1); $checkToken <= $lastArrayToken; $checkToken++) {
             // Skip bracketed statements, like function calls.
@@ -96,7 +96,7 @@ abstract class AbstractArraySniff implements Sniff
             ) {
                 // Let subsequent calls of this test handle nested arrays.
                 if ($tokens[$lastToken]['code'] !== T_DOUBLE_ARROW) {
-                    $indices[] = array('value_start' => $checkToken);
+                    $indices[] = ['value_start' => $checkToken];
                     $lastToken = $checkToken;
                 }
 
@@ -158,7 +158,7 @@ abstract class AbstractArraySniff implements Sniff
                         true
                     );
 
-                    $indices[] = array('value_start' => $valueContent);
+                    $indices[] = ['value_start' => $valueContent];
                 }
 
                 $lastToken = $checkToken;
@@ -181,12 +181,12 @@ abstract class AbstractArraySniff implements Sniff
                     true
                 );
 
-                $indices[] = array(
-                              'index_start' => $indexStart,
-                              'index_end'   => $indexEnd,
-                              'arrow'       => $checkToken,
-                              'value_start' => $nextContent,
-                             );
+                $indices[] = [
+                    'index_start' => $indexStart,
+                    'index_end'   => $indexEnd,
+                    'arrow'       => $checkToken,
+                    'value_start' => $nextContent,
+                ];
 
                 $lastToken = $checkToken;
             }//end if

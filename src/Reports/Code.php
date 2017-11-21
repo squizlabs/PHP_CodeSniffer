@@ -74,7 +74,7 @@ class Code implements Report
         }//end if
 
         // Create an array that maps lines to the first token on the line.
-        $lineTokens = array();
+        $lineTokens = [];
         $lastLine   = 0;
         $stackPtr   = 0;
         foreach ($tokens as $stackPtr => $token) {
@@ -84,10 +84,10 @@ class Code implements Report
                 }
 
                 $lastLine++;
-                $lineTokens[$lastLine] = array(
-                                          'start' => $stackPtr,
-                                          'end'   => null,
-                                         );
+                $lineTokens[$lastLine] = [
+                    'start' => $stackPtr,
+                    'end'   => null,
+                ];
             }
         }
 
@@ -235,7 +235,7 @@ class Code implements Report
                         $tokenContent = $token['content'];
                     }
 
-                    $tokenContent = Util\Common::prepareForOutput($tokenContent, array("\r", "\n", "\t"));
+                    $tokenContent = Util\Common::prepareForOutput($tokenContent, ["\r", "\n", "\t"]);
                     $tokenContent = str_replace("\000", ' ', $tokenContent);
 
                     $underline = false;

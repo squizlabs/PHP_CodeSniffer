@@ -25,17 +25,17 @@ class CamelCapsMethodNameUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                6  => 1,
-                7  => 1,
-                11 => 1,
-                12 => 1,
-                13 => 1,
-                17 => 1,
-                21 => 1,
-                25 => 1,
-                26 => 1,
-               );
+        return [
+            6  => 1,
+            7  => 1,
+            11 => 1,
+            12 => 1,
+            13 => 1,
+            17 => 1,
+            21 => 1,
+            25 => 1,
+            26 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -50,7 +50,7 @@ class CamelCapsMethodNameUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

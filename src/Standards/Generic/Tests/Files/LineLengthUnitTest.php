@@ -44,18 +44,18 @@ class LineLengthUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'LineLengthUnitTest.1.inc':
-            return array(
-                    31 => 1,
-                    34 => 1,
-                    45 => 1,
-                   );
+            return [
+                31 => 1,
+                34 => 1,
+                45 => 1,
+            ];
             break;
         case 'LineLengthUnitTest.2.inc':
         case 'LineLengthUnitTest.3.inc':
-            return array(7 => 1);
+            return [7 => 1];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -76,27 +76,27 @@ class LineLengthUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'LineLengthUnitTest.1.inc':
-            return array(
-                    9  => 1,
-                    15 => 1,
-                    21 => 1,
-                    24 => 1,
-                    29 => 1,
-                    37 => 1,
-                    63 => 1,
-                    73 => 1,
-                    75 => 1,
-                   );
+            return [
+                9  => 1,
+                15 => 1,
+                21 => 1,
+                24 => 1,
+                29 => 1,
+                37 => 1,
+                63 => 1,
+                73 => 1,
+                75 => 1,
+            ];
             break;
         case 'LineLengthUnitTest.2.inc':
         case 'LineLengthUnitTest.3.inc':
-            return array(6 => 1);
+            return [6 => 1];
             break;
         case 'LineLengthUnitTest.4.inc':
-            return array(10 => 1);
+            return [10 => 1];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 

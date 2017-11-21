@@ -25,7 +25,7 @@ class SAPIUsageUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(2 => 1);
+        return [2 => 1];
 
     }//end getErrorList()
 
@@ -40,7 +40,7 @@ class SAPIUsageUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

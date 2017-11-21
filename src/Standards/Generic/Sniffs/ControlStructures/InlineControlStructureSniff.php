@@ -21,10 +21,10 @@ class InlineControlStructureSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * If true, an error will be thrown; otherwise a warning.
@@ -41,16 +41,16 @@ class InlineControlStructureSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_IF,
-                T_ELSE,
-                T_ELSEIF,
-                T_FOREACH,
-                T_WHILE,
-                T_DO,
-                T_SWITCH,
-                T_FOR,
-               );
+        return [
+            T_IF,
+            T_ELSE,
+            T_ELSEIF,
+            T_FOREACH,
+            T_WHILE,
+            T_DO,
+            T_SWITCH,
+            T_FOR,
+        ];
 
     }//end register()
 

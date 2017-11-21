@@ -20,25 +20,25 @@ class LongConditionClosingCommentSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * The openers that we are interested in.
      *
      * @var integer[]
      */
-    private static $openers = array(
-                               T_SWITCH,
-                               T_IF,
-                               T_FOR,
-                               T_FOREACH,
-                               T_WHILE,
-                               T_TRY,
-                               T_CASE,
-                              );
+    private static $openers = [
+        T_SWITCH,
+        T_IF,
+        T_FOR,
+        T_FOREACH,
+        T_WHILE,
+        T_TRY,
+        T_CASE,
+    ];
 
     /**
      * The length that a code block must be before
@@ -65,7 +65,7 @@ class LongConditionClosingCommentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_CLOSE_CURLY_BRACKET);
+        return [T_CLOSE_CURLY_BRACKET];
 
     }//end register()
 
@@ -157,12 +157,12 @@ class LongConditionClosingCommentSniff implements Sniff
         $lineDifference = ($endBrace['line'] - $startBrace['line']);
 
         $expected = sprintf($this->commentFormat, $startCondition['content']);
-        $comment  = $phpcsFile->findNext(array(T_COMMENT), $stackPtr, null, false);
+        $comment  = $phpcsFile->findNext([T_COMMENT], $stackPtr, null, false);
 
         if (($comment === false) || ($tokens[$comment]['line'] !== $endBrace['line'])) {
             if ($lineDifference >= $this->lineLimit) {
                 $error = 'End comment for long condition not found; expected "%s"';
-                $data  = array($expected);
+                $data  = [$expected];
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Missing', $data);
 
                 if ($fix === true) {
@@ -180,17 +180,17 @@ class LongConditionClosingCommentSniff implements Sniff
 
         if (($comment - $stackPtr) !== 1) {
             $error = 'Space found before closing comment; expected "%s"';
-            $data  = array($expected);
+            $data  = [$expected];
             $phpcsFile->addError($error, $stackPtr, 'SpacingBefore', $data);
         }
 
         if (trim($tokens[$comment]['content']) !== $expected) {
             $found = trim($tokens[$comment]['content']);
             $error = 'Incorrect closing comment; expected "%s" but found "%s"';
-            $data  = array(
-                      $expected,
-                      $found,
-                     );
+            $data  = [
+                $expected,
+                $found,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Invalid', $data);
             if ($fix === true) {

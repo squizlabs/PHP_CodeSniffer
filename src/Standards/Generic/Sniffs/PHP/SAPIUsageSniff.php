@@ -23,7 +23,7 @@ class SAPIUsageSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STRING);
+        return [T_STRING];
 
     }//end register()
 
@@ -41,12 +41,12 @@ class SAPIUsageSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $ignore = array(
-                   T_DOUBLE_COLON    => true,
-                   T_OBJECT_OPERATOR => true,
-                   T_FUNCTION        => true,
-                   T_CONST           => true,
-                  );
+        $ignore = [
+            T_DOUBLE_COLON    => true,
+            T_OBJECT_OPERATOR => true,
+            T_FUNCTION        => true,
+            T_CONST           => true,
+        ];
 
         $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if (isset($ignore[$tokens[$prevToken]['code']]) === true) {

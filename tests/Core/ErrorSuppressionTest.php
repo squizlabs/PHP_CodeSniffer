@@ -26,8 +26,8 @@ class ErrorSuppressionTest extends TestCase
     public function testSuppressError()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
+        $config->standards = ['Generic'];
+        $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
 
         $ruleset = new Ruleset($config);
 
@@ -122,8 +122,8 @@ class ErrorSuppressionTest extends TestCase
     public function testSuppressSomeErrors()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
+        $config->standards = ['Generic'];
+        $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
 
         $ruleset = new Ruleset($config);
 
@@ -188,8 +188,8 @@ class ErrorSuppressionTest extends TestCase
     public function testSuppressWarning()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array('Generic.Commenting.Todo');
+        $config->standards = ['Generic'];
+        $config->sniffs    = ['Generic.Commenting.Todo'];
 
         $ruleset = new Ruleset($config);
 
@@ -254,8 +254,8 @@ class ErrorSuppressionTest extends TestCase
     public function testSuppressLine()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
+        $config->standards = ['Generic'];
+        $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
 
         $ruleset = new Ruleset($config);
 
@@ -320,8 +320,8 @@ class ErrorSuppressionTest extends TestCase
     public function testNestedSuppressLine()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array('Generic.PHP.LowerCaseConstant');
+        $config->standards = ['Generic'];
+        $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
 
         $ruleset = new Ruleset($config);
 
@@ -377,7 +377,7 @@ class ErrorSuppressionTest extends TestCase
     {
         return;
         $phpcs = new PHP_CodeSniffer();
-        $phpcs->initStandard('PEAR', array('PEAR.NamingConventions.ValidVariableName'));
+        $phpcs->initStandard('PEAR', ['PEAR.NamingConventions.ValidVariableName']);
 
         // Process without suppression.
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'function myFunction() {'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
@@ -438,8 +438,8 @@ class ErrorSuppressionTest extends TestCase
     public function testSuppressFile()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array('Generic.Commenting.Todo');
+        $config->standards = ['Generic'];
+        $config->sniffs    = ['Generic.Commenting.Todo'];
 
         $ruleset = new Ruleset($config);
 
@@ -554,11 +554,11 @@ class ErrorSuppressionTest extends TestCase
     public function testDisableSelected()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array(
-                              'Generic.PHP.LowerCaseConstant',
-                              'Generic.Commenting.Todo',
-                             );
+        $config->standards = ['Generic'];
+        $config->sniffs    = [
+            'Generic.PHP.LowerCaseConstant',
+            'Generic.Commenting.Todo',
+        ];
 
         $ruleset = new Ruleset($config);
 
@@ -643,11 +643,11 @@ class ErrorSuppressionTest extends TestCase
     public function testEnableSelected()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array(
-                              'Generic.PHP.LowerCaseConstant',
-                              'Generic.Commenting.Todo',
-                             );
+        $config->standards = ['Generic'];
+        $config->sniffs    = [
+            'Generic.PHP.LowerCaseConstant',
+            'Generic.Commenting.Todo',
+        ];
 
         $ruleset = new Ruleset($config);
 
@@ -732,11 +732,11 @@ class ErrorSuppressionTest extends TestCase
     public function testIgnoreSelected()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array(
-                              'Generic.PHP.LowerCaseConstant',
-                              'Generic.Commenting.Todo',
-                             );
+        $config->standards = ['Generic'];
+        $config->sniffs    = [
+            'Generic.PHP.LowerCaseConstant',
+            'Generic.Commenting.Todo',
+        ];
 
         $ruleset = new Ruleset($config);
 
@@ -835,11 +835,11 @@ class ErrorSuppressionTest extends TestCase
     public function testCommenting()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
-        $config->sniffs    = array(
-                              'Generic.PHP.LowerCaseConstant',
-                              'Generic.Commenting.Todo',
-                             );
+        $config->standards = ['Generic'];
+        $config->sniffs    = [
+            'Generic.PHP.LowerCaseConstant',
+            'Generic.Commenting.Todo',
+        ];
 
         $ruleset = new Ruleset($config);
 

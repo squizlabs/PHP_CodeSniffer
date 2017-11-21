@@ -25,7 +25,7 @@ class NoSilencedErrorsUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -40,7 +40,7 @@ class NoSilencedErrorsUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(5 => 1);
+        return [5 => 1];
 
     }//end getWarningList()
 

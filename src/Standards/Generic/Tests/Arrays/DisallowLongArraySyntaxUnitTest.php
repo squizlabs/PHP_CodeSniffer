@@ -25,14 +25,14 @@ class DisallowLongArraySyntaxUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2  => 1,
-                4  => 1,
-                6  => 1,
-                7  => 1,
-                12 => 1,
-                13 => 1,
-               );
+        return [
+            2  => 1,
+            4  => 1,
+            6  => 1,
+            7  => 1,
+            12 => 1,
+            13 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -47,7 +47,7 @@ class DisallowLongArraySyntaxUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

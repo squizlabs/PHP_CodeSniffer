@@ -51,11 +51,11 @@ class DisallowAlternativePHPTagsSniff implements Sniff
             $this->aspTags = (boolean) ini_get('asp_tags');
         }
 
-        return array(
-                T_OPEN_TAG,
-                T_OPEN_TAG_WITH_ECHO,
-                T_INLINE_HTML,
-               );
+        return [
+            T_OPEN_TAG,
+            T_OPEN_TAG_WITH_ECHO,
+            T_INLINE_HTML,
+        ];
 
     }//end register()
 
@@ -91,7 +91,7 @@ class DisallowAlternativePHPTagsSniff implements Sniff
             }
 
             if (isset($error, $closer, $errorCode) === true) {
-                $data = array($content);
+                $data = [$content];
 
                 if ($closer === false) {
                     $phpcsFile->addError($error, $stackPtr, $errorCode, $data);
@@ -110,11 +110,11 @@ class DisallowAlternativePHPTagsSniff implements Sniff
             $error   = 'ASP style opening tag used with echo; expected "<?php echo %s ..." but found "%s %s ..."';
             $nextVar = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
             $snippet = $this->getSnippet($tokens[$nextVar]['content']);
-            $data    = array(
-                        $snippet,
-                        $content,
-                        $snippet,
-                       );
+            $data    = [
+                $snippet,
+                $content,
+                $snippet,
+            ];
 
             $closer = $this->findClosingTag($phpcsFile, $tokens, $stackPtr, '%>');
 
@@ -137,7 +137,7 @@ class DisallowAlternativePHPTagsSniff implements Sniff
         ) {
             $error   = 'Script style opening tag used; expected "<?php" but found "%s"';
             $snippet = $this->getSnippet($content, $match[1]);
-            $data    = array($match[1].$snippet);
+            $data    = [$match[1].$snippet];
 
             $phpcsFile->addError($error, $stackPtr, 'ScriptOpenTagFound', $data);
             return;
@@ -147,13 +147,13 @@ class DisallowAlternativePHPTagsSniff implements Sniff
             if (strpos($content, '<%=') !== false) {
                 $error   = 'Possible use of ASP style short opening tags detected; found: %s';
                 $snippet = $this->getSnippet($content, '<%=');
-                $data    = array('<%='.$snippet);
+                $data    = ['<%='.$snippet];
 
                 $phpcsFile->addWarning($error, $stackPtr, 'MaybeASPShortOpenTagFound', $data);
             } else if (strpos($content, '<%') !== false) {
                 $error   = 'Possible use of ASP style opening tags detected; found: %s';
                 $snippet = $this->getSnippet($content, '<%');
-                $data    = array('<%'.$snippet);
+                $data    = ['<%'.$snippet];
 
                 $phpcsFile->addWarning($error, $stackPtr, 'MaybeASPOpenTagFound', $data);
             }

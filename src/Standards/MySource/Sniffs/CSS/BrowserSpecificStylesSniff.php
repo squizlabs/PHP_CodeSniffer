@@ -20,7 +20,7 @@ class BrowserSpecificStylesSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
     /**
      * A list of specific stylesheet suffixes we allow.
@@ -31,13 +31,13 @@ class BrowserSpecificStylesSniff implements Sniff
      *
      * @var array
      */
-    protected $specificStylesheets = array(
-                                      'moz'    => true,
-                                      'ie'     => true,
-                                      'ie7'    => true,
-                                      'ie8'    => true,
-                                      'webkit' => true,
-                                     );
+    protected $specificStylesheets = [
+        'moz'    => true,
+        'ie'     => true,
+        'ie7'    => true,
+        'ie8'    => true,
+        'webkit' => true,
+    ];
 
 
     /**
@@ -47,7 +47,7 @@ class BrowserSpecificStylesSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STYLE);
+        return [T_STYLE];
 
     }//end register()
 

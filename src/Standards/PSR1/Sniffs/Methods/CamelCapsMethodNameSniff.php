@@ -49,7 +49,7 @@ class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
         if ($testName !== '' &&  Common::isCamelCaps($testName, false, true, false) === false) {
             $error     = 'Method name "%s" is not in camel caps format';
             $className = $phpcsFile->getDeclarationName($currScope);
-            $errorData = array($className.'::'.$methodName);
+            $errorData = [$className.'::'.$methodName];
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
             $phpcsFile->recordMetric($stackPtr, 'CamelCase method name', 'no');
         } else {

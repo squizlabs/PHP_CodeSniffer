@@ -20,7 +20,7 @@ class IndentationSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
     /**
      * The number of spaces code should be indented.
@@ -37,7 +37,7 @@ class IndentationSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -118,10 +118,10 @@ class IndentationSniff implements Sniff
                 }
             } else if ($foundIndent !== $expectedIndent) {
                 $error = 'Line indented incorrectly; expected %s spaces, found %s';
-                $data  = array(
-                          $expectedIndent,
-                          $foundIndent,
-                         );
+                $data  = [
+                    $expectedIndent,
+                    $foundIndent,
+                ];
 
                 $fix = $phpcsFile->addFixableError($error, $i, 'Incorrect', $data);
                 if ($fix === true) {

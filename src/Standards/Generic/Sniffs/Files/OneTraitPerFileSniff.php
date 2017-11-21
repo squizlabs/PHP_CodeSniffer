@@ -23,7 +23,7 @@ class OneTraitPerFileSniff implements Sniff
      */
     public function register()
     {
-        return array(T_TRAIT);
+        return [T_TRAIT];
 
     }//end register()
 

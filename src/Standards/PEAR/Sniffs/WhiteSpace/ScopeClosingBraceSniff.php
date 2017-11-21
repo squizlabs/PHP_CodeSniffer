@@ -94,11 +94,11 @@ class ScopeClosingBraceSniff implements Sniff
 
         // Check that the closing brace is on it's own line.
         $lastContent = $phpcsFile->findPrevious(
-            array(
-             T_WHITESPACE,
-             T_INLINE_HTML,
-             T_OPEN_TAG,
-            ),
+            [
+                T_WHITESPACE,
+                T_INLINE_HTML,
+                T_OPEN_TAG,
+            ],
             ($scopeEnd - 1),
             $scopeStart,
             true
@@ -145,20 +145,20 @@ class ScopeClosingBraceSniff implements Sniff
             $expectedIndent = ($startColumn + $this->indent - 1);
             if ($braceIndent !== $expectedIndent) {
                 $error = 'Case breaking statement indented incorrectly; expected %s spaces, found %s';
-                $data  = array(
-                          $expectedIndent,
-                          $braceIndent,
-                         );
+                $data  = [
+                    $expectedIndent,
+                    $braceIndent,
+                ];
                 $fix   = $phpcsFile->addFixableError($error, $scopeEnd, 'BreakIndent', $data);
             }
         } else {
             $expectedIndent = max(0, ($startColumn - 1));
             if ($braceIndent !== $expectedIndent) {
                 $error = 'Closing brace indented incorrectly; expected %s spaces, found %s';
-                $data  = array(
-                          $expectedIndent,
-                          $braceIndent,
-                         );
+                $data  = [
+                    $expectedIndent,
+                    $braceIndent,
+                ];
                 $fix   = $phpcsFile->addFixableError($error, $scopeEnd, 'Indent', $data);
             }
         }//end if

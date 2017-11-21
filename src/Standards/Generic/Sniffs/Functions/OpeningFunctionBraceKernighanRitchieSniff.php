@@ -39,10 +39,10 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_FUNCTION,
-                T_CLOSURE,
-               );
+        return [
+            T_FUNCTION,
+            T_CLOSURE,
+        ];
 
     }//end register()
 
@@ -156,7 +156,7 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
 
         if ($length !== 1) {
             $error = 'Expected 1 space before opening brace; found %s';
-            $data  = array($length);
+            $data  = [$length];
             $fix   = $phpcsFile->addFixableError($error, $closeBracket, 'SpaceBeforeBrace', $data);
             if ($fix === true) {
                 if ($length === 0 || $length === '\t') {

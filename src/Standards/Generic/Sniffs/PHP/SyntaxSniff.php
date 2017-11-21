@@ -32,7 +32,7 @@ class SyntaxSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -68,7 +68,7 @@ class SyntaxSniff implements Sniff
         }
 
         $output  = shell_exec($cmd);
-        $matches = array();
+        $matches = [];
         if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/m', trim($output), $matches) === 1) {
             $error = trim($matches[1]);
             $line  = (int) $matches[2];

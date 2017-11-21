@@ -20,7 +20,7 @@ class EmptyStyleDefinitionSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
 
     /**
@@ -30,7 +30,7 @@ class EmptyStyleDefinitionSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STYLE);
+        return [T_STYLE];
 
     }//end register()
 
@@ -47,7 +47,7 @@ class EmptyStyleDefinitionSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $next   = $phpcsFile->findNext(array(T_WHITESPACE, T_COLON), ($stackPtr + 1), null, true);
+        $next   = $phpcsFile->findNext([T_WHITESPACE, T_COLON], ($stackPtr + 1), null, true);
 
         if ($next === false || $tokens[$next]['code'] === T_SEMICOLON || $tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
             $error = 'Style definition is empty';

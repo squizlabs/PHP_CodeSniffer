@@ -20,7 +20,7 @@ class DuplicateClassNameSniff implements Sniff
      *
      * @var array
      */
-    protected $foundClasses = array();
+    protected $foundClasses = [];
 
 
     /**
@@ -30,7 +30,7 @@ class DuplicateClassNameSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -49,12 +49,12 @@ class DuplicateClassNameSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         $namespace  = '';
-        $findTokens = array(
-                       T_CLASS,
-                       T_INTERFACE,
-                       T_NAMESPACE,
-                       T_CLOSE_TAG,
-                      );
+        $findTokens = [
+            T_CLASS,
+            T_INTERFACE,
+            T_NAMESPACE,
+            T_CLOSE_TAG,
+        ];
 
         $stackPtr = $phpcsFile->findNext($findTokens, ($stackPtr + 1));
         while ($stackPtr !== false) {
@@ -67,11 +67,11 @@ class DuplicateClassNameSniff implements Sniff
             // Keep track of what namespace we are in.
             if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
                 $nsEnd = $phpcsFile->findNext(
-                    array(
-                     T_NS_SEPARATOR,
-                     T_STRING,
-                     T_WHITESPACE,
-                    ),
+                    [
+                        T_NS_SEPARATOR,
+                        T_STRING,
+                        T_WHITESPACE,
+                    ],
                     ($stackPtr + 1),
                     null,
                     true
@@ -92,18 +92,18 @@ class DuplicateClassNameSniff implements Sniff
                     $file  = $this->foundClasses[$compareName]['file'];
                     $line  = $this->foundClasses[$compareName]['line'];
                     $error = 'Duplicate %s name "%s" found; first defined in %s on line %s';
-                    $data  = array(
-                              $type,
-                              $name,
-                              $file,
-                              $line,
-                             );
+                    $data  = [
+                        $type,
+                        $name,
+                        $file,
+                        $line,
+                    ];
                     $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
                 } else {
-                    $this->foundClasses[$compareName] = array(
-                                                         'file' => $phpcsFile->getFilename(),
-                                                         'line' => $tokens[$stackPtr]['line'],
-                                                        );
+                    $this->foundClasses[$compareName] = [
+                        'file' => $phpcsFile->getFilename(),
+                        'line' => $tokens[$stackPtr]['line'],
+                    ];
                 }
             }//end if
 

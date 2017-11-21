@@ -31,10 +31,10 @@ class BlockCommentSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_COMMENT,
-                T_DOC_COMMENT_OPEN_TAG,
-               );
+        return [
+            T_COMMENT,
+            T_DOC_COMMENT_OPEN_TAG,
+        ];
 
     }//end register()
 
@@ -70,20 +70,20 @@ class BlockCommentSniff implements Sniff
         // We are only interested in inline doc block comments.
         if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_OPEN_TAG) {
             $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
-            $ignore    = array(
-                          T_CLASS     => true,
-                          T_INTERFACE => true,
-                          T_TRAIT     => true,
-                          T_FUNCTION  => true,
-                          T_PUBLIC    => true,
-                          T_PRIVATE   => true,
-                          T_FINAL     => true,
-                          T_PROTECTED => true,
-                          T_STATIC    => true,
-                          T_ABSTRACT  => true,
-                          T_CONST     => true,
-                          T_VAR       => true,
-                         );
+            $ignore    = [
+                T_CLASS     => true,
+                T_INTERFACE => true,
+                T_TRAIT     => true,
+                T_FUNCTION  => true,
+                T_PUBLIC    => true,
+                T_PRIVATE   => true,
+                T_FINAL     => true,
+                T_PROTECTED => true,
+                T_STATIC    => true,
+                T_ABSTRACT  => true,
+                T_CONST     => true,
+                T_VAR       => true,
+            ];
             if (isset($ignore[$tokens[$nextToken]['code']]) === true) {
                 return;
             }
@@ -111,7 +111,7 @@ class BlockCommentSniff implements Sniff
             return;
         }//end if
 
-        $commentLines  = array($stackPtr);
+        $commentLines  = [$stackPtr];
         $nextComment   = $stackPtr;
         $lastLine      = $tokens[$stackPtr]['line'];
         $commentString = $tokens[$stackPtr]['content'];
@@ -212,10 +212,10 @@ class BlockCommentSniff implements Sniff
                     $expected .= 's';
                 }
 
-                $data = array(
-                         $expected,
-                         $leadingSpace,
-                        );
+                $data = [
+                    $expected,
+                    $leadingSpace,
+                ];
 
                 $error = 'First line of comment not aligned correctly; expected %s but found %s';
                 $fix   = $phpcsFile->addFixableError($error, $commentLines[1], 'FirstLineIndent', $data);
@@ -263,10 +263,10 @@ class BlockCommentSniff implements Sniff
                     $expected .= 's';
                 }
 
-                $data = array(
-                         $expected,
-                         $leadingSpace,
-                        );
+                $data = [
+                    $expected,
+                    $leadingSpace,
+                ];
 
                 $error = 'Comment line indented incorrectly; expected at least %s but found %s';
                 $fix   = $phpcsFile->addFixableError($error, $line, 'LineIndent', $data);
@@ -303,10 +303,10 @@ class BlockCommentSniff implements Sniff
                     $expected .= ' spaces';
                 }
 
-                $data = array(
-                         $expected,
-                         $leadingSpace,
-                        );
+                $data = [
+                    $expected,
+                    $leadingSpace,
+                ];
 
                 $error = 'Last line of comment aligned incorrectly; expected %s but found %s';
                 $phpcsFile->addError($error, $commentLines[$lastIndex], 'LastLineIndent', $data);

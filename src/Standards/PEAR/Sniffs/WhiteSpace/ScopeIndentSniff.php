@@ -19,6 +19,6 @@ class ScopeIndentSniff extends GenericScopeIndentSniff
      *
      * @var int[]
      */
-    protected $nonIndentingScopes = array(T_SWITCH);
+    protected $nonIndentingScopes = [T_SWITCH];
 
 }//end class

@@ -25,7 +25,7 @@ class DisallowNewWidgetUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(4 => 1);
+        return [4 => 1];
 
     }//end getErrorList()
 
@@ -40,7 +40,7 @@ class DisallowNewWidgetUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

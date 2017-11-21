@@ -20,7 +20,7 @@ class OpacitySniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
 
     /**
@@ -30,7 +30,7 @@ class OpacitySniff implements Sniff
      */
     public function register()
     {
-        return array(T_STYLE);
+        return [T_STYLE];
 
     }//end register()
 
@@ -52,7 +52,7 @@ class OpacitySniff implements Sniff
             return;
         }
 
-        $next = $phpcsFile->findNext(array(T_COLON, T_WHITESPACE), ($stackPtr + 1), null, true);
+        $next = $phpcsFile->findNext([T_COLON, T_WHITESPACE], ($stackPtr + 1), null, true);
 
         if ($next === false
             || ($tokens[$next]['code'] !== T_DNUMBER
@@ -73,14 +73,14 @@ class OpacitySniff implements Sniff
                 $phpcsFile->addError($error, $next, 'DecimalPrecision');
             } else if ($value === '0.0' || $value === '1.0') {
                 $error = 'Opacity value does not require decimal point; use %s instead';
-                $data  = array($value{0});
+                $data  = [$value{0}];
                 $fix   = $phpcsFile->addFixableError($error, $next, 'PointNotRequired', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($next, $value{0});
                 }
             } else if ($value{0} === '.') {
                 $error = 'Opacity values must not start with a decimal point; use 0%s instead';
-                $data  = array($value);
+                $data  = [$value];
                 $fix   = $phpcsFile->addFixableError($error, $next, 'StartWithPoint', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($next, '0'.$value);

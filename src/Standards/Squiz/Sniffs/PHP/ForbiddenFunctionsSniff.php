@@ -22,12 +22,12 @@ class ForbiddenFunctionsSniff extends GenericForbiddenFunctionsSniff
      *
      * @var array<string, string|null>
      */
-    public $forbiddenFunctions = array(
-                                  'sizeof'          => 'count',
-                                  'delete'          => 'unset',
-                                  'print'           => 'echo',
-                                  'is_null'         => null,
-                                  'create_function' => null,
-                                 );
+    public $forbiddenFunctions = [
+        'sizeof'          => 'count',
+        'delete'          => 'unset',
+        'print'           => 'echo',
+        'is_null'         => null,
+        'create_function' => null,
+    ];
 
 }//end class

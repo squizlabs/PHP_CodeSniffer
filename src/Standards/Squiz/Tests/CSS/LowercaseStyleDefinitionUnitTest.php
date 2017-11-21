@@ -25,12 +25,12 @@ class LowercaseStyleDefinitionUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2  => 1,
-                3  => 1,
-                5  => 2,
-                11 => 1,
-               );
+        return [
+            2  => 1,
+            3  => 1,
+            5  => 2,
+            11 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -45,7 +45,7 @@ class LowercaseStyleDefinitionUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

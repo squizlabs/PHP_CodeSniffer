@@ -29,53 +29,53 @@ class ComparisonOperatorUsageUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'ComparisonOperatorUsageUnitTest.inc':
-            return array(
-                    6   => 1,
-                    7   => 1,
-                    10  => 1,
-                    11  => 1,
-                    18  => 1,
-                    19  => 1,
-                    22  => 1,
-                    23  => 1,
-                    29  => 2,
-                    32  => 2,
-                    38  => 4,
-                    47  => 2,
-                    69  => 1,
-                    72  => 1,
-                    75  => 1,
-                    78  => 1,
-                    80  => 1,
-                    82  => 1,
-                    83  => 1,
-                    89  => 1,
-                    92  => 1,
-                    100 => 1,
-                    106 => 1,
-                    112 => 1,
-                    123 => 1,
-                    127 => 1,
-                    131 => 1,
-                   );
+            return [
+                6   => 1,
+                7   => 1,
+                10  => 1,
+                11  => 1,
+                18  => 1,
+                19  => 1,
+                22  => 1,
+                23  => 1,
+                29  => 2,
+                32  => 2,
+                38  => 4,
+                47  => 2,
+                69  => 1,
+                72  => 1,
+                75  => 1,
+                78  => 1,
+                80  => 1,
+                82  => 1,
+                83  => 1,
+                89  => 1,
+                92  => 1,
+                100 => 1,
+                106 => 1,
+                112 => 1,
+                123 => 1,
+                127 => 1,
+                131 => 1,
+            ];
             break;
         case 'ComparisonOperatorUsageUnitTest.js':
-            return array(
-                    5  => 1,
-                    6  => 1,
-                    17 => 1,
-                    18 => 1,
-                    28 => 2,
-                    40 => 1,
-                    47 => 1,
-                    52 => 1,
-                    63 => 1,
-                    67 => 1,
-                    71 => 1,
-                   );
+            return [
+                5  => 1,
+                6  => 1,
+                17 => 1,
+                18 => 1,
+                28 => 2,
+                40 => 1,
+                47 => 1,
+                52 => 1,
+                63 => 1,
+                67 => 1,
+                71 => 1,
+            ];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -92,7 +92,7 @@ class ComparisonOperatorUsageUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

@@ -37,14 +37,14 @@ abstract class AbstractScopeSniff implements Sniff
      *
      * @var array
      */
-    private $tokens = array();
+    private $tokens = [];
 
     /**
      * The type of scope opener tokens that this test wishes to listen to.
      *
      * @var string
      */
-    private $scopeTokens = array();
+    private $scopeTokens = [];
 
     /**
      * True if this test should fire on tokens outside of the scope.

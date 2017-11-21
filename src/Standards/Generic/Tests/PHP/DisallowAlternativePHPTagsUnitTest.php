@@ -24,7 +24,7 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
      */
     protected function getTestFiles($testFileBase)
     {
-        $testFiles = array($testFileBase.'1.inc');
+        $testFiles = [$testFileBase.'1.inc'];
 
         $aspTags = false;
         if (PHP_VERSION_ID < 70000) {
@@ -66,21 +66,21 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowAlternativePHPTagsUnitTest.1.inc':
-            return array(
-                    4  => 1,
-                    7  => 1,
-                    8  => 1,
-                    11 => 1,
-                   );
+            return [
+                4  => 1,
+                7  => 1,
+                8  => 1,
+                11 => 1,
+            ];
         case 'DisallowAlternativePHPTagsUnitTest.2.inc':
-            return array(
-                    2 => 1,
-                    3 => 1,
-                    4 => 1,
-                    5 => 1,
-                   );
+            return [
+                2 => 1,
+                3 => 1,
+                4 => 1,
+                5 => 1,
+            ];
         default:
-            return array();
+            return [];
         }//end switch
 
     }//end getErrorList()
@@ -96,7 +96,7 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

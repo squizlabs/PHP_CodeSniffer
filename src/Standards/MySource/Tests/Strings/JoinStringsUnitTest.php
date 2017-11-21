@@ -28,18 +28,18 @@ class JoinStringsUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='JoinStringsUnitTest.js')
     {
         if ($testFile !== 'JoinStringsUnitTest.js') {
-            return array();
+            return [];
         }
 
-        return array(
-                6  => 1,
-                7  => 1,
-                8  => 2,
-                9  => 2,
-                10 => 2,
-                12 => 2,
-                15 => 1,
-               );
+        return [
+            6  => 1,
+            7  => 1,
+            8  => 2,
+            9  => 2,
+            10 => 2,
+            12 => 2,
+            15 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -54,7 +54,7 @@ class JoinStringsUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

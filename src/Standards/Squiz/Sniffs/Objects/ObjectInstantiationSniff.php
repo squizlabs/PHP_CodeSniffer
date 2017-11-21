@@ -24,7 +24,7 @@ class ObjectInstantiationSniff implements Sniff
      */
     public function register()
     {
-        return array(T_NEW);
+        return [T_NEW];
 
     }//end register()
 
@@ -47,14 +47,14 @@ class ObjectInstantiationSniff implements Sniff
 
         $prev = $phpcsFile->findPrevious($allowedTokens, ($stackPtr - 1), null, true);
 
-        $allowedTokens = array(
-                          T_EQUAL        => true,
-                          T_DOUBLE_ARROW => true,
-                          T_THROW        => true,
-                          T_RETURN       => true,
-                          T_INLINE_THEN  => true,
-                          T_INLINE_ELSE  => true,
-                         );
+        $allowedTokens = [
+            T_EQUAL        => true,
+            T_DOUBLE_ARROW => true,
+            T_THROW        => true,
+            T_RETURN       => true,
+            T_INLINE_THEN  => true,
+            T_INLINE_ELSE  => true,
+        ];
 
         if (isset($allowedTokens[$tokens[$prev]['code']]) === false) {
             $error = 'New objects must be assigned to a variable';

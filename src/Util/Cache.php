@@ -29,7 +29,7 @@ class Cache
      *
      * @var array<string, mixed>
      */
-    private static $cache = array();
+    private static $cache = [];
 
 
     /**
@@ -144,14 +144,14 @@ class Cache
         // the results of a run to create a new hash. This hash will be used
         // in the cache file name.
         $rulesetHash = md5(var_export($ruleset->ignorePatterns, true).var_export($ruleset->includePatterns, true));
-        $configData  = array(
-                        'tabWidth'     => $config->tabWidth,
-                        'encoding'     => $config->encoding,
-                        'recordErrors' => $config->recordErrors,
-                        'annotations'  => $config->annotations,
-                        'codeHash'     => $codeHash,
-                        'rulesetHash'  => $rulesetHash,
-                       );
+        $configData  = [
+            'tabWidth'     => $config->tabWidth,
+            'encoding'     => $config->encoding,
+            'recordErrors' => $config->recordErrors,
+            'annotations'  => $config->annotations,
+            'codeHash'     => $codeHash,
+            'rulesetHash'  => $rulesetHash,
+        ];
 
         $configString = implode(',', $configData);
         $cacheHash    = substr(sha1($configString), 0, 12);
@@ -177,7 +177,7 @@ class Cache
                 echo "\tChecking possible cache file paths".PHP_EOL;
             }
 
-            $paths = array();
+            $paths = [];
             foreach ($config->files as $file) {
                 $file = Common::realpath($file);
                 while ($file !== DIRECTORY_SEPARATOR) {
@@ -244,7 +244,7 @@ class Cache
 
             // Verify the contents of the cache file.
             if (self::$cache['config'] !== $configData) {
-                self::$cache = array();
+                self::$cache = [];
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo "\t* cache was invalid and has been cleared *".PHP_EOL;
                 }

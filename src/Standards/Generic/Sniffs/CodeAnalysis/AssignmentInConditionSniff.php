@@ -28,14 +28,14 @@ class AssignmentInConditionSniff implements Sniff
      *
      * @var array
      */
-    protected $assignmentTokens = array();
+    protected $assignmentTokens = [];
 
     /**
      * The tokens that indicate the start of a condition.
      *
      * @var array
      */
-    protected $conditionStartTokens = array();
+    protected $conditionStartTokens = [];
 
 
     /**
@@ -54,14 +54,14 @@ class AssignmentInConditionSniff implements Sniff
 
         $this->conditionStartTokens = $starters;
 
-        return array(
-                T_IF,
-                T_ELSEIF,
-                T_FOR,
-                T_SWITCH,
-                T_CASE,
-                T_WHILE,
-               );
+        return [
+            T_IF,
+            T_ELSEIF,
+            T_FOR,
+            T_SWITCH,
+            T_CASE,
+            T_WHILE,
+        ];
 
     }//end register()
 

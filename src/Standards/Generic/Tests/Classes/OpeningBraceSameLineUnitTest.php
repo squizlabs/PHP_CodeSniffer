@@ -26,19 +26,19 @@ class OpeningBraceSameLineUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
 
-        return array(
-                19 => 2,
-                23 => 1,
-                28 => 2,
-                34 => 1,
-                38 => 1,
-                41 => 1,
-                44 => 1,
-                47 => 1,
-                70 => 1,
-                79 => 1,
-                90 => 1,
-               );
+        return [
+            19 => 2,
+            23 => 1,
+            28 => 2,
+            34 => 1,
+            38 => 1,
+            41 => 1,
+            44 => 1,
+            47 => 1,
+            70 => 1,
+            79 => 1,
+            90 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -53,7 +53,7 @@ class OpeningBraceSameLineUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(51 => 1);
+        return [51 => 1];
 
     }//end getWarningList()
 

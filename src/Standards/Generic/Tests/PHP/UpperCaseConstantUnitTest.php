@@ -25,22 +25,22 @@ class UpperCaseConstantUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                7  => 1,
-                10 => 1,
-                15 => 1,
-                16 => 1,
-                23 => 1,
-                26 => 1,
-                31 => 1,
-                32 => 1,
-                39 => 1,
-                42 => 1,
-                47 => 1,
-                48 => 1,
-                70 => 1,
-                71 => 1,
-               );
+        return [
+            7  => 1,
+            10 => 1,
+            15 => 1,
+            16 => 1,
+            23 => 1,
+            26 => 1,
+            31 => 1,
+            32 => 1,
+            39 => 1,
+            42 => 1,
+            47 => 1,
+            48 => 1,
+            70 => 1,
+            71 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -55,7 +55,7 @@ class UpperCaseConstantUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

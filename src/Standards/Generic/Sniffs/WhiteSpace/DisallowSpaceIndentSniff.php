@@ -20,11 +20,11 @@ class DisallowSpaceIndentSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                   'CSS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+        'CSS',
+    ];
 
     /**
      * The --tab-width CLI value that is being used.
@@ -41,7 +41,7 @@ class DisallowSpaceIndentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -68,11 +68,11 @@ class DisallowSpaceIndentSniff implements Sniff
             }
         }
 
-        $checkTokens = array(
-                        T_WHITESPACE             => true,
-                        T_INLINE_HTML            => true,
-                        T_DOC_COMMENT_WHITESPACE => true,
-                       );
+        $checkTokens = [
+            T_WHITESPACE             => true,
+            T_INLINE_HTML            => true,
+            T_DOC_COMMENT_WHITESPACE => true,
+        ];
 
         $tokens = $phpcsFile->getTokens();
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {

@@ -21,10 +21,10 @@ class SemicolonSpacingSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
 
     /**
@@ -34,7 +34,7 @@ class SemicolonSpacingSniff implements Sniff
      */
     public function register()
     {
-        return array(T_SEMICOLON);
+        return [T_SEMICOLON];
 
     }//end register()
 
@@ -84,10 +84,10 @@ class SemicolonSpacingSniff implements Sniff
         $expected = $tokens[$nonSpace]['content'].';';
         $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).';';
         $error    = 'Space found before semicolon; expected "%s" but found "%s"';
-        $data     = array(
-                     $expected,
-                     $found,
-                    );
+        $data     = [
+            $expected,
+            $found,
+        ];
 
         $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
         if ($fix === true) {

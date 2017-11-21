@@ -20,17 +20,17 @@ class Common
      *
      * @var string[]
      */
-    public static $allowedTypes = array(
-                                   'array',
-                                   'boolean',
-                                   'float',
-                                   'integer',
-                                   'mixed',
-                                   'object',
-                                   'string',
-                                   'resource',
-                                   'callable',
-                                  );
+    public static $allowedTypes = [
+        'array',
+        'boolean',
+        'float',
+        'integer',
+        'mixed',
+        'object',
+        'string',
+        'resource',
+        'callable',
+    ];
 
 
     /**
@@ -162,7 +162,7 @@ class Common
      *
      * @return string
      */
-    public static function prepareForOutput($content, $exclude=array())
+    public static function prepareForOutput($content, $exclude=[])
     {
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             if (in_array("\r", $exclude) === false) {
@@ -361,7 +361,7 @@ class Common
             if (strpos($lowerVarType, 'array(') !== false) {
                 // Valid array declaration:
                 // array, array(type), array(type1 => type2).
-                $matches = array();
+                $matches = [];
                 $pattern = '/^array\(\s*([^\s^=^>]*)(\s*=>\s*(.*))?\s*\)/i';
                 if (preg_match($pattern, $varType, $matches) !== 0) {
                     $type1 = '';

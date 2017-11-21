@@ -25,7 +25,7 @@ class DiscourageGotoUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -40,12 +40,12 @@ class DiscourageGotoUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                3  => 1,
-                6  => 1,
-                11 => 1,
-                16 => 1,
-               );
+        return [
+            3  => 1,
+            6  => 1,
+            11 => 1,
+            16 => 1,
+        ];
 
     }//end getWarningList()
 
