@@ -41,7 +41,7 @@ abstract class AbstractArraySniff implements Sniff
      *
      * @return void
      */
-    final public function process(File $phpcsFile, $stackPtr)
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
