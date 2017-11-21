@@ -126,6 +126,16 @@ class File
     protected $metrics = [];
 
     /**
+     * The metrics recorded for each token.
+     *
+     * Stops the same metric being recorded for the same token twice.
+     *
+     * @var array
+     * @see getMetrics()
+     */
+    private $metricTokens = [];
+
+    /**
      * The total number of errors raised.
      *
      * @var integer
@@ -601,6 +611,7 @@ class File
         $this->listenerTimes = null;
         $this->content       = null;
         $this->tokens        = null;
+        $this->metricTokens  = null;
         $this->tokenizer     = null;
         $this->fixer         = null;
         $this->config        = null;
@@ -1006,7 +1017,9 @@ class File
     {
         if (isset($this->metrics[$metric]) === false) {
             $this->metrics[$metric] = ['values' => [$value => 1]];
-        } else {
+            $this->metricTokens[$metric][$stackPtr] = true;
+        } else if (isset($this->metricTokens[$metric][$stackPtr]) === false) {
+            $this->metricTokens[$metric][$stackPtr] = true;
             if (isset($this->metrics[$metric]['values'][$value]) === false) {
                 $this->metrics[$metric]['values'][$value] = 1;
             } else {

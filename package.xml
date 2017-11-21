@@ -68,6 +68,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, STDIN files using fake file paths were excluded from checking
   - Ignore patterns are now checked on symlink target paths instead of symlink source paths
     -- Restores previous behaviour of this feature
+  - Metrics were being double counted when multiple sniffs were recording the same metrics
   - Added AbstractArraySniff to make it easier to create sniffs that check array formatting
     -- Allows for checking of single and multi line arrays easily
     -- Provides a parsed structure of the array including positions of keys, values, and double arrows
