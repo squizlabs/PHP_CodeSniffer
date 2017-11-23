@@ -100,6 +100,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1718 : Unclosed strings at EOF sometimes tokenized as T_WHITESPACE by the JS tokenizer
   - Fixed bug #1731 : Directory exclusions do not work as expected when a single file name is passed to phpcs
   - Fixed bug #1746 : Very large reports can sometimes become garbled when using the parallel option
+  - Fixed bug #1757 : Unknown type hint "object" in Squiz.Commenting.FunctionComment
  </notes>
  <contents>
   <dir name="/">

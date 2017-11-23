@@ -133,6 +133,13 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
             $errors[982] = 1;
         }
 
+        // Object type hints only work from PHP 7.2 onwards.
+        if (PHP_VERSION_ID >= 70200) {
+            $errors[627] = 2;
+        } else {
+            $errors[992] = 2;
+        }
+
         return $errors;
 
     }//end getErrorList()
