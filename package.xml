@@ -79,6 +79,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    -- Allows for the indent size to be set using an "indent" property of the sniff
   - Added Generic.PHP.DiscourageGoto to warn about the use of the GOTO language construct
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Generic.WhiteSpace.DisallowSpaceIndent now fixes space indents in mulit-line block comments
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.WhiteSpace.DisallowSpaceIndent now fixes mixed space/tab indents more accurately
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Commenting.FunctionComment now supports nullable type hints
   - Squiz.WhiteSpace.SemicolonSpacing now ignores semicolons used for empty statements inside FOR conditions
     -- Thanks to Juliette Reinders Folmer for the patch
