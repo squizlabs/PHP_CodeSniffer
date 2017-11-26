@@ -75,7 +75,7 @@ class DisallowSpaceIndentSniff implements Sniff
         ];
 
         $tokens = $phpcsFile->getTokens();
-        for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+        for ($i = 0; $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['column'] !== 1 || isset($checkTokens[$tokens[$i]['code']]) === false) {
                 continue;
             }
