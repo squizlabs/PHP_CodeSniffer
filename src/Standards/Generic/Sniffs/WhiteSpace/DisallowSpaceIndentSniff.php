@@ -72,6 +72,7 @@ class DisallowSpaceIndentSniff implements Sniff
             T_WHITESPACE             => true,
             T_INLINE_HTML            => true,
             T_DOC_COMMENT_WHITESPACE => true,
+            T_COMMENT                => true,
         ];
 
         $tokens = $phpcsFile->getTokens();
@@ -90,12 +91,21 @@ class DisallowSpaceIndentSniff implements Sniff
 
             $recordMetrics = true;
 
-            // If this is an inline HTML token, split the content into
-            // indentation whitespace and the actual HTML/text.
+            $expectedIndentSize = $tokens[$i]['length'];
+
+            // If this is an inline HTML token or a subsequent line of a multi-line comment,
+            // split the content into indentation whitespace and the actual HTML/text.
             $nonWhitespace = '';
-            if ($tokens[$i]['code'] === T_INLINE_HTML && preg_match('`^(\s*)(\S.*)`s', $content, $matches) > 0) {
+            if (($tokens[$i]['code'] === T_INLINE_HTML
+                || $tokens[$i]['code'] === T_COMMENT)
+                && preg_match('`^(\s*)(\S.*)`s', $content, $matches) > 0
+            ) {
                 if (isset($matches[1]) === true) {
                     $content = $matches[1];
+
+                    // Tabs are not replaced in content, so the "length" is wrong.
+                    $matches[1]         = str_replace("\t", str_repeat(' ', $this->tabWidth), $matches[1]);
+                    $expectedIndentSize = strlen($matches[1]);
                 }
 
                 if (isset($matches[2]) === true) {
@@ -110,17 +120,17 @@ class DisallowSpaceIndentSniff implements Sniff
 
                 // Don't record metrics for empty lines.
                 $recordMetrics = false;
-            }
+            }//end if
 
-            $hasSpaces = strpos($content, ' ');
-            $hasTabs   = strpos($content, "\t");
+            $foundSpaces = substr_count($content, ' ');
+            $foundTabs   = substr_count($content, "\t");
 
-            if ($hasSpaces === false && $hasTabs === false) {
+            if ($foundSpaces === 0 && $foundTabs === 0) {
                 // Empty line.
                 continue;
             }
 
-            if ($hasSpaces === false && $hasTabs !== false) {
+            if ($foundSpaces === 0 && $foundTabs > 0) {
                 // All ok, nothing to do.
                 if ($recordMetrics === true) {
                     $phpcsFile->recordMetric($i, 'Line indent', 'tabs');
@@ -129,8 +139,11 @@ class DisallowSpaceIndentSniff implements Sniff
                 continue;
             }
 
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE && $content === ' ') {
-                // Ignore file/class-level docblocks, especially for recording metrics.
+            if (($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE
+                || $tokens[$i]['code'] === T_COMMENT)
+                && $content === ' '
+            ) {
+                // Ignore all non-indented comments, especially for recording metrics.
                 continue;
             }
 
@@ -138,22 +151,23 @@ class DisallowSpaceIndentSniff implements Sniff
             // We just don't know yet whether they need to be replaced or
             // are precision indentation, nor whether they are correctly
             // placed at the end of the whitespace.
-            $trimmed        = str_replace(' ', '', $content);
-            $numSpaces      = (strlen($content) - strlen($trimmed));
-            $numTabs        = (int) floor($numSpaces / $this->tabWidth);
-            $tabAfterSpaces = strpos($content, "\t", $hasSpaces);
+            $tabAfterSpaces = strpos($content, "\t", strpos($content, ' '));
 
-            if ($hasTabs === false) {
+            // Calculate the expected tabs and spaces.
+            $expectedTabs   = (int) floor($expectedIndentSize / $this->tabWidth);
+            $expectedSpaces = ($expectedIndentSize % $this->tabWidth);
+
+            if ($foundTabs === 0) {
                 if ($recordMetrics === true) {
                     $phpcsFile->recordMetric($i, 'Line indent', 'spaces');
                 }
 
-                if ($numTabs === 0) {
+                if ($foundTabs === $expectedTabs && $foundSpaces === $expectedSpaces) {
                     // Ignore: precision indentation.
                     continue;
                 }
             } else {
-                if ($numTabs === 0) {
+                if ($foundTabs === $expectedTabs && $foundSpaces === $expectedSpaces) {
                     // Precision indentation.
                     if ($recordMetrics === true) {
                         if ($tabAfterSpaces !== false) {
@@ -176,10 +190,9 @@ class DisallowSpaceIndentSniff implements Sniff
             $error = 'Tabs must be used to indent lines; spaces are not allowed';
             $fix   = $phpcsFile->addFixableError($error, $i, 'SpacesUsed');
             if ($fix === true) {
-                $remaining = ($numSpaces % $this->tabWidth);
-                $padding   = str_repeat("\t", $numTabs);
-                $padding  .= str_repeat(' ', $remaining);
-                $phpcsFile->fixer->replaceToken($i, $trimmed.$padding.$nonWhitespace);
+                $padding  = str_repeat("\t", $expectedTabs);
+                $padding .= str_repeat(' ', $expectedSpaces);
+                $phpcsFile->fixer->replaceToken($i, $padding.$nonWhitespace);
             }
         }//end for
 

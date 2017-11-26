@@ -80,3 +80,39 @@ $x = 1;
 // Mixed spaces and tabs after comment.
     		   
 $x = 1;
+
+/*
+ * This multi-line comment should be fine and should be ignored for metrics.
+ */
+
+/*
+ This multi-line comment should be fine and should be ignored for metrics.
+
+ Another line.
+ */
+
+	/**
+	 * This PHP DocBlock is indented with tabs + one space; metrics should say tabs.
+	 *
+	 * @var int $x
+	 */
+
+	/*
+	 * This multi-line comment is indented with tabs + one space; metrics should say tabs.
+	 */
+
+    /**
+     * This PHP DocBlock is indented with spaces and should be fixed.
+     *
+     * @var int $x
+     */
+
+    /*
+     * This multi-line comment is indented with spaces and should be fixed.
+     */
+
+    /*
+     This multi-line comment is indented with spaces and should be fixed.
+
+     Another line.
+     */
