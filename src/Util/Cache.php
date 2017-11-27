@@ -50,8 +50,9 @@ class Cache
             echo PHP_EOL."\tGenerating loaded file list for code hash".PHP_EOL;
         }
 
-        $codeHash = '';
-        $classes  = array_keys(Autoload::getLoadedClasses());
+        $codeHashFiles = [];
+
+        $classes = array_keys(Autoload::getLoadedClasses());
         sort($classes);
 
         $installDir     = dirname(__DIR__);
@@ -72,7 +73,7 @@ class Cache
                 echo "\t\t=> internal sniff: $file".PHP_EOL;
             }
 
-            $codeHash .= md5_file($file);
+            $codeHashFiles[] = $file;
         }
 
         // Add the content of the used rulesets to the hash so that sniff setting
@@ -88,7 +89,7 @@ class Cache
                 echo "\t\t=> internal ruleset: $file".PHP_EOL;
             }
 
-            $codeHash .= md5_file($file);
+            $codeHashFiles[] = $file;
         }
 
         // Go through the core PHPCS code and add those files to the file
@@ -129,12 +130,19 @@ class Cache
             }
         );
 
-        $iterator = new \RecursiveIteratorIterator($filter);
+        $iterator  = new \RecursiveIteratorIterator($filter);
+        $coreFiles = [];
         foreach ($iterator as $file) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo "\t\t=> core file: $file".PHP_EOL;
             }
 
+            $codeHashFiles[] = $file->getPathname();
+        }
+
+        $codeHash = '';
+        sort($codeHashFiles);
+        foreach ($codeHashFiles as $file) {
             $codeHash .= md5_file($file);
         }
 
