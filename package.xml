@@ -106,6 +106,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The standard for PHP_CodeSniffer itself now enforces short array syntax
   - The standard for PHP_CodeSniffer itself now uses the Generic.Arrays/ArrayIndent sniff rules
   - Fixed bug #1462 : Error processing cyrillic strings in Tokenizer
+  - Fixed bug #1573 : Squiz.WhiteSpace.LanguageConstructSpacing does not properly check for tabs and newlines
+    -- Thanks to Michał Bundyra for the patch
   - Fixed bug #1590 : InlineControlStructure CBF issue while adding braces to an if thats returning a nested function
   - Fixed bug #1718 : Unclosed strings at EOF sometimes tokenized as T_WHITESPACE by the JS tokenizer
   - Fixed bug #1731 : Directory exclusions do not work as expected when a single file name is passed to phpcs
