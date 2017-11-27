@@ -72,6 +72,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for bash process substitution
     -- Thanks to Scott Dutton for the contribution
   - Files included in the cache file code hash are now sorted to aid in cache file reuse across servers
+  - Windows BAT files can now be used outside a PEAR install
+    -- You must have the path to PHP inside your PATH environment variable
+    -- Thanks to Joris Debonnet for the patch
   - Added AbstractArraySniff to make it easier to create sniffs that check array formatting
     -- Allows for checking of single and multi line arrays easily
     -- Provides a parsed structure of the array including positions of keys, values, and double arrows
