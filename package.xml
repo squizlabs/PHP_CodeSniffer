@@ -83,6 +83,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.WhiteSpace.DisallowSpaceIndent now fixes mixed space/tab indents more accurately
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.WhiteSpace.DisallowTabIndent now fixes tab indents in mulit-line block comments
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Commenting.FunctionComment now supports nullable type hints
   - Squiz.WhiteSpace.SemicolonSpacing now ignores semicolons used for empty statements inside FOR conditions
     -- Thanks to Juliette Reinders Folmer for the patch
