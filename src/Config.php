@@ -1531,9 +1531,9 @@ class Config
             }
 
             if ($path !== '') {
-                $configFile = dirname($path).'/CodeSniffer.conf';
+                $configFile = dirname($path).DIRECTORY_SEPARATOR.'CodeSniffer.conf';
             } else {
-                $configFile = dirname(__DIR__).'/CodeSniffer.conf';
+                $configFile = dirname(__DIR__).DIRECTORY_SEPARATOR.'CodeSniffer.conf';
                 if (is_file($configFile) === false
                     && strpos('@data_dir@', '@data_dir') === false
                 ) {
@@ -1608,9 +1608,9 @@ class Config
         }
 
         if ($path !== '') {
-            $configFile = dirname($path).'/CodeSniffer.conf';
+            $configFile = dirname($path).DIRECTORY_SEPARATOR.'CodeSniffer.conf';
         } else {
-            $configFile = dirname(__DIR__).'/CodeSniffer.conf';
+            $configFile = dirname(__DIR__).DIRECTORY_SEPARATOR.'CodeSniffer.conf';
             if (is_file($configFile) === false
                 && strpos('@data_dir@', '@data_dir') === false
             ) {
