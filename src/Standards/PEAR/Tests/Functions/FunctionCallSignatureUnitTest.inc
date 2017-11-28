@@ -379,3 +379,19 @@ function foo()
         }
     );
 }
+
+$deprecated_functions = [
+    'the_category_ID'
+       => function_call( // 7 spaces, not 8. This is the problem line.
+        $a,
+        $b
+    ),
+];
+
+$deprecated_functions = [
+    'the_category_ID'
+         => function_call( // 7 spaces, not 8. This is the problem line.
+        $a,
+        $b
+    ),
+];

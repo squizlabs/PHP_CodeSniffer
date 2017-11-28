@@ -98,7 +98,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Override the 'requiredSpacesBeforeColon' setting in a ruleset.xml file to change
     -- Default remains at 1
     -- Thanks to Nikola Kovacs for the patch
-  - PEAR.Functions.FunctionCallSignature now requires the function keyword to be indented to an exact tab stop
+  - PEAR.Functions.FunctionCallSignature now requires the function name to be indented to an exact tab stop
+    -- If the function name is not the start of the statement, the opening statement must be indented correctly instead
+    -- Added a new fixable error code PEAR.Functions.FunctionCallSignature.OpeningIndent for this error
   - The Squiz standard now ensures array keys are indented 4 spaces from the main statement
     -- Previously, this standard aligned keys 1 space from the start of the array keyword
   - The Squiz standard now ensures array end braces are aligned with the main statement
