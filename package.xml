@@ -85,13 +85,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the contribution
   - Improved fixer conflicts and syntax error handling for a number of sniffs
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.WhiteSpace.DisallowSpaceIndent now fixes space indents in mulit-line block comments
+  - Generic.WhiteSpace.DisallowSpaceIndent now fixes space indents in multi-line block comments
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.WhiteSpace.DisallowSpaceIndent now fixes mixed space/tab indents more accurately
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.WhiteSpace.DisallowTabIndent now fixes tab indents in mulit-line block comments
+  - Generic.WhiteSpace.DisallowTabIndent now fixes tab indents in multi-line block comments
     -- Thanks to Juliette Reinders Folmer for the patch
   - PEAR.Functions.FunctionDeclaration no longer errors when a function declaration is the first content in a JS file
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Functions.FunctionDeclarationArgumentSpacing is no longer confused about comments in function declarations
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.NonExecutableCode error messages now indicate which line the code block ending is on
     -- Makes it easier to identify where the code block exited or returned
