@@ -1228,6 +1228,13 @@ switch ($sContext) {
 	}
 }
 
+array_map(
+	static function ( $item ) {
+		echo $item;
+	},
+	$some_array
+);
+
 public function foo()
 {
 	$foo('some

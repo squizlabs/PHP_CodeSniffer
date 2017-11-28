@@ -782,13 +782,22 @@ class ScopeIndentSniff implements Sniff
                 }
             }//end if
 
-            // Method prefix indentation has to be exact or else if will break
+            // Method prefix indentation has to be exact or else it will break
             // the rest of the function declaration, and potentially future ones.
             if ($checkToken !== null
                 && isset(Tokens::$methodPrefixes[$tokens[$checkToken]['code']]) === true
                 && $tokens[($checkToken + 1)]['code'] !== T_DOUBLE_COLON
             ) {
-                $exact = true;
+                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($checkToken + 1), null, true);
+                if ($next === false || $tokens[$next]['code'] !== T_CLOSURE) {
+                    if ($this->debug === true) {
+                        $line = $tokens[$checkToken]['line'];
+                        $type = $tokens[$checkToken]['type'];
+                        echo "\t* method prefix ($type) found on line $line; indent set to exact *".PHP_EOL;
+                    }
+
+                    $exact = true;
+                }
             }
 
             // JS property indentation has to be exact or else if will break
