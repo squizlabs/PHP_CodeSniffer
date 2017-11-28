@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionDeclarationArgumentSpacingSniff implements Sniff
 {
@@ -203,7 +204,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
 
                 // Before we throw an error, make sure there is no type hint.
                 $comma     = $phpcsFile->findPrevious(T_COMMA, ($nextParam - 1));
-                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($comma + 1), null, true);
+                $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($comma + 1), null, true);
                 if ($phpcsFile->isReference($nextToken) === true) {
                     $nextToken++;
                 }
@@ -292,7 +293,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
 
                 // Before we throw an error, make sure there is no type hint.
                 $bracket   = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($nextParam - 1));
-                $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($bracket + 1), null, true);
+                $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($bracket + 1), null, true);
                 if ($phpcsFile->isReference($nextToken) === true) {
                     $nextToken++;
                 }
