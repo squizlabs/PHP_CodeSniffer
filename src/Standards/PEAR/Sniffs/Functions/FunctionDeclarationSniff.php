@@ -99,10 +99,14 @@ class FunctionDeclarationSniff implements Sniff
             }
         }//end if
 
-        // Must be one space before the opening parenthesis. For closures, this is
-        // enforced by the first check because there is no content between the keywords
+        // Must be no space before the opening parenthesis. For closures, this is
+        // enforced by the previous check because there is no content between the keywords
         // and the opening parenthesis.
-        if ($tokens[$stackPtr]['code'] === T_FUNCTION) {
+        // Unfinished closures are tokenized as T_FUNCTION however, and can be excluded
+        // by checking for the scope_opener.
+        if ($tokens[$stackPtr]['code'] === T_FUNCTION
+            && isset($tokens[$stackPtr]['scope_opener']) === true
+        ) {
             if ($tokens[($openBracket - 1)]['content'] === $phpcsFile->eolChar) {
                 $spaces = 'newline';
             } else if ($tokens[($openBracket - 1)]['code'] === T_WHITESPACE) {
