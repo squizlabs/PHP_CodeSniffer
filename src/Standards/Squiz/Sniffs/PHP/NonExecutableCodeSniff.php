@@ -225,16 +225,22 @@ class NonExecutableCodeSniff implements Sniff
         for ($i = ($start + 1); $i < $end; $i++) {
             if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === true
                 || isset(Tokens::$bracketTokens[$tokens[$i]['code']]) === true
+                || $tokens[$i]['code'] === T_SEMICOLON
             ) {
                 continue;
             }
 
             // Skip whole functions and classes/interfaces because they are not
             // technically executed code, but rather declarations that may be used.
-            if ($tokens[$i]['code'] === T_FUNCTION
-                || $tokens[$i]['code'] === T_CLASS
-                || $tokens[$i]['code'] === T_INTERFACE
+            if (isset(Tokens::$ooScopeTokens[$tokens[$i]['code']]) === true
+                || $tokens[$i]['code'] === T_FUNCTION
+                || $tokens[$i]['code'] === T_CLOSURE
             ) {
+                if (isset($tokens[$i]['scope_closer']) === false) {
+                    // Parse error/Live coding.
+                    return;
+                }
+
                 $i = $tokens[$i]['scope_closer'];
                 continue;
             }
@@ -242,8 +248,11 @@ class NonExecutableCodeSniff implements Sniff
             $line = $tokens[$i]['line'];
             if ($line > $lastLine) {
                 $type    = substr($tokens[$stackPtr]['type'], 2);
-                $warning = 'Code after %s statement cannot be executed';
-                $data    = [$type];
+                $warning = 'Code after %s statement (line %s) cannot be executed';
+                $data    = [
+                    $type,
+                    $tokens[$stackPtr]['line'],
+                ];
                 $phpcsFile->addWarning($warning, $i, 'Unreachable', $data);
                 $lastLine = $line;
             }
