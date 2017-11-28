@@ -159,3 +159,16 @@ try {
 }
 
 $var = ($foo['blah'] + []);
+
+// Test ignoring merge boundaries. VALID TESTCASE. DO NOT REMOVE.
+function testIgnoreMergeBoundaries()
+    {
+        $arr = array(
+            'a' => 'a'
+<<<<<<< HEAD
+            'b' => 'b'
+=======
+            'c' => 'c'
+>>>>>>> master
+        );
+    }

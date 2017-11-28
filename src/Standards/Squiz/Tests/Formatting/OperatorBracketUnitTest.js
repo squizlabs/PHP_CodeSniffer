@@ -114,3 +114,10 @@ if (something === true
 }
 
 if (true === /^\d*\.?\d*$/.test(input)) return true;
+
+// Test ignoring merge boundaries. VALID TESTCASE. DO NOT REMOVE.
+<<<<<<< HEAD
+result = 'something';
+=======
+result = 'else';
+>>>>>>> develop

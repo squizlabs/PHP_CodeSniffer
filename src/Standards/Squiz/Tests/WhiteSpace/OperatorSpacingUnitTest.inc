@@ -217,3 +217,16 @@ Hooks::run( 'ParserOptionsRegister', [
 	&self::$inCacheKey,
 	&self::$lazyOptions,
 ] );
+
+// Test ignoring merge boundaries. VALID TESTCASE. DO NOT REMOVE.
+function testIgnoreMergeBoundaries()
+    {
+        $arr = array(
+            'a' => 'a'
+<<<<<<< HEAD
+            'b' => 'b'
+=======
+            'c' => 'c'
+>>>>>>> master
+        );
+    }

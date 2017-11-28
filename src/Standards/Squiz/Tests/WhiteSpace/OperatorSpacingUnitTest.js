@@ -98,3 +98,10 @@ x = x >>> y;
 x >>>= y;
 
 var foo = bar.map(baz=> baz.length);
+
+// Test ignoring merge boundaries. VALID TESTCASE. DO NOT REMOVE.
+<<<<<<< HEAD
+result = 'something';
+=======
+result = 'else';
+>>>>>>> develop

@@ -64,6 +64,14 @@ class OperatorBracketSniff implements Sniff
             return;
         }
 
+        if (isset(Tokens::$gitBoundaryTokens[$tokens[$stackPtr]['code']]) === true) {
+            // Skip git merge boundaries.
+            $endBoundary = $phpcsFile->isMergeConflictBoundary($stackPtr);
+            if ($endBoundary !== false) {
+                return $endBoundary;
+            }
+        }
+
         // There is one instance where brackets aren't needed, which involves
         // the minus sign being used to assign a negative number to a variable.
         if ($tokens[$stackPtr]['code'] === T_MINUS) {

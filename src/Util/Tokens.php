@@ -562,6 +562,20 @@ final class Tokens
         T_TRAIT      => T_TRAIT,
     ];
 
+    /**
+     * Tokens which could potentially be part of a git merge conflict boundary.
+     *
+     * @var array
+     */
+    public static $gitBoundaryTokens = array(
+                                        T_SL           => T_SL,
+                                        T_ZSR          => T_ZSR,
+                                        T_LESS_THAN    => T_LESS_THAN,
+                                        T_GREATER_THAN => T_GREATER_THAN,
+                                        T_IS_IDENTICAL => T_IS_IDENTICAL,
+                                        T_EQUAL        => T_EQUAL,
+                                       );
+
 
     /**
      * Given a token, returns the name of the token.

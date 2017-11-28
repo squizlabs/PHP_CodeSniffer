@@ -2317,4 +2317,80 @@ class File
     }//end findImplementedInterfaceNames()
 
 
+    /**
+     * Determine if the passed token is part of a merge conflict boundary.
+     *
+     * Used to distinguish whether a token is an operator or part of a git
+     * merge conflict boundary.
+     * For PHP and CSS, only the T_SL token is checked.
+     * For JS, any of the following tokens will be checked: T_SL, T_ZSR,
+     * T_LESS_THAN, T_GREATER_THAN, T_IS_IDENTICAL and T_EQUAL.
+     *
+     * If a merge conflict boundary is found, it will return a stackPtr to
+     * to the end of the boundary to enable sniffs which listen for these
+     * operators to skip over the rest of the merge conflict boundary.
+     *
+     * @param int $stackPtr The position of the target token.
+     *
+     * @return boolean|integer Boolean false if the token is not part of
+     *                         a merge conflict boundary.
+     *                         An integer stackPtr to the end of the merge
+     *                         conflict boundary if it is.
+     */
+    public function isMergeConflictBoundary($stackPtr)
+    {
+        if ($this->tokens[$stackPtr]['code'] !== T_SL
+            && ($this->tokenizerType !== 'JS'
+            || isset(Util\Tokens::$gitBoundaryTokens[$this->tokens[$stackPtr]['code']]) === false)
+        ) {
+            return false;
+        }
+
+        $startOfLine = $stackPtr;
+        if ($this->tokens[$stackPtr]['column'] !== 1) {
+            for ($i = ($stackPtr - 1); $i >= 0; $i--) {
+                if ($this->tokens[$i]['column'] === 1) {
+                    $startOfLine = $i;
+                    break;
+                }
+            }
+        }
+
+        $endOfLine = $stackPtr;
+        if (isset($this->tokens[($stackPtr + 1)]) === true) {
+            for ($i = ($stackPtr + 1); $i < $this->numTokens; $i++) {
+                if ($this->tokens[$stackPtr]['line'] !== $this->tokens[$i]['line']) {
+                    $endOfLine = --$i;
+                    break;
+                }
+            }
+        }
+
+        $lineContent = trim($this->getTokensAsString($startOfLine, ($endOfLine - $startOfLine + 1)));
+
+        if ($this->tokens[$startOfLine]['code'] === T_SL
+            && $lineContent === '<<<<<<< HEAD'
+        ) {
+            return $endOfLine;
+        }
+
+        if ($this->tokenizerType === 'JS'
+            && $this->tokens[$startOfLine]['code'] === T_IS_IDENTICAL
+            && $lineContent === '======='
+        ) {
+            return $endOfLine;
+        }
+
+        if ($this->tokenizerType === 'JS'
+            && $this->tokens[$startOfLine]['code'] === T_ZSR
+            && substr($lineContent, 0, 8) === '>>>>>>> '
+        ) {
+            return $endOfLine;
+        }
+
+        return false;
+
+    }//end isMergeConflictBoundary()
+
+
 }//end class
