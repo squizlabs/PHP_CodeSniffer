@@ -36,6 +36,7 @@ class ColonSpacingUnitTest extends AbstractSniffUnitTest
             29 => 1,
             30 => 1,
             32 => 1,
+            41 => 1,
         ];
 
     }//end getErrorList()

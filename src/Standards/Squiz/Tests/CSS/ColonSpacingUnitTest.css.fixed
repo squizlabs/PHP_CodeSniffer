@@ -1,12 +1,10 @@
 body {
 font-family: Arial, Helvetica, sans-serif;
-margin     : 40px 0 0 0;
-padding :  0;
-background:  #8FB7DB url(diag_lines_bg.gif) top left;
-margin-top:
-10px;
-margin-bottom: 
-0px;
+margin: 40px 0 0 0;
+padding: 0;
+background: #8FB7DB url(diag_lines_bg.gif) top left;
+margin-top: 10px;
+margin-bottom: 0px;
 }
 
 .TableWidgetType .recover:hover {
@@ -24,12 +22,12 @@ margin-bottom:
 
 /* checking embedded PHP */
 li {
-    background:url(<?php print $staticserver; ?>/images/<?php print $staticdir; ?>/bullet.gif) left <?php print $left; ?>px no-repeat;
-    margin:0px;
-    padding-left:10px;
-    margin-bottom:<?php echo $marginBottom; ?>px;
+    background: url(<?php print $staticserver; ?>/images/<?php print $staticdir; ?>/bullet.gif) left <?php print $left; ?>px no-repeat;
+    margin: 0px;
+    padding-left: 10px;
+    margin-bottom: <?php echo $marginBottom; ?>px;
     margin-top: <?php echo $marginTop; ?>px;
-    line-height:13px;
+    line-height: 13px;
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#2e62a8, endColorstr=#123363);
 }
 
@@ -38,5 +36,5 @@ li {
     margin:;
     margin-right:
     margin-left: 10px;
-    float:/* Some comment. */ ;
+    float: /* Some comment. */ ;
 }
