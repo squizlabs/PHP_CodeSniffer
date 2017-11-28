@@ -180,7 +180,7 @@ class MultipleStatementAlignmentSniff implements Sniff
                     $assignColumn = ($varEnd + 1);
                 } else {
                     $padding = ($assignments[$prevAssign]['assign_col'] - $varEnd + $assignments[$prevAssign]['assign_len'] - $assignLen);
-                    if ($padding === 0) {
+                    if ($padding <= 0) {
                         $padding = 1;
                     }
 
