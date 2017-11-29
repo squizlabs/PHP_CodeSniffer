@@ -124,6 +124,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1590 : InlineControlStructure CBF issue while adding braces to an if thats returning a nested function
   - Fixed bug #1718 : Unclosed strings at EOF sometimes tokenized as T_WHITESPACE by the JS tokenizer
   - Fixed bug #1731 : Directory exclusions do not work as expected when a single file name is passed to phpcs
+  - Fixed bug #1737 : Squiz.CSS.EmptyStyleDefinition sees comment as style definition and fails to report error
   - Fixed bug #1746 : Very large reports can sometimes become garbled when using the parallel option
   - Fixed bug #1757 : Unknown type hint "object" in Squiz.Commenting.FunctionComment
   - Fixed bug #1758 : PHPCS gets stuck creating file list when processing circular symlinks
