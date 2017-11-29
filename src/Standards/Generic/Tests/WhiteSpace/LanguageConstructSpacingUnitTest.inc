@@ -26,11 +26,6 @@ require_once($blah);
 $obj = new MyClass();
 $obj = new    MyClass();
 
-return;
-return $blah;
-return   $blah;
-return($blah);
-
 yield $blah;
 yield   $blah;
 
@@ -58,3 +53,18 @@ use    MyNamespace\MyClass;
 use \MyNamespace\MyClass;
 use    \MyNamespace\MyClass;
 
+return;
+return $blah;
+return   $blah;
+return($blah);
+
+return	$tab;
+return
+$newLine;
+
+// The following line must have a single space at the end (after return)
+return 
+$spaceAndNewLine;
+
+// The following line must be the last line in the file
+return

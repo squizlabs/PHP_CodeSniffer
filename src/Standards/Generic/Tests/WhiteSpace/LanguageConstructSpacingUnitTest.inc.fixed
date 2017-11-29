@@ -26,35 +26,43 @@ require_once($blah);
 $obj = new MyClass();
 $obj = new MyClass();
 
+yield $blah;
+yield $blah;
+
+yield from $test();
+yield from $test();
+yield from $test();
+yield from $test();
+
+throw new Exception();
+throw new Exception();
+throw new Exception();
+throw new Exception();
+
+namespace MyClass;
+namespace MyClass;
+namespace MyNamespace\MyClass;
+namespace MyNamespace\MyClass;
+namespace \MyNamespace\MyClass;
+namespace \MyNamespace\MyClass;
+
+use MyClass;
+use MyClass;
+use MyNamespace\MyClass;
+use MyNamespace\MyClass;
+use \MyNamespace\MyClass;
+use \MyNamespace\MyClass;
+
 return;
 return $blah;
 return $blah;
 return($blah);
 
-yield $blah;
-yield $blah;
+return $tab;
+return $newLine;
 
-yield from $test();
-yield from $test();
-yield from $test();
-yield from $test();
+// The following line must have a single space at the end (after return)
+return $spaceAndNewLine;
 
-throw new Exception();
-throw new Exception();
-throw new Exception();
-throw new Exception();
-
-namespace MyClass;
-namespace MyClass;
-namespace MyNamespace\MyClass;
-namespace MyNamespace\MyClass;
-namespace \MyNamespace\MyClass;
-namespace \MyNamespace\MyClass;
-
-use MyClass;
-use MyClass;
-use MyNamespace\MyClass;
-use MyNamespace\MyClass;
-use \MyNamespace\MyClass;
-use \MyNamespace\MyClass;
-
+// The following line must be the last line in the file
+return
