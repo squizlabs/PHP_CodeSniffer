@@ -75,6 +75,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Windows BAT files can now be used outside a PEAR install
     -- You must have the path to PHP inside your PATH environment variable
     -- Thanks to Joris Debonnet for the patch
+  - The JS unsigned right shift assignment operator is now properly classified as an assignment operator
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Added AbstractArraySniff to make it easier to create sniffs that check array formatting
     -- Allows for checking of single and multi line arrays easily
     -- Provides a parsed structure of the array including positions of keys, values, and double arrows
