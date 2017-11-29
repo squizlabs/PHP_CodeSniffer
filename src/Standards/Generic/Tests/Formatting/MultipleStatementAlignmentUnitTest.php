@@ -110,6 +110,7 @@ class MultipleStatementAlignmentUnitTest extends AbstractSniffUnitTest
                 112 => 1,
                 113 => 1,
                 114 => 1,
+                117 => 1,
             ];
             break;
         default:
