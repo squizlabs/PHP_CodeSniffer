@@ -23,10 +23,10 @@ class ElseIfDeclarationSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_ELSE,
-                T_ELSEIF,
-               );
+        return [
+            T_ELSE,
+            T_ELSEIF,
+        ];
 
     }//end register()
 

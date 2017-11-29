@@ -27,109 +27,109 @@ class JS extends Tokenizer
      *
      * @var array
      */
-    public $scopeOpeners = array(
-                            T_IF       => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => false,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_TRY      => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => true,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_CATCH    => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => true,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_ELSE     => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => false,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_FOR      => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => false,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_CLASS    => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => true,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_FUNCTION => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => false,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_WHILE    => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => false,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_DO       => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => true,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_SWITCH   => array(
-                                           'start'  => array(T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET),
-                                           'end'    => array(T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET),
-                                           'strict' => true,
-                                           'shared' => false,
-                                           'with'   => array(),
-                                          ),
-                            T_CASE     => array(
-                                           'start'  => array(T_COLON => T_COLON),
-                                           'end'    => array(
-                                                        T_BREAK    => T_BREAK,
-                                                        T_RETURN   => T_RETURN,
-                                                        T_CONTINUE => T_CONTINUE,
-                                                        T_THROW    => T_THROW,
-                                                       ),
-                                           'strict' => true,
-                                           'shared' => true,
-                                           'with'   => array(
-                                                        T_DEFAULT => T_DEFAULT,
-                                                        T_CASE    => T_CASE,
-                                                        T_SWITCH  => T_SWITCH,
-                                                       ),
-                                          ),
-                            T_DEFAULT  => array(
-                                           'start'  => array(T_COLON => T_COLON),
-                                           'end'    => array(
-                                                        T_BREAK    => T_BREAK,
-                                                        T_RETURN   => T_RETURN,
-                                                        T_CONTINUE => T_CONTINUE,
-                                                        T_THROW    => T_THROW,
-                                                       ),
-                                           'strict' => true,
-                                           'shared' => true,
-                                           'with'   => array(
-                                                        T_CASE   => T_CASE,
-                                                        T_SWITCH => T_SWITCH,
-                                                       ),
-                                          ),
-                           );
+    public $scopeOpeners = [
+        T_IF       => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => false,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_TRY      => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => true,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_CATCH    => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => true,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_ELSE     => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => false,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_FOR      => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => false,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_CLASS    => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => true,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_FUNCTION => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => false,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_WHILE    => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => false,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_DO       => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => true,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_SWITCH   => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => true,
+            'shared' => false,
+            'with'   => [],
+        ],
+        T_CASE     => [
+            'start'  => [T_COLON => T_COLON],
+            'end'    => [
+                T_BREAK    => T_BREAK,
+                T_RETURN   => T_RETURN,
+                T_CONTINUE => T_CONTINUE,
+                T_THROW    => T_THROW,
+            ],
+            'strict' => true,
+            'shared' => true,
+            'with'   => [
+                T_DEFAULT => T_DEFAULT,
+                T_CASE    => T_CASE,
+                T_SWITCH  => T_SWITCH,
+            ],
+        ],
+        T_DEFAULT  => [
+            'start'  => [T_COLON => T_COLON],
+            'end'    => [
+                T_BREAK    => T_BREAK,
+                T_RETURN   => T_RETURN,
+                T_CONTINUE => T_CONTINUE,
+                T_THROW    => T_THROW,
+            ],
+            'strict' => true,
+            'shared' => true,
+            'with'   => [
+                T_CASE   => T_CASE,
+                T_SWITCH => T_SWITCH,
+            ],
+        ],
+    ];
 
     /**
      * A list of tokens that end the scope.
@@ -140,111 +140,111 @@ class JS extends Tokenizer
      *
      * @var array
      */
-    public $endScopeTokens = array(
-                              T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
-                              T_BREAK               => T_BREAK,
-                             );
+    public $endScopeTokens = [
+        T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET,
+        T_BREAK               => T_BREAK,
+    ];
 
     /**
      * A list of special JS tokens and their types.
      *
      * @var array
      */
-    protected $tokenValues = array(
-                              'class'     => 'T_CLASS',
-                              'function'  => 'T_FUNCTION',
-                              'prototype' => 'T_PROTOTYPE',
-                              'try'       => 'T_TRY',
-                              'catch'     => 'T_CATCH',
-                              'return'    => 'T_RETURN',
-                              'throw'     => 'T_THROW',
-                              'break'     => 'T_BREAK',
-                              'switch'    => 'T_SWITCH',
-                              'continue'  => 'T_CONTINUE',
-                              'if'        => 'T_IF',
-                              'else'      => 'T_ELSE',
-                              'do'        => 'T_DO',
-                              'while'     => 'T_WHILE',
-                              'for'       => 'T_FOR',
-                              'var'       => 'T_VAR',
-                              'case'      => 'T_CASE',
-                              'default'   => 'T_DEFAULT',
-                              'true'      => 'T_TRUE',
-                              'false'     => 'T_FALSE',
-                              'null'      => 'T_NULL',
-                              'this'      => 'T_THIS',
-                              'typeof'    => 'T_TYPEOF',
-                              '('         => 'T_OPEN_PARENTHESIS',
-                              ')'         => 'T_CLOSE_PARENTHESIS',
-                              '{'         => 'T_OPEN_CURLY_BRACKET',
-                              '}'         => 'T_CLOSE_CURLY_BRACKET',
-                              '['         => 'T_OPEN_SQUARE_BRACKET',
-                              ']'         => 'T_CLOSE_SQUARE_BRACKET',
-                              '?'         => 'T_INLINE_THEN',
-                              '.'         => 'T_OBJECT_OPERATOR',
-                              '+'         => 'T_PLUS',
-                              '-'         => 'T_MINUS',
-                              '*'         => 'T_MULTIPLY',
-                              '%'         => 'T_MODULUS',
-                              '/'         => 'T_DIVIDE',
-                              '^'         => 'T_LOGICAL_XOR',
-                              ','         => 'T_COMMA',
-                              ';'         => 'T_SEMICOLON',
-                              ':'         => 'T_COLON',
-                              '<'         => 'T_LESS_THAN',
-                              '>'         => 'T_GREATER_THAN',
-                              '<<'        => 'T_SL',
-                              '>>'        => 'T_SR',
-                              '>>>'       => 'T_ZSR',
-                              '<<='       => 'T_SL_EQUAL',
-                              '>>='       => 'T_SR_EQUAL',
-                              '>>>='      => 'T_ZSR_EQUAL',
-                              '<='        => 'T_IS_SMALLER_OR_EQUAL',
-                              '>='        => 'T_IS_GREATER_OR_EQUAL',
-                              '=>'        => 'T_DOUBLE_ARROW',
-                              '!'         => 'T_BOOLEAN_NOT',
-                              '||'        => 'T_BOOLEAN_OR',
-                              '&&'        => 'T_BOOLEAN_AND',
-                              '|'         => 'T_BITWISE_OR',
-                              '&'         => 'T_BITWISE_AND',
-                              '!='        => 'T_IS_NOT_EQUAL',
-                              '!=='       => 'T_IS_NOT_IDENTICAL',
-                              '='         => 'T_EQUAL',
-                              '=='        => 'T_IS_EQUAL',
-                              '==='       => 'T_IS_IDENTICAL',
-                              '-='        => 'T_MINUS_EQUAL',
-                              '+='        => 'T_PLUS_EQUAL',
-                              '*='        => 'T_MUL_EQUAL',
-                              '/='        => 'T_DIV_EQUAL',
-                              '%='        => 'T_MOD_EQUAL',
-                              '++'        => 'T_INC',
-                              '--'        => 'T_DEC',
-                              '//'        => 'T_COMMENT',
-                              '/*'        => 'T_COMMENT',
-                              '/**'       => 'T_DOC_COMMENT',
-                              '*/'        => 'T_COMMENT',
-                             );
+    protected $tokenValues = [
+        'class'     => 'T_CLASS',
+        'function'  => 'T_FUNCTION',
+        'prototype' => 'T_PROTOTYPE',
+        'try'       => 'T_TRY',
+        'catch'     => 'T_CATCH',
+        'return'    => 'T_RETURN',
+        'throw'     => 'T_THROW',
+        'break'     => 'T_BREAK',
+        'switch'    => 'T_SWITCH',
+        'continue'  => 'T_CONTINUE',
+        'if'        => 'T_IF',
+        'else'      => 'T_ELSE',
+        'do'        => 'T_DO',
+        'while'     => 'T_WHILE',
+        'for'       => 'T_FOR',
+        'var'       => 'T_VAR',
+        'case'      => 'T_CASE',
+        'default'   => 'T_DEFAULT',
+        'true'      => 'T_TRUE',
+        'false'     => 'T_FALSE',
+        'null'      => 'T_NULL',
+        'this'      => 'T_THIS',
+        'typeof'    => 'T_TYPEOF',
+        '('         => 'T_OPEN_PARENTHESIS',
+        ')'         => 'T_CLOSE_PARENTHESIS',
+        '{'         => 'T_OPEN_CURLY_BRACKET',
+        '}'         => 'T_CLOSE_CURLY_BRACKET',
+        '['         => 'T_OPEN_SQUARE_BRACKET',
+        ']'         => 'T_CLOSE_SQUARE_BRACKET',
+        '?'         => 'T_INLINE_THEN',
+        '.'         => 'T_OBJECT_OPERATOR',
+        '+'         => 'T_PLUS',
+        '-'         => 'T_MINUS',
+        '*'         => 'T_MULTIPLY',
+        '%'         => 'T_MODULUS',
+        '/'         => 'T_DIVIDE',
+        '^'         => 'T_LOGICAL_XOR',
+        ','         => 'T_COMMA',
+        ';'         => 'T_SEMICOLON',
+        ':'         => 'T_COLON',
+        '<'         => 'T_LESS_THAN',
+        '>'         => 'T_GREATER_THAN',
+        '<<'        => 'T_SL',
+        '>>'        => 'T_SR',
+        '>>>'       => 'T_ZSR',
+        '<<='       => 'T_SL_EQUAL',
+        '>>='       => 'T_SR_EQUAL',
+        '>>>='      => 'T_ZSR_EQUAL',
+        '<='        => 'T_IS_SMALLER_OR_EQUAL',
+        '>='        => 'T_IS_GREATER_OR_EQUAL',
+        '=>'        => 'T_DOUBLE_ARROW',
+        '!'         => 'T_BOOLEAN_NOT',
+        '||'        => 'T_BOOLEAN_OR',
+        '&&'        => 'T_BOOLEAN_AND',
+        '|'         => 'T_BITWISE_OR',
+        '&'         => 'T_BITWISE_AND',
+        '!='        => 'T_IS_NOT_EQUAL',
+        '!=='       => 'T_IS_NOT_IDENTICAL',
+        '='         => 'T_EQUAL',
+        '=='        => 'T_IS_EQUAL',
+        '==='       => 'T_IS_IDENTICAL',
+        '-='        => 'T_MINUS_EQUAL',
+        '+='        => 'T_PLUS_EQUAL',
+        '*='        => 'T_MUL_EQUAL',
+        '/='        => 'T_DIV_EQUAL',
+        '%='        => 'T_MOD_EQUAL',
+        '++'        => 'T_INC',
+        '--'        => 'T_DEC',
+        '//'        => 'T_COMMENT',
+        '/*'        => 'T_COMMENT',
+        '/**'       => 'T_DOC_COMMENT',
+        '*/'        => 'T_COMMENT',
+    ];
 
     /**
      * A list string delimiters.
      *
      * @var array
      */
-    protected $stringTokens = array(
-                               '\'' => '\'',
-                               '"'  => '"',
-                              );
+    protected $stringTokens = [
+        '\'' => '\'',
+        '"'  => '"',
+    ];
 
     /**
      * A list tokens that start and end comments.
      *
      * @var array
      */
-    protected $commentTokens = array(
-                                '//'  => null,
-                                '/*'  => '*/',
-                                '/**' => '*/',
-                               );
+    protected $commentTokens = [
+        '//'  => null,
+        '/*'  => '*/',
+        '/**' => '*/',
+    ];
 
 
     /**
@@ -290,7 +290,7 @@ class JS extends Tokenizer
             }
         }
 
-        $tokens          = array();
+        $tokens          = [];
         $inString        = '';
         $stringChar      = null;
         $inComment       = '';
@@ -300,11 +300,11 @@ class JS extends Tokenizer
 
         $commentTokenizer = new Comment();
 
-        $tokens[] = array(
-                     'code'    => T_OPEN_TAG,
-                     'type'    => 'T_OPEN_TAG',
-                     'content' => '',
-                    );
+        $tokens[] = [
+            'code'    => T_OPEN_TAG,
+            'type'    => 'T_OPEN_TAG',
+            'content' => '',
+        ];
 
         // Convert newlines to single characters for ease of
         // processing. We will change them back later.
@@ -334,11 +334,11 @@ class JS extends Tokenizer
                 // If the buffer only has whitespace and we are about to
                 // add a character, store the whitespace first.
                 if (trim($char) !== '' && trim($buffer) === '') {
-                    $tokens[] = array(
-                                 'code'    => T_WHITESPACE,
-                                 'type'    => 'T_WHITESPACE',
-                                 'content' => str_replace("\n", $this->eolChar, $buffer),
-                                );
+                    $tokens[] = [
+                        'code'    => T_WHITESPACE,
+                        'type'    => 'T_WHITESPACE',
+                        'content' => str_replace("\n", $this->eolChar, $buffer),
+                    ];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($buffer);
@@ -355,11 +355,11 @@ class JS extends Tokenizer
                     && trim($char) === ''
                     && trim($buffer) !== ''
                 ) {
-                    $tokens[] = array(
-                                 'code'    => T_STRING,
-                                 'type'    => 'T_STRING',
-                                 'content' => str_replace("\n", $this->eolChar, $buffer),
-                                );
+                    $tokens[] = [
+                        'code'    => T_STRING,
+                        'type'    => 'T_STRING',
+                        'content' => str_replace("\n", $this->eolChar, $buffer),
+                    ];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($buffer);
@@ -387,11 +387,11 @@ class JS extends Tokenizer
                     if ($escapes === 0 || ($escapes % 2) === 0) {
                         // There is an even number escape chars,
                         // so this is not escaped, it is the end of the string.
-                        $tokens[] = array(
-                                     'code'    => T_CONSTANT_ENCAPSED_STRING,
-                                     'type'    => 'T_CONSTANT_ENCAPSED_STRING',
-                                     'content' => str_replace("\n", $this->eolChar, $buffer).$char,
-                                    );
+                        $tokens[] = [
+                            'code'    => T_CONSTANT_ENCAPSED_STRING,
+                            'type'    => 'T_CONSTANT_ENCAPSED_STRING',
+                            'content' => str_replace("\n", $this->eolChar, $buffer).$char,
+                        ];
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* found end of string *".PHP_EOL;
@@ -455,11 +455,11 @@ class JS extends Tokenizer
                 );
 
                 if ($regex !== null) {
-                    $tokens[] = array(
-                                 'code'    => T_REGULAR_EXPRESSION,
-                                 'type'    => 'T_REGULAR_EXPRESSION',
-                                 'content' => $regex['content'],
-                                );
+                    $tokens[] = [
+                        'code'    => T_REGULAR_EXPRESSION,
+                        'type'    => 'T_REGULAR_EXPRESSION',
+                        'content' => $regex['content'],
+                    ];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($regex['content']);
@@ -544,11 +544,11 @@ class JS extends Tokenizer
                         $value = 'T_STRING';
                     }
 
-                    $tokens[] = array(
-                                 'code'    => constant($value),
-                                 'type'    => $value,
-                                 'content' => $buffer,
-                                );
+                    $tokens[] = [
+                        'code'    => constant($value),
+                        'type'    => $value,
+                        'content' => $buffer,
+                    ];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($buffer);
@@ -563,11 +563,11 @@ class JS extends Tokenizer
                 // found a valid token.
                 $newContent = substr(str_replace("\n", $this->eolChar, $buffer), 0, -1);
                 if ($newContent !== '') {
-                    $tokens[] = array(
-                                 'code'    => T_STRING,
-                                 'type'    => 'T_STRING',
-                                 'content' => $newContent,
-                                );
+                    $tokens[] = [
+                        'code'    => T_STRING,
+                        'type'    => 'T_STRING',
+                        'content' => $newContent,
+                    ];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput(substr($buffer, 0, -1));
@@ -611,11 +611,11 @@ class JS extends Tokenizer
 
                 if ($matchedToken === false) {
                     $value    = $this->tokenValues[strtolower($char)];
-                    $tokens[] = array(
-                                 'code'    => constant($value),
-                                 'type'    => $value,
-                                 'content' => $char,
-                                );
+                    $tokens[] = [
+                        'code'    => constant($value),
+                        'type'    => $value,
+                        'content' => $char,
+                    ];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "\t\t* look ahead found nothing *".PHP_EOL;
@@ -649,11 +649,11 @@ class JS extends Tokenizer
                     for ($x = 0; $x < $lastNumChars; $x++) {
                         $lastChar = $lastChars[$x];
                         $value    = $this->tokenValues[strtolower($lastChar)];
-                        $tokens[] = array(
-                                     'code'    => constant($value),
-                                     'type'    => $value,
-                                     'content' => $lastChar,
-                                    );
+                        $tokens[] = [
+                            'code'    => constant($value),
+                            'type'    => $value,
+                            'content' => $lastChar,
+                        ];
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $content = Util\Common::prepareForOutput($lastChar);
@@ -687,11 +687,11 @@ class JS extends Tokenizer
                 }
 
                 if ($inComment === '' && $cleanBuffer === false) {
-                    $tokens[] = array(
-                                 'code'    => T_STRING,
-                                 'type'    => 'T_STRING',
-                                 'content' => str_replace("\n", $this->eolChar, $buffer),
-                                );
+                    $tokens[] = [
+                        'code'    => T_STRING,
+                        'type'    => 'T_STRING',
+                        'content' => str_replace("\n", $this->eolChar, $buffer),
+                    ];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $content = Util\Common::prepareForOutput($buffer);
@@ -709,24 +709,39 @@ class JS extends Tokenizer
         }//end for
 
         if (empty($buffer) === false) {
-            // Buffer contains whitespace from the end of the file.
-            $tokens[] = array(
-                         'code'    => T_WHITESPACE,
-                         'type'    => 'T_WHITESPACE',
-                         'content' => str_replace("\n", $this->eolChar, $buffer),
-                        );
+            if ($inString !== '') {
+                // The string did not end before the end of the file,
+                // which means there was probably a syntax error somewhere.
+                $tokens[] = [
+                    'code'    => T_STRING,
+                    'type'    => 'T_STRING',
+                    'content' => str_replace("\n", $this->eolChar, $buffer),
+                ];
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                $content = Util\Common::prepareForOutput($buffer);
-                echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
-            }
-        }
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $content = Util\Common::prepareForOutput($buffer);
+                    echo "\t=> Added token T_STRING ($content)".PHP_EOL;
+                }
+            } else {
+                // Buffer contains whitespace from the end of the file.
+                $tokens[] = [
+                    'code'    => T_WHITESPACE,
+                    'type'    => 'T_WHITESPACE',
+                    'content' => str_replace("\n", $this->eolChar, $buffer),
+                ];
 
-        $tokens[] = array(
-                     'code'    => T_CLOSE_TAG,
-                     'type'    => 'T_CLOSE_TAG',
-                     'content' => '',
-                    );
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $content = Util\Common::prepareForOutput($buffer);
+                    echo "\t=> Added token T_WHITESPACE ($content)".PHP_EOL;
+                }
+            }//end if
+        }//end if
+
+        $tokens[] = [
+            'code'    => T_CLOSE_TAG,
+            'type'    => 'T_CLOSE_TAG',
+            'content' => '',
+        ];
 
         /*
             Now that we have done some basic tokenizing, we need to
@@ -734,7 +749,7 @@ class JS extends Tokenizer
             so they match what the PHP tokenizer does.
         */
 
-        $finalTokens = array();
+        $finalTokens = [];
         $newStackPtr = 0;
         $numTokens   = count($tokens);
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
@@ -907,35 +922,35 @@ class JS extends Tokenizer
      */
     public function getRegexToken($char, $string, $chars, $tokens)
     {
-        $beforeTokens = array(
-                         T_EQUAL               => true,
-                         T_IS_NOT_EQUAL        => true,
-                         T_IS_IDENTICAL        => true,
-                         T_IS_NOT_IDENTICAL    => true,
-                         T_OPEN_PARENTHESIS    => true,
-                         T_OPEN_SQUARE_BRACKET => true,
-                         T_RETURN              => true,
-                         T_BOOLEAN_OR          => true,
-                         T_BOOLEAN_AND         => true,
-                         T_BITWISE_OR          => true,
-                         T_BITWISE_AND         => true,
-                         T_COMMA               => true,
-                         T_COLON               => true,
-                         T_TYPEOF              => true,
-                         T_INLINE_THEN         => true,
-                         T_INLINE_ELSE         => true,
-                        );
+        $beforeTokens = [
+            T_EQUAL               => true,
+            T_IS_NOT_EQUAL        => true,
+            T_IS_IDENTICAL        => true,
+            T_IS_NOT_IDENTICAL    => true,
+            T_OPEN_PARENTHESIS    => true,
+            T_OPEN_SQUARE_BRACKET => true,
+            T_RETURN              => true,
+            T_BOOLEAN_OR          => true,
+            T_BOOLEAN_AND         => true,
+            T_BITWISE_OR          => true,
+            T_BITWISE_AND         => true,
+            T_COMMA               => true,
+            T_COLON               => true,
+            T_TYPEOF              => true,
+            T_INLINE_THEN         => true,
+            T_INLINE_ELSE         => true,
+        ];
 
-        $afterTokens = array(
-                        ','            => true,
-                        ')'            => true,
-                        ']'            => true,
-                        ';'            => true,
-                        ' '            => true,
-                        '.'            => true,
-                        ':'            => true,
-                        $this->eolChar => true,
-                       );
+        $afterTokens = [
+            ','            => true,
+            ')'            => true,
+            ']'            => true,
+            ';'            => true,
+            ' '            => true,
+            '.'            => true,
+            ':'            => true,
+            $this->eolChar => true,
+        ];
 
         // Find the last non-whitespace token that was added
         // to the tokens array.
@@ -1023,11 +1038,11 @@ class JS extends Tokenizer
             $content .= $chars[$x];
         }
 
-        $token = array(
-                  'start'   => $char,
-                  'end'     => $regexEnd,
-                  'content' => $content,
-                 );
+        $token = [
+            'start'   => $char,
+            'end'     => $regexEnd,
+            'content' => $content,
+        ];
 
         return $token;
 
@@ -1048,7 +1063,7 @@ class JS extends Tokenizer
         }
 
         $numTokens  = count($this->tokens);
-        $classStack = array();
+        $classStack = [];
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1128,7 +1143,7 @@ class JS extends Tokenizer
                             $this->tokens[$name]['code'] = T_FUNCTION;
                             $this->tokens[$name]['type'] = 'T_FUNCTION';
 
-                            foreach (array($name, $i, $closer) as $token) {
+                            foreach ([$name, $i, $closer] as $token) {
                                 $this->tokens[$token]['scope_condition']    = $name;
                                 $this->tokens[$token]['scope_opener']       = $i;
                                 $this->tokens[$token]['scope_closer']       = $closer;

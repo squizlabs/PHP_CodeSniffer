@@ -40,39 +40,39 @@ class BlockCommentUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        $errors = array(
-                   8   => 1,
-                   20  => 1,
-                   24  => 1,
-                   30  => 1,
-                   31  => 1,
-                   34  => 1,
-                   40  => 1,
-                   45  => 1,
-                   49  => 1,
-                   51  => 1,
-                   53  => 1,
-                   57  => 1,
-                   60  => 1,
-                   61  => 1,
-                   63  => 1,
-                   65  => 1,
-                   68  => 1,
-                   70  => 1,
-                   72  => 1,
-                   75  => 1,
-                   84  => 1,
-                   87  => 1,
-                   89  => 1,
-                   92  => 1,
-                   111 => 1,
-                   159 => 1,
-                   181 => 1,
-                   188 => 1,
-                   206 => 1,
-                   207 => 1,
-                   214 => 1,
-                  );
+        $errors = [
+            8   => 1,
+            20  => 1,
+            24  => 1,
+            30  => 1,
+            31  => 1,
+            34  => 1,
+            40  => 1,
+            45  => 1,
+            49  => 1,
+            51  => 1,
+            53  => 1,
+            57  => 1,
+            60  => 1,
+            61  => 1,
+            63  => 1,
+            65  => 1,
+            68  => 1,
+            70  => 1,
+            72  => 1,
+            75  => 1,
+            84  => 1,
+            87  => 1,
+            89  => 1,
+            92  => 1,
+            111 => 1,
+            159 => 1,
+            181 => 1,
+            188 => 1,
+            206 => 1,
+            207 => 1,
+            214 => 1,
+        ];
 
         return $errors;
 
@@ -89,7 +89,7 @@ class BlockCommentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

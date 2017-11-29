@@ -16,30 +16,11 @@
 namespace PHP_CodeSniffer\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 abstract class AbstractVariableSniff extends AbstractScopeSniff
 {
-
-    /**
-     * The end token of the current function that we are in.
-     *
-     * @var integer
-     */
-    private $endFunction = -1;
-
-    /**
-     * TRUE if a function is currently open.
-     *
-     * @var boolean
-     */
-    private $functionOpen = false;
-
-    /**
-     * The current PHP_CodeSniffer file that we are processing.
-     *
-     * @var \PHP_CodeSniffer\Files\File
-     */
-    protected $currentFile = null;
 
 
     /**
@@ -47,19 +28,13 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        $scopes = array(
-                   T_CLASS,
-                   T_ANON_CLASS,
-                   T_TRAIT,
-                   T_INTERFACE,
-                  );
+        $scopes = Tokens::$ooScopeTokens;
 
-        $listen = array(
-                   T_FUNCTION,
-                   T_VARIABLE,
-                   T_DOUBLE_QUOTED_STRING,
-                   T_HEREDOC,
-                  );
+        $listen = [
+            T_VARIABLE,
+            T_DOUBLE_QUOTED_STRING,
+            T_HEREDOC,
+        ];
 
         parent::__construct($scopes, $listen, true);
 
@@ -78,42 +53,7 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      */
     final protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
-        if ($this->currentFile !== $phpcsFile) {
-            $this->currentFile  = $phpcsFile;
-            $this->functionOpen = false;
-            $this->endFunction  = -1;
-        }
-
         $tokens = $phpcsFile->getTokens();
-
-        if ($stackPtr > $this->endFunction) {
-            $this->functionOpen = false;
-        }
-
-        if ($tokens[$stackPtr]['code'] === T_FUNCTION
-            && $this->functionOpen === false
-        ) {
-            $this->functionOpen = true;
-
-            $methodProps = $phpcsFile->getMethodProperties($stackPtr);
-
-            // If the function is abstract, or is in an interface,
-            // then set the end of the function to it's closing semicolon.
-            if ($methodProps['is_abstract'] === true
-                || $tokens[$currScope]['code'] === T_INTERFACE
-            ) {
-                $this->endFunction
-                    = $phpcsFile->findNext(array(T_SEMICOLON), $stackPtr);
-            } else {
-                if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-                    $error = 'Possible parse error: non-abstract method defined as abstract';
-                    $phpcsFile->addWarning($error, $stackPtr, 'Internal.ParseError.NonAbstractDefinedAbstract');
-                    return;
-                }
-
-                $this->endFunction = $tokens[$stackPtr]['scope_closer'];
-            }
-        }//end if
 
         if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING
             || $tokens[$stackPtr]['code'] === T_HEREDOC
@@ -127,13 +67,56 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
             return;
         }
 
-        if ($this->functionOpen === true) {
-            if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
-                $this->processVariable($phpcsFile, $stackPtr);
+        // If this token is inside nested inside a function at a deeper
+        // level than the current OO scope that was found, it's a normal
+        // variable and not a member var.
+        $conditions = array_reverse($tokens[$stackPtr]['conditions'], true);
+        $inFunction = false;
+        foreach ($conditions as $scope => $code) {
+            if (isset(Tokens::$ooScopeTokens[$code]) === true) {
+                break;
             }
+
+            if ($code === T_FUNCTION || $code === T_CLOSURE) {
+                $inFunction = true;
+            }
+        }
+
+        if ($scope !== $currScope) {
+            // We found a closer scope to this token, so ignore
+            // this particular time through the sniff. We will process
+            // this token when this closer scope is found to avoid
+            // duplicate checks.
+            return;
+        }
+
+        // Just make sure this isn't a variable in a function declaration.
+        if ($inFunction === false && isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            foreach ($tokens[$stackPtr]['nested_parenthesis'] as $opener => $closer) {
+                if (isset($tokens[$opener]['parenthesis_owner']) === false) {
+                    // Check if this is a USE statement in a closure.
+                    $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($opener - 1), null, true);
+                    if ($tokens[$prev]['code'] === T_USE) {
+                        $inFunction = true;
+                        break;
+                    }
+
+                    continue;
+                }
+
+                $owner = $tokens[$opener]['parenthesis_owner'];
+                if ($tokens[$owner]['code'] === T_FUNCTION
+                    || $tokens[$owner]['code'] === T_CLOSURE
+                ) {
+                    $inFunction = true;
+                    break;
+                }
+            }
+        }//end if
+
+        if ($inFunction === true) {
+            $this->processVariable($phpcsFile, $stackPtr);
         } else {
-            // What if we assign a member variable to another?
-            // ie. private $_count = $this->_otherCount + 1;.
             $this->processMemberVar($phpcsFile, $stackPtr);
         }
 

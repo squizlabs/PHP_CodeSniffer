@@ -201,7 +201,7 @@ if (TRUE) {
     $res  = 'bar';
 }
 
-// @codingStandardsChangeSetting Generic.Formatting.MultipleStatementAlignment maxPadding 8
+// phpcs:set Generic.Formatting.MultipleStatementAlignment maxPadding 8
 
 $one                = 'one';
 $varonetwo          = 'two';
@@ -215,7 +215,7 @@ $varonetwo .= 'two';
 $varonetwothree     = 'three';
 $varonetwothreefour = 'four';
 
-// @codingStandardsChangeSetting Generic.Formatting.MultipleStatementAlignment maxPadding 1000
+// phpcs:set Generic.Formatting.MultipleStatementAlignment maxPadding 1000
 
 $filterQuery = SquizRoadmap::getSearchQueryFilter($searchParams);
 Channels::addToBasket('itemid', $filterQuery);

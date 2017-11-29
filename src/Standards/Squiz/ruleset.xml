@@ -74,4 +74,19 @@
   </properties>
  </rule>
 
+ <!-- We use custom indent rules for arrays -->
+ <rule ref="Generic.Arrays.ArrayIndent"/>
+ <rule ref="Squiz.Arrays.ArrayDeclaration.KeyNotAligned">
+   <severity>0</severity>
+ </rule>
+ <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNotAligned">
+   <severity>0</severity>
+ </rule>
+ <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">
+   <severity>0</severity>
+ </rule>
+ <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
+   <severity>0</severity>
+ </rule>
+
 </ruleset>

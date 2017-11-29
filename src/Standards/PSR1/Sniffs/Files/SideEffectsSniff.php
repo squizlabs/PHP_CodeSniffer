@@ -24,7 +24,7 @@ class SideEffectsSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -45,10 +45,10 @@ class SideEffectsSniff implements Sniff
 
         if ($result['symbol'] !== null && $result['effect'] !== null) {
             $error = 'A file should declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it should execute logic with side effects, but should not do both. The first symbol is defined on line %s and the first side effect is on line %s.';
-            $data  = array(
-                      $tokens[$result['symbol']]['line'],
-                      $tokens[$result['effect']]['line'],
-                     );
+            $data  = [
+                $tokens[$result['symbol']]['line'],
+                $tokens[$result['effect']]['line'],
+            ];
             $phpcsFile->addWarning($error, 0, 'FoundWithSymbols', $data);
             $phpcsFile->recordMetric($stackPtr, 'Declarations and side effects mixed', 'yes');
         } else {
@@ -78,22 +78,46 @@ class SideEffectsSniff implements Sniff
      */
     private function searchForConflict($phpcsFile, $start, $end, $tokens)
     {
-        $symbols = array(
-                    T_CLASS     => T_CLASS,
-                    T_INTERFACE => T_INTERFACE,
-                    T_TRAIT     => T_TRAIT,
-                    T_FUNCTION  => T_FUNCTION,
-                   );
+        $symbols = [
+            T_CLASS     => T_CLASS,
+            T_INTERFACE => T_INTERFACE,
+            T_TRAIT     => T_TRAIT,
+            T_FUNCTION  => T_FUNCTION,
+        ];
 
-        $conditions = array(
-                       T_IF     => T_IF,
-                       T_ELSE   => T_ELSE,
-                       T_ELSEIF => T_ELSEIF,
-                      );
+        $conditions = [
+            T_IF     => T_IF,
+            T_ELSE   => T_ELSE,
+            T_ELSEIF => T_ELSEIF,
+        ];
 
         $firstSymbol = null;
         $firstEffect = null;
         for ($i = $start; $i <= $end; $i++) {
+            // Respect phpcs:disable comments.
+            if ($tokens[$i]['code'] === T_PHPCS_DISABLE
+                && (empty($tokens[$i]['sniffCodes']) === true
+                || isset($tokens[$i]['sniffCodes']['PSR1']) === true
+                || isset($tokens[$i]['sniffCodes']['PSR1.Files']) === true
+                || isset($tokens[$i]['sniffCodes']['PSR1.Files.SideEffects']) === true)
+            ) {
+                do {
+                    $i = $phpcsFile->findNext(T_PHPCS_ENABLE, ($i + 1));
+                } while ($i !== false
+                    && empty($tokens[$i]['sniffCodes']) === false
+                    && isset($tokens[$i]['sniffCodes']['PSR1']) === false
+                    && isset($tokens[$i]['sniffCodes']['PSR1.Files']) === false
+                    && isset($tokens[$i]['sniffCodes']['PSR1.Files.SideEffects']) === false);
+
+                if ($i === false) {
+                    // The entire rest of the file is disabled,
+                    // so return what we have so far.
+                    break;
+                }
+
+                continue;
+            }
+
             // Ignore whitespace and comments.
             if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
                 continue;
@@ -214,10 +238,10 @@ class SideEffectsSniff implements Sniff
             }
         }//end for
 
-        return array(
-                'symbol' => $firstSymbol,
-                'effect' => $firstEffect,
-               );
+        return [
+            'symbol' => $firstSymbol,
+            'effect' => $firstEffect,
+        ];
 
     }//end searchForConflict()
 

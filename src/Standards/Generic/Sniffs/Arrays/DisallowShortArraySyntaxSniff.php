@@ -23,7 +23,7 @@ class DisallowShortArraySyntaxSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_SHORT_ARRAY);
+        return [T_OPEN_SHORT_ARRAY];
 
     }//end register()
 

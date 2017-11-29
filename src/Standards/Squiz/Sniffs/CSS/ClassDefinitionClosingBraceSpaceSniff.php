@@ -21,7 +21,7 @@ class ClassDefinitionClosingBraceSpaceSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
 
     /**
@@ -31,7 +31,7 @@ class ClassDefinitionClosingBraceSpaceSniff implements Sniff
      */
     public function register()
     {
-        return array(T_CLOSE_CURLY_BRACKET);
+        return [T_CLOSE_CURLY_BRACKET];
 
     }//end register()
 
@@ -58,7 +58,7 @@ class ClassDefinitionClosingBraceSpaceSniff implements Sniff
             $found = (($tokens[$next]['line'] - $tokens[$stackPtr]['line']) - 1);
             if ($found !== 1) {
                 $error = 'Expected one blank line after closing brace of class definition; %s found';
-                $data  = array($found);
+                $data  = [$found];
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterClose', $data);
 
                 if ($fix === true) {

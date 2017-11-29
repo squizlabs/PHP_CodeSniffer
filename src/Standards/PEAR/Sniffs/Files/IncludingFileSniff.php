@@ -26,12 +26,12 @@ class IncludingFileSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_INCLUDE_ONCE,
-                T_REQUIRE_ONCE,
-                T_REQUIRE,
-                T_INCLUDE,
-               );
+        return [
+            T_INCLUDE_ONCE,
+            T_REQUIRE_ONCE,
+            T_REQUIRE,
+            T_INCLUDE,
+        ];
 
     }//end register()
 
@@ -52,7 +52,7 @@ class IncludingFileSniff implements Sniff
         $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         if ($tokens[$nextToken]['code'] === T_OPEN_PARENTHESIS) {
             $error = '"%s" is a statement not a function; no parentheses are required';
-            $data  = array($tokens[$stackPtr]['content']);
+            $data  = [$tokens[$stackPtr]['content']];
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'BracketsNotRequired', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();

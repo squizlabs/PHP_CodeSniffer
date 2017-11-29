@@ -42,7 +42,7 @@ class LowercasePHPFunctionsSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STRING);
+        return [T_STRING];
 
     }//end register()
 
@@ -72,7 +72,7 @@ class LowercasePHPFunctionsSniff implements Sniff
             return;
         }
 
-        $prev = $phpcsFile->findPrevious(array(T_WHITESPACE, T_BITWISE_AND), ($stackPtr - 1), null, true);
+        $prev = $phpcsFile->findPrevious([T_WHITESPACE, T_BITWISE_AND], ($stackPtr - 1), null, true);
         if ($tokens[$prev]['code'] === T_FUNCTION) {
             // Function declaration, not a function call.
             return;
@@ -108,10 +108,10 @@ class LowercasePHPFunctionsSniff implements Sniff
 
         if ($content !== strtolower($content)) {
             $error = 'Calls to inbuilt PHP functions must be lowercase; expected "%s" but found "%s"';
-            $data  = array(
-                      strtolower($content),
-                      $content,
-                     );
+            $data  = [
+                strtolower($content),
+                $content,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'CallUppercase', $data);
             if ($fix === true) {

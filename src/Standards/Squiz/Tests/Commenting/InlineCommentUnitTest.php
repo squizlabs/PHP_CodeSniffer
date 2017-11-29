@@ -29,40 +29,44 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'InlineCommentUnitTest.inc':
-            $errors = array(
-                       17  => 1,
-                       27  => 1,
-                       28  => 1,
-                       32  => 2,
-                       36  => 1,
-                       44  => 2,
-                       58  => 1,
-                       61  => 1,
-                       64  => 1,
-                       67  => 1,
-                       95  => 1,
-                       96  => 1,
-                       97  => 3,
-                       118 => 1,
-                      );
+            $errors = [
+                17  => 1,
+                27  => 1,
+                28  => 1,
+                32  => 2,
+                36  => 1,
+                44  => 2,
+                58  => 1,
+                61  => 1,
+                64  => 1,
+                67  => 1,
+                95  => 1,
+                96  => 1,
+                97  => 3,
+                118 => 1,
+                126 => 2,
+                130 => 2,
+            ];
 
             return $errors;
         case 'InlineCommentUnitTest.js':
-            return array(
-                    31  => 1,
-                    36  => 2,
-                    48  => 1,
-                    51  => 1,
-                    54  => 1,
-                    57  => 1,
-                    102 => 1,
-                    103 => 1,
-                    104 => 3,
-                    118 => 1,
-                    121 => 1,
-                   );
+            return [
+                31  => 1,
+                36  => 2,
+                48  => 1,
+                51  => 1,
+                54  => 1,
+                57  => 1,
+                102 => 1,
+                103 => 1,
+                104 => 3,
+                118 => 1,
+                121 => 1,
+                125 => 2,
+                129 => 2,
+            ];
         default:
-            return array();
+            return [];
         }//end switch
 
     }//end getErrorList()
@@ -78,7 +82,7 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

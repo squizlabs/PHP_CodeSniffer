@@ -24,10 +24,10 @@ class MultipleStatementAlignmentSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * If true, an error will be thrown; otherwise a warning.
@@ -103,7 +103,7 @@ class MultipleStatementAlignmentSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $assignments = array();
+        $assignments = [];
         $prevAssign  = null;
         $lastLine    = $tokens[$stackPtr]['line'];
         $maxPadding  = null;
@@ -180,7 +180,7 @@ class MultipleStatementAlignmentSniff implements Sniff
                     $assignColumn = ($varEnd + 1);
                 } else {
                     $padding = ($assignments[$prevAssign]['assign_col'] - $varEnd + $assignments[$prevAssign]['assign_len'] - $assignLen);
-                    if ($padding === 0) {
+                    if ($padding <= 0) {
                         $padding = 1;
                     }
 
@@ -230,13 +230,13 @@ class MultipleStatementAlignmentSniff implements Sniff
                 }
             }
 
-            $assignments[$assign] = array(
-                                     'var_end'    => $varEnd,
-                                     'assign_len' => $assignLen,
-                                     'assign_col' => $assignColumn,
-                                     'expected'   => $padding,
-                                     'found'      => $found,
-                                    );
+            $assignments[$assign] = [
+                'var_end'    => $varEnd,
+                'assign_len' => $assignLen,
+                'assign_col' => $assignColumn,
+                'expected'   => $padding,
+                'found'      => $found,
+            ];
 
             $lastLine   = $tokens[$assign]['line'];
             $prevAssign = $assign;
@@ -276,10 +276,10 @@ class MultipleStatementAlignmentSniff implements Sniff
                 $error = 'Equals sign not aligned with surrounding assignments; expected %s but found %s';
             }
 
-            $errorData = array(
-                          $expectedText,
-                          $foundText,
-                         );
+            $errorData = [
+                $expectedText,
+                $foundText,
+            ];
 
             if ($this->error === true) {
                 $fix = $phpcsFile->addFixableError($error, $assignment, $type, $errorData);

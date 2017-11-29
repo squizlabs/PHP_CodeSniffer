@@ -21,7 +21,7 @@ class ObjectMemberCommaSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('JS');
+    public $supportedTokenizers = ['JS'];
 
 
     /**
@@ -31,7 +31,7 @@ class ObjectMemberCommaSniff implements Sniff
      */
     public function register()
     {
-        return array(T_CLOSE_OBJECT);
+        return [T_CLOSE_OBJECT];
 
     }//end register()
 

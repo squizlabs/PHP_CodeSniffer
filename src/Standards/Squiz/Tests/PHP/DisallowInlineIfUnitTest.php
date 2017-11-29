@@ -29,13 +29,13 @@ class DisallowInlineIfUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowInlineIfUnitTest.inc':
-            return array(8 => 1);
+            return [8 => 1];
             break;
         case 'DisallowInlineIfUnitTest.js':
-            return array(1 => 1);
+            return [1 => 1];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -52,7 +52,7 @@ class DisallowInlineIfUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

@@ -25,36 +25,36 @@ class ValidVariableNameUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        $errors = array(
-                   3   => 1,
-                   5   => 1,
-                   10  => 1,
-                   12  => 1,
-                   15  => 1,
-                   17  => 1,
-                   20  => 1,
-                   22  => 1,
-                   25  => 1,
-                   27  => 1,
-                   31  => 1,
-                   33  => 1,
-                   36  => 1,
-                   37  => 1,
-                   39  => 1,
-                   42  => 1,
-                   44  => 1,
-                   53  => 1,
-                   58  => 1,
-                   62  => 1,
-                   63  => 1,
-                   64  => 1,
-                   67  => 1,
-                   81  => 1,
-                   106 => 1,
-                   107 => 1,
-                   108 => 1,
-                   117 => 1,
-                  );
+        $errors = [
+            3   => 1,
+            5   => 1,
+            10  => 1,
+            12  => 1,
+            15  => 1,
+            17  => 1,
+            20  => 1,
+            22  => 1,
+            25  => 1,
+            27  => 1,
+            31  => 1,
+            33  => 1,
+            36  => 1,
+            37  => 1,
+            39  => 1,
+            42  => 1,
+            44  => 1,
+            53  => 1,
+            58  => 1,
+            62  => 1,
+            63  => 1,
+            64  => 1,
+            67  => 1,
+            81  => 1,
+            106 => 1,
+            107 => 1,
+            108 => 1,
+            117 => 1,
+        ];
 
         return $errors;
 
@@ -71,7 +71,7 @@ class ValidVariableNameUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

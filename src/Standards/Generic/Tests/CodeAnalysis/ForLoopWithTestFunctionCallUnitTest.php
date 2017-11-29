@@ -25,7 +25,7 @@ class ForLoopWithTestFunctionCallUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -40,10 +40,10 @@ class ForLoopWithTestFunctionCallUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                4  => 1,
-                13 => 1,
-               );
+        return [
+            4  => 1,
+            13 => 1,
+        ];
 
     }//end getWarningList()
 

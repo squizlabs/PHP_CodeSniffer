@@ -16,4 +16,16 @@ goto a;
 function (array $a) {}
 const PRIVATE;
 HttpStatus::CONTINUE;
+function ($f) {
+    yield $f;
+    yield from fun();
+}
+class X extends Y {
+    public function m() {
+        parent::m();
+    }
+    public function n() {
+        self::n();
+    }
+}
 function

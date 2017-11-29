@@ -764,8 +764,8 @@ switch ($foo) {
         break;
 }
 
-// @codingStandardsChangeSetting Squiz.Commenting.LongConditionClosingComment lineLimit 5
-// @codingStandardsChangeSetting Squiz.Commenting.LongConditionClosingComment commentFormat //Dragonbait-%s
+// phpcs:set Squiz.Commenting.LongConditionClosingComment lineLimit 5
+// phpcs:set Squiz.Commenting.LongConditionClosingComment commentFormat //Dragonbait-%s
 
 function quite_long_function()
 {
@@ -811,8 +811,8 @@ function quite_long_function()
     }
 }
 
-// @codingStandardsChangeSetting Squiz.Commenting.LongConditionClosingComment lineLimit 30
-// @codingStandardsChangeSetting Squiz.Commenting.LongConditionClosingComment commentFormat // Bye-Bye %s()
+// phpcs:set Squiz.Commenting.LongConditionClosingComment lineLimit 30
+// phpcs:set Squiz.Commenting.LongConditionClosingComment commentFormat // Bye-Bye %s()
 
 // Ok - below limit
 foreach ($var as $val) {
@@ -930,5 +930,33 @@ foreach ($var as $val) {
     // Line 30
 }
 
-// @codingStandardsChangeSetting Squiz.Commenting.LongConditionClosingComment lineLimit 20
-// @codingStandardsChangeSetting Squiz.Commenting.LongConditionClosingComment commentFormat //end %s
+// phpcs:set Squiz.Commenting.LongConditionClosingComment lineLimit 20
+// phpcs:set Squiz.Commenting.LongConditionClosingComment commentFormat //end %s
+
+try {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+} catch (DALException $e) {
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+    // some code here.
+} catch (ChannelException $e) {
+    // some code here.
+} finally {
+    // some code here.
+}

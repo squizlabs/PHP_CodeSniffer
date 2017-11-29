@@ -25,3 +25,6 @@ class MyClass {
 
 /* testNullableTypeHint */
 function nullableTypeHint(?int $var1, ?\bar $var2) {}
+
+/* testBitwiseAndConstantExpressionDefaultValue */
+function myFunction($a = 10 & 20) {}

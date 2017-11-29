@@ -21,7 +21,7 @@ class ClassDefinitionOpeningBraceSpaceSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
 
     /**
@@ -31,7 +31,7 @@ class ClassDefinitionOpeningBraceSpaceSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_CURLY_BRACKET);
+        return [T_OPEN_CURLY_BRACKET];
 
     }//end register()
 
@@ -68,7 +68,7 @@ class ClassDefinitionOpeningBraceSpaceSniff implements Sniff
                 }
 
                 $error = 'Expected 1 space before opening brace of class definition; %s found';
-                $data  = array($length);
+                $data  = [$length];
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Before', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), ' ');
@@ -104,7 +104,7 @@ class ClassDefinitionOpeningBraceSpaceSniff implements Sniff
             if ($nested === true) {
                 if ($foundLines !== 1) {
                     $error = 'Expected 1 blank line after opening brace of nesting class definition; %s found';
-                    $data  = array($foundLines);
+                    $data  = [$foundLines];
                     $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'AfterNesting', $data);
 
                     if ($fix === true) {

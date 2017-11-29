@@ -26,7 +26,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS), array(T_DOUBLE_COLON));
+        parent::__construct([T_CLASS], [T_DOUBLE_COLON]);
 
     }//end __construct()
 
@@ -48,7 +48,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
         if ($tokens[$calledClassName]['code'] === T_SELF) {
             if ($tokens[$calledClassName]['content'] !== 'self') {
                 $error = 'Must use "self::" for local static member reference; found "%s::"';
-                $data  = array($tokens[$calledClassName]['content']);
+                $data  = [$tokens[$calledClassName]['content']];
                 $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'IncorrectCase', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($calledClassName, 'self');
@@ -83,7 +83,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
                     $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'NotUsed');
 
                     if ($fix === true) {
-                        $prev = $phpcsFile->findPrevious(array(T_NS_SEPARATOR, T_STRING), ($stackPtr - 1), null, true);
+                        $prev = $phpcsFile->findPrevious([T_NS_SEPARATOR, T_STRING], ($stackPtr - 1), null, true);
                         $phpcsFile->fixer->beginChangeset();
                         for ($i = ($prev + 1); $i < $stackPtr; $i++) {
                             $phpcsFile->fixer->replaceToken($i, '');
@@ -101,7 +101,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
             $found = strlen($tokens[($stackPtr - 1)]['content']);
             $error = 'Expected 0 spaces before double colon; %s found';
-            $data  = array($found);
+            $data  = [$found];
             $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceBefore', $data);
 
             if ($fix === true) {
@@ -112,7 +112,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
         if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
             $found = strlen($tokens[($stackPtr + 1)]['content']);
             $error = 'Expected 0 spaces after double colon; %s found';
-            $data  = array($found);
+            $data  = [$found];
             $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceAfter', $data);
 
             if ($fix === true) {
@@ -149,7 +149,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
      */
     protected function getDeclarationNameWithNamespace(array $tokens, $stackPtr)
     {
-        $nameParts      = array();
+        $nameParts      = [];
         $currentPointer = $stackPtr;
         while ($tokens[$currentPointer]['code'] === T_NS_SEPARATOR
             || $tokens[$currentPointer]['code'] === T_STRING

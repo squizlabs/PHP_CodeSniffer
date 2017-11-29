@@ -29,48 +29,51 @@ class ControlStructureSpacingUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'ControlStructureSpacingUnitTest.inc':
-            return array(
-                    3   => 1,
-                    5   => 1,
-                    8   => 1,
-                    15  => 1,
-                    23  => 1,
-                    74  => 1,
-                    79  => 1,
-                    82  => 1,
-                    83  => 1,
-                    87  => 1,
-                    103 => 1,
-                    113 => 2,
-                    114 => 2,
-                    118 => 1,
-                    150 => 1,
-                    153 => 1,
-                    154 => 1,
-                    157 => 1,
-                    170 => 1,
-                    176 => 2,
-                    179 => 1,
-                    189 => 1,
-                   );
+            return [
+                3   => 1,
+                5   => 1,
+                8   => 1,
+                15  => 1,
+                23  => 1,
+                74  => 1,
+                79  => 1,
+                82  => 1,
+                83  => 1,
+                87  => 1,
+                103 => 1,
+                113 => 2,
+                114 => 2,
+                118 => 1,
+                150 => 1,
+                153 => 1,
+                154 => 1,
+                157 => 1,
+                170 => 1,
+                176 => 2,
+                179 => 1,
+                189 => 1,
+                222 => 1,
+                233 => 1,
+                235 => 1,
+            ];
             break;
         case 'ControlStructureSpacingUnitTest.js':
-            return array(
-                    3  => 1,
-                    9  => 1,
-                    15 => 1,
-                    21 => 1,
-                    56 => 1,
-                    61 => 1,
-                    64 => 1,
-                    65 => 1,
-                    68 => 1,
-                    74 => 2,
-                    75 => 2,
-                   );
+            return [
+                3  => 1,
+                9  => 1,
+                15 => 1,
+                21 => 1,
+                56 => 1,
+                61 => 1,
+                64 => 1,
+                65 => 1,
+                68 => 1,
+                74 => 2,
+                75 => 2,
+            ];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -87,7 +90,7 @@ class ControlStructureSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

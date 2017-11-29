@@ -32,14 +32,14 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
          *
          * @var array<string, string>
          */
-        private static $loadedClasses = array();
+        private static $loadedClasses = [];
 
         /**
          * A mapping of class names to file names.
          *
          * @var array<string, string>
          */
-        private static $loadedFiles = array();
+        private static $loadedFiles = [];
 
         /**
          * A list of additional directories to search during autoloading.
@@ -48,7 +48,7 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
          *
          * @var string[]
          */
-        private static $searchPaths = array();
+        private static $searchPaths = [];
 
 
         /**

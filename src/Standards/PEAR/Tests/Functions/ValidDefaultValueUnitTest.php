@@ -25,16 +25,16 @@ class ValidDefaultValueUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                29 => 1,
-                34 => 1,
-                39 => 1,
-                71 => 1,
-                76 => 1,
-                81 => 1,
-                91 => 1,
-                99 => 1,
-               );
+        return [
+            29 => 1,
+            34 => 1,
+            39 => 1,
+            71 => 1,
+            76 => 1,
+            81 => 1,
+            91 => 1,
+            99 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -49,7 +49,7 @@ class ValidDefaultValueUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

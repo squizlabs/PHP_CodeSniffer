@@ -30,7 +30,7 @@ class FunctionSpacingSniff implements Sniff
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return [T_FUNCTION];
 
     }//end register()
 
@@ -93,10 +93,10 @@ class FunctionSpacingSniff implements Sniff
             }
 
             $error .= ' after function; %s found';
-            $data   = array(
-                       $this->spacing,
-                       $foundLines,
-                      );
+            $data   = [
+                $this->spacing,
+                $foundLines,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, $closer, 'After', $data);
             if ($fix === true) {
@@ -192,10 +192,10 @@ class FunctionSpacingSniff implements Sniff
             }
 
             $error .= ' before function; %s found';
-            $data   = array(
-                       $this->spacing,
-                       $foundLines,
-                      );
+            $data   = [
+                $this->spacing,
+                $foundLines,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Before', $data);
             if ($fix === true) {

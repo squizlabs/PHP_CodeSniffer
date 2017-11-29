@@ -25,19 +25,19 @@ class IncludeSystemUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                9  => 1,
-                14 => 1,
-                24 => 1,
-                27 => 1,
-                28 => 1,
-                31 => 1,
-                36 => 1,
-                41 => 1,
-                61 => 1,
-                70 => 1,
-                89 => 1,
-               );
+        return [
+            9  => 1,
+            14 => 1,
+            24 => 1,
+            27 => 1,
+            28 => 1,
+            31 => 1,
+            36 => 1,
+            41 => 1,
+            61 => 1,
+            70 => 1,
+            89 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -52,11 +52,9 @@ class IncludeSystemUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 
 
 }//end class
-
-?>

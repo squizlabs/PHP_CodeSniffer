@@ -33,7 +33,7 @@ class ValidFunctionNameSniff extends PEARValidFunctionNameSniff
             return;
         }
 
-        $errorData = array($functionName);
+        $errorData = [$functionName];
 
         // Does this function claim to be magical?
         if (preg_match('|^__[^_]|', $functionName) !== 0) {

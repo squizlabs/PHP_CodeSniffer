@@ -25,13 +25,13 @@ class EmptyClassDefinitionUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                1  => 1,
-                2  => 1,
-                4  => 1,
-                7  => 1,
-                10 => 1,
-               );
+        return [
+            1  => 1,
+            2  => 1,
+            4  => 1,
+            7  => 1,
+            10 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -46,7 +46,7 @@ class EmptyClassDefinitionUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

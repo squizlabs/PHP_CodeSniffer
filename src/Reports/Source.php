@@ -37,17 +37,17 @@ class Source implements Report
             return false;
         }
 
-        $sources = array();
+        $sources = [];
 
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
                     $src = $error['source'];
                     if (isset($sources[$src]) === false) {
-                        $sources[$src] = array(
-                                          'fixable' => (int) $error['fixable'],
-                                          'count'   => 1,
-                                         );
+                        $sources[$src] = [
+                            'fixable' => (int) $error['fixable'],
+                            'count'   => 1,
+                        ];
                     } else {
                         $sources[$src]['count']++;
                     }
@@ -98,7 +98,7 @@ class Source implements Report
             return;
         }
 
-        $sources   = array();
+        $sources   = [];
         $maxLength = 0;
 
         foreach ($lines as $line) {
@@ -133,21 +133,21 @@ class Source implements Report
 
                 $maxLength = max($maxLength, strlen($sniff));
 
-                $sources[$source] = array(
-                                     'count'   => $count,
-                                     'fixable' => $fixable,
-                                     'parts'   => $parts,
-                                    );
+                $sources[$source] = [
+                    'count'   => $count,
+                    'fixable' => $fixable,
+                    'parts'   => $parts,
+                ];
             } else {
                 $sources[$source]['count'] += $count;
             }//end if
 
             $fileLen = strlen($parts[0]);
-            $reportFiles[$parts[0]] = array(
-                                       'errors'   => $parts[1],
-                                       'warnings' => $parts[2],
-                                       'strlen'   => $fileLen,
-                                      );
+            $reportFiles[$parts[0]] = [
+                'errors'   => $parts[1],
+                'warnings' => $parts[2],
+                'strlen'   => $fileLen,
+            ];
         }//end foreach
 
         if ($showSources === true) {

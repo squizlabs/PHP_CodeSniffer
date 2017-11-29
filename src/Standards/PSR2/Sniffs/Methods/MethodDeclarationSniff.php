@@ -22,7 +22,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct(array(T_CLASS, T_INTERFACE), array(T_FUNCTION));
+        parent::__construct([T_CLASS, T_INTERFACE], [T_FUNCTION]);
 
     }//end __construct()
 
@@ -48,7 +48,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff
 
         if ($methodName[0] === '_' && isset($methodName[1]) === true && $methodName[1] !== '_') {
             $error = 'Method name "%s" should not be prefixed with an underscore to indicate visibility';
-            $data  = array($methodName);
+            $data  = [$methodName];
             $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
         }
 
@@ -79,7 +79,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff
             }
         }
 
-        $fixes = array();
+        $fixes = [];
 
         if ($visibility !== 0 && $final > $visibility) {
             $error = 'The final declaration must precede the visibility declaration';

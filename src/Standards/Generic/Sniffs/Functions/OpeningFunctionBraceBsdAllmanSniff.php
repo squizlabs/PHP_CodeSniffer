@@ -37,10 +37,10 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_FUNCTION,
-                T_CLOSURE,
-               );
+        return [
+            T_FUNCTION,
+            T_CLOSURE,
+        ];
 
     }//end register()
 
@@ -90,7 +90,7 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnSameLine');
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
-                $indent = $phpcsFile->findFirstOnLine(array(), $openingBrace);
+                $indent = $phpcsFile->findFirstOnLine([], $openingBrace);
                 if ($tokens[$indent]['code'] === T_WHITESPACE) {
                     $phpcsFile->fixer->addContentBefore($openingBrace, $tokens[$indent]['content']);
                 }
@@ -102,7 +102,7 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'same line');
         } else if ($lineDifference > 1) {
             $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
-            $data  = array(($lineDifference - 1));
+            $data  = [($lineDifference - 1)];
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceSpacing', $data);
             if ($fix === true) {
                 for ($i = ($tokens[$stackPtr]['parenthesis_closer'] + 1); $i < $openingBrace; $i++) {
@@ -151,10 +151,10 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
             $found    = ($braceIndent - 1);
 
             $error = 'Opening brace indented incorrectly; expected %s spaces, found %s';
-            $data  = array(
-                      $expected,
-                      $found,
-                     );
+            $data  = [
+                $expected,
+                $found,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, $openingBrace, 'BraceIndent', $data);
             if ($fix === true) {

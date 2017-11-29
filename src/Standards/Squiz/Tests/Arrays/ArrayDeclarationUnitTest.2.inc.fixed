@@ -350,6 +350,13 @@ $fields = [
            'value' => ['type' => 'VARCHAR'],
           ];
 
+get_current_screen()->add_help_tab( [
+                                     'id' => <<<EOD
+Here comes some text.
+EOD
+,
+                                    ] );
+
 echo [1][0];
 echo 'PHP'[0];
 echo [1][0, 1, 2]; // not valid code, but should not be picked up here

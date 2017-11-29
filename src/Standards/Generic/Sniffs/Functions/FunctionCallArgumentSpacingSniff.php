@@ -26,8 +26,9 @@ class FunctionCallArgumentSpacingSniff implements Sniff
     {
         $tokens = Tokens::$functionNameTokens;
 
-        // For calling closures.
         $tokens[] = T_VARIABLE;
+        $tokens[] = T_CLOSE_CURLY_BRACKET;
+        $tokens[] = T_CLOSE_PARENTHESIS;
 
         return $tokens;
 
@@ -60,6 +61,13 @@ class FunctionCallArgumentSpacingSniff implements Sniff
             return;
         }
 
+        if ($tokens[$stackPtr]['code'] === T_CLOSE_CURLY_BRACKET
+            && isset($tokens[$stackPtr]['scope_condition']) === true
+        ) {
+            // Not a function call.
+            return;
+        }
+
         // If the next non-whitespace token after the function or method call
         // is not an opening parenthesis then it cant really be a *call*.
         $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, ($functionName + 1), null, true);
@@ -74,12 +82,12 @@ class FunctionCallArgumentSpacingSniff implements Sniff
         $closeBracket  = $tokens[$openBracket]['parenthesis_closer'];
         $nextSeparator = $openBracket;
 
-        $find = array(
-                 T_COMMA,
-                 T_VARIABLE,
-                 T_CLOSURE,
-                 T_OPEN_SHORT_ARRAY,
-                );
+        $find = [
+            T_COMMA,
+            T_VARIABLE,
+            T_CLOSURE,
+            T_OPEN_SHORT_ARRAY,
+        ];
 
         while (($nextSeparator = $phpcsFile->findNext($find, ($nextSeparator + 1), $closeBracket)) !== false) {
             if ($tokens[$nextSeparator]['code'] === T_CLOSURE) {
@@ -126,7 +134,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
                         $space = strlen($tokens[($nextSeparator + 1)]['content']);
                         if ($space > 1) {
                             $error = 'Expected 1 space after comma in function call; %s found';
-                            $data  = array($space);
+                            $data  = [$space];
                             $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'TooMuchSpaceAfterComma', $data);
                             if ($fix === true) {
                                 $phpcsFile->fixer->replaceToken(($nextSeparator + 1), ' ');

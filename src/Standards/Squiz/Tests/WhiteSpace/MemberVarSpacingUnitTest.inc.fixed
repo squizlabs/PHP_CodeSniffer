@@ -150,3 +150,60 @@ class Foo
     private $caseStudy = null;
 
 }
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 2
+
+class MyClass
+{
+
+    public $var1 = 'value';
+
+
+    public $var2 = 'value';
+
+
+    public $var3 = 'value';
+
+}//end class
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacingBeforeFirst 0
+
+class MyClass
+{
+    public $var1 = 'value';
+
+    public $var2 = 'value';
+
+    public $var3 = 'value';
+
+}//end class
+
+class MyClass
+{
+    public $var1 = 'value';
+
+    public $var2 = 'value';
+
+    public $var3 = 'value';
+
+}//end class
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 0
+
+class MyClass
+{
+    public $var1 = 'value';
+    public $var2 = 'value';
+    public $var3 = 'value';
+
+}//end class
+
+interface MyInterface
+{
+    /* testing */
+    public $var1 = 'value';
+    public $var2 = 'value';
+    public $var3 = 'value';
+
+}//end class

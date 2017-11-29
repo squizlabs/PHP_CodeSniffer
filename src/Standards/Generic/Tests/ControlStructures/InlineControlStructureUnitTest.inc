@@ -200,3 +200,20 @@ if (true)
     }
     catch(Exception $e) {
     }
+
+switch ($num) {
+    case 0:
+        if (1 > $num)
+            return bar(
+                baz(
+                    "foobarbaz"
+                )
+            );
+        break;
+}
+
+do {
+	$i++;
+}
+// Comment
+while ($i < 10);

@@ -25,7 +25,7 @@ class AjaxNullComparisonUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -40,14 +40,14 @@ class AjaxNullComparisonUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                37  => 1,
-                49  => 1,
-                60  => 1,
-                73  => 1,
-                88  => 1,
-                118 => 1,
-               );
+        return [
+            37  => 1,
+            49  => 1,
+            60  => 1,
+            73  => 1,
+            88  => 1,
+            118 => 1,
+        ];
 
     }//end getWarningList()
 

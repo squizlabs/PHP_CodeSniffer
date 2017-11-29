@@ -25,14 +25,14 @@ class ScopeKeywordSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                7  => 2,
-                8  => 1,
-                13 => 1,
-                14 => 1,
-                15 => 1,
-                17 => 2,
-               );
+        return [
+            7  => 2,
+            8  => 1,
+            13 => 1,
+            14 => 1,
+            15 => 1,
+            17 => 2,
+        ];
 
     }//end getErrorList()
 
@@ -47,7 +47,7 @@ class ScopeKeywordSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

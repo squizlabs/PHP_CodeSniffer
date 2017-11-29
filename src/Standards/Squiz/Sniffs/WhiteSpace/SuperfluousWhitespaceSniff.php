@@ -24,11 +24,11 @@ class SuperfluousWhitespaceSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                   'CSS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+        'CSS',
+    ];
 
     /**
      * If TRUE, whitespace rules are not checked for blank lines.
@@ -47,14 +47,14 @@ class SuperfluousWhitespaceSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_OPEN_TAG,
-                T_CLOSE_TAG,
-                T_WHITESPACE,
-                T_COMMENT,
-                T_DOC_COMMENT_WHITESPACE,
-                T_CLOSURE,
-               );
+        return [
+            T_OPEN_TAG,
+            T_CLOSE_TAG,
+            T_WHITESPACE,
+            T_COMMENT,
+            T_DOC_COMMENT_WHITESPACE,
+            T_CLOSURE,
+        ];
 
     }//end register()
 
@@ -230,7 +230,7 @@ class SuperfluousWhitespaceSniff implements Sniff
                 $lines = ($tokens[$next]['line'] - $tokens[$stackPtr]['line']);
                 if ($lines > 1) {
                     $error = 'Functions must not contain multiple empty lines in a row; found %s empty lines';
-                    $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'EmptyLines', array($lines));
+                    $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'EmptyLines', [$lines]);
                     if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
                         $i = $stackPtr;

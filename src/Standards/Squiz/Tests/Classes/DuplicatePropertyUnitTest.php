@@ -25,11 +25,11 @@ class DuplicatePropertyUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                4  => 1,
-                8  => 1,
-                28 => 1,
-               );
+        return [
+            4  => 1,
+            8  => 1,
+            28 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -44,7 +44,7 @@ class DuplicatePropertyUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

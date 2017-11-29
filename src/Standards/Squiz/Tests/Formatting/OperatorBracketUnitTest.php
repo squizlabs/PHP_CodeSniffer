@@ -29,59 +29,62 @@ class OperatorBracketUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'OperatorBracketUnitTest.inc':
-            return array(
-                    3   => 1,
-                    6   => 1,
-                    9   => 1,
-                    12  => 1,
-                    15  => 1,
-                    18  => 2,
-                    20  => 1,
-                    25  => 1,
-                    28  => 1,
-                    31  => 1,
-                    34  => 1,
-                    37  => 1,
-                    40  => 1,
-                    43  => 2,
-                    45  => 1,
-                    47  => 5,
-                    48  => 1,
-                    50  => 2,
-                    55  => 2,
-                    56  => 1,
-                    63  => 2,
-                    64  => 1,
-                    67  => 1,
-                    86  => 1,
-                    90  => 1,
-                    109 => 1,
-                    130 => 1,
-                    134 => 1,
-                    135 => 2,
-                    137 => 1,
-                    139 => 1,
-                   );
+            return [
+                3   => 1,
+                6   => 1,
+                9   => 1,
+                12  => 1,
+                15  => 1,
+                18  => 2,
+                20  => 1,
+                25  => 1,
+                28  => 1,
+                31  => 1,
+                34  => 1,
+                37  => 1,
+                40  => 1,
+                43  => 2,
+                45  => 1,
+                47  => 5,
+                48  => 1,
+                50  => 2,
+                55  => 2,
+                56  => 1,
+                63  => 2,
+                64  => 1,
+                67  => 1,
+                86  => 1,
+                90  => 1,
+                109 => 1,
+                130 => 1,
+                134 => 1,
+                135 => 2,
+                137 => 1,
+                139 => 1,
+                150 => 1,
+                161 => 1,
+                163 => 2,
+            ];
             break;
         case 'OperatorBracketUnitTest.js':
-            return array(
-                    5   => 1,
-                    8   => 1,
-                    11  => 1,
-                    14  => 1,
-                    24  => 1,
-                    30  => 1,
-                    33  => 1,
-                    36  => 1,
-                    39  => 1,
-                    46  => 1,
-                    47  => 1,
-                    63  => 1,
-                    108 => 1,
-                   );
+            return [
+                5   => 1,
+                8   => 1,
+                11  => 1,
+                14  => 1,
+                24  => 1,
+                30  => 1,
+                33  => 1,
+                36  => 1,
+                39  => 1,
+                46  => 1,
+                47  => 1,
+                63  => 1,
+                108 => 1,
+            ];
              break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -98,7 +101,7 @@ class OperatorBracketUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

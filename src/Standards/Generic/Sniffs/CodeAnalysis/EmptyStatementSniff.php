@@ -38,18 +38,18 @@ class EmptyStatementSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_CATCH,
-                T_DO,
-                T_ELSE,
-                T_ELSEIF,
-                T_FOR,
-                T_FOREACH,
-                T_IF,
-                T_SWITCH,
-                T_TRY,
-                T_WHILE,
-               );
+        return [
+            T_CATCH,
+            T_DO,
+            T_ELSE,
+            T_ELSEIF,
+            T_FOR,
+            T_FOREACH,
+            T_IF,
+            T_SWITCH,
+            T_TRY,
+            T_WHILE,
+        ];
 
     }//end register()
 
@@ -87,7 +87,7 @@ class EmptyStatementSniff implements Sniff
         // Get token identifier.
         $name  = strtoupper($token['content']);
         $error = 'Empty %s statement detected';
-        $phpcsFile->addError($error, $stackPtr, 'Detected'.$name, array($name));
+        $phpcsFile->addError($error, $stackPtr, 'Detected'.$name, [$name]);
 
     }//end process()
 

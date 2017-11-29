@@ -38,18 +38,18 @@ class ControlStructureSpacingSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_IF,
-                T_WHILE,
-                T_FOREACH,
-                T_FOR,
-                T_SWITCH,
-                T_DO,
-                T_ELSE,
-                T_ELSEIF,
-                T_TRY,
-                T_CATCH,
-               );
+        return [
+            T_IF,
+            T_WHILE,
+            T_FOREACH,
+            T_FOR,
+            T_SWITCH,
+            T_DO,
+            T_ELSE,
+            T_ELSEIF,
+            T_TRY,
+            T_CATCH,
+        ];
 
     }//end register()
 
@@ -90,10 +90,10 @@ class ControlStructureSpacingSniff implements Sniff
 
         if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
             $error = 'Expected %s spaces after opening bracket; %s found';
-            $data  = array(
-                      $this->requiredSpacesAfterOpen,
-                      $spaceAfterOpen,
-                     );
+            $data  = [
+                $this->requiredSpacesAfterOpen,
+                $spaceAfterOpen,
+            ];
             $fix   = $phpcsFile->addFixableError($error, ($parenOpener + 1), 'SpacingAfterOpenBrace', $data);
             if ($fix === true) {
                 $padding = str_repeat(' ', $this->requiredSpacesAfterOpen);
@@ -117,10 +117,10 @@ class ControlStructureSpacingSniff implements Sniff
 
             if ($spaceBeforeClose !== $this->requiredSpacesBeforeClose) {
                 $error = 'Expected %s spaces before closing bracket; %s found';
-                $data  = array(
-                          $this->requiredSpacesBeforeClose,
-                          $spaceBeforeClose,
-                         );
+                $data  = [
+                    $this->requiredSpacesBeforeClose,
+                    $spaceBeforeClose,
+                ];
                 $fix   = $phpcsFile->addFixableError($error, ($parenCloser - 1), 'SpaceBeforeCloseBrace', $data);
                 if ($fix === true) {
                     $padding = str_repeat(' ', $this->requiredSpacesBeforeClose);

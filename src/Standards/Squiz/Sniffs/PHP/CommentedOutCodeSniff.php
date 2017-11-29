@@ -22,10 +22,10 @@ class CommentedOutCodeSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'CSS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'CSS',
+    ];
 
     /**
      * If a comment is more than $maxPercentage% code, a warning will be shown.
@@ -42,7 +42,7 @@ class CommentedOutCodeSniff implements Sniff
      */
     public function register()
     {
-        return array(T_COMMENT);
+        return [T_COMMENT];
 
     }//end register()
 
@@ -144,14 +144,14 @@ class CommentedOutCodeSniff implements Sniff
 
         ini_set('error_reporting', $oldErrors);
 
-        $emptyTokens = array(
-                        T_WHITESPACE              => true,
-                        T_STRING                  => true,
-                        T_STRING_CONCAT           => true,
-                        T_ENCAPSED_AND_WHITESPACE => true,
-                        T_NONE                    => true,
-                        T_COMMENT                 => true,
-                       );
+        $emptyTokens = [
+            T_WHITESPACE              => true,
+            T_STRING                  => true,
+            T_STRING_CONCAT           => true,
+            T_ENCAPSED_AND_WHITESPACE => true,
+            T_NONE                    => true,
+            T_COMMENT                 => true,
+        ];
 
         $numTokens = count($stringTokens);
 
@@ -220,7 +220,7 @@ class CommentedOutCodeSniff implements Sniff
             $percentCode = min(100, $percentCode);
 
             $error = 'This comment is %s%% valid code; is this commented out code?';
-            $data  = array($percentCode);
+            $data  = [$percentCode];
             $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
         }
 

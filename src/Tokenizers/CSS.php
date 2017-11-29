@@ -67,12 +67,12 @@ class CSS extends PHP
         $string = str_replace('?>', '^PHPCS_CSS_T_CLOSE_TAG^', $string);
         $tokens = parent::tokenize('<?php '.$string.'?>');
 
-        $finalTokens    = array();
-        $finalTokens[0] = array(
-                           'code'    => T_OPEN_TAG,
-                           'type'    => 'T_OPEN_TAG',
-                           'content' => '',
-                          );
+        $finalTokens    = [];
+        $finalTokens[0] = [
+            'code'    => T_OPEN_TAG,
+            'type'    => 'T_OPEN_TAG',
+            'content' => '',
+        ];
 
         $newStackPtr      = 1;
         $numTokens        = count($tokens);
@@ -125,11 +125,11 @@ class CSS extends PHP
                     echo $cleanContent.PHP_EOL;
                 }
 
-                $finalTokens[$newStackPtr] = array(
-                                              'type'    => 'T_EMBEDDED_PHP',
-                                              'code'    => T_EMBEDDED_PHP,
-                                              'content' => $content,
-                                             );
+                $finalTokens[$newStackPtr] = [
+                    'type'    => 'T_EMBEDDED_PHP',
+                    'code'    => T_EMBEDDED_PHP,
+                    'content' => $content,
+                ];
 
                 $newStackPtr++;
                 continue;
@@ -138,28 +138,28 @@ class CSS extends PHP
             if ($token['code'] === T_GOTO_LABEL) {
                 // Convert these back to T_STRING followed by T_COLON so we can
                 // more easily process style definitions.
-                $finalTokens[$newStackPtr] = array(
-                                              'type'    => 'T_STRING',
-                                              'code'    => T_STRING,
-                                              'content' => substr($token['content'], 0, -1),
-                                             );
+                $finalTokens[$newStackPtr] = [
+                    'type'    => 'T_STRING',
+                    'code'    => T_STRING,
+                    'content' => substr($token['content'], 0, -1),
+                ];
                 $newStackPtr++;
-                $finalTokens[$newStackPtr] = array(
-                                              'type'    => 'T_COLON',
-                                              'code'    => T_COLON,
-                                              'content' => ':',
-                                             );
+                $finalTokens[$newStackPtr] = [
+                    'type'    => 'T_COLON',
+                    'code'    => T_COLON,
+                    'content' => ':',
+                ];
                 $newStackPtr++;
                 continue;
             }
 
             if ($token['code'] === T_FUNCTION) {
                 // There are no functions in CSS, so convert this to a string.
-                $finalTokens[$newStackPtr] = array(
-                                              'type'    => 'T_STRING',
-                                              'code'    => T_STRING,
-                                              'content' => $token['content'],
-                                             );
+                $finalTokens[$newStackPtr] = [
+                    'type'    => 'T_STRING',
+                    'code'    => T_STRING,
+                    'content' => $token['content'],
+                ];
 
                 $newStackPtr++;
                 continue;
@@ -222,24 +222,24 @@ class CSS extends PHP
                         array_shift($commentTokens);
                         // Work out what we trimmed off above and remember to re-add it.
                         $trimmed = substr($token['content'], 0, (strlen($token['content']) - strlen($content)));
-                        $finalTokens[$newStackPtr] = array(
-                                                      'type'    => 'T_COLOUR',
-                                                      'code'    => T_COLOUR,
-                                                      'content' => $trimmed.$firstContent,
-                                                     );
+                        $finalTokens[$newStackPtr] = [
+                            'type'    => 'T_COLOUR',
+                            'code'    => T_COLOUR,
+                            'content' => $trimmed.$firstContent,
+                        ];
                     } else {
-                        $finalTokens[$newStackPtr] = array(
-                                                      'type'    => 'T_HASH',
-                                                      'code'    => T_HASH,
-                                                      'content' => '#',
-                                                     );
+                        $finalTokens[$newStackPtr] = [
+                            'type'    => 'T_HASH',
+                            'code'    => T_HASH,
+                            'content' => '#',
+                        ];
                     }
                 } else {
-                    $finalTokens[$newStackPtr] = array(
-                                                  'type'    => 'T_STRING',
-                                                  'code'    => T_STRING,
-                                                  'content' => '//',
-                                                 );
+                    $finalTokens[$newStackPtr] = [
+                        'type'    => 'T_STRING',
+                        'code'    => T_STRING,
+                        'content' => '//',
+                    ];
                 }//end if
 
                 $newStackPtr++;
@@ -457,8 +457,8 @@ class CSS extends PHP
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* token is a string joiner; ignoring this and previous token".PHP_EOL;
-                            $old = PHP_CodeSniffer::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
-                            $new = PHP_CodeSniffer::prepareForOutput($newContent);
+                            $old = Util\Common::prepareForOutput($finalTokens[($stackPtr + 1)]['content']);
+                            $new = Util\Common::prepareForOutput($newContent);
                             echo "\t\t=> token ".($stackPtr + 1)." content changed from \"$old\" to \"$new\"".PHP_EOL;
                         }
 

@@ -30,7 +30,7 @@ class ObjectOperatorIndentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OBJECT_OPERATOR);
+        return [T_OBJECT_OPERATOR];
 
     }//end register()
 
@@ -129,10 +129,10 @@ class ObjectOperatorIndentSniff implements Sniff
 
                     if ($foundIndent !== $requiredIndent) {
                         $error = 'Object operator not indented correctly; expected %s spaces but found %s';
-                        $data  = array(
-                                  $requiredIndent,
-                                  $foundIndent,
-                                 );
+                        $data  = [
+                            $requiredIndent,
+                            $foundIndent,
+                        ];
 
                         $fix = $phpcsFile->addFixableError($error, $next, 'Incorrect', $data);
                         if ($fix === true) {

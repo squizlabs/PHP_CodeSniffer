@@ -12,8 +12,9 @@ namespace PHP_CodeSniffer\Tests\Core\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\DummyFile;
+use PHPUnit\Framework\TestCase;
 
-class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
+class FindExtendedClassNameTest extends TestCase
 {
 
     /**
@@ -35,7 +36,7 @@ class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
+        $config->standards = ['Generic'];
 
         $ruleset = new Ruleset($config);
 
@@ -144,6 +145,50 @@ class FindExtendedClassNameTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($found);
 
     }//end testInterface()
+
+
+    /**
+     * Test an interface that extends another.
+     *
+     * @return void
+     */
+    public function testExtendedInterface()
+    {
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testInterfaceThatExtendsInterface */'
+        );
+
+        $found = $this->phpcsFile->findExtendedClassName(($class + 2));
+        $this->assertSame('testFECNInterface', $found);
+
+    }//end testExtendedInterface()
+
+
+    /**
+     * Test an interface that extends another, using namespaces.
+     *
+     * @return void
+     */
+    public function testExtendedNamespacedInterface()
+    {
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testInterfaceThatExtendsFQCNInterface */'
+        );
+
+        $found = $this->phpcsFile->findExtendedClassName(($class + 2));
+        $this->assertSame('\PHP_CodeSniffer\Tests\Core\File\testFECNInterface', $found);
+
+    }//end testExtendedNamespacedInterface()
 
 
 }//end class

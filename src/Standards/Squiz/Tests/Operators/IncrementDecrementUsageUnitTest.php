@@ -25,17 +25,17 @@ class IncrementDecrementUsageUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2  => 1,
-                6  => 1,
-                12 => 1,
-                16 => 1,
-                25 => 1,
-                26 => 1,
-                27 => 1,
-                29 => 1,
-                31 => 1,
-               );
+        return [
+            2  => 1,
+            6  => 1,
+            12 => 1,
+            16 => 1,
+            25 => 1,
+            26 => 1,
+            27 => 1,
+            29 => 1,
+            31 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -50,11 +50,9 @@ class IncrementDecrementUsageUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 
 
 }//end class
-
-?>

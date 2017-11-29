@@ -25,26 +25,26 @@ class IncludingFileUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                4  => 1,
-                5  => 1,
-                11 => 1,
-                12 => 1,
-                16 => 1,
-                17 => 1,
-                33 => 1,
-                34 => 1,
-                47 => 1,
-                48 => 1,
-                64 => 1,
-                65 => 1,
-                73 => 1,
-                74 => 1,
-                85 => 1,
-                86 => 1,
-                98 => 1,
-                99 => 2,
-               );
+        return [
+            4  => 1,
+            5  => 1,
+            11 => 1,
+            12 => 1,
+            16 => 1,
+            17 => 1,
+            33 => 1,
+            34 => 1,
+            47 => 1,
+            48 => 1,
+            64 => 1,
+            65 => 1,
+            73 => 1,
+            74 => 1,
+            85 => 1,
+            86 => 1,
+            98 => 1,
+            99 => 2,
+        ];
 
     }//end getErrorList()
 
@@ -59,11 +59,9 @@ class IncludingFileUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 
 
 }//end class
-
-?>

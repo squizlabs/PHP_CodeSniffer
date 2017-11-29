@@ -22,11 +22,11 @@ class DiscouragedFunctionsSniff extends GenericForbiddenFunctionsSniff
      *
      * @var array<string, string|null>
      */
-    public $forbiddenFunctions = array(
-                                  'error_log' => null,
-                                  'print_r'   => null,
-                                  'var_dump'  => null,
-                                 );
+    public $forbiddenFunctions = [
+        'error_log' => null,
+        'print_r'   => null,
+        'var_dump'  => null,
+    ];
 
     /**
      * If true, an error will be thrown; otherwise a warning.

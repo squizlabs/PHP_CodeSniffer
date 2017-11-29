@@ -71,16 +71,16 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                 $blankSpace = substr($prevContent, strpos($prevContent, $phpcsFile->eolChar));
                 $spaces     = strlen($blankSpace);
 
-                if (in_array($tokens[($stackPtr - 2)]['code'], array(T_ABSTRACT, T_FINAL)) === true
+                if (in_array($tokens[($stackPtr - 2)]['code'], [T_ABSTRACT, T_FINAL]) === true
                     && $spaces !== 1
                 ) {
                     $prevContent = strtolower($tokens[($stackPtr - 2)]['content']);
                     $error       = 'Expected 1 space between %s and %s keywords; %s found';
-                    $data        = array(
-                                    $prevContent,
-                                    $stackPtrType,
-                                    $spaces,
-                                   );
+                    $data        = [
+                        $prevContent,
+                        $stackPtrType,
+                        $spaces,
+                    ];
 
                     $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
                     if ($fix === true) {
@@ -92,10 +92,10 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
             ) {
                 $prevContent = strtolower($tokens[($stackPtr - 2)]['content']);
                 $error       = 'Expected 1 space between %s and %s keywords; newline found';
-                $data        = array(
-                                $prevContent,
-                                $stackPtrType,
-                               );
+                $data        = [
+                    $prevContent,
+                    $stackPtrType,
+                ];
 
                 $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NewlineBeforeKeyword', $data);
                 if ($fix === true) {
@@ -126,11 +126,11 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
         if (strlen($gap) !== 1) {
             $found = strlen($gap);
             $error = 'Expected 1 space between %s keyword and %s name; %s found';
-            $data  = array(
-                      $stackPtrType,
-                      $stackPtrType,
-                      $found,
-                     );
+            $data  = [
+                $stackPtrType,
+                $stackPtrType,
+                $found,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterKeyword', $data);
             if ($fix === true) {
@@ -144,10 +144,10 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
             if (strlen($gap) !== 1) {
                 $found = strlen($gap);
                 $error = 'Expected 1 space after %s name; %s found';
-                $data  = array(
-                          $stackPtrType,
-                          $found,
-                         );
+                $data  = [
+                    $stackPtrType,
+                    $found,
+                ];
 
                 $fix = $phpcsFile->addFixableError($error, $className, 'SpaceAfterName', $data);
                 if ($fix === true) {
@@ -159,12 +159,12 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
         $openingBrace = $tokens[$stackPtr]['scope_opener'];
 
         // Check positions of the extends and implements keywords.
-        foreach (array('extends', 'implements') as $keywordType) {
+        foreach (['extends', 'implements'] as $keywordType) {
             $keyword = $phpcsFile->findNext(constant('T_'.strtoupper($keywordType)), ($stackPtr + 1), $openingBrace);
             if ($keyword !== false) {
                 if ($tokens[$keyword]['line'] !== $tokens[$stackPtr]['line']) {
                     $error = 'The '.$keywordType.' keyword must be on the same line as the %s name';
-                    $data  = array($stackPtrType);
+                    $data  = [$stackPtrType];
                     $fix   = $phpcsFile->addFixableError($error, $keyword, ucfirst($keywordType).'Line', $data);
                     if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
@@ -184,7 +184,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     $gap = strlen($tokens[($keyword - 1)]['content']);
                     if ($gap !== 1) {
                         $error = 'Expected 1 space before '.$keywordType.' keyword; %s found';
-                        $data  = array($gap);
+                        $data  = [$gap];
                         $fix   = $phpcsFile->addFixableError($error, $keyword, 'SpaceBefore'.ucfirst($keywordType), $data);
                         if ($fix === true) {
                             $phpcsFile->fixer->replaceToken(($keyword - 1), ' ');
@@ -216,12 +216,12 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
             }
         }
 
-        $find = array(
-                 T_STRING,
-                 $keywordTokenType,
-                );
+        $find = [
+            T_STRING,
+            $keywordTokenType,
+        ];
 
-        $classNames = array();
+        $classNames = [];
         $nextClass  = $phpcsFile->findNext($find, ($className + 2), ($openingBrace - 1));
         while ($nextClass !== false) {
             $classNames[] = $nextClass;
@@ -244,10 +244,10 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                 || $tokens[($className - 2)]['code'] !== T_STRING)
             ) {
                 $prev = $phpcsFile->findPrevious(
-                    array(
-                     T_NS_SEPARATOR,
-                     T_WHITESPACE,
-                    ),
+                    [
+                        T_NS_SEPARATOR,
+                        T_WHITESPACE,
+                    ],
                     ($className - 1),
                     $implements,
                     true
@@ -308,10 +308,10 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     $expected = ($classIndent + $this->indent);
                     if ($found !== $expected) {
                         $error = 'Expected %s spaces before interface name; %s found';
-                        $data  = array(
-                                  $expected,
-                                  $found,
-                                 );
+                        $data  = [
+                            $expected,
+                            $found,
+                        ];
                         $fix   = $phpcsFile->addFixableError($error, $className, 'InterfaceWrongIndent', $data);
                         if ($fix === true) {
                             $padding = str_repeat(' ', $expected);
@@ -332,7 +332,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     && $tokens[($className - 2)]['code'] === T_COMMA)
                 ) {
                     $error = 'Expected 1 space before "%s"; 0 found';
-                    $data  = array($tokens[$className]['content']);
+                    $data  = [$tokens[$className]['content']];
                     $fix   = $phpcsFile->addFixableError($error, ($nextComma + 1), 'NoSpaceBeforeName', $data);
                     if ($fix === true) {
                         $phpcsFile->fixer->addContentBefore(($nextComma + 1), ' ');
@@ -347,10 +347,10 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     $spaceBefore = strlen($tokens[$prev]['content']);
                     if ($spaceBefore !== 1) {
                         $error = 'Expected 1 space before "%s"; %s found';
-                        $data  = array(
-                                  $tokens[$className]['content'],
-                                  $spaceBefore,
-                                 );
+                        $data  = [
+                            $tokens[$className]['content'],
+                            $spaceBefore,
+                        ];
 
                         $fix = $phpcsFile->addFixableError($error, $className, 'SpaceBeforeName', $data);
                         if ($fix === true) {
@@ -369,10 +369,10 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     // is not where we expect it to be.
                     if ($tokens[($className + 2)]['code'] !== $keywordTokenType) {
                         $error = 'Expected 0 spaces between "%s" and comma; %s found';
-                        $data  = array(
-                                  $tokens[$className]['content'],
-                                  strlen($tokens[($className + 1)]['content']),
-                                 );
+                        $data  = [
+                            $tokens[$className]['content'],
+                            strlen($tokens[($className + 1)]['content']),
+                        ];
 
                         $fix = $phpcsFile->addFixableError($error, $className, 'SpaceBeforeComma', $data);
                         if ($fix === true) {
@@ -410,7 +410,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
             && $tokens[$prevContent]['line'] !== ($tokens[$closeBrace]['line'] - 1)
         ) {
             $error = 'The closing brace for the %s must go on the next line after the body';
-            $data  = array($tokens[$stackPtr]['content']);
+            $data  = [$tokens[$stackPtr]['content']];
             $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'CloseBraceAfterBody', $data);
 
             if ($fix === true) {
@@ -429,13 +429,13 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
 
         // Check the closing brace is on it's own line, but allow
         // for comments like "//end class".
-        $nextContent = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT), ($closeBrace + 1), null, true);
+        $nextContent = $phpcsFile->findNext([T_WHITESPACE, T_COMMENT], ($closeBrace + 1), null, true);
         if ($tokens[$nextContent]['content'] !== $phpcsFile->eolChar
             && $tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']
         ) {
             $type  = strtolower($tokens[$stackPtr]['content']);
             $error = 'Closing %s brace must be on a line by itself';
-            $data  = array($type);
+            $data  = [$type];
             $phpcsFile->addError($error, $closeBrace, 'CloseBraceSameLine', $data);
         }
 

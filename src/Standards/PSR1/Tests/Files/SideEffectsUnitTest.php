@@ -27,7 +27,7 @@ class SideEffectsUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='')
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -48,9 +48,10 @@ class SideEffectsUnitTest extends AbstractSniffUnitTest
         case 'SideEffectsUnitTest.3.inc':
         case 'SideEffectsUnitTest.4.inc':
         case 'SideEffectsUnitTest.5.inc':
-            return array(1 => 1);
+        case 'SideEffectsUnitTest.10.inc':
+            return [1 => 1];
         default:
-            return array();
+            return [];
         }//end switch
 
     }//end getWarningList()

@@ -22,10 +22,10 @@ class FixmeSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
 
     /**
@@ -54,7 +54,7 @@ class FixmeSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         $content = $tokens[$stackPtr]['content'];
-        $matches = array();
+        $matches = [];
         preg_match('/(?:\A|[^\p{L}]+)fixme([^\p{L}]+(.*)|\Z)/ui', $content, $matches);
         if (empty($matches) === false) {
             // Clear whitespace and some common characters not required at
@@ -63,7 +63,7 @@ class FixmeSniff implements Sniff
             $fixmeMessage = trim($matches[1]);
             $fixmeMessage = trim($fixmeMessage, '-:[](). ');
             $error        = 'Comment refers to a FIXME task';
-            $data         = array($fixmeMessage);
+            $data         = [$fixmeMessage];
             if ($fixmeMessage !== '') {
                 $type   = 'TaskFound';
                 $error .= ' "%s"';

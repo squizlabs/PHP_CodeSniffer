@@ -101,3 +101,10 @@ $someObject->my_function($var_name);
 var_dump($http_response_header);
 var_dump($HTTP_RAW_POST_DATA);
 var_dump($php_errormsg);
+
+interface Base
+{
+    protected $anonymous;
+
+    public function __construct();
+}

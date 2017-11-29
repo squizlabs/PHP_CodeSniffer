@@ -1,100 +1,121 @@
 <?xml version="1.0"?>
 <ruleset name="PHP_CodeSniffer">
- <description>The coding standard for PHP_CodeSniffer itself.</description>
+    <description>The coding standard for PHP_CodeSniffer itself.</description>
 
- <file>autoload.php</file>
- <file>bin</file>
- <file>src</file>
- <file>tests</file>
+    <file>autoload.php</file>
+    <file>bin</file>
+    <file>src</file>
+    <file>tests</file>
 
- <exclude-pattern>*/Standards/*/Tests/*.(inc|css|js)</exclude-pattern>
+    <exclude-pattern>*/Standards/*/Tests/*\.(inc|css|js)</exclude-pattern>
 
- <arg name="basepath" value="."/>
- <arg name="colors" />
- <arg name="parallel" value="75" />
- <arg value="np"/>
+    <arg name="basepath" value="."/>
+    <arg name="colors" />
+    <arg name="parallel" value="75" />
+    <arg value="np"/>
 
- <!-- Don't hide tokenizer exceptions -->
- <rule ref="Internal.Tokenizer.Exception">
-  <type>error</type>
- </rule>
+    <!-- Don't hide tokenizer exceptions -->
+    <rule ref="Internal.Tokenizer.Exception">
+        <type>error</type>
+    </rule>
 
- <!-- Include the whole PEAR standard -->
- <rule ref="PEAR">
-    <exclude name="PEAR.NamingConventions.ValidFunctionName" />
-    <exclude name="PEAR.NamingConventions.ValidVariableName" />
-    <exclude name="PEAR.Commenting.ClassComment" />
-    <exclude name="PEAR.Commenting.FileComment.MissingCategoryTag" />
-    <exclude name="PEAR.Commenting.FileComment.MissingPackageTag" />
-    <exclude name="PEAR.Commenting.FileComment.MissingLinkTag" />
-    <exclude name="PEAR.Commenting.FileComment.MissingVersion" />
- </rule>
+    <!-- Include the whole PEAR standard -->
+    <rule ref="PEAR">
+        <exclude name="PEAR.NamingConventions.ValidFunctionName" />
+        <exclude name="PEAR.NamingConventions.ValidVariableName" />
+        <exclude name="PEAR.Commenting.ClassComment" />
+        <exclude name="PEAR.Commenting.FileComment.MissingCategoryTag" />
+        <exclude name="PEAR.Commenting.FileComment.MissingPackageTag" />
+        <exclude name="PEAR.Commenting.FileComment.MissingLinkTag" />
+        <exclude name="PEAR.Commenting.FileComment.MissingVersion" />
+    </rule>
 
- <!-- Include some sniffs from other standards that don't conflict with PEAR -->
- <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
- <rule ref="Squiz.Arrays.ArrayDeclaration" />
- <rule ref="Squiz.Commenting.ClosingDeclarationComment" />
- <rule ref="Squiz.ControlStructures.ControlSignature" />
- <rule ref="Squiz.ControlStructures.ElseIfDeclaration" />
- <rule ref="Squiz.Commenting.BlockComment" />
- <rule ref="Squiz.Commenting.DocCommentAlignment" />
- <rule ref="Squiz.Commenting.EmptyCatchComment" />
- <rule ref="Squiz.Commenting.InlineComment" />
- <rule ref="Squiz.Commenting.LongConditionClosingComment" />
- <rule ref="Squiz.Commenting.PostStatementComment" />
- <rule ref="Squiz.Commenting.VariableComment" />
- <rule ref="Squiz.Formatting.OperatorBracket" />
- <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing" />
- <rule ref="Squiz.Operators.ComparisonOperatorUsage" />
- <rule ref="Squiz.PHP.DisallowInlineIf" />
- <rule ref="Squiz.Strings.ConcatenationSpacing" />
- <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
- <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace" />
- <rule ref="Squiz.WhiteSpace.FunctionSpacing" />
- <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
- <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
- <rule ref="Generic.Commenting.Todo"/>
- <rule ref="Generic.ControlStructures.InlineControlStructure"/>
- <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
- <rule ref="Generic.Formatting.SpaceAfterCast"/>
- <rule ref="Generic.NamingConventions.ConstructorName"/>
- <rule ref="Generic.PHP.DeprecatedFunctions"/>
- <rule ref="Generic.PHP.LowerCaseKeyword"/>
- <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
- <rule ref="PSR2.Classes.PropertyDeclaration"/>
- <rule ref="PSR2.Methods.MethodDeclaration"/>
- <rule ref="PSR2.Files.EndFileNewline"/>
- <rule ref="Zend.Files.ClosingTag"/>
+    <!-- Include some sniffs from other standards that don't conflict with PEAR -->
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing" />
+    <rule ref="Squiz.Arrays.ArrayDeclaration" />
+    <rule ref="Squiz.Commenting.ClosingDeclarationComment" />
+    <rule ref="Squiz.ControlStructures.ControlSignature" />
+    <rule ref="Squiz.ControlStructures.ElseIfDeclaration" />
+    <rule ref="Squiz.Commenting.BlockComment" />
+    <rule ref="Squiz.Commenting.DocCommentAlignment" />
+    <rule ref="Squiz.Commenting.EmptyCatchComment" />
+    <rule ref="Squiz.Commenting.InlineComment" />
+    <rule ref="Squiz.Commenting.LongConditionClosingComment" />
+    <rule ref="Squiz.Commenting.PostStatementComment" />
+    <rule ref="Squiz.Commenting.VariableComment" />
+    <rule ref="Squiz.Formatting.OperatorBracket" />
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing" />
+    <rule ref="Squiz.Operators.ComparisonOperatorUsage" />
+    <rule ref="Squiz.PHP.DisallowInlineIf" />
+    <rule ref="Squiz.Strings.ConcatenationSpacing" />
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
+    <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace" />
+    <rule ref="Squiz.WhiteSpace.FunctionSpacing" />
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+    <rule ref="Generic.Commenting.Todo"/>
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+    <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+    <rule ref="Generic.Formatting.SpaceAfterCast"/>
+    <rule ref="Generic.NamingConventions.ConstructorName"/>
+    <rule ref="Generic.PHP.DeprecatedFunctions"/>
+    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+    <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
+    <rule ref="PSR2.Classes.PropertyDeclaration"/>
+    <rule ref="PSR2.Methods.MethodDeclaration"/>
+    <rule ref="PSR2.Files.EndFileNewline"/>
+    <rule ref="Zend.Files.ClosingTag"/>
 
- <!-- Check var names, but we don't want leading underscores for private vars -->
- <rule ref="Squiz.NamingConventions.ValidVariableName" />
- <rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
-  <severity>0</severity>
- </rule>
+     <!-- We use custom indent rules for arrays -->
+    <rule ref="Generic.Arrays.ArrayIndent"/>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.KeyNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
+        <severity>0</severity>
+    </rule>
 
- <!-- Only one argument per line in multi-line function calls -->
- <rule ref="PEAR.Functions.FunctionCallSignature">
-  <properties>
-   <property name="allowMultipleArguments" value="false"/>
-  </properties>
- </rule>
+    <!-- Check var names, but we don't want leading underscores for private vars -->
+    <rule ref="Squiz.NamingConventions.ValidVariableName" />
+    <rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+        <severity>0</severity>
+    </rule>
 
- <!-- Have 12 chars padding maximum and always show as errors -->
- <rule ref="Generic.Formatting.MultipleStatementAlignment">
-  <properties>
-   <property name="maxPadding" value="12"/>
-   <property name="error" value="true"/>
-  </properties>
- </rule>
+    <!-- Only one argument per line in multi-line function calls -->
+    <rule ref="PEAR.Functions.FunctionCallSignature">
+        <properties>
+            <property name="allowMultipleArguments" value="false"/>
+        </properties>
+    </rule>
 
- <!-- Private methods MUST not be prefixed with an underscore -->
- <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
-  <type>error</type>
- </rule>
+    <!-- Have 12 chars padding maximum and always show as errors -->
+    <rule ref="Generic.Formatting.MultipleStatementAlignment">
+        <properties>
+            <property name="maxPadding" value="12"/>
+            <property name="error" value="true"/>
+        </properties>
+    </rule>
 
- <!-- Private properties MUST not be prefixed with an underscore -->
- <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
-  <type>error</type>
- </rule>
+    <!-- Private methods MUST not be prefixed with an underscore -->
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <!-- Private properties MUST not be prefixed with an underscore -->
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <!-- The testing bootstrap file uses string concats to stop IDEs seeing the class aliases -->
+    <rule ref="Generic.Strings.UnnecessaryStringConcat">
+        <exclude-pattern>tests/bootstrap.php</exclude-pattern>
+    </rule>
 
 </ruleset>

@@ -39,7 +39,6 @@ function getInstalledStandards(
     includeGeneric=false,
     standardsDir=''
 ) {
-
 }
 
 var a = Function('return 1+1');
@@ -56,3 +55,6 @@ class test
        return false;
     }
 }
+
+( function ( $ ) {
+    foo(function ( value ) {} )( jQuery );

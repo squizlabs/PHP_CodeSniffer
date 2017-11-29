@@ -23,7 +23,7 @@ class InlineCommentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_COMMENT);
+        return [T_COMMENT];
 
     }//end register()
 

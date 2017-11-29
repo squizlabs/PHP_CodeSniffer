@@ -37,10 +37,10 @@ class OneTraitPerFileUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                6  => 1,
-                10 => 1,
-               );
+        return [
+            6  => 1,
+            10 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -55,7 +55,7 @@ class OneTraitPerFileUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

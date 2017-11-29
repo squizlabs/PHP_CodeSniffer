@@ -23,7 +23,7 @@ class UpperCaseConstantNameSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STRING);
+        return [T_STRING];
 
     }//end register()
 
@@ -73,13 +73,13 @@ class UpperCaseConstantNameSniff implements Sniff
 
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
             $functionKeyword = $phpcsFile->findPrevious(
-                array(
-                 T_WHITESPACE,
-                 T_COMMA,
-                 T_COMMENT,
-                 T_STRING,
-                 T_NS_SEPARATOR,
-                ),
+                [
+                    T_WHITESPACE,
+                    T_COMMA,
+                    T_COMMENT,
+                    T_STRING,
+                    T_NS_SEPARATOR,
+                ],
                 ($stackPtr - 1),
                 null,
                 true
@@ -98,10 +98,10 @@ class UpperCaseConstantNameSniff implements Sniff
                 }
 
                 $error = 'Class constants must be uppercase; expected %s but found %s';
-                $data  = array(
-                          strtoupper($constName),
-                          $constName,
-                         );
+                $data  = [
+                    strtoupper($constName),
+                    $constName,
+                ];
                 $phpcsFile->addError($error, $stackPtr, 'ClassConstantNotUpperCase', $data);
             } else {
                 $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'upper');
@@ -157,10 +157,10 @@ class UpperCaseConstantNameSniff implements Sniff
             }
 
             $error = 'Constants must be uppercase; expected %s but found %s';
-            $data  = array(
-                      $prefix.strtoupper($constName),
-                      $prefix.$constName,
-                     );
+            $data  = [
+                $prefix.strtoupper($constName),
+                $prefix.$constName,
+            ];
             $phpcsFile->addError($error, $stackPtr, 'ConstantNotUpperCase', $data);
         } else {
             $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'upper');

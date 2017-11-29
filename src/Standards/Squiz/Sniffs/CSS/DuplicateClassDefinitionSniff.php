@@ -21,7 +21,7 @@ class DuplicateClassDefinitionSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
 
     /**
@@ -31,7 +31,7 @@ class DuplicateClassDefinitionSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -50,7 +50,7 @@ class DuplicateClassDefinitionSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Find the content of each class definition name.
-        $classNames = array();
+        $classNames = [];
         $next       = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ($stackPtr + 1));
         if ($next === false) {
             // No class definitions in the file.
@@ -61,12 +61,11 @@ class DuplicateClassDefinitionSniff implements Sniff
         // to prevent false positives with @media blocks.
         $scope = 'main';
 
-        $find = array(
-                 T_CLOSE_CURLY_BRACKET,
-                 T_OPEN_CURLY_BRACKET,
-                 T_COMMENT,
-                 T_OPEN_TAG,
-                );
+        $find = [
+            T_CLOSE_CURLY_BRACKET,
+            T_OPEN_CURLY_BRACKET,
+            T_OPEN_TAG,
+        ];
 
         while ($next !== false) {
             $prev = $phpcsFile->findPrevious($find, ($next - 1));
@@ -101,7 +100,7 @@ class DuplicateClassDefinitionSniff implements Sniff
             } else if (isset($classNames[$scope][$name]) === true) {
                 $first = $classNames[$scope][$name];
                 $error = 'Duplicate class definition found; first defined on line %s';
-                $data  = array($tokens[$first]['line']);
+                $data  = [$tokens[$first]['line']];
                 $phpcsFile->addError($error, $next, 'Found', $data);
             } else {
                 $classNames[$scope][$name] = $next;

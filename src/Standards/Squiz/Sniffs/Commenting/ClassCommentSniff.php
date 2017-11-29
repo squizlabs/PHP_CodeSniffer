@@ -32,7 +32,7 @@ class ClassCommentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_CLASS);
+        return [T_CLASS];
 
     }//end register()
 
@@ -76,7 +76,7 @@ class ClassCommentSniff implements Sniff
         $commentStart = $tokens[$commentEnd]['comment_opener'];
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             $error = '%s tag is not allowed in class comment';
-            $data  = array($tokens[$tag]['content']);
+            $data  = [$tokens[$tag]['content']];
             $phpcsFile->addWarning($error, $tag, 'TagNotAllowed', $data);
         }
 

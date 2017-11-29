@@ -24,7 +24,7 @@ class EmbeddedPhpSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -152,10 +152,10 @@ class EmbeddedPhpSniff implements Sniff
                 $contentColumn = ($tokens[$firstContent]['column'] - 1);
                 if ($contentColumn !== $indent) {
                     $error = 'First line of embedded PHP code must be indented %s spaces; %s found';
-                    $data  = array(
-                              $indent,
-                              $contentColumn,
-                             );
+                    $data  = [
+                        $indent,
+                        $contentColumn,
+                    ];
                     $fix   = $phpcsFile->addFixableError($error, $firstContent, 'Indent', $data);
                     if ($fix === true) {
                         $padding = str_repeat(' ', $indent);
@@ -192,7 +192,7 @@ class EmbeddedPhpSniff implements Sniff
                 if ($tokens[$first]['line'] === $tokens[$stackPtr]['line']) {
                     continue;
                 } else if (trim($tokens[$first]['content']) !== '') {
-                    $first = $phpcsFile->findFirstOnLine(array(), $first, true);
+                    $first = $phpcsFile->findFirstOnLine([], $first, true);
                     break;
                 }
             }
@@ -210,10 +210,10 @@ class EmbeddedPhpSniff implements Sniff
             $found     = ($tokens[$stackPtr]['column'] - 1);
             if ($found > $expected) {
                 $error = 'Opening PHP tag indent incorrect; expected no more than %s spaces but found %s';
-                $data  = array(
-                          $expected,
-                          $found,
-                         );
+                $data  = [
+                    $expected,
+                    $found,
+                ];
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'OpenTagIndent', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr - 1), str_repeat(' ', $expected));
@@ -308,7 +308,7 @@ class EmbeddedPhpSniff implements Sniff
         }
 
         // Check that there is one, and only one space at the start of the statement.
-        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), ($closeTag - 1), true);
+        $firstContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), $closeTag, true);
 
         if ($firstContent === false) {
             $error = 'Empty embedded PHP tag found';
@@ -333,7 +333,7 @@ class EmbeddedPhpSniff implements Sniff
 
         if ($leadingSpace !== 1) {
             $error = 'Expected 1 space after opening PHP tag; %s found';
-            $data  = array($leadingSpace);
+            $data  = [$leadingSpace];
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterOpen', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
@@ -341,31 +341,33 @@ class EmbeddedPhpSniff implements Sniff
         }
 
         $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($closeTag - 1), $stackPtr, true);
-        if ((isset($tokens[$prev]['scope_opener']) === false
-            || $tokens[$prev]['scope_opener'] !== $prev)
-            && (isset($tokens[$prev]['scope_closer']) === false
-            || $tokens[$prev]['scope_closer'] !== $prev)
-            && $tokens[$prev]['code'] !== T_SEMICOLON
-        ) {
-            $error = 'Inline PHP statement must end with a semicolon';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSemicolon');
-            if ($fix === true) {
-                $phpcsFile->fixer->addContent($prev, ';');
-            }
-        } else if ($tokens[$prev]['code'] === T_SEMICOLON) {
-            $statementCount = 1;
-            for ($i = ($stackPtr + 1); $i < $prev; $i++) {
-                if ($tokens[$i]['code'] === T_SEMICOLON) {
-                    $statementCount++;
+        if ($prev !== $stackPtr) {
+            if ((isset($tokens[$prev]['scope_opener']) === false
+                || $tokens[$prev]['scope_opener'] !== $prev)
+                && (isset($tokens[$prev]['scope_closer']) === false
+                || $tokens[$prev]['scope_closer'] !== $prev)
+                && $tokens[$prev]['code'] !== T_SEMICOLON
+            ) {
+                $error = 'Inline PHP statement must end with a semicolon';
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSemicolon');
+                if ($fix === true) {
+                    $phpcsFile->fixer->addContent($prev, ';');
+                }
+            } else if ($tokens[$prev]['code'] === T_SEMICOLON) {
+                $statementCount = 1;
+                for ($i = ($stackPtr + 1); $i < $prev; $i++) {
+                    if ($tokens[$i]['code'] === T_SEMICOLON) {
+                        $statementCount++;
+                    }
+                }
+
+                if ($statementCount > 1) {
+                    $error = 'Inline PHP statement must contain a single statement; %s found';
+                    $data  = [$statementCount];
+                    $phpcsFile->addError($error, $stackPtr, 'MultipleStatements', $data);
                 }
             }
-
-            if ($statementCount > 1) {
-                $error = 'Inline PHP statement must contain a single statement; %s found';
-                $data  = array($statementCount);
-                $phpcsFile->addError($error, $stackPtr, 'MultipleStatements', $data);
-            }
-        }
+        }//end if
 
         $trailingSpace = 0;
         if ($tokens[($closeTag - 1)]['code'] === T_WHITESPACE) {
@@ -378,7 +380,7 @@ class EmbeddedPhpSniff implements Sniff
 
         if ($trailingSpace !== 1) {
             $error = 'Expected 1 space before closing PHP tag; %s found';
-            $data  = array($trailingSpace);
+            $data  = [$trailingSpace];
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeClose', $data);
             if ($fix === true) {
                 if ($trailingSpace === 0) {

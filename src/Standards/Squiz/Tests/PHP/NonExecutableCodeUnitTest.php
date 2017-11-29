@@ -25,7 +25,7 @@ class NonExecutableCodeUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -40,36 +40,37 @@ class NonExecutableCodeUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                5   => 1,
-                11  => 1,
-                17  => 1,
-                18  => 1,
-                19  => 2,
-                28  => 1,
-                32  => 1,
-                33  => 2,
-                34  => 2,
-                42  => 1,
-                45  => 1,
-                54  => 1,
-                58  => 1,
-                73  => 1,
-                83  => 1,
-                95  => 1,
-                105 => 1,
-                123 => 1,
-                147 => 1,
-                150 => 1,
-                153 => 1,
-                166 => 1,
-                180 => 1,
-                232 => 1,
-                233 => 1,
-                234 => 1,
-                235 => 2,
-                239 => 1,
-               );
+        return [
+            5   => 1,
+            11  => 1,
+            17  => 1,
+            18  => 1,
+            19  => 2,
+            28  => 1,
+            32  => 1,
+            33  => 2,
+            34  => 2,
+            42  => 1,
+            45  => 1,
+            54  => 1,
+            58  => 1,
+            73  => 1,
+            83  => 1,
+            95  => 1,
+            105 => 1,
+            123 => 1,
+            147 => 1,
+            150 => 1,
+            153 => 1,
+            166 => 1,
+            180 => 1,
+            232 => 1,
+            233 => 1,
+            234 => 1,
+            235 => 2,
+            239 => 1,
+            273 => 2,
+        ];
 
     }//end getWarningList()
 

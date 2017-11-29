@@ -74,7 +74,7 @@ class Runner
             if ($this->config->explain === true) {
                 $standards = $this->config->standards;
                 foreach ($standards as $standard) {
-                    $this->config->standards = array($standard);
+                    $this->config->standards = [$standard];
                     $ruleset = new Ruleset($this->config);
                     $ruleset->explain();
                 }
@@ -86,7 +86,7 @@ class Runner
             if ($this->config->generator !== null) {
                 $standards = $this->config->standards;
                 foreach ($standards as $standard) {
-                    $this->config->standards = array($standard);
+                    $this->config->standards = [$standard];
                     $ruleset   = new Ruleset($this->config);
                     $class     = 'PHP_CodeSniffer\Generators\\'.$this->config->generator;
                     $generator = new $class($ruleset);
@@ -100,7 +100,7 @@ class Runner
             // so we hard-code the full report here and when outputting.
             // We also ensure parallel processing is off because we need to do one file at a time.
             if ($this->config->interactive === true) {
-                $this->config->reports      = array('full' => null);
+                $this->config->reports      = ['full' => null];
                 $this->config->parallel     = 1;
                 $this->config->showProgress = false;
             }
@@ -183,7 +183,7 @@ class Runner
             $this->config->showSources  = false;
             $this->config->recordErrors = false;
             $this->config->reportFile   = null;
-            $this->config->reports      = array('cbf' => null);
+            $this->config->reports      = ['cbf' => null];
 
             // If a standard tries to set command line arguments itself, some
             // may be blocked because PHPCBF is running, so stop the script
@@ -361,7 +361,7 @@ class Runner
         }//end if
 
         // Turn all sniff errors into exceptions.
-        set_error_handler(array($this, 'handleErrors'));
+        set_error_handler([$this, 'handleErrors']);
 
         // If verbosity is too high, turn off parallelism so the
         // debug output is clean.
@@ -381,27 +381,27 @@ class Runner
             // Running normally.
             $numProcessed = 0;
             foreach ($todo as $path => $file) {
-                if ($file->ignored === true) {
-                    continue;
-                }
+                if ($file->ignored === false) {
+                    $currDir = dirname($path);
+                    if ($lastDir !== $currDir) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                            echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
+                        }
 
-                $currDir = dirname($path);
-                if ($lastDir !== $currDir) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                        echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
+                        $lastDir = $currDir;
                     }
 
-                    $lastDir = $currDir;
+                    $this->processFile($file);
+                } else if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                    echo 'Skipping '.basename($file->path).PHP_EOL;
                 }
-
-                $this->processFile($file);
 
                 $numProcessed++;
                 $this->printProgress($file, $numFiles, $numProcessed);
             }
         } else {
             // Batching and forking.
-            $childProcs  = array();
+            $childProcs  = [];
             $numPerBatch = ceil($numFiles / $this->config->parallel);
 
             for ($batch = 0; $batch < $this->config->parallel; $batch++) {
@@ -420,10 +420,10 @@ class Runner
                 if ($pid === -1) {
                     throw new RuntimeException('Failed to create child process');
                 } else if ($pid !== 0) {
-                    $childProcs[] = array(
-                                     'pid' => $pid,
-                                     'out' => $childOutFilename,
-                                    );
+                    $childProcs[] = [
+                        'pid' => $pid,
+                        'out' => $childOutFilename,
+                    ];
                 } else {
                     // Move forward to the start of the batch.
                     $todo->rewind();
@@ -440,7 +440,7 @@ class Runner
                     $this->reporter->totalFixed    = 0;
 
                     // Process the files.
-                    $pathsProcessed = array();
+                    $pathsProcessed = [];
                     ob_start();
                     for ($i = $startAt; $i < $endAt; $i++) {
                         $path = $todo->key();
@@ -470,13 +470,13 @@ class Runner
 
                     // Write information about the run to the filesystem
                     // so it can be picked up by the main process.
-                    $childOutput = array(
-                                    'totalFiles'    => $this->reporter->totalFiles,
-                                    'totalErrors'   => $this->reporter->totalErrors,
-                                    'totalWarnings' => $this->reporter->totalWarnings,
-                                    'totalFixable'  => $this->reporter->totalFixable,
-                                    'totalFixed'    => $this->reporter->totalFixed,
-                                   );
+                    $childOutput = [
+                        'totalFiles'    => $this->reporter->totalFiles,
+                        'totalErrors'   => $this->reporter->totalErrors,
+                        'totalWarnings' => $this->reporter->totalWarnings,
+                        'totalFixable'  => $this->reporter->totalFixable,
+                        'totalFixed'    => $this->reporter->totalFixed,
+                    ];
 
                     $output  = '<'.'?php'."\n".' $childOutput = ';
                     $output .= var_export($childOutput, true);
@@ -484,7 +484,7 @@ class Runner
                     $output .= var_export($debugOutput, true);
 
                     if ($this->config->cache === true) {
-                        $childCache = array();
+                        $childCache = [];
                         foreach ($pathsProcessed as $path) {
                             $childCache[$path] = Cache::get($path);
                         }
@@ -554,6 +554,11 @@ class Runner
      */
     public function handleErrors($code, $message, $file, $line)
     {
+        if ((error_reporting() & $code) === 0) {
+            // This type of error is being muted.
+            return true;
+        }
+
         throw new RuntimeException("$message in $file on line $line");
 
     }//end handleErrors()
@@ -805,12 +810,18 @@ class Runner
             }//end if
         }//end if
 
-        if (($numProcessed % 60) === 0) {
-            $padding = (strlen($numFiles) - strlen($numProcessed));
-            echo str_repeat(' ', $padding);
-            $percent = round(($numProcessed / $numFiles) * 100);
-            echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
+        $numPerLine = 60;
+        if ($numProcessed !== $numFiles && ($numProcessed % $numPerLine) !== 0) {
+            return;
         }
+
+        $percent = round(($numProcessed / $numFiles) * 100);
+        $padding = (strlen($numFiles) - strlen($numProcessed));
+        if ($numProcessed === $numFiles && $numFiles > $numPerLine) {
+            $padding += ($numPerLine - ($numFiles - (floor($numFiles / $numPerLine) * $numPerLine)));
+        }
+
+        echo str_repeat(' ', $padding)." $numProcessed / $numFiles ($percent%)".PHP_EOL;
 
     }//end printProgress()
 

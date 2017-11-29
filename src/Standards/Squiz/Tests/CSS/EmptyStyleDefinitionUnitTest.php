@@ -25,10 +25,12 @@ class EmptyStyleDefinitionUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                3 => 1,
-                4 => 1,
-               );
+        return [
+            3  => 1,
+            4  => 1,
+            8  => 1,
+            10 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -43,7 +45,7 @@ class EmptyStyleDefinitionUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

@@ -23,7 +23,7 @@ class DisallowLongArraySyntaxSniff implements Sniff
      */
     public function register()
     {
-        return array(T_ARRAY);
+        return [T_ARRAY];
 
     }//end register()
 
@@ -39,13 +39,23 @@ class DisallowLongArraySyntaxSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        $tokens = $phpcsFile->getTokens();
+
         $phpcsFile->recordMetric($stackPtr, 'Short array syntax used', 'no');
 
         $error = 'Short array syntax must be used to define arrays';
-        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Found');
+
+        if (isset($tokens[$stackPtr]['parenthesis_opener']) === false
+            || isset($tokens[$stackPtr]['parenthesis_closer']) === false
+        ) {
+            // Live coding/parse error, just show the error, don't try and fix it.
+            $phpcsFile->addError($error, $stackPtr, 'Found');
+            return;
+        }
+
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Found');
 
         if ($fix === true) {
-            $tokens = $phpcsFile->getTokens();
             $opener = $tokens[$stackPtr]['parenthesis_opener'];
             $closer = $tokens[$stackPtr]['parenthesis_closer'];
 

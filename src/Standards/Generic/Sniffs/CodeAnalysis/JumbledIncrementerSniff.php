@@ -43,7 +43,7 @@ class JumbledIncrementerSniff implements Sniff
      */
     public function register()
     {
-        return array(T_FOR);
+        return [T_FOR];
 
     }//end register()
 
@@ -89,7 +89,7 @@ class JumbledIncrementerSniff implements Sniff
 
             if (count($diff) !== 0) {
                 $error = 'Loop incrementor (%s) jumbling with inner loop';
-                $data  = array(join(', ', $diff));
+                $data  = [join(', ', $diff)];
                 $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
             }
         }
@@ -109,13 +109,13 @@ class JumbledIncrementerSniff implements Sniff
     {
         // Skip invalid statement.
         if (isset($token['parenthesis_opener']) === false) {
-            return array();
+            return [];
         }
 
         $start = ++$token['parenthesis_opener'];
         $end   = --$token['parenthesis_closer'];
 
-        $incrementers = array();
+        $incrementers = [];
         $semicolons   = 0;
         for ($next = $start; $next <= $end; ++$next) {
             $code = $tokens[$next]['code'];

@@ -23,17 +23,17 @@ class LowercaseClassKeywordsSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_CLASS,
-                T_INTERFACE,
-                T_TRAIT,
-                T_EXTENDS,
-                T_IMPLEMENTS,
-                T_ABSTRACT,
-                T_FINAL,
-                T_VAR,
-                T_CONST,
-               );
+        return [
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
+            T_EXTENDS,
+            T_IMPLEMENTS,
+            T_ABSTRACT,
+            T_FINAL,
+            T_VAR,
+            T_CONST,
+        ];
 
     }//end register()
 
@@ -54,11 +54,11 @@ class LowercaseClassKeywordsSniff implements Sniff
         $content = $tokens[$stackPtr]['content'];
         if ($content !== strtolower($content)) {
             $error = '%s keyword must be lowercase; expected "%s" but found "%s"';
-            $data  = array(
-                      strtoupper($content),
-                      strtolower($content),
-                      $content,
-                     );
+            $data  = [
+                strtoupper($content),
+                strtolower($content),
+                $content,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'FoundUppercase', $data);
             if ($fix === true) {

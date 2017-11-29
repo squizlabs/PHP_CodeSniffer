@@ -29,33 +29,35 @@ class SemicolonSpacingUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'SemicolonSpacingUnitTest.inc':
-            return array(
-                    3  => 1,
-                    4  => 1,
-                    5  => 2,
-                    6  => 1,
-                    8  => 1,
-                    9  => 1,
-                    14 => 1,
-                    16 => 1,
-                    18 => 1,
-                   );
+            return [
+                3  => 1,
+                4  => 1,
+                5  => 2,
+                6  => 1,
+                8  => 1,
+                9  => 1,
+                14 => 1,
+                16 => 1,
+                18 => 1,
+                29 => 1,
+                30 => 2,
+            ];
             break;
         case 'SemicolonSpacingUnitTest.js':
-            return array(
-                    3  => 1,
-                    4  => 1,
-                    6  => 1,
-                    10 => 2,
-                    11 => 1,
-                    13 => 1,
-                    19 => 1,
-                    22 => 1,
-                    25 => 1,
-                   );
+            return [
+                3  => 1,
+                4  => 1,
+                6  => 1,
+                10 => 2,
+                11 => 1,
+                13 => 1,
+                19 => 1,
+                22 => 1,
+                25 => 1,
+            ];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -72,7 +74,7 @@ class SemicolonSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

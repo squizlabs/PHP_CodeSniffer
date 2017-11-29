@@ -20,10 +20,10 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
 
     /**
@@ -41,7 +41,7 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
      */
     public function isMultiLineDeclaration($phpcsFile, $stackPtr, $openBracket, $tokens)
     {
-        $bracketsToCheck = array($stackPtr => $openBracket);
+        $bracketsToCheck = [$stackPtr => $openBracket];
 
         // Closures may use the USE keyword and so be multi-line in this way.
         if ($tokens[$stackPtr]['code'] === T_CLOSURE) {

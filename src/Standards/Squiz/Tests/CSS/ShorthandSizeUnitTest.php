@@ -25,17 +25,17 @@ class ShorthandSizeUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                8  => 1,
-                9  => 1,
-                10 => 1,
-                11 => 1,
-                12 => 1,
-                13 => 1,
-                15 => 1,
-                16 => 1,
-                17 => 1,
-               );
+        return [
+            8  => 1,
+            9  => 1,
+            10 => 1,
+            11 => 1,
+            12 => 1,
+            13 => 1,
+            15 => 1,
+            16 => 1,
+            17 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -50,7 +50,7 @@ class ShorthandSizeUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

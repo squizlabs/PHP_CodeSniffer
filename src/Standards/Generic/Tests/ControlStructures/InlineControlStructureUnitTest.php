@@ -29,59 +29,60 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'InlineControlStructureUnitTest.inc':
-            return array(
-                    3   => 1,
-                    7   => 1,
-                    11  => 1,
-                    13  => 1,
-                    15  => 1,
-                    17  => 1,
-                    23  => 1,
-                    42  => 1,
-                    43  => 1,
-                    45  => 1,
-                    46  => 1,
-                    49  => 1,
-                    62  => 1,
-                    66  => 1,
-                    78  => 1,
-                    120 => 1,
-                    128 => 1,
-                    134 => 1,
-                    142 => 1,
-                    143 => 1,
-                    144 => 1,
-                    150 => 1,
-                    158 => 1,
-                    159 => 1,
-                    162 => 1,
-                    163 => 1,
-                    164 => 1,
-                    167 => 1,
-                    168 => 1,
-                    170 => 1,
-                    178 => 1,
-                    185 => 1,
-                    188 => 2,
-                    191 => 1,
-                    195 => 1,
-                    198 => 1,
-                   );
+            return [
+                3   => 1,
+                7   => 1,
+                11  => 1,
+                13  => 1,
+                15  => 1,
+                17  => 1,
+                23  => 1,
+                42  => 1,
+                43  => 1,
+                45  => 1,
+                46  => 1,
+                49  => 1,
+                62  => 1,
+                66  => 1,
+                78  => 1,
+                120 => 1,
+                128 => 1,
+                134 => 1,
+                142 => 1,
+                143 => 1,
+                144 => 1,
+                150 => 1,
+                158 => 1,
+                159 => 1,
+                162 => 1,
+                163 => 1,
+                164 => 1,
+                167 => 1,
+                168 => 1,
+                170 => 1,
+                178 => 1,
+                185 => 1,
+                188 => 2,
+                191 => 1,
+                195 => 1,
+                198 => 1,
+                206 => 1,
+            ];
             break;
         case 'InlineControlStructureUnitTest.js':
-            return array(
-                    3  => 1,
-                    7  => 1,
-                    11 => 1,
-                    13 => 1,
-                    15 => 1,
-                    21 => 1,
-                    27 => 1,
-                    30 => 1,
-                   );
+            return [
+                3  => 1,
+                7  => 1,
+                11 => 1,
+                13 => 1,
+                15 => 1,
+                21 => 1,
+                27 => 1,
+                30 => 1,
+            ];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -98,7 +99,7 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

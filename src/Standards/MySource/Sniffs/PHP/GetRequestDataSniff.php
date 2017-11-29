@@ -23,7 +23,7 @@ class GetRequestDataSniff implements Sniff
      */
     public function register()
     {
-        return array(T_VARIABLE);
+        return [T_VARIABLE];
 
     }//end register()
 
@@ -89,7 +89,7 @@ class GetRequestDataSniff implements Sniff
 
         $type  = 'SuperglobalAccessed';
         $error = 'The %s super global must not be accessed directly; use Security::getRequestData(';
-        $data  = array($varName);
+        $data  = [$varName];
         if ($usedVar !== '') {
             $type  .= 'WithVar';
             $error .= '%s, \'%s\'';

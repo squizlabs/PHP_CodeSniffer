@@ -25,7 +25,7 @@ class CommentedOutCodeUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -44,22 +44,22 @@ class CommentedOutCodeUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'CommentedOutCodeUnitTest.inc':
-            return array(
-                    6  => 1,
-                    8  => 1,
-                    15 => 1,
-                    19 => 1,
-                    87 => 1,
-                   );
+            return [
+                6  => 1,
+                8  => 1,
+                15 => 1,
+                19 => 1,
+                87 => 1,
+            ];
             break;
         case 'CommentedOutCodeUnitTest.css':
-            return array(
-                    7  => 1,
-                    16 => 1,
-                   );
+            return [
+                7  => 1,
+                16 => 1,
+            ];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
