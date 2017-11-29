@@ -6,7 +6,7 @@
  * and provides functions to access data stored in config files.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2017 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
@@ -363,7 +363,10 @@ class Config
         $handle = fopen('php://stdin', 'r');
 
         // Check for content on STDIN.
-        if (($this->stdin === true) || (($this->isStdinATTY() === false) && (feof($handle) === false))) {
+        if ($this->stdin === true
+            || (Util\Common::isStdinATTY() === false
+            && feof($handle) === false)
+        ) {
             $fileContents = stream_get_contents($handle);
 
             if (trim($fileContents) !== '') {
@@ -377,63 +380,6 @@ class Config
         fclose($handle);
 
     }//end __construct()
-
-
-    /**
-     * Check if STDIN is a TTY.
-     *
-     * @return bool
-     */
-    protected function isStdinATTY()
-    {
-        // The check is slow (especially calling `tty`) so we static
-        // cache the result.
-        static $isTTY = null;
-
-        if ($isTTY !== null) {
-            return $isTTY;
-        }
-
-        // If PHP has the POSIX extensions we will use them.
-        if (function_exists('posix_isatty') === true) {
-            $isTTY = (posix_isatty(STDIN) === true);
-
-            return $isTTY;
-        }
-
-        // Next try is detecting whether we have `tty` installed and use that.
-        if (defined('PHP_WINDOWS_VERSION_PLATFORM') === true) {
-            $devnull = 'NUL';
-            $which   = 'where';
-        } else {
-            $devnull = '/dev/null';
-            $which   = 'which';
-        }
-
-        $tty = trim(shell_exec("$which tty 2> $devnull"));
-        if (empty($tty) === false) {
-            exec("tty -s 2> $devnull", $output, $returnValue);
-            $isTTY = ($returnValue === 0);
-
-            return $isTTY;
-        }
-
-        // Finally we will use fstat.  The solution borrowed from
-        // https://stackoverflow.com/questions/11327367/detect-if-a-php-script-is-being-run-interactively-or-not
-        // This doesn't work on Mingw/Cygwin/... using Mintty but they
-        // have `tty` installed.
-        $type = array(
-                 'S_IFMT'  => 0170000,
-                 'S_IFIFO' => 0010000,
-                );
-
-        $stat  = fstat(STDIN);
-        $mode  = ($stat['mode'] & $type['S_IFMT']);
-        $isTTY = ($mode !== $type['S_IFIFO']);
-
-        return $isTTY;
-
-    }//end isStdinATTY()
 
 
     /**

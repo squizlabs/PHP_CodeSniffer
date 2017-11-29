@@ -59,6 +59,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The sniff will no longer check any code that is between phpcs:disable and phpcs:enable comments
     -- The sniff does not support the phpcs:ignore; you must wrap code structures with disable/enable comments
     -- Previously, there was no way to have this sniff ignore parts of a file
+  - Fixed a problem where PHPCS would sometimes hang waiting for STDIN, or read incomplete versions of large files
+    -- Thanks to Arne Jørgensen for the patch
   - Array properties specified in ruleset files now have their keys and values trimmed
     -- This saves having to do this in individual sniffs, and stops errors introduced by whitespace in rulesets
     -- Thanks to Juliette Reinders Folmer for the patch
