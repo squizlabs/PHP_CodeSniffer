@@ -57,12 +57,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Same rule applies for the new phpcs:ignore comment syntax
   - PSR1.Files.SideEffects now respects the new phpcs:disable comment syntax
     -- The sniff will no longer check any code that is between phpcs:disable and phpcs:enable comments
-    -- The sniff does not support the phpcs:ignore; you must wrap code structures with disable/enable comments
+    -- The sniff does not support phpcs:ignore; you must wrap code structures with disable/enable comments
     -- Previously, there was no way to have this sniff ignore parts of a file
   - Fixed a problem where PHPCS would sometimes hang waiting for STDIN, or read incomplete versions of large files
     -- Thanks to Arne Jørgensen for the patch
   - Array properties specified in ruleset files now have their keys and values trimmed
-    -- This saves having to do this in individual sniffs, and stops errors introduced by whitespace in rulesets
+    -- This saves having to do this in individual sniffs and stops errors introduced by whitespace in rulesets
     -- Thanks to Juliette Reinders Folmer for the patch
   - Added phpcs.xsd to allow validation of ruleset XML files
     -- Thanks to Renaat De Muynck for the contribution
@@ -70,15 +70,17 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, STDIN files using fake file paths were excluded from checking
   - Ignore patterns are now checked on symlink target paths instead of symlink source paths
     -- Restores previous behaviour of this feature
-  - Metrics were being double counted when multiple sniffs were recording the same metrics
+  - Metrics were being double counted when multiple sniffs were recording the same metric
   - Added support for bash process substitution
     -- Thanks to Scott Dutton for the contribution
   - Files included in the cache file code hash are now sorted to aid in cache file reuse across servers
   - Windows BAT files can now be used outside a PEAR install
-    -- You must have the path to PHP inside your PATH environment variable
+    -- You must have the path to PHP set in your PATH environment variable
     -- Thanks to Joris Debonnet for the patch
   - The JS unsigned right shift assignment operator is now properly classified as an assignment operator
     -- Thanks to Juliette Reinders Folmer for the patch
+  - The AbstractVariableSniff abstract sniff now supports anonymous classes and nested functions
+    -- Also fixes an issue with Squiz.Scope.MemberVarScope where member vars of anonymous classes were not being checked
   - Added AbstractArraySniff to make it easier to create sniffs that check array formatting
     -- Allows for checking of single and multi line arrays easily
     -- Provides a parsed structure of the array including positions of keys, values, and double arrows
@@ -87,8 +89,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    -- Allows for the indent size to be set using an "indent" property of the sniff
   - Added Generic.PHP.DiscourageGoto to warn about the use of the GOTO language construct
     -- Thanks to Juliette Reinders Folmer for the contribution
-  - Improved fixer conflicts and syntax error handling for a number of sniffs
-    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.WhiteSpace.DisallowSpaceIndent now fixes space indents in multi-line block comments
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.WhiteSpace.DisallowSpaceIndent now fixes mixed space/tab indents more accurately
@@ -105,9 +105,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.FunctionComment now supports nullable type hints
   - Squiz.WhiteSpace.SemicolonSpacing now ignores semicolons used for empty statements inside FOR conditions
     -- Thanks to Juliette Reinders Folmer for the patch
-  - The AbstractVariableSniff abstract sniff now supports anonymous classes and nested functions
-    -- Also fixes an issue with Squiz.Scope.MemberVarScope where member vars of anonymous classes were not being checked
-  - Squiz.ControlStructures.ControlSignature now allows the number of spaces before the colon in alternative syntax to be set
+  - Squiz.ControlStructures.ControlSignature now allows configuring the number of spaces before the colon in alternative syntax
     -- Override the 'requiredSpacesBeforeColon' setting in a ruleset.xml file to change
     -- Default remains at 1
     -- Thanks to Nikola Kovacs for the patch
@@ -120,6 +118,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, this standard aligned the close brace with the start of the array keyword
   - The standard for PHP_CodeSniffer itself now enforces short array syntax
   - The standard for PHP_CodeSniffer itself now uses the Generic.Arrays/ArrayIndent sniff rules
+  - Improved fixer conflicts and syntax error handling for a number of sniffs
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1462 : Error processing cyrillic strings in Tokenizer
   - Fixed bug #1573 : Squiz.WhiteSpace.LanguageConstructSpacing does not properly check for tabs and newlines
     -- Thanks to Michał Bundyra for the patch
