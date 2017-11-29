@@ -26,9 +26,11 @@ class StaticThisUsageUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            7 => 1,
-            8 => 1,
-            9 => 1,
+            7  => 1,
+            8  => 1,
+            9  => 1,
+            14 => 1,
+            20 => 1,
         ];
 
     }//end getErrorList()
