@@ -20,6 +20,11 @@ matrix:
     - php: nightly
     - php: hhvm
 
+addons:
+  apt:
+    packages:
+      - pv
+
 before_install:
   # Circumvent a bug in the travis HHVM image - ships with incompatible PHPUnit.
   - if [[ $TRAVIS_PHP_VERSION == hhv* ]]; then composer self-update; fi

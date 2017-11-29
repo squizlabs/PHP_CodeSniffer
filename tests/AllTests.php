@@ -3,7 +3,7 @@
  * A test class for running all PHP_CodeSniffer unit tests.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2017 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
@@ -52,6 +52,7 @@ class PHP_CodeSniffer_AllTests
         // unset our autoload function after the run.
         $suite = new TestSuite('PHP CodeSniffer');
 
+        $suite->addTest(CLI\AllTests::suite());
         $suite->addTest(Core\AllTests::suite());
         $suite->addTest(Standards\AllSniffs::suite());
 
