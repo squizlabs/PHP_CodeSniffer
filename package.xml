@@ -434,8 +434,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortArraySyntaxUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortArraySyntaxUnitTest.inc.fixed" role="test" />
