@@ -993,14 +993,19 @@ class Config
                     break;
                 }
 
+                $this->overriddenDefaults['basepath'] = true;
+
+                if (substr($arg, 9) === '') {
+                    $this->basepath = null;
+                    break;
+                }
+
                 $this->basepath = Util\Common::realpath(substr($arg, 9));
 
                 // It may not exist and return false instead.
                 if ($this->basepath === false) {
                     $this->basepath = substr($arg, 9);
                 }
-
-                $this->overriddenDefaults['basepath'] = true;
 
                 if (is_dir($this->basepath) === false) {
                     $error  = 'ERROR: The specified basepath "'.$this->basepath.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
