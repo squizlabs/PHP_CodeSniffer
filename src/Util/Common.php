@@ -170,6 +170,10 @@ class Common
             return $isTTY;
         }
 
+        if (defined('STDIN') === false) {
+            return false;
+        }
+
         // If PHP has the POSIX extensions we will use them.
         if (function_exists('posix_isatty') === true) {
             $isTTY = (posix_isatty(STDIN) === true);

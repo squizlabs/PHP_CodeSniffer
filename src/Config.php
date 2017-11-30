@@ -360,6 +360,10 @@ class Config
             } while ($currentDir !== '.' && $currentDir !== $lastDir);
         }//end if
 
+        if (defined('STDIN') === false) {
+            return;
+        }
+
         $handle = fopen('php://stdin', 'r');
 
         // Check for content on STDIN.
