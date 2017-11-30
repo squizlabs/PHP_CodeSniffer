@@ -96,12 +96,6 @@ class Cache
         // hash. This ensures that core PHPCS changes will also invalidate the cache.
         // Note that we ignore sniffs here, and any files that don't affect
         // the outcome of the run.
-        $di = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($installDir),
-            0,
-            \RecursiveIteratorIterator::CATCH_GET_CHILD
-        );
-
         $di     = new \RecursiveDirectoryIterator($installDir);
         $filter = new \RecursiveCallbackFilterIterator(
             $di,

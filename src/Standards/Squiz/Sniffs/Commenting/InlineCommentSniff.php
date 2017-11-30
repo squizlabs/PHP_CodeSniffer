@@ -292,7 +292,6 @@ class InlineCommentSniff implements Sniff
                 return;
             }
 
-            $start = false;
             for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
                 if ($tokens[$i]['line'] === ($tokens[$stackPtr]['line'] + 1)) {
                     if ($tokens[$i]['code'] !== T_WHITESPACE) {

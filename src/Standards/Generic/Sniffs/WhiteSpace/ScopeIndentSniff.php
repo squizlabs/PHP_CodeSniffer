@@ -142,12 +142,11 @@ class ScopeIndentSniff implements Sniff
             }
         }
 
-        $currentIndent = 0;
-        $lastOpenTag   = $stackPtr;
-        $lastCloseTag  = null;
-        $openScopes    = [];
-        $adjustments   = [];
-        $setIndents    = [];
+        $lastOpenTag  = $stackPtr;
+        $lastCloseTag = null;
+        $openScopes   = [];
+        $adjustments  = [];
+        $setIndents   = [];
 
         $tokens  = $phpcsFile->getTokens();
         $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
@@ -840,7 +839,6 @@ class ScopeIndentSniff implements Sniff
                 the checking of future line.
             */
 
-            $adjusted = false;
             if ($checkToken !== null
                 && isset($this->ignoreIndentation[$tokens[$checkToken]['code']]) === false
                 && (($tokenIndent !== $checkIndent && $exact === true)

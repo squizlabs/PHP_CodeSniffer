@@ -54,8 +54,6 @@ class SubversionPropertiesSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
         $path       = $phpcsFile->getFileName();
         $properties = $this->getProperties($path);
         if ($properties === null) {

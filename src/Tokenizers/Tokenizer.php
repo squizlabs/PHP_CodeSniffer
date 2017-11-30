@@ -451,10 +451,8 @@ abstract class Tokenizer
             // String only contains tabs, so we can shortcut the process.
             $numTabs = strlen($token['content']);
 
-            $newContent   = '';
             $firstTabSize = ($tabWidth - (($currColumn - 1) % $tabWidth));
             $length       = ($firstTabSize + ($tabWidth * ($numTabs - 1)));
-            $currColumn  += $length;
             $newContent   = $prefix.str_repeat($padding, ($length - 1));
         } else {
             // We need to determine the length of each tab.

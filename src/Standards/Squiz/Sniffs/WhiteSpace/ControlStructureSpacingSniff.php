@@ -212,7 +212,6 @@ class ControlStructureSpacingSniff implements Sniff
 
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
-                    $i = ($scopeCloser - 1);
                     for ($i = ($scopeCloser - 1); $i > $lastContent; $i--) {
                         if ($tokens[$i]['line'] === $tokens[$scopeCloser]['line']) {
                             continue;
