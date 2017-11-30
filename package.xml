@@ -99,21 +99,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - PEAR.Functions.FunctionDeclaration no longer errors when a function declaration is the first content in a JS file
     -- Thanks to Juliette Reinders Folmer for the patch
+  - PEAR.Functions.FunctionCallSignature now requires the function name to be indented to an exact tab stop
+    -- If the function name is not the start of the statement, the opening statement must be indented correctly instead
+    -- Added a new fixable error code PEAR.Functions.FunctionCallSignature.OpeningIndent for this error
   - Squiz.Functions.FunctionDeclarationArgumentSpacing is no longer confused about comments in function declarations
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.NonExecutableCode error messages now indicate which line the code block ending is on
     -- Makes it easier to identify where the code block exited or returned
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Commenting.FunctionComment now supports nullable type hints
+  - Squiz.Commenting.FunctionCommentThrowTag no longer assigns throw tags inside anon classes to the enclosing function
   - Squiz.WhiteSpace.SemicolonSpacing now ignores semicolons used for empty statements inside FOR conditions
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.ControlStructures.ControlSignature now allows configuring the number of spaces before the colon in alternative syntax
     -- Override the 'requiredSpacesBeforeColon' setting in a ruleset.xml file to change
     -- Default remains at 1
     -- Thanks to Nikola Kovacs for the patch
-  - PEAR.Functions.FunctionCallSignature now requires the function name to be indented to an exact tab stop
-    -- If the function name is not the start of the statement, the opening statement must be indented correctly instead
-    -- Added a new fixable error code PEAR.Functions.FunctionCallSignature.OpeningIndent for this error
   - The Squiz standard now ensures array keys are indented 4 spaces from the main statement
     -- Previously, this standard aligned keys 1 space from the start of the array keyword
   - The Squiz standard now ensures array end braces are aligned with the main statement
