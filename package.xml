@@ -68,6 +68,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Renaat De Muynck for the contribution
   - File paths specified using --stdin-path can now point to fake file locations (request #1488)
     -- Previously, STDIN files using fake file paths were excluded from checking
+  - Setting an empty basepath (--basepath=) on the CLI will now clear a basepath set directly in a ruleset
+    -- Thanks to Xaver Loppenstedt for the patch
   - Ignore patterns are now checked on symlink target paths instead of symlink source paths
     -- Restores previous behaviour of this feature
   - Metrics were being double counted when multiple sniffs were recording the same metric
