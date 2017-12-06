@@ -39,8 +39,17 @@ class DeclareStrictTypesUnitTest extends AbstractSniffUnitTest
         case 'DeclareStrictTypesUnitTest.5.inc':
             return [2 => 1];
         case 'DeclareStrictTypesUnitTest.6.inc':
+            return [1 => 2];
+        case 'DeclareStrictTypesUnitTest.7.inc':
+            return [
+                1 => 1,
+                4 => 1,
+            ];
+        case 'DeclareStrictTypesUnitTest.8.inc':
+            return [6 => 2];
+        case 'DeclareStrictTypesUnitTest.9.inc':
             return [5 => 3];
-        }
+        }//end switch
 
         return [1 => 1];
 
