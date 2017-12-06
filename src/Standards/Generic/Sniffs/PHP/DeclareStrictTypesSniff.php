@@ -85,42 +85,121 @@ class DeclareStrictTypesSniff implements Sniff
             $string = $phpcsFile->getTokensAsString($next, ($eos - $next + 1));
 
             if (stripos($string, 'strict_types') !== false) {
-                // Check how many blank lines is before declare statement.
-                $prev        = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
-                $linesBefore = ($tokens[$next]['line'] - $tokens[$prev]['line'] - 1);
-                if ($linesBefore !== $this->linesBefore) {
-                    $error = 'Invalid number of blank lines before declare statement; expected %d, but found %d';
-                    $data  = [
-                        $this->linesBefore,
-                        $linesBefore,
-                    ];
-                    $fix   = $phpcsFile->addFixableError($error, $next, 'LinesBefore', $data);
+                $prev  = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
+                $after = $phpcsFile->findNext(T_WHITESPACE, ($eos + 1), null, true);
 
-                    if ($fix === true) {
-                        $phpcsFile->fixer->beginChangeset();
-                        if ($linesBefore > $this->linesBefore) {
-                            // Remove additional blank line(s).
+                if ($after !== false
+                    && $tokens[$prev]['code'] === T_OPEN_TAG
+                    && $tokens[$after]['code'] === T_CLOSE_TAG
+                ) {
+                    if ($tokens[$prev]['line'] !== $tokens[$next]['line']) {
+                        $error = 'PHP open tag must be in the same line as declaration.';
+                        $fix   = $phpcsFile->addFixableError($error, $prev, 'OpenTag');
+
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            $phpcsFile->fixer->replaceToken($prev, '<?php ');
                             for ($i = ($prev + 1); $i < $next; ++$i) {
                                 $phpcsFile->fixer->replaceToken($i, '');
-                                if (($tokens[$next]['line'] - $tokens[($i + 1)]['line'] - 1) === $this->linesBefore) {
-                                    break;
-                                }
                             }
-                        } else {
-                            // Add new blank line(s).
-                            while ($linesBefore < $this->linesBefore) {
-                                $phpcsFile->fixer->addNewlineBefore($next);
-                                ++$linesBefore;
-                            }
+
+                            $phpcsFile->fixer->endChangeset();
                         }
 
-                        $phpcsFile->fixer->endChangeset();
+                        $prev = false;
+                    }//end if
+
+                    if ($prev !== false && ($prev < ($next - 1) || $tokens[$prev]['content'] !== '<?php ')) {
+                        $error = 'Expected single space after PHP open tag and before declaration.';
+                        $fix   = $phpcsFile->addFixableError($error, $prev, 'OpenTagSpace');
+
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            $phpcsFile->fixer->replaceToken($prev, '<?php ');
+                            for ($i = ($prev + 1); $i < $next; ++$i) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }
                     }
+
+                    if ($tokens[$after]['line'] !== $tokens[$eos]['line']) {
+                        $error = 'PHP close tag must be in the same line as declaration.';
+                        $fix   = $phpcsFile->addFixableError($error, $after, 'CloseTag');
+
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($i = ($eos + 1); $i < $after; ++$i) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            $phpcsFile->fixer->addContentBefore($after, ' ');
+                            $phpcsFile->fixer->endChangeset();
+                        }
+
+                        $after = false;
+                    }//end if
+
+                    if ($after !== false && ($after > ($eos + 2) || $tokens[($eos + 1)]['content'] !== ' ')) {
+                        $error = 'Expected single space before PHP close tag and after declaration.';
+                        $fix   = $phpcsFile->addFixableError($error, $after, 'CloseTagSpace');
+
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($i = ($eos + 1); $i < $after; ++$i) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            $phpcsFile->fixer->addContentBefore($after, ' ');
+                            $phpcsFile->fixer->endChangeset();
+                        }
+                    }//end if
+
+                    $prev  = false;
+                    $after = false;
+                }//end if
+
+                // Check how many blank lines is before declare statement.
+                if ($prev !== false) {
+                    $linesBefore = ($tokens[$next]['line'] - $tokens[$prev]['line'] - 1);
+                    if ($linesBefore !== $this->linesBefore) {
+                        $error = 'Invalid number of blank lines before declare statement; expected %d, but found %d';
+                        $data  = [
+                            $this->linesBefore,
+                            $linesBefore,
+                        ];
+                        $fix   = $phpcsFile->addFixableError($error, $next, 'LinesBefore', $data);
+
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            if ($linesBefore > $this->linesBefore) {
+                                // Remove additional blank line(s).
+                                for ($i = ($prev + 1); $i < $next; ++$i) {
+                                    $phpcsFile->fixer->replaceToken($i, '');
+                                    if (($tokens[$next]['line'] - $tokens[($i + 1)]['line'] - 1) === $this->linesBefore) {
+                                        break;
+                                    }
+                                }
+                            } else {
+                                // Add new blank line(s).
+                                while ($linesBefore < $this->linesBefore) {
+                                    $phpcsFile->fixer->addNewlineBefore($next);
+                                    ++$linesBefore;
+                                }
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }
+                    }//end if
                 }//end if
 
                 // Check number of blank lines after the declare statement.
-                $after = $phpcsFile->findNext(T_WHITESPACE, ($eos + 1), null, true);
                 if ($after !== false) {
+                    if ($tokens[$after]['code'] === T_CLOSE_TAG) {
+                        $this->linesAfter = 0;
+                    }
+
                     $linesAfter = ($tokens[$after]['line'] - $tokens[$eos]['line'] - 1);
                     if ($linesAfter !== $this->linesAfter) {
                         $error = 'Invalid number of blank lines after declare statement; expected %d, but found %d';
