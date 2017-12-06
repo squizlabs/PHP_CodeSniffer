@@ -40,7 +40,7 @@ class DeclareStrictTypesSniff implements Sniff
      *
      * @var integer
      */
-    public $linesBefore = 0;
+    public $linesBefore = 1;
 
     /**
      * Number of blank lines after declaration.
