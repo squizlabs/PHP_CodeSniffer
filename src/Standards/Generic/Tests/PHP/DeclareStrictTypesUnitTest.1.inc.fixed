@@ -1,0 +1,7 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * @method string method(bool $b)
+ */
+class X {}
