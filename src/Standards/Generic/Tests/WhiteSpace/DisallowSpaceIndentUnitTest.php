@@ -25,6 +25,10 @@ class DisallowSpaceIndentUnitTest extends AbstractSniffUnitTest
      */
     public function setCliValues($testFile, $config)
     {
+        if ($testFile === 'DisallowSpaceIndentUnitTest.2.inc') {
+            return;
+        }
+
         $config->tabWidth = 4;
 
     }//end setCliValues()
@@ -40,10 +44,11 @@ class DisallowSpaceIndentUnitTest extends AbstractSniffUnitTest
      *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='DisallowSpaceIndentUnitTest.inc')
+    public function getErrorList($testFile='DisallowSpaceIndentUnitTest.1.inc')
     {
         switch ($testFile) {
-        case 'DisallowSpaceIndentUnitTest.inc':
+        case 'DisallowSpaceIndentUnitTest.1.inc':
+        case 'DisallowSpaceIndentUnitTest.2.inc':
             return [
                 5   => 1,
                 9   => 1,

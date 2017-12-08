@@ -57,6 +57,7 @@ class DisallowSpaceIndentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        $tabsReplaced = false;
         if ($this->tabWidth === null) {
             if (isset($phpcsFile->config->tabWidth) === false || $phpcsFile->config->tabWidth === 0) {
                 // We have no idea how wide tabs are, so assume 4 spaces for fixing.
@@ -65,6 +66,7 @@ class DisallowSpaceIndentSniff implements Sniff
                 $this->tabWidth = 4;
             } else {
                 $this->tabWidth = $phpcsFile->config->tabWidth;
+                $tabsReplaced   = true;
             }
         }
 
@@ -75,23 +77,33 @@ class DisallowSpaceIndentSniff implements Sniff
             T_COMMENT                => true,
         ];
 
+        $eolLen = strlen($phpcsFile->eolChar);
+
         $tokens = $phpcsFile->getTokens();
         for ($i = 0; $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['column'] !== 1 || isset($checkTokens[$tokens[$i]['code']]) === false) {
                 continue;
             }
 
-            // If tabs are being converted to spaces by the tokeniser, the
-            // original content should be checked instead of the converted content.
+            // If the tokenizer hasn't replaced tabs with spaces, we need to do it manually.
+            $token = $tokens[$i];
+            if ($tabsReplaced === false) {
+                $phpcsFile->tokenizer->replaceTabsInToken($token, ' ', ' ', $this->tabWidth);
+                if (strpos($token['content'], $phpcsFile->eolChar) !== false) {
+                    // Newline chars are not counted in the token length.
+                    $token['length'] -= $eolLen;
+                }
+            }
+
             if (isset($tokens[$i]['orig_content']) === true) {
                 $content = $tokens[$i]['orig_content'];
             } else {
                 $content = $tokens[$i]['content'];
             }
 
-            $recordMetrics = true;
+            $expectedIndentSize = $token['length'];
 
-            $expectedIndentSize = $tokens[$i]['length'];
+            $recordMetrics = true;
 
             // If this is an inline HTML token or a subsequent line of a multi-line comment,
             // split the content into indentation whitespace and the actual HTML/text.

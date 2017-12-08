@@ -150,7 +150,7 @@ abstract class Tokenizer
     {
         $currColumn = 1;
         $lineNumber = 1;
-        $eolLen     = (strlen($this->eolChar) * -1);
+        $eolLen     = strlen($this->eolChar);
         $ignoring   = null;
         $inTests    = defined('PHP_CODESNIFFER_IN_TESTS');
 
@@ -219,7 +219,7 @@ abstract class Tokenizer
                 $currColumn = 1;
 
                 // Newline chars are not counted in the token length.
-                $this->tokens[$i]['length'] += $eolLen;
+                $this->tokens[$i]['length'] -= $eolLen;
             }
 
             if ($checkAnnotations === true
@@ -428,13 +428,14 @@ abstract class Tokenizer
      * is placed into an orig_content index and the new token length is also
      * set in the length index.
      *
-     * @param array  $token   The token to replace tabs inside.
-     * @param string $prefix  The character to use to represent the start of a tab.
-     * @param string $padding The character to use to represent the end of a tab.
+     * @param array  $token    The token to replace tabs inside.
+     * @param string $prefix   The character to use to represent the start of a tab.
+     * @param string $padding  The character to use to represent the end of a tab.
+     * @param int    $tabWidth The number of spaces each tab represents.
      *
      * @return void
      */
-    public function replaceTabsInToken(&$token, $prefix=' ', $padding=' ')
+    public function replaceTabsInToken(&$token, $prefix=' ', $padding=' ', $tabWidth=null)
     {
         $checkEncoding = false;
         if (function_exists('iconv_strlen') === true) {
@@ -442,9 +443,11 @@ abstract class Tokenizer
         }
 
         $currColumn = $token['column'];
-        $tabWidth   = $this->config->tabWidth;
-        if ($tabWidth === 0) {
-            $tabWidth = 1;
+        if ($tabWidth === null) {
+            $tabWidth = $this->config->tabWidth;
+            if ($tabWidth === 0) {
+                $tabWidth = 1;
+            }
         }
 
         if (str_replace("\t", '', $token['content']) === '') {
