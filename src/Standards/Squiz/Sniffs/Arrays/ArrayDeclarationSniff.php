@@ -500,6 +500,10 @@ class ArrayDeclarationSniff implements Sniff
                     true
                 );
 
+                if ($nextContent === false) {
+                    break;
+                }
+
                 $currentEntry['value'] = $nextContent;
                 $indices[] = $currentEntry;
                 $lastToken = $nextToken;
