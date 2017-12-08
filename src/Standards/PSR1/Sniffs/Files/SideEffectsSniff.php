@@ -178,7 +178,9 @@ class SideEffectsSniff implements Sniff
                 && strtolower($tokens[$i]['content']) === 'define'
             ) {
                 $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), null, true);
-                if ($tokens[$prev]['code'] !== T_OBJECT_OPERATOR) {
+                if ($tokens[$prev]['code'] !== T_OBJECT_OPERATOR
+                    && $tokens[$prev]['code'] !== T_DOUBLE_COLON
+                ) {
                     if ($firstSymbol === null) {
                         $firstSymbol = $i;
                     }

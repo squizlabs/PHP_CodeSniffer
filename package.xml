@@ -139,6 +139,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1761 : Generic.WhiteSpace.ScopeIndent error on multi-line function call with static closure argument
   - Fixed bug #1762 : Generic.WhiteSpace.Disallow[Space/Tab]Indent not inspecting content before open tag
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #1769 : Custom "define" function triggers a warning about declaring new symbols
  </notes>
  <contents>
   <dir name="/">
