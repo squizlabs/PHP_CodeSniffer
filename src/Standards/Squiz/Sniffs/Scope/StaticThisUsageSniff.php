@@ -61,10 +61,12 @@ class StaticThisUsageSniff extends AbstractScopeSniff
         $end  = $tokens[$stackPtr]['scope_closer'];
 
         do {
-            $next = $phpcsFile->findNext([T_VARIABLE, T_CLOSURE], ($next + 1), $end);
+            $next = $phpcsFile->findNext([T_VARIABLE, T_CLOSURE, T_ANON_CLASS], ($next + 1), $end);
             if ($next === false) {
                 continue;
-            } else if ($tokens[$next]['code'] === T_CLOSURE) {
+            } else if ($tokens[$next]['code'] === T_CLOSURE
+                || $tokens[$next]['code'] === T_ANON_CLASS
+            ) {
                 $next = $tokens[$next]['scope_closer'];
                 continue;
             } else if (strtolower($tokens[$next]['content']) !== '$this') {
