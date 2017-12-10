@@ -42,6 +42,11 @@ class FunctionCommentThrowTagSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+            // Abstract or incomplete.
+            return;
+        }
+
         $find   = Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;
 

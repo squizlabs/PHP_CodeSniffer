@@ -403,3 +403,10 @@ class A
         }
     }
 }
+
+abstract class SomeClass {
+    /**
+     * Comment here.
+     */
+    abstract public function getGroups();
+}
