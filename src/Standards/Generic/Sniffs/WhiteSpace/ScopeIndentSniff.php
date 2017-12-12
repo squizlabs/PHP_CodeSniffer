@@ -325,10 +325,18 @@ class ScopeIndentSniff implements Sniff
                             echo "\t* first token on line $line is $first ($type) *".PHP_EOL;
                         }
 
-                        if ($first === $tokens[$parenCloser]['parenthesis_opener']) {
+                        if ($first === $tokens[$parenCloser]['parenthesis_opener']
+                            && $tokens[($first - 1)]['line'] === $tokens[$first]['line']
+                        ) {
                             // This is unlikely to be the start of the statement, so look
                             // back further to find it.
                             $first--;
+                            if ($this->debug === true) {
+                                $line = $tokens[$first]['line'];
+                                $type = $tokens[$first]['type'];
+                                echo "\t* first token is the parenthesis opener *".PHP_EOL;
+                                echo "\t* amended first token is $first ($type) on line $line *".PHP_EOL;
+                            }
                         }
 
                         $prev = $phpcsFile->findStartOfStatement($first, T_COMMA);

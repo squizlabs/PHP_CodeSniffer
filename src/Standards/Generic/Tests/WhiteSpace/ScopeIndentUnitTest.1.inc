@@ -1235,6 +1235,15 @@ array_map(
     $some_array
 );
 
+/**
+ * Comment.
+ */
+(function () use ($app) {
+    echo 'hi';
+})();
+
+$app->run();
+
 public function foo()
 {
     $foo('some
