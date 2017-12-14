@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed problems with some scripts and plugins waiting for STDIN
     -- This was a notable problem with the PHPStorm plugin for PHP_CodeSniffer
+  - Empty diffs are no longer followed by a newline character (request #1781)
  </notes>
  <contents>
   <dir name="/">
