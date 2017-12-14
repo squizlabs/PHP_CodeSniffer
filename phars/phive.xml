@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <repository xmlns="https://phar.io/repository" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://phar.io/repository https://phar.io/data/repository.xsd">
     <phar name="phpcs">
-        <release version="3.2.0" url="https://squizlabs.github.io/PHP_CodeSniffer/phpcs-3.2.0.phar">
+        <release version="3.2.0" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcs-3.2.0.phar">
             <signature type="gpg"/>
             <hash type="sha-256" value="ec2d3e530e47083d430368bdfb12365ecb5aa6cb31335e527e7a43f713e8a0e1"/>
         </release>
     </phar>
     <phar name="phpcbf">
-        <release version="3.2.0" url="https://squizlabs.github.io/PHP_CodeSniffer/phpcbf-3.2.0.phar">
+        <release version="3.2.0" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcbf-3.2.0.phar">
             <signature type="gpg"/>
             <hash type="sha-256" value="4b5802015b31c7f105399255f7d56c923e39c481984e2d337150096a331540e8"/>
         </release>
