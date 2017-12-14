@@ -131,9 +131,8 @@ class DisallowAlternativePHPTagsSniff implements Sniff
         }//end if
 
         // Account for incorrect script open tags.
-        // The "(?:<s)?" in the regex is to work-around a bug in PHP 5.2.
         if ($openTag['code'] === T_INLINE_HTML
-            && preg_match('`((?:<s)?cript (?:[^>]+)?language=[\'"]?php[\'"]?(?:[^>]+)?>)`i', $content, $match) === 1
+            && preg_match('`(<script (?:[^>]+)?language=[\'"]?php[\'"]?(?:[^>]+)?>)`i', $content, $match) === 1
         ) {
             $error   = 'Script style opening tag used; expected "<?php" but found "%s"';
             $snippet = $this->getSnippet($content, $match[1]);
