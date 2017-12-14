@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed problems with some scripts and plugins waiting for STDIN
     -- This was a notable problem with the PHPStorm plugin for PHP_CodeSniffer
   - Empty diffs are no longer followed by a newline character (request #1781)
+  - Fixed bug #1782 : Incorrect detection of operator in ternary + anonymous function
  </notes>
  <contents>
   <dir name="/">
