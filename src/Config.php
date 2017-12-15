@@ -365,6 +365,7 @@ class Config
         }
 
         $handle = fopen('php://stdin', 'r');
+        stream_set_blocking($handle, 0);
 
         // Check for content on STDIN.
         if ($this->stdin === true
