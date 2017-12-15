@@ -29,7 +29,7 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
      *
      * @var boolean
      */
-    public $checkClosures = true;
+    public $checkClosures = false;
 
 
     /**
