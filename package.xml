@@ -29,6 +29,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed problems with some scripts and plugins waiting for STDIN
     -- This was a notable problem with the PHPStorm plugin for PHP_CodeSniffer
   - Empty diffs are no longer followed by a newline character (request #1781)
+  - Generic.Functions.OpeningFunctionBraceKernighanRitchie no longer complains when the open brace is followed by a close tag
+    -- This makes the sniff more useful when used in templates
+    -- Thanks to Joseph Zidell for the patch
   - Fixed bug #1782 : Incorrect detection of operator in ternary + anonymous function
  </notes>
  <contents>

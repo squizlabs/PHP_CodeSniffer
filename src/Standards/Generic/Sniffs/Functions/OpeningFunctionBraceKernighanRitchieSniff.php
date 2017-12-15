@@ -29,7 +29,7 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
      *
      * @var boolean
      */
-    public $checkClosures = false;
+    public $checkClosures = true;
 
 
     /**
@@ -121,7 +121,9 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
 
         $next = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
         if ($tokens[$next]['line'] === $tokens[$openingBrace]['line']) {
-            if ($next === $tokens[$stackPtr]['scope_closer']) {
+            if ($next === $tokens[$stackPtr]['scope_closer']
+                || $tokens[$next]['code'] === T_CLOSE_TAG
+            ) {
                 // Ignore empty functions.
                 return;
             }
