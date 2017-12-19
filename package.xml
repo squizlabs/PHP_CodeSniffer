@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2017-12-18</date>
- <time>11:00:00</time>
+ <date>2017-12-20</date>
+ <time>08:43:00</time>
  <version>
   <release>3.2.2</release>
   <api>3.2.2</api>
@@ -1591,6 +1591,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>3.2.2</release>
+    <api>3.2.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2017-12-20</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Disabled STDIN detection on Windows
+      -- This fixes a problem with IDE plugins (e.g., PHPStorm) hanging on Windows
+    </notes>
+  </release>
   <release>
    <version>
     <release>3.2.1</release>
