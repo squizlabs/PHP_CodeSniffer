@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <repository xmlns="https://phar.io/repository" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://phar.io/repository https://phar.io/data/repository.xsd">
     <phar name="phpcs">
-        <release version="3.2.2" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcs-3.2.1.phar">
+        <release version="3.2.2" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcs-3.2.2.phar">
             <signature type="gpg"/>
             <hash type="sha-256" value="c934737207f3baf2d36187a43ed4bd005a70eae65f16cf22ca4eed32a69aca2a"/>
         </release>
@@ -15,7 +15,7 @@
         </release>
     </phar>
     <phar name="phpcbf">
-        <release version="3.2.2" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcbf-3.2.1.phar">
+        <release version="3.2.2" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcbf-3.2.2.phar">
             <signature type="gpg"/>
             <hash type="sha-256" value="7ad5e782411f4b8944a0bfab7d70b782c3133c921fd237b8227567186ef71f52"/>
         </release>
