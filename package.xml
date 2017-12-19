@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-12-18</date>
  <time>11:00:00</time>
  <version>
-  <release>3.2.1</release>
-  <api>3.2.1</api>
+  <release>3.2.2</release>
+  <api>3.2.2</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,13 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed problems with some scripts and plugins waiting for STDIN
-    -- This was a notable problem with IDE plugins (e.g., PHPStorm) and build systems
-  - Empty diffs are no longer followed by a newline character (request #1781)
-  - Generic.Functions.OpeningFunctionBraceKernighanRitchie no longer complains when the open brace is followed by a close tag
-    -- This makes the sniff more useful when used in templates
-    -- Thanks to Joseph Zidell for the patch
-  - Fixed bug #1782 : Incorrect detection of operator in ternary + anonymous function
+  - Disabled STDIN detection on Windows
+    -- This fixes a problem with IDE plugins (e.g., PHPStorm) hanging on Windows
  </notes>
  <contents>
   <dir name="/">

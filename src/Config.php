@@ -23,7 +23,7 @@ class Config
      *
      * @var string
      */
-    const VERSION = '3.2.1';
+    const VERSION = '3.2.2';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -360,7 +360,9 @@ class Config
             } while ($currentDir !== '.' && $currentDir !== $lastDir);
         }//end if
 
-        if (defined('STDIN') === false) {
+        if (defined('STDIN') === false
+            || strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
+        ) {
             return;
         }
 
