@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2017-12-20</date>
  <time>08:43:00</time>
  <version>
-  <release>3.2.2</release>
-  <api>3.2.2</api>
+  <release>3.2.3</release>
+  <api>3.2.3</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,8 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Disabled STDIN detection on Windows
-    -- This fixes a problem with IDE plugins (e.g., PHPStorm) hanging on Windows
+  - Fixed bug #1793 : PSR2 forcing exact indent for function call opening statements
  </notes>
  <contents>
   <dir name="/">
