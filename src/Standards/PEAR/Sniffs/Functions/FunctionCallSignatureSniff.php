@@ -368,6 +368,8 @@ class FunctionCallSignatureSniff implements Sniff
         // at a tab stop. Without this, the function will be indented a further
         // $indent spaces to the right.
         $functionIndent = (int) (floor($foundFunctionIndent / $this->indent) * $this->indent);
+        $adjustment     = 0;
+
         if ($foundFunctionIndent !== $functionIndent) {
             $error = 'Opening statement of multi-line function call not indented correctly; expected %s spaces but found %s';
             $data  = [
@@ -377,7 +379,8 @@ class FunctionCallSignatureSniff implements Sniff
 
             $fix = $phpcsFile->addFixableError($error, $first, 'OpeningIndent', $data);
             if ($fix === true) {
-                $padding = str_repeat(' ', $functionIndent);
+                $adjustment = ($functionIndent - $foundFunctionIndent);
+                $padding    = str_repeat(' ', $functionIndent);
                 if ($foundFunctionIndent === 0) {
                     $phpcsFile->fixer->addContentBefore($first, $padding);
                 } else {
@@ -393,7 +396,7 @@ class FunctionCallSignatureSniff implements Sniff
             if ($fix === true) {
                 $phpcsFile->fixer->addContent(
                     $openBracket,
-                    $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
+                    $phpcsFile->eolChar.str_repeat(' ', ($foundFunctionIndent + $this->indent))
                 );
             }
         }
@@ -406,7 +409,7 @@ class FunctionCallSignatureSniff implements Sniff
             if ($fix === true) {
                 $phpcsFile->fixer->addContentBefore(
                     $closeBracket,
-                    $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
+                    $phpcsFile->eolChar.str_repeat(' ', ($foundFunctionIndent + $this->indent))
                 );
             }
         }
@@ -477,9 +480,9 @@ class FunctionCallSignatureSniff implements Sniff
                         // Closing brace needs to be indented to the same level
                         // as the function call.
                         $inArg          = false;
-                        $expectedIndent = $foundFunctionIndent;
+                        $expectedIndent = ($foundFunctionIndent + $adjustment);
                     } else {
-                        $expectedIndent = ($functionIndent + $this->indent);
+                        $expectedIndent = ($foundFunctionIndent + $this->indent + $adjustment);
                     }
 
                     if ($tokens[$i]['code'] !== T_WHITESPACE
@@ -565,7 +568,7 @@ class FunctionCallSignatureSniff implements Sniff
 
                             $phpcsFile->fixer->addContentBefore(
                                 $next,
-                                $phpcsFile->eolChar.str_repeat(' ', ($functionIndent + $this->indent))
+                                $phpcsFile->eolChar.str_repeat(' ', ($foundFunctionIndent + $this->indent))
                             );
                             $phpcsFile->fixer->endChangeset();
                         }
