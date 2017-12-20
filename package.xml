@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - PEAR.Functions.FunctionCallSignature now ensures the closing brace is aligned with the opening statement again
+    -- Previously, it was enforcing positioning on an exact tab stop, like the opening brace
+    -- This fixes an incorrect error when using the PSR2 standard with some code blocks
   - Fixed bug #1793 : PSR2 forcing exact indent for function call opening statements
  </notes>
  <contents>
