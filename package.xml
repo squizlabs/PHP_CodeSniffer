@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- It was enforcing this during checking, but this meant invalid errors if the OpeningIndent message was being muted
     -- This fixes incorrect errors when using the PSR2 standard with some code blocks
   - Fixed bug #1793 : PSR2 forcing exact indent for function call opening statements
+  - Fixed bug #1803 : Squiz.WhiteSpace.ScopeKeywordSpacing removes member var name while fixing if no space after scope keyword
  </notes>
  <contents>
   <dir name="/">
@@ -1429,6 +1430,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeClosingBraceUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeClosingBraceUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeKeywordSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ScopeKeywordSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeKeywordSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SemicolonSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SemicolonSpacingUnitTest.inc.fixed" role="test" />
