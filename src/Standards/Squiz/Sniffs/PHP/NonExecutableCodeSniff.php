@@ -224,6 +224,11 @@ class NonExecutableCodeSniff implements Sniff
             }
         }//end for
 
+        if (isset($tokens[$start]) === false) {
+            // Live coding or parse error.
+            return;
+        }
+
         $lastLine = $tokens[$start]['line'];
         for ($i = ($start + 1); $i < $end; $i++) {
             if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === true
