@@ -51,8 +51,9 @@ class LanguageConstructSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[($stackPtr + 1)]) === false) {
-            // Skip if there is no next token.
+        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($nextToken === false) {
+            // Skip when at end of file.
             return;
         }
 
