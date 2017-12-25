@@ -192,3 +192,5 @@
  */
 
 /**doc comment */
+
+/** No docblock close tag. Must be last test without new line.
