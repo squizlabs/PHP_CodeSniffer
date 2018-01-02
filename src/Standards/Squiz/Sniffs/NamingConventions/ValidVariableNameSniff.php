@@ -16,16 +16,6 @@ use PHP_CodeSniffer\Files\File;
 class ValidVariableNameSniff extends AbstractVariableSniff
 {
 
-    /**
-     * Tokens to ignore so that we can find a DOUBLE_COLON.
-     *
-     * @var array
-     */
-    private $ignore = [
-        T_WHITESPACE,
-        T_COMMENT,
-    ];
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
