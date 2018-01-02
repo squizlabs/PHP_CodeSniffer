@@ -373,7 +373,7 @@ class EmbeddedPhpSniff implements Sniff
         if ($tokens[($closeTag - 1)]['code'] === T_WHITESPACE) {
             $trailingSpace = strlen($tokens[($closeTag - 1)]['content']);
         } else if (($tokens[($closeTag - 1)]['code'] === T_COMMENT
-            || $tokens[($closeTag - 1)]['code'] === T_PHPCS_IGNORE)
+            || isset(Tokens::$phpcsCommentTokens[$tokens[($closeTag - 1)]['code']]) === true)
             && substr($tokens[($closeTag - 1)]['content'], -1) === ' '
         ) {
             $trailingSpace = (strlen($tokens[($closeTag - 1)]['content']) - strlen(rtrim($tokens[($closeTag - 1)]['content'])));
@@ -387,7 +387,7 @@ class EmbeddedPhpSniff implements Sniff
                 if ($trailingSpace === 0) {
                     $phpcsFile->fixer->addContentBefore($closeTag, ' ');
                 } else if ($tokens[($closeTag - 1)]['code'] === T_COMMENT
-                    || $tokens[($closeTag - 1)]['code'] === T_PHPCS_IGNORE
+                    || isset(Tokens::$phpcsCommentTokens[$tokens[($closeTag - 1)]['code']]) === true
                 ) {
                     $phpcsFile->fixer->replaceToken(($closeTag - 1), rtrim($tokens[($closeTag - 1)]['content']).' ');
                 } else {
