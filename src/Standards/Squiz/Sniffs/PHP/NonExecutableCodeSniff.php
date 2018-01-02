@@ -224,6 +224,10 @@ class NonExecutableCodeSniff implements Sniff
             }
         }//end for
 
+        if (isset($tokens[$start]) === false) {
+            return;
+        }
+
         $lastLine = $tokens[$start]['line'];
         for ($i = ($start + 1); $i < $end; $i++) {
             if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === true

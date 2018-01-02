@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This fixes incorrect errors when using the PSR2 standard with some code blocks
   - Generic.PHP.Syntax now forces display_errors to ON when linting
     -- Thanks to Raúl Arellano for the patch
+  - Squiz.PHP.NonExecutableCode could fatal error while fixing file with syntax error
   - Fixed bug #1793 : PSR2 forcing exact indent for function call opening statements
   - Fixed bug #1803 : Squiz.WhiteSpace.ScopeKeywordSpacing removes member var name while fixing if no space after scope keyword
   - Fixed bug #1817 : Blank line not enforced after control structure if comment on same line as closing brace
