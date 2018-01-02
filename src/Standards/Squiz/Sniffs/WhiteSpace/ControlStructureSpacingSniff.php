@@ -250,6 +250,7 @@ class ControlStructureSpacingSniff implements Sniff
 
             if ($tokens[$nextCode]['code'] === T_ELSE
                 || $tokens[$nextCode]['code'] === T_ELSEIF
+                || $tokens[$trailingContent]['line'] === $tokens[$scopeCloser]['line']
             ) {
                 $trailingContent = $nextCode;
             }
@@ -319,7 +320,20 @@ class ControlStructureSpacingSniff implements Sniff
             $error = 'No blank line found after control structure';
             $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'NoLineAfterClose');
             if ($fix === true) {
-                $phpcsFile->fixer->addNewline($scopeCloser);
+                $trailingContent = $phpcsFile->findNext(
+                    T_WHITESPACE,
+                    ($scopeCloser + 1),
+                    null,
+                    true
+                );
+
+                if ($tokens[$trailingContent]['code'] === T_COMMENT
+                    && $tokens[$trailingContent]['line'] === $tokens[$scopeCloser]['line']
+                ) {
+                    $phpcsFile->fixer->addNewline($trailingContent);
+                } else {
+                    $phpcsFile->fixer->addNewline($scopeCloser);
+                }
             }
         }//end if
 

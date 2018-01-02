@@ -1223,7 +1223,6 @@ class Config
                     $this->processUnknownArgument('--'.$arg, $pos);
                 }
             }//end if
-
             break;
         }//end switch
 

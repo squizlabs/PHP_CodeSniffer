@@ -229,6 +229,11 @@ if (true) { echo 'foo';
     echo 'foo';
 }
 
+if ($true) {
+    echo 'hi 2';
+}//end if
+echo 'hi';
+
 ?>
 <?php foreach($formset['Fieldset'] as $fieldset): ?>
 
