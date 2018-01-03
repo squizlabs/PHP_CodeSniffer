@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionSpacingSniff implements Sniff
 {
@@ -138,7 +139,9 @@ class FunctionSpacingSniff implements Sniff
             $currentLine = $tokens[$stackPtr]['line'];
 
             $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, $prevLineToken, null, true);
-            if ($tokens[$prevContent]['code'] === T_COMMENT) {
+            if ($tokens[$prevContent]['code'] === T_COMMENT
+                || isset(Tokens::$phpcsCommentTokens[$tokens[$prevContent]['code']]) === true
+            ) {
                 // Ignore comments as they can have different spacing rules, and this
                 // isn't a proper function comment anyway.
                 return;
