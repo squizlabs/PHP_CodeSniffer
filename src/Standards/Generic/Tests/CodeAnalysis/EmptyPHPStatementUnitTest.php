@@ -51,6 +51,8 @@ class EmptyPHPStatementUnitTest extends AbstractSniffUnitTest
             33 => 1,
             43 => 1,
             45 => 1,
+            49 => 1,
+            50 => 1,
         ];
 
     }//end getWarningList()

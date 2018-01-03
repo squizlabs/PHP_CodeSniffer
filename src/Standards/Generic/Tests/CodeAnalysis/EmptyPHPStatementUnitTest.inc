@@ -42,4 +42,9 @@ function_call();
 -->
 <?php ; ?>
 
-<input name="<?php ; ?>" />
+<input name="<?php ; ?>" /> <!-- Bad. -->
+
+<!-- Tests with short open echo tag. -->
+<input name="<?= 'some text' ?>" /> <!-- OK. -->
+<input name="<?= ?>" /> <!-- Bad. -->
+<input name="<?= ; ?>" /> <!-- Bad. -->

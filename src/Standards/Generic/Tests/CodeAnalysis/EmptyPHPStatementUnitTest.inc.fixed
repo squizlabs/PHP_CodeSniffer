@@ -37,4 +37,9 @@ function_call();
  */
 -->
 
-<input name="" />
+<input name="" /> <!-- Bad. -->
+
+<!-- Tests with short open echo tag. -->
+<input name="<?= 'some text' ?>" /> <!-- OK. -->
+<input name="" /> <!-- Bad. -->
+<input name="" /> <!-- Bad. -->

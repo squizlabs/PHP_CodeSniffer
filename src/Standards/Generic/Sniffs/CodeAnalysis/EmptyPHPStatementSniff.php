@@ -55,7 +55,8 @@ class EmptyPHPStatementSniff implements Sniff
 
             if ($prevNonEmpty === false
                 || ($tokens[$prevNonEmpty]['code'] !== T_SEMICOLON
-                && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG)
+                && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG
+                && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG_WITH_ECHO)
             ) {
                 return;
             }
@@ -68,7 +69,9 @@ class EmptyPHPStatementSniff implements Sniff
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
 
-                if ($tokens[$prevNonEmpty]['code'] === T_OPEN_TAG) {
+                if ($tokens[$prevNonEmpty]['code'] === T_OPEN_TAG
+                    || $tokens[$prevNonEmpty]['code'] === T_OPEN_TAG_WITH_ECHO
+                ) {
                     // Check for superfluous whitespace after the semi-colon which will be
                     // removed as the `<?php ` open tag token already contains whitespace,
                     // either a space or a new line.
@@ -90,14 +93,16 @@ class EmptyPHPStatementSniff implements Sniff
 
                 $phpcsFile->fixer->endChangeset();
             }//end if
-
             break;
 
         // Detect `<?php ? >`.
         case 'T_CLOSE_TAG':
             $prevNonEmpty = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
 
-            if ($prevNonEmpty === false || $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG) {
+            if ($prevNonEmpty === false
+                || ($tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG
+                && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG_WITH_ECHO)
+            ) {
                 return;
             }
 
