@@ -464,6 +464,19 @@ final class Tokens
     ];
 
     /**
+     * Tokens that are comments containing PHPCS instructions.
+     *
+     * @var array<int, int>
+     */
+    public static $phpcsCommentTokens = [
+        T_PHPCS_ENABLE           => T_PHPCS_ENABLE,
+        T_PHPCS_DISABLE          => T_PHPCS_DISABLE,
+        T_PHPCS_SET              => T_PHPCS_SET,
+        T_PHPCS_IGNORE           => T_PHPCS_IGNORE,
+        T_PHPCS_IGNORE_FILE      => T_PHPCS_IGNORE_FILE,
+    ];
+
+    /**
      * Tokens that represent strings.
      *
      * Note that T_STRINGS are NOT represented in this list.
