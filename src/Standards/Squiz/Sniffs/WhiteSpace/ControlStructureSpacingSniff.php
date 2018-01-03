@@ -238,7 +238,9 @@ class ControlStructureSpacingSniff implements Sniff
             true
         );
 
-        if ($tokens[$trailingContent]['code'] === T_COMMENT) {
+        if ($tokens[$trailingContent]['code'] === T_COMMENT
+            || isset(Tokens::$phpcsCommentTokens[$tokens[$trailingContent]['code']]) === true
+        ) {
             // Special exception for code where the comment about
             // an ELSE or ELSEIF is written between the control structures.
             $nextCode = $phpcsFile->findNext(
@@ -327,7 +329,8 @@ class ControlStructureSpacingSniff implements Sniff
                     true
                 );
 
-                if ($tokens[$trailingContent]['code'] === T_COMMENT
+                if (($tokens[$trailingContent]['code'] === T_COMMENT
+                    || isset(Tokens::$phpcsCommentTokens[$tokens[$trailingContent]['code']]) === true)
                     && $tokens[$trailingContent]['line'] === $tokens[$scopeCloser]['line']
                 ) {
                     $phpcsFile->fixer->addNewline($trailingContent);

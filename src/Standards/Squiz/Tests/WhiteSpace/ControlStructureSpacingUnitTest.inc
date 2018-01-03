@@ -234,6 +234,11 @@ if ($true) {
 }//end if
 echo 'hi';
 
+if ($true) {
+    echo 'hi 2';
+} // phpcs:enable Standard.Category.Sniff -- for reasons.
+echo 'hi';
+
 ?>
 <?php foreach($formset['Fieldset'] as $fieldset): ?>
 

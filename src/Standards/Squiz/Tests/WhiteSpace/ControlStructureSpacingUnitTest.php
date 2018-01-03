@@ -54,8 +54,9 @@ class ControlStructureSpacingUnitTest extends AbstractSniffUnitTest
                 189 => 1,
                 222 => 1,
                 234 => 1,
-                238 => 1,
-                240 => 1,
+                239 => 1,
+                243 => 1,
+                245 => 1,
             ];
             break;
         case 'ControlStructureSpacingUnitTest.js':
