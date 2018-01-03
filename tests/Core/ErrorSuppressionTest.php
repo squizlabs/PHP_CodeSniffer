@@ -1000,6 +1000,20 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, $numWarnings);
         $this->assertCount(1, $warnings);
 
+        // Ignore an enable before a disable.
+        $content = '<?php '.PHP_EOL.'// phpcs:enable Generic.PHP.NoSilencedErrors -- Because reasons'.PHP_EOL.'$var = @delete( $filename );'.PHP_EOL;
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+        $this->assertEquals(0, $numWarnings);
+        $this->assertCount(0, $warnings);
+
     }//end testCommenting()
 
 

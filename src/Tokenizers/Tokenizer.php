@@ -351,41 +351,42 @@ abstract class Tokenizer
                         $this->tokens[$i]['code']       = T_PHPCS_DISABLE;
                         $this->tokens[$i]['type']       = 'T_PHPCS_DISABLE';
                         $this->tokens[$i]['sniffCodes'] = $disabledSniffs;
-                    } else if ($ignoring !== null
-                        && substr($commentTextLower, 0, 12) === 'phpcs:enable'
-                    ) {
-                        $enabledSniffs = [];
+                    } else if (substr($commentTextLower, 0, 12) === 'phpcs:enable') {
+                        if ($ignoring !== null) {
+                            $enabledSniffs = [];
 
-                        $additionalText = substr($commentText, 13);
-                        if ($additionalText === false) {
-                            $ignoring = null;
-                        } else {
-                            $parts = explode(',', substr($commentText, 13));
-                            foreach ($parts as $sniffCode) {
-                                $sniffCode = trim($sniffCode);
-                                $enabledSniffs[$sniffCode] = true;
-                                if (isset($ignoring[$sniffCode]) === true) {
-                                    unset($ignoring[$sniffCode]);
+                            $additionalText = substr($commentText, 13);
+                            if ($additionalText === false) {
+                                $ignoring = null;
+                            } else {
+                                $parts = explode(',', substr($commentText, 13));
+                                foreach ($parts as $sniffCode) {
+                                    $sniffCode = trim($sniffCode);
+                                    $enabledSniffs[$sniffCode] = true;
+                                    if (isset($ignoring[$sniffCode]) === true) {
+                                        unset($ignoring[$sniffCode]);
+                                    }
+                                }
+
+                                if (empty($ignoring) === true) {
+                                    $ignoring = null;
                                 }
                             }
 
-                            if (empty($ignoring) === true) {
-                                $ignoring = null;
+                            if ($ownLine === true) {
+                                // Completely ignore the comment line.
+                                $this->ignoredLines[$this->tokens[$i]['line']] = ['all' => true];
+                            } else {
+                                // The comment is on the same line as the code it is ignoring,
+                                // so respect the new ignore rules.
+                                $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
                             }
-                        }
 
-                        if ($ownLine === true) {
-                            // Completely ignore the comment line.
-                            $this->ignoredLines[$this->tokens[$i]['line']] = ['all' => true];
-                        } else {
-                            // The comment is on the same line as the code it is ignoring,
-                            // so respect the new ignore rules.
-                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
-                        }
+                            $this->tokens[$i]['sniffCodes'] = $enabledSniffs;
+                        }//end if
 
-                        $this->tokens[$i]['code']       = T_PHPCS_ENABLE;
-                        $this->tokens[$i]['type']       = 'T_PHPCS_ENABLE';
-                        $this->tokens[$i]['sniffCodes'] = $enabledSniffs;
+                        $this->tokens[$i]['code'] = T_PHPCS_ENABLE;
+                        $this->tokens[$i]['type'] = 'T_PHPCS_ENABLE';
                     } else if (substr($commentTextLower, 0, 12) === 'phpcs:ignore') {
                         $ignoreRules = [];
 
