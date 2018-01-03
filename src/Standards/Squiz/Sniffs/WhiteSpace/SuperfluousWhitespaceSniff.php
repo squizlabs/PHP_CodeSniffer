@@ -192,6 +192,7 @@ class SuperfluousWhitespaceSniff implements Sniff
 
             // Ignore blank lines if required.
             if ($this->ignoreBlankLines === true
+                && $tokens[$stackPtr]['code'] === T_WHITESPACE
                 && $tokens[($stackPtr - 1)]['line'] !== $tokens[$stackPtr]['line']
             ) {
                 return;
