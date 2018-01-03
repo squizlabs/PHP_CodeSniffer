@@ -280,7 +280,16 @@ abstract class Tokenizer
 
                         $ignoring = null;
                     }//end if
-                } else if (substr($commentTextLower, 0, 6) === 'phpcs:') {
+                } else if (substr($commentTextLower, 0, 6) === 'phpcs:'
+                    || substr($commentTextLower, 0, 7) === '@phpcs:'
+                ) {
+                    // If the @phpcs: syntax is being used, strip the @ to make
+                    // comparisions easier.
+                    if ($commentText[0] === '@') {
+                        $commentText      = substr($commentText, 1);
+                        $commentTextLower = strtolower($commentText);
+                    }
+
                     // If there is a comment on the end, strip it off.
                     $commentStart = strpos($commentTextLower, ' --');
                     if ($commentStart !== false) {
