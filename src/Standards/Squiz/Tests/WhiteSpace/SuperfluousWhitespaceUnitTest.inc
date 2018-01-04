@@ -46,6 +46,8 @@ function myFunction2()
     
 }
 
+// Ordinary comment with extra whitespace at the end    
+
 // phpcs:set Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
 
 // Уберём из системных свойств все кроме информации об услугах
