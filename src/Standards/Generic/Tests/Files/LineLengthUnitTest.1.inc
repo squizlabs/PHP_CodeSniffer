@@ -74,3 +74,9 @@ $ab	= function ()	{ /* comment */ if ($foo === true) { return	(int) $foo; }  };
 	$ab	= function () { /* comment */ if ($foo === true) { return(int) $foo; }};
 	$ab	= function () { /* comment */ if ($foo === true) {	return(int) $foo; }};
 $ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab	=  	$ab;
+
+// PHPCS annotations on a line by themselves should be ignored for the metrics.
+// phpcs:enable Standard.Category.Sniff.ErrorCode1,Standard.Category.Sniff.ErrorCode2 -- for reasons ...
+
+// ... but not when combined with statements.
+$a = $b; // phpcs:ignore Standard.Category.Sniff.ErrorCode1,Standard.Category.Sniff.ErrorCode2 -- for reasons ...
