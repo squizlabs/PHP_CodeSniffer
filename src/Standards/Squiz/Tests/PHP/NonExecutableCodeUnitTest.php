@@ -68,6 +68,12 @@ class NonExecutableCodeUnitTest extends AbstractSniffUnitTest
                 153 => 1,
                 166 => 1,
                 180 => 1,
+                232 => 1,
+                240 => 1,
+                246 => 1,
+                252 => 1,
+                253 => 1,
+                254 => 2,
             ];
             break;
         case 'NonExecutableCodeUnitTest.2.inc':
@@ -84,7 +90,6 @@ class NonExecutableCodeUnitTest extends AbstractSniffUnitTest
             return [];
             break;
         }//end switch
-
 
     }//end getWarningList()
 

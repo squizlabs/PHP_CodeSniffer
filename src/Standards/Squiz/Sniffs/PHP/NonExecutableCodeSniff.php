@@ -30,6 +30,7 @@ class NonExecutableCodeSniff implements Sniff
             T_RETURN,
             T_THROW,
             T_EXIT,
+            T_GOTO,
         ];
 
     }//end register()

@@ -224,3 +224,36 @@ switch (true) {
             }
         );
 }
+
+for($i=0,$j=50; $i<100; $i++) {
+  while($j--) {
+    if($j==17) {
+		goto end;
+		echo 'unreachable';
+	}
+  }
+}
+
+switch ($var) {
+    case '1':
+        goto end;
+        echo 'hi';
+
+    case '2':
+    case '3':
+        if ($something === true) {
+            goto end;
+            echo 'hi';
+        }
+    break;
+    default:
+        goto end;
+
+        if ($something === true) {
+            goto end;
+            echo 'hi';
+        }
+}
+
+end:
+echo 'j hit 17';
