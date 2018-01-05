@@ -158,3 +158,8 @@ class A extends B
     implements C
 {
 }
+
+class C2
+{
+
+} // phpcs:ignore Standard.Category.Sniff
