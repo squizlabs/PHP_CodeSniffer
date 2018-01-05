@@ -45,6 +45,10 @@ class MemberVarSpacingUnitTest extends AbstractSniffUnitTest
             200 => 1,
             209 => 1,
             211 => 1,
+            224 => 1,
+            229 => 1,
+            241 => 1,
+            246 => 1,
         ];
 
     }//end getErrorList()
