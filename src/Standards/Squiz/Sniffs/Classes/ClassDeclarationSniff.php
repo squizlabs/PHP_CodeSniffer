@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\ClassDeclarationSniff as PSR2ClassDeclarationSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
 {
@@ -108,7 +109,8 @@ class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
             // Ignore comments on the same lines as the brace.
             if ($tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']
                 && ($tokens[$nextContent]['code'] === T_WHITESPACE
-                || $tokens[$nextContent]['code'] === T_COMMENT)
+                || $tokens[$nextContent]['code'] === T_COMMENT
+                || isset(Tokens::$phpcsCommentTokens[$tokens[$nextContent]['code']]) === true)
             ) {
                 continue;
             }
