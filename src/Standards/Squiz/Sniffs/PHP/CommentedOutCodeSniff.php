@@ -160,15 +160,6 @@ class CommentedOutCodeSniff implements Sniff
 
         ini_set('error_reporting', $oldErrors);
 
-        $emptyTokens = [
-            T_WHITESPACE              => true,
-            T_STRING                  => true,
-            T_STRING_CONCAT           => true,
-            T_ENCAPSED_AND_WHITESPACE => true,
-            T_NONE                    => true,
-            T_COMMENT                 => true,
-        ];
-
         $numTokens = count($stringTokens);
 
         /*
@@ -197,6 +188,15 @@ class CommentedOutCodeSniff implements Sniff
         ) {
             return;
         }
+
+        $emptyTokens = [
+            T_WHITESPACE              => true,
+            T_STRING                  => true,
+            T_STRING_CONCAT           => true,
+            T_ENCAPSED_AND_WHITESPACE => true,
+            T_NONE                    => true,
+            T_COMMENT                 => true,
+        ];
 
         $numComment  = 0;
         $numPossible = 0;
