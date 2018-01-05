@@ -61,8 +61,16 @@ class CommentedOutCodeSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Process whole comment blocks at once, so skip all but the first token.
-        if ($stackPtr > 0 && $tokens[$stackPtr]['code'] === $tokens[($stackPtr - 1)]['code']) {
-            return;
+        if ($stackPtr > 0) {
+            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            if ($prev !== false
+                && $tokens[$stackPtr]['code'] === $tokens[$prev]['code']
+                && $tokens[$stackPtr]['line'] === ($tokens[$prev]['line'] + 1)
+            ) {
+                return;
+            }
+
+            unset($prev);
         }
 
         // Ignore comments at the end of code blocks.
@@ -75,8 +83,15 @@ class CommentedOutCodeSniff implements Sniff
             $content = '<?php ';
         }
 
+        $lastLineSeen = $tokens[$stackPtr]['line'];
         for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$stackPtr]['code'] !== $tokens[$i]['code']) {
+            if ($tokens[$i]['code'] === T_WHITESPACE) {
+                continue;
+            }
+
+            if ($tokens[$stackPtr]['code'] !== $tokens[$i]['code']
+                || ($lastLineSeen + 1) < $tokens[$i]['line']
+            ) {
                 break;
             }
 
@@ -111,7 +126,8 @@ class CommentedOutCodeSniff implements Sniff
                 $tokenContent = substr($tokenContent, 1);
             }
 
-            $content .= $tokenContent.$phpcsFile->eolChar;
+            $content     .= $tokenContent.$phpcsFile->eolChar;
+            $lastLineSeen = $tokens[$i]['line'];
         }//end for
 
         $content = trim($content);
