@@ -3,6 +3,7 @@ $size = sizeof($array);
 $size = count($array);
 delete($filepath);
 unset($filepath);
+$check = is_integer($var);
 $size = \sizeof($array);
 $size = \my\ns\sizeof('abc');($array);
 
@@ -21,6 +22,7 @@ function delete() {}
 function unset() {}
 function sizeof() {}
 function count() {}
+function join() {}
 
 trait DelProvider {
   public function delete() {
