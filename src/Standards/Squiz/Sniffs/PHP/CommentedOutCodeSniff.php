@@ -206,8 +206,8 @@ class CommentedOutCodeSniff implements Sniff
             if (isset($emptyTokens[$stringTokens[$i]['code']]) === true) {
                 // Looks like comment.
                 $numComment++;
-            } else if (in_array($stringTokens[$i]['code'], Tokens::$comparisonTokens) === true
-                || in_array($stringTokens[$i]['code'], Tokens::$arithmeticTokens) === true
+            } else if (isset(Tokens::$comparisonTokens[$stringTokens[$i]['code']]) === true
+                || isset(Tokens::$arithmeticTokens[$stringTokens[$i]['code']]) === true
                 || $stringTokens[$i]['code'] === T_GOTO_LABEL
             ) {
                 // Commented out HTML/XML and other docs contain a lot of these
