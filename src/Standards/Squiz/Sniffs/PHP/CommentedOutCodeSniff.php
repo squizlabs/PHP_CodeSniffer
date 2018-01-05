@@ -78,11 +78,7 @@ class CommentedOutCodeSniff implements Sniff
             return;
         }
 
-        $content = '';
-        if ($phpcsFile->tokenizerType === 'PHP') {
-            $content = '<?php ';
-        }
-
+        $content      = '';
         $lastLineSeen = $tokens[$stackPtr]['line'];
         for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['code'] === T_WHITESPACE) {
@@ -130,12 +126,6 @@ class CommentedOutCodeSniff implements Sniff
             $lastLineSeen = $tokens[$i]['line'];
         }//end for
 
-        $content = trim($content);
-
-        if ($phpcsFile->tokenizerType === 'PHP') {
-            $content .= ' ?>';
-        }
-
         // Quite a few comments use multiple dashes, equals signs etc
         // to frame comments and licence headers.
         $content = preg_replace('/[-=#*]{2,}/', '-', $content);
@@ -143,6 +133,16 @@ class CommentedOutCodeSniff implements Sniff
         // Random numbers sitting inside the content can throw parse errors
         // for invalid literals in PHP7+, so strip those.
         $content = preg_replace('/\d+/', '', $content);
+
+        $content = trim($content);
+
+        if ($content === '') {
+            return;
+        }
+
+        if ($phpcsFile->tokenizerType === 'PHP') {
+            $content = '<?php '.$content.' ?>';
+        }
 
         // Because we are not really parsing code, the tokenizer can throw all sorts
         // of errors that don't mean anything, so ignore them.
