@@ -32,7 +32,7 @@ if ($blah) {
 
 // Continue, as we're done with this token.
 
-/**
+/*
  * The listeners array.
  *
  * @var array(PHP_CodeSniffer_Sniff)
@@ -59,7 +59,7 @@ function myFunction()
 // | A comment block           |
 // *****************************
 
-/**
+/*
  * List of panels.
  *
  * XML structure:
