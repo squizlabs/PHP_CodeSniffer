@@ -122,6 +122,9 @@ class CommentedOutCodeSniff implements Sniff
                 $tokenContent = substr($tokenContent, 1);
             }
 
+            // Remove PHPCS annotations.
+            $tokenContent = preg_replace('`[@]?(?:phpcs:(?:enable|disable|set|ignore)|codingStandards(?:Ignore|Change)).*$`', '', $tokenContent);
+
             $content     .= $tokenContent.$phpcsFile->eolChar;
             $lastLineSeen = $tokens[$i]['line'];
         }//end for
