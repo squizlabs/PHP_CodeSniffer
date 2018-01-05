@@ -122,7 +122,7 @@ class CommentedOutCodeSniff implements Sniff
 
         // Quite a few comments use multiple dashes, equals signs etc
         // to frame comments and licence headers.
-        $content = preg_replace('/[-=*]+/', '-', $content);
+        $content = preg_replace('/[-=#*]{2,}/', '-', $content);
 
         // Random numbers sitting inside the content can throw parse errors
         // for invalid literals in PHP7+, so strip those.
