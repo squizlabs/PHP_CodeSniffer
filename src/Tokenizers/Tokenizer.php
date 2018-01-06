@@ -255,7 +255,7 @@ abstract class Tokenizer
                     ) {
                         $ignoring = ['all' => true];
                         if ($ownLine === true) {
-                            $this->ignoredLines[$this->tokens[$i]['line']] = ['all' => true];
+                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
                         }
                     } else if ($ignoring !== null
                         && strpos($commentText, '@codingStandardsIgnoreEnd') !== false
@@ -272,7 +272,7 @@ abstract class Tokenizer
                     ) {
                         $ignoring = ['all' => true];
                         if ($ownLine === true) {
-                            $this->ignoredLines[$this->tokens[$i]['line']]       = ['all' => true];
+                            $this->ignoredLines[$this->tokens[$i]['line']]       = $ignoring;
                             $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = $ignoring;
                         } else {
                             $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
