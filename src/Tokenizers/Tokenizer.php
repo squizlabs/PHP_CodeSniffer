@@ -320,8 +320,11 @@ abstract class Tokenizer
                     }
 
                     if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
-                        // Ignore standards for lines that change sniff settings.
-                        $this->ignoredLines[$this->tokens[$i]['line']] = true;
+                        // Ignore standards for complete lines that change sniff settings.
+                        if ($ownLine === true) {
+                            $this->ignoredLines[$this->tokens[$i]['line']] = true;
+                        }
+
                         $this->tokens[$i]['code'] = T_PHPCS_SET;
                         $this->tokens[$i]['type'] = 'T_PHPCS_SET';
                     } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile') {
