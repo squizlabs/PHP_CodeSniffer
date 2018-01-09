@@ -733,6 +733,64 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, $numWarnings);
         $this->assertCount(0, $warnings);
 
+        // Suppress using docblocks.
+        $content = '<?php '.PHP_EOL.'/**
+        '.PHP_EOL.' * phpcs:disable Generic.Commenting.Todo'.PHP_EOL.' */ '.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+        $this->assertEquals(0, $numWarnings);
+        $this->assertCount(0, $warnings);
+
+        $content = '<?php '.PHP_EOL.'/**
+        '.PHP_EOL.' * @phpcs:disable Generic.Commenting.Todo'.PHP_EOL.' */ '.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+        $this->assertEquals(0, $numWarnings);
+        $this->assertCount(0, $warnings);
+
+        // Suppress wrong catergory using docblocks.
+        $content = '<?php '.PHP_EOL.'/**
+        '.PHP_EOL.' * phpcs:disable Generic.Files'.PHP_EOL.' */ '.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+        $this->assertEquals(1, $numWarnings);
+        $this->assertCount(1, $warnings);
+
+        $content = '<?php '.PHP_EOL.'/**
+        '.PHP_EOL.' * @phpcs:disable Generic.Files'.PHP_EOL.' */ '.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+        $this->assertEquals(1, $numWarnings);
+        $this->assertCount(1, $warnings);
+
     }//end testDisableSelected()
 
 
