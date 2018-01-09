@@ -2,7 +2,7 @@
 /**
  * Checks if Control Structures Brackets are on a line by their own
  *
- * @author    Squiz Pty Ltd <products@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2018 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
@@ -28,9 +28,7 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                  );
+    public $supportedTokenizers = ['PHP'];
 
 
     /**
@@ -40,19 +38,19 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_IF,
-                T_ELSEIF,
-                T_ELSE,
-                T_FOREACH,
-                T_FOR,
-                T_SWITCH,
-                T_DO,
-                T_WHILE,
-                T_TRY,
-                T_CATCH,
-                T_FINALLY,
-               );
+        return [
+            T_IF,
+            T_ELSEIF,
+            T_ELSE,
+            T_FOREACH,
+            T_FOR,
+            T_SWITCH,
+            T_DO,
+            T_WHILE,
+            T_TRY,
+            T_CATCH,
+            T_FINALLY,
+        ];
 
     }//end register()
 
@@ -68,7 +66,7 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens    = $phpcsFile->getTokens();
-        $errorData = array(strtolower($tokens[$stackPtr]['content']));
+        $errorData = [strtolower($tokens[$stackPtr]['content'])];
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
             if ($tokens[$stackPtr]['code'] !== T_WHILE) {
@@ -106,11 +104,11 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
 
             if ($braceLine > ($controlStructureLine + 1)) {
                 $error = 'Opening brace of a %s must be on the line following the %s declaration.; Found %s line(s).';
-                $data  = array(
-                          $tokens[$stackPtr]['content'],
-                          $tokens[$stackPtr]['content'],
-                          ($braceLine - $controlStructureLine - 1),
-                         );
+                $data  = [
+                    $tokens[$stackPtr]['content'],
+                    $tokens[$stackPtr]['content'],
+                    ($braceLine - $controlStructureLine - 1),
+                ];
                 $fix   = $phpcsFile->addFixableError($error, $openBrace, 'OpenBraceWrongLine', $data);
 
                 if ($fix === true) {
@@ -177,10 +175,10 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
 
             if ($spaces !== $expected) {
                 $error = 'Expected %s tabs before opening brace; %s found';
-                $data  = array(
-                          $expected,
-                          $spaces,
-                         );
+                $data  = [
+                    $expected,
+                    $spaces,
+                ];
                 $fix   = $phpcsFile->addFixableError($error, $openBrace, 'SpaceBeforeBrace', $data);
 
                 if ($fix === true) {
@@ -222,7 +220,7 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
 
             if ($found > 1) {
                 $error = 'Expected 1 newline after opening brace; %s found';
-                $data  = array($found);
+                $data  = [$found];
                 $fix   = $phpcsFile->addFixableError($error, $opener, 'ExtraNewlineAfterOpenBrace', $data);
 
                 if ($fix === true) {

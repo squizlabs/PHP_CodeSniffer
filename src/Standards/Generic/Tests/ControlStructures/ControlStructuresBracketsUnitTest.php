@@ -2,7 +2,7 @@
 /**
  * Unit test class for the ControlStructuresBracketsNewLineSniff
  *
- * @author    Squiz Pty Ltd <products@squiz.net>
+ * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2018 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
@@ -26,24 +26,24 @@ class ControlStructuresBracketsNewLineUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                10  => 1,
-                16  => 1,
-                22  => 1,
-                26  => 1,
-                33  => 1,
-                38  => 1,
-                44  => 1,
-                51  => 1,
-                57  => 1,
-                74  => 1,
-                78  => 1,
-                106 => 1,
-                112 => 1,
-                120 => 1,
-                126 => 1,
-                135 => 1,
-               );
+        return [
+            10  => 1,
+            16  => 1,
+            22  => 1,
+            26  => 1,
+            33  => 1,
+            38  => 1,
+            44  => 1,
+            51  => 1,
+            57  => 1,
+            74  => 1,
+            78  => 1,
+            106 => 1,
+            112 => 1,
+            120 => 1,
+            126 => 1,
+            135 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -58,7 +58,7 @@ class ControlStructuresBracketsNewLineUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(6 => 1);
+        return [6 => 1];
 
     }//end getWarningList()
 
