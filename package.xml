@@ -56,6 +56,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1828 : Squiz.WhiteSpace.SuperfluousWhiteSpace ignoreBlankLines property ignores whitespace after single line comments
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #1840 : When a comment has too many asterisks, phpcbf gives FAILED TO FIX error
  </notes>
  <contents>
   <dir name="/">

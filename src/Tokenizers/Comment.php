@@ -113,7 +113,7 @@ class Comment
                 continue;
             }
 
-            if ($string[$char] === '*') {
+            if ($lineNum > 0 && $string[$char] === '*') {
                 // This is a function or class doc block line.
                 $char++;
                 $tokens[$stackPtr] = [
