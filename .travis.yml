@@ -23,6 +23,8 @@ matrix:
     - php: hhvm
 
 before_install:
+  # Speed up build time by disabling Xdebug when its not needed.
+  - if [[ $TRAVIS_PHP_VERSION != "nightly" && $TRAVIS_PHP_VERSION != hhv* ]]; then phpenv config-rm xdebug.ini; fi
   # Circumvent a bug in the travis HHVM image - ships with incompatible PHPUnit.
   - if [[ $TRAVIS_PHP_VERSION == hhv* ]]; then composer self-update; fi
   - if [[ $TRAVIS_PHP_VERSION == hhv* ]]; then composer require phpunit/phpunit:~4.0; fi
