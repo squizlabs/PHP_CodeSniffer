@@ -54,24 +54,12 @@ class CommentedOutCodeSniff implements Sniff
      * @param int                         $stackPtr  The position of the current token
      *                                               in the stack passed in $tokens.
      *
-     * @return void
+     * @return int|void Integer stack pointer to skip forward or void to continue
+     *                  normal file processing.
      */
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        // Process whole comment blocks at once, so skip all but the first token.
-        if ($stackPtr > 0) {
-            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-            if ($prev !== false
-                && $tokens[$stackPtr]['code'] === $tokens[$prev]['code']
-                && $tokens[$stackPtr]['line'] === ($tokens[$prev]['line'] + 1)
-            ) {
-                return;
-            }
-
-            unset($prev);
-        }
 
         // Ignore comments at the end of code blocks.
         if (substr($tokens[$stackPtr]['content'], 0, 6) === '//end ') {
@@ -85,8 +73,14 @@ class CommentedOutCodeSniff implements Sniff
             $commentStyle = 'block';
         }
 
+        $lastCommentBlockToken = $stackPtr;
         for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['code'] === T_WHITESPACE) {
+                continue;
+            }
+
+            if (isset(Tokens::$phpcsCommentTokens[$tokens[$i]['code']]) === true) {
+                $lastLineSeen = $tokens[$i]['line'];
                 continue;
             }
 
@@ -131,6 +125,8 @@ class CommentedOutCodeSniff implements Sniff
 
             $content     .= $tokenContent.$phpcsFile->eolChar;
             $lastLineSeen = $tokens[$i]['line'];
+
+            $lastCommentBlockToken = $i;
         }//end for
 
         // Quite a few comments use multiple dashes, equals signs etc
@@ -144,7 +140,7 @@ class CommentedOutCodeSniff implements Sniff
         $content = trim($content);
 
         if ($content === '') {
-            return;
+            return ($lastCommentBlockToken + 1);
         }
 
         if ($phpcsFile->tokenizerType === 'PHP') {
@@ -162,7 +158,7 @@ class CommentedOutCodeSniff implements Sniff
         } catch (TokenizerException $e) {
             // We couldn't check the comment, so ignore it.
             ini_set('error_reporting', $oldErrors);
-            return;
+            return ($lastCommentBlockToken + 1);
         }
 
         ini_set('error_reporting', $oldErrors);
@@ -178,14 +174,14 @@ class CommentedOutCodeSniff implements Sniff
 
         // First token is always the opening PHP tag.
         if ($stringTokens[0]['code'] !== T_OPEN_TAG) {
-            return;
+            return ($lastCommentBlockToken + 1);
         }
 
         // Last token is always the closing PHP tag, unless something went wrong.
         if (isset($stringTokens[($numTokens - 1)]) === false
             || $stringTokens[($numTokens - 1)]['code'] !== T_CLOSE_TAG
         ) {
-            return;
+            return ($lastCommentBlockToken + 1);
         }
 
         // Second last token is always whitespace or a comment, depending
@@ -193,7 +189,7 @@ class CommentedOutCodeSniff implements Sniff
         if ($phpcsFile->tokenizerType === 'PHP'
             && isset(Tokens::$emptyTokens[$stringTokens[($numTokens - 2)]['code']]) === false
         ) {
-            return;
+            return ($lastCommentBlockToken + 1);
         }
 
         $emptyTokens  = [
@@ -247,6 +243,8 @@ class CommentedOutCodeSniff implements Sniff
             $data  = [$percentCode];
             $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
         }
+
+        return ($lastCommentBlockToken + 1);
 
     }//end process()
 

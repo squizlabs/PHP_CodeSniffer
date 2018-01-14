@@ -55,6 +55,7 @@ class CommentedOutCodeUnitTest extends AbstractSniffUnitTest
                 97  => 1,
                 109 => 1,
                 116 => 1,
+                128 => 1,
             ];
             break;
         case 'CommentedOutCodeUnitTest.css':
