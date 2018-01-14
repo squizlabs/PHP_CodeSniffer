@@ -40,5 +40,6 @@ script:
   - if [[ $TRAVIS_PHP_VERSION == hhv* ]]; then vendor/bin/phpunit tests/AllTests.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" &&  $TRAVIS_PHP_VERSION != hhv* && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
+  - if [[ $CUSTOM_INI != "1" ]]; then composer validate --no-check-all --strict; fi
   - if [[ $CUSTOM_INI != "1" &&  $TRAVIS_PHP_VERSION != hhv* ]]; then php scripts/build-phar.php; fi
   - if [[ $CUSTOM_INI != "1" &&  $TRAVIS_PHP_VERSION != hhv* ]]; then php phpcs.phar; fi
