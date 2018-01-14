@@ -112,3 +112,15 @@ function myFunction( $param )
 	 *
 	 * }//end myFunction()
 	 */
+
+    /*
+     * function myFunction( $param )
+     * {
+     *  // phpcs:disable Standard.Category.Sniff -- for reasons.
+     *  if ( preg_match( '`[abc]`', $param ) > 0 ) {
+     *      do_something();
+     *  }
+     *  // phpcs:enable Standard.Category.Sniff -- for reasons.
+     *
+     * }//end myFunction()
+     */

@@ -80,6 +80,11 @@ class CommentedOutCodeSniff implements Sniff
 
         $content      = '';
         $lastLineSeen = $tokens[$stackPtr]['line'];
+        $commentStyle = 'line';
+        if (strpos($tokens[$stackPtr]['content'], '/*') === 0) {
+            $commentStyle = 'block';
+        }
+
         for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
             if ($tokens[$i]['code'] === T_WHITESPACE) {
                 continue;
@@ -98,32 +103,31 @@ class CommentedOutCodeSniff implements Sniff
 
             $tokenContent = trim($tokens[$i]['content']);
 
-            if (substr($tokenContent, 0, 2) === '//') {
-                $tokenContent = substr($tokenContent, 2);
-            }
+            if ($commentStyle === 'line') {
+                if (substr($tokenContent, 0, 2) === '//') {
+                    $tokenContent = substr($tokenContent, 2);
+                }
 
-            if (substr($tokenContent, 0, 1) === '#') {
-                $tokenContent = substr($tokenContent, 1);
-            }
+                if (substr($tokenContent, 0, 1) === '#') {
+                    $tokenContent = substr($tokenContent, 1);
+                }
+            } else {
+                if (substr($tokenContent, 0, 3) === '/**') {
+                    $tokenContent = substr($tokenContent, 3);
+                }
 
-            if (substr($tokenContent, 0, 3) === '/**') {
-                $tokenContent = substr($tokenContent, 3);
-            }
+                if (substr($tokenContent, 0, 2) === '/*') {
+                    $tokenContent = substr($tokenContent, 2);
+                }
 
-            if (substr($tokenContent, 0, 2) === '/*') {
-                $tokenContent = substr($tokenContent, 2);
-            }
+                if (substr($tokenContent, -2) === '*/') {
+                    $tokenContent = substr($tokenContent, 0, -2);
+                }
 
-            if (substr($tokenContent, -2) === '*/') {
-                $tokenContent = substr($tokenContent, 0, -2);
-            }
-
-            if (substr($tokenContent, 0, 1) === '*') {
-                $tokenContent = substr($tokenContent, 1);
-            }
-
-            // Remove PHPCS annotations.
-            $tokenContent = preg_replace('`[@]?(?:phpcs:(?:enable|disable|set|ignore)|codingStandards(?:Ignore|Change)).*$`', '', $tokenContent);
+                if (substr($tokenContent, 0, 1) === '*') {
+                    $tokenContent = substr($tokenContent, 1);
+                }
+            }//end if
 
             $content     .= $tokenContent.$phpcsFile->eolChar;
             $lastLineSeen = $tokens[$i]['line'];
@@ -192,7 +196,7 @@ class CommentedOutCodeSniff implements Sniff
             return;
         }
 
-        $emptyTokens = [
+        $emptyTokens  = [
             T_WHITESPACE              => true,
             T_STRING                  => true,
             T_STRING_CONCAT           => true,
@@ -200,6 +204,7 @@ class CommentedOutCodeSniff implements Sniff
             T_NONE                    => true,
             T_COMMENT                 => true,
         ];
+        $emptyTokens += Tokens::$phpcsCommentTokens;
 
         $numComment  = 0;
         $numPossible = 0;
