@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class UpperCaseConstantNameSniff implements Sniff
 {
@@ -61,29 +62,13 @@ class UpperCaseConstantNameSniff implements Sniff
 
         // If the next non-whitespace token after this token
         // is not an opening parenthesis then it is not a function call.
-        for ($openBracket = ($stackPtr + 1); $openBracket < $phpcsFile->numTokens; $openBracket++) {
-            if ($tokens[$openBracket]['code'] !== T_WHITESPACE) {
-                break;
-            }
-        }
-
-        if ($openBracket === $phpcsFile->numTokens) {
+        $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        if ($openBracket === false) {
             return;
         }
 
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
-            $functionKeyword = $phpcsFile->findPrevious(
-                [
-                    T_WHITESPACE,
-                    T_COMMA,
-                    T_COMMENT,
-                    T_STRING,
-                    T_NS_SEPARATOR,
-                ],
-                ($stackPtr - 1),
-                null,
-                true
-            );
+            $functionKeyword = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 
             if ($tokens[$functionKeyword]['code'] !== T_CONST) {
                 return;
