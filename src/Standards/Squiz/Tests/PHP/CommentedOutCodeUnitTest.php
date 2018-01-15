@@ -45,11 +45,17 @@ class CommentedOutCodeUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'CommentedOutCodeUnitTest.inc':
             return [
-                6  => 1,
-                8  => 1,
-                15 => 1,
-                19 => 1,
-                87 => 1,
+                6   => 1,
+                8   => 1,
+                15  => 1,
+                19  => 1,
+                35  => 1,
+                87  => 1,
+                91  => 1,
+                97  => 1,
+                109 => 1,
+                116 => 1,
+                128 => 1,
             ];
             break;
         case 'CommentedOutCodeUnitTest.css':

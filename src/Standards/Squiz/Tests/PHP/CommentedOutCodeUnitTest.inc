@@ -32,7 +32,7 @@ if ($blah) {
 
 // Continue, as we're done with this token.
 
-/**
+/*
  * The listeners array.
  *
  * @var array(PHP_CodeSniffer_Sniff)
@@ -59,7 +59,7 @@ function myFunction()
 // | A comment block           |
 // *****************************
 
-/**
+/*
  * List of panels.
  *
  * XML structure:
@@ -87,3 +87,48 @@ function myFunction()
 // function ()
 
 // T_STRING is not a function call or not listed in _getFunctionListWithCallableArgument().
+
+	// function myFunction( $param )
+	// {
+	//    do_something();
+	// }//end myFunction()
+	//
+
+/*
+function myFunction( $param )
+{
+	// phpcs:disable Standard.Category.Sniff -- for reasons.
+	if ( preg_match( '`[abc]`', $param ) > 0 ) {
+		do_something();
+	}
+	// phpcs:enable Standard.Category.Sniff -- for reasons.
+
+}//end myFunction()
+*/
+
+	/*
+	 * function myFunction( $param ) // @phpcs:ignore Standard.Category.Sniff -- for reasons.
+	 * {
+	 *
+	 * }//end myFunction()
+	 */
+
+    /*
+     * function myFunction( $param )
+     * {
+     *  // phpcs:disable Standard.Category.Sniff -- for reasons.
+     *  if ( preg_match( '`[abc]`', $param ) > 0 ) {
+     *      do_something();
+     *  }
+     *  // phpcs:enable Standard.Category.Sniff -- for reasons.
+     *
+     * }//end myFunction()
+     */
+
+    // function myFunction( $param )
+    // {
+          // phpcs:disable Standard.Category.Sniff -- for reasons.
+    //    do_something();
+          // phpcs:enable Standard.Category.Sniff -- for reasons.
+    // }//end myFunction()
+    //
