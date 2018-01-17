@@ -76,7 +76,7 @@ class DocCommentAlignmentSniff implements Sniff
             T_VAR       => true,
         ];
 
-        if (isset($ignore[$tokens[$nextToken]['code']]) === false) {
+        if ($nextToken === false || isset($ignore[$tokens[$nextToken]['code']]) === false) {
             // Could be a file comment.
             $prevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($tokens[$prevToken]['code'] !== T_OPEN_TAG) {
@@ -96,6 +96,11 @@ class DocCommentAlignmentSniff implements Sniff
             }
 
             if ($tokens[$i]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+                if (trim($tokens[$i]['content']) === '') {
+                    // Don't process an unfinished docblock close tag during live coding.
+                    continue;
+                }
+
                 // Can't process the close tag if it is not the first thing on the line.
                 $prev = $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, ($i - 1), $stackPtr, true);
                 if ($tokens[$prev]['line'] === $tokens[$i]['line']) {
