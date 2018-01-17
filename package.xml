@@ -51,6 +51,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Improved phpcs: annotation syntax handling for a number of sniffs
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Improved auto-fixing of files with incomplete comment blocks for various commenting sniffs
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1793 : PSR2 forcing exact indent for function call opening statements
   - Fixed bug #1803 : Squiz.WhiteSpace.ScopeKeywordSpacing removes member var name while fixing if no space after scope keyword
   - Fixed bug #1817 : Blank line not enforced after control structure if comment on same line as closing brace
