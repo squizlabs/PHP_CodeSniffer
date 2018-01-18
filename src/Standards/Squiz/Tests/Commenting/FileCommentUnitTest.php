@@ -49,7 +49,7 @@ class FileCommentUnitTest extends AbstractSniffUnitTest
             return [];
         default:
             return [];
-        }
+        }//end switch
 
     }//end getErrorList()
 
