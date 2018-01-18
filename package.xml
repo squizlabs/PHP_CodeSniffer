@@ -1208,9 +1208,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DocCommentAlignmentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyCatchCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyCatchCommentUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.php" role="test" />
