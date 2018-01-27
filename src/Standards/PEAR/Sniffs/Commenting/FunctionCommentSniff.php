@@ -59,7 +59,8 @@ class FunctionCommentSniff implements Sniff
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
-            $phpcsFile->addError('Missing function doc comment', $stackPtr, 'Missing');
+            $function = $phpcsFile->getDeclarationName($stackPtr);
+            $phpcsFile->addError('Missing function doc comment: '.$function.'()', $stackPtr, 'Missing');
             $phpcsFile->recordMetric($stackPtr, 'Function has doc comment', 'no');
             return;
         } else {
