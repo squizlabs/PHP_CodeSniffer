@@ -61,7 +61,7 @@ class FunctionCommentSniff implements Sniff
         ) {
             $function = $phpcsFile->getDeclarationName($stackPtr);
             $phpcsFile->addError(
-                'Missing docblock for function "%s()"',
+                'Missing function doc comment for function "%s()"',
                 $stackPtr,
                 'Missing',
                 [$function]
