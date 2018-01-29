@@ -60,7 +60,12 @@ class FunctionCommentSniff implements Sniff
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
             $function = $phpcsFile->getDeclarationName($stackPtr);
-            $phpcsFile->addError('Missing function doc comment: '.$function.'()', $stackPtr, 'Missing');
+            $phpcsFile->addError(
+                'Missing docblock for function "%s()"',
+                $stackPtr,
+                'Missing',
+                [$function]
+            );
             $phpcsFile->recordMetric($stackPtr, 'Function has doc comment', 'no');
             return;
         } else {
