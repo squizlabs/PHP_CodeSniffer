@@ -303,7 +303,11 @@ abstract class Tokenizer
                     $ownLine = false;
                     if ($i > 0) {
                         for ($prev = ($i - 1); $prev >= 0; $prev--) {
-                            if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
+                            if ($this->tokens[$prev]['code'] === T_WHITESPACE
+                                || $this->tokens[$prev]['code'] === T_OPEN_TAG
+                                || ($this->tokens[$prev]['code'] === T_INLINE_HTML
+                                && trim($this->tokens[$prev]['content']) === '')
+                            ) {
                                 continue;
                             }
 
