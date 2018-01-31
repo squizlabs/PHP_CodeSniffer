@@ -3,7 +3,7 @@
  * Checks that strict types are declared in the PHP file.
  *
  * @author    Michał Bundyra <contact@webimpress.com>
- * @copyright 2006-2017 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2018 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
@@ -78,13 +78,58 @@ class DeclareStrictTypesSniff implements Sniff
 
         $tokens = $phpcsFile->getTokens();
 
+        if ($stackPtr > 0) {
+            $before = trim($phpcsFile->getTokensAsString(0, $stackPtr));
+
+            if ($before === '') {
+                $error = 'Unexpected whitespace before PHP opening tag';
+                $fix   = $phpcsFile->addFixableError($error, 0, 'Whitespace');
+
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = 0; $i < $stackPtr; ++$i) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }
+            } else {
+                $error = 'Missing strict type declaration as first statement in the script';
+                $fix   = $phpcsFile->addFixableError($error, 0, 'Missing');
+
+                if ($fix === true) {
+                    $phpcsFile->fixer->addContentBefore(
+                        0,
+                        sprintf('<?php %s ?>%s', $this->format, $phpcsFile->eolChar)
+                    );
+                }
+            }//end if
+
+            $this->checkOtherDeclarations($phpcsFile);
+
+            return $phpcsFile->numTokens;
+        }//end if
+
         $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 
         if ($tokens[$next]['code'] === T_DECLARE) {
-            $eos    = $phpcsFile->findEndOfStatement($next);
-            $string = $phpcsFile->getTokensAsString($next, ($eos - $next + 1));
+            $string = $phpcsFile->findNext(
+                T_STRING,
+                ($tokens[$next]['parenthesis_opener'] + 1),
+                $tokens[$next]['parenthesis_closer']
+            );
 
-            if (stripos($string, 'strict_types') !== false) {
+            if ($string !== false
+                && stripos($tokens[$string]['content'], 'strict_types') !== false
+            ) {
+                if (isset($tokens[$next]['scope_closer']) === true
+                    && $next === $tokens[$next]['scope_condition']
+                ) {
+                    $eos = $tokens[$next]['scope_closer'];
+                } else {
+                    $eos = $phpcsFile->findEndOfStatement($next);
+                }
+
                 $prev  = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
                 $after = $phpcsFile->findNext(T_WHITESPACE, ($eos + 1), null, true);
 
@@ -93,7 +138,7 @@ class DeclareStrictTypesSniff implements Sniff
                     && $tokens[$after]['code'] === T_CLOSE_TAG
                 ) {
                     if ($tokens[$prev]['line'] !== $tokens[$next]['line']) {
-                        $error = 'PHP open tag must be in the same line as declaration.';
+                        $error = 'PHP open tag must be on the same line as strict type declaration.';
                         $fix   = $phpcsFile->addFixableError($error, $prev, 'OpenTag');
 
                         if ($fix === true) {
@@ -110,7 +155,7 @@ class DeclareStrictTypesSniff implements Sniff
                     }//end if
 
                     if ($prev !== false && ($prev < ($next - 1) || $tokens[$prev]['content'] !== '<?php ')) {
-                        $error = 'Expected single space after PHP open tag and before declaration.';
+                        $error = 'Expected single space after PHP open tag and before strict type declaration.';
                         $fix   = $phpcsFile->addFixableError($error, $prev, 'OpenTagSpace');
 
                         if ($fix === true) {
@@ -125,7 +170,7 @@ class DeclareStrictTypesSniff implements Sniff
                     }
 
                     if ($tokens[$after]['line'] !== $tokens[$eos]['line']) {
-                        $error = 'PHP close tag must be in the same line as declaration.';
+                        $error = 'PHP close tag must be on the same line as strict type declaration.';
                         $fix   = $phpcsFile->addFixableError($error, $after, 'CloseTag');
 
                         if ($fix === true) {
@@ -160,16 +205,22 @@ class DeclareStrictTypesSniff implements Sniff
                     $after = false;
                 }//end if
 
-                // Check how many blank lines is before declare statement.
+                // Check how many blank lines there are before declare statement.
                 if ($prev !== false) {
                     $linesBefore = ($tokens[$next]['line'] - $tokens[$prev]['line'] - 1);
                     if ($linesBefore !== $this->linesBefore) {
-                        $error = 'Invalid number of blank lines before declare statement; expected %d, but found %d';
-                        $data  = [
-                            $this->linesBefore,
-                            $linesBefore,
-                        ];
-                        $fix   = $phpcsFile->addFixableError($error, $next, 'LinesBefore', $data);
+                        if ($linesBefore < 0) {
+                            $error = 'Strict type declaration must be in new line';
+                            $data  = [];
+                        } else {
+                            $error = 'Invalid number of blank lines before declare statement; expected %d, but found %d';
+                            $data  = [
+                                $this->linesBefore,
+                                $linesBefore,
+                            ];
+                        }
+
+                        $fix = $phpcsFile->addFixableError($error, $next, 'LinesBefore', $data);
 
                         if ($fix === true) {
                             $phpcsFile->fixer->beginChangeset();
@@ -182,15 +233,22 @@ class DeclareStrictTypesSniff implements Sniff
                                     }
                                 }
                             } else {
+                                // Clear whitespaces between prev and next, but no new lines.
+                                if ($linesBefore < 0) {
+                                    for ($i = ($prev + 1); $i < $next; ++$i) {
+                                        $phpcsFile->fixer->replaceToken($i, '');
+                                    }
+                                }
+
                                 // Add new blank line(s).
                                 while ($linesBefore < $this->linesBefore) {
                                     $phpcsFile->fixer->addNewlineBefore($next);
                                     ++$linesBefore;
                                 }
-                            }
+                            }//end if
 
                             $phpcsFile->fixer->endChangeset();
-                        }
+                        }//end if
                     }//end if
                 }//end if
 
@@ -202,12 +260,18 @@ class DeclareStrictTypesSniff implements Sniff
 
                     $linesAfter = ($tokens[$after]['line'] - $tokens[$eos]['line'] - 1);
                     if ($linesAfter !== $this->linesAfter) {
-                        $error = 'Invalid number of blank lines after declare statement; expected %d, but found %d';
-                        $data  = [
-                            $this->linesAfter,
-                            $linesAfter,
-                        ];
-                        $fix   = $phpcsFile->addFixableError($error, $eos, 'LinesAfter', $data);
+                        if ($linesAfter < 0) {
+                            $error = 'Strict type declaration must be the only statement in the line';
+                            $data  = [];
+                        } else {
+                            $error = 'Invalid number of blank lines after declare statement; expected %d, but found %d';
+                            $data  = [
+                                $this->linesAfter,
+                                $linesAfter,
+                            ];
+                        }
+
+                        $fix = $phpcsFile->addFixableError($error, $eos, 'LinesAfter', $data);
 
                         if ($fix === true) {
                             $phpcsFile->fixer->beginChangeset();
@@ -219,42 +283,60 @@ class DeclareStrictTypesSniff implements Sniff
                                     }
                                 }
                             } else {
+                                // Remove whitespaces between EOS and after token.
+                                if ($linesAfter < 0) {
+                                    for ($i = ($eos + 1); $i < $after; ++$i) {
+                                        $phpcsFile->fixer->replaceToken($i, '');
+                                    }
+                                }
+
+                                // Add new lines after the statement.
                                 while ($linesAfter < $this->linesAfter) {
                                     $phpcsFile->fixer->addNewline($eos);
                                     ++$linesAfter;
                                 }
-                            }
+                            }//end if
 
                             $phpcsFile->fixer->endChangeset();
-                        }
+                        }//end if
                     }//end if
                 }//end if
 
                 // Check if declare statement match provided format.
+                $string = $phpcsFile->getTokensAsString($next, ($eos - $next + 1));
                 if ($string !== $this->format) {
-                    $error = 'Invalid format of declaration; expected "%s", but found "%s"';
+                    $error = 'Invalid format of strict type declaration; expected "%s", but found "%s"';
                     $data  = [
                         $this->format,
                         $string,
                     ];
-                    $fix   = $phpcsFile->addFixableError($error, $next, 'InvalidFormat', $data);
 
-                    if ($fix === true) {
-                        $phpcsFile->fixer->beginChangeset();
-                        for ($i = $next; $i < $eos; ++$i) {
-                            $phpcsFile->fixer->replaceToken($i, '');
+                    if ($this->normalize($string) === $this->normalize($this->format)) {
+                        $fix = $phpcsFile->addFixableError($error, $next, 'InvalidFormat', $data);
+
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($i = $next; $i < $eos; ++$i) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            $phpcsFile->fixer->replaceToken($eos, $this->format);
+                            $phpcsFile->fixer->endChangeset();
                         }
-
-                        $phpcsFile->fixer->replaceToken($eos, $this->format);
-                        $phpcsFile->fixer->endChangeset();
+                    } else {
+                        $phpcsFile->addError($error, $next, 'InvalidFormatNotFixable', $data);
                     }
-                }
+                }//end if
+
+                $this->checkOtherDeclarations($phpcsFile, $next);
 
                 return (count($tokens) + 1);
             }//end if
         }//end if
 
-        $error = 'Missing declaration of strict types at the beginning of the file';
+        $this->checkOtherDeclarations($phpcsFile, $next);
+
+        $error = 'Missing strict type declaration at the beginning of the file';
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotFound');
 
         if ($fix === true) {
@@ -262,7 +344,7 @@ class DeclareStrictTypesSniff implements Sniff
             $first = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
             if ($first !== null && $tokens[$first]['code'] === T_DOC_COMMENT_OPEN_TAG) {
                 foreach ($tokens[$first]['comment_tags'] as $tag) {
-                    if (in_array(strtolower($tokens[$tag]['content']), $this->omitCommentWithTags, true)) {
+                    if (in_array(strtolower($tokens[$tag]['content']), $this->omitCommentWithTags, true) === true) {
                         $after = $tokens[$first]['comment_closer'];
                         break;
                     }
@@ -285,6 +367,69 @@ class DeclareStrictTypesSniff implements Sniff
         return (count($tokens) + 1);
 
     }//end process()
+
+
+    /**
+     * Normalize given string by removing all white characters
+     * and changed to lower case.
+     *
+     * @param string $string String to be normalized.
+     *
+     * @return string
+     */
+    private function normalize($string)
+    {
+        return strtolower(preg_replace('/\s/', '', $string));
+
+    }//end normalize()
+
+
+    /**
+     * Process other strict_type declaration in the file and remove them.
+     * The declaration has to be the very first statement in the script.
+     *
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $declare   The position of the first declaration.
+     *
+     * @return void
+     */
+    private function checkOtherDeclarations(File $phpcsFile, $declare=0)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        while (($declare = $phpcsFile->findNext(T_DECLARE, ($declare + 1))) !== false) {
+            $string = $phpcsFile->findNext(
+                T_STRING,
+                ($tokens[$declare]['parenthesis_opener'] + 1),
+                $tokens[$declare]['parenthesis_closer']
+            );
+
+            if ($string !== false
+                && stripos($tokens[$string]['content'], 'strict_types') !== false
+            ) {
+                $error = 'Strict type declaration must be the very first statement in the script';
+                $fix   = $phpcsFile->addFixableError($error, $declare, 'NotFirstStatement');
+
+                if ($fix === true) {
+                    $end = $phpcsFile->findNext(
+                        (Tokens::$emptyTokens + [T_SEMICOLON]),
+                        ($tokens[$declare]['parenthesis_closer'] + 1),
+                        null,
+                        true
+                    );
+
+                    if ($end === false) {
+                        $end = $phpcsFile->numTokens;
+                    }
+
+                    for ($i = $declare; $i < $end; ++$i) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+                }
+            }//end if
+        }//end while
+
+    }//end checkOtherDeclarations()
 
 
 }//end class
