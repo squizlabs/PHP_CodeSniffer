@@ -116,6 +116,14 @@ class MultipleStatementAlignmentSniff implements Sniff
 
         for ($assign = $stackPtr; $assign < $phpcsFile->numTokens; $assign++) {
             if (isset($find[$tokens[$assign]['code']]) === false) {
+                if ($tokens[$assign]['code'] === T_CLOSURE
+                    || $tokens[$assign]['code'] === T_ANON_CLASS
+                ) {
+                    $assign   = $tokens[$assign]['scope_closer'];
+                    $lastCode = $assign;
+                    continue;
+                }
+
                 // A blank line indicates that the assignment block has ended.
                 if (isset(Tokens::$emptyTokens[$tokens[$assign]['code']]) === false) {
                     if (($tokens[$assign]['line'] - $tokens[$lastCode]['line']) > 1) {

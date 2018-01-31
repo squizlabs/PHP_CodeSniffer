@@ -232,3 +232,19 @@ $bar = 'hi';
 $foo = $moo = $test;
 $boo = 'boo';
 $foo = $moooo = 'foo';
+
+$foobarbaz = array_map(
+    function ($n) {
+        return $n * $n;
+    },
+    [1, 2, 3]
+);
+$foo       = 5;
+
+$loggerResult = $util->setLogger(new class {
+    public function log($msg)
+    {
+        echo $msg;
+    }
+});
+$foo          = 5;
