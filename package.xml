@@ -35,6 +35,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - The PEAR.Commenting.FunctionComment.Missing error message now includes the name of the function
     -- Thanks to Yorman Arias for the patch
+  - The PEAR.Commenting.ClassComment.Missing and Squiz.Commenting.ClassComment.Missing error messages now include the name of the class
+    -- Thanks to Yorman Arias for the patch
   - PEAR.Functions.FunctionCallSignature now only forces alignment at a specific tab stop while fixing
     -- It was enforcing this during checking, but this meant invalid errors if the OpeningIndent message was being muted
     -- This fixes incorrect errors when using the PSR2 standard with some code blocks
