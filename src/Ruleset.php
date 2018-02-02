@@ -156,7 +156,7 @@ class Ruleset
         foreach ($standardPaths as $standard) {
             // If rules are loaded over http, use caching.
             $urlInfo = parse_url($standard);
-            if ($urlInfo !== false && strpos($urlInfo['scheme'], 'http') === 0) {
+            if ($urlInfo !== false && array_key_exists('scheme', $urlInfo) === true && strpos($urlInfo['scheme'], 'http') === 0) {
                 $timeout  = 3;
                 $context  = stream_context_create(['http' => ['timeout' => $timeout]]);
                 $contents = @file_get_contents($standard, false, $context);
