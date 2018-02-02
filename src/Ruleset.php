@@ -154,7 +154,35 @@ class Ruleset
         }
 
         foreach ($standardPaths as $standard) {
-            $ruleset = @simplexml_load_string(file_get_contents($standard));
+            // If rules are loaded over http, use caching.
+            $urlInfo = parse_url($standard);
+            if ($urlInfo !== false && strpos($urlInfo['scheme'], 'http') === 0) {
+                $timeout  = 3;
+                $context  = stream_context_create(['http' => ['timeout' => $timeout]]);
+                $contents = @file_get_contents($standard, false, $context);
+                $ds       = DIRECTORY_SEPARATOR;
+                $filePath = preg_replace('/[\/\\\\]/', $ds, __DIR__.$ds.'Standards'.$ds.'HttpCache'.$ds.$urlInfo['host'].$urlInfo['path']);
+                if ($contents === false) {
+                    echo 'NOTICE: Fetching of remote ruleset failed. Falling back to cache.'.PHP_EOL;
+                    if (file_exists($filePath) === false) {
+                        echo 'ERROR: Cached ruleset does not exist.'.PHP_EOL;
+                    } else {
+                        $contents = @file_get_contents($filePath);
+                    }
+                } else {
+                    $dir = pathinfo($filePath, PATHINFO_DIRNAME);
+                    if (file_exists($dir) === false) {
+                        mkdir($dir, 0777, true);
+                    }
+
+                    file_put_contents($filePath, $contents);
+                }
+
+                $ruleset = simplexml_load_string($contents);
+            } else {
+                $ruleset = @simplexml_load_string(file_get_contents($standard));
+            }//end if
+
             if ($ruleset !== false) {
                 $standardName = (string) $ruleset['name'];
                 if ($this->name !== '') {
