@@ -75,6 +75,11 @@ class Common
             return str_replace('/dev/fd', 'php://fd', $path);
         }
 
+        // Check for file served over http(s)
+        if (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0) {
+            return $path;
+        }
+
         // No extra work needed if this is not a phar file.
         if (self::isPharFile($path) === false) {
             return realpath($path);

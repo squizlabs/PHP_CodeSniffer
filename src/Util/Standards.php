@@ -226,6 +226,22 @@ class Standards
             // standards directory.
             $standard = Common::realPath($standard);
 
+            // If the file is served over HTTP, check if the file is available and is an XML file.
+            if (strpos($standard, 'http://') === 0 || strpos($standard, 'https://') === 0) {
+                $headers = get_headers($standard);
+                foreach ($headers as $header) {
+                    if (stripos($header, 'HTTP') === 0 && stripos($header, '200') === false) {
+                        return false;
+                    }
+
+                    if (stripos($header, 'Content-Type') === 0 && stripos($header, 'application/xml') === false) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
             // Might be an actual ruleset file itUtil.
             // If it has an XML extension, let's at least try it.
             if (is_file($standard) === true
