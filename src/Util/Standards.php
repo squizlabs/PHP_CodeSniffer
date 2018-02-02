@@ -228,6 +228,10 @@ class Standards
 
             // If the file is served over HTTP, check if the file is available and is an XML file.
             if (strpos($standard, 'http://') === 0 || strpos($standard, 'https://') === 0) {
+                if (strpos($standard, 'http://') === 0) {
+                    echo 'NOTICE: HTTP is insecure. Use HTTPS, if available.', PHP_EOL;
+                }
+
                 $headers = get_headers($standard);
                 foreach ($headers as $header) {
                     if (stripos($header, 'HTTP') === 0 && stripos($header, '200') === false) {
