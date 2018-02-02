@@ -227,8 +227,9 @@ class Standards
             $standard = Common::realPath($standard);
 
             // If the file is served over HTTP, check if the file is available and is an XML file.
-            if (strpos($standard, 'http://') === 0 || strpos($standard, 'https://') === 0) {
-                if (strpos($standard, 'http://') === 0) {
+            $protocol = parse_url($standard, PHP_URL_SCHEME);
+            if ($protocol !== false && strpos($standard, 'http') === 0) {
+                if ($protocol !== 'https') {
                     echo 'NOTICE: HTTP is insecure. Use HTTPS, if available.', PHP_EOL;
                 }
 
