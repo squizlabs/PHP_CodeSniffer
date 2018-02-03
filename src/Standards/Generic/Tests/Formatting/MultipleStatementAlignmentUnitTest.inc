@@ -248,3 +248,20 @@ $loggerResult = $util->setLogger(new class {
     }
 });
 $foo          = 5;
+
+$foo = array(
+    'a' => 'b',
+);
+$barbar = 'bar';
+
+$foo = array(
+    // Some comment.
+    'a' => 'b',
+);
+$barbar = 'bar';
+
+$foo = [
+    // phpcs:ignore Standard.Category.Sniff.Code -- for reasons.
+    'a' => 'b',
+];
+$barbar = 'bar';

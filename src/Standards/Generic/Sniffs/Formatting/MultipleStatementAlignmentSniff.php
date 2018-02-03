@@ -124,6 +124,22 @@ class MultipleStatementAlignmentSniff implements Sniff
                     continue;
                 }
 
+                // Skip past the content of arrays.
+                if ($tokens[$assign]['code'] === T_OPEN_SHORT_ARRAY
+                    && isset($tokens[$assign]['bracket_closer']) === true
+                ) {
+                    $assign = $lastCode = $tokens[$assign]['bracket_closer'];
+                    continue;
+                }
+
+                if ($tokens[$assign]['code'] === T_ARRAY
+                    && isset($tokens[$assign]['parenthesis_opener']) === true
+                    && isset($tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer']) === true
+                ) {
+                    $assign = $lastCode = $tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer'];
+                    continue;
+                }
+
                 // A blank line indicates that the assignment block has ended.
                 if (isset(Tokens::$emptyTokens[$tokens[$assign]['code']]) === false) {
                     if (($tokens[$assign]['line'] - $tokens[$lastCode]['line']) > 1) {
