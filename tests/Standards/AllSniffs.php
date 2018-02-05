@@ -56,7 +56,7 @@ class AllSniffs
             $ignoreTestsForStandards = explode(',', $ignoreTestsForStandards);
         }
 
-        $installedStandards = Standards::getInstalledStandardDetails(true);
+        $installedStandards = self::getInstalledStandardDetails();
 
         foreach ($installedStandards as $standard => $details) {
             Autoload::addSearchPath($details['path'], $details['namespace']);
@@ -105,6 +105,19 @@ class AllSniffs
         return $suite;
 
     }//end suite()
+
+
+    /**
+     * Get the details of all coding standards installed.
+     *
+     * @return array
+     * @see    Standards::getInstalledStandardDetails()
+     */
+    protected static function getInstalledStandardDetails()
+    {
+        return Standards::getInstalledStandardDetails(true);
+
+    }//end getInstalledStandardDetails()
 
 
 }//end class
