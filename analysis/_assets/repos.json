@@ -1281,13 +1281,6 @@
         "extensions": ""
     },
     {
-        "name": "Orno\\Route",
-        "url": "orno/route",
-        "path": "src",
-        "ignore": "",
-        "extensions": ""
-    },
-    {
         "name": "concrete5",
         "url": "concrete5/concrete5",
         "path": "web/concrete",
