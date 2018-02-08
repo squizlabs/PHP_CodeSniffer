@@ -59,7 +59,7 @@ class Json implements Report
                     $messagesObject->column = $column;
                     $messagesObject->fixable = $fixable;
 
-                    $messages .= json_encode($messagesObject);
+                    $messages .= json_encode($messagesObject) . ",";
                 }//end foreach
             }//end foreach
         }//end foreach
