@@ -197,6 +197,9 @@ try {
 catch (Exception $e) {
     // Something
 }
+finally {
+    // Something
+}
 
 if ($foo) {
 

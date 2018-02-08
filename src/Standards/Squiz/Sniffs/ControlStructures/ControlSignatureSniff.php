@@ -44,6 +44,7 @@ class ControlSignatureSniff implements Sniff
         return [
             T_TRY,
             T_CATCH,
+            T_FINALLY,
             T_DO,
             T_WHILE,
             T_FOR,

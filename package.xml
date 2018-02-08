@@ -69,6 +69,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1840 : When a comment has too many asterisks, phpcbf gives FAILED TO FIX error
   - Fixed bug #1867 : Cant use phpcs:ignore where the next line is HTML
   - Fixed bug #1870 : Invalid warning in multiple assignments alignment with closure or anon class
+  - Fixed bug #1890 : Incorrect Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose error between catch and finally statements
  </notes>
  <contents>
   <dir name="/">

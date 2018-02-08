@@ -45,6 +45,7 @@ class ControlStructureSpacingSniff implements Sniff
             T_ELSEIF,
             T_TRY,
             T_CATCH,
+            T_FINALLY,
         ];
 
     }//end register()
@@ -317,6 +318,7 @@ class ControlStructureSpacingSniff implements Sniff
         } else if ($tokens[$trailingContent]['code'] !== T_ELSE
             && $tokens[$trailingContent]['code'] !== T_ELSEIF
             && $tokens[$trailingContent]['code'] !== T_CATCH
+            && $tokens[$trailingContent]['code'] !== T_FINALLY
             && $tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)
         ) {
             $error = 'No blank line found after control structure';
