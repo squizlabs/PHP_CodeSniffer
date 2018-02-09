@@ -47,6 +47,7 @@ class Squiz_Sniffs_ControlStructures_ControlSignatureSniff implements PHP_CodeSn
         return array(
                 T_TRY,
                 T_CATCH,
+                T_FINALLY,
                 T_DO,
                 T_WHILE,
                 T_FOR,
