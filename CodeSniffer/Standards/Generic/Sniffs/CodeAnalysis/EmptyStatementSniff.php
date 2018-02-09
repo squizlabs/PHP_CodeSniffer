@@ -50,7 +50,9 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
     public function register()
     {
         return array(
+                T_TRY,
                 T_CATCH,
+                T_FINALLY,
                 T_DO,
                 T_ELSE,
                 T_ELSEIF,
@@ -98,7 +100,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
         // Get token identifier.
         $name  = strtoupper($token['content']);
         $error = 'Empty %s statement detected';
-        $phpcsFile->addError($error, $stackPtr, 'Detected'.$name, array($name));
+         $phpcsFile->addError($error, $stackPtr, 'Detected'.ucfirst(strtolower($name)), array($name));
 
     }//end process()
 
