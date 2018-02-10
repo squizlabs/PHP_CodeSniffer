@@ -39,7 +39,8 @@ class ValidFunctionNameSniff extends PEARValidFunctionNameSniff
         if (preg_match('|^__[^_]|', $functionName) !== 0) {
             $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
             $phpcsFile->addError($error, $stackPtr, 'DoubleUnderscore', $errorData);
-            return;
+
+            $functionName = ltrim($functionName, '_');
         }
 
         if (Common::isCamelCaps($functionName, false, true, false) === false) {
