@@ -100,7 +100,7 @@ class Generic_Sniffs_CodeAnalysis_EmptyStatementSniff implements PHP_CodeSniffer
         // Get token identifier.
         $name  = strtoupper($token['content']);
         $error = 'Empty %s statement detected';
-         $phpcsFile->addError($error, $stackPtr, 'Detected'.ucfirst(strtolower($name)), array($name));
+        $phpcsFile->addError($error, $stackPtr, 'Detected'.ucfirst(strtolower($name)), array($name));
 
     }//end process()
 
