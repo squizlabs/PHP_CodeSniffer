@@ -24,9 +24,9 @@ class TestSuite extends PHPUnit_TestSuite
      *
      * @return \PHPUnit\Framework\TestResult
      */
-    public function run(TestResult $result=null, $filter=false)
+    public function run(TestResult $result=null)
     {
-        $result = parent::run($result, $filter);
+        $result = parent::run($result);
 
         $codes = count($GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']);
 
