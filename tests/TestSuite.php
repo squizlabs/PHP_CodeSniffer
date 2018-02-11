@@ -20,7 +20,6 @@ class TestSuite extends PHPUnit_TestSuite
      * Runs the tests and collects their result in a TestResult.
      *
      * @param \PHPUnit\Framework\TestResult $result A test result.
-     * @param mixed                         $filter The filter passed to each test.
      *
      * @return \PHPUnit\Framework\TestResult
      */
