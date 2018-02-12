@@ -59,6 +59,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Improved auto-fixing of files with incomplete comment blocks for various commenting sniffs
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed test suite compatibility with PHPUnit 7
   - Fixed bug #1793 : PSR2 forcing exact indent for function call opening statements
   - Fixed bug #1803 : Squiz.WhiteSpace.ScopeKeywordSpacing removes member var name while fixing if no space after scope keyword
   - Fixed bug #1817 : Blank line not enforced after control structure if comment on same line as closing brace
@@ -124,6 +125,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <file baseinstalldir="" name="AllTests.php" role="test" />
     <file baseinstalldir="" name="bootstrap.php" role="test" />
     <file baseinstalldir="" name="TestSuite.php" role="test" />
+    <file baseinstalldir="" name="TestSuite7.php" role="test" />
    </dir>
    <dir name="src">
     <file baseinstalldir="PHP/CodeSniffer" name="Config.php" role="php">
@@ -1594,6 +1596,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="phpunit.xml" name="phpunit.xml.dist" />
    <install as="AllTests.php" name="tests/AllTests.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
+   <install as="TestSuite7.php" name="tests/TestSuite7.php" />
    <install as="tests/bootstrap.php" name="tests/bootstrap.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
@@ -1621,6 +1624,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="tests/AllTests.php" name="tests/AllTests.php" />
    <install as="tests/bootstrap.php" name="tests/bootstrap.php" />
    <install as="tests/TestSuite.php" name="tests/TestSuite.php" />
+   <install as="tests/TestSuite7.php" name="tests/TestSuite7.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />

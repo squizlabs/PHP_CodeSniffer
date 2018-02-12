@@ -23,7 +23,7 @@ class TestSuite extends PHPUnit_TestSuite
      *
      * @return \PHPUnit\Framework\TestResult
      */
-    public function run(TestResult $result=null)
+    public function run(TestResult $result=null): TestResult
     {
         $result = parent::run($result);
         printPHPCodeSnifferTestOutput();
