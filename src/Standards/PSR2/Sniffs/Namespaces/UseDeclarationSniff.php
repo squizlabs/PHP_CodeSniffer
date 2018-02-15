@@ -142,7 +142,7 @@ class UseDeclarationSniff implements Sniff
             return;
         }
 
-        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
 
         if ($next === false || $tokens[$next]['code'] === T_CLOSE_TAG) {
             return;
