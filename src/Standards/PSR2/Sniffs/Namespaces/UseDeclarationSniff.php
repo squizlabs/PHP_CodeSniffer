@@ -137,13 +137,15 @@ class UseDeclarationSniff implements Sniff
             return;
         }
 
-        $end         = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-        $nextComment = $phpcsFile->findNext(T_COMMENT, ($end + 1));
+        $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        $candidateComment = $end;
 
-        // The end of the line is allowed to be a comment as well as a semi colon.
-        if ($nextComment !== false && $tokens[$nextComment]['line'] === $tokens[$end]['line']) {
-            $end = $nextComment;
-        }
+        do {
+            $nextComment      = $candidateComment;
+            $candidateComment = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextComment + 1));
+        } while ($candidateComment !== false && $tokens[$candidateComment]['line'] === $tokens[$end]['line']);
+
+        $end = $nextComment;
 
         if ($end === false) {
             return;
