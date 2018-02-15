@@ -2,3 +2,7 @@
 use Foo\Bar; //comment
 
 // This should pass.
+class Baz
+{
+
+}
