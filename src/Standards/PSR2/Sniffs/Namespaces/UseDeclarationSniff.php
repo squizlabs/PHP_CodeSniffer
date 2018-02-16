@@ -138,18 +138,24 @@ class UseDeclarationSniff implements Sniff
         }
 
         $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-        $candidateComment = $end;
-
-        do {
-            $nextComment      = $candidateComment;
-            $candidateComment = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextComment + 1));
-        } while ($candidateComment !== false && $tokens[$candidateComment]['line'] === $tokens[$end]['line']);
-
-        $end = $nextComment;
-
         if ($end === false) {
             return;
         }
+
+        // Find either the start of the next line or the beginning of the next statement,
+        // whichever comes first.
+        for ($end = ++$end; $end < $phpcsFile->numTokens; $end++) {
+            if (isset(Tokens::$emptyTokens[$tokens[$end]['code']]) === false) {
+                break;
+            }
+
+            if ($tokens[$end]['column'] === 1) {
+                // Reached the next line.
+                break;
+            }
+        }
+
+        --$end;
 
         $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
 
