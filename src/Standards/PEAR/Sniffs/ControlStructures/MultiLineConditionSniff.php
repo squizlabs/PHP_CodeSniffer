@@ -181,22 +181,34 @@ class MultiLineConditionSniff implements Sniff
                 $next = $phpcsFile->findNext(Tokens::$emptyTokens, $i, null, true);
                 if ($next !== $closeBracket && $tokens[$next]['line'] === $tokens[$i]['line']) {
                     if (isset(Tokens::$booleanOperators[$tokens[$next]['code']]) === false) {
+                        $prev    = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($i - 1), $openBracket, true);
+                        $fixable = true;
+                        if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === false
+                            && $phpcsFile->findNext(T_WHITESPACE, ($prev + 1), $next, true) !== false
+                        ) {
+                            // Condition spread over multi-lines interspersed with comments.
+                            $fixable = false;
+                        }
+
                         $error = 'Each line in a multi-line IF statement must begin with a boolean operator';
-                        $fix   = $phpcsFile->addFixableError($error, $i, 'StartWithBoolean');
-                        if ($fix === true) {
-                            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($i - 1), $openBracket, true);
-                            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
-                                $phpcsFile->fixer->beginChangeset();
-                                $phpcsFile->fixer->replaceToken($prev, '');
-                                $phpcsFile->fixer->addContentBefore($next, $tokens[$prev]['content'].' ');
-                                $phpcsFile->fixer->endChangeset();
-                            } else {
-                                for ($x = ($prev + 1); $x < $next; $x++) {
-                                    $phpcsFile->fixer->replaceToken($x, '');
+                        if ($fixable === false) {
+                            $phpcsFile->addError($error, $next, 'StartWithBoolean');
+                        } else {
+                            $fix = $phpcsFile->addFixableError($error, $next, 'StartWithBoolean');
+                            if ($fix === true) {
+                                if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
+                                    $phpcsFile->fixer->beginChangeset();
+                                    $phpcsFile->fixer->replaceToken($prev, '');
+                                    $phpcsFile->fixer->addContentBefore($next, $tokens[$prev]['content'].' ');
+                                    $phpcsFile->fixer->endChangeset();
+                                } else {
+                                    for ($x = ($prev + 1); $x < $next; $x++) {
+                                        $phpcsFile->fixer->replaceToken($x, '');
+                                    }
                                 }
                             }
                         }
-                    }
+                    }//end if
                 }//end if
 
                 $prevLine = $tokens[$i]['line'];
