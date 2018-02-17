@@ -179,7 +179,7 @@ class MultiLineConditionSniff implements Sniff
                 }
 
                 $next = $phpcsFile->findNext(Tokens::$emptyTokens, $i, null, true);
-                if ($next !== $closeBracket) {
+                if ($next !== $closeBracket && $tokens[$next]['line'] === $tokens[$i]['line']) {
                     if (isset(Tokens::$booleanOperators[$tokens[$next]['code']]) === false) {
                         $error = 'Each line in a multi-line IF statement must begin with a boolean operator';
                         $fix   = $phpcsFile->addFixableError($error, $i, 'StartWithBoolean');
