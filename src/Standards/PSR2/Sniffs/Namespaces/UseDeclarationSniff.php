@@ -157,6 +157,15 @@ class UseDeclarationSniff implements Sniff
 
         --$end;
 
+        if (($tokens[$end]['code'] === T_COMMENT
+            || isset(Tokens::$phpcsCommentTokens[$tokens[$end]['code']]) === true)
+            && substr($tokens[$end]['content'], 0, 2) === '/*'
+            && substr($tokens[$end]['content'], -2) !== '*/'
+        ) {
+            // Multi-line block comments are not allowed as trailing comment after a use statement.
+            --$end;
+        }
+
         $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
 
         if ($next === false || $tokens[$next]['code'] === T_CLOSE_TAG) {
