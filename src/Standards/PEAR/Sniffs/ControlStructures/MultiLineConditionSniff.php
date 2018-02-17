@@ -117,7 +117,9 @@ class MultiLineConditionSniff implements Sniff
                     if ($fix === true) {
                         // Account for a comment at the end of the line.
                         $next = $phpcsFile->findNext(T_WHITESPACE, ($closeBracket + 1), null, true);
-                        if ($tokens[$next]['code'] !== T_COMMENT) {
+                        if ($tokens[$next]['code'] !== T_COMMENT
+                            && isset(Tokens::$phpcsCommentTokens[$tokens[$next]['code']]) === false
+                        ) {
                             $phpcsFile->fixer->addNewlineBefore($closeBracket);
                         } else {
                             $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
@@ -144,7 +146,9 @@ class MultiLineConditionSniff implements Sniff
                     $expectedIndent = ($statementIndent + $this->indent);
                 }//end if
 
-                if ($tokens[$i]['code'] === T_COMMENT) {
+                if ($tokens[$i]['code'] === T_COMMENT
+                    || isset(Tokens::$phpcsCommentTokens[$tokens[$i]['code']]) === true
+                ) {
                     $prevLine = $tokens[$i]['line'];
                     continue;
                 }
