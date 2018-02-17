@@ -1015,7 +1015,7 @@ class File
 
 
     /**
-     * Adds an warning to the warning stack.
+     * Record a metric about the file being examined.
      *
      * @param int    $stackPtr The stack position where the metric was recorded.
      * @param string $metric   The name of the metric being recorded.
