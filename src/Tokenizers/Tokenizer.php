@@ -228,8 +228,8 @@ abstract class Tokenizer
                 || $this->tokens[$i]['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML))
             ) {
-                $commentText      = ltrim($this->tokens[$i]['content'], ' /*');
-                $commentText      = rtrim($commentText, " */\r\n");
+                $commentText      = ltrim($this->tokens[$i]['content'], " \t/*");
+                $commentText      = rtrim($commentText, " */\t\r\n");
                 $commentTextLower = strtolower($commentText);
                 if (strpos($commentText, '@codingStandards') !== false) {
                     // If this comment is the only thing on the line, it tells us
