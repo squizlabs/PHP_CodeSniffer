@@ -92,7 +92,7 @@ class ErrorSuppressionTest extends TestCase
         $this->assertCount(0, $errors);
 
         // Process with block comment suppression.
-        $content = '<?php '.PHP_EOL.'/* phpcs:disable */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/* phpcs:disable */';
+        $content = '<?php '.PHP_EOL.'/* phpcs:disable */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/* phpcs:enable */';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
@@ -852,7 +852,7 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, $numWarnings);
         $this->assertCount(0, $warnings);
 
-        // Suppress wrong catergory using docblocks.
+        // Suppress wrong category using docblocks.
         $content = '<?php '.PHP_EOL.'/**
         '.PHP_EOL.' * phpcs:disable Generic.Files'.PHP_EOL.' */ '.PHP_EOL.'//TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
