@@ -73,6 +73,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1890 : Incorrect Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose error between catch and finally statements
   - Fixed bug #1891 : Comment on last USE statement causes false positive for PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse
     -- Thanks to Matt Coleman, Daniel Hensby, and Juliette Reinders Folmer for the patch
+  - Fixed bug #1901 : Fixed PHPCS annotations in multi-line tab-indented comments + not ignoring whole line for phpcs:set
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
