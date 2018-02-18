@@ -72,7 +72,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1870 : Invalid warning in multiple assignments alignment with closure or anon class
   - Fixed bug #1890 : Incorrect Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose error between catch and finally statements
   - Fixed bug #1891 : Comment on last USE statement causes false positive for PSR2.Namespaces.UseDeclaration.SpaceAfterLastUse
-    -- Thanks to Matt Coleman for the patch
+    -- Thanks to Matt Coleman, Daniel Hensby, and Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
@@ -1004,6 +1004,17 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.8.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.9.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.10.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.10.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.11.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.11.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.12.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.12.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.13.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.13.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.14.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.14.inc.fixed" role="test" />
        </dir>
       </dir>
       <file baseinstalldir="PHP/CodeSniffer" name="ruleset.xml" role="php" />
