@@ -239,10 +239,8 @@ class DocCommentSniff implements Sniff
             }
 
             if ($tokens[$tag]['content'] === '@param') {
-                if (($paramGroupid === null
-                    && empty($tagGroups[$groupid]) === false)
-                    || ($paramGroupid !== null
-                    && $paramGroupid !== $groupid)
+                if ($paramGroupid !== null
+                    && $paramGroupid !== $groupid
                 ) {
                     $error = 'Parameter tags must be grouped together in a doc comment';
                     $phpcsFile->addError($error, $tag, 'ParamGroup');
@@ -251,18 +249,22 @@ class DocCommentSniff implements Sniff
                 if ($paramGroupid === null) {
                     $paramGroupid = $groupid;
                 }
-            } else if ($groupid === $paramGroupid) {
-                $error = 'Tag cannot be grouped with parameter tags in a doc comment';
-                $phpcsFile->addError($error, $tag, 'NonParamGroup');
             }//end if
 
             $tagGroups[$groupid][] = $tag;
         }//end foreach
 
-        foreach ($tagGroups as $group) {
+        foreach ($tagGroups as $groupid => $group) {
             $maxLength = 0;
             $paddings  = [];
             foreach ($group as $pos => $tag) {
+                if ($paramGroupid === $groupid
+                    && $tokens[$tag]['content'] !== '@param'
+                ) {
+                    $error = 'Tag cannot be grouped with parameter tags in a doc comment';
+                    $phpcsFile->addError($error, $tag, 'NonParamGroup');
+                }
+
                 $tagLength = strlen($tokens[$tag]['content']);
                 if ($tagLength > $maxLength) {
                     $maxLength = $tagLength;
