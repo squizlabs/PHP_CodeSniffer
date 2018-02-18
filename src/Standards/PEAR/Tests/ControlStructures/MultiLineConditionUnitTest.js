@@ -177,3 +177,75 @@ if (a
     )) {
     return false;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (foo == 401 || // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    bar == 3200)  /*
+                     phpcs:ignore Standard.Category.Sniff -- for reasons.
+                   */
+{
+    return false;
+}
+
+if (foo == 401 || // phpcs:disable Standard.Category.Sniff -- for reasons.
+    bar == 3200)  // phpcs:enable
+{
+    return false;
+}
+
+if (IPP.errorCode() == 401
+    // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    || IPP.errorCode() == 3200
+) {
+    return false;
+}
+
+    if (foo == 401 ||
+    /*
+	 * phpcs:disable Standard.Category.Sniff -- for reasons.
+	 */
+    bar == 3200
+    ) {
+        return false;
+    }
+
+if (IPP.errorCode() == 401
+    || IPP.errorCode() == 3200
+    // phpcs:ignore Standard.Category.Sniff -- for reasons.
+) {
+    return false;
+}
+
+if (foo == 401
+    || bar
+        == 'someverylongexpectedoutput'
+) {
+    return false;
+}
+
+if (IPP.errorCode() == 401
+    || bar
+        // A comment.
+        == 'someverylongexpectedoutput'
+) {
+    return false;
+}
+
+if (foo == 401
+    || IPP.errorCode()
+        // phpcs:ignore Standard.Category.Sniff -- for reasons.
+        == 'someverylongexpectedoutput'
+) {
+    return false;
+}
