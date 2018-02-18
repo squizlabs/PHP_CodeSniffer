@@ -228,8 +228,8 @@ abstract class Tokenizer
                 || $this->tokens[$i]['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML))
             ) {
-                $commentText      = ltrim($this->tokens[$i]['content'], ' /*');
-                $commentText      = rtrim($commentText, " */\r\n");
+                $commentText      = ltrim($this->tokens[$i]['content'], " \t/*");
+                $commentText      = rtrim($commentText, " */\t\r\n");
                 $commentTextLower = strtolower($commentText);
                 if (strpos($commentText, '@codingStandards') !== false) {
                     // If this comment is the only thing on the line, it tells us
@@ -255,7 +255,7 @@ abstract class Tokenizer
                     ) {
                         $ignoring = ['all' => true];
                         if ($ownLine === true) {
-                            $this->ignoredLines[$this->tokens[$i]['line']] = ['all' => true];
+                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
                         }
                     } else if ($ignoring !== null
                         && strpos($commentText, '@codingStandardsIgnoreEnd') !== false
@@ -272,7 +272,7 @@ abstract class Tokenizer
                     ) {
                         $ignoring = ['all' => true];
                         if ($ownLine === true) {
-                            $this->ignoredLines[$this->tokens[$i]['line']]       = ['all' => true];
+                            $this->ignoredLines[$this->tokens[$i]['line']]       = $ignoring;
                             $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = $ignoring;
                         } else {
                             $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
@@ -320,8 +320,11 @@ abstract class Tokenizer
                     }
 
                     if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
-                        // Ignore standards for lines that change sniff settings.
-                        $this->ignoredLines[$this->tokens[$i]['line']] = true;
+                        // Ignore standards for complete lines that change sniff settings.
+                        if ($ownLine === true) {
+                            $this->ignoredLines[$this->tokens[$i]['line']] = true;
+                        }
+
                         $this->tokens[$i]['code'] = T_PHPCS_SET;
                         $this->tokens[$i]['type'] = 'T_PHPCS_SET';
                     } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile') {
