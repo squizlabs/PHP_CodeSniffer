@@ -49,6 +49,12 @@ class UseDeclarationUnitTest extends AbstractSniffUnitTest
                 18 => 1,
                 19 => 1,
             ];
+        case 'UseDeclarationUnitTest.10.inc':
+        case 'UseDeclarationUnitTest.11.inc':
+        case 'UseDeclarationUnitTest.12.inc':
+        case 'UseDeclarationUnitTest.13.inc':
+        case 'UseDeclarationUnitTest.14.inc':
+            return [2 => 1];
         default:
             return [];
         }//end switch
