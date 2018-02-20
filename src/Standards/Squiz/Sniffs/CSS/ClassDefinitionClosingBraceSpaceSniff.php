@@ -9,9 +9,9 @@
 
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\CSS;
 
- use PHP_CodeSniffer\Sniffs\Sniff;
- use PHP_CodeSniffer\Files\File;
- use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class ClassDefinitionClosingBraceSpaceSniff implements Sniff
 {
