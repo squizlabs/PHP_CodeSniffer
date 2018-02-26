@@ -132,3 +132,13 @@ function myFunction( $param )
           // phpcs:enable Standard.Category.Sniff -- for reasons.
     // }//end myFunction()
     //
+
+echo 'something'; // @codeCoverageIgnore
+echo 'something'; // @codeCoverageIgnoreStart
+echo 'something'; // @SuppressWarnings(PHPMD.UnusedLocalVariable)
+
+// Ok!
+
+/* Go! */
+
+// ISO-639-3

@@ -129,6 +129,11 @@ class CommentedOutCodeSniff implements Sniff
             $lastCommentBlockToken = $i;
         }//end for
 
+        // Ignore typical warning suppression annotations from other tools.
+        if (preg_match('`^\s*@[A-Za-z]+\s*$`', $content) === 1) {
+            return ($lastCommentBlockToken + 1);
+        }
+
         // Quite a few comments use multiple dashes, equals signs etc
         // to frame comments and licence headers.
         $content = preg_replace('/[-=#*]{2,}/', '-', $content);
@@ -172,24 +177,35 @@ class CommentedOutCodeSniff implements Sniff
             valid code.
         */
 
-        // First token is always the opening PHP tag.
+        // First token is always the opening tag.
         if ($stringTokens[0]['code'] !== T_OPEN_TAG) {
             return ($lastCommentBlockToken + 1);
+        } else {
+            array_shift($stringTokens);
+            --$numTokens;
         }
 
-        // Last token is always the closing PHP tag, unless something went wrong.
+        // Last token is always the closing tag, unless something went wrong.
         if (isset($stringTokens[($numTokens - 1)]) === false
             || $stringTokens[($numTokens - 1)]['code'] !== T_CLOSE_TAG
         ) {
             return ($lastCommentBlockToken + 1);
+        } else {
+            array_pop($stringTokens);
+            --$numTokens;
         }
 
         // Second last token is always whitespace or a comment, depending
         // on the code inside the comment.
-        if ($phpcsFile->tokenizerType === 'PHP'
-            && isset(Tokens::$emptyTokens[$stringTokens[($numTokens - 2)]['code']]) === false
-        ) {
-            return ($lastCommentBlockToken + 1);
+        if ($phpcsFile->tokenizerType === 'PHP') {
+            if (isset(Tokens::$emptyTokens[$stringTokens[($numTokens - 1)]['code']]) === false) {
+                return ($lastCommentBlockToken + 1);
+            }
+
+            if ($stringTokens[($numTokens - 1)]['code'] === T_WHITESPACE) {
+                array_pop($stringTokens);
+                --$numTokens;
+            }
         }
 
         $emptyTokens  = [
@@ -202,9 +218,10 @@ class CommentedOutCodeSniff implements Sniff
         ];
         $emptyTokens += Tokens::$phpcsCommentTokens;
 
-        $numComment  = 0;
-        $numPossible = 0;
-        $numCode     = 0;
+        $numComment       = 0;
+        $numPossible      = 0;
+        $numCode          = 0;
+        $numNonWhitespace = 0;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (isset($emptyTokens[$stringTokens[$i]['code']]) === true) {
@@ -221,17 +238,16 @@ class CommentedOutCodeSniff implements Sniff
                 // Looks like code.
                 $numCode++;
             }
+
+            if ($stringTokens[$i]['code'] !== T_WHITESPACE) {
+                ++$numNonWhitespace;
+            }
         }
 
-        // We subtract 3 from the token number so we ignore the start/end tokens
-        // and their surrounding whitespace. We take 2 off the number of code
-        // tokens so we ignore the start/end tokens.
-        if ($numTokens > 3) {
-            $numTokens -= 3;
-        }
-
-        if ($numCode >= 2) {
-            $numCode -= 2;
+        // Ignore comments with only two or less non-whitespace tokens.
+        // Sample size too small for a reliably determination.
+        if ($numNonWhitespace <= 2) {
+            return ($lastCommentBlockToken + 1);
         }
 
         $percentCode = ceil((($numCode / $numTokens) * 100));
