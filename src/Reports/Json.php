@@ -54,14 +54,12 @@ class Json implements Report
                         $fixable = 'true';
                     }
 
-                    $messages .= '{"message":"'.$error['message'].'",';
-                    $messages .= '"source":"'.$error['source'].'",';
-                    $messages .= '"severity":'.$error['severity'].',';
-                    $messages .= '"type":"'.$error['type'].'",';
-                    $messages .= '"line":'.$line.',';
-                    $messages .= '"column":'.$column.',';
-                    $messages .= '"fixable":'.$fixable;
-                    $messages .= '},';
+                    $messagesObject = (object) $error;
+                    $messagesObject->line = $line;
+                    $messagesObject->column = $column;
+                    $messagesObject->fixable = $fixable;
+
+                    $messages .= json_encode($messagesObject) . ",";
                 }//end foreach
             }//end foreach
         }//end foreach
