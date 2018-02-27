@@ -118,7 +118,9 @@ class BlockCommentSniff implements Sniff
 
         // Construct the comment into an array.
         while (($nextComment = $phpcsFile->findNext(T_WHITESPACE, ($nextComment + 1), null, true)) !== false) {
-            if ($tokens[$nextComment]['code'] !== $tokens[$stackPtr]['code']) {
+            if ($tokens[$nextComment]['code'] !== $tokens[$stackPtr]['code']
+                && isset(Tokens::$phpcsCommentTokens[$tokens[$nextComment]['code']]) === false
+            ) {
                 // Found the next bit of code.
                 break;
             }
@@ -136,7 +138,7 @@ class BlockCommentSniff implements Sniff
             ) {
                 break;
             }
-        }
+        }//end while
 
         $commentText = str_replace($phpcsFile->eolChar, '', $commentString);
         $commentText = trim($commentText, "/* \t");
