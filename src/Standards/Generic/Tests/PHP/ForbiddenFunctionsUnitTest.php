@@ -29,6 +29,7 @@ class ForbiddenFunctionsUnitTest extends AbstractSniffUnitTest
             2 => 1,
             4 => 1,
             6 => 1,
+            7 => 1,
         ];
 
         return $errors;
