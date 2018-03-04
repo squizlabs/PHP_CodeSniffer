@@ -45,9 +45,9 @@ class OpeningFunctionBraceKernighanRitchieUnitTest extends AbstractSniffUnitTest
             132 => 1,
             137 => 1,
             142 => 1,
-            153 => 1,
-            158 => 1,
-            167 => 1,
+            157 => 1,
+            162 => 1,
+            171 => 1,
         ];
 
     }//end getErrorList()

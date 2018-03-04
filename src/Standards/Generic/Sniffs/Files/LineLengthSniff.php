@@ -15,6 +15,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Files;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class LineLengthSniff implements Sniff
 {
@@ -106,6 +107,16 @@ class LineLengthSniff implements Sniff
             && $tokens[$stackPtr]['content'] === $phpcsFile->eolChar
         ) {
             $stackPtr--;
+        }
+
+        if (isset(Tokens::$phpcsCommentTokens[$tokens[$stackPtr]['code']]) === true) {
+            $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            if ($tokens[$stackPtr]['line'] !== $tokens[$prevNonWhiteSpace]['line']) {
+                // Ignore PHPCS annotation comments if they are on a line by themselves.
+                return;
+            }
+
+            unset($prevNonWhiteSpace);
         }
 
         $lineLength = ($tokens[$stackPtr]['column'] + $tokens[$stackPtr]['length'] - 1);

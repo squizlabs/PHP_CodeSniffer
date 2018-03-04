@@ -722,7 +722,6 @@ class PHP extends Tokenizer
                 if ($nowdoc === true) {
                     $finalTokens[$newStackPtr]['code'] = T_END_NOWDOC;
                     $finalTokens[$newStackPtr]['type'] = 'T_END_NOWDOC';
-                    $nowdoc = true;
                 }
 
                 $newStackPtr++;
@@ -1243,10 +1242,48 @@ class PHP extends Tokenizer
                 // Convert colons that are actually the ELSE component of an
                 // inline IF statement.
                 if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
-                    array_pop($insideInlineIf);
-                    $newToken['code'] = T_INLINE_ELSE;
-                    $newToken['type'] = 'T_INLINE_ELSE';
-                }
+                    // Make sure this isn't the return type separator of a closure.
+                    $isReturnType = false;
+                    for ($i = ($stackPtr - 1); $i > 0; $i--) {
+                        if (is_array($tokens[$i]) === false
+                            || ($tokens[$i][0] !== T_DOC_COMMENT
+                            && $tokens[$i][0] !== T_COMMENT
+                            && $tokens[$i][0] !== T_WHITESPACE)
+                        ) {
+                            break;
+                        }
+                    }
+
+                    if ($tokens[$i] === ')') {
+                        for ($i--; $i > 0; $i--) {
+                            if ($tokens[$i] === '(') {
+                                break;
+                            }
+                        }
+
+                        // We've found the open parenthesis, so if the previous
+                        // non-empty token is FUNCTION or USE, this is a closure.
+                        for ($i--; $i > 0; $i--) {
+                            if (is_array($tokens[$i]) === false
+                                || ($tokens[$i][0] !== T_DOC_COMMENT
+                                && $tokens[$i][0] !== T_COMMENT
+                                && $tokens[$i][0] !== T_WHITESPACE)
+                            ) {
+                                break;
+                            }
+                        }
+
+                        if ($tokens[$i][0] === T_FUNCTION || $tokens[$i][0] === T_USE) {
+                            $isReturnType = true;
+                        }
+                    }//end if
+
+                    if ($isReturnType === false) {
+                        array_pop($insideInlineIf);
+                        $newToken['code'] = T_INLINE_ELSE;
+                        $newToken['type'] = 'T_INLINE_ELSE';
+                    }
+                }//end if
 
                 // This is a special condition for T_ARRAY tokens used for
                 // type hinting function arguments as being arrays. We want to keep

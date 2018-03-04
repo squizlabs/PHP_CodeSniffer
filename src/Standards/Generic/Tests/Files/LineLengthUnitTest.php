@@ -48,6 +48,7 @@ class LineLengthUnitTest extends AbstractSniffUnitTest
                 31 => 1,
                 34 => 1,
                 45 => 1,
+                82 => 1,
             ];
             break;
         case 'LineLengthUnitTest.2.inc':

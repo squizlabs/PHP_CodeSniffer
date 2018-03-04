@@ -23,7 +23,7 @@ class Config
      *
      * @var string
      */
-    const VERSION = '3.2.0';
+    const VERSION = '3.3.0';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -59,7 +59,7 @@ class Config
      * bool     showSources     Show sniff source codes in report output.
      * bool     showProgress    Show basic progress information while running.
      * bool     quiet           Quiet mode; disables progress and verbose output.
-     * bool     annotations     Process @codingStandard annotations.
+     * bool     annotations     Process phpcs: annotations.
      * int      tabWidth        How many spaces each tab is worth.
      * string   encoding        The encoding of the files being checked.
      * string[] sniffs          The sniffs that should be used for checking.
@@ -360,6 +360,12 @@ class Config
             } while ($currentDir !== '.' && $currentDir !== $lastDir);
         }//end if
 
+        if (defined('STDIN') === false
+            || strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
+        ) {
+            return;
+        }
+
         $handle = fopen('php://stdin', 'r');
 
         // Check for content on STDIN.
@@ -367,7 +373,18 @@ class Config
             || (Util\Common::isStdinATTY() === false
             && feof($handle) === false)
         ) {
-            $fileContents = stream_get_contents($handle);
+            $readStreams = [$handle];
+            $writeSteams = null;
+
+            $fileContents = '';
+            while (is_resource($handle) === true && feof($handle) === false) {
+                // Set a timeout of 200ms.
+                if (stream_select($readStreams, $writeSteams, $writeSteams, 0, 200000) === 0) {
+                    break;
+                }
+
+                $fileContents .= fgets($handle);
+            }
 
             if (trim($fileContents) !== '') {
                 $this->stdin        = true;
@@ -375,7 +392,7 @@ class Config
                 $this->overriddenDefaults['stdin']        = true;
                 $this->overriddenDefaults['stdinContent'] = true;
             }
-        }
+        }//end if
 
         fclose($handle);
 
@@ -989,14 +1006,19 @@ class Config
                     break;
                 }
 
+                $this->overriddenDefaults['basepath'] = true;
+
+                if (substr($arg, 9) === '') {
+                    $this->basepath = null;
+                    break;
+                }
+
                 $this->basepath = Util\Common::realpath(substr($arg, 9));
 
                 // It may not exist and return false instead.
                 if ($this->basepath === false) {
                     $this->basepath = substr($arg, 9);
                 }
-
-                $this->overriddenDefaults['basepath'] = true;
 
                 if (is_dir($this->basepath) === false) {
                     $error  = 'ERROR: The specified basepath "'.$this->basepath.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
@@ -1201,7 +1223,6 @@ class Config
                     $this->processUnknownArgument('--'.$arg, $pos);
                 }
             }//end if
-
             break;
         }//end switch
 
@@ -1357,7 +1378,7 @@ class Config
         echo ' --no-colors           Do not use colors in output (this is the default)'.PHP_EOL;
         echo ' --cache               Cache results between runs'.PHP_EOL;
         echo ' --no-cache            Do not cache results between runs (this is the default)'.PHP_EOL;
-        echo ' --ignore-annotations  Ignore all @codingStandard annotations in code comments'.PHP_EOL;
+        echo ' --ignore-annotations  Ignore all phpcs: annotations in code comments'.PHP_EOL;
         echo PHP_EOL;
         echo ' <cacheFile>    Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo ' <basepath>     A path to strip from the front of file paths inside reports'.PHP_EOL;
@@ -1417,7 +1438,7 @@ class Config
         echo PHP_EOL;
         echo ' --help                Print this help message'.PHP_EOL;
         echo ' --version             Print version information'.PHP_EOL;
-        echo ' --ignore-annotations  Ignore all @codingStandard annotations in code comments'.PHP_EOL;
+        echo ' --ignore-annotations  Ignore all phpcs: annotations in code comments'.PHP_EOL;
         echo PHP_EOL;
         echo ' <basepath>    A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo ' <bootstrap>   A comma separated list of files to run before processing begins'.PHP_EOL;

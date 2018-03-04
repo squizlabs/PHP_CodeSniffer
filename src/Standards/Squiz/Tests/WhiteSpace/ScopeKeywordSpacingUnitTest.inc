@@ -22,6 +22,12 @@ class MyClass
         // New in PHP 5.3
         static::bar();
     }
+
+    public static$var = null;
+
+    public  
+    static
+    $var = null;
 }
 
 abstract class Foo

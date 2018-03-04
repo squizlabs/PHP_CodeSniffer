@@ -59,7 +59,13 @@ class FunctionCommentSniff implements Sniff
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
-            $phpcsFile->addError('Missing function doc comment', $stackPtr, 'Missing');
+            $function = $phpcsFile->getDeclarationName($stackPtr);
+            $phpcsFile->addError(
+                'Missing doc comment for function %s()',
+                $stackPtr,
+                'Missing',
+                [$function]
+            );
             $phpcsFile->recordMetric($stackPtr, 'Function has doc comment', 'no');
             return;
         } else {
@@ -158,21 +164,16 @@ class FunctionCommentSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $throws = [];
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             if ($tokens[$tag]['content'] !== '@throws') {
                 continue;
             }
 
             $exception = null;
-            $comment   = null;
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = [];
                 preg_match('/([^\s]+)(?:\s+(.*))?/', $tokens[($tag + 2)]['content'], $matches);
                 $exception = $matches[1];
-                if (isset($matches[2]) === true) {
-                    $comment = $matches[2];
-                }
             }
 
             if ($exception === null) {

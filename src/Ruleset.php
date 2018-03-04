@@ -948,9 +948,7 @@ class Ruleset
                         $value  = (string) $prop['value'];
                         $values = [];
                         foreach (explode(',', $value) as $val) {
-                            $v = '';
-
-                            list($k,$v) = explode('=>', $val.'=>');
+                            list($k, $v) = explode('=>', $val.'=>');
                             if ($v !== '') {
                                 $values[trim($k)] = trim($v);
                             } else {

@@ -212,3 +212,37 @@ interface MyInterface
     public $var3 = 'value';
 
 }//end class
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 0
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacingBeforeFirst 0
+
+class phpcsCommentTest {
+
+
+    // phpcs:disable Standard.Category.Sniff
+
+    public $var1 = 'value';
+
+
+    // phpcs:enable Standard.Category.Sniff
+
+    public $var1 = 'value';
+
+}
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacingBeforeFirst 1
+
+class phpcsCommentTest {
+
+
+    // phpcs:disable Standard.Category.Sniff
+
+    public $var1 = 'value';
+
+
+    // phpcs:enable Standard.Category.Sniff
+
+    public $var1 = 'value';
+
+}

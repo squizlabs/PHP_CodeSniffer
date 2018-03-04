@@ -41,5 +41,17 @@ class MyClass
             echo $this->name;
         };
     }
+
+    private static function func1(array $data)
+    {
+        return new class()
+        {
+            private $data;
+
+            public function __construct(array $data)
+            {
+                $this->data = $data;
+            }
+        };
+    }
 }
-?>

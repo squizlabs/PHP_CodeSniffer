@@ -932,6 +932,7 @@ class JS extends Tokenizer
             T_RETURN              => true,
             T_BOOLEAN_OR          => true,
             T_BOOLEAN_AND         => true,
+            T_BOOLEAN_NOT         => true,
             T_BITWISE_OR          => true,
             T_BITWISE_AND         => true,
             T_COMMA               => true,

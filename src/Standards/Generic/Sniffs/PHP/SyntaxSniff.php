@@ -62,7 +62,7 @@ class SyntaxSniff implements Sniff
 
         $fileName = escapeshellarg($phpcsFile->getFilename());
         if (defined('HHVM_VERSION') === false) {
-            $cmd = escapeshellcmd($this->phpPath)." -l -d error_prepend_string='' $fileName 2>&1";
+            $cmd = escapeshellcmd($this->phpPath)." -l -d display_errors=1 -d error_prepend_string='' $fileName 2>&1";
         } else {
             $cmd = escapeshellcmd($this->phpPath)." -l $fileName 2>&1";
         }

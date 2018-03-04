@@ -110,14 +110,14 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         // Is this a magic method. i.e., is prefixed with "__" ?
         if (preg_match('|^__[^_]|', $methodName) !== 0) {
             $magicPart = strtolower(substr($methodName, 2));
-            if (isset($this->magicMethods[$magicPart]) === false
-                && isset($this->methodsDoubleUnderscore[$magicPart]) === false
+            if (isset($this->magicMethods[$magicPart]) === true
+                || isset($this->methodsDoubleUnderscore[$magicPart]) === true
             ) {
-                $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
-                $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
+                return;
             }
 
-            return;
+            $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
+            $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
         }
 
         // PHP4 constructors are allowed to break our rules.
@@ -178,12 +178,12 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         // Is this a magic function. i.e., it is prefixed with "__".
         if (preg_match('|^__[^_]|', $functionName) !== 0) {
             $magicPart = strtolower(substr($functionName, 2));
-            if (isset($this->magicFunctions[$magicPart]) === false) {
-                 $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
-                 $phpcsFile->addError($error, $stackPtr, 'FunctionDoubleUnderscore', $errorData);
+            if (isset($this->magicFunctions[$magicPart]) === true) {
+                return;
             }
 
-            return;
+            $error = 'Function name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
+            $phpcsFile->addError($error, $stackPtr, 'FunctionDoubleUnderscore', $errorData);
         }
 
         // Ignore first underscore in functions prefixed with "_".

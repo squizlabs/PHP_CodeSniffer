@@ -190,7 +190,7 @@ class Runner
             // dying if any are found.
             $this->config->dieOnUnknownArg = false;
 
-            $numErrors = $this->run();
+            $this->run();
             $this->reporter->printReports();
 
             echo PHP_EOL;

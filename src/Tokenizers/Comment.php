@@ -113,7 +113,7 @@ class Comment
                 continue;
             }
 
-            if ($string[$char] === '*') {
+            if ($lineNum > 0 && $string[$char] === '*') {
                 // This is a function or class doc block line.
                 $char++;
                 $tokens[$stackPtr] = [
@@ -192,7 +192,9 @@ class Comment
             // The content up until the first whitespace is the tag name.
             $matches = [];
             preg_match('/@[^\s]+/', $string, $matches, 0, $start);
-            if (isset($matches[0]) === true) {
+            if (isset($matches[0]) === true
+                && substr(strtolower($matches[0]), 0, 7) !== '@phpcs:'
+            ) {
                 $tagName  = $matches[0];
                 $start   += strlen($tagName);
                 $tokens[] = [

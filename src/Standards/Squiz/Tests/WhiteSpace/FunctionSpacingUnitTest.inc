@@ -300,3 +300,8 @@ if ($foo) {
 // foo
 function foo() {
 }
+
+
+// phpcs:disable Standard.Category.Sniff -- for reasons.
+function bar() {
+}

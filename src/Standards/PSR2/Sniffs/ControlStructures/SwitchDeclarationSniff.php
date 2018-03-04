@@ -59,16 +59,12 @@ class SwitchDeclarationSniff implements Sniff
         $switch        = $tokens[$stackPtr];
         $nextCase      = $stackPtr;
         $caseAlignment = ($switch['column'] + $this->indent);
-        $caseCount     = 0;
-        $foundDefault  = false;
 
         while (($nextCase = $this->findNextCase($phpcsFile, ($nextCase + 1), $switch['scope_closer'])) !== false) {
             if ($tokens[$nextCase]['code'] === T_DEFAULT) {
-                $type         = 'default';
-                $foundDefault = true;
+                $type = 'default';
             } else {
                 $type = 'case';
-                $caseCount++;
             }
 
             if ($tokens[$nextCase]['content'] !== strtolower($tokens[$nextCase]['content'])) {
@@ -113,7 +109,8 @@ class SwitchDeclarationSniff implements Sniff
 
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
                 if ($tokens[$next]['line'] === $tokens[$opener]['line']
-                    && $tokens[$next]['code'] === T_COMMENT
+                    && ($tokens[$next]['code'] === T_COMMENT
+                    || isset(Tokens::$phpcsCommentTokens[$tokens[$next]['code']]) === true)
                 ) {
                     // Skip comments on the same line.
                     $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);

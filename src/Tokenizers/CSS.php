@@ -358,7 +358,6 @@ class CSS extends PHP
                     $finalTokens[($stackPtr + 1)]['content'] = '-'.$finalTokens[($stackPtr + 1)]['content'];
                     unset($finalTokens[$stackPtr]);
                 }//end if
-
                 break;
             case T_COLON:
                 // Only interested in colons that are defining styles.
@@ -472,7 +471,6 @@ class CSS extends PHP
                         unset($finalTokens[$stackPtr]);
                     }
                 }//end if
-
                 break;
             case T_ASPERAND:
                 $asperandStart = true;

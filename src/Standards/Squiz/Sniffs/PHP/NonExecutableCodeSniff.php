@@ -30,6 +30,7 @@ class NonExecutableCodeSniff implements Sniff
             T_RETURN,
             T_THROW,
             T_EXIT,
+            T_GOTO,
         ];
 
     }//end register()
@@ -223,6 +224,10 @@ class NonExecutableCodeSniff implements Sniff
                 break;
             }
         }//end for
+
+        if (isset($tokens[$start]) === false) {
+            return;
+        }
 
         $lastLine = $tokens[$start]['line'];
         for ($i = ($start + 1); $i < $end; $i++) {

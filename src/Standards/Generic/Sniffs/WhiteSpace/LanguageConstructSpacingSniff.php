@@ -15,8 +15,6 @@ use PHP_CodeSniffer\Util;
 
 class LanguageConstructSpacingSniff implements Sniff
 {
-
-
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -56,8 +54,9 @@ class LanguageConstructSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[($stackPtr + 1)]) === false) {
-            // Skip if there is no next token.
+        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($nextToken === false) {
+            // Skip when at end of file.
             return;
         }
 
@@ -87,21 +86,17 @@ class LanguageConstructSpacingSniff implements Sniff
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
                 }
             }
-        } else {
-            if ($tokens[($stackPtr + 1)]['code'] !== T_OPEN_PARENTHESIS) {
-                $error = 'Language constructs must be followed by a single space; expected "%s" but found "%s"';
-                $data  = [
-                    $tokens[$stackPtr]['content'].' '.$tokens[($stackPtr + 1)]['content'],
-                    $tokens[$stackPtr]['content'].$tokens[($stackPtr + 1)]['content'],
-                ];
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->addContent($stackPtr, ' ');
-                }
+        } else if ($tokens[($stackPtr + 1)]['code'] !== T_OPEN_PARENTHESIS) {
+            $error = 'Language constructs must be followed by a single space; expected "%s" but found "%s"';
+            $data  = [
+                $tokens[$stackPtr]['content'].' '.$tokens[($stackPtr + 1)]['content'],
+                $tokens[$stackPtr]['content'].$tokens[($stackPtr + 1)]['content'],
+            ];
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
+            if ($fix === true) {
+                $phpcsFile->fixer->addContent($stackPtr, ' ');
             }
         }//end if
 
     }//end process()
-
-
 }//end class

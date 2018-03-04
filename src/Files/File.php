@@ -366,7 +366,9 @@ class File
                             }
                         }
                     }//end if
-                } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile') {
+                } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile'
+                    || substr($commentTextLower, 0, 17) === '@phpcs:ignorefile'
+                ) {
                     // Ignoring the whole file, just a little late.
                     $this->errors       = [];
                     $this->warnings     = [];
@@ -374,7 +376,15 @@ class File
                     $this->warningCount = 0;
                     $this->fixableCount = 0;
                     return;
-                } else if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
+                } else if (substr($commentTextLower, 0, 9) === 'phpcs:set'
+                    || substr($commentTextLower, 0, 10) === '@phpcs:set'
+                ) {
+                    // If the @phpcs: syntax is being used, strip the @ to make
+                    // comparisions easier.
+                    if ($commentText[0] === '@') {
+                        $commentText = substr($commentText, 1);
+                    }
+
                     // Need to maintain case here, to get the correct sniff code.
                     $parts = explode(' ', substr($commentText, 10));
                     if ($parts >= 3) {
@@ -1005,7 +1015,7 @@ class File
 
 
     /**
-     * Adds an warning to the warning stack.
+     * Record a metric about the file being examined.
      *
      * @param int    $stackPtr The stack position where the metric was recorded.
      * @param string $metric   The name of the metric being recorded.

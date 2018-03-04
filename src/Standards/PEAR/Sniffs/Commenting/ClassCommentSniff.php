@@ -56,7 +56,8 @@ class ClassCommentSniff extends FileCommentSniff
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
-            $phpcsFile->addError('Missing class doc comment', $stackPtr, 'Missing');
+            $errorData[] = $phpcsFile->getDeclarationName($stackPtr);
+            $phpcsFile->addError('Missing doc comment for %s %s', $stackPtr, 'Missing', $errorData);
             $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'no');
             return;
         }
@@ -64,7 +65,7 @@ class ClassCommentSniff extends FileCommentSniff
         $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'yes');
 
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
-            $phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr, 'WrongStyle');
+            $phpcsFile->addError('You must use "/**" style comments for a %s comment', $stackPtr, 'WrongStyle', $errorData);
             return;
         }
 

@@ -16,16 +16,6 @@ use PHP_CodeSniffer\Files\File;
 class ValidVariableNameSniff extends AbstractVariableSniff
 {
 
-    /**
-     * Tokens to ignore so that we can find a DOUBLE_COLON.
-     *
-     * @var array
-     */
-    private $ignore = [
-        T_WHITESPACE,
-        T_COMMENT,
-    ];
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -151,7 +141,6 @@ class ValidVariableNameSniff extends AbstractVariableSniff
                 $error = 'Public member variable "%s" must not contain a leading underscore';
                 $data  = [$varName];
                 $phpcsFile->addError($error, $stackPtr, 'PublicHasUnderscore', $data);
-                return;
             }
         } else {
             if (substr($varName, 0, 1) !== '_') {
@@ -162,11 +151,13 @@ class ValidVariableNameSniff extends AbstractVariableSniff
                     $varName,
                 ];
                 $phpcsFile->addError($error, $stackPtr, 'PrivateNoUnderscore', $data);
-                return;
             }
         }
 
-        if (Common::isCamelCaps($varName, false, $public, false) === false) {
+        // Remove a potential underscore prefix for testing CamelCaps.
+        $varName = ltrim($varName, '_');
+
+        if (Common::isCamelCaps($varName, false, true, false) === false) {
             $error = 'Member variable "%s" is not in valid camel caps format';
             $data  = [$varName];
             $phpcsFile->addError($error, $stackPtr, 'MemberVarNotCamelCaps', $data);

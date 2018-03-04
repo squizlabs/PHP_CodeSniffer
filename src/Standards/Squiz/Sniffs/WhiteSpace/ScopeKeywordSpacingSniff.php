@@ -60,15 +60,30 @@ class ScopeKeywordSpacingSniff implements Sniff
             return;
         }
 
-        $nextToken = $tokens[($stackPtr + 1)];
-        if (strlen($nextToken['content']) !== 1
-            || $nextToken['content'] === $phpcsFile->eolChar
-        ) {
-            $error = 'Scope keyword "%s" must be followed by a single space';
-            $data  = [$tokens[$stackPtr]['content']];
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
+        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            $spacing = 0;
+        } else {
+            if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                $spacing = 'newline';
+            } else {
+                $spacing = $tokens[($stackPtr + 1)]['length'];
+            }
+        }
+
+        if ($spacing !== 1) {
+            $error = 'Scope keyword "%s" must be followed by a single space; found %s';
+            $data  = [
+                $tokens[$stackPtr]['content'],
+                $spacing,
+            ];
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                if ($spacing === 0) {
+                    $phpcsFile->fixer->addContent($stackPtr, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                }
             }
         }
 

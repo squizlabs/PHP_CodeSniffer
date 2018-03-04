@@ -43,11 +43,6 @@ class ValidDefaultValueSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        $argStart = $tokens[$stackPtr]['parenthesis_opener'];
-        $argEnd   = $tokens[$stackPtr]['parenthesis_closer'];
-
         // Flag for when we have found a default in our arg list.
         // If there is a value without a default after this, it is an error.
         $defaultFound = false;

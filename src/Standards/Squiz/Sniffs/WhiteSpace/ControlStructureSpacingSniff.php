@@ -45,6 +45,7 @@ class ControlStructureSpacingSniff implements Sniff
             T_ELSEIF,
             T_TRY,
             T_CATCH,
+            T_FINALLY,
         ];
 
     }//end register()
@@ -212,7 +213,6 @@ class ControlStructureSpacingSniff implements Sniff
 
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
-                    $i = ($scopeCloser - 1);
                     for ($i = ($scopeCloser - 1); $i > $lastContent; $i--) {
                         if ($tokens[$i]['line'] === $tokens[$scopeCloser]['line']) {
                             continue;
@@ -239,7 +239,9 @@ class ControlStructureSpacingSniff implements Sniff
             true
         );
 
-        if ($tokens[$trailingContent]['code'] === T_COMMENT) {
+        if ($tokens[$trailingContent]['code'] === T_COMMENT
+            || isset(Tokens::$phpcsCommentTokens[$tokens[$trailingContent]['code']]) === true
+        ) {
             // Special exception for code where the comment about
             // an ELSE or ELSEIF is written between the control structures.
             $nextCode = $phpcsFile->findNext(
@@ -251,6 +253,7 @@ class ControlStructureSpacingSniff implements Sniff
 
             if ($tokens[$nextCode]['code'] === T_ELSE
                 || $tokens[$nextCode]['code'] === T_ELSEIF
+                || $tokens[$trailingContent]['line'] === $tokens[$scopeCloser]['line']
             ) {
                 $trailingContent = $nextCode;
             }
@@ -315,12 +318,27 @@ class ControlStructureSpacingSniff implements Sniff
         } else if ($tokens[$trailingContent]['code'] !== T_ELSE
             && $tokens[$trailingContent]['code'] !== T_ELSEIF
             && $tokens[$trailingContent]['code'] !== T_CATCH
+            && $tokens[$trailingContent]['code'] !== T_FINALLY
             && $tokens[$trailingContent]['line'] === ($tokens[$scopeCloser]['line'] + 1)
         ) {
             $error = 'No blank line found after control structure';
             $fix   = $phpcsFile->addFixableError($error, $scopeCloser, 'NoLineAfterClose');
             if ($fix === true) {
-                $phpcsFile->fixer->addNewline($scopeCloser);
+                $trailingContent = $phpcsFile->findNext(
+                    T_WHITESPACE,
+                    ($scopeCloser + 1),
+                    null,
+                    true
+                );
+
+                if (($tokens[$trailingContent]['code'] === T_COMMENT
+                    || isset(Tokens::$phpcsCommentTokens[$tokens[$trailingContent]['code']]) === true)
+                    && $tokens[$trailingContent]['line'] === $tokens[$scopeCloser]['line']
+                ) {
+                    $phpcsFile->fixer->addNewline($trailingContent);
+                } else {
+                    $phpcsFile->fixer->addNewline($scopeCloser);
+                }
             }
         }//end if
 

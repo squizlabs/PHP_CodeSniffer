@@ -54,29 +54,39 @@ class CommentedOutCodeSniff implements Sniff
      * @param int                         $stackPtr  The position of the current token
      *                                               in the stack passed in $tokens.
      *
-     * @return void
+     * @return int|void Integer stack pointer to skip forward or void to continue
+     *                  normal file processing.
      */
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        // Process whole comment blocks at once, so skip all but the first token.
-        if ($stackPtr > 0 && $tokens[$stackPtr]['code'] === $tokens[($stackPtr - 1)]['code']) {
-            return;
-        }
 
         // Ignore comments at the end of code blocks.
         if (substr($tokens[$stackPtr]['content'], 0, 6) === '//end ') {
             return;
         }
 
-        $content = '';
-        if ($phpcsFile->tokenizerType === 'PHP') {
-            $content = '<?php ';
+        $content      = '';
+        $lastLineSeen = $tokens[$stackPtr]['line'];
+        $commentStyle = 'line';
+        if (strpos($tokens[$stackPtr]['content'], '/*') === 0) {
+            $commentStyle = 'block';
         }
 
+        $lastCommentBlockToken = $stackPtr;
         for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$stackPtr]['code'] !== $tokens[$i]['code']) {
+            if ($tokens[$i]['code'] === T_WHITESPACE) {
+                continue;
+            }
+
+            if (isset(Tokens::$phpcsCommentTokens[$tokens[$i]['code']]) === true) {
+                $lastLineSeen = $tokens[$i]['line'];
+                continue;
+            }
+
+            if ($tokens[$stackPtr]['code'] !== $tokens[$i]['code']
+                || ($lastLineSeen + 1) < $tokens[$i]['line']
+            ) {
                 break;
             }
 
@@ -87,46 +97,60 @@ class CommentedOutCodeSniff implements Sniff
 
             $tokenContent = trim($tokens[$i]['content']);
 
-            if (substr($tokenContent, 0, 2) === '//') {
-                $tokenContent = substr($tokenContent, 2);
-            }
+            if ($commentStyle === 'line') {
+                if (substr($tokenContent, 0, 2) === '//') {
+                    $tokenContent = substr($tokenContent, 2);
+                }
 
-            if (substr($tokenContent, 0, 1) === '#') {
-                $tokenContent = substr($tokenContent, 1);
-            }
+                if (substr($tokenContent, 0, 1) === '#') {
+                    $tokenContent = substr($tokenContent, 1);
+                }
+            } else {
+                if (substr($tokenContent, 0, 3) === '/**') {
+                    $tokenContent = substr($tokenContent, 3);
+                }
 
-            if (substr($tokenContent, 0, 3) === '/**') {
-                $tokenContent = substr($tokenContent, 3);
-            }
+                if (substr($tokenContent, 0, 2) === '/*') {
+                    $tokenContent = substr($tokenContent, 2);
+                }
 
-            if (substr($tokenContent, 0, 2) === '/*') {
-                $tokenContent = substr($tokenContent, 2);
-            }
+                if (substr($tokenContent, -2) === '*/') {
+                    $tokenContent = substr($tokenContent, 0, -2);
+                }
 
-            if (substr($tokenContent, -2) === '*/') {
-                $tokenContent = substr($tokenContent, 0, -2);
-            }
+                if (substr($tokenContent, 0, 1) === '*') {
+                    $tokenContent = substr($tokenContent, 1);
+                }
+            }//end if
 
-            if (substr($tokenContent, 0, 1) === '*') {
-                $tokenContent = substr($tokenContent, 1);
-            }
+            $content     .= $tokenContent.$phpcsFile->eolChar;
+            $lastLineSeen = $tokens[$i]['line'];
 
-            $content .= $tokenContent.$phpcsFile->eolChar;
+            $lastCommentBlockToken = $i;
         }//end for
 
-        $content = trim($content);
-
-        if ($phpcsFile->tokenizerType === 'PHP') {
-            $content .= ' ?>';
+        // Ignore typical warning suppression annotations from other tools.
+        if (preg_match('`^\s*@[A-Za-z]+\s*$`', $content) === 1) {
+            return ($lastCommentBlockToken + 1);
         }
 
         // Quite a few comments use multiple dashes, equals signs etc
         // to frame comments and licence headers.
-        $content = preg_replace('/[-=*]+/', '-', $content);
+        $content = preg_replace('/[-=#*]{2,}/', '-', $content);
 
         // Random numbers sitting inside the content can throw parse errors
         // for invalid literals in PHP7+, so strip those.
         $content = preg_replace('/\d+/', '', $content);
+
+        $content = trim($content);
+
+        if ($content === '') {
+            return ($lastCommentBlockToken + 1);
+        }
+
+        if ($phpcsFile->tokenizerType === 'PHP') {
+            $content = '<?php '.$content.' ?>';
+        }
 
         // Because we are not really parsing code, the tokenizer can throw all sorts
         // of errors that don't mean anything, so ignore them.
@@ -139,19 +163,10 @@ class CommentedOutCodeSniff implements Sniff
         } catch (TokenizerException $e) {
             // We couldn't check the comment, so ignore it.
             ini_set('error_reporting', $oldErrors);
-            return;
+            return ($lastCommentBlockToken + 1);
         }
 
         ini_set('error_reporting', $oldErrors);
-
-        $emptyTokens = [
-            T_WHITESPACE              => true,
-            T_STRING                  => true,
-            T_STRING_CONCAT           => true,
-            T_ENCAPSED_AND_WHITESPACE => true,
-            T_NONE                    => true,
-            T_COMMENT                 => true,
-        ];
 
         $numTokens = count($stringTokens);
 
@@ -162,36 +177,58 @@ class CommentedOutCodeSniff implements Sniff
             valid code.
         */
 
-        // First token is always the opening PHP tag.
+        // First token is always the opening tag.
         if ($stringTokens[0]['code'] !== T_OPEN_TAG) {
-            return;
+            return ($lastCommentBlockToken + 1);
+        } else {
+            array_shift($stringTokens);
+            --$numTokens;
         }
 
-        // Last token is always the closing PHP tag, unless something went wrong.
+        // Last token is always the closing tag, unless something went wrong.
         if (isset($stringTokens[($numTokens - 1)]) === false
             || $stringTokens[($numTokens - 1)]['code'] !== T_CLOSE_TAG
         ) {
-            return;
+            return ($lastCommentBlockToken + 1);
+        } else {
+            array_pop($stringTokens);
+            --$numTokens;
         }
 
         // Second last token is always whitespace or a comment, depending
         // on the code inside the comment.
-        if ($phpcsFile->tokenizerType === 'PHP'
-            && isset(Tokens::$emptyTokens[$stringTokens[($numTokens - 2)]['code']]) === false
-        ) {
-            return;
+        if ($phpcsFile->tokenizerType === 'PHP') {
+            if (isset(Tokens::$emptyTokens[$stringTokens[($numTokens - 1)]['code']]) === false) {
+                return ($lastCommentBlockToken + 1);
+            }
+
+            if ($stringTokens[($numTokens - 1)]['code'] === T_WHITESPACE) {
+                array_pop($stringTokens);
+                --$numTokens;
+            }
         }
 
-        $numComment  = 0;
-        $numPossible = 0;
-        $numCode     = 0;
+        $emptyTokens  = [
+            T_WHITESPACE              => true,
+            T_STRING                  => true,
+            T_STRING_CONCAT           => true,
+            T_ENCAPSED_AND_WHITESPACE => true,
+            T_NONE                    => true,
+            T_COMMENT                 => true,
+        ];
+        $emptyTokens += Tokens::$phpcsCommentTokens;
+
+        $numComment       = 0;
+        $numPossible      = 0;
+        $numCode          = 0;
+        $numNonWhitespace = 0;
 
         for ($i = 0; $i < $numTokens; $i++) {
             if (isset($emptyTokens[$stringTokens[$i]['code']]) === true) {
                 // Looks like comment.
                 $numComment++;
-            } else if (in_array($stringTokens[$i]['code'], Tokens::$comparisonTokens) === true
-                || in_array($stringTokens[$i]['code'], Tokens::$arithmeticTokens) === true
+            } else if (isset(Tokens::$comparisonTokens[$stringTokens[$i]['code']]) === true
+                || isset(Tokens::$arithmeticTokens[$stringTokens[$i]['code']]) === true
                 || $stringTokens[$i]['code'] === T_GOTO_LABEL
             ) {
                 // Commented out HTML/XML and other docs contain a lot of these
@@ -201,17 +238,16 @@ class CommentedOutCodeSniff implements Sniff
                 // Looks like code.
                 $numCode++;
             }
+
+            if ($stringTokens[$i]['code'] !== T_WHITESPACE) {
+                ++$numNonWhitespace;
+            }
         }
 
-        // We subtract 3 from the token number so we ignore the start/end tokens
-        // and their surrounding whitespace. We take 2 off the number of code
-        // tokens so we ignore the start/end tokens.
-        if ($numTokens > 3) {
-            $numTokens -= 3;
-        }
-
-        if ($numCode >= 2) {
-            $numCode -= 2;
+        // Ignore comments with only two or less non-whitespace tokens.
+        // Sample size too small for a reliably determination.
+        if ($numNonWhitespace <= 2) {
+            return ($lastCommentBlockToken + 1);
         }
 
         $percentCode = ceil((($numCode / $numTokens) * 100));
@@ -223,6 +259,8 @@ class CommentedOutCodeSniff implements Sniff
             $data  = [$percentCode];
             $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
         }
+
+        return ($lastCommentBlockToken + 1);
 
     }//end process()
 

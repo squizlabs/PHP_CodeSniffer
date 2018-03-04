@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class UpperCaseConstantNameSniff implements Sniff
 {
@@ -23,7 +24,10 @@ class UpperCaseConstantNameSniff implements Sniff
      */
     public function register()
     {
-        return [T_STRING];
+        return [
+            T_STRING,
+            T_CONST,
+        ];
 
     }//end register()
 
@@ -39,62 +43,22 @@ class UpperCaseConstantNameSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens    = $phpcsFile->getTokens();
-        $constName = $tokens[$stackPtr]['content'];
+        $tokens = $phpcsFile->getTokens();
 
-        // If this token is in a heredoc, ignore it.
-        if ($phpcsFile->hasCondition($stackPtr, T_START_HEREDOC) === true) {
-            return;
-        }
-
-        // Special case for PHP 5.5 class name resolution.
-        if (strtolower($constName) === 'class'
-            && $tokens[($stackPtr - 1)]['code'] === T_DOUBLE_COLON
-        ) {
-            return;
-        }
-
-        // Special case for PHPUnit.
-        if ($constName === 'PHPUnit_MAIN_METHOD') {
-            return;
-        }
-
-        // If the next non-whitespace token after this token
-        // is not an opening parenthesis then it is not a function call.
-        for ($openBracket = ($stackPtr + 1); $openBracket < $phpcsFile->numTokens; $openBracket++) {
-            if ($tokens[$openBracket]['code'] !== T_WHITESPACE) {
-                break;
-            }
-        }
-
-        if ($openBracket === $phpcsFile->numTokens) {
-            return;
-        }
-
-        if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
-            $functionKeyword = $phpcsFile->findPrevious(
-                [
-                    T_WHITESPACE,
-                    T_COMMA,
-                    T_COMMENT,
-                    T_STRING,
-                    T_NS_SEPARATOR,
-                ],
-                ($stackPtr - 1),
-                null,
-                true
-            );
-
-            if ($tokens[$functionKeyword]['code'] !== T_CONST) {
+        if ($tokens[$stackPtr]['code'] === T_CONST) {
+            // This is a class constant.
+            $constant = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+            if ($constant === false) {
                 return;
             }
 
-            // This is a class constant.
+            $constName = $tokens[$constant]['content'];
+
             if (strtoupper($constName) !== $constName) {
                 if (strtolower($constName) === $constName) {
-                    $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'lower');
+                    $phpcsFile->recordMetric($constant, 'Constant name case', 'lower');
                 } else {
-                    $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'mixed');
+                    $phpcsFile->recordMetric($constant, 'Constant name case', 'mixed');
                 }
 
                 $error = 'Class constants must be uppercase; expected %s but found %s';
@@ -102,27 +66,31 @@ class UpperCaseConstantNameSniff implements Sniff
                     strtoupper($constName),
                     $constName,
                 ];
-                $phpcsFile->addError($error, $stackPtr, 'ClassConstantNotUpperCase', $data);
+                $phpcsFile->addError($error, $constant, 'ClassConstantNotUpperCase', $data);
             } else {
-                $phpcsFile->recordMetric($stackPtr, 'Constant name case', 'upper');
+                $phpcsFile->recordMetric($constant, 'Constant name case', 'upper');
             }
 
             return;
         }//end if
 
-        if (strtolower($constName) !== 'define') {
+        // Only interested in define statements now.
+        if (strtolower($tokens[$stackPtr]['content']) !== 'define') {
             return;
         }
-
-        /*
-            This may be a "define" function call.
-        */
 
         // Make sure this is not a method call.
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if ($tokens[$prev]['code'] === T_OBJECT_OPERATOR
             || $tokens[$prev]['code'] === T_DOUBLE_COLON
         ) {
+            return;
+        }
+
+        // If the next non-whitespace token after this token
+        // is not an opening parenthesis then it is not a function call.
+        $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        if ($openBracket === false) {
             return;
         }
 

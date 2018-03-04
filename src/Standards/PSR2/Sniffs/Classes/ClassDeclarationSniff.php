@@ -429,7 +429,10 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
 
         // Check the closing brace is on it's own line, but allow
         // for comments like "//end class".
-        $nextContent = $phpcsFile->findNext([T_WHITESPACE, T_COMMENT], ($closeBrace + 1), null, true);
+        $ignoreTokens   = Tokens::$phpcsCommentTokens;
+        $ignoreTokens[] = T_WHITESPACE;
+        $ignoreTokens[] = T_COMMENT;
+        $nextContent    = $phpcsFile->findNext($ignoreTokens, ($closeBrace + 1), null, true);
         if ($tokens[$nextContent]['content'] !== $phpcsFile->eolChar
             && $tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']
         ) {

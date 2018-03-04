@@ -45,7 +45,6 @@ abstract class Generator
     {
         $this->ruleset = $ruleset;
 
-        $standardFiles = [];
         foreach ($ruleset->sniffs as $className => $sniffClass) {
             $file    = Autoload::getLoadedFileName($className);
             $docFile = str_replace(

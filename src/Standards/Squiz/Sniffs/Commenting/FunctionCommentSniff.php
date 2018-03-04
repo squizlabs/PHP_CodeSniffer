@@ -67,7 +67,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 $phpcsFile->addError($error, $return, 'MissingReturnType');
             } else {
                 // Support both a return type and a description.
-                $split = preg_match('`^((?:\|?(?:array\([^\)]*\)|[\\\\a-z0-9\[\]]+))*)( .*)?`i', $content, $returnParts);
+                preg_match('`^((?:\|?(?:array\([^\)]*\)|[\\\\a-z0-9\[\]]+))*)( .*)?`i', $content, $returnParts);
                 if (isset($returnParts[1]) === false) {
                     return;
                 }
@@ -190,7 +190,6 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $throws = [];
         foreach ($tokens[$commentStart]['comment_tags'] as $pos => $tag) {
             if ($tokens[$tag]['content'] !== '@throws') {
                 continue;
