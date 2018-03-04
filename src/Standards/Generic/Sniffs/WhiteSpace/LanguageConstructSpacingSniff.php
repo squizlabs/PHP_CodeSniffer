@@ -15,6 +15,8 @@ use PHP_CodeSniffer\Util;
 
 class LanguageConstructSpacingSniff implements Sniff
 {
+
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -99,4 +101,6 @@ class LanguageConstructSpacingSniff implements Sniff
         }//end if
 
     }//end process()
+
+
 }//end class
