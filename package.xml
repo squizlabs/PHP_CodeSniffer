@@ -36,7 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Generic.WhiteSpace.ArbitraryParenthesesSpacing sniff
     -- Generates an error for whitespace inside parenthesis that don't belong to a function call/declaration or control structure
     -- Generates a warning for any empty parenthesis found
-    -- Allows the required spacing to be set using the spacingInside sniff property (default is 0)
+    -- Allows the required spacing to be set using the spacing sniff property (default is 0)
     -- Allows newlines to be used by setting the ignoreNewlines sniff property (default is false)
     -- Thanks to Juliette Reinders Folmer for the contribution
   - Squiz.Arrays.ArrayDeclaration now continues checking array formatting even if the key indent is not correct

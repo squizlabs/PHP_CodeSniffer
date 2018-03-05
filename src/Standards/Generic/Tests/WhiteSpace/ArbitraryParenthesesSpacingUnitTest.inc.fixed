@@ -86,7 +86,7 @@ if ( $success && ('nothumb' == $target || 'all' == $target) ) {}
 
 $directory = ('/' == $file[ strlen($file)-1 ]);
 
-// @codingStandardsChangeSetting Generic.WhiteSpace.ArbitraryParenthesesSpacing spacingInside 1
+// phpcs:set Generic.WhiteSpace.ArbitraryParenthesesSpacing spacing 1
 if (( null !== $extra ) && ( $row->extra !== $extra )) {} // Bad x 4.
 
 if (( null !== $extra ) && ( $row->extra !== $extra )) {}
@@ -114,7 +114,7 @@ if ( $success && ( 'nothumb' == $target || 'all' == $target ) ) {} // Bad x 2.
 
 $directory = ( '/' == $file[ strlen($file)-1 ] ); // Bad x 2.
 
-// @codingStandardsChangeSetting Generic.WhiteSpace.ArbitraryParenthesesSpacing spacingInside 0
+// phpcs:set Generic.WhiteSpace.ArbitraryParenthesesSpacing spacing 0
 
 /*
  * Test handling of ignoreNewlines.
@@ -126,15 +126,15 @@ if (
 
 $a = (null !== $extra); // Bad x 2, 1 x line 131, 1 x line 133.
 
-// @codingStandardsChangeSetting Generic.WhiteSpace.ArbitraryParenthesesSpacing spacingInside 1
+// phpcs:set Generic.WhiteSpace.ArbitraryParenthesesSpacing spacing 1
 if (
     ( null !== $extra ) && ( $row->extra !== $extra )
 ) {} // Bad x 4, 1 x line 137, 2 x line 139, 1 x line 141.
 
 $a = ( null !== $extra ); // Bad x 2, 1 x line 144, 1 x line 146.
-// @codingStandardsChangeSetting Generic.WhiteSpace.ArbitraryParenthesesSpacing spacingInside 0
+// phpcs:set Generic.WhiteSpace.ArbitraryParenthesesSpacing spacing 0
 
-// @codingStandardsChangeSetting Generic.WhiteSpace.ArbitraryParenthesesSpacing ignoreNewlines true
+// phpcs:set Generic.WhiteSpace.ArbitraryParenthesesSpacing ignoreNewlines true
 if (
     (
         null !== $extra
@@ -146,4 +146,4 @@ if (
 $a = (
     null !== $extra
 );
-// @codingStandardsChangeSetting Generic.WhiteSpace.ArbitraryParenthesesSpacing ignoreNewlines false
+// phpcs:set Generic.WhiteSpace.ArbitraryParenthesesSpacing ignoreNewlines false

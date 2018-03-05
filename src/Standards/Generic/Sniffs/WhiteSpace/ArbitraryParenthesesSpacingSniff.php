@@ -24,7 +24,7 @@ class ArbitraryParenthesesSpacingSniff implements Sniff
      *
      * @var integer
      */
-    public $spacingInside = 0;
+    public $spacing = 0;
 
     /**
      * Allow newlines instead of spaces.
@@ -122,7 +122,7 @@ class ArbitraryParenthesesSpacingSniff implements Sniff
         }
 
         // Check the spacing on the inside of the parentheses.
-        $this->spacingInside = (int) $this->spacingInside;
+        $this->spacing = (int) $this->spacing;
 
         if ($tokens[$stackPtr]['code'] === T_OPEN_PARENTHESIS
             && isset($tokens[($stackPtr + 1)], $tokens[($stackPtr + 2)]) === true
@@ -139,20 +139,20 @@ class ArbitraryParenthesesSpacingSniff implements Sniff
                 }
             }
 
-            if ($this->spacingInside !== $inside
+            if ($this->spacing !== $inside
                 && ($inside !== 'newline' || $this->ignoreNewlines === false)
             ) {
                 $error = 'Expected %s space after open parenthesis; %s found';
                 $data  = [
-                    $this->spacingInside,
+                    $this->spacing,
                     $inside,
                 ];
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterOpen', $data);
 
                 if ($fix === true) {
                     $expected = '';
-                    if ($this->spacingInside > 0) {
-                        $expected = str_repeat(' ', $this->spacingInside);
+                    if ($this->spacing > 0) {
+                        $expected = str_repeat(' ', $this->spacing);
                     }
 
                     if ($inside === 0) {
@@ -193,20 +193,20 @@ class ArbitraryParenthesesSpacingSniff implements Sniff
                 }
             }
 
-            if ($this->spacingInside !== $inside
+            if ($this->spacing !== $inside
                 && ($inside !== 'newline' || $this->ignoreNewlines === false)
             ) {
                 $error = 'Expected %s space before close parenthesis; %s found';
                 $data  = [
-                    $this->spacingInside,
+                    $this->spacing,
                     $inside,
                 ];
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeClose', $data);
 
                 if ($fix === true) {
                     $expected = '';
-                    if ($this->spacingInside > 0) {
-                        $expected = str_repeat(' ', $this->spacingInside);
+                    if ($this->spacing > 0) {
+                        $expected = str_repeat(' ', $this->spacing);
                     }
 
                     if ($inside === 0) {
