@@ -241,6 +241,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="SubversionPropertiesStandard.xml" role="php" />
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP/CodeSniffer" name="ArbitraryParenthesesSpacingStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentStandard.xml" role="php" />
@@ -339,6 +340,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="SubversionPropertiesSniff.php" role="php" />
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP/CodeSniffer" name="ArbitraryParenthesesSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentSniff.php" role="php" />
@@ -558,6 +560,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UnnecessaryStringConcatUnitTest.php" role="test" />
        </dir>
        <dir name="WhiteSpace">
+        <file baseinstalldir="PHP/CodeSniffer" name="ArbitraryParenthesesSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ArbitraryParenthesesSpacingUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ArbitraryParenthesesSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.1.inc" role="test" />
