@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Martin Vasel for the patch
   - Improved testability of custom rulesets by allowing the installed standards to be overridden
     -- Thanks to Timo Schinkel for the patch
+  - The key used for caching PHPCS runs now includes all set config values
+    -- This fixes a problem where changing config values (e.g., via --runtime-set) used an incorrect cache file
   - Squiz.Arrays.ArrayDeclaration now continues checking array formatting even if the key indent is not correct
     -- Allows for using different array indent rules while still checking/fixing double arrow and value alignment
   - Squiz.PHP.CommentedOutCode now ignores simple @-style annotation comments so they are not flagged as commented out code
