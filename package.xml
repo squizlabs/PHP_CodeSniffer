@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
   - The JSON report format now does escaping in error source codes as well as error messages
     -- Thanks to Martin Vasel for the patch
   - Improved testability of custom rulesets by allowing the installed standards to be overridden
