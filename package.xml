@@ -33,6 +33,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Timo Schinkel for the patch
   - The key used for caching PHPCS runs now includes all set config values
     -- This fixes a problem where changing config values (e.g., via --runtime-set) used an incorrect cache file
+  - Added new Generic.WhiteSpace.ArbitraryParenthesesSpacing sniff
+    -- Generates an error for whitespace inside parenthesis that don't belong to a function call/declaration or control structure
+    -- Generates a warning for any empty parenthesis found
+    -- Allows the required spacing to be set using the spacingInside sniff property (default is 0)
+    -- Allows newlines to be used by setting the ignoreNewlines sniff property (default is false)
+    -- Thanks to Juliette Reinders Folmer for the contribution
   - Squiz.Arrays.ArrayDeclaration now continues checking array formatting even if the key indent is not correct
     -- Allows for using different array indent rules while still checking/fixing double arrow and value alignment
   - Squiz.PHP.CommentedOutCode now ignores simple @-style annotation comments so they are not flagged as commented out code
