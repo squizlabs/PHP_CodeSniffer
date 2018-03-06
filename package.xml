@@ -33,6 +33,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Timo Schinkel for the patch
   - The key used for caching PHPCS runs now includes all set config values
     -- This fixes a problem where changing config values (e.g., via --runtime-set) used an incorrect cache file
+  - The "Function opening brace placement" metric has been separated into function and closure metrics in the info report
+    -- Closures are no longer included in the "Function opening brace placement" metric
+    -- A new "Closure opening brace placement" metric now shows information for closures
   - Added new Generic.WhiteSpace.ArbitraryParenthesesSpacing sniff
     -- Generates an error for whitespace inside parenthesis that don't belong to a function call/declaration or control structure
     -- Generates a warning for any empty parenthesis found

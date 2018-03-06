@@ -85,6 +85,11 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
 
         $lineDifference = ($braceLine - $functionLine);
 
+        $metricType = 'Function';
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $metricType = 'Closure';
+        }
+
         if ($lineDifference === 0) {
             $error = 'Opening brace should be on a new line';
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnSameLine');
@@ -99,7 +104,7 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
                 $phpcsFile->fixer->endChangeset();
             }
 
-            $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'same line');
+            $phpcsFile->recordMetric($stackPtr, "$metricType opening brace placement", 'same line');
         } else if ($lineDifference > 1) {
             $error = 'Opening brace should be on the line after the declaration; found %s blank line(s)';
             $data  = [($lineDifference - 1)];
@@ -167,7 +172,7 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
             }
         }//end if
 
-        $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'new line');
+        $phpcsFile->recordMetric($stackPtr, "$metricType opening brace placement", 'new line');
 
     }//end process()
 

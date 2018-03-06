@@ -87,8 +87,13 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
 
         $lineDifference = ($braceLine - $functionLine);
 
+        $metricType = 'Function';
+        if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
+            $metricType = 'Closure';
+        }
+
         if ($lineDifference > 0) {
-            $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'new line');
+            $phpcsFile->recordMetric($stackPtr, "$metricType opening brace placement", 'new line');
             $error = 'Opening brace should be on the same line as the declaration';
             $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'BraceOnNewLine');
             if ($fix === true) {
@@ -116,7 +121,7 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
                 $phpcsFile->fixer->endChangeset();
             }//end if
         } else {
-            $phpcsFile->recordMetric($stackPtr, 'Function opening brace placement', 'same line');
+            $phpcsFile->recordMetric($stackPtr, "$metricType opening brace placement", 'same line');
         }//end if
 
         $next = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
