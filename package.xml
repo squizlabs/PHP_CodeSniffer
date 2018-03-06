@@ -39,6 +39,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Allows the required spacing to be set using the spacing sniff property (default is 0)
     -- Allows newlines to be used by setting the ignoreNewlines sniff property (default is false)
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Added PSR2.ControlStructures.ClosingBracePlacement sniff
+    -- Ensures control structure keywords are on the same line as the closing brace from the earlier body
+    -- Applies to catch, finally, else, elseif, and do/while structures
+    -- The included PSR2 standard now enforces this rule
   - Squiz.Arrays.ArrayDeclaration now continues checking array formatting even if the key indent is not correct
     -- Allows for using different array indent rules while still checking/fixing double arrow and value alignment
   - Squiz.PHP.CommentedOutCode now ignores simple @-style annotation comments so they are not flagged as commented out code
@@ -897,6 +901,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="PropertyDeclarationSniff.php" role="php" />
        </dir>
        <dir name="ControlStructures">
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingBracePlacementSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ElseIfDeclarationSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SwitchDeclarationSniff.php" role="php" />
@@ -924,6 +929,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="PropertyDeclarationUnitTest.php" role="test" />
        </dir>
        <dir name="ControlStructures">
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingBracePlacementUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingBracePlacementUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingBracePlacementUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingUnitTest.php" role="test" />
