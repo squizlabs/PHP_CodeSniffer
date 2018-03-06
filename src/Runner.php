@@ -313,7 +313,7 @@ class Runner
 
         // Include bootstrap files.
         foreach ($this->config->bootstrap as $bootstrap) {
-            include_once $bootstrap;
+            include $bootstrap;
         }
 
         if ($this->config->stdin === true) {

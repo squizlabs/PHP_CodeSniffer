@@ -76,7 +76,7 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
                 if (strpos(__DIR__, 'phar://') !== 0
                     && file_exists(__DIR__.'/../../autoload.php') === true
                 ) {
-                    self::$composerAutoloader = include_once __DIR__.'/../../autoload.php';
+                    self::$composerAutoloader = include __DIR__.'/../../autoload.php';
                     if (self::$composerAutoloader instanceof \Composer\Autoload\ClassLoader) {
                         self::$composerAutoloader->unregister();
                         self::$composerAutoloader->register();
@@ -164,7 +164,7 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             $interfaces = get_declared_interfaces();
             $traits     = get_declared_traits();
 
-            include_once $path;
+            include $path;
 
             $className  = null;
             $newClasses = array_reverse(array_diff(get_declared_classes(), $classes));
