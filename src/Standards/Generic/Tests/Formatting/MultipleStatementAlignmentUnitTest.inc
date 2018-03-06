@@ -265,3 +265,19 @@ $foo = [
     'a' => 'b',
 ];
 $barbar = 'bar';
+
+// Issue #1922 - allow for lists before the assignment operator.
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+    $transformer = new ContractTransformer($options['contracts']);
+    $types       = ['support.contact.question' => ContactData::QUESTION];
+
+    [$important, $questions, $incidents, $requests] = $this->createContractBuckets($options['contracts']);
+}
+
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+    $transformer                                    = new ContractTransformer($options['contracts']);
+    $types                                          = ['support.contact.question' => ContactData::QUESTION];
+    [$important, $questions, $incidents, $requests] = $this->createContractBuckets($options['contracts']);
+}
