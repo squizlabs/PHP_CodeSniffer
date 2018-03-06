@@ -116,30 +116,6 @@ class MultipleStatementAlignmentSniff implements Sniff
 
         for ($assign = $stackPtr; $assign < $phpcsFile->numTokens; $assign++) {
             if (isset($find[$tokens[$assign]['code']]) === false) {
-                if ($tokens[$assign]['code'] === T_CLOSURE
-                    || $tokens[$assign]['code'] === T_ANON_CLASS
-                ) {
-                    $assign   = $tokens[$assign]['scope_closer'];
-                    $lastCode = $assign;
-                    continue;
-                }
-
-                // Skip past the content of arrays.
-                if ($tokens[$assign]['code'] === T_OPEN_SHORT_ARRAY
-                    && isset($tokens[$assign]['bracket_closer']) === true
-                ) {
-                    $assign = $lastCode = $tokens[$assign]['bracket_closer'];
-                    continue;
-                }
-
-                if ($tokens[$assign]['code'] === T_ARRAY
-                    && isset($tokens[$assign]['parenthesis_opener']) === true
-                    && isset($tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer']) === true
-                ) {
-                    $assign = $lastCode = $tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer'];
-                    continue;
-                }
-
                 // A blank line indicates that the assignment block has ended.
                 if (isset(Tokens::$emptyTokens[$tokens[$assign]['code']]) === false) {
                     if (($tokens[$assign]['line'] - $tokens[$lastCode]['line']) > 1) {
@@ -163,10 +139,6 @@ class MultipleStatementAlignmentSniff implements Sniff
                     }
                 }//end if
 
-                continue;
-            } else if ($assign !== $stackPtr && $tokens[$assign]['line'] === $lastLine) {
-                // Skip multiple assignments on the same line. We only need to
-                // try and align the first assignment.
                 continue;
             }//end if
 
@@ -264,6 +236,10 @@ class MultipleStatementAlignmentSniff implements Sniff
 
             $lastLine   = $tokens[$assign]['line'];
             $prevAssign = $assign;
+
+            // Skip past the value assignment.
+            $assign   = ($phpcsFile->findEndOfStatement($assign) - 1);
+            $lastCode = $assign;
         }//end for
 
         if (empty($assignments) === true) {
