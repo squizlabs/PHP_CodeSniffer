@@ -117,8 +117,67 @@ class MultipleStatementAlignmentSniff implements Sniff
         for ($assign = $stackPtr; $assign < $phpcsFile->numTokens; $assign++) {
             if (isset($find[$tokens[$assign]['code']]) === false) {
                 // A blank line indicates that the assignment block has ended.
+                if (isset(Tokens::$emptyTokens[$tokens[$assign]['code']]) === false
+                    && ($tokens[$assign]['line'] - $tokens[$lastCode]['line']) > 1
+                ) {
+                    break;
+                }
+
+                if (($tokens[$assign]['code'] === T_CLOSURE
+                    || $tokens[$assign]['code'] === T_ANON_CLASS)
+                    && isset($tokens[$assign]['scope_closer']) === true
+                ) {
+                    $start = $tokens[$assign]['scope_opener'];
+                    $end   = $tokens[$assign]['scope_closer'];
+
+                    $innerFind = $find;
+
+                    $innerFind[T_CLOSURE]    = T_CLOSURE;
+                    $innerFind[T_ANON_CLASS] = T_ANON_CLASS;
+
+                    do {
+                        $innerAssign = $phpcsFile->findNext($innerFind, ($start + 1), $end);
+                        if ($innerAssign !== false) {
+                            // There is an assignment block inside the closure/class
+                            // that we would normally skip over, so process it now.
+                            $start = $this->checkAlignment($phpcsFile, $innerAssign);
+                            if ($start === $innerAssign
+                                && ($tokens[$innerAssign]['code'] === T_CLOSURE
+                                || $tokens[$innerAssign]['code'] === T_ANON_CLASS)
+                            ) {
+                                // No assignments were found, so skip over the block.
+                                $start = $tokens[$innerAssign]['scope_closer'];
+                            }
+                        }
+                    } while ($innerAssign !== false);
+
+                    $assign   = $end;
+                    $lastCode = $assign;
+                    continue;
+                }//end if
+
+                // Skip past the content of arrays.
+                if ($tokens[$assign]['code'] === T_OPEN_SHORT_ARRAY
+                    && isset($tokens[$assign]['bracket_closer']) === true
+                ) {
+                    $assign   = $tokens[$assign]['bracket_closer'];
+                    $lastCode = $assign;
+                    continue;
+                }
+
+                if ($tokens[$assign]['code'] === T_ARRAY
+                    && isset($tokens[$assign]['parenthesis_opener']) === true
+                    && isset($tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer']) === true
+                ) {
+                    $assign   = $tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer'];
+                    $lastCode = $assign;
+                    continue;
+                }
+
+                // A blank line indicates that the assignment block has ended.
                 if (isset(Tokens::$emptyTokens[$tokens[$assign]['code']]) === false) {
-                    if (($tokens[$assign]['line'] - $tokens[$lastCode]['line']) > 1) {
+                    if ($prevAssign === null) {
+                        // Processing an inner block but no assignments found.
                         break;
                     }
 
@@ -139,6 +198,10 @@ class MultipleStatementAlignmentSniff implements Sniff
                     }
                 }//end if
 
+                continue;
+            } else if ($assign !== $stackPtr && $tokens[$assign]['line'] === $lastLine) {
+                // Skip multiple assignments on the same line. We only need to
+                // try and align the first assignment.
                 continue;
             }//end if
 
@@ -171,6 +234,11 @@ class MultipleStatementAlignmentSniff implements Sniff
             $varEnd    = $tokens[($var + 1)]['column'];
             $assignLen = $tokens[$assign]['length'];
             if ($assign !== $stackPtr) {
+                if ($prevAssign === null) {
+                    // Processing an inner block but no assignments found.
+                    break;
+                }
+
                 if (($varEnd + 1) > $assignments[$prevAssign]['assign_col']) {
                     $padding      = 1;
                     $assignColumn = ($varEnd + 1);
@@ -236,10 +304,6 @@ class MultipleStatementAlignmentSniff implements Sniff
 
             $lastLine   = $tokens[$assign]['line'];
             $prevAssign = $assign;
-
-            // Skip past the value assignment.
-            $assign   = ($phpcsFile->findEndOfStatement($assign) - 1);
-            $lastCode = $assign;
         }//end for
 
         if (empty($assignments) === true) {

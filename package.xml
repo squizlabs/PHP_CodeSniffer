@@ -54,7 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1915 : JS tokenizer fails to tokenize regular expression proceeded by boolean not operator
   - Fixed bug #1922 : Equal sign alignment check broken when list syntax used before assignment operator
-    -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #1925 : Generic.Formatting.MultipleStatementAlignment skipping assignments within closures
  </notes>
  <contents>
   <dir name="/">

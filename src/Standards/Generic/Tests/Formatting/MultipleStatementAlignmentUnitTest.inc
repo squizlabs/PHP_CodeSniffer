@@ -281,3 +281,75 @@ public function buildForm(FormBuilderInterface $builder, array $options)
     $types                                          = ['support.contact.question' => ContactData::QUESTION];
     [$important, $questions, $incidents, $requests] = $this->createContractBuckets($options['contracts']);
 }
+
+$loggerResult = $util->setLogger(new class {
+    public function log($msg)
+    {
+        $a = $msg;
+        $foobar = $msg;
+        $foo = function() {
+            $a = $msg;
+            $foobar = $msg;
+            $loggerResult = $util->setLogger(new class {
+                public function log($msg)
+                {
+                    $a = $msg;
+                    $foobar = $msg;
+                    $foo = function() {
+                        foo(function() {
+                            foo(function() {
+                                echo 'hi';
+                            });
+                            $a = $msg;
+                            $foobar = $msg;
+
+                            $foo = function() {
+
+                                $foo = 1;
+                                $barbar=2;
+                            }
+                            $barbar = function() {
+                                $foo    = 1;
+                                $barbar = 2;
+                            }
+                        });
+                        $a = $msg;
+                        $foobar      = $msg;
+                    }
+                    $bar = $msg;
+                }
+
+                public function log2($msg)
+                {
+                    $a = $msg;
+                    $foobar = $msg;
+                    $foo = function() {
+                        foo(function() {
+                            foo(function() {
+                                echo 'hi';
+                            });
+                            $a = $msg;
+                            $foobar = $msg;
+
+                            $foo = function() {
+
+                                $foo = 1;
+                                $barbar=2;
+                            }
+                            $barbar = function() {
+                                $foo    = 1;
+                                $barbar = 2;
+                            }
+                        });
+                        $a = $msg;
+                        $foobar      = $msg;
+                    }
+                    $bar = $msg;
+                }
+            });
+            $foo          = 5;
+        }
+        $bar = $msg;
+    }
+});
+$foo          = 5;
