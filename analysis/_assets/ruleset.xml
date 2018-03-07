@@ -1,40 +1,44 @@
 <?xml version="1.0"?>
 <ruleset name="PHPCS Analysis">
- <description>Not a real coding standard; just sniffs that record interesting metrics.</description>
- <ini name="memory_limit" value="512M"/>
- <arg value="m"/>
- <arg name="parallel" value="50" />
- <rule ref="Generic.ControlStructures.InlineControlStructure"/>
- <rule ref="Generic.Files.LineEndings"/>
- <rule ref="Generic.Files.LineLength"/>
- <rule ref="Generic.Files.LowercasedFilename"/>
- <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
- <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
- <rule ref="Generic.Formatting.SpaceAfterCast"/>
- <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
- <rule ref="Generic.NamingConventions.CamelCapsFunctionName"/>
- <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
- <rule ref="Generic.PHP.DisallowShortOpenTag"/>
- <rule ref="Generic.PHP.LowerCaseConstant"/>
- <rule ref="Generic.PHP.LowerCaseKeyword"/>
- <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
- <rule ref="PEAR.Classes.ClassDeclaration"/>
- <rule ref="PEAR.Commenting.ClassComment"/>
- <rule ref="PEAR.Commenting.FileComment"/>
- <rule ref="PEAR.Commenting.FunctionComment"/>
- <rule ref="PEAR.Commenting.InlineComment"/>
- <rule ref="PEAR.NamingConventions.ValidFunctionName"/>
- <rule ref="PSR1.Classes.ClassDeclaration"/>
- <rule ref="PSR1.Files.SideEffects"/>
- <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
- <rule ref="PSR2.Files.EndFileNewline"/>
- <rule ref="Squiz.Arrays.ArrayDeclaration"/>
- <rule ref="Squiz.Classes.ValidClassName"/>
- <rule ref="Squiz.Files.FileExtension"/>
- <rule ref="Squiz.Strings.ConcatenationSpacing"/>
- <rule ref="Squiz.Strings.EchoedStrings"/>
- <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
- <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing"/>
- <rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
- <rule ref="Zend.Files.ClosingTag"/>
+    <description>Not a real coding standard; just sniffs that record interesting metrics.</description>
+    <ini name="memory_limit" value="512M"/>
+    <arg value="m"/>
+    <arg name="parallel" value="50" />
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+    <rule ref="Generic.Files.LineEndings"/>
+    <rule ref="Generic.Files.LineLength"/>
+    <rule ref="Generic.Files.LowercasedFilename"/>
+    <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+    <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
+    <rule ref="Generic.Formatting.SpaceAfterCast"/>
+    <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman">
+        <properties>
+            <property name="checkClosures" value="true" />
+        </properties>
+    </rule>
+    <rule ref="Generic.NamingConventions.CamelCapsFunctionName"/>
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+    <rule ref="Generic.PHP.DisallowShortOpenTag"/>
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+    <rule ref="PEAR.Classes.ClassDeclaration"/>
+    <rule ref="PEAR.Commenting.ClassComment"/>
+    <rule ref="PEAR.Commenting.FileComment"/>
+    <rule ref="PEAR.Commenting.FunctionComment"/>
+    <rule ref="PEAR.Commenting.InlineComment"/>
+    <rule ref="PEAR.NamingConventions.ValidFunctionName"/>
+    <rule ref="PSR1.Classes.ClassDeclaration"/>
+    <rule ref="PSR1.Files.SideEffects"/>
+    <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+    <rule ref="PSR2.Files.EndFileNewline"/>
+    <rule ref="Squiz.Arrays.ArrayDeclaration"/>
+    <rule ref="Squiz.Classes.ValidClassName"/>
+    <rule ref="Squiz.Files.FileExtension"/>
+    <rule ref="Squiz.Strings.ConcatenationSpacing"/>
+    <rule ref="Squiz.Strings.EchoedStrings"/>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
+    <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing"/>
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
+    <rule ref="Zend.Files.ClosingTag"/>
 </ruleset>

@@ -97,6 +97,10 @@ $metricText = array(
                                                                        'description' => 'Is the opening brace of a function on the same line as the <em>function</em> keyword or the next line?',
                                                                        'items'       => 'functions',
                                                                       ),
+               'Closure opening brace placement'                  => array(
+                                                                       'description' => 'Is the opening brace of a closure on the same line as the <em>function</em> keyword or the next line?',
+                                                                       'items'       => 'closures',
+                                                                      ),
                'Class opening brace placement'                     => array(
                                                                        'description' => 'Is the opening brace of a class on the same line as the <em>class</em> keyword or the next line?',
                                                                        'items'       => 'classes',
