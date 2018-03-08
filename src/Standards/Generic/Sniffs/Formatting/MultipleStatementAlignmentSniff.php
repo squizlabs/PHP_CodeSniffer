@@ -110,77 +110,46 @@ class MultipleStatementAlignmentSniff implements Sniff
         $stopped     = null;
         $lastCode    = $stackPtr;
         $lastSemi    = null;
+        $arrayEnd    = null;
 
         $find = Tokens::$assignmentTokens;
         unset($find[T_DOUBLE_ARROW]);
 
         for ($assign = $stackPtr; $assign < $phpcsFile->numTokens; $assign++) {
+            if ($tokens[$assign]['level'] < $tokens[$stackPtr]['level']) {
+                // Statement is in a different context, so the block is over.
+                break;
+            }
+
+            if ($assign === $arrayEnd) {
+                $arrayEnd = null;
+            }
+
             if (isset($find[$tokens[$assign]['code']]) === false) {
                 // A blank line indicates that the assignment block has ended.
                 if (isset(Tokens::$emptyTokens[$tokens[$assign]['code']]) === false
                     && ($tokens[$assign]['line'] - $tokens[$lastCode]['line']) > 1
+                    && $tokens[$assign]['level'] === $tokens[$stackPtr]['level']
+                    && $arrayEnd === null
                 ) {
                     break;
                 }
 
-                if (($tokens[$assign]['code'] === T_CLOSURE
-                    || $tokens[$assign]['code'] === T_ANON_CLASS)
-                    && isset($tokens[$assign]['scope_closer']) === true
-                ) {
-                    $start = $tokens[$assign]['scope_opener'];
-                    $end   = $tokens[$assign]['scope_closer'];
-
-                    $innerFind = $find;
-
-                    $innerFind[T_CLOSURE]    = T_CLOSURE;
-                    $innerFind[T_ANON_CLASS] = T_ANON_CLASS;
-
-                    do {
-                        $innerAssign = $phpcsFile->findNext($innerFind, ($start + 1), $end);
-                        if ($innerAssign !== false) {
-                            // There is an assignment block inside the closure/class
-                            // that we would normally skip over, so process it now.
-                            $start = $this->checkAlignment($phpcsFile, $innerAssign);
-                            if ($start === $innerAssign
-                                && ($tokens[$innerAssign]['code'] === T_CLOSURE
-                                || $tokens[$innerAssign]['code'] === T_ANON_CLASS)
-                            ) {
-                                // No assignments were found, so skip over the block.
-                                $start = $tokens[$innerAssign]['scope_closer'];
-                            }
-                        }
-                    } while ($innerAssign !== false);
-
-                    $assign   = $end;
-                    $lastCode = $assign;
-                    continue;
-                }//end if
-
-                // Skip past the content of arrays.
                 if ($tokens[$assign]['code'] === T_OPEN_SHORT_ARRAY
                     && isset($tokens[$assign]['bracket_closer']) === true
                 ) {
-                    $assign   = $tokens[$assign]['bracket_closer'];
-                    $lastCode = $assign;
-                    continue;
+                    $arrayEnd = $tokens[$assign]['bracket_closer'];
                 }
 
                 if ($tokens[$assign]['code'] === T_ARRAY
                     && isset($tokens[$assign]['parenthesis_opener']) === true
                     && isset($tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer']) === true
                 ) {
-                    $assign   = $tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer'];
-                    $lastCode = $assign;
-                    continue;
+                    $arrayEnd = $tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer'];
                 }
 
                 // A blank line indicates that the assignment block has ended.
                 if (isset(Tokens::$emptyTokens[$tokens[$assign]['code']]) === false) {
-                    if ($prevAssign === null) {
-                        // Processing an inner block but no assignments found.
-                        break;
-                    }
-
                     $lastCode = $assign;
 
                     if ($tokens[$assign]['code'] === T_SEMICOLON) {
@@ -191,7 +160,7 @@ class MultipleStatementAlignmentSniff implements Sniff
                             } else {
                                 $lastSemi = $assign;
                             }
-                        } else {
+                        } else if ($tokens[$assign]['level'] < $tokens[$stackPtr]['level']) {
                             // Statement is in a different context, so the block is over.
                             break;
                         }
@@ -207,7 +176,11 @@ class MultipleStatementAlignmentSniff implements Sniff
 
             if ($assign !== $stackPtr) {
                 // Has to be nested inside the same conditions as the first assignment.
-                if ($tokens[$assign]['conditions'] !== $tokens[$stackPtr]['conditions']) {
+                if ($tokens[$assign]['level'] > $tokens[$stackPtr]['level']) {
+                    $assign   = $this->checkAlignment($phpcsFile, $assign);
+                    $lastCode = $assign;
+                    continue;
+                } else if ($tokens[$assign]['level'] < $tokens[$stackPtr]['level']) {
                     break;
                 }
 
@@ -374,7 +347,7 @@ class MultipleStatementAlignmentSniff implements Sniff
         if ($stopped !== null) {
             return $this->checkAlignment($phpcsFile, $stopped);
         } else {
-            return $assignment;
+            return $assign;
         }
 
     }//end checkAlignment()

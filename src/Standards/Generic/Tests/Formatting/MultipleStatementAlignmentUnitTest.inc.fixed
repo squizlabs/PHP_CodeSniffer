@@ -266,7 +266,12 @@ $foo    = [
 ];
 $barbar = 'bar';
 
-// Issue #1922 - allow for lists before the assignment operator.
+$foo    = [
+
+    'a' => 'b',
+];
+$barbar = 'bar';
+
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
     $transformer = new ContractTransformer($options['contracts']);
@@ -353,3 +358,14 @@ $loggerResult = $util->setLogger(new class {
     }
 });
 $foo          = 5;
+
+$foo = [
+    0 => function () {
+        $foo    = 'foo';
+        $barbar = 'bar';
+    },
+    1 => function () {
+        $foo    = 'foo';
+        $barbar = 'bar';
+    },
+];
