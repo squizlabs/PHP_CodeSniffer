@@ -189,17 +189,17 @@ class GetMemberPropertiesTest extends TestCase
             [
                 '/* testGroupProtectedStatic 1 */',
                 [
-                    'scope'            => 'protected',
+                    'scope'           => 'protected',
                     'scope_specified' => true,
-                    'is_static'        => true,
+                    'is_static'       => true,
                 ],
             ],
             [
                 '/* testGroupProtectedStatic 2 */',
                 [
-                    'scope'            => 'protected',
+                    'scope'           => 'protected',
                     'scope_specified' => true,
-                    'is_static'        => true,
+                    'is_static'       => true,
                 ],
             ],
             [
