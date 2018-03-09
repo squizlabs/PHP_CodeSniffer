@@ -4,6 +4,7 @@
 
     <file>autoload.php</file>
     <file>bin</file>
+    <file>scripts</file>
     <file>src</file>
     <file>tests</file>
 
