@@ -118,7 +118,9 @@ class BlockCommentSniff implements Sniff
 
         // Construct the comment into an array.
         while (($nextComment = $phpcsFile->findNext(T_WHITESPACE, ($nextComment + 1), null, true)) !== false) {
-            if ($tokens[$nextComment]['code'] !== $tokens[$stackPtr]['code']) {
+            if ($tokens[$nextComment]['code'] !== $tokens[$stackPtr]['code']
+                && isset(Tokens::$phpcsCommentTokens[$tokens[$nextComment]['code']]) === false
+            ) {
                 // Found the next bit of code.
                 break;
             }
@@ -131,13 +133,15 @@ class BlockCommentSniff implements Sniff
             $lastLine       = $tokens[$nextComment]['line'];
             $commentLines[] = $nextComment;
             $commentString .= $tokens[$nextComment]['content'];
-            if ($tokens[$nextComment]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+            if ($tokens[$nextComment]['code'] === T_DOC_COMMENT_CLOSE_TAG
+                || substr($tokens[$nextComment]['content'], -2) === '*/'
+            ) {
                 break;
             }
-        }
+        }//end while
 
         $commentText = str_replace($phpcsFile->eolChar, '', $commentString);
-        $commentText = trim($commentText, '/* ');
+        $commentText = trim($commentText, "/* \t");
         if ($commentText === '') {
             $error = 'Empty block comment not allowed';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Empty');
@@ -157,10 +161,17 @@ class BlockCommentSniff implements Sniff
 
         if (count($commentLines) === 1) {
             $error = 'Single line block comment not allowed; use inline ("// text") comment instead';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SingleLine');
-            if ($fix === true) {
-                $comment = '// '.$commentText.$phpcsFile->eolChar;
-                $phpcsFile->fixer->replaceToken($stackPtr, $comment);
+
+            // Only fix comments when they are the last token on a line.
+            $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+            if ($tokens[$stackPtr]['line'] !== $tokens[$nextNonEmpty]['line']) {
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SingleLine');
+                if ($fix === true) {
+                    $comment = '// '.$commentText.$phpcsFile->eolChar;
+                    $phpcsFile->fixer->replaceToken($stackPtr, $comment);
+                }
+            } else {
+                $phpcsFile->addError($error, $stackPtr, 'SingleLine');
             }
 
             return;
@@ -192,7 +203,8 @@ class BlockCommentSniff implements Sniff
             return;
         }//end if
 
-        $starColumn = ($tokens[$stackPtr]['column'] + 3);
+        $starColumn = $tokens[$stackPtr]['column'];
+        $hasStars   = false;
 
         // Make sure first line isn't blank.
         if (trim($tokens[$commentLines[1]]['content']) === '') {
@@ -206,14 +218,21 @@ class BlockCommentSniff implements Sniff
             $content      = $tokens[$commentLines[1]]['content'];
             $commentText  = ltrim($content);
             $leadingSpace = (strlen($content) - strlen($commentText));
-            if ($leadingSpace !== $starColumn) {
-                $expected = $starColumn.' space';
-                if ($starColumn !== 1) {
-                    $expected .= 's';
+
+            $expected = ($starColumn + 3);
+            if ($commentText[0] === '*') {
+                $expected = $starColumn;
+                $hasStars = true;
+            }
+
+            if ($leadingSpace !== $expected) {
+                $expectedTxt = $expected.' space';
+                if ($expected !== 1) {
+                    $expectedTxt .= 's';
                 }
 
                 $data = [
-                    $expected,
+                    $expectedTxt,
                     $leadingSpace,
                 ];
 
@@ -224,12 +243,13 @@ class BlockCommentSniff implements Sniff
                         && $tokens[$commentLines[1]]['orig_content'][0] === "\t"
                     ) {
                         // Line is indented using tabs.
-                        $padding = str_repeat("\t", floor($starColumn / $this->tabWidth));
+                        $padding  = str_repeat("\t", floor($expected / $this->tabWidth));
+                        $padding .= str_repeat(' ', ($expected % $this->tabWidth));
                     } else {
-                        $padding = str_repeat(' ', $starColumn);
+                        $padding = str_repeat(' ', $expected);
                     }
 
-                    $phpcsFile->fixer->replaceToken($commentLines[1], $padding.ltrim($content));
+                    $phpcsFile->fixer->replaceToken($commentLines[1], $padding.$commentText);
                 }
             }//end if
 
@@ -241,7 +261,6 @@ class BlockCommentSniff implements Sniff
 
         // Check that each line of the comment is indented past the star.
         foreach ($commentLines as $line) {
-            $leadingSpace = (strlen($tokens[$line]['content']) - strlen(ltrim($tokens[$line]['content'])));
             // First and last lines (comment opener and closer) are handled separately.
             if ($line === $commentLines[(count($commentLines) - 1)] || $line === $commentLines[0]) {
                 continue;
@@ -257,14 +276,23 @@ class BlockCommentSniff implements Sniff
                 continue;
             }
 
-            if ($leadingSpace < $starColumn) {
-                $expected = $starColumn.' space';
-                if ($starColumn !== 1) {
-                    $expected .= 's';
+            $commentText  = ltrim($tokens[$line]['content']);
+            $leadingSpace = (strlen($tokens[$line]['content']) - strlen($commentText));
+
+            $expected = ($starColumn + 3);
+            if ($commentText[0] === '*') {
+                $expected = $starColumn;
+                $hasStars = true;
+            }
+
+            if ($leadingSpace < $expected) {
+                $expectedTxt = $expected.' space';
+                if ($expected !== 1) {
+                    $expectedTxt .= 's';
                 }
 
                 $data = [
-                    $expected,
+                    $expectedTxt,
                     $leadingSpace,
                 ];
 
@@ -275,42 +303,59 @@ class BlockCommentSniff implements Sniff
                         && $tokens[$line]['orig_content'][0] === "\t"
                     ) {
                         // Line is indented using tabs.
-                        $padding = str_repeat("\t", floor($starColumn / $this->tabWidth));
+                        $padding  = str_repeat("\t", floor($expected / $this->tabWidth));
+                        $padding .= str_repeat(' ', ($expected % $this->tabWidth));
                     } else {
-                        $padding = str_repeat(' ', $starColumn);
+                        $padding = str_repeat(' ', $expected);
                     }
 
-                    $phpcsFile->fixer->replaceToken($line, $padding.ltrim($tokens[$line]['content']));
+                    $phpcsFile->fixer->replaceToken($line, $padding.$commentText);
                 }
             }//end if
         }//end foreach
 
         // Finally, test the last line is correct.
-        $lastIndex = (count($commentLines) - 1);
-        $content   = trim($tokens[$commentLines[$lastIndex]]['content']);
-        if ($content !== '*/' && $content !== '**/') {
+        $lastIndex   = (count($commentLines) - 1);
+        $content     = $tokens[$commentLines[$lastIndex]]['content'];
+        $commentText = ltrim($content);
+        if ($commentText !== '*/' && $commentText !== '**/') {
             $error = 'Comment closer must be on a new line';
             $phpcsFile->addError($error, $commentLines[$lastIndex], 'CloserSameLine');
         } else {
-            $content      = $tokens[$commentLines[$lastIndex]]['content'];
-            $commentText  = ltrim($content);
             $leadingSpace = (strlen($content) - strlen($commentText));
-            if ($leadingSpace !== ($tokens[$stackPtr]['column'] - 1)) {
-                $expected = ($tokens[$stackPtr]['column'] - 1);
-                if ($expected === 1) {
-                    $expected .= ' space';
-                } else {
-                    $expected .= ' spaces';
+
+            $expected = ($starColumn - 1);
+            if ($hasStars === true) {
+                $expected = $starColumn;
+            }
+
+            if ($leadingSpace !== $expected) {
+                $expectedTxt = $expected.' space';
+                if ($expected !== 1) {
+                    $expectedTxt .= 's';
                 }
 
                 $data = [
-                    $expected,
+                    $expectedTxt,
                     $leadingSpace,
                 ];
 
                 $error = 'Last line of comment aligned incorrectly; expected %s but found %s';
-                $phpcsFile->addError($error, $commentLines[$lastIndex], 'LastLineIndent', $data);
-            }
+                $fix   = $phpcsFile->addFixableError($error, $commentLines[$lastIndex], 'LastLineIndent', $data);
+                if ($fix === true) {
+                    if (isset($tokens[$line]['orig_content']) === true
+                        && $tokens[$line]['orig_content'][0] === "\t"
+                    ) {
+                        // Line is indented using tabs.
+                        $padding  = str_repeat("\t", floor($expected / $this->tabWidth));
+                        $padding .= str_repeat(' ', ($expected % $this->tabWidth));
+                    } else {
+                        $padding = str_repeat(' ', $expected);
+                    }
+
+                    $phpcsFile->fixer->replaceToken($commentLines[$lastIndex], $padding.$commentText);
+                }
+            }//end if
         }//end if
 
         // Check that the lines before and after this comment are blank.
