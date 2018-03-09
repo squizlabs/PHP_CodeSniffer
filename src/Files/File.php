@@ -1491,8 +1491,9 @@ class File
      *
      * <code>
      *   array(
-     *    'scope'       => 'public', // public protected or protected
-     *    'is_static'   => false,    // true if the static keyword was found.
+     *    'scope'           => 'public', // public protected or protected.
+     *    'scope_specified' => false,    // true if the scope was explicitely specified.
+     *    'is_static'       => false,    // true if the static keyword was found.
      *   );
      * </code>
      *
@@ -1541,18 +1542,26 @@ class File
             T_PRIVATE     => T_PRIVATE,
             T_PROTECTED   => T_PROTECTED,
             T_STATIC      => T_STATIC,
+            T_VAR         => T_VAR,
             T_WHITESPACE  => T_WHITESPACE,
             T_COMMENT     => T_COMMENT,
             T_DOC_COMMENT => T_DOC_COMMENT,
-            T_VARIABLE    => T_VARIABLE,
-            T_COMMA       => T_COMMA,
         ];
 
         $scope          = 'public';
         $scopeSpecified = false;
         $isStatic       = false;
 
-        for ($i = ($stackPtr - 1); $i > 0; $i--) {
+        $startOfStatement = $this->findPrevious(
+            [
+                T_SEMICOLON,
+                T_OPEN_CURLY_BRACKET,
+                T_CLOSE_CURLY_BRACKET,
+            ],
+            ($stackPtr - 1)
+        );
+
+        for ($i = ($startOfStatement + 1); $i < $stackPtr; $i++) {
             if (isset($valid[$this->tokens[$i]['code']]) === false) {
                 break;
             }

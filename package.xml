@@ -104,6 +104,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="FindExtendedClassNameTest.php" role="test" />
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.inc" role="test" />
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.php" role="test" />
+      <file baseinstalldir="" name="GetMemberPropertiesTest.inc" role="test" />
+      <file baseinstalldir="" name="GetMemberPropertiesTest.php" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.inc" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.php" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
