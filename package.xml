@@ -46,6 +46,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Ensures control structure keywords are on the same line as the closing brace from the earlier body
     -- Applies to catch, finally, else, elseif, and do/while structures
     -- The included PSR2 standard now enforces this rule
+  - Improved core support for grouped property declarations
+    -- Also improves support in Squiz.WhiteSpace.ScopeKeywordSpacing and Squiz.WhiteSpace.MemberVarSpacing
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Arrays.ArrayDeclaration now continues checking array formatting even if the key indent is not correct
     -- Allows for using different array indent rules while still checking/fixing double arrow and value alignment
   - Squiz.Commenting.BlockComment has improved support for tab-indented comments
