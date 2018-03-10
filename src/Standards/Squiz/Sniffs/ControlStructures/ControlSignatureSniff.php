@@ -260,6 +260,7 @@ class ControlSignatureSniff implements Sniff
         } else if ($tokens[$stackPtr]['code'] === T_ELSE
             || $tokens[$stackPtr]['code'] === T_ELSEIF
             || $tokens[$stackPtr]['code'] === T_CATCH
+            || $tokens[$stackPtr]['code'] === T_FINALLY
         ) {
             if (isset($tokens[$stackPtr]['scope_opener']) === true
                 && $tokens[$tokens[$stackPtr]['scope_opener']]['code'] === T_COLON
