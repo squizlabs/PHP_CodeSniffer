@@ -282,18 +282,23 @@ class ControlSignatureSniff implements Sniff
         $found = 1;
         if ($tokens[($closer + 1)]['code'] !== T_WHITESPACE) {
             $found = 0;
+        } else if ($tokens[$closer]['line'] !== $tokens[$stackPtr]['line']) {
+            $found = 'newline';
         } else if ($tokens[($closer + 1)]['content'] !== ' ') {
-            if (strpos($tokens[($closer + 1)]['content'], $phpcsFile->eolChar) !== false) {
-                $found = 'newline';
-            } else {
-                $found = strlen($tokens[($closer + 1)]['content']);
-            }
+            $found = strlen($tokens[($closer + 1)]['content']);
         }
 
         if ($found !== 1) {
             $error = 'Expected 1 space after closing brace; %s found';
             $data  = [$found];
-            $fix   = $phpcsFile->addFixableError($error, $closer, 'SpaceAfterCloseBrace', $data);
+
+            if ($phpcsFile->findNext(Tokens::$commentTokens, ($closer + 1), $stackPtr) !== false) {
+                // Comment found between closing brace and keyword, don't auto-fix.
+                $phpcsFile->addError($error, $closer, 'SpaceAfterCloseBrace', $data);
+                return;
+            }
+
+            $fix = $phpcsFile->addFixableError($error, $closer, 'SpaceAfterCloseBrace', $data);
             if ($fix === true) {
                 if ($found === 0) {
                     $phpcsFile->fixer->addContent($closer, ' ');
