@@ -69,7 +69,14 @@ class ControlSignatureUnitTest extends AbstractSniffUnitTest
             $errors[243] = 2;
             $errors[244] = 2;
             $errors[248] = 1;
-        }
+            $errors[259] = 1;
+            $errors[262] = 1;
+            $errors[267] = 1;
+            $errors[269] = 1;
+            $errors[276] = 1;
+            $errors[279] = 1;
+            $errors[283] = 1;
+        }//end if
 
         return $errors;
 

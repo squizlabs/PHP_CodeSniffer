@@ -252,3 +252,35 @@ endif;
     ?>
     hello
 <?php endforeach; ?>
+<?php
+
+// Issue #1857/#1927.
+if ($something) {
+}
+// phpcs:ignore Standard.Category.Sniff
+elseif ($something) {
+} // comment
+else {
+}
+
+if ($something) {
+} // phpcs:ignore Standard.Category.Sniff
+elseif ($something) {
+}
+// comment
+else {
+}
+
+try {
+    $x = 1;
+} // stray comment here
+catch (CustomException $exception) {
+    $x = 2;
+}
+// phpcs:ignore Standard.Category.Sniff
+catch (Exception $exception) {
+    $x = 2;
+}
+finally {
+    $x = 3;
+}
