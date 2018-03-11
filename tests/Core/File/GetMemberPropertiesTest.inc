@@ -36,6 +36,33 @@ class TestMemberProperties
     /* testNoPrefix */
     $varK = true;
 
+    /* testPublicStaticWithDocblock */
+    /**
+     * Comment here.
+     *
+     * @phpcs:ignore Standard.Category.Sniff -- because
+     * @var boolean
+     */
+    public static $varH = true;
+
+    /* testProtectedStaticWithDocblock */
+    /**
+     * Comment here.
+     *
+     * @phpcs:ignore Standard.Category.Sniff -- because
+     * @var boolean
+     */
+    static protected $varI = true;
+
+    /* testPrivateStaticWithDocblock */
+    /**
+     * Comment here.
+     *
+     * @phpcs:ignore Standard.Category.Sniff -- because
+     * @var boolean
+     */
+    private static $varJ = true;
+
 
     protected static
         /* testGroupProtectedStatic 1 */

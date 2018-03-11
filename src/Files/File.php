@@ -1538,15 +1538,14 @@ class File
         }
 
         $valid = [
-            T_PUBLIC      => T_PUBLIC,
-            T_PRIVATE     => T_PRIVATE,
-            T_PROTECTED   => T_PROTECTED,
-            T_STATIC      => T_STATIC,
-            T_VAR         => T_VAR,
-            T_WHITESPACE  => T_WHITESPACE,
-            T_COMMENT     => T_COMMENT,
-            T_DOC_COMMENT => T_DOC_COMMENT,
+            T_PUBLIC    => T_PUBLIC,
+            T_PRIVATE   => T_PRIVATE,
+            T_PROTECTED => T_PROTECTED,
+            T_STATIC    => T_STATIC,
+            T_VAR       => T_VAR,
         ];
+
+        $valid += Util\Tokens::$emptyTokens;
 
         $scope          = 'public';
         $scopeSpecified = false;

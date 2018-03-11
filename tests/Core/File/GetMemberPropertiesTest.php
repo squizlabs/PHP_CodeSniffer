@@ -179,6 +179,30 @@ class GetMemberPropertiesTest extends TestCase
                 ],
             ],
             [
+                '/* testPublicStaticWithDocblock */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => true,
+                ],
+            ],
+            [
+                '/* testProtectedStaticWithDocblock */',
+                [
+                    'scope'           => 'protected',
+                    'scope_specified' => true,
+                    'is_static'       => true,
+                ],
+            ],
+            [
+                '/* testPrivateStaticWithDocblock */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => true,
+                ],
+            ],
+            [
                 '/* testNoPrefix */',
                 [
                     'scope'           => 'public',

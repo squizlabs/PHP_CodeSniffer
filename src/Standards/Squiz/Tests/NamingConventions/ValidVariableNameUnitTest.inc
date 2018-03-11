@@ -123,3 +123,13 @@ trait MyTrait
     public $_varName = 'hello';
     private $_varName = 'hello';
 }
+
+class TestClass
+{
+    /**
+     * Comment goes here.
+     *
+     * @var array
+     */
+    private static $_foo = [];
+}
