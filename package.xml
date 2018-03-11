@@ -57,6 +57,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Commenting.BlockComment now aligns star-prefixed lines under the opening tag while fixing, instead of indenting them
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.ControlStructures.ControlSignature now errors when a comment follows the closing brace of an earlier body
+    -- Applies to catch, finally, else, elseif, and do/while structures
+    -- The included PSR2 standard now enforces this rule
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.CommentedOutCode now ignores simple @-style annotation comments so they are not flagged as commented out code
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.CommentedOutCode now ignores a greater number of short comments so they are not flagged as commented out code
