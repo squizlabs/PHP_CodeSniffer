@@ -58,6 +58,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.BlockComment now aligns star-prefixed lines under the opening tag while fixing, instead of indenting them
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Commenting.FunctionComment.IncorrectTypeHint message no longer contains cut-off suggested type hints
+  - Squiz.Commenting.InlineComment now uses a new error code for inline comments at the end of a function
+    -- Previously, all inline comments followed by a blank line threw a Squiz.Commenting.InlineComment.SpacingAfter error
+    -- Now, inline comments at the end of a function will instead throw Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd
+    -- If you previously excluded SpacingAfter, add an exclusion for SpacingAfterAtFunctionEnd to your ruleset as well
+    -- If you previously only included SpacingAfter, consider including SpacingAfterAtFunctionEnd as well
+    -- The Squiz standard now excludes SpacingAfterAtFunctionEnd as the blank line is checked elsewhere
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.ControlStructures.ControlSignature now errors when a comment follows the closing brace of an earlier body
     -- Applies to catch, finally, else, elseif, and do/while structures
     -- The included PSR2 standard now enforces this rule
