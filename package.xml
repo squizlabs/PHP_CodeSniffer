@@ -57,6 +57,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Commenting.BlockComment now aligns star-prefixed lines under the opening tag while fixing, instead of indenting them
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Commenting.FunctionComment.IncorrectTypeHint message no longer contains cut-off suggested type hints
   - Squiz.ControlStructures.ControlSignature now errors when a comment follows the closing brace of an earlier body
     -- Applies to catch, finally, else, elseif, and do/while structures
     -- The included PSR2 standard now enforces this rule
