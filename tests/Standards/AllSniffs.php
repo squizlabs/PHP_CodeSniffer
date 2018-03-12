@@ -11,7 +11,6 @@ namespace PHP_CodeSniffer\Tests\Standards;
 
 use PHP_CodeSniffer\Util\Standards;
 use PHP_CodeSniffer\Autoload;
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 use PHPUnit\TextUI\TestRunner;
 use PHPUnit\Framework\TestSuite;
 

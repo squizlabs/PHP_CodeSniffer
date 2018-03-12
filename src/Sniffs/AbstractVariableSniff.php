@@ -17,7 +17,6 @@ namespace PHP_CodeSniffer\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 abstract class AbstractVariableSniff extends AbstractScopeSniff
 {

@@ -12,7 +12,6 @@ namespace PHP_CodeSniffer\Util;
 use PHP_CodeSniffer\Autoload;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Util\Common;
 
 class Cache
 {

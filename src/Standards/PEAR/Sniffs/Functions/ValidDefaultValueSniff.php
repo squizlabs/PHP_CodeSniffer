@@ -11,7 +11,6 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Tokens;
 
 class ValidDefaultValueSniff implements Sniff
 {

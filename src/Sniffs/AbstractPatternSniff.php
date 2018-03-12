@@ -10,7 +10,6 @@
 namespace PHP_CodeSniffer\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Tokenizers\PHP;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
