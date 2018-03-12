@@ -175,3 +175,14 @@ function myFunction(): Something
 function myFunction($bar) { ?>
     <div><?php echo $bar; ?></div>
 <?php }
+
+function myFunction($a, $lot, $of, $params)
+    : array
+{
+    return null;
+}
+
+function myFunction($a, $lot, $of, $params)
+    : array {
+    return null;
+}

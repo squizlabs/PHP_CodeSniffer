@@ -76,6 +76,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1915 : JS tokenizer fails to tokenize regular expression proceeded by boolean not operator
   - Fixed bug #1922 : Equal sign alignment check broken when list syntax used before assignment operator
   - Fixed bug #1925 : Generic.Formatting.MultipleStatementAlignment skipping assignments within closures
+  - Fixed bug #1931 : Generic opening brace placement sniffs do not correctly support function return types
  </notes>
  <contents>
   <dir name="/">

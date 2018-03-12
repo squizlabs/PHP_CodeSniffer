@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class OpeningFunctionBraceBsdAllmanSniff implements Sniff
 {
@@ -80,7 +81,10 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
             }
         }
 
-        $functionLine = $tokens[$closeBracket]['line'];
+        // Find the end of the function declaration.
+        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($openingBrace - 1), $closeBracket, true);
+
+        $functionLine = $tokens[$prev]['line'];
         $braceLine    = $tokens[$openingBrace]['line'];
 
         $lineDifference = ($braceLine - $functionLine);

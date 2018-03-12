@@ -196,3 +196,8 @@ class Foo
 function myFunction() : Something {
     return null;
 }
+
+function myFunction($a, $lot, $of, $params)
+    : array {
+    return null;
+}

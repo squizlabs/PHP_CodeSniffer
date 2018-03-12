@@ -82,7 +82,10 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
             }
         }
 
-        $functionLine = $tokens[$closeBracket]['line'];
+        // Find the end of the function declaration.
+        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($openingBrace - 1), $closeBracket, true);
+
+        $functionLine = $tokens[$prev]['line'];
         $braceLine    = $tokens[$openingBrace]['line'];
 
         $lineDifference = ($braceLine - $functionLine);
