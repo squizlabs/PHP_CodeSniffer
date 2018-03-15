@@ -221,3 +221,13 @@ function myFunction($a, $lot, $of, $params)
 { // phpcs:ignore Standard.Category.Sniff -- for reasons.
     return null;
 }
+
+function myFunction($a, $lot, $of, $params)
+    : array /* phpcs:ignore Standard.Category.Sniff -- for reasons */ {
+    return null;
+}
+
+function myFunction($a, $lot, $of, $params)
+    : array /* comment */ {
+    return null;
+}
