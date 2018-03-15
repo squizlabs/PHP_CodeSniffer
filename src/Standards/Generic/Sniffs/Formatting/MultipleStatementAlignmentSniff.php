@@ -115,9 +115,21 @@ class MultipleStatementAlignmentSniff implements Sniff
         $find = Tokens::$assignmentTokens;
         unset($find[T_DOUBLE_ARROW]);
 
+        $scopes = Tokens::$scopeOpeners;
+        unset($scopes[T_CLOSURE]);
+        unset($scopes[T_ANON_CLASS]);
+        unset($scopes[T_OBJECT]);
+
         for ($assign = $stackPtr; $assign < $phpcsFile->numTokens; $assign++) {
             if ($tokens[$assign]['level'] < $tokens[$stackPtr]['level']) {
                 // Statement is in a different context, so the block is over.
+                break;
+            }
+
+            if (isset($scopes[$tokens[$assign]['code']]) === true
+                && isset($tokens[$assign]['scope_opener']) === true
+                && $tokens[$assign]['level'] === $tokens[$stackPtr]['level']
+            ) {
                 break;
             }
 
@@ -148,7 +160,6 @@ class MultipleStatementAlignmentSniff implements Sniff
                     $arrayEnd = $tokens[$tokens[$assign]['parenthesis_opener']]['parenthesis_closer'];
                 }
 
-                // A blank line indicates that the assignment block has ended.
                 if (isset(Tokens::$emptyTokens[$tokens[$assign]['code']]) === false) {
                     $lastCode = $assign;
 

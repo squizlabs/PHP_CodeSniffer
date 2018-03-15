@@ -369,3 +369,7 @@ $foo = [
         $barbar = 'bar';
     },
 ];
+
+$abc = 'something';
+if ($foo) {}
+$defghi = 'longer something';
