@@ -203,3 +203,8 @@ function myFunction($a, $lot, $of, $params)
 {
     return null;
 }
+
+function myFunction($a, $lot, $of, $params)
+    : array { // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    return null;
+}

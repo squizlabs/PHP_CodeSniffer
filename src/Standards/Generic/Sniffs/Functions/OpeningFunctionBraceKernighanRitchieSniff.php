@@ -127,7 +127,9 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, "$metricType opening brace placement", 'same line');
         }//end if
 
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($openingBrace + 1), null, true);
+        $ignore   = Tokens::$phpcsCommentTokens;
+        $ignore[] = T_WHITESPACE;
+        $next     = $phpcsFile->findNext($ignore, ($openingBrace + 1), null, true);
         if ($tokens[$next]['line'] === $tokens[$openingBrace]['line']) {
             if ($next === $tokens[$stackPtr]['scope_closer']
                 || $tokens[$next]['code'] === T_CLOSE_TAG
