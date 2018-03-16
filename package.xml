@@ -39,6 +39,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Removed Squiz.PHP.DisallowObEndFlush from the Squiz standard
     -- If you use this sniff and want to continue banning ob_end_flush(), use Generic.PHP.ForbiddenFunctions instead
     -- You will need to set the forbiddenFunctions property in your ruleset.xml file
+  - Removed Squiz.PHP.ForbiddenFunctions from the Squiz standard
+    -- Replaced by using the forbiddenFunctions property of Generic.PHP.ForbiddenFunctions in the Squiz ruleset.xml
+    -- Functionality of the Squiz standard remains the same, but the error codes are now different
+    -- Previously, Squiz.PHP.ForbiddenFunctions.Found and Squiz.PHP.ForbiddenFunctions.FoundWithAlternative
+    -- Now, Generic.PHP.ForbiddenFunctions.Found and Generic.PHP.ForbiddenFunctions.FoundWithAlternative
   - Added new Generic.WhiteSpace.ArbitraryParenthesesSpacing sniff
     -- Generates an error for whitespace inside parenthesis that don't belong to a function call/declaration or control structure
     -- Generates a warning for any empty parenthesis found
@@ -1174,7 +1179,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DiscouragedFunctionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmbeddedPhpSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EvalSniff.php" role="php" />
-        <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="GlobalKeywordSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="HeredocSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="InnerFunctionsSniff.php" role="php" />
@@ -1427,8 +1431,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="EmbeddedPhpUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EvalUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EvalUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="GlobalKeywordUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="GlobalKeywordUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="HeredocUnitTest.inc" role="test" />
