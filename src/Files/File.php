@@ -2079,6 +2079,10 @@ class File
                 && ($i === $this->tokens[$i]['scope_opener']
                 || $i === $this->tokens[$i]['scope_condition'])
             ) {
+                if ($i === $start && isset(Util\Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true) {
+                    return $this->tokens[$i]['scope_closer'];
+                }
+
                 $i = $this->tokens[$i]['scope_closer'];
             } else if (isset($this->tokens[$i]['bracket_closer']) === true
                 && $i === $this->tokens[$i]['bracket_opener']
