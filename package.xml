@@ -36,6 +36,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The "Function opening brace placement" metric has been separated into function and closure metrics in the info report
     -- Closures are no longer included in the "Function opening brace placement" metric
     -- A new "Closure opening brace placement" metric now shows information for closures
+  - Removed Squiz.PHP.DisallowObEndFlush from the Squiz standard
+    -- If you use this sniff and want to continue banning ob_end_flush(), use Generic.PHP.ForbiddenFunctions instead
+    -- You will need to set the forbiddenFunctions property in your ruleset.xml file
   - Added new Generic.WhiteSpace.ArbitraryParenthesesSpacing sniff
     -- Generates an error for whitespace inside parenthesis that don't belong to a function call/declaration or control structure
     -- Generates a warning for any empty parenthesis found
@@ -1167,7 +1170,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowComparisonAssignmentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowInlineIfSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleAssignmentsSniff.php" role="php" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowObEndFlushSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSizeFunctionsInLoopsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DiscouragedFunctionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmbeddedPhpSniff.php" role="php" />
@@ -1415,8 +1417,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowInlineIfUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleAssignmentsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleAssignmentsUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowObEndFlushUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowObEndFlushUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSizeFunctionsInLoopsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSizeFunctionsInLoopsUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSizeFunctionsInLoopsUnitTest.php" role="test" />
