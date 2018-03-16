@@ -169,4 +169,35 @@ class FindEndOfStatementTest extends TestCase
     }//end testSwitch()
 
 
+    /**
+     * Test statements that are array values.
+     *
+     * @return void
+     */
+    public function testStatementAsArrayValue()
+    {
+        // Test short array syntax.
+        $start = ($this->phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testStatementAsArrayValue */') + 7);
+        $found = $this->phpcsFile->findEndOfStatement($start);
+
+        $tokens = $this->phpcsFile->getTokens();
+        $this->assertSame($tokens[($start + 2)], $tokens[$found]);
+
+        // Test long array syntax.
+        $start += 12;
+        $found  = $this->phpcsFile->findEndOfStatement($start);
+
+        $tokens = $this->phpcsFile->getTokens();
+        $this->assertSame($tokens[($start + 2)], $tokens[$found]);
+
+        // Test same statement outside of array.
+        $start += 10;
+        $found  = $this->phpcsFile->findEndOfStatement($start);
+
+        $tokens = $this->phpcsFile->getTokens();
+        $this->assertSame($tokens[($start + 3)], $tokens[$found]);
+
+    }//end testStatementAsArrayValue()
+
+
 }//end class

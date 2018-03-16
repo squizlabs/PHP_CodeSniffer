@@ -22,3 +22,8 @@ switch ($a) {
     case 1: {break;}
     default: {break;}
 }
+
+/* testStatementAsArrayValue */
+$a = [new Datetime];
+$a = array(new Datetime);
+$a = new Datetime;
