@@ -394,9 +394,13 @@ class Config
             }
         }//end if
 
-        if ($handle !== false) {
-            fclose($handle);
+        if (defined('PHP_CODESNIFFER_IN_TESTS') === true && defined('HHVM_VERSION') === true) {
+            // HHVM 3.25+ wont let us re-open STDIN after it is closed.
+            // So don't close it.
+            return;
         }
+
+        fclose($handle);
 
     }//end __construct()
 
