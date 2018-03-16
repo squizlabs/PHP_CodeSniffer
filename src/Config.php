@@ -394,7 +394,9 @@ class Config
             }
         }//end if
 
-        fclose($handle);
+        if ($handle !== false) {
+            fclose($handle);
+        }
 
     }//end __construct()
 
