@@ -23,6 +23,29 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
 
 
     /**
+     * List of PHP Reserved variables.
+     *
+     * Used by various naming convention sniffs.
+     *
+     * @var array
+     */
+    protected $phpReservedVars = [
+        '_SERVER'              => true,
+        '_GET'                 => true,
+        '_POST'                => true,
+        '_REQUEST'             => true,
+        '_SESSION'             => true,
+        '_ENV'                 => true,
+        '_COOKIE'              => true,
+        '_FILES'               => true,
+        'GLOBALS'              => true,
+        'http_response_header' => true,
+        'HTTP_RAW_POST_DATA'   => true,
+        'php_errormsg'         => true,
+    ];
+
+
+    /**
      * Constructs an AbstractVariableTest.
      */
     public function __construct()
