@@ -16,3 +16,9 @@ myFunction(<<<END
 Foo
 END
 , 'bar');
+
+/* testSwitch */
+switch ($a) {
+    case 1: {break;}
+    default: {break;}
+}

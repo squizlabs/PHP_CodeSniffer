@@ -138,4 +138,35 @@ class FindEndOfStatementTest extends TestCase
     }//end testHeredocFunctionArg()
 
 
+    /**
+     * Test parts of a switch statement.
+     *
+     * @return void
+     */
+    public function testSwitch()
+    {
+        // Find the end of the swtich.
+        $start = ($this->phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testSwitch */') + 2);
+        $found = $this->phpcsFile->findEndOfStatement($start);
+
+        $tokens = $this->phpcsFile->getTokens();
+        $this->assertSame($tokens[($start + 28)], $tokens[$found]);
+
+        // Find the end of the case.
+        $start += 9;
+        $found  = $this->phpcsFile->findEndOfStatement($start);
+
+        $tokens = $this->phpcsFile->getTokens();
+        $this->assertSame($tokens[($start + 8)], $tokens[$found]);
+
+        // Find the end of default case.
+        $start += 11;
+        $found  = $this->phpcsFile->findEndOfStatement($start);
+
+        $tokens = $this->phpcsFile->getTokens();
+        $this->assertSame($tokens[($start + 6)], $tokens[$found]);
+
+    }//end testSwitch()
+
+
 }//end class
