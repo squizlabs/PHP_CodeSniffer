@@ -85,6 +85,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1876 : PSR2.Namespaces.UseDeclaration not giving error for use statements before the namespace declaration
     -- Adds a new PSR2.Namespaces.UseDeclaration.UseBeforeNamespace error message
   - Fixed bug #1881 : Generic.Arrays.ArrayIndent is indenting sub-arrays incorrectly when comma not used after the last value
+  - Fixed bug #1882 : Conditional with missing braces confused by indirect variables
   - Fixed bug #1915 : JS tokenizer fails to tokenize regular expression proceeded by boolean not operator
   - Fixed bug #1922 : Equal sign alignment check broken when list syntax used before assignment operator
   - Fixed bug #1925 : Generic.Formatting.MultipleStatementAlignment skipping assignments within closures

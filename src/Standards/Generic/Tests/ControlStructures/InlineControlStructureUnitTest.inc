@@ -217,3 +217,8 @@ do {
 }
 // Comment
 while ($i < 10);
+
+if ($this) {
+    if ($that)
+        foo(${$a[$b]});
+}

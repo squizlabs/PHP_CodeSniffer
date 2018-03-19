@@ -284,3 +284,8 @@ catch (Exception $exception) {
 finally {
     $x = 3;
 }
+
+if ($this) {
+    if ($that)
+        foo(${$a[$b]});
+}
