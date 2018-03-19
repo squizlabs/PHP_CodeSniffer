@@ -122,6 +122,12 @@ class UseDeclarationSniff implements Sniff
                 $error = 'USE declarations must go after the first namespace declaration';
                 $phpcsFile->addError($error, $stackPtr, 'UseAfterNamespace');
             }
+        } else {
+            $next = $phpcsFile->findNext(T_NAMESPACE, ($stackPtr + 1));
+            if ($next !== false) {
+                $error = 'USE declarations must go after the namespace declaration';
+                $phpcsFile->addError($error, $stackPtr, 'UseBeforeNamespace');
+            }
         }
 
         // Only interested in the last USE statement from here onwards.
