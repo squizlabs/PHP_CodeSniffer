@@ -33,10 +33,10 @@ class ArrayIndentUnitTest extends AbstractSniffUnitTest
             31 => 1,
             33 => 1,
             41 => 1,
-            49 => 1,
-            50 => 1,
-            51 => 1,
-            52 => 1,
+            55 => 1,
+            56 => 1,
+            57 => 1,
+            58 => 1,
         ];
 
     }//end getErrorList()

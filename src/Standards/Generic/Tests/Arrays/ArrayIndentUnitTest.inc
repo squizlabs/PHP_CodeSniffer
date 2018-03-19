@@ -43,6 +43,12 @@ $var = array(
     'two' => 2,
 );
 
+return [
+    [
+        'foo' => true,
+    ]
+];
+
 // phpcs:set Generic.Arrays.ArrayIndent indent 2
 
 $var = [

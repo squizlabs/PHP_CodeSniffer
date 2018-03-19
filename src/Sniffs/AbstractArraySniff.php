@@ -109,10 +109,9 @@ abstract class AbstractArraySniff implements Sniff
                 }
 
                 $checkToken = $phpcsFile->findNext(T_WHITESPACE, ($checkToken + 1), null, true);
+                $lastToken  = $checkToken;
                 if ($tokens[$checkToken]['code'] !== T_COMMA) {
                     $checkToken--;
-                } else {
-                    $lastToken = $checkToken;
                 }
 
                 continue;
