@@ -26,14 +26,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - This release requires changes to any rulesets that set the spacing property of the Squiz.WhiteSpace.FunctionSpacing sniff
-    -- To maintain existing behaviour, you need to also set the new spacingBeforeFirst and spacingAfterLast properties
-    -- For example, if you have set spacing to 1, you need to set spacingBeforeFirst and spacingAfterLast to 1 also
-    -- Changing your ruleset in this way will still allow it to be backwards comaptible with older PHPCS versions
-       --- Older versions will ignore the values set for the 2 new properties
-    -- For more information, see the sniff property documentation:
-       --- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties#squizwhitespacefunctionspacing
-
   - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
   - The JSON report format now does escaping in error source codes as well as error messages
     -- Thanks to Martin Vasel for the patch
@@ -89,6 +81,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.CommentedOutCode now ignores a greater number of short comments so they are not flagged as commented out code
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.WhiteSpacing.FunctionSpacing now has a property to specify how many blank lines should be before the first class method
+      -- Only applies when a method is the first code block in a class (i.e., there are no member vars before it)
+      -- Override the 'spacingBeforeFirst' property in a ruleset.xml file to change
+      -- If not set, the sniff will use whatever value is set for the existing 'spacing' property
+  - Squiz.WhiteSpacing.FunctionSpacing now has a property to specify how many blank lines should be after the last class method
+      -- Only applies when a method is the last code block in a class (i.e., there are no member vars after it)
+      -- Override the 'spacingAfterLast' property in a ruleset.xml file to change
+      -- If not set, the sniff will use whatever value is set for the existing 'spacing' property
   - Fixed bug #1863 : File::findEndOfStatement() not working when passed a scope opener
   - Fixed bug #1876 : PSR2.Namespaces.UseDeclaration not giving error for use statements before the namespace declaration
     -- Adds a new PSR2.Namespaces.UseDeclaration.UseBeforeNamespace error message

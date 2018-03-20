@@ -37,6 +37,13 @@ class FunctionSpacingSniff implements Sniff
      */
     public $spacingAfterLast = 2;
 
+    /**
+     * The number of blank lines after the last function in a class.
+     *
+     * @var integer
+     */
+    private $rulesetProperties = null;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -61,6 +68,26 @@ class FunctionSpacingSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        // If the ruleset has only overriden the spacing property, use
+        // that value for all spacing rules.
+        if ($this->rulesetProperties === null) {
+            $this->rulesetProperties = [];
+            if (isset($phpcsFile->ruleset->ruleset['Squiz.WhiteSpace.FunctionSpacing']) === true
+                && isset($phpcsFile->ruleset->ruleset['Squiz.WhiteSpace.FunctionSpacing']['properties']) === true
+            ) {
+                $this->rulesetProperties = $phpcsFile->ruleset->ruleset['Squiz.WhiteSpace.FunctionSpacing']['properties'];
+                if (isset($this->rulesetProperties['spacing']) === true) {
+                    if (isset($this->rulesetProperties['spacingBeforeFirst']) === false) {
+                        $this->spacingBeforeFirst = $this->spacing;
+                    }
+
+                    if (isset($this->rulesetProperties['spacingAfterLast']) === false) {
+                        $this->spacingAfterLast = $this->spacing;
+                    }
+                }
+            }
+        }
+
         $tokens        = $phpcsFile->getTokens();
         $this->spacing = (int) $this->spacing;
         $this->spacingBeforeFirst = (int) $this->spacingBeforeFirst;
