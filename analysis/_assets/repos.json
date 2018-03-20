@@ -1363,6 +1363,13 @@
         "path": "src",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "PHP Binance Api",
+        "url": "jaggedsoft/php-binance-api",
+        "path": "",
+        "ignore": "*/vendor/*",
+        "extensions": ""
     }
 ]
 
