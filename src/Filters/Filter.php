@@ -204,9 +204,10 @@ class Filter extends \RecursiveFilterIterator
                 // If the ignore pattern ends with /* then it is ignoring an entire directory.
                 if (substr($pattern, -2) === '/*') {
                     // Need to check this pattern for dirs as well as individual file paths.
-                    $pattern = substr($pattern, 0, -2);
-                    $this->ignoreDirPatterns[$pattern]  = $type;
                     $this->ignoreFilePatterns[$pattern] = $type;
+
+                    $pattern = substr($pattern, 0, -2);
+                    $this->ignoreDirPatterns[$pattern] = $type;
                 } else {
                     // This is a file-specific pattern, so only need to check this
                     // for individual file paths.
