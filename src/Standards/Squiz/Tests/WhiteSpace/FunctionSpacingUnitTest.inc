@@ -305,3 +305,53 @@ function foo() {
 // phpcs:disable Standard.Category.Sniff -- for reasons.
 function bar() {
 }
+
+
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 0
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 0
+class MyClass
+{
+    protected $tag = '';
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    private static function func1() {
+
+    }//end func1()
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    private static function func2() {
+
+    }//end func1()
+
+
+}//end class
+
+class MyClass {
+    function a(){}
+    function b(){}
+    function c(){}
+}
+
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 1
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 1
+
+class MyClass {
+    function a(){}
+    function b(){}
+    function c(){}
+}
+
+$util->setLogger(new class {
+    public function a(){}
+    private function b(){}
+    protected function c(){}
+});

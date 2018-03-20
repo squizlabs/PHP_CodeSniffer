@@ -26,6 +26,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - This release requires changes to any rulesets that set the spacing property of the Squiz.WhiteSpace.FunctionSpacing sniff
+    -- To maintain existing behaviour, you need to also set the new spacingBeforeFirst and spacingAfterLast properties
+    -- For example, if you have set spacing to 1, you need to set spacingBeforeFirst and spacingAfterLast to 1 also
+    -- Changing your ruleset in this way will still allow it to be backwards comaptible with older PHPCS versions
+       --- Older versions will ignore the values set for the 2 new properties
+    -- For more information, see the sniff property documentation:
+       --- https://github.com/squizlabs/PHP_CodeSniffer/wiki/Customisable-Sniff-Properties#squizwhitespacefunctionspacing
+
   - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
   - The JSON report format now does escaping in error source codes as well as error messages
     -- Thanks to Martin Vasel for the patch
