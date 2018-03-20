@@ -467,7 +467,7 @@ abstract class Tokenizer
             }
         }
 
-        if (str_replace("\t", '', $token['content']) === '') {
+        if (rtrim($token['content'], "\t") === '') {
             // String only contains tabs, so we can shortcut the process.
             $numTabs = strlen($token['content']);
 
