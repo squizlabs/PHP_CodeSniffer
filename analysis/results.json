@@ -1,9 +1,9 @@
 {
   "EOL char":{
-    "total":59205,
-    "total_repos":195,
+    "total":59209,
+    "total_repos":196,
     "values":{
-      "\\n":59066,
+      "\\n":59070,
       "\\r\\n":139
     },
     "repos":{
@@ -66,6 +66,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":100,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -374,32 +375,32 @@
         "\\r\\n":145
       },
       "2017-11-01":{
-        "\\n":58616,
+        "\\n":58618,
         "\\r\\n":145
       },
       "2017-12-01":{
-        "\\n":58885,
+        "\\n":58888,
         "\\r\\n":145
       },
       "2018-01-01":{
-        "\\n":58949,
+        "\\n":58953,
         "\\r\\n":145
       },
       "2018-02-01":{
-        "\\n":59074,
+        "\\n":59078,
         "\\r\\n":145
       }
     },
     "winner":"\\n"
   },
   "Line length":{
-    "total":9765194,
-    "total_repos":195,
+    "total":9766118,
+    "total_repos":196,
     "values":{
-      "121-150":81204,
-      "151 or more":61535,
-      "80 or less":9016585,
-      "81-120":605870
+      "121-150":81211,
+      "151 or more":61536,
+      "80 or less":9017442,
+      "81-120":605929
     },
     "repos":{
       "80 or less":{
@@ -461,6 +462,7 @@
         "Halleck45\/PhpMetrics":96.79,
         "iranianpep\/botonomous":97.73,
         "jackalope\/jackalope":94.18,
+        "jaggedsoft\/php-binance-api":92.75,
         "joomla\/joomla-cms":93.1,
         "KnpLabs\/snappy":91.54,
         "kriswallsmith\/assetic":96.33,
@@ -806,37 +808,37 @@
         "81-120":600856
       },
       "2017-11-01":{
-        "121-150":81243,
+        "121-150":81247,
         "151 or more":61347,
-        "80 or less":8978014,
-        "81-120":602422
+        "80 or less":8978540,
+        "81-120":602461
       },
       "2017-12-01":{
-        "121-150":81339,
+        "121-150":81342,
         "151 or more":61530,
-        "80 or less":9012590,
-        "81-120":603991
+        "80 or less":9013282,
+        "81-120":604038
       },
       "2018-01-01":{
-        "121-150":81250,
+        "121-150":81255,
         "151 or more":61523,
-        "80 or less":9018773,
-        "81-120":605073
+        "80 or less":9019496,
+        "81-120":605123
       },
       "2018-02-01":{
-        "121-150":81223,
-        "151 or more":61537,
-        "80 or less":9019470,
-        "81-120":605944
+        "121-150":81230,
+        "151 or more":61538,
+        "80 or less":9020327,
+        "81-120":606003
       }
     },
     "winner":"80 or less"
   },
   "Lowercase filename":{
-    "total":59205,
-    "total_repos":195,
+    "total":59209,
+    "total_repos":196,
     "values":{
-      "yes":19605,
+      "yes":19609,
       "no":39600
     },
     "repos":{
@@ -847,6 +849,7 @@
         "concrete5\/concrete5":99.72,
         "EllisLab\/CodeIgniter":63.8,
         "facebook\/facebook-php-sdk":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":94.68,
         "ladybirdweb\/agorainvoicing":60.78,
         "leafo\/lessphp":100,
@@ -1178,29 +1181,29 @@
         "no":39174
       },
       "2017-11-01":{
-        "yes":19505,
+        "yes":19507,
         "no":39256
       },
       "2017-12-01":{
-        "yes":19592,
+        "yes":19595,
         "no":39438
       },
       "2018-01-01":{
-        "yes":19594,
+        "yes":19598,
         "no":39500
       },
       "2018-02-01":{
-        "yes":19611,
+        "yes":19615,
         "no":39608
       }
     },
     "winner":"no"
   },
   "PHP short open tag used":{
-    "total":535712,
-    "total_repos":195,
+    "total":535723,
+    "total_repos":196,
     "values":{
-      "no":535712
+      "no":535723
     },
     "repos":{
       "no":{
@@ -1262,6 +1265,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":100,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -1505,27 +1509,27 @@
         "no":532817
       },
       "2017-11-01":{
-        "no":534883
+        "no":534885
       },
       "2017-12-01":{
-        "no":536281
+        "no":536284
       },
       "2018-01-01":{
-        "no":535454
+        "no":535458
       },
       "2018-02-01":{
-        "no":535726
+        "no":535737
       }
     },
     "winner":"no"
   },
   "Line indent":{
-    "total":7708297,
-    "total_repos":195,
+    "total":7709111,
+    "total_repos":196,
     "values":{
-      "mixed":26025,
-      "spaces":6022251,
-      "tabs":1660021
+      "mixed":26028,
+      "spaces":6022259,
+      "tabs":1660824
     },
     "repos":{
       "spaces":{
@@ -1696,6 +1700,7 @@
         "concrete5\/concrete5":92.69,
         "contao\/core":99.82,
         "EllisLab\/CodeIgniter":99.98,
+        "jaggedsoft\/php-binance-api":98.65,
         "joomla\/joomla-cms":95.14,
         "leafo\/lessphp":99.19,
         "michelf\/php-markdown":100,
@@ -1901,33 +1906,33 @@
       },
       "2017-11-01":{
         "mixed":26393,
-        "spaces":6047582,
-        "tabs":1657278
+        "spaces":6047590,
+        "tabs":1657729
       },
       "2017-12-01":{
         "mixed":26259,
-        "spaces":6052638,
-        "tabs":1667027
+        "spaces":6052646,
+        "tabs":1667644
       },
       "2018-01-01":{
         "mixed":26245,
-        "spaces":6055947,
-        "tabs":1669840
+        "spaces":6055955,
+        "tabs":1670504
       },
       "2018-02-01":{
-        "mixed":26245,
-        "spaces":6061286,
-        "tabs":1672295
+        "mixed":26248,
+        "spaces":6061294,
+        "tabs":1673098
       }
     },
     "winner":"spaces"
   },
   "File has doc comment":{
-    "total":59204,
-    "total_repos":195,
+    "total":59208,
+    "total_repos":196,
     "values":{
-      "no":14088,
-      "yes":45116
+      "no":14089,
+      "yes":45119
     },
     "repos":{
       "no":{
@@ -2015,6 +2020,7 @@
         "facebook\/facebook-php-sdk":100,
         "google\/google-api-php-client":99.21,
         "Halleck45\/PhpMetrics":99.25,
+        "jaggedsoft\/php-binance-api":75,
         "joomla\/joomla-cms":98.75,
         "kriswallsmith\/assetic":98.15,
         "leafo\/lessphp":100,
@@ -2268,29 +2274,29 @@
         "yes":45128
       },
       "2017-11-01":{
-        "no":13534,
-        "yes":45226
+        "no":13535,
+        "yes":45227
       },
       "2017-12-01":{
-        "no":13625,
-        "yes":45404
+        "no":13626,
+        "yes":45406
       },
       "2018-01-01":{
-        "no":13635,
-        "yes":45458
+        "no":13636,
+        "yes":45461
       },
       "2018-02-01":{
-        "no":14095,
-        "yes":45123
+        "no":14096,
+        "yes":45126
       }
     },
     "winner":"yes"
   },
   "Declarations and side effects mixed":{
-    "total":59205,
-    "total_repos":195,
+    "total":59209,
+    "total_repos":196,
     "values":{
-      "no":50796,
+      "no":50800,
       "yes":8409
     },
     "repos":{
@@ -2351,6 +2357,7 @@
         "Halleck45\/PhpMetrics":84.21,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":99.07,
         "kriswallsmith\/Buzz":100,
@@ -2632,30 +2639,30 @@
         "yes":8392
       },
       "2017-11-01":{
-        "no":50354,
+        "no":50356,
         "yes":8407
       },
       "2017-12-01":{
-        "no":50624,
+        "no":50627,
         "yes":8406
       },
       "2018-01-01":{
-        "no":50686,
+        "no":50690,
         "yes":8408
       },
       "2018-02-01":{
-        "no":50807,
+        "no":50811,
         "yes":8412
       }
     },
     "winner":"no"
   },
   "Number of newlines at EOF":{
-    "total":56644,
-    "total_repos":195,
+    "total":56648,
+    "total_repos":196,
     "values":{
       "0":2637,
-      "1":52954,
+      "1":52958,
       "2":810,
       "3":216,
       "4":18,
@@ -2721,6 +2728,7 @@
         "guzzle\/guzzle":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":97.07,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -3207,7 +3215,7 @@
       },
       "2017-11-01":{
         "0":2717,
-        "1":52417,
+        "1":52419,
         "2":816,
         "3":217,
         "4":18,
@@ -3217,7 +3225,7 @@
       },
       "2017-12-01":{
         "0":2715,
-        "1":52687,
+        "1":52690,
         "2":818,
         "3":216,
         "4":18,
@@ -3227,7 +3235,7 @@
       },
       "2018-01-01":{
         "0":2720,
-        "1":52753,
+        "1":52757,
         "2":818,
         "3":216,
         "4":18,
@@ -3237,7 +3245,7 @@
       },
       "2018-02-01":{
         "0":2640,
-        "1":52965,
+        "1":52969,
         "2":810,
         "3":216,
         "4":18,
@@ -3249,10 +3257,10 @@
     "winner":1
   },
   "File extension for class files":{
-    "total":44796,
-    "total_repos":195,
+    "total":44798,
+    "total_repos":196,
     "values":{
-      ".php":44794,
+      ".php":44796,
       ".inc":2
     },
     "repos":{
@@ -3315,6 +3323,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":100,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -3592,29 +3601,29 @@
         ".inc":3
       },
       "2017-11-01":{
-        ".php":44453,
+        ".php":44454,
         ".inc":3
       },
       "2017-12-01":{
-        ".php":44639,
+        ".php":44641,
         ".inc":3
       },
       "2018-01-01":{
-        ".php":44699,
+        ".php":44701,
         ".inc":2
       },
       "2018-02-01":{
-        ".php":44806,
+        ".php":44808,
         ".inc":2
       }
     },
     "winner":".php"
   },
   "PHP closing tag at EOF":{
-    "total":59205,
-    "total_repos":195,
+    "total":59209,
+    "total_repos":196,
     "values":{
-      "no":56504,
+      "no":56508,
       "yes":2701
     },
     "repos":{
@@ -3677,6 +3686,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":95.47,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -3956,29 +3966,29 @@
         "yes":2724
       },
       "2017-11-01":{
-        "no":56045,
+        "no":56047,
         "yes":2716
       },
       "2017-12-01":{
-        "no":56314,
+        "no":56317,
         "yes":2716
       },
       "2018-01-01":{
-        "no":56384,
+        "no":56388,
         "yes":2710
       },
       "2018-02-01":{
-        "no":56509,
+        "no":56513,
         "yes":2710
       }
     },
     "winner":"no"
   },
   "PHP keyword case":{
-    "total":2882894,
-    "total_repos":195,
+    "total":2883382,
+    "total_repos":196,
     "values":{
-      "lower":2880460,
+      "lower":2880948,
       "mixed":511,
       "upper":1923
     },
@@ -4042,6 +4052,7 @@
         "Halleck45\/PhpMetrics":99.85,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":99.98,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -4353,22 +4364,22 @@
         "upper":1926
       },
       "2017-11-01":{
-        "lower":2870187,
+        "lower":2870455,
         "mixed":523,
         "upper":1923
       },
       "2017-12-01":{
-        "lower":2874509,
+        "lower":2874874,
         "mixed":522,
         "upper":1923
       },
       "2018-01-01":{
-        "lower":2876678,
+        "lower":2877082,
         "mixed":522,
         "upper":1923
       },
       "2018-02-01":{
-        "lower":2881242,
+        "lower":2881730,
         "mixed":522,
         "upper":1923
       }
@@ -4376,11 +4387,11 @@
     "winner":"lower"
   },
   "Class opening brace placement":{
-    "total":52614,
-    "total_repos":195,
+    "total":52616,
+    "total_repos":196,
     "values":{
       "new line":41561,
-      "same line":11053
+      "same line":11055
     },
     "repos":{
       "new line":{
@@ -4573,6 +4584,7 @@
         "fruux\/sabre-dav":100,
         "ginatrapani\/ThinkUp":99.73,
         "Halleck45\/PhpMetrics":68.42,
+        "jaggedsoft\/php-binance-api":100,
         "leafo\/lessphp":100,
         "michelf\/php-markdown":100,
         "moodle\/moodle":98.21,
@@ -4722,29 +4734,29 @@
       },
       "2017-11-01":{
         "new line":41322,
-        "same line":10954
+        "same line":10955
       },
       "2017-12-01":{
         "new line":41429,
-        "same line":11032
+        "same line":11034
       },
       "2018-01-01":{
         "new line":41460,
-        "same line":11063
+        "same line":11065
       },
       "2018-02-01":{
         "new line":41567,
-        "same line":11063
+        "same line":11065
       }
     },
     "winner":"new line"
   },
   "Class has doc comment":{
-    "total":52614,
-    "total_repos":195,
+    "total":52616,
+    "total_repos":196,
     "values":{
-      "no":17396,
-      "yes":35218
+      "no":17397,
+      "yes":35219
     },
     "repos":{
       "no":{
@@ -4756,6 +4768,7 @@
         "danielstjules\/Stringy":50,
         "fzaninotto\/Faker":92.24,
         "google\/google-api-php-client":79.07,
+        "jaggedsoft\/php-binance-api":50,
         "kriswallsmith\/Buzz":68.18,
         "ladybirdweb\/agorainvoicing":71.14,
         "ladybirdweb\/faveo-helpdesk":73.24,
@@ -5085,29 +5098,29 @@
         "yes":34938
       },
       "2017-11-01":{
-        "no":17287,
+        "no":17288,
         "yes":34989
       },
       "2017-12-01":{
-        "no":17340,
-        "yes":35121
+        "no":17341,
+        "yes":35122
       },
       "2018-01-01":{
-        "no":17324,
-        "yes":35199
+        "no":17325,
+        "yes":35200
       },
       "2018-02-01":{
-        "no":17398,
-        "yes":35232
+        "no":17399,
+        "yes":35233
       }
     },
     "winner":"yes"
   },
   "One class per file":{
-    "total":52614,
-    "total_repos":195,
+    "total":52616,
+    "total_repos":196,
     "values":{
-      "yes":44796,
+      "yes":44798,
       "no":7818
     },
     "repos":{
@@ -5169,6 +5182,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":96.46,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":98.17,
@@ -5449,30 +5463,30 @@
         "no":7811
       },
       "2017-11-01":{
-        "yes":44456,
+        "yes":44457,
         "no":7820
       },
       "2017-12-01":{
-        "yes":44642,
+        "yes":44644,
         "no":7819
       },
       "2018-01-01":{
-        "yes":44701,
+        "yes":44703,
         "no":7822
       },
       "2018-02-01":{
-        "yes":44808,
+        "yes":44810,
         "no":7822
       }
     },
     "winner":"yes"
   },
   "Class defined in namespace":{
-    "total":52614,
-    "total_repos":195,
+    "total":52616,
+    "total_repos":196,
     "values":{
-      "no":19163,
-      "yes":33451
+      "no":19164,
+      "yes":33452
     },
     "repos":{
       "no":{
@@ -5486,6 +5500,7 @@
         "facebook\/facebook-php-sdk":100,
         "ginatrapani\/ThinkUp":93.32,
         "google\/google-api-php-client":100,
+        "jaggedsoft\/php-binance-api":50,
         "joomla\/joomla-cms":94.91,
         "ladybirdweb\/agorainvoicing":62.78,
         "leafo\/lessphp":100,
@@ -5814,29 +5829,29 @@
       },
       "2017-11-01":{
         "no":19165,
-        "yes":33111
+        "yes":33112
       },
       "2017-12-01":{
-        "no":19168,
-        "yes":33293
+        "no":19169,
+        "yes":33294
       },
       "2018-01-01":{
-        "no":19172,
-        "yes":33351
+        "no":19173,
+        "yes":33352
       },
       "2018-02-01":{
-        "no":19179,
-        "yes":33451
+        "no":19180,
+        "yes":33452
       }
     },
     "winner":"yes"
   },
   "CamelCase class name":{
-    "total":52614,
-    "total_repos":195,
+    "total":52616,
+    "total_repos":196,
     "values":{
       "no":13540,
-      "yes":39074
+      "yes":39076
     },
     "repos":{
       "no":{
@@ -5911,6 +5926,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":95.87,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -6178,29 +6194,29 @@
       },
       "2017-11-01":{
         "no":13540,
-        "yes":38736
+        "yes":38737
       },
       "2017-12-01":{
         "no":13542,
-        "yes":38919
+        "yes":38921
       },
       "2018-01-01":{
         "no":13546,
-        "yes":38977
+        "yes":38979
       },
       "2018-02-01":{
         "no":13550,
-        "yes":39080
+        "yes":39082
       }
     },
     "winner":"yes"
   },
   "Function opening brace placement":{
-    "total":329337,
-    "total_repos":195,
+    "total":329416,
+    "total_repos":196,
     "values":{
       "new line":252420,
-      "same line":76917
+      "same line":76996
     },
     "repos":{
       "new line":{
@@ -6391,6 +6407,7 @@
         "facebook\/facebook-php-sdk":100,
         "fruux\/sabre-dav":99.89,
         "ginatrapani\/ThinkUp":99.44,
+        "jaggedsoft\/php-binance-api":100,
         "leafo\/lessphp":100,
         "michelf\/php-markdown":97.92,
         "moodle\/moodle":97.73,
@@ -6542,29 +6559,29 @@
       },
       "2017-11-01":{
         "new line":251820,
-        "same line":76047
+        "same line":76091
       },
       "2017-12-01":{
         "new line":252124,
-        "same line":76528
+        "same line":76596
       },
       "2018-01-01":{
         "new line":252130,
-        "same line":76762
+        "same line":76831
       },
       "2018-02-01":{
         "new line":252438,
-        "same line":76991
+        "same line":77070
       }
     },
     "winner":"new line"
   },
   "CamelCase method name":{
-    "total":314599,
-    "total_repos":195,
+    "total":314676,
+    "total_repos":196,
     "values":{
-      "no":37363,
-      "yes":277236
+      "no":37366,
+      "yes":277310
     },
     "repos":{
       "yes":{
@@ -6625,6 +6642,7 @@
         "Halleck45\/PhpMetrics":99.78,
         "iranianpep\/botonomous":99.23,
         "jackalope\/jackalope":97.45,
+        "jaggedsoft\/php-binance-api":96.1,
         "joomla\/joomla-cms":93.94,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":99.64,
@@ -6906,29 +6924,29 @@
       },
       "2017-11-01":{
         "no":37319,
-        "yes":275874
+        "yes":275917
       },
       "2017-12-01":{
         "no":37334,
-        "yes":276667
+        "yes":276733
       },
       "2018-01-01":{
         "no":37376,
-        "yes":276911
+        "yes":276978
       },
       "2018-02-01":{
-        "no":37386,
-        "yes":277398
+        "no":37389,
+        "yes":277472
       }
     },
     "winner":"yes"
   },
   "Function has doc comment":{
-    "total":346484,
-    "total_repos":195,
+    "total":346563,
+    "total_repos":196,
     "values":{
-      "no":100774,
-      "yes":245710
+      "no":100828,
+      "yes":245735
     },
     "repos":{
       "no":{
@@ -6940,6 +6958,7 @@
         "fabpot\/Goutte":83.33,
         "fabpot\/Twig":50.26,
         "google\/google-api-php-client":91.1,
+        "jaggedsoft\/php-binance-api":68.35,
         "kriswallsmith\/assetic":68.76,
         "kriswallsmith\/Buzz":50.85,
         "leafo\/lessphp":66.67,
@@ -7269,30 +7288,30 @@
         "yes":244731
       },
       "2017-11-01":{
-        "no":99774,
-        "yes":245060
+        "no":99798,
+        "yes":245080
       },
       "2017-12-01":{
-        "no":100374,
-        "yes":245342
+        "no":100419,
+        "yes":245365
       },
       "2018-01-01":{
-        "no":100490,
-        "yes":245519
+        "no":100536,
+        "yes":245542
       },
       "2018-02-01":{
-        "no":100817,
-        "yes":245759
+        "no":100871,
+        "yes":245784
       }
     },
     "winner":"yes"
   },
   "Space after operator":{
-    "total":3268137,
-    "total_repos":194,
+    "total":3268590,
+    "total_repos":195,
     "values":{
-      "0":86593,
-      "1":3151540,
+      "0":86668,
+      "1":3151918,
       "2":3057,
       "newline":24343,
       "3":317,
@@ -7382,6 +7401,7 @@
         "Halleck45\/PhpMetrics":99.69,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":99.78,
+        "jaggedsoft\/php-binance-api":83.44,
         "joomla\/joomla-cms":99.14,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -8418,8 +8438,8 @@
         "35":16
       },
       "2017-11-01":{
-        "0":87003,
-        "1":3092610,
+        "0":87046,
+        "1":3092818,
         "2":3118,
         "newline":24357,
         "3":317,
@@ -8450,8 +8470,8 @@
         "35":16
       },
       "2017-12-01":{
-        "0":86818,
-        "1":3142640,
+        "0":86885,
+        "1":3142911,
         "2":3093,
         "newline":24358,
         "3":317,
@@ -8482,8 +8502,8 @@
         "35":16
       },
       "2018-01-01":{
-        "0":86695,
-        "1":3148811,
+        "0":86766,
+        "1":3149120,
         "2":3095,
         "newline":24353,
         "3":317,
@@ -8514,8 +8534,8 @@
         "35":16
       },
       "2018-02-01":{
-        "0":86643,
-        "1":3152161,
+        "0":86718,
+        "1":3152539,
         "2":3058,
         "newline":24343,
         "3":317,
@@ -8549,10 +8569,10 @@
     "winner":1
   },
   "Spacing before object operator":{
-    "total":1742203,
-    "total_repos":194,
+    "total":1742446,
+    "total_repos":195,
     "values":{
-      "0":1709181,
+      "0":1709424,
       "newline":29983,
       "1":3039
     },
@@ -8616,6 +8636,7 @@
         "Halleck45\/PhpMetrics":91.28,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":99.91,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":97.1,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":98.38,
@@ -8946,22 +8967,22 @@
         "1":3039
       },
       "2017-11-01":{
-        "0":1700431,
+        "0":1700597,
         "newline":29819,
         "1":3039
       },
       "2017-12-01":{
-        "0":1704602,
+        "0":1704792,
         "newline":29952,
         "1":3038
       },
       "2018-01-01":{
-        "0":1705714,
+        "0":1705915,
         "newline":29964,
         "1":3038
       },
       "2018-02-01":{
-        "0":1709435,
+        "0":1709678,
         "newline":29983,
         "1":3039
       }
@@ -8969,10 +8990,10 @@
     "winner":0
   },
   "Spacing after object operator":{
-    "total":1742203,
-    "total_repos":194,
+    "total":1742446,
+    "total_repos":195,
     "values":{
-      "0":1738708,
+      "0":1738951,
       "1":3453,
       "newline":42
     },
@@ -9036,6 +9057,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":99.99,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -9346,22 +9368,22 @@
         "newline":42
       },
       "2017-11-01":{
-        "0":1729793,
+        "0":1729959,
         "1":3454,
         "newline":42
       },
       "2017-12-01":{
-        "0":1734097,
+        "0":1734287,
         "1":3453,
         "newline":42
       },
       "2018-01-01":{
-        "0":1735221,
+        "0":1735422,
         "1":3453,
         "newline":42
       },
       "2018-02-01":{
-        "0":1738962,
+        "0":1739205,
         "1":3453,
         "newline":42
       }
@@ -9369,11 +9391,11 @@
     "winner":0
   },
   "Multiple statements on same line":{
-    "total":2374681,
-    "total_repos":195,
+    "total":2375094,
+    "total_repos":196,
     "values":{
-      "no":2369008,
-      "yes":5673
+      "no":2369418,
+      "yes":5676
     },
     "repos":{
       "no":{
@@ -9435,6 +9457,7 @@
         "Halleck45\/PhpMetrics":99.78,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":99.27,
         "joomla\/joomla-cms":99.96,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":99.92,
@@ -9712,30 +9735,30 @@
         "yes":5685
       },
       "2017-11-01":{
-        "no":2360484,
-        "yes":5688
+        "no":2360729,
+        "yes":5689
       },
       "2017-12-01":{
-        "no":2365230,
-        "yes":5672
+        "no":2365543,
+        "yes":5675
       },
       "2018-01-01":{
-        "no":2366393,
-        "yes":5673
+        "no":2366750,
+        "yes":5676
       },
       "2018-02-01":{
-        "no":2369849,
-        "yes":5673
+        "no":2370259,
+        "yes":5676
       }
     },
     "winner":"no"
   },
   "Control structure defined inline":{
-    "total":575644,
-    "total_repos":194,
+    "total":575738,
+    "total_repos":195,
     "values":{
-      "no":555065,
-      "yes":20579
+      "no":555114,
+      "yes":20624
     },
     "repos":{
       "no":{
@@ -9797,6 +9820,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":52.13,
         "joomla\/joomla-cms":99.04,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -10075,31 +10099,31 @@
         "yes":23099
       },
       "2017-11-01":{
-        "no":552287,
-        "yes":23078
+        "no":552314,
+        "yes":23102
       },
       "2017-12-01":{
-        "no":555106,
-        "yes":20684
+        "no":555142,
+        "yes":20712
       },
       "2018-01-01":{
-        "no":555112,
-        "yes":20672
+        "no":555151,
+        "yes":20705
       },
       "2018-02-01":{
-        "no":555222,
-        "yes":20656
+        "no":555271,
+        "yes":20701
       }
     },
     "winner":"no"
   },
   "Spaces after control structure open parenthesis":{
-    "total":513694,
-    "total_repos":194,
+    "total":513788,
+    "total_repos":195,
     "values":{
-      "0":472543,
+      "0":472546,
       "newline":788,
-      "1":40246,
+      "1":40337,
       "2":29,
       "3":68,
       "4":4,
@@ -10304,6 +10328,7 @@
         "zikula\/core":99.99
       },
       "1":{
+        "jaggedsoft\/php-binance-api":96.81,
         "nazariyg\/Phred":87.15,
         "wikimedia\/mediawiki-core":99.45,
         "WordPress\/WordPress":99.81
@@ -10776,7 +10801,7 @@
       "2017-11-01":{
         "0":471907,
         "newline":814,
-        "1":40232,
+        "1":40283,
         "2":30,
         "3":68,
         "4":4,
@@ -10789,7 +10814,7 @@
       "2017-12-01":{
         "0":472083,
         "newline":784,
-        "1":40506,
+        "1":40570,
         "2":29,
         "3":68,
         "4":4,
@@ -10802,7 +10827,7 @@
       "2018-01-01":{
         "0":472217,
         "newline":790,
-        "1":40635,
+        "1":40706,
         "2":29,
         "3":68,
         "4":4,
@@ -10813,9 +10838,9 @@
         "11":"1"
       },
       "2018-02-01":{
-        "0":472756,
+        "0":472759,
         "newline":788,
-        "1":40246,
+        "1":40337,
         "2":29,
         "3":68,
         "4":4,
@@ -10829,11 +10854,11 @@
     "winner":0
   },
   "Spaces before control structure close parenthesis":{
-    "total":513694,
-    "total_repos":194,
+    "total":513788,
+    "total_repos":195,
     "values":{
-      "0":476330,
-      "1":37341,
+      "0":476334,
+      "1":37431,
       "2":22,
       "3":"1"
     },
@@ -11032,6 +11057,7 @@
         "zikula\/core":100
       },
       "1":{
+        "jaggedsoft\/php-binance-api":95.74,
         "nazariyg\/Phred":83.29,
         "wikimedia\/mediawiki-core":96.6,
         "WordPress\/WordPress":99.31
@@ -11522,26 +11548,26 @@
         "3":"1"
       },
       "2017-11-01":{
-        "0":476161,
-        "1":36881,
+        "0":476162,
+        "1":36931,
         "2":28,
         "3":"1"
       },
       "2017-12-01":{
-        "0":476314,
-        "1":37153,
+        "0":476315,
+        "1":37216,
         "2":22,
         "3":"1"
       },
       "2018-01-01":{
-        "0":476463,
-        "1":37273,
+        "0":476464,
+        "1":37343,
         "2":22,
         "3":"1"
       },
       "2018-02-01":{
-        "0":476542,
-        "1":37342,
+        "0":476546,
+        "1":37432,
         "2":22,
         "3":"1"
       }
@@ -11549,10 +11575,10 @@
     "winner":0
   },
   "Blank lines at start of control structure":{
-    "total":572324,
-    "total_repos":194,
+    "total":572379,
+    "total_repos":195,
     "values":{
-      "0":566716,
+      "0":566771,
       "1":5570,
       "2":34,
       "3":4
@@ -11617,6 +11643,7 @@
         "Halleck45\/PhpMetrics":94.58,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":99.08,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":99.63,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -11961,25 +11988,25 @@
         "3":4
       },
       "2017-11-01":{
-        "0":563768,
+        "0":563795,
         "1":5609,
         "2":34,
         "3":4
       },
       "2017-12-01":{
-        "0":566663,
+        "0":566699,
         "1":5614,
         "2":34,
         "3":4
       },
       "2018-01-01":{
-        "0":566770,
+        "0":566809,
         "1":5608,
         "2":34,
         "3":4
       },
       "2018-02-01":{
-        "0":566975,
+        "0":567030,
         "1":5572,
         "2":34,
         "3":4
@@ -11988,10 +12015,10 @@
     "winner":0
   },
   "Blank lines at end of control structure":{
-    "total":571614,
-    "total_repos":194,
+    "total":571669,
+    "total_repos":195,
     "values":{
-      "0":566994,
+      "0":567049,
       "1":4536,
       "2":77,
       "3":6,
@@ -12057,6 +12084,7 @@
         "Halleck45\/PhpMetrics":98.64,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":99.76,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -12435,28 +12463,28 @@
         "4":"1"
       },
       "2017-11-01":{
-        "0":564067,
+        "0":564094,
         "1":4569,
         "2":77,
         "3":6,
         "4":"1"
       },
       "2017-12-01":{
-        "0":566967,
+        "0":567003,
         "1":4550,
         "2":77,
         "3":6,
         "4":"1"
       },
       "2018-01-01":{
-        "0":567073,
+        "0":567112,
         "1":4546,
         "2":77,
         "3":6,
         "4":"1"
       },
       "2018-02-01":{
-        "0":567254,
+        "0":567309,
         "1":4536,
         "2":77,
         "3":6,
@@ -12466,10 +12494,10 @@
     "winner":0
   },
   "Spacing before string concat":{
-    "total":418201,
-    "total_repos":184,
+    "total":418256,
+    "total_repos":185,
     "values":{
-      "0":163574,
+      "0":163629,
       "newline":16199,
       "1":235914,
       "2":1255,
@@ -12687,6 +12715,7 @@
         "ginatrapani\/ThinkUp":76.44,
         "Halleck45\/PhpMetrics":68.97,
         "iranianpep\/botonomous":98.11,
+        "jaggedsoft\/php-binance-api":100,
         "kriswallsmith\/assetic":91.57,
         "kriswallsmith\/Buzz":62.07,
         "ladybirdweb\/agorainvoicing":96.94,
@@ -14342,7 +14371,7 @@
         "49":"1"
       },
       "2017-11-01":{
-        "0":164179,
+        "0":164211,
         "newline":16559,
         "1":235961,
         "2":1254,
@@ -14390,7 +14419,7 @@
         "49":"1"
       },
       "2017-12-01":{
-        "0":164069,
+        "0":164105,
         "newline":16409,
         "1":236188,
         "2":1251,
@@ -14438,7 +14467,7 @@
         "49":"1"
       },
       "2018-01-01":{
-        "0":163861,
+        "0":163910,
         "newline":16240,
         "1":236059,
         "2":1255,
@@ -14486,7 +14515,7 @@
         "49":"1"
       },
       "2018-02-01":{
-        "0":163583,
+        "0":163638,
         "newline":16199,
         "1":235933,
         "2":1255,
@@ -14537,10 +14566,10 @@
     "winner":1
   },
   "Spacing after string concat":{
-    "total":418202,
-    "total_repos":184,
+    "total":418257,
+    "total_repos":185,
     "values":{
-      "0":160819,
+      "0":160874,
       "newline":31751,
       "1":224921,
       "2":389,
@@ -14744,6 +14773,7 @@
         "ginatrapani\/ThinkUp":70.16,
         "Halleck45\/PhpMetrics":68.97,
         "iranianpep\/botonomous":96.23,
+        "jaggedsoft\/php-binance-api":100,
         "kriswallsmith\/assetic":94.38,
         "kriswallsmith\/Buzz":62.07,
         "ladybirdweb\/agorainvoicing":91.5,
@@ -16166,7 +16196,7 @@
       },
       "2017-11-01":{
         "newline":31830,
-        "0":161363,
+        "0":161395,
         "1":225331,
         "2":393,
         "3":37,
@@ -16205,7 +16235,7 @@
         "43":"1"
       },
       "2017-12-01":{
-        "0":161277,
+        "0":161313,
         "newline":31830,
         "1":225397,
         "2":392,
@@ -16245,7 +16275,7 @@
         "43":"1"
       },
       "2018-01-01":{
-        "0":161079,
+        "0":161128,
         "newline":31802,
         "1":225078,
         "2":392,
@@ -16285,7 +16315,7 @@
         "43":"1"
       },
       "2018-02-01":{
-        "0":160824,
+        "0":160879,
         "newline":31755,
         "1":224938,
         "2":389,
@@ -16328,11 +16358,11 @@
     "winner":1
   },
   "Short array syntax used":{
-    "total":539766,
-    "total_repos":193,
+    "total":539879,
+    "total_repos":194,
     "values":{
       "no":239382,
-      "yes":300384
+      "yes":300497
     },
     "repos":{
       "no":{
@@ -16433,6 +16463,7 @@
         "guzzle\/guzzle":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "KnpLabs\/snappy":100,
         "ladybirdweb\/agorainvoicing":95.42,
         "ladybirdweb\/faveo-helpdesk":96.83,
@@ -16672,19 +16703,19 @@
       },
       "2017-11-01":{
         "no":241205,
-        "yes":270651
+        "yes":270721
       },
       "2017-12-01":{
         "no":239607,
-        "yes":295702
+        "yes":295800
       },
       "2018-01-01":{
         "no":239658,
-        "yes":298875
+        "yes":298975
       },
       "2018-02-01":{
         "no":239374,
-        "yes":300384
+        "yes":300497
       }
     },
     "winner":"yes"
@@ -16951,11 +16982,11 @@
     "winner":"lower"
   },
   "Adjacent assignments aligned":{
-    "total":187875,
-    "total_repos":192,
+    "total":187935,
+    "total_repos":193,
     "values":{
-      "no":151267,
-      "yes":36608
+      "no":151320,
+      "yes":36615
     },
     "repos":{
       "no":{
@@ -17009,6 +17040,7 @@
         "Halleck45\/PhpMetrics":85.94,
         "iranianpep\/botonomous":83.33,
         "jackalope\/jackalope":90.74,
+        "jaggedsoft\/php-binance-api":88.33,
         "joomla\/joomla-cms":55.07,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":63.7,
@@ -17293,29 +17325,29 @@
         "yes":35028
       },
       "2017-11-01":{
-        "no":157282,
-        "yes":35098
+        "no":157314,
+        "yes":35100
       },
       "2017-12-01":{
-        "no":156191,
-        "yes":36102
+        "no":156235,
+        "yes":36105
       },
       "2018-01-01":{
-        "no":156213,
-        "yes":36056
+        "no":156259,
+        "yes":36062
       },
       "2018-02-01":{
-        "no":155964,
-        "yes":36579
+        "no":156017,
+        "yes":36586
       }
     },
     "winner":"no"
   },
   "File extension for non-class files":{
-    "total":14409,
-    "total_repos":72,
+    "total":14411,
+    "total_repos":73,
     "values":{
-      ".php":14229,
+      ".php":14231,
       ".inc":118,
       ".module":62
     },
@@ -17342,6 +17374,7 @@
         "google\/google-api-php-client":100,
         "guzzle\/guzzle":100,
         "iranianpep\/botonomous":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":100,
         "kriswallsmith\/assetic":100,
         "ladybirdweb\/agorainvoicing":100,
@@ -17545,22 +17578,22 @@
         ".module":62
       },
       "2017-11-01":{
-        ".php":14125,
+        ".php":14126,
         ".inc":117,
         ".module":62
       },
       "2017-12-01":{
-        ".php":14208,
+        ".php":14209,
         ".inc":117,
         ".module":62
       },
       "2018-01-01":{
-        ".php":14212,
+        ".php":14214,
         ".inc":118,
         ".module":62
       },
       "2018-02-01":{
-        ".php":14231,
+        ".php":14233,
         ".inc":118,
         ".module":62
       }
@@ -17568,12 +17601,12 @@
     "winner":".php"
   },
   "Inline comment style":{
-    "total":396746,
-    "total_repos":189,
+    "total":396860,
+    "total_repos":190,
     "values":{
       "# ...":9885,
-      "\/* ... *\/":29854,
-      "\/\/ ...":357007
+      "\/* ... *\/":29855,
+      "\/\/ ...":357120
     },
     "repos":{
       "\/\/ ...":{
@@ -17626,6 +17659,7 @@
         "Halleck45\/PhpMetrics":54.3,
         "iranianpep\/botonomous":74.07,
         "jackalope\/jackalope":96.73,
+        "jaggedsoft\/php-binance-api":99.12,
         "joomla\/joomla-cms":97.1,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":52.68,
@@ -17945,32 +17979,32 @@
       },
       "2017-11-01":{
         "# ...":9917,
-        "\/* ... *\/":30196,
-        "\/\/ ...":356112
+        "\/* ... *\/":30197,
+        "\/\/ ...":356200
       },
       "2017-12-01":{
         "# ...":9906,
-        "\/* ... *\/":30211,
-        "\/\/ ...":356638
+        "\/* ... *\/":30212,
+        "\/\/ ...":356732
       },
       "2018-01-01":{
         "# ...":9893,
-        "\/* ... *\/":30192,
-        "\/\/ ...":356762
+        "\/* ... *\/":30193,
+        "\/\/ ...":356867
       },
       "2018-02-01":{
         "# ...":9885,
-        "\/* ... *\/":29872,
-        "\/\/ ...":357164
+        "\/* ... *\/":29873,
+        "\/\/ ...":357277
       }
     },
     "winner":"\/\/ ..."
   },
   "PHP constant case":{
-    "total":325483,
-    "total_repos":194,
+    "total":325531,
+    "total_repos":195,
     "values":{
-      "lower":283930,
+      "lower":283978,
       "upper":41362,
       "mixed":191
     },
@@ -18031,6 +18065,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":99.48,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -18346,22 +18381,22 @@
         "mixed":191
       },
       "2017-11-01":{
-        "lower":282226,
+        "lower":282253,
         "upper":38308,
         "mixed":191
       },
       "2017-12-01":{
-        "lower":283080,
+        "lower":283117,
         "upper":41005,
         "mixed":191
       },
       "2018-01-01":{
-        "lower":283469,
+        "lower":283509,
         "upper":41250,
         "mixed":191
       },
       "2018-02-01":{
-        "lower":283989,
+        "lower":284037,
         "upper":41362,
         "mixed":191
       }
@@ -18369,11 +18404,11 @@
     "winner":"lower"
   },
   "Space before operator":{
-    "total":438459,
-    "total_repos":191,
+    "total":438585,
+    "total_repos":192,
     "values":{
-      "0":89561,
-      "1":342881,
+      "0":89647,
+      "1":342921,
       "newline":5292,
       "2":304,
       "16":4,
@@ -18594,6 +18629,7 @@
       },
       "0":{
         "fzaninotto\/Faker":50.29,
+        "jaggedsoft\/php-binance-api":68.25,
         "nikic\/PHP-Parser":72.59,
         "sugarcrm\/sugarcrm_dev":53.51,
         "yiisoft\/yii":90.63
@@ -19776,8 +19812,8 @@
         "18":"4"
       },
       "2017-11-01":{
-        "0":90027,
-        "1":341649,
+        "0":90077,
+        "1":341667,
         "newline":5351,
         "2":308,
         "16":4,
@@ -19805,8 +19841,8 @@
         "18":"4"
       },
       "2017-12-01":{
-        "0":89799,
-        "1":342631,
+        "0":89877,
+        "1":342653,
         "newline":5356,
         "2":304,
         "16":4,
@@ -19834,8 +19870,8 @@
         "18":"4"
       },
       "2018-01-01":{
-        "0":89668,
-        "1":342797,
+        "0":89750,
+        "1":342828,
         "newline":5334,
         "2":304,
         "16":4,
@@ -19863,8 +19899,8 @@
         "18":"4"
       },
       "2018-02-01":{
-        "0":89610,
-        "1":343176,
+        "0":89696,
+        "1":343216,
         "newline":5291,
         "2":304,
         "16":4,
@@ -19895,10 +19931,10 @@
     "winner":1
   },
   "Brackets around echoed strings":{
-    "total":64635,
-    "total_repos":79,
+    "total":64660,
+    "total_repos":80,
     "values":{
-      "no":64141,
+      "no":64166,
       "yes":494
     },
     "repos":{
@@ -19925,6 +19961,7 @@
         "fruux\/sabre-dav":100,
         "ginatrapani\/ThinkUp":96.63,
         "iranianpep\/botonomous":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":99.8,
         "ladybirdweb\/agorainvoicing":100,
         "ladybirdweb\/faveo-helpdesk":99.04,
@@ -20122,29 +20159,29 @@
         "yes":497
       },
       "2017-11-01":{
-        "no":63996,
+        "no":64012,
         "yes":497
       },
       "2017-12-01":{
-        "no":64231,
+        "no":64247,
         "yes":494
       },
       "2018-01-01":{
-        "no":64076,
+        "no":64097,
         "yes":494
       },
       "2018-02-01":{
-        "no":64145,
+        "no":64170,
         "yes":494
       }
     },
     "winner":"no"
   },
   "Private method prefixed with underscore":{
-    "total":11266,
-    "total_repos":137,
+    "total":11287,
+    "total_repos":138,
     "values":{
-      "no":10092,
+      "no":10113,
       "yes":1174
     },
     "repos":{
@@ -20179,6 +20216,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":81.32,
         "kriswallsmith\/assetic":100,
         "kriswallsmith\/Buzz":100,
@@ -20428,29 +20466,29 @@
         "yes":1213
       },
       "2017-11-01":{
-        "no":9819,
+        "no":9832,
         "yes":1211
       },
       "2017-12-01":{
-        "no":9931,
+        "no":9950,
         "yes":1207
       },
       "2018-01-01":{
-        "no":9989,
+        "no":10008,
         "yes":1203
       },
       "2018-02-01":{
-        "no":10092,
+        "no":10113,
         "yes":1190
       }
     },
     "winner":"no"
   },
   "Use of ELSE IF or ELSEIF":{
-    "total":28199,
-    "total_repos":172,
+    "total":28201,
+    "total_repos":173,
     "values":{
-      "elseif":21823,
+      "elseif":21825,
       "else if":6376
     },
     "repos":{
@@ -20494,6 +20532,7 @@
         "guzzle\/guzzle":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "joomla\/joomla-cms":96.98,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
@@ -20769,19 +20808,19 @@
         "else if":6499
       },
       "2017-11-01":{
-        "elseif":21617,
+        "elseif":21618,
         "else if":6532
       },
       "2017-12-01":{
-        "elseif":21670,
+        "elseif":21671,
         "else if":6536
       },
       "2018-01-01":{
-        "elseif":21772,
+        "elseif":21774,
         "else if":6448
       },
       "2018-02-01":{
-        "elseif":21827,
+        "elseif":21829,
         "else if":6376
       }
     },
@@ -21216,10 +21255,10 @@
     "winner":0
   },
   "Array end comma":{
-    "total":14644,
-    "total_repos":141,
+    "total":14645,
+    "total_repos":142,
     "values":{
-      "no":7468,
+      "no":7469,
       "yes":7176
     },
     "repos":{
@@ -21241,6 +21280,7 @@
         "google\/google-api-php-client":75,
         "guzzle\/guzzle":80,
         "Halleck45\/PhpMetrics":93.75,
+        "jaggedsoft\/php-binance-api":100,
         "leafo\/lessphp":75,
         "moodle\/moodle":79.2,
         "nazariyg\/Phred":100,
@@ -21511,15 +21551,15 @@
         "yes":7099
       },
       "2017-12-01":{
-        "no":7475,
+        "no":7476,
         "yes":7134
       },
       "2018-01-01":{
-        "no":7475,
+        "no":7476,
         "yes":7153
       },
       "2018-02-01":{
-        "no":7466,
+        "no":7467,
         "yes":7176
       }
     },
@@ -22061,10 +22101,10 @@
     "winner":"no"
   },
   "Closure opening brace placement":{
-    "total":8021,
-    "total_repos":134,
+    "total":8045,
+    "total_repos":135,
     "values":{
-      "same line":7899,
+      "same line":7923,
       "new line":122
     },
     "repos":{
@@ -22101,6 +22141,7 @@
         "Halleck45\/PhpMetrics":100,
         "iranianpep\/botonomous":100,
         "jackalope\/jackalope":100,
+        "jaggedsoft\/php-binance-api":100,
         "KnpLabs\/snappy":100,
         "kriswallsmith\/assetic":100,
         "kriswallsmith\/Buzz":100,
@@ -22209,7 +22250,7 @@
     },
     "trends":{
       "2018-02-01":{
-        "same line":7898,
+        "same line":7922,
         "new line":122
       },
       "2015-01-01":{
@@ -22349,15 +22390,15 @@
         "new line":126
       },
       "2017-11-01":{
-        "same line":7760,
+        "same line":7779,
         "new line":126
       },
       "2017-12-01":{
-        "same line":7785,
+        "same line":7805,
         "new line":122
       },
       "2018-01-01":{
-        "same line":7859,
+        "same line":7879,
         "new line":123
       }
     },
