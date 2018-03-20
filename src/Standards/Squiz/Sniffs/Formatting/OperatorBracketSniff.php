@@ -77,9 +77,9 @@ class OperatorBracketSniff implements Sniff
             if ($tokens[$number]['code'] === T_LNUMBER || $tokens[$number]['code'] === T_DNUMBER) {
                 $previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
                 if ($previous !== false) {
-                    $isAssignment = in_array($tokens[$previous]['code'], Tokens::$assignmentTokens);
-                    $isEquality   = in_array($tokens[$previous]['code'], Tokens::$equalityTokens);
-                    $isComparison = in_array($tokens[$previous]['code'], Tokens::$comparisonTokens);
+                    $isAssignment = isset(Tokens::$assignmentTokens[$tokens[$previous]['code']]);
+                    $isEquality   = isset(Tokens::$equalityTokens[$tokens[$previous]['code']]);
+                    $isComparison = isset(Tokens::$comparisonTokens[$tokens[$previous]['code']]);
                     if ($isAssignment === true || $isEquality === true || $isComparison === true) {
                         // This is a negative assignment or comparison.
                         // We need to check that the minus and the number are
@@ -100,15 +100,15 @@ class OperatorBracketSniff implements Sniff
             // A list of tokens that indicate that the token is not
             // part of an arithmetic operation.
             $invalidTokens = [
-                T_COMMA,
-                T_COLON,
-                T_OPEN_PARENTHESIS,
-                T_OPEN_SQUARE_BRACKET,
-                T_OPEN_SHORT_ARRAY,
-                T_CASE,
+                T_COMMA               => true,
+                T_COLON               => true,
+                T_OPEN_PARENTHESIS    => true,
+                T_OPEN_SQUARE_BRACKET => true,
+                T_OPEN_SHORT_ARRAY    => true,
+                T_CASE                => true,
             ];
 
-            if (in_array($tokens[$previousToken]['code'], $invalidTokens) === true) {
+            if (isset($invalidTokens[$tokens[$previousToken]['code']]) === true) {
                 return;
             }
         }
