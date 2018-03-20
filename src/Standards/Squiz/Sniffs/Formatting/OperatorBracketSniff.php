@@ -77,9 +77,9 @@ class OperatorBracketSniff implements Sniff
             if ($tokens[$number]['code'] === T_LNUMBER || $tokens[$number]['code'] === T_DNUMBER) {
                 $previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
                 if ($previous !== false) {
-                    $isAssignment = in_array($tokens[$previous]['code'], Tokens::$assignmentTokens);
-                    $isEquality   = in_array($tokens[$previous]['code'], Tokens::$equalityTokens);
-                    $isComparison = in_array($tokens[$previous]['code'], Tokens::$comparisonTokens);
+                    $isAssignment = array_key_exists($tokens[$previous]['code'], Tokens::$assignmentTokens);
+                    $isEquality   = array_key_exists($tokens[$previous]['code'], Tokens::$equalityTokens);
+                    $isComparison = array_key_exists($tokens[$previous]['code'], Tokens::$comparisonTokens);
                     if ($isAssignment === true || $isEquality === true || $isComparison === true) {
                         // This is a negative assignment or comparison.
                         // We need to check that the minus and the number are
@@ -196,7 +196,7 @@ class OperatorBracketSniff implements Sniff
                     }
                 }//end if
 
-                if (in_array($prevCode, Tokens::$scopeOpeners) === true) {
+                if (array_key_exists($prevCode, Tokens::$scopeOpeners) === true) {
                     // This operation is inside a control structure like FOREACH
                     // or IF, but has no bracket of it's own.
                     // The only control structure allowed to do this is SWITCH.
