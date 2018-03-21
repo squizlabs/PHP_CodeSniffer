@@ -102,6 +102,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1931 : Generic opening brace placement sniffs do not correctly support function return types
   - Fixed bug #1938 : Generic opening brace placement sniffs incorrectly move PHPCS annotations
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #1939 : phpcs:set annotations do not cause the line they are on to be ignored
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
@@ -1527,6 +1529,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="SemicolonSpacingUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SemicolonSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SemicolonSpacingUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.1.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.1.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.1.js" role="test" />
@@ -1539,8 +1545,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.3.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.3.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.3.js.fixed" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SuperfluousWhitespaceUnitTest.php" role="test" />
        </dir>
       </dir>

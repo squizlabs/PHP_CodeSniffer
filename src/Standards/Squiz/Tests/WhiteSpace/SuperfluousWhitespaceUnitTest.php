@@ -28,7 +28,7 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='SuperfluousWhitespaceUnitTest.inc')
     {
         switch ($testFile) {
-        case 'SuperfluousWhitespaceUnitTest.inc':
+        case 'SuperfluousWhitespaceUnitTest.1.inc':
             return [
                 2  => 1,
                 4  => 1,
@@ -41,6 +41,12 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
                 33 => 1,
                 49 => 1,
                 55 => 1,
+            ];
+            break;
+        case 'SuperfluousWhitespaceUnitTest.2.inc':
+            return [
+                2 => 1,
+                8 => 1,
             ];
             break;
         case 'SuperfluousWhitespaceUnitTest.1.js':

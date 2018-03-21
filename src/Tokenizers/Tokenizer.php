@@ -300,28 +300,71 @@ abstract class Tokenizer
                     // If this comment is the only thing on the line, it tells us
                     // to ignore the following line. If the line contains other content
                     // then we are just ignoring this one single line.
-                    $ownLine = false;
+                    $lineHasOtherContent = false;
+                    $lineHasOtherTokens  = false;
                     if ($i > 0) {
                         for ($prev = ($i - 1); $prev > 0; $prev--) {
+                            if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
+                                // Changed lines.
+                                break;
+                            }
+
                             if ($this->tokens[$prev]['code'] === T_WHITESPACE
-                                || $this->tokens[$prev]['code'] === T_OPEN_TAG
                                 || ($this->tokens[$prev]['code'] === T_INLINE_HTML
                                 && trim($this->tokens[$prev]['content']) === '')
                             ) {
                                 continue;
                             }
 
-                            break;
-                        }
+                            $lineHasOtherTokens = true;
 
-                        if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
-                            $ownLine = true;
-                        }
-                    }
+                            if ($this->tokens[$prev]['code'] === T_OPEN_TAG) {
+                                continue;
+                            }
+
+                            $lineHasOtherContent = true;
+                            break;
+                        }//end for
+
+                        $changedLines = false;
+                        for ($next = $i; $next < $this->numTokens; $next++) {
+                            if ($changedLines === true) {
+                                // Changed lines.
+                                break;
+                            }
+
+                            if (isset($this->knownLengths[$this->tokens[$next]['code']]) === false
+                                && strpos($this->tokens[$next]['content'], $this->eolChar) !== false
+                            ) {
+                                // Last token on the current line.
+                                $changedLines = true;
+                            }
+
+                            if ($next === $i) {
+                                continue;
+                            }
+
+                            if ($this->tokens[$next]['code'] === T_WHITESPACE
+                                || ($this->tokens[$next]['code'] === T_INLINE_HTML
+                                && trim($this->tokens[$next]['content']) === '')
+                            ) {
+                                continue;
+                            }
+
+                            $lineHasOtherTokens = true;
+
+                            if ($this->tokens[$next]['code'] === T_CLOSE_TAG) {
+                                continue;
+                            }
+
+                            $lineHasOtherContent = true;
+                            break;
+                        }//end for
+                    }//end if
 
                     if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
                         // Ignore standards for complete lines that change sniff settings.
-                        if ($ownLine === true) {
+                        if ($lineHasOtherTokens === false) {
                             $this->ignoredLines[$this->tokens[$i]['line']] = ['all' => true];
                         }
 
@@ -332,7 +375,7 @@ abstract class Tokenizer
                         $this->tokens[$i]['code'] = T_PHPCS_IGNORE_FILE;
                         $this->tokens[$i]['type'] = 'T_PHPCS_IGNORE_FILE';
                     } else if (substr($commentTextLower, 0, 13) === 'phpcs:disable') {
-                        if ($ownLine === true) {
+                        if ($lineHasOtherContent === false) {
                             // Completely ignore the comment line.
                             $this->ignoredLines[$this->tokens[$i]['line']] = ['all' => true];
                         }
@@ -380,7 +423,7 @@ abstract class Tokenizer
                                 }
                             }
 
-                            if ($ownLine === true) {
+                            if ($lineHasOtherContent === false) {
                                 // Completely ignore the comment line.
                                 $this->ignoredLines[$this->tokens[$i]['line']] = ['all' => true];
                             } else {
@@ -415,7 +458,7 @@ abstract class Tokenizer
                             $ignoreRules += $ignoring;
                         }
 
-                        if ($ownLine === true) {
+                        if ($lineHasOtherContent === false) {
                             // Completely ignore the comment line, and set the folllowing
                             // line to include the ignore rules we've set.
                             $this->ignoredLines[$this->tokens[$i]['line']]       = ['all' => true];
