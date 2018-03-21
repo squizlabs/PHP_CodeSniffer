@@ -12,14 +12,17 @@ function getVar($varname='var', $var='var')
     for ($i = $var; (null !== ($key = key($i))); next($i)) {
         while ($i = true) {
             echo $i = getVar();
+            echo \A\B\C::$d = getVar();
         }
     }
 
     while ($row = $query->fetch(PDO::FETCH_NUM)) {
-        $result[$row[0]] = array()
+        $result[$row[0]] = array();
         $result[$row[0]][] = $current;
 
         self::$_inTransaction = TRUE;
+        parent::$_inTransaction = TRUE;
+        static::$_inTransaction = TRUE;
         $$varName = $varValue;
     }
 
@@ -32,6 +35,11 @@ class myClass
     protected $dbh = NULL;
     var $dbh = NULL; // Old PHP4 compatible code.
 }
+
+A::$a = 'b';
+\A::$a = 'c';
+\A\B\C::$d = 'd';
+B\C::$d = 'e';
 
 $var = $var2;
 list ($a, $b) = explode(',', $c);

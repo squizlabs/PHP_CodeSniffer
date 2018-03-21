@@ -32,6 +32,7 @@ class DisallowMultipleAssignmentsUnitTest extends AbstractSniffUnitTest
             9  => 1,
             12 => 1,
             14 => 1,
+            15 => 1,
         ];
 
     }//end getErrorList()
