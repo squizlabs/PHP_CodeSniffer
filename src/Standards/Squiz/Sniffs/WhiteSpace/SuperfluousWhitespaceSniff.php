@@ -162,15 +162,15 @@ class SuperfluousWhitespaceSniff implements Sniff
                 ) {
                     return;
                 }
-
-                if ($phpcsFile->fixer->enabled === true) {
-                    $prev     = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-                    $stackPtr = ($prev + 1);
-                }
             }//end if
 
             $fix = $phpcsFile->addFixableError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
             if ($fix === true) {
+                if ($phpcsFile->tokenizerType !== 'PHP') {
+                    $prev     = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+                    $stackPtr = ($prev + 1);
+                }
+
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');

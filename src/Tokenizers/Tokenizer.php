@@ -322,7 +322,7 @@ abstract class Tokenizer
                     if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
                         // Ignore standards for complete lines that change sniff settings.
                         if ($ownLine === true) {
-                            $this->ignoredLines[$this->tokens[$i]['line']] = true;
+                            $this->ignoredLines[$this->tokens[$i]['line']] = ['all' => true];
                         }
 
                         $this->tokens[$i]['code'] = T_PHPCS_SET;
