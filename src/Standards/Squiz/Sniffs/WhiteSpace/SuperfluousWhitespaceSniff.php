@@ -219,8 +219,7 @@ class SuperfluousWhitespaceSniff implements Sniff
                 Check for multiple blank lines in a function.
             */
 
-            if (($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true
-                || $phpcsFile->hasCondition($stackPtr, T_CLOSURE) === true)
+            if (($phpcsFile->hasCondition($stackPtr, [T_FUNCTION, T_CLOSURE]) === true)
                 && $tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line']
                 && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']
             ) {
