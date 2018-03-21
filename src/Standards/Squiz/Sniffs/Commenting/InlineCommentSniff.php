@@ -295,10 +295,11 @@ class InlineCommentSniff implements Sniff
             $errorCode = 'SpacingAfter';
 
             if (isset($tokens[$stackPtr]['conditions']) === true) {
-                $type         = end($tokens[$stackPtr]['conditions']);
-                $conditionPtr = key($tokens[$stackPtr]['conditions']);
+                $conditions   = $tokens[$stackPtr]['conditions'];
+                $type         = end($conditions);
+                $conditionPtr = key($conditions);
 
-                if (in_array($type, [T_FUNCTION, T_CLOSURE], true) === true
+                if (($type === T_FUNCTION || $type === T_CLOSURE)
                     && $tokens[$conditionPtr]['scope_closer'] === $next
                 ) {
                     $errorCode = 'SpacingAfterAtFunctionEnd';
