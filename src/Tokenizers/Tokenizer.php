@@ -160,8 +160,8 @@ abstract class Tokenizer
         }
 
         $checkAnnotations = $this->config->annotations;
-        $encoding = $this->config->encoding;
-        $tabWidthIsZero = $this->config->tabWidth === 0;
+        $encoding         = $this->config->encoding;
+        $tabWidth         = $this->config->tabWidth;
 
         $this->tokensWithTabs = [
             T_WHITESPACE               => true,
@@ -185,7 +185,7 @@ abstract class Tokenizer
                 // There are no tabs in the tokens we know the length of.
                 $length      = $this->knownLengths[$this->tokens[$i]['code']];
                 $currColumn += $length;
-            } else if ($tabWidthIsZero
+            } else if ($tabWidth === 0
                 || isset($this->tokensWithTabs[$this->tokens[$i]['code']]) === false
                 || strpos($this->tokens[$i]['content'], "\t") === false
             ) {
