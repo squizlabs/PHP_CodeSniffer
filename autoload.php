@@ -218,6 +218,18 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
 
 
         /**
+         * Retrieve the namespaces and paths registered by external standards.
+         *
+         * @return array
+         */
+        public static function getSearchPaths()
+        {
+            return self::$searchPaths;
+
+        }//end getSearchPaths()
+
+
+        /**
          * Gets the class name for the given file path.
          *
          * @param string $path The name of the file.
