@@ -43,6 +43,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The "Function opening brace placement" metric has been separated into function and closure metrics in the info report
     -- Closures are no longer included in the "Function opening brace placement" metric
     -- A new "Closure opening brace placement" metric now shows information for closures
+  - Multi-line T_YIELD_FROM statemenets are now replicated properly for older PHP versions
   - Removed Squiz.PHP.DisallowObEndFlush from the Squiz standard
     -- If you use this sniff and want to continue banning ob_end_flush(), use Generic.PHP.ForbiddenFunctions instead
     -- You will need to set the forbiddenFunctions property in your ruleset.xml file

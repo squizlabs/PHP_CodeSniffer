@@ -477,6 +477,11 @@ class PHP extends Tokenizer
         $commentTokenizer = new Comment();
 
         for ($stackPtr = 0; $stackPtr < $numTokens; $stackPtr++) {
+            // Special case for tokens we have needed to blank out.
+            if ($tokens[$stackPtr] === null) {
+                continue;
+            }
+
             $token        = (array) $tokens[$stackPtr];
             $tokenIsArray = isset($token[1]);
 
@@ -746,15 +751,20 @@ class PHP extends Tokenizer
                 && $tokens[($stackPtr + 2)][0] === T_STRING
                 && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
             ) {
-                $newToken            = [];
-                $newToken['code']    = T_YIELD_FROM;
-                $newToken['type']    = 'T_YIELD_FROM';
-                $newToken['content'] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
-                $finalTokens[$newStackPtr] = $newToken;
+                // Could be multi-line, so just just the token stack.
+                $token[0] = T_YIELD_FROM;
+                $token[1] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
 
-                $newStackPtr++;
-                $stackPtr += 2;
-                continue;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    for ($i = ($stackPtr + 1); $i <= ($stackPtr + 2); $i++) {
+                        $type    = Util\Tokens::tokenName($tokens[$i][0]);
+                        $content = Util\Common::prepareForOutput($tokens[$i][1]);
+                        echo "\t\t* token $i merged into T_YIELD_FROM; was: $type => $content".PHP_EOL;
+                    }
+                }
+
+                $tokens[($stackPtr + 1)] = null;
+                $tokens[($stackPtr + 2)] = null;
             }
 
             /*
@@ -775,25 +785,30 @@ class PHP extends Tokenizer
                     && $tokens[($stackPtr + 2)][0] === T_STRING
                     && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
                 ) {
+                    // Could be multi-line, so just just the token stack.
+                    $token[0] = T_YIELD_FROM;
+                    $token[1] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        for ($i = ($stackPtr + 1); $i <= ($stackPtr + 2); $i++) {
+                            $type    = Util\Tokens::tokenName($tokens[$i][0]);
+                            $content = Util\Common::prepareForOutput($tokens[$i][1]);
+                            echo "\t\t* token $i merged into T_YIELD_FROM; was: $type => $content".PHP_EOL;
+                        }
+                    }
+
+                    $tokens[($stackPtr + 1)] = null;
+                    $tokens[($stackPtr + 2)] = null;
+                } else {
                     $newToken            = [];
-                    $newToken['code']    = T_YIELD_FROM;
-                    $newToken['type']    = 'T_YIELD_FROM';
-                    $newToken['content'] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+                    $newToken['code']    = T_YIELD;
+                    $newToken['type']    = 'T_YIELD';
+                    $newToken['content'] = $token[1];
                     $finalTokens[$newStackPtr] = $newToken;
 
                     $newStackPtr++;
-                    $stackPtr += 2;
                     continue;
-                }
-
-                $newToken            = [];
-                $newToken['code']    = T_YIELD;
-                $newToken['type']    = 'T_YIELD';
-                $newToken['content'] = $token[1];
-                $finalTokens[$newStackPtr] = $newToken;
-
-                $newStackPtr++;
-                continue;
+                }//end if
             }//end if
 
             /*
@@ -1127,11 +1142,11 @@ class PHP extends Tokenizer
             }//end if
 
             /*
-                HHVM 3.5 and 3.6 tokenizes a hashbang line such as #!/usr/bin/php
+                HHVM 3.5 and 3.6 tokenize a hashbang line such as #!/usr/bin/php
                 as T_HASHBANG while PHP proper uses T_INLINE_HTML.
             */
 
-            if ($tokenIsArray === true && token_name($token[0]) === 'T_HASHBANG') {
+            if ($tokenIsArray === true && Util\Tokens::tokenName($token[0]) === 'T_HASHBANG') {
                 $finalTokens[$newStackPtr] = [
                     'content' => $token[1],
                     'code'    => T_INLINE_HTML,
@@ -1157,7 +1172,7 @@ class PHP extends Tokenizer
                 $tokenLines = explode($this->eolChar, $token[1]);
                 $numLines   = count($tokenLines);
                 $newToken   = [
-                    'type'    => token_name($token[0]),
+                    'type'    => Util\Tokens::tokenName($token[0]),
                     'code'    => $token[0],
                     'content' => '',
                 ];
@@ -1857,7 +1872,7 @@ class PHP extends Tokenizer
         } else {
             $newToken = [
                 'code' => $token[0],
-                'type' => token_name($token[0]),
+                'type' => Util\Tokens::tokenName($token[0]),
             ];
 
             self::$resolveTokenCache[$token[0]] = $newToken;
