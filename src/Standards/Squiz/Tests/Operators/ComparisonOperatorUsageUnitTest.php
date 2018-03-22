@@ -57,6 +57,7 @@ class ComparisonOperatorUsageUnitTest extends AbstractSniffUnitTest
                 123 => 1,
                 127 => 1,
                 131 => 1,
+                135 => 1,
             ];
             break;
         case 'ComparisonOperatorUsageUnitTest.js':

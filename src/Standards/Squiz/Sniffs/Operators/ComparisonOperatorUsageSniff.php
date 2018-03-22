@@ -153,6 +153,8 @@ class ComparisonOperatorUsageSniff implements Sniff
         $foundOps    = 0;
         $foundBools  = 0;
 
+        $lastNonEmpty = $start;
+
         for ($i = $start; $i <= $end; $i++) {
             $type = $tokens[$i]['code'];
             if (in_array($type, array_keys(self::$invalidOps[$tokenizer])) === true) {
@@ -165,6 +167,15 @@ class ComparisonOperatorUsageSniff implements Sniff
                 $foundOps++;
             } else if (in_array($type, self::$validOps) === true) {
                 $foundOps++;
+            }
+
+            if ($type == T_OPEN_PARENTHESIS
+                && isset($tokens[$i]['parenthesis_closer']) === true
+                && isset(Tokens::$functionNameTokens[$tokens[$lastNonEmpty]['code']]) === true
+            ) {
+                $i = $tokens[$i]['parenthesis_closer'];
+                $lastNonEmpty = $i;
+                continue;
             }
 
             if ($tokens[$i]['code'] === T_TRUE || $tokens[$i]['code'] === T_FALSE) {
@@ -192,6 +203,10 @@ class ComparisonOperatorUsageSniff implements Sniff
                     $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');
                     $foundOps++;
                 }
+            }
+
+            if (isset(Tokens::$emptyTokens[$type]) === false) {
+                $lastNonEmpty = $i;
             }
         }//end for
 
