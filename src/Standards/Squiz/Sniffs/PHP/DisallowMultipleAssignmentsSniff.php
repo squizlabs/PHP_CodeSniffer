@@ -97,6 +97,7 @@ class DisallowMultipleAssignmentsSniff implements Sniff
         $allowed[T_NS_SEPARATOR]    = T_NS_SEPARATOR;
         $allowed[T_DOUBLE_COLON]    = T_DOUBLE_COLON;
         $allowed[T_OBJECT_OPERATOR] = T_OBJECT_OPERATOR;
+        $allowed[T_ASPERAND]        = T_ASPERAND;
         $allowed[T_DOLLAR]          = T_DOLLAR;
         $allowed[T_SELF]            = T_SELF;
         $allowed[T_PARENT]          = T_PARENT;
@@ -134,6 +135,7 @@ class DisallowMultipleAssignmentsSniff implements Sniff
             || $tokens[$varToken]['code'] === T_INLINE_THEN
             || $tokens[$varToken]['code'] === T_INLINE_ELSE
             || $tokens[$varToken]['code'] === T_SEMICOLON
+            || $tokens[$varToken]['code'] === T_CLOSE_PARENTHESIS
             || isset($allowed[$tokens[$varToken]['code']]) === true
         ) {
             return;

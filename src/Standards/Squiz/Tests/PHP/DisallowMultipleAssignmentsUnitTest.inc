@@ -41,6 +41,12 @@ A::$a = 'b';
 \A\B\C::$d = 'd';
 B\C::$d = 'e';
 
+@$a = 1;
+
+$a = [];
+foreach ($a as $b)
+    $c = 'd';
+
 $var = $var2;
 list ($a, $b) = explode(',', $c);
 $var1 ? $var2 = 0 : $var2 = 1;
