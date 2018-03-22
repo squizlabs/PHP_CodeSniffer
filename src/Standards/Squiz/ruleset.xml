@@ -97,6 +97,11 @@
         <severity>0</severity>
     </rule>
 
+    <!-- Squiz.WhiteSpace.LanguageConstructSpacing is deprecated -->
+    <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing">
+        <severity>0</severity>
+    </rule>
+
     <!-- Prevent fixer conflict for conflicting rules. -->
     <rule ref="Squiz.Commenting.InlineComment">
         <exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd"/>
