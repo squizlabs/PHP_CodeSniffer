@@ -169,11 +169,11 @@ class ComparisonOperatorUsageSniff implements Sniff
                 $foundOps++;
             }
 
-            if ($type == T_OPEN_PARENTHESIS
+            if ($type === T_OPEN_PARENTHESIS
                 && isset($tokens[$i]['parenthesis_closer']) === true
                 && isset(Tokens::$functionNameTokens[$tokens[$lastNonEmpty]['code']]) === true
             ) {
-                $i = $tokens[$i]['parenthesis_closer'];
+                $i            = $tokens[$i]['parenthesis_closer'];
                 $lastNonEmpty = $i;
                 continue;
             }
