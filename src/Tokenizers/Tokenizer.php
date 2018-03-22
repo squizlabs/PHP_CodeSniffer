@@ -87,7 +87,7 @@ abstract class Tokenizer
     /**
      * Checks the content to see if it looks minified.
      *
-     * @param string $content The content to tokenize,
+     * @param string $content The content to tokenize.
      * @param string $eolChar The EOL char used in the content.
      *
      * @return boolean
@@ -1372,7 +1372,7 @@ abstract class Tokenizer
      *
      * The level map adds a 'level' index to each token which indicates the
      * depth that a token within a set of scope blocks. It also adds a
-     * 'condition' index which is an array of the scope conditions that opened
+     * 'conditions' index which is an array of the scope conditions that opened
      * each of the scopes - position 0 being the first scope opener.
      *
      * @return void

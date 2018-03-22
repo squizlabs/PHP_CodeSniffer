@@ -145,9 +145,9 @@ final class Tokens
         T_FUNCTION            => 100,
         T_CLOSURE             => 100,
 
-                                 /*
-                                     Conditions.
-                                 */
+        /*
+         * Conditions.
+         */
 
         T_WHILE               => 50,
         T_FOR                 => 50,
@@ -164,9 +164,9 @@ final class Tokens
         T_SELF                => 25,
         T_PARENT              => 25,
 
-                                 /*
-                                     Operators and arithmetic.
-                                 */
+        /*
+         * Operators and arithmetic.
+         */
 
         T_BITWISE_AND         => 8,
         T_BITWISE_OR          => 8,
@@ -201,9 +201,9 @@ final class Tokens
         T_BOOLEAN_AND         => 5,
         T_BOOLEAN_OR          => 5,
 
-                                 /*
-                                     Equality.
-                                 */
+        /*
+         * Equality.
+         */
 
         T_IS_EQUAL            => 5,
         T_IS_NOT_EQUAL        => 5,
@@ -566,7 +566,7 @@ final class Tokens
     ];
 
     /**
-     * Tokens that are open class and object scopes.
+     * Tokens that open class and object scopes.
      *
      * @var array<int, int>
      */

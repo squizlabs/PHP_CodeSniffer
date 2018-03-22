@@ -781,7 +781,7 @@ class PHP extends Tokenizer
                 && $tokens[($stackPtr + 2)][0] === T_STRING
                 && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
             ) {
-                // Could be multi-line, so just just the token stack.
+                // Could be multi-line, so just the token stack.
                 $token[0] = T_YIELD_FROM;
                 $token[1] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
 

@@ -25,7 +25,7 @@ do {
 
 while ( $sample === false ) {}
 
- // Silly, but not an assignment.
+// Silly, but not an assignment.
 if (123 = $a) {}
 if (strtolower($b) = $b) {}
 if (array( 1 => 'a', 2 => 'b' ) = $b) {}

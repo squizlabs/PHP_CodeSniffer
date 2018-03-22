@@ -38,9 +38,9 @@ class FunctionSpacingSniff implements Sniff
     public $spacingAfterLast = 2;
 
     /**
-     * The number of blank lines after the last function in a class.
+     * Original properties as set in a custom ruleset (if any).
      *
-     * @var integer
+     * @var array
      */
     private $rulesetProperties = null;
 

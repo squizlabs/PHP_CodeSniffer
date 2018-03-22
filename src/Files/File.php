@@ -1370,7 +1370,7 @@ class File
             case T_SELF:
             case T_PARENT:
             case T_STATIC:
-                // Self is valid, the others invalid, but were probably intended as type hints.
+                // Self and parent are valid, static invalid, but was probably intended as type hint.
                 if (isset($defaultStart) === false) {
                     if ($typeHintToken === false) {
                         $typeHintToken = $i;
@@ -1945,10 +1945,10 @@ class File
      * Returns the content of the tokens from the specified start position in
      * the token stack for the specified length.
      *
-     * @param int $start       The position to start from in the token stack.
-     * @param int $length      The length of tokens to traverse from the start pos.
-     * @param int $origContent Whether the original content or the tab replaced
-     *                         content should be used.
+     * @param int  $start       The position to start from in the token stack.
+     * @param int  $length      The length of tokens to traverse from the start pos.
+     * @param bool $origContent Whether the original content or the tab replaced
+     *                          content should be used.
      *
      * @return string The token contents.
      */
