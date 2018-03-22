@@ -68,15 +68,46 @@ class LanguageConstructSpacingSniff implements Sniff
         }
 
         $content = $tokens[$stackPtr]['content'];
-        if (($tokens[$stackPtr]['code'] === T_YIELD_FROM) && strtolower($content) !== 'yield from') {
-            $error = 'Language constructs must be followed by a single space; expected 1 space between YIELD FROM found "%s"';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', [$content]);
-            preg_match('/yield/i', $content, $yield);
-            preg_match('/from/i', $content, $from);
-            if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($stackPtr, $yield[0].' '.$from[0]);
+        if ($tokens[$stackPtr]['code'] === T_YIELD_FROM
+            && strtolower($content) !== 'yield from'
+        ) {
+            if ($tokens[($stackPtr - 1)]['code'] === T_YIELD_FROM) {
+                // A multi-line statements that has already been processed.
+                return;
             }
-        }
+
+            $found = $content;
+            if ($tokens[($stackPtr + 1)]['code'] === T_YIELD_FROM) {
+                // This yield from statement is split over multiple lines.
+                $i = ($stackPtr + 1);
+                do {
+                    $found .= $tokens[$i]['content'];
+                    $i++;
+                } while ($tokens[$i]['code'] === T_YIELD_FROM);
+            }
+
+            $error = 'Language constructs must be followed by a single space; expected 1 space between YIELD FROM found "%s"';
+            $data  = [Util\Common::prepareForOutput($found)];
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'IncorrectYieldFrom', $data);
+            if ($fix === true) {
+                preg_match('/yield/i', $found, $yield);
+                preg_match('/from/i', $found, $from);
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->replaceToken($stackPtr, $yield[0].' '.$from[0]);
+
+                if ($tokens[($stackPtr + 1)]['code'] === T_YIELD_FROM) {
+                    $i = ($stackPtr + 1);
+                    do {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                        $i++;
+                    } while ($tokens[$i]['code'] === T_YIELD_FROM);
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
+
+            return;
+        }//end if
 
         if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
             $content = $tokens[($stackPtr + 1)]['content'];

@@ -30,9 +30,11 @@ yield $blah;
 yield $blah;
 
 yield from $test();
+yield FROM $test();
+YIELD from $test();
 yield from $test();
 yield from $test();
-yield from $test();
+yield From $test();
 
 throw new Exception();
 throw new Exception();

@@ -26,6 +26,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The Squiz.WhiteSpace.LanguageConstructSpacing sniff has been moved to the Generic standard
+    -- The sniff's old code is no longer supported
+    -- The sniff's new code is Generic.WhiteSpace.LanguageConstructSpacing
+    -- You MUST replace all instances of the old sniff code with the new sniff code in your ruleset.xml files
+    -- The sniff now also checks many more language constructs to enforce spacing rules
+    -- Thanks to Mponos George for the contribution
+
   - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
   - The JSON report format now does escaping in error source codes as well as error messages
     -- Thanks to Martin Vasel for the patch
