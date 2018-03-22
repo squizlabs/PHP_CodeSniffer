@@ -90,7 +90,8 @@ class DisallowComparisonAssignmentSniff implements Sniff
         }
 
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
-            if (isset(Tokens::$comparisonTokens[$tokens[$i]['code']]) === true
+            if ((isset(Tokens::$comparisonTokens[$tokens[$i]['code']]) === true
+                && $tokens[$i]['code'] !== T_COALESCE)
                 || $tokens[$i]['code'] === T_INLINE_THEN
             ) {
                 $error = 'The value of a comparison must not be assigned to a variable';
