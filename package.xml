@@ -65,6 +65,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- It would previously throw either a NonParamGroup or ParamGroup error depending on the order of tags
     -- This change allows the NonParamGroup error to be suppressed in a ruleset to allow the @param group to contain other tags
     -- Thanks to Phil Davis for the patch
+  - Generic.CodeAnalysis.AssignmentInCondition now reports a different error code for assignments found in WHILE conditions
+    -- The return value of a function call is often assigned in a WHILE condition, so this change makes it easier to exclude these cases
+    -- The new code for this error message is Generic.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition
+    -- The error code for all other cases remains as Generic.CodeAnalysis.AssignmentInCondition.Found
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Arrays.ArrayDeclaration now continues checking array formatting even if the key indent is not correct
     -- Allows for using different array indent rules while still checking/fixing double arrow and value alignment
   - Squiz.Commenting.BlockComment has improved support for tab-indented comments
