@@ -52,13 +52,6 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowShortOpenTagUnitTest.1.inc':
-            if (PHP_VERSION_ID < 50400) {
-                $option = (boolean) ini_get('short_open_tag');
-                if ($option === false) {
-                    // Short open tags are off and PHP isn't doing short echo by default.
-                    return [];
-                }
-            }
             return [
                 5  => 1,
                 6  => 1,
@@ -93,18 +86,6 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowShortOpenTagUnitTest.1.inc':
-            if (PHP_VERSION_ID < 50400) {
-                $option = (boolean) ini_get('short_open_tag');
-                if ($option === false) {
-                    // Short open tags are off and PHP isn't doing short echo by default.
-                    return [
-                        5  => 1,
-                        6  => 1,
-                        7  => 1,
-                        10 => 1,
-                    ];
-                }
-            }
             return [];
         case 'DisallowShortOpenTagUnitTest.3.inc':
             return [
