@@ -68,6 +68,13 @@
     <rule ref="PSR2.Files.EndFileNewline"/>
     <rule ref="Zend.Files.ClosingTag"/>
 
+    <!-- PEAR uses warnings for inline control structures, so switch back to errors -->
+    <rule ref="Generic.ControlStructures.InlineControlStructure">
+        <properties>
+            <property name="error" value="true"/>
+        </properties>
+    </rule>
+
      <!-- We use custom indent rules for arrays -->
     <rule ref="Generic.Arrays.ArrayIndent"/>
     <rule ref="Squiz.Arrays.ArrayDeclaration.KeyNotAligned">
