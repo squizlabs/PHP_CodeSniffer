@@ -431,7 +431,14 @@ class FunctionCommentSniff implements Sniff
                         $expected,
                         $found,
                     ];
-                    $fix   = $phpcsFile->addFixableError($error, $commentToken, 'ParamCommentAlignment', $data);
+
+                    if ($found < $expected) {
+                        $code = 'ParamCommentAlignment';
+                    } else {
+                        $code = 'ParamCommentAlignmentExceeded';
+                    }
+
+                    $fix = $phpcsFile->addFixableError($error, $commentToken, $code, $data);
                     if ($fix === true) {
                         $padding = str_repeat(' ', $expected);
                         if ($tokens[($commentToken - 1)]['code'] === T_DOC_COMMENT_WHITESPACE) {

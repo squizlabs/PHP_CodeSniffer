@@ -70,6 +70,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The new code for this error message is Generic.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition
     -- The error code for all other cases remains as Generic.CodeAnalysis.AssignmentInCondition.Found
     -- Thanks to Juliette Reinders Folmer for the patch
+  - PEAR.Commenting.FunctionComment now report a different error code for param comment lines with too much padding
+    -- Previously, any lines of a param comment that don't start at the exact comment position got the same error code
+    -- Now, only comment lines with too little padding use ParamCommentAlignment as they are clearly mistakes
+    -- Comment lines with too much padding may be using precision alignment as now use ParamCommentAlignmentExceeded
+    -- This allows for excessive padding to be excluded from a ruleset while continuing to enforce a minimum padding
   - Squiz.Arrays.ArrayDeclaration now continues checking array formatting even if the key indent is not correct
     -- Allows for using different array indent rules while still checking/fixing double arrow and value alignment
   - Squiz.Commenting.BlockComment has improved support for tab-indented comments
