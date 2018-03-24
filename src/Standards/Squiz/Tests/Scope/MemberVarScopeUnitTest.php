@@ -32,6 +32,8 @@ class MemberVarScopeUnitTest extends AbstractSniffUnitTest
             33 => 1,
             39 => 1,
             41 => 1,
+            66 => 2,
+            67 => 1,
         ];
 
     }//end getErrorList()
