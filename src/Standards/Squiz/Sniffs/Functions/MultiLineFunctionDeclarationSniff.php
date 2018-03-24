@@ -179,7 +179,7 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
                 continue;
             }
 
-            $next = $phpcsFile->findNext(T_WHITESPACE, ($i + 1), null, true);
+            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
             if ($tokens[$next]['line'] === $tokens[$i]['line']) {
                 $error = 'Multi-line '.$type.' declarations must define one parameter per line';
                 $fix   = $phpcsFile->addFixableError($error, $next, $errorPrefix.'OneParamPerLine');
