@@ -109,13 +109,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.PHP.DisallowComparisonAssignment no longer errors when using the null coalescing operator
     -- Given this operator is used almost exclusively to assign values, it didn't make sense to generate an error
   - Squiz.WhiteSpacing.FunctionSpacing now has a property to specify how many blank lines should be before the first class method
-      -- Only applies when a method is the first code block in a class (i.e., there are no member vars before it)
-      -- Override the 'spacingBeforeFirst' property in a ruleset.xml file to change
-      -- If not set, the sniff will use whatever value is set for the existing 'spacing' property
+    -- Only applies when a method is the first code block in a class (i.e., there are no member vars before it)
+    -- Override the 'spacingBeforeFirst' property in a ruleset.xml file to change
+    -- If not set, the sniff will use whatever value is set for the existing 'spacing' property
   - Squiz.WhiteSpacing.FunctionSpacing now has a property to specify how many blank lines should be after the last class method
-      -- Only applies when a method is the last code block in a class (i.e., there are no member vars after it)
-      -- Override the 'spacingAfterLast' property in a ruleset.xml file to change
-      -- If not set, the sniff will use whatever value is set for the existing 'spacing' property
+    -- Only applies when a method is the last code block in a class (i.e., there are no member vars after it)
+    -- Override the 'spacingAfterLast' property in a ruleset.xml file to change
+    -- If not set, the sniff will use whatever value is set for the existing 'spacing' property
   - Fixed bug #1863 : File::findEndOfStatement() not working when passed a scope opener
   - Fixed bug #1876 : PSR2.Namespaces.UseDeclaration not giving error for use statements before the namespace declaration
     -- Adds a new PSR2.Namespaces.UseDeclaration.UseBeforeNamespace error message
@@ -132,6 +132,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1939 : phpcs:set annotations do not cause the line they are on to be ignored
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #1949 : Squiz.PHP.DisallowMultipleAssignments false positive when using namespaces with static assignments
+  - Fixed bug #1959 : SquizMultiLineFunctionDeclaration error when param has trailing comment
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
