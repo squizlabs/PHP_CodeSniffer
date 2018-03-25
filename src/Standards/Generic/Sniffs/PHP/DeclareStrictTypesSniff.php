@@ -40,14 +40,14 @@ class DeclareStrictTypesSniff implements Sniff
      *
      * @var integer
      */
-    public $linesBefore = 1;
+    public $spacingBefore = 1;
 
     /**
      * Number of blank lines after declaration.
      *
      * @var integer
      */
-    public $linesAfter = 1;
+    public $spacingAfter = 1;
 
 
     /**
@@ -73,8 +73,8 @@ class DeclareStrictTypesSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $this->linesBefore = (int) $this->linesBefore;
-        $this->linesAfter  = (int) $this->linesAfter;
+        $this->spacingBefore = (int) $this->spacingBefore;
+        $this->spacingAfter  = (int) $this->spacingAfter;
 
         $tokens = $phpcsFile->getTokens();
 
@@ -208,14 +208,14 @@ class DeclareStrictTypesSniff implements Sniff
                 // Check how many blank lines there are before declare statement.
                 if ($prev !== false) {
                     $linesBefore = ($tokens[$next]['line'] - $tokens[$prev]['line'] - 1);
-                    if ($linesBefore !== $this->linesBefore) {
+                    if ($linesBefore !== $this->spacingBefore) {
                         if ($linesBefore < 0) {
                             $error = 'Strict type declaration must be in new line';
                             $data  = [];
                         } else {
                             $error = 'Invalid number of blank lines before declare statement; expected %d, but found %d';
                             $data  = [
-                                $this->linesBefore,
+                                $this->spacingBefore,
                                 $linesBefore,
                             ];
                         }
@@ -224,11 +224,11 @@ class DeclareStrictTypesSniff implements Sniff
 
                         if ($fix === true) {
                             $phpcsFile->fixer->beginChangeset();
-                            if ($linesBefore > $this->linesBefore) {
+                            if ($linesBefore > $this->spacingBefore) {
                                 // Remove additional blank line(s).
                                 for ($i = ($prev + 1); $i < $next; ++$i) {
                                     $phpcsFile->fixer->replaceToken($i, '');
-                                    if (($tokens[$next]['line'] - $tokens[($i + 1)]['line'] - 1) === $this->linesBefore) {
+                                    if (($tokens[$next]['line'] - $tokens[($i + 1)]['line'] - 1) === $this->spacingBefore) {
                                         break;
                                     }
                                 }
@@ -241,7 +241,7 @@ class DeclareStrictTypesSniff implements Sniff
                                 }
 
                                 // Add new blank line(s).
-                                while ($linesBefore < $this->linesBefore) {
+                                while ($linesBefore < $this->spacingBefore) {
                                     $phpcsFile->fixer->addNewlineBefore($next);
                                     ++$linesBefore;
                                 }
@@ -255,18 +255,18 @@ class DeclareStrictTypesSniff implements Sniff
                 // Check number of blank lines after the declare statement.
                 if ($after !== false) {
                     if ($tokens[$after]['code'] === T_CLOSE_TAG) {
-                        $this->linesAfter = 0;
+                        $this->spacingAfter = 0;
                     }
 
                     $linesAfter = ($tokens[$after]['line'] - $tokens[$eos]['line'] - 1);
-                    if ($linesAfter !== $this->linesAfter) {
+                    if ($linesAfter !== $this->spacingAfter) {
                         if ($linesAfter < 0) {
                             $error = 'Strict type declaration must be the only statement in the line';
                             $data  = [];
                         } else {
                             $error = 'Invalid number of blank lines after declare statement; expected %d, but found %d';
                             $data  = [
-                                $this->linesAfter,
+                                $this->spacingAfter,
                                 $linesAfter,
                             ];
                         }
@@ -275,10 +275,10 @@ class DeclareStrictTypesSniff implements Sniff
 
                         if ($fix === true) {
                             $phpcsFile->fixer->beginChangeset();
-                            if ($linesAfter > $this->linesAfter) {
+                            if ($linesAfter > $this->spacingAfter) {
                                 for ($i = ($eos + 1); $i < $after; ++$i) {
                                     $phpcsFile->fixer->replaceToken($i, '');
-                                    if (($tokens[($i + 1)]['line'] - $tokens[$after]['line'] - 1) === $this->linesAfter) {
+                                    if (($tokens[($i + 1)]['line'] - $tokens[$after]['line'] - 1) === $this->spacingAfter) {
                                         break;
                                     }
                                 }
@@ -291,7 +291,7 @@ class DeclareStrictTypesSniff implements Sniff
                                 }
 
                                 // Add new lines after the statement.
-                                while ($linesAfter < $this->linesAfter) {
+                                while ($linesAfter < $this->spacingAfter) {
                                     $phpcsFile->fixer->addNewline($eos);
                                     ++$linesAfter;
                                 }
