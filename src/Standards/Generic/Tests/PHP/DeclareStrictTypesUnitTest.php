@@ -65,7 +65,10 @@ class DeclareStrictTypesUnitTest extends AbstractSniffUnitTest
             return [2 => 2];
         }//end switch
 
-        return [1 => 1];
+        return [
+            1 => 1,
+            5 => 1,
+        ];
 
     }//end getErrorList()
 
