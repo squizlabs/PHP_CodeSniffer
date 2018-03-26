@@ -16,19 +16,6 @@ use PHP_CodeSniffer\Util\Tokens;
 class DeclareStrictTypesSniff implements Sniff
 {
     /**
-     * Comment with one of these tags will be omitted. The strict_types
-     * declaration will be placed the next line below the comment.
-     * Otherwise it will be placed line below PHP opening tag.
-     *
-     * @var array
-     */
-    public $omitCommentWithTags = [
-        '@author',
-        '@copyright',
-        '@license',
-    ];
-
-    /**
      * How declaration should be formatted.
      *
      * @var string
@@ -333,29 +320,8 @@ class DeclareStrictTypesSniff implements Sniff
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotFound');
 
         if ($fix === true) {
-            $after = $stackPtr;
-            $first = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-            if ($first !== null && $tokens[$first]['code'] === T_DOC_COMMENT_OPEN_TAG) {
-                foreach ($tokens[$first]['comment_tags'] as $tag) {
-                    if (in_array(strtolower($tokens[$tag]['content']), $this->omitCommentWithTags, true) === true) {
-                        $after = $tokens[$first]['comment_closer'];
-                        break;
-                    }
-                }
-            }
-
-            $phpcsFile->fixer->beginChangeset();
-            if ($after > $stackPtr) {
-                $phpcsFile->fixer->addNewline($after);
-            }
-
-            $phpcsFile->fixer->addContent($after, 'declare(strict_types=1);');
-            if ($after === $stackPtr) {
-                $phpcsFile->fixer->addNewline($after);
-            }
-
-            $phpcsFile->fixer->endChangeset();
-        }//end if
+            $phpcsFile->fixer->addContent($stackPtr, $this->format.$phpcsFile->eolChar);
+        }
 
         return (count($tokens) + 1);
 

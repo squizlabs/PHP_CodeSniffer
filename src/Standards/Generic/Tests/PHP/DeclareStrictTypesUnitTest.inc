@@ -1,4 +1,8 @@
+
+
 <?php
-/**
- * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
- */
+
+declare(strict_types=1);
+
+
+namespace MyNamespace;
