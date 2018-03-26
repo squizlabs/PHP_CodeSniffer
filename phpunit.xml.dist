@@ -5,4 +5,13 @@
             <file>tests/AllTests.php</file>
         </testsuite>
     </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+            <exclude>
+                <directory>src/Standards/*/Tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>
