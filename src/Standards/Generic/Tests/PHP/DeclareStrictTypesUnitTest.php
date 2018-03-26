@@ -43,7 +43,7 @@ class DeclareStrictTypesUnitTest extends AbstractSniffUnitTest
         case 'DeclareStrictTypesUnitTest.7.inc':
             return [
                 1 => 1,
-                4 => 1,
+                6 => 1,
             ];
         case 'DeclareStrictTypesUnitTest.8.inc':
             return [6 => 1];
