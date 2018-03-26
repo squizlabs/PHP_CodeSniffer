@@ -2,6 +2,10 @@ sudo: false
 language: php
 dist: trusty
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 matrix:
   fast_finish: true
   include:
@@ -14,6 +18,7 @@ matrix:
     - php: 7.0
       env: CUSTOM_INI=1
     - php: 7.1
+      env: TEST_COVERAGE=true
     - php: 7.2
     - php: nightly
     - php: hhvm
@@ -24,11 +29,15 @@ matrix:
 
 before_install:
   # Speed up build time by disabling Xdebug when its not needed.
-  - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
+  - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || echo 'No xdebug config.' ; fi
   # Circumvent a bug in the travis HHVM image - ships with incompatible PHPUnit.
-  - if [[ $TRAVIS_PHP_VERSION == hhv* ]]; then composer self-update; fi
   - if [[ $TRAVIS_PHP_VERSION == hhv* ]]; then composer require phpunit/phpunit:~4.0; fi
   - if [[ $TRAVIS_PHP_VERSION == hhv* ]]; then composer install; fi
+
+install:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry composer require --dev --no-interaction php-coveralls/php-coveralls ; fi
+  - travis_retry composer update
+  - stty cols 120 && composer show
 
 before_script:
   - if [[ $CUSTOM_INI == "1" && ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then phpenv config-add php5-testingConfig.ini; fi
@@ -36,10 +45,12 @@ before_script:
 
 script:
   - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then php bin/phpcs --config-set php_path php; fi
-  - if [[ $TRAVIS_PHP_VERSION != hhv* ]]; then phpunit tests/AllTests.php; fi
-  - if [[ $TRAVIS_PHP_VERSION == hhv* ]]; then vendor/bin/phpunit tests/AllTests.php; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then vendor/bin/phpunit --coverage-clover clover.xml ; else vendor/bin/phpunit ; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" &&  $TRAVIS_PHP_VERSION != hhv* && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
   - if [[ $CUSTOM_INI != "1" ]]; then composer validate --no-check-all --strict; fi
   - if [[ $CUSTOM_INI != "1" &&  $TRAVIS_PHP_VERSION != hhv* ]]; then php scripts/build-phar.php; fi
   - if [[ $CUSTOM_INI != "1" &&  $TRAVIS_PHP_VERSION != hhv* ]]; then php phpcs.phar; fi
+
+after_script:
+  - if [[ $TEST_COVERAGE == 'true' ]]; then travis_retry php vendor/bin/php-coveralls -v ; fi
