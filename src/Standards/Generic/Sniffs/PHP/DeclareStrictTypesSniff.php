@@ -258,7 +258,7 @@ class DeclareStrictTypesSniff implements Sniff
                             if ($linesAfter > $this->spacingAfter) {
                                 for ($i = ($eos + 1); $i < $after; ++$i) {
                                     $phpcsFile->fixer->replaceToken($i, '');
-                                    if (($tokens[($i + 1)]['line'] - $tokens[$after]['line'] - 1) === $this->spacingAfter) {
+                                    if (($tokens[$after]['line'] - $tokens[($i + 1)]['line'] - 1) === $this->spacingAfter) {
                                         break;
                                     }
                                 }
@@ -371,7 +371,7 @@ class DeclareStrictTypesSniff implements Sniff
 
                 if ($fix === true) {
                     $end = $phpcsFile->findNext(
-                        (Tokens::$emptyTokens + [T_SEMICOLON]),
+                        (Tokens::$emptyTokens + [T_SEMICOLON => T_SEMICOLON]),
                         ($tokens[$declare]['parenthesis_closer'] + 1),
                         null,
                         true
