@@ -1260,6 +1260,33 @@ public function foo()
     });
 }
 
+switch ( $a ) {
+    case 'a':
+        $b = 2;
+        /**
+         * A comment.
+         */
+        apply_filter( 'something', $b );
+    break;
+
+    case 'aa':
+        $b = 2;
+        /*
+         * A comment.
+         */
+        apply_filter( 'something', $b );
+    break;
+}
+
+if ($foo) {
+    if ($oo) {
+        /*
+         *
+         *
+        */
+    }
+}
+
 function foo()
 {
     $foo = array(
