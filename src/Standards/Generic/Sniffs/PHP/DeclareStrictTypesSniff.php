@@ -122,14 +122,7 @@ class DeclareStrictTypesSniff implements Sniff
             if ($string !== false
                 && stripos($tokens[$string]['content'], 'strict_types') !== false
             ) {
-                if (isset($tokens[$next]['scope_closer']) === true
-                    && $next === $tokens[$next]['scope_condition']
-                ) {
-                    $eos = $tokens[$next]['scope_closer'];
-                } else {
-                    $eos = $phpcsFile->findEndOfStatement($next);
-                }
-
+                $eos   = $phpcsFile->findEndOfStatement($next);
                 $prev  = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
                 $after = $phpcsFile->findNext(T_WHITESPACE, ($eos + 1), null, true);
 
