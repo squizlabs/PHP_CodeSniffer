@@ -1,4 +1,8 @@
 <?php
+[
+ $a,
+ [$b],
+] = $array;
 
 function test()
 {
@@ -8,7 +12,6 @@ function test()
 
     $c = ['a' => 1];
 }
-
 
 class TestClass
 {

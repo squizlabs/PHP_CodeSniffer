@@ -1,4 +1,5 @@
 <?php
+[$a, [$b]] = $array;
 
 function test()
 {
@@ -10,7 +11,6 @@ function test()
             'a' => 1,
          ];
 }
-
 
 class TestClass
 {
