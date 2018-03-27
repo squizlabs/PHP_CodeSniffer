@@ -310,7 +310,7 @@ class DeclareStrictTypesSniff implements Sniff
 
                 $this->checkOtherDeclarations($phpcsFile, $next);
 
-                return (count($tokens) + 1);
+                return $phpcsFile->numTokens;
             }//end if
         }//end if
 
@@ -323,7 +323,7 @@ class DeclareStrictTypesSniff implements Sniff
             $phpcsFile->fixer->addContent($stackPtr, $this->format.$phpcsFile->eolChar);
         }
 
-        return (count($tokens) + 1);
+        return $phpcsFile->numTokens;
 
     }//end process()
 
