@@ -1549,7 +1549,7 @@ class PHP extends Tokenizer
                     T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
                 ];
 
-                for ($x = ($i - 1); $x > 0; $x--) {
+                for ($x = ($i - 1); $x >= 0; $x--) {
                     // If we hit a scope opener, the statement has ended
                     // without finding anything, so it's probably an array
                     // using PHP 7.1 short list syntax.
