@@ -101,7 +101,7 @@ class ArrayDeclarationUnitTest extends AbstractSniffUnitTest
             ];
         case 'ArrayDeclarationUnitTest.2.inc':
             return [
-                2 => 1,
+                2   => 1,
                 10  => 1,
                 23  => 2,
                 24  => 2,
