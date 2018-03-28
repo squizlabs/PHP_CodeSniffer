@@ -1146,7 +1146,7 @@ class PHP extends Tokenizer
                 as T_HASHBANG while PHP proper uses T_INLINE_HTML.
             */
 
-            if ($tokenIsArray === true && Util\Tokens::tokenName($token[0]) === 'T_HASHBANG') {
+            if ($tokenIsArray === true && defined('T_HASHBANG') === true && $token[0] === T_HASHBANG) {
                 $finalTokens[$newStackPtr] = [
                     'content' => $token[1],
                     'code'    => T_INLINE_HTML,
