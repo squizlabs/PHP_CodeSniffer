@@ -53,6 +53,7 @@
             <xs:element name="exclude-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
             <xs:element name="include-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
             <xs:element name="properties" type="propertiesType" maxOccurs="1" minOccurs="0"></xs:element>
+            <xs:element name="file" type="xs:string" maxOccurs="unbounded" minOccurs="0"></xs:element>
         </xs:choice>
         <xs:attribute name="ref" type="xs:string" use="required"></xs:attribute>
     </xs:complexType>
