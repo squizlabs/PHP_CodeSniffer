@@ -29,6 +29,7 @@
         <exclude name="PEAR.Commenting.FileComment.MissingPackageTag" />
         <exclude name="PEAR.Commenting.FileComment.MissingLinkTag" />
         <exclude name="PEAR.Commenting.FileComment.MissingVersion" />
+        <exclude name="PEAR.Commenting.InlineComment" />
     </rule>
 
     <!-- Include some sniffs from other standards that don't conflict with PEAR -->
