@@ -48,6 +48,7 @@
     <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing" />
     <rule ref="Squiz.Operators.ComparisonOperatorUsage" />
     <rule ref="Squiz.PHP.DisallowInlineIf" />
+    <rule ref="Squiz.Scope.MethodScope" />
     <rule ref="Squiz.Strings.ConcatenationSpacing" />
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
     <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace" />
