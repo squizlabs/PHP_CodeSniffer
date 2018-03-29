@@ -90,6 +90,10 @@ class Standards
                 continue;
             }
 
+            if (is_dir($standardsDir) === false) {
+                continue;
+            }
+
             $di = new \DirectoryIterator($standardsDir);
             foreach ($di as $file) {
                 if ($file->isDir() === true && $file->isDot() === false) {

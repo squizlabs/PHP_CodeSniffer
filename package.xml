@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
   - The JSON report format now does escaping in error source codes as well as error messages
     -- Thanks to Martin Vasel for the patch
+  - Invalid installed_paths values are now ignored instead of causing a fatal error
   - Improved testability of custom rulesets by allowing the installed standards to be overridden
     -- Thanks to Timo Schinkel for the patch
   - The key used for caching PHPCS runs now includes all set config values
