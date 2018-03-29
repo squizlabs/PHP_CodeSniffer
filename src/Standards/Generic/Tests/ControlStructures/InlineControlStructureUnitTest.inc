@@ -222,3 +222,16 @@ if ($this) {
     if ($that)
         foo(${$a[$b]});
 }
+
+while (!$this->readLine($tokens, $tag)); //phpcs:ignore Standard.Category.Sniff
+
+while (!$this->readLine($tokens, $tag)); // comment
+
+while (!$this->readLine($tokens, $tag)); /* comment */
+
+foreach ($stringParade as $hit)
+    $hitParade[] = $hit + 0; // phpcs:ignore Standard.Category.Sniff
+
+if ($bar)
+    if ($foo) echo 'hi'; /* @phpcs:ignore Standard.Category.Sniff */
+
