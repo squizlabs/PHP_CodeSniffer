@@ -736,6 +736,20 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                <?php/** is tokenized incorrectly as T_OPEN_TAG and T_STRING
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_OPEN_TAG
+                && $token[1] === '<?'
+                && $tokens[($stackPtr + 1)][0] === T_STRING
+                && strtolower($tokens[($stackPtr + 1)][1]) === 'php'
+            ) {
+                $token[1] .= $tokens[($stackPtr + 1)][1];
+                $tokens[($stackPtr + 1)] = null;
+            }
+
+            /*
                 Before PHP 7.0, the "yield from" was tokenized as
                 T_YIELD, T_WHITESPACE and T_STRING. So look for
                 and change this token in earlier versions.
