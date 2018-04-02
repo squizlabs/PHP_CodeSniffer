@@ -11,7 +11,7 @@ function someFunctionWithAVeryLongName2($firstParameter='something',
 ) {
 }
 
-function blah() 
+function blah()
 {
 }
 

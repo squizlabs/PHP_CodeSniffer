@@ -15,7 +15,7 @@ function someFunctionWithAVeryLongName2(
 ) {
 }
 
-function blah() 
+function blah()
 {
 }
 
@@ -69,7 +69,7 @@ var a = Function('return 1+1');
 
 class test
 {
-    myFunction() 
+    myFunction()
     {
        return false;
     }

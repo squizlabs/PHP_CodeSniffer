@@ -117,11 +117,16 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
                         $phpcsFile->fixer->addContentBefore($openingBrace, $tokens[$indent]['content']);
                     }
 
+                    if ($tokens[($openingBrace - 1)]['code'] === T_WHITESPACE) {
+                        $phpcsFile->fixer->replaceToken(($openingBrace - 1), '');
+                    }
+
                     $phpcsFile->fixer->addNewlineBefore($openingBrace);
                 } else {
                     $phpcsFile->fixer->replaceToken($openingBrace, '');
                     $phpcsFile->fixer->addNewlineBefore($nextLine);
                     $phpcsFile->fixer->addContentBefore($nextLine, '{');
+
                     if ($tokens[$indent]['code'] === T_WHITESPACE) {
                         $phpcsFile->fixer->addContentBefore($nextLine, $tokens[$indent]['content']);
                     }

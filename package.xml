@@ -72,6 +72,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The new code for this error message is Generic.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition
     -- The error code for all other cases remains as Generic.CodeAnalysis.AssignmentInCondition.Found
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.Functions.OpeningFunctionBraceBsdAllman now longer leaves trailing whitespace when moving the opening brace during fixing
+    -- Also applies to fixes made by PEAR.Functions.FunctionDeclaration and Squiz.Functions.MultiLineFunctionDeclaration
   - Generic.WhiteSpace.ScopeIndent now does a better job of fixing the indent of multi-line comments
   - PEAR.Commenting.FunctionComment now report a different error code for param comment lines with too much padding
     -- Previously, any lines of a param comment that don't start at the exact comment position got the same error code
