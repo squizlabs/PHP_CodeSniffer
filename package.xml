@@ -33,6 +33,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The new Generic sniff now also checks many more language constructs to enforce additional spacing rules
        --- Thanks to Mponos George for the contribution
 
+  - The current method for setting array properties in ruleset files has been deprecated and will be removed in version 4
+    -- Currently, setting an array value uses the string syntax "print=>echo,create_function=>null"
+    -- Now, invididual array elements are specifed using a new "element" tag with "key" and "value" attributes
+       -- For example, element key="print" value="echo"
+    -- Thanks to Michał Bundyra for the patch
+
   - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
   - The JSON report format now does escaping in error source codes as well as error messages
     -- Thanks to Martin Vasel for the patch

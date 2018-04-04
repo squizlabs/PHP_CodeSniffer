@@ -947,6 +947,7 @@ class Ruleset
                     ) {
                         $values = [];
                         if (isset($prop->element) === true) {
+                            $printValue = '';
                             foreach ($prop->element as $element) {
                                 if ($this->shouldProcessElement($element) === false) {
                                     continue;
@@ -956,12 +957,17 @@ class Ruleset
                                 if (isset($element['key']) === true) {
                                     $key          = (string) $element['key'];
                                     $values[$key] = $value;
+                                    $printValue  .= $key.'=>'.$value.',';
                                 } else {
-                                    $values[] = $value;
+                                    $values[]    = $value;
+                                    $printValue .= $value.',';
                                 }
                             }
+
+                            $printValue = rtrim($printValue, ',');
                         } else {
-                            $value = (string) $prop['value'];
+                            $value      = (string) $prop['value'];
+                            $printValue = $value;
                             foreach (explode(',', $value) as $val) {
                                 list($k, $v) = explode('=>', $val.'=>');
                                 if ($v !== '') {
@@ -975,7 +981,7 @@ class Ruleset
                         $this->ruleset[$code]['properties'][$name] = $values;
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo str_repeat("\t", $depth);
-                            echo "\t\t=> array property \"$name\" set to \"".print_r($values, true).'"';
+                            echo "\t\t=> array property \"$name\" set to \"$printValue\"";
                             if ($code !== $ref) {
                                 echo " for $code";
                             }
