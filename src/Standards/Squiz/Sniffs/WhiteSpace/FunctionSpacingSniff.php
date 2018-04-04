@@ -202,7 +202,7 @@ class FunctionSpacingSniff implements Sniff
             }
         }
 
-        if (is_null($prevLineToken) === true) {
+        if ($prevLineToken === null) {
             // Never found the previous line, which means
             // there are 0 blank lines before the function.
             $foundLines  = 0;

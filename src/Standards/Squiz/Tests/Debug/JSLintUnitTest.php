@@ -24,7 +24,11 @@ class JSLintUnitTest extends AbstractSniffUnitTest
     protected function shouldSkipTest()
     {
         $jslPath = Config::getExecutablePath('jslint');
-        return (is_null($jslPath));
+        if ($jslPath === null) {
+            return true;
+        }
+
+        return false;
 
     }//end shouldSkipTest()
 
