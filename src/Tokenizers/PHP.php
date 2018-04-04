@@ -651,7 +651,7 @@ class PHP extends Tokenizer
                 // Check if this is actually a nowdoc and use a different token
                 // to help the sniffs.
                 $nowdoc = false;
-                if ($token[1][3] === "'") {
+                if (strpos($token[1], "'") !== false) {
                     $finalTokens[$newStackPtr]['code'] = T_START_NOWDOC;
                     $finalTokens[$newStackPtr]['type'] = 'T_START_NOWDOC';
                     $nowdoc = true;
