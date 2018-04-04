@@ -945,21 +945,37 @@ class Ruleset
                     if (isset($prop['type']) === true
                         && (string) $prop['type'] === 'array'
                     ) {
-                        $value  = (string) $prop['value'];
                         $values = [];
-                        foreach (explode(',', $value) as $val) {
-                            list($k, $v) = explode('=>', $val.'=>');
-                            if ($v !== '') {
-                                $values[trim($k)] = trim($v);
-                            } else {
-                                $values[] = trim($k);
+                        if (isset($prop->element) === true) {
+                            foreach ($prop->element as $element) {
+                                if ($this->shouldProcessElement($element) === false) {
+                                    continue;
+                                }
+
+                                $value = (string) $element['value'];
+                                if (isset($element['key']) === true) {
+                                    $key          = (string) $element['key'];
+                                    $values[$key] = $value;
+                                } else {
+                                    $values[] = $value;
+                                }
                             }
-                        }
+                        } else {
+                            $value = (string) $prop['value'];
+                            foreach (explode(',', $value) as $val) {
+                                list($k, $v) = explode('=>', $val.'=>');
+                                if ($v !== '') {
+                                    $values[trim($k)] = trim($v);
+                                } else {
+                                    $values[] = trim($k);
+                                }
+                            }
+                        }//end if
 
                         $this->ruleset[$code]['properties'][$name] = $values;
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo str_repeat("\t", $depth);
-                            echo "\t\t=> array property \"$name\" set to \"$value\"";
+                            echo "\t\t=> array property \"$name\" set to \"".print_r($values, true).'"';
                             if ($code !== $ref) {
                                 echo " for $code";
                             }
