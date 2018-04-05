@@ -350,3 +350,11 @@ $a = array
 ( 'a', 'b' );
 
 $a = array /* comment */ ( 'a', 'b' );
+
+$x = array(
+    'a' => false);
+
+$x = array(
+    'xxxx'   => array('aaaaaaaaaa' => 'ccccccccccc',
+                 'bbbbbbbb'   => false),
+);
