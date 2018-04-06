@@ -42,6 +42,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
   - You can now apply include-pattern rules to individual message codes in a ruleset like you can with exclude-pattern rules
     -- Previously, include-pattern rules only applied to entire sniffs
+    -- If a message code has both include and exclude patterns, the exclude patterns will be ignored
   - The JSON report format now does escaping in error source codes as well as error messages
     -- Thanks to Martin Vasel for the patch
   - Invalid installed_paths values are now ignored instead of causing a fatal error
