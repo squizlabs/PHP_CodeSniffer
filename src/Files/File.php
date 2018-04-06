@@ -239,7 +239,8 @@ class File
         $this->configCache['errorSeverity']   = $this->config->errorSeverity;
         $this->configCache['warningSeverity'] = $this->config->warningSeverity;
         $this->configCache['recordErrors']    = $this->config->recordErrors;
-        $this->configCache['ignorePatterns']  = $this->ruleset->getIgnorePatterns();
+        $this->configCache['ignorePatterns']  = $this->ruleset->ignorePatterns;
+        $this->configCache['includePatterns'] = $this->ruleset->includePatterns;
 
     }//end __construct()
 
@@ -937,11 +938,21 @@ class File
 
         // Make sure we are not ignoring this file.
         foreach ($checkCodes as $checkCode) {
-            if (isset($this->configCache['ignorePatterns'][$checkCode]) === false) {
+            $patterns = null;
+
+            if (isset($this->configCache['includePatterns'][$checkCode]) === true) {
+                $patterns  = $this->configCache['includePatterns'][$checkCode];
+                $excluding = false;
+            } else if (isset($this->configCache['ignorePatterns'][$checkCode]) === true) {
+                $patterns  = $this->configCache['ignorePatterns'][$checkCode];
+                $excluding = true;
+            }
+
+            if ($patterns === null) {
                 continue;
             }
 
-            foreach ($this->configCache['ignorePatterns'][$checkCode] as $pattern => $type) {
+            foreach ($patterns as $pattern => $type) {
                 // While there is support for a type of each pattern
                 // (absolute or relative) we don't actually support it here.
                 $replacements = [
@@ -957,7 +968,11 @@ class File
                 }
 
                 $pattern = '`'.strtr($pattern, $replacements).'`i';
-                if (preg_match($pattern, $this->path) === 1) {
+                $matched = preg_match($pattern, $this->path);
+                if (($matched === 1 && $excluding === true)
+                    || ($matched === 0 && $excluding === false)
+                ) {
+                    // This file path is being excluded, or not included.
                     $this->ignoredCodes[$checkCode] = true;
                     return false;
                 }
