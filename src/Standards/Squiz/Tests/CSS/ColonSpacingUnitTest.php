@@ -25,18 +25,19 @@ class ColonSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                3  => 1,
-                4  => 2,
-                5  => 1,
-                6  => 1,
-                8  => 1,
-                27 => 1,
-                28 => 1,
-                29 => 1,
-                30 => 1,
-                32 => 1,
-               );
+        return [
+            3  => 1,
+            4  => 2,
+            5  => 1,
+            6  => 1,
+            8  => 1,
+            27 => 1,
+            28 => 1,
+            29 => 1,
+            30 => 1,
+            32 => 1,
+            41 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -51,7 +52,7 @@ class ColonSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

@@ -1228,6 +1228,22 @@ switch ($sContext) {
 	}
 }
 
+array_map(
+	static function ( $item ) {
+		echo $item;
+	},
+	$some_array
+);
+
+/**
+ * Comment.
+ */
+(function () use ($app) {
+	echo 'hi';
+})();
+
+$app->run();
+
 public function foo()
 {
 	$foo('some
@@ -1242,6 +1258,33 @@ public function foo()
 	$foo(
 	'some long description', function () {
 	});
+}
+
+switch ( $a ) {
+	case 'a':
+		$b = 2;
+		/**
+		 * A comment.
+		 */
+		apply_filter( 'something', $b );
+	break;
+
+	case 'aa':
+		$b = 2;
+		/*
+		 * A comment.
+		 */
+		apply_filter( 'something', $b );
+	break;
+}
+
+if ($foo) {
+	if ($oo) {
+		/*
+		 *
+		 *
+		*/
+	}
 }
 
 function foo()

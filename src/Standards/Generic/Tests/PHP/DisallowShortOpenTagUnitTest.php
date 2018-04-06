@@ -24,7 +24,7 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
      */
     protected function getTestFiles($testFileBase)
     {
-        $testFiles = array($testFileBase.'1.inc');
+        $testFiles = [$testFileBase.'1.inc'];
 
         $option = (boolean) ini_get('short_open_tag');
         if ($option === true || defined('HHVM_VERSION') === true) {
@@ -52,28 +52,21 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowShortOpenTagUnitTest.1.inc':
-            if (PHP_VERSION_ID < 50400) {
-                $option = (boolean) ini_get('short_open_tag');
-                if ($option === false) {
-                    // Short open tags are off and PHP isn't doing short echo by default.
-                    return array();
-                }
-            }
-            return array(
-                    5  => 1,
-                    6  => 1,
-                    7  => 1,
-                    10 => 1,
-                   );
+            return [
+                5  => 1,
+                6  => 1,
+                7  => 1,
+                10 => 1,
+            ];
         case 'DisallowShortOpenTagUnitTest.2.inc':
-            return array(
-                    2 => 1,
-                    3 => 1,
-                    4 => 1,
-                    7 => 1,
-                   );
+            return [
+                2 => 1,
+                3 => 1,
+                4 => 1,
+                7 => 1,
+            ];
         default:
-            return array();
+            return [];
         }//end switch
 
     }//end getErrorList()
@@ -93,27 +86,15 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowShortOpenTagUnitTest.1.inc':
-            if (PHP_VERSION_ID < 50400) {
-                $option = (boolean) ini_get('short_open_tag');
-                if ($option === false) {
-                    // Short open tags are off and PHP isn't doing short echo by default.
-                    return array(
-                            5  => 1,
-                            6  => 1,
-                            7  => 1,
-                            10 => 1,
-                           );
-                }
-            }
-            return array();
+            return [];
         case 'DisallowShortOpenTagUnitTest.3.inc':
-            return array(
-                    3  => 1,
-                    6  => 1,
-                    11 => 1,
-                   );
+            return [
+                3  => 1,
+                6  => 1,
+                11 => 1,
+            ];
         default:
-            return array();
+            return [];
         }//end switch
 
     }//end getWarningList()

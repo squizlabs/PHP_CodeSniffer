@@ -11,7 +11,7 @@ function someFunctionWithAVeryLongName2($firstParameter='something',
 ) {
 }
 
-function blah() 
+function blah()
 {
 }
 
@@ -237,3 +237,5 @@ function foo(
 /* hello */ echo 'hi';
     // body
 }
+
+$a = function () {

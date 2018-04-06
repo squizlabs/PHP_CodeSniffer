@@ -25,7 +25,7 @@ class ReturnFunctionValueUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -40,11 +40,11 @@ class ReturnFunctionValueUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                2 => 1,
-                3 => 1,
-                4 => 1,
-               );
+        return [
+            2 => 1,
+            3 => 1,
+            4 => 1,
+        ];
 
     }//end getWarningList()
 

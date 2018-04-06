@@ -25,7 +25,7 @@ class AssignmentInConditionUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -40,41 +40,41 @@ class AssignmentInConditionUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                46 => 1,
-                47 => 1,
-                48 => 1,
-                49 => 1,
-                50 => 1,
-                51 => 1,
-                52 => 1,
-                53 => 1,
-                54 => 1,
-                55 => 1,
-                56 => 1,
-                57 => 1,
-                58 => 1,
-                59 => 1,
-                60 => 1,
-                61 => 2,
-                63 => 1,
-                64 => 1,
-                67 => 1,
-                68 => 1,
-                69 => 1,
-                70 => 1,
-                71 => 1,
-                72 => 1,
-                73 => 1,
-                75 => 1,
-                77 => 1,
-                80 => 2,
-                84 => 1,
-                85 => 2,
-                88 => 1,
-                90 => 1,
-                92 => 1,
-               );
+        return [
+            46 => 1,
+            47 => 1,
+            48 => 1,
+            49 => 1,
+            50 => 1,
+            51 => 1,
+            52 => 1,
+            53 => 1,
+            54 => 1,
+            55 => 1,
+            56 => 1,
+            57 => 1,
+            58 => 1,
+            59 => 1,
+            60 => 1,
+            61 => 2,
+            63 => 1,
+            64 => 1,
+            67 => 1,
+            68 => 1,
+            69 => 1,
+            70 => 1,
+            71 => 1,
+            72 => 1,
+            73 => 1,
+            75 => 1,
+            77 => 1,
+            80 => 2,
+            84 => 1,
+            85 => 2,
+            88 => 1,
+            90 => 1,
+            92 => 1,
+        ];
 
     }//end getWarningList()
 

@@ -37,7 +37,7 @@ class ForLoopShouldBeWhileLoopSniff implements Sniff
      */
     public function register()
     {
-        return array(T_FOR);
+        return [T_FOR];
 
     }//end register()
 
@@ -64,11 +64,11 @@ class ForLoopShouldBeWhileLoopSniff implements Sniff
         $next = ++$token['parenthesis_opener'];
         $end  = --$token['parenthesis_closer'];
 
-        $parts = array(
-                  0,
-                  0,
-                  0,
-                 );
+        $parts = [
+            0,
+            0,
+            0,
+        ];
         $index = 0;
 
         for (; $next <= $end; ++$next) {

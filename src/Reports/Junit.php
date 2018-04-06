@@ -110,7 +110,7 @@ class Junit implements Report
     ) {
         // Figure out the total number of tests.
         $tests   = 0;
-        $matches = array();
+        $matches = [];
         preg_match_all('/tests="([0-9]+)"/', $cachedData, $matches);
         if (isset($matches[1]) === true) {
             foreach ($matches[1] as $match) {

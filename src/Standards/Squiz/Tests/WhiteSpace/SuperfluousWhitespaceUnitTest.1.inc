@@ -46,6 +46,8 @@ function myFunction3()
     
 }
 
+// Ordinary comment with extra whitespace at the end    
+
 // phpcs:set Squiz.WhiteSpace.SuperfluousWhitespace ignoreBlankLines false
  
 

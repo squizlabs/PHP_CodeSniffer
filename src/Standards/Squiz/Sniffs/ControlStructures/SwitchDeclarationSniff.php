@@ -21,10 +21,10 @@ class SwitchDeclarationSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * The number of spaces code should be indented.
@@ -41,7 +41,7 @@ class SwitchDeclarationSniff implements Sniff
      */
     public function register()
     {
-        return array(T_SWITCH);
+        return [T_SWITCH];
 
     }//end register()
 
@@ -72,7 +72,7 @@ class SwitchDeclarationSniff implements Sniff
         $caseCount     = 0;
         $foundDefault  = false;
 
-        while (($nextCase = $phpcsFile->findNext(array(T_CASE, T_DEFAULT, T_SWITCH), ($nextCase + 1), $switch['scope_closer'])) !== false) {
+        while (($nextCase = $phpcsFile->findNext([T_CASE, T_DEFAULT, T_SWITCH], ($nextCase + 1), $switch['scope_closer'])) !== false) {
             // Skip nested SWITCH statements; they are handled on their own.
             if ($tokens[$nextCase]['code'] === T_SWITCH) {
                 $nextCase = $tokens[$nextCase]['scope_closer'];
@@ -90,10 +90,10 @@ class SwitchDeclarationSniff implements Sniff
             if ($tokens[$nextCase]['content'] !== strtolower($tokens[$nextCase]['content'])) {
                 $expected = strtolower($tokens[$nextCase]['content']);
                 $error    = strtoupper($type).' keyword must be lowercase; expected "%s" but found "%s"';
-                $data     = array(
-                             $expected,
-                             $tokens[$nextCase]['content'],
-                            );
+                $data     = [
+                    $expected,
+                    $tokens[$nextCase]['content'],
+                ];
 
                 $fix = $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
                 if ($fix === true) {

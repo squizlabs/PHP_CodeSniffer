@@ -28,17 +28,17 @@ class FirebugConsoleUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='FirebugConsoleUnitTest.js')
     {
         if ($testFile !== 'FirebugConsoleUnitTest.js') {
-            return array();
+            return [];
         }
 
-        return array(
-                1 => 1,
-                2 => 1,
-                3 => 1,
-                5 => 1,
-                6 => 1,
-                8 => 1,
-               );
+        return [
+            1 => 1,
+            2 => 1,
+            3 => 1,
+            5 => 1,
+            6 => 1,
+            8 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -53,7 +53,7 @@ class FirebugConsoleUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

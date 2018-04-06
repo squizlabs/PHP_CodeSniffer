@@ -25,14 +25,14 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                15 => 1,
-                24 => 1,
-                25 => 1,
-                27 => 1,
-                28 => 1,
-                29 => 1,
-               );
+        return [
+            15 => 1,
+            24 => 1,
+            25 => 1,
+            27 => 1,
+            28 => 1,
+            29 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -47,7 +47,7 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

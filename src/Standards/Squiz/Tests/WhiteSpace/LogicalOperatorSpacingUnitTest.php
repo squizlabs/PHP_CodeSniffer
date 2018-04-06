@@ -27,13 +27,13 @@ class LogicalOperatorSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='LogicalOperatorSpacingUnitTest.inc')
     {
-        return array(
-                4  => 2,
-                5  => 3,
-                6  => 3,
-                15 => 1,
-                17 => 1,
-               );
+        return [
+            4  => 2,
+            5  => 3,
+            6  => 3,
+            15 => 1,
+            17 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -48,7 +48,7 @@ class LogicalOperatorSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

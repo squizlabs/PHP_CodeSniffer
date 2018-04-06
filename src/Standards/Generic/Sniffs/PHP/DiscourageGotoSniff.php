@@ -23,10 +23,10 @@ class DiscourageGotoSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_GOTO,
-                T_GOTO_LABEL,
-               );
+        return [
+            T_GOTO,
+            T_GOTO_LABEL,
+        ];
 
     }//end register()
 

@@ -25,14 +25,14 @@ class UnusedSystemUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2  => 1,
-                5  => 1,
-                8  => 1,
-                24 => 1,
-                34 => 1,
-                54 => 1,
-               );
+        return [
+            2  => 1,
+            5  => 1,
+            8  => 1,
+            24 => 1,
+            34 => 1,
+            54 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -47,7 +47,7 @@ class UnusedSystemUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

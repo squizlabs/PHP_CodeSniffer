@@ -25,11 +25,11 @@ class SpaceAfterNotUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2 => 2,
-                4 => 2,
-                5 => 1,
-               );
+        return [
+            2 => 2,
+            4 => 2,
+            5 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -44,7 +44,7 @@ class SpaceAfterNotUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

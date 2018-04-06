@@ -24,7 +24,7 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
      */
     protected function getTestFiles($testFileBase)
     {
-        $testFiles = array($testFileBase.'1.inc');
+        $testFiles = [$testFileBase.'1.inc'];
 
         $aspTags = false;
         if (PHP_VERSION_ID < 70000) {
@@ -33,6 +33,8 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
 
         if ($aspTags === true) {
             $testFiles[] = $testFileBase.'2.inc';
+        } else {
+            $testFiles[] = $testFileBase.'3.inc';
         }
 
         return $testFiles;
@@ -66,21 +68,21 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowAlternativePHPTagsUnitTest.1.inc':
-            return array(
-                    4  => 1,
-                    7  => 1,
-                    8  => 1,
-                    11 => 1,
-                   );
+            return [
+                4  => 1,
+                7  => 1,
+                8  => 1,
+                11 => 1,
+            ];
         case 'DisallowAlternativePHPTagsUnitTest.2.inc':
-            return array(
-                    2 => 1,
-                    3 => 1,
-                    4 => 1,
-                    5 => 1,
-                   );
+            return [
+                2 => 1,
+                3 => 1,
+                4 => 1,
+                5 => 1,
+            ];
         default:
-            return array();
+            return [];
         }//end switch
 
     }//end getErrorList()
@@ -92,11 +94,22 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList($testFile='')
     {
-        return array();
+        if ($testFile === 'DisallowAlternativePHPTagsUnitTest.3.inc') {
+            return [
+                3 => 1,
+                4 => 1,
+                5 => 1,
+                6 => 1,
+            ];
+        }
+
+        return [];
 
     }//end getWarningList()
 

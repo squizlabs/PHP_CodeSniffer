@@ -15,6 +15,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Files;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class LineLengthSniff implements Sniff
 {
@@ -50,7 +51,7 @@ class LineLengthSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -108,6 +109,16 @@ class LineLengthSniff implements Sniff
             $stackPtr--;
         }
 
+        if (isset(Tokens::$phpcsCommentTokens[$tokens[$stackPtr]['code']]) === true) {
+            $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            if ($tokens[$stackPtr]['line'] !== $tokens[$prevNonWhiteSpace]['line']) {
+                // Ignore PHPCS annotation comments if they are on a line by themselves.
+                return;
+            }
+
+            unset($prevNonWhiteSpace);
+        }
+
         $lineLength = ($tokens[$stackPtr]['column'] + $tokens[$stackPtr]['length'] - 1);
 
         // Record metrics for common line length groupings.
@@ -153,18 +164,18 @@ class LineLengthSniff implements Sniff
         if ($this->absoluteLineLimit > 0
             && $lineLength > $this->absoluteLineLimit
         ) {
-            $data = array(
-                     $this->absoluteLineLimit,
-                     $lineLength,
-                    );
+            $data = [
+                $this->absoluteLineLimit,
+                $lineLength,
+            ];
 
             $error = 'Line exceeds maximum limit of %s characters; contains %s characters';
             $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else if ($lineLength > $this->lineLimit) {
-            $data = array(
-                     $this->lineLimit,
-                     $lineLength,
-                    );
+            $data = [
+                $this->lineLimit,
+                $lineLength,
+            ];
 
             $warning = 'Line exceeds %s characters; contains %s characters';
             $phpcsFile->addWarning($warning, $stackPtr, 'TooLong', $data);

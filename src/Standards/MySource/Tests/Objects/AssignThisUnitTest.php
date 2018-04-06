@@ -28,14 +28,14 @@ class AssignThisUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='AssignThisUnitTest.js')
     {
         if ($testFile !== 'AssignThisUnitTest.js') {
-            return array();
+            return [];
         }
 
-        return array(
-                7  => 1,
-                11 => 1,
-                16 => 1,
-               );
+        return [
+            7  => 1,
+            11 => 1,
+            16 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -50,7 +50,7 @@ class AssignThisUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

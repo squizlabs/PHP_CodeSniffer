@@ -25,7 +25,7 @@ class JumbledIncrementerUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -40,11 +40,11 @@ class JumbledIncrementerUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                3  => 2,
-                4  => 1,
-                20 => 1,
-               );
+        return [
+            3  => 2,
+            4  => 1,
+            20 => 1,
+        ];
 
     }//end getWarningList()
 

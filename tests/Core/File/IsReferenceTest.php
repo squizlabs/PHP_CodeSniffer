@@ -36,7 +36,7 @@ class IsReferenceTest extends TestCase
     public function setUp()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
+        $config->standards = ['Generic'];
 
         $ruleset = new Ruleset($config);
 
@@ -96,188 +96,188 @@ class IsReferenceTest extends TestCase
      */
     public function dataIsReference()
     {
-        return array(
-                array(
-                 '/* bitwiseAndA */',
-                 false,
-                ),
-                array(
-                 '/* bitwiseAndB */',
-                 false,
-                ),
-                array(
-                 '/* bitwiseAndC */',
-                 false,
-                ),
-                array(
-                 '/* bitwiseAndD */',
-                 false,
-                ),
-                array(
-                 '/* bitwiseAndE */',
-                 false,
-                ),
-                array(
-                 '/* bitwiseAndF */',
-                 false,
-                ),
-                array(
-                 '/* bitwiseAndG */',
-                 false,
-                ),
-                array(
-                 '/* bitwiseAndH */',
-                 false,
-                ),
-                array(
-                 '/* bitwiseAndI */',
-                 false,
-                ),
-                array(
-                 '/* functionReturnByReference */',
-                 true,
-                ),
-                array(
-                 '/* functionPassByReferenceA */',
-                 true,
-                ),
-                array(
-                 '/* functionPassByReferenceB */',
-                 true,
-                ),
-                array(
-                 '/* functionPassByReferenceC */',
-                 true,
-                ),
-                array(
-                 '/* functionPassByReferenceD */',
-                 true,
-                ),
-                array(
-                 '/* functionPassByReferenceE */',
-                 true,
-                ),
-                array(
-                 '/* functionPassByReferenceF */',
-                 true,
-                ),
-                array(
-                 '/* functionPassByReferenceG */',
-                 true,
-                ),
-                array(
-                 '/* foreachValueByReference */',
-                 true,
-                ),
-                array(
-                 '/* foreachKeyByReference */',
-                 true,
-                ),
-                array(
-                 '/* arrayValueByReferenceA */',
-                 true,
-                ),
-                array(
-                 '/* arrayValueByReferenceB */',
-                 true,
-                ),
-                array(
-                 '/* arrayValueByReferenceC */',
-                 true,
-                ),
-                array(
-                 '/* arrayValueByReferenceD */',
-                 true,
-                ),
-                array(
-                 '/* arrayValueByReferenceE */',
-                 true,
-                ),
-                array(
-                 '/* arrayValueByReferenceF */',
-                 true,
-                ),
-                array(
-                 '/* arrayValueByReferenceG */',
-                 true,
-                ),
-                array(
-                 '/* arrayValueByReferenceH */',
-                 true,
-                ),
-                array(
-                 '/* assignByReferenceA */',
-                 true,
-                ),
-                array(
-                 '/* assignByReferenceB */',
-                 true,
-                ),
-                array(
-                 '/* assignByReferenceC */',
-                 true,
-                ),
-                array(
-                 '/* assignByReferenceD */',
-                 true,
-                ),
-                array(
-                 '/* assignByReferenceE */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceA */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceB */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceC */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceD */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceE */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceF */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceG */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceH */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceI */',
-                 true,
-                ),
-                array(
-                 '/* passByReferenceJ */',
-                 true,
-                ),
-                array(
-                 '/* newByReferenceA */',
-                 true,
-                ),
-                array(
-                 '/* newByReferenceB */',
-                 true,
-                ),
-                array(
-                 '/* useByReference */',
-                 true,
-                ),
-               );
+        return [
+            [
+                '/* bitwiseAndA */',
+                false,
+            ],
+            [
+                '/* bitwiseAndB */',
+                false,
+            ],
+            [
+                '/* bitwiseAndC */',
+                false,
+            ],
+            [
+                '/* bitwiseAndD */',
+                false,
+            ],
+            [
+                '/* bitwiseAndE */',
+                false,
+            ],
+            [
+                '/* bitwiseAndF */',
+                false,
+            ],
+            [
+                '/* bitwiseAndG */',
+                false,
+            ],
+            [
+                '/* bitwiseAndH */',
+                false,
+            ],
+            [
+                '/* bitwiseAndI */',
+                false,
+            ],
+            [
+                '/* functionReturnByReference */',
+                true,
+            ],
+            [
+                '/* functionPassByReferenceA */',
+                true,
+            ],
+            [
+                '/* functionPassByReferenceB */',
+                true,
+            ],
+            [
+                '/* functionPassByReferenceC */',
+                true,
+            ],
+            [
+                '/* functionPassByReferenceD */',
+                true,
+            ],
+            [
+                '/* functionPassByReferenceE */',
+                true,
+            ],
+            [
+                '/* functionPassByReferenceF */',
+                true,
+            ],
+            [
+                '/* functionPassByReferenceG */',
+                true,
+            ],
+            [
+                '/* foreachValueByReference */',
+                true,
+            ],
+            [
+                '/* foreachKeyByReference */',
+                true,
+            ],
+            [
+                '/* arrayValueByReferenceA */',
+                true,
+            ],
+            [
+                '/* arrayValueByReferenceB */',
+                true,
+            ],
+            [
+                '/* arrayValueByReferenceC */',
+                true,
+            ],
+            [
+                '/* arrayValueByReferenceD */',
+                true,
+            ],
+            [
+                '/* arrayValueByReferenceE */',
+                true,
+            ],
+            [
+                '/* arrayValueByReferenceF */',
+                true,
+            ],
+            [
+                '/* arrayValueByReferenceG */',
+                true,
+            ],
+            [
+                '/* arrayValueByReferenceH */',
+                true,
+            ],
+            [
+                '/* assignByReferenceA */',
+                true,
+            ],
+            [
+                '/* assignByReferenceB */',
+                true,
+            ],
+            [
+                '/* assignByReferenceC */',
+                true,
+            ],
+            [
+                '/* assignByReferenceD */',
+                true,
+            ],
+            [
+                '/* assignByReferenceE */',
+                true,
+            ],
+            [
+                '/* passByReferenceA */',
+                true,
+            ],
+            [
+                '/* passByReferenceB */',
+                true,
+            ],
+            [
+                '/* passByReferenceC */',
+                true,
+            ],
+            [
+                '/* passByReferenceD */',
+                true,
+            ],
+            [
+                '/* passByReferenceE */',
+                true,
+            ],
+            [
+                '/* passByReferenceF */',
+                true,
+            ],
+            [
+                '/* passByReferenceG */',
+                true,
+            ],
+            [
+                '/* passByReferenceH */',
+                true,
+            ],
+            [
+                '/* passByReferenceI */',
+                true,
+            ],
+            [
+                '/* passByReferenceJ */',
+                true,
+            ],
+            [
+                '/* newByReferenceA */',
+                true,
+            ],
+            [
+                '/* newByReferenceB */',
+                true,
+            ],
+            [
+                '/* useByReference */',
+                true,
+            ],
+        ];
 
     }//end dataIsReference()
 

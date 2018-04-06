@@ -37,7 +37,7 @@ class NoSilencedErrorsSniff implements Sniff
      */
     public function register()
     {
-        return array(T_ASPERAND);
+        return [T_ASPERAND];
 
     }//end register()
 
@@ -53,7 +53,6 @@ class NoSilencedErrorsSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $error = 'Silencing errors is forbidden';
         if ($this->error === true) {
             $error = 'Silencing errors is forbidden';
             $phpcsFile->addError($error, $stackPtr, 'Forbidden');

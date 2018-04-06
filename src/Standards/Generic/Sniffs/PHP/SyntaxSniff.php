@@ -32,7 +32,7 @@ class SyntaxSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -62,13 +62,13 @@ class SyntaxSniff implements Sniff
 
         $fileName = escapeshellarg($phpcsFile->getFilename());
         if (defined('HHVM_VERSION') === false) {
-            $cmd = escapeshellcmd($this->phpPath)." -l -d error_prepend_string='' $fileName 2>&1";
+            $cmd = escapeshellcmd($this->phpPath)." -l -d display_errors=1 -d error_prepend_string='' $fileName 2>&1";
         } else {
             $cmd = escapeshellcmd($this->phpPath)." -l $fileName 2>&1";
         }
 
         $output  = shell_exec($cmd);
-        $matches = array();
+        $matches = [];
         if (preg_match('/^.*error:(.*) in .* on line ([0-9]+)/m', trim($output), $matches) === 1) {
             $error = trim($matches[1]);
             $line  = (int) $matches[2];

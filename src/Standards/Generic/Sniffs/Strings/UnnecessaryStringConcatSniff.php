@@ -21,10 +21,10 @@ class UnnecessaryStringConcatSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * If true, an error will be thrown; otherwise a warning.
@@ -51,10 +51,10 @@ class UnnecessaryStringConcatSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_STRING_CONCAT,
-                T_PLUS,
-               );
+        return [
+            T_STRING_CONCAT,
+            T_PLUS,
+        ];
 
     }//end register()
 

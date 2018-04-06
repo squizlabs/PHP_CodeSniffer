@@ -25,12 +25,12 @@ class DisallowSelfActionsUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                12 => 1,
-                13 => 1,
-                28 => 1,
-                29 => 1,
-               );
+        return [
+            12 => 1,
+            13 => 1,
+            28 => 1,
+            29 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -45,7 +45,7 @@ class DisallowSelfActionsUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

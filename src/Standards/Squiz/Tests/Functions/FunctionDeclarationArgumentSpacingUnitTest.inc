@@ -75,3 +75,12 @@ function MissingParamTypeInDocBlock(array$a = null, callable$c, \ArrayObject$o, 
 function myFunc(...$args) {}
 function myFunc( ...$args) {}
 function myFunc(... $args) {}
+
+function foo( // comment
+    $bar,
+    \NS\ClassName     $nsTypeHint,
+    /* not a type hint */ $baz,
+    string $withTypeHint
+) { // comment
+    // ...
+}

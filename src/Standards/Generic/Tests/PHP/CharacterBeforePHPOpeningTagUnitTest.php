@@ -29,10 +29,10 @@ class CharacterBeforePHPOpeningTagUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'CharacterBeforePHPOpeningTagUnitTest.1.inc':
-            return array(2 => 1);
+            return [2 => 1];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -49,7 +49,7 @@ class CharacterBeforePHPOpeningTagUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

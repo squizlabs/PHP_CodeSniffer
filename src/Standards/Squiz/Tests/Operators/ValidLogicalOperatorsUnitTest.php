@@ -25,11 +25,11 @@ class ValidLogicalOperatorsUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                5  => 1,
-                11 => 1,
-                17 => 2,
-               );
+        return [
+            5  => 1,
+            11 => 1,
+            17 => 2,
+        ];
 
     }//end getErrorList()
 
@@ -44,7 +44,7 @@ class ValidLogicalOperatorsUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

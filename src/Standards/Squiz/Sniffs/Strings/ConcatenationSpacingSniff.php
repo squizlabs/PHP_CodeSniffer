@@ -38,7 +38,7 @@ class ConcatenationSpacingSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STRING_CONCAT);
+        return [T_STRING_CONCAT];
 
     }//end register()
 
@@ -104,7 +104,7 @@ class ConcatenationSpacingSniff implements Sniff
 
         if ($this->spacing === 0) {
             $message = 'Concat operator must not be surrounded by spaces';
-            $data    = array();
+            $data    = [];
         } else {
             if ($this->spacing > 1) {
                 $message = 'Concat operator must be surrounded by %s spaces';
@@ -112,7 +112,7 @@ class ConcatenationSpacingSniff implements Sniff
                 $message = 'Concat operator must be surrounded by a single space';
             }
 
-            $data = array($this->spacing);
+            $data = [$this->spacing];
         }
 
         $fix = $phpcsFile->addFixableError($message, $stackPtr, 'PaddingFound', $data);

@@ -28,22 +28,28 @@ class FileCommentUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='FileCommentUnitTest.inc')
     {
         switch ($testFile) {
-        case 'FileCommentUnitTest.inc':
+        case 'FileCommentUnitTest.1.inc':
         case 'FileCommentUnitTest.js':
-            return array(
-                    1  => 1,
-                    22 => 2,
-                    23 => 1,
-                    24 => 2,
-                    25 => 2,
-                    26 => 1,
-                    27 => 2,
-                    28 => 2,
-                    32 => 2,
-                   );
+            return [
+                1  => 1,
+                22 => 2,
+                23 => 1,
+                24 => 2,
+                25 => 2,
+                26 => 1,
+                27 => 2,
+                28 => 2,
+                32 => 2,
+            ];
+        case 'FileCommentUnitTest.3.inc':
+            // HHVM just removes the entire comment token, as if it was never there.
+            if (defined('HHVM_VERSION') === true) {
+                return [1 => 1];
+            }
+            return [];
         default:
-            return array();
-        }
+            return [];
+        }//end switch
 
     }//end getErrorList()
 
@@ -58,7 +64,7 @@ class FileCommentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

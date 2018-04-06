@@ -20,7 +20,7 @@ class FirebugConsoleSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('JS');
+    public $supportedTokenizers = ['JS'];
 
 
     /**
@@ -30,12 +30,12 @@ class FirebugConsoleSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_STRING,
-                T_PROPERTY,
-                T_LABEL,
-                T_OBJECT,
-               );
+        return [
+            T_STRING,
+            T_PROPERTY,
+            T_LABEL,
+            T_OBJECT,
+        ];
 
     }//end register()
 

@@ -20,7 +20,7 @@ class DisallowObjectStringIndexSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('JS');
+    public $supportedTokenizers = ['JS'];
 
 
     /**
@@ -30,7 +30,7 @@ class DisallowObjectStringIndexSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_SQUARE_BRACKET);
+        return [T_OPEN_SQUARE_BRACKET];
 
     }//end register()
 

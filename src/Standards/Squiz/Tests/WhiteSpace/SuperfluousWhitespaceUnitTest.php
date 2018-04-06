@@ -28,50 +28,57 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='SuperfluousWhitespaceUnitTest.inc')
     {
         switch ($testFile) {
-        case 'SuperfluousWhitespaceUnitTest.inc':
-            return array(
-                    2  => 1,
-                    4  => 1,
-                    5  => 1,
-                    6  => 1,
-                    7  => 1,
-                    16 => 1,
-                    23 => 1,
-                    28 => 1,
-                    33 => 1,
-                    50 => 1,
-                    56 => 1,
-                    57 => 1,
-                    60 => 1,
-                    71 => 1,
-                    76 => 1,
-                   );
+        case 'SuperfluousWhitespaceUnitTest.1.inc':
+            return [
+                2  => 1,
+                4  => 1,
+                5  => 1,
+                6  => 1,
+                7  => 1,
+                16 => 1,
+                23 => 1,
+                28 => 1,
+                33 => 1,
+                49 => 1,
+                52 => 1,
+                58 => 1,
+                59 => 1,
+                62 => 1,
+                73 => 1,
+                78 => 1,
+            ];
+            break;
+        case 'SuperfluousWhitespaceUnitTest.2.inc':
+            return [
+                2 => 1,
+                8 => 1,
+            ];
             break;
         case 'SuperfluousWhitespaceUnitTest.1.js':
-            return array(
-                    1  => 1,
-                    3  => 1,
-                    4  => 1,
-                    5  => 1,
-                    6  => 1,
-                    15 => 1,
-                    22 => 1,
-                    29 => 1,
-                    38 => 1,
-                    56 => 1,
-                   );
+            return [
+                1  => 1,
+                3  => 1,
+                4  => 1,
+                5  => 1,
+                6  => 1,
+                15 => 1,
+                22 => 1,
+                29 => 1,
+                38 => 1,
+                56 => 1,
+            ];
             break;
         case 'SuperfluousWhitespaceUnitTest.1.css':
-            return array(
-                    1  => 1,
-                    8  => 1,
-                    9  => 1,
-                    11 => 1,
-                    25 => 1,
-                   );
+            return [
+                1  => 1,
+                8  => 1,
+                9  => 1,
+                11 => 1,
+                25 => 1,
+            ];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -88,7 +95,7 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

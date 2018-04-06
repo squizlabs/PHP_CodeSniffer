@@ -24,7 +24,11 @@ class JSLintUnitTest extends AbstractSniffUnitTest
     protected function shouldSkipTest()
     {
         $jslPath = Config::getExecutablePath('jslint');
-        return (is_null($jslPath));
+        if ($jslPath === null) {
+            return true;
+        }
+
+        return false;
 
     }//end shouldSkipTest()
 
@@ -39,7 +43,7 @@ class JSLintUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -54,10 +58,10 @@ class JSLintUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(
-                1 => 2,
-                2 => 1,
-               );
+        return [
+            1 => 2,
+            2 => 1,
+        ];
 
     }//end getWarningList()
 

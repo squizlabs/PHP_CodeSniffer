@@ -42,9 +42,9 @@ abstract class VersionControl implements Report
     {
         $blames = $this->getBlameContent($report['filename']);
 
-        $authorCache = array();
-        $praiseCache = array();
-        $sourceCache = array();
+        $authorCache = [];
+        $praiseCache = [];
+        $sourceCache = [];
 
         foreach ($report['messages'] as $line => $lineErrors) {
             $author = 'Unknown';
@@ -57,10 +57,10 @@ abstract class VersionControl implements Report
 
             if (isset($authorCache[$author]) === false) {
                 $authorCache[$author] = 0;
-                $praiseCache[$author] = array(
-                                         'good' => 0,
-                                         'bad'  => 0,
-                                        );
+                $praiseCache[$author] = [
+                    'good' => 0,
+                    'bad'  => 0,
+                ];
             }
 
             $praiseCache[$author]['bad']++;
@@ -72,10 +72,10 @@ abstract class VersionControl implements Report
                     if ($showSources === true) {
                         $source = $error['source'];
                         if (isset($sourceCache[$author][$source]) === false) {
-                            $sourceCache[$author][$source] = array(
-                                                              'count'   => 1,
-                                                              'fixable' => $error['fixable'],
-                                                             );
+                            $sourceCache[$author][$source] = [
+                                'count'   => 1,
+                                'fixable' => $error['fixable'],
+                            ];
                         } else {
                             $sourceCache[$author][$source]['count']++;
                         }
@@ -101,10 +101,10 @@ abstract class VersionControl implements Report
                 }
 
                 $authorCache[$author] = 0;
-                $praiseCache[$author] = array(
-                                         'good' => 0,
-                                         'bad'  => 0,
-                                        );
+                $praiseCache[$author] = [
+                    'good' => 0,
+                    'bad'  => 0,
+                ];
             }
 
             $praiseCache[$author]['good']++;
@@ -171,9 +171,9 @@ abstract class VersionControl implements Report
             return;
         }
 
-        $authorCache = array();
-        $praiseCache = array();
-        $sourceCache = array();
+        $authorCache = [];
+        $praiseCache = [];
+        $sourceCache = [];
 
         foreach ($lines as $line) {
             $parts = explode('>>', $line);
@@ -187,10 +187,10 @@ abstract class VersionControl implements Report
                 break;
             case 'PRAISE':
                 if (isset($praiseCache[$parts[1]]) === false) {
-                    $praiseCache[$parts[1]] = array(
-                                               'good' => $parts[2],
-                                               'bad'  => $parts[3],
-                                              );
+                    $praiseCache[$parts[1]] = [
+                        'good' => $parts[2],
+                        'bad'  => $parts[3],
+                    ];
                 } else {
                     $praiseCache[$parts[1]]['good'] += $parts[2];
                     $praiseCache[$parts[1]]['bad']  += $parts[3];
@@ -198,14 +198,14 @@ abstract class VersionControl implements Report
                 break;
             case 'SOURCE':
                 if (isset($praiseCache[$parts[1]]) === false) {
-                    $praiseCache[$parts[1]] = array();
+                    $praiseCache[$parts[1]] = [];
                 }
 
                 if (isset($sourceCache[$parts[1]][$parts[2]]) === false) {
-                    $sourceCache[$parts[1]][$parts[2]] = array(
-                                                          'count'   => $parts[3],
-                                                          'fixable' => (bool) $parts[4],
-                                                         );
+                    $sourceCache[$parts[1]][$parts[2]] = [
+                        'count'   => $parts[3],
+                        'fixable' => (bool) $parts[4],
+                    ];
                 } else {
                     $sourceCache[$parts[1]][$parts[2]]['count'] += $parts[3];
                 }

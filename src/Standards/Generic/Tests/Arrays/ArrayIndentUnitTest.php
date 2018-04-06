@@ -1,17 +1,17 @@
 <?php
 /**
- * Unit test class for the ForbiddenFunctions sniff.
+ * Unit test class for the ArrayIndent sniff.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Standards\Squiz\Tests\PHP;
+namespace PHP_CodeSniffer\Standards\Generic\Tests\Arrays;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class ForbiddenFunctionsUnitTest extends AbstractSniffUnitTest
+class ArrayIndentUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -25,12 +25,19 @@ class ForbiddenFunctionsUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2 => 1,
-                3 => 1,
-                4 => 1,
-                5 => 1,
-               );
+        return [
+            14 => 1,
+            15 => 1,
+            17 => 1,
+            30 => 1,
+            31 => 1,
+            33 => 1,
+            41 => 1,
+            55 => 1,
+            56 => 1,
+            57 => 1,
+            58 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -45,7 +52,7 @@ class ForbiddenFunctionsUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

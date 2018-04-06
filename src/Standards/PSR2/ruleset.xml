@@ -145,6 +145,9 @@
  <rule ref="PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">
   <severity>0</severity>
  </rule>
+ <rule ref="PSR2.Methods.FunctionCallSignature.OpeningIndent">
+  <severity>0</severity>
+ </rule>
 
  <!-- 5. Control Structures -->
 
@@ -163,6 +166,11 @@
  <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
  <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
  <!-- checked in ControlStructures/ControlStructureSpacingSniff -->
+
+ <!-- exclude this message as it is already checked Generic.PHP.LowerCaseKeyword -->
+ <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.AsNotLower">
+  <severity>0</severity>
+ </rule>
 
  <!-- The body of each structure MUST be enclosed by braces. This standardizes how the structures look, and reduces the likelihood of introducing errors as new lines get added to the body. -->
  <rule ref="Generic.ControlStructures.InlineControlStructure"/>

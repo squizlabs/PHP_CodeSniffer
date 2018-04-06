@@ -1,4 +1,5 @@
 <?php
+array($a, array($b)) = $array;
 
 function test()
 {
@@ -10,7 +11,6 @@ function test()
             'a' => 1,
          );
 }
-
 
 class TestClass
 {
@@ -350,3 +350,11 @@ $a = array
 ( 'a', 'b' );
 
 $a = array /* comment */ ( 'a', 'b' );
+
+$x = array(
+    'a' => false);
+
+$x = array(
+    'xxxx'   => array('aaaaaaaaaa' => 'ccccccccccc',
+                 'bbbbbbbb'   => false),
+);

@@ -30,10 +30,10 @@ class ObjectOperatorSpacingSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_OBJECT_OPERATOR,
-                T_DOUBLE_COLON,
-               );
+        return [
+            T_OBJECT_OPERATOR,
+            T_DOUBLE_COLON,
+        ];
 
     }//end register()
 

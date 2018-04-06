@@ -32,7 +32,7 @@ class Gitblame extends VersionControl
      */
     protected function getAuthor($line)
     {
-        $blameParts = array();
+        $blameParts = [];
         $line       = preg_replace('|\s+|', ' ', $line);
         preg_match(
             '|\(.+[0-9]{4}-[0-9]{2}-[0-9]{2}\s+[0-9]+\)|',

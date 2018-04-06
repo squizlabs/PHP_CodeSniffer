@@ -188,7 +188,18 @@
  */
 
 /**
+ * Short description.
+ *
+ * @tag    one
+ * @param  int    $number
+ * @param  string $text
+ * @return something
+ */
+
+/**
  * étude des ...
  */
 
 /**doc comment */
+
+/** No docblock close tag. Must be last test without new line.

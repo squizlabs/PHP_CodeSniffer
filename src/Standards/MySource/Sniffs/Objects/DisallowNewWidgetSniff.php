@@ -23,7 +23,7 @@ class DisallowNewWidgetSniff implements Sniff
      */
     public function register()
     {
-        return array(T_NEW);
+        return [T_NEW];
 
     }//end register()
 
@@ -49,7 +49,7 @@ class DisallowNewWidgetSniff implements Sniff
         if (substr(strtolower($tokens[$className]['content']), -10) === 'widgettype') {
             $widgetType = substr($tokens[$className]['content'], 0, -10);
             $error      = 'Manual creation of widget objects is banned; use Widget::getWidget(\'%s\'); instead';
-            $data       = array($widgetType);
+            $data       = [$widgetType];
             $phpcsFile->addError($error, $stackPtr, 'Found', $data);
         }
 

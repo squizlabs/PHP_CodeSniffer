@@ -4,6 +4,7 @@
 
     <file>autoload.php</file>
     <file>bin</file>
+    <file>scripts</file>
     <file>src</file>
     <file>tests</file>
 
@@ -28,6 +29,7 @@
         <exclude name="PEAR.Commenting.FileComment.MissingPackageTag" />
         <exclude name="PEAR.Commenting.FileComment.MissingLinkTag" />
         <exclude name="PEAR.Commenting.FileComment.MissingVersion" />
+        <exclude name="PEAR.Commenting.InlineComment" />
     </rule>
 
     <!-- Include some sniffs from other standards that don't conflict with PEAR -->
@@ -47,12 +49,14 @@
     <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing" />
     <rule ref="Squiz.Operators.ComparisonOperatorUsage" />
     <rule ref="Squiz.PHP.DisallowInlineIf" />
+    <rule ref="Squiz.Scope.MethodScope" />
     <rule ref="Squiz.Strings.ConcatenationSpacing" />
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing" />
     <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace" />
     <rule ref="Squiz.WhiteSpace.FunctionSpacing" />
     <rule ref="Squiz.WhiteSpace.OperatorSpacing" />
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
     <rule ref="Generic.Commenting.Todo"/>
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
     <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
@@ -65,6 +69,28 @@
     <rule ref="PSR2.Methods.MethodDeclaration"/>
     <rule ref="PSR2.Files.EndFileNewline"/>
     <rule ref="Zend.Files.ClosingTag"/>
+
+    <!-- PEAR uses warnings for inline control structures, so switch back to errors -->
+    <rule ref="Generic.ControlStructures.InlineControlStructure">
+        <properties>
+            <property name="error" value="true"/>
+        </properties>
+    </rule>
+
+     <!-- We use custom indent rules for arrays -->
+    <rule ref="Generic.Arrays.ArrayIndent"/>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.KeyNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.ValueNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNotAligned">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
+        <severity>0</severity>
+    </rule>
 
     <!-- Check var names, but we don't want leading underscores for private vars -->
     <rule ref="Squiz.NamingConventions.ValidVariableName" />
@@ -84,6 +110,19 @@
         <properties>
             <property name="maxPadding" value="12"/>
             <property name="error" value="true"/>
+        </properties>
+    </rule>
+
+    <!-- Ban some functions -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="sizeof" value="count"/>
+                <element key="delete" value="unset"/>
+                <element key="print" value="echo"/>
+                <element key="is_null" value="null"/>
+                <element key="create_function" value="null"/>
+            </property>
         </properties>
     </rule>
 

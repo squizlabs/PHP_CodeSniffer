@@ -384,3 +384,27 @@ class Foo
         echo $a, $b, $c, $d;
     };
 })('a','b')('c','d');
+
+function foo()
+{
+    Bar(
+        function () {
+        }
+    );
+}
+
+$deprecated_functions = [
+    'the_category_ID'
+    => function_call( // 7 spaces, not 8. This is the problem line.
+        $a,
+        $b
+    ),
+];
+
+$deprecated_functions = [
+    'the_category_ID'
+        => function_call( // 7 spaces, not 8. This is the problem line.
+            $a,
+            $b
+        ),
+];

@@ -38,7 +38,7 @@ class NestingLevelSniff implements Sniff
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return [T_FUNCTION];
 
     }//end register()
 
@@ -80,17 +80,17 @@ class NestingLevelSniff implements Sniff
 
         if ($nestingLevel > $this->absoluteNestingLevel) {
             $error = 'Function\'s nesting level (%s) exceeds allowed maximum of %s';
-            $data  = array(
-                      $nestingLevel,
-                      $this->absoluteNestingLevel,
-                     );
+            $data  = [
+                $nestingLevel,
+                $this->absoluteNestingLevel,
+            ];
             $phpcsFile->addError($error, $stackPtr, 'MaxExceeded', $data);
         } else if ($nestingLevel > $this->nestingLevel) {
             $warning = 'Function\'s nesting level (%s) exceeds %s; consider refactoring the function';
-            $data    = array(
-                        $nestingLevel,
-                        $this->nestingLevel,
-                       );
+            $data    = [
+                $nestingLevel,
+                $this->nestingLevel,
+            ];
             $phpcsFile->addWarning($warning, $stackPtr, 'TooHigh', $data);
         }
 

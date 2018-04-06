@@ -25,26 +25,26 @@ class IndentationUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2  => 1,
-                3  => 1,
-                5  => 1,
-                6  => 1,
-                7  => 1,
-                12 => 1,
-                30 => 1,
-                32 => 1,
-                50 => 1,
-                52 => 1,
-                53 => 1,
-                66 => 1,
-                67 => 1,
-                68 => 1,
-                69 => 1,
-                70 => 1,
-                71 => 1,
-                72 => 1,
-               );
+        return [
+            2  => 1,
+            3  => 1,
+            5  => 1,
+            6  => 1,
+            7  => 1,
+            12 => 1,
+            30 => 1,
+            32 => 1,
+            50 => 1,
+            52 => 1,
+            53 => 1,
+            66 => 1,
+            67 => 1,
+            68 => 1,
+            69 => 1,
+            70 => 1,
+            71 => 1,
+            72 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -59,7 +59,7 @@ class IndentationUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

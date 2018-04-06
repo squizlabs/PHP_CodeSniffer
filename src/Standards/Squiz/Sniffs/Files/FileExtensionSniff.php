@@ -23,7 +23,7 @@ class FileExtensionSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -42,13 +42,13 @@ class FileExtensionSniff implements Sniff
         $tokens    = $phpcsFile->getTokens();
         $fileName  = $phpcsFile->getFileName();
         $extension = substr($fileName, strrpos($fileName, '.'));
-        $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE, T_TRAIT), $stackPtr);
+        $nextClass = $phpcsFile->findNext([T_CLASS, T_INTERFACE, T_TRAIT], $stackPtr);
 
         if ($nextClass !== false) {
             $phpcsFile->recordMetric($stackPtr, 'File extension for class files', $extension);
             if ($extension === '.php') {
                 $error = '%s found in ".php" file; use ".inc" extension instead';
-                $data  = array(ucfirst($tokens[$nextClass]['content']));
+                $data  = [ucfirst($tokens[$nextClass]['content'])];
                 $phpcsFile->addError($error, $stackPtr, 'ClassFound', $data);
             }
         } else {

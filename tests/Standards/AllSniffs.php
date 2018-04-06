@@ -11,7 +11,6 @@ namespace PHP_CodeSniffer\Tests\Standards;
 
 use PHP_CodeSniffer\Util\Standards;
 use PHP_CodeSniffer\Autoload;
-use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 use PHPUnit\TextUI\TestRunner;
 use PHPUnit\Framework\TestSuite;
 
@@ -41,8 +40,8 @@ class AllSniffs
      */
     public static function suite()
     {
-        $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = array();
-        $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = array();
+        $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = [];
+        $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = [];
 
         $suite = new TestSuite('PHP CodeSniffer Standards');
 
@@ -51,12 +50,12 @@ class AllSniffs
         // Optionally allow for ignoring the tests for one or more standards.
         $ignoreTestsForStandards = getenv('PHPCS_IGNORE_TESTS');
         if ($ignoreTestsForStandards === false) {
-            $ignoreTestsForStandards = array();
+            $ignoreTestsForStandards = [];
         } else {
             $ignoreTestsForStandards = explode(',', $ignoreTestsForStandards);
         }
 
-        $installedStandards = Standards::getInstalledStandardDetails(true);
+        $installedStandards = self::getInstalledStandardDetails();
 
         foreach ($installedStandards as $standard => $details) {
             Autoload::addSearchPath($details['path'], $details['namespace']);
@@ -105,6 +104,19 @@ class AllSniffs
         return $suite;
 
     }//end suite()
+
+
+    /**
+     * Get the details of all coding standards installed.
+     *
+     * @return array
+     * @see    Standards::getInstalledStandardDetails()
+     */
+    protected static function getInstalledStandardDetails()
+    {
+        return Standards::getInstalledStandardDetails(true);
+
+    }//end getInstalledStandardDetails()
 
 
 }//end class

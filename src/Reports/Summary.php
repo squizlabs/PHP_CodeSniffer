@@ -80,17 +80,17 @@ class Summary implements Report
             return;
         }
 
-        $reportFiles = array();
+        $reportFiles = [];
         $maxLength   = 0;
 
         foreach ($lines as $line) {
             $parts   = explode('>>', $line);
             $fileLen = strlen($parts[0]);
-            $reportFiles[$parts[0]] = array(
-                                       'errors'   => $parts[1],
-                                       'warnings' => $parts[2],
-                                       'strlen'   => $fileLen,
-                                      );
+            $reportFiles[$parts[0]] = [
+                'errors'   => $parts[1],
+                'warnings' => $parts[2],
+                'strlen'   => $fileLen,
+            ];
 
             $maxLength = max($maxLength, $fileLen);
         }

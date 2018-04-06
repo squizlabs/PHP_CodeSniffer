@@ -28,17 +28,13 @@ class ClassDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='')
     {
         if ($testFile === 'ClassDeclarationUnitTest.2.inc') {
-            return array();
+            return [];
         }
 
-        if (PHP_VERSION_ID >= 50300) {
-            return array(
-                    2 => 1,
-                    3 => 2,
-                   );
-        } else {
-            return array(3 => 1);
-        }
+        return [
+            2 => 1,
+            3 => 2,
+        ];
 
     }//end getErrorList()
 
@@ -53,7 +49,7 @@ class ClassDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

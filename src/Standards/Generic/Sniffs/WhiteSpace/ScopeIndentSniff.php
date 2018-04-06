@@ -22,10 +22,10 @@ class ScopeIndentSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * The number of spaces code should be indented.
@@ -72,7 +72,7 @@ class ScopeIndentSniff implements Sniff
      *
      * @var int[]
      */
-    public $ignoreIndentationTokens = array();
+    public $ignoreIndentationTokens = [];
 
     /**
      * List of tokens not needing to be checked for indentation.
@@ -82,14 +82,14 @@ class ScopeIndentSniff implements Sniff
      *
      * @var int[]
      */
-    private $ignoreIndentation = array();
+    private $ignoreIndentation = [];
 
     /**
      * Any scope openers that should not cause an indent.
      *
      * @var int[]
      */
-    protected $nonIndentingScopes = array();
+    protected $nonIndentingScopes = [];
 
     /**
      * Show debug output for this sniff.
@@ -110,7 +110,7 @@ class ScopeIndentSniff implements Sniff
             $this->debug = false;
         }
 
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -142,12 +142,11 @@ class ScopeIndentSniff implements Sniff
             }
         }
 
-        $currentIndent = 0;
-        $lastOpenTag   = $stackPtr;
-        $lastCloseTag  = null;
-        $openScopes    = array();
-        $adjustments   = array();
-        $setIndents    = array();
+        $lastOpenTag  = $stackPtr;
+        $lastCloseTag = null;
+        $openScopes   = [];
+        $adjustments  = [];
+        $setIndents   = [];
 
         $tokens  = $phpcsFile->getTokens();
         $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
@@ -164,7 +163,7 @@ class ScopeIndentSniff implements Sniff
         }
 
         if (empty($this->ignoreIndentation) === true) {
-            $this->ignoreIndentation = array(T_INLINE_HTML => true);
+            $this->ignoreIndentation = [T_INLINE_HTML => true];
             foreach ($this->ignoreIndentationTokens as $token) {
                 if (is_int($token) === false) {
                     if (defined($token) === false) {
@@ -326,10 +325,18 @@ class ScopeIndentSniff implements Sniff
                             echo "\t* first token on line $line is $first ($type) *".PHP_EOL;
                         }
 
-                        if ($first === $tokens[$parenCloser]['parenthesis_opener']) {
+                        if ($first === $tokens[$parenCloser]['parenthesis_opener']
+                            && $tokens[($first - 1)]['line'] === $tokens[$first]['line']
+                        ) {
                             // This is unlikely to be the start of the statement, so look
                             // back further to find it.
                             $first--;
+                            if ($this->debug === true) {
+                                $line = $tokens[$first]['line'];
+                                $type = $tokens[$first]['type'];
+                                echo "\t* first token is the parenthesis opener *".PHP_EOL;
+                                echo "\t* amended first token is $first ($type) on line $line *".PHP_EOL;
+                            }
                         }
 
                         $prev = $phpcsFile->findStartOfStatement($first, T_COMMA);
@@ -439,7 +446,7 @@ class ScopeIndentSniff implements Sniff
                         $first--;
                     }
 
-                    $prev = $phpcsFile->findStartOfStatement($first, array(T_COMMA, T_DOUBLE_ARROW));
+                    $prev = $phpcsFile->findStartOfStatement($first, [T_COMMA, T_DOUBLE_ARROW]);
                     if ($prev !== $first) {
                         // This is not the start of the statement.
                         if ($this->debug === true) {
@@ -449,7 +456,7 @@ class ScopeIndentSniff implements Sniff
                         }
 
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
-                        $prev  = $phpcsFile->findStartOfStatement($first, array(T_COMMA, T_DOUBLE_ARROW));
+                        $prev  = $phpcsFile->findStartOfStatement($first, [T_COMMA, T_DOUBLE_ARROW]);
                         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
                         if ($this->debug === true) {
                             $line = $tokens[$first]['line'];
@@ -516,32 +523,19 @@ class ScopeIndentSniff implements Sniff
                     && (($adjustments[$first] < 0 && $tokenIndent > $currentIndent)
                     || ($adjustments[$first] > 0 && $tokenIndent < $currentIndent))
                 ) {
-                    $padding = ($tokenIndent + $adjustments[$first]);
-                    if ($padding > 0) {
-                        if ($this->tabIndent === true) {
-                            $numTabs   = floor($padding / $this->tabWidth);
-                            $numSpaces = ($padding - ($numTabs * $this->tabWidth));
-                            $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
-                        } else {
-                            $padding = str_repeat(' ', $padding);
-                        }
-                    } else {
-                        $padding = '';
-                    }
+                    $length = ($tokenIndent + $adjustments[$first]);
 
+                    // When fixing, we're going to adjust the indent of this line
+                    // here automatically, so use this new padding value when
+                    // comparing the expected padding to the actual padding.
                     if ($phpcsFile->fixer->enabled === true) {
-                        if ($checkToken === $i) {
-                            $phpcsFile->fixer->replaceToken($checkToken, $padding.$trimmed);
-                        } else {
-                            // Easier to just replace the entire indent.
-                            $phpcsFile->fixer->replaceToken(($checkToken - 1), $padding);
-                        }
+                        $tokenIndent = $length;
+                        $this->adjustIndent($phpcsFile, $checkToken, $length, $adjustments[$first]);
                     }
 
                     if ($this->debug === true) {
-                        $length = strlen($padding);
-                        $line   = $tokens[$checkToken]['line'];
-                        $type   = $tokens[$checkToken]['type'];
+                        $line = $tokens[$checkToken]['line'];
+                        $type = $tokens[$checkToken]['type'];
                         echo "Indent adjusted to $length for $type on line $line".PHP_EOL;
                     }
 
@@ -782,13 +776,22 @@ class ScopeIndentSniff implements Sniff
                 }
             }//end if
 
-            // Method prefix indentation has to be exact or else if will break
+            // Method prefix indentation has to be exact or else it will break
             // the rest of the function declaration, and potentially future ones.
             if ($checkToken !== null
                 && isset(Tokens::$methodPrefixes[$tokens[$checkToken]['code']]) === true
                 && $tokens[($checkToken + 1)]['code'] !== T_DOUBLE_COLON
             ) {
-                $exact = true;
+                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($checkToken + 1), null, true);
+                if ($next === false || $tokens[$next]['code'] !== T_CLOSURE) {
+                    if ($this->debug === true) {
+                        $line = $tokens[$checkToken]['line'];
+                        $type = $tokens[$checkToken]['type'];
+                        echo "\t* method prefix ($type) found on line $line; indent set to exact *".PHP_EOL;
+                    }
+
+                    $exact = true;
+                }
             }
 
             // JS property indentation has to be exact or else if will break
@@ -828,10 +831,9 @@ class ScopeIndentSniff implements Sniff
                 of this line should be.
 
                 After this IF block, we adjust the indent again for
-                the checking of future line.
+                the checking of future lines
             */
 
-            $adjusted = false;
             if ($checkToken !== null
                 && isset($this->ignoreIndentation[$tokens[$checkToken]['code']]) === false
                 && (($tokenIndent !== $checkIndent && $exact === true)
@@ -846,16 +848,16 @@ class ScopeIndentSniff implements Sniff
 
                 if ($this->tabIndent === true) {
                     $error .= '%s tabs, found %s';
-                    $data   = array(
-                               floor($checkIndent / $this->tabWidth),
-                               floor($tokenIndent / $this->tabWidth),
-                              );
+                    $data   = [
+                        floor($checkIndent / $this->tabWidth),
+                        floor($tokenIndent / $this->tabWidth),
+                    ];
                 } else {
                     $error .= '%s spaces, found %s';
-                    $data   = array(
-                               $checkIndent,
-                               $tokenIndent,
-                              );
+                    $data   = [
+                        $checkIndent,
+                        $tokenIndent,
+                    ];
                 }
 
                 if ($this->debug === true) {
@@ -864,40 +866,21 @@ class ScopeIndentSniff implements Sniff
                     echo "[Line $line] $message".PHP_EOL;
                 }
 
+                // Assume the change would be applied and continue
+                // checking indents under this assumption. This gives more
+                // technically accurate error messages.
+                $adjustments[$checkToken] = ($checkIndent - $tokenIndent);
+
                 $fix = $phpcsFile->addFixableError($error, $checkToken, $type, $data);
                 if ($fix === true || $this->debug === true) {
-                    $padding = '';
-                    if ($this->tabIndent === true) {
-                        $numTabs = floor($checkIndent / $this->tabWidth);
-                        if ($numTabs > 0) {
-                            $numSpaces = ($checkIndent - ($numTabs * $this->tabWidth));
-                            $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
-                        }
-                    } else if ($checkIndent > 0) {
-                        $padding = str_repeat(' ', $checkIndent);
-                    }
+                    $accepted = $this->adjustIndent($phpcsFile, $checkToken, $checkIndent, ($checkIndent - $tokenIndent));
 
-                    if ($checkToken === $i) {
-                        $accepted = $phpcsFile->fixer->replaceToken($checkToken, $padding.$trimmed);
-                    } else {
-                        // Easier to just replace the entire indent.
-                        $accepted = $phpcsFile->fixer->replaceToken(($checkToken - 1), $padding);
+                    if ($accepted === true && $this->debug === true) {
+                        $line = $tokens[$checkToken]['line'];
+                        $type = $tokens[$checkToken]['type'];
+                        echo "\t=> Add adjustment of ".$adjustments[$checkToken]." for token $checkToken ($type) on line $line".PHP_EOL;
                     }
-
-                    if ($accepted === true) {
-                        $adjustments[$checkToken] = ($checkIndent - $tokenIndent);
-                        if ($this->debug === true) {
-                            $line = $tokens[$checkToken]['line'];
-                            $type = $tokens[$checkToken]['type'];
-                            echo "\t=> Add adjustment of ".$adjustments[$checkToken]." for token $checkToken ($type) on line $line".PHP_EOL;
-                        }
-                    }
-                } else {
-                    // Assume the change would be applied and continue
-                    // checking indents under this assumption. This gives more
-                    // technically accurate error messages.
-                    $adjustments[$checkToken] = ($checkIndent - $tokenIndent);
-                }//end if
+                }
             }//end if
 
             if ($checkToken !== null) {
@@ -909,7 +892,7 @@ class ScopeIndentSniff implements Sniff
             if ($tokens[$i]['code'] === T_START_HEREDOC
                 || $tokens[$i]['code'] === T_START_NOWDOC
             ) {
-                $i = $phpcsFile->findNext(array(T_END_HEREDOC, T_END_NOWDOC), ($i + 1));
+                $i = $phpcsFile->findNext([T_END_HEREDOC, T_END_NOWDOC], ($i + 1));
                 continue;
             }
 
@@ -1218,7 +1201,7 @@ class ScopeIndentSniff implements Sniff
                 }//end if
 
                 if ($prev === false) {
-                    $prev = $phpcsFile->findPrevious(array(T_EQUAL, T_RETURN), ($tokens[$i]['scope_condition'] - 1), null, false, null, true);
+                    $prev = $phpcsFile->findPrevious([T_EQUAL, T_RETURN], ($tokens[$i]['scope_condition'] - 1), null, false, null, true);
                     if ($prev === false) {
                         $prev = $i;
                         if ($this->debug === true) {
@@ -1291,6 +1274,88 @@ class ScopeIndentSniff implements Sniff
         return $phpcsFile->numTokens;
 
     }//end process()
+
+
+    /**
+     * Processes this test, when one of its tokens is encountered.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile All the tokens found in the document.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack passed in $tokens.
+     * @param int                         $length    The length of the new indent.
+     * @param int                         $change    The difference in length between
+     *                                               the old and new indent.
+     *
+     * @return void
+     */
+    protected function adjustIndent(File $phpcsFile, $stackPtr, $length, $change)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        $padding = '';
+        if ($length > 0) {
+            if ($this->tabIndent === true) {
+                $numTabs = floor($length / $this->tabWidth);
+                if ($numTabs > 0) {
+                    $numSpaces = ($length - ($numTabs * $this->tabWidth));
+                    $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
+                }
+            } else {
+                $padding = str_repeat(' ', $length);
+            }
+        }
+
+        if ($tokens[$stackPtr]['column'] === 1) {
+            $trimmed  = ltrim($tokens[$stackPtr]['content']);
+            $accepted = $phpcsFile->fixer->replaceToken($stackPtr, $padding.$trimmed);
+        } else {
+            // Easier to just replace the entire indent.
+            $accepted = $phpcsFile->fixer->replaceToken(($stackPtr - 1), $padding);
+        }
+
+        if ($accepted === false) {
+            return false;
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_OPEN_TAG) {
+            // We adjusted the start of a comment, so adjust the rest of it
+            // as well so the alignment remains correct.
+            for ($x = ($stackPtr + 1); $x < $tokens[$stackPtr]['comment_closer']; $x++) {
+                if ($tokens[$x]['column'] !== 1) {
+                    continue;
+                }
+
+                $length = 0;
+                if ($tokens[$x]['code'] === T_DOC_COMMENT_WHITESPACE) {
+                    $length = $tokens[$x]['length'];
+                }
+
+                $padding = ($length + $change);
+                if ($padding > 0) {
+                    if ($this->tabIndent === true) {
+                        $numTabs   = floor($padding / $this->tabWidth);
+                        $numSpaces = ($padding - ($numTabs * $this->tabWidth));
+                        $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
+                    } else {
+                        $padding = str_repeat(' ', $padding);
+                    }
+                } else {
+                    $padding = '';
+                }
+
+                $phpcsFile->fixer->replaceToken($x, $padding);
+                if ($this->debug === true) {
+                    $length = strlen($padding);
+                    $line   = $tokens[$x]['line'];
+                    $type   = $tokens[$x]['type'];
+                    echo "\t=> Indent adjusted to $length for $type on line $line".PHP_EOL;
+                }
+            }//end for
+        }//end if
+
+        return true;
+
+    }//end adjustIndent()
 
 
 }//end class

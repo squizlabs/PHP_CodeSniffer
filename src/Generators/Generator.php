@@ -14,7 +14,6 @@ namespace PHP_CodeSniffer\Generators;
 
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Autoload;
-use PHP_CodeSniffer\Util\Common;
 
 abstract class Generator
 {
@@ -31,7 +30,7 @@ abstract class Generator
      *
      * @var string[]
      */
-    public $docFiles = array();
+    public $docFiles = [];
 
 
     /**
@@ -45,7 +44,6 @@ abstract class Generator
     {
         $this->ruleset = $ruleset;
 
-        $standardFiles = array();
         foreach ($ruleset->sniffs as $className => $sniffClass) {
             $file    = Autoload::getLoadedFileName($className);
             $docFile = str_replace(

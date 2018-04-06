@@ -36,7 +36,7 @@ class FindImplementedInterfaceNamesTest extends TestCase
     public function setUp()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
+        $config->standards = ['Generic'];
 
         $ruleset = new Ruleset($config);
 
@@ -76,7 +76,7 @@ class FindImplementedInterfaceNamesTest extends TestCase
         );
 
         $found = $this->phpcsFile->findImplementedInterfaceNames(($class + 2));
-        $this->assertSame(array('testFIINInterface'), $found);
+        $this->assertSame(['testFIINInterface'], $found);
 
     }//end testImplementedClass()
 
@@ -98,7 +98,7 @@ class FindImplementedInterfaceNamesTest extends TestCase
         );
 
         $found = $this->phpcsFile->findImplementedInterfaceNames(($class + 2));
-        $this->assertSame(array('testFIINInterface', 'testFIINInterface2'), $found);
+        $this->assertSame(['testFIINInterface', 'testFIINInterface2'], $found);
 
     }//end testMultiImplementedClass()
 
@@ -120,7 +120,7 @@ class FindImplementedInterfaceNamesTest extends TestCase
         );
 
         $found = $this->phpcsFile->findImplementedInterfaceNames(($class + 2));
-        $this->assertSame(array('\PHP_CodeSniffer\Tests\Core\File\testFIINInterface'), $found);
+        $this->assertSame(['\PHP_CodeSniffer\Tests\Core\File\testFIINInterface'], $found);
 
     }//end testNamespacedClass()
 

@@ -25,30 +25,30 @@ class NoSpaceAfterCastUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                3  => 1,
-                5  => 1,
-                7  => 1,
-                9  => 1,
-                11 => 1,
-                13 => 1,
-                15 => 1,
-                17 => 1,
-                19 => 1,
-                21 => 1,
-                23 => 1,
-                25 => 1,
-                27 => 1,
-                29 => 1,
-                31 => 1,
-                33 => 1,
-                35 => 1,
-                37 => 1,
-                39 => 1,
-                41 => 1,
-                43 => 1,
-                45 => 1,
-               );
+        return [
+            3  => 1,
+            5  => 1,
+            7  => 1,
+            9  => 1,
+            11 => 1,
+            13 => 1,
+            15 => 1,
+            17 => 1,
+            19 => 1,
+            21 => 1,
+            23 => 1,
+            25 => 1,
+            27 => 1,
+            29 => 1,
+            31 => 1,
+            33 => 1,
+            35 => 1,
+            37 => 1,
+            39 => 1,
+            41 => 1,
+            43 => 1,
+            45 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -63,7 +63,7 @@ class NoSpaceAfterCastUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

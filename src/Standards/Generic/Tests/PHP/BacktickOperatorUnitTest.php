@@ -25,7 +25,7 @@ class BacktickOperatorUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(2 => 2);
+        return [2 => 2];
 
     }//end getErrorList()
 
@@ -40,7 +40,7 @@ class BacktickOperatorUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

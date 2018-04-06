@@ -24,7 +24,7 @@ class DisallowComparisonAssignmentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_EQUAL);
+        return [T_EQUAL];
 
     }//end register()
 
@@ -67,11 +67,11 @@ class DisallowComparisonAssignmentSniff implements Sniff
         }
 
         // Ignore function calls.
-        $ignore = array(
-                   T_STRING,
-                   T_WHITESPACE,
-                   T_OBJECT_OPERATOR,
-                  );
+        $ignore = [
+            T_STRING,
+            T_WHITESPACE,
+            T_OBJECT_OPERATOR,
+        ];
 
         $next = $phpcsFile->findNext($ignore, ($stackPtr + 1), null, true);
         if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS
@@ -90,7 +90,8 @@ class DisallowComparisonAssignmentSniff implements Sniff
         }
 
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
-            if (isset(Tokens::$comparisonTokens[$tokens[$i]['code']]) === true
+            if ((isset(Tokens::$comparisonTokens[$tokens[$i]['code']]) === true
+                && $tokens[$i]['code'] !== T_COALESCE)
                 || $tokens[$i]['code'] === T_INLINE_THEN
             ) {
                 $error = 'The value of a comparison must not be assigned to a variable';

@@ -25,12 +25,12 @@ class OneObjectStructurePerFileUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                6  => 1,
-                10 => 1,
-                14 => 1,
-                18 => 1,
-               );
+        return [
+            6  => 1,
+            10 => 1,
+            14 => 1,
+            18 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -45,7 +45,7 @@ class OneObjectStructurePerFileUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

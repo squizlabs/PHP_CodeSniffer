@@ -358,3 +358,55 @@ class Test
         };
     }
 }
+
+/**
+ * Class comment.
+ */
+class A
+{
+    /**
+     * Function B.
+     */
+    public function b()
+    {
+        return new class {
+            public function c()
+            {
+                throw new \Exception();
+            }
+        }
+    }
+}
+
+/**
+ * Class comment.
+ */
+class A
+{
+    /**
+     * Function B.
+     */
+    public function b()
+    {
+        return new class {
+            /**
+             * Tag and token number mismatch.
+             *
+             * @throws PHP_Exception1
+             * @throws PHP_Exception2
+             */
+            public function oneLessThrowsTagNeeded()
+            {
+                throw new PHP_Exception1('Error');
+
+            }//end oneLessThrowsTagNeeded()
+        }
+    }
+}
+
+abstract class SomeClass {
+    /**
+     * Comment here.
+     */
+    abstract public function getGroups();
+}

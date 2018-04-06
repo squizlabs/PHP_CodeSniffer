@@ -25,12 +25,12 @@ class DisallowBooleanStatementUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                3  => 1,
-                8  => 1,
-                13 => 1,
-                15 => 1,
-               );
+        return [
+            3  => 1,
+            8  => 1,
+            13 => 1,
+            15 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -45,7 +45,7 @@ class DisallowBooleanStatementUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

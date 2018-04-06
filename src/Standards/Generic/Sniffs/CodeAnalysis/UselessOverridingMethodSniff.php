@@ -36,7 +36,7 @@ class UselessOverridingMethodSniff implements Sniff
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return [T_FUNCTION];
 
     }//end register()
 
@@ -64,7 +64,7 @@ class UselessOverridingMethodSniff implements Sniff
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         // Get all parameters from method signature.
-        $signature = array();
+        $signature = [];
         foreach ($phpcsFile->getMethodParameters($stackPtr) as $param) {
             $signature[] = $param['name'];
         }
@@ -113,7 +113,7 @@ class UselessOverridingMethodSniff implements Sniff
             return;
         }
 
-        $parameters       = array('');
+        $parameters       = [''];
         $parenthesisCount = 1;
         $count            = count($tokens);
         for (++$next; $next < $count; ++$next) {

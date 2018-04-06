@@ -99,7 +99,7 @@ class File
      *
      * @var array
      */
-    protected $tokens = array();
+    protected $tokens = [];
 
     /**
      * The errors raised from sniffs.
@@ -107,7 +107,7 @@ class File
      * @var array
      * @see getErrors()
      */
-    protected $errors = array();
+    protected $errors = [];
 
     /**
      * The warnings raised from sniffs.
@@ -115,7 +115,7 @@ class File
      * @var array
      * @see getWarnings()
      */
-    protected $warnings = array();
+    protected $warnings = [];
 
     /**
      * The metrics recorded by sniffs.
@@ -123,7 +123,17 @@ class File
      * @var array
      * @see getMetrics()
      */
-    protected $metrics = array();
+    protected $metrics = [];
+
+    /**
+     * The metrics recorded for each token.
+     *
+     * Stops the same metric being recorded for the same token twice.
+     *
+     * @var array
+     * @see getMetrics()
+     */
+    private $metricTokens = [];
 
     /**
      * The total number of errors raised.
@@ -158,21 +168,21 @@ class File
      *
      * @var array
      */
-    protected $ignoredListeners = array();
+    protected $ignoredListeners = [];
 
     /**
      * An array of message codes that are being ignored.
      *
      * @var array
      */
-    protected $ignoredCodes = array();
+    protected $ignoredCodes = [];
 
     /**
      * An array of sniffs listening to this file's processing.
      *
      * @var \PHP_CodeSniffer\Sniffs\Sniff[]
      */
-    protected $listeners = array();
+    protected $listeners = [];
 
     /**
      * The class name of the sniff currently processing the file.
@@ -186,7 +196,7 @@ class File
      *
      * @var array
      */
-    protected $listenerTimes = array();
+    protected $listenerTimes = [];
 
     /**
      * A cache of often used config settings to improve performance.
@@ -195,7 +205,7 @@ class File
      *
      * @var array
      */
-    protected $configCache = array();
+    protected $configCache = [];
 
 
     /**
@@ -229,7 +239,8 @@ class File
         $this->configCache['errorSeverity']   = $this->config->errorSeverity;
         $this->configCache['warningSeverity'] = $this->config->warningSeverity;
         $this->configCache['recordErrors']    = $this->config->recordErrors;
-        $this->configCache['ignorePatterns']  = $this->ruleset->getIgnorePatterns();
+        $this->configCache['ignorePatterns']  = $this->ruleset->ignorePatterns;
+        $this->configCache['includePatterns'] = $this->ruleset->includePatterns;
 
     }//end __construct()
 
@@ -246,7 +257,7 @@ class File
     public function setContent($content)
     {
         $this->content = $content;
-        $this->tokens  = array();
+        $this->tokens  = [];
 
         try {
             $this->eolChar = Util\Common::detectLineEndings($content);
@@ -295,8 +306,8 @@ class File
             return;
         }
 
-        $this->errors       = array();
-        $this->warnings     = array();
+        $this->errors       = [];
+        $this->warnings     = [];
         $this->errorCount   = 0;
         $this->warningCount = 0;
         $this->fixableCount = 0;
@@ -310,7 +321,7 @@ class File
         }
 
         $foundCode        = false;
-        $listenerIgnoreTo = array();
+        $listenerIgnoreTo = [];
         $inTests          = defined('PHP_CODESNIFFER_IN_TESTS');
         $checkAnnotations = $this->config->annotations;
 
@@ -331,8 +342,8 @@ class File
                 if (strpos($commentText, '@codingStandards') !== false) {
                     if (strpos($commentText, '@codingStandardsIgnoreFile') !== false) {
                         // Ignoring the whole file, just a little late.
-                        $this->errors       = array();
-                        $this->warnings     = array();
+                        $this->errors       = [];
+                        $this->warnings     = [];
                         $this->errorCount   = 0;
                         $this->warningCount = 0;
                         $this->fixableCount = 0;
@@ -356,15 +367,25 @@ class File
                             }
                         }
                     }//end if
-                } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile') {
+                } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile'
+                    || substr($commentTextLower, 0, 17) === '@phpcs:ignorefile'
+                ) {
                     // Ignoring the whole file, just a little late.
-                    $this->errors       = array();
-                    $this->warnings     = array();
+                    $this->errors       = [];
+                    $this->warnings     = [];
                     $this->errorCount   = 0;
                     $this->warningCount = 0;
                     $this->fixableCount = 0;
                     return;
-                } else if (substr($commentTextLower, 0, 9) === 'phpcs:set') {
+                } else if (substr($commentTextLower, 0, 9) === 'phpcs:set'
+                    || substr($commentTextLower, 0, 10) === '@phpcs:set'
+                ) {
+                    // If the @phpcs: syntax is being used, strip the @ to make
+                    // comparisions easier.
+                    if ($commentText[0] === '@') {
+                        $commentText = substr($commentText, 1);
+                    }
+
                     // Need to maintain case here, to get the correct sniff code.
                     $parts = explode(' ', substr($commentText, 10));
                     if ($parts >= 3) {
@@ -601,6 +622,7 @@ class File
         $this->listenerTimes = null;
         $this->content       = null;
         $this->tokens        = null;
+        $this->metricTokens  = null;
         $this->tokenizer     = null;
         $this->fixer         = null;
         $this->config        = null;
@@ -626,7 +648,7 @@ class File
         $error,
         $stackPtr,
         $code,
-        $data=array(),
+        $data=[],
         $severity=0,
         $fixable=false
     ) {
@@ -660,7 +682,7 @@ class File
         $warning,
         $stackPtr,
         $code,
-        $data=array(),
+        $data=[],
         $severity=0,
         $fixable=false
     ) {
@@ -693,7 +715,7 @@ class File
         $error,
         $line,
         $code,
-        $data=array(),
+        $data=[],
         $severity=0
     ) {
         return $this->addMessage(true, $error, $line, 1, $code, $data, $severity, false);
@@ -717,7 +739,7 @@ class File
         $warning,
         $line,
         $code,
-        $data=array(),
+        $data=[],
         $severity=0
     ) {
         return $this->addMessage(false, $warning, $line, 1, $code, $data, $severity, false);
@@ -743,7 +765,7 @@ class File
         $error,
         $stackPtr,
         $code,
-        $data=array(),
+        $data=[],
         $severity=0
     ) {
         $recorded = $this->addError($error, $stackPtr, $code, $data, $severity, true);
@@ -774,7 +796,7 @@ class File
         $warning,
         $stackPtr,
         $code,
-        $data=array(),
+        $data=[],
         $severity=0
     ) {
         $recorded = $this->addWarning($warning, $stackPtr, $code, $data, $severity, true);
@@ -815,7 +837,7 @@ class File
             // An internal message.
             $listenerCode = Util\Common::getSniffCode($this->activeListener);
             $sniffCode    = $code;
-            $checkCodes   = array($sniffCode);
+            $checkCodes   = [$sniffCode];
         } else {
             if ($parts[0] !== $code) {
                 // The full message code has been passed in.
@@ -827,12 +849,12 @@ class File
                 $parts        = explode('.', $sniffCode);
             }
 
-            $checkCodes = array(
-                           $sniffCode,
-                           $parts[0].'.'.$parts[1].'.'.$parts[2],
-                           $parts[0].'.'.$parts[1],
-                           $parts[0],
-                          );
+            $checkCodes = [
+                $sniffCode,
+                $parts[0].'.'.$parts[1].'.'.$parts[2],
+                $parts[0].'.'.$parts[1],
+                $parts[0],
+            ];
         }//end if
 
         // Check if this line is ignoring this specific message.
@@ -916,17 +938,27 @@ class File
 
         // Make sure we are not ignoring this file.
         foreach ($checkCodes as $checkCode) {
-            if (isset($this->configCache['ignorePatterns'][$checkCode]) === false) {
+            $patterns = null;
+
+            if (isset($this->configCache['includePatterns'][$checkCode]) === true) {
+                $patterns  = $this->configCache['includePatterns'][$checkCode];
+                $excluding = false;
+            } else if (isset($this->configCache['ignorePatterns'][$checkCode]) === true) {
+                $patterns  = $this->configCache['ignorePatterns'][$checkCode];
+                $excluding = true;
+            }
+
+            if ($patterns === null) {
                 continue;
             }
 
-            foreach ($this->configCache['ignorePatterns'][$checkCode] as $pattern => $type) {
+            foreach ($patterns as $pattern => $type) {
                 // While there is support for a type of each pattern
                 // (absolute or relative) we don't actually support it here.
-                $replacements = array(
-                                 '\\,' => ',',
-                                 '*'   => '.*',
-                                );
+                $replacements = [
+                    '\\,' => ',',
+                    '*'   => '.*',
+                ];
 
                 // We assume a / directory separator, as do the exclude rules
                 // most developers write, so we need a special case for any system
@@ -936,7 +968,11 @@ class File
                 }
 
                 $pattern = '`'.strtr($pattern, $replacements).'`i';
-                if (preg_match($pattern, $this->path) === 1) {
+                $matched = preg_match($pattern, $this->path);
+                if (($matched === 1 && $excluding === true)
+                    || ($matched === 0 && $excluding === false)
+                ) {
+                    // This file path is being excluded, or not included.
                     $this->ignoredCodes[$checkCode] = true;
                     return false;
                 }
@@ -964,20 +1000,20 @@ class File
         }
 
         if (isset($messages[$line]) === false) {
-            $messages[$line] = array();
+            $messages[$line] = [];
         }
 
         if (isset($messages[$line][$column]) === false) {
-            $messages[$line][$column] = array();
+            $messages[$line][$column] = [];
         }
 
-        $messages[$line][$column][] = array(
-                                       'message'  => $message,
-                                       'source'   => $sniffCode,
-                                       'listener' => $this->activeListener,
-                                       'severity' => $severity,
-                                       'fixable'  => $fixable,
-                                      );
+        $messages[$line][$column][] = [
+            'message'  => $message,
+            'source'   => $sniffCode,
+            'listener' => $this->activeListener,
+            'severity' => $severity,
+            'fixable'  => $fixable,
+        ];
 
         if (PHP_CODESNIFFER_VERBOSITY > 1
             && $this->fixer->enabled === true
@@ -994,7 +1030,7 @@ class File
 
 
     /**
-     * Adds an warning to the warning stack.
+     * Record a metric about the file being examined.
      *
      * @param int    $stackPtr The stack position where the metric was recorded.
      * @param string $metric   The name of the metric being recorded.
@@ -1005,8 +1041,10 @@ class File
     public function recordMetric($stackPtr, $metric, $value)
     {
         if (isset($this->metrics[$metric]) === false) {
-            $this->metrics[$metric] = array('values' => array($value => 1));
-        } else {
+            $this->metrics[$metric] = ['values' => [$value => 1]];
+            $this->metricTokens[$metric][$stackPtr] = true;
+        } else if (isset($this->metricTokens[$metric][$stackPtr]) === false) {
+            $this->metricTokens[$metric][$stackPtr] = true;
             if (isset($this->metrics[$metric]['values'][$value]) === false) {
                 $this->metrics[$metric]['values'][$value] = 1;
             } else {
@@ -1226,7 +1264,7 @@ class File
         $opener = $this->tokens[$stackPtr]['parenthesis_opener'];
         $closer = $this->tokens[$stackPtr]['parenthesis_closer'];
 
-        $vars            = array();
+        $vars            = [];
         $currVar         = null;
         $paramStart      = ($opener + 1);
         $defaultStart    = null;
@@ -1328,7 +1366,7 @@ class File
                     continue;
                 }
 
-                $vars[$paramCount]            = array();
+                $vars[$paramCount]            = [];
                 $vars[$paramCount]['token']   = $currVar;
                 $vars[$paramCount]['name']    = $this->tokens[$currVar]['content'];
                 $vars[$paramCount]['content'] = trim($this->getTokensAsString($paramStart, ($i - $paramStart)));
@@ -1393,24 +1431,24 @@ class File
         }
 
         if ($this->tokens[$stackPtr]['code'] === T_FUNCTION) {
-            $valid = array(
-                      T_PUBLIC      => T_PUBLIC,
-                      T_PRIVATE     => T_PRIVATE,
-                      T_PROTECTED   => T_PROTECTED,
-                      T_STATIC      => T_STATIC,
-                      T_FINAL       => T_FINAL,
-                      T_ABSTRACT    => T_ABSTRACT,
-                      T_WHITESPACE  => T_WHITESPACE,
-                      T_COMMENT     => T_COMMENT,
-                      T_DOC_COMMENT => T_DOC_COMMENT,
-                     );
+            $valid = [
+                T_PUBLIC      => T_PUBLIC,
+                T_PRIVATE     => T_PRIVATE,
+                T_PROTECTED   => T_PROTECTED,
+                T_STATIC      => T_STATIC,
+                T_FINAL       => T_FINAL,
+                T_ABSTRACT    => T_ABSTRACT,
+                T_WHITESPACE  => T_WHITESPACE,
+                T_COMMENT     => T_COMMENT,
+                T_DOC_COMMENT => T_DOC_COMMENT,
+            ];
         } else {
-            $valid = array(
-                      T_STATIC      => T_STATIC,
-                      T_WHITESPACE  => T_WHITESPACE,
-                      T_COMMENT     => T_COMMENT,
-                      T_DOC_COMMENT => T_DOC_COMMENT,
-                     );
+            $valid = [
+                T_STATIC      => T_STATIC,
+                T_WHITESPACE  => T_WHITESPACE,
+                T_COMMENT     => T_COMMENT,
+                T_DOC_COMMENT => T_DOC_COMMENT,
+            ];
         }
 
         $scope          = 'public';
@@ -1449,13 +1487,13 @@ class File
             }//end switch
         }//end for
 
-        return array(
-                'scope'           => $scope,
-                'scope_specified' => $scopeSpecified,
-                'is_abstract'     => $isAbstract,
-                'is_final'        => $isFinal,
-                'is_static'       => $isStatic,
-               );
+        return [
+            'scope'           => $scope,
+            'scope_specified' => $scopeSpecified,
+            'is_abstract'     => $isAbstract,
+            'is_final'        => $isFinal,
+            'is_static'       => $isStatic,
+        ];
 
     }//end getMethodProperties()
 
@@ -1468,8 +1506,9 @@ class File
      *
      * <code>
      *   array(
-     *    'scope'       => 'public', // public protected or protected
-     *    'is_static'   => false,    // true if the static keyword was found.
+     *    'scope'           => 'public', // public protected or protected.
+     *    'scope_specified' => false,    // true if the scope was explicitely specified.
+     *    'is_static'       => false,    // true if the static keyword was found.
      *   );
      * </code>
      *
@@ -1506,30 +1545,37 @@ class File
                 ) {
                     $error = 'Possible parse error: interfaces may not include member vars';
                     $this->addWarning($error, $stackPtr, 'Internal.ParseError.InterfaceHasMemberVar');
-                    return array();
+                    return [];
                 }
             } else {
                 throw new TokenizerException('$stackPtr is not a class member var');
             }
         }
 
-        $valid = array(
-                  T_PUBLIC      => T_PUBLIC,
-                  T_PRIVATE     => T_PRIVATE,
-                  T_PROTECTED   => T_PROTECTED,
-                  T_STATIC      => T_STATIC,
-                  T_WHITESPACE  => T_WHITESPACE,
-                  T_COMMENT     => T_COMMENT,
-                  T_DOC_COMMENT => T_DOC_COMMENT,
-                  T_VARIABLE    => T_VARIABLE,
-                  T_COMMA       => T_COMMA,
-                 );
+        $valid = [
+            T_PUBLIC    => T_PUBLIC,
+            T_PRIVATE   => T_PRIVATE,
+            T_PROTECTED => T_PROTECTED,
+            T_STATIC    => T_STATIC,
+            T_VAR       => T_VAR,
+        ];
+
+        $valid += Util\Tokens::$emptyTokens;
 
         $scope          = 'public';
         $scopeSpecified = false;
         $isStatic       = false;
 
-        for ($i = ($stackPtr - 1); $i > 0; $i--) {
+        $startOfStatement = $this->findPrevious(
+            [
+                T_SEMICOLON,
+                T_OPEN_CURLY_BRACKET,
+                T_CLOSE_CURLY_BRACKET,
+            ],
+            ($stackPtr - 1)
+        );
+
+        for ($i = ($startOfStatement + 1); $i < $stackPtr; $i++) {
             if (isset($valid[$this->tokens[$i]['code']]) === false) {
                 break;
             }
@@ -1553,11 +1599,11 @@ class File
             }
         }//end for
 
-        return array(
-                'scope'           => $scope,
-                'scope_specified' => $scopeSpecified,
-                'is_static'       => $isStatic,
-               );
+        return [
+            'scope'           => $scope,
+            'scope_specified' => $scopeSpecified,
+            'is_static'       => $isStatic,
+        ];
 
     }//end getMemberProperties()
 
@@ -1586,13 +1632,13 @@ class File
             throw new TokenizerException('$stackPtr must be of type T_CLASS');
         }
 
-        $valid = array(
-                  T_FINAL       => T_FINAL,
-                  T_ABSTRACT    => T_ABSTRACT,
-                  T_WHITESPACE  => T_WHITESPACE,
-                  T_COMMENT     => T_COMMENT,
-                  T_DOC_COMMENT => T_DOC_COMMENT,
-                 );
+        $valid = [
+            T_FINAL       => T_FINAL,
+            T_ABSTRACT    => T_ABSTRACT,
+            T_WHITESPACE  => T_WHITESPACE,
+            T_COMMENT     => T_COMMENT,
+            T_DOC_COMMENT => T_DOC_COMMENT,
+        ];
 
         $isAbstract = false;
         $isFinal    = false;
@@ -1613,10 +1659,10 @@ class File
             }
         }//end for
 
-        return array(
-                'is_abstract' => $isAbstract,
-                'is_final'    => $isFinal,
-               );
+        return [
+            'is_abstract' => $isAbstract,
+            'is_final'    => $isFinal,
+        ];
 
     }//end getClassProperties()
 
@@ -1689,7 +1735,7 @@ class File
                         $varToken = $tokenAfter;
                         if ($param['variable_length'] === true) {
                             $varToken = $this->findNext(
-                                (Util\Tokens::$emptyTokens + array(T_ELLIPSIS)),
+                                (Util\Tokens::$emptyTokens + [T_ELLIPSIS]),
                                 ($stackPtr + 1),
                                 null,
                                 true
@@ -2003,18 +2049,18 @@ class File
      */
     public function findEndOfStatement($start, $ignore=null)
     {
-        $endTokens = array(
-                      T_COLON                => true,
-                      T_COMMA                => true,
-                      T_DOUBLE_ARROW         => true,
-                      T_SEMICOLON            => true,
-                      T_CLOSE_PARENTHESIS    => true,
-                      T_CLOSE_SQUARE_BRACKET => true,
-                      T_CLOSE_CURLY_BRACKET  => true,
-                      T_CLOSE_SHORT_ARRAY    => true,
-                      T_OPEN_TAG             => true,
-                      T_CLOSE_TAG            => true,
-                     );
+        $endTokens = [
+            T_COLON                => true,
+            T_COMMA                => true,
+            T_DOUBLE_ARROW         => true,
+            T_SEMICOLON            => true,
+            T_CLOSE_PARENTHESIS    => true,
+            T_CLOSE_SQUARE_BRACKET => true,
+            T_CLOSE_CURLY_BRACKET  => true,
+            T_CLOSE_SHORT_ARRAY    => true,
+            T_OPEN_TAG             => true,
+            T_CLOSE_TAG            => true,
+        ];
 
         if ($ignore !== null) {
             $ignore = (array) $ignore;
@@ -2048,6 +2094,10 @@ class File
                 && ($i === $this->tokens[$i]['scope_opener']
                 || $i === $this->tokens[$i]['scope_condition'])
             ) {
+                if ($i === $start && isset(Util\Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true) {
+                    return $this->tokens[$i]['scope_closer'];
+                }
+
                 $i = $this->tokens[$i]['scope_closer'];
             } else if (isset($this->tokens[$i]['bracket_closer']) === true
                 && $i === $this->tokens[$i]['bracket_opener']
@@ -2089,7 +2139,7 @@ class File
     public function findFirstOnLine($types, $start, $exclude=false, $value=null)
     {
         if (is_array($types) === false) {
-            $types = array($types);
+            $types = [$types];
         }
 
         $foundToken = false;
@@ -2231,11 +2281,11 @@ class File
             return false;
         }
 
-        $find = array(
-                 T_NS_SEPARATOR,
-                 T_STRING,
-                 T_WHITESPACE,
-                );
+        $find = [
+            T_NS_SEPARATOR,
+            T_STRING,
+            T_WHITESPACE,
+        ];
 
         $end  = $this->findNext($find, ($extendsIndex + 1), $classCloserIndex, true);
         $name = $this->getTokensAsString(($extendsIndex + 1), ($end - $extendsIndex - 1));
@@ -2282,12 +2332,12 @@ class File
             return false;
         }
 
-        $find = array(
-                 T_NS_SEPARATOR,
-                 T_STRING,
-                 T_WHITESPACE,
-                 T_COMMA,
-                );
+        $find = [
+            T_NS_SEPARATOR,
+            T_STRING,
+            T_WHITESPACE,
+            T_COMMA,
+        ];
 
         $end  = $this->findNext($find, ($implementsIndex + 1), ($classOpenerIndex + 1), true);
         $name = $this->getTokensAsString(($implementsIndex + 1), ($end - $implementsIndex - 1));

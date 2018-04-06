@@ -196,3 +196,43 @@ class Foo
 function myFunction() : Something {
     return null;
 }
+
+function myFunction($a, $lot, $of, $params)
+    : array {
+    return null;
+}
+
+function myFunction($a, $lot, $of, $params) { // comment
+    return null;
+}
+
+function myFunction($a, $lot, $of, $params)
+    : array { // comment
+    return null;
+}
+
+function myFunction($a, $lot, $of, $params)
+    : array { // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    return null;
+}
+
+function myFunction($a, $lot, $of, $params)
+    : array {// phpcs:ignore Standard.Category.Sniff -- for reasons.
+    return null;
+}
+
+function myFunction($a, $lot, $of, $params)
+    : array
+{ // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    return null;
+}
+
+function myFunction($a, $lot, $of, $params)
+    : array /* phpcs:ignore Standard.Category.Sniff -- for reasons */ {
+    return null;
+}
+
+function myFunction($a, $lot, $of, $params)
+    : array /* comment */ {
+    return null;
+}

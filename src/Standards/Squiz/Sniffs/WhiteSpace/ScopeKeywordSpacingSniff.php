@@ -44,33 +44,80 @@ class ScopeKeywordSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if (isset($tokens[($stackPtr + 1)]) === false) {
+            return;
+        }
+
+        $prevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 
         if ($tokens[$stackPtr]['code'] === T_STATIC
-            && ($tokens[$nextToken]['code'] === T_DOUBLE_COLON
+            && (($nextToken === false || $tokens[$nextToken]['code'] === T_DOUBLE_COLON)
             || $tokens[$prevToken]['code'] === T_NEW)
         ) {
-            // Late static binding, e.g., static:: OR new static() usage.
+            // Late static binding, e.g., static:: OR new static() usage or live coding.
             return;
         }
 
         if ($tokens[$prevToken]['code'] === T_AS) {
-            // Trait visibilty change, e.g., "use HelloWorld { sayHello as private; }".
+            // Trait visibility change, e.g., "use HelloWorld { sayHello as private; }".
             return;
         }
 
-        $nextToken = $tokens[($stackPtr + 1)];
-        if (strlen($nextToken['content']) !== 1
-            || $nextToken['content'] === $phpcsFile->eolChar
-        ) {
-            $error = 'Scope keyword "%s" must be followed by a single space';
-            $data  = array($tokens[$stackPtr]['content']);
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
-            if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+        if ($nextToken !== false && $tokens[$nextToken]['code'] === T_VARIABLE) {
+            $endOfStatement = $phpcsFile->findNext(T_SEMICOLON, ($nextToken + 1));
+            if ($endOfStatement === false) {
+                // Live coding.
+                return;
+            }
+
+            $multiProperty = $phpcsFile->findNext(T_VARIABLE, ($nextToken + 1), $endOfStatement);
+            if ($multiProperty !== false
+                && $tokens[$stackPtr]['line'] !== $tokens[$nextToken]['line']
+                && $tokens[$nextToken]['line'] !== $tokens[$endOfStatement]['line']
+            ) {
+                // Allow for multiple properties definitions to each be on their own line.
+                return;
             }
         }
+
+        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            $spacing = 0;
+        } else {
+            if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
+                $spacing = 'newline';
+            } else {
+                $spacing = $tokens[($stackPtr + 1)]['length'];
+            }
+        }
+
+        if ($spacing !== 1) {
+            $error = 'Scope keyword "%s" must be followed by a single space; found %s';
+            $data  = [
+                $tokens[$stackPtr]['content'],
+                $spacing,
+            ];
+
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
+            if ($fix === true) {
+                if ($spacing === 0) {
+                    $phpcsFile->fixer->addContent($stackPtr, ' ');
+                } else {
+                    $phpcsFile->fixer->beginChangeset();
+
+                    for ($i = ($stackPtr + 2); $i < $phpcsFile->numTokens; $i++) {
+                        if (isset($tokens[$i]) === false || $tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }//end if
+        }//end if
 
     }//end process()
 

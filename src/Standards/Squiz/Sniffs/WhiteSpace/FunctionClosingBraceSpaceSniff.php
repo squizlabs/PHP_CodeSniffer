@@ -20,10 +20,10 @@ class FunctionClosingBraceSpaceSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
 
     /**
@@ -33,10 +33,10 @@ class FunctionClosingBraceSpaceSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_FUNCTION,
-                T_CLOSURE,
-               );
+        return [
+            T_FUNCTION,
+            T_CLOSURE,
+        ];
 
     }//end register()
 
@@ -83,8 +83,7 @@ class FunctionClosingBraceSpaceSniff implements Sniff
         }
 
         $nestedFunction = false;
-        if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true
-            || $phpcsFile->hasCondition($stackPtr, T_CLOSURE) === true
+        if ($phpcsFile->hasCondition($stackPtr, [T_FUNCTION, T_CLOSURE]) === true
             || isset($tokens[$stackPtr]['nested_parenthesis']) === true
         ) {
             $nestedFunction = true;
@@ -94,8 +93,6 @@ class FunctionClosingBraceSpaceSniff implements Sniff
         $prevLine  = $tokens[$prevContent]['line'];
         $found     = ($braceLine - $prevLine - 1);
 
-        $afterKeyword  = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        $beforeKeyword = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
         if ($nestedFunction === true) {
             if ($found < 0) {
                 $error = 'Closing brace of nested function must be on a new line';
@@ -105,7 +102,7 @@ class FunctionClosingBraceSpaceSniff implements Sniff
                 }
             } else if ($found > 0) {
                 $error = 'Expected 0 blank lines before closing brace of nested function; %s found';
-                $data  = array($found);
+                $data  = [$found];
                 $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeNestedClose', $data);
 
                 if ($fix === true) {
@@ -137,7 +134,7 @@ class FunctionClosingBraceSpaceSniff implements Sniff
                 }
 
                 $error = 'Expected 1 blank line before closing function brace; %s found';
-                $data  = array($found);
+                $data  = [$found];
                 $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeClose', $data);
 
                 if ($fix === true) {

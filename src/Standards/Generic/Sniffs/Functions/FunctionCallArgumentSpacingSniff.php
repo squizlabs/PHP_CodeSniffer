@@ -82,12 +82,12 @@ class FunctionCallArgumentSpacingSniff implements Sniff
         $closeBracket  = $tokens[$openBracket]['parenthesis_closer'];
         $nextSeparator = $openBracket;
 
-        $find = array(
-                 T_COMMA,
-                 T_VARIABLE,
-                 T_CLOSURE,
-                 T_OPEN_SHORT_ARRAY,
-                );
+        $find = [
+            T_COMMA,
+            T_VARIABLE,
+            T_CLOSURE,
+            T_OPEN_SHORT_ARRAY,
+        ];
 
         while (($nextSeparator = $phpcsFile->findNext($find, ($nextSeparator + 1), $closeBracket)) !== false) {
             if ($tokens[$nextSeparator]['code'] === T_CLOSURE) {
@@ -134,7 +134,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
                         $space = strlen($tokens[($nextSeparator + 1)]['content']);
                         if ($space > 1) {
                             $error = 'Expected 1 space after comma in function call; %s found';
-                            $data  = array($space);
+                            $data  = [$space];
                             $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'TooMuchSpaceAfterComma', $data);
                             if ($fix === true) {
                                 $phpcsFile->fixer->replaceToken(($nextSeparator + 1), ' ');
