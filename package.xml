@@ -347,6 +347,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseConstantStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeDeclarationStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="UpperCaseConstantStandard.xml" role="php" />
@@ -445,6 +446,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseConstantSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeDeclarationSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SyntaxSniff.php" role="php" />
@@ -661,6 +663,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeDeclarationUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeDeclarationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageUnitTest.inc" role="test" />
