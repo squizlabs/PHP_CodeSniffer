@@ -84,6 +84,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.Functions.OpeningFunctionBraceBsdAllman now longer leaves trailing whitespace when moving the opening brace during fixing
     -- Also applies to fixes made by PEAR.Functions.FunctionDeclaration and Squiz.Functions.MultiLineFunctionDeclaration
   - Generic.WhiteSpace.ScopeIndent now does a better job of fixing the indent of multi-line comments
+  - Generic.WhiteSpace.ScopeIndent now does a better job of fixing the indent of PHP open and close tags
   - PEAR.Commenting.FunctionComment now report a different error code for param comment lines with too much padding
     -- Previously, any lines of a param comment that don't start at the exact comment position got the same error code
     -- Now, only comment lines with too little padding use ParamCommentAlignment as they are clearly mistakes

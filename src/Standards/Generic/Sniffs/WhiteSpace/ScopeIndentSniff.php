@@ -800,16 +800,43 @@ class ScopeIndentSniff implements Sniff
                 $exact = true;
             }
 
-            // PHP tags needs to be indented to exact column positions
+            // Open PHP tags needs to be indented to exact column positions
             // so they don't cause problems with indent checks for the code
-            // within them, but they don't need to line up with the current indent.
+            // within them, but they don't need to line up with the current indent
+            // in most cases.
             if ($checkToken !== null
                 && ($tokens[$checkToken]['code'] === T_OPEN_TAG
-                || $tokens[$checkToken]['code'] === T_OPEN_TAG_WITH_ECHO
-                || $tokens[$checkToken]['code'] === T_CLOSE_TAG)
+                || $tokens[$checkToken]['code'] === T_OPEN_TAG_WITH_ECHO)
             ) {
-                $exact       = true;
                 $checkIndent = ($tokens[$checkToken]['column'] - 1);
+
+                // If we are re-opening a block that was closed in the same
+                // scope as us, then reset the indent back to what the scope opener
+                // set instead of using whatever indent this open tag has set.
+                if (empty($tokens[$checkToken]['conditions']) === false) {
+                    $close = $phpcsFile->findPrevious(T_CLOSE_TAG, ($checkToken - 1));
+                    if ($close !== false
+                        && $tokens[$checkToken]['conditions'] === $tokens[$close]['conditions']
+                    ) {
+                        $conditions    = array_keys($tokens[$checkToken]['conditions']);
+                        $lastCondition = array_pop($conditions);
+                        $lastOpener    = $tokens[$lastCondition]['scope_opener'];
+                        $lastCloser    = $tokens[$lastCondition]['scope_closer'];
+                        if ($tokens[$lastCloser]['line'] !== $tokens[$checkToken]['line']
+                            && isset($setIndents[$lastOpener]) === true
+                        ) {
+                            $checkIndent = $setIndents[$lastOpener];
+                        }
+                    }
+                }
+
+                $checkIndent = (int) (ceil($checkIndent / $this->indent) * $this->indent);
+            }//end if
+
+            // Close tags needs to be indented to exact column positions.
+            if ($checkToken !== null && $tokens[$checkToken]['code'] === T_CLOSE_TAG) {
+                $exact       = true;
+                $checkIndent = $currentIndent;
                 $checkIndent = (int) (ceil($checkIndent / $this->indent) * $this->indent);
             }
 
@@ -1291,6 +1318,11 @@ class ScopeIndentSniff implements Sniff
     protected function adjustIndent(File $phpcsFile, $stackPtr, $length, $change)
     {
         $tokens = $phpcsFile->getTokens();
+
+        // We don't adjust indents outside of PHP.
+        if ($tokens[$stackPtr]['code'] === T_INLINE_HTML) {
+            return false;
+        }
 
         $padding = '';
         if ($length > 0) {

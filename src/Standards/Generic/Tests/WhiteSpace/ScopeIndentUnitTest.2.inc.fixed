@@ -1276,6 +1276,22 @@ switch ( $a ) {
 		 */
 		apply_filter( 'something', $b );
 	break;
+
+	case 'b':
+		$b = 3;
+		?>
+	<input name="something" value="<?php echo $b; ?>">
+		<?php
+		$b = 4;
+	break;
+
+	default:
+		$b = 3;
+		?>
+	<input name="something" value="<?php echo $b; ?>">
+		<?php
+		$b = 4;
+	break;
 }
 
 if ($foo) {
