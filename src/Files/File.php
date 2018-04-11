@@ -827,7 +827,7 @@ class File
     protected function addMessage($error, $message, $line, $column, $code, $data, $severity, $fixable)
     {
         // Check if this line is ignoring all message codes.
-        if (isset($this->tokenizer->ignoredLines[$line]['all']) === true) {
+        if (isset($this->tokenizer->ignoredLines[$line]['.all']) === true) {
             return false;
         }
 
@@ -857,12 +857,32 @@ class File
             ];
         }//end if
 
-        // Check if this line is ignoring this specific message.
-        foreach ($checkCodes as $checkCode) {
-            if (isset($this->tokenizer->ignoredLines[$line][$checkCode]) === true) {
+        if (isset($this->tokenizer->ignoredLines[$line]) === true) {
+            // Check if this line is ignoring this specific message.
+            $ignored = false;
+            foreach ($checkCodes as $checkCode) {
+                if (isset($this->tokenizer->ignoredLines[$line][$checkCode]) === true) {
+                    $ignored = true;
+                    break;
+                }
+            }
+
+            // If it is ignored, make sure it's not whitelisted.
+            if ($ignored === true
+                && isset($this->tokenizer->ignoredLines[$line]['.except']) === true
+            ) {
+                foreach ($checkCodes as $checkCode) {
+                    if (isset($this->tokenizer->ignoredLines[$line]['.except'][$checkCode]) === true) {
+                        $ignored = false;
+                        break;
+                    }
+                }
+            }
+
+            if ($ignored === true) {
                 return false;
             }
-        }
+        }//end if
 
         $includeAll = true;
         if ($this->configCache['cache'] === false
