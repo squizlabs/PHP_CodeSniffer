@@ -1333,8 +1333,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.php" role="test" />

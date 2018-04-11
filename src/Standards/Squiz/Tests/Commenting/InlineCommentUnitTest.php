@@ -16,6 +16,23 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
 
 
     /**
+     * Set CLI values before the file is tested.
+     *
+     * @param string                  $testFile The name of the file being tested.
+     * @param \PHP_CodeSniffer\Config $config   The config data for the test run.
+     *
+     * @return void
+     */
+    public function setCliValues($testFile, $config)
+    {
+        if ($testFile === 'InlineCommentUnitTest.2.inc') {
+            $config->annotations = false;
+        }
+
+    }//end setCliValues()
+
+
+    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
@@ -25,11 +42,11 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
      *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='InlineCommentUnitTest.inc')
+    public function getErrorList($testFile='InlineCommentUnitTest.1.inc')
     {
         switch ($testFile) {
-        case 'InlineCommentUnitTest.inc':
-            $errors = [
+        case 'InlineCommentUnitTest.1.inc':
+            return [
                 17  => 1,
                 27  => 1,
                 28  => 1,
@@ -48,7 +65,6 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
                 130 => 2,
             ];
 
-            return $errors;
         case 'InlineCommentUnitTest.js':
             return [
                 31  => 1,
@@ -65,6 +81,7 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
                 125 => 2,
                 129 => 2,
             ];
+
         default:
             return [];
         }//end switch
