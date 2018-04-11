@@ -397,8 +397,22 @@ abstract class Tokenizer
                                 $sniffCode = trim($sniffCode);
                                 $disabledSniffs[$sniffCode] = true;
                                 $ignoring[$sniffCode]       = true;
+
+                                if (isset($ignoring['.except']) === true) {
+                                    foreach (array_keys($ignoring['.except']) as $ignoredSniffCode) {
+                                        if ($ignoredSniffCode === $sniffCode
+                                            || strpos($ignoredSniffCode, $sniffCode.'.') === 0
+                                        ) {
+                                            unset($ignoring['.except'][$ignoredSniffCode]);
+                                        }
+                                    }
+
+                                    if (empty($ignoring['.except']) === true) {
+                                        unset($ignoring['.except']);
+                                    }
+                                }
                             }
-                        }
+                        }//end if
 
                         $this->tokens[$i]['code']       = T_PHPCS_DISABLE;
                         $this->tokens[$i]['type']       = 'T_PHPCS_DISABLE';
