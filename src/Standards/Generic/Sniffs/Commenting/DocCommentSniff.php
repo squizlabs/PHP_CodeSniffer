@@ -116,7 +116,9 @@ class DocCommentSniff implements Sniff
         }
 
         // Check for a comment description.
-        if ($tokens[$short]['code'] !== T_DOC_COMMENT_STRING) {
+        if ($tokens[$short]['code'] !== T_DOC_COMMENT_STRING
+            || preg_match('`^[@]?phpcs:`', $tokens[$short]['content']) === 1
+        ) {
             $error = 'Missing short description in doc comment';
             $phpcsFile->addError($error, $stackPtr, 'MissingShort');
             return;
@@ -157,7 +159,7 @@ class DocCommentSniff implements Sniff
             }
         }
 
-        if (preg_match('/^\p{Ll}/u', $shortContent) === 1) {
+        if (preg_match('/^(?!phpcs:)\p{Ll}/u', $shortContent) === 1) {
             $error = 'Doc comment short description must start with a capital letter';
             $phpcsFile->addError($error, $short, 'ShortNotCapital');
         }
@@ -183,7 +185,7 @@ class DocCommentSniff implements Sniff
                 }
             }
 
-            if (preg_match('/^\p{Ll}/u', $tokens[$long]['content']) === 1) {
+            if (preg_match('/^(?!phpcs:)\p{Ll}/u', $tokens[$long]['content']) === 1) {
                 $error = 'Doc comment long description must start with a capital letter';
                 $phpcsFile->addError($error, $long, 'LongNotCapital');
             }
