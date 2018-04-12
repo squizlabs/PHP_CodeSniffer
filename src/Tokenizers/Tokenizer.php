@@ -398,6 +398,8 @@ abstract class Tokenizer
                                 $disabledSniffs[$sniffCode] = true;
                                 $ignoring[$sniffCode]       = true;
 
+                                // This newly disabled sniff might be disabling an existing
+                                // enabled exception that we are tracking.
                                 if (isset($ignoring['.except']) === true) {
                                     foreach (array_keys($ignoring['.except']) as $ignoredSniffCode) {
                                         if ($ignoredSniffCode === $sniffCode
@@ -411,7 +413,7 @@ abstract class Tokenizer
                                         unset($ignoring['.except']);
                                     }
                                 }
-                            }
+                            }//end foreach
                         }//end if
 
                         $this->tokens[$i]['code']       = T_PHPCS_DISABLE;
@@ -430,6 +432,8 @@ abstract class Tokenizer
                                     $sniffCode = trim($sniffCode);
                                     $enabledSniffs[$sniffCode] = true;
 
+                                    // This new enabled sniff might remove previously disabled
+                                    // sniffs if it is actually a standard or category of sniffs.
                                     foreach (array_keys($ignoring) as $ignoredSniffCode) {
                                         if ($ignoredSniffCode === $sniffCode
                                             || strpos($ignoredSniffCode, $sniffCode.'.') === 0
@@ -437,12 +441,29 @@ abstract class Tokenizer
                                             unset($ignoring[$ignoredSniffCode]);
                                         }
                                     }
-                                }
+
+                                    // This new enabled sniff might be able to clear up
+                                    // previously enabled sniffs if it is actually a standard or
+                                    // category of sniffs.
+                                    if (isset($ignoring['.except']) === true) {
+                                        foreach (array_keys($ignoring['.except']) as $ignoredSniffCode) {
+                                            if ($ignoredSniffCode === $sniffCode
+                                                || strpos($ignoredSniffCode, $sniffCode.'.') === 0
+                                            ) {
+                                                unset($ignoring['.except'][$ignoredSniffCode]);
+                                            }
+                                        }
+                                    }
+                                }//end foreach
 
                                 if (empty($ignoring) === true) {
                                     $ignoring = null;
                                 } else {
-                                    $ignoring['.except'] = $enabledSniffs;
+                                    if (isset($ignoring['.except']) === true) {
+                                        $ignoring['.except'] += $enabledSniffs;
+                                    } else {
+                                        $ignoring['.except'] = $enabledSniffs;
+                                    }
                                 }
                             }//end if
 
