@@ -515,7 +515,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UselessOverridingMethodUnitTest.php" role="test" />
        </dir>
        <dir name="Commenting">
-        <file baseinstalldir="PHP/CodeSniffer" name="DocCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DocCommentUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DocCommentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DocCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DocCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FixmeUnitTest.inc" role="test" />
@@ -1312,8 +1313,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ValidClassNameUnitTest.php" role="test" />
        </dir>
        <dir name="Commenting">
-        <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="BlockCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassCommentUnitTest.php" role="test" />
@@ -1337,8 +1339,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineCommentUnitTest.php" role="test" />
