@@ -119,60 +119,17 @@ class DocCommentSniff implements Sniff
         if ($tokens[$short]['code'] !== T_DOC_COMMENT_STRING) {
             $error = 'Missing short description in doc comment';
             $phpcsFile->addError($error, $stackPtr, 'MissingShort');
-            return;
-        }
-
-        // No extra newline before short description.
-        if ($tokens[$short]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
-            $error = 'Doc comment short description must be on the first line';
-            $fix   = $phpcsFile->addFixableError($error, $short, 'SpacingBeforeShort');
-            if ($fix === true) {
-                $phpcsFile->fixer->beginChangeset();
-                for ($i = $stackPtr; $i < $short; $i++) {
-                    if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
-                        continue;
-                    } else if ($tokens[$i]['line'] === $tokens[$short]['line']) {
-                        break;
-                    }
-
-                    $phpcsFile->fixer->replaceToken($i, '');
-                }
-
-                $phpcsFile->fixer->endChangeset();
-            }
-        }
-
-        // Account for the fact that a short description might cover
-        // multiple lines.
-        $shortContent = $tokens[$short]['content'];
-        $shortEnd     = $short;
-        for ($i = ($short + 1); $i < $commentEnd; $i++) {
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
-                if ($tokens[$i]['line'] === ($tokens[$shortEnd]['line'] + 1)) {
-                    $shortContent .= $tokens[$i]['content'];
-                    $shortEnd      = $i;
-                } else {
-                    break;
-                }
-            }
-        }
-
-        if (preg_match('/^\p{Ll}/u', $shortContent) === 1) {
-            $error = 'Doc comment short description must start with a capital letter';
-            $phpcsFile->addError($error, $short, 'ShortNotCapital');
-        }
-
-        $long = $phpcsFile->findNext($empty, ($shortEnd + 1), ($commentEnd - 1), true);
-        if ($long !== false && $tokens[$long]['code'] === T_DOC_COMMENT_STRING) {
-            if ($tokens[$long]['line'] !== ($tokens[$shortEnd]['line'] + 2)) {
-                $error = 'There must be exactly one blank line between descriptions in a doc comment';
-                $fix   = $phpcsFile->addFixableError($error, $long, 'SpacingBetween');
+        } else {
+            // No extra newline before short description.
+            if ($tokens[$short]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
+                $error = 'Doc comment short description must be on the first line';
+                $fix   = $phpcsFile->addFixableError($error, $short, 'SpacingBeforeShort');
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
-                    for ($i = ($shortEnd + 1); $i < $long; $i++) {
-                        if ($tokens[$i]['line'] === $tokens[$shortEnd]['line']) {
+                    for ($i = $stackPtr; $i < $short; $i++) {
+                        if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
                             continue;
-                        } else if ($tokens[$i]['line'] === ($tokens[$long]['line'] - 1)) {
+                        } else if ($tokens[$i]['line'] === $tokens[$short]['line']) {
                             break;
                         }
 
@@ -183,10 +140,52 @@ class DocCommentSniff implements Sniff
                 }
             }
 
-            if (preg_match('/^\p{Ll}/u', $tokens[$long]['content']) === 1) {
-                $error = 'Doc comment long description must start with a capital letter';
-                $phpcsFile->addError($error, $long, 'LongNotCapital');
+            // Account for the fact that a short description might cover
+            // multiple lines.
+            $shortContent = $tokens[$short]['content'];
+            $shortEnd     = $short;
+            for ($i = ($short + 1); $i < $commentEnd; $i++) {
+                if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
+                    if ($tokens[$i]['line'] === ($tokens[$shortEnd]['line'] + 1)) {
+                        $shortContent .= $tokens[$i]['content'];
+                        $shortEnd      = $i;
+                    } else {
+                        break;
+                    }
+                }
             }
+
+            if (preg_match('/^\p{Ll}/u', $shortContent) === 1) {
+                $error = 'Doc comment short description must start with a capital letter';
+                $phpcsFile->addError($error, $short, 'ShortNotCapital');
+            }
+
+            $long = $phpcsFile->findNext($empty, ($shortEnd + 1), ($commentEnd - 1), true);
+            if ($long !== false && $tokens[$long]['code'] === T_DOC_COMMENT_STRING) {
+                if ($tokens[$long]['line'] !== ($tokens[$shortEnd]['line'] + 2)) {
+                    $error = 'There must be exactly one blank line between descriptions in a doc comment';
+                    $fix   = $phpcsFile->addFixableError($error, $long, 'SpacingBetween');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($shortEnd + 1); $i < $long; $i++) {
+                            if ($tokens[$i]['line'] === $tokens[$shortEnd]['line']) {
+                                continue;
+                            } else if ($tokens[$i]['line'] === ($tokens[$long]['line'] - 1)) {
+                                break;
+                            }
+
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
+                    }
+                }
+
+                if (preg_match('/^\p{Ll}/u', $tokens[$long]['content']) === 1) {
+                    $error = 'Doc comment long description must start with a capital letter';
+                    $phpcsFile->addError($error, $long, 'LongNotCapital');
+                }
+            }//end if
         }//end if
 
         if (empty($tokens[$commentStart]['comment_tags']) === true) {
