@@ -105,6 +105,7 @@ class Reporter
                 $output = $config->reportFile;
             }
 
+            $reportClassName = '';
             if (strpos($type, '.') !== false) {
                 // This is a path to a custom report class.
                 $filename = realpath($type);
@@ -114,8 +115,32 @@ class Reporter
                 }
 
                 $reportClassName = Autoload::loadFile($filename);
-            } else {
+            } else if (class_exists('PHP_CodeSniffer\Reports\\'.$type) === true) {
+                // PHPCS native report.
                 $reportClassName = 'PHP_CodeSniffer\Reports\\'.$type;
+            } else if (class_exists($type) === true) {
+                // FQN of a custom report.
+                $reportClassName = $type;
+            } else {
+                // OK, so not a FQN, try and find the report using the registered namespaces.
+                $registeredNamespaces = Autoload::getSearchPaths();
+                $trimmedType          = ltrim($type, '\\');
+
+                foreach ($registeredNamespaces as $nsPrefix) {
+                    if ($nsPrefix === '') {
+                        continue;
+                    }
+
+                    if (class_exists($nsPrefix.'\\'.$trimmedType) === true) {
+                        $reportClassName = $nsPrefix.'\\'.$trimmedType;
+                        break;
+                    }
+                }
+            }//end if
+
+            if ($reportClassName === '') {
+                $error = "ERROR: Class file for report \"$type\" not found".PHP_EOL;
+                throw new DeepExitException($error, 3);
             }
 
             $reportClass = new $reportClassName();
