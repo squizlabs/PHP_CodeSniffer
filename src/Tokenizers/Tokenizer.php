@@ -224,11 +224,10 @@ abstract class Tokenizer
                 $this->tokens[$i]['length'] -= $eolLen;
             }
 
-            if ($checkAnnotations === true
-                && ($this->tokens[$i]['code'] === T_COMMENT
+            if ($this->tokens[$i]['code'] === T_COMMENT
                 || $this->tokens[$i]['code'] === T_DOC_COMMENT_STRING
                 || $this->tokens[$i]['code'] === T_DOC_COMMENT_TAG
-                || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML))
+                || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML)
             ) {
                 $commentText      = ltrim($this->tokens[$i]['content'], " \t/*");
                 $commentText      = rtrim($commentText, " */\t\r\n");
@@ -520,6 +519,12 @@ abstract class Tokenizer
                 $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
             }
         }//end for
+
+        // If annotations are being ignored, we clear out all the ignore rules
+        // but leave the annotations tokenized as normal.
+        if ($checkAnnotations === false) {
+            $this->ignoredLines = [];
+        }
 
     }//end createPositionMap()
 
