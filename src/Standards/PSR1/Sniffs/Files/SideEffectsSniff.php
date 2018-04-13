@@ -91,11 +91,14 @@ class SideEffectsSniff implements Sniff
             T_ELSEIF => T_ELSEIF,
         ];
 
+        $checkAnnotations = $phpcsFile->config->annotations;
+
         $firstSymbol = null;
         $firstEffect = null;
         for ($i = $start; $i <= $end; $i++) {
             // Respect phpcs:disable comments.
-            if ($tokens[$i]['code'] === T_PHPCS_DISABLE
+            if ($checkAnnotations === true
+                && $tokens[$i]['code'] === T_PHPCS_DISABLE
                 && (empty($tokens[$i]['sniffCodes']) === true
                 || isset($tokens[$i]['sniffCodes']['PSR1']) === true
                 || isset($tokens[$i]['sniffCodes']['PSR1.Files']) === true

@@ -16,6 +16,23 @@ class SideEffectsUnitTest extends AbstractSniffUnitTest
 
 
     /**
+     * Set CLI values before the file is tested.
+     *
+     * @param string                  $testFile The name of the file being tested.
+     * @param \PHP_CodeSniffer\Config $config   The config data for the test run.
+     *
+     * @return void
+     */
+    public function setCliValues($testFile, $config)
+    {
+        if ($testFile === 'SideEffectsUnitTest.12.inc') {
+            $config->annotations = false;
+        }
+
+    }//end setCliValues()
+
+
+    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
@@ -49,6 +66,7 @@ class SideEffectsUnitTest extends AbstractSniffUnitTest
         case 'SideEffectsUnitTest.4.inc':
         case 'SideEffectsUnitTest.5.inc':
         case 'SideEffectsUnitTest.10.inc':
+        case 'SideEffectsUnitTest.12.inc':
             return [1 => 1];
         default:
             return [];
