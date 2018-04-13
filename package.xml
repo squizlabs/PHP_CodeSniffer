@@ -80,6 +80,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- It would previously throw either a NonParamGroup or ParamGroup error depending on the order of tags
     -- This change allows the NonParamGroup error to be suppressed in a ruleset to allow the @param group to contain other tags
     -- Thanks to Phil Davis for the patch
+  - Generic.Commenting.DocComment now continues checks param tags even if the doc comment short description is missing
+    -- This change allowes the MissingShort error to be suppressed in a ruleset without all other errors being suppressed as well
+    -- Thanks to Phil Davis for the patch
   - Generic.CodeAnalysis.AssignmentInCondition now reports a different error code for assignments found in WHILE conditions
     -- The return value of a function call is often assigned in a WHILE condition, so this change makes it easier to exclude these cases
     -- The new code for this error message is Generic.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition
