@@ -1,5 +1,5 @@
 <?php
-/* @codingStandardsIgnoreFile */
+/* phpcs:ignoreFile */
 
 class TestMemberProperties
 {

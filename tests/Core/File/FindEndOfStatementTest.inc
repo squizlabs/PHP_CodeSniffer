@@ -1,5 +1,5 @@
 <?php
-/* @codingStandardsIgnoreFile */
+/* phpcs:ignoreFile */
 
 /* testSimpleAssignment */
 $a = false;
