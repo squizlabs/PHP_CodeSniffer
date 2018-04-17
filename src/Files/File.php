@@ -1527,23 +1527,17 @@ class File
 
                 if ($this->tokens[$i]['code'] === T_NULLABLE) {
                     $nullableReturnType = true;
+                    $returnType        .= '?';
                 }
 
-                while ($this->tokens[$i]['code'] === T_RETURN_TYPE) {
+                if ($this->tokens[$i]['code'] === T_RETURN_TYPE
+                    || $this->tokens[$i]['code'] === T_STRING
+                    || $this->tokens[$i]['code'] === T_NS_SEPARATOR
+                ) {
                     $returnType .= $this->tokens[$i]['content'];
-                    $i++;
                 }
             }
         }//end if
-
-        if ($returnType !== '') {
-            // Cleanup.
-            $returnType = preg_replace('/\s+/', '', $returnType);
-            $returnType = preg_replace('/\/\*.*?\*\//', '', $returnType);
-            if ($nullableReturnType === true) {
-                $returnType = '?'.$returnType;
-            }
-        }
 
         return [
             'scope'                => $scope,
