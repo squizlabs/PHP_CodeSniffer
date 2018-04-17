@@ -178,6 +178,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1971 : Short array list syntax not correctly tokenized if short array is the first content in a file
   - Fixed bug #1979 : Tokenizer does not change heredoc to nowdoc token if the start tag contains spaces
   - Fixed bug #1982 : Squiz.Arrays.ArrayDeclaration fixer sometimes puts a comma in front of the last array value
+  - Fixed bug #1993 : PSR1/PSR2 not reporting or fixing short open tags
  </notes>
  <contents>
   <dir name="/">
