@@ -1017,7 +1017,8 @@ class PHP extends Tokenizer
                 so go forward and change the token type before it is processed.
             */
 
-            if ($tokenIsArray === true && $token[0] === T_FUNCTION
+            if ($tokenIsArray === true
+                && $token[0] === T_FUNCTION
                 && $finalTokens[$lastNotEmptyToken]['code'] !== T_USE
             ) {
                 for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
@@ -1032,7 +1033,101 @@ class PHP extends Tokenizer
                 if ($x < $numTokens && is_array($tokens[$x]) === true) {
                     $tokens[$x][0] = T_STRING;
                 }
-            }
+
+                // Go looking for the colon to start the return type hint.
+                // Start by finding the closing parenthesis of the function.
+                $parenthesisStack  = [];
+                $parenthesisCloser = false;
+                for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
+                    if (is_array($tokens[$x]) === false && $tokens[$x] === '(') {
+                        $parenthesisStack[] = $x;
+                    } else if (is_array($tokens[$x]) === false && $tokens[$x] === ')') {
+                        array_pop($parenthesisStack);
+                        if (empty($parenthesisStack) === true) {
+                            $parenthesisCloser = $x;
+                            break;
+                        }
+                    }
+                }
+
+                if ($parenthesisCloser !== false) {
+                    for ($x = ($parenthesisCloser + 1); $x < $numTokens; $x++) {
+                        if (is_array($tokens[$x]) === false
+                            || isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                        ) {
+                            // Non-empty content.
+                            if (is_array($tokens[$x]) === true && $tokens[$x][0] === T_USE) {
+                                // Search ahead for the closing parenthesis.
+                                for ($x = ($x + 1); $x < $numTokens; $x++) {
+                                    if (is_array($tokens[$x]) === false && $tokens[$x] === ')') {
+                                        continue(2);
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+                    }
+
+                    if (is_array($tokens[$x]) === false && $tokens[$x] === ':') {
+                        $allowed = [
+                            T_STRING       => T_STRING,
+                            T_ARRAY        => T_ARRAY,
+                            T_ARRAY_HINT   => T_ARRAY_HINT,
+                            T_CALLABLE     => T_CALLABLE,
+                            T_SELF         => T_SELF,
+                            T_PARENT       => T_PARENT,
+                            T_NS_SEPARATOR => T_NS_SEPARATOR,
+                        ];
+
+                        $allowed += Util\Tokens::$emptyTokens;
+
+                        $typeHintStart = null;
+                        $typeHintEnd   = null;
+
+                        for ($x = ($x + 1); $x < $numTokens; $x++) {
+                            if ($typeHintStart === null
+                                && is_array($tokens[$x]) === true
+                                && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
+                            ) {
+                                // We haven't found the start of the type hint yet.
+                                continue;
+                            }
+
+                            if (is_array($tokens[$x]) === true
+                                && isset($allowed[$tokens[$x][0]]) === true
+                            ) {
+                                if ($typeHintStart === null) {
+                                    $typeHintStart = $x;
+                                }
+
+                                if (isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false) {
+                                    $typeHintEnd = $x;
+                                }
+
+                                continue;
+                            }
+
+                            break;
+                        }//end for
+
+                        if ($typeHintStart !== null) {
+                            $tokens[$typeHintStart][0] = T_RETURN_TYPE;
+
+                            for ($i = ($typeHintStart + 1); $i <= $typeHintEnd; $i++) {
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    $type    = Util\Tokens::tokenName($tokens[$i][0]);
+                                    $content = Util\Common::prepareForOutput($tokens[$i][1]);
+                                    echo "\t\t* token $i merged into token $typeHintStart (T_RETURN_TYPE); was: $type => $content".PHP_EOL;
+                                }
+
+                                $tokens[$typeHintStart][1] .= $tokens[$i][1];
+                                $tokens[$i] = null;
+                            }
+                        }
+                    }//end if
+                }//end if
+            }//end if
 
             /*
                 Before PHP 7, the <=> operator was tokenized as
@@ -1439,59 +1534,7 @@ class PHP extends Tokenizer
                             }
                         }
                     }
-
-                    $tokenAfterReturnTypeHint = $this->tokens[$i]['scope_opener'];
-                } else if (isset($this->tokens[$i]['parenthesis_closer']) === true) {
-                    $tokenAfterReturnTypeHint = null;
-                    for ($x = ($this->tokens[$i]['parenthesis_closer'] + 1); $x < $numTokens; $x++) {
-                        if ($this->tokens[$x]['code'] === T_SEMICOLON) {
-                            $tokenAfterReturnTypeHint = $x;
-                            break;
-                        }
-                    }
-
-                    if ($tokenAfterReturnTypeHint === null) {
-                        // Probably a syntax error.
-                        continue;
-                    }
-                } else {
-                    // Probably a syntax error.
-                    continue;
                 }//end if
-
-                /*
-                    Detect function return values and assign them
-                    a special token, because PHP doesn't.
-                */
-
-                for ($x = ($tokenAfterReturnTypeHint - 1); $x > $i; $x--) {
-                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
-                        if (in_array($this->tokens[$x]['code'], [T_STRING, T_ARRAY, T_ARRAY_HINT, T_CALLABLE, T_SELF, T_PARENT], true) === true) {
-                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                $line = $this->tokens[$x]['line'];
-                                $type = $this->tokens[$x]['type'];
-                                echo "\t* token $x on line $line changed from $type to T_RETURN_TYPE".PHP_EOL;
-                            }
-
-                            $this->tokens[$x]['code'] = T_RETURN_TYPE;
-                            $this->tokens[$x]['type'] = 'T_RETURN_TYPE';
-
-                            if (array_key_exists('parenthesis_opener', $this->tokens[$x]) === true) {
-                                unset($this->tokens[$x]['parenthesis_opener']);
-                            }
-
-                            if (array_key_exists('parenthesis_closer', $this->tokens[$x]) === true) {
-                                unset($this->tokens[$x]['parenthesis_closer']);
-                            }
-
-                            if (array_key_exists('parenthesis_owner', $this->tokens[$x]) === true) {
-                                unset($this->tokens[$x]['parenthesis_owner']);
-                            }
-                        }//end if
-
-                        break;
-                    }//end if
-                }//end for
 
                 continue;
             } else if ($this->tokens[$i]['code'] === T_CLASS && isset($this->tokens[$i]['scope_opener']) === true) {

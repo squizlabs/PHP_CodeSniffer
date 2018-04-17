@@ -51,6 +51,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This stops sniffs (especially commenting sniffs) from generating a large number of false errors when ignoring
     -- Any custom sniffs that are using the T_PHPCS_* tokens to detect annotations may need to be changed to ignore them
        -- Check $phpcsFile->config->annotations to see if annotations are enabled and ignore when false
+  - Function return types are now tokenized as T_RETURN_TYPE in all cases
+    -- Previously, only simple types were tokenized in this way and namespaces were ignored
+    -- Custom sniffs looking for T_NS_SEPERATOR inside return types will now need to look for T_RETURN_TYPE and check the value directly
   - You can now use fully or partially qualified class names for custom reports instead of absolute file paths
     -- To support this, you must specify an autoload file in your ruleset.xml file and use it to register an autoloader
     -- Your autoloader will need to load your custom report class when requested
@@ -60,6 +63,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Invalid installed_paths values are now ignored instead of causing a fatal error
   - Improved testability of custom rulesets by allowing the installed standards to be overridden
     -- Thanks to Timo Schinkel for the patch
+  - The return value of File::getMethodProperties() now contains a "return_type" array index
+    -- This contains the return type of the function or closer, or a blank string if not specified
+    -- If the return type contains namespace information, it will be cleaned of whitespace and comments
+       -- To access the original return value string, use the main tokens array
   - The key used for caching PHPCS runs now includes all set config values
     -- This fixes a problem where changing config values (e.g., via --runtime-set) used an incorrect cache file
   - The "Function opening brace placement" metric has been separated into function and closure metrics in the info report
@@ -211,6 +218,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="GetMemberPropertiesTest.php" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.inc" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.php" role="test" />
+      <file baseinstalldir="" name="GetMethodPropertiesTest.inc" role="test" />
+      <file baseinstalldir="" name="GetMethodPropertiesTest.php" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
      </dir>
@@ -1723,6 +1732,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.inc" name="tests/Core/File/FindImplementedInterfaceNamesTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.inc" name="tests/Core/File/GetMethodParametersTest.inc" />
+   <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.php" name="tests/Core/File/GetMethodPropertiesTest.php" />
+   <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.inc" name="tests/Core/File/GetMethodPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
@@ -1752,6 +1763,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.inc" name="tests/Core/File/FindImplementedInterfaceNamesTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.inc" name="tests/Core/File/GetMethodParametersTest.inc" />
+   <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.php" name="tests/Core/File/GetMethodPropertiesTest.php" />
+   <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.inc" name="tests/Core/File/GetMethodPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />

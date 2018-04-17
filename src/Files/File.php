@@ -1428,6 +1428,7 @@ class File
      * <code>
      *   array(
      *    'scope'           => 'public', // public protected or protected
+     *    'return_type'     => '',       // the return type of the method.
      *    'scope_specified' => true,     // true is scope keyword was found.
      *    'is_abstract'     => false,    // true if the abstract keyword was found.
      *    'is_final'        => false,    // true if the final keyword was found.
@@ -1476,6 +1477,7 @@ class File
         $isAbstract     = false;
         $isFinal        = false;
         $isStatic       = false;
+        $returnType     = '';
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
             if (isset($valid[$this->tokens[$i]['code']]) === false) {
@@ -1507,8 +1509,36 @@ class File
             }//end switch
         }//end for
 
+        if (isset($this->tokens[$stackPtr]['parenthesis_closer']) === true) {
+            $scopeOpener = null;
+            if (isset($this->tokens[$stackPtr]['scope_opener']) === true) {
+                $scopeOpener = $this->tokens[$stackPtr]['scope_opener'];
+            }
+
+            for ($i = $this->tokens[$stackPtr]['parenthesis_closer']; $i < $this->numTokens; $i++) {
+                if (($scopeOpener === null && $this->tokens[$i]['code'] === T_SEMICOLON)
+                    || ($scopeOpener !== null && $i === $scopeOpener)
+                ) {
+                    // Didn't find anything.
+                    break;
+                }
+
+                while ($this->tokens[$i]['code'] === T_RETURN_TYPE) {
+                    $returnType .= $this->tokens[$i]['content'];
+                    $i++;
+                }
+            }
+        }
+
+        if ($returnType !== '') {
+            // Cleanup.
+            $returnType = preg_replace('/\s+/', '', $returnType);
+            $returnType = preg_replace('/\/\*.*?\*\//', '', $returnType);
+        }
+
         return [
             'scope'           => $scope,
+            'return_type'     => $returnType,
             'scope_specified' => $scopeSpecified,
             'is_abstract'     => $isAbstract,
             'is_final'        => $isFinal,
