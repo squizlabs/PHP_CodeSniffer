@@ -1052,6 +1052,12 @@ class Config
                             $output = null;
                         } else {
                             $dir = dirname($output);
+                            if (is_dir($dir) === false) {
+                                $error  = 'ERROR: The specified '.$report.' report file path "'.$output.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
+                                $error .= $this->printShortUsage(true);
+                                throw new DeepExitException($error, 3);
+                            }
+
                             if ($dir === '.') {
                                 // Passed report file is a filename in the current directory.
                                 $output = getcwd().'/'.basename($output);

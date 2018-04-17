@@ -76,6 +76,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- A new "Closure opening brace placement" metric now shows information for closures
   - Multi-line T_YIELD_FROM statemenets are now replicated properly for older PHP versions
   - The PSR2 standard no longer produces 2 error messages when the AS keyword in a foreach loop is not lowercase
+  - Specifying a path to a non-existent dir when using the --report-[reportType]=/path/to/report CLI option no longer throws an exception
+    -- This now prints a readable error message, as it does when using --report-file
   - Removed Squiz.PHP.DisallowObEndFlush from the Squiz standard
     -- If you use this sniff and want to continue banning ob_end_flush(), use Generic.PHP.ForbiddenFunctions instead
     -- You will need to set the forbiddenFunctions property in your ruleset.xml file
