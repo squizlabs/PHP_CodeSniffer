@@ -28,6 +28,15 @@ class MyClass {
     /* testPublicReturnMethod */
     public function myFunction(): array {}
 
+    /* testNullableReturnMethod */
+    public function myFunction(): ?array {}
+
+    /* testMessyNullableReturnMethod */
+    public function myFunction() /* comment
+        */ :  
+        /* comment */ ? //comment
+        array {}
+
     /* testReturnNamespace */
     function myFunction(): \MyNamespace\MyClass {}
 

@@ -67,12 +67,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testBasicFunction()
     {
         $expected = [
-            'scope'           => 'public',
-            'return_type'     => '',
-            'scope_specified' => false,
-            'is_abstract'     => false,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -98,12 +99,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testReturnFunction()
     {
         $expected = [
-            'scope'           => 'public',
-            'return_type'     => 'array',
-            'scope_specified' => false,
-            'is_abstract'     => false,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'array',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -129,12 +131,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testNestedClosure()
     {
         $expected = [
-            'scope'           => 'public',
-            'return_type'     => 'int',
-            'scope_specified' => false,
-            'is_abstract'     => false,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'int',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -160,12 +163,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testBasicMethod()
     {
         $expected = [
-            'scope'           => 'public',
-            'return_type'     => '',
-            'scope_specified' => false,
-            'is_abstract'     => false,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -191,12 +195,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testPrivateStaticMethod()
     {
         $expected = [
-            'scope'           => 'private',
-            'return_type'     => '',
-            'scope_specified' => true,
-            'is_abstract'     => false,
-            'is_final'        => false,
-            'is_static'       => true,
+            'scope'                => 'private',
+            'scope_specified'      => true,
+            'return_type'          => '',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -222,12 +227,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testFinalMethod()
     {
         $expected = [
-            'scope'           => 'public',
-            'return_type'     => '',
-            'scope_specified' => true,
-            'is_abstract'     => false,
-            'is_final'        => true,
-            'is_static'       => false,
+            'scope'                => 'public',
+            'scope_specified'      => true,
+            'return_type'          => '',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => true,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -253,12 +259,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testProtectedReturnMethod()
     {
         $expected = [
-            'scope'           => 'protected',
-            'return_type'     => 'int',
-            'scope_specified' => true,
-            'is_abstract'     => false,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'protected',
+            'scope_specified'      => true,
+            'return_type'          => 'int',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -284,12 +291,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testPublicReturnMethod()
     {
         $expected = [
-            'scope'           => 'public',
-            'return_type'     => 'array',
-            'scope_specified' => true,
-            'is_abstract'     => false,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'public',
+            'scope_specified'      => true,
+            'return_type'          => 'array',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -308,6 +316,70 @@ class GetMethodPropertiesTest extends TestCase
 
 
     /**
+     * Test a public method with a nullable return type.
+     *
+     * @return void
+     */
+    public function testNullableReturnMethod()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => true,
+            'return_type'          => '?array',
+            'nullable_return_type' => true,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+        ];
+
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testNullableReturnMethod */'
+        );
+
+        $found = $this->phpcsFile->getMethodProperties(($function + 5));
+        $this->assertSame($expected, $found);
+
+    }//end testNullableReturnMethod()
+
+
+    /**
+     * Test a public method with a nullable return type.
+     *
+     * @return void
+     */
+    public function testMessyNullableReturnMethod()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => true,
+            'return_type'          => '?array',
+            'nullable_return_type' => true,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+        ];
+
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testMessyNullableReturnMethod */'
+        );
+
+        $found = $this->phpcsFile->getMethodProperties(($function + 5));
+        $this->assertSame($expected, $found);
+
+    }//end testMessyNullableReturnMethod()
+
+
+    /**
      * Test a method with a namespaced return type.
      *
      * @return void
@@ -315,12 +387,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testReturnNamespace()
     {
         $expected = [
-            'scope'           => 'public',
-            'return_type'     => '\MyNamespace\MyClass',
-            'scope_specified' => false,
-            'is_abstract'     => false,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '\MyNamespace\MyClass',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -346,12 +419,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testReturnMultilineNamespace()
     {
         $expected = [
-            'scope'           => 'public',
-            'return_type'     => '\MyNamespace\MyClass\Foo',
-            'scope_specified' => false,
-            'is_abstract'     => false,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '\MyNamespace\MyClass\Foo',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -377,12 +451,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testAbstractMethod()
     {
         $expected = [
-            'scope'           => 'public',
-            'return_type'     => '',
-            'scope_specified' => false,
-            'is_abstract'     => true,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '',
+            'nullable_return_type' => false,
+            'is_abstract'          => true,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -408,12 +483,13 @@ class GetMethodPropertiesTest extends TestCase
     public function testAbstractReturnMethod()
     {
         $expected = [
-            'scope'           => 'protected',
-            'return_type'     => 'bool',
-            'scope_specified' => true,
-            'is_abstract'     => true,
-            'is_final'        => false,
-            'is_static'       => false,
+            'scope'                => 'protected',
+            'scope_specified'      => true,
+            'return_type'          => 'bool',
+            'nullable_return_type' => false,
+            'is_abstract'          => true,
+            'is_final'             => false,
+            'is_static'            => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);

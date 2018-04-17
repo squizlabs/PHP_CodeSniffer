@@ -1427,12 +1427,13 @@ class File
      * The format of the array is:
      * <code>
      *   array(
-     *    'scope'           => 'public', // public protected or protected
-     *    'return_type'     => '',       // the return type of the method.
-     *    'scope_specified' => true,     // true is scope keyword was found.
-     *    'is_abstract'     => false,    // true if the abstract keyword was found.
-     *    'is_final'        => false,    // true if the final keyword was found.
-     *    'is_static'       => false,    // true if the static keyword was found.
+     *    'scope'                => 'public', // public protected or protected
+     *    'scope_specified'      => true,     // true is scope keyword was found.
+     *    'return_type'          => '',       // the return type of the method.
+     *    'nullable_return_type' => false, // true if the return type is nullable.
+     *    'is_abstract'          => false,    // true if the abstract keyword was found.
+     *    'is_final'             => false,    // true if the final keyword was found.
+     *    'is_static'            => false,    // true if the static keyword was found.
      *   );
      * </code>
      *
@@ -1474,10 +1475,11 @@ class File
 
         $scope          = 'public';
         $scopeSpecified = false;
-        $isAbstract     = false;
-        $isFinal        = false;
-        $isStatic       = false;
         $returnType     = '';
+        $nullableReturnType = false;
+        $isAbstract         = false;
+        $isFinal            = false;
+        $isStatic           = false;
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
             if (isset($valid[$this->tokens[$i]['code']]) === false) {
@@ -1523,26 +1525,34 @@ class File
                     break;
                 }
 
+                if ($this->tokens[$i]['code'] === T_NULLABLE) {
+                    $nullableReturnType = true;
+                }
+
                 while ($this->tokens[$i]['code'] === T_RETURN_TYPE) {
                     $returnType .= $this->tokens[$i]['content'];
                     $i++;
                 }
             }
-        }
+        }//end if
 
         if ($returnType !== '') {
             // Cleanup.
             $returnType = preg_replace('/\s+/', '', $returnType);
             $returnType = preg_replace('/\/\*.*?\*\//', '', $returnType);
+            if ($nullableReturnType === true) {
+                $returnType = '?'.$returnType;
+            }
         }
 
         return [
-            'scope'           => $scope,
-            'return_type'     => $returnType,
-            'scope_specified' => $scopeSpecified,
-            'is_abstract'     => $isAbstract,
-            'is_final'        => $isFinal,
-            'is_static'       => $isStatic,
+            'scope'                => $scope,
+            'scope_specified'      => $scopeSpecified,
+            'return_type'          => $returnType,
+            'nullable_return_type' => $nullableReturnType,
+            'is_abstract'          => $isAbstract,
+            'is_final'             => $isFinal,
+            'is_static'            => $isStatic,
         ];
 
     }//end getMethodProperties()

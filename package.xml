@@ -36,7 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The current method for setting array properties in ruleset files has been deprecated and will be removed in version 4
     -- Currently, setting an array value uses the string syntax "print=>echo,create_function=>null"
     -- Now, invididual array elements are specifed using a new "element" tag with "key" and "value" attributes
-       -- For example, element key="print" value="echo"
+       --- For example, element key="print" value="echo"
     -- Thanks to Michał Bundyra for the patch
 
   - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
@@ -50,7 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCS annotations now remain as T_PHPCS_* tokens instead of reverting to comment tokens when --ignore-annotations is used
     -- This stops sniffs (especially commenting sniffs) from generating a large number of false errors when ignoring
     -- Any custom sniffs that are using the T_PHPCS_* tokens to detect annotations may need to be changed to ignore them
-       -- Check $phpcsFile->config->annotations to see if annotations are enabled and ignore when false
+       --- Check $phpcsFile->config->annotations to see if annotations are enabled and ignore when false
   - Function return types are now tokenized as T_RETURN_TYPE in all cases
     -- Previously, only simple types were tokenized in this way and namespaces were ignored
     -- Custom sniffs looking for T_NS_SEPERATOR inside return types will now need to look for T_RETURN_TYPE and check the value directly
@@ -65,8 +65,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Timo Schinkel for the patch
   - The return value of File::getMethodProperties() now contains a "return_type" array index
     -- This contains the return type of the function or closer, or a blank string if not specified
+    -- If the return type is nullable, the return type will contain the leading ?
+       --- A nullable_return_type array index in the return value will also be set to true
     -- If the return type contains namespace information, it will be cleaned of whitespace and comments
-       -- To access the original return value string, use the main tokens array
+       --- To access the original return value string, use the main tokens array
   - The key used for caching PHPCS runs now includes all set config values
     -- This fixes a problem where changing config values (e.g., via --runtime-set) used an incorrect cache file
   - The "Function opening brace placement" metric has been separated into function and closure metrics in the info report

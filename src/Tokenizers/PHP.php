@@ -1057,7 +1057,7 @@ class PHP extends Tokenizer
                         ) {
                             // Non-empty content.
                             if (is_array($tokens[$x]) === true && $tokens[$x][0] === T_USE) {
-                                // Search ahead for the closing parenthesis.
+                                // Found a use statements, so search ahead for the closing parenthesis.
                                 for ($x = ($x + 1); $x < $numTokens; $x++) {
                                     if (is_array($tokens[$x]) === false && $tokens[$x] === ')') {
                                         continue(2);
@@ -1090,7 +1090,15 @@ class PHP extends Tokenizer
                                 && is_array($tokens[$x]) === true
                                 && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
                             ) {
-                                // We haven't found the start of the type hint yet.
+                                // Whitespace or coments before the type hint.
+                                continue;
+                            }
+
+                            if ($typeHintStart === null
+                                && is_array($tokens[$x]) === false
+                                && $tokens[$x] === '?'
+                            ) {
+                                // Found a nullable operator, so skip it.
                                 continue;
                             }
 
