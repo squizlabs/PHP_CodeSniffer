@@ -1529,20 +1529,14 @@ class File
                     $nullableReturnType = true;
                 }
 
-                while ($this->tokens[$i]['code'] === T_RETURN_TYPE) {
+                if ($this->tokens[$i]['code'] === T_RETURN_TYPE) {
                     $returnType .= $this->tokens[$i]['content'];
-                    $i++;
                 }
             }
         }//end if
 
-        if ($returnType !== '') {
-            // Cleanup.
-            $returnType = preg_replace('/\s+/', '', $returnType);
-            $returnType = preg_replace('/\/\*.*?\*\//', '', $returnType);
-            if ($nullableReturnType === true) {
-                $returnType = '?'.$returnType;
-            }
+        if ($returnType !== '' && $nullableReturnType === true) {
+            $returnType = '?'.$returnType;
         }
 
         return [

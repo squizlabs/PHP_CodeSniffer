@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Function return types are now tokenized as T_RETURN_TYPE in all cases
     -- Previously, only simple types were tokenized in this way and namespaces were ignored
     -- Custom sniffs looking for T_NS_SEPERATOR inside return types will now need to look for T_RETURN_TYPE and check the value directly
+    -- Comments and whitespace inside return types remain tokenized as-is, so a return type may be split over multiple tokens
   - You can now use fully or partially qualified class names for custom reports instead of absolute file paths
     -- To support this, you must specify an autoload file in your ruleset.xml file and use it to register an autoloader
     -- Your autoloader will need to load your custom report class when requested

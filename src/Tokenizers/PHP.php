@@ -1080,17 +1080,15 @@ class PHP extends Tokenizer
                             T_NS_SEPARATOR => T_NS_SEPARATOR,
                         ];
 
-                        $allowed += Util\Tokens::$emptyTokens;
-
                         $typeHintStart = null;
                         $typeHintEnd   = null;
 
+                        // Find the start of the return type.
                         for ($x = ($x + 1); $x < $numTokens; $x++) {
-                            if ($typeHintStart === null
-                                && is_array($tokens[$x]) === true
+                            if (is_array($tokens[$x]) === true
                                 && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
                             ) {
-                                // Whitespace or coments before the type hint.
+                                // Whitespace or coments before the return type.
                                 continue;
                             }
 
@@ -1102,6 +1100,10 @@ class PHP extends Tokenizer
                                 continue;
                             }
 
+                            break;
+                        }
+
+                        do {
                             if (is_array($tokens[$x]) === true
                                 && isset($allowed[$tokens[$x][0]]) === true
                             ) {
@@ -1113,26 +1115,51 @@ class PHP extends Tokenizer
                                     $typeHintEnd = $x;
                                 }
 
+                                $x++;
                                 continue;
                             }
 
-                            break;
-                        }//end for
+                            // End of return type, or part of it.
+                            if ($typeHintStart !== null) {
+                                $tokens[$typeHintStart][0] = T_RETURN_TYPE;
 
-                        if ($typeHintStart !== null) {
-                            $tokens[$typeHintStart][0] = T_RETURN_TYPE;
+                                for ($i = ($typeHintStart + 1); $i <= $typeHintEnd; $i++) {
+                                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                        $type    = Util\Tokens::tokenName($tokens[$i][0]);
+                                        $content = Util\Common::prepareForOutput($tokens[$i][1]);
+                                        echo "\t\t* token $i merged into token $typeHintStart (T_RETURN_TYPE); was: $type => $content".PHP_EOL;
+                                    }
 
-                            for ($i = ($typeHintStart + 1); $i <= $typeHintEnd; $i++) {
-                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                    $type    = Util\Tokens::tokenName($tokens[$i][0]);
-                                    $content = Util\Common::prepareForOutput($tokens[$i][1]);
-                                    echo "\t\t* token $i merged into token $typeHintStart (T_RETURN_TYPE); was: $type => $content".PHP_EOL;
+                                    $tokens[$typeHintStart][1] .= $tokens[$i][1];
+                                    $tokens[$i] = null;
                                 }
 
-                                $tokens[$typeHintStart][1] .= $tokens[$i][1];
-                                $tokens[$i] = null;
-                            }
-                        }
+                                $typeHintStart = null;
+                                $typeHintEnd   = null;
+
+                                $x++;
+                                continue;
+                            } else if (is_array($tokens[$x]) === true
+                                && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
+                            ) {
+                                // Empty token at the end/middle of the return type.
+                                // Find the start of the next part of it (if any).
+                                for ($x = ($x + 1); $x < $numTokens; $x++) {
+                                    if (is_array($tokens[$x]) === true
+                                        && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
+                                    ) {
+                                        // Whitespace or coments before the return type.
+                                        continue;
+                                    }
+
+                                    break;
+                                }
+
+                                continue;
+                            }//end if
+
+                            break;
+                        } while ($x < $numTokens);
                     }//end if
                 }//end if
             }//end if
