@@ -1033,6 +1033,12 @@ class PHP extends Tokenizer
                     $tokens[$x][0] = T_STRING;
                 }
 
+                /*
+                    This is a special condition for T_ARRAY tokens used for
+                    function return types. We want to keep the parenthesis map clean,
+                    so let's tag these tokens as T_STRING.
+                */
+
                 // Go looking for the colon to start the return type hint.
                 // Start by finding the closing parenthesis of the function.
                 $parenthesisStack  = [];
@@ -1078,8 +1084,7 @@ class PHP extends Tokenizer
                             T_NS_SEPARATOR => T_NS_SEPARATOR,
                         ];
 
-                        $typeHintStart = null;
-                        $typeHintEnd   = null;
+                        $allowed += Util\Tokens::$emptyTokens;
 
                         // Find the start of the return type.
                         for ($x = ($x + 1); $x < $numTokens; $x++) {
@@ -1090,74 +1095,39 @@ class PHP extends Tokenizer
                                 continue;
                             }
 
-                            if ($typeHintStart === null
-                                && is_array($tokens[$x]) === false
-                                && $tokens[$x] === '?'
-                            ) {
+                            if (is_array($tokens[$x]) === false && $tokens[$x] === '?') {
                                 // Found a nullable operator, so skip it.
+                                // But also covert the token to save the tokenizer
+                                // a bit of time later on.
+                                $tokens[$x] = [
+                                    T_NULLABLE,
+                                    '?',
+                                ];
+
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    echo "\t\t* token $x changed from ? to T_NULLABLE".PHP_EOL;
+                                }
+
                                 continue;
                             }
 
                             break;
+                        }//end for
+
+                        // Any T_ARRAY tokens we find between here and the next
+                        // token that can't be part of the return type need to be
+                        // coverted to T_STRING tokens.
+                        for ($x; $x < $numTokens; $x++) {
+                            if (is_array($tokens[$x]) === false || isset($allowed[$tokens[$x][0]]) === false) {
+                                break;
+                            } else if ($tokens[$x][0] === T_ARRAY) {
+                                $tokens[$x][0] = T_STRING;
+
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    echo "\t\t* token $x changed from T_ARRAY to T_STRING".PHP_EOL;
+                                }
+                            }
                         }
-
-                        do {
-                            if (is_array($tokens[$x]) === true
-                                && isset($allowed[$tokens[$x][0]]) === true
-                            ) {
-                                if ($typeHintStart === null) {
-                                    $typeHintStart = $x;
-                                }
-
-                                if (isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false) {
-                                    $typeHintEnd = $x;
-                                }
-
-                                $x++;
-                                continue;
-                            }
-
-                            // End of return type, or part of it.
-                            if ($typeHintStart !== null) {
-                                $tokens[$typeHintStart][0] = T_RETURN_TYPE;
-
-                                for ($i = ($typeHintStart + 1); $i <= $typeHintEnd; $i++) {
-                                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                        $type    = Util\Tokens::tokenName($tokens[$i][0]);
-                                        $content = Util\Common::prepareForOutput($tokens[$i][1]);
-                                        echo "\t\t* token $i merged into token $typeHintStart (T_RETURN_TYPE); was: $type => $content".PHP_EOL;
-                                    }
-
-                                    $tokens[$typeHintStart][1] .= $tokens[$i][1];
-                                    $tokens[$i] = null;
-                                }
-
-                                $typeHintStart = null;
-                                $typeHintEnd   = null;
-
-                                $x++;
-                                continue;
-                            } else if (is_array($tokens[$x]) === true
-                                && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
-                            ) {
-                                // Empty token at the end/middle of the return type.
-                                // Find the start of the next part of it (if any).
-                                for ($x = ($x + 1); $x < $numTokens; $x++) {
-                                    if (is_array($tokens[$x]) === true
-                                        && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
-                                    ) {
-                                        // Whitespace or coments before the return type.
-                                        continue;
-                                    }
-
-                                    break;
-                                }
-
-                                continue;
-                            }//end if
-
-                            break;
-                        } while ($x < $numTokens);
                     }//end if
                 }//end if
             }//end if

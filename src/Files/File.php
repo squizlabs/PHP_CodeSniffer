@@ -1516,11 +1516,20 @@ class File
                 $scopeOpener = $this->tokens[$stackPtr]['scope_opener'];
             }
 
+            $valid = [
+                T_STRING       => T_STRING,
+                T_ARRAY        => T_ARRAY,
+                T_CALLABLE     => T_CALLABLE,
+                T_SELF         => T_SELF,
+                T_PARENT       => T_PARENT,
+                T_NS_SEPARATOR => T_NS_SEPARATOR,
+            ];
+
             for ($i = $this->tokens[$stackPtr]['parenthesis_closer']; $i < $this->numTokens; $i++) {
                 if (($scopeOpener === null && $this->tokens[$i]['code'] === T_SEMICOLON)
                     || ($scopeOpener !== null && $i === $scopeOpener)
                 ) {
-                    // Didn't find anything.
+                    // End of function definition.
                     break;
                 }
 
@@ -1528,7 +1537,7 @@ class File
                     $nullableReturnType = true;
                 }
 
-                if ($this->tokens[$i]['code'] === T_RETURN_TYPE) {
+                if (isset($valid[$this->tokens[$i]['code']]) === true) {
                     $returnType .= $this->tokens[$i]['content'];
                 }
             }
