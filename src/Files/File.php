@@ -1325,7 +1325,6 @@ class File
             case T_ELLIPSIS:
                 $variableLength = true;
                 break;
-            case T_ARRAY_HINT:
             case T_CALLABLE:
                 $typeHint .= $this->tokens[$i]['content'];
                 break;

@@ -420,7 +420,6 @@ class PHP extends Tokenizer
         T_SR                       => 2,
         T_SL_EQUAL                 => 3,
         T_SR_EQUAL                 => 3,
-        T_ARRAY_HINT               => 5,
         T_GREATER_THAN             => 1,
         T_LESS_THAN                => 1,
         T_BOOLEAN_NOT              => 1,
@@ -1073,7 +1072,6 @@ class PHP extends Tokenizer
                         $allowed = [
                             T_STRING       => T_STRING,
                             T_ARRAY        => T_ARRAY,
-                            T_ARRAY_HINT   => T_ARRAY_HINT,
                             T_CALLABLE     => T_CALLABLE,
                             T_SELF         => T_SELF,
                             T_PARENT       => T_PARENT,
@@ -1433,14 +1431,14 @@ class PHP extends Tokenizer
                 // This is a special condition for T_ARRAY tokens used for
                 // type hinting function arguments as being arrays. We want to keep
                 // the parenthesis map clean, so let's tag these tokens as
-                // T_ARRAY_HINT.
+                // T_STRING.
                 if ($newToken['code'] === T_ARRAY) {
                     for ($i = $stackPtr; $i < $numTokens; $i++) {
                         if ($tokens[$i] === '(') {
                             break;
                         } else if ($tokens[$i][0] === T_VARIABLE) {
-                            $newToken['code'] = T_ARRAY_HINT;
-                            $newToken['type'] = 'T_ARRAY_HINT';
+                            $newToken['code'] = T_STRING;
+                            $newToken['type'] = 'T_STRING';
                             break;
                         }
                     }

@@ -39,6 +39,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
        --- For example, element key="print" value="echo"
     -- Thanks to Michał Bundyra for the patch
 
+  - The T_ARRAY_HINT token has been deprectated and will be removed in version 4
+    -- The token was used to ensure array type hints were not tokenized as T_ARRAY, but no other type hints were given a special token
+    -- Array type hints now use the standard T_STRING token instead
+    -- Sniffs referencing this token type will continue to run without error until version 4, but will not find any T_ARRAY_HINT tokens
+
   - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
   - You can now apply include-pattern rules to individual message codes in a ruleset like you can with exclude-pattern rules
     -- Previously, include-pattern rules only applied to entire sniffs
