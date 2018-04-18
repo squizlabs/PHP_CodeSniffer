@@ -113,9 +113,9 @@ class Reporter
                 }
 
                 $reportClassName = Autoload::loadFile($filename);
-            } else if (class_exists('PHP_CodeSniffer\Reports\\'.$type) === true) {
+            } else if (class_exists('PHP_CodeSniffer\Reports\\'.ucfirst($type)) === true) {
                 // PHPCS native report.
-                $reportClassName = 'PHP_CodeSniffer\Reports\\'.$type;
+                $reportClassName = 'PHP_CodeSniffer\Reports\\'.ucfirst($type);
             } else if (class_exists($type) === true) {
                 // FQN of a custom report.
                 $reportClassName = $type;
