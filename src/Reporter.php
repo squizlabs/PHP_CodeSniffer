@@ -99,8 +99,6 @@ class Reporter
         $this->config = $config;
 
         foreach ($config->reports as $type => $output) {
-            $type = ucfirst($type);
-
             if ($output === null) {
                 $output = $config->reportFile;
             }
@@ -200,7 +198,6 @@ class Reporter
      */
     public function printReport($report)
     {
-        $report      = ucfirst($report);
         $reportClass = $this->reports[$report]['class'];
         $reportFile  = $this->reports[$report]['output'];
 
