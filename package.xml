@@ -99,6 +99,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Functionality of the Squiz standard remains the same, but the error codes are now different
     -- Previously, Squiz.PHP.ForbiddenFunctions.Found and Squiz.PHP.ForbiddenFunctions.FoundWithAlternative
     -- Now, Generic.PHP.ForbiddenFunctions.Found and Generic.PHP.ForbiddenFunctions.FoundWithAlternative
+  - Added new Generic.PHP.LowerCaseType sniff
+    -- Ensures PHP types used for type hints, return types, and type casting are lowercase
   - Added new Generic.WhiteSpace.ArbitraryParenthesesSpacing sniff
     -- Generates an error for whitespace inside parenthesis that don't belong to a function call/declaration or control structure
     -- Generates a warning for any empty parenthesis found
@@ -391,6 +393,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseConstantStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="UpperCaseConstantStandard.xml" role="php" />
@@ -489,6 +492,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseConstantSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SyntaxSniff.php" role="php" />
@@ -705,6 +709,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageUnitTest.inc" role="test" />
