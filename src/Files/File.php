@@ -1518,7 +1518,6 @@ class File
 
             $valid = [
                 T_STRING       => T_STRING,
-                T_ARRAY        => T_ARRAY,
                 T_CALLABLE     => T_CALLABLE,
                 T_SELF         => T_SELF,
                 T_PARENT       => T_PARENT,
