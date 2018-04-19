@@ -111,9 +111,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Allows the required spacing to be set using the spacing sniff property (default is 0)
     -- Allows newlines to be used by setting the ignoreNewlines sniff property (default is false)
     -- Thanks to Juliette Reinders Folmer for the contribution
-  - Added New PSR12.Keywords.ShortFormTypeKeywords sniff
+  - Added new PSR12.Classes.ClassInstantiation sniff
+    -- Ensures parenthesis are used when instantiating a new class
+  - Added new PSR12.Keywords.ShortFormTypeKeywords sniff
     -- Ensures the short form of PHP types is used when type casting
-  - Added New PSR12.Namespaces.CompundNamespaceDepth sniff
+  - Added new PSR12.Namespaces.CompundNamespaceDepth sniff
     -- Ensures compund namespace use statements have a max depth of 2 levels
     -- The max depth can be changed by setting the 'maxDepth' sniff property in a ruleset.xml file
   - Improved core support for grouped property declarations
@@ -1037,6 +1039,47 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Methods">
         <file baseinstalldir="PHP/CodeSniffer" name="CamelCapsMethodNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CamelCapsMethodNameUnitTest.php" role="test" />
+       </dir>
+      </dir>
+      <file baseinstalldir="PHP/CodeSniffer" name="ruleset.xml" role="php" />
+     </dir>
+     <dir name="PSR12">
+      <dir name="Docs">
+       <dir name="Classes">
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationStandard.xml" role="php" />
+       </dir>
+       <dir name="Keywords">
+        <file baseinstalldir="PHP/CodeSniffer" name="ShortFormTypeKeywordsStandard.xml" role="php" />
+       </dir>
+       <dir name="Namespaces">
+        <file baseinstalldir="PHP/CodeSniffer" name="CompoundNamespaceDepthStandard.xml" role="php" />
+       </dir>
+      </dir>
+      <dir name="Sniffs">
+       <dir name="Classes">
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationSniff.php" role="php" />
+       </dir>
+       <dir name="Keywords">
+        <file baseinstalldir="PHP/CodeSniffer" name="ShortFormTypeKeywordsSniff.php" role="php" />
+       </dir>
+       <dir name="Namespaces">
+        <file baseinstalldir="PHP/CodeSniffer" name="CompoundNamespaceDepthSniff.php" role="php" />
+       </dir>
+      </dir>
+      <dir name="Tests">
+       <dir name="Classes">
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.php" role="test" />
+       </dir>
+       <dir name="Keywords">
+        <file baseinstalldir="PHP/CodeSniffer" name="ShortFormTypeKeywordsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ShortFormTypeKeywordsUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ShortFormTypeKeywordsUnitTest.php" role="test" />
+       </dir>
+       <dir name="Namespaces">
+        <file baseinstalldir="PHP/CodeSniffer" name="CompoundNamespaceDepthUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="CompoundNamespaceDepthUnitTest.php" role="test" />
        </dir>
       </dir>
       <file baseinstalldir="PHP/CodeSniffer" name="ruleset.xml" role="php" />

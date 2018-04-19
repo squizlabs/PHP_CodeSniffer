@@ -82,7 +82,7 @@
 
     <!-- The header of a PHP file may consist of a number of different blocks. If present, each of the blocks below MUST be separated by a single blank line, and MUST NOT contain a blank line. Each block MUST be in the order listed below, although blocks that are not relevant may be omitted.
 
-    Opening <?php tag.
+    Opening PHP tag.
     File-level docblock.
     One or more declare statements.
     The namespace declaration of the file.
@@ -92,7 +92,7 @@
     The remainder of the code in the file.
     When a file contains a mix of HTML and PHP, any of the above sections may still be used. If so, they MUST be present at the top of the file, even if the remainder of the code consists a closing PHP tag and then a mixture of HTML and PHP. -->
 
-    <!-- When the opening <?php tag is on the first line of the file, it MUST be on its own line with no other statements unless it is a file containing markup outside of PHP opening and closing tags. -->
+    <!-- When the opening PHP tag is on the first line of the file, it MUST be on its own line with no other statements unless it is a file containing markup outside of PHP opening and closing tags. -->
 
     <!-- Import statements MUST never begin with a leading backslash as they must always be fully qualified. -->
 
@@ -110,17 +110,14 @@
     <!-- Any closing brace MUST NOT be followed by any comment or statement on the same line. -->
 
     <!-- When instantiating a new class, parenthesis MUST always be present even when there are no arguments passed to the constructor. -->
+    <!-- checked by PSR12.Classes.ClassInstantiation -->
 
     <!-- 4.1 Extends and Implements -->
 
     <!-- The extends and implements keywords MUST be declared on the same line as the class name. -->
-
     <!-- The opening brace for the class MUST go on its own line; the closing brace for the class MUST go on the next line after the body. -->
-
     <!-- Opening braces MUST be on their own line and MUST NOT be preceded or followed by a blank line. -->
-
     <!-- Closing braces MUST be on their own line and MUST NOT be preceded by a blank line. -->
-
     <!-- Lists of implements and extends MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line. -->
     <rule ref="PSR2.Classes.ClassDeclaration"/>
 
