@@ -43,7 +43,7 @@ class LowerCaseTypeSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens  = $phpcsFile->getTokens();
+        $tokens = $phpcsFile->getTokens();
 
         if (isset(Tokens::$castTokens[$tokens[$stackPtr]['code']]) === true) {
             // A cast token.
@@ -69,7 +69,7 @@ class LowerCaseTypeSniff implements Sniff
             }//end if
 
             return;
-        }
+        }//end if
 
         $phpTypes = [
             'self'     => true,
@@ -109,7 +109,7 @@ class LowerCaseTypeSniff implements Sniff
             } else {
                 $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'lower');
             }//end if
-        }
+        }//end if
 
         $params = $phpcsFile->getMethodParameters($stackPtr);
         foreach ($params as $param) {
@@ -139,8 +139,8 @@ class LowerCaseTypeSniff implements Sniff
                 } else {
                     $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'lower');
                 }//end if
-            }
-        }
+            }//end if
+        }//end foreach
 
     }//end process()
 
