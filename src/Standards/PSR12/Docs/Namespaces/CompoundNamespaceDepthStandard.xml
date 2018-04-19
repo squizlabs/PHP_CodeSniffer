@@ -1,0 +1,28 @@
+<documentation title="Compound Namespace Depth">
+    <standard>
+    <![CDATA[
+    Compound namespaces with a depth of more than two MUST NOT be used.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Max depth of 2.">
+        <![CDATA[
+use Vendor\Package\SomeNamespace\{
+    SubnamespaceOne\ClassA,
+    SubnamespaceOne\ClassB,
+    SubnamespaceTwo\ClassY,
+    ClassZ,
+};
+        ]]>
+        </code>
+        <code title="Invalid: Max depth of 3.">
+        <![CDATA[
+use Vendor\Package\SomeNamespace\{
+    <em>SubnamespaceOne\AnotherNamespace\ClassA,</em>
+    SubnamespaceOne\ClassB,
+    ClassZ,
+};
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

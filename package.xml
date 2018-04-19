@@ -57,6 +57,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        --- If the return type contains namespace information, it will be cleaned of whitespace and comments
            ---- To access the original return value string, use the main tokens array
 
+  - This release contains an incomplete version of the PSR-12 coding standard
+    -- Errors found using this standard should be valid, but it will miss a lot of violations until it is complete
+    -- If you'd like to test and help, you can use the standard by running PHPCS with --standard=PSR12
+
   - Config values set using --runtime-set now override any config values set in rulesets or the CodeSniffer.conf file
   - You can now apply include-pattern rules to individual message codes in a ruleset like you can with exclude-pattern rules
     -- Previously, include-pattern rules only applied to entire sniffs
@@ -107,6 +111,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Allows the required spacing to be set using the spacing sniff property (default is 0)
     -- Allows newlines to be used by setting the ignoreNewlines sniff property (default is false)
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Added New PSR12.Keywords.ShortFormTypeKeywords sniff
+    -- Ensures the short form of PHP types is used when type casting
+  - Added New PSR12.Namespaces.CompundNamespaceDepth sniff
+    -- Ensures compund namespace use statements have a max depth of 2 levels
+    -- The max depth can be changed by setting the 'maxDepth' sniff property in a ruleset.xml file
   - Improved core support for grouped property declarations
     -- Also improves support in Squiz.WhiteSpace.ScopeKeywordSpacing and Squiz.WhiteSpace.MemberVarSpacing
     -- Thanks to Juliette Reinders Folmer for the patch
