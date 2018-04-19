@@ -83,10 +83,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The "Function opening brace placement" metric has been separated into function and closure metrics in the info report
     -- Closures are no longer included in the "Function opening brace placement" metric
     -- A new "Closure opening brace placement" metric now shows information for closures
-  - Multi-line T_YIELD_FROM statemenets are now replicated properly for older PHP versions
+  - Multi-line T_YIELD_FROM statements are now replicated properly for older PHP versions
   - The PSR2 standard no longer produces 2 error messages when the AS keyword in a foreach loop is not lowercase
   - Specifying a path to a non-existent dir when using the --report-[reportType]=/path/to/report CLI option no longer throws an exception
     -- This now prints a readable error message, as it does when using --report-file
+  - The File::getMethodParamaters() method now includes a type_hint_token array index in the return value
+    -- Provides the position in the token stack of the first token in the type hint
+  - The File::getMethodProperties() method now includes a return_type_token array index in the return value
+    -- Provides the position in the token stack of the first token in the return type
   - Removed Squiz.PHP.DisallowObEndFlush from the Squiz standard
     -- If you use this sniff and want to continue banning ob_end_flush(), use Generic.PHP.ForbiddenFunctions instead
     -- You will need to set the forbiddenFunctions property in your ruleset.xml file
@@ -109,7 +113,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This change allows the NonParamGroup error to be suppressed in a ruleset to allow the @param group to contain other tags
     -- Thanks to Phil Davis for the patch
   - Generic.Commenting.DocComment now continues checks param tags even if the doc comment short description is missing
-    -- This change allowes the MissingShort error to be suppressed in a ruleset without all other errors being suppressed as well
+    -- This change allows the MissingShort error to be suppressed in a ruleset without all other errors being suppressed as well
     -- Thanks to Phil Davis for the patch
   - Generic.CodeAnalysis.AssignmentInCondition now reports a different error code for assignments found in WHILE conditions
     -- The return value of a function call is often assigned in a WHILE condition, so this change makes it easier to exclude these cases

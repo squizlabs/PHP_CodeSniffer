@@ -86,6 +86,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 2));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testBasicFunction()
@@ -118,6 +119,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 2));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testReturnFunction()
@@ -150,6 +152,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 1));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testNestedClosure()
@@ -182,6 +185,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 3));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testBasicMethod()
@@ -214,6 +218,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 7));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testPrivateStaticMethod()
@@ -246,6 +251,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 7));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testFinalMethod()
@@ -278,6 +284,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 5));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testProtectedReturnMethod()
@@ -310,6 +317,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 5));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testPublicReturnMethod()
@@ -342,6 +350,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 5));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testNullableReturnMethod()
@@ -374,6 +383,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 5));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testMessyNullableReturnMethod()
@@ -406,6 +416,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 3));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testReturnNamespace()
@@ -438,6 +449,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 3));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testReturnMultilineNamespace()
@@ -470,6 +482,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 5));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testAbstractMethod()
@@ -502,6 +515,7 @@ class GetMethodPropertiesTest extends TestCase
         );
 
         $found = $this->phpcsFile->getMethodProperties(($function + 7));
+        unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
     }//end testAbstractReturnMethod()

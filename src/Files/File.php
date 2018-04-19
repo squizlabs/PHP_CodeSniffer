@@ -1259,6 +1259,8 @@ class File
      *         'pass_by_reference' => boolean, // Is the variable passed by reference?
      *         'variable_length'   => boolean, // Is the param of variable length through use of `...` ?
      *         'type_hint'         => string,  // The type hint for the variable.
+     *         'type_hint_token'   => integer, // The stack pointer to the type hint
+     *                                         // or false if there is no type hint.
      *         'nullable_type'     => boolean, // Is the variable using a nullable type?
      *        )
      * </code>
@@ -1292,6 +1294,7 @@ class File
         $passByReference = false;
         $variableLength  = false;
         $typeHint        = '';
+        $typeHintToken   = false;
         $nullableType    = false;
 
         for ($i = $paramStart; $i <= $closer; $i++) {
@@ -1326,6 +1329,10 @@ class File
                 $variableLength = true;
                 break;
             case T_CALLABLE:
+                if ($typeHintToken === false) {
+                    $typeHintToken = $i;
+                }
+
                 $typeHint .= $this->tokens[$i]['content'];
                 break;
             case T_SELF:
@@ -1333,6 +1340,10 @@ class File
             case T_STATIC:
                 // Self is valid, the others invalid, but were probably intended as type hints.
                 if (isset($defaultStart) === false) {
+                    if ($typeHintToken === false) {
+                        $typeHintToken = $i;
+                    }
+
                     $typeHint .= $this->tokens[$i]['content'];
                 }
                 break;
@@ -1362,12 +1373,20 @@ class File
                 }
 
                 if ($defaultStart === null) {
+                    if ($typeHintToken === false) {
+                        $typeHintToken = $i;
+                    }
+
                     $typeHint .= $this->tokens[$i]['content'];
                 }
                 break;
             case T_NS_SEPARATOR:
                 // Part of a type hint or default value.
                 if ($defaultStart === null) {
+                    if ($typeHintToken === false) {
+                        $typeHintToken = $i;
+                    }
+
                     $typeHint .= $this->tokens[$i]['content'];
                 }
                 break;
@@ -1397,6 +1416,7 @@ class File
                 $vars[$paramCount]['pass_by_reference'] = $passByReference;
                 $vars[$paramCount]['variable_length']   = $variableLength;
                 $vars[$paramCount]['type_hint']         = $typeHint;
+                $vars[$paramCount]['type_hint_token']   = $typeHintToken;
                 $vars[$paramCount]['nullable_type']     = $nullableType;
 
                 // Reset the vars, as we are about to process the next parameter.
@@ -1405,6 +1425,7 @@ class File
                 $passByReference = false;
                 $variableLength  = false;
                 $typeHint        = '';
+                $typeHintToken   = false;
                 $nullableType    = false;
 
                 $paramCount++;
@@ -1429,7 +1450,9 @@ class File
      *    'scope'                => 'public', // public protected or protected
      *    'scope_specified'      => true,     // true is scope keyword was found.
      *    'return_type'          => '',       // the return type of the method.
-     *    'nullable_return_type' => false, // true if the return type is nullable.
+     *    'return_type_token'    => integer,  // The stack pointer to the start of the return type
+     *                                        // or false if there is no return type.
+     *    'nullable_return_type' => false,    // true if the return type is nullable.
      *    'is_abstract'          => false,    // true if the abstract keyword was found.
      *    'is_final'             => false,    // true if the final keyword was found.
      *    'is_static'            => false,    // true if the static keyword was found.
@@ -1474,11 +1497,9 @@ class File
 
         $scope          = 'public';
         $scopeSpecified = false;
-        $returnType     = '';
-        $nullableReturnType = false;
-        $isAbstract         = false;
-        $isFinal            = false;
-        $isStatic           = false;
+        $isAbstract     = false;
+        $isFinal        = false;
+        $isStatic       = false;
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
             if (isset($valid[$this->tokens[$i]['code']]) === false) {
@@ -1510,6 +1531,10 @@ class File
             }//end switch
         }//end for
 
+        $returnType         = '';
+        $returnTypeToken    = false;
+        $nullableReturnType = false;
+
         if (isset($this->tokens[$stackPtr]['parenthesis_closer']) === true) {
             $scopeOpener = null;
             if (isset($this->tokens[$stackPtr]['scope_opener']) === true) {
@@ -1537,6 +1562,10 @@ class File
                 }
 
                 if (isset($valid[$this->tokens[$i]['code']]) === true) {
+                    if ($returnTypeToken === false) {
+                        $returnTypeToken = $i;
+                    }
+
                     $returnType .= $this->tokens[$i]['content'];
                 }
             }
@@ -1550,6 +1579,7 @@ class File
             'scope'                => $scope,
             'scope_specified'      => $scopeSpecified,
             'return_type'          => $returnType,
+            'return_type_token'    => $returnTypeToken,
             'nullable_return_type' => $nullableReturnType,
             'is_abstract'          => $isAbstract,
             'is_final'             => $isFinal,
