@@ -17,6 +17,13 @@ The easiest way to get started with PHP\_CodeSniffer is to download the Phar fil
 
     curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
     php phpcbf.phar -h
+    
+    wget https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar --output-document=phpcs
+    php phpcs.phar -h
+    
+    wget https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar --output-document=phpcbf
+    php phpcbf.phar -h
+
 
 ### Composer
 If you use Composer, you can install PHP_CodeSniffer system-wide with the following command:
