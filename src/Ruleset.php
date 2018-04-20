@@ -1268,6 +1268,19 @@ class Ruleset
             $value = true;
         } else if ($value === 'false') {
             $value = false;
+        } else if (substr($name, -2) === '[]') {
+            $name   = substr($name, 0, -2);
+            $values = [];
+            foreach (explode(',', $value) as $val) {
+                list($k, $v) = explode('=>', $val.'=>');
+                if ($v !== '') {
+                    $values[trim($k)] = trim($v);
+                } else {
+                    $values[] = trim($k);
+                }
+            }
+
+            $value = $values;
         }
 
         $this->sniffs[$sniffClass]->$name = $value;
