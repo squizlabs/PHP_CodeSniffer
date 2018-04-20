@@ -11,12 +11,19 @@ PHP\_CodeSniffer requires PHP version 5.4.0 or greater, although individual snif
 ## Installation
 
 The easiest way to get started with PHP\_CodeSniffer is to download the Phar files for each of the commands:
+```
+# Download using curl
+curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
 
-    curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
-    php phpcs.phar -h
+# Or download using wget
+wget https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
+wget https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
 
-    curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
-    php phpcbf.phar -h
+# Then test the downloaded PHARs
+php phpcs.phar -h
+php phpcbf.phar -h
+```
 
 ### Composer
 If you use Composer, you can install PHP_CodeSniffer system-wide with the following command:
