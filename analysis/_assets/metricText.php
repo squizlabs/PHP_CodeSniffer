@@ -129,6 +129,10 @@ $metricText = array(
                                                                        'description' => 'What case are PHP constants (true, false, null) written in?',
                                                                        'items'       => 'PHP constants',
                                                                       ),
+               'PHP type case'                                 => array(
+                                                                       'description' => 'What case are PHP types (int, bool, string) written in?',
+                                                                       'items'       => 'PHP types',
+                                                                      ),
                'Spacing before string concat'                      => array(
                                                                        'description' => 'How many spaces precede the string concatenation operator?',
                                                                        'items'       => 'concat operators',
