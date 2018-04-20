@@ -69,42 +69,11 @@ class OperatorSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Skip default values in function declarations.
-        // Skip declare statements.
-        if ($tokens[$stackPtr]['code'] === T_EQUAL
-            || $tokens[$stackPtr]['code'] === T_MINUS
-        ) {
-            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-                $parenthesis = array_keys($tokens[$stackPtr]['nested_parenthesis']);
-                $bracket     = array_pop($parenthesis);
-                if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
-                    $function = $tokens[$bracket]['parenthesis_owner'];
-                    if ($tokens[$function]['code'] === T_FUNCTION
-                        || $tokens[$function]['code'] === T_CLOSURE
-                        || $tokens[$function]['code'] === T_DECLARE
-                    ) {
-                        return;
-                    }
-                }
-            }
-        }
-
-        if ($tokens[$stackPtr]['code'] === T_EQUAL) {
-            // Skip for '=&' case.
-            if (isset($tokens[($stackPtr + 1)]) === true
-                && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND
-            ) {
-                return;
-            }
+        if ($this->isOperator($phpcsFile, $stackPtr) === false) {
+            return;
         }
 
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
-            // If it's not a reference, then we expect one space either side of the
-            // bitwise operator.
-            if ($phpcsFile->isReference($stackPtr) === true) {
-                return;
-            }
-
             // Check there is one space before the & operator.
             if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE) {
                 $error = 'Expected 1 space before "&" operator; 0 found';
@@ -166,60 +135,11 @@ class OperatorSpacingSniff implements Sniff
             return;
         }//end if
 
-        if ($tokens[$stackPtr]['code'] === T_MINUS || $tokens[$stackPtr]['code'] === T_PLUS) {
-            // Check minus spacing, but make sure we aren't just assigning
-            // a minus value or returning one.
-            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-            if ($tokens[$prev]['code'] === T_RETURN) {
-                // Just returning a negative value; eg. (return -1).
-                return;
-            }
-
-            if (isset(Tokens::$operators[$tokens[$prev]['code']]) === true) {
-                // Just trying to operate on a negative value; eg. ($var * -1).
-                return;
-            }
-
-            if (isset(Tokens::$comparisonTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to compare a negative value; eg. ($var === -1).
-                return;
-            }
-
-            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
-                // Just trying to compare a negative value; eg. ($var || -1 === $b).
-                return;
-            }
-
-            if (isset(Tokens::$assignmentTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to assign a negative value; eg. ($var = -1).
-                return;
-            }
-
-            // A list of tokens that indicate that the token is not
-            // part of an arithmetic operation.
-            $invalidTokens = [
-                T_COMMA               => true,
-                T_OPEN_PARENTHESIS    => true,
-                T_OPEN_SQUARE_BRACKET => true,
-                T_OPEN_SHORT_ARRAY    => true,
-                T_DOUBLE_ARROW        => true,
-                T_COLON               => true,
-                T_INLINE_THEN         => true,
-                T_INLINE_ELSE         => true,
-                T_CASE                => true,
-            ];
-
-            if (isset($invalidTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to use a negative value; eg. myFunction($var, -2).
-                return;
-            }
-        }//end if
-
         $operator = $tokens[$stackPtr]['content'];
 
         if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE
             && (($tokens[($stackPtr - 1)]['code'] === T_INLINE_THEN
-            && $tokens[($stackPtr )]['code'] === T_INLINE_ELSE) === false)
+            && $tokens[($stackPtr)]['code'] === T_INLINE_ELSE) === false)
         ) {
             $error = "Expected 1 space before \"$operator\"; 0 found";
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceBefore');
@@ -308,6 +228,110 @@ class OperatorSpacingSniff implements Sniff
         }//end if
 
     }//end process()
+
+
+    /**
+     * Checks if an operator is actually a different type of token in the current context.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The current file being checked.
+     * @param int                         $stackPtr  The position of the operator in
+     *                                               the stack.
+     *
+     * @return boolean
+     */
+    protected function isOperator(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Skip default values in function declarations.
+        // Skip declare statements.
+        if ($tokens[$stackPtr]['code'] === T_EQUAL
+            || $tokens[$stackPtr]['code'] === T_MINUS
+        ) {
+            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+                $parenthesis = array_keys($tokens[$stackPtr]['nested_parenthesis']);
+                $bracket     = array_pop($parenthesis);
+                if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
+                    $function = $tokens[$bracket]['parenthesis_owner'];
+                    if ($tokens[$function]['code'] === T_FUNCTION
+                        || $tokens[$function]['code'] === T_CLOSURE
+                        || $tokens[$function]['code'] === T_DECLARE
+                    ) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_EQUAL) {
+            // Skip for '=&' case.
+            if (isset($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)]['code'] === T_BITWISE_AND
+            ) {
+                return false;
+            }
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
+            // If it's not a reference, then we expect one space either side of the
+            // bitwise operator.
+            if ($phpcsFile->isReference($stackPtr) === true) {
+                return false;
+            }
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_MINUS || $tokens[$stackPtr]['code'] === T_PLUS) {
+            // Check minus spacing, but make sure we aren't just assigning
+            // a minus value or returning one.
+            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+            if ($tokens[$prev]['code'] === T_RETURN) {
+                // Just returning a negative value; eg. (return -1).
+                return false;
+            }
+
+            if (isset(Tokens::$operators[$tokens[$prev]['code']]) === true) {
+                // Just trying to operate on a negative value; eg. ($var * -1).
+                return false;
+            }
+
+            if (isset(Tokens::$comparisonTokens[$tokens[$prev]['code']]) === true) {
+                // Just trying to compare a negative value; eg. ($var === -1).
+                return false;
+            }
+
+            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
+                // Just trying to compare a negative value; eg. ($var || -1 === $b).
+                return false;
+            }
+
+            if (isset(Tokens::$assignmentTokens[$tokens[$prev]['code']]) === true) {
+                // Just trying to assign a negative value; eg. ($var = -1).
+                return false;
+            }
+
+            // A list of tokens that indicate that the token is not
+            // part of an arithmetic operation.
+            $invalidTokens = [
+                T_COMMA               => true,
+                T_OPEN_PARENTHESIS    => true,
+                T_OPEN_SQUARE_BRACKET => true,
+                T_OPEN_SHORT_ARRAY    => true,
+                T_DOUBLE_ARROW        => true,
+                T_COLON               => true,
+                T_INLINE_THEN         => true,
+                T_INLINE_ELSE         => true,
+                T_CASE                => true,
+            ];
+
+            if (isset($invalidTokens[$tokens[$prev]['code']]) === true) {
+                // Just trying to use a negative value; eg. myFunction($var, -2).
+                return false;
+            }
+        }//end if
+
+        return true;
+
+    }//end isOperator()
 
 
 }//end class
