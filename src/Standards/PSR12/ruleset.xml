@@ -240,6 +240,7 @@
     <!-- 5.2 switch, case -->
 
     <!-- The case statement MUST be indented once from switch, and the break keyword (or other terminating keywords) MUST be indented at the same level as the case body. There MUST be a comment such as // no break when fall-through is intentional in a non-empty case body. -->
+    <rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
 
     <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line with one space between them. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
 
@@ -258,8 +259,8 @@
     <!-- 6. Operators -->
 
     <!-- All binary and ternary (but not unary) operators MUST be preceded and followed by at least one space. This includes all arithmetic, comparison, assignment, bitwise, logical (excluding ! which is unary), string concatenation, type operators, trait operators (insteadof and as), and the single pipe operator (e.g. ExceptionType1 | ExceptionType2 $e). -->
-
     <!-- Other operators are left undefined. -->
+    <!-- checked by PSR12.Operators.OperatorSpacing -->
 
     <!-- 7. Closures -->
 
