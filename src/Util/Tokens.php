@@ -283,6 +283,40 @@ final class Tokens
     ];
 
     /**
+     * Tokens that perform operations.
+     *
+     * @var array<int, int>
+     */
+    public static $operators = [
+        T_MINUS       => T_MINUS,
+        T_PLUS        => T_PLUS,
+        T_MULTIPLY    => T_MULTIPLY,
+        T_DIVIDE      => T_DIVIDE,
+        T_MODULUS     => T_MODULUS,
+        T_POW         => T_POW,
+        T_SPACESHIP   => T_SPACESHIP,
+        T_COALESCE    => T_COALESCE,
+        T_BITWISE_AND => T_BITWISE_AND,
+        T_BITWISE_OR  => T_BITWISE_OR,
+        T_BITWISE_XOR => T_BITWISE_XOR,
+        T_SL          => T_SL,
+        T_SR          => T_SR,
+    ];
+
+    /**
+     * Tokens that perform boolean operations.
+     *
+     * @var array<int, int>
+     */
+    public static $booleanOperators = [
+        T_BOOLEAN_AND => T_BOOLEAN_AND,
+        T_BOOLEAN_OR  => T_BOOLEAN_OR,
+        T_LOGICAL_AND => T_LOGICAL_AND,
+        T_LOGICAL_OR  => T_LOGICAL_OR,
+        T_LOGICAL_XOR => T_LOGICAL_XOR,
+    ];
+
+    /**
      * Tokens that represent casting.
      *
      * @var array<int, int>
@@ -372,40 +406,6 @@ final class Tokens
         T_ABSTRACT  => T_ABSTRACT,
         T_STATIC    => T_STATIC,
         T_FINAL     => T_FINAL,
-    ];
-
-    /**
-     * Tokens that perform operations.
-     *
-     * @var array<int, int>
-     */
-    public static $operators = [
-        T_MINUS       => T_MINUS,
-        T_PLUS        => T_PLUS,
-        T_MULTIPLY    => T_MULTIPLY,
-        T_DIVIDE      => T_DIVIDE,
-        T_MODULUS     => T_MODULUS,
-        T_POW         => T_POW,
-        T_SPACESHIP   => T_SPACESHIP,
-        T_COALESCE    => T_COALESCE,
-        T_BITWISE_AND => T_BITWISE_AND,
-        T_BITWISE_OR  => T_BITWISE_OR,
-        T_BITWISE_XOR => T_BITWISE_XOR,
-        T_SL          => T_SL,
-        T_SR          => T_SR,
-    ];
-
-    /**
-     * Tokens that perform boolean operations.
-     *
-     * @var array<int, int>
-     */
-    public static $booleanOperators = [
-        T_BOOLEAN_AND => T_BOOLEAN_AND,
-        T_BOOLEAN_OR  => T_BOOLEAN_OR,
-        T_LOGICAL_AND => T_LOGICAL_AND,
-        T_LOGICAL_OR  => T_LOGICAL_OR,
-        T_LOGICAL_XOR => T_LOGICAL_XOR,
     ];
 
     /**
