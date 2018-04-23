@@ -157,7 +157,7 @@ class ComparisonOperatorUsageSniff implements Sniff
 
         for ($i = $start; $i <= $end; $i++) {
             $type = $tokens[$i]['code'];
-            if (in_array($type, array_keys(self::$invalidOps[$tokenizer])) === true) {
+            if (array_key_exists($type, self::$invalidOps[$tokenizer]) === true) {
                 $error = 'Operator %s prohibited; use %s instead';
                 $data  = [
                     $tokens[$i]['content'],
