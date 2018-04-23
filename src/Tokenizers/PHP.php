@@ -1074,7 +1074,10 @@ class PHP extends Tokenizer
                         }
                     }
 
-                    if (is_array($tokens[$x]) === false && $tokens[$x] === ':') {
+                    if (isset($tokens[$x]) === true
+                        && is_array($tokens[$x]) === false
+                        && $tokens[$x] === ':'
+                    ) {
                         $allowed = [
                             T_STRING       => T_STRING,
                             T_ARRAY        => T_ARRAY,
