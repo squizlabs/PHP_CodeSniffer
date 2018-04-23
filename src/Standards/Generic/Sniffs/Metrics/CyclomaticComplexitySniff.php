@@ -58,8 +58,6 @@ class CyclomaticComplexitySniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $this->currentFile = $phpcsFile;
-
         $tokens = $phpcsFile->getTokens();
 
         // Ignore abstract methods.
