@@ -1263,6 +1263,10 @@ class Ruleset
             $value = trim($value);
         }
 
+        if ($value === '') {
+            $value = null;
+        }
+
         // Special case for booleans.
         if ($value === 'true') {
             $value = true;
@@ -1271,12 +1275,14 @@ class Ruleset
         } else if (substr($name, -2) === '[]') {
             $name   = substr($name, 0, -2);
             $values = [];
-            foreach (explode(',', $value) as $val) {
-                list($k, $v) = explode('=>', $val.'=>');
-                if ($v !== '') {
-                    $values[trim($k)] = trim($v);
-                } else {
-                    $values[] = trim($k);
+            if ($value !== null) {
+                foreach (explode(',', $value) as $val) {
+                    list($k, $v) = explode('=>', $val.'=>');
+                    if ($v !== '') {
+                        $values[trim($k)] = trim($v);
+                    } else {
+                        $values[] = trim($k);
+                    }
                 }
             }
 

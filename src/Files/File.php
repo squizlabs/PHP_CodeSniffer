@@ -352,7 +352,7 @@ class File
                         $start   = strpos($commentText, '@codingStandardsChangeSetting');
                         $comment = substr($commentText, ($start + 30));
                         $parts   = explode(' ', $comment);
-                        if (count($parts) >= 3) {
+                        if (count($parts) >= 2) {
                             $sniffParts = explode('.', $parts[0]);
                             if (count($sniffParts) >= 3) {
                                 // If the sniff code is not known to us, it has not been registered in this run.
@@ -388,7 +388,7 @@ class File
 
                     // Need to maintain case here, to get the correct sniff code.
                     $parts = explode(' ', substr($commentText, 10));
-                    if (count($parts) >= 3) {
+                    if (count($parts) >= 2) {
                         $sniffParts = explode('.', $parts[0]);
                         if (count($sniffParts) >= 3) {
                             // If the sniff code is not known to us, it has not been registered in this run.
