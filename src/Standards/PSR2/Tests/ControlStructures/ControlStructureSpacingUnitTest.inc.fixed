@@ -44,3 +44,9 @@ foreach ( $something as $blah => $that ) {}
 // phpcs:set PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 0
 
 $binary = b"binary string";
+
+declare(ticks=1) {} // OK
+declare(ticks = 1) {} // OK
+declare(ticks=1) {}
+declare(ticks=1) {}
+declare(ticks=1) {}
