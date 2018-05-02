@@ -210,6 +210,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #1982 : Squiz.Arrays.ArrayDeclaration fixer sometimes puts a comma in front of the last array value
   - Fixed bug #1993 : PSR1/PSR2 not reporting or fixing short open tags
   - Fixed bug #1996 : Custom report paths don't work on case-sensitive filesystems
+  - Fixed bug #2006 : Squiz.Functions.FunctionDeclarationArgumentSpacing fixer removes comment between parens when no args
+    -- The SpacingAfterOpenHint error message has been removed
+       --- It is replaced by the the existing SpacingAfterOpen message
+    -- The error message format for the SpacingAfterOpen and SpacingBeforeClose messages has been changed
+       --- These used to contain 3 pieces of data, but now only contain 2
+    -- If you have customised the error messages of this sniff, please review your ruleset after upgrading
  </notes>
  <contents>
   <dir name="/">
