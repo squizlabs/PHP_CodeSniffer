@@ -1,0 +1,23 @@
+<documentation title="Class Instantiation">
+    <standard>
+    <![CDATA[
+    Visibility MUST be declared on all constants if your project PHP minimum version supports constant visibilities (PHP 7.1 or later).
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Parenthesis used.">
+        <![CDATA[
+class Foo {
+    public const VALID = 'C';
+}
+        ]]>
+        </code>
+        <code title="Invalid: Parenthesis not used.">
+        <![CDATA[
+class Foo {
+    const INVALID = 'C';
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
