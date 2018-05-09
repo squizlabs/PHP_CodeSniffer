@@ -168,6 +168,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Applies to catch, finally, else, elseif, and do/while structures
     -- The included PSR2 standard now enforces this rule
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Formatting.OperatorBracket.MissingBrackets message has been changed to remove the word "arithmetic"
+    -- The sniff checks more than just arithmetic operators, so the message is now clearer
   - Sniffs.Operators.ComparisonOperatorUsage now detects more cases of implicit true comparisons
     -- It could previously be confused by comparisons used as function arguments
   - Squiz.PHP.CommentedOutCode now ignores simple @-style annotation comments so they are not flagged as commented out code

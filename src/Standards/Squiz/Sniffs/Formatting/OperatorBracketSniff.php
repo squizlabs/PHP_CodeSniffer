@@ -356,7 +356,7 @@ class OperatorBracketSniff implements Sniff
 
         $after = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($after - 1), null, true);
 
-        $error = 'Arithmetic operation must be bracketed';
+        $error = 'Operation must be bracketed';
         if ($before === $after || $before === $stackPtr || $after === $stackPtr) {
             $phpcsFile->addError($error, $stackPtr, 'MissingBrackets');
             return;
