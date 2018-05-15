@@ -147,6 +147,11 @@ class MultipleStatementAlignmentSniff implements Sniff
                     break;
                 }
 
+                if ($tokens[$assign]['code'] === T_CLOSE_TAG) {
+                    // Breaking out of PHP ends the assignment block.
+                    break;
+                }
+
                 if ($tokens[$assign]['code'] === T_OPEN_SHORT_ARRAY
                     && isset($tokens[$assign]['bracket_closer']) === true
                 ) {
