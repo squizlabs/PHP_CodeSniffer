@@ -1370,6 +1370,13 @@
         "path": "",
         "ignore": "",
         "extensions": ""
+    },
+    {
+        "name": "DSU Report AP",
+        "url": "civictechro/DSU-reportapp-api",
+        "path": "api",
+        "ignore": "*/vendor/*",
+        "extensions": ""
     }
 ]
 
