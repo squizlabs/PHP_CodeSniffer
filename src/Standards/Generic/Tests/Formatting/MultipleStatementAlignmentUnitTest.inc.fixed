@@ -373,3 +373,17 @@ $foo = [
 $abc = 'something';
 if ($foo) {}
 $defghi = 'longer something';
+
+		public function get_location_details( $location_id, $atts ) {
+			$coords_lat  = 'abc';
+			$coords_long = 'def';
+			?>
+
+			<div>
+				<?php
+				$location       = 'ghi';
+				$other_location = 'jkl';
+				?>
+			</div>
+			<?php
+		}
