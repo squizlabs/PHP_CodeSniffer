@@ -144,6 +144,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Now, only comment lines with too little padding use ParamCommentAlignment as they are clearly mistakes
     -- Comment lines with too much padding may be using precision alignment as now use ParamCommentAlignmentExceeded
     -- This allows for excessive padding to be excluded from a ruleset while continuing to enforce a minimum padding
+  - PEAR.WhiteSpace.ObjectOperatorIndent now checks the indent of more chained operators
+    -- Previously, it only checked chains beginning with a variable
+    -- Now, it checks chains beginning with function calls, static class names, etc
   - Squiz.Arrays.ArrayDeclaration now continues checking array formatting even if the key indent is not correct
     -- Allows for using different array indent rules while still checking/fixing double arrow and value alignment
   - Squiz.Commenting.BlockComment has improved support for tab-indented comments
@@ -995,6 +998,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="WhiteSpace">
         <file baseinstalldir="PHP/CodeSniffer" name="ObjectOperatorIndentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ObjectOperatorIndentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ObjectOperatorIndentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeClosingBraceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeClosingBraceUnitTest.inc.fixed" role="test" />

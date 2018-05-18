@@ -1,9 +1,9 @@
 <?php
 $someObject->someFunction("some", "parameter")
-->someOtherFunc(23, 42)->
-    someOtherFunc2($one, $two)
+    ->someOtherFunc(23, 42)
+    ->someOtherFunc2($one, $two)
 
- ->someOtherFunc3(23, 42)
+    ->someOtherFunc3(23, 42)
     ->andAThirdFunction();
 
     $someObject->someFunction("some", "parameter")
@@ -12,7 +12,7 @@ $someObject->someFunction("some", "parameter")
 $someObject->someFunction("some", "parameter")->someOtherFunc(23, 42);
 
 $someObject->someFunction("some", "parameter")
-        ->someOtherFunc(23, 42);
+    ->someOtherFunc(23, 42);
 
 func(
     $bar->foo()
@@ -24,7 +24,7 @@ func(
 )
     ->bar(
         $bar->foo()
-        ->bar()
+            ->bar()
             ->func()
     );
 
@@ -34,8 +34,8 @@ $object
 
 if ($bar) {
     $object
-    ->setBar($foo)
-    ->setFoo($bar);
+        ->setBar($foo)
+        ->setFoo($bar);
 }
 
 $response -> CompletedTrackDetails -> TrackDetails -> Events;
@@ -45,9 +45,9 @@ $response
     -> Events;
 
 $response
-     -> CompletedTrackDetails
--> TrackDetails
- -> Events;
+    -> CompletedTrackDetails
+    -> TrackDetails
+    -> Events;
 
 $var = get_object(
     $foo->something()
@@ -62,12 +62,12 @@ $foo->one(
 
 get_object()->one()
     ->two()
-        ->three();
+    ->three();
 
 someclass::one()
     ->two()
-        ->three();
+    ->three();
 
 (new someclass())->one()
     ->two()
-        ->three();
+    ->three();
