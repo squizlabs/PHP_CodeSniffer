@@ -374,16 +374,16 @@ $abc = 'something';
 if ($foo) {}
 $defghi = 'longer something';
 
-		public function get_location_details( $location_id, $atts ) {
-			$coords_lat  = 'abc';
-			$coords_long = 'def';
-			?>
+function foo() {
+    $foo = 'foo';
+    $bar = 'bar';
+    ?>
 
-			<div>
-				<?php
-				$location       = 'ghi';
-				$other_location = 'jkl';
-				?>
-			</div>
-			<?php
-		}
+    <div>
+        <?php
+        $foo = 'foo';
+        $bar = 'bar';
+        ?>
+    </div>
+    <?php
+}
