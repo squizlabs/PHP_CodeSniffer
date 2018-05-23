@@ -85,8 +85,10 @@ class LowerCaseTypeSniff implements Sniff
             'object'   => true,
         ];
 
-        $props      = $phpcsFile->getMethodProperties($stackPtr);
-        $returnType = $props['return_type'];
+        $props = $phpcsFile->getMethodProperties($stackPtr);
+
+        // Strip off potential nullable indication.
+        $returnType = ltrim($props['return_type'], '?');
         if ($returnType !== ''
             && isset($phpTypes[strtolower($returnType)]) === true
         ) {
@@ -116,7 +118,9 @@ class LowerCaseTypeSniff implements Sniff
 
         $params = $phpcsFile->getMethodParameters($stackPtr);
         foreach ($params as $param) {
-            $typeHint = $param['type_hint'];
+            // Strip off potential nullable indication.
+            $typeHint = ltrim($param['type_hint'], '?');
+
             if ($typeHint !== ''
                 && isset($phpTypes[strtolower($typeHint)]) === true
             ) {

@@ -31,3 +31,14 @@ $foo = function (bool $a, callable $b) use ($foo) : Bar {};
 class Testing {
     public function TestThis(SELF $a, obJect $b, Parent $c) : VOID {}
 }
+
+function foo(
+    ?Float $a,
+    ? String $b,
+    ?ITERABLE $c,
+    ?	Object $d,
+    ?Foo\Bar $e
+) : ?Foo\Bar {}
+
+$foo = function (?Int $a, ?    Callable $b)
+    :?INT{};
