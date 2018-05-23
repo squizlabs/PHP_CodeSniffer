@@ -27,3 +27,7 @@ $foo = function (int $a, callable $b) :int{};
 $foo = function (bool $a, float $b) use ($foo) : int {};
 $foo = function (Foo $a, Foo\Bar $b) use ($foo) : \Foo\Bar {};
 $foo = function (bool $a, callable $b) use ($foo) : Bar {};
+
+class Testing {
+    public function TestThis(self $a, object $b, parent $c) : void {}
+}

@@ -73,6 +73,7 @@ class LowerCaseTypeSniff implements Sniff
 
         $phpTypes = [
             'self'     => true,
+            'parent'   => true,
             'array'    => true,
             'callable' => true,
             'bool'     => true,
@@ -80,6 +81,8 @@ class LowerCaseTypeSniff implements Sniff
             'int'      => true,
             'string'   => true,
             'iterable' => true,
+            'void'     => true,
+            'object'   => true,
         ];
 
         $props      = $phpcsFile->getMethodProperties($stackPtr);
