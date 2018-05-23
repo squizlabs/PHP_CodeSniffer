@@ -23,13 +23,6 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
      */
     public $indent = 4;
 
-    /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = ['PHP'];
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -67,16 +60,6 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
     {
         $tokens    = $phpcsFile->getTokens();
         $errorData = [strtolower($tokens[$stackPtr]['content'])];
-
-        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            if ($tokens[$stackPtr]['code'] !== T_WHILE) {
-                $error = 'Possible parse error: %s missing opening or closing brace';
-                $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $errorData);
-            }
-
-            return;
-        }
-
         $openBrace            = $tokens[$stackPtr]['scope_opener'];
         $lastContent          = $phpcsFile->findPrevious(T_WHITESPACE, ($openBrace - 1), $stackPtr, true);
         $controlStructureLine = $tokens[$lastContent]['line'];
@@ -180,7 +163,7 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
                 $fix   = $phpcsFile->addFixableError($error, $openBrace, 'SpaceBeforeBrace', $data);
 
                 if ($fix === true) {
-                          $indent = str_repeat("\t", $expected);
+                    $indent = str_repeat("\t", $expected);
 
                     if ($spaces === 0) {
                         $phpcsFile->fixer->addContentBefore($openBrace, $indent);

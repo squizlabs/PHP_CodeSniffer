@@ -58,7 +58,6 @@ class ControlStructuresBracketsNewLineUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [6 => 1];
 
     }//end getWarningList()
 
