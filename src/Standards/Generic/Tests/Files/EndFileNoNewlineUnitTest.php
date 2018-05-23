@@ -35,19 +35,10 @@ class EndFileNoNewlineUnitTest extends AbstractSniffUnitTest
             return [3 => 1];
         case 'EndFileNoNewlineUnitTest.2.css':
         case 'EndFileNoNewlineUnitTest.2.js':
+        case 'EndFileNoNewlineUnitTest.6.inc':
             return [2 => 1];
         case 'EndFileNoNewlineUnitTest.5.inc':
-            // HHVM just removes the entire comment token, as if it was never there.
-            if (defined('HHVM_VERSION') === true) {
-                return [1 => 1];
-            }
             return [];
-        case 'EndFileNoNewlineUnitTest.6.inc':
-            // HHVM just removes the entire comment token, as if it was never there.
-            if (defined('HHVM_VERSION') === true) {
-                return [1 => 1];
-            }
-            return [2 => 1];
         default:
             return [];
         }//end switch

@@ -26,12 +26,6 @@ class DisallowLongArraySyntaxUnitTest extends AbstractSniffUnitTest
     {
         $testFiles = [$testFileBase.'1.inc'];
 
-        // HHVM doesn't tokenize any of the file after a git
-        // merge conflict, so only run this check on non-HHVM versions.
-        if (defined('HHVM_VERSION') === false) {
-            $testFiles[] = $testFileBase.'2.inc';
-        }
-
         return $testFiles;
 
     }//end getTestFiles()

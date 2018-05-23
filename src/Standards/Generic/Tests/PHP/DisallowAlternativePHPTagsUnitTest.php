@@ -43,18 +43,6 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
 
 
     /**
-     * Skip this test on HHVM.
-     *
-     * @return bool Whether to skip this test.
-     */
-    protected function shouldSkipTest()
-    {
-        return defined('HHVM_VERSION');
-
-    }//end shouldSkipTest()
-
-
-    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
