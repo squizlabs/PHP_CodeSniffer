@@ -101,14 +101,14 @@ class LowerCaseTypeSniff implements Sniff
                 }
 
                 $error = 'PHP return type declarations must be lowercase; expected "%s" but found "%s"';
+                $token = $props['return_type_token'];
                 $data  = [
                     strtolower($returnType),
                     $returnType,
                 ];
 
-                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'ReturnTypeFound', $data);
+                $fix = $phpcsFile->addFixableError($error, $token, 'ReturnTypeFound', $data);
                 if ($fix === true) {
-                    $token = $props['return_type_token'];
                     $phpcsFile->fixer->replaceToken($token, strtolower($tokens[$token]['content']));
                 }
             } else {
@@ -133,14 +133,14 @@ class LowerCaseTypeSniff implements Sniff
                     }
 
                     $error = 'PHP parameter type declarations must be lowercase; expected "%s" but found "%s"';
+                    $token = $param['type_hint_token'];
                     $data  = [
                         strtolower($typeHint),
                         $typeHint,
                     ];
 
-                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'ParamTypeFound', $data);
+                    $fix = $phpcsFile->addFixableError($error, $token, 'ParamTypeFound', $data);
                     if ($fix === true) {
-                        $token = $param['type_hint_token'];
                         $phpcsFile->fixer->replaceToken($token, strtolower($tokens[$token]['content']));
                     }
                 } else {
