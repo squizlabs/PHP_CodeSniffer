@@ -58,10 +58,10 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens               = $phpcsFile->getTokens();
-        $errorData            = [strtolower($tokens[$stackPtr]['content'])];
-        $openBrace            = $tokens[$stackPtr]['scope_opener'];
-        $lastContent          = $phpcsFile->findPrevious(T_WHITESPACE, ($openBrace - 1), $stackPtr, true);
+        $tokens      = $phpcsFile->getTokens();
+        $errorData   = [strtolower($tokens[$stackPtr]['content'])];
+        $openBrace   = $tokens[$stackPtr]['scope_opener'];
+        $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($openBrace - 1), $stackPtr, true);
         $controlStructureLine = $tokens[$lastContent]['line'];
         $braceLine            = $tokens[$openBrace]['line'];
 
