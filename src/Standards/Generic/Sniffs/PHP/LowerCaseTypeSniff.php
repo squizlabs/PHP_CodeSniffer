@@ -54,13 +54,13 @@ class LowerCaseTypeSniff implements Sniff
                     $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'mixed');
                 }
 
-                $error = 'PHP types must be lowercase; expected "%s" but found "%s"';
+                $error = 'PHP type casts must be lowercase; expected "%s" but found "%s"';
                 $data  = [
                     strtolower($tokens[$stackPtr]['content']),
                     $tokens[$stackPtr]['content'],
                 ];
 
-                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'TypeCastFound', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken($stackPtr, strtolower($tokens[$stackPtr]['content']));
                 }
@@ -98,13 +98,13 @@ class LowerCaseTypeSniff implements Sniff
                     $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'mixed');
                 }
 
-                $error = 'PHP types must be lowercase; expected "%s" but found "%s"';
+                $error = 'PHP return type declarations must be lowercase; expected "%s" but found "%s"';
                 $data  = [
                     strtolower($returnType),
                     $returnType,
                 ];
 
-                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'ReturnTypeFound', $data);
                 if ($fix === true) {
                     $token = $props['return_type_token'];
                     $phpcsFile->fixer->replaceToken($token, strtolower($tokens[$token]['content']));
@@ -128,13 +128,13 @@ class LowerCaseTypeSniff implements Sniff
                         $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'mixed');
                     }
 
-                    $error = 'PHP types must be lowercase; expected "%s" but found "%s"';
+                    $error = 'PHP parameter type declarations must be lowercase; expected "%s" but found "%s"';
                     $data  = [
                         strtolower($typeHint),
                         $typeHint,
                     ];
 
-                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Found', $data);
+                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'ParamTypeFound', $data);
                     if ($fix === true) {
                         $token = $param['type_hint_token'];
                         $phpcsFile->fixer->replaceToken($token, strtolower($tokens[$token]['content']));
