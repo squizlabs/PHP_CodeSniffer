@@ -88,12 +88,14 @@ class LowerCaseTypeSniff implements Sniff
         $props = $phpcsFile->getMethodProperties($stackPtr);
 
         // Strip off potential nullable indication.
-        $returnType = ltrim($props['return_type'], '?');
+        $returnType      = ltrim($props['return_type'], '?');
+        $returnTypeLower = strtolower($returnType);
+
         if ($returnType !== ''
-            && isset($phpTypes[strtolower($returnType)]) === true
+            && isset($phpTypes[$returnTypeLower]) === true
         ) {
             // A function return type.
-            if (strtolower($returnType) !== $returnType) {
+            if ($returnTypeLower !== $returnType) {
                 if ($returnType === strtoupper($returnType)) {
                     $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'upper');
                 } else {
@@ -103,13 +105,13 @@ class LowerCaseTypeSniff implements Sniff
                 $error = 'PHP return type declarations must be lowercase; expected "%s" but found "%s"';
                 $token = $props['return_type_token'];
                 $data  = [
-                    strtolower($returnType),
+                    $returnTypeLower,
                     $returnType,
                 ];
 
                 $fix = $phpcsFile->addFixableError($error, $token, 'ReturnTypeFound', $data);
                 if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken($token, strtolower($tokens[$token]['content']));
+                    $phpcsFile->fixer->replaceToken($token, $returnTypeLower);
                 }
             } else {
                 $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'lower');
@@ -117,15 +119,20 @@ class LowerCaseTypeSniff implements Sniff
         }//end if
 
         $params = $phpcsFile->getMethodParameters($stackPtr);
+        if (empty($params) === true) {
+            return;
+        }
+
         foreach ($params as $param) {
             // Strip off potential nullable indication.
-            $typeHint = ltrim($param['type_hint'], '?');
+            $typeHint      = ltrim($param['type_hint'], '?');
+            $typeHintLower = strtolower($typeHint);
 
             if ($typeHint !== ''
-                && isset($phpTypes[strtolower($typeHint)]) === true
+                && isset($phpTypes[$typeHintLower]) === true
             ) {
                 // A function return type.
-                if (strtolower($typeHint) !== $typeHint) {
+                if ($typeHintLower !== $typeHint) {
                     if ($typeHint === strtoupper($typeHint)) {
                         $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'upper');
                     } else {
@@ -135,13 +142,13 @@ class LowerCaseTypeSniff implements Sniff
                     $error = 'PHP parameter type declarations must be lowercase; expected "%s" but found "%s"';
                     $token = $param['type_hint_token'];
                     $data  = [
-                        strtolower($typeHint),
+                        $typeHintLower,
                         $typeHint,
                     ];
 
                     $fix = $phpcsFile->addFixableError($error, $token, 'ParamTypeFound', $data);
                     if ($fix === true) {
-                        $phpcsFile->fixer->replaceToken($token, strtolower($tokens[$token]['content']));
+                        $phpcsFile->fixer->replaceToken($token, $typeHintLower);
                     }
                 } else {
                     $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'lower');
