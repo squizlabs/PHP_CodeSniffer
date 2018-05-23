@@ -1,17 +1,17 @@
 <documentation title="Lowercase PHP Types">
     <standard>
     <![CDATA[
-    All PHP types used for type hints and return types should be lowercase.
+    All PHP types used for parameter type and return type declarations should be lowercase.
     ]]>
     </standard>
     <code_comparison>
-        <code title="Valid: Lowercase types used.">
+        <code title="Valid: Lowercase type declarations used.">
         <![CDATA[
 function myFunction(int $foo) : string {
 }
         ]]>
         </code>
-        <code title="Invalid: Non-lowercase types used.">
+        <code title="Invalid: Non-lowercase type declarations used.">
         <![CDATA[
 function myFunction(<em>Int</em> $foo) : <em>STRING</em> {
 }
