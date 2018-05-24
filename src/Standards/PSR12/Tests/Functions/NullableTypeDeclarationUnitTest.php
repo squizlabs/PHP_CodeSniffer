@@ -7,11 +7,11 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Standards\PSR12\Tests\Methods;
+namespace PHP_CodeSniffer\Standards\PSR12\Tests\Functions;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class NullableWhitespaceUnitTest extends AbstractSniffUnitTest
+class NullableTypeDeclarationUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -26,12 +26,14 @@ class NullableWhitespaceUnitTest extends AbstractSniffUnitTest
     protected function getErrorList()
     {
         return [
-            12 => 1,
             16 => 1,
-            24 => 1,
+            17 => 1,
+            18 => 1,
+            29 => 2,
             34 => 1,
             36 => 1,
-            40 => 1,
+            37 => 1,
+            39 => 1,
         ];
 
     }//end getErrorList()

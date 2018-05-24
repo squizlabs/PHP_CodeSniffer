@@ -1056,6 +1056,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Classes">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationStandard.xml" role="php" />
        </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationStandard.xml" role="php" />
+       </dir>
        <dir name="Keywords">
         <file baseinstalldir="PHP/CodeSniffer" name="ShortFormTypeKeywordsStandard.xml" role="php" />
        </dir>
@@ -1069,6 +1072,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <dir name="Sniffs">
        <dir name="Classes">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationSniff.php" role="php" />
+       </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationSniff.php" role="php" />
        </dir>
        <dir name="Keywords">
         <file baseinstalldir="PHP/CodeSniffer" name="ShortFormTypeKeywordsSniff.php" role="php" />
@@ -1085,6 +1091,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.php" role="test" />
+       </dir>
+       <dir name="Functions">
+        <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationUnitTest.php" role="test" />
        </dir>
        <dir name="Keywords">
         <file baseinstalldir="PHP/CodeSniffer" name="ShortFormTypeKeywordsUnitTest.inc" role="test" />

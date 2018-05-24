@@ -1,0 +1,41 @@
+<?php
+
+class MyClass {
+    public function validNullableTypeHinting(
+        ?array $array = null,
+        ?MyObject $object = null
+    ): ?MyObject
+    {
+    }
+
+    public function validReturnTypeForThisSniff():?MyObject
+    {
+    }
+
+    public function invalidReturnTypeTooMuchWhitespace(
+        ? array $array = null,
+        ? MyObject
+    ):? MyObject
+    {
+    }
+}
+
+// valid in lambda
+array_map(function(?int $integer = null): ?int {
+    return $integer
+}, []);
+
+// invalid in lambda
+array_map(function(? int $integer = null): ? int {
+    return $integer
+}, []);
+
+interface MyInterface {
+    public function invalidTypeHintsWithNewlinesAndComments( ?
+        string $varA,
+        ? /* a comment, fixing is undesirable */ array $varB,
+        ? // phpcs:ignore Standard.Cat.Sniff -- fixing is undesirable
+        int $varC
+    ) ?
+        bool;
+}
