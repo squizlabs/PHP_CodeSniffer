@@ -115,6 +115,15 @@ class DocCommentSniff implements Sniff
             }
         }
 
+        // Check for different inheritdoc notations.
+        if ($tokens[$short]['code'] === T_DOC_COMMENT_TAG && strcasecmp($tokens[$short]['content'], '@inheritdoc') === 0) {
+            return;
+        }
+
+        if ($tokens[$short]['code'] === T_DOC_COMMENT_STRING && strcasecmp($tokens[$short]['content'], '{@inheritdoc}') === 0) {
+            return;
+        }
+
         // Check for a comment description.
         if ($tokens[$short]['code'] !== T_DOC_COMMENT_STRING) {
             $error = 'Missing short description in doc comment';

@@ -84,6 +84,11 @@ class FunctionCommentSniff implements Sniff
 
         $commentStart = $tokens[$commentEnd]['comment_opener'];
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
+            // Check for @inheritdoc tag.
+            if (strcasecmp($tokens[$tag]['content'], '@inheritdoc') === 0) {
+                return;
+            }
+
             if ($tokens[$tag]['content'] === '@see') {
                 // Make sure the tag isn't empty.
                 $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $tag, $commentEnd);
@@ -91,6 +96,13 @@ class FunctionCommentSniff implements Sniff
                     $error = 'Content missing for @see tag in function comment';
                     $phpcsFile->addError($error, $tag, 'EmptySees');
                 }
+            }
+        }
+
+        // Check for {@inheritdoc} comment.
+        for ($i = $commentStart; $i < $commentEnd; ++$i) {
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING && strcasecmp($tokens[$i]['content'], '{@inheritdoc}') === 0) {
+                return;
             }
         }
 
