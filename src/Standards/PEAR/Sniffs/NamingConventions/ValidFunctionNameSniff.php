@@ -232,6 +232,7 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
         if ($packagePart !== '') {
             // Check that each new word starts with a capital.
             $nameBits = explode('_', $packagePart);
+            $nameBits = array_filter($nameBits);
             foreach ($nameBits as $bit) {
                 if ($bit{0} !== strtoupper($bit{0})) {
                     $newPackagePart = '';

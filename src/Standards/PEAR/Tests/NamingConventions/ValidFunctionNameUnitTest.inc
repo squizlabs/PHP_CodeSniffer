@@ -229,3 +229,5 @@ $a new class {
     function __myFunction() {}
     function __my_function() {}
 }
+
+function send_system_email__to_user($body, $recipient){}
