@@ -25,6 +25,7 @@ class DisallowLongArraySyntaxUnitTest extends AbstractSniffUnitTest
     protected function getTestFiles($testFileBase)
     {
         $testFiles = [$testFileBase.'1.inc'];
+        $testFiles[] = $testFileBase.'2.inc';
 
         return $testFiles;
 

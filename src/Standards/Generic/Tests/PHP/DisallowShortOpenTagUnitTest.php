@@ -25,8 +25,13 @@ class DisallowShortOpenTagUnitTest extends AbstractSniffUnitTest
     protected function getTestFiles($testFileBase)
     {
         $testFiles   = [$testFileBase.'1.inc'];
+
         $option      = (boolean) ini_get('short_open_tag');
-        $testFiles[] = $testFileBase.'3.inc';
+        if ($option === true) {
+            $testFiles[] = $testFileBase.'2.inc';
+        } else {
+            $testFiles[] = $testFileBase.'3.inc';
+        }
 
         return $testFiles;
 
