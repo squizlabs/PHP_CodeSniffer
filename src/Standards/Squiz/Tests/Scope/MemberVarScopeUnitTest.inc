@@ -66,3 +66,7 @@ class MyClass {
     var $mCounter, $mSearchUser,
         $mSearchPeriodStart;
 }
+
+interface Base {
+    protected $anonymous;
+}
