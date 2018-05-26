@@ -61,86 +61,91 @@ class UseDeclarationSniff implements Sniff
             && $tokens[$next]['code'] !== T_SEMICOLON
             && $tokens[$next]['code'] !== T_CLOSE_TAG
         ) {
-            $error = 'There must be one USE keyword per declaration';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
-            if ($fix === true) {
-                if ($tokens[$next]['code'] === T_COMMA) {
-                    $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.'use ');
-                } else {
-                    $baseUse           = rtrim($phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr)));
-                    $closingCurly      = $phpcsFile->findNext(T_CLOSE_USE_GROUP, ($next + 1));
-                    $lastNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingCurly - 1), null, true);
+            $error        = 'There must be one USE keyword per declaration';
+            $closingCurly = $phpcsFile->findNext(T_CLOSE_USE_GROUP, ($next + 1));
+            if ($closingCurly === false) {
+                // Parse error or live coding. Not auto-fixable.
+                $phpcsFile->addError($error, $stackPtr, 'MultipleDeclarations');
+            } else {
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
+                if ($fix === true) {
+                    if ($tokens[$next]['code'] === T_COMMA) {
+                        $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.'use ');
+                    } else {
+                        $baseUse           = rtrim($phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr)));
+                        $lastNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingCurly - 1), null, true);
 
-                    $phpcsFile->fixer->beginChangeset();
+                        $phpcsFile->fixer->beginChangeset();
 
-                    // Remove base use statement.
-                    for ($i = $stackPtr; $i <= $next; $i++) {
-                        $phpcsFile->fixer->replaceToken($i, '');
-                    }
-
-                    if (preg_match('`^[\r\n]+$`', $tokens[($next + 1)]['content']) === 1) {
-                        $phpcsFile->fixer->replaceToken(($next + 1), '');
-                    }
-
-                    // Convert grouped use statements into full use statements.
-                    do {
-                        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), $closingCurly, true);
-                        if ($next === false) {
-                            // Group use statement with trailing comma after last item.
-                            break;
-                        }
-
-                        $nonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
-                        for ($i = ($nonWhitespace + 1); $i < $next; $i++) {
-                            if (preg_match('`^[\r\n]+$`', $tokens[$i]['content']) === 1) {
-                                // Preserve new lines.
-                                continue;
-                            }
-
+                        // Remove base use statement.
+                        for ($i = $stackPtr; $i <= $next; $i++) {
                             $phpcsFile->fixer->replaceToken($i, '');
                         }
 
-                        if ($tokens[$next]['code'] === T_CONST || $tokens[$next]['code'] === T_FUNCTION) {
-                            $phpcsFile->fixer->addContentBefore($next, 'use ');
-                            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), $closingCurly, true);
-                            $phpcsFile->fixer->addContentBefore($next, str_replace('use ', '', $baseUse));
-                        } else {
-                            $phpcsFile->fixer->addContentBefore($next, $baseUse);
+                        if (preg_match('`^[\r\n]+$`', $tokens[($next + 1)]['content']) === 1) {
+                            $phpcsFile->fixer->replaceToken(($next + 1), '');
                         }
 
-                        $next = $phpcsFile->findNext(T_COMMA, ($next + 1), $closingCurly);
-                        if ($next !== false) {
-                            $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), $closingCurly, true);
-                            if ($nextNonEmpty !== false && $tokens[$nextNonEmpty]['line'] === $tokens[$next]['line']) {
-                                $prevNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($nextNonEmpty - 1), $next, true);
-                                if ($prevNonWhitespace === $next) {
-                                    $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar);
+                        // Convert grouped use statements into full use statements.
+                        do {
+                            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), $closingCurly, true);
+                            if ($next === false) {
+                                // Group use statement with trailing comma after last item.
+                                break;
+                            }
+
+                            $nonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
+                            for ($i = ($nonWhitespace + 1); $i < $next; $i++) {
+                                if (preg_match('`^[\r\n]+$`', $tokens[$i]['content']) === 1) {
+                                    // Preserve new lines.
+                                    continue;
+                                }
+
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            if ($tokens[$next]['code'] === T_CONST || $tokens[$next]['code'] === T_FUNCTION) {
+                                $phpcsFile->fixer->addContentBefore($next, 'use ');
+                                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), $closingCurly, true);
+                                $phpcsFile->fixer->addContentBefore($next, str_replace('use ', '', $baseUse));
+                            } else {
+                                $phpcsFile->fixer->addContentBefore($next, $baseUse);
+                            }
+
+                            $next = $phpcsFile->findNext(T_COMMA, ($next + 1), $closingCurly);
+                            if ($next !== false) {
+                                $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), $closingCurly, true);
+                                if ($nextNonEmpty !== false && $tokens[$nextNonEmpty]['line'] === $tokens[$next]['line']) {
+                                    $prevNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($nextNonEmpty - 1), $next, true);
+                                    if ($prevNonWhitespace === $next) {
+                                        $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar);
+                                    } else {
+                                        $phpcsFile->fixer->replaceToken($next, ';');
+                                        $phpcsFile->fixer->addNewline($prevNonWhitespace);
+                                    }
                                 } else {
+                                    // Last item with trailing comma or next item already on new line.
                                     $phpcsFile->fixer->replaceToken($next, ';');
-                                    $phpcsFile->fixer->addNewline($prevNonWhitespace);
                                 }
                             } else {
-                                // Last item with trailing comma or next item already on new line.
-                                $phpcsFile->fixer->replaceToken($next, ';');
+                                // Last item without trailing comma.
+                                $phpcsFile->fixer->addContent($lastNonWhitespace, ';');
                             }
-                        } else {
-                            // Last item without trailing comma.
-                            $phpcsFile->fixer->addContent($lastNonWhitespace, ';');
+                        } while ($next !== false);
+
+                        // Remove closing curly,semi-colon and any whitespace between last child and closing curly.
+                        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($closingCurly + 1), null, true);
+                        if ($next === false || $tokens[$next]['code'] !== T_SEMICOLON) {
+                            // Parse error, forgotten semi-colon.
+                            $next = $closingCurly;
                         }
-                    } while ($next !== false);
 
-                    // Remove closing curly,semi-colon and any whitespace between last child and closing curly.
-                    $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($closingCurly + 1), null, true);
-                    if ($next === false || $tokens[$next]['code'] !== T_SEMICOLON) {
-                        // Parse error, forgotten semi-colon.
-                        $next = $closingCurly;
-                    }
+                        for ($i = ($lastNonWhitespace + 1); $i <= $next; $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
 
-                    for ($i = ($lastNonWhitespace + 1); $i <= $next; $i++) {
-                        $phpcsFile->fixer->replaceToken($i, '');
-                    }
-
-                    $phpcsFile->fixer->endChangeset();
+                        $phpcsFile->fixer->endChangeset();
+                    }//end if
                 }//end if
             }//end if
         }//end if
