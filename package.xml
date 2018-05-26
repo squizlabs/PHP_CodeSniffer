@@ -1236,6 +1236,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.14.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.14.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.15.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.16.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.16.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.17.inc" role="test" />
        </dir>
       </dir>
       <file baseinstalldir="PHP/CodeSniffer" name="ruleset.xml" role="php" />
