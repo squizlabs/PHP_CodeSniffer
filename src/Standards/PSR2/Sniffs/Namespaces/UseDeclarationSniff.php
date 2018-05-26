@@ -179,9 +179,16 @@ class UseDeclarationSniff implements Sniff
             return;
         }
 
-        $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        $end = $phpcsFile->findNext([T_SEMICOLON, T_CLOSE_USE_GROUP, T_CLOSE_TAG], ($stackPtr + 1));
         if ($end === false) {
             return;
+        }
+
+        if ($tokens[$end]['code'] === T_CLOSE_USE_GROUP) {
+            $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
+            if ($tokens[$nextNonEmpty]['code'] === T_SEMICOLON) {
+                $end = $nextNonEmpty;
+            }
         }
 
         // Find either the start of the next line or the beginning of the next statement,
