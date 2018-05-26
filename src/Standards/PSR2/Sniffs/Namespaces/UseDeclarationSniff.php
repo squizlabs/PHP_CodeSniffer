@@ -130,7 +130,12 @@ class UseDeclarationSniff implements Sniff
                     } while ($next !== false);
 
                     // Remove closing curly,semi-colon and any whitespace between last child and closing curly.
-                    $next = $phpcsFile->findNext(T_SEMICOLON, $closingCurly);
+                    $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($closingCurly + 1), null, true);
+                    if ($next === false || $tokens[$next]['code'] !== T_SEMICOLON) {
+                        // Parse error, forgotten semi-colon.
+                        $next = $closingCurly;
+                    }
+
                     for ($i = ($lastNonWhitespace + 1); $i <= $next; $i++) {
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
