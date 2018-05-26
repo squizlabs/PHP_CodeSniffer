@@ -81,8 +81,8 @@ class UseDeclarationSniff implements Sniff
                     do {
                         $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), $closingCurly, true);
 
-                        $whitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
-                        for ($i = ($whitespace + 1); $i < $next; $i++) {
+                        $nonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), null, true);
+                        for ($i = ($nonWhitespace + 1); $i < $next; $i++) {
                             $phpcsFile->fixer->replaceToken($i, '');
                         }
 
@@ -103,9 +103,9 @@ class UseDeclarationSniff implements Sniff
                     $phpcsFile->fixer->replaceToken($closingCurly, '');
 
                     // Remove any trailing whitespace.
-                    $next       = $phpcsFile->findNext(T_SEMICOLON, $closingCurly);
-                    $whitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingCurly - 1), null, true);
-                    for ($i = ($whitespace + 1); $i < $next; $i++) {
+                    $next          = $phpcsFile->findNext(T_SEMICOLON, $closingCurly);
+                    $nonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingCurly - 1), null, true);
+                    for ($i = ($nonWhitespace + 1); $i < $next; $i++) {
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
 
