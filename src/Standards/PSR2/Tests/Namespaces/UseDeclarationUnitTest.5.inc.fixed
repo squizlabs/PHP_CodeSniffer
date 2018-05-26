@@ -26,7 +26,3 @@ use const foo\math\PI;
 use function foo\math\sin;
 use function foo\math\cos;
 use function foo\math\cosh;
-
-class PHP7 {
-
-}
