@@ -355,3 +355,10 @@ $util->setLogger(new class {
     private function b(){}
     protected function c(){}
 });
+
+?>
+
+<?php
+function functionInEmbeddedPHP() {
+
+}

@@ -398,3 +398,10 @@ $util->setLogger(new class {
     protected function c(){}
 
 });
+
+?>
+
+<?php
+function functionInEmbeddedPHP() {
+
+}
