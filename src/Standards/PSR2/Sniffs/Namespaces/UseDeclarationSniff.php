@@ -61,17 +61,21 @@ class UseDeclarationSniff implements Sniff
             && $tokens[$next]['code'] !== T_SEMICOLON
             && $tokens[$next]['code'] !== T_CLOSE_TAG
         ) {
-            $error        = 'There must be one USE keyword per declaration';
-            $closingCurly = $phpcsFile->findNext(T_CLOSE_USE_GROUP, ($next + 1));
-            if ($closingCurly === false) {
-                // Parse error or live coding. Not auto-fixable.
-                $phpcsFile->addError($error, $stackPtr, 'MultipleDeclarations');
-            } else {
+            $error = 'There must be one USE keyword per declaration';
+
+            if ($tokens[$next]['code'] === T_COMMA) {
                 $fix = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
                 if ($fix === true) {
-                    if ($tokens[$next]['code'] === T_COMMA) {
-                        $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.'use ');
-                    } else {
+                    $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.'use ');
+                }
+            } else {
+                $closingCurly = $phpcsFile->findNext(T_CLOSE_USE_GROUP, ($next + 1));
+                if ($closingCurly === false) {
+                    // Parse error or live coding. Not auto-fixable.
+                    $phpcsFile->addError($error, $stackPtr, 'MultipleDeclarations');
+                } else {
+                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
+                    if ($fix === true) {
                         $baseUse           = rtrim($phpcsFile->getTokensAsString($stackPtr, ($next - $stackPtr)));
                         $lastNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingCurly - 1), null, true);
 
