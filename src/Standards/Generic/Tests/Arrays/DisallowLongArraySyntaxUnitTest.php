@@ -16,23 +16,6 @@ class DisallowLongArraySyntaxUnitTest extends AbstractSniffUnitTest
 
 
     /**
-     * Get a list of all test files to check.
-     *
-     * @param string $testFileBase The base path that the unit tests files will have.
-     *
-     * @return string[]
-     */
-    protected function getTestFiles($testFileBase)
-    {
-        $testFiles   = [$testFileBase.'1.inc'];
-        $testFiles[] = $testFileBase.'2.inc';
-
-        return $testFiles;
-
-    }//end getTestFiles()
-
-
-    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
