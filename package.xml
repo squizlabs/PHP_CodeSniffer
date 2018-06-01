@@ -98,6 +98,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Provides the position in the token stack of the first token in the type hint
   - The File::getMethodProperties() method now includes a return_type_token array index in the return value
     -- Provides the position in the token stack of the first token in the return type
+  - The File::getTokensAsString() method can now optionally return original (non tab-replaced) content
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Removed Squiz.PHP.DisallowObEndFlush from the Squiz standard
     -- If you use this sniff and want to continue banning ob_end_flush(), use Generic.PHP.ForbiddenFunctions instead
     -- You will need to set the forbiddenFunctions property in your ruleset.xml file
