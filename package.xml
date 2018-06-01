@@ -227,6 +227,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If you have customised the error messages of this sniff, please review your ruleset after upgrading
   - Fixed bug #2018 : Generic.Formatting.MultipleStatementAlignment does see PHP close tag as end of statement block
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2027 : PEAR.NamingConventions.ValidFunctionName error when function name includes double underscore
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
