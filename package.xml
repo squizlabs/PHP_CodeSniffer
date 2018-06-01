@@ -69,6 +69,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, you could only re-enable a sniff/category/standard using the exact same code that was disabled
     -- Now, you can disable a standard and only re-enable a specific category or sniff
     -- Or, you can disable a specific sniff and have it re-enable when you re-enable the category or standard
+  - The value of array sniff properties can now be set using phpcs:set annotations
+    -- e.g., phpcs:set Standard.Category.SniffName property[] key=>value,key2=>value2
+    -- Thanks to Michał Bundyra for the patch
   - PHPCS annotations now remain as T_PHPCS_* tokens instead of reverting to comment tokens when --ignore-annotations is used
     -- This stops sniffs (especially commenting sniffs) from generating a large number of false errors when ignoring
     -- Any custom sniffs that are using the T_PHPCS_* tokens to detect annotations may need to be changed to ignore them
