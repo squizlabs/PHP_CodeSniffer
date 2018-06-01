@@ -1895,12 +1895,14 @@ class File
      * Returns the content of the tokens from the specified start position in
      * the token stack for the specified length.
      *
-     * @param int $start  The position to start from in the token stack.
-     * @param int $length The length of tokens to traverse from the start pos.
+     * @param int $start       The position to start from in the token stack.
+     * @param int $length      The length of tokens to traverse from the start pos.
+     * @param int $origContent Whether the original content or the tab replaced
+     *                         content should be used.
      *
      * @return string The token contents.
      */
-    public function getTokensAsString($start, $length)
+    public function getTokensAsString($start, $length, $origContent=false)
     {
         $str = '';
         $end = ($start + $length);
@@ -1909,7 +1911,13 @@ class File
         }
 
         for ($i = $start; $i < $end; $i++) {
-            $str .= $this->tokens[$i]['content'];
+            // If tabs are being converted to spaces by the tokeniser, the
+            // original content should be used instead of the converted content.
+            if ($origContent === true && isset($this->tokens[$i]['orig_content']) === true) {
+                $str .= $this->tokens[$i]['orig_content'];
+            } else {
+                $str .= $this->tokens[$i]['content'];
+            }
         }
 
         return $str;
