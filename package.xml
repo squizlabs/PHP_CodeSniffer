@@ -105,6 +105,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Now, Generic.PHP.ForbiddenFunctions.Found and Generic.PHP.ForbiddenFunctions.FoundWithAlternative
   - Added new Generic.PHP.LowerCaseType sniff
     -- Ensures PHP types used for type hints, return types, and type casting are lowercase
+    -- Thanks to Juliette Reinders Folmer for the contribution
   - Added new Generic.WhiteSpace.ArbitraryParenthesesSpacing sniff
     -- Generates an error for whitespace inside parenthesis that don't belong to a function call/declaration or control structure
     -- Generates a warning for any empty parenthesis found
