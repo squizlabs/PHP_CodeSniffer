@@ -1843,6 +1843,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindExtendedClassNameTest.inc" name="tests/Core/File/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.php" name="tests/Core/File/FindImplementedInterfaceNamesTest.php" />
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.inc" name="tests/Core/File/FindImplementedInterfaceNamesTest.inc" />
+   <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.php" name="tests/Core/File/GetMemberPropertiesTest.php" />
+   <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.inc" name="tests/Core/File/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.inc" name="tests/Core/File/GetMethodParametersTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.php" name="tests/Core/File/GetMethodPropertiesTest.php" />
@@ -1874,6 +1876,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindExtendedClassNameTest.inc" name="tests/Core/File/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.php" name="tests/Core/File/FindImplementedInterfaceNamesTest.php" />
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.inc" name="tests/Core/File/FindImplementedInterfaceNamesTest.inc" />
+   <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.php" name="tests/Core/File/GetMemberPropertiesTest.php" />
+   <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.inc" name="tests/Core/File/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.inc" name="tests/Core/File/GetMethodParametersTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.php" name="tests/Core/File/GetMethodPropertiesTest.php" />
