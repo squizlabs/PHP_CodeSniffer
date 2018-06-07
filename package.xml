@@ -32,6 +32,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Fixes a conflict between this sniff and the Squiz.Commenting.PostStatementComment sniff
     -- Also stops PHPCS annotations from being moved to a different line, potentially changing their meaning
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.WhiteSpace.FunctionSpacing no longer checks spacing of functions at the top of an embedded PHP block
+    -- Fixes a conflict between this sniff and the Squiz.PHP.EmbeddedPHP sniff
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2029 : Squiz.Scope.MemberVarScope throws fatal error when a property is found in an interface
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
