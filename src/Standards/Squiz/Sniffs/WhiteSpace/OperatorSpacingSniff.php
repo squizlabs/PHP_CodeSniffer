@@ -220,11 +220,22 @@ class OperatorSpacingSniff implements Sniff
                     $operator,
                     $found,
                 ];
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfter', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+
+                $nextNonWhitespace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                if ($nextNonWhitespace !== false
+                    && isset(Tokens::$commentTokens[$tokens[$nextNonWhitespace]['code']]) === true
+                    && $found === 'newline'
+                ) {
+                    // Don't auto-fix when it's a comment or PHPCS annotation on a new line as
+                    // it causes fixer conflicts and can cause the meaning of annotations to change.
+                    $phpcsFile->addError($error, $stackPtr, 'SpacingAfter', $data);
+                } else {
+                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfter', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
+                    }
                 }
-            }
+            }//end if
         }//end if
 
     }//end process()
