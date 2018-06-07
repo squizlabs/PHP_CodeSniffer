@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Squiz.WhiteSpace.SuperfluousWhitespace now recognizes unicode whitespace at the start and end of a file
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2029 : Squiz.Scope.MemberVarScope throws fatal error when a property is found in an interface
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
