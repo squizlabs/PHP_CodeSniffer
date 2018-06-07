@@ -65,8 +65,7 @@ class ValidClassNameSniff implements Sniff
             $name = trim($phpcsFile->getTokensAsString($nameStart, ($nameEnd - $nameStart)));
         }
 
-        // Check for PascalCaps format.
-        // Variable 2 to isCamelCaps specifies "classFormat" which is PascalCase
+        // Check for PascalCase format.
         $valid = Common::isCamelCaps($name, true, true, false);
         if ($valid === false) {
             $type  = ucfirst($tokens[$stackPtr]['content']);
@@ -76,9 +75,9 @@ class ValidClassNameSniff implements Sniff
                 $name,
             ];
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
-            $phpcsFile->recordMetric($stackPtr, 'CamelCase class name', 'no');
+            $phpcsFile->recordMetric($stackPtr, 'PascalCase class name', 'no');
         } else {
-            $phpcsFile->recordMetric($stackPtr, 'CamelCase class name', 'yes');
+            $phpcsFile->recordMetric($stackPtr, 'PascalCase class name', 'yes');
         }
 
     }//end process()

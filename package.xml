@@ -35,6 +35,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.WhiteSpace.FunctionSpacing no longer checks spacing of functions at the top of an embedded PHP block
     -- Fixes a conflict between this sniff and the Squiz.PHP.EmbeddedPHP sniff
     -- Thanks to Juliette Reinders Folmer for the patch
+  - The Squiz.Classes.ValidClassName.NotCamelCaps message now references PascalCase instead of CamelCase
+    -- The "CamelCase class name" metric produced by the sniff has been changed to "PascalCase class name"
+    -- This reflects the fact that the class name check is actually a Pascal Case check and not really Camel Case
+    -- Thanks to Tom H Anderson for the patch
   - Fixed bug #2029 : Squiz.Scope.MemberVarScope throws fatal error when a property is found in an interface
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
