@@ -49,6 +49,19 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
                 8 => 1,
             ];
             break;
+        case 'SuperfluousWhitespaceUnitTest.3.inc':
+            return [
+                6  => 1,
+                10 => 1,
+            ];
+            break;
+        case 'SuperfluousWhitespaceUnitTest.4.inc':
+        case 'SuperfluousWhitespaceUnitTest.5.inc':
+            return [
+                1 => 1,
+                4 => 1,
+            ];
+            break;
         case 'SuperfluousWhitespaceUnitTest.1.js':
             return [
                 1  => 1,

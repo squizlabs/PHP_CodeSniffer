@@ -95,17 +95,20 @@ class SuperfluousWhitespaceSniff implements Sniff
                     return;
                 }
 
+                $beforeOpen = '';
+
                 for ($i = ($stackPtr - 1); $i >= 0; $i--) {
                     // If we find something that isn't inline html then there is something previous in the file.
                     if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
                         return;
                     }
 
-                    // If we have ended up with inline html make sure it isn't just whitespace.
-                    $tokenContent = trim($tokens[$i]['content']);
-                    if ($tokenContent !== '') {
-                        return;
-                    }
+                    $beforeOpen .= $tokens[$i]['content'];
+                }
+
+                // If we have ended up with inline html make sure it isn't just whitespace.
+                if (preg_match('`^[\pZ\s]+$`u', $beforeOpen) !== 1) {
+                    return;
                 }
             }//end if
 
@@ -129,6 +132,8 @@ class SuperfluousWhitespaceSniff implements Sniff
                     return;
                 }
 
+                $afterClose = '';
+
                 for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
                     // If we find something that isn't inline HTML then there
                     // is more to the file.
@@ -136,12 +141,12 @@ class SuperfluousWhitespaceSniff implements Sniff
                         return;
                     }
 
-                    // If we have ended up with inline html make sure it
-                    // isn't just whitespace.
-                    $tokenContent = trim($tokens[$i]['content']);
-                    if (empty($tokenContent) === false) {
-                        return;
-                    }
+                    $afterClose .= $tokens[$i]['content'];
+                }
+
+                // If we have ended up with inline html make sure it isn't just whitespace.
+                if (preg_match('`^[\pZ\s]+$`u', $afterClose) !== 1) {
+                    return;
                 }
             } else {
                 // The last token is always the close tag inserted when tokenized

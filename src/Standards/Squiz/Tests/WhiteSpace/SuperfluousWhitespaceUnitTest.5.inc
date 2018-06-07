@@ -1,0 +1,5 @@
+ <?php
+
+// This should throw an error - unicode space before open tag and after close tag.
+?> 
+ 
