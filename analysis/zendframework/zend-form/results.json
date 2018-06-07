@@ -131,19 +131,22 @@
         },
         "2018-05-01":{
           "\\n":135
+        },
+        "2018-06-01":{
+          "\\n":135
         }
       },
       "winner":"\\n"
     },
     "Line length":{
-      "total":15115,
+      "total":15178,
       "values":{
-        "80 or less":14250,
-        "81-120":865
+        "80 or less":14309,
+        "81-120":869
       },
       "percentages":{
-        "80 or less":94.28,
-        "81-120":5.72
+        "80 or less":94.27,
+        "81-120":5.73
       },
       "trends":{
         "2015-01-01":{
@@ -363,6 +366,10 @@
         "2018-05-01":{
           "80 or less":14250,
           "81-120":865
+        },
+        "2018-06-01":{
+          "80 or less":14309,
+          "81-120":869
         }
       },
       "winner":"80 or less"
@@ -497,6 +504,9 @@
           "no":135
         },
         "2018-05-01":{
+          "no":135
+        },
+        "2018-06-01":{
           "no":135
         }
       },
@@ -633,14 +643,17 @@
         },
         "2018-05-01":{
           "no":135
+        },
+        "2018-06-01":{
+          "no":135
         }
       },
       "winner":"no"
     },
     "Line indent":{
-      "total":12869,
+      "total":12933,
       "values":{
-        "spaces":12869
+        "spaces":12933
       },
       "percentages":{
         "spaces":100
@@ -768,6 +781,9 @@
         },
         "2018-05-01":{
           "spaces":12869
+        },
+        "2018-06-01":{
+          "spaces":12933
         }
       },
       "winner":"spaces"
@@ -902,6 +918,9 @@
           "yes":135
         },
         "2018-05-01":{
+          "yes":135
+        },
+        "2018-06-01":{
           "yes":135
         }
       },
@@ -1038,6 +1057,9 @@
         },
         "2018-05-01":{
           "no":135
+        },
+        "2018-06-01":{
+          "no":135
         }
       },
       "winner":"no"
@@ -1172,6 +1194,9 @@
           "1":135
         },
         "2018-05-01":{
+          "1":135
+        },
+        "2018-06-01":{
           "1":135
         }
       },
@@ -1308,6 +1333,9 @@
         },
         "2018-05-01":{
           ".php":135
+        },
+        "2018-06-01":{
+          ".php":135
         }
       },
       "winner":".php"
@@ -1443,14 +1471,17 @@
         },
         "2018-05-01":{
           "no":135
+        },
+        "2018-06-01":{
+          "no":135
         }
       },
       "winner":"no"
     },
     "PHP keyword case":{
-      "total":4701,
+      "total":4718,
       "values":{
-        "lower":4701
+        "lower":4718
       },
       "percentages":{
         "lower":100
@@ -1578,14 +1609,17 @@
         },
         "2018-05-01":{
           "lower":4701
+        },
+        "2018-06-01":{
+          "lower":4718
         }
       },
       "winner":"lower"
     },
     "Multiple statements on same line":{
-      "total":2960,
+      "total":2976,
       "values":{
-        "no":2960
+        "no":2976
       },
       "percentages":{
         "no":100
@@ -1713,6 +1747,9 @@
         },
         "2018-05-01":{
           "no":2960
+        },
+        "2018-06-01":{
+          "no":2976
         }
       },
       "winner":"no"
@@ -1847,6 +1884,9 @@
           "new line":135
         },
         "2018-05-01":{
+          "new line":135
+        },
+        "2018-06-01":{
           "new line":135
         }
       },
@@ -2026,6 +2066,10 @@
         "2018-05-01":{
           "no":100,
           "yes":35
+        },
+        "2018-06-01":{
+          "no":100,
+          "yes":35
         }
       },
       "winner":"no"
@@ -2160,6 +2204,9 @@
           "yes":135
         },
         "2018-05-01":{
+          "yes":135
+        },
+        "2018-06-01":{
           "yes":135
         }
       },
@@ -2296,6 +2343,9 @@
         },
         "2018-05-01":{
           "yes":135
+        },
+        "2018-06-01":{
+          "yes":135
         }
       },
       "winner":"yes"
@@ -2431,14 +2481,17 @@
         },
         "2018-05-01":{
           "yes":135
+        },
+        "2018-06-01":{
+          "yes":135
         }
       },
       "winner":"yes"
     },
     "Function opening brace placement":{
-      "total":593,
+      "total":597,
       "values":{
-        "new line":589,
+        "new line":593,
         "same line":4
       },
       "percentages":{
@@ -2609,15 +2662,19 @@
         "2018-05-01":{
           "new line":589,
           "same line":4
+        },
+        "2018-06-01":{
+          "new line":593,
+          "same line":4
         }
       },
       "winner":"new line"
     },
     "Function has doc comment":{
-      "total":651,
+      "total":655,
       "values":{
         "no":2,
-        "yes":649
+        "yes":653
       },
       "percentages":{
         "no":0.31,
@@ -2787,14 +2844,18 @@
         "2018-05-01":{
           "no":2,
           "yes":649
+        },
+        "2018-06-01":{
+          "no":2,
+          "yes":653
         }
       },
       "winner":"yes"
     },
     "PHP constant case":{
-      "total":662,
+      "total":664,
       "values":{
-        "lower":662
+        "lower":664
       },
       "percentages":{
         "lower":100
@@ -2922,6 +2983,9 @@
         },
         "2018-05-01":{
           "lower":662
+        },
+        "2018-06-01":{
+          "lower":664
         }
       },
       "winner":"lower"
@@ -3057,14 +3121,17 @@
         },
         "2018-05-01":{
           "no":752
+        },
+        "2018-06-01":{
+          "no":752
         }
       },
       "winner":"no"
     },
     "Spaces after control structure open parenthesis":{
-      "total":722,
+      "total":723,
       "values":{
-        "0":722
+        "0":723
       },
       "percentages":{
         "0":100
@@ -3195,14 +3262,17 @@
         },
         "2018-05-01":{
           "0":722
+        },
+        "2018-06-01":{
+          "0":723
         }
       },
       "winner":0
     },
     "Spaces before control structure close parenthesis":{
-      "total":722,
+      "total":723,
       "values":{
-        "0":722
+        "0":723
       },
       "percentages":{
         "0":100
@@ -3333,14 +3403,17 @@
         },
         "2018-05-01":{
           "0":722
+        },
+        "2018-06-01":{
+          "0":723
         }
       },
       "winner":0
     },
     "Blank lines at start of control structure":{
-      "total":756,
+      "total":758,
       "values":{
-        "0":756
+        "0":758
       },
       "percentages":{
         "0":100
@@ -3468,14 +3541,17 @@
         },
         "2018-05-01":{
           "0":756
+        },
+        "2018-06-01":{
+          "0":758
         }
       },
       "winner":0
     },
     "Blank lines at end of control structure":{
-      "total":756,
+      "total":758,
       "values":{
-        "0":756
+        "0":758
       },
       "percentages":{
         "0":100
@@ -3603,14 +3679,17 @@
         },
         "2018-05-01":{
           "0":756
+        },
+        "2018-06-01":{
+          "0":758
         }
       },
       "winner":0
     },
     "Spacing before object operator":{
-      "total":2686,
+      "total":2693,
       "values":{
-        "0":2686
+        "0":2693
       },
       "percentages":{
         "0":100
@@ -3738,14 +3817,17 @@
         },
         "2018-05-01":{
           "0":2686
+        },
+        "2018-06-01":{
+          "0":2693
         }
       },
       "winner":0
     },
     "Spacing after object operator":{
-      "total":2686,
+      "total":2693,
       "values":{
-        "0":2686
+        "0":2693
       },
       "percentages":{
         "0":100
@@ -3873,14 +3955,17 @@
         },
         "2018-05-01":{
           "0":2686
+        },
+        "2018-06-01":{
+          "0":2693
         }
       },
       "winner":0
     },
     "CamelCase method name":{
-      "total":608,
+      "total":612,
       "values":{
-        "yes":608
+        "yes":612
       },
       "percentages":{
         "yes":100
@@ -4008,14 +4093,17 @@
         },
         "2018-05-01":{
           "yes":608
+        },
+        "2018-06-01":{
+          "yes":612
         }
       },
       "winner":"yes"
     },
     "Space after operator":{
-      "total":2728,
+      "total":2739,
       "values":{
-        "1":2728
+        "1":2739
       },
       "percentages":{
         "1":100
@@ -4196,6 +4284,9 @@
         },
         "2018-05-01":{
           "1":2728
+        },
+        "2018-06-01":{
+          "1":2739
         }
       },
       "winner":1
@@ -4203,12 +4294,12 @@
     "Space before operator":{
       "total":350,
       "values":{
-        "newline":33,
-        "1":317
+        "newline":35,
+        "1":315
       },
       "percentages":{
-        "newline":9.43,
-        "1":90.57
+        "newline":10,
+        "1":90
       },
       "trends":{
         "2015-01-01":{
@@ -4482,19 +4573,23 @@
         "2018-05-01":{
           "newline":33,
           "1":317
+        },
+        "2018-06-01":{
+          "newline":35,
+          "1":315
         }
       },
       "winner":1
     },
     "Adjacent assignments aligned":{
-      "total":172,
+      "total":173,
       "values":{
-        "no":76,
+        "no":77,
         "yes":96
       },
       "percentages":{
-        "no":44.19,
-        "yes":55.81
+        "no":44.51,
+        "yes":55.49
       },
       "trends":{
         "2015-01-01":{
@@ -4660,14 +4755,18 @@
         "2018-05-01":{
           "no":76,
           "yes":96
+        },
+        "2018-06-01":{
+          "no":77,
+          "yes":96
         }
       },
       "winner":"yes"
     },
     "Short array syntax used":{
-      "total":334,
+      "total":335,
       "values":{
-        "yes":334
+        "yes":335
       },
       "percentages":{
         "yes":100
@@ -4795,6 +4894,9 @@
         },
         "2018-05-01":{
           "yes":334
+        },
+        "2018-06-01":{
+          "yes":335
         }
       },
       "winner":"yes"
@@ -4930,15 +5032,18 @@
         },
         "2018-05-01":{
           "elseif":23
+        },
+        "2018-06-01":{
+          "elseif":23
         }
       },
       "winner":"elseif"
     },
     "Inline comment style":{
-      "total":133,
+      "total":134,
       "values":{
         "\/* ... *\/":"1",
-        "\/\/ ...":132
+        "\/\/ ...":133
       },
       "percentages":{
         "\/* ... *\/":0.75,
@@ -5108,14 +5213,18 @@
         "2018-05-01":{
           "\/* ... *\/":"1",
           "\/\/ ...":132
+        },
+        "2018-06-01":{
+          "\/* ... *\/":"1",
+          "\/\/ ...":133
         }
       },
       "winner":"\/\/ ..."
     },
     "PHP type case":{
-      "total":94,
+      "total":98,
       "values":{
-        "lower":94
+        "lower":98
       },
       "percentages":{
         "lower":100
@@ -5243,6 +5352,9 @@
         },
         "2018-05-01":{
           "lower":94
+        },
+        "2018-06-01":{
+          "lower":98
         }
       },
       "winner":"lower"
@@ -5377,6 +5489,9 @@
           "upper":22
         },
         "2018-05-01":{
+          "upper":22
+        },
+        "2018-06-01":{
           "upper":22
         }
       },
@@ -5554,6 +5669,10 @@
           "1":54
         },
         "2018-05-01":{
+          "newline":9,
+          "1":54
+        },
+        "2018-06-01":{
           "newline":9,
           "1":54
         }
@@ -5734,14 +5853,18 @@
         "2018-05-01":{
           "newline":3,
           "1":60
+        },
+        "2018-06-01":{
+          "newline":3,
+          "1":60
         }
       },
       "winner":1
     },
     "Private method prefixed with underscore":{
-      "total":8,
+      "total":11,
       "values":{
-        "no":8
+        "no":11
       },
       "percentages":{
         "no":100
@@ -5866,6 +5989,9 @@
         },
         "2018-05-01":{
           "no":8
+        },
+        "2018-06-01":{
+          "no":11
         }
       },
       "winner":"no"
@@ -6044,14 +6170,18 @@
         "2018-05-01":{
           "no":5,
           "yes":18
+        },
+        "2018-06-01":{
+          "no":5,
+          "yes":18
         }
       },
       "winner":"yes"
     },
     "Spacing after cast statement":{
-      "total":38,
+      "total":39,
       "values":{
-        "1":38
+        "1":39
       },
       "percentages":{
         "1":100
@@ -6179,14 +6309,17 @@
         },
         "2018-05-01":{
           "1":38
+        },
+        "2018-06-01":{
+          "1":39
         }
       },
       "winner":1
     },
     "Closure opening brace placement":{
-      "total":4,
+      "total":5,
       "values":{
-        "same line":4
+        "same line":5
       },
       "percentages":{
         "same line":100
@@ -6314,6 +6447,9 @@
         },
         "2018-05-01":{
           "same line":4
+        },
+        "2018-06-01":{
+          "same line":5
         }
       },
       "winner":"same line"
@@ -6349,6 +6485,6 @@
   },
   "project":{
     "path":"zendframework\/zend-form",
-    "commitid":"a8fbfa8b58e5dd1678e9b02841237a761ba35bb1"
+    "commitid":"e30c510524df35813dfcbcba4e0aafc0fd9edd93"
   }
 }
