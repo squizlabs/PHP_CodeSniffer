@@ -41,12 +41,6 @@ class FileCommentUnitTest extends AbstractSniffUnitTest
                 28 => 2,
                 32 => 2,
             ];
-        case 'FileCommentUnitTest.3.inc':
-            // HHVM just removes the entire comment token, as if it was never there.
-            if (defined('HHVM_VERSION') === true) {
-                return [1 => 1];
-            }
-            return [];
         default:
             return [];
         }//end switch
