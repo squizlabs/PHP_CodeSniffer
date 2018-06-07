@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Tom H Anderson for the patch
   - Fixed bug #2029 : Squiz.Scope.MemberVarScope throws fatal error when a property is found in an interface
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2047 : PSR12.Classes.ClassInstantiation false positive when instantiating class from array index
  </notes>
  <contents>
   <dir name="/">

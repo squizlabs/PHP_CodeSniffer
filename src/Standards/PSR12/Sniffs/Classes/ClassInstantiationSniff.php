@@ -59,6 +59,12 @@ class ClassInstantiationSniff implements Sniff
             return;
         }
 
+        // Support array indexes.
+        while ($tokens[$classNameEnd]['code'] === T_OPEN_SQUARE_BRACKET) {
+            $closer       = $tokens[$classNameEnd]['bracket_closer'];
+            $classNameEnd = $phpcsFile->findNext(Tokens::$emptyTokens, ($closer + 1), null, true);
+        }
+
         if ($tokens[$classNameEnd]['code'] === T_ANON_CLASS) {
             // Ignore anon classes.
             return;
