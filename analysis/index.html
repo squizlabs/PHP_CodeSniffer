@@ -22,7 +22,7 @@
         <div class="listBoxClose" onclick="toggleGradeBox();"></div>
         <div class="listBoxHeader">
             <h2>Embed Instructions</h2>
-            <p>Across all 197 projects, 88.99% of the source code conforms to the same coding conventions</p>
+            <p>Across all 197 projects, 89.05% of the source code conforms to the same coding conventions</p>
             <p><img src="https://squizlabs.github.io/PHP_CodeSniffer/analysis/grade.svg" title="Code consistency"></p>
         </div>
         <div class="listBoxListWrap">
@@ -42,7 +42,7 @@
 
 <div id="listBoxWrap" class="listBoxWrap"></div>
 
-<div id="consistency" class="blue" title="Across all 197 projects, 88.99% of the source code conforms to the same coding conventions" onclick="toggleGradeBox();">
+<div id="consistency" class="blue" title="Across all 197 projects, 89.05% of the source code conforms to the same coding conventions" onclick="toggleGradeBox();">
     <span class="grade">B</span>consistency
 </div>
 
@@ -83,7 +83,6 @@
 <li><a href="#blank-lines-at-end-of-control-structure"><div class="td1">Blank lines at end of control structure</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>99.24%</div></a></li>
 <li><a href="#blank-lines-at-start-of-control-structure"><div class="td1">Blank lines at start of control structure</div><div class="td2"><span class="screenHide">Method: </span>0</div><div class="td3"><span class="screenHide">Value: </span>99.09%</div></a></li>
 <li><a href="#brackets-around-echoed-strings"><div class="td1">Brackets around echoed strings</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>99.14%</div></a></li>
-<li><a href="#camelcase-class-name"><div class="td1">CamelCase class name</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>73.76%</div></a></li>
 <li><a href="#camelcase-function-name"><div class="td1">CamelCase function name</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
 <li><a href="#camelcase-method-name"><div class="td1">CamelCase method name</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>87.37%</div></a></li>
 <li><a href="#class-defined-in-namespace"><div class="td1">Class defined in namespace</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>64.41%</div></a></li>
@@ -111,6 +110,7 @@
 <li><a href="#php-keyword-case"><div class="td1">PHP keyword case</div><div class="td2"><span class="screenHide">Method: </span>lower</div><div class="td3"><span class="screenHide">Value: </span>99.92%</div></a></li>
 <li><a href="#php-short-open-tag-used"><div class="td1">PHP short open tag used</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>100%</div></a></li>
 <li><a href="#php-type-case"><div class="td1">PHP type case</div><div class="td2"><span class="screenHide">Method: </span>lower</div><div class="td3"><span class="screenHide">Value: </span>99.92%</div></a></li>
+<li><a href="#pascalcase-class-name"><div class="td1">PascalCase class name</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>73.76%</div></a></li>
 <li><a href="#private-method-prefixed-with-underscore"><div class="td1">Private method prefixed with underscore</div><div class="td2"><span class="screenHide">Method: </span>no</div><div class="td3"><span class="screenHide">Value: </span>89.72%</div></a></li>
 <li><a href="#short-array-syntax-used"><div class="td1">Short array syntax used</div><div class="td2"><span class="screenHide">Method: </span>yes</div><div class="td3"><span class="screenHide">Value: </span>56.93%</div></a></li>
 <li><a href="#space-after-operator"><div class="td1">Space after operator</div><div class="td2"><span class="screenHide">Method: </span>1</div><div class="td3"><span class="screenHide">Value: </span>96.28%</div></a></li>
@@ -1777,6 +1777,12 @@
 <li><a href="aws/aws-sdk-php/index.html#short-array-syntax-used">AWS SDK for PHP</a> added 7743 array definitions using <em>yes</em></li>
 </ul>
 </li>
+<li onmouseover="ct4.setSelection([{row:41,column:null}]);" onmouseout="ct4.setSelection([]);" class="historicalDate"><strong>01 Jun 2018</strong>: there was a 1.13% swing from <em>no</em> to <em>yes</em>
+<ul>
+<li><a href="phpmyadmin/phpmyadmin/index.html#short-array-syntax-used">phpMyAdmin</a> saw a 94.34% swing from <em>no</em> to <em>yes</em></li>
+<li><a href="aws/aws-sdk-php/index.html#short-array-syntax-used">AWS SDK for PHP</a> added 4945 array definitions using <em>yes</em></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -3421,10 +3427,10 @@
 </div>
 </div>
 </div>
-<div id="camelcase-class-name" class="conventionWrap">
+<div id="pascalcase-class-name" class="conventionWrap">
 <div class="conventionDetails">
-<h2><a href="#camelcase-class-name">CamelCase class name</a></h2>
-<p>Are class names defined using CamelCase?</p>
+<h2><a href="#pascalcase-class-name">PascalCase class name</a></h2>
+<p>Are class names defined using PascalCase?</p>
 <div class="currentData">
 <div class="tag">Current</div>
 <div class="currentDataWrap">
@@ -3453,250 +3459,250 @@
 <tr title="14,342 classes">
 <td class="key" style="background-color:#2D3F50"><span class="screenHide">no</span></td>
 <td class="result">no</td>
-<td class="value">26.24%<br/><a href="" onclick="showListBox('camelcase-class-name-no-repos');return false;">preferred by 7.11% of projects</a></td>
+<td class="value">26.24%<br/><a href="" onclick="showListBox('pascalcase-class-name-no-repos');return false;">preferred by 7.11% of projects</a></td>
 </tr>
 <tr title="40,317 classes">
 <td class="key keyPopular" style="background-color:#91A2B2" title="Most popular method"><span class="screenHide">yes - Most popular method</span></td>
 <td class="result">yes</td>
-<td class="value">73.76%<br/><a href="" onclick="showListBox('camelcase-class-name-yes-repos');return false;">preferred by 90.36% of projects</a></td>
+<td class="value">73.76%<br/><a href="" onclick="showListBox('pascalcase-class-name-yes-repos');return false;">preferred by 90.36% of projects</a></td>
 </tr>
 </table>
 <table class="statsTable undecided">
 <tr>
 <td class="key"><span class="screenHide">undecided</span></td>
-<td class="value"><a href="" onclick="showListBox('camelcase-class-name-undecided-repos');return false;">2.54% of projects are undecided</a></td>
+<td class="value"><a href="" onclick="showListBox('pascalcase-class-name-undecided-repos');return false;">2.54% of projects are undecided</a></td>
 </tr>
 </table>
 <p class="statsInfo">Based on 54,659 classes in 197 projects</p>
 </div>
 </div>
-<div id="camelcase-class-name-no-repos" class="listBoxWrap">
+<div id="pascalcase-class-name-no-repos" class="listBoxWrap">
 <div class="listBoxContent">
 <div class="listBoxClose" onclick="hideListBox();"></div>
 <div class="listBoxHeader">
 <h3>14 projects prefer <i>no</i></h3>
 </div>
-<div id="camelcase-class-name-no-reposlistBoxListWrap" class="listBoxListWrap">
+<div id="pascalcase-class-name-no-reposlistBoxListWrap" class="listBoxListWrap">
 <ul class="listBoxList">
-<li><a href="anchorcms/anchor-cms/index.html#camelcase-class-name"><div class="td1">Anchor CMS</div><div class="td2">100%</div></a></li>
-<li><a href="EllisLab/CodeIgniter/index.html#camelcase-class-name"><div class="td1">CodeIgniter</div><div class="td2">100%</div></a></li>
-<li><a href="google/google-api-php-client/index.html#camelcase-class-name"><div class="td1">Google APIs Client Library</div><div class="td2">100%</div></a></li>
-<li><a href="leafo/lessphp/index.html#camelcase-class-name"><div class="td1">lessphp</div><div class="td2">100%</div></a></li>
-<li><a href="moodle/moodle/index.html#camelcase-class-name"><div class="td1">Moodle</div><div class="td2">99%</div></a></li>
-<li><a href="bobthecow/mustache.php/index.html#camelcase-class-name"><div class="td1">Mustache.php</div><div class="td2">100%</div></a></li>
-<li><a href="pear/pear-core/index.html#camelcase-class-name"><div class="td1">PEAR - The PEAR Installer</div><div class="td2">96%</div></a></li>
-<li><a href="sebastianbergmann/php-code-coverage/index.html#camelcase-class-name"><div class="td1">PHP_CodeCoverage</div><div class="td2">100%</div></a></li>
-<li><a href="phpbb/phpbb/index.html#camelcase-class-name"><div class="td1">phpBB</div><div class="td2">99%</div></a></li>
-<li><a href="PHPOffice/PHPExcel/index.html#camelcase-class-name"><div class="td1">PHPExcel</div><div class="td2">97%</div></a></li>
-<li><a href="sugarcrm/sugarcrm_dev/index.html#camelcase-class-name"><div class="td1">SugarCRM CE</div><div class="td2">81%</div></a></li>
-<li><a href="swiftmailer/swiftmailer/index.html#camelcase-class-name"><div class="td1">Swift Mailer</div><div class="td2">99%</div></a></li>
-<li><a href="fabpot/Twig/index.html#camelcase-class-name"><div class="td1">Twig</div><div class="td2">100%</div></a></li>
-<li><a href="WordPress/WordPress/index.html#camelcase-class-name"><div class="td1">WordPress</div><div class="td2">100%</div></a></li>
+<li><a href="anchorcms/anchor-cms/index.html#pascalcase-class-name"><div class="td1">Anchor CMS</div><div class="td2">100%</div></a></li>
+<li><a href="EllisLab/CodeIgniter/index.html#pascalcase-class-name"><div class="td1">CodeIgniter</div><div class="td2">100%</div></a></li>
+<li><a href="google/google-api-php-client/index.html#pascalcase-class-name"><div class="td1">Google APIs Client Library</div><div class="td2">100%</div></a></li>
+<li><a href="leafo/lessphp/index.html#pascalcase-class-name"><div class="td1">lessphp</div><div class="td2">100%</div></a></li>
+<li><a href="moodle/moodle/index.html#pascalcase-class-name"><div class="td1">Moodle</div><div class="td2">99%</div></a></li>
+<li><a href="bobthecow/mustache.php/index.html#pascalcase-class-name"><div class="td1">Mustache.php</div><div class="td2">100%</div></a></li>
+<li><a href="pear/pear-core/index.html#pascalcase-class-name"><div class="td1">PEAR - The PEAR Installer</div><div class="td2">96%</div></a></li>
+<li><a href="sebastianbergmann/php-code-coverage/index.html#pascalcase-class-name"><div class="td1">PHP_CodeCoverage</div><div class="td2">100%</div></a></li>
+<li><a href="phpbb/phpbb/index.html#pascalcase-class-name"><div class="td1">phpBB</div><div class="td2">99%</div></a></li>
+<li><a href="PHPOffice/PHPExcel/index.html#pascalcase-class-name"><div class="td1">PHPExcel</div><div class="td2">97%</div></a></li>
+<li><a href="sugarcrm/sugarcrm_dev/index.html#pascalcase-class-name"><div class="td1">SugarCRM CE</div><div class="td2">81%</div></a></li>
+<li><a href="swiftmailer/swiftmailer/index.html#pascalcase-class-name"><div class="td1">Swift Mailer</div><div class="td2">99%</div></a></li>
+<li><a href="fabpot/Twig/index.html#pascalcase-class-name"><div class="td1">Twig</div><div class="td2">100%</div></a></li>
+<li><a href="WordPress/WordPress/index.html#pascalcase-class-name"><div class="td1">WordPress</div><div class="td2">100%</div></a></li>
 </ul>
 </div>
 </div>
 </div>
-<div id="camelcase-class-name-yes-repos" class="listBoxWrap">
+<div id="pascalcase-class-name-yes-repos" class="listBoxWrap">
 <div class="listBoxContent">
 <div class="listBoxClose" onclick="hideListBox();"></div>
 <div class="listBoxHeader">
 <h3>178 projects prefer <i>yes</i></h3>
 </div>
-<div id="camelcase-class-name-yes-reposlistBoxListWrap" class="listBoxListWrap">
+<div id="pascalcase-class-name-yes-reposlistBoxListWrap" class="listBoxListWrap">
 <ul class="listBoxList">
-<li><a href="ladybirdweb/agorainvoicing/index.html#camelcase-class-name"><div class="td1">Agora Invoicing</div><div class="td2">97%</div></a></li>
-<li><a href="kriswallsmith/assetic/index.html#camelcase-class-name"><div class="td1">Assetic</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Autoload/index.html#camelcase-class-name"><div class="td1">Aura.Autoload</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Cli/index.html#camelcase-class-name"><div class="td1">Aura.Cli</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Cli_Kernel/index.html#camelcase-class-name"><div class="td1">Aura.Cli_Kernel</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Di/index.html#camelcase-class-name"><div class="td1">Aura.Di</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Dispatcher/index.html#camelcase-class-name"><div class="td1">Aura.Dispatcher</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Filter/index.html#camelcase-class-name"><div class="td1">Aura.Filter</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Html/index.html#camelcase-class-name"><div class="td1">Aura.Html</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Input/index.html#camelcase-class-name"><div class="td1">Aura.Input</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Intl/index.html#camelcase-class-name"><div class="td1">Aura.Intl</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Marshal/index.html#camelcase-class-name"><div class="td1">Aura.Marshal</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Project_Kernel/index.html#camelcase-class-name"><div class="td1">Aura.Project_Kernel</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Router/index.html#camelcase-class-name"><div class="td1">Aura.Router</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Session/index.html#camelcase-class-name"><div class="td1">Aura.Session</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Signal/index.html#camelcase-class-name"><div class="td1">Aura.Signal</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Sql/index.html#camelcase-class-name"><div class="td1">Aura.Sql</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.SqlQuery/index.html#camelcase-class-name"><div class="td1">Aura.SqlQuery</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.SqlSchema/index.html#camelcase-class-name"><div class="td1">Aura.SqlSchema</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Uri/index.html#camelcase-class-name"><div class="td1">Aura.Uri</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.View/index.html#camelcase-class-name"><div class="td1">Aura.View</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Web/index.html#camelcase-class-name"><div class="td1">Aura.Web</div><div class="td2">100%</div></a></li>
-<li><a href="auraphp/Aura.Web_Kernel/index.html#camelcase-class-name"><div class="td1">Aura.Web_Kernel</div><div class="td2">100%</div></a></li>
-<li><a href="aws/aws-sdk-php/index.html#camelcase-class-name"><div class="td1">AWS SDK for PHP</div><div class="td2">100%</div></a></li>
-<li><a href="Behat/Behat/index.html#camelcase-class-name"><div class="td1">Behat</div><div class="td2">100%</div></a></li>
-<li><a href="iranianpep/botonomous/index.html#camelcase-class-name"><div class="td1">Botonomous</div><div class="td2">100%</div></a></li>
-<li><a href="box-project/box2/index.html#camelcase-class-name"><div class="td1">Box</div><div class="td2">100%</div></a></li>
-<li><a href="kriswallsmith/Buzz/index.html#camelcase-class-name"><div class="td1">Buzz</div><div class="td2">100%</div></a></li>
-<li><a href="cakephp/cakephp/index.html#camelcase-class-name"><div class="td1">CakePHP</div><div class="td2">100%</div></a></li>
-<li><a href="chamilo/chamilo-lms/index.html#camelcase-class-name"><div class="td1">Chamilo</div><div class="td2">81%</div></a></li>
-<li><a href="batopa/chirp/index.html#camelcase-class-name"><div class="td1">Chirp</div><div class="td2">100%</div></a></li>
-<li><a href="Codeception/Codeception/index.html#camelcase-class-name"><div class="td1">Codeception</div><div class="td2">99%</div></a></li>
-<li><a href="composer/composer/index.html#camelcase-class-name"><div class="td1">Composer</div><div class="td2">100%</div></a></li>
-<li><a href="contao/core/index.html#camelcase-class-name"><div class="td1">Contao Open Source CMS</div><div class="td2">90%</div></a></li>
-<li><a href="doctrine/doctrine2/index.html#camelcase-class-name"><div class="td1">Doctrine 2 ORM</div><div class="td2">100%</div></a></li>
-<li><a href="drupal/drupal/index.html#camelcase-class-name"><div class="td1">Drupal</div><div class="td2">85%</div></a></li>
-<li><a href="civictechro/DSU-reportapp-api/index.html#camelcase-class-name"><div class="td1">DSU Report AP</div><div class="td2">100%</div></a></li>
-<li><a href="ezsystems/ezpublish-kernel/index.html#camelcase-class-name"><div class="td1">eZ Publish 5.x Kernel</div><div class="td2">100%</div></a></li>
-<li><a href="facebook/facebook-php-sdk/index.html#camelcase-class-name"><div class="td1">Facebook PHP SDK</div><div class="td2">100%</div></a></li>
-<li><a href="fzaninotto/Faker/index.html#camelcase-class-name"><div class="td1">Faker</div><div class="td2">100%</div></a></li>
-<li><a href="nikic/FastRoute/index.html#camelcase-class-name"><div class="td1">FastRoute</div><div class="td2">100%</div></a></li>
-<li><a href="ladybirdweb/faveo-helpdesk/index.html#camelcase-class-name"><div class="td1">Faveo Help-desk</div><div class="td2">93%</div></a></li>
-<li><a href="ladybirdweb/faveo-servicedesk-community/index.html#camelcase-class-name"><div class="td1">Faveo Servicedesk</div><div class="td2">95%</div></a></li>
-<li><a href="thephpleague/flysystem/index.html#camelcase-class-name"><div class="td1">Flysystem</div><div class="td2">100%</div></a></li>
-<li><a href="thephpleague/fractal/index.html#camelcase-class-name"><div class="td1">Fractal</div><div class="td2">100%</div></a></li>
-<li><a href="fabpot/Goutte/index.html#camelcase-class-name"><div class="td1">Goutte</div><div class="td2">100%</div></a></li>
-<li><a href="guzzle/guzzle/index.html#camelcase-class-name"><div class="td1">Guzzle</div><div class="td2">100%</div></a></li>
-<li><a href="avalanche123/Imagine/index.html#camelcase-class-name"><div class="td1">Imagine</div><div class="td2">100%</div></a></li>
-<li><a href="jackalope/jackalope/index.html#camelcase-class-name"><div class="td1">Jackalope</div><div class="td2">100%</div></a></li>
-<li><a href="joomla/joomla-cms/index.html#camelcase-class-name"><div class="td1">Joomla! CMS</div><div class="td2">95%</div></a></li>
-<li><a href="chriso/klein.php/index.html#camelcase-class-name"><div class="td1">Klein.php</div><div class="td2">100%</div></a></li>
-<li><a href="laravel/framework/index.html#camelcase-class-name"><div class="td1">Laravel Framework (Kernel)</div><div class="td2">100%</div></a></li>
-<li><a href="nette/latte/index.html#camelcase-class-name"><div class="td1">Latte</div><div class="td2">100%</div></a></li>
-<li><a href="magento/magento2/index.html#camelcase-class-name"><div class="td1">Magento</div><div class="td2">100%</div></a></li>
-<li><a href="wikimedia/mediawiki-core/index.html#camelcase-class-name"><div class="td1">MediaWiki</div><div class="td2">98%</div></a></li>
-<li><a href="padraic/mockery/index.html#camelcase-class-name"><div class="td1">Mockery</div><div class="td2">100%</div></a></li>
-<li><a href="Seldaek/monolog/index.html#camelcase-class-name"><div class="td1">Monolog</div><div class="td2">100%</div></a></li>
-<li><a href="nette/neon/index.html#camelcase-class-name"><div class="td1">NEON</div><div class="td2">100%</div></a></li>
-<li><a href="nette/application/index.html#camelcase-class-name"><div class="td1">Nette Application MVC</div><div class="td2">100%</div></a></li>
-<li><a href="nette/bootstrap/index.html#camelcase-class-name"><div class="td1">Nette Bootstrap</div><div class="td2">100%</div></a></li>
-<li><a href="nette/caching/index.html#camelcase-class-name"><div class="td1">Nette Caching</div><div class="td2">100%</div></a></li>
-<li><a href="nette/component-model/index.html#camelcase-class-name"><div class="td1">Nette Component Model</div><div class="td2">100%</div></a></li>
-<li><a href="nette/database/index.html#camelcase-class-name"><div class="td1">Nette Database</div><div class="td2">100%</div></a></li>
-<li><a href="nette/di/index.html#camelcase-class-name"><div class="td1">Nette Dependency Injection</div><div class="td2">100%</div></a></li>
-<li><a href="nette/finder/index.html#camelcase-class-name"><div class="td1">Nette Finder: Files Searching</div><div class="td2">100%</div></a></li>
-<li><a href="nette/forms/index.html#camelcase-class-name"><div class="td1">Nette Forms: greatly facilitates web forms</div><div class="td2">100%</div></a></li>
-<li><a href="nette/http/index.html#camelcase-class-name"><div class="td1">Nette HTTP Component</div><div class="td2">100%</div></a></li>
-<li><a href="nette/mail/index.html#camelcase-class-name"><div class="td1">Nette Mail: Sending E-mails</div><div class="td2">100%</div></a></li>
-<li><a href="nette/php-generator/index.html#camelcase-class-name"><div class="td1">Nette PHP Generator</div><div class="td2">100%</div></a></li>
-<li><a href="nette/reflection/index.html#camelcase-class-name"><div class="td1">Nette PHP Reflection</div><div class="td2">100%</div></a></li>
-<li><a href="nette/safe-stream/index.html#camelcase-class-name"><div class="td1">Nette SafeStream: Atomic Operations</div><div class="td2">100%</div></a></li>
-<li><a href="nette/security/index.html#camelcase-class-name"><div class="td1">Nette Security: Access Control</div><div class="td2">100%</div></a></li>
-<li><a href="nette/tester/index.html#camelcase-class-name"><div class="td1">Nette Tester: enjoyable unit testing</div><div class="td2">100%</div></a></li>
-<li><a href="nette/tokenizer/index.html#camelcase-class-name"><div class="td1">Nette Tokenizer</div><div class="td2">100%</div></a></li>
-<li><a href="nette/utils/index.html#camelcase-class-name"><div class="td1">Nette Utility Classes</div><div class="td2">100%</div></a></li>
-<li><a href="thephpleague/oauth2-client/index.html#camelcase-class-name"><div class="td1">OAuth 2.0 Client</div><div class="td2">100%</div></a></li>
-<li><a href="openemr/openemr/index.html#camelcase-class-name"><div class="td1">OpenEMR</div><div class="td2">77%</div></a></li>
-<li><a href="owncloud/core/index.html#camelcase-class-name"><div class="td1">ownCloud</div><div class="td2">97%</div></a></li>
-<li><a href="erusev/parsedown/index.html#camelcase-class-name"><div class="td1">Parsedown</div><div class="td2">100%</div></a></li>
-<li><a href="phingofficial/phing/index.html#camelcase-class-name"><div class="td1">Phing</div><div class="td2">97%</div></a></li>
-<li><a href="jaggedsoft/php-binance-api/index.html#camelcase-class-name"><div class="td1">PHP Binance Api</div><div class="td2">100%</div></a></li>
-<li><a href="fabpot/PHP-CS-Fixer/index.html#camelcase-class-name"><div class="td1">PHP Coding Standards Fixer</div><div class="td2">100%</div></a></li>
-<li><a href="michelf/php-markdown/index.html#camelcase-class-name"><div class="td1">PHP Markdown</div><div class="td2">100%</div></a></li>
-<li><a href="thephpleague/oauth2-server/index.html#camelcase-class-name"><div class="td1">PHP OAuth 2.0 Server</div><div class="td2">100%</div></a></li>
-<li><a href="nikic/PHP-Parser/index.html#camelcase-class-name"><div class="td1">PHP Parser</div><div class="td2">72%</div></a></li>
-<li><a href="squizlabs/PHP_CodeSniffer/index.html#camelcase-class-name"><div class="td1">PHP_CodeSniffer</div><div class="td2">100%</div></a></li>
-<li><a href="phpDocumentor/phpDocumentor2/index.html#camelcase-class-name"><div class="td1">phpDocumentor</div><div class="td2">97%</div></a></li>
-<li><a href="PHPMailer/PHPMailer/index.html#camelcase-class-name"><div class="td1">PHPMailer</div><div class="td2">100%</div></a></li>
-<li><a href="Halleck45/PhpMetrics/index.html#camelcase-class-name"><div class="td1">PhpMetrics</div><div class="td2">100%</div></a></li>
-<li><a href="phpmyadmin/phpmyadmin/index.html#camelcase-class-name"><div class="td1">phpMyAdmin</div><div class="td2">93%</div></a></li>
-<li><a href="sebastianbergmann/phpunit/index.html#camelcase-class-name"><div class="td1">PHPUnit</div><div class="td2">99%</div></a></li>
-<li><a href="nazariyg/Phred/index.html#camelcase-class-name"><div class="td1">Phred</div><div class="td2">93%</div></a></li>
-<li><a href="pimcore/pimcore/index.html#camelcase-class-name"><div class="td1">pimcore</div><div class="td2">99%</div></a></li>
-<li><a href="piwik/piwik/index.html#camelcase-class-name"><div class="td1">Piwik</div><div class="td2">88%</div></a></li>
-<li><a href="ppi/framework/index.html#camelcase-class-name"><div class="td1">PPI Framework</div><div class="td2">100%</div></a></li>
-<li><a href="PrestaShop/PrestaShop/index.html#camelcase-class-name"><div class="td1">PrestaShop</div><div class="td2">93%</div></a></li>
-<li><a href="propelorm/Propel/index.html#camelcase-class-name"><div class="td1">Propel</div><div class="td2">94%</div></a></li>
-<li><a href="c9s/Pux/index.html#camelcase-class-name"><div class="td1">Pux</div><div class="td2">100%</div></a></li>
-<li><a href="quickapps/cms/index.html#camelcase-class-name"><div class="td1">QuickAppsCMS</div><div class="td2">100%</div></a></li>
-<li><a href="radphp/radphp/index.html#camelcase-class-name"><div class="td1">RadPHP</div><div class="td2">100%</div></a></li>
-<li><a href="cboden/Ratchet/index.html#camelcase-class-name"><div class="td1">Ratchet</div><div class="td2">100%</div></a></li>
-<li><a href="reactphp/child-process/index.html#camelcase-class-name"><div class="td1">React.child-process</div><div class="td2">100%</div></a></li>
-<li><a href="reactphp/dns/index.html#camelcase-class-name"><div class="td1">React.dns</div><div class="td2">100%</div></a></li>
-<li><a href="reactphp/event-loop/index.html#camelcase-class-name"><div class="td1">React.event-loop</div><div class="td2">100%</div></a></li>
-<li><a href="reactphp/http/index.html#camelcase-class-name"><div class="td1">React.http</div><div class="td2">100%</div></a></li>
-<li><a href="reactphp/http-client/index.html#camelcase-class-name"><div class="td1">React.http-client</div><div class="td2">100%</div></a></li>
-<li><a href="reactphp/promise/index.html#camelcase-class-name"><div class="td1">React.promise</div><div class="td2">100%</div></a></li>
-<li><a href="reactphp/socket/index.html#camelcase-class-name"><div class="td1">React.socket</div><div class="td2">100%</div></a></li>
-<li><a href="reactphp/socket-client/index.html#camelcase-class-name"><div class="td1">React.socket-client</div><div class="td2">100%</div></a></li>
-<li><a href="reactphp/stream/index.html#camelcase-class-name"><div class="td1">React.stream</div><div class="td2">100%</div></a></li>
-<li><a href="Codegyre/Robo/index.html#camelcase-class-name"><div class="td1">RoboTask</div><div class="td2">88%</div></a></li>
-<li><a href="nette/robot-loader/index.html#camelcase-class-name"><div class="td1">RobotLoader: comfortable autoloading</div><div class="td2">100%</div></a></li>
-<li><a href="fruux/sabre-dav/index.html#camelcase-class-name"><div class="td1">SabreDAV</div><div class="td2">100%</div></a></li>
-<li><a href="scabbiafw/scabbia2-fw/index.html#camelcase-class-name"><div class="td1">Scabbia2 PHP Framework Code</div><div class="td2">100%</div></a></li>
-<li><a href="sculpin/sculpin/index.html#camelcase-class-name"><div class="td1">Sculpin</div><div class="td2">100%</div></a></li>
-<li><a href="silexphp/Silex/index.html#camelcase-class-name"><div class="td1">Silex</div><div class="td2">100%</div></a></li>
-<li><a href="codeguy/Slim/index.html#camelcase-class-name"><div class="td1">Slim Framework</div><div class="td2">100%</div></a></li>
-<li><a href="KnpLabs/snappy/index.html#camelcase-class-name"><div class="td1">Snappy</div><div class="td2">100%</div></a></li>
-<li><a href="tedivm/Stash/index.html#camelcase-class-name"><div class="td1">Stash</div><div class="td2">100%</div></a></li>
-<li><a href="danielstjules/Stringy/index.html#camelcase-class-name"><div class="td1">Stringy</div><div class="td2">100%</div></a></li>
-<li><a href="symfony/symfony/index.html#camelcase-class-name"><div class="td1">Symfony2</div><div class="td2">100%</div></a></li>
-<li><a href="ginatrapani/ThinkUp/index.html#camelcase-class-name"><div class="td1">ThinkUp</div><div class="td2">97%</div></a></li>
-<li><a href="nette/tracy/index.html#camelcase-class-name"><div class="td1">Tracy - PHP debugger</div><div class="td2">100%</div></a></li>
-<li><a href="TYPO3/TYPO3.CMS/index.html#camelcase-class-name"><div class="td1">TYPO3 CMS</div><div class="td2">100%</div></a></li>
-<li><a href="yiisoft/yii2/index.html#camelcase-class-name"><div class="td1">Yii PHP Framework Version 2</div><div class="td2">98%</div></a></li>
-<li><a href="yiisoft/yii/index.html#camelcase-class-name"><div class="td1">Yii Web Programming Framework</div><div class="td2">94%</div></a></li>
-<li><a href="zendframework/zend-authentication/index.html#camelcase-class-name"><div class="td1">Zend Framework.authentication</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-barcode/index.html#camelcase-class-name"><div class="td1">Zend Framework.barcode</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-cache/index.html#camelcase-class-name"><div class="td1">Zend Framework.cache</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-captcha/index.html#camelcase-class-name"><div class="td1">Zend Framework.captcha</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-code/index.html#camelcase-class-name"><div class="td1">Zend Framework.code</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-config/index.html#camelcase-class-name"><div class="td1">Zend Framework.config</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-console/index.html#camelcase-class-name"><div class="td1">Zend Framework.console</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-crypt/index.html#camelcase-class-name"><div class="td1">Zend Framework.crypt</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-db/index.html#camelcase-class-name"><div class="td1">Zend Framework.db</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-debug/index.html#camelcase-class-name"><div class="td1">Zend Framework.debug</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-di/index.html#camelcase-class-name"><div class="td1">Zend Framework.di</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-dom/index.html#camelcase-class-name"><div class="td1">Zend Framework.dom</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-escaper/index.html#camelcase-class-name"><div class="td1">Zend Framework.escaper</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-eventmanager/index.html#camelcase-class-name"><div class="td1">Zend Framework.eventmanager</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-feed/index.html#camelcase-class-name"><div class="td1">Zend Framework.feed</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-file/index.html#camelcase-class-name"><div class="td1">Zend Framework.file</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-filter/index.html#camelcase-class-name"><div class="td1">Zend Framework.filter</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-form/index.html#camelcase-class-name"><div class="td1">Zend Framework.form</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-http/index.html#camelcase-class-name"><div class="td1">Zend Framework.http</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-i18n/index.html#camelcase-class-name"><div class="td1">Zend Framework.i18n</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-i18n-resources/index.html#camelcase-class-name"><div class="td1">Zend Framework.i18n-resources</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-inputfilter/index.html#camelcase-class-name"><div class="td1">Zend Framework.inputfilter</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-json/index.html#camelcase-class-name"><div class="td1">Zend Framework.json</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-loader/index.html#camelcase-class-name"><div class="td1">Zend Framework.loader</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-log/index.html#camelcase-class-name"><div class="td1">Zend Framework.log</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-mail/index.html#camelcase-class-name"><div class="td1">Zend Framework.mail</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-math/index.html#camelcase-class-name"><div class="td1">Zend Framework.math</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-memory/index.html#camelcase-class-name"><div class="td1">Zend Framework.memory</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-mime/index.html#camelcase-class-name"><div class="td1">Zend Framework.mime</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-modulemanager/index.html#camelcase-class-name"><div class="td1">Zend Framework.modulemanager</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-mvc/index.html#camelcase-class-name"><div class="td1">Zend Framework.mvc</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-navigation/index.html#camelcase-class-name"><div class="td1">Zend Framework.navigation</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-paginator/index.html#camelcase-class-name"><div class="td1">Zend Framework.paginator</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-permissions-acl/index.html#camelcase-class-name"><div class="td1">Zend Framework.permissions-acl</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-permissions-rbac/index.html#camelcase-class-name"><div class="td1">Zend Framework.permissions-rbac</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-progressbar/index.html#camelcase-class-name"><div class="td1">Zend Framework.progressbar</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-serializer/index.html#camelcase-class-name"><div class="td1">Zend Framework.serializer</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-server/index.html#camelcase-class-name"><div class="td1">Zend Framework.server</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-servicemanager/index.html#camelcase-class-name"><div class="td1">Zend Framework.servicemanager</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-session/index.html#camelcase-class-name"><div class="td1">Zend Framework.session</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-soap/index.html#camelcase-class-name"><div class="td1">Zend Framework.soap</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-stdlib/index.html#camelcase-class-name"><div class="td1">Zend Framework.stdlib</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-tag/index.html#camelcase-class-name"><div class="td1">Zend Framework.tag</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-test/index.html#camelcase-class-name"><div class="td1">Zend Framework.test</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-text/index.html#camelcase-class-name"><div class="td1">Zend Framework.text</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-uri/index.html#camelcase-class-name"><div class="td1">Zend Framework.uri</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-validator/index.html#camelcase-class-name"><div class="td1">Zend Framework.validator</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-version/index.html#camelcase-class-name"><div class="td1">Zend Framework.version</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-view/index.html#camelcase-class-name"><div class="td1">Zend Framework.view</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zend-xmlrpc/index.html#camelcase-class-name"><div class="td1">Zend Framework.xmlrpc</div><div class="td2">100%</div></a></li>
-<li><a href="zendframework/zendxml/index.html#camelcase-class-name"><div class="td1">Zend Framework.zendxml</div><div class="td2">100%</div></a></li>
-<li><a href="zikula/core/index.html#camelcase-class-name"><div class="td1">Zikula</div><div class="td2">83%</div></a></li>
+<li><a href="ladybirdweb/agorainvoicing/index.html#pascalcase-class-name"><div class="td1">Agora Invoicing</div><div class="td2">97%</div></a></li>
+<li><a href="kriswallsmith/assetic/index.html#pascalcase-class-name"><div class="td1">Assetic</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Autoload/index.html#pascalcase-class-name"><div class="td1">Aura.Autoload</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Cli/index.html#pascalcase-class-name"><div class="td1">Aura.Cli</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Cli_Kernel/index.html#pascalcase-class-name"><div class="td1">Aura.Cli_Kernel</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Di/index.html#pascalcase-class-name"><div class="td1">Aura.Di</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Dispatcher/index.html#pascalcase-class-name"><div class="td1">Aura.Dispatcher</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Filter/index.html#pascalcase-class-name"><div class="td1">Aura.Filter</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Html/index.html#pascalcase-class-name"><div class="td1">Aura.Html</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Input/index.html#pascalcase-class-name"><div class="td1">Aura.Input</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Intl/index.html#pascalcase-class-name"><div class="td1">Aura.Intl</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Marshal/index.html#pascalcase-class-name"><div class="td1">Aura.Marshal</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Project_Kernel/index.html#pascalcase-class-name"><div class="td1">Aura.Project_Kernel</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Router/index.html#pascalcase-class-name"><div class="td1">Aura.Router</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Session/index.html#pascalcase-class-name"><div class="td1">Aura.Session</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Signal/index.html#pascalcase-class-name"><div class="td1">Aura.Signal</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Sql/index.html#pascalcase-class-name"><div class="td1">Aura.Sql</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.SqlQuery/index.html#pascalcase-class-name"><div class="td1">Aura.SqlQuery</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.SqlSchema/index.html#pascalcase-class-name"><div class="td1">Aura.SqlSchema</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Uri/index.html#pascalcase-class-name"><div class="td1">Aura.Uri</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.View/index.html#pascalcase-class-name"><div class="td1">Aura.View</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Web/index.html#pascalcase-class-name"><div class="td1">Aura.Web</div><div class="td2">100%</div></a></li>
+<li><a href="auraphp/Aura.Web_Kernel/index.html#pascalcase-class-name"><div class="td1">Aura.Web_Kernel</div><div class="td2">100%</div></a></li>
+<li><a href="aws/aws-sdk-php/index.html#pascalcase-class-name"><div class="td1">AWS SDK for PHP</div><div class="td2">100%</div></a></li>
+<li><a href="Behat/Behat/index.html#pascalcase-class-name"><div class="td1">Behat</div><div class="td2">100%</div></a></li>
+<li><a href="iranianpep/botonomous/index.html#pascalcase-class-name"><div class="td1">Botonomous</div><div class="td2">100%</div></a></li>
+<li><a href="box-project/box2/index.html#pascalcase-class-name"><div class="td1">Box</div><div class="td2">100%</div></a></li>
+<li><a href="kriswallsmith/Buzz/index.html#pascalcase-class-name"><div class="td1">Buzz</div><div class="td2">100%</div></a></li>
+<li><a href="cakephp/cakephp/index.html#pascalcase-class-name"><div class="td1">CakePHP</div><div class="td2">100%</div></a></li>
+<li><a href="chamilo/chamilo-lms/index.html#pascalcase-class-name"><div class="td1">Chamilo</div><div class="td2">81%</div></a></li>
+<li><a href="batopa/chirp/index.html#pascalcase-class-name"><div class="td1">Chirp</div><div class="td2">100%</div></a></li>
+<li><a href="Codeception/Codeception/index.html#pascalcase-class-name"><div class="td1">Codeception</div><div class="td2">99%</div></a></li>
+<li><a href="composer/composer/index.html#pascalcase-class-name"><div class="td1">Composer</div><div class="td2">100%</div></a></li>
+<li><a href="contao/core/index.html#pascalcase-class-name"><div class="td1">Contao Open Source CMS</div><div class="td2">90%</div></a></li>
+<li><a href="doctrine/doctrine2/index.html#pascalcase-class-name"><div class="td1">Doctrine 2 ORM</div><div class="td2">100%</div></a></li>
+<li><a href="drupal/drupal/index.html#pascalcase-class-name"><div class="td1">Drupal</div><div class="td2">85%</div></a></li>
+<li><a href="civictechro/DSU-reportapp-api/index.html#pascalcase-class-name"><div class="td1">DSU Report AP</div><div class="td2">100%</div></a></li>
+<li><a href="ezsystems/ezpublish-kernel/index.html#pascalcase-class-name"><div class="td1">eZ Publish 5.x Kernel</div><div class="td2">100%</div></a></li>
+<li><a href="facebook/facebook-php-sdk/index.html#pascalcase-class-name"><div class="td1">Facebook PHP SDK</div><div class="td2">100%</div></a></li>
+<li><a href="fzaninotto/Faker/index.html#pascalcase-class-name"><div class="td1">Faker</div><div class="td2">100%</div></a></li>
+<li><a href="nikic/FastRoute/index.html#pascalcase-class-name"><div class="td1">FastRoute</div><div class="td2">100%</div></a></li>
+<li><a href="ladybirdweb/faveo-helpdesk/index.html#pascalcase-class-name"><div class="td1">Faveo Help-desk</div><div class="td2">93%</div></a></li>
+<li><a href="ladybirdweb/faveo-servicedesk-community/index.html#pascalcase-class-name"><div class="td1">Faveo Servicedesk</div><div class="td2">95%</div></a></li>
+<li><a href="thephpleague/flysystem/index.html#pascalcase-class-name"><div class="td1">Flysystem</div><div class="td2">100%</div></a></li>
+<li><a href="thephpleague/fractal/index.html#pascalcase-class-name"><div class="td1">Fractal</div><div class="td2">100%</div></a></li>
+<li><a href="fabpot/Goutte/index.html#pascalcase-class-name"><div class="td1">Goutte</div><div class="td2">100%</div></a></li>
+<li><a href="guzzle/guzzle/index.html#pascalcase-class-name"><div class="td1">Guzzle</div><div class="td2">100%</div></a></li>
+<li><a href="avalanche123/Imagine/index.html#pascalcase-class-name"><div class="td1">Imagine</div><div class="td2">100%</div></a></li>
+<li><a href="jackalope/jackalope/index.html#pascalcase-class-name"><div class="td1">Jackalope</div><div class="td2">100%</div></a></li>
+<li><a href="joomla/joomla-cms/index.html#pascalcase-class-name"><div class="td1">Joomla! CMS</div><div class="td2">95%</div></a></li>
+<li><a href="chriso/klein.php/index.html#pascalcase-class-name"><div class="td1">Klein.php</div><div class="td2">100%</div></a></li>
+<li><a href="laravel/framework/index.html#pascalcase-class-name"><div class="td1">Laravel Framework (Kernel)</div><div class="td2">100%</div></a></li>
+<li><a href="nette/latte/index.html#pascalcase-class-name"><div class="td1">Latte</div><div class="td2">100%</div></a></li>
+<li><a href="magento/magento2/index.html#pascalcase-class-name"><div class="td1">Magento</div><div class="td2">100%</div></a></li>
+<li><a href="wikimedia/mediawiki-core/index.html#pascalcase-class-name"><div class="td1">MediaWiki</div><div class="td2">98%</div></a></li>
+<li><a href="padraic/mockery/index.html#pascalcase-class-name"><div class="td1">Mockery</div><div class="td2">100%</div></a></li>
+<li><a href="Seldaek/monolog/index.html#pascalcase-class-name"><div class="td1">Monolog</div><div class="td2">100%</div></a></li>
+<li><a href="nette/neon/index.html#pascalcase-class-name"><div class="td1">NEON</div><div class="td2">100%</div></a></li>
+<li><a href="nette/application/index.html#pascalcase-class-name"><div class="td1">Nette Application MVC</div><div class="td2">100%</div></a></li>
+<li><a href="nette/bootstrap/index.html#pascalcase-class-name"><div class="td1">Nette Bootstrap</div><div class="td2">100%</div></a></li>
+<li><a href="nette/caching/index.html#pascalcase-class-name"><div class="td1">Nette Caching</div><div class="td2">100%</div></a></li>
+<li><a href="nette/component-model/index.html#pascalcase-class-name"><div class="td1">Nette Component Model</div><div class="td2">100%</div></a></li>
+<li><a href="nette/database/index.html#pascalcase-class-name"><div class="td1">Nette Database</div><div class="td2">100%</div></a></li>
+<li><a href="nette/di/index.html#pascalcase-class-name"><div class="td1">Nette Dependency Injection</div><div class="td2">100%</div></a></li>
+<li><a href="nette/finder/index.html#pascalcase-class-name"><div class="td1">Nette Finder: Files Searching</div><div class="td2">100%</div></a></li>
+<li><a href="nette/forms/index.html#pascalcase-class-name"><div class="td1">Nette Forms: greatly facilitates web forms</div><div class="td2">100%</div></a></li>
+<li><a href="nette/http/index.html#pascalcase-class-name"><div class="td1">Nette HTTP Component</div><div class="td2">100%</div></a></li>
+<li><a href="nette/mail/index.html#pascalcase-class-name"><div class="td1">Nette Mail: Sending E-mails</div><div class="td2">100%</div></a></li>
+<li><a href="nette/php-generator/index.html#pascalcase-class-name"><div class="td1">Nette PHP Generator</div><div class="td2">100%</div></a></li>
+<li><a href="nette/reflection/index.html#pascalcase-class-name"><div class="td1">Nette PHP Reflection</div><div class="td2">100%</div></a></li>
+<li><a href="nette/safe-stream/index.html#pascalcase-class-name"><div class="td1">Nette SafeStream: Atomic Operations</div><div class="td2">100%</div></a></li>
+<li><a href="nette/security/index.html#pascalcase-class-name"><div class="td1">Nette Security: Access Control</div><div class="td2">100%</div></a></li>
+<li><a href="nette/tester/index.html#pascalcase-class-name"><div class="td1">Nette Tester: enjoyable unit testing</div><div class="td2">100%</div></a></li>
+<li><a href="nette/tokenizer/index.html#pascalcase-class-name"><div class="td1">Nette Tokenizer</div><div class="td2">100%</div></a></li>
+<li><a href="nette/utils/index.html#pascalcase-class-name"><div class="td1">Nette Utility Classes</div><div class="td2">100%</div></a></li>
+<li><a href="thephpleague/oauth2-client/index.html#pascalcase-class-name"><div class="td1">OAuth 2.0 Client</div><div class="td2">100%</div></a></li>
+<li><a href="openemr/openemr/index.html#pascalcase-class-name"><div class="td1">OpenEMR</div><div class="td2">77%</div></a></li>
+<li><a href="owncloud/core/index.html#pascalcase-class-name"><div class="td1">ownCloud</div><div class="td2">97%</div></a></li>
+<li><a href="erusev/parsedown/index.html#pascalcase-class-name"><div class="td1">Parsedown</div><div class="td2">100%</div></a></li>
+<li><a href="phingofficial/phing/index.html#pascalcase-class-name"><div class="td1">Phing</div><div class="td2">97%</div></a></li>
+<li><a href="jaggedsoft/php-binance-api/index.html#pascalcase-class-name"><div class="td1">PHP Binance Api</div><div class="td2">100%</div></a></li>
+<li><a href="fabpot/PHP-CS-Fixer/index.html#pascalcase-class-name"><div class="td1">PHP Coding Standards Fixer</div><div class="td2">100%</div></a></li>
+<li><a href="michelf/php-markdown/index.html#pascalcase-class-name"><div class="td1">PHP Markdown</div><div class="td2">100%</div></a></li>
+<li><a href="thephpleague/oauth2-server/index.html#pascalcase-class-name"><div class="td1">PHP OAuth 2.0 Server</div><div class="td2">100%</div></a></li>
+<li><a href="nikic/PHP-Parser/index.html#pascalcase-class-name"><div class="td1">PHP Parser</div><div class="td2">72%</div></a></li>
+<li><a href="squizlabs/PHP_CodeSniffer/index.html#pascalcase-class-name"><div class="td1">PHP_CodeSniffer</div><div class="td2">100%</div></a></li>
+<li><a href="phpDocumentor/phpDocumentor2/index.html#pascalcase-class-name"><div class="td1">phpDocumentor</div><div class="td2">97%</div></a></li>
+<li><a href="PHPMailer/PHPMailer/index.html#pascalcase-class-name"><div class="td1">PHPMailer</div><div class="td2">100%</div></a></li>
+<li><a href="Halleck45/PhpMetrics/index.html#pascalcase-class-name"><div class="td1">PhpMetrics</div><div class="td2">100%</div></a></li>
+<li><a href="phpmyadmin/phpmyadmin/index.html#pascalcase-class-name"><div class="td1">phpMyAdmin</div><div class="td2">93%</div></a></li>
+<li><a href="sebastianbergmann/phpunit/index.html#pascalcase-class-name"><div class="td1">PHPUnit</div><div class="td2">99%</div></a></li>
+<li><a href="nazariyg/Phred/index.html#pascalcase-class-name"><div class="td1">Phred</div><div class="td2">93%</div></a></li>
+<li><a href="pimcore/pimcore/index.html#pascalcase-class-name"><div class="td1">pimcore</div><div class="td2">99%</div></a></li>
+<li><a href="piwik/piwik/index.html#pascalcase-class-name"><div class="td1">Piwik</div><div class="td2">88%</div></a></li>
+<li><a href="ppi/framework/index.html#pascalcase-class-name"><div class="td1">PPI Framework</div><div class="td2">100%</div></a></li>
+<li><a href="PrestaShop/PrestaShop/index.html#pascalcase-class-name"><div class="td1">PrestaShop</div><div class="td2">93%</div></a></li>
+<li><a href="propelorm/Propel/index.html#pascalcase-class-name"><div class="td1">Propel</div><div class="td2">94%</div></a></li>
+<li><a href="c9s/Pux/index.html#pascalcase-class-name"><div class="td1">Pux</div><div class="td2">100%</div></a></li>
+<li><a href="quickapps/cms/index.html#pascalcase-class-name"><div class="td1">QuickAppsCMS</div><div class="td2">100%</div></a></li>
+<li><a href="radphp/radphp/index.html#pascalcase-class-name"><div class="td1">RadPHP</div><div class="td2">100%</div></a></li>
+<li><a href="cboden/Ratchet/index.html#pascalcase-class-name"><div class="td1">Ratchet</div><div class="td2">100%</div></a></li>
+<li><a href="reactphp/child-process/index.html#pascalcase-class-name"><div class="td1">React.child-process</div><div class="td2">100%</div></a></li>
+<li><a href="reactphp/dns/index.html#pascalcase-class-name"><div class="td1">React.dns</div><div class="td2">100%</div></a></li>
+<li><a href="reactphp/event-loop/index.html#pascalcase-class-name"><div class="td1">React.event-loop</div><div class="td2">100%</div></a></li>
+<li><a href="reactphp/http/index.html#pascalcase-class-name"><div class="td1">React.http</div><div class="td2">100%</div></a></li>
+<li><a href="reactphp/http-client/index.html#pascalcase-class-name"><div class="td1">React.http-client</div><div class="td2">100%</div></a></li>
+<li><a href="reactphp/promise/index.html#pascalcase-class-name"><div class="td1">React.promise</div><div class="td2">100%</div></a></li>
+<li><a href="reactphp/socket/index.html#pascalcase-class-name"><div class="td1">React.socket</div><div class="td2">100%</div></a></li>
+<li><a href="reactphp/socket-client/index.html#pascalcase-class-name"><div class="td1">React.socket-client</div><div class="td2">100%</div></a></li>
+<li><a href="reactphp/stream/index.html#pascalcase-class-name"><div class="td1">React.stream</div><div class="td2">100%</div></a></li>
+<li><a href="Codegyre/Robo/index.html#pascalcase-class-name"><div class="td1">RoboTask</div><div class="td2">88%</div></a></li>
+<li><a href="nette/robot-loader/index.html#pascalcase-class-name"><div class="td1">RobotLoader: comfortable autoloading</div><div class="td2">100%</div></a></li>
+<li><a href="fruux/sabre-dav/index.html#pascalcase-class-name"><div class="td1">SabreDAV</div><div class="td2">100%</div></a></li>
+<li><a href="scabbiafw/scabbia2-fw/index.html#pascalcase-class-name"><div class="td1">Scabbia2 PHP Framework Code</div><div class="td2">100%</div></a></li>
+<li><a href="sculpin/sculpin/index.html#pascalcase-class-name"><div class="td1">Sculpin</div><div class="td2">100%</div></a></li>
+<li><a href="silexphp/Silex/index.html#pascalcase-class-name"><div class="td1">Silex</div><div class="td2">100%</div></a></li>
+<li><a href="codeguy/Slim/index.html#pascalcase-class-name"><div class="td1">Slim Framework</div><div class="td2">100%</div></a></li>
+<li><a href="KnpLabs/snappy/index.html#pascalcase-class-name"><div class="td1">Snappy</div><div class="td2">100%</div></a></li>
+<li><a href="tedivm/Stash/index.html#pascalcase-class-name"><div class="td1">Stash</div><div class="td2">100%</div></a></li>
+<li><a href="danielstjules/Stringy/index.html#pascalcase-class-name"><div class="td1">Stringy</div><div class="td2">100%</div></a></li>
+<li><a href="symfony/symfony/index.html#pascalcase-class-name"><div class="td1">Symfony2</div><div class="td2">100%</div></a></li>
+<li><a href="ginatrapani/ThinkUp/index.html#pascalcase-class-name"><div class="td1">ThinkUp</div><div class="td2">97%</div></a></li>
+<li><a href="nette/tracy/index.html#pascalcase-class-name"><div class="td1">Tracy - PHP debugger</div><div class="td2">100%</div></a></li>
+<li><a href="TYPO3/TYPO3.CMS/index.html#pascalcase-class-name"><div class="td1">TYPO3 CMS</div><div class="td2">100%</div></a></li>
+<li><a href="yiisoft/yii2/index.html#pascalcase-class-name"><div class="td1">Yii PHP Framework Version 2</div><div class="td2">98%</div></a></li>
+<li><a href="yiisoft/yii/index.html#pascalcase-class-name"><div class="td1">Yii Web Programming Framework</div><div class="td2">94%</div></a></li>
+<li><a href="zendframework/zend-authentication/index.html#pascalcase-class-name"><div class="td1">Zend Framework.authentication</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-barcode/index.html#pascalcase-class-name"><div class="td1">Zend Framework.barcode</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-cache/index.html#pascalcase-class-name"><div class="td1">Zend Framework.cache</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-captcha/index.html#pascalcase-class-name"><div class="td1">Zend Framework.captcha</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-code/index.html#pascalcase-class-name"><div class="td1">Zend Framework.code</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-config/index.html#pascalcase-class-name"><div class="td1">Zend Framework.config</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-console/index.html#pascalcase-class-name"><div class="td1">Zend Framework.console</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-crypt/index.html#pascalcase-class-name"><div class="td1">Zend Framework.crypt</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-db/index.html#pascalcase-class-name"><div class="td1">Zend Framework.db</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-debug/index.html#pascalcase-class-name"><div class="td1">Zend Framework.debug</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-di/index.html#pascalcase-class-name"><div class="td1">Zend Framework.di</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-dom/index.html#pascalcase-class-name"><div class="td1">Zend Framework.dom</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-escaper/index.html#pascalcase-class-name"><div class="td1">Zend Framework.escaper</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-eventmanager/index.html#pascalcase-class-name"><div class="td1">Zend Framework.eventmanager</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-feed/index.html#pascalcase-class-name"><div class="td1">Zend Framework.feed</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-file/index.html#pascalcase-class-name"><div class="td1">Zend Framework.file</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-filter/index.html#pascalcase-class-name"><div class="td1">Zend Framework.filter</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-form/index.html#pascalcase-class-name"><div class="td1">Zend Framework.form</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-http/index.html#pascalcase-class-name"><div class="td1">Zend Framework.http</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-i18n/index.html#pascalcase-class-name"><div class="td1">Zend Framework.i18n</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-i18n-resources/index.html#pascalcase-class-name"><div class="td1">Zend Framework.i18n-resources</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-inputfilter/index.html#pascalcase-class-name"><div class="td1">Zend Framework.inputfilter</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-json/index.html#pascalcase-class-name"><div class="td1">Zend Framework.json</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-loader/index.html#pascalcase-class-name"><div class="td1">Zend Framework.loader</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-log/index.html#pascalcase-class-name"><div class="td1">Zend Framework.log</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-mail/index.html#pascalcase-class-name"><div class="td1">Zend Framework.mail</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-math/index.html#pascalcase-class-name"><div class="td1">Zend Framework.math</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-memory/index.html#pascalcase-class-name"><div class="td1">Zend Framework.memory</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-mime/index.html#pascalcase-class-name"><div class="td1">Zend Framework.mime</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-modulemanager/index.html#pascalcase-class-name"><div class="td1">Zend Framework.modulemanager</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-mvc/index.html#pascalcase-class-name"><div class="td1">Zend Framework.mvc</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-navigation/index.html#pascalcase-class-name"><div class="td1">Zend Framework.navigation</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-paginator/index.html#pascalcase-class-name"><div class="td1">Zend Framework.paginator</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-permissions-acl/index.html#pascalcase-class-name"><div class="td1">Zend Framework.permissions-acl</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-permissions-rbac/index.html#pascalcase-class-name"><div class="td1">Zend Framework.permissions-rbac</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-progressbar/index.html#pascalcase-class-name"><div class="td1">Zend Framework.progressbar</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-serializer/index.html#pascalcase-class-name"><div class="td1">Zend Framework.serializer</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-server/index.html#pascalcase-class-name"><div class="td1">Zend Framework.server</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-servicemanager/index.html#pascalcase-class-name"><div class="td1">Zend Framework.servicemanager</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-session/index.html#pascalcase-class-name"><div class="td1">Zend Framework.session</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-soap/index.html#pascalcase-class-name"><div class="td1">Zend Framework.soap</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-stdlib/index.html#pascalcase-class-name"><div class="td1">Zend Framework.stdlib</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-tag/index.html#pascalcase-class-name"><div class="td1">Zend Framework.tag</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-test/index.html#pascalcase-class-name"><div class="td1">Zend Framework.test</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-text/index.html#pascalcase-class-name"><div class="td1">Zend Framework.text</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-uri/index.html#pascalcase-class-name"><div class="td1">Zend Framework.uri</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-validator/index.html#pascalcase-class-name"><div class="td1">Zend Framework.validator</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-version/index.html#pascalcase-class-name"><div class="td1">Zend Framework.version</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-view/index.html#pascalcase-class-name"><div class="td1">Zend Framework.view</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zend-xmlrpc/index.html#pascalcase-class-name"><div class="td1">Zend Framework.xmlrpc</div><div class="td2">100%</div></a></li>
+<li><a href="zendframework/zendxml/index.html#pascalcase-class-name"><div class="td1">Zend Framework.zendxml</div><div class="td2">100%</div></a></li>
+<li><a href="zikula/core/index.html#pascalcase-class-name"><div class="td1">Zikula</div><div class="td2">83%</div></a></li>
 </ul>
 </div>
 </div>
 </div>
-<div id="camelcase-class-name-undecided-repos" class="listBoxWrap">
+<div id="pascalcase-class-name-undecided-repos" class="listBoxWrap">
 <div class="listBoxContent">
 <div class="listBoxClose" onclick="hideListBox();"></div>
 <div class="listBoxHeader"><h3>5 projects are undecided</h3></div>
-<div id="camelcase-class-name-undecided-reposlistBoxListWrap" class="listBoxListWrap">
+<div id="pascalcase-class-name-undecided-reposlistBoxListWrap" class="listBoxListWrap">
 <ul class="listBoxList">
-<li><a href="concrete5/concrete5/index.html#camelcase-class-name"><div class="td1">concrete5</div><div class="td2">51%</div></a></li>
-<li><a href="dropbox/dropbox-sdk-php/index.html#camelcase-class-name"><div class="td1">Dropbox SDK for PHP 5.3+</div><div class="td2">68%</div></a></li>
-<li><a href="pyrocms/pyrocms/index.html#camelcase-class-name"><div class="td1">PyroCMS</div><div class="td2">56%</div></a></li>
-<li><a href="revive-adserver/revive-adserver/index.html#camelcase-class-name"><div class="td1">Revive Adserver</div><div class="td2">51%</div></a></li>
-<li><a href="silverstripe/silverstripe-framework/index.html#camelcase-class-name"><div class="td1">SilverStripe Framework</div><div class="td2">68%</div></a></li>
+<li><a href="concrete5/concrete5/index.html#pascalcase-class-name"><div class="td1">concrete5</div><div class="td2">51%</div></a></li>
+<li><a href="dropbox/dropbox-sdk-php/index.html#pascalcase-class-name"><div class="td1">Dropbox SDK for PHP 5.3+</div><div class="td2">68%</div></a></li>
+<li><a href="pyrocms/pyrocms/index.html#pascalcase-class-name"><div class="td1">PyroCMS</div><div class="td2">56%</div></a></li>
+<li><a href="revive-adserver/revive-adserver/index.html#pascalcase-class-name"><div class="td1">Revive Adserver</div><div class="td2">51%</div></a></li>
+<li><a href="silverstripe/silverstripe-framework/index.html#pascalcase-class-name"><div class="td1">SilverStripe Framework</div><div class="td2">68%</div></a></li>
 </ul>
 </div>
 </div>
@@ -3711,36 +3717,36 @@
 <ul>
 <li onmouseover="ct10.setSelection([{row:3,column:null}]);" onmouseout="ct10.setSelection([]);" class="historicalDate"><strong>01 Apr 2015</strong>: there was a 0.7% swing from <em>no</em> to <em>yes</em>
 <ul>
-<li><a href="squizlabs/PHP_CodeSniffer/index.html#camelcase-class-name">PHP_CodeSniffer</a> saw a 98.43% swing from <em>no</em> to <em>yes</em></li>
-<li><a href="TYPO3/TYPO3.CMS/index.html#camelcase-class-name">TYPO3 CMS</a> saw a 3.19% swing from <em>no</em> to <em>yes</em></li>
+<li><a href="squizlabs/PHP_CodeSniffer/index.html#pascalcase-class-name">PHP_CodeSniffer</a> saw a 98.43% swing from <em>no</em> to <em>yes</em></li>
+<li><a href="TYPO3/TYPO3.CMS/index.html#pascalcase-class-name">TYPO3 CMS</a> saw a 3.19% swing from <em>no</em> to <em>yes</em></li>
 </ul>
 </li>
 <li onmouseover="ct10.setSelection([{row:8,column:null}]);" onmouseout="ct10.setSelection([]);" class="historicalDate"><strong>01 Sep 2015</strong>: there was a 4.66% swing from <em>yes</em> to <em>no</em>
 <ul>
-<li><a href="sugarcrm/sugarcrm_dev/index.html#camelcase-class-name">SugarCRM CE</a> saw a 44.61% swing from <em>yes</em> to <em>no</em></li>
-<li><a href="sugarcrm/sugarcrm_dev/index.html#camelcase-class-name">SugarCRM CE</a> added 2995 classes using <em>no</em></li>
+<li><a href="sugarcrm/sugarcrm_dev/index.html#pascalcase-class-name">SugarCRM CE</a> saw a 44.61% swing from <em>yes</em> to <em>no</em></li>
+<li><a href="sugarcrm/sugarcrm_dev/index.html#pascalcase-class-name">SugarCRM CE</a> added 2995 classes using <em>no</em></li>
 </ul>
 </li>
 <li onmouseover="ct10.setSelection([{row:11,column:null}]);" onmouseout="ct10.setSelection([]);" class="historicalDate"><strong>01 Dec 2015</strong>: there was a 2.25% swing from <em>no</em> to <em>yes</em>
 <ul>
-<li><a href="chamilo/chamilo-lms/index.html#camelcase-class-name">Chamilo</a> saw a 5.16% swing from <em>no</em> to <em>yes</em></li>
-<li><a href="PHPMailer/PHPMailer/index.html#camelcase-class-name">PHPMailer</a> saw a 15.38% swing from <em>no</em> to <em>yes</em></li>
-<li><a href="TYPO3/TYPO3.CMS/index.html#camelcase-class-name">TYPO3 CMS</a> saw a 39.71% swing from <em>no</em> to <em>yes</em></li>
-<li><a href="chamilo/chamilo-lms/index.html#camelcase-class-name">Chamilo</a> removed 2 classes using <em>no</em> and added 269 classes using <em>yes</em></li>
-<li><a href="TYPO3/TYPO3.CMS/index.html#camelcase-class-name">TYPO3 CMS</a> removed 1312 classes using <em>no</em></li>
+<li><a href="chamilo/chamilo-lms/index.html#pascalcase-class-name">Chamilo</a> saw a 5.16% swing from <em>no</em> to <em>yes</em></li>
+<li><a href="PHPMailer/PHPMailer/index.html#pascalcase-class-name">PHPMailer</a> saw a 15.38% swing from <em>no</em> to <em>yes</em></li>
+<li><a href="TYPO3/TYPO3.CMS/index.html#pascalcase-class-name">TYPO3 CMS</a> saw a 39.71% swing from <em>no</em> to <em>yes</em></li>
+<li><a href="chamilo/chamilo-lms/index.html#pascalcase-class-name">Chamilo</a> removed 2 classes using <em>no</em> and added 269 classes using <em>yes</em></li>
+<li><a href="TYPO3/TYPO3.CMS/index.html#pascalcase-class-name">TYPO3 CMS</a> removed 1312 classes using <em>no</em></li>
 </ul>
 </li>
 <li onmouseover="ct10.setSelection([{row:13,column:null}]);" onmouseout="ct10.setSelection([]);" class="historicalDate"><strong>01 Feb 2016</strong>: there was a 0.67% swing from <em>yes</em> to <em>no</em>
 <ul>
-<li><a href="PHPMailer/PHPMailer/index.html#camelcase-class-name">PHPMailer</a> saw a 8.33% swing from <em>yes</em> to <em>no</em></li>
-<li><a href="pimcore/pimcore/index.html#camelcase-class-name">pimcore</a> saw a 46.21% swing from <em>yes</em> to <em>no</em></li>
-<li><a href="pimcore/pimcore/index.html#camelcase-class-name">pimcore</a> added 550 classes using <em>no</em></li>
+<li><a href="PHPMailer/PHPMailer/index.html#pascalcase-class-name">PHPMailer</a> saw a 8.33% swing from <em>yes</em> to <em>no</em></li>
+<li><a href="pimcore/pimcore/index.html#pascalcase-class-name">pimcore</a> saw a 46.21% swing from <em>yes</em> to <em>no</em></li>
+<li><a href="pimcore/pimcore/index.html#pascalcase-class-name">pimcore</a> added 550 classes using <em>no</em></li>
 </ul>
 </li>
 <li onmouseover="ct10.setSelection([{row:21,column:null}]);" onmouseout="ct10.setSelection([]);" class="historicalDate"><strong>01 Oct 2016</strong>: there was a 1.32% swing from <em>yes</em> to <em>no</em>
 <ul>
-<li><a href="openemr/openemr/index.html#camelcase-class-name">OpenEMR</a> saw a 37.82% swing from <em>yes</em> to <em>no</em></li>
-<li><a href="openemr/openemr/index.html#camelcase-class-name">OpenEMR</a> removed 2178 classes using <em>yes</em></li>
+<li><a href="openemr/openemr/index.html#pascalcase-class-name">OpenEMR</a> saw a 37.82% swing from <em>yes</em> to <em>no</em></li>
+<li><a href="openemr/openemr/index.html#pascalcase-class-name">OpenEMR</a> removed 2178 classes using <em>yes</em></li>
 </ul>
 </li>
 <li onmouseover="ct10.setSelection([{row:22,column:null}]);" onmouseout="ct10.setSelection([]);" class="historicalDate"><strong>01 Nov 2016</strong>: there was a 1.2% swing from <em>no</em> to <em>yes</em>
@@ -3749,13 +3755,13 @@
 </li>
 <li onmouseover="ct10.setSelection([{row:24,column:null}]);" onmouseout="ct10.setSelection([]);" class="historicalDate"><strong>01 Jan 2017</strong>: there was a 0.68% swing from <em>no</em> to <em>yes</em>
 <ul>
-<li><a href="sebastianbergmann/phpunit/index.html#camelcase-class-name">PHPUnit</a> saw a 93.75% swing from <em>no</em> to <em>yes</em></li>
+<li><a href="sebastianbergmann/phpunit/index.html#pascalcase-class-name">PHPUnit</a> saw a 93.75% swing from <em>no</em> to <em>yes</em></li>
 </ul>
 </li>
 <li onmouseover="ct10.setSelection([{row:26,column:null}]);" onmouseout="ct10.setSelection([]);" class="historicalDate"><strong>01 Mar 2017</strong>: there was a 0.87% swing from <em>no</em> to <em>yes</em>
 <ul>
-<li><a href="pimcore/pimcore/index.html#camelcase-class-name">pimcore</a> saw a 48.26% swing from <em>no</em> to <em>yes</em></li>
-<li><a href="pimcore/pimcore/index.html#camelcase-class-name">pimcore</a> removed 571 classes using <em>no</em></li>
+<li><a href="pimcore/pimcore/index.html#pascalcase-class-name">pimcore</a> saw a 48.26% swing from <em>no</em> to <em>yes</em></li>
+<li><a href="pimcore/pimcore/index.html#pascalcase-class-name">pimcore</a> removed 571 classes using <em>no</em></li>
 </ul>
 </li>
 </ul>
@@ -4078,6 +4084,11 @@
 <ul>
 <li><a href="openemr/openemr/index.html#use-of-else-if-or-elseif">OpenEMR</a> saw a 13.02% swing from <em>elseif</em> to <em>else if</em></li>
 <li><a href="openemr/openemr/index.html#use-of-else-if-or-elseif">OpenEMR</a> added 802 elseif statements using <em>else if</em></li>
+</ul>
+</li>
+<li onmouseover="ct11.setSelection([{row:41,column:null}]);" onmouseout="ct11.setSelection([]);" class="historicalDate"><strong>01 Jun 2018</strong>: there was a 0.73% swing from <em>else if</em> to <em>elseif</em>
+<ul>
+<li><a href="owncloud/core/index.html#use-of-else-if-or-elseif">ownCloud</a> saw a 64.61% swing from <em>else if</em> to <em>elseif</em></li>
 </ul>
 </li>
 </ul>
@@ -13702,7 +13713,7 @@
 
     </div>
 
-    <div class="footer">Report generated on Thu, 07 Jun 2018 15:30:24 +1000</div>
+    <div class="footer">Report generated on Thu, 07 Jun 2018 15:53:23 +1000</div>
 </div>
 
 <script>
@@ -13778,7 +13789,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "array definitions");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),89.76,false,'89.76%',10.24,false,'10.24%',282155,"282,155"],[new Date('2015-02-01'),89.76,false,'89.76%',10.24,false,'10.24%',284368,"284,368"],[new Date('2015-03-01'),89.69,false,'89.69%',10.31,false,'10.31%',284871,"284,871"],[new Date('2015-04-01'),90.15,false,'90.15%',9.85,false,'9.85%',281883,"281,883"],[new Date('2015-05-01'),89.83,false,'89.83%',10.17,false,'10.17%',283728,"283,728"],[new Date('2015-06-01'),89.26,true,'89.26%',10.74,true,'10.74%',283724,"283,724"],[new Date('2015-07-01'),88.24,true,'88.24%',11.76,true,'11.76%',284745,"284,745"],[new Date('2015-08-01'),87.45,true,'87.45%',12.55,true,'12.55%',285451,"285,451"],[new Date('2015-09-01'),74.35,true,'74.35%',25.65,true,'25.65%',358524,"358,524"],[new Date('2015-10-01'),73.99,false,'73.99%',26.01,false,'26.01%',363466,"363,466"],[new Date('2015-11-01'),72.24,true,'72.24%',27.76,true,'27.76%',373012,"373,012"],[new Date('2015-12-01'),71.97,false,'71.97%',28.03,false,'28.03%',374164,"374,164"],[new Date('2016-01-01'),71.69,false,'71.69%',28.31,false,'28.31%',372814,"372,814"],[new Date('2016-02-01'),70.92,true,'70.92%',29.08,true,'29.08%',376856,"376,856"],[new Date('2016-03-01'),68.02,true,'68.02%',31.98,true,'31.98%',390688,"390,688"],[new Date('2016-04-01'),67.24,true,'67.24%',32.76,true,'32.76%',395870,"395,870"],[new Date('2016-05-01'),66.05,true,'66.05%',33.95,true,'33.95%',400886,"400,886"],[new Date('2016-06-01'),65.34,true,'65.34%',34.66,true,'34.66%',404726,"404,726"],[new Date('2016-07-01'),63.4,true,'63.4%',36.6,true,'36.6%',413631,"413,631"],[new Date('2016-08-01'),62.6,true,'62.6%',37.4,true,'37.4%',416180,"416,180"],[new Date('2016-09-01'),58.3,true,'58.3%',41.7,true,'41.7%',421887,"421,887"],[new Date('2016-10-01'),55.76,true,'55.76%',44.24,true,'44.24%',428229,"428,229"],[new Date('2016-11-01'),57.24,true,'57.24%',42.76,true,'42.76%',455271,"455,271"],[new Date('2016-12-01'),54.87,true,'54.87%',45.13,true,'45.13%',475994,"475,994"],[new Date('2017-01-01'),53.59,true,'53.59%',46.41,true,'46.41%',485967,"485,967"],[new Date('2017-02-01'),52.38,true,'52.38%',47.62,true,'47.62%',497097,"497,097"],[new Date('2017-03-01'),51.92,false,'51.92%',48.08,false,'48.08%',502119,"502,119"],[new Date('2017-04-01'),51.55,false,'51.55%',48.45,false,'48.45%',506666,"506,666"],[new Date('2017-05-01'),49.74,true,'49.74%',50.26,true,'50.26%',493554,"493,554"],[new Date('2017-06-01'),49.37,false,'49.37%',50.63,false,'50.63%',497196,"497,196"],[new Date('2017-07-01'),48.94,false,'48.94%',51.06,false,'51.06%',501765,"501,765"],[new Date('2017-08-01'),48.65,false,'48.65%',51.35,false,'51.35%',504523,"504,523"],[new Date('2017-09-01'),47.85,true,'47.85%',52.15,true,'52.15%',512044,"512,044"],[new Date('2017-10-01'),47.87,false,'47.87%',52.13,false,'52.13%',513890,"513,890"],[new Date('2017-11-01'),47.61,false,'47.61%',52.39,false,'52.39%',517505,"517,505"],[new Date('2017-12-01'),45.25,true,'45.25%',54.75,true,'54.75%',540997,"540,997"],[new Date('2018-01-01'),44.99,false,'44.99%',55.01,false,'55.01%',544235,"544,235"],[new Date('2018-02-01'),44.83,false,'44.83%',55.17,false,'55.17%',545481,"545,481"],[new Date('2018-03-01'),45.15,false,'45.15%',54.85,false,'54.85%',558895,"558,895"],[new Date('2018-04-01'),44.94,false,'44.94%',55.06,false,'55.06%',561946,"561,946"],[new Date('2018-05-01'),44.2,true,'44.2%',55.8,true,'55.8%',572535,"572,535"],[new Date('2018-06-01'),43.07,false,'43.07%',56.93,false,'56.93%',579025,"579,025"]]);
+data.addRows([[new Date('2015-01-01'),89.76,false,'89.76%',10.24,false,'10.24%',282155,"282,155"],[new Date('2015-02-01'),89.76,false,'89.76%',10.24,false,'10.24%',284368,"284,368"],[new Date('2015-03-01'),89.69,false,'89.69%',10.31,false,'10.31%',284871,"284,871"],[new Date('2015-04-01'),90.15,false,'90.15%',9.85,false,'9.85%',281883,"281,883"],[new Date('2015-05-01'),89.83,false,'89.83%',10.17,false,'10.17%',283728,"283,728"],[new Date('2015-06-01'),89.26,true,'89.26%',10.74,true,'10.74%',283724,"283,724"],[new Date('2015-07-01'),88.24,true,'88.24%',11.76,true,'11.76%',284745,"284,745"],[new Date('2015-08-01'),87.45,true,'87.45%',12.55,true,'12.55%',285451,"285,451"],[new Date('2015-09-01'),74.35,true,'74.35%',25.65,true,'25.65%',358524,"358,524"],[new Date('2015-10-01'),73.99,false,'73.99%',26.01,false,'26.01%',363466,"363,466"],[new Date('2015-11-01'),72.24,true,'72.24%',27.76,true,'27.76%',373012,"373,012"],[new Date('2015-12-01'),71.97,false,'71.97%',28.03,false,'28.03%',374164,"374,164"],[new Date('2016-01-01'),71.69,false,'71.69%',28.31,false,'28.31%',372814,"372,814"],[new Date('2016-02-01'),70.92,true,'70.92%',29.08,true,'29.08%',376856,"376,856"],[new Date('2016-03-01'),68.02,true,'68.02%',31.98,true,'31.98%',390688,"390,688"],[new Date('2016-04-01'),67.24,true,'67.24%',32.76,true,'32.76%',395870,"395,870"],[new Date('2016-05-01'),66.05,true,'66.05%',33.95,true,'33.95%',400886,"400,886"],[new Date('2016-06-01'),65.34,true,'65.34%',34.66,true,'34.66%',404726,"404,726"],[new Date('2016-07-01'),63.4,true,'63.4%',36.6,true,'36.6%',413631,"413,631"],[new Date('2016-08-01'),62.6,true,'62.6%',37.4,true,'37.4%',416180,"416,180"],[new Date('2016-09-01'),58.3,true,'58.3%',41.7,true,'41.7%',421887,"421,887"],[new Date('2016-10-01'),55.76,true,'55.76%',44.24,true,'44.24%',428229,"428,229"],[new Date('2016-11-01'),57.24,true,'57.24%',42.76,true,'42.76%',455271,"455,271"],[new Date('2016-12-01'),54.87,true,'54.87%',45.13,true,'45.13%',475994,"475,994"],[new Date('2017-01-01'),53.59,true,'53.59%',46.41,true,'46.41%',485967,"485,967"],[new Date('2017-02-01'),52.38,true,'52.38%',47.62,true,'47.62%',497097,"497,097"],[new Date('2017-03-01'),51.92,false,'51.92%',48.08,false,'48.08%',502119,"502,119"],[new Date('2017-04-01'),51.55,false,'51.55%',48.45,false,'48.45%',506666,"506,666"],[new Date('2017-05-01'),49.74,true,'49.74%',50.26,true,'50.26%',493554,"493,554"],[new Date('2017-06-01'),49.37,false,'49.37%',50.63,false,'50.63%',497196,"497,196"],[new Date('2017-07-01'),48.94,false,'48.94%',51.06,false,'51.06%',501765,"501,765"],[new Date('2017-08-01'),48.65,false,'48.65%',51.35,false,'51.35%',504523,"504,523"],[new Date('2017-09-01'),47.85,true,'47.85%',52.15,true,'52.15%',512044,"512,044"],[new Date('2017-10-01'),47.87,false,'47.87%',52.13,false,'52.13%',513890,"513,890"],[new Date('2017-11-01'),47.61,false,'47.61%',52.39,false,'52.39%',517505,"517,505"],[new Date('2017-12-01'),45.25,true,'45.25%',54.75,true,'54.75%',540997,"540,997"],[new Date('2018-01-01'),44.99,false,'44.99%',55.01,false,'55.01%',544235,"544,235"],[new Date('2018-02-01'),44.83,false,'44.83%',55.17,false,'55.17%',545481,"545,481"],[new Date('2018-03-01'),45.15,false,'45.15%',54.85,false,'54.85%',558895,"558,895"],[new Date('2018-04-01'),44.94,false,'44.94%',55.06,false,'55.06%',561946,"561,946"],[new Date('2018-05-01'),44.2,true,'44.2%',55.8,true,'55.8%',572535,"572,535"],[new Date('2018-06-01'),43.07,true,'43.07%',56.93,true,'56.93%',579025,"579,025"]]);
 ct4 = new google.visualization.LineChart(document.getElementById("chart4t"));
 trendOptions.series = {2:itemSeries};
 trendOptions.vAxes[1].title = "array definitions";
@@ -13903,7 +13914,7 @@ data.addColumn({type:'boolean',role:'emphasis'});
 data.addColumn({type:'string',role:'tooltip'});
 data.addColumn("number", "elseif statements");
 data.addColumn({type:'string',role:'tooltip'});
-data.addRows([[new Date('2015-01-01'),28.72,false,'28.72%',71.28,false,'71.28%',29395,"29,395"],[new Date('2015-02-01'),28.62,false,'28.62%',71.38,false,'71.38%',29471,"29,471"],[new Date('2015-03-01'),27.18,true,'27.18%',72.82,true,'72.82%',27643,"27,643"],[new Date('2015-04-01'),27.43,false,'27.43%',72.57,false,'72.57%',27571,"27,571"],[new Date('2015-05-01'),27.6,false,'27.6%',72.4,false,'72.4%',27432,"27,432"],[new Date('2015-06-01'),27.42,false,'27.42%',72.58,false,'72.58%',27499,"27,499"],[new Date('2015-07-01'),27.44,false,'27.44%',72.56,false,'72.56%',27536,"27,536"],[new Date('2015-08-01'),26.46,true,'26.46%',73.54,true,'73.54%',27603,"27,603"],[new Date('2015-09-01'),26.6,false,'26.6%',73.4,false,'73.4%',27616,"27,616"],[new Date('2015-10-01'),26.74,false,'26.74%',73.26,false,'73.26%',27898,"27,898"],[new Date('2015-11-01'),26.68,false,'26.68%',73.32,false,'73.32%',27923,"27,923"],[new Date('2015-12-01'),26.59,false,'26.59%',73.41,false,'73.41%',27920,"27,920"],[new Date('2016-01-01'),26.61,false,'26.61%',73.39,false,'73.39%',28027,"28,027"],[new Date('2016-02-01'),26.68,false,'26.68%',73.32,false,'73.32%',27945,"27,945"],[new Date('2016-03-01'),25.05,true,'25.05%',74.95,true,'74.95%',27895,"27,895"],[new Date('2016-04-01'),24.98,false,'24.98%',75.02,false,'75.02%',27937,"27,937"],[new Date('2016-05-01'),25.26,false,'25.26%',74.74,false,'74.74%',28189,"28,189"],[new Date('2016-06-01'),24.61,true,'24.61%',75.39,true,'75.39%',28331,"28,331"],[new Date('2016-07-01'),24.66,false,'24.66%',75.34,false,'75.34%',28457,"28,457"],[new Date('2016-08-01'),24.54,false,'24.54%',75.46,false,'75.46%',28252,"28,252"],[new Date('2016-09-01'),24.13,false,'24.13%',75.87,false,'75.87%',28439,"28,439"],[new Date('2016-10-01'),24.75,true,'24.75%',75.25,true,'75.25%',27718,"27,718"],[new Date('2016-11-01'),23.85,true,'23.85%',76.15,true,'76.15%',29161,"29,161"],[new Date('2016-12-01'),23.94,false,'23.94%',76.06,false,'76.06%',29222,"29,222"],[new Date('2017-01-01'),23.84,false,'23.84%',76.16,false,'76.16%',29353,"29,353"],[new Date('2017-02-01'),23.63,false,'23.63%',76.37,false,'76.37%',29616,"29,616"],[new Date('2017-03-01'),23.7,false,'23.7%',76.3,false,'76.3%',29585,"29,585"],[new Date('2017-04-01'),23.92,false,'23.92%',76.08,false,'76.08%',29734,"29,734"],[new Date('2017-05-01'),24.6,true,'24.6%',75.4,true,'75.4%',28667,"28,667"],[new Date('2017-06-01'),24.56,false,'24.56%',75.44,false,'75.44%',28667,"28,667"],[new Date('2017-07-01'),24.55,false,'24.55%',75.45,false,'75.45%',28645,"28,645"],[new Date('2017-08-01'),24.4,false,'24.4%',75.6,false,'75.6%',28674,"28,674"],[new Date('2017-09-01'),24.47,false,'24.47%',75.53,false,'75.53%',28630,"28,630"],[new Date('2017-10-01'),24.43,false,'24.43%',75.57,false,'75.57%',28662,"28,662"],[new Date('2017-11-01'),24.52,false,'24.52%',75.48,false,'75.48%',28739,"28,739"],[new Date('2017-12-01'),24.51,false,'24.51%',75.49,false,'75.49%',28805,"28,805"],[new Date('2018-01-01'),24.21,false,'24.21%',75.79,false,'75.79%',28826,"28,826"],[new Date('2018-02-01'),23.98,false,'23.98%',76.02,false,'76.02%',28810,"28,810"],[new Date('2018-03-01'),26.06,true,'26.06%',73.94,true,'73.94%',29613,"29,613"],[new Date('2018-04-01'),26.09,false,'26.09%',73.91,false,'73.91%',29721,"29,721"],[new Date('2018-05-01'),26.17,false,'26.17%',73.83,false,'73.83%',29818,"29,818"],[new Date('2018-06-01'),25.44,false,'25.44%',74.56,false,'74.56%',29828,"29,828"]]);
+data.addRows([[new Date('2015-01-01'),28.72,false,'28.72%',71.28,false,'71.28%',29395,"29,395"],[new Date('2015-02-01'),28.62,false,'28.62%',71.38,false,'71.38%',29471,"29,471"],[new Date('2015-03-01'),27.18,true,'27.18%',72.82,true,'72.82%',27643,"27,643"],[new Date('2015-04-01'),27.43,false,'27.43%',72.57,false,'72.57%',27571,"27,571"],[new Date('2015-05-01'),27.6,false,'27.6%',72.4,false,'72.4%',27432,"27,432"],[new Date('2015-06-01'),27.42,false,'27.42%',72.58,false,'72.58%',27499,"27,499"],[new Date('2015-07-01'),27.44,false,'27.44%',72.56,false,'72.56%',27536,"27,536"],[new Date('2015-08-01'),26.46,true,'26.46%',73.54,true,'73.54%',27603,"27,603"],[new Date('2015-09-01'),26.6,false,'26.6%',73.4,false,'73.4%',27616,"27,616"],[new Date('2015-10-01'),26.74,false,'26.74%',73.26,false,'73.26%',27898,"27,898"],[new Date('2015-11-01'),26.68,false,'26.68%',73.32,false,'73.32%',27923,"27,923"],[new Date('2015-12-01'),26.59,false,'26.59%',73.41,false,'73.41%',27920,"27,920"],[new Date('2016-01-01'),26.61,false,'26.61%',73.39,false,'73.39%',28027,"28,027"],[new Date('2016-02-01'),26.68,false,'26.68%',73.32,false,'73.32%',27945,"27,945"],[new Date('2016-03-01'),25.05,true,'25.05%',74.95,true,'74.95%',27895,"27,895"],[new Date('2016-04-01'),24.98,false,'24.98%',75.02,false,'75.02%',27937,"27,937"],[new Date('2016-05-01'),25.26,false,'25.26%',74.74,false,'74.74%',28189,"28,189"],[new Date('2016-06-01'),24.61,true,'24.61%',75.39,true,'75.39%',28331,"28,331"],[new Date('2016-07-01'),24.66,false,'24.66%',75.34,false,'75.34%',28457,"28,457"],[new Date('2016-08-01'),24.54,false,'24.54%',75.46,false,'75.46%',28252,"28,252"],[new Date('2016-09-01'),24.13,false,'24.13%',75.87,false,'75.87%',28439,"28,439"],[new Date('2016-10-01'),24.75,true,'24.75%',75.25,true,'75.25%',27718,"27,718"],[new Date('2016-11-01'),23.85,true,'23.85%',76.15,true,'76.15%',29161,"29,161"],[new Date('2016-12-01'),23.94,false,'23.94%',76.06,false,'76.06%',29222,"29,222"],[new Date('2017-01-01'),23.84,false,'23.84%',76.16,false,'76.16%',29353,"29,353"],[new Date('2017-02-01'),23.63,false,'23.63%',76.37,false,'76.37%',29616,"29,616"],[new Date('2017-03-01'),23.7,false,'23.7%',76.3,false,'76.3%',29585,"29,585"],[new Date('2017-04-01'),23.92,false,'23.92%',76.08,false,'76.08%',29734,"29,734"],[new Date('2017-05-01'),24.6,true,'24.6%',75.4,true,'75.4%',28667,"28,667"],[new Date('2017-06-01'),24.56,false,'24.56%',75.44,false,'75.44%',28667,"28,667"],[new Date('2017-07-01'),24.55,false,'24.55%',75.45,false,'75.45%',28645,"28,645"],[new Date('2017-08-01'),24.4,false,'24.4%',75.6,false,'75.6%',28674,"28,674"],[new Date('2017-09-01'),24.47,false,'24.47%',75.53,false,'75.53%',28630,"28,630"],[new Date('2017-10-01'),24.43,false,'24.43%',75.57,false,'75.57%',28662,"28,662"],[new Date('2017-11-01'),24.52,false,'24.52%',75.48,false,'75.48%',28739,"28,739"],[new Date('2017-12-01'),24.51,false,'24.51%',75.49,false,'75.49%',28805,"28,805"],[new Date('2018-01-01'),24.21,false,'24.21%',75.79,false,'75.79%',28826,"28,826"],[new Date('2018-02-01'),23.98,false,'23.98%',76.02,false,'76.02%',28810,"28,810"],[new Date('2018-03-01'),26.06,true,'26.06%',73.94,true,'73.94%',29613,"29,613"],[new Date('2018-04-01'),26.09,false,'26.09%',73.91,false,'73.91%',29721,"29,721"],[new Date('2018-05-01'),26.17,false,'26.17%',73.83,false,'73.83%',29818,"29,818"],[new Date('2018-06-01'),25.44,true,'25.44%',74.56,true,'74.56%',29828,"29,828"]]);
 ct11 = new google.visualization.LineChart(document.getElementById("chart11t"));
 trendOptions.series = {2:itemSeries};
 trendOptions.vAxes[1].title = "elseif statements";

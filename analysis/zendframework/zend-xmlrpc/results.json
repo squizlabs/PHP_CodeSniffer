@@ -2299,7 +2299,7 @@
       },
       "winner":"yes"
     },
-    "CamelCase class name":{
+    "PascalCase class name":{
       "total":45,
       "values":{
         "yes":45

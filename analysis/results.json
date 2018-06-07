@@ -6137,7 +6137,7 @@
     },
     "winner":"yes"
   },
-  "CamelCase class name":{
+  "PascalCase class name":{
     "total":54659,
     "total_repos":197,
     "values":{

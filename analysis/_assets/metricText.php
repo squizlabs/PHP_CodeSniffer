@@ -20,8 +20,8 @@ $metricText = array(
                                                                        'description' => 'Is each class defined in a namespace of at least 1 level?',
                                                                        'items'       => 'classes',
                                                                       ),
-               'CamelCase class name'                              => array(
-                                                                       'description' => 'Are class names defined using CamelCase?',
+               'PascalCase class name'                              => array(
+                                                                       'description' => 'Are class names defined using PascalCase?',
                                                                        'items'       => 'classes',
                                                                       ),
                'Blank lines at start of control structure'         => array(

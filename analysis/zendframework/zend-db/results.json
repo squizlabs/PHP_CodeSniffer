@@ -2419,7 +2419,7 @@
       },
       "winner":"yes"
     },
-    "CamelCase class name":{
+    "PascalCase class name":{
       "total":202,
       "values":{
         "yes":202

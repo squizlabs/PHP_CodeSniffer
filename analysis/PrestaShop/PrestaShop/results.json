@@ -7113,7 +7113,7 @@
       },
       "winner":"no"
     },
-    "CamelCase class name":{
+    "PascalCase class name":{
       "total":497,
       "values":{
         "no":34,
