@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Support for HHVM has been dropped due to recent unfixed bugs and HHVM refocus on Hack only
+    -- Thanks to Walt Sorensen and Juliette Reinders Folmer for helping to remove all HHVM exceptions from the core
+
   - Squiz.WhiteSpace.SuperfluousWhitespace now recognizes unicode whitespace at the start and end of a file
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.OperatorSpacing no longer tries to fix operator spacing if the next content is a comment on a new line
