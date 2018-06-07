@@ -30,7 +30,7 @@ class MemberVarScopeSniff extends AbstractVariableSniff
         $tokens     = $phpcsFile->getTokens();
         $properties = $phpcsFile->getMemberProperties($stackPtr);
 
-        if ($properties['scope_specified'] !== false) {
+        if ($properties === [] || $properties['scope_specified'] !== false) {
             return;
         }
 
