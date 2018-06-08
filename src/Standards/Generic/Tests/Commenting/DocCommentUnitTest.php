@@ -49,8 +49,8 @@ class DocCommentUnitTest extends AbstractSniffUnitTest
             95  => 1,
             156 => 1,
             158 => 1,
-            170 => 4,
-            171 => 4,
+            170 => 3,
+            171 => 3,
             179 => 1,
             183 => 1,
             184 => 2,
@@ -61,8 +61,9 @@ class DocCommentUnitTest extends AbstractSniffUnitTest
             196 => 1,
             199 => 1,
             203 => 1,
-            207 => 1,
-            210 => 4,
+            206 => 1,
+            211 => 1,
+            214 => 4,
         ];
 
     }//end getErrorList()

@@ -195,7 +195,9 @@ class DocCommentSniff implements Sniff
 
         $firstTag = $tokens[$commentStart]['comment_tags'][0];
         $prev     = $phpcsFile->findPrevious($empty, ($firstTag - 1), $stackPtr, true);
-        if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)) {
+        if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)
+            && $tokens[$prev]['code'] !== T_DOC_COMMENT_OPEN_TAG
+        ) {
             $error = 'There must be exactly one blank line before the tags in a doc comment';
             $fix   = $phpcsFile->addFixableError($error, $firstTag, 'SpacingBeforeTags');
             if ($fix === true) {

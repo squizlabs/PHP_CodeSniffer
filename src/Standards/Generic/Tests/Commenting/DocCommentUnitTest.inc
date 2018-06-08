@@ -204,6 +204,10 @@
  */
 
 /**
+ * @param int $number
+ */
+
+/**
  * étude des ...
  */
 
