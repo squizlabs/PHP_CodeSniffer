@@ -96,10 +96,12 @@ class MultipleStatementAlignmentSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int                         $stackPtr  The position of the current token
      *                                               in the stack passed in $tokens.
+     * @param int                         $end       The token where checking should end.
+     *                                               If NULL, the entire file will be checked.
      *
      * @return int
      */
-    public function checkAlignment($phpcsFile, $stackPtr)
+    public function checkAlignment($phpcsFile, $stackPtr, $end=null)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -112,6 +114,10 @@ class MultipleStatementAlignmentSniff implements Sniff
         $lastSemi    = null;
         $arrayEnd    = null;
 
+        if ($end === null) {
+            $end = $phpcsFile->numTokens;
+        }
+
         $find = Tokens::$assignmentTokens;
         unset($find[T_DOUBLE_ARROW]);
 
@@ -120,7 +126,7 @@ class MultipleStatementAlignmentSniff implements Sniff
         unset($scopes[T_ANON_CLASS]);
         unset($scopes[T_OBJECT]);
 
-        for ($assign = $stackPtr; $assign < $phpcsFile->numTokens; $assign++) {
+        for ($assign = $stackPtr; $assign < $end; $assign++) {
             if ($tokens[$assign]['level'] < $tokens[$stackPtr]['level']) {
                 // Statement is in a different context, so the block is over.
                 break;
@@ -191,13 +197,22 @@ class MultipleStatementAlignmentSniff implements Sniff
             }//end if
 
             if ($assign !== $stackPtr) {
-                // Has to be nested inside the same conditions as the first assignment.
                 if ($tokens[$assign]['level'] > $tokens[$stackPtr]['level']) {
+                    // Has to be nested inside the same conditions as the first assignment.
+                    // We've gone one level down, so process this new block.
                     $assign   = $this->checkAlignment($phpcsFile, $assign);
                     $lastCode = $assign;
                     continue;
                 } else if ($tokens[$assign]['level'] < $tokens[$stackPtr]['level']) {
+                    // We've gone one level up, so the block we are processing is done.
                     break;
+                } else if ($arrayEnd !== null) {
+                    // Assignments inside arrays are not part of
+                    // the original block, so process this new block.
+                    $assign   = ($this->checkAlignment($phpcsFile, $assign, $arrayEnd) - 1);
+                    $arrayEnd = null;
+                    $lastCode = $assign;
+                    continue;
                 }
 
                 // Make sure it is not assigned inside a condition (eg. IF, FOR).

@@ -387,3 +387,19 @@ function foo() {
     </div>
     <?php
 }
+
+$foo = new Foo([
+    $a = new Bar(),
+    $b = new Bar(),
+]);
+
+$foo    = new Foo([
+    $a = new Bar(),
+    $b = new Bar(),
+    $c = new Bar(),
+]);
+$foofoo = new Foo([
+    $a = new Bar(),
+    $b = new Bar(),
+    $c = new Bar(),
+]);
