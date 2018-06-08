@@ -28,3 +28,7 @@ $foo = new $bar['a']();
 $foo = new $bar['a']['b']();
 $foo = new $bar['a'][$baz['a']['b']]['b']();
 $foo = new $bar['a'] [$baz['a']/* comment */  ['b']]['b'];
+
+$a = new self::$transport[$cap_string];
+$renderer = new $this->inline_diff_renderer;
+$a = new ${$varHoldingClassName};
