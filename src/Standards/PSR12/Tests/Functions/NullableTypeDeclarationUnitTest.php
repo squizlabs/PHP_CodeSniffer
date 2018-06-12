@@ -26,14 +26,17 @@ class NullableTypeDeclarationUnitTest extends AbstractSniffUnitTest
     protected function getErrorList()
     {
         return [
-            16 => 1,
-            17 => 1,
-            18 => 1,
-            29 => 2,
-            34 => 1,
-            36 => 1,
-            37 => 1,
-            39 => 1,
+            23 => 1,
+            24 => 1,
+            25 => 1,
+            30 => 1,
+            31 => 1,
+            32 => 1,
+            43 => 2,
+            48 => 1,
+            50 => 1,
+            51 => 1,
+            53 => 1,
         ];
 
     }//end getErrorList()

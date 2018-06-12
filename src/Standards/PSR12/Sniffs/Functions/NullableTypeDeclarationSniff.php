@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PSR12\Sniffs\Functions;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class NullableTypeDeclarationSniff implements Sniff
 {
@@ -39,29 +40,32 @@ class NullableTypeDeclarationSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $nextValidTokenPtr = $phpcsFile->findNext([T_STRING, T_ARRAY_HINT, T_RETURN_TYPE], ($stackPtr + 1), null);
+        $nextValidTokenPtr = $phpcsFile->findNext([T_STRING, T_NS_SEPARATOR], ($stackPtr + 1), null);
+        if ($nextValidTokenPtr === false) {
+            // Parse error or live coding.
+            return;
+        }
+
         if ($nextValidTokenPtr !== ($stackPtr + 1)) {
             $nonWhitespaceTokenPtr = $phpcsFile->findNext([T_WHITESPACE], ($stackPtr + 1), $nextValidTokenPtr, true);
 
             if ($nonWhitespaceTokenPtr === false) {
-                if ($phpcsFile->addFixableError(
-                    'Superfluous whitespace after nullable',
-                    ($stackPtr + 1),
-                    'WhitespaceFound'
-                ) === true
-                ) {
+                // No other tokens then whitespace tokens found; fixable.
+                $fix = $phpcsFile->addFixableError('Superfluous whitespace after nullable', ($stackPtr + 1), 'WhitespaceFound');
+                if ($fix === true) {
                     for ($ptr = ($stackPtr + 1); $ptr < $nextValidTokenPtr; $ptr++) {
                         $phpcsFile->fixer->replaceToken($ptr, '');
                     }
                 }
 
-                return ($stackPtr + 1);
+                return;
             }
 
+            // Non-whitespace tokens found; trigger error but don't fix.
             $phpcsFile->addError('Unexpected characters found after nullable', ($stackPtr + 1), 'UnexpectedCharactersFound');
         }
 
-        return ($stackPtr + 1);
+        return;
 
     }//end process()
 

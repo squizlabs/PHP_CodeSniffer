@@ -3,8 +3,15 @@
 class MyClass {
     public function validNullableTypeHinting(
         ?array $array = null,
-        ?MyObject $object = null
+        ?MyObject $object
     ): ?MyObject
+    {
+    }
+
+    public function validWithFQN(
+        ?\MyNameSpace\MyArray $array = null,
+        ?\MyNameSpace\MyObject $object
+    ): ?\MyNameSpace\MyObject
     {
     }
 
@@ -12,22 +19,29 @@ class MyClass {
     {
     }
 
-    public function invalidReturnTypeTooMuchWhitespace(
+    public function invalidTooMuchWhitespace(
         ?array $array = null,
         ?MyObject
     ):?MyObject
+    {
+    }
+
+    public function invalidWithFQNTooMuchWhitespace(
+        ?\MyNameSpace\MyArray $array = null,
+        ?\MyNameSpace\MyObject
+    ):?\MyNameSpace\MyObject
     {
     }
 }
 
 // valid in lambda
 array_map(function(?int $integer = null): ?int {
-    return $integer
+    return $integer;
 }, []);
 
 // invalid in lambda
 array_map(function(?int $integer = null): ?int {
-    return $integer
+    return $integer;
 }, []);
 
 interface MyInterface {
