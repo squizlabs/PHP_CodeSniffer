@@ -137,6 +137,7 @@
     <!-- 4.3 Properties and Constants -->
 
     <!-- Visibility MUST be declared on all properties. -->
+    <!-- checked by PSR12.Classes.ConstantDeclaration -->
     <!-- The var keyword MUST NOT be used to declare a property. -->
     <!-- There MUST NOT be more than one property declared per statement. -->
     <!-- Property names MUST NOT be prefixed with a single underscore to indicate protected or private visibility. -->
