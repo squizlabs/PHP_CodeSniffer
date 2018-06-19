@@ -1,0 +1,9 @@
+<?php
+use Vendor\Package\SomeNamespace\SubnamespaceOne\ClassA;
+use Vendor\Package\SomeNamespace\SubnamespaceOne\ClassB;
+
+class Test {
+	public function __construct() {
+		$var = 1;
+	}
+}

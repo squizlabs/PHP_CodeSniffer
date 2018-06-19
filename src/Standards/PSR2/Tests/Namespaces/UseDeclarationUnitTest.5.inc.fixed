@@ -27,6 +27,30 @@ use function foo\math\sin;
 use function foo\math\cos;
 use function foo\math\cosh;
 
-class PHP7 {
+use Grouped\TrailingComma\ClassL;
+use const Grouped\TrailingComma\ConstM;
+use function Grouped\TrailingComma\func_n;
+use Grouped\TrailingComma\ClassO as O;
 
-}
+use function foo\math\trailingcomma\no\whitespace\sin;
+use function foo\math\trailingcomma\no\whitespace\cos;
+use function foo\math\trailingcomma\no\whitespace\cosh;
+
+use function foo\math\multipleonnewline\sin;
+use function foo\math\multipleonnewline\cos; /* comment */
+use function foo\math\multipleonnewline\cosh;
+
+// phpcs:disable Standard.Cat.Sniff -- for reasons.
+    // A comment.
+use Grouped\TrailingCommaWithCommentsAndAnnotations\ClassP;
+    /* Another comment. */
+use const Grouped\TrailingCommaWithCommentsAndAnnotations\ConstQ; // A trailing comment.
+
+use function Grouped\TrailingCommaWithCommentsAndAnnotations\func_r; // phpcs:ignore Standard.Cat.Sniff -- for reasons.
+    // phpcs:ignore Standard.Cat.Sniff -- for reasons.
+use Grouped\TrailingCommaWithCommentsAndAnnotations\ClassS as S;
+
+    // Some other comment.
+
+
+// phpcs:enable
