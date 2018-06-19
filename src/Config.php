@@ -1292,9 +1292,7 @@ class Config
             $error .= $this->printShortUsage(true);
             throw new DeepExitException($error, 3);
         } else {
-            $files       = $this->files;
-            $files[]     = $file;
-            $this->files = $files;
+            $this->files[] = $file;
             self::$overriddenDefaults['files'] = true;
         }
 
