@@ -1292,6 +1292,8 @@ class Config
             $error .= $this->printShortUsage(true);
             throw new DeepExitException($error, 3);
         } else {
+            // Can't modify the files array directly because it's not a real
+            // class member, so need to use this little get/modify/set trick.
             $files       = $this->files;
             $files[]     = $file;
             $this->files = $files;
