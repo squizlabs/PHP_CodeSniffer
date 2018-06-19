@@ -32,6 +32,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.Commenting.DocComment no longer generates the SpacingBeforeTags error if tags are the first content in the docblock
     -- The sniff will still generate a MissingShort error if there is no short comment
     -- This allows the MissingShort error to be suppressed in a ruleset to make short descriptions optional
+  - PSR2.Namespaces.UseDeclaration now supports commas at the end of group use declarations
+    -- Also improves checking and fixing for use statements containing parse errors
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.SuperfluousWhitespace now recognizes unicode whitespace at the start and end of a file
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.OperatorSpacing no longer tries to fix operator spacing if the next content is a comment on a new line
