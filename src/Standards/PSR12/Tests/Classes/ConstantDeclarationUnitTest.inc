@@ -9,4 +9,8 @@ class MyClass extends ParentClass
     private const PRIVATE_VALID = 'PRIVATE_VALID';
 
     const INVALID = 'INVALID';
+
+    // See Squiz.WhiteSpace.ScopeKeywordSpacing.Incorrect
+    private
+        const VALID_FOR_THIS_SNIFF = 'VALID_FOR_THIS_SNIFF';
 }

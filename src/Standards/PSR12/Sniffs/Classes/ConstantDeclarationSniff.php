@@ -48,20 +48,16 @@ class ConstantDeclarationSniff implements Sniff
 
         if ($phpVersion < 70100) {
             // This sniff does not apply for php version < 7.1.0.
-            return ($stackPtr + 1);
+            return;
         }
 
         $tokens = $phpcsFile->getTokens();
 
         // Expectation: whitespace prepended with a visibility indicator.
-        $scopeModifierPtr = $phpcsFile->findPrevious([T_WHITESPACE], ($stackPtr - 1), 0, true);
-        if (isset($tokens[$scopeModifierPtr]) === false || is_array($tokens[$scopeModifierPtr]) === false
-            || in_array($tokens[$scopeModifierPtr]['code'], Tokens::$scopeModifiers) === false
-        ) {
+        $scopeModifierPtr = $phpcsFile->findPrevious([T_WHITESPACE], ($stackPtr - 1), null, true);
+        if ($scopeModifierPtr === false || in_array($tokens[$scopeModifierPtr]['code'], Tokens::$scopeModifiers) === false) {
             $phpcsFile->addError('Visibility must be declared on constant', $stackPtr, 'ScopeMissing');
         }
-
-        return ($stackPtr + 1);
 
     }//end process()
 
