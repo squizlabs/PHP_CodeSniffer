@@ -53,6 +53,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2047 : PSR12.Classes.ClassInstantiation false positive when instantiating class from array index
   - Fixed bug #2048 : GenericFormatting.MultipleStatementAlignment false positive when assigning values inside an array
   - Fixed bug #2053 : PSR12.Classes.ClassInstantiation incorrectly fix when using member vars and some variable formats
+  - Fixed bug #2065 : Generic.ControlStructures.InlineControlStructure fixing fails when inline control structure contains closure
  </notes>
  <contents>
   <dir name="/">

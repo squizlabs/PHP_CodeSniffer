@@ -235,3 +235,6 @@ foreach ($stringParade as $hit)
 if ($bar)
     if ($foo) echo 'hi'; /* @phpcs:ignore Standard.Category.Sniff */
 
+if (true) $callable = function () {
+    return true;
+};
