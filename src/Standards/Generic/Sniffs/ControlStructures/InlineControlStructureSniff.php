@@ -191,7 +191,7 @@ class InlineControlStructureSniff implements Sniff
                     if ($type === T_TRY && $nextType === T_CATCH) {
                         $end = $tokens[$next]['scope_closer'];
                     }
-                } elseif ($type === T_CLOSURE) {
+                } else if ($type === T_CLOSURE) {
                     // There should be a semicolon after the closing brace.
                     $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
                     if ($next !== false && $tokens[$next]['code'] === T_SEMICOLON) {
