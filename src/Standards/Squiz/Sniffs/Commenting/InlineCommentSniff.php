@@ -292,6 +292,13 @@ class InlineCommentSniff implements Sniff
                 return;
             }
 
+            if ($tokens[$next]['code'] === T_DOC_COMMENT_OPEN_TAG) {
+                // If this inline comment is followed by a docblock,
+                // ignore spacing as docblock/function etc spacing rules
+                // are likely to conflict with our rules.
+                return;
+            }
+
             $errorCode = 'SpacingAfter';
 
             if (isset($tokens[$stackPtr]['conditions']) === true) {
