@@ -106,7 +106,7 @@ class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
 
         // Check that the closing brace has one blank line after it.
         for ($nextContent = ($closeBrace + 1); $nextContent < $phpcsFile->numTokens; $nextContent++) {
-            // Ignore comments on the same lines as the brace.
+            // Ignore comments on the same line as the brace.
             if ($tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']
                 && ($tokens[$nextContent]['code'] === T_WHITESPACE
                 || $tokens[$nextContent]['code'] === T_COMMENT
@@ -166,6 +166,13 @@ class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
         }//end if
 
         if ($difference !== -1 && $difference !== 1) {
+            if ($tokens[$nextContent]['code'] === T_DOC_COMMENT_OPEN_TAG) {
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($tokens[$nextContent]['comment_closer'] + 1), null, true);
+                if ($next !== false && $tokens[$next]['code'] === T_FUNCTION) {
+                    return;
+                }
+            }
+
             $error = 'Closing brace of a %s must be followed by a single blank line; found %s';
             $data  = [
                 $tokens[$stackPtr]['content'],

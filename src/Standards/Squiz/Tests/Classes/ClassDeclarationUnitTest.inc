@@ -94,6 +94,17 @@ interface MyInterface
 
 <?php
 
+class MyClass2
+{
+    var $x;
+}
+
+
+/**
+ * No error.
+ */
+function example() {}
+
 class CorrectClassDeclaration
 {
 
