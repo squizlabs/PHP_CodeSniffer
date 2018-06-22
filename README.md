@@ -82,3 +82,25 @@ Bug reports and feature requests can be submitted on the [Github Issue Tracker](
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for information.
+
+## Versioning
+
+PHP_CodeSniffer uses a `MAJOR.MINOR.PATCH` version number format.
+
+The `MAJOR` version is incremented when:
+- backwards-incompatible changes are made to how the `phpcs` or `phpcbf` commands are used, or
+- backwards-incompatible changes are made to the `ruleset.xml` format, or
+- backwards-incompatible changes are made to the API used by sniff developers, or
+- custom PHP_CodeSniffer token types are removed
+
+The `MINOR` version is incremented when:
+- new backwards-compatible features are added to the `phpcs` and `phpcbf` commands, or
+- backwards-compatible changes are made to the `ruleset.xml` format, or
+- backwards-compatible changes are made to the API used by sniff developers
+
+> NOTE: Backwards-compatible changes to the API used by sniff develpers will allow an exsiting sniff to continue running without producing fatal errors but may not result in the sniff reporting the same errors as it did previously without changes being required.
+
+The `PATCH` version is incremented when:
+- backwards-compatible bug fixes are made
+
+> NOTE: As PHP_CodeSniffer exists to report and fix issues, most bugs are the result of coding standard errors being incorrectly reported or coding standard errors not being reported when they should be. This means that the messages produced by PHP_CodeSniffer, and the fixes it makes, are likely to be different between PATCH versions.
