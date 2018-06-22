@@ -96,7 +96,8 @@ The `MAJOR` version is incremented when:
 The `MINOR` version is incremented when:
 - new backwards-compatible features are added to the `phpcs` and `phpcbf` commands, or
 - backwards-compatible changes are made to the `ruleset.xml` format, or
-- backwards-compatible changes are made to the API used by sniff developers
+- backwards-compatible changes are made to the API used by sniff developers, or
+- new sniffs are added to an included standard
 
 > NOTE: Backwards-compatible changes to the API used by sniff develpers will allow an exsiting sniff to continue running without producing fatal errors but may not result in the sniff reporting the same errors as it did previously without changes being required.
 
