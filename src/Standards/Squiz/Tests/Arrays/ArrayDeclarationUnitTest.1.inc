@@ -358,3 +358,13 @@ $x = array(
     'xxxx'   => array('aaaaaaaaaa' => 'ccccccccccc',
                  'bbbbbbbb'   => false),
 );
+
+$foo = array
+        ('foo' => array
+                ('bar1'   => 1
+                ,'bar2'   => 1
+                ,'bar3'   => 1
+                ,'bar4'   => 1
+                ,'bar5'   => 1
+                )
+        );

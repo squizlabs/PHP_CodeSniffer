@@ -703,7 +703,9 @@ class ArrayDeclarationSniff implements Sniff
                 continue;
             }
 
-            if ($tokens[$index['index']]['column'] !== $indicesStart) {
+            if ($tokens[$index['index']]['column'] !== $indicesStart
+                && ($index['index'] - 1) !== $arrayStart
+            ) {
                 $expected = ($indicesStart - 1);
                 $found    = ($tokens[$index['index']]['column'] - 1);
                 $error    = 'Array key not aligned correctly; expected %s spaces but found %s';
@@ -714,7 +716,7 @@ class ArrayDeclarationSniff implements Sniff
 
                 $fix = $phpcsFile->addFixableError($error, $index['index'], 'KeyNotAligned', $data);
                 if ($fix === true) {
-                    if ($found === 0) {
+                    if ($found === 0 || $tokens[($index['index'] - 1)]['code'] !== T_WHITESPACE) {
                         $phpcsFile->fixer->addContent(($index['index'] - 1), str_repeat(' ', $expected));
                     } else {
                         $phpcsFile->fixer->replaceToken(($index['index'] - 1), str_repeat(' ', $expected));
@@ -840,9 +842,15 @@ class ArrayDeclarationSniff implements Sniff
                         }
                     }
 
+                    $phpcsFile->fixer->beginChangeset();
                     $phpcsFile->fixer->addContentBefore(($i - 1), ',');
+                    if ($nextComma !== false) {
+                        $phpcsFile->fixer->replaceToken($nextComma, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
                 }
-            }
+            }//end if
 
             // Check that there is no space before the comma.
             if ($nextComma !== false && $tokens[($nextComma - 1)]['code'] === T_WHITESPACE) {
