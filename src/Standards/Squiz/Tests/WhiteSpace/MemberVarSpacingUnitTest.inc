@@ -291,3 +291,16 @@ class ClassUsingComplexTraits
     /* comment */
     protected $secondVar = true;
 }
+
+class Foo
+{
+
+
+    private function foo()
+    {
+    }
+
+
+    /* no error here because after function */
+    private $bar = false;
+}

@@ -111,6 +111,13 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
         // Determine if this is the first member var.
         $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($first - 1), null, true);
+        if ($tokens[$prev]['code'] === T_CLOSE_CURLY_BRACKET
+            && isset($tokens[$prev]['scope_condition']) === true
+            && $tokens[$tokens[$prev]['scope_condition']]['code'] === T_FUNCTION
+        ) {
+            return;
+        }
+
         if ($tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET
             && isset(Tokens::$ooScopeTokens[$tokens[$tokens[$prev]['scope_condition']]['code']]) === true
         ) {

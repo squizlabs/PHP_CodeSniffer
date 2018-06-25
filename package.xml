@@ -40,10 +40,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Classes.ClassDeclaration no longer enforces spacing rules when a class is followed by a function
     -- Fixes a conflict between this sniff and the Squiz.WhiteSpace.FunctionSpacing sniff
+  - The Squiz.Classes.ValidClassName.NotCamelCaps message now references PascalCase instead of CamelCase
+    -- The "CamelCase class name" metric produced by the sniff has been changed to "PascalCase class name"
+    -- This reflects the fact that the class name check is actually a Pascal Case check and not really Camel Case
+    -- Thanks to Tom H Anderson for the patch
   - Squiz.Commenting.InlineComment no longer enforces spacing rules when an inline comment is followed by a docblock
     -- Fixes a conflict between this sniff and the Squiz.WhiteSpace.FunctionSpacing sniff
-  - Squiz.WhiteSpace.SuperfluousWhitespace now recognizes unicode whitespace at the start and end of a file
-    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.OperatorSpacing no longer tries to fix operator spacing if the next content is a comment on a new line
     -- Fixes a conflict between this sniff and the Squiz.Commenting.PostStatementComment sniff
     -- Also stops PHPCS annotations from being moved to a different line, potentially changing their meaning
@@ -51,10 +53,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.WhiteSpace.FunctionSpacing no longer checks spacing of functions at the top of an embedded PHP block
     -- Fixes a conflict between this sniff and the Squiz.PHP.EmbeddedPHP sniff
     -- Thanks to Juliette Reinders Folmer for the patch
-  - The Squiz.Classes.ValidClassName.NotCamelCaps message now references PascalCase instead of CamelCase
-    -- The "CamelCase class name" metric produced by the sniff has been changed to "PascalCase class name"
-    -- This reflects the fact that the class name check is actually a Pascal Case check and not really Camel Case
-    -- Thanks to Tom H Anderson for the patch
+  - Squiz.WhiteSpace.MemberVarSpacing no longer checks spacing before member vars that come directly after methods
+    -- Fixes a conflict between this sniff and the Squiz.WhiteSpace.FunctionSpacing sniff
+  - Squiz.WhiteSpace.SuperfluousWhitespace now recognizes unicode whitespace at the start and end of a file
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2029 : Squiz.Scope.MemberVarScope throws fatal error when a property is found in an interface
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2047 : PSR12.Classes.ClassInstantiation false positive when instantiating class from array index
