@@ -356,3 +356,13 @@ $foo = ['foo' => ['bar1'  => 1
                 ,'bar5'   => 1
                 ]
         ];
+
+$foo = [
+        '1' => $row['status'] === 'rejected'
+            ? self::REJECTED_CODE
+            : self::VERIFIED_CODE,
+        '2' => in_array($row['status'], ['notverified', 'unverified'], true)
+            ? self::STATUS_PENDING
+            : self::STATUS_VERIFIED,
+        '3' => strtotime($row['date']),
+       ];
