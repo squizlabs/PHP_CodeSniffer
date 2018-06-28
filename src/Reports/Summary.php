@@ -95,6 +95,27 @@ class Summary implements Report
             $maxLength = max($maxLength, $fileLen);
         }
 
+        uksort(
+            $reportFiles,
+            function ($keyA, $keyB) {
+                $pathPartsA = explode(DIRECTORY_SEPARATOR, $keyA);
+                $pathPartsB = explode(DIRECTORY_SEPARATOR, $keyB);
+
+                do {
+                    $partA = array_shift($pathPartsA);
+                    $partB = array_shift($pathPartsB);
+                } while ($partA === $partB && empty($pathPartsA) === false && empty($pathPartsB) === false);
+
+                if (empty($pathPartsA) === false && empty($pathPartsB) === true) {
+                    return 1;
+                } else if (empty($pathPartsA) === true && empty($pathPartsB) === false) {
+                    return -1;
+                } else {
+                    return strcasecmp($partA, $partB);
+                }
+            }
+        );
+
         $width = min($width, ($maxLength + 21));
         $width = max($width, 70);
 
