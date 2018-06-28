@@ -141,13 +141,6 @@ class Source implements Report
             } else {
                 $sources[$source]['count'] += $count;
             }//end if
-
-            $fileLen = strlen($parts[0]);
-            $reportFiles[$parts[0]] = [
-                'errors'   => $parts[1],
-                'warnings' => $parts[2],
-                'strlen'   => $fileLen,
-            ];
         }//end foreach
 
         if ($showSources === true) {
