@@ -50,7 +50,7 @@ class File
     /**
      * If TRUE, the entire file is being ignored.
      *
-     * @var string
+     * @var boolean
      */
     public $ignored = false;
 
@@ -74,6 +74,13 @@ class File
      * @var \PHP_CodeSniffer\Tokenizers\Tokenizer
      */
     public $tokenizer = null;
+
+    /**
+     * The name of the tokenizer being used for this file.
+     *
+     * @var string
+     */
+    public $tokenizerType = 'PHP';
 
     /**
      * Was the file loaded from cache?
