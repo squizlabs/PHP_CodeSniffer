@@ -76,8 +76,9 @@ abstract class AbstractArraySniff implements Sniff
             $lastToken = $stackPtr;
         }
 
-        $keyUsed = false;
-        $indices = [];
+        $findComma = false;
+        $keyUsed   = false;
+        $indices   = [];
 
         for ($checkToken = ($stackPtr + 1); $checkToken <= $lastArrayToken; $checkToken++) {
             // Skip bracketed statements, like function calls.
@@ -94,7 +95,9 @@ abstract class AbstractArraySniff implements Sniff
                 || $tokens[$checkToken]['code'] === T_CLOSURE
             ) {
                 // Let subsequent calls of this test handle nested arrays.
-                if ($tokens[$lastToken]['code'] !== T_DOUBLE_ARROW) {
+                if ($tokens[$lastToken]['code'] !== T_DOUBLE_ARROW
+                    && $findComma === false
+                ) {
                     $indices[] = ['value_start' => $checkToken];
                     $lastToken = $checkToken;
                 }
@@ -110,7 +113,9 @@ abstract class AbstractArraySniff implements Sniff
 
                 $checkToken = $phpcsFile->findNext(T_WHITESPACE, ($checkToken + 1), null, true);
                 $lastToken  = $checkToken;
+
                 if ($tokens[$checkToken]['code'] !== T_COMMA) {
+                    $findComma = true;
                     $checkToken--;
                 }
 
@@ -148,7 +153,9 @@ abstract class AbstractArraySniff implements Sniff
                     continue;
                 }
 
-                if ($keyUsed === false) {
+                if ($findComma === true) {
+                    $findComma = false;
+                } else if ($keyUsed === false) {
                     $valueContent = $phpcsFile->findNext(
                         Tokens::$emptyTokens,
                         ($lastToken + 1),

@@ -56,3 +56,15 @@ $var = [
         2 => 'two',
     /* three */ 3 => 'three',
     ];
+
+$var = [
+    ['one'] +
+    ['two'] +
+    ['three']
+];
+
+$var = [
+    ['one']
+    + ['two']
+    + ['three']
+];
