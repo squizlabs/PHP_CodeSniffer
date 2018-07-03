@@ -163,7 +163,9 @@ abstract class AbstractArraySniff implements Sniff
                         true
                     );
 
-                    $indices[] = ['value_start' => $valueContent];
+                    if ($valueContent !== false) {
+                        $indices[] = ['value_start' => $valueContent];
+                    }
                 }
 
                 $lastToken = $checkToken;
