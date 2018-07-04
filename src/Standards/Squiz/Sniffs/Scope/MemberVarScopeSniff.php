@@ -11,7 +11,6 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope;
 
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Tokens;
 
 class MemberVarScopeSniff extends AbstractVariableSniff
 {
