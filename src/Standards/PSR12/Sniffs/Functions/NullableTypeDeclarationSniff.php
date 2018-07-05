@@ -3,7 +3,7 @@
  * Verifies that nullable typehints are lacking superfluous whitespace, e.g. ?int
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2018 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
@@ -40,30 +40,42 @@ class NullableTypeDeclarationSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $nextValidTokenPtr = $phpcsFile->findNext([T_STRING, T_NS_SEPARATOR], ($stackPtr + 1), null);
-        if ($nextValidTokenPtr === false) {
+        $validTokens = [
+            T_STRING,
+            T_NS_SEPARATOR,
+            T_CALLABLE,
+            T_SELF,
+            T_PARENT,
+        ];
+
+        $nextNonEmptyPtr = $phpcsFile->findNext([T_WHITESPACE], ($stackPtr + 1), null, true);
+        if ($nextNonEmptyPtr === false) {
             // Parse error or live coding.
             return;
         }
 
-        if ($nextValidTokenPtr !== ($stackPtr + 1)) {
-            $nonWhitespaceTokenPtr = $phpcsFile->findNext([T_WHITESPACE], ($stackPtr + 1), $nextValidTokenPtr, true);
+        $tokens          = $phpcsFile->getTokens();
+        $validTokenFound = in_array($tokens[$nextNonEmptyPtr]['code'], $validTokens) === true;
 
-            if ($nonWhitespaceTokenPtr === false) {
-                // No other tokens then whitespace tokens found; fixable.
-                $fix = $phpcsFile->addFixableError('Superfluous whitespace after nullable', ($stackPtr + 1), 'WhitespaceFound');
-                if ($fix === true) {
-                    for ($ptr = ($stackPtr + 1); $ptr < $nextValidTokenPtr; $ptr++) {
-                        $phpcsFile->fixer->replaceToken($ptr, '');
-                    }
+        if ($validTokenFound === true && $nextNonEmptyPtr === ($stackPtr + 1)) {
+            // Valid structure.
+            return;
+        }
+
+        if ($validTokenFound === true) {
+            // No other tokens then whitespace tokens found; fixable.
+            $fix = $phpcsFile->addFixableError('Superfluous whitespace after nullable', ($stackPtr + 1), 'WhitespaceFound');
+            if ($fix === true) {
+                for ($ptr = ($stackPtr + 1); $ptr < $nextNonEmptyPtr; $ptr++) {
+                    $phpcsFile->fixer->replaceToken($ptr, '');
                 }
-
-                return;
             }
 
-            // Non-whitespace tokens found; trigger error but don't fix.
-            $phpcsFile->addError('Unexpected characters found after nullable', ($stackPtr + 1), 'UnexpectedCharactersFound');
+            return;
         }
+
+        // Non-whitespace tokens found; trigger error but don't fix.
+        $phpcsFile->addError('Unexpected characters found after nullable', ($stackPtr + 1), 'UnexpectedCharactersFound');
 
         return;
 

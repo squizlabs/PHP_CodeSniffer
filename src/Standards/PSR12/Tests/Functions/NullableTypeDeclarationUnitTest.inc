@@ -53,3 +53,7 @@ interface MyInterface {
     ) ?
         bool;
 }
+
+function testSelf( ? self $self ) : ? self {}
+function testParent( ? parent $parent ) : ? parent {}
+function testCallable( ? callable $callable ) : ? callable {}

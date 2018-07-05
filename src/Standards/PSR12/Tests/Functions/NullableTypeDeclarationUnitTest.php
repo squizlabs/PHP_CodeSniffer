@@ -3,7 +3,7 @@
  * Unit test class for the NullableWhitespace sniff.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2018 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
@@ -37,6 +37,9 @@ class NullableTypeDeclarationUnitTest extends AbstractSniffUnitTest
             50 => 1,
             51 => 1,
             53 => 1,
+            57 => 2,
+            58 => 2,
+            59 => 2,
         ];
 
     }//end getErrorList()
