@@ -156,7 +156,7 @@ class Config
     /**
      * Command line values that the user has supplied directly.
      *
-     * @var array<string, TRUE>
+     * @var array<string, bool|array>
      */
     private static $overriddenDefaults = [];
 
@@ -745,9 +745,7 @@ class Config
             self::$overriddenDefaults['annotations'] = true;
             break;
         case 'config-set':
-            if (isset($this->cliArgs[($pos + 1)]) === false
-                || isset($this->cliArgs[($pos + 2)]) === false
-            ) {
+            if (isset($this->cliArgs[($pos + 1)], $this->cliArgs[($pos + 2)]) === false) {
                 $error  = 'ERROR: Setting a config option requires a name and value'.PHP_EOL.PHP_EOL;
                 $error .= $this->printShortUsage(true);
                 throw new DeepExitException($error, 3);
@@ -803,9 +801,7 @@ class Config
             ob_end_clean();
             throw new DeepExitException($output, 0);
         case 'runtime-set':
-            if (isset($this->cliArgs[($pos + 1)]) === false
-                || isset($this->cliArgs[($pos + 2)]) === false
-            ) {
+            if (isset($this->cliArgs[($pos + 1)], $this->cliArgs[($pos + 2)]) === false) {
                 $error  = 'ERROR: Setting a runtime config option requires a name and value'.PHP_EOL.PHP_EOL;
                 $error .= $this->printShortUsage(true);
                 throw new DeepExitException($error, 3);

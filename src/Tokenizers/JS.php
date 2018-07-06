@@ -915,10 +915,10 @@ class JS extends Tokenizer
      *
      * @param string $char   The index of the possible regex start character.
      * @param string $string The complete content of the string being tokenized.
-     * @param string $chars  An array of characters being tokenized.
-     * @param string $tokens The current array of tokens found in the string.
+     * @param array  $chars  An array of characters being tokenized.
+     * @param array  $tokens The current array of tokens found in the string.
      *
-     * @return void
+     * @return array|null
      */
     public function getRegexToken($char, $string, $chars, $tokens)
     {

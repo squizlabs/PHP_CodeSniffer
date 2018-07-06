@@ -19,7 +19,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
     /**
      * A list of classes that don't need to be included.
      *
-     * @var string[]
+     * @var array<string, bool>
      */
     private $ignore = [
         'self'                      => true,

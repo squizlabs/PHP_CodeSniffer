@@ -64,13 +64,13 @@ abstract class Generator
     /**
      * Retrieves the title of the sniff from the DOMNode supplied.
      *
-     * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                      It represents the "documentation" tag in the XML
-     *                      standard file.
+     * @param \DOMElement $doc The DOMNode object for the sniff.
+     *                         It represents the "documentation" tag in the XML
+     *                         standard file.
      *
      * @return string
      */
-    protected function getTitle(\DOMNode $doc)
+    protected function getTitle(\DOMElement $doc)
     {
         return $doc->getAttribute('title');
 
