@@ -71,6 +71,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2053 : PSR12.Classes.ClassInstantiation incorrectly fix when using member vars and some variable formats
   - Fixed bug #2065 : Generic.ControlStructures.InlineControlStructure fixing fails when inline control structure contains closure
   - Fixed bug #2072 : Squiz.Arrays.ArrayDeclaration throws NoComma error when array value is a shorthand IF statement
+  - Fixed bug #2082 : File with "defined() or define()" syntax triggers PSR1.Files.SideEffects.FoundWithSymbols
  </notes>
  <contents>
   <dir name="/">

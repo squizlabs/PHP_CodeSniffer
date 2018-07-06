@@ -63,4 +63,6 @@ namespace {
     class A {}
 }
 
+defined('APP_BASE_URL') or define('APP_BASE_URL', '/');
+
 ?>
