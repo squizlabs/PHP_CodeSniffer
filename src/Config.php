@@ -179,7 +179,7 @@ class Config
      *
      * @var array<string, string>
      */
-    private static $executablePaths = [];
+    private static $executablePaths = ["php" => PHP_BINARY];
 
 
     /**
