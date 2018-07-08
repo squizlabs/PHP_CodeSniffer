@@ -743,7 +743,7 @@ abstract class Tokenizer
                 }
                 break;
             default:
-                continue;
+                continue 2;
             }//end switch
         }//end for
 
