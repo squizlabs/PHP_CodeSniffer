@@ -12,7 +12,6 @@ namespace PHP_CodeSniffer\Tests\Core;
 use PHPUnit\TextUI\TestRunner;
 use PHPUnit\Framework\TestSuite;
 
-require_once 'ConfigTest.php';
 require_once 'IsCamelCapsTest.php';
 require_once 'ErrorSuppressionTest.php';
 require_once 'File/FindEndOfStatementTest.php';
@@ -47,7 +46,6 @@ class AllTests
     public static function suite()
     {
         $suite = new TestSuite('PHP CodeSniffer Core');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\ConfigTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\IsCamelCapsTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\ErrorSuppressionTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\FindEndOfStatementTest');
