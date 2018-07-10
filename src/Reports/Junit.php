@@ -39,6 +39,7 @@ class Junit implements Report
 
         $out->startElement('testsuite');
         $out->writeAttribute('name', $report['filename']);
+        $out->writeAttribute('errors', 0);
 
         if (count($report['messages']) === 0) {
             $out->writeAttribute('tests', 1);
