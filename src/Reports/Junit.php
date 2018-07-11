@@ -121,7 +121,7 @@ class Junit implements Report
 
         $failures = ($totalErrors + $totalWarnings);
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<testsuites name="PHP_CodeSniffer '.Config::VERSION.'" tests="'.$tests.'" failures="'.$failures.'">'.PHP_EOL;
+        echo '<testsuites name="PHP_CodeSniffer '.Config::VERSION.'" errors="0" tests="'.$tests.'" failures="'.$failures.'">'.PHP_EOL;
         echo $cachedData;
         echo '</testsuites>'.PHP_EOL;
 
