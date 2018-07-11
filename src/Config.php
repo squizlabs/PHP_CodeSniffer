@@ -1520,6 +1520,7 @@ class Config
             /*
              * For php, we know the executable path. There's no need to look it up.
              */
+
             return PHP_BINARY;
         }
 
