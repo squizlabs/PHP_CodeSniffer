@@ -33,6 +33,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - The source report now orders error codes by name when they have the same number of errors
     -- Thanks to Juliette Reinders Folmer for the patch
+  - The junit report no longer generates validation errors with the Jenkins xUnit plugin
+    -- Thanks to Nikolay Geo for the patch
   - Generic.Commenting.DocComment no longer generates the SpacingBeforeTags error if tags are the first content in the docblock
     -- The sniff will still generate a MissingShort error if there is no short comment
     -- This allows the MissingShort error to be suppressed in a ruleset to make short descriptions optional
