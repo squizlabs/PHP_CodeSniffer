@@ -378,3 +378,9 @@ $foo = array(
             : self::STATUS_VERIFIED,
         '3' => strtotime($row['date']),
        );
+
+$foo = foo(
+    array(
+    // comment
+    )
+);

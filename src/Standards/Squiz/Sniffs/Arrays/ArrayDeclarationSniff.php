@@ -524,8 +524,18 @@ class ArrayDeclarationSniff implements Sniff
         if ($singleValue === true) {
             // Array cannot be empty, so this is a multi-line array with
             // a single value. It should be defined on single line.
-            $error = 'Multi-line array contains a single value; use single-line array instead';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MultiLineNotAllowed');
+            $error     = 'Multi-line array contains a single value; use single-line array instead';
+            $errorCode = 'MultiLineNotAllowed';
+
+            $find    = Tokens::$phpcsCommentTokens;
+            $find[]  = T_COMMENT;
+            $comment = $phpcsFile->findNext($find, ($arrayStart + 1), $arrayEnd);
+            if ($comment === false) {
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, $errorCode);
+            } else {
+                $fix = false;
+                $phpcsFile->addError($error, $stackPtr, $errorCode);
+            }
 
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();

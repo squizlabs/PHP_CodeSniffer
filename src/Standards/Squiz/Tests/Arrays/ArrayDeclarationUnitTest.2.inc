@@ -366,3 +366,10 @@ $foo = [
             : self::STATUS_VERIFIED,
         '3' => strtotime($row['date']),
        ];
+
+
+$foo = foo(
+    [
+    // comment
+    ]
+);

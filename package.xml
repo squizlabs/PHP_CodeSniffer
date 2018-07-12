@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Arrays.ArrayDeclaration no longer removes the array opening brace while fixing
     -- This could occur when the opening brace was on a new line and the first array key directly followed
     -- This change also stops the KeyNotAligned error message being incorrectly reported in these cases
+  - Squiz.Arrays.ArrayDeclaration no longer tries to change multi-line arrays to single line when they contain comments
+    -- Fixes a conflict between this sniff and some indentation sniffs
   - Squiz.Classes.ClassDeclaration no longer enforces spacing rules when a class is followed by a function
     -- Fixes a conflict between this sniff and the Squiz.WhiteSpace.FunctionSpacing sniff
   - The Squiz.Classes.ValidClassName.NotCamelCaps message now references PascalCase instead of CamelCase
