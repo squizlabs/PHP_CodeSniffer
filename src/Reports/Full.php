@@ -123,18 +123,30 @@ class Full implements Report
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
                     $message = $error['message'];
-                    $message = str_replace("\n", "\n".$paddingLine2, $message);
                     if ($showSources === true) {
                         $message = "\033[1m".$message."\033[0m".' ('.$error['source'].')';
                     }
 
+                    $msgLines = [$message];
+                    if (strpos($message, "\n") !== false) {
+                        $msgLines = explode("\n", $message);
+                    }
+
+                    $errorMsg = '';
+                    foreach ($msgLines as $k => $msgLine) {
+                        if ($k !== 0) {
+                            $errorMsg .= PHP_EOL.$paddingLine2;
+                        }
+
+                        $errorMsg .= wordwrap(
+                            $msgLine,
+                            $maxErrorSpace,
+                            PHP_EOL.$paddingLine2
+                        );
+                    }
+
                     // The padding that goes on the front of the line.
-                    $padding  = ($maxLineNumLength - strlen($line));
-                    $errorMsg = wordwrap(
-                        $message,
-                        $maxErrorSpace,
-                        PHP_EOL.$paddingLine2
-                    );
+                    $padding = ($maxLineNumLength - strlen($line));
 
                     echo ' '.str_repeat(' ', $padding).$line.' | ';
                     if ($error['type'] === 'ERROR') {
