@@ -114,28 +114,29 @@ class Full implements Report
 
         // The maximum amount of space an error message can use.
         $maxErrorSpace = ($width - $paddingLength - 1);
-        if ($showSources === true) {
-            // Account for the chars used to print colors.
-            $maxErrorSpace += 8;
-        }
 
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $message = $error['message'];
-                    if ($showSources === true) {
-                        $message = "\033[1m".$message."\033[0m".' ('.$error['source'].')';
-                    }
-
+                    $message  = $error['message'];
                     $msgLines = [$message];
                     if (strpos($message, "\n") !== false) {
                         $msgLines = explode("\n", $message);
                     }
 
                     $errorMsg = '';
+                    $lastLine = (count($msgLines) - 1);
                     foreach ($msgLines as $k => $msgLine) {
-                        if ($k !== 0) {
+                        if ($k === 0) {
+                            if ($showSources === true) {
+                                $errorMsg .= "\033[1m";
+                            }
+                        } else {
                             $errorMsg .= PHP_EOL.$paddingLine2;
+                        }
+
+                        if ($k === $lastLine && $showSources === true) {
+                            $msgLine .= "\033[0m".' ('.$error['source'].')';
                         }
 
                         $errorMsg .= wordwrap(
