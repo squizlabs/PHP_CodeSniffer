@@ -26,8 +26,10 @@ class NamespaceDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            6 => 1,
-            9 => 1,
+            6  => 1,
+            9  => 1,
+            17 => 1,
+            19 => 1,
         ];
 
     }//end getErrorList()
