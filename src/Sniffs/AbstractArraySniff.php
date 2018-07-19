@@ -94,11 +94,21 @@ abstract class AbstractArraySniff implements Sniff
                 || $tokens[$checkToken]['code'] === T_OPEN_SHORT_ARRAY
                 || $tokens[$checkToken]['code'] === T_CLOSURE
             ) {
+                if ($findComma === true) {
+                    continue;
+                }
+
                 // Let subsequent calls of this test handle nested arrays.
-                if ($tokens[$lastToken]['code'] !== T_DOUBLE_ARROW
-                    && $findComma === false
-                ) {
-                    $indices[] = ['value_start' => $checkToken];
+                if ($tokens[$lastToken]['code'] !== T_DOUBLE_ARROW) {
+                    $valueContent = $phpcsFile->findNext(
+                        Tokens::$emptyTokens,
+                        ($lastToken + 1),
+                        ($checkToken + 1),
+                        true
+                    );
+
+                    $indices[] = ['value_start' => $valueContent];
+
                     $lastToken = $checkToken;
                 }
 
@@ -112,9 +122,11 @@ abstract class AbstractArraySniff implements Sniff
                 }
 
                 $checkToken = $phpcsFile->findNext(T_WHITESPACE, ($checkToken + 1), null, true);
-                $lastToken  = $checkToken;
 
-                if ($tokens[$checkToken]['code'] !== T_COMMA) {
+                $lastToken = $checkToken;
+                if ($tokens[$checkToken]['code'] !== T_COMMA
+                    || $keyUsed === true
+                ) {
                     $findComma = true;
                     $checkToken--;
                 }
