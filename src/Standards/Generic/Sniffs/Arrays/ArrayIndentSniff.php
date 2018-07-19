@@ -271,10 +271,16 @@ class ArrayIndentSniff extends AbstractArraySniff
 
         $nextNewline = $phpcsFile->findNext(T_WHITESPACE, ($newline + 1), $end, false, PHP_EOL);
         if ($nextNewline === false) {
-            return $phpcsFile->findFirstOnLine(T_WHITESPACE, $end, true);
+            $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $end, true);
+        } else {
+            $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $nextNewline, true);
         }
 
-        return $phpcsFile->findFirstOnLine(T_WHITESPACE, $nextNewline, true);
+        if (in_array($tokens[$first]['code'], [T_ARRAY, T_OPEN_SHORT_ARRAY]) !== true) {
+            return false;
+        }
+
+        return $first;
 
     }//end findFirstIndexOnNextLine()
 

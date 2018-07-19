@@ -66,21 +66,28 @@ $var = [
 
 $var = [
   ['one']
-  + ['two']
-  + ['three']
+    + ['two']
+    + ['three']
 ];
 
 $var = [
   ['one']
         // Following lines
-  + ['two']
-  + ['three']
+    + ['two']
+    + ['three']
+];
+
+$var = [
+  ['one']
+    + ['two']
+        // Following lines
+    + ['three']
 ];
 
 $var = [
   ['one']
         // Following lines
-  /* two */ + ['two']
+        /* two */ + ['two']
   + ['three']
 ];
 

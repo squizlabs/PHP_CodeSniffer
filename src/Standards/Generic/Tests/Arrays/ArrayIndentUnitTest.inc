@@ -78,6 +78,13 @@ $var = [
 
 $var = [
   ['one']
+    + ['two']
+        // Following lines
+    + ['three']
+];
+
+$var = [
+  ['one']
         // Following lines
         /* two */ + ['two']
   + ['three']
