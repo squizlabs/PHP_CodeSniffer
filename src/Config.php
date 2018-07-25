@@ -1516,6 +1516,14 @@ class Config
             return $data;
         }
 
+        if ($name === "php") {
+            /*
+             * For php, we know the executable path. There's no need to look it up.
+             */
+
+            return PHP_BINARY;
+        }
+
         if (array_key_exists($name, self::$executablePaths) === true) {
             return self::$executablePaths[$name];
         }
