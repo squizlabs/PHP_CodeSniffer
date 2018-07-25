@@ -43,6 +43,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.Functions.FunctionCallArgumentSpacing now properly fixes multi-line function calls with leading commas
     -- Previously, newlines between function arguments would be removed
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.PHP.Syntax will now use PHP_BINARY instead of trying to discover the executable path
+    -- This ensures that the sniff will always syntax check files using the PHP version that PHPCS is running under
+    -- Setting the php_path config var will still override this value as normal
+    -- Thanks to Willem Stuursma-Ruwen for the patch
   - PSR2.Namespaces.UseDeclaration now supports commas at the end of group use declarations
     -- Also improves checking and fixing for use statements containing parse errors
     -- Thanks to Juliette Reinders Folmer for the patch
