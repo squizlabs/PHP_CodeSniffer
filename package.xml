@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2018-06-07</date>
- <time>09:52:00</time>
+ <date>2018-07-27</date>
+ <time>09:45:00</time>
  <version>
   <release>3.3.1</release>
   <api>3.3.1</api>
@@ -1752,6 +1752,77 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>3.3.1</release>
+    <api>3.3.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2018-07-27</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Support for HHVM has been dropped due to recent unfixed bugs and HHVM refocus on Hack only
+      -- Thanks to Walt Sorensen and Juliette Reinders Folmer for helping to remove all HHVM exceptions from the core
+
+    - The full report (the default report) now has improved word wrapping for multi-line messages and sniff codes
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - The summary report now sorts files based on their directory location instead of just a basic string sort
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - The source report now orders error codes by name when they have the same number of errors
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - The junit report no longer generates validation errors with the Jenkins xUnit plugin
+      -- Thanks to Nikolay Geo for the patch
+    - Generic.Commenting.DocComment no longer generates the SpacingBeforeTags error if tags are the first content in the docblock
+      -- The sniff will still generate a MissingShort error if there is no short comment
+      -- This allows the MissingShort error to be suppressed in a ruleset to make short descriptions optional
+    - Generic.Functions.FunctionCallArgumentSpacing now properly fixes multi-line function calls with leading commas
+      -- Previously, newlines between function arguments would be removed
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.PHP.Syntax will now use PHP_BINARY instead of trying to discover the executable path
+      -- This ensures that the sniff will always syntax check files using the PHP version that PHPCS is running under
+      -- Setting the php_path config var will still override this value as normal
+      -- Thanks to Willem Stuursma-Ruwen for the patch
+    - PSR2.Namespaces.UseDeclaration now supports commas at the end of group use declarations
+      -- Also improves checking and fixing for use statements containing parse errors
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Squiz.Arrays.ArrayDeclaration no longer removes the array opening brace while fixing
+      -- This could occur when the opening brace was on a new line and the first array key directly followed
+      -- This change also stops the KeyNotAligned error message being incorrectly reported in these cases
+    - Squiz.Arrays.ArrayDeclaration no longer tries to change multi-line arrays to single line when they contain comments
+      -- Fixes a conflict between this sniff and some indentation sniffs
+    - Squiz.Classes.ClassDeclaration no longer enforces spacing rules when a class is followed by a function
+      -- Fixes a conflict between this sniff and the Squiz.WhiteSpace.FunctionSpacing sniff
+    - The Squiz.Classes.ValidClassName.NotCamelCaps message now references PascalCase instead of CamelCase
+      -- The "CamelCase class name" metric produced by the sniff has been changed to "PascalCase class name"
+      -- This reflects the fact that the class name check is actually a Pascal Case check and not really Camel Case
+      -- Thanks to Tom H Anderson for the patch
+    - Squiz.Commenting.InlineComment no longer enforces spacing rules when an inline comment is followed by a docblock
+      -- Fixes a conflict between this sniff and the Squiz.WhiteSpace.FunctionSpacing sniff
+    - Squiz.WhiteSpace.OperatorSpacing no longer tries to fix operator spacing if the next content is a comment on a new line
+      -- Fixes a conflict between this sniff and the Squiz.Commenting.PostStatementComment sniff
+      -- Also stops PHPCS annotations from being moved to a different line, potentially changing their meaning
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Squiz.WhiteSpace.FunctionSpacing no longer checks spacing of functions at the top of an embedded PHP block
+      -- Fixes a conflict between this sniff and the Squiz.PHP.EmbeddedPHP sniff
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Squiz.WhiteSpace.MemberVarSpacing no longer checks spacing before member vars that come directly after methods
+      -- Fixes a conflict between this sniff and the Squiz.WhiteSpace.FunctionSpacing sniff
+    - Squiz.WhiteSpace.SuperfluousWhitespace now recognizes unicode whitespace at the start and end of a file
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2029 : Squiz.Scope.MemberVarScope throws fatal error when a property is found in an interface
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2047 : PSR12.Classes.ClassInstantiation false positive when instantiating class from array index
+    - Fixed bug #2048 : GenericFormatting.MultipleStatementAlignment false positive when assigning values inside an array
+    - Fixed bug #2053 : PSR12.Classes.ClassInstantiation incorrectly fix when using member vars and some variable formats
+    - Fixed bug #2065 : Generic.ControlStructures.InlineControlStructure fixing fails when inline control structure contains closure
+    - Fixed bug #2072 : Squiz.Arrays.ArrayDeclaration throws NoComma error when array value is a shorthand IF statement
+    - Fixed bug #2082 : File with "defined() or define()" syntax triggers PSR1.Files.SideEffects.FoundWithSymbols
+    - Fixed bug #2095 : PSR2.Namespaces.NamespaceDeclaration does not handle namespaces defined over multiple lines
+    </notes>
+  </release>
   <release>
    <version>
     <release>3.3.0</release>
