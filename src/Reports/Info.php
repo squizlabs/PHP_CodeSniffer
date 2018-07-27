@@ -101,30 +101,59 @@ class Info implements Report
         echo str_repeat('-', 70).PHP_EOL;
 
         foreach ($metrics as $metric => $values) {
-            $winner      = '';
-            $winnerCount = 0;
-            $totalCount  = 0;
-            foreach ($values as $value => $count) {
-                $totalCount += $count;
-                if ($count > $winnerCount) {
-                    $winner      = $value;
-                    $winnerCount = $count;
-                }
-            }
+            if (count($values) === 1) {
+                $count = reset($values);
+                $value = key($values);
 
-            $winPercent = round(($winnerCount / $totalCount * 100), 2);
-            echo "$metric: \033[4m$winner\033[0m [$winnerCount/$totalCount, $winPercent%]".PHP_EOL;
-
-            asort($values);
-            $values = array_reverse($values, true);
-            foreach ($values as $value => $count) {
-                if ($value === $winner) {
-                    continue;
+                echo "$metric: \033[4m$value\033[0m [$count/$count, 100%]".PHP_EOL;
+            } else {
+                $totalCount = 0;
+                $valueWidth = 0;
+                foreach ($values as $value => $count) {
+                    $totalCount += $count;
+                    $valueWidth  = max($valueWidth, strlen($value));
                 }
 
-                $percent = round(($count / $totalCount * 100), 2);
-                echo "\t$value => $count ($percent%)".PHP_EOL;
-            }
+                $countWidth       = strlen($totalCount);
+                $nrOfThousandSeps = floor($countWidth / 3);
+                $countWidth      += $nrOfThousandSeps;
+
+                // Account for 'total' line.
+                $valueWidth = max(5, $valueWidth);
+
+                echo "$metric:".PHP_EOL;
+
+                ksort($values);
+                arsort($values);
+
+                $percentPrefixWidth = 0;
+                $percentWidth       = 6;
+                foreach ($values as $value => $count) {
+                    $percent       = round(($count / $totalCount * 100), 2);
+                    $percentPrefix = '';
+                    if ($percent === 0.00) {
+                        $percent            = 0.01;
+                        $percentPrefix      = '<';
+                        $percentPrefixWidth = 2;
+                        $percentWidth       = 4;
+                    }
+
+                    printf(
+                        "\t%-{$valueWidth}s => %{$countWidth}s (%{$percentPrefixWidth}s%{$percentWidth}.2f%%)".PHP_EOL,
+                        $value,
+                        number_format($count),
+                        $percentPrefix,
+                        $percent
+                    );
+                }
+
+                echo "\t".str_repeat('-', ($valueWidth + $countWidth + 15)).PHP_EOL;
+                printf(
+                    "\t%-{$valueWidth}s => %{$countWidth}s (100.00%%)".PHP_EOL,
+                    'total',
+                    number_format($totalCount)
+                );
+            }//end if
 
             echo PHP_EOL;
         }//end foreach
