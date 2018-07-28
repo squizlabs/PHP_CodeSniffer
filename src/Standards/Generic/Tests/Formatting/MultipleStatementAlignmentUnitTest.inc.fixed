@@ -86,14 +86,14 @@ class MyClass
     const MODE_DEBUG  = 'debug';
     const MODE_DEBUG2 = 'debug';
 
-    $array[$test] = 'anything';
-    $var          = 'anything';
+    var $array[$test] = 'anything';
+    var $var          = 'anything';
 
-    const MODE_DEBUG2              = 'debug';
-    $array[$test]                  = 'anything';
-    $var                           = 'anything';
-    $array[($test + 1)]            = 'anything';
-    $array[($blah + (10 - $test))] = 'anything';
+    const MODE_DEBUG3                  = 'debug';
+    public $array[$test]               = 'anything';
+    private $vara                      = 'anything';
+    protected $array[($test + 1)]      = 'anything';
+    var $array[($blah + (10 - $test))] = 'anything';
 }
 
 function myFunction($var=true)
