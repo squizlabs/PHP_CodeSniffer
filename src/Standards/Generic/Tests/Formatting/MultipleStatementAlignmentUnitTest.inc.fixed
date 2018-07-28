@@ -312,15 +312,15 @@ $loggerResult = $util->setLogger(new class {
 
                                 $foo    = 1;
                                 $barbar =2;
-                            }
+                            };
                             $barbar = function() {
                                 $foo    = 1;
                                 $barbar = 2;
-                            }
+                            };
                         });
                         $a      = $msg;
                         $foobar = $msg;
-                    }
+                    };
                     $bar    = $msg;
                 }
 
@@ -340,20 +340,20 @@ $loggerResult = $util->setLogger(new class {
 
                                 $foo    = 1;
                                 $barbar =2;
-                            }
+                            };
                             $barbar = function() {
                                 $foo    = 1;
                                 $barbar = 2;
-                            }
+                            };
                         });
                         $a      = $msg;
                         $foobar = $msg;
-                    }
+                    };
                     $bar    = $msg;
                 }
             });
             $foo          = 5;
-        }
+        };
         $bar    = $msg;
     }
 });

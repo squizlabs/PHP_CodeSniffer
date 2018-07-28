@@ -18,7 +18,7 @@ function myFunction()	{
 }
 
 
-class myClass()
+class myClass
 {
     // Good.
     function myFunction() {
@@ -64,7 +64,7 @@ function myFunction($variable1, $variable2,
 }
 
 
-class myClass()
+class myClass
 {
     // Good.
     function myFunction($variable1, $variable2,
@@ -88,7 +88,7 @@ class myClass()
     }
 }
 
-interface MyInterface()
+interface MyInterface
 {
     function myFunction();
 }
@@ -131,17 +131,17 @@ $closureWithArgsAndVars = function ($arg1, $arg2) use ($var1, $var2){
 $test = function ($param) use ($result)
 {
     return null;
-}
+};
 
 $test = function ($param) use ($result) : Something
 {
     return null;
-}
+};
 
 $test = function ($param) use ($result): Something
 {
     return null;
-}
+};
 
 foo(function ($bar) { ?>
     <div><?php echo $bar; ?></div>

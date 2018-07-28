@@ -51,7 +51,7 @@ $x = new stdClass();
 $x->null = 7;
 
 use Zend\Log\Writer\Null as NullWriter;
-new \Zend\Log\Writer\Null()
+new \Zend\Log\Writer\Null();
 
 namespace False;
 

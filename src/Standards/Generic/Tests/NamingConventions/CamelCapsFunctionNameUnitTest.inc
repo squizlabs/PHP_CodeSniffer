@@ -146,4 +146,4 @@ $a = new class {
     function __myFunction() {}
     function __my_function() {}
     function __call() {}
-}
+};
