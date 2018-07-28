@@ -181,7 +181,7 @@ abstract class Test3
 	}
 }
 
-public function test()
+function test()
 {
 	$o = <<<EOF
 this is some text
@@ -1244,7 +1244,7 @@ array_map(
 
 $app->run();
 
-public function foo()
+function foo()
 {
 	$foo('some
 	long description', function () {
