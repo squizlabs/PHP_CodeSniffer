@@ -75,32 +75,6 @@ interface My_Interface {
     public function _getSomeValue_Again() {}
     public function _My_Package_getSomeValue() {}
 
-    protected function getSomeValue() {}
-    protected function parseMyDSN() {}
-    protected function get_some_value() {}
-    protected function GetSomeValue() {}
-    protected function getSomeValue_Again() {}
-    protected function My_Package_getSomeValue() {}
-    protected function _getSomeValue() {}
-    protected function _parseMyDSN() {}
-    protected function _get_some_value() {}
-    protected function _GetSomeValue() {}
-    protected function _getSomeValue_Again() {}
-    protected function _My_Package_getSomeValue() {}
-
-    private function getSomeValue() {}
-    private function parseMyDSN() {}
-    private function get_some_value() {}
-    private function GetSomeValue() {}
-    private function getSomeValue_Again() {}
-    private function My_Package_getSomeValue() {}
-    private function _getSomeValue() {}
-    private function _parseMyDSN() {}
-    private function _get_some_value() {}
-    private function _GetSomeValue() {}
-    private function _getSomeValue_Again() {}
-    private function _My_Package_getSomeValue() {}
-
     function getSomeValue() {}
     function parseMyDSN() {}
     function get_some_value() {}
