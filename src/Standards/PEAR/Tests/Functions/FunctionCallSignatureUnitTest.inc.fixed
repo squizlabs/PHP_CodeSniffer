@@ -106,7 +106,7 @@ $foo = new stdClass(
     3
 );
 
-public function doSomething()
+function doSomething()
 {
     return $this->getFoo()
         ->doBar(
@@ -147,7 +147,7 @@ $bar = new stdClass(
     6
 );
 
-public function doSomething()
+function doSomething()
 {
     return $this->getFoo()
         ->doBar(

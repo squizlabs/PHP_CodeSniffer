@@ -105,7 +105,7 @@ $foo = new stdClass(
     2,
     3);
 
-public function doSomething()
+function doSomething()
 {
     return $this->getFoo()
         ->doBar(
@@ -142,7 +142,7 @@ $bar = new stdClass(
     4, /* thanks */ 5, /* PSR-2 */ 6
 );
 
-public function doSomething()
+function doSomething()
 {
     return $this->getFoo()
         ->doBar(

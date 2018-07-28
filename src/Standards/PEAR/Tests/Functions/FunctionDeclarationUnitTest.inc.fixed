@@ -1,5 +1,5 @@
 <?php
-public function someFunctionWithAVeryLongName($firstParameter='something',
+function someFunctionWithAVeryLongName($firstParameter='something',
     $secondParameter='booooo', $third=null, $fourthParameter=false,
     $fifthParameter=123.12, $sixthParam=true
 ) {
