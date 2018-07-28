@@ -51,7 +51,7 @@ class Magic_Test {
     function __invoke() {}
     function __myFunction() {}
     function __my_function() {}
-    function __call() {}
+
 }
 
 function __construct() {}
@@ -71,7 +71,7 @@ function __autoload() {}
 function __invoke() {}
 function __myFunction() {}
 function __my_function() {}
-function __call() {}
+
 
 class Closure_Test {
     function test() {
@@ -145,5 +145,5 @@ $a = new class {
     function __invoke() {}
     function __myFunction() {}
     function __my_function() {}
-    function __call() {}
+
 };
