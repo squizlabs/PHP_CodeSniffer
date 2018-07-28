@@ -65,7 +65,7 @@ $something
 
 // This is not a function call.
 function &testFunction($arg1,
-    $arg2,
+    $arg2
 ) {
 }
 
@@ -204,7 +204,7 @@ function foo()
         /* comment
          * comment
         */
-        'string'.
+        'string'
     );
 }
 

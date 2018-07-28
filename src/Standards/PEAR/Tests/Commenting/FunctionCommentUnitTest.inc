@@ -243,13 +243,13 @@ function myFunction($arg1) {}
  */
 function myFunction() {}
 
-class MyClass() {
+abstract class MyClass {
     /**
      * An abstract function.
      *
      * @return string[]
      */
-    abstract final protected function myFunction();
+    abstract protected function myFunction();
 }
 
 /**

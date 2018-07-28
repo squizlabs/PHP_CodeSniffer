@@ -62,31 +62,31 @@ abstract class My_Class {
 
 interface My_Interface {
 
-    public function getSomeValue() {}
-    public function parseMyDSN() {}
-    public function get_some_value() {}
-    public function GetSomeValue() {}
-    public function getSomeValue_Again() {}
-    public function My_Package_getSomeValue() {}
-    public function _getSomeValue() {}
-    public function _parseMyDSN() {}
-    public function _get_some_value() {}
-    public function _GetSomeValue() {}
-    public function _getSomeValue_Again() {}
-    public function _My_Package_getSomeValue() {}
+    public function getSomeValue();
+    public function parseMyDSN();
+    public function get_some_value();
+    public function GetSomeValue();
+    public function getSomeValue_Again();
+    public function My_Package_getSomeValue();
+    public function _getSomeValue();
+    public function _parseMyDSN();
+    public function _get_some_value();
+    public function _GetSomeValue();
+    public function _getSomeValue_Again();
+    public function _My_Package_getSomeValue();
 
-    function getSomeValue() {}
-    function parseMyDSN() {}
-    function get_some_value() {}
-    function GetSomeValue() {}
-    function getSomeValue_Again() {}
-    function My_Package_getSomeValue() {}
-    function _getSomeValue() {}
-    function _parseMyDSN() {}
-    function _get_some_value() {}
-    function _GetSomeValue() {}
-    function _getSomeValue_Again() {}
-    function _My_Package_getSomeValue() {}
+    function getSomeValue();
+    function parseMyDSN();
+    function get_some_value();
+    function GetSomeValue();
+    function getSomeValue_Again();
+    function My_Package_getSomeValue();
+    function _getSomeValue();
+    function _parseMyDSN();
+    function _get_some_value();
+    function _GetSomeValue();
+    function _getSomeValue_Again();
+    function _My_Package_getSomeValue();
 
 }//end interface
 
@@ -184,7 +184,7 @@ class Foo {
 }
 
 /* Magic methods in anonymous classes. */
-$a new class {
+$a = new class {
     function __construct() {}
     function __destruct() {}
     function __call($name, $args) {}
@@ -202,6 +202,6 @@ $a new class {
     function __invoke() {}
     function __myFunction() {}
     function __my_function() {}
-}
+};
 
 function send_system_email__to_user($body, $recipient){}
