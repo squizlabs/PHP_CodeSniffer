@@ -26,12 +26,12 @@ class CallTimePassByReferenceUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            9  => 1,
-            12 => 1,
-            15 => 1,
-            18 => 2,
-            23 => 1,
-            30 => 1,
+            11 => 1,
+            14 => 1,
+            17 => 1,
+            20 => 2,
+            25 => 1,
+            32 => 1,
         ];
 
     }//end getErrorList()

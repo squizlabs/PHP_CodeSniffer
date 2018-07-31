@@ -1,5 +1,7 @@
 <?php
 class myclass extends yourclass implements someint {
+    const MY_CONST = 0777;
+
     function myfunc($var) {
         echo $var;
     }
@@ -31,3 +33,9 @@ $foo = Bar(&$fooBar);
 
 myfunc($myvar&$myvar);
 myfunc($myvar[0]&$myvar);
+
+define("MY_CONST", 0777);
+
+myfunc(myclass::MY_CONST&$myvar);
+
+myfunc(MY_CONST&$myvar);

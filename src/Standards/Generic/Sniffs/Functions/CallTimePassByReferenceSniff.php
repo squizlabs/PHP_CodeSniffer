@@ -130,6 +130,7 @@ class CallTimePassByReferenceSniff implements Sniff
                     || $tokenCode === T_CLOSE_PARENTHESIS
                     || $tokenCode === T_CLOSE_SQUARE_BRACKET
                     || $tokenCode === T_LNUMBER
+                    || $tokenCode === T_STRING
                     || isset(Tokens::$assignmentTokens[$tokenCode]) === true
                 ) {
                     continue;
