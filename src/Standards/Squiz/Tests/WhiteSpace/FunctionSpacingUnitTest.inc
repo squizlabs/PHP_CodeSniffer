@@ -362,3 +362,34 @@ $util->setLogger(new class {
 function functionInEmbeddedPHP() {
 
 }
+
+// Make sure the indentation for the function comment does not get removed.
+class MyClass
+{
+
+    protected $tag = '';
+
+
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func1() {}
+
+}//end class
+
+class MyClass
+{
+
+
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func1() {}
+
+}//end class
