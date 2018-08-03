@@ -112,4 +112,20 @@
     <rule ref="Squiz.Commenting.InlineComment">
         <exclude name="Squiz.Commenting.InlineComment.SpacingAfterAtFunctionEnd"/>
     </rule>
+
+    <!-- Private methods MUST not be prefixed with an underscore -->
+    <rule ref="Squiz.NamingConventions.ValidFunctionName.PrivateNoUnderscore">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <type>error</type>
+    </rule>
+
+    <!-- Private properties MUST not be prefixed with an underscore -->
+    <rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR2.Classes.PropertyDeclaration.Underscore">
+        <type>error</type>
+    </rule>
 </ruleset>
