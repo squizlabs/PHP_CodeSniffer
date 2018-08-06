@@ -393,3 +393,21 @@ class MyClass
     function func1() {}
 
 }//end class
+
+class MyClass
+{
+    // Unrelated comment.
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func1() {}
+    // phpcs:disable Standard.Category.Sniff -- for reasons.
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func2() {}
+}//end class

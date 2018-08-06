@@ -302,7 +302,7 @@ class FunctionSpacingSniff implements Sniff
 
                 if ($foundLines < $requiredSpacing) {
                     $padding = str_repeat($phpcsFile->eolChar, ($requiredSpacing - $foundLines));
-                    $phpcsFile->fixer->addContent($nextSpace, $padding);
+                    $phpcsFile->fixer->addContentBefore($nextSpace, $padding);
                 } else {
                     $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), null, true);
                     $phpcsFile->fixer->beginChangeset();
