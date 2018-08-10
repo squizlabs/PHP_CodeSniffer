@@ -293,7 +293,7 @@ class VariableCommentUnitTest
      /**
      * @var int Var type checking (int v.s. integer) with single-line comment.
      */
-     private $_varSimpleTypeCheck;
+     private $_varSimpleTypeCheckSingleLine;
 
 
 }//end class
