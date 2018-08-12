@@ -219,5 +219,31 @@ namespace ReturnTypeVariations
     {
         return;
     };
-}
 
+    $func = function() use($a):
+    string // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    {
+        return;
+    };
+
+    $func = function() use($a): // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    string
+    {
+        return;
+    };
+
+    $func = function() use($a):string // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    {
+        return;
+    };
+
+    $func = function() use($a) :string // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    {
+        return;
+    };
+
+    $func = function() use($a) : string // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    {
+        return;
+    };
+}

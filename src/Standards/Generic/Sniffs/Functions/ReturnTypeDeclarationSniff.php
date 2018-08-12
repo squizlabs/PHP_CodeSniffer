@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class ReturnTypeDeclarationSniff implements Sniff
 {
@@ -125,7 +126,18 @@ class ReturnTypeDeclarationSniff implements Sniff
         $errorMessage = str_replace("\t", '\t', $errorMessage);
         $errorMessage = str_replace('EOL', '\n', $errorMessage);
 
-        if ($phpcsFile->addFixableError($errorMessage, $stackPtr, 'ReturnTypeDeclarationSpacing') === false) {
+        // Ensure we don't affect inline comments when automatically fixing.
+        $find    = Tokens::$phpcsCommentTokens;
+        $find[]  = T_COMMENT;
+        $comment = $phpcsFile->findNext($find, $closingParenthesisPosition, $endPosition);
+        if ($comment === false) {
+            $fix = $phpcsFile->addFixableError($errorMessage, $stackPtr, 'ReturnTypeDeclarationSpacing');
+        } else {
+            $fix = false;
+            $phpcsFile->addError($errorMessage, $stackPtr, 'ReturnTypeDeclarationSpacing');
+        }
+
+        if ($fix === false) {
             return;
         }
 
