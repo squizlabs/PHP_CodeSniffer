@@ -123,7 +123,7 @@ class Info implements Report
 
                 echo "$metric:".PHP_EOL;
 
-                ksort($values);
+                ksort($values, SORT_NATURAL);
                 arsort($values);
 
                 $percentPrefixWidth = 0;
