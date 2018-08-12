@@ -70,7 +70,7 @@ class ReturnTypeDeclarationSniff implements Sniff
 
         $tokensToFind = [
             T_COLON,
-            T_RETURN_TYPE,
+            T_STRING,
             T_WHITESPACE,
         ];
 
@@ -82,7 +82,7 @@ class ReturnTypeDeclarationSniff implements Sniff
                 $closingParenthesisColonSpacing = $acc;
                 $acc           = '';
                 $colonPosition = $nextSeparator;
-            } else if ($tokens[$nextSeparator]['code'] === T_RETURN_TYPE) {
+            } else if ($tokens[$nextSeparator]['code'] === T_STRING) {
                 $colonReturnTypeSpacing = $acc;
                 $acc = '';
                 $returnTypePosition = $nextSeparator;
