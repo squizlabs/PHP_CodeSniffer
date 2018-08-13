@@ -1184,7 +1184,7 @@ function test()
 
 switch ($a) {
     case 0:
-        function () {
+        $a = function () {
         };
     case 1:
         break;
@@ -1238,7 +1238,7 @@ array_map(
 /**
  * Comment.
  */
-(function () use ($app) {
+$a(function () use ($app) {
     echo 'hi';
 })();
 

@@ -14,7 +14,7 @@ $var = array;
 
 function foo(array $array) {}
 
-function (array $array) use ($foo): array {};
+$a = function (array $array) use ($foo): array {};
 
 abstract function foo(): array;
 

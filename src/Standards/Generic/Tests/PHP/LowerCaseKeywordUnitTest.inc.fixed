@@ -13,10 +13,10 @@ const array();
 foreach ($var as $var) { exit; }
 if ($a and $b or $c xor $d) { die; } elseif( $var ) { } else {}
 goto a;
-function (Array $a) {};
+$b = function (Array $a) {};
 const PRIVATE;
 HttpStatus::CONTINUE;
-function ($f) {
+$c = function ($f) {
     yield $f;
     yield from fun();
 };
