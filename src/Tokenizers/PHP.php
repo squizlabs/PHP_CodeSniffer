@@ -1313,9 +1313,15 @@ class PHP extends Tokenizer
                     }
 
                     if ($tokens[$i] === ')') {
+                        $parenCount = 1;
                         for ($i--; $i > 0; $i--) {
                             if ($tokens[$i] === '(') {
-                                break;
+                                $parenCount--;
+                                if ($parenCount === 0) {
+                                    break;
+                                }
+                            } else if ($tokens[$i] === ')') {
+                                $parenCount++;
                             }
                         }
 

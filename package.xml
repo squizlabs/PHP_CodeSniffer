@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, this standard enforced the use of underscores
   - Fixed bug #2110 : Squiz.WhiteSpace.FunctionSpacing is removing indents from the start of functions when fixing
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2120 : Tokenizer fails to match T_INLINE_ELSE when used after function call containing closure
  </notes>
  <contents>
   <dir name="/">
