@@ -345,7 +345,7 @@ $x = $var('y',
 $obj->{$x}(1,
   2);
 
-(function ($a, $b) {
+return (function ($a, $b) {
     return function ($c, $d) use ($a, $b) {
         echo $a, $b, $c, $d;
     };
@@ -366,7 +366,7 @@ class Foo
     }
 }
 
-(function ($a, $b) {
+return (function ($a, $b) {
     return function ($c, $d) use ($a, $b) {
         echo $a, $b, $c, $d;
     };
