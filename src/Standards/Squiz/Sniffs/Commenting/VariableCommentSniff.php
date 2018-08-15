@@ -98,7 +98,7 @@ class VariableCommentSniff extends AbstractVariableSniff
             return;
         }
 
-        $varType       = $tokens[($foundVar + 2)]['content'];
+        $varType       = explode(' ', $tokens[($foundVar + 2)]['content'])[0];
         $suggestedType = Common::suggestType($varType);
         if ($varType !== $suggestedType) {
             $error = 'Expected "%s" but found "%s" for @var tag in member variable comment';
