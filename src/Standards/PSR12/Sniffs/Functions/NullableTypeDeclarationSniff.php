@@ -16,6 +16,19 @@ use PHP_CodeSniffer\Util\Tokens;
 class NullableTypeDeclarationSniff implements Sniff
 {
 
+    /**
+     * An array of valid tokens after `T_NULLABLE` occurrences.
+     *
+     * @var array
+     */
+    private $validTokens = [
+        T_STRING       => true,
+        T_NS_SEPARATOR => true,
+        T_CALLABLE     => true,
+        T_SELF         => true,
+        T_PARENT       => true,
+    ];
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -40,22 +53,15 @@ class NullableTypeDeclarationSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $validTokens = [
-            T_STRING,
-            T_NS_SEPARATOR,
-            T_CALLABLE,
-            T_SELF,
-            T_PARENT,
-        ];
-
         $nextNonEmptyPtr = $phpcsFile->findNext([T_WHITESPACE], ($stackPtr + 1), null, true);
         if ($nextNonEmptyPtr === false) {
             // Parse error or live coding.
             return;
         }
 
-        $tokens          = $phpcsFile->getTokens();
-        $validTokenFound = in_array($tokens[$nextNonEmptyPtr]['code'], $validTokens) === true;
+        $tokens           = $phpcsFile->getTokens();
+        $nextNonEmptyCode = $tokens[$nextNonEmptyPtr]['code'];
+        $validTokenFound  = isset($this->validTokens[$nextNonEmptyCode]);
 
         if ($validTokenFound === true && $nextNonEmptyPtr === ($stackPtr + 1)) {
             // Valid structure.
@@ -76,8 +82,6 @@ class NullableTypeDeclarationSniff implements Sniff
 
         // Non-whitespace tokens found; trigger error but don't fix.
         $phpcsFile->addError('Unexpected characters found after nullable', ($stackPtr + 1), 'UnexpectedCharactersFound');
-
-        return;
 
     }//end process()
 
