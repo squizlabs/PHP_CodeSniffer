@@ -98,18 +98,40 @@ class VariableCommentSniff extends AbstractVariableSniff
             return;
         }
 
-        $varType       = explode(' ', $tokens[($foundVar + 2)]['content'])[0];
-        $suggestedType = Common::suggestType($varType);
+         // Support both a var type and a description.
+        preg_match('`^((?:\|?(?:array\([^\)]*\)|[\\\\a-z0-9\[\]]+))*)( .*)?`i', $tokens[($foundVar + 2)]['content'], $varParts);
+        if (isset($varParts[1]) === false) {
+            return;
+        }
+
+        $varType = $varParts[1];
+
+        // Check var type (can be multiple, separated by '|').
+        $typeNames      = explode('|', $varType);
+        $suggestedNames = [];
+        foreach ($typeNames as $i => $typeName) {
+            $suggestedName = Common::suggestType($typeName);
+            if (in_array($suggestedName, $suggestedNames) === false) {
+                $suggestedNames[] = $suggestedName;
+            }
+        }
+
+        $suggestedType = implode('|', $suggestedNames);
         if ($varType !== $suggestedType) {
             $error = 'Expected "%s" but found "%s" for @var tag in member variable comment';
             $data  = [
                 $suggestedType,
                 $varType,
             ];
-
-            $fix = $phpcsFile->addFixableError($error, ($foundVar + 2), 'IncorrectVarType', $data);
+            $fix   = $phpcsFile->addFixableError($error, $foundVar, 'IncorrectVarType', $data);
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($foundVar + 2), $suggestedType);
+                $replacement = $suggestedType;
+                if (empty($varParts[2]) === false) {
+                    $replacement .= $varParts[2];
+                }
+
+                $phpcsFile->fixer->replaceToken(($foundVar + 2), $replacement);
+                unset($replacement);
             }
         }
 
