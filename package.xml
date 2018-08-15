@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Fixed a problem where the report cache was not being cleared when the sniffs inside a standard were updated
   - The info report (--report=info) now has improved formatting for metrics that span multiple lines
     -- Thanks to Juliette Reinders Folmer for the patch
   - The unit test runner now skips .bak files when looking for test cases

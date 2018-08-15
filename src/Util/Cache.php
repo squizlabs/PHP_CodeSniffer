@@ -123,8 +123,7 @@ class Cache
             }
         );
 
-        $iterator      = new \RecursiveIteratorIterator($filter);
-        $codeHashFiles = [];
+        $iterator = new \RecursiveIteratorIterator($filter);
         foreach ($iterator as $file) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 echo "\t\t=> core file: $file".PHP_EOL;
