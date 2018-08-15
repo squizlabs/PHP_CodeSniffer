@@ -19,7 +19,7 @@ class DeprecatedFunctionsSniff extends ForbiddenFunctionsSniff
      * The value is NULL if no alternative exists. IE, the
      * function should just not be used.
      *
-     * @var array(string => string|null)
+     * @var array<string, string|null>
      */
     public $forbiddenFunctions = [];
 
