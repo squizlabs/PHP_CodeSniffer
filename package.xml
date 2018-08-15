@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - The Squiz standard now ensures underscores are not used to indicate visibility of private members vars and methods
     -- Previously, this standard enforced the use of underscores
+  - Squiz.Commenting.FunctionComment no longer errors when trying to fix indents of multi-line param comments
   - Fixed bug #2110 : Squiz.WhiteSpace.FunctionSpacing is removing indents from the start of functions when fixing
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2115 : Squiz.Commenting.VariableComment not checking var types when the @var line contains a comment

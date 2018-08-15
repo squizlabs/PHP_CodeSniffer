@@ -112,20 +112,22 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
             888 => 1,
             890 => 1,
             978 => 1,
+            997 => 1,
         ];
 
         // Scalar type hints only work from PHP 7 onwards.
         if (PHP_VERSION_ID >= 70000) {
-            $errors[17]  = 3;
-            $errors[128] = 1;
-            $errors[143] = 3;
-            $errors[161] = 2;
-            $errors[201] = 1;
-            $errors[232] = 7;
-            $errors[363] = 3;
-            $errors[377] = 1;
-            $errors[575] = 2;
-            $errors[627] = 1;
+            $errors[17]   = 3;
+            $errors[128]  = 1;
+            $errors[143]  = 3;
+            $errors[161]  = 2;
+            $errors[201]  = 1;
+            $errors[232]  = 7;
+            $errors[363]  = 3;
+            $errors[377]  = 1;
+            $errors[575]  = 2;
+            $errors[627]  = 1;
+            $errors[1002] = 1;
         } else {
             $errors[729] = 4;
             $errors[740] = 2;

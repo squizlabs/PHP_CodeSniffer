@@ -990,3 +990,13 @@ public static function foo(?int $a, ?array $b) {}
  * @return void
  */
 public function foo(object $a, ?object $b) {}
+
+/**
+ * Prepares given PHP class method for later code building.
+ *
+ * @param integer           $foo Comment.
+ *  - Additional comment.
+ *
+ * @return void
+ */
+function foo($foo) {}
