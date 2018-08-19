@@ -191,4 +191,49 @@ class FindExtendedClassNameTest extends TestCase
     }//end testExtendedNamespacedInterface()
 
 
+    /**
+     * Test a non-extended class with a nested class which does extend another class.
+     *
+     * @return void
+     */
+    public function testNestedExtendedClass()
+    {
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testNestedExtendedClass */'
+        );
+
+        $found = $this->phpcsFile->findExtendedClassName(($class + 2));
+        $this->assertFalse($found);
+
+    }//end testNestedExtendedClass()
+
+
+    /**
+     * Test a nested anonymous class that extends a named class.
+     *
+     * @return void
+     */
+    public function testNestedExtendedAnonClass()
+    {
+        $start = ($this->phpcsFile->numTokens - 1);
+        $class = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testNestedExtendedAnonClass */'
+        );
+        $class = $this->phpcsFile->findNext(T_ANON_CLASS, ($class + 1));
+
+        $found = $this->phpcsFile->findExtendedClassName($class);
+        $this->assertSame('testFECNAnonClass', $found);
+
+    }//end testNestedExtendedAnonClass()
+
+
 }//end class
