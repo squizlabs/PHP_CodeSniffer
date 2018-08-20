@@ -80,6 +80,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="FindEndOfStatementTest.php" role="test" />
       <file baseinstalldir="" name="FindExtendedClassNameTest.inc" role="test" />
       <file baseinstalldir="" name="FindExtendedClassNameTest.php" role="test" />
+      <file baseinstalldir="" name="FindExtendedInterfaceNamesTest.inc" role="test" />
+      <file baseinstalldir="" name="FindExtendedInterfaceNamesTest.php" role="test" />
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.inc" role="test" />
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.php" role="test" />
       <file baseinstalldir="" name="GetMemberPropertiesTest.inc" role="test" />
