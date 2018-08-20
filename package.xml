@@ -42,6 +42,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2120 : Tokenizer fails to match T_INLINE_ELSE when used after function call containing closure
   - Fixed bug #2121 : Squiz.PHP.DisallowMultipleAssignments false positive in while loop conditions
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2127 : File::findExtendedClassName() doesn't support nested classes
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
