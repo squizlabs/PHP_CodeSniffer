@@ -4,7 +4,7 @@
  * Ensures that all function paths return
  *
  * @author    Jesse G. Donat <donatj@gmail.com>
- * @copyright 2009-2014 Jesse G. Donat
+ * @copyright 2018 Jesse G. Donat
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
