@@ -16,6 +16,7 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class InconsistentReturnSniff implements Sniff
 {
 
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -23,10 +24,10 @@ class InconsistentReturnSniff implements Sniff
      */
     public function register()
     {
-        return [
-            T_FUNCTION
-        ];
-    }
+        return [T_FUNCTION];
+
+    }//end register()
+
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -37,20 +38,19 @@ class InconsistentReturnSniff implements Sniff
      *
      * @return void
      */
-    public function process( File $phpcsFile, $stackPtr )
+    public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
         $returnCount = 0;
         $funcLevel   = $tokens[$stackPtr]['level'];
 
-        if (empty($tokens[$stackPtr]['scope_opener'])) {
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
             return;
         }
 
         $markerPtr = $tokens[$stackPtr]['scope_opener'];
         while (($markerPtr = $phpcsFile->findNext([ T_RETURN, T_THROW ], ($markerPtr + 1), $tokens[$stackPtr]['scope_closer'])) !== false) {
-
             $nextPtr = $phpcsFile->findNext(T_WHITESPACE, ($markerPtr + 1), null, true);
             if ($tokens[$nextPtr]['code'] === T_SEMICOLON) {
                 return;
@@ -70,7 +70,7 @@ class InconsistentReturnSniff implements Sniff
 
                 if ($code === T_SWITCH) {
                     $casePtr = $phpcsFile->findPrevious([ T_CASE, T_DEFAULT ], $markerPtr);
-                    if ($casePtr && $tokens[$casePtr]['code'] === T_DEFAULT) {
+                    if ($casePtr !== false && $tokens[$casePtr]['code'] === T_DEFAULT) {
                         $markerLevel--;
                     }
                 }
@@ -80,16 +80,18 @@ class InconsistentReturnSniff implements Sniff
                 $returnCount++;
             }
 
-            if ($markerLevel == $funcLevel + 1) {
+            if ($markerLevel === ($funcLevel + 1)) {
                 return;
             }
-        }
+        }//end while
 
-        if ($returnCount == 0) {
+        if ($returnCount === 0) {
             return;
         }
 
-		$phpcsFile->addWarning("Not all paths through function return a value or throw exception.", $stackPtr, 'NotAllReturn');
-    }
+        $phpcsFile->addWarning("Not all paths through function return a value or throw exception.", $stackPtr, 'NotAllReturn');
 
-}
+    }//end process()
+
+
+}//end class
