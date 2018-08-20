@@ -2377,12 +2377,12 @@ class File
             return false;
         }
 
-        if (isset($this->tokens[$stackPtr]['scope_closer']) === false) {
+        if (isset($this->tokens[$stackPtr]['scope_opener']) === false) {
             return false;
         }
 
-        $classCloserIndex = $this->tokens[$stackPtr]['scope_closer'];
-        $extendsIndex     = $this->findNext(T_EXTENDS, $stackPtr, $classCloserIndex);
+        $classOpenerIndex = $this->tokens[$stackPtr]['scope_opener'];
+        $extendsIndex     = $this->findNext(T_EXTENDS, $stackPtr, $classOpenerIndex);
         if (false === $extendsIndex) {
             return false;
         }
@@ -2393,7 +2393,7 @@ class File
             T_WHITESPACE,
         ];
 
-        $end  = $this->findNext($find, ($extendsIndex + 1), $classCloserIndex, true);
+        $end  = $this->findNext($find, ($extendsIndex + 1), ($classOpenerIndex + 1), true);
         $name = $this->getTokensAsString(($extendsIndex + 1), ($end - $extendsIndex - 1));
         $name = trim($name);
 

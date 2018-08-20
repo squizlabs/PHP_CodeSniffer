@@ -22,3 +22,11 @@ interface testInterfaceThatExtendsInterface extends testFECNInterface{}
 
 /* testInterfaceThatExtendsFQCNInterface */
 interface testInterfaceThatExtendsFQCNInterface extends \PHP_CodeSniffer\Tests\Core\File\testFECNInterface{}
+
+/* testNestedExtendedClass */
+class testFECNNestedExtendedClass {
+	public function someMethod() {
+		/* testNestedExtendedAnonClass */
+		$anon = new class extends testFECNAnonClass {};
+	}
+}
