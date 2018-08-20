@@ -41,13 +41,12 @@ class InconsistentReturnSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        $returnCount = 0;
-        $funcLevel   = $tokens[$stackPtr]['level'];
-
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
             return;
         }
+
+        $returnCount = 0;
+        $funcLevel   = $tokens[$stackPtr]['level'];
 
         $markerPtr = $tokens[$stackPtr]['scope_opener'];
         while (($markerPtr = $phpcsFile->findNext([ T_RETURN, T_THROW ], ($markerPtr + 1), $tokens[$stackPtr]['scope_closer'])) !== false) {
@@ -55,8 +54,6 @@ class InconsistentReturnSniff implements Sniff
             if ($tokens[$nextPtr]['code'] === T_SEMICOLON) {
                 return;
             }
-
-            $markers[] = $markerPtr;
 
             $markerLevel = $tokens[$markerPtr]['level'];
             foreach ($tokens[$markerPtr]['conditions'] as $point => $code) {
