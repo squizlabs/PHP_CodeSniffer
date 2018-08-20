@@ -390,7 +390,11 @@ class Ruleset
             $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
 
             $parts = explode('.', $rule['ref']);
-            if (count($parts) === 4) {
+            if (count($parts) === 4
+                && $parts[0] !== ''
+                && $parts[1] !== ''
+                && $parts[2] !== ''
+            ) {
                 $sniffCode = $parts[0].'.'.$parts[1].'.'.$parts[2];
                 if (isset($this->ruleset[$sniffCode]['severity']) === true
                     && $this->ruleset[$sniffCode]['severity'] === 0
