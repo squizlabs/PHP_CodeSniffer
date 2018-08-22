@@ -130,6 +130,14 @@ class FindExtendedClassNameTest extends TestCase
                 '/* testNestedExtendedAnonClass */',
                 'testFECNAnonClass',
             ],
+            [
+                '/* testClassThatExtendsAndImplements */',
+                'testFECNClass',
+            ],
+            [
+                '/* testClassThatImplementsAndExtends */',
+                'testFECNClass',
+            ],
         ];
 
     }//end dataExtendedClass()
