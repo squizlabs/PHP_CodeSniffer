@@ -120,6 +120,20 @@ class FindImplementedInterfaceNamesTest extends TestCase
                 '/* testInterface */',
                 false,
             ],
+            [
+                '/* testClassThatExtendsAndImplements */',
+                [
+                    'InterfaceA',
+                    '\NameSpaced\Cat\InterfaceB',
+                ],
+            ],
+            [
+                '/* testClassThatImplementsAndExtends */',
+                [
+                    '\InterfaceA',
+                    'InterfaceB',
+                ],
+            ],
         ];
 
     }//end dataImplementedInterface()
