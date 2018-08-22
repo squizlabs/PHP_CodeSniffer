@@ -127,6 +127,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="PHP/CodeSniffer" name="ExactMatch.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Filter.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="GitModified.php" role="php" />
+     <file baseinstalldir="PHP/CodeSniffer" name="GitStaged.php" role="php" />
     </dir>
     <dir name="Generators">
      <file baseinstalldir="PHP/CodeSniffer" name="Generator.php" role="php" />
