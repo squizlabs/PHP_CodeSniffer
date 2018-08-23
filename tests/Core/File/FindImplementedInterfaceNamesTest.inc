@@ -3,7 +3,6 @@
 
 namespace PHP_CodeSniffer\Tests\Core\File;
 
-\PHP_CodeSniffer\Tests\Core\File\testFECNClass
 interface testFIINInterface2 {}
 
 /* testInterface */
