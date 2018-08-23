@@ -30,3 +30,9 @@ class testFECNNestedExtendedClass {
 		$anon = new class extends testFECNAnonClass {};
 	}
 }
+
+/* testClassThatExtendsAndImplements */
+class testFECNClassThatExtendsAndImplements extends testFECNClass implements InterfaceA, InterfaceB {}
+
+/* testClassThatImplementsAndExtends */
+class testFECNClassThatImplementsAndExtends implements InterfaceA, InterfaceB extends testFECNClass {}
