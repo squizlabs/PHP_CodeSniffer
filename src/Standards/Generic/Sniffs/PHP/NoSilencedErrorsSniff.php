@@ -64,10 +64,10 @@ class NoSilencedErrorsSniff implements Sniff
         $found = str_replace(["\t", "\n", "\r"], ' ', $found).'...';
 
         if ($this->error === true) {
-            $error = 'Silencing errors is forbidden. Found: %s';
+            $error = 'Silencing errors is forbidden; found: %s';
             $phpcsFile->addError($error, $stackPtr, 'Forbidden', [$found]);
         } else {
-            $error = 'Silencing errors is discouraged. Found: %s';
+            $error = 'Silencing errors is discouraged; found: %s';
             $phpcsFile->addWarning($error, $stackPtr, 'Discouraged', [$found]);
         }
 
