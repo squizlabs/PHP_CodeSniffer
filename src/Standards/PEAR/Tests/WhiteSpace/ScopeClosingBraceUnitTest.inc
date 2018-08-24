@@ -24,7 +24,7 @@ class Test2
  }
 
 
-public function test2()
+function test2()
 {
     if ($str{0}) {
         $chr = $str{0}; }

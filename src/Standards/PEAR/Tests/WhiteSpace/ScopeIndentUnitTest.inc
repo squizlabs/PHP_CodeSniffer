@@ -181,7 +181,7 @@ abstract class Test3
     }
 }
 
-public function test()
+function test()
 {
     $o = <<<EOF
 this is some text

@@ -1,5 +1,5 @@
 <?php
-public function someFunctionWithAVeryLongName($firstParameter='something',
+function someFunctionWithAVeryLongName($firstParameter='something',
    $secondParameter='booooo', $third=null, $fourthParameter=false,
      $fifthParameter=123.12, $sixthParam=true
 ){
@@ -18,7 +18,7 @@ function  blah()
 {
 }
 
-class MyClass
+abstract class MyClass
 {
 
     public function someFunctionWithAVeryLongName($firstParameter='something',
@@ -182,21 +182,21 @@ $b = function &() {
 function foo(
     $param1,
     $param2,
-    $param3,
+    $param3
 ) : SomeClass {
 }
 
 function foo(
     $param1,
     $param2,
-    $param3,
+    $param3
 ): SomeClass {
 }
 
 function foo(
     $param1,
     $param2,
-    $param3,
+    $param3
 ): SomeClass // Comment here
 {
 }
@@ -206,7 +206,7 @@ function foo(
 
     $param2,
 
-    $param3,
+    $param3
 ) : SomeClass {
 }
 

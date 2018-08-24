@@ -57,7 +57,7 @@ foreach($items as $item){
     echo $item;
 }
 
-for ($items as $item) { echo $item; }
+foreach ($items as $item) { echo $item; }
 
 
 // if
@@ -130,7 +130,7 @@ if ($i == 0) {
 }
 
 if ($i == 0) { $i = 1; } else if ($i == 2) { $i = 0; }
-if ($i == 0) { $i = 1; } elseif ($1 == 2) { $i = 0; }
+if ($i == 0) { $i = 1; } elseif ($i == 2) { $i = 0; }
 
 if ($i == 0) { // this is ok because comments are allowed
     $i = 1;

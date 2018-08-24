@@ -40,7 +40,7 @@ function myFunction(array $arg2=array(), array $arg1)
 {
 }
 
-class myClass()
+class myClass
 {
     // No args.
     function myFunction()
@@ -93,7 +93,7 @@ function foo($baz, Foo $foo = null, $bar = true) {}
 function foo($baz, $bar = true, Foo $foo = null) {}
 
 // Valid closure
-function ($arg1, $arg2='hello') {}
+$closure = function ($arg1, $arg2='hello') {};
 
 // Invalid closure
-function(array $arg2=array(), array $arg1) {}
+$closure = function(array $arg2=array(), array $arg1) {}
