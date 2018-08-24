@@ -61,8 +61,9 @@ class InconsistentReturnSniff implements Sniff
                     continue 2;
                 }
 
-                if ($code === T_CATCH) {
+                if ($code === T_CATCH || $code === T_ELSE) {
                     $markerLevel--;
+                    continue;
                 }
 
                 if ($code === T_SWITCH) {
