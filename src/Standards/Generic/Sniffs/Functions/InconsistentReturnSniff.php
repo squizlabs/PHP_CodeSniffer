@@ -24,7 +24,7 @@ class InconsistentReturnSniff implements Sniff
      */
     public function register()
     {
-        return [T_FUNCTION];
+        return [T_FUNCTION, T_CLOSURE];
 
     }//end register()
 
