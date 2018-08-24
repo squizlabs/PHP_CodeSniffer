@@ -136,3 +136,6 @@ trait Base
         };
     }
 }
+
+if ( class_exists( Test :: class ) ) {}
+if ( class_exists( Test2 ::class ) ) {}

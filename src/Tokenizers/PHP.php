@@ -1378,7 +1378,7 @@ class PHP extends Tokenizer
                 // where "class" should be T_STRING instead of T_CLASS.
                 if (($newToken['code'] === T_CLASS
                     || $newToken['code'] === T_FUNCTION)
-                    && $finalTokens[($newStackPtr - 1)]['code'] === T_DOUBLE_COLON
+                    && $finalTokens[$lastNotEmptyToken]['code'] === T_DOUBLE_COLON
                 ) {
                     $newToken['code'] = T_STRING;
                     $newToken['type'] = 'T_STRING';

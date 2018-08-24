@@ -46,6 +46,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2127 : File::findExtendedClassName() doesn't support nested classes
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2138 : Tokenizer detects wrong token for php ::class feature with spaces
  </notes>
  <contents>
   <dir name="/">
