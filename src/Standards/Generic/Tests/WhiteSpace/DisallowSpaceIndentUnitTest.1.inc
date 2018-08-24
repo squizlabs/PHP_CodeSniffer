@@ -64,10 +64,10 @@ $x = 1;
 
 		    // Issue #1404
         	// This is a line with mixed tabs and spaces.
-	    	echo 'And here is another line with mixed tabs and spaces.'
-	        echo 'And another one.'
-    	    echo 'And another one.'
-        	echo 'And another one.'
+	    	echo 'And here is another line with mixed tabs and spaces.';
+	        echo 'And another one.';
+    	    echo 'And another one.';
+        	echo 'And another one.';
 
 // Spaces after comment.
     

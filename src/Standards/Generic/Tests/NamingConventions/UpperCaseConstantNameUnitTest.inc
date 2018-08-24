@@ -13,7 +13,7 @@ define('bar\foo\baz\invalidNameWithNamespace', true);
 define("bar\foo\baz\VALID_NAME_WITH_NAMESPACE", true);
 define("bar\foo\baz\invalidNameWithNamespace", true);
 
-class TestClass extends MyClass, YourClass
+class TestClass extends MyClass implements MyInterface, YourInterface
 {
 
     const const1 = 'hello';

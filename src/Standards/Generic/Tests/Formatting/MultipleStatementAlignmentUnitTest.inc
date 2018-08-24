@@ -86,14 +86,14 @@ class MyClass
     const MODE_DEBUG = 'debug';
     const MODE_DEBUG2 = 'debug';
 
-    $array[$test] = 'anything';
-    $var          = 'anything';
+    var $array[$test] = 'anything';
+    var $var          = 'anything';
 
-    const MODE_DEBUG2  = 'debug';
-    $array[$test]    = 'anything';
-    $var             = 'anything';
-    $array[($test + 1)] = 'anything';
-    $array[($blah + (10 - $test))] = 'anything';
+    const MODE_DEBUG3  = 'debug';
+    public $array[$test]    = 'anything';
+    private $vara             = 'anything';
+    protected $array[($test + 1)] = 'anything';
+    var $array[($blah + (10 - $test))] = 'anything';
 }
 
 function myFunction($var=true)
@@ -272,7 +272,7 @@ $foo = [
 ];
 $barbar = 'bar';
 
-public function buildForm(FormBuilderInterface $builder, array $options)
+function buildForm(FormBuilderInterface $builder, array $options)
 {
     $transformer = new ContractTransformer($options['contracts']);
     $types       = ['support.contact.question' => ContactData::QUESTION];
@@ -280,7 +280,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
     [$important, $questions, $incidents, $requests] = $this->createContractBuckets($options['contracts']);
 }
 
-public function buildForm(FormBuilderInterface $builder, array $options)
+function buildForm(FormBuilderInterface $builder, array $options)
 {
     $transformer                                    = new ContractTransformer($options['contracts']);
     $types                                          = ['support.contact.question' => ContactData::QUESTION];
@@ -312,15 +312,15 @@ $loggerResult = $util->setLogger(new class {
 
                                 $foo = 1;
                                 $barbar=2;
-                            }
+                            };
                             $barbar = function() {
                                 $foo    = 1;
                                 $barbar = 2;
-                            }
+                            };
                         });
                         $a = $msg;
                         $foobar      = $msg;
-                    }
+                    };
                     $bar = $msg;
                 }
 
@@ -340,20 +340,20 @@ $loggerResult = $util->setLogger(new class {
 
                                 $foo = 1;
                                 $barbar=2;
-                            }
+                            };
                             $barbar = function() {
                                 $foo    = 1;
                                 $barbar = 2;
-                            }
+                            };
                         });
                         $a = $msg;
                         $foobar      = $msg;
-                    }
+                    };
                     $bar = $msg;
                 }
             });
             $foo          = 5;
-        }
+        };
         $bar = $msg;
     }
 });

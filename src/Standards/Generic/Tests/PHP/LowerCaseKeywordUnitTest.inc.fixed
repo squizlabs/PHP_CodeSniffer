@@ -1,25 +1,25 @@
 <?php
 // A few keywords. Obviously not valid syntax.
-class Something extends SomethingElse implements Whatever
+class Something extends SomethingElse implements Whatever {}
 abstract public private protected function whatever() {}
-const array()
-for ($var as $var) { exit; }
-if ($a and $b or $c xor $d) { die; } elseif { } else
+const array();
+foreach ($var as $var) { exit; }
+if ($a and $b or $c xor $d) { die; } elseif( $var ) { } else {}
 goto a;
 
-class Something extends SomethingElse implements Whatever
+class Something extends SomethingElse implements Whatever {}
 abstract public private protected function whatever() {}
-const array()
-for ($var as $var) { exit; }
-if ($a and $b or $c xor $d) { die; } elseif { } else
+const array();
+foreach ($var as $var) { exit; }
+if ($a and $b or $c xor $d) { die; } elseif( $var ) { } else {}
 goto a;
-function (Array $a) {}
+$b = function (Array $a) {};
 const PRIVATE;
 HttpStatus::CONTINUE;
-function ($f) {
+$c = function ($f) {
     yield $f;
     yield from fun();
-}
+};
 class X extends Y {
     public function m() {
         parent::m();

@@ -14,7 +14,7 @@ $d = new MyClass(  );
 $e = new class(  ) {};
 
 try {
-} catch( Exception ) {
+} catch( Exception $e ) {
 }
 
 include( PATH . 'file.php' );
@@ -33,7 +33,7 @@ yield from ( function(){} );
 
 $obj->{$var}( $foo,$bar );
 
-(function( $a, $b ) {
+$bar(function( $a, $b ) {
     return function( $c, $d ) use ( $a, $b ) {
         echo $a, $b, $c, $d;
     };

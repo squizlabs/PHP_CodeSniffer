@@ -181,7 +181,7 @@ abstract class Test3
     }
 }
 
-public function test()
+function test()
 {
     $o = <<<EOF
 this is some text
@@ -396,7 +396,7 @@ $myFunction = function() {
     if ($a === 404) {
        $a = 403;
     }
-}
+};
 
 class Whatever
 {
@@ -626,7 +626,7 @@ $var = call_user_func(
                 } else {
                     return $a--;
                 }
-            }
+            };
         }
     }
 );
@@ -636,7 +636,7 @@ a(
         $a = function() {
             $b = false;
         };
-    true
+    true;
     }
 );
 
@@ -999,7 +999,7 @@ try {
 } catch (\Exception $e) {
     $foo = function() {
         return 'foo';
-    }
+    };
 
     if (true) {
     }
@@ -1007,17 +1007,17 @@ try {
 
 if ($foo) {
     foo();
-} else if (\Exception $e) {
+} else if ($e) {
     $foo = function() {
         return 'foo';
-    }
+    };
 
     if (true) {
     }
 } else {
     $foo = function() {
         return 'foo';
-    }
+    };
 
     if (true) {
     }
@@ -1070,7 +1070,7 @@ class Test123
         ],
         $prop2 = [
             'testB' => 456,
-        ],
+        ];
 
     protected static
         $prop3 = array(
@@ -1078,7 +1078,7 @@ class Test123
         ),
         $prop4 = array(
             'testB' => 456,
-        ),
+        );
 
     protected static $prop5;
 }
@@ -1184,7 +1184,7 @@ function test()
 
 switch ($a) {
     case 0:
-        function () {
+        $a = function () {
         };
     case 1:
         break;
@@ -1238,13 +1238,13 @@ array_map(
 /**
  * Comment.
  */
-(function () use ($app) {
+$a(function () use ($app) {
     echo 'hi';
 })();
 
 $app->run();
 
-public function foo()
+function foo()
 {
     $foo('some
     long description', function () {

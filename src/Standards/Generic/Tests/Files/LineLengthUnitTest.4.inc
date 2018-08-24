@@ -7,4 +7,4 @@ phpcs:set Generic.Files.LineLength absoluteLineLimit 120
 if($thisIsOk === true) {}
 
 /* This line is too long but will be ignored. This line is too long but will be ignored. */
-if (($anotherReallyLongVarName === true) || (is_array($anotherReallyLongVarName) === false)) {
+if (($anotherReallyLongVarName === true) || (is_array($anotherReallyLongVarName) === false)) {}
