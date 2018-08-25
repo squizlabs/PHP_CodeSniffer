@@ -52,6 +52,7 @@ class DuplicateClassNameSniff implements Sniff
         $findTokens = [
             T_CLASS,
             T_INTERFACE,
+            T_TRAIT,
             T_NAMESPACE,
             T_CLOSE_TAG,
         ];
