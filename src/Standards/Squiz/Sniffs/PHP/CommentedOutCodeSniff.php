@@ -130,7 +130,7 @@ class CommentedOutCodeSniff implements Sniff
         }//end for
 
         // Ignore typical warning suppression annotations from other tools.
-        if (preg_match('`^\s*@[A-Za-z]+\s*$`', $content) === 1) {
+        if (preg_match('`^\s*@[A-Za-z()\._-]+\s*$`', $content) === 1) {
             return ($lastCommentBlockToken + 1);
         }
 
