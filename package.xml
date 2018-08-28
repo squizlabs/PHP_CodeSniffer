@@ -35,6 +35,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, this standard enforced the use of underscores
   - Generic.PHP.NoSilencedErrors error messages now contain a code snippet to show the context of the error
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Arrays.ArrayDeclaration no longer reports errors for a comma on a line new after a here/nowdoc
+    -- Also stops a parse error being generated when auto-fixing
+    -- The SpaceBeforeComma error message has been changed to only have one data value instead of two
   - Squiz.Commenting.FunctionComment no longer errors when trying to fix indents of multi-line param comments
   - Squiz.Formatting.OperatorBracket now correctly fixes statements that contain strings
   - Squiz.PHP.CommentedOutCode now ignores more @-style annotations and includes better comment block detection

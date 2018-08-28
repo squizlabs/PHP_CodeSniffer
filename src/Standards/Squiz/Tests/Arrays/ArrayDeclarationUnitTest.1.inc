@@ -384,3 +384,12 @@ $foo = foo(
     // comment
     )
 );
+
+$foo = array(
+        <<<HERE
+HERE
+,
+        <<<HERE
+HERE
+      ,
+       );

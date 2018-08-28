@@ -431,24 +431,27 @@ class ArrayDeclarationSniff implements Sniff
 
                 if ($keyUsed === false) {
                     if ($tokens[($nextToken - 1)]['code'] === T_WHITESPACE) {
-                        $content = $tokens[($nextToken - 2)]['content'];
-                        if ($tokens[($nextToken - 1)]['content'] === $phpcsFile->eolChar) {
-                            $spaceLength = 'newline';
-                        } else {
-                            $spaceLength = $tokens[($nextToken - 1)]['length'];
-                        }
+                        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($nextToken - 1), null, true);
+                        if (($tokens[$prev]['code'] !== T_END_HEREDOC
+                            && $tokens[$prev]['code'] !== T_END_NOWDOC)
+                            || $tokens[($nextToken - 1)]['line'] === $tokens[$nextToken]['line']
+                        ) {
+                            $content = $tokens[($nextToken - 2)]['content'];
+                            if ($tokens[($nextToken - 1)]['content'] === $phpcsFile->eolChar) {
+                                $spaceLength = 'newline';
+                            } else {
+                                $spaceLength = $tokens[($nextToken - 1)]['length'];
+                            }
 
-                        $error = 'Expected 0 spaces between "%s" and comma; %s found';
-                        $data  = [
-                            $content,
-                            $spaceLength,
-                        ];
+                            $error = 'Expected 0 spaces before comma; %s found';
+                            $data  = [$spaceLength];
 
-                        $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeComma', $data);
-                        if ($fix === true) {
-                            $phpcsFile->fixer->replaceToken(($nextToken - 1), '');
+                            $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeComma', $data);
+                            if ($fix === true) {
+                                $phpcsFile->fixer->replaceToken(($nextToken - 1), '');
+                            }
                         }
-                    }
+                    }//end if
 
                     $valueContent = $phpcsFile->findNext(
                         Tokens::$emptyTokens,
@@ -837,7 +840,7 @@ class ArrayDeclarationSniff implements Sniff
 
             // Check that there is no space before the comma.
             if ($nextComma !== false && $tokens[($nextComma - 1)]['code'] === T_WHITESPACE) {
-                // Here/nowdoc closing tags must have the command on the next line.
+                // Here/nowdoc closing tags must have the comma on the next line.
                 $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($nextComma - 1), null, true);
                 if ($tokens[$prev]['code'] !== T_END_HEREDOC && $tokens[$prev]['code'] !== T_END_NOWDOC) {
                     $content     = $tokens[($nextComma - 2)]['content'];

@@ -373,3 +373,12 @@ $foo = foo(
     // comment
     ]
 );
+
+$foo = [
+        <<<HERE
+HERE
+,
+        <<<HERE
+HERE
+      ,
+       ];
