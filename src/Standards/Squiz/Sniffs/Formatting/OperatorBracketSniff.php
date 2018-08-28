@@ -268,20 +268,21 @@ class OperatorBracketSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         $allowed = [
-            T_VARIABLE        => true,
-            T_LNUMBER         => true,
-            T_DNUMBER         => true,
-            T_STRING          => true,
-            T_WHITESPACE      => true,
-            T_NS_SEPARATOR    => true,
-            T_THIS            => true,
-            T_SELF            => true,
-            T_OBJECT_OPERATOR => true,
-            T_DOUBLE_COLON    => true,
-            T_MODULUS         => true,
-            T_ISSET           => true,
-            T_ARRAY           => true,
-            T_NONE            => true,
+            T_VARIABLE                 => true,
+            T_LNUMBER                  => true,
+            T_DNUMBER                  => true,
+            T_STRING                   => true,
+            T_CONSTANT_ENCAPSED_STRING => true,
+            T_WHITESPACE               => true,
+            T_NS_SEPARATOR             => true,
+            T_THIS                     => true,
+            T_SELF                     => true,
+            T_OBJECT_OPERATOR          => true,
+            T_DOUBLE_COLON             => true,
+            T_MODULUS                  => true,
+            T_ISSET                    => true,
+            T_ARRAY                    => true,
+            T_NONE                     => true,
         ];
 
         // Find the first token in the expression.
@@ -323,7 +324,7 @@ class OperatorBracketSniff implements Sniff
         // Find the last token in the expression.
         for ($after = ($stackPtr + 1); $after < $phpcsFile->numTokens; $after++) {
             // Special case for plus operators because we can't tell if they are used
-            // for addition or string contact. So assume string concat to be safe.
+            // for addition or string concat. So assume string concat to be safe.
             if ($phpcsFile->tokenizerType === 'JS' && $tokens[$after]['code'] === T_PLUS) {
                 break;
             }
