@@ -66,7 +66,18 @@ class UseDeclarationSniff implements Sniff
             if ($tokens[$next]['code'] === T_COMMA) {
                 $fix = $phpcsFile->addFixableError($error, $stackPtr, 'MultipleDeclarations');
                 if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.'use ');
+                    switch ($tokens[($stackPtr + 2)]['content']) {
+                    case 'const':
+                        $baseUse = 'use const';
+                        break;
+                    case 'function':
+                        $baseUse = 'use function';
+                        break;
+                    default:
+                        $baseUse = 'use';
+                    }
+
+                    $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.$baseUse);
                 }
             } else {
                 $closingCurly = $phpcsFile->findNext(T_CLOSE_USE_GROUP, ($next + 1));

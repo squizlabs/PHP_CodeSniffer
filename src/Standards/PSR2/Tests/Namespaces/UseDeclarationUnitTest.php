@@ -32,7 +32,9 @@ class UseDeclarationUnitTest extends AbstractSniffUnitTest
             return [
                 4  => 1,
                 5  => 1,
-                10 => 2,
+                6  => 1,
+                7  => 1,
+                12 => 2,
             ];
         case 'UseDeclarationUnitTest.3.inc':
             return [
