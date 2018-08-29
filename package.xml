@@ -55,6 +55,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2138 : Tokenizer detects wrong token for php ::class feature with spaces
   - Fixed bug #2143 : PSR2.Namespaces.UseDeclaration does not properly fix "use function" and "use const" statements
     -- Thanks to Chris Wilkinson for the patch
+  - Fixed bug #2144 : Squiz.Arrays.ArrayDeclaration does incorrect align calculation in array with cyrillic keys
  </notes>
  <contents>
   <dir name="/">
