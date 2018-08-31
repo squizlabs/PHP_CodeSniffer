@@ -59,6 +59,18 @@ class FunctionDeclarationUnitTest extends AbstractSniffUnitTest
                 223 => 1,
                 230 => 1,
                 237 => 1,
+                243 => 1,
+                247 => 1,
+                251 => 2,
+                253 => 2,
+                257 => 2,
+                259 => 1,
+                263 => 1,
+                265 => 1,
+                269 => 1,
+                273 => 1,
+                277 => 1,
+                278 => 1,
             ];
         } else {
             $errors = [

@@ -239,3 +239,41 @@ function foo(
 }
 
 $a = function () {
+
+function foo ()
+{}
+
+class Foo {
+    function bar ()
+    {
+    }
+
+    abstract function baz () ;
+
+    abstract function qux () : void ;
+}
+
+interface Foo {
+    function bar () ;
+
+    function baz (
+        $longArgument,
+        $longerArgument,
+        $muchLongerArgument
+    ) ;
+
+    function qux (
+        $longArgument,
+        $longerArgument,
+        $muchLongerArgument
+    ) : void ;
+}
+
+trait Foo {
+    function bar ()
+    {
+    }
+
+    abstract function baz ()
+    ;
+}
