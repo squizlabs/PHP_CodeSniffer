@@ -75,6 +75,14 @@
         <xs:sequence>
             <xs:element name="property" maxOccurs="unbounded" minOccurs="1">
                 <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="element" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="key" type="xs:string"></xs:attribute>
+                                <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
                     <xs:attribute name="type">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
@@ -83,7 +91,7 @@
                         </xs:simpleType>
                     </xs:attribute>
                     <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
-                    <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+                    <xs:attribute name="value" type="xs:string"></xs:attribute>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
