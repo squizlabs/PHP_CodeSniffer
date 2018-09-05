@@ -56,6 +56,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2143 : PSR2.Namespaces.UseDeclaration does not properly fix "use function" and "use const" statements
     -- Thanks to Chris Wilkinson for the patch
   - Fixed bug #2144 : Squiz.Arrays.ArrayDeclaration does incorrect align calculation in array with cyrillic keys
+  - Fixed bug #2146 : Zend.Files.ClosingTag removes closing tag from end of file without inserting a semicolon
   - Fixed bug #2151 : XML schema not updated with the new array property syntax
  </notes>
  <contents>
@@ -1603,7 +1604,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Files">
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.3.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.4.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.php" role="test" />
        </dir>
        <dir name="NamingConventions">
