@@ -115,7 +115,7 @@ class OpeningFunctionBraceKernighanRitchieSniff implements Sniff
                         && $tokens[($openingBrace - 1)]['line'] === $tokens[$openingBrace]['line']
                         && $tokens[($openingBrace - 2)]['line'] < $tokens[$openingBrace]['line']
                     ) {
-                        // Brace is preceeded by indent, so remove it to ensure we don't
+                        // Brace is preceded by indent, so remove it to ensure we don't
                         // leave behind more indent than is required for the first line.
                         $phpcsFile->fixer->replaceToken(($openingBrace - 1), '');
                     }

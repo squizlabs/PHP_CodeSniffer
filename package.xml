@@ -2452,7 +2452,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Also used by the autoloader to help other standards directly include sniffs for your standard
       -- Set the value to the namespace prefix you are using for sniff files (everything up to \Sniffs\)
       -- e.g., if your namespace format is MyProject\CS\Standard\Sniffs\Category set the namespace to MyProject\CS\Standard
-      -- If ommitted, the namespace is assumed to be the same as the directory name containing the ruleset.xml file
+      -- If omitted, the namespace is assumed to be the same as the directory name containing the ruleset.xml file
       -- The namespace is set in the ruleset tag of the ruleset.xml file
       -- e.g., ruleset name="My Coding Standard" namespace="MyProject\CS\Standard"
     - Rulesets can now specify custom autoloaders using the new autoload tag
@@ -2501,7 +2501,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- e.g., StandardName\Sniffs\CategoryName\AbstractHelper or StandardName\Helpers\StringSniffHelper
     - Fixed an error where STDIN was sometimes not checked when using the --parallel CLI option
     - The is_closure index has been removed from the return value of File::getMethodProperties()
-      -- This value was always false becasue T_FUNCTION tokens are never closures
+      -- This value was always false because T_FUNCTION tokens are never closures
       -- Closures have a token type of T_CLOSURE
     - The File::isAnonymousFunction() method has been removed
       -- This function always returned false because it only accepted T_FUNCTION tokens, which are never closures
@@ -2984,7 +2984,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Added Generic.PHP.DisallowAlternativePHPTags to ban the use of alternate PHP tags
       -- Thanks to Juliette Reinders Folmer for the patch
     - Squiz.WhiteSpace.LanguageConstructSpacing no longer checks for spaces if parenthesis are being used (request #1062)
-      -- Makes this sniff more compatibile with those that check parenthesis spacing of function calls
+      -- Makes this sniff more compatible with those that check parenthesis spacing of function calls
     - Squiz.WhiteSpace.ObjectOperatorSpacing now has a setting to ignore newline characters around object operators
       -- Default remains FALSE, so newlines are not allowed
       -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
@@ -4884,7 +4884,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Messages can now be changed from errors to warnings (and vice versa) inside ruleset.xml files
       -- As you would with "message" and "severity", specify a "type" tag under a "rule" tag and set the value to "error" or "warning"
     - PHP_CodeSniffer will now generate a warning on files that it detects have mixed line endings
-      -- This warning has the code Internal.LineEndings.Mixed and can be overriden in a ruleset.xml file
+      -- This warning has the code Internal.LineEndings.Mixed and can be overridden in a ruleset.xml file
       -- Thanks to Vit Brunner for help with this
     - Sniffs inside PHP 5.3 namespaces are now supported, along with the existing underscore-style emulated namespaces
       -- For example: namespace MyStandard\Sniffs\Arrays; class ArrayDeclarationSniff implements \PHP_CodeSniffer_Sniff { ...
@@ -5016,7 +5016,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Squiz FunctionDeclarationArgumentSpacing now has a setting to specify how many spaces should surround equals signs
       -- Default remains at 0
       -- Override the equalsSpacing setting in a ruleset.xml file to change
-    - Squiz ClassDeclarationSniff now throws errors for > 1 space before extends/implements class name with ns seperator
+    - Squiz ClassDeclarationSniff now throws errors for > 1 space before extends/implements class name with ns separator
     - Squiz standard now warns about deprecated functions using Generic DeprecatedFunctionsSniff
     - PEAR FunctionDeclarationSniff now reports an error for multiple spaces after the FUNCTION keyword and around USE
     - PEAR FunctionDeclarationSniff now supports closures
@@ -5111,7 +5111,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <notes>
     - Added new Generic FixmeSniff that shows error messages for all FIXME comments left in your code
       -- Thanks to Sam Graham for the contribution
-    - The maxPercentage setting in the Squiz CommentedOutCodeSniff can now be overriden in a rulset.xml file
+    - The maxPercentage setting in the Squiz CommentedOutCodeSniff can now be overridden in a rulset.xml file
       -- Thanks to Volker Dusch for the patch
     - The Checkstyle and XML reports now use XMLWriter
       -- Only change in output is that empty file tags are no longer produced for files with no violations
@@ -5875,7 +5875,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed bug #13922 : crash in case of malformed (but tokenized) php file
       -- PEAR and Squiz ClassDeclarationSniff now throw warnings for possible parse errors
       -- Squiz ValidClassNameSniff now throws warning for possible parse errors
-      -- Squiz ClosingDeclarationCommentSniff now throws additonal warnings for parse errors
+      -- Squiz ClosingDeclarationCommentSniff now throws additional warnings for parse errors
    </notes>
   </release>
   <release>
@@ -5969,7 +5969,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Squiz OutputBufferingIndentSniff now ignores the indentation of inline HTML
     - MySource IncludeSystemSniff now ignores usage of ZipArchive
     - Removed "function" from error messages for Generic function brace sniffs (feature request #13820)
-    - Generic UpperCaseConstantSniff no longer throws errors for delcare(ticks = ...)
+    - Generic UpperCaseConstantSniff no longer throws errors for declare(ticks = ...)
       -- Thanks to Josh Snyder for the patch
     - Squiz ClosingDeclarationCommentSniff and AbstractVariableSniff now throw warnings for possible parse errors
     - Fixed bug #13827 : AbstractVariableSniff throws "undefined index"
@@ -6390,7 +6390,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed missing error when multiple statements are not aligned correctly with object operators
     - Fixed incorrect errors for some PHP special variables in Squiz ValidVariableNameSniff
     - Fixed incorrect errors for arrays that only contain other arrays in Squiz ArrayDeclarationSniff
-    - Fixed bug #9844 : throw new Exception(\n accidently reported as error but it ain't
+    - Fixed bug #9844 : throw new Exception(\n accidentally reported as error but it ain't
    </notes>
   </release>
   <release>

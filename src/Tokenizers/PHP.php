@@ -1119,7 +1119,7 @@ class PHP extends Tokenizer
 
                         // Any T_ARRAY tokens we find between here and the next
                         // token that can't be part of the return type need to be
-                        // coverted to T_STRING tokens.
+                        // converted to T_STRING tokens.
                         for ($x; $x < $numTokens; $x++) {
                             if (is_array($tokens[$x]) === false || isset($allowed[$tokens[$x][0]]) === false) {
                                 break;

@@ -388,7 +388,7 @@ class File
                     || substr($commentTextLower, 0, 10) === '@phpcs:set'
                 ) {
                     // If the @phpcs: syntax is being used, strip the @ to make
-                    // comparisions easier.
+                    // comparisons easier.
                     if ($commentText[0] === '@') {
                         $commentText = substr($commentText, 1);
                     }
@@ -1605,7 +1605,7 @@ class File
      * <code>
      *   array(
      *    'scope'           => 'public', // public protected or protected.
-     *    'scope_specified' => false,    // true if the scope was explicitely specified.
+     *    'scope_specified' => false,    // true if the scope was explicitly specified.
      *    'is_static'       => false,    // true if the static keyword was found.
      *   );
      * </code>

@@ -78,7 +78,7 @@ class FunctionSpacingSniff implements Sniff
             return;
         }
 
-        // If the ruleset has only overriden the spacing property, use
+        // If the ruleset has only overridden the spacing property, use
         // that value for all spacing rules.
         if ($this->rulesetProperties === null) {
             $this->rulesetProperties = [];

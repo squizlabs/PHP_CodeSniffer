@@ -99,7 +99,7 @@ The `MINOR` version is incremented when:
 - backwards-compatible changes are made to the API used by sniff developers, or
 - new sniffs are added to an included standard
 
-> NOTE: Backwards-compatible changes to the API used by sniff develpers will allow an exsiting sniff to continue running without producing fatal errors but may not result in the sniff reporting the same errors as it did previously without changes being required.
+> NOTE: Backwards-compatible changes to the API used by sniff develpers will allow an existing sniff to continue running without producing fatal errors but may not result in the sniff reporting the same errors as it did previously without changes being required.
 
 The `PATCH` version is incremented when:
 - backwards-compatible bug fixes are made

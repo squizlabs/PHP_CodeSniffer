@@ -118,7 +118,7 @@ class MyClass
 {
 
     /**
-     * The tag that this element represents (omiting the @ symbol).
+     * The tag that this element represents (omitting the @ symbol).
      *
      * @var string
      */
