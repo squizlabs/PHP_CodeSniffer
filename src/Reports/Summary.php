@@ -159,9 +159,10 @@ class Summary implements Report
             echo 'S';
         }
 
-        echo ' WERE FOUND IN '.$totalFiles.' FILE';
-        if ($totalFiles !== 1) {
-            echo 'S';
+        if ($totalFiles === 1) {
+            echo ' WERE FOUND IN '.$totalFiles.' FILE';
+        } else {
+            echo ' WERE FOUND IN '.count($reportFiles).' OUT OF '.$totalFiles.' FILES';
         }
 
         echo "\033[0m";
