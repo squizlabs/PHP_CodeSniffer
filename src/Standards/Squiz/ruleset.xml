@@ -103,8 +103,7 @@
         <severity>0</severity>
     </rule>
 
-    <!-- Squiz.WhiteSpace.LanguageConstructSpacing is deprecated -->
-    <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing">
+    <rule ref="Generic.WhiteSpace.LanguageConstructSpacing">
         <severity>0</severity>
     </rule>
 
