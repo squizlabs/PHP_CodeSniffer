@@ -195,16 +195,16 @@ class MultiLineConditionSniff implements Sniff
                     $error = 'Multi-line IF statement not indented correctly; expected ';
                     if ($this->tabIndent === true) {
                         $error .= '%s tabs, found %s';
-                        $data  = [
+                        $data   = [
                             floor($expectedIndent / $this->tabWidth),
                             floor($foundIndent / $this->tabWidth),
                         ];
                     } else {
                         $error .= '%s spaces but found %s';
-                      $data  = [
-                          $expectedIndent,
-                          $foundIndent,
-                      ];
+                        $data   = [
+                            $expectedIndent,
+                            $foundIndent,
+                        ];
                     }
 
                     $fix = $phpcsFile->addFixableError($error, $i, 'Alignment', $data);
