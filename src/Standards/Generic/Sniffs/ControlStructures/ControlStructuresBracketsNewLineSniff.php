@@ -144,12 +144,12 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
             $nested = 0;
 
             // Take into account any nested parenthesis that don't contribute to the level (often required for
-            // closures and anonymous classes)
+            // closures and anonymous classes).
             if (array_key_exists('nested_parenthesis', $tokens[$stackPtr])) {
                 $nested = count($tokens[$stackPtr]['nested_parenthesis']);
             }//end if
 
-			$expected = ($tokens[$stackPtr]['level'] + $nested) * $this->indent;
+            $expected = (($tokens[$stackPtr]['level'] + $nested) * $this->indent);
 
             // We need to divide by 4 here since there is a space vs tab intent in the check vs token.
             $expected /= $this->indent;
