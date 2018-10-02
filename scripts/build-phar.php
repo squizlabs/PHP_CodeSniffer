@@ -21,10 +21,10 @@ if (ini_get('phar.readonly') === '1') {
     exit(1);
 }
 
-$scripts = array(
-            'phpcs',
-            'phpcbf',
-           );
+$scripts = [
+    'phpcs',
+    'phpcbf',
+];
 
 foreach ($scripts as $script) {
     echo "Building $script phar".PHP_EOL;
@@ -87,7 +87,8 @@ foreach ($scripts as $script) {
     $stub .= 'Phar::mapPhar(\''.$pharName.'\');'."\n";
     $stub .= 'require_once "phar://'.$pharName.'/autoload.php";'."\n";
     $stub .= '$runner = new PHP_CodeSniffer\Runner();'."\n";
-    $stub .= '$runner->run'.$script.'();'."\n";
+    $stub .= '$exitCode = $runner->run'.$script.'();'."\n";
+    $stub .= 'exit($exitCode);'."\n";
     $stub .= '__HALT_COMPILER();';
     $phar->setStub($stub);
 

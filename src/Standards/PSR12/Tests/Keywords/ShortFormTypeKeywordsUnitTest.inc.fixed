@@ -1,0 +1,8 @@
+<?php
+$bar = (bool) $foo;
+$bar = (bool) $foo;
+$bar = (Bool) $foo;
+$bar = (bool) $foo;
+$bar = (int) $foo;
+$bar = (int) $foo;
+$bar = (INT) $foo;

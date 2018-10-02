@@ -122,3 +122,28 @@ echo $foo;
  * Comments about the include
  */
 include_once($blah);
+
+// some comment without capital or full stop
+echo $foo; // An unrelated comment.
+
+// An unrelated comment.
+echo $foo; // some comment without capital or full stop
+
+class Foo
+{
+    // This is fine.
+
+    /**
+     * Spacing is ignored above.
+     */
+    function bar(){}
+}
+
+/*
+ * N.B.: The below test line must be the last test in the file.
+ * Testing that a new line after an inline comment when it's the last non-whitespace
+ * token in a file, does *not* throw an error as this would conflict with the common
+ * "new line required at end of file" rule.
+ */
+
+// For this test line having an empty line below it, is fine.

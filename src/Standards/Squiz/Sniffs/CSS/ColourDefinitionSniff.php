@@ -20,7 +20,7 @@ class ColourDefinitionSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
 
     /**
@@ -30,7 +30,7 @@ class ColourDefinitionSniff implements Sniff
      */
     public function register()
     {
-        return array(T_COLOUR);
+        return [T_COLOUR];
 
     }//end register()
 
@@ -52,10 +52,10 @@ class ColourDefinitionSniff implements Sniff
         $expected = strtoupper($colour);
         if ($colour !== $expected) {
             $error = 'CSS colours must be defined in uppercase; expected %s but found %s';
-            $data  = array(
-                      $expected,
-                      $colour,
-                     );
+            $data  = [
+                $expected,
+                $colour,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotUpper', $data);
             if ($fix === true) {
@@ -71,10 +71,10 @@ class ColourDefinitionSniff implements Sniff
         if ($colour{1} === $colour{2} && $colour{3} === $colour{4} && $colour{5} === $colour{6}) {
             $expected = '#'.$colour{1}.$colour{3}.$colour{5};
             $error    = 'CSS colours must use shorthand if available; expected %s but found %s';
-            $data     = array(
-                         $expected,
-                         $colour,
-                        );
+            $data     = [
+                $expected,
+                $colour,
+            ];
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Shorthand', $data);
             if ($fix === true) {

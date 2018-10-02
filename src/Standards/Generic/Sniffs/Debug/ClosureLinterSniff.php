@@ -23,21 +23,21 @@ class ClosureLinterSniff implements Sniff
      *
      * @var integer
      */
-    public $errorCodes = array();
+    public $errorCodes = [];
 
     /**
      * A list of error codes to ignore.
      *
      * @var integer
      */
-    public $ignoreCodes = array();
+    public $ignoreCodes = [];
 
     /**
      * A list of tokenizers this sniff supports.
      *
      * @var array
      */
-    public $supportedTokenizers = array('JS');
+    public $supportedTokenizers = ['JS'];
 
 
     /**
@@ -47,7 +47,7 @@ class ClosureLinterSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_TAG);
+        return [T_OPEN_TAG];
 
     }//end register()
 
@@ -72,15 +72,15 @@ class ClosureLinterSniff implements Sniff
         $fileName = $phpcsFile->getFilename();
 
         $lintPath = escapeshellcmd($lintPath);
-        $cmd      = '$lintPath --nosummary --notime --unix_mode '.escapeshellarg($fileName);
-        $msg      = exec($cmd, $output, $retval);
+        $cmd      = $lintPath.' --nosummary --notime --unix_mode '.escapeshellarg($fileName);
+        exec($cmd, $output, $retval);
 
         if (is_array($output) === false) {
             return;
         }
 
         foreach ($output as $finding) {
-            $matches    = array();
+            $matches    = [];
             $numMatches = preg_match('/^(.*):([0-9]+):\(.*?([0-9]+)\)(.*)$/', $finding, $matches);
             if ($numMatches === 0) {
                 continue;
@@ -96,10 +96,10 @@ class ClosureLinterSniff implements Sniff
             $error = trim($matches[4]);
 
             $message = 'gjslint says: (%s) %s';
-            $data    = array(
-                        $code,
-                        $error,
-                       );
+            $data    = [
+                $code,
+                $error,
+            ];
             if (in_array($code, $this->errorCodes) === true) {
                 $phpcsFile->addErrorOnLine($message, $line, 'ExternalToolError', $data);
             } else {

@@ -1,0 +1,38 @@
+<documentation title="Lowercase PHP Types">
+    <standard>
+    <![CDATA[
+    All PHP types used for parameter type and return type declarations should be lowercase.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Lowercase type declarations used.">
+        <![CDATA[
+function myFunction(int $foo) : string {
+}
+        ]]>
+        </code>
+        <code title="Invalid: Non-lowercase type declarations used.">
+        <![CDATA[
+function myFunction(<em>Int</em> $foo) : <em>STRING</em> {
+}
+        ]]>
+        </code>
+    </code_comparison>
+    <standard>
+    <![CDATA[
+    All PHP types used for type casting should be lowercase.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Lowercase type used.">
+        <![CDATA[
+$foo = (bool) $isValid;
+        ]]>
+        </code>
+        <code title="Invalid: Non-lowercase type used.">
+        <![CDATA[
+$foo = <em>(BOOL)</em> $isValid;
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

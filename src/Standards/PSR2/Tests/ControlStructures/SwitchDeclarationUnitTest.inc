@@ -122,7 +122,7 @@ switch ($foo) {
         // some comment
         echo 'bar';
         break;
-    case 'baz': // other comment
+    case 'baz': // phpcs:ignore Standard.Category.Sniff
         echo 'baz';
         break;
     case 'boo':
@@ -245,4 +245,20 @@ switch ($foo) {
         }
     case 2:
         return 2;
+}
+
+switch ($sContext)
+{
+    case 'SOMETHING':
+    case 'CONSTANT':
+        do_something();
+        break;
+    case 'GLOBAL':
+    case 'GLOBAL1':
+        do_something();
+        // Fall through
+    default:
+    {
+        do_something();
+    }
 }

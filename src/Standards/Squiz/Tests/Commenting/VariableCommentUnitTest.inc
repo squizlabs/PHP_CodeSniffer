@@ -290,6 +290,12 @@ class VariableCommentUnitTest
      protected $noComment2 = '';
 
 
+     /**
+     * @var int Var type checking (int v.s. integer) with single-line comment.
+     */
+     private $_varSimpleTypeCheckSingleLine;
+
+
 }//end class
 
 

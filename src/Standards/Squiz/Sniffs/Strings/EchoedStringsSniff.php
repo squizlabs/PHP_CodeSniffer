@@ -24,7 +24,7 @@ class EchoedStringsSniff implements Sniff
      */
     public function register()
     {
-        return array(T_ECHO);
+        return [T_ECHO];
 
     }//end register()
 
@@ -49,7 +49,7 @@ class EchoedStringsSniff implements Sniff
             return;
         }
 
-        $end = $phpcsFile->findNext(array(T_SEMICOLON, T_CLOSE_TAG), $stackPtr, null, false);
+        $end = $phpcsFile->findNext([T_SEMICOLON, T_CLOSE_TAG], $stackPtr, null, false);
 
         // If the token before the semi-colon is not a closing parenthesis, then we are not concerned.
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($end - 1), null, true);

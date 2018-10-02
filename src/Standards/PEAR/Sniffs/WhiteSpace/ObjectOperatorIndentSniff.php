@@ -50,7 +50,7 @@ class ObjectOperatorIndentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OBJECT_OPERATOR);
+        return [T_OBJECT_OPERATOR];
 
     }//end register()
 
@@ -80,29 +80,23 @@ class ObjectOperatorIndentSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Make sure this is the first object operator in a chain of them.
-        $varToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if ($varToken === false || $tokens[$varToken]['code'] !== T_VARIABLE) {
+        $start = $phpcsFile->findStartOfStatement($stackPtr);
+        $prev  = $phpcsFile->findPrevious(T_OBJECT_OPERATOR, ($stackPtr - 1), $start);
+        if ($prev !== false) {
             return;
         }
 
         // Make sure this is a chained call.
-        $next = $phpcsFile->findNext(
-            T_OBJECT_OPERATOR,
-            ($stackPtr + 1),
-            null,
-            false,
-            null,
-            true
-        );
-
+        $end  = $phpcsFile->findEndOfStatement($stackPtr);
+        $next = $phpcsFile->findNext(T_OBJECT_OPERATOR, ($stackPtr + 1), $end);
         if ($next === false) {
             // Not a chained call.
             return;
         }
 
         // Determine correct indent.
-        for ($i = ($varToken - 1); $i >= 0; $i--) {
-            if ($tokens[$i]['line'] !== $tokens[$varToken]['line']) {
+        for ($i = ($start - 1); $i >= 0; $i--) {
+            if ($tokens[$i]['line'] !== $tokens[$start]['line']) {
                 $i++;
                 break;
             }
@@ -129,7 +123,7 @@ class ObjectOperatorIndentSniff implements Sniff
         // Check indentation of each object operator in the chain.
         // If the first object operator is on a different line than
         // the variable, make sure we check its indentation too.
-        if ($tokens[$stackPtr]['line'] > $tokens[$varToken]['line']) {
+        if ($tokens[$stackPtr]['line'] > $tokens[$start]['line']) {
             $next = $stackPtr;
         }
 
@@ -162,16 +156,16 @@ class ObjectOperatorIndentSniff implements Sniff
                         $error = 'Object operator not indented correctly; expected ';
                         if ($this->tabIndent === true) {
                             $error .= '%s tabs, found %s';
-                            $data   = array(
-                                       floor($requiredIndent / $this->tabWidth),
-                                       floor($foundIndent / $this->tabWidth),
-                                      );
+                            $data  = [
+                                floor($requiredIndent / $this->tabWidth),
+                                floor($foundIndent / $this->tabWidth),
+                            ];
                         } else {
                             $error .= '%s spaces but found %s';
-                            $data   = array(
-                                       $requiredIndent,
-                                       $foundIndent,
-                                      );
+                            $data  = [
+                                $requiredIndent,
+                                $foundIndent,
+                            ];
                         }
 
                         $fix = $phpcsFile->addFixableError($error, $next, 'Incorrect', $data);

@@ -11,4 +11,12 @@ namespace Vendor\Package;
 
     use BarClass as Bar;
 
+namespace Vendor
+\Package;
+
+namespace Vendor\
+Package;
+namespace Vendor\
+
+Package;
 namespace Vendor\Package;

@@ -21,7 +21,7 @@ class LineEndingsUnitTest extends AbstractSniffUnitTest
      * @param string                  $testFile The name of the file being tested.
      * @param \PHP_CodeSniffer\Config $config   The config data for the test run.
      *
-     * @return array
+     * @return void
      */
     public function setCliValues($testFile, $config)
     {
@@ -40,7 +40,7 @@ class LineEndingsUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(1 => 1);
+        return [1 => 1];
 
     }//end getErrorList()
 
@@ -55,7 +55,7 @@ class LineEndingsUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

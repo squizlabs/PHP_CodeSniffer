@@ -31,7 +31,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
 
         if ($tokens[$stackPtr]['content'][1] === '_') {
             $error = 'Property name "%s" should not be prefixed with an underscore to indicate visibility';
-            $data  = array($tokens[$stackPtr]['content']);
+            $data  = [$tokens[$stackPtr]['content']];
             $phpcsFile->addWarning($error, $stackPtr, 'Underscore', $data);
         }
 
@@ -39,7 +39,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
         // for this, but also only process the first property in the list so we don't
         // repeat errors.
         $find = Tokens::$scopeModifiers;
-        $find = array_merge($find, array(T_VARIABLE, T_VAR, T_SEMICOLON));
+        $find = array_merge($find, [T_VARIABLE, T_VAR, T_SEMICOLON]);
         $prev = $phpcsFile->findPrevious($find, ($stackPtr - 1));
         if ($tokens[$prev]['code'] === T_VARIABLE) {
             return;
@@ -50,7 +50,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
             $phpcsFile->addError($error, $stackPtr, 'VarUsed');
         }
 
-        $next = $phpcsFile->findNext(array(T_VARIABLE, T_SEMICOLON), ($stackPtr + 1));
+        $next = $phpcsFile->findNext([T_VARIABLE, T_SEMICOLON], ($stackPtr + 1));
         if ($tokens[$next]['code'] === T_VARIABLE) {
             $error = 'There must not be more than one property declared per statement';
             $phpcsFile->addError($error, $stackPtr, 'Multiple');
@@ -59,7 +59,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
         $modifier = $phpcsFile->findPrevious(Tokens::$scopeModifiers, $stackPtr);
         if (($modifier === false) || ($tokens[$modifier]['line'] !== $tokens[$stackPtr]['line'])) {
             $error = 'Visibility must be declared on property "%s"';
-            $data  = array($tokens[$stackPtr]['content']);
+            $data  = [$tokens[$stackPtr]['content']];
             $phpcsFile->addError($error, $stackPtr, 'ScopeMissing', $data);
         }
 

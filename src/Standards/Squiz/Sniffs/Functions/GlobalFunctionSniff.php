@@ -23,7 +23,7 @@ class GlobalFunctionSniff implements Sniff
      */
     public function register()
     {
-        return array(T_FUNCTION);
+        return [T_FUNCTION];
 
     }//end register()
 
@@ -50,7 +50,7 @@ class GlobalFunctionSniff implements Sniff
             // Special exception for __autoload as it needs to be global.
             if ($functionName !== '__autoload') {
                 $error = 'Consider putting global function "%s" in a static class';
-                $data  = array($functionName);
+                $data  = [$functionName];
                 $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
             }
         }

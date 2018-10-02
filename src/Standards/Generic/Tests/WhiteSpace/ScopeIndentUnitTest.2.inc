@@ -1,4 +1,4 @@
-@codingStandardsChangeSetting Generic.WhiteSpace.ScopeIndent tabIndent true
+phpcs:set Generic.WhiteSpace.ScopeIndent tabIndent true
 <meta name="twitter:site" content="<?php echo $metaTagsData['twitter:site']; ?>">
 <?php
 class Test {
@@ -181,7 +181,7 @@ abstract class Test3
 	}
 }
 
-public function test()
+function test()
 {
 	$o = <<<EOF
 this is some text
@@ -396,7 +396,7 @@ $myFunction = function() {
 	if ($a === 404) {
 	   $a = 403;
 	}
-}
+};
 
 class Whatever
 {
@@ -626,7 +626,7 @@ $var = call_user_func(
 				} else {
 					return $a--;
 				}
-			}
+			};
 		}
 	}
 );
@@ -636,7 +636,7 @@ a(
 		$a = function() {
 			$b = false;
 		};
-	true
+	true;
 	}
 );
 
@@ -999,7 +999,7 @@ try {
 } catch (\Exception $e) {
 	$foo = function() {
 		return 'foo';
-	}
+	};
 
 	if (true) {
 	}
@@ -1007,17 +1007,17 @@ try {
 
 if ($foo) {
 	foo();
-} else if (\Exception $e) {
+} else if ($e) {
 	$foo = function() {
 		return 'foo';
-	}
+	};
 
 	if (true) {
 	}
 } else {
 	$foo = function() {
 		return 'foo';
-	}
+	};
 
 	if (true) {
 	}
@@ -1070,7 +1070,7 @@ class Test123
 		],
 		$prop2 = [
 			'testB' => 456,
-		],
+		];
 
 	protected static
 		$prop3 = array(
@@ -1078,7 +1078,7 @@ class Test123
 		),
 		$prop4 = array(
 			'testB' => 456,
-		),
+		);
 
 	protected static $prop5;
 }
@@ -1180,6 +1180,127 @@ function test()
 			echo $method . $var2;
 		}
 	}
+}
+
+switch ($a) {
+	case 0:
+		$a = function () {
+		};
+	case 1:
+		break;
+}
+
+class Test
+{
+	public function __construct()
+	{
+if (false) {
+echo 0;
+		}
+	}
+}
+
+return [
+	'veryLongKeySoIWantToMakeALineBreak'
+		=> 'veryLonValueSoIWantToMakeALineBreak',
+
+	'someOtherKey' => [
+		'someValue'
+	],
+
+	'arrayWithArraysInThere' => [
+		['Value1', 'Value1']
+	],
+];
+
+switch ($sContext) {
+	case 'SOMETHING':
+	case 'CONSTANT':
+		do_something();
+		break;
+	case 'GLOBAL':
+	case 'GLOBAL1':
+		do_something();
+		// Fall through
+	default:
+	{
+		do_something();
+	}
+}
+
+array_map(
+	static function ( $item ) {
+		echo $item;
+	},
+	$some_array
+);
+
+/**
+ * Comment.
+ */
+$a(function () use ($app) {
+	echo 'hi';
+})();
+
+$app->run();
+
+function foo()
+{
+	$foo('some
+	long description', function () {
+	});
+
+	$foo('some
+	long
+	description', function () {
+	});
+
+	$foo(
+'some long description', function () {
+	});
+}
+
+switch ( $a ) {
+case 'a':
+	$b = 2;
+	/**
+	 * A comment.
+	 */
+	apply_filter( 'something', $b );
+	break;
+
+case 'aa':
+	$b = 2;
+	/*
+	 * A comment.
+	 */
+	apply_filter( 'something', $b );
+	break;
+
+case 'b':
+	$b = 3;
+?>
+	<input name="something" value="<?php echo $b; ?>">
+<?php
+	$b = 4;
+	break;
+
+default:
+	$b = 3;
+	?>
+	<input name="something" value="<?php echo $b; ?>">
+	<?php
+	$b = 4;
+	break;
+}
+
+if ($foo) {
+if ($oo) {
+	/*
+	 *
+	 *
+   */
+}
 }
 
 	function foo()

@@ -27,16 +27,16 @@ class CreateWidgetTypeCallbackUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='CreateWidgetTypeCallbackUnitTest.js')
     {
-        return array(
-                18  => 1,
-                23  => 2,
-                26  => 1,
-                30  => 1,
-                34  => 1,
-                43  => 2,
-                91  => 1,
-                123 => 1,
-               );
+        return [
+            18  => 1,
+            23  => 2,
+            26  => 1,
+            30  => 1,
+            34  => 1,
+            43  => 2,
+            91  => 1,
+            123 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -51,7 +51,7 @@ class CreateWidgetTypeCallbackUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

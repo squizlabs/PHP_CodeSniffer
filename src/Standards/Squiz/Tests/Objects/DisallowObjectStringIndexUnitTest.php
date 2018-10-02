@@ -28,15 +28,15 @@ class DisallowObjectStringIndexUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='DisallowObjectStringIndexUnitTest.js')
     {
         if ($testFile !== 'DisallowObjectStringIndexUnitTest.js') {
-            return array();
+            return [];
         }
 
-        return array(
-                13 => 1,
-                17 => 1,
-                25 => 1,
-                35 => 1,
-               );
+        return [
+            13 => 1,
+            17 => 1,
+            25 => 1,
+            35 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -51,7 +51,7 @@ class DisallowObjectStringIndexUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

@@ -25,7 +25,7 @@ class ClosingPHPTagUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(9 => 1);
+        return [9 => 1];
 
     }//end getErrorList()
 
@@ -40,7 +40,7 @@ class ClosingPHPTagUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

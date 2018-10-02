@@ -80,20 +80,41 @@ class Summary implements Report
             return;
         }
 
-        $reportFiles = array();
+        $reportFiles = [];
         $maxLength   = 0;
 
         foreach ($lines as $line) {
             $parts   = explode('>>', $line);
             $fileLen = strlen($parts[0]);
-            $reportFiles[$parts[0]] = array(
-                                       'errors'   => $parts[1],
-                                       'warnings' => $parts[2],
-                                       'strlen'   => $fileLen,
-                                      );
+            $reportFiles[$parts[0]] = [
+                'errors'   => $parts[1],
+                'warnings' => $parts[2],
+                'strlen'   => $fileLen,
+            ];
 
             $maxLength = max($maxLength, $fileLen);
         }
+
+        uksort(
+            $reportFiles,
+            function ($keyA, $keyB) {
+                $pathPartsA = explode(DIRECTORY_SEPARATOR, $keyA);
+                $pathPartsB = explode(DIRECTORY_SEPARATOR, $keyB);
+
+                do {
+                    $partA = array_shift($pathPartsA);
+                    $partB = array_shift($pathPartsB);
+                } while ($partA === $partB && empty($pathPartsA) === false && empty($pathPartsB) === false);
+
+                if (empty($pathPartsA) === false && empty($pathPartsB) === true) {
+                    return 1;
+                } else if (empty($pathPartsA) === true && empty($pathPartsB) === false) {
+                    return -1;
+                } else {
+                    return strcasecmp($partA, $partB);
+                }
+            }
+        );
 
         $width = min($width, ($maxLength + 21));
         $width = max($width, 70);

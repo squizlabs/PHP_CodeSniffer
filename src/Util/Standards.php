@@ -24,13 +24,13 @@ class Standards
     {
         $ds = DIRECTORY_SEPARATOR;
 
-        $installedPaths = array(dirname(dirname(__DIR__)).$ds.'src'.$ds.'Standards');
+        $installedPaths = [dirname(dirname(__DIR__)).$ds.'src'.$ds.'Standards'];
         $configPaths    = Config::getConfigData('installed_paths');
         if ($configPaths !== null) {
             $installedPaths = array_merge($installedPaths, explode(',', $configPaths));
         }
 
-        $resolvedInstalledPaths = array();
+        $resolvedInstalledPaths = [];
         foreach ($installedPaths as $installedPath) {
             if (substr($installedPath, 0, 1) === '.') {
                 $installedPath = Common::realPath(__DIR__.$ds.'..'.$ds.'..'.$ds.$installedPath);
@@ -42,6 +42,104 @@ class Standards
         return $resolvedInstalledPaths;
 
     }//end getInstalledStandardPaths()
+
+
+    /**
+     * Get the details of all coding standards installed.
+     *
+     * Coding standards are directories located in the
+     * CodeSniffer/Standards directory. Valid coding standards
+     * include a Sniffs subdirectory.
+     *
+     * The details returned for each standard are:
+     * - path:      the path to the coding standard's main directory
+     * - name:      the name of the coding standard, as sourced from the ruleset.xml file
+     * - namespace: the namespace used by the coding standard, as sourced from the ruleset.xml file
+     *
+     * If you only need the paths to the installed standards,
+     * use getInstalledStandardPaths() instead as it performs less work to
+     * retrieve coding standard names.
+     *
+     * @param boolean $includeGeneric If true, the special "Generic"
+     *                                coding standard will be included
+     *                                if installed.
+     * @param string  $standardsDir   A specific directory to look for standards
+     *                                in. If not specified, PHP_CodeSniffer will
+     *                                look in its default locations.
+     *
+     * @return array
+     * @see    getInstalledStandardPaths()
+     */
+    public static function getInstalledStandardDetails(
+        $includeGeneric=false,
+        $standardsDir=''
+    ) {
+        $rulesets = [];
+
+        if ($standardsDir === '') {
+            $installedPaths = self::getInstalledStandardPaths();
+        } else {
+            $installedPaths = [$standardsDir];
+        }
+
+        foreach ($installedPaths as $standardsDir) {
+            // Check if the installed dir is actually a standard itself.
+            $csFile = $standardsDir.'/ruleset.xml';
+            if (is_file($csFile) === true) {
+                $rulesets[] = $csFile;
+                continue;
+            }
+
+            if (is_dir($standardsDir) === false) {
+                continue;
+            }
+
+            $di = new \DirectoryIterator($standardsDir);
+            foreach ($di as $file) {
+                if ($file->isDir() === true && $file->isDot() === false) {
+                    $filename = $file->getFilename();
+
+                    // Ignore the special "Generic" standard.
+                    if ($includeGeneric === false && $filename === 'Generic') {
+                        continue;
+                    }
+
+                    // Valid coding standard dirs include a ruleset.
+                    $csFile = $file->getPathname().'/ruleset.xml';
+                    if (is_file($csFile) === true) {
+                        $rulesets[] = $csFile;
+                    }
+                }
+            }
+        }//end foreach
+
+        $installedStandards = [];
+
+        foreach ($rulesets as $rulesetPath) {
+            $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
+            if ($ruleset === false) {
+                continue;
+            }
+
+            $standardName = (string) $ruleset['name'];
+            $dirname      = basename(dirname($rulesetPath));
+
+            if (isset($ruleset['namespace']) === true) {
+                $namespace = (string) $ruleset['namespace'];
+            } else {
+                $namespace = $dirname;
+            }
+
+            $installedStandards[$dirname] = [
+                'path'      => dirname($rulesetPath),
+                'name'      => $standardName,
+                'namespace' => $namespace,
+            ];
+        }//end foreach
+
+        return $installedStandards;
+
+    }//end getInstalledStandardDetails()
 
 
     /**
@@ -65,12 +163,12 @@ class Standards
         $includeGeneric=false,
         $standardsDir=''
     ) {
-        $installedStandards = array();
+        $installedStandards = [];
 
         if ($standardsDir === '') {
             $installedPaths = self::getInstalledStandardPaths();
         } else {
-            $installedPaths = array($standardsDir);
+            $installedPaths = [$standardsDir];
         }
 
         foreach ($installedPaths as $standardsDir) {
@@ -78,6 +176,11 @@ class Standards
             $csFile = $standardsDir.'/ruleset.xml';
             if (is_file($csFile) === true) {
                 $installedStandards[] = basename($standardsDir);
+                continue;
+            }
+
+            if (is_dir($standardsDir) === false) {
+                // Doesn't exist.
                 continue;
             }
 
@@ -162,10 +265,18 @@ class Standards
      */
     public static function getInstalledStandardPath($standard)
     {
+        if (strpos($standard, '.') !== false) {
+            return null;
+        }
+
         $installedPaths = self::getInstalledStandardPaths();
         foreach ($installedPaths as $installedPath) {
             $standardPath = $installedPath.DIRECTORY_SEPARATOR.$standard;
-            if (file_exists($standardPath) === false && basename($installedPath) === $standard) {
+            if (file_exists($standardPath) === false) {
+                if (basename($installedPath) !== $standard) {
+                    continue;
+                }
+
                 $standardPath = $installedPath;
             }
 
@@ -179,7 +290,7 @@ class Standards
                     return $path;
                 }
             }
-        }
+        }//end foreach
 
         return null;
 

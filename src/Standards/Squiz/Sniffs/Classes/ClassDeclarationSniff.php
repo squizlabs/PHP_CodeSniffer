@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 
 use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\ClassDeclarationSniff as PSR2ClassDeclarationSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
 {
@@ -30,10 +31,8 @@ class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
         // We want all the errors from the PSR2 standard, plus some of our own.
         parent::process($phpcsFile, $stackPtr);
 
-        $tokens = $phpcsFile->getTokens();
-
         // Check that this is the only class or interface in the file.
-        $nextClass = $phpcsFile->findNext(array(T_CLASS, T_INTERFACE), ($stackPtr + 1));
+        $nextClass = $phpcsFile->findNext([T_CLASS, T_INTERFACE], ($stackPtr + 1));
         if ($nextClass !== false) {
             // We have another, so an error is thrown.
             $error = 'Only one interface or class is allowed in a file';
@@ -70,10 +69,10 @@ class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
                     if ($spaces !== 0) {
                         $type  = strtolower($tokens[$stackPtr]['content']);
                         $error = 'Expected 0 spaces before %s keyword; %s found';
-                        $data  = array(
-                                  $type,
-                                  $spaces,
-                                 );
+                        $data  = [
+                            $type,
+                            $spaces,
+                        ];
 
                         $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeKeyword', $data);
                         if ($fix === true) {
@@ -107,10 +106,11 @@ class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
 
         // Check that the closing brace has one blank line after it.
         for ($nextContent = ($closeBrace + 1); $nextContent < $phpcsFile->numTokens; $nextContent++) {
-            // Ignore comments on the same lines as the brace.
+            // Ignore comments on the same line as the brace.
             if ($tokens[$nextContent]['line'] === $tokens[$closeBrace]['line']
                 && ($tokens[$nextContent]['code'] === T_WHITESPACE
-                || $tokens[$nextContent]['code'] === T_COMMENT)
+                || $tokens[$nextContent]['code'] === T_COMMENT
+                || isset(Tokens::$phpcsCommentTokens[$tokens[$nextContent]['code']]) === true)
             ) {
                 continue;
             }
@@ -133,7 +133,7 @@ class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
             || $tokens[$lastContent]['line'] === $tokens[$closeBrace]['line']
         ) {
             $error = 'Closing %s brace must be on a line by itself';
-            $data  = array($tokens[$stackPtr]['content']);
+            $data  = [$tokens[$stackPtr]['content']];
             $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'CloseBraceSameLine', $data);
             if ($fix === true) {
                 if ($difference === -1) {
@@ -155,7 +155,7 @@ class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
                         $phpcsFile->addError($error, $closeBrace, 'NewLineBeforeCloseBrace');
                     } else {
                         $error = 'Expected 0 spaces before closing brace; %s found';
-                        $data  = array($spaces);
+                        $data  = [$spaces];
                         $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpaceBeforeCloseBrace', $data);
                         if ($fix === true) {
                             $phpcsFile->fixer->replaceToken(($closeBrace - 1), '');
@@ -166,15 +166,22 @@ class ClassDeclarationSniff extends PSR2ClassDeclarationSniff
         }//end if
 
         if ($difference !== -1 && $difference !== 1) {
+            if ($tokens[$nextContent]['code'] === T_DOC_COMMENT_OPEN_TAG) {
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($tokens[$nextContent]['comment_closer'] + 1), null, true);
+                if ($next !== false && $tokens[$next]['code'] === T_FUNCTION) {
+                    return;
+                }
+            }
+
             $error = 'Closing brace of a %s must be followed by a single blank line; found %s';
-            $data  = array(
-                      $tokens[$stackPtr]['content'],
-                      $difference,
-                     );
+            $data  = [
+                $tokens[$stackPtr]['content'],
+                $difference,
+            ];
             $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'NewlinesAfterCloseBrace', $data);
             if ($fix === true) {
                 if ($difference === 0) {
-                    $first = $phpcsFile->findFirstOnLine(array(), $nextContent, true);
+                    $first = $phpcsFile->findFirstOnLine([], $nextContent, true);
                     $phpcsFile->fixer->addNewlineBefore($first);
                 } else {
                     $phpcsFile->fixer->beginChangeset();

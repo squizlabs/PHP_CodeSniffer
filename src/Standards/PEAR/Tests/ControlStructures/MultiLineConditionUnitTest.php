@@ -27,34 +27,42 @@ class MultiLineConditionUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='MultiLineConditionUnitTest.inc')
     {
-        $errors = array(
-                   21  => 1,
-                   22  => 1,
-                   35  => 1,
-                   40  => 1,
-                   41  => 1,
-                   42  => 1,
-                   43  => 1,
-                   49  => 1,
-                   54  => 1,
-                   57  => 1,
-                   58  => 1,
-                   59  => 1,
-                   61  => 1,
-                   67  => 1,
-                   87  => 1,
-                   88  => 1,
-                   89  => 1,
-                   90  => 1,
-                   96  => 2,
-                   101 => 1,
-                   109 => 2,
-                   125 => 1,
-                   145 => 2,
-                   153 => 2,
-                   168 => 1,
-                   177 => 1,
-                  );
+        $errors = [
+            21  => 1,
+            22  => 1,
+            35  => 1,
+            40  => 1,
+            41  => 1,
+            42  => 1,
+            43  => 1,
+            49  => 1,
+            54  => 1,
+            57  => 1,
+            58  => 1,
+            59  => 1,
+            61  => 1,
+            67  => 1,
+            87  => 1,
+            88  => 1,
+            89  => 1,
+            90  => 1,
+            96  => 2,
+            101 => 1,
+            109 => 2,
+            125 => 1,
+            145 => 2,
+            153 => 2,
+            168 => 1,
+            177 => 1,
+            194 => 2,
+            202 => 2,
+            215 => 1,
+            218 => 2,
+            232 => 2,
+            239 => 1,
+            240 => 2,
+            248 => 2,
+        ];
 
         if ($testFile === 'MultiLineConditionUnitTest.inc') {
             $errors[183] = 1;
@@ -75,7 +83,7 @@ class MultiLineConditionUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

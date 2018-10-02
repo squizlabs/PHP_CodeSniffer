@@ -188,5 +188,27 @@
  */
 
 /**
+ * Short description.
+ *
+ * @tag    one
+ * @param  int    $number
+ * @param  string $text
+ * @return something
+ */
+
+/**
+ *
+ * @param  int    $number
+ * @param  string $text
+ * @return something
+ */
+
+/**
+ * @param int $number
+ */
+
+/**
  * étude des ...
  */
+
+/**doc comment */

@@ -25,19 +25,19 @@ class LowercaseDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                3  => 1,
-                5  => 1,
-                7  => 1,
-                9  => 1,
-                10 => 1,
-                12 => 1,
-                14 => 1,
-                15 => 1,
-                16 => 1,
-                20 => 1,
-                21 => 1,
-               );
+        return [
+            3  => 1,
+            5  => 1,
+            7  => 1,
+            9  => 1,
+            10 => 1,
+            12 => 1,
+            14 => 1,
+            15 => 1,
+            16 => 1,
+            20 => 1,
+            21 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -52,7 +52,7 @@ class LowercaseDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

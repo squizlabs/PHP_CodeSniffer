@@ -29,14 +29,14 @@ class VariableCommentSniff extends AbstractVariableSniff
     public function processMemberVar(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $ignore = array(
-                   T_PUBLIC,
-                   T_PRIVATE,
-                   T_PROTECTED,
-                   T_VAR,
-                   T_STATIC,
-                   T_WHITESPACE,
-                  );
+        $ignore = [
+            T_PUBLIC,
+            T_PRIVATE,
+            T_PROTECTED,
+            T_VAR,
+            T_STATIC,
+            T_WHITESPACE,
+        ];
 
         $commentEnd = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
         if ($commentEnd === false
@@ -72,7 +72,7 @@ class VariableCommentSniff extends AbstractVariableSniff
                 }
             } else {
                 $error = '%s tag is not allowed in member variable comment';
-                $data  = array($tokens[$tag]['content']);
+                $data  = [$tokens[$tag]['content']];
                 $phpcsFile->addWarning($error, $tag, 'TagNotAllowed', $data);
             }//end if
         }//end foreach
@@ -98,18 +98,40 @@ class VariableCommentSniff extends AbstractVariableSniff
             return;
         }
 
-        $varType       = $tokens[($foundVar + 2)]['content'];
-        $suggestedType = Common::suggestType($varType);
+         // Support both a var type and a description.
+        preg_match('`^((?:\|?(?:array\([^\)]*\)|[\\\\a-z0-9\[\]]+))*)( .*)?`i', $tokens[($foundVar + 2)]['content'], $varParts);
+        if (isset($varParts[1]) === false) {
+            return;
+        }
+
+        $varType = $varParts[1];
+
+        // Check var type (can be multiple, separated by '|').
+        $typeNames      = explode('|', $varType);
+        $suggestedNames = [];
+        foreach ($typeNames as $i => $typeName) {
+            $suggestedName = Common::suggestType($typeName);
+            if (in_array($suggestedName, $suggestedNames) === false) {
+                $suggestedNames[] = $suggestedName;
+            }
+        }
+
+        $suggestedType = implode('|', $suggestedNames);
         if ($varType !== $suggestedType) {
             $error = 'Expected "%s" but found "%s" for @var tag in member variable comment';
-            $data  = array(
-                      $suggestedType,
-                      $varType,
-                     );
-
-            $fix = $phpcsFile->addFixableError($error, ($foundVar + 2), 'IncorrectVarType', $data);
+            $data  = [
+                $suggestedType,
+                $varType,
+            ];
+            $fix   = $phpcsFile->addFixableError($error, $foundVar, 'IncorrectVarType', $data);
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($foundVar + 2), $suggestedType);
+                $replacement = $suggestedType;
+                if (empty($varParts[2]) === false) {
+                    $replacement .= $varParts[2];
+                }
+
+                $phpcsFile->fixer->replaceToken(($foundVar + 2), $replacement);
+                unset($replacement);
             }
         }
 

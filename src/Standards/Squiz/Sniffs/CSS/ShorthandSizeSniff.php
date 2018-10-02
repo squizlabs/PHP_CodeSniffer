@@ -20,7 +20,7 @@ class ShorthandSizeSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
     /**
      * A list of styles that we shouldn't check.
@@ -29,13 +29,13 @@ class ShorthandSizeSniff implements Sniff
      *
      * @var array
      */
-    protected $excludeStyles = array(
-                                'background-position'      => 'background-position',
-                                'box-shadow'               => 'box-shadow',
-                                'transform-origin'         => 'transform-origin',
-                                '-webkit-transform-origin' => '-webkit-transform-origin',
-                                '-ms-transform-origin'     => '-ms-transform-origin',
-                               );
+    protected $excludeStyles = [
+        'background-position'      => 'background-position',
+        'box-shadow'               => 'box-shadow',
+        'transform-origin'         => 'transform-origin',
+        '-webkit-transform-origin' => '-webkit-transform-origin',
+        '-ms-transform-origin'     => '-ms-transform-origin',
+    ];
 
 
     /**
@@ -45,7 +45,7 @@ class ShorthandSizeSniff implements Sniff
      */
     public function register()
     {
-        return array(T_STYLE);
+        return [T_STYLE];
 
     }//end register()
 
@@ -83,7 +83,7 @@ class ShorthandSizeSniff implements Sniff
 
         // Check if this style value is a set of numbers with optional prefixes.
         $content = preg_replace('/\s+/', ' ', $content);
-        $values  = array();
+        $values  = [];
         $num     = preg_match_all(
             '/([0-9]+)([a-zA-Z]{2}\s+|%\s+|\s+)/',
             $content.' ',
@@ -109,7 +109,7 @@ class ShorthandSizeSniff implements Sniff
         if ($num === 3) {
             $expected = trim($content.' '.$values[1][1].$values[1][2]);
             $error    = 'Shorthand syntax not allowed here; use %s instead';
-            $data     = array($expected);
+            $data     = [$expected];
             $fix      = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
 
             if ($fix === true) {
@@ -150,10 +150,10 @@ class ShorthandSizeSniff implements Sniff
         $expected = preg_replace('/\s+/', ' ', trim($expected));
 
         $error = 'Size definitions must use shorthand if available; expected "%s" but found "%s"';
-        $data  = array(
-                  $expected,
-                  $content,
-                 );
+        $data  = [
+            $expected,
+            $content,
+        ];
 
         $fix = $phpcsFile->addFixableError($error, $stackPtr, 'NotUsed', $data);
         if ($fix === true) {

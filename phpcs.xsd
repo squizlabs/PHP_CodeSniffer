@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+    <xs:element name="ruleset">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="description" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+                <xs:element name="config" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+                        <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="file" type="xs:string" maxOccurs="unbounded" minOccurs="0"></xs:element>
+                <xs:element name="exclude-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+                <xs:element name="arg" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:attribute name="name" type="xs:string"></xs:attribute>
+                        <xs:attribute name="value" type="xs:string"></xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ini" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+                        <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="autoload" type="xs:string" maxOccurs="unbounded" minOccurs="0"></xs:element>
+                <xs:element name="rule" type="ruleType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+            </xs:choice>
+            <xs:attribute name="name" type="xs:string"></xs:attribute>
+            <xs:attribute name="namespace" type="xs:string"></xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="ruleType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="exclude" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="message" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
+            <xs:element name="severity" type="xs:integer" maxOccurs="1" minOccurs="0"></xs:element>
+            <xs:element name="type" maxOccurs="1" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="error"></xs:enumeration>
+                        <xs:enumeration value="warning"></xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="exclude-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+            <xs:element name="include-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
+            <xs:element name="properties" type="propertiesType" maxOccurs="1" minOccurs="0"></xs:element>
+        </xs:choice>
+        <xs:attribute name="ref" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="patternType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="type">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="relative"></xs:enumeration>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="propertiesType">
+        <xs:sequence>
+            <xs:element name="property" maxOccurs="unbounded" minOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="element" maxOccurs="unbounded" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attribute name="key" type="xs:string"></xs:attribute>
+                                <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="type">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="array"></xs:enumeration>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+                    <xs:attribute name="value" type="xs:string"></xs:attribute>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

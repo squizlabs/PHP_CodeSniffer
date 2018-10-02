@@ -37,7 +37,7 @@ class NoSilencedErrorsSniff implements Sniff
      */
     public function register()
     {
-        return array(T_ASPERAND);
+        return [T_ASPERAND];
 
     }//end register()
 
@@ -53,13 +53,22 @@ class NoSilencedErrorsSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $error = 'Silencing errors is forbidden';
+        // Prepare the "Found" string to display.
+        $contextLength  = 4;
+        $endOfStatement = $phpcsFile->findEndOfStatement($stackPtr, T_COMMA);
+        if (($endOfStatement - $stackPtr) < $contextLength) {
+            $contextLength = ($endOfStatement - $stackPtr);
+        }
+
+        $found = $phpcsFile->getTokensAsString($stackPtr, $contextLength);
+        $found = str_replace(["\t", "\n", "\r"], ' ', $found).'...';
+
         if ($this->error === true) {
-            $error = 'Silencing errors is forbidden';
-            $phpcsFile->addError($error, $stackPtr, 'Forbidden');
+            $error = 'Silencing errors is forbidden; found: %s';
+            $phpcsFile->addError($error, $stackPtr, 'Forbidden', [$found]);
         } else {
-            $error = 'Silencing errors is discouraged';
-            $phpcsFile->addWarning($error, $stackPtr, 'Discouraged');
+            $error = 'Silencing errors is discouraged; found: %s';
+            $phpcsFile->addWarning($error, $stackPtr, 'Discouraged', [$found]);
         }
 
     }//end process()

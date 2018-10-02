@@ -31,7 +31,7 @@ class SwitchDeclarationSniff implements Sniff
      */
     public function register()
     {
-        return array(T_SWITCH);
+        return [T_SWITCH];
 
     }//end register()
 
@@ -59,25 +59,21 @@ class SwitchDeclarationSniff implements Sniff
         $switch        = $tokens[$stackPtr];
         $nextCase      = $stackPtr;
         $caseAlignment = ($switch['column'] + $this->indent);
-        $caseCount     = 0;
-        $foundDefault  = false;
 
         while (($nextCase = $this->findNextCase($phpcsFile, ($nextCase + 1), $switch['scope_closer'])) !== false) {
             if ($tokens[$nextCase]['code'] === T_DEFAULT) {
-                $type         = 'default';
-                $foundDefault = true;
+                $type = 'default';
             } else {
                 $type = 'case';
-                $caseCount++;
             }
 
             if ($tokens[$nextCase]['content'] !== strtolower($tokens[$nextCase]['content'])) {
                 $expected = strtolower($tokens[$nextCase]['content']);
                 $error    = strtoupper($type).' keyword must be lowercase; expected "%s" but found "%s"';
-                $data     = array(
-                             $expected,
-                             $tokens[$nextCase]['content'],
-                            );
+                $data     = [
+                    $expected,
+                    $tokens[$nextCase]['content'],
+                ];
 
                 $fix = $phpcsFile->addFixableError($error, $nextCase, $type.'NotLower', $data);
                 if ($fix === true) {
@@ -113,7 +109,8 @@ class SwitchDeclarationSniff implements Sniff
 
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
                 if ($tokens[$next]['line'] === $tokens[$opener]['line']
-                    && $tokens[$next]['code'] === T_COMMENT
+                    && ($tokens[$next]['code'] === T_COMMENT
+                    || isset(Tokens::$phpcsCommentTokens[$tokens[$next]['code']]) === true)
                 ) {
                     // Skip comments on the same line.
                     $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
@@ -216,7 +213,7 @@ class SwitchDeclarationSniff implements Sniff
     private function findNextCase($phpcsFile, $stackPtr, $end)
     {
         $tokens = $phpcsFile->getTokens();
-        while (($stackPtr = $phpcsFile->findNext(array(T_CASE, T_DEFAULT, T_SWITCH), $stackPtr, $end)) !== false) {
+        while (($stackPtr = $phpcsFile->findNext([T_CASE, T_DEFAULT, T_SWITCH], $stackPtr, $end)) !== false) {
             // Skip nested SWITCH statements; they are handled on their own.
             if ($tokens[$stackPtr]['code'] === T_SWITCH) {
                 $stackPtr = $tokens[$stackPtr]['scope_closer'];
@@ -243,13 +240,13 @@ class SwitchDeclarationSniff implements Sniff
     private function findNestedTerminator($phpcsFile, $stackPtr, $end)
     {
         $tokens      = $phpcsFile->getTokens();
-        $terminators = array(
-                        T_RETURN,
-                        T_BREAK,
-                        T_CONTINUE,
-                        T_THROW,
-                        T_EXIT,
-                       );
+        $terminators = [
+            T_RETURN,
+            T_BREAK,
+            T_CONTINUE,
+            T_THROW,
+            T_EXIT,
+        ];
 
         $lastToken = $phpcsFile->findPrevious(T_WHITESPACE, ($end - 1), $stackPtr, true);
         if ($lastToken !== false) {

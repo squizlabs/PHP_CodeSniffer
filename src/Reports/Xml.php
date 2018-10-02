@@ -35,6 +35,8 @@ class Xml implements Report
         $out = new \XMLWriter;
         $out->openMemory();
         $out->setIndent(true);
+        $out->setIndentString('    ');
+        $out->startDocument('1.0', 'UTF-8');
 
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
             // Nothing to print.
@@ -68,7 +70,13 @@ class Xml implements Report
         }//end foreach
 
         $out->endElement();
-        echo $out->flush();
+
+        // Remove the start of the document because we will
+        // add that manually later. We only have it in here to
+        // properly set the encoding.
+        $content = $out->flush();
+        $content = substr($content, (strpos($content, PHP_EOL) + strlen(PHP_EOL)));
+        echo $content;
 
         return true;
 

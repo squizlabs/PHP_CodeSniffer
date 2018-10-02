@@ -10,7 +10,6 @@
 namespace PHP_CodeSniffer\Reports;
 
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util;
 
 class Diff implements Report
 {
@@ -121,7 +120,7 @@ class Diff implements Report
         $toScreen=true
     ) {
         echo $cachedData;
-        if ($toScreen === true) {
+        if ($toScreen === true && $cachedData !== '') {
             echo PHP_EOL;
         }
 

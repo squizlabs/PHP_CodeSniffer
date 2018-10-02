@@ -23,7 +23,7 @@ class ReturnFunctionValueSniff implements Sniff
      */
     public function register()
     {
-        return array(T_RETURN);
+        return [T_RETURN];
 
     }//end register()
 

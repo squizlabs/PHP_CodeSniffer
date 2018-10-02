@@ -106,3 +106,30 @@ unset($foo,$bar);
 
 $closure($foo,$bar);
 $var = $closure() + $closure($foo,$bar) + self::$closure($foo,$bar);
+
+class Test
+{
+    public static function baz($foo, $bar)
+    {
+        $a = new self($foo,$bar);
+        $b = new static($foo,$bar);
+    }
+}
+
+$obj->{$var}($foo,$bar);
+
+(function ($a, $b) {
+    return function ($c, $d) use ($a, $b) {
+        echo $a, $b, $c, $d;
+    };
+})('a','b')('c','d');
+
+my_function_call(
+    'a'
+    /* Comment */
+    ,'b'
+    , 'c' // Comment.
+    ,'d'
+    ,'e' // phpcs:ignore Standard.Category.Sniff -- for reasons.
+    , 'f'
+);

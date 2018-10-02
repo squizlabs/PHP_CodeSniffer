@@ -29,26 +29,26 @@ class DisallowSizeFunctionsInLoopsUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'DisallowSizeFunctionsInLoopsUnitTest.inc':
-            return array(
-                    2  => 1,
-                    7  => 1,
-                    11 => 1,
-                    13 => 1,
-                    18 => 1,
-                    23 => 1,
-                    27 => 1,
-                    29 => 1,
-                    35 => 1,
-                    40 => 1,
-                    44 => 1,
-                    46 => 1,
-                   );
+            return [
+                2  => 1,
+                7  => 1,
+                11 => 1,
+                13 => 1,
+                18 => 1,
+                23 => 1,
+                27 => 1,
+                29 => 1,
+                35 => 1,
+                40 => 1,
+                44 => 1,
+                46 => 1,
+            ];
             break;
         case 'DisallowSizeFunctionsInLoopsUnitTest.js':
-            return array(1 => 1);
+            return [1 => 1];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -65,7 +65,7 @@ class DisallowSizeFunctionsInLoopsUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

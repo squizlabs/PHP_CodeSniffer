@@ -28,46 +28,46 @@ class MultiLineFunctionDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='MultiLineFunctionDeclarationUnitTest.inc')
     {
         if ($testFile === 'MultiLineFunctionDeclarationUnitTest.inc') {
-            $errors = array(
-                       2   => 1,
-                       3   => 1,
-                       4   => 2,
-                       5   => 1,
-                       7   => 1,
-                       11  => 1,
-                       12  => 1,
-                       13  => 1,
-                       16  => 1,
-                       36  => 1,
-                       43  => 2,
-                       48  => 1,
-                       81  => 1,
-                       82  => 2,
-                       88  => 1,
-                       102 => 2,
-                       137 => 1,
-                       141 => 2,
-                       142 => 1,
-                       158 => 1,
-                       160 => 1,
-                      );
+            $errors = [
+                2   => 1,
+                3   => 1,
+                4   => 2,
+                5   => 1,
+                7   => 1,
+                11  => 1,
+                12  => 1,
+                13  => 1,
+                16  => 1,
+                36  => 1,
+                43  => 2,
+                48  => 1,
+                81  => 1,
+                82  => 2,
+                88  => 1,
+                102 => 2,
+                137 => 1,
+                141 => 2,
+                142 => 1,
+                158 => 1,
+                160 => 1,
+            ];
         } else {
-            $errors = array(
-                       2  => 1,
-                       3  => 1,
-                       4  => 2,
-                       5  => 1,
-                       7  => 1,
-                       11 => 1,
-                       12 => 1,
-                       13 => 1,
-                       16 => 1,
-                       26 => 1,
-                       36 => 1,
-                       43 => 2,
-                       48 => 1,
-                       65 => 1,
-                      );
+            $errors = [
+                2  => 1,
+                3  => 1,
+                4  => 2,
+                5  => 1,
+                7  => 1,
+                11 => 1,
+                12 => 1,
+                13 => 1,
+                16 => 1,
+                26 => 1,
+                36 => 1,
+                43 => 2,
+                48 => 1,
+                65 => 1,
+            ];
         }//end if
 
         return $errors;
@@ -85,7 +85,7 @@ class MultiLineFunctionDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

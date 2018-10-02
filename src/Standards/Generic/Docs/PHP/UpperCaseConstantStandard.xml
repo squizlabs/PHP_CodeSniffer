@@ -1,4 +1,4 @@
-<documentation title="PHP Constants">
+<documentation title="Uppercase PHP Constants">
     <standard>
     <![CDATA[
     The <em>true</em>, <em>false</em> and <em>null</em> constants must always be uppercase.

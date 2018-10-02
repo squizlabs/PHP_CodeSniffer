@@ -152,3 +152,155 @@ class Foo
     private $caseStudy = null;
 
 }
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 2
+
+class MyClass
+{
+    public $var1 = 'value';
+
+
+    public $var2 = 'value';
+
+    public $var3 = 'value';
+
+}//end class
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacingBeforeFirst 0
+
+class MyClass
+{
+    public $var1 = 'value';
+
+
+    public $var2 = 'value';
+
+    public $var3 = 'value';
+
+}//end class
+
+class MyClass
+{
+
+    public $var1 = 'value';
+
+    public $var2 = 'value';
+
+    public $var3 = 'value';
+
+}//end class
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 0
+
+class MyClass
+{
+    public $var1 = 'value';
+
+    public $var2 = 'value';
+    public $var3 = 'value';
+
+}//end class
+
+interface MyInterface
+{
+
+    /* testing */
+    public $var1 = 'value';
+
+    public $var2 = 'value';
+    public $var3 = 'value';
+
+}//end class
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 0
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacingBeforeFirst 0
+
+class phpcsCommentTest {
+
+
+    // phpcs:disable Standard.Category.Sniff
+
+    public $var1 = 'value';
+
+
+    // phpcs:enable Standard.Category.Sniff
+
+    public $var1 = 'value';
+
+}
+
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.MemberVarSpacing spacingBeforeFirst 1
+
+class phpcsCommentTest {
+
+
+    // phpcs:disable Standard.Category.Sniff
+
+    public $var1 = 'value';
+
+
+    // phpcs:enable Standard.Category.Sniff
+
+    public $var1 = 'value';
+
+}
+
+class MyOtherClass
+{
+    public
+        $varK = array( 'a', 'b' );
+    protected static
+        $varK,
+        $varL,
+        $varM;
+
+
+
+    private
+        $varO = true,
+        $varP = array( 'a' => 'a', 'b' => 'b' ),
+        $varQ = 'string',
+        $varR = 123;
+}
+
+// Make sure the determination of whether a property is the first property or not is done correctly.
+class ClassUsingSimpleTraits
+{
+    use HelloWorld;
+
+
+    /* comment */
+    public $firstVar = array( 'a', 'b' );
+    protected $secondVar = true;
+}
+
+class ClassUsingComplexTraits
+{
+    use A, B {
+        B::smallTalk insteadof A;
+        A::bigTalk insteadof B;
+    }
+
+
+
+    public $firstVar = array( 'a', 'b' );
+
+
+    /* comment */
+    protected $secondVar = true;
+}
+
+class Foo
+{
+
+
+    private function foo()
+    {
+    }
+
+
+    /* no error here because after function */
+    private $bar = false;
+}

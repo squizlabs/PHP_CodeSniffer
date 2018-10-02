@@ -9,59 +9,46 @@
 
 namespace PHP_CodeSniffer\Tests;
 
-use PHP_CodeSniffer\Util\Tokens;
-
-if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
-    define('PHP_CODESNIFFER_IN_TESTS', true);
-}
-
-if (defined('PHP_CODESNIFFER_CBF') === false) {
-    define('PHP_CODESNIFFER_CBF', false);
-}
-
-if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
-    define('PHP_CODESNIFFER_VERBOSITY', 0);
-}
+use PHPUnit\TextUI\TestRunner;
 
 if (is_file(__DIR__.'/../autoload.php') === true) {
-    include_once __DIR__.'/../autoload.php';
     include_once 'Core/AllTests.php';
     include_once 'Standards/AllSniffs.php';
 } else {
-    include_once 'PHP/CodeSniffer/autoload.php';
     include_once 'CodeSniffer/Core/AllTests.php';
     include_once 'CodeSniffer/Standards/AllSniffs.php';
 }
 
-require_once 'TestSuite.php';
+// PHPUnit 7 made the TestSuite run() method incompatible with
+// older PHPUnit versions due to return type hints, so maintain
+// two different suite objects.
+$phpunit7 = false;
+if (class_exists('\PHPUnit\Runner\Version') === true) {
+    $version = \PHPUnit\Runner\Version::id();
+    if ($version[0] === '7') {
+        $phpunit7 = true;
+    }
+}
 
-$tokens = new Tokens();
+if ($phpunit7 === true) {
+    include_once 'TestSuite7.php';
+} else {
+    include_once 'TestSuite.php';
+}
 
 class PHP_CodeSniffer_AllTests
 {
 
 
     /**
-     * Prepare the test runner.
-     *
-     * @return void
-     */
-    public static function main()
-    {
-        \PHPUnit_TextUI_TestRunner::run(self::suite());
-
-    }//end main()
-
-
-    /**
      * Add all PHP_CodeSniffer test suites into a single test suite.
      *
-     * @return \PHPUnit_Framework_TestSuite
+     * @return \PHPUnit\Framework\TestSuite
      */
     public static function suite()
     {
-        $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'] = array();
-        $GLOBALS['PHP_CODESNIFFER_TEST_DIRS']     = array();
+        $GLOBALS['PHP_CODESNIFFER_STANDARD_DIRS'] = [];
+        $GLOBALS['PHP_CODESNIFFER_TEST_DIRS']     = [];
 
         // Use a special PHP_CodeSniffer test suite so that we can
         // unset our autoload function after the run.

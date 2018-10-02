@@ -25,11 +25,11 @@ class ColourDefinitionUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                2 => 1,
-                5 => 1,
-                6 => 1,
-               );
+        return [
+            2 => 1,
+            5 => 1,
+            6 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -44,7 +44,7 @@ class ColourDefinitionUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

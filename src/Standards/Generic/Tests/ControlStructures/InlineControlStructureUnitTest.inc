@@ -187,8 +187,54 @@ if ($a && $a === Foo::VARIABLE && ($a === Foo::METHOD || $a === Foo::FUNCTION))
 
 $out = array_map(function ($test) { if ($test) return 1; else return 2; }, $input); // comment
 
+for ($x=0;$x<5;$x++):
+    if ($x) continue;
+endfor;
+
+for ($x=0;$x<5;$x++):
+    if ($x) continue ?> <?php
+endfor;
+
 if (true)
     try {
     }
     catch(Exception $e) {
     }
+
+switch ($num) {
+    case 0:
+        if (1 > $num)
+            return bar(
+                baz(
+                    "foobarbaz"
+                )
+            );
+        break;
+}
+
+do {
+	$i++;
+}
+// Comment
+while ($i < 10);
+
+if ($this) {
+    if ($that)
+        foo(${$a[$b]});
+}
+
+while (!$this->readLine($tokens, $tag)); //phpcs:ignore Standard.Category.Sniff
+
+while (!$this->readLine($tokens, $tag)); // comment
+
+while (!$this->readLine($tokens, $tag)); /* comment */
+
+foreach ($stringParade as $hit)
+    $hitParade[] = $hit + 0; // phpcs:ignore Standard.Category.Sniff
+
+if ($bar)
+    if ($foo) echo 'hi'; /* @phpcs:ignore Standard.Category.Sniff */
+
+if (true) $callable = function () {
+    return true;
+};

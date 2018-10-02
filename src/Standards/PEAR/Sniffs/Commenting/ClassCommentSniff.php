@@ -23,11 +23,11 @@ class ClassCommentSniff extends FileCommentSniff
      */
     public function register()
     {
-        return array(
-                T_CLASS,
-                T_INTERFACE,
-                T_TRAIT,
-               );
+        return [
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
+        ];
 
     }//end register()
 
@@ -43,11 +43,9 @@ class ClassCommentSniff extends FileCommentSniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $this->currentFile = $phpcsFile;
-
         $tokens    = $phpcsFile->getTokens();
         $type      = strtolower($tokens[$stackPtr]['content']);
-        $errorData = array($type);
+        $errorData = [$type];
 
         $find   = Tokens::$methodPrefixes;
         $find[] = T_WHITESPACE;
@@ -56,7 +54,8 @@ class ClassCommentSniff extends FileCommentSniff
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
-            $phpcsFile->addError('Missing class doc comment', $stackPtr, 'Missing');
+            $errorData[] = $phpcsFile->getDeclarationName($stackPtr);
+            $phpcsFile->addError('Missing doc comment for %s %s', $stackPtr, 'Missing', $errorData);
             $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'no');
             return;
         }
@@ -64,7 +63,7 @@ class ClassCommentSniff extends FileCommentSniff
         $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'yes');
 
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
-            $phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr, 'WrongStyle');
+            $phpcsFile->addError('You must use "/**" style comments for a %s comment', $stackPtr, 'WrongStyle', $errorData);
             return;
         }
 
@@ -94,7 +93,7 @@ class ClassCommentSniff extends FileCommentSniff
             $content = $tokens[($tag + 2)]['content'];
             if ((strstr($content, 'Release:') === false)) {
                 $error = 'Invalid version "%s" in doc comment; consider "Release: <package_version>" instead';
-                $data  = array($content);
+                $data  = [$content];
                 $phpcsFile->addWarning($error, $tag, 'InvalidVersion', $data);
             }
         }

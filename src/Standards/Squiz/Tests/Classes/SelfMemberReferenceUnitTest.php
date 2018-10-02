@@ -25,17 +25,17 @@ class SelfMemberReferenceUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                24  => 1,
-                25  => 1,
-                26  => 1,
-                30  => 1,
-                31  => 1,
-                32  => 2,
-                79  => 1,
-                108 => 1,
-                119 => 1,
-               );
+        return [
+            24  => 1,
+            25  => 1,
+            26  => 1,
+            30  => 1,
+            31  => 1,
+            32  => 2,
+            79  => 1,
+            108 => 1,
+            119 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -50,7 +50,7 @@ class SelfMemberReferenceUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

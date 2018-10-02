@@ -28,47 +28,51 @@ class FunctionDeclarationUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='FunctionDeclarationUnitTest.inc')
     {
         if ($testFile === 'FunctionDeclarationUnitTest.inc') {
-            $errors = array(
-                       3   => 1,
-                       4   => 1,
-                       5   => 1,
-                       9   => 1,
-                       10  => 1,
-                       11  => 1,
-                       14  => 1,
-                       17  => 1,
-                       44  => 1,
-                       52  => 1,
-                       61  => 2,
-                       98  => 1,
-                       110 => 2,
-                       120 => 3,
-                       121 => 1,
-                       140 => 1,
-                       145 => 1,
-                       161 => 2,
-                       162 => 2,
-                       164 => 2,
-                       167 => 2,
-                       171 => 1,
-                       173 => 1,
-                       201 => 1,
-                       206 => 1,
-                       208 => 1,
-                      );
+            $errors = [
+                3   => 1,
+                4   => 1,
+                5   => 1,
+                9   => 1,
+                10  => 1,
+                11  => 1,
+                14  => 1,
+                17  => 1,
+                44  => 1,
+                52  => 1,
+                61  => 2,
+                98  => 1,
+                110 => 2,
+                120 => 3,
+                121 => 1,
+                140 => 1,
+                145 => 1,
+                161 => 2,
+                162 => 2,
+                164 => 2,
+                167 => 2,
+                171 => 1,
+                173 => 1,
+                201 => 1,
+                206 => 1,
+                208 => 1,
+                216 => 1,
+                223 => 1,
+                230 => 1,
+                237 => 1,
+            ];
         } else {
-            $errors = array(
-                       3  => 1,
-                       4  => 1,
-                       5  => 1,
-                       9  => 1,
-                       10 => 1,
-                       11 => 1,
-                       14 => 1,
-                       17 => 1,
-                       41 => 1,
-                       48 => 1,
-                      );
+            $errors = [
+                3  => 1,
+                4  => 1,
+                5  => 1,
+                9  => 1,
+                10 => 1,
+                11 => 1,
+                14 => 1,
+                17 => 1,
+                41 => 1,
+                48 => 1,
+            ];
         }//end if
 
         return $errors;
@@ -86,7 +90,7 @@ class FunctionDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

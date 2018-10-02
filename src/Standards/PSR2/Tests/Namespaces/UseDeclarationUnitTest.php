@@ -29,28 +29,48 @@ class UseDeclarationUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'UseDeclarationUnitTest.2.inc':
-            return array(
-                    4  => 1,
-                    5  => 1,
-                    10 => 2,
-                   );
+            return [
+                4  => 1,
+                5  => 1,
+                6  => 1,
+                7  => 1,
+                12 => 2,
+            ];
         case 'UseDeclarationUnitTest.3.inc':
-            return array(
-                    4 => 1,
-                    6 => 1,
-                   );
+            return [
+                4 => 1,
+                6 => 1,
+            ];
         case 'UseDeclarationUnitTest.5.inc':
-            return array(
-                    5  => 1,
-                    6  => 1,
-                    8  => 1,
-                    14 => 1,
-                    17 => 1,
-                    18 => 1,
-                    19 => 1,
-                   );
+            return [
+                5  => 1,
+                6  => 1,
+                8  => 1,
+                14 => 1,
+                17 => 1,
+                18 => 1,
+                19 => 1,
+                21 => 1,
+                28 => 1,
+                30 => 1,
+                35 => 1,
+            ];
+        case 'UseDeclarationUnitTest.10.inc':
+        case 'UseDeclarationUnitTest.11.inc':
+        case 'UseDeclarationUnitTest.12.inc':
+        case 'UseDeclarationUnitTest.13.inc':
+        case 'UseDeclarationUnitTest.14.inc':
+        case 'UseDeclarationUnitTest.16.inc':
+        case 'UseDeclarationUnitTest.17.inc':
+            return [2 => 1];
+        case 'UseDeclarationUnitTest.15.inc':
+            return [
+                3 => 1,
+                4 => 1,
+                5 => 1,
+            ];
         default:
-            return array();
+            return [];
         }//end switch
 
     }//end getErrorList()
@@ -66,7 +86,7 @@ class UseDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

@@ -19,6 +19,7 @@ use PHP_CodeSniffer\Util\Cache;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Standards;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Exceptions\DeepExitException;
 
 class Runner
 {
@@ -52,89 +53,94 @@ class Runner
      */
     public function runPHPCS()
     {
-        Util\Timing::startTiming();
-        Runner::checkRequirements();
+        try {
+            Util\Timing::startTiming();
+            Runner::checkRequirements();
 
-        if (defined('PHP_CODESNIFFER_CBF') === false) {
-            define('PHP_CODESNIFFER_CBF', false);
-        }
-
-        // Creating the Config object populates it with all required settings
-        // based on the CLI arguments provided to the script and any config
-        // values the user has set.
-        $this->config = new Config();
-
-        // Init the run and load the rulesets to set additional config vars.
-        $this->init();
-
-        // Print a list of sniffs in each of the supplied standards.
-        // We fudge the config here so that each standard is explained in isolation.
-        if ($this->config->explain === true) {
-            $standards = $this->config->standards;
-            foreach ($standards as $standard) {
-                $this->config->standards = array($standard);
-                $ruleset = new Ruleset($this->config);
-                $ruleset->explain();
+            if (defined('PHP_CODESNIFFER_CBF') === false) {
+                define('PHP_CODESNIFFER_CBF', false);
             }
 
-            exit(0);
-        }
+            // Creating the Config object populates it with all required settings
+            // based on the CLI arguments provided to the script and any config
+            // values the user has set.
+            $this->config = new Config();
 
-        // Generate documentation for each of the supplied standards.
-        if ($this->config->generator !== null) {
-            $standards = $this->config->standards;
-            foreach ($standards as $standard) {
-                $this->config->standards = array($standard);
-                $ruleset   = new Ruleset($this->config);
-                $class     = 'PHP_CodeSniffer\Generators\\'.$this->config->generator;
-                $generator = new $class($ruleset);
-                $generator->generate();
+            // Init the run and load the rulesets to set additional config vars.
+            $this->init();
+
+            // Print a list of sniffs in each of the supplied standards.
+            // We fudge the config here so that each standard is explained in isolation.
+            if ($this->config->explain === true) {
+                $standards = $this->config->standards;
+                foreach ($standards as $standard) {
+                    $this->config->standards = [$standard];
+                    $ruleset = new Ruleset($this->config);
+                    $ruleset->explain();
+                }
+
+                return 0;
             }
 
-            exit(0);
-        }
+            // Generate documentation for each of the supplied standards.
+            if ($this->config->generator !== null) {
+                $standards = $this->config->standards;
+                foreach ($standards as $standard) {
+                    $this->config->standards = [$standard];
+                    $ruleset   = new Ruleset($this->config);
+                    $class     = 'PHP_CodeSniffer\Generators\\'.$this->config->generator;
+                    $generator = new $class($ruleset);
+                    $generator->generate();
+                }
 
-        // Other report formats don't really make sense in interactive mode
-        // so we hard-code the full report here and when outputting.
-        // We also ensure parallel processing is off because we need to do one file at a time.
-        if ($this->config->interactive === true) {
-            $this->config->reports     = array('full' => null);
-            $this->config->parallel    = 1;
-            $this->config->showProcess = false;
-        }
+                return 0;
+            }
 
-        // Disable caching if we are processing STDIN as we can't be 100%
-        // sure where the file came from or if it will change in the future.
-        if ($this->config->stdin === true) {
-            $this->config->cache = false;
-        }
+            // Other report formats don't really make sense in interactive mode
+            // so we hard-code the full report here and when outputting.
+            // We also ensure parallel processing is off because we need to do one file at a time.
+            if ($this->config->interactive === true) {
+                $this->config->reports      = ['full' => null];
+                $this->config->parallel     = 1;
+                $this->config->showProgress = false;
+            }
 
-        $numErrors = $this->run();
+            // Disable caching if we are processing STDIN as we can't be 100%
+            // sure where the file came from or if it will change in the future.
+            if ($this->config->stdin === true) {
+                $this->config->cache = false;
+            }
 
-        // Print all the reports for this run.
-        $toScreen = $this->reporter->printReports();
+            $numErrors = $this->run();
 
-        // Only print timer output if no reports were
-        // printed to the screen so we don't put additional output
-        // in something like an XML report. If we are printing to screen,
-        // the report types would have already worked out who should
-        // print the timer info.
-        if ($this->config->interactive === false
-            && ($toScreen === false
-            || (($this->reporter->totalErrors + $this->reporter->totalWarnings) === 0 && $this->config->showProgress === true))
-        ) {
-            Util\Timing::printRunTime();
-        }
+            // Print all the reports for this run.
+            $toScreen = $this->reporter->printReports();
+
+            // Only print timer output if no reports were
+            // printed to the screen so we don't put additional output
+            // in something like an XML report. If we are printing to screen,
+            // the report types would have already worked out who should
+            // print the timer info.
+            if ($this->config->interactive === false
+                && ($toScreen === false
+                || (($this->reporter->totalErrors + $this->reporter->totalWarnings) === 0 && $this->config->showProgress === true))
+            ) {
+                Util\Timing::printRunTime();
+            }
+        } catch (DeepExitException $e) {
+            echo $e->getMessage();
+            return $e->getCode();
+        }//end try
 
         if ($numErrors === 0) {
             // No errors found.
-            exit(0);
+            return 0;
         } else if ($this->reporter->totalFixable === 0) {
             // Errors found, but none of them can be fixed by PHPCBF.
-            exit(1);
+            return 1;
         } else {
             // Errors found, and some can be fixed by PHPCBF.
-            exit(2);
+            return 2;
         }
 
     }//end runPHPCS()
@@ -151,62 +157,67 @@ class Runner
             define('PHP_CODESNIFFER_CBF', true);
         }
 
-        Util\Timing::startTiming();
-        Runner::checkRequirements();
+        try {
+            Util\Timing::startTiming();
+            Runner::checkRequirements();
 
-        // Creating the Config object populates it with all required settings
-        // based on the CLI arguments provided to the script and any config
-        // values the user has set.
-        $this->config = new Config();
+            // Creating the Config object populates it with all required settings
+            // based on the CLI arguments provided to the script and any config
+            // values the user has set.
+            $this->config = new Config();
 
-        // When processing STDIN, we can't output anything to the screen
-        // or it will end up mixed in with the file output.
-        if ($this->config->stdin === true) {
-            $this->config->verbosity = 0;
-        }
+            // When processing STDIN, we can't output anything to the screen
+            // or it will end up mixed in with the file output.
+            if ($this->config->stdin === true) {
+                $this->config->verbosity = 0;
+            }
 
-        // Init the run and load the rulesets to set additional config vars.
-        $this->init();
+            // Init the run and load the rulesets to set additional config vars.
+            $this->init();
 
-        // Override some of the command line settings that might break the fixes.
-        $this->config->generator    = null;
-        $this->config->explain      = false;
-        $this->config->interactive  = false;
-        $this->config->cache        = false;
-        $this->config->showSources  = false;
-        $this->config->recordErrors = false;
-        $this->config->reportFile   = null;
-        $this->config->reports      = array('cbf' => null);
+            // Override some of the command line settings that might break the fixes.
+            $this->config->generator    = null;
+            $this->config->explain      = false;
+            $this->config->interactive  = false;
+            $this->config->cache        = false;
+            $this->config->showSources  = false;
+            $this->config->recordErrors = false;
+            $this->config->reportFile   = null;
+            $this->config->reports      = ['cbf' => null];
 
-        // If a standard tries to set command line arguments itself, some
-        // may be blocked because PHPCBF is running, so stop the script
-        // dying if any are found.
-        $this->config->dieOnUnknownArg = false;
+            // If a standard tries to set command line arguments itself, some
+            // may be blocked because PHPCBF is running, so stop the script
+            // dying if any are found.
+            $this->config->dieOnUnknownArg = false;
 
-        $numErrors = $this->run();
-        $this->reporter->printReports();
+            $this->run();
+            $this->reporter->printReports();
 
-        echo PHP_EOL;
-        Util\Timing::printRunTime();
+            echo PHP_EOL;
+            Util\Timing::printRunTime();
+        } catch (DeepExitException $e) {
+            echo $e->getMessage();
+            return $e->getCode();
+        }//end try
 
         if ($this->reporter->totalFixed === 0) {
             // Nothing was fixed by PHPCBF.
             if ($this->reporter->totalFixable === 0) {
                 // Nothing found that could be fixed.
-                exit(0);
+                return 0;
             } else {
                 // Something failed to fix.
-                exit(2);
+                return 2;
             }
         }
 
         if ($this->reporter->totalFixable === 0) {
             // PHPCBF fixed all fixable errors.
-            exit(1);
+            return 1;
         }
 
         // PHPCBF fixed some fixable errors, but others failed to fix.
-        exit(2);
+        return 2;
 
     }//end runPHPCBF()
 
@@ -220,13 +231,13 @@ class Runner
     {
         // Check the PHP version.
         if (PHP_VERSION_ID < 50400) {
-            echo 'ERROR: PHP_CodeSniffer requires PHP version 5.4.0 or greater.'.PHP_EOL;
-            exit(3);
+            $error = 'ERROR: PHP_CodeSniffer requires PHP version 5.4.0 or greater.'.PHP_EOL;
+            throw new DeepExitException($error, 3);
         }
 
         if (extension_loaded('tokenizer') === false) {
-            echo 'ERROR: PHP_CodeSniffer requires the tokenizer extension to be enabled.'.PHP_EOL;
-            exit(3);
+            $error = 'ERROR: PHP_CodeSniffer requires the tokenizer extension to be enabled.'.PHP_EOL;
+            throw new DeepExitException($error, 3);
         }
 
     }//end checkRequirements()
@@ -252,9 +263,12 @@ class Runner
             if (Util\Standards::isInstalledStandard($standard) === false) {
                 // They didn't select a valid coding standard, so help them
                 // out by letting them know which standards are installed.
-                echo 'ERROR: the "'.$standard.'" coding standard is not installed. ';
+                $error = 'ERROR: the "'.$standard.'" coding standard is not installed. ';
+                ob_start();
                 Util\Standards::printInstalledStandards();
-                exit(3);
+                $error .= ob_get_contents();
+                ob_end_clean();
+                throw new DeepExitException($error, 3);
             }
         }
 
@@ -269,9 +283,9 @@ class Runner
         $tokens = new Util\Tokens();
 
         // Allow autoloading of custom files inside installed standards.
-        $installedPaths = Standards::getInstalledStandardPaths();
-        foreach ($installedPaths as $path) {
-            Autoload::addSearchPath($path);
+        $installedStandards = Standards::getInstalledStandardDetails();
+        foreach ($installedStandards as $name => $details) {
+            Autoload::addSearchPath($details['path'], $details['namespace']);
         }
 
         // The ruleset contains all the information about how the files
@@ -279,9 +293,9 @@ class Runner
         try {
             $this->ruleset = new Ruleset($this->config);
         } catch (RuntimeException $e) {
-            echo 'ERROR: '.$e->getMessage().PHP_EOL.PHP_EOL;
-            $this->config->printShortUsage();
-            exit(3);
+            $error  = 'ERROR: '.$e->getMessage().PHP_EOL.PHP_EOL;
+            $error .= $this->config->printShortUsage(true);
+            throw new DeepExitException($error, 3);
         }
 
     }//end init()
@@ -316,9 +330,9 @@ class Runner
             $todo->addFile($dummy->path, $dummy);
         } else {
             if (empty($this->config->files) === true) {
-                echo 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
-                $this->config->printUsage();
-                exit(0);
+                $error  = 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
+                $error .= $this->config->printShortUsage(true);
+                throw new DeepExitException($error, 3);
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
@@ -347,7 +361,7 @@ class Runner
         }//end if
 
         // Turn all sniff errors into exceptions.
-        set_error_handler(array($this, 'handleErrors'));
+        set_error_handler([$this, 'handleErrors']);
 
         // If verbosity is too high, turn off parallelism so the
         // debug output is clean.
@@ -367,27 +381,27 @@ class Runner
             // Running normally.
             $numProcessed = 0;
             foreach ($todo as $path => $file) {
-                if ($file->ignored === true) {
-                    continue;
-                }
+                if ($file->ignored === false) {
+                    $currDir = dirname($path);
+                    if ($lastDir !== $currDir) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                            echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
+                        }
 
-                $currDir = dirname($path);
-                if ($lastDir !== $currDir) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                        echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
+                        $lastDir = $currDir;
                     }
 
-                    $lastDir = $currDir;
+                    $this->processFile($file);
+                } else if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                    echo 'Skipping '.basename($file->path).PHP_EOL;
                 }
-
-                $this->processFile($file);
 
                 $numProcessed++;
                 $this->printProgress($file, $numFiles, $numProcessed);
             }
         } else {
             // Batching and forking.
-            $childProcs  = array();
+            $childProcs  = [];
             $numPerBatch = ceil($numFiles / $this->config->parallel);
 
             for ($batch = 0; $batch < $this->config->parallel; $batch++) {
@@ -406,10 +420,10 @@ class Runner
                 if ($pid === -1) {
                     throw new RuntimeException('Failed to create child process');
                 } else if ($pid !== 0) {
-                    $childProcs[] = array(
-                                     'pid' => $pid,
-                                     'out' => $childOutFilename,
-                                    );
+                    $childProcs[] = [
+                        'pid' => $pid,
+                        'out' => $childOutFilename,
+                    ];
                 } else {
                     // Move forward to the start of the batch.
                     $todo->rewind();
@@ -426,7 +440,7 @@ class Runner
                     $this->reporter->totalFixed    = 0;
 
                     // Process the files.
-                    $pathsProcessed = array();
+                    $pathsProcessed = [];
                     ob_start();
                     for ($i = $startAt; $i < $endAt; $i++) {
                         $path = $todo->key();
@@ -456,13 +470,13 @@ class Runner
 
                     // Write information about the run to the filesystem
                     // so it can be picked up by the main process.
-                    $childOutput = array(
-                                    'totalFiles'    => $this->reporter->totalFiles,
-                                    'totalErrors'   => $this->reporter->totalErrors,
-                                    'totalWarnings' => $this->reporter->totalWarnings,
-                                    'totalFixable'  => $this->reporter->totalFixable,
-                                    'totalFixed'    => $this->reporter->totalFixed,
-                                   );
+                    $childOutput = [
+                        'totalFiles'    => $this->reporter->totalFiles,
+                        'totalErrors'   => $this->reporter->totalErrors,
+                        'totalWarnings' => $this->reporter->totalWarnings,
+                        'totalFixable'  => $this->reporter->totalFixable,
+                        'totalFixed'    => $this->reporter->totalFixed,
+                    ];
 
                     $output  = '<'.'?php'."\n".' $childOutput = ';
                     $output .= var_export($childOutput, true);
@@ -470,7 +484,7 @@ class Runner
                     $output .= var_export($debugOutput, true);
 
                     if ($this->config->cache === true) {
-                        $childCache = array();
+                        $childCache = [];
                         foreach ($pathsProcessed as $path) {
                             $childCache[$path] = Cache::get($path);
                         }
@@ -540,6 +554,11 @@ class Runner
      */
     public function handleErrors($code, $message, $file, $line)
     {
+        if ((error_reporting() & $code) === 0) {
+            // This type of error is being muted.
+            return true;
+        }
+
         throw new RuntimeException("$message in $file on line $line");
 
     }//end handleErrors()
@@ -591,9 +610,6 @@ class Runner
 
         $this->reporter->cacheFileReport($file, $this->config);
 
-        // Clean up the file to save (a lot of) memory.
-        $file->cleanUp();
-
         if ($this->config->interactive === true) {
             /*
                 Running interactively.
@@ -619,7 +635,7 @@ class Runner
                 case 's':
                     break(2);
                 case 'q':
-                    exit(0);
+                    throw new DeepExitException('', 0);
                 default:
                     // Repopulate the sniffs because some of them save their state
                     // and only clear it when the file changes, but we are rechecking
@@ -632,6 +648,9 @@ class Runner
                 }
             }//end while
         }//end if
+
+        // Clean up the file to save (a lot of) memory.
+        $file->cleanUp();
 
     }//end processFile()
 
@@ -707,7 +726,7 @@ class Runner
      *
      * @return void
      */
-    function printProgress($file, $numFiles, $numProcessed)
+    public function printProgress($file, $numFiles, $numProcessed)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 0
             || $this->config->showProgress === false
@@ -791,12 +810,18 @@ class Runner
             }//end if
         }//end if
 
-        if (($numProcessed % 60) === 0) {
-            $padding = (strlen($numFiles) - strlen($numProcessed));
-            echo str_repeat(' ', $padding);
-            $percent = round(($numProcessed / $numFiles) * 100);
-            echo " $numProcessed / $numFiles ($percent%)".PHP_EOL;
+        $numPerLine = 60;
+        if ($numProcessed !== $numFiles && ($numProcessed % $numPerLine) !== 0) {
+            return;
         }
+
+        $percent = round(($numProcessed / $numFiles) * 100);
+        $padding = (strlen($numFiles) - strlen($numProcessed));
+        if ($numProcessed === $numFiles && $numFiles > $numPerLine) {
+            $padding += ($numPerLine - ($numFiles - (floor($numFiles / $numPerLine) * $numPerLine)));
+        }
+
+        echo str_repeat(' ', $padding)." $numProcessed / $numFiles ($percent%)".PHP_EOL;
 
     }//end printProgress()
 

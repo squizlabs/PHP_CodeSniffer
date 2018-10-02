@@ -10,6 +10,8 @@
 
 namespace PHP_CodeSniffer\Reports;
 
+use PHP_CodeSniffer\Exceptions\DeepExitException;
+
 class Hgblame extends VersionControl
 {
 
@@ -30,7 +32,7 @@ class Hgblame extends VersionControl
      */
     protected function getAuthor($line)
     {
-        $blameParts = array();
+        $blameParts = [];
         $line       = preg_replace('|\s+|', ' ', $line);
 
         preg_match(
@@ -82,15 +84,15 @@ class Hgblame extends VersionControl
         if ($found === true) {
             chdir($location);
         } else {
-            echo 'ERROR: Could not locate .hg directory '.PHP_EOL.PHP_EOL;
-            exit(3);
+            $error = 'ERROR: Could not locate .hg directory '.PHP_EOL.PHP_EOL;
+            throw new DeepExitException($error, 3);
         }
 
         $command = 'hg blame -u -d -v "'.$filename.'" 2>&1';
         $handle  = popen($command, 'r');
         if ($handle === false) {
-            echo 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
-            exit(3);
+            $error = 'ERROR: Could not execute "'.$command.'"'.PHP_EOL.PHP_EOL;
+            throw new DeepExitException($error, 3);
         }
 
         $rawContent = stream_get_contents($handle);

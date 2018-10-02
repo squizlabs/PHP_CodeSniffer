@@ -31,10 +31,10 @@ class UnusedFunctionParameterSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_FUNCTION,
-                T_CLOSURE,
-               );
+        return [
+            T_FUNCTION,
+            T_CLOSURE,
+        ];
 
     }//end register()
 
@@ -58,7 +58,7 @@ class UnusedFunctionParameterSniff implements Sniff
             return;
         }
 
-        $params = array();
+        $params = [];
         foreach ($phpcsFile->getMethodParameters($stackPtr) as $param) {
             $params[$param['name']] = $stackPtr;
         }
@@ -67,13 +67,13 @@ class UnusedFunctionParameterSniff implements Sniff
         $end  = --$token['scope_closer'];
 
         $foundContent = false;
-        $validTokens  = array(
-                         T_HEREDOC              => T_HEREDOC,
-                         T_NOWDOC               => T_NOWDOC,
-                         T_END_HEREDOC          => T_END_HEREDOC,
-                         T_END_NOWDOC           => T_END_NOWDOC,
-                         T_DOUBLE_QUOTED_STRING => T_DOUBLE_QUOTED_STRING,
-                        );
+        $validTokens  = [
+            T_HEREDOC              => T_HEREDOC,
+            T_NOWDOC               => T_NOWDOC,
+            T_END_HEREDOC          => T_END_HEREDOC,
+            T_END_NOWDOC           => T_END_NOWDOC,
+            T_DOUBLE_QUOTED_STRING => T_DOUBLE_QUOTED_STRING,
+        ];
         $validTokens += Tokens::$emptyTokens;
 
         for (; $next <= $end; ++$next) {
@@ -165,7 +165,7 @@ class UnusedFunctionParameterSniff implements Sniff
         if ($foundContent === true && count($params) > 0) {
             foreach ($params as $paramName => $position) {
                 $error = 'The method parameter %s is never used';
-                $data  = array($paramName);
+                $data  = [$paramName];
                 $phpcsFile->addWarning($error, $position, 'Found', $data);
             }
         }

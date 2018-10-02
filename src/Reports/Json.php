@@ -42,28 +42,23 @@ class Json implements Report
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $error['message'] = str_replace('\\', '\\\\', $error['message']);
-                    $error['message'] = str_replace('"', '\"', $error['message']);
-                    $error['message'] = str_replace('/', '\/', $error['message']);
                     $error['message'] = str_replace("\n", '\n', $error['message']);
                     $error['message'] = str_replace("\r", '\r', $error['message']);
                     $error['message'] = str_replace("\t", '\t', $error['message']);
 
-                    $fixable = 'false';
+                    $fixable = false;
                     if ($error['fixable'] === true) {
-                        $fixable = 'true';
+                        $fixable = true;
                     }
 
-                    $messages .= '{"message":"'.$error['message'].'",';
-                    $messages .= '"source":"'.$error['source'].'",';
-                    $messages .= '"severity":'.$error['severity'].',';
-                    $messages .= '"type":"'.$error['type'].'",';
-                    $messages .= '"line":'.$line.',';
-                    $messages .= '"column":'.$column.',';
-                    $messages .= '"fixable":'.$fixable;
-                    $messages .= '},';
-                }//end foreach
-            }//end foreach
+                    $messagesObject          = (object) $error;
+                    $messagesObject->line    = $line;
+                    $messagesObject->column  = $column;
+                    $messagesObject->fixable = $fixable;
+
+                    $messages .= json_encode($messagesObject).",";
+                }
+            }
         }//end foreach
 
         echo rtrim($messages, ',');

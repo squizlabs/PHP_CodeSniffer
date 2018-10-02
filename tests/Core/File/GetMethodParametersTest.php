@@ -12,8 +12,9 @@ namespace PHP_CodeSniffer\Tests\Core\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\DummyFile;
+use PHPUnit\Framework\TestCase;
 
-class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
+class GetMethodParametersTest extends TestCase
 {
 
     /**
@@ -35,7 +36,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $config            = new Config();
-        $config->standards = array('Generic');
+        $config->standards = ['Generic'];
 
         $ruleset = new Ruleset($config);
 
@@ -65,15 +66,15 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function testPassByReference()
     {
-        $expected    = array();
-        $expected[0] = array(
-                        'name'              => '$var',
-                        'content'           => '&$var',
-                        'pass_by_reference' => true,
-                        'variable_length'   => false,
-                        'type_hint'         => '',
-                        'nullable_type'     => false,
-                       );
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => '&$var',
+            'pass_by_reference' => true,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
         $function = $this->phpcsFile->findPrevious(
@@ -86,6 +87,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
+        unset($found[0]['type_hint_token']);
         $this->assertSame($expected, $found);
 
     }//end testPassByReference()
@@ -98,15 +100,15 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function testArrayHint()
     {
-        $expected    = array();
-        $expected[0] = array(
-                        'name'              => '$var',
-                        'content'           => 'array $var',
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => 'array',
-                        'nullable_type'     => false,
-                       );
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => 'array $var',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'array',
+            'nullable_type'     => false,
+        ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
         $function = $this->phpcsFile->findPrevious(
@@ -119,6 +121,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
+        unset($found[0]['type_hint_token']);
         $this->assertSame($expected, $found);
 
     }//end testArrayHint()
@@ -131,24 +134,24 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function testTypeHint()
     {
-        $expected    = array();
-        $expected[0] = array(
-                        'name'              => '$var1',
-                        'content'           => 'foo $var1',
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => 'foo',
-                        'nullable_type'     => false,
-                       );
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var1',
+            'content'           => 'foo $var1',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'foo',
+            'nullable_type'     => false,
+        ];
 
-        $expected[1] = array(
-                        'name'              => '$var2',
-                        'content'           => 'bar $var2',
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => 'bar',
-                        'nullable_type'     => false,
-                       );
+        $expected[1] = [
+            'name'              => '$var2',
+            'content'           => 'bar $var2',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'bar',
+            'nullable_type'     => false,
+        ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
         $function = $this->phpcsFile->findPrevious(
@@ -162,6 +165,8 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
         unset($found[1]['token']);
+        unset($found[0]['type_hint_token']);
+        unset($found[1]['type_hint_token']);
         $this->assertSame($expected, $found);
 
     }//end testTypeHint()
@@ -174,15 +179,15 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function testSelfTypeHint()
     {
-        $expected    = array();
-        $expected[0] = array(
-                        'name'              => '$var',
-                        'content'           => 'self $var',
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => 'self',
-                        'nullable_type'     => false,
-                       );
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => 'self $var',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'self',
+            'nullable_type'     => false,
+        ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
         $function = $this->phpcsFile->findPrevious(
@@ -195,6 +200,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
+        unset($found[0]['type_hint_token']);
         $this->assertSame($expected, $found);
 
     }//end testSelfTypeHint()
@@ -207,24 +213,24 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function testNullableTypeHint()
     {
-        $expected    = array();
-        $expected[0] = array(
-                        'name'              => '$var1',
-                        'content'           => '?int $var1',
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => '?int',
-                        'nullable_type'     => true,
-                       );
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var1',
+            'content'           => '?int $var1',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?int',
+            'nullable_type'     => true,
+        ];
 
-        $expected[1] = array(
-                        'name'              => '$var2',
-                        'content'           => '?\bar $var2',
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => '?\bar',
-                        'nullable_type'     => true,
-                       );
+        $expected[1] = [
+            'name'              => '$var2',
+            'content'           => '?\bar $var2',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?\bar',
+            'nullable_type'     => true,
+        ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
         $function = $this->phpcsFile->findPrevious(
@@ -238,6 +244,8 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
         unset($found[1]['token']);
+        unset($found[0]['type_hint_token']);
+        unset($found[1]['type_hint_token']);
         $this->assertSame($expected, $found);
 
     }//end testNullableTypeHint()
@@ -250,15 +258,15 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function testVariable()
     {
-        $expected    = array();
-        $expected[0] = array(
-                        'name'              => '$var',
-                        'content'           => '$var',
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => '',
-                        'nullable_type'     => false,
-                       );
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => '$var',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
         $function = $this->phpcsFile->findPrevious(
@@ -271,6 +279,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
+        unset($found[0]['type_hint_token']);
         $this->assertSame($expected, $found);
 
     }//end testVariable()
@@ -283,16 +292,16 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function testSingleDefaultValue()
     {
-        $expected    = array();
-        $expected[0] = array(
-                        'name'              => '$var1',
-                        'content'           => '$var1=self::CONSTANT',
-                        'default'           => 'self::CONSTANT',
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => '',
-                        'nullable_type'     => false,
-                       );
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var1',
+            'content'           => '$var1=self::CONSTANT',
+            'default'           => 'self::CONSTANT',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
         $function = $this->phpcsFile->findPrevious(
@@ -305,6 +314,7 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
 
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
+        unset($found[0]['type_hint_token']);
         $this->assertSame($expected, $found);
 
     }//end testSingleDefaultValue()
@@ -317,25 +327,25 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
      */
     public function testDefaultValues()
     {
-        $expected    = array();
-        $expected[0] = array(
-                        'name'              => '$var1',
-                        'content'           => '$var1=1',
-                        'default'           => '1',
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => '',
-                        'nullable_type'     => false,
-                       );
-        $expected[1] = array(
-                        'name'              => '$var2',
-                        'content'           => "\$var2='value'",
-                        'default'           => "'value'",
-                        'pass_by_reference' => false,
-                        'variable_length'   => false,
-                        'type_hint'         => '',
-                        'nullable_type'     => false,
-                       );
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var1',
+            'content'           => '$var1=1',
+            'default'           => '1',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$var2',
+            'content'           => "\$var2='value'",
+            'default'           => "'value'",
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
         $function = $this->phpcsFile->findPrevious(
@@ -349,9 +359,46 @@ class GetMethodParametersTest extends \PHPUnit_Framework_TestCase
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
         unset($found[1]['token']);
+        unset($found[0]['type_hint_token']);
+        unset($found[1]['type_hint_token']);
         $this->assertSame($expected, $found);
 
     }//end testDefaultValues()
+
+
+    /**
+     * Verify "bitwise and" in default value !== pass-by-reference.
+     *
+     * @return void
+     */
+    public function testBitwiseAndConstantExpressionDefaultValue()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$a',
+            'content'           => '$a = 10 & 20',
+            'default'           => '10 & 20',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testBitwiseAndConstantExpressionDefaultValue */'
+        );
+
+        $found = $this->phpcsFile->getMethodParameters(($function + 2));
+        unset($found[0]['token']);
+        unset($found[0]['type_hint_token']);
+        $this->assertSame($expected, $found);
+
+    }//end testBitwiseAndConstantExpressionDefaultValue()
 
 
 }//end class

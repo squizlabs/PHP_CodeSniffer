@@ -1,0 +1,26 @@
+<documentation title="Arbitrary Parentheses Spacing">
+    <standard>
+    <![CDATA[
+    Arbitrary sets of parentheses should have no spaces inside.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: no spaces on the inside of a set of arbitrary parentheses.">
+        <![CDATA[
+$a = (null !== $extra);
+        ]]>
+        </code>
+        <code title="Invalid: spaces on the inside of a set of arbitrary parentheses.">
+        <![CDATA[
+$a = ( null !== $extra );
+        ]]>
+        </code>
+        <code title="Invalid: new lines on the inside of a set of arbitrary parentheses.">
+        <![CDATA[
+$a = (
+    null !== $extra
+);
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

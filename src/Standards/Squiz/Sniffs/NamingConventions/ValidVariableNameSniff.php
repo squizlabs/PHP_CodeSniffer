@@ -16,16 +16,6 @@ use PHP_CodeSniffer\Files\File;
 class ValidVariableNameSniff extends AbstractVariableSniff
 {
 
-    /**
-     * Tokens to ignore so that we can find a DOUBLE_COLON.
-     *
-     * @var array
-     */
-    private $ignore = array(
-                       T_WHITESPACE,
-                       T_COMMENT,
-                      );
-
 
     /**
      * Processes this test, when one of its tokens is encountered.
@@ -41,32 +31,17 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         $tokens  = $phpcsFile->getTokens();
         $varName = ltrim($tokens[$stackPtr]['content'], '$');
 
-        $phpReservedVars = array(
-                            '_SERVER',
-                            '_GET',
-                            '_POST',
-                            '_REQUEST',
-                            '_SESSION',
-                            '_ENV',
-                            '_COOKIE',
-                            '_FILES',
-                            'GLOBALS',
-                            'http_response_header',
-                            'HTTP_RAW_POST_DATA',
-                            'php_errormsg',
-                           );
-
         // If it's a php reserved var, then its ok.
-        if (in_array($varName, $phpReservedVars) === true) {
+        if (isset($this->phpReservedVars[$varName]) === true) {
             return;
         }
 
-        $objOperator = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
+        $objOperator = $phpcsFile->findNext([T_WHITESPACE], ($stackPtr + 1), null, true);
         if ($tokens[$objOperator]['code'] === T_OBJECT_OPERATOR) {
             // Check to see if we are using a variable from an object.
-            $var = $phpcsFile->findNext(array(T_WHITESPACE), ($objOperator + 1), null, true);
+            $var = $phpcsFile->findNext([T_WHITESPACE], ($objOperator + 1), null, true);
             if ($tokens[$var]['code'] === T_STRING) {
-                $bracket = $phpcsFile->findNext(array(T_WHITESPACE), ($var + 1), null, true);
+                $bracket = $phpcsFile->findNext([T_WHITESPACE], ($var + 1), null, true);
                 if ($tokens[$bracket]['code'] !== T_OPEN_PARENTHESIS) {
                     $objVarName = $tokens[$var]['content'];
 
@@ -80,7 +55,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
 
                     if (Common::isCamelCaps($objVarName, false, true, false) === false) {
                         $error = 'Variable "%s" is not in valid camel caps format';
-                        $data  = array($originalVarName);
+                        $data  = [$originalVarName];
                         $phpcsFile->addError($error, $var, 'NotCamelCaps', $data);
                     }
                 }//end if
@@ -92,13 +67,13 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         // check the main part of the variable name.
         $originalVarName = $varName;
         if (substr($varName, 0, 1) === '_') {
-            $objOperator = $phpcsFile->findPrevious(array(T_WHITESPACE), ($stackPtr - 1), null, true);
+            $objOperator = $phpcsFile->findPrevious([T_WHITESPACE], ($stackPtr - 1), null, true);
             if ($tokens[$objOperator]['code'] === T_DOUBLE_COLON) {
                 // The variable lives within a class, and is referenced like
                 // this: MyClass::$_variable, so we don't know its scope.
                 $inClass = true;
             } else {
-                $inClass = $phpcsFile->hasCondition($stackPtr, array(T_CLASS, T_INTERFACE, T_TRAIT));
+                $inClass = $phpcsFile->hasCondition($stackPtr, [T_CLASS, T_INTERFACE, T_TRAIT]);
             }
 
             if ($inClass === true) {
@@ -108,7 +83,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
 
         if (Common::isCamelCaps($varName, false, true, false) === false) {
             $error = 'Variable "%s" is not in valid camel caps format';
-            $data  = array($originalVarName);
+            $data  = [$originalVarName];
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
         }
 
@@ -139,27 +114,28 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         }
 
         $public    = ($memberProps['scope'] !== 'private');
-        $errorData = array($varName);
+        $errorData = [$varName];
 
         if ($public === true) {
             if (substr($varName, 0, 1) === '_') {
                 $error = '%s member variable "%s" must not contain a leading underscore';
-                $data  = array(
-                          ucfirst($memberProps['scope']),
-                          $errorData[0],
-                         );
+                $data  = [
+                    ucfirst($memberProps['scope']),
+                    $errorData[0],
+                ];
                 $phpcsFile->addError($error, $stackPtr, 'PublicHasUnderscore', $data);
-                return;
             }
         } else {
             if (substr($varName, 0, 1) !== '_') {
                 $error = 'Private member variable "%s" must contain a leading underscore';
                 $phpcsFile->addError($error, $stackPtr, 'PrivateNoUnderscore', $errorData);
-                return;
             }
         }
 
-        if (Common::isCamelCaps($varName, false, $public, false) === false) {
+        // Remove a potential underscore prefix for testing CamelCaps.
+        $varName = ltrim($varName, '_');
+
+        if (Common::isCamelCaps($varName, false, true, false) === false) {
             $error = 'Member variable "%s" is not in valid camel caps format';
             $phpcsFile->addError($error, $stackPtr, 'MemberNotCamelCaps', $errorData);
         }
@@ -180,31 +156,16 @@ class ValidVariableNameSniff extends AbstractVariableSniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $phpReservedVars = array(
-                            '_SERVER',
-                            '_GET',
-                            '_POST',
-                            '_REQUEST',
-                            '_SESSION',
-                            '_ENV',
-                            '_COOKIE',
-                            '_FILES',
-                            'GLOBALS',
-                            'http_response_header',
-                            'HTTP_RAW_POST_DATA',
-                            'php_errormsg',
-                           );
-
         if (preg_match_all('|[^\\\]\${?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)|', $tokens[$stackPtr]['content'], $matches) !== 0) {
             foreach ($matches[1] as $varName) {
                 // If it's a php reserved var, then its ok.
-                if (in_array($varName, $phpReservedVars) === true) {
+                if (isset($this->phpReservedVars[$varName]) === true) {
                     continue;
                 }
 
                 if (Common::isCamelCaps($varName, false, true, false) === false) {
                     $error = 'Variable "%s" is not in valid camel caps format';
-                    $data  = array($varName);
+                    $data  = [$varName];
                     $phpcsFile->addError($error, $stackPtr, 'StringNotCamelCaps', $data);
                 }
             }

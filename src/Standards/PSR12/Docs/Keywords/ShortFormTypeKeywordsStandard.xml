@@ -1,0 +1,19 @@
+<documentation title="Short Form Type Keywords">
+    <standard>
+    <![CDATA[
+    Short form of type keywords MUST be used i.e. bool instead of boolean, int instead of integer etc.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Short form type used.">
+        <![CDATA[
+$foo = (bool) $isValid;
+        ]]>
+        </code>
+        <code title="Invalid: Long form type type used.">
+        <![CDATA[
+$foo = <em>(boolean)</em> $isValid;
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

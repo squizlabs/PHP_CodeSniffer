@@ -23,7 +23,7 @@ class EvalSniff implements Sniff
      */
     public function register()
     {
-        return array(T_EVAL);
+        return [T_EVAL];
 
     }//end register()
 

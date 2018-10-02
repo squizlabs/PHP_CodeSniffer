@@ -20,10 +20,10 @@ class DocCommentSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
 
     /**
@@ -33,7 +33,7 @@ class DocCommentSniff implements Sniff
      */
     public function register()
     {
-        return array(T_DOC_COMMENT_OPEN_TAG);
+        return [T_DOC_COMMENT_OPEN_TAG];
 
     }//end register()
 
@@ -49,14 +49,23 @@ class DocCommentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens       = $phpcsFile->getTokens();
+        $tokens = $phpcsFile->getTokens();
+
+        if (isset($tokens[$stackPtr]['comment_closer']) === false
+            || ($tokens[$tokens[$stackPtr]['comment_closer']]['content'] === ''
+            && $tokens[$stackPtr]['comment_closer'] === ($phpcsFile->numTokens - 1))
+        ) {
+            // Don't process an unfinished comment during live coding.
+            return;
+        }
+
         $commentStart = $stackPtr;
         $commentEnd   = $tokens[$stackPtr]['comment_closer'];
 
-        $empty = array(
-                  T_DOC_COMMENT_WHITESPACE,
-                  T_DOC_COMMENT_STAR,
-                 );
+        $empty = [
+            T_DOC_COMMENT_WHITESPACE,
+            T_DOC_COMMENT_STAR,
+        ];
 
         $short = $phpcsFile->findNext($empty, ($stackPtr + 1), $commentEnd, true);
         if ($short === false) {
@@ -110,60 +119,17 @@ class DocCommentSniff implements Sniff
         if ($tokens[$short]['code'] !== T_DOC_COMMENT_STRING) {
             $error = 'Missing short description in doc comment';
             $phpcsFile->addError($error, $stackPtr, 'MissingShort');
-            return;
-        }
-
-        // No extra newline before short description.
-        if ($tokens[$short]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
-            $error = 'Doc comment short description must be on the first line';
-            $fix   = $phpcsFile->addFixableError($error, $short, 'SpacingBeforeShort');
-            if ($fix === true) {
-                $phpcsFile->fixer->beginChangeset();
-                for ($i = $stackPtr; $i < $short; $i++) {
-                    if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
-                        continue;
-                    } else if ($tokens[$i]['line'] === $tokens[$short]['line']) {
-                        break;
-                    }
-
-                    $phpcsFile->fixer->replaceToken($i, '');
-                }
-
-                $phpcsFile->fixer->endChangeset();
-            }
-        }
-
-        // Account for the fact that a short description might cover
-        // multiple lines.
-        $shortContent = $tokens[$short]['content'];
-        $shortEnd     = $short;
-        for ($i = ($short + 1); $i < $commentEnd; $i++) {
-            if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
-                if ($tokens[$i]['line'] === ($tokens[$shortEnd]['line'] + 1)) {
-                    $shortContent .= $tokens[$i]['content'];
-                    $shortEnd      = $i;
-                } else {
-                    break;
-                }
-            }
-        }
-
-        if (preg_match('/^\p{Ll}/u', $shortContent) === 1) {
-            $error = 'Doc comment short description must start with a capital letter';
-            $phpcsFile->addError($error, $short, 'ShortNotCapital');
-        }
-
-        $long = $phpcsFile->findNext($empty, ($shortEnd + 1), ($commentEnd - 1), true);
-        if ($long !== false && $tokens[$long]['code'] === T_DOC_COMMENT_STRING) {
-            if ($tokens[$long]['line'] !== ($tokens[$shortEnd]['line'] + 2)) {
-                $error = 'There must be exactly one blank line between descriptions in a doc comment';
-                $fix   = $phpcsFile->addFixableError($error, $long, 'SpacingBetween');
+        } else {
+            // No extra newline before short description.
+            if ($tokens[$short]['line'] !== ($tokens[$stackPtr]['line'] + 1)) {
+                $error = 'Doc comment short description must be on the first line';
+                $fix   = $phpcsFile->addFixableError($error, $short, 'SpacingBeforeShort');
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
-                    for ($i = ($shortEnd + 1); $i < $long; $i++) {
-                        if ($tokens[$i]['line'] === $tokens[$shortEnd]['line']) {
+                    for ($i = $stackPtr; $i < $short; $i++) {
+                        if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
                             continue;
-                        } else if ($tokens[$i]['line'] === ($tokens[$long]['line'] - 1)) {
+                        } else if ($tokens[$i]['line'] === $tokens[$short]['line']) {
                             break;
                         }
 
@@ -174,10 +140,52 @@ class DocCommentSniff implements Sniff
                 }
             }
 
-            if (preg_match('/^\p{Ll}/u', $tokens[$long]['content']) === 1) {
-                $error = 'Doc comment long description must start with a capital letter';
-                $phpcsFile->addError($error, $long, 'LongNotCapital');
+            // Account for the fact that a short description might cover
+            // multiple lines.
+            $shortContent = $tokens[$short]['content'];
+            $shortEnd     = $short;
+            for ($i = ($short + 1); $i < $commentEnd; $i++) {
+                if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
+                    if ($tokens[$i]['line'] === ($tokens[$shortEnd]['line'] + 1)) {
+                        $shortContent .= $tokens[$i]['content'];
+                        $shortEnd      = $i;
+                    } else {
+                        break;
+                    }
+                }
             }
+
+            if (preg_match('/^\p{Ll}/u', $shortContent) === 1) {
+                $error = 'Doc comment short description must start with a capital letter';
+                $phpcsFile->addError($error, $short, 'ShortNotCapital');
+            }
+
+            $long = $phpcsFile->findNext($empty, ($shortEnd + 1), ($commentEnd - 1), true);
+            if ($long !== false && $tokens[$long]['code'] === T_DOC_COMMENT_STRING) {
+                if ($tokens[$long]['line'] !== ($tokens[$shortEnd]['line'] + 2)) {
+                    $error = 'There must be exactly one blank line between descriptions in a doc comment';
+                    $fix   = $phpcsFile->addFixableError($error, $long, 'SpacingBetween');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($shortEnd + 1); $i < $long; $i++) {
+                            if ($tokens[$i]['line'] === $tokens[$shortEnd]['line']) {
+                                continue;
+                            } else if ($tokens[$i]['line'] === ($tokens[$long]['line'] - 1)) {
+                                break;
+                            }
+
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
+                    }
+                }
+
+                if (preg_match('/^\p{Ll}/u', $tokens[$long]['content']) === 1) {
+                    $error = 'Doc comment long description must start with a capital letter';
+                    $phpcsFile->addError($error, $long, 'LongNotCapital');
+                }
+            }//end if
         }//end if
 
         if (empty($tokens[$commentStart]['comment_tags']) === true) {
@@ -187,7 +195,9 @@ class DocCommentSniff implements Sniff
 
         $firstTag = $tokens[$commentStart]['comment_tags'][0];
         $prev     = $phpcsFile->findPrevious($empty, ($firstTag - 1), $stackPtr, true);
-        if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)) {
+        if ($tokens[$firstTag]['line'] !== ($tokens[$prev]['line'] + 2)
+            && $tokens[$prev]['code'] !== T_DOC_COMMENT_OPEN_TAG
+        ) {
             $error = 'There must be exactly one blank line before the tags in a doc comment';
             $fix   = $phpcsFile->addFixableError($error, $firstTag, 'SpacingBeforeTags');
             if ($fix === true) {
@@ -209,7 +219,7 @@ class DocCommentSniff implements Sniff
         // Break out the tags into groups and check alignment within each.
         // A tag group is one where there are no blank lines between tags.
         // The param tag group is special as it requires all @param tags to be inside.
-        $tagGroups    = array();
+        $tagGroups    = [];
         $groupid      = 0;
         $paramGroupid = null;
         foreach ($tokens[$commentStart]['comment_tags'] as $pos => $tag) {
@@ -230,10 +240,8 @@ class DocCommentSniff implements Sniff
             }
 
             if ($tokens[$tag]['content'] === '@param') {
-                if (($paramGroupid === null
-                    && empty($tagGroups[$groupid]) === false)
-                    || ($paramGroupid !== null
-                    && $paramGroupid !== $groupid)
+                if ($paramGroupid !== null
+                    && $paramGroupid !== $groupid
                 ) {
                     $error = 'Parameter tags must be grouped together in a doc comment';
                     $phpcsFile->addError($error, $tag, 'ParamGroup');
@@ -242,18 +250,22 @@ class DocCommentSniff implements Sniff
                 if ($paramGroupid === null) {
                     $paramGroupid = $groupid;
                 }
-            } else if ($groupid === $paramGroupid) {
-                $error = 'Tag cannot be grouped with parameter tags in a doc comment';
-                $phpcsFile->addError($error, $tag, 'NonParamGroup');
             }//end if
 
             $tagGroups[$groupid][] = $tag;
         }//end foreach
 
-        foreach ($tagGroups as $group) {
+        foreach ($tagGroups as $groupid => $group) {
             $maxLength = 0;
-            $paddings  = array();
+            $paddings  = [];
             foreach ($group as $pos => $tag) {
+                if ($paramGroupid === $groupid
+                    && $tokens[$tag]['content'] !== '@param'
+                ) {
+                    $error = 'Tag cannot be grouped with parameter tags in a doc comment';
+                    $phpcsFile->addError($error, $tag, 'NonParamGroup');
+                }
+
                 $tagLength = strlen($tokens[$tag]['content']);
                 if ($tagLength > $maxLength) {
                     $maxLength = $tagLength;
@@ -271,7 +283,7 @@ class DocCommentSniff implements Sniff
             $lastTag = $group[$pos];
             $next    = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($lastTag + 3), $commentEnd);
             if ($next !== false) {
-                $prev = $phpcsFile->findPrevious(array(T_DOC_COMMENT_TAG, T_DOC_COMMENT_STRING), ($next - 1), $commentStart);
+                $prev = $phpcsFile->findPrevious([T_DOC_COMMENT_TAG, T_DOC_COMMENT_STRING], ($next - 1), $commentStart);
                 if ($tokens[$next]['line'] !== ($tokens[$prev]['line'] + 2)) {
                     $error = 'There must be a single blank line after a tag group';
                     $fix   = $phpcsFile->addFixableError($error, $lastTag, 'SpacingAfterTagGroup');
@@ -298,10 +310,10 @@ class DocCommentSniff implements Sniff
 
                 if ($padding !== $required) {
                     $error = 'Tag value indented incorrectly; expected %s spaces but found %s';
-                    $data  = array(
-                              $required,
-                              $padding,
-                             );
+                    $data  = [
+                        $required,
+                        $padding,
+                    ];
 
                     $fix = $phpcsFile->addFixableError($error, ($tag + 1), 'TagValueIndent', $data);
                     if ($fix === true) {
@@ -317,7 +329,7 @@ class DocCommentSniff implements Sniff
             $phpcsFile->addError($error, $tagGroups[$paramGroupid][0], 'ParamNotFirst');
         }
 
-        $foundTags = array();
+        $foundTags = [];
         foreach ($tokens[$stackPtr]['comment_tags'] as $pos => $tag) {
             $tagName = $tokens[$tag]['content'];
             if (isset($foundTags[$tagName]) === true) {

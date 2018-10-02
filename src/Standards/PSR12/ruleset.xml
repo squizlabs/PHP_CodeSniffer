@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+<ruleset name="PSR12">
+    <description>The PSR-12 coding standard.</description>
+    <arg name="tab-width" value="4"/>
+
+    <!-- 2. General -->
+
+    <!-- 2.1 Basic Coding Standard -->
+
+    <!-- Code MUST follow all rules outlined in PSR-1. -->
+    <rule ref="PSR1"/>
+
+    <!-- 2.2 Files -->
+
+    <!-- All PHP files MUST use the Unix LF (linefeed) line ending only. -->
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
+
+    <!-- All PHP files MUST end with a non-blank line, terminated with a single LF. -->
+    <rule ref="PSR2.Files.EndFileNewline"/>
+
+    <!-- The closing ?> tag MUST be omitted from files containing only PHP. -->
+    <rule ref="PSR2.Files.ClosingTag"/>
+
+    <!-- 2.3 Lines -->
+
+    <!-- There MUST NOT be a hard limit on line length.
+    The soft limit on line length MUST be 120 characters.
+    Lines SHOULD NOT be longer than 80 characters; lines longer than that SHOULD be split into multiple subsequent lines of no more than 80 characters each. -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+    </rule>
+
+    <!-- There MUST NOT be trailing whitespace at the end of lines.
+    Blank lines MAY be added to improve readability and to indicate related blocks of code except where explicitly forbidden. -->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <properties>
+            <property name="ignoreBlankLines" value="true"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+        <severity>0</severity>
+    </rule>
+
+    <!-- There MUST NOT be more than one statement per line. -->
+    <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+
+    <!-- 2.4 Indenting -->
+
+    <!-- Code MUST use an indent of 4 spaces for each indent level, and MUST NOT use tabs for indenting. -->
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="ignoreIndentationTokens" type="array">
+                <element value="T_COMMENT"/>
+                <element value="T_DOC_COMMENT_OPEN_TAG"/>
+            </property>
+        </properties>
+    </rule>
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+
+    <!-- 2.5 Keywords and Types -->
+
+    <!-- All PHP reserved keywords and types [1][2] MUST be in lower case.
+    Any new types and keywords added to future PHP versions MUST be in lower case. -->
+    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+    <rule ref="Generic.PHP.LowerCaseType"/>
+
+    <!-- Short form of type keywords MUST be used i.e. bool instead of boolean, int instead of integer etc. -->
+    <!-- checked by PSR12.Keywords.ShortFormTypeKeywords -->
+
+    <!-- 3. Declare Statements, Namespace, and Import Statements -->
+
+    <!-- The header of a PHP file may consist of a number of different blocks. If present, each of the blocks below MUST be separated by a single blank line, and MUST NOT contain a blank line. Each block MUST be in the order listed below, although blocks that are not relevant may be omitted.
+
+    Opening PHP tag.
+    File-level docblock.
+    One or more declare statements.
+    The namespace declaration of the file.
+    One or more class-based use import statements.
+    One or more function-based use import statements.
+    One or more constant-based use import statements.
+    The remainder of the code in the file.
+    When a file contains a mix of HTML and PHP, any of the above sections may still be used. If so, they MUST be present at the top of the file, even if the remainder of the code consists a closing PHP tag and then a mixture of HTML and PHP. -->
+
+    <!-- When the opening PHP tag is on the first line of the file, it MUST be on its own line with no other statements unless it is a file containing markup outside of PHP opening and closing tags. -->
+
+    <!-- Import statements MUST never begin with a leading backslash as they must always be fully qualified. -->
+
+    <!-- Compound namespaces with a depth of more than two MUST NOT be used. -->
+    <!-- checked by PSR12.Namespaces.CompoundNamespaceDepth -->
+
+    <!-- When wishing to declare strict types in files containing markup outside PHP opening and closing tags MUST, on the first line, include an opening PHP tag, the strict types declaration and closing tag. -->
+
+    <!-- Declare statements MUST contain no spaces and MUST be exactly declare(strict_types=1) (with an optional semi-colon terminator). -->
+
+    <!-- Block declare statements are allowed and MUST be formatted as below. -->
+
+    <!-- 4. Classes, Properties, and Methods -->
+
+    <!-- Any closing brace MUST NOT be followed by any comment or statement on the same line. -->
+
+    <!-- When instantiating a new class, parenthesis MUST always be present even when there are no arguments passed to the constructor. -->
+    <!-- checked by PSR12.Classes.ClassInstantiation -->
+
+    <!-- 4.1 Extends and Implements -->
+
+    <!-- The extends and implements keywords MUST be declared on the same line as the class name. -->
+    <!-- The opening brace for the class MUST go on its own line; the closing brace for the class MUST go on the next line after the body. -->
+    <!-- Opening braces MUST be on their own line and MUST NOT be preceded or followed by a blank line. -->
+    <!-- Closing braces MUST be on their own line and MUST NOT be preceded by a blank line. -->
+    <!-- Lists of implements and extends MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line. -->
+    <rule ref="PSR2.Classes.ClassDeclaration"/>
+
+    <!-- 4.2 Using traits -->
+
+    <!-- The use keyword used inside the classes to implement traits MUST be declared on the next line after the opening brace. -->
+
+    <!-- Each individual Trait that is imported into a class MUST be included one-per-line, and each inclusion MUST have its own use import statement. -->
+
+    <!-- When the class has nothing after the use import statement, the class closing brace MUST be on the next line after the use import statement. Otherwise it MUST have a blank line after the use import statement. -->
+
+    <!-- When using the insteadof and as operators they must be used as follows taking note of indentation, spacing and new lines. -->
+
+    <!-- 4.3 Properties and Constants -->
+
+    <!-- Visibility MUST be declared on all properties. -->
+    <!-- The var keyword MUST NOT be used to declare a property. -->
+    <!-- There MUST NOT be more than one property declared per statement. -->
+    <!-- Property names MUST NOT be prefixed with a single underscore to indicate protected or private visibility. -->
+    <rule ref="PSR2.Classes.PropertyDeclaration"/>
+
+    <!-- Visibility MUST be declared on all constants if your project PHP minimum version supports constant visibilities (PHP 7.1 or later). -->
+
+    <!-- 4.4 Methods and Functions -->
+
+    <!-- Visibility MUST be declared on all methods. -->
+    <rule ref="Squiz.Scope.MethodScope"/>
+    <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
+
+    <!-- Method names MUST NOT be prefixed with a single underscore to indicate protected or private visibility. That is, an underscore prefix explicitly has no meaning. -->
+    <rule ref="PSR2.Methods.MethodDeclaration"/>
+    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
+        <type>error</type>
+        <message>Method name "%s" must not be prefixed with an underscore to indicate visibility</message>
+    </rule>
+
+    <!-- Method and function names MUST NOT be declared with a space after the method name. The opening brace MUST go on its own line, and the closing brace MUST go on the next line following the body. There MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. -->
+    <rule ref="PSR2.Methods.FunctionClosingBrace"/>
+    <rule ref="Squiz.Functions.FunctionDeclaration"/>
+    <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
+
+    <!-- 4.5 Method and function Arguments -->
+
+    <!-- In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma. -->
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+        <properties>
+            <property name="equalsSpacing" value="1"/>
+        </properties>
+    </rule>
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Method and function arguments with default values MUST go at the end of the argument list. -->
+    <rule ref="PEAR.Functions.ValidDefaultValue"/>
+
+    <!-- Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line. When the argument list is split across multiple lines, the closing parenthesis and opening brace MUST be placed together on their own line with one space between them. -->
+    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
+
+    <!-- When you have a return type declaration present there MUST be one space after the colon followed by the type declaration. The colon and declaration MUST be on the same line as the argument list closing parentheses with no spaces between the two characters. -->
+
+    <!-- In nullable type declarations there MUST NOT be a space between the question mark and the type. -->
+
+    <!-- 4.6 abstract, final, and static -->
+
+    <!-- When present, the abstract and final declarations MUST precede the visibility declaration. -->
+    <!-- When present, the static declaration MUST come after the visibility declaration. -->
+    <!-- checked by PSR2.Methods.MethodDeclaration included above -->
+
+    <!-- 4.7 Method and Function Calls -->
+
+    <!-- When making a method or function call, there MUST NOT be a space between the method or function name and the opening parenthesis, there MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma. -->
+    <!-- Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line. A single argument being split across multiple lines (as might be the case with an anonymous function or array) does not constitute splitting the argument list itself. -->
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+    <rule ref="PSR2.Methods.FunctionCallSignature"/>
+    <rule ref="PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR2.Methods.FunctionCallSignature.OpeningIndent">
+        <severity>0</severity>
+    </rule>
+
+    <!-- 5. Control Structures -->
+
+    <!-- The general style rules for control structures are as follows:
+    There MUST be one space after the control structure keyword
+    There MUST NOT be a space after the opening parenthesis
+    There MUST NOT be a space before the closing parenthesis
+    There MUST be one space between the closing parenthesis and the opening brace
+    The structure body MUST be indented once
+    The closing brace MUST be on the next line after the body
+    The body of each structure MUST be enclosed by braces. This standardizes how the structures look, and reduces the likelihood of introducing errors as new lines get added to the body. -->
+    <rule ref="Squiz.ControlStructures.ControlSignature"/>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen" />
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose" />
+    <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+    <rule ref="PSR2.ControlStructures.ControlStructureSpacing"/>
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+
+    <!-- exclude this message as it is already checked in Generic.PHP.LowerCaseKeyword -->
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.AsNotLower">
+        <severity>0</severity>
+    </rule>
+
+    <!-- 5.1 if, elseif, else -->
+
+    <!-- else and elseif are on the same line as the closing brace from the earlier body. -->
+
+    <!-- The keyword elseif SHOULD be used instead of else if so that all control keywords look like single words. -->
+    <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
+
+    <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line with one space between them. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
+
+    <!-- 5.2 switch, case -->
+
+    <!-- The case statement MUST be indented once from switch, and the break keyword (or other terminating keywords) MUST be indented at the same level as the case body. There MUST be a comment such as // no break when fall-through is intentional in a non-empty case body. -->
+    <rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
+
+    <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line with one space between them. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
+
+    <!-- 5.3 while, do while -->
+
+    <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
+
+    <!-- 5.4 for -->
+
+    <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first expression MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line with one space between them. -->
+
+    <!-- 5.5 foreach -->
+
+    <!-- 5.6 try, catch, finally -->
+
+    <!-- 6. Operators -->
+
+    <!-- All binary and ternary (but not unary) operators MUST be preceded and followed by at least one space. This includes all arithmetic, comparison, assignment, bitwise, logical (excluding ! which is unary), string concatenation, type operators, trait operators (insteadof and as), and the single pipe operator (e.g. ExceptionType1 | ExceptionType2 $e). -->
+    <!-- Other operators are left undefined. -->
+    <!-- checked by PSR12.Operators.OperatorSpacing -->
+
+    <!-- 7. Closures -->
+
+    <!-- Closures MUST be declared with a space after the function keyword, and a space before and after the use keyword. -->
+    <!-- The opening brace MUST go on the same line, and the closing brace MUST go on the next line following the body. -->
+    <!-- There MUST NOT be a space after the opening parenthesis of the argument list or variable list, and there MUST NOT be a space before the closing parenthesis of the argument list or variable list. -->
+    <!-- In the argument list and variable list, there MUST NOT be a space before each comma, and there MUST be one space after each comma. -->
+    <!-- Closure arguments with default values MUST go at the end of the argument list. -->
+    <!-- Argument lists and variable lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument or variable per line. -->
+    <!-- When the ending list (whether of arguments or variables) is split across multiple lines, the closing parenthesis and opening brace MUST be placed together on their own line with one space between them. -->
+    <!-- checked by Squiz.Functions.MultiLineFunctionDeclaration -->
+
+    <!-- 8. Anonymous Classes -->
+
+    <!-- Anonymous Classes MUST follow the same guidelines and principles as closures in the above section. -->
+
+    <!-- The opening parenthesis MAY be on the same line as the class keyword so long as the list of implements interfaces does not wrap. If the list of interfaces wraps, the parenthesis MUST be placed on the line immediately following the last interface. -->
+
+</ruleset>

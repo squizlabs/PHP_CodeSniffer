@@ -20,7 +20,7 @@ class AssignThisSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('JS');
+    public $supportedTokenizers = ['JS'];
 
 
     /**
@@ -30,7 +30,7 @@ class AssignThisSniff implements Sniff
      */
     public function register()
     {
-        return array(T_THIS);
+        return [T_THIS];
 
     }//end register()
 

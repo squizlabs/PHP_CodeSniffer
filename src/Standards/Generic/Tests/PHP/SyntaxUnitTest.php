@@ -18,27 +18,6 @@ class SyntaxUnitTest extends AbstractSniffUnitTest
 
 
     /**
-     * Should this test be skipped for some reason.
-     *
-     * @return void
-     */
-    protected function shouldSkipTest()
-    {
-        if (defined('PHP_BINARY') === true) {
-            return false;
-        }
-
-        $phpPath = Config::getExecutablePath('php');
-        if ($phpPath === null) {
-            return true;
-        }
-
-        return false;
-
-    }//end shouldSkipTest()
-
-
-    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
@@ -48,7 +27,7 @@ class SyntaxUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(3 => 1);
+        return [3 => 1];
 
     }//end getErrorList()
 
@@ -63,7 +42,7 @@ class SyntaxUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

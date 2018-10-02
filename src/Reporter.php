@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer;
 use PHP_CodeSniffer\Reports\Report;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Util\Common;
 
 class Reporter
@@ -71,14 +72,14 @@ class Reporter
      *
      * @var array
      */
-    private $reports = array();
+    private $reports = [];
 
     /**
      * A cache of opened temporary files.
      *
      * @var array
      */
-    private $tmpFiles = array();
+    private $tmpFiles = [];
 
 
     /**
@@ -98,23 +99,46 @@ class Reporter
         $this->config = $config;
 
         foreach ($config->reports as $type => $output) {
-            $type = ucfirst($type);
-
             if ($output === null) {
                 $output = $config->reportFile;
             }
 
+            $reportClassName = '';
             if (strpos($type, '.') !== false) {
                 // This is a path to a custom report class.
                 $filename = realpath($type);
                 if ($filename === false) {
-                    echo "ERROR: Custom report \"$type\" not found".PHP_EOL;
-                    exit(3);
+                    $error = "ERROR: Custom report \"$type\" not found".PHP_EOL;
+                    throw new DeepExitException($error, 3);
                 }
 
                 $reportClassName = Autoload::loadFile($filename);
+            } else if (class_exists('PHP_CodeSniffer\Reports\\'.ucfirst($type)) === true) {
+                // PHPCS native report.
+                $reportClassName = 'PHP_CodeSniffer\Reports\\'.ucfirst($type);
+            } else if (class_exists($type) === true) {
+                // FQN of a custom report.
+                $reportClassName = $type;
             } else {
-                $reportClassName = 'PHP_CodeSniffer\Reports\\'.$type;
+                // OK, so not a FQN, try and find the report using the registered namespaces.
+                $registeredNamespaces = Autoload::getSearchPaths();
+                $trimmedType          = ltrim($type, '\\');
+
+                foreach ($registeredNamespaces as $nsPrefix) {
+                    if ($nsPrefix === '') {
+                        continue;
+                    }
+
+                    if (class_exists($nsPrefix.'\\'.$trimmedType) === true) {
+                        $reportClassName = $nsPrefix.'\\'.$trimmedType;
+                        break;
+                    }
+                }
+            }//end if
+
+            if ($reportClassName === '') {
+                $error = "ERROR: Class file for report \"$type\" not found".PHP_EOL;
+                throw new DeepExitException($error, 3);
             }
 
             $reportClass = new $reportClassName();
@@ -122,13 +146,15 @@ class Reporter
                 throw new RuntimeException('Class "'.$reportClassName.'" must implement the "PHP_CodeSniffer\Report" interface.');
             }
 
-            $this->reports[$type] = array(
-                                     'output' => $output,
-                                     'class'  => $reportClass,
-                                    );
+            $this->reports[$type] = [
+                'output' => $output,
+                'class'  => $reportClass,
+            ];
 
             if ($output === null) {
                 // Using a temp file.
+                // This needs to be set in the constructor so that all
+                // child procs use the same report file when running in parallel.
                 $this->tmpFiles[$type] = tempnam(sys_get_temp_dir(), 'phpcs');
                 file_put_contents($this->tmpFiles[$type], '');
             } else {
@@ -172,7 +198,6 @@ class Reporter
      */
     public function printReport($report)
     {
-        $report      = ucfirst($report);
         $reportClass = $this->reports[$report]['class'];
         $reportFile  = $this->reports[$report]['output'];
 
@@ -223,6 +248,7 @@ class Reporter
             echo $generatedReport;
             if ($filename !== null && file_exists($filename) === true) {
                 unlink($filename);
+                unset($this->tmpFiles[$report]);
             }
         }
 
@@ -265,10 +291,17 @@ class Reporter
 
             if ($report['output'] === null) {
                 // Using a temp file.
-                file_put_contents($this->tmpFiles[$type], $generatedReport, FILE_APPEND);
+                if (isset($this->tmpFiles[$type]) === false) {
+                    // When running in interactive mode, the reporter prints the full
+                    // report many times, which will unlink the temp file. So we need
+                    // to create a new one if it doesn't exist.
+                    $this->tmpFiles[$type] = tempnam(sys_get_temp_dir(), 'phpcs');
+                    file_put_contents($this->tmpFiles[$type], '');
+                }
+
+                file_put_contents($this->tmpFiles[$type], $generatedReport, (FILE_APPEND | LOCK_EX));
             } else {
-                $flags = FILE_APPEND;
-                file_put_contents($report['output'], $generatedReport, FILE_APPEND);
+                file_put_contents($report['output'], $generatedReport, (FILE_APPEND | LOCK_EX));
             }//end if
         }//end foreach
 
@@ -299,13 +332,13 @@ class Reporter
      */
     public function prepareFileReport(File $phpcsFile)
     {
-        $report = array(
-                   'filename' => Common::stripBasepath($phpcsFile->getFilename(), $this->config->basepath),
-                   'errors'   => $phpcsFile->getErrorCount(),
-                   'warnings' => $phpcsFile->getWarningCount(),
-                   'fixable'  => $phpcsFile->getFixableCount(),
-                   'messages' => array(),
-                  );
+        $report = [
+            'filename' => Common::stripBasepath($phpcsFile->getFilename(), $this->config->basepath),
+            'errors'   => $phpcsFile->getErrorCount(),
+            'warnings' => $phpcsFile->getWarningCount(),
+            'fixable'  => $phpcsFile->getFixableCount(),
+            'messages' => [],
+        ];
 
         if ($report['errors'] === 0 && $report['warnings'] === 0) {
             // Prefect score!
@@ -315,32 +348,32 @@ class Reporter
         if ($this->config->recordErrors === false) {
             $message  = 'Errors are not being recorded but this report requires error messages. ';
             $message .= 'This report will not show the correct information.';
-            $report['messages'][1][1] = array(
-                                         array(
-                                          'message'  => $message,
-                                          'source'   => 'Internal.RecordErrors',
-                                          'severity' => 5,
-                                          'fixable'  => false,
-                                          'type'     => 'ERROR',
-                                         ),
-                                        );
+            $report['messages'][1][1] = [
+                [
+                    'message'  => $message,
+                    'source'   => 'Internal.RecordErrors',
+                    'severity' => 5,
+                    'fixable'  => false,
+                    'type'     => 'ERROR',
+                ],
+            ];
             return $report;
         }
 
-        $errors = array();
+        $errors = [];
 
         // Merge errors and warnings.
         foreach ($phpcsFile->getErrors() as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
-                $newErrors = array();
+                $newErrors = [];
                 foreach ($colErrors as $data) {
-                    $newErrors[] = array(
-                                    'message'  => $data['message'],
-                                    'source'   => $data['source'],
-                                    'severity' => $data['severity'],
-                                    'fixable'  => $data['fixable'],
-                                    'type'     => 'ERROR',
-                                   );
+                    $newErrors[] = [
+                        'message'  => $data['message'],
+                        'source'   => $data['source'],
+                        'severity' => $data['severity'],
+                        'fixable'  => $data['fixable'],
+                        'type'     => 'ERROR',
+                    ];
                 }
 
                 $errors[$line][$column] = $newErrors;
@@ -351,19 +384,19 @@ class Reporter
 
         foreach ($phpcsFile->getWarnings() as $line => $lineWarnings) {
             foreach ($lineWarnings as $column => $colWarnings) {
-                $newWarnings = array();
+                $newWarnings = [];
                 foreach ($colWarnings as $data) {
-                    $newWarnings[] = array(
-                                      'message'  => $data['message'],
-                                      'source'   => $data['source'],
-                                      'severity' => $data['severity'],
-                                      'fixable'  => $data['fixable'],
-                                      'type'     => 'WARNING',
-                                     );
+                    $newWarnings[] = [
+                        'message'  => $data['message'],
+                        'source'   => $data['source'],
+                        'severity' => $data['severity'],
+                        'fixable'  => $data['fixable'],
+                        'type'     => 'WARNING',
+                    ];
                 }
 
                 if (isset($errors[$line]) === false) {
-                    $errors[$line] = array();
+                    $errors[$line] = [];
                 }
 
                 if (isset($errors[$line][$column]) === true) {

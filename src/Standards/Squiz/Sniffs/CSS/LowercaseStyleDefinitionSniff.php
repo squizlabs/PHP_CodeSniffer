@@ -20,7 +20,7 @@ class LowercaseStyleDefinitionSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array('CSS');
+    public $supportedTokenizers = ['CSS'];
 
 
     /**
@@ -30,7 +30,7 @@ class LowercaseStyleDefinitionSniff implements Sniff
      */
     public function register()
     {
-        return array(T_OPEN_CURLY_BRACKET);
+        return [T_OPEN_CURLY_BRACKET];
 
     }//end register()
 
@@ -78,10 +78,10 @@ class LowercaseStyleDefinitionSniff implements Sniff
                 $expected = strtolower($tokens[$i]['content']);
                 if ($expected !== $tokens[$i]['content']) {
                     $error = 'Style definitions must be lowercase; expected %s but found %s';
-                    $data  = array(
-                              $expected,
-                              $tokens[$i]['content'],
-                             );
+                    $data  = [
+                        $expected,
+                        $tokens[$i]['content'],
+                    ];
 
                     $fix = $phpcsFile->addFixableError($error, $i, 'FoundUpper', $data);
                     if ($fix === true) {

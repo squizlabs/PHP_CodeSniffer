@@ -24,11 +24,11 @@ class ValidClassNameSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_CLASS,
-                T_INTERFACE,
-                T_TRAIT,
-               );
+        return [
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
+        ];
 
     }//end register()
 
@@ -48,7 +48,7 @@ class ValidClassNameSniff implements Sniff
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
             $error = 'Possible parse error: %s missing opening or closing brace';
-            $data  = array($tokens[$stackPtr]['content']);
+            $data  = [$tokens[$stackPtr]['content']];
             $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $data);
             return;
         }
@@ -65,19 +65,19 @@ class ValidClassNameSniff implements Sniff
             $name = trim($phpcsFile->getTokensAsString($nameStart, ($nameEnd - $nameStart)));
         }
 
-        // Check for camel caps format.
+        // Check for PascalCase format.
         $valid = Common::isCamelCaps($name, true, true, false);
         if ($valid === false) {
             $type  = ucfirst($tokens[$stackPtr]['content']);
-            $error = '%s name "%s" is not in camel caps format';
-            $data  = array(
-                      $type,
-                      $name,
-                     );
+            $error = '%s name "%s" is not in PascalCase format';
+            $data  = [
+                $type,
+                $name,
+            ];
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
-            $phpcsFile->recordMetric($stackPtr, 'CamelCase class name', 'no');
+            $phpcsFile->recordMetric($stackPtr, 'PascalCase class name', 'no');
         } else {
-            $phpcsFile->recordMetric($stackPtr, 'CamelCase class name', 'yes');
+            $phpcsFile->recordMetric($stackPtr, 'PascalCase class name', 'yes');
         }
 
     }//end process()

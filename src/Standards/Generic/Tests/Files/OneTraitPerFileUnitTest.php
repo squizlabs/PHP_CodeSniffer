@@ -16,18 +16,6 @@ class OneTraitPerFileUnitTest extends AbstractSniffUnitTest
 
 
     /**
-     * Should this test be skipped for some reason.
-     *
-     * @return bool
-     */
-    protected function shouldSkipTest()
-    {
-        return (PHP_VERSION_ID < 50400);
-
-    }//end shouldSkipTest()
-
-
-    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
@@ -37,10 +25,10 @@ class OneTraitPerFileUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                6  => 1,
-                10 => 1,
-               );
+        return [
+            6  => 1,
+            10 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -55,7 +43,7 @@ class OneTraitPerFileUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

@@ -39,6 +39,7 @@ class Junit implements Report
 
         $out->startElement('testsuite');
         $out->writeAttribute('name', $report['filename']);
+        $out->writeAttribute('errors', 0);
 
         if (count($report['messages']) === 0) {
             $out->writeAttribute('tests', 1);
@@ -110,7 +111,7 @@ class Junit implements Report
     ) {
         // Figure out the total number of tests.
         $tests   = 0;
-        $matches = array();
+        $matches = [];
         preg_match_all('/tests="([0-9]+)"/', $cachedData, $matches);
         if (isset($matches[1]) === true) {
             foreach ($matches[1] as $match) {
@@ -120,7 +121,7 @@ class Junit implements Report
 
         $failures = ($totalErrors + $totalWarnings);
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<testsuites name="PHP_CodeSniffer '.Config::VERSION.'" tests="'.$tests.'" failures="'.$failures.'">'.PHP_EOL;
+        echo '<testsuites name="PHP_CodeSniffer '.Config::VERSION.'" errors="0" tests="'.$tests.'" failures="'.$failures.'">'.PHP_EOL;
         echo $cachedData;
         echo '</testsuites>'.PHP_EOL;
 

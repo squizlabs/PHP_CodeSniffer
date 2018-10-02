@@ -75,7 +75,7 @@ class Text extends Generator
         $text = str_replace('<em>', '*', $text);
         $text = str_replace('</em>', '*', $text);
 
-        $lines    = array();
+        $lines    = [];
         $tempLine = '';
         $words    = explode(' ', $text);
 
@@ -121,7 +121,7 @@ class Text extends Generator
         $first      = trim($codeBlocks->item(0)->nodeValue);
         $firstTitle = $codeBlocks->item(0)->getAttribute('title');
 
-        $firstTitleLines = array();
+        $firstTitleLines = [];
         $tempTitle       = '';
         $words           = explode(' ', $firstTitle);
 
@@ -156,7 +156,7 @@ class Text extends Generator
         $second      = trim($codeBlocks->item(1)->nodeValue);
         $secondTitle = $codeBlocks->item(1)->getAttribute('title');
 
-        $secondTitleLines = array();
+        $secondTitleLines = [];
         $tempTitle        = '';
         $words            = explode(' ', $secondTitle);
 

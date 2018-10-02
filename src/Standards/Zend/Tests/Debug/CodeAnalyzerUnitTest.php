@@ -24,7 +24,11 @@ class CodeAnalyzerUnitTest extends AbstractSniffUnitTest
     protected function shouldSkipTest()
     {
         $analyzerPath = Config::getExecutablePath('zend_ca');
-        return (is_null($analyzerPath));
+        if ($analyzerPath === null) {
+            return true;
+        }
+
+        return false;
 
     }//end shouldSkipTest()
 
@@ -39,7 +43,7 @@ class CodeAnalyzerUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array();
+        return [];
 
     }//end getErrorList()
 
@@ -54,7 +58,7 @@ class CodeAnalyzerUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array(2 => 1);
+        return [2 => 1];
 
     }//end getWarningList()
 

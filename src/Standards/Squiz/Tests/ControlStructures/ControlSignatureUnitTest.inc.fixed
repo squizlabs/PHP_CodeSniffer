@@ -214,3 +214,81 @@ if (1 === $a) :
 else :
     echo 'not 1';
 endif;
+
+// @codingStandardsChangeSetting Squiz.ControlStructures.ControlSignature requiredSpacesBeforeColon 0
+
+if ($a == 5):
+    echo "a equals 5";
+    echo "...";
+elseif ($a == 6):
+    echo "a equals 6";
+    echo "!!!";
+else:
+    echo "a is neither 5 nor 6";
+endif;
+
+switch ($foo) {
+
+    case 'bar':
+    break;
+
+}
+
+if ($foo):
+endif;
+
+?>
+
+<?php while ($row = $data->getRow()): ?>
+    <p><?= $val ?></p>
+<?php endwhile; ?>
+
+<?php foreach ($formset['Fieldset'] as $fieldset): ?>
+    <?php foreach ($fieldset['Field'] as $field): ?> 
+    <?php endforeach; ?>
+<?php endforeach; ?>
+
+<?php foreach ($formset['Fieldset'] as $fieldset):
+?> hello
+<?php endforeach; ?>
+
+<?php foreach ($formset['Fieldset'] as $fieldset):
+    ?>
+    hello
+<?php endforeach; ?>
+<?php
+
+// Issue #1857/#1927.
+if ($something) {
+}
+// phpcs:ignore Standard.Category.Sniff
+elseif ($something) {
+} // comment
+else {
+}
+
+if ($something) {
+} // phpcs:ignore Standard.Category.Sniff
+elseif ($something) {
+}
+// comment
+else {
+}
+
+try {
+    $x = 1;
+} // stray comment here
+catch (CustomException $exception) {
+    $x = 2;
+}
+// phpcs:ignore Standard.Category.Sniff
+catch (Exception $exception) {
+    $x = 2;
+} finally {
+    $x = 3;
+}
+
+if ($this) {
+    if ($that)
+        foo(${$a[$b]});
+}

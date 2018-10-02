@@ -23,10 +23,10 @@ class DoubleQuoteUsageSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_CONSTANT_ENCAPSED_STRING,
-                T_DOUBLE_QUOTED_STRING,
-               );
+        return [
+            T_CONSTANT_ENCAPSED_STRING,
+            T_DOUBLE_QUOTED_STRING,
+        ];
 
     }//end register()
 
@@ -44,12 +44,14 @@ class DoubleQuoteUsageSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // We are only interested in the first token in a multi-line string.
-        if ($tokens[$stackPtr]['code'] === $tokens[($stackPtr - 1)]['code']) {
-            return;
+        // If tabs are being converted to spaces by the tokeniser, the
+        // original content should be used instead of the converted content.
+        if (isset($tokens[$stackPtr]['orig_content']) === true) {
+            $workingString = $tokens[$stackPtr]['orig_content'];
+        } else {
+            $workingString = $tokens[$stackPtr]['content'];
         }
 
-        $workingString   = $tokens[$stackPtr]['content'];
         $lastStringToken = $stackPtr;
 
         $i = ($stackPtr + 1);
@@ -57,21 +59,22 @@ class DoubleQuoteUsageSniff implements Sniff
             while ($i < $phpcsFile->numTokens
                 && $tokens[$i]['code'] === $tokens[$stackPtr]['code']
             ) {
-                $workingString  .= $tokens[$i]['content'];
+                if (isset($tokens[$i]['orig_content']) === true) {
+                    $workingString .= $tokens[$i]['orig_content'];
+                } else {
+                    $workingString .= $tokens[$i]['content'];
+                }
+
                 $lastStringToken = $i;
                 $i++;
             }
         }
 
-        // Check if it's a double quoted string.
-        if (strpos($workingString, '"') === false) {
-            return;
-        }
+        $skipTo = ($lastStringToken + 1);
 
-        // Make sure it's not a part of a string started in a previous line.
-        // If it is, then we have already checked it.
-        if ($workingString[0] !== '"') {
-            return;
+        // Check if it's a double quoted string.
+        if ($workingString[0] !== '"' || substr($workingString, -1) !== '"') {
+            return $skipTo;
         }
 
         // The use of variables in double quoted strings is not allowed.
@@ -80,49 +83,50 @@ class DoubleQuoteUsageSniff implements Sniff
             foreach ($stringTokens as $token) {
                 if (is_array($token) === true && $token[0] === T_VARIABLE) {
                     $error = 'Variable "%s" not allowed in double quoted string; use concatenation instead';
-                    $data  = array($token[1]);
+                    $data  = [$token[1]];
                     $phpcsFile->addError($error, $stackPtr, 'ContainsVar', $data);
                 }
             }
 
-            return;
+            return $skipTo;
         }//end if
 
-        $allowedChars = array(
-                         '\0',
-                         '\1',
-                         '\2',
-                         '\3',
-                         '\4',
-                         '\5',
-                         '\6',
-                         '\7',
-                         '\n',
-                         '\r',
-                         '\f',
-                         '\t',
-                         '\v',
-                         '\x',
-                         '\b',
-                         '\e',
-                         '\u',
-                         '\'',
-                        );
+        $allowedChars = [
+            '\0',
+            '\1',
+            '\2',
+            '\3',
+            '\4',
+            '\5',
+            '\6',
+            '\7',
+            '\n',
+            '\r',
+            '\f',
+            '\t',
+            '\v',
+            '\x',
+            '\b',
+            '\e',
+            '\u',
+            '\'',
+        ];
 
         foreach ($allowedChars as $testChar) {
             if (strpos($workingString, $testChar) !== false) {
-                return;
+                return $skipTo;
             }
         }
 
         $error = 'String %s does not require double quotes; use single quotes instead';
-        $data  = array(str_replace(array("\r", "\n"), array('\r', '\n'), $workingString));
+        $data  = [str_replace(["\r", "\n"], ['\r', '\n'], $workingString)];
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NotRequired', $data);
 
         if ($fix === true) {
             $phpcsFile->fixer->beginChangeset();
             $innerContent = substr($workingString, 1, -1);
             $innerContent = str_replace('\"', '"', $innerContent);
+            $innerContent = str_replace('\\$', '$', $innerContent);
             $phpcsFile->fixer->replaceToken($stackPtr, "'$innerContent'");
             while ($lastStringToken !== $stackPtr) {
                 $phpcsFile->fixer->replaceToken($lastStringToken, '');
@@ -131,6 +135,8 @@ class DoubleQuoteUsageSniff implements Sniff
 
             $phpcsFile->fixer->endChangeset();
         }
+
+        return $skipTo;
 
     }//end process()
 

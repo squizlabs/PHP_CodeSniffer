@@ -65,7 +65,7 @@ $something
 
 // This is not a function call.
 function &testFunction($arg1,
-    $arg2,
+    $arg2
 ) {
 }
 
@@ -105,7 +105,7 @@ $foo = new stdClass(
     2,
     3);
 
-public function doSomething()
+function doSomething()
 {
     return $this->getFoo()
         ->doBar(
@@ -120,7 +120,7 @@ $foo,
 $bar
 );
 
-// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments false
+// phpcs:set PEAR.Functions.FunctionCallSignature allowMultipleArguments false
 
 fputs(
     STDOUT,
@@ -142,7 +142,7 @@ $bar = new stdClass(
     4, /* thanks */ 5, /* PSR-2 */ 6
 );
 
-public function doSomething()
+function doSomething()
 {
     return $this->getFoo()
         ->doBar(
@@ -158,7 +158,7 @@ doError(
     'Check your id' // fix
 );
 
-// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature allowMultipleArguments true
+// phpcs:set PEAR.Functions.FunctionCallSignature allowMultipleArguments true
 
 // Don't report errors for closing braces. Leave that to other sniffs.
 foo(
@@ -204,17 +204,20 @@ function foo()
         /* comment
          * comment
         */
-        'string'.
+        'string'
     );
 }
 
-// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 1
-// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 1
+// phpcs:set PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 1
+// phpcs:set PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 1
 test($arg, $arg2);
 test( $arg, $arg2 );
 test(  $arg, $arg2  );
-// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 0
-// @codingStandardsChangeSetting PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 0
+test();
+test( );
+test(  );
+// phpcs:set PEAR.Functions.FunctionCallSignature requiredSpacesAfterOpen 0
+// phpcs:set PEAR.Functions.FunctionCallSignature requiredSpacesBeforeClose 0
 
 ?>
 <script>
@@ -313,3 +316,82 @@ foo(
     */
     $e
 );
+
+test(
+        1,2,3,4
+    );
+
+class Test
+{
+    public function getInstance()
+    {
+        return new static(
+          'arg',
+              'foo'
+        );
+    }
+
+    public function getSelf()
+    {
+        return new self(
+         'a','b', 'c'
+        );
+    }
+}
+
+$x = $var('y',
+'x');
+
+$obj->{$x}(1,
+  2);
+
+return (function ($a, $b) {
+    return function ($c, $d) use ($a, $b) {
+        echo $a, $b, $c, $d;
+    };
+})(
+  'a','b'
+)('c',
+    'd');
+
+class Foo
+{
+    public function bar($a, $b)
+    {
+        if (!$a || !$b) {
+            return;
+        }
+
+        (new stdClass())->a = $a;
+    }
+}
+
+return (function ($a, $b) {
+    return function ($c, $d) use ($a, $b) {
+        echo $a, $b, $c, $d;
+    };
+})('a','b')('c','d');
+
+function foo()
+{
+     Bar(
+        function () {
+        }
+    );
+}
+
+$deprecated_functions = [
+    'the_category_ID'
+       => function_call( // 7 spaces, not 8. This is the problem line.
+        $a,
+        $b
+    ),
+];
+
+$deprecated_functions = [
+    'the_category_ID'
+         => function_call( // 7 spaces, not 8. This is the problem line.
+        $a,
+        $b
+    ),
+];

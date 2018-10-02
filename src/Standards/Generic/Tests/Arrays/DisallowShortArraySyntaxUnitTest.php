@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the DisallowLongArraySyntax sniff.
+ * Unit test class for the DisallowShortArraySyntax sniff.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
@@ -25,12 +25,12 @@ class DisallowShortArraySyntaxUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                3 => 1,
-                5 => 1,
-                7 => 1,
-                8 => 1,
-               );
+        return [
+            3 => 1,
+            5 => 1,
+            7 => 1,
+            8 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -45,7 +45,7 @@ class DisallowShortArraySyntaxUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

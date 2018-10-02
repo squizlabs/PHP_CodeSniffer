@@ -32,14 +32,14 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
          *
          * @var array<string, string>
          */
-        private static $loadedClasses = array();
+        private static $loadedClasses = [];
 
         /**
          * A mapping of class names to file names.
          *
          * @var array<string, string>
          */
-        private static $loadedFiles = array();
+        private static $loadedFiles = [];
 
         /**
          * A list of additional directories to search during autoloading.
@@ -48,7 +48,7 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
          *
          * @var string[]
          */
-        private static $searchPaths = array();
+        private static $searchPaths = [];
 
 
         /**
@@ -67,6 +67,12 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             // so this autoloader runs before the composer one as we need to include
             // all files so we can figure out what the class/interface/trait name is.
             if (self::$composerAutoloader === null) {
+                // Make sure we don't try to load any of Composer's classes
+                // while the autoloader is being setup.
+                if (strpos($class, 'Composer\\') === 0) {
+                    return;
+                }
+
                 if (strpos(__DIR__, 'phar://') !== 0
                     && file_exists(__DIR__.'/../../autoload.php') === true
                 ) {
@@ -82,7 +88,7 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
                 } else {
                     self::$composerAutoloader = false;
                 }
-            }
+            }//end if
 
             $ds   = DIRECTORY_SEPARATOR;
             $path = false;
@@ -109,8 +115,13 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
 
             // See if the class is inside one of our alternate search paths.
             if ($path === false) {
-                foreach (self::$searchPaths as $searchPath) {
-                    $path = $searchPath.$ds.str_replace('\\', $ds, $class).'.php';
+                foreach (self::$searchPaths as $searchPath => $nsPrefix) {
+                    $className = $class;
+                    if ($nsPrefix !== '' && substr($class, 0, strlen($nsPrefix)) === $nsPrefix) {
+                        $className = substr($class, (strlen($nsPrefix) + 1));
+                    }
+
+                    $path = $searchPath.$ds.str_replace('\\', $ds, $className).'.php';
                     if (is_file($path) === true) {
                         break;
                     }
@@ -194,15 +205,28 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
         /**
          * Adds a directory to search during autoloading.
          *
-         * @param string $path The path to the directory to search.
+         * @param string $path     The path to the directory to search.
+         * @param string $nsPrefix The namespace prefix used by files under this path.
          *
          * @return void
          */
-        public static function addSearchPath($path)
+        public static function addSearchPath($path, $nsPrefix='')
         {
-            self::$searchPaths[] = $path;
+            self::$searchPaths[$path] = rtrim(trim((string) $nsPrefix), '\\');
 
         }//end addSearchPath()
+
+
+        /**
+         * Retrieve the namespaces and paths registered by external standards.
+         *
+         * @return array
+         */
+        public static function getSearchPaths()
+        {
+            return self::$searchPaths;
+
+        }//end getSearchPaths()
 
 
         /**

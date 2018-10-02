@@ -9,32 +9,24 @@
 
 namespace PHP_CodeSniffer\Tests;
 
-class TestSuite extends \PHPUnit_Framework_TestSuite
+use PHPUnit\Framework\TestSuite as PHPUnit_TestSuite;
+use PHPUnit\Framework\TestResult;
+
+class TestSuite extends PHPUnit_TestSuite
 {
 
 
     /**
      * Runs the tests and collects their result in a TestResult.
      *
-     * @param \PHPUnit_Framework_TestResult $result A test result.
-     * @param mixed                         $filter The filter passed to each test.
+     * @param \PHPUnit\Framework\TestResult $result A test result.
      *
-     * @return \PHPUnit_Framework_TestResult
+     * @return \PHPUnit\Framework\TestResult
      */
-    public function run(\PHPUnit_Framework_TestResult $result=null, $filter=false)
+    public function run(TestResult $result=null)
     {
-        $result = parent::run($result, $filter);
-
-        $codes = count($GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']);
-
-        echo PHP_EOL.PHP_EOL;
-        echo "Tests generated $codes unique error codes";
-        if ($codes > 0) {
-            $fixes   = count($GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']);
-            $percent = round(($fixes / $codes * 100), 2);
-            echo "; $fixes were fixable ($percent%)";
-        }
-
+        $result = parent::run($result);
+        printPHPCodeSnifferTestOutput();
         return $result;
 
     }//end run()

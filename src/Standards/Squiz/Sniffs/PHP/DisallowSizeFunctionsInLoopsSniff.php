@@ -20,24 +20,24 @@ class DisallowSizeFunctionsInLoopsSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * An array of functions we don't want in the condition of loops.
      *
      * @var array
      */
-    protected $forbiddenFunctions = array(
-                                     'PHP' => array(
-                                               'sizeof' => true,
-                                               'strlen' => true,
-                                               'count'  => true,
-                                              ),
-                                     'JS'  => array('length' => true),
-                                    );
+    protected $forbiddenFunctions = [
+        'PHP' => [
+            'sizeof' => true,
+            'strlen' => true,
+            'count'  => true,
+        ],
+        'JS'  => ['length' => true],
+    ];
 
 
     /**
@@ -47,10 +47,10 @@ class DisallowSizeFunctionsInLoopsSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_WHILE,
-                T_FOR,
-               );
+        return [
+            T_WHILE,
+            T_FOR,
+        ];
 
     }//end register()
 
@@ -103,7 +103,7 @@ class DisallowSizeFunctionsInLoopsSniff implements Sniff
                 }
 
                 $error = 'The use of %s inside a loop condition is not allowed; assign the return value to a variable and use the variable in the loop condition instead';
-                $data  = array($functionName);
+                $data  = [$functionName];
                 $phpcsFile->addError($error, $i, 'Found', $data);
             }//end if
         }//end for

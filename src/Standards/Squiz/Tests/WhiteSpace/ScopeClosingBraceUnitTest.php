@@ -25,12 +25,13 @@ class ScopeClosingBraceUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                11 => 1,
-                13 => 1,
-                24 => 1,
-                80 => 1,
-               );
+        return [
+            11  => 1,
+            13  => 1,
+            24  => 1,
+            80  => 1,
+            102 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -45,7 +46,7 @@ class ScopeClosingBraceUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

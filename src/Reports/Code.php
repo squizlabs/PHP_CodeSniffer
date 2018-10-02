@@ -50,7 +50,12 @@ class Code implements Report
                 echo "CODE report is forcing parse of $file".PHP_EOL;
             }
 
-            $phpcsFile->parse();
+            try {
+                $phpcsFile->parse();
+            } catch (\Exception $e) {
+                // This is a second parse, so ignore exceptions.
+                // They would have been added to the file's error list already.
+            }
 
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
                 $timeTaken = ((microtime(true) - $startTime) * 1000);
@@ -69,8 +74,9 @@ class Code implements Report
         }//end if
 
         // Create an array that maps lines to the first token on the line.
-        $lineTokens = array();
+        $lineTokens = [];
         $lastLine   = 0;
+        $stackPtr   = 0;
         foreach ($tokens as $stackPtr => $token) {
             if ($token['line'] !== $lastLine) {
                 if ($lastLine > 0) {
@@ -78,10 +84,10 @@ class Code implements Report
                 }
 
                 $lastLine++;
-                $lineTokens[$lastLine] = array(
-                                          'start' => $stackPtr,
-                                          'end'   => null,
-                                         );
+                $lineTokens[$lastLine] = [
+                    'start' => $stackPtr,
+                    'end'   => null,
+                ];
             }
         }
 
@@ -192,65 +198,67 @@ class Code implements Report
             $endLine   = min(($line + $surroundingLines), $lastLine);
 
             $snippet = '';
-            for ($i = $lineTokens[$startLine]['start']; $i <= $lineTokens[$endLine]['end']; $i++) {
-                $snippetLine = $tokens[$i]['line'];
-                if ($lineTokens[$snippetLine]['start'] === $i) {
-                    // Starting a new line.
-                    if ($snippetLine === $line) {
-                        $snippet .= "\033[1m".'>> ';
+            if (isset($lineTokens[$startLine]) === true) {
+                for ($i = $lineTokens[$startLine]['start']; $i <= $lineTokens[$endLine]['end']; $i++) {
+                    $snippetLine = $tokens[$i]['line'];
+                    if ($lineTokens[$snippetLine]['start'] === $i) {
+                        // Starting a new line.
+                        if ($snippetLine === $line) {
+                            $snippet .= "\033[1m".'>> ';
+                        } else {
+                            $snippet .= '   ';
+                        }
+
+                        $snippet .= str_repeat(' ', ($maxLineNumLength - strlen($snippetLine)));
+                        $snippet .= $snippetLine.':  ';
+                        if ($snippetLine === $line) {
+                            $snippet .= "\033[0m";
+                        }
+                    }
+
+                    if (isset($tokens[$i]['orig_content']) === true) {
+                        $tokenContent = $tokens[$i]['orig_content'];
                     } else {
-                        $snippet .= '   ';
+                        $tokenContent = $tokens[$i]['content'];
                     }
 
-                    $snippet .= str_repeat(' ', ($maxLineNumLength - strlen($snippetLine)));
-                    $snippet .= $snippetLine.':  ';
-                    if ($snippetLine === $line) {
-                        $snippet .= "\033[0m";
+                    if (strpos($tokenContent, "\t") !== false) {
+                        $token            = $tokens[$i];
+                        $token['content'] = $tokenContent;
+                        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                            $tab = "\000";
+                        } else {
+                            $tab = "\033[30;1m»\033[0m";
+                        }
+
+                        $phpcsFile->tokenizer->replaceTabsInToken($token, $tab, "\000");
+                        $tokenContent = $token['content'];
                     }
-                }
 
-                if (isset($tokens[$i]['orig_content']) === true) {
-                    $tokenContent = $tokens[$i]['orig_content'];
-                } else {
-                    $tokenContent = $tokens[$i]['content'];
-                }
+                    $tokenContent = Util\Common::prepareForOutput($tokenContent, ["\r", "\n", "\t"]);
+                    $tokenContent = str_replace("\000", ' ', $tokenContent);
 
-                if (strpos($tokenContent, "\t") !== false) {
-                    $token            = $tokens[$i];
-                    $token['content'] = $tokenContent;
-                    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                        $tab = "\000";
+                    $underline = false;
+                    if ($snippetLine === $line && isset($lineErrors[$tokens[$i]['column']]) === true) {
+                        $underline = true;
+                    }
+
+                    // Underline invisible characters as well.
+                    if ($underline === true && trim($tokenContent) === '') {
+                        $snippet .= "\033[4m".' '."\033[0m".$tokenContent;
                     } else {
-                        $tab = "\033[30;1m»\033[0m";
+                        if ($underline === true) {
+                            $snippet .= "\033[4m";
+                        }
+
+                        $snippet .= $tokenContent;
+
+                        if ($underline === true) {
+                            $snippet .= "\033[0m";
+                        }
                     }
-
-                    $phpcsFile->tokenizer->replaceTabsInToken($token, $tab, "\000");
-                    $tokenContent = $token['content'];
-                }
-
-                $tokenContent = Util\Common::prepareForOutput($tokenContent, array("\r", "\n", "\t"));
-                $tokenContent = str_replace("\000", ' ', $tokenContent);
-
-                $underline = false;
-                if ($snippetLine === $line && isset($lineErrors[$tokens[$i]['column']]) === true) {
-                    $underline = true;
-                }
-
-                // Underline invisible characters as well.
-                if ($underline === true && trim($tokenContent) === '') {
-                    $snippet .= "\033[4m".' '."\033[0m".$tokenContent;
-                } else {
-                    if ($underline === true) {
-                        $snippet .= "\033[4m";
-                    }
-
-                    $snippet .= $tokenContent;
-
-                    if ($underline === true) {
-                        $snippet .= "\033[0m";
-                    }
-                }
-            }//end for
+                }//end for
+            }//end if
 
             echo str_repeat('-', $width).PHP_EOL;
 

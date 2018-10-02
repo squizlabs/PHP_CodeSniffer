@@ -157,7 +157,7 @@ class PHP_CodeSniffer_File
  *
  * @return void
  */
-public function functionOutsideClass(&$str, &$foo)
+function functionOutsideClass(&$str, &$foo)
 {
     return;
 }//end functionOutsideClass()
@@ -181,7 +181,7 @@ function tagBeforeComment()
  *
  *
  */
-public function noReturnOutsideClass()
+function noReturnOutsideClass()
 {
 
 }//end noReturnOutsideClass()
@@ -195,7 +195,7 @@ public function noReturnOutsideClass()
  * @return void
  * @fine  Unknown tag
  */
-public function missingTwoParamComment($one, $two, $three)
+function missingTwoParamComment($one, $two, $three)
 {
 
 }//end missingTwoParamComment()
@@ -243,13 +243,13 @@ function myFunction($arg1) {}
  */
 function myFunction() {}
 
-class MyClass() {
+abstract class MyClass {
     /**
      * An abstract function.
      *
      * @return string[]
      */
-    abstract final protected function myFunction();
+    abstract protected function myFunction();
 }
 
 /**
@@ -261,7 +261,7 @@ class MyClass() {
  *
  * @return void
  */
-public function foo(&$tokens, $tokenizer, $eolChar)
+function foo(&$tokens, $tokenizer, $eolChar)
 {
 
 }//end foo()
@@ -270,7 +270,7 @@ public function foo(&$tokens, $tokenizer, $eolChar)
  * Gettext.
  *
  */
-public function _() {
+function _() {
     return $foo;
 }
 
@@ -294,7 +294,7 @@ class Baz {
  *
  * @return void
  */
-public function completeStep($status, array $array = [Class1::class, 'test'], $note = '') {
+function completeStep($status, array $array = [Class1::class, 'test'], $note = '') {
     echo 'foo';
 }
 
@@ -306,7 +306,7 @@ public function completeStep($status, array $array = [Class1::class, 'test'], $n
  *
  * @return void
  */
-public function myFunction(string $name1, string ...$name2) {
+function myFunction(string $name1, string ...$name2) {
 }
 
 
@@ -318,7 +318,7 @@ public function myFunction(string $name1, string ...$name2) {
  *
  * @return void
  */
-public function myFunction(string $name1, string ...$name2) {
+function myFunction(string $name1, string ...$name2) {
 }
 
 /**

@@ -25,17 +25,19 @@ class FunctionCommentThrowTagUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return array(
-                9   => 1,
-                21  => 1,
-                35  => 1,
-                47  => 1,
-                61  => 2,
-                106 => 1,
-                123 => 1,
-                200 => 1,
-                251 => 1,
-               );
+        return [
+            9   => 1,
+            21  => 1,
+            35  => 1,
+            47  => 1,
+            61  => 2,
+            106 => 1,
+            123 => 1,
+            200 => 1,
+            219 => 1,
+            287 => 1,
+            397 => 1,
+        ];
 
     }//end getErrorList()
 
@@ -50,7 +52,7 @@ class FunctionCommentThrowTagUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

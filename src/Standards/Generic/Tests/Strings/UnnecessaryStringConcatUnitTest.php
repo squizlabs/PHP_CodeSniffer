@@ -29,26 +29,26 @@ class UnnecessaryStringConcatUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'UnnecessaryStringConcatUnitTest.inc':
-            return array(
-                    2  => 1,
-                    6  => 1,
-                    9  => 1,
-                    12 => 1,
-                    19 => 1,
-                    20 => 1,
-                   );
+            return [
+                2  => 1,
+                6  => 1,
+                9  => 1,
+                12 => 1,
+                19 => 1,
+                20 => 1,
+            ];
             break;
         case 'UnnecessaryStringConcatUnitTest.js':
-            return array(
-                    1  => 1,
-                    8  => 1,
-                    11 => 1,
-                    14 => 1,
-                    15 => 1,
-                   );
+            return [
+                1  => 1,
+                8  => 1,
+                11 => 1,
+                14 => 1,
+                15 => 1,
+            ];
             break;
         default:
-            return array();
+            return [];
             break;
         }//end switch
 
@@ -65,7 +65,7 @@ class UnnecessaryStringConcatUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return array();
+        return [];
 
     }//end getWarningList()
 

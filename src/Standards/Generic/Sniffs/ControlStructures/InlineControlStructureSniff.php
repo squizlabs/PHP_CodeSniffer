@@ -21,10 +21,10 @@ class InlineControlStructureSniff implements Sniff
      *
      * @var array
      */
-    public $supportedTokenizers = array(
-                                   'PHP',
-                                   'JS',
-                                  );
+    public $supportedTokenizers = [
+        'PHP',
+        'JS',
+    ];
 
     /**
      * If true, an error will be thrown; otherwise a warning.
@@ -41,16 +41,16 @@ class InlineControlStructureSniff implements Sniff
      */
     public function register()
     {
-        return array(
-                T_IF,
-                T_ELSE,
-                T_ELSEIF,
-                T_FOREACH,
-                T_WHILE,
-                T_DO,
-                T_SWITCH,
-                T_FOR,
-               );
+        return [
+            T_IF,
+            T_ELSE,
+            T_ELSEIF,
+            T_FOREACH,
+            T_WHILE,
+            T_DO,
+            T_SWITCH,
+            T_FOR,
+        ];
 
     }//end register()
 
@@ -83,7 +83,7 @@ class InlineControlStructureSniff implements Sniff
 
         if ($tokens[$stackPtr]['code'] === T_WHILE) {
             // This could be from a DO WHILE, which doesn't have an opening brace.
-            $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            $lastContent = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
                 $brace = $tokens[$lastContent];
                 if (isset($brace['scope_condition']) === true) {
@@ -191,6 +191,12 @@ class InlineControlStructureSniff implements Sniff
                     if ($type === T_TRY && $nextType === T_CATCH) {
                         $end = $tokens[$next]['scope_closer'];
                     }
+                } else if ($type === T_CLOSURE) {
+                    // There should be a semicolon after the closing brace.
+                    $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
+                    if ($next !== false && $tokens[$next]['code'] === T_SEMICOLON) {
+                        $end = $next;
+                    }
                 }//end if
 
                 if ($tokens[$end]['code'] !== T_END_HEREDOC
@@ -215,30 +221,34 @@ class InlineControlStructureSniff implements Sniff
             $end = $lastNonEmpty;
         }
 
-        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
-
-        if ($next === false || $tokens[$next]['line'] !== $tokens[$end]['line']) {
+        $nextContent = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
+        if ($nextContent === false || $tokens[$nextContent]['line'] !== $tokens[$end]['line']) {
             // Looks for completely empty statements.
             $next = $phpcsFile->findNext(T_WHITESPACE, ($closer + 1), ($end + 1), true);
-
-            // Account for a comment on the end of the line.
-            for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
-                if (isset($tokens[($endLine + 1)]) === false
-                    || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
-                ) {
-                    break;
-                }
-            }
-
-            if ($tokens[$endLine]['code'] !== T_COMMENT) {
-                $endLine = $end;
-            }
         } else {
             $next    = ($end + 1);
             $endLine = $end;
         }
 
         if ($next !== $end) {
+            if ($nextContent === false || $tokens[$nextContent]['line'] !== $tokens[$end]['line']) {
+                // Account for a comment on the end of the line.
+                for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
+                    if (isset($tokens[($endLine + 1)]) === false
+                        || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
+                    ) {
+                        break;
+                    }
+                }
+
+                if (isset(Tokens::$commentTokens[$tokens[$endLine]['code']]) === false
+                    && ($tokens[$endLine]['code'] !== T_WHITESPACE
+                    || isset(Tokens::$commentTokens[$tokens[($endLine - 1)]['code']]) === false)
+                ) {
+                    $endLine = $end;
+                }
+            }
+
             if ($endLine !== $end) {
                 $endToken     = $endLine;
                 $addedContent = '';
@@ -262,9 +272,7 @@ class InlineControlStructureSniff implements Sniff
             } else {
                 $indent = '';
                 for ($first = $stackPtr; $first > 0; $first--) {
-                    if ($first === 1
-                        || $tokens[($first - 1)]['line'] !== $tokens[$first]['line']
-                    ) {
+                    if ($tokens[$first]['column'] === 1) {
                         break;
                     }
                 }
@@ -285,6 +293,24 @@ class InlineControlStructureSniff implements Sniff
                 $phpcsFile->fixer->addContent($endToken, $addedContent);
             }//end if
         } else {
+            if ($nextContent === false || $tokens[$nextContent]['line'] !== $tokens[$end]['line']) {
+                // Account for a comment on the end of the line.
+                for ($endLine = $end; $endLine < $phpcsFile->numTokens; $endLine++) {
+                    if (isset($tokens[($endLine + 1)]) === false
+                        || $tokens[$endLine]['line'] !== $tokens[($endLine + 1)]['line']
+                    ) {
+                        break;
+                    }
+                }
+
+                if ($tokens[$endLine]['code'] !== T_COMMENT
+                    && ($tokens[$endLine]['code'] !== T_WHITESPACE
+                    || $tokens[($endLine - 1)]['code'] !== T_COMMENT)
+                ) {
+                    $endLine = $end;
+                }
+            }
+
             if ($endLine !== $end) {
                 $phpcsFile->fixer->replaceToken($end, '');
                 $phpcsFile->fixer->addNewlineBefore($endLine);

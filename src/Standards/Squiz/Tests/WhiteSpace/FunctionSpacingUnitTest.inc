@@ -118,7 +118,7 @@ class MyClass
 {
 
     /**
-     * The tag that this element represents (omiting the @ symbol).
+     * The tag that this element represents (omitting the @ symbol).
      *
      * @var string
      */
@@ -205,7 +205,7 @@ class MyClass
 
 }//end class
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.FunctionSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 1
 
 interface MyInterface
 {
@@ -254,7 +254,7 @@ class MyClass
 
 }//end class
 
-// @codingStandardsChangeSetting Squiz.WhiteSpace.FunctionSpacing spacing 2
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 2
 
 // Closures should be ignored.
 preg_replace_callback(
@@ -300,3 +300,114 @@ if ($foo) {
 // foo
 function foo() {
 }
+
+
+// phpcs:disable Standard.Category.Sniff -- for reasons.
+function bar() {
+}
+
+
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 0
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 0
+class MyClass
+{
+    protected $tag = '';
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    private static function func1() {
+
+    }//end func1()
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    private static function func2() {
+
+    }//end func1()
+
+
+}//end class
+
+class MyClass {
+    function a(){}
+    function b(){}
+    function c(){}
+}
+
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 1
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 1
+
+class MyClass {
+    function a(){}
+    function b(){}
+    function c(){}
+}
+
+$util->setLogger(new class {
+    public function a(){}
+    private function b(){}
+    protected function c(){}
+});
+
+?>
+
+<?php
+function functionInEmbeddedPHP() {
+
+}
+
+// Make sure the indentation for the function comment does not get removed.
+class MyClass
+{
+
+    protected $tag = '';
+
+
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func1() {}
+
+}//end class
+
+class MyClass
+{
+
+
+
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func1() {}
+
+}//end class
+
+class MyClass
+{
+    // Unrelated comment.
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func1() {}
+    // phpcs:disable Standard.Category.Sniff -- for reasons.
+    /**
+     * Function comment.
+     *
+     * @return boolean
+     */
+    function func2() {}
+}//end class
