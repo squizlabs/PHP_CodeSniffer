@@ -156,13 +156,13 @@ class ObjectOperatorIndentSniff implements Sniff
                         $error = 'Object operator not indented correctly; expected ';
                         if ($this->tabIndent === true) {
                             $error .= '%s tabs, found %s';
-                            $data  = [
+                            $data   = [
                                 floor($requiredIndent / $this->tabWidth),
                                 floor($foundIndent / $this->tabWidth),
                             ];
                         } else {
                             $error .= '%s spaces but found %s';
-                            $data  = [
+                            $data   = [
                                 $requiredIndent,
                                 $foundIndent,
                             ];
