@@ -394,13 +394,13 @@ class FunctionDeclarationSniff implements Sniff
                     $error = 'Multi-line function declaration not indented correctly; expected ';
                     if ($this->tabIndent === true) {
                         $error .= '%s tabs, found %s';
-                        $data  = [
+                        $data   = [
                             floor($expectedIndent / $this->tabWidth),
                             floor($foundIndent / $this->tabWidth),
                         ];
                     } else {
                         $error .= '%s spaces but found %s';
-                        $data  = [
+                        $data   = [
                             $expectedIndent,
                             $foundIndent,
                         ];
