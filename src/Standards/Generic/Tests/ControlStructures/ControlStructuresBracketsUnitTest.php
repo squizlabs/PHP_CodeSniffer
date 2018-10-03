@@ -43,6 +43,9 @@ class ControlStructuresBracketsNewLineUnitTest extends AbstractSniffUnitTest
             120 => 1,
             126 => 1,
             135 => 1,
+            182 => 1,
+            188 => 1,
+            210 => 1,
         ];
 
     }//end getErrorList()
