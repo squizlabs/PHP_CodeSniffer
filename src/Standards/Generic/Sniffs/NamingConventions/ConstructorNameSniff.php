@@ -56,28 +56,31 @@ class ConstructorNameSniff extends AbstractScopeSniff
      */
     protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
-        $className = $phpcsFile->getDeclarationName($currScope);
+        $tokens = $phpcsFile->getTokens();
+
+        // Determine if this is a function which needs to be examined.
+        $conditions = $tokens[$stackPtr]['conditions'];
+        end($conditions);
+        $deepestScope = key($conditions);
+        if ($deepestScope !== $currScope) {
+            return;
+        }
+
+        $className = strtolower($phpcsFile->getDeclarationName($currScope));
         if ($className !== $this->currentClass) {
             $this->loadFunctionNamesInScope($phpcsFile, $currScope);
             $this->currentClass = $className;
         }
 
-        $methodName = $phpcsFile->getDeclarationName($stackPtr);
+        $methodName = strtolower($phpcsFile->getDeclarationName($stackPtr));
 
-        if (strcasecmp($methodName, $className) === 0) {
-            if (in_array('__construct', $this->functionList) === false) {
+        if ($methodName === $className) {
+            if (in_array('__construct', $this->functionList, true) === false) {
                 $error = 'PHP4 style constructors are not allowed; use "__construct()" instead';
                 $phpcsFile->addError($error, $stackPtr, 'OldStyle');
             }
-        } else if (strcasecmp($methodName, '__construct') !== 0) {
+        } else if ($methodName !== '__construct') {
             // Not a constructor.
-            return;
-        }
-
-        $tokens = $phpcsFile->getTokens();
-
-        $parentClassName = $phpcsFile->findExtendedClassName($currScope);
-        if ($parentClassName === false) {
             return;
         }
 
@@ -86,11 +89,16 @@ class ConstructorNameSniff extends AbstractScopeSniff
             return;
         }
 
+        $parentClassName = strtolower($phpcsFile->findExtendedClassName($currScope));
+        if ($parentClassName === false) {
+            return;
+        }
+
         $endFunctionIndex = $tokens[$stackPtr]['scope_closer'];
         $startIndex       = $stackPtr;
         while (($doubleColonIndex = $phpcsFile->findNext(T_DOUBLE_COLON, $startIndex, $endFunctionIndex)) !== false) {
             if ($tokens[($doubleColonIndex + 1)]['code'] === T_STRING
-                && $tokens[($doubleColonIndex + 1)]['content'] === $parentClassName
+                && strtolower($tokens[($doubleColonIndex + 1)]['content']) === $parentClassName
             ) {
                 $error = 'PHP4 style calls to parent constructors are not allowed; use "parent::__construct()" instead';
                 $phpcsFile->addError($error, ($doubleColonIndex + 1), 'OldStyleCall');
@@ -136,8 +144,12 @@ class ConstructorNameSniff extends AbstractScopeSniff
                 continue;
             }
 
-            $next = $phpcsFile->findNext(T_STRING, $i);
-            $this->functionList[] = trim($tokens[$next]['content']);
+            $this->functionList[] = trim(strtolower($phpcsFile->getDeclarationName($i)));
+
+            if (isset($tokens[$i]['scope_closer']) !== false) {
+                // Skip past nested functions and such.
+                $i = $tokens[$i]['scope_closer'];
+            }
         }
 
     }//end loadFunctionNamesInScope()
