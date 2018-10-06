@@ -34,6 +34,9 @@ class InlineHTMLUnitTest extends AbstractSniffUnitTest
         case 'InlineHTMLUnitTest.4.inc':
             return [1 => 1];
             break;
+        case 'InlineHTMLUnitTest.7.inc':
+            return [1 => 1];
+            break;
         default:
             return [];
             break;
