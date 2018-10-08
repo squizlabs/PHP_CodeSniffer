@@ -920,6 +920,7 @@ class ScopeIndentSniff implements Sniff
                 || $tokens[$i]['code'] === T_START_NOWDOC
             ) {
                 $i = $phpcsFile->findNext([T_END_HEREDOC, T_END_NOWDOC], ($i + 1));
+                $i = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
                 continue;
             }
 

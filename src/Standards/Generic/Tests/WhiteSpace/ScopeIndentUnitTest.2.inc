@@ -1294,6 +1294,15 @@ default:
 	break;
 }
 
+function test() {
+	return [
+		<<<'SQLDATA'
+DATA
+SQLDATA
+,
+	];
+}
+
 if ($foo) {
 if ($oo) {
 	/*

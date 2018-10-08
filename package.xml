@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2018-09-24</date>
  <time>09:07:00</time>
  <version>
-  <release>3.3.2</release>
-  <api>3.3.2</api>
+  <release>3.4.0</release>
+  <api>3.4.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,38 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed a problem where the report cache was not being cleared when the sniffs inside a standard were updated
-  - The info report (--report=info) now has improved formatting for metrics that span multiple lines
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - The unit test runner now skips .bak files when looking for test cases
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - The Squiz standard now ensures underscores are not used to indicate visibility of private members vars and methods
-    -- Previously, this standard enforced the use of underscores
-  - Generic.PHP.NoSilencedErrors error messages now contain a code snippet to show the context of the error
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Squiz.Arrays.ArrayDeclaration no longer reports errors for a comma on a line new after a here/nowdoc
-    -- Also stops a parse error being generated when auto-fixing
-    -- The SpaceBeforeComma error message has been changed to only have one data value instead of two
-  - Squiz.Commenting.FunctionComment no longer errors when trying to fix indents of multi-line param comments
-  - Squiz.Formatting.OperatorBracket now correctly fixes statements that contain strings
-  - Squiz.PHP.CommentedOutCode now ignores more @-style annotations and includes better comment block detection
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed a problem where referencing a relative file path in a ruleset XML file could add unnecessary sniff exclusions
-    -- This didn't actually exclude anything, but caused verbose output to list strange exclusion rules
-  - Fixed bug #2110 : Squiz.WhiteSpace.FunctionSpacing is removing indents from the start of functions when fixing
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #2115 : Squiz.Commenting.VariableComment not checking var types when the @var line contains a comment
-  - Fixed bug #2120 : Tokenizer fails to match T_INLINE_ELSE when used after function call containing closure
-  - Fixed bug #2121 : Squiz.PHP.DisallowMultipleAssignments false positive in while loop conditions
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #2127 : File::findExtendedClassName() doesn't support nested classes
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #2138 : Tokenizer detects wrong token for php ::class feature with spaces
-  - Fixed bug #2143 : PSR2.Namespaces.UseDeclaration does not properly fix "use function" and "use const" statements
-    -- Thanks to Chris Wilkinson for the patch
-  - Fixed bug #2144 : Squiz.Arrays.ArrayDeclaration does incorrect align calculation in array with cyrillic keys
-  - Fixed bug #2146 : Zend.Files.ClosingTag removes closing tag from end of file without inserting a semicolon
-  - Fixed bug #2151 : XML schema not updated with the new array property syntax
+  - Fixed bug #2165 : Conflict between Squiz.Arrays.ArrayDeclaration and ScopeIndent sniffs when heredoc used in array
  </notes>
  <contents>
   <dir name="/">
