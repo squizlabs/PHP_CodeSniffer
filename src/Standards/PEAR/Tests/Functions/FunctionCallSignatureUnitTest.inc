@@ -390,8 +390,29 @@ $deprecated_functions = [
 
 $deprecated_functions = [
     'the_category_ID'
-         => function_call( // 7 spaces, not 8. This is the problem line.
+         => function_call( // 9 spaces, not 8. This is the problem line.
         $a,
         $b
     ),
 ];
+
+// phpcs:set PEAR.Functions.FunctionCallSignature allowMultipleArguments false
+
+printf(
+    '<select name="%1$s" id="%2$s">%3$s</select>',
+    $obj->getName(), // Trailing comment.
+    $obj->getID(), // phpcs:ignore Standard.Category.SniffName -- for reasons.
+    $option
+);
+
+// Handling of PHP 7.3 trailing comma's.
+functionCall($args, $foo,);
+functionCall(
+    $args, $foo,
+);
+functionCall(
+    $args,
+    $foo,
+);
+
+// phpcs:set PEAR.Functions.FunctionCallSignature allowMultipleArguments true
