@@ -31,6 +31,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the contribution
   - Generic.Classes.DuplicateClassName now inspects traits for duplicate names as well as classes and interfaces
     -- Thanks to Chris Wilkinson for the patch
+  - Generic.Files.InlineHTML now ignores a BOM at the start of the file
+    -- Thanks to Chris Wilkinson for the patch
+  - Generic.PHP.CharacterBeforePHPOpeningTag now ignores a BOM at the start of the file
+    -- Thanks to Chris Wilkinson for the patch
   - PSR2.Methods.MethodDeclaration now checks method declarations inside traits
     -- Thanks to Chris Wilkinson for the patch
   - Squiz.Classes.ClassFileName now checks that a trait name matches the filename
@@ -450,6 +454,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.inc" role="test" />
@@ -524,6 +530,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="BacktickOperatorUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.php" role="test" />
