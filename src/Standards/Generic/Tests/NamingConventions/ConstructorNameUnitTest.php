@@ -30,6 +30,7 @@ class ConstructorNameUnitTest extends AbstractSniffUnitTest
             11 => 1,
             47 => 1,
             62 => 1,
+            91 => 1,
         ];
 
     }//end getErrorList()
