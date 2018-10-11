@@ -26,6 +26,7 @@ class ClassFileNameSniff implements Sniff
         return [
             T_CLASS,
             T_INTERFACE,
+            T_TRAIT,
         ];
 
     }//end register()
