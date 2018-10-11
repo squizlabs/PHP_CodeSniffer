@@ -29,6 +29,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Generic.VersionControl.GitMergeConflict sniff
     -- Detects merge conflict artifacts left in files
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Generic.Classes.DuplicateClassName now inspects traits for duplicate names as well as classes and interfaces
+    -- Thanks to Chris Wilkinson for the patch
+  - PSR2.Methods.MethodDeclaration now checks method declarations inside traits
+    -- Thanks to Chris Wilkinson for the patch
+  - Squiz.Classes.ClassFileName now checks that a trait name matches the filename
+    -- Thanks to Chris Wilkinson for the patch
   - Fixed bug #2165 : Conflict between Squiz.Arrays.ArrayDeclaration and ScopeIndent sniffs when heredoc used in array
  </notes>
  <contents>
