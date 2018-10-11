@@ -243,7 +243,7 @@ $a = function () {
 function foo ()
 {}
 
-class Foo {
+abstract class Foo {
     function bar ()
     {
     }
@@ -276,4 +276,41 @@ trait Foo {
 
     abstract function baz ()
     ;
+}
+
+if(true) {
+    abstract class Foo {
+        function bar ()
+        {
+        }
+
+        abstract function baz () ;
+
+        abstract function qux () : void ;
+    }
+
+    interface Foo {
+        function bar () ;
+
+        function baz (
+            $longArgument,
+            $longerArgument,
+            $muchLongerArgument
+        ) ;
+
+        function qux (
+            $longArgument,
+            $longerArgument,
+            $muchLongerArgument
+        ) : void ;
+    }
+
+    trait Foo {
+        function bar ()
+        {
+        }
+
+        abstract function baz ()
+        ;
+    }
 }
