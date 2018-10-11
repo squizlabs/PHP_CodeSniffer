@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Classes.ClassFileName now checks that a trait name matches the filename
     -- Thanks to Chris Wilkinson for the patch
   - Fixed bug #2165 : Conflict between Squiz.Arrays.ArrayDeclaration and ScopeIndent sniffs when heredoc used in array
+  - Fixed bug #2167 : Generic.WhiteSpace.ScopeIndent shows invalid error when scope opener indented inside inline HTML
   - Fixed bug #2178 : Generic.NamingConventions.ConstructorName matches methods in anon classes with same name as containing class
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>

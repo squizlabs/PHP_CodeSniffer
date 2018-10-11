@@ -1325,6 +1325,13 @@ if ($oo) {
     }
 
 ?>
+
+<div>
+    <?php if ($foo) {
+        echo $foo;
+    } ?>
+</div>
+
 <?php
     if (true) {
     }

@@ -172,10 +172,10 @@ class ScopeIndentUnitTest extends AbstractSniffUnitTest
             1320 => 1,
             1322 => 1,
             1325 => 1,
-            1329 => 1,
-            1330 => 1,
-            1331 => 1,
-            1332 => 1,
+            1336 => 1,
+            1337 => 1,
+            1338 => 1,
+            1339 => 1,
         ];
 
     }//end getErrorList()
