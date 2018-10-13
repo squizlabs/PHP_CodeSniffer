@@ -55,3 +55,8 @@ abstract class MyClass
     abstract protected function myFunction(): bool;
 }
 
+interface MyInterface
+{
+    /* testInterfaceMethod */
+    function myFunction();
+}
