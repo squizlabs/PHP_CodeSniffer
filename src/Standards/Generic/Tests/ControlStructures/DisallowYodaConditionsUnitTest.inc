@@ -60,3 +60,8 @@ if(array() == $value){}
 // check string comparison
 $assigned = $value === 'string';
 $assigned = 'string' == $value;
+
+if(($otherValue) === $value){}
+if($otherValue === ($value)){}
+if(($value) === true){}
+if((true) === $value){}

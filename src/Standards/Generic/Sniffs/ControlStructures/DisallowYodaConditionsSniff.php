@@ -46,11 +46,12 @@ class DisallowYodaConditionsSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens    = $phpcsFile->getTokens();
-        $prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $prevIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         if (in_array(
             $tokens[$prevIndex]['code'],
             [
-                T_CLOSE_SHORT_ARRAY,
+                T_OPEN_SHORT_ARRAY,
+                T_ARRAY,
                 T_TRUE,
                 T_FALSE,
                 T_NULL,
@@ -58,7 +59,7 @@ class DisallowYodaConditionsSniff implements Sniff
                 T_CONSTANT_ENCAPSED_STRING,
             ],
             true
-        ) === false
+        ) === true
         ) {
             return;
         }

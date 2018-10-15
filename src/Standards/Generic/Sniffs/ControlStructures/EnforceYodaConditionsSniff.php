@@ -46,6 +46,7 @@ class EnforceYodaConditionsSniff implements Sniff
             $tokens[$nextIndex]['code'],
             [
                 T_OPEN_SHORT_ARRAY,
+                T_ARRAY,
                 T_TRUE,
                 T_FALSE,
                 T_NULL,
@@ -55,23 +56,6 @@ class EnforceYodaConditionsSniff implements Sniff
             true
         ) === false
         ) {
-            return;
-        }
-
-        if ($tokens[$nextIndex]['code'] === T_CLOSE_SHORT_ARRAY) {
-            $nextIndex = $tokens[$nextIndex]['bracket_opener'];
-        }
-
-        $nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextIndex + 1), null, true);
-        if ($nextIndex === false) {
-            return;
-        }
-
-        if (in_array($tokens[$nextIndex]['code'], Tokens::$arithmeticTokens, true) === true) {
-            return;
-        }
-
-        if ($tokens[$nextIndex]['code'] === T_STRING_CONCAT) {
             return;
         }
 
