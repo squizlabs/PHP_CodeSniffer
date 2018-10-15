@@ -98,17 +98,20 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             }//end if
         }//end if
 
-        $phpcsFile->fixer->beginChangeset();
-
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
             $found = strlen($tokens[($stackPtr - 1)]['content']);
             $error = 'Expected 0 spaces before double colon; %s found';
             $data  = [$found];
             $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceBefore', $data);
-            $i     = $stackPtr;
 
-            while ($fix === true && $tokens[--$i]['code'] === T_WHITESPACE) {
-                $phpcsFile->fixer->replaceToken($i, '');
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+
+                for ($i = ($stackPtr - 1); $tokens[$i]['code'] === T_WHITESPACE; $i--) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
         }
 
@@ -117,14 +120,17 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             $error = 'Expected 0 spaces after double colon; %s found';
             $data  = [$found];
             $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceAfter', $data);
-            $i     = $stackPtr;
 
-            while ($fix === true && $tokens[++$i]['code'] === T_WHITESPACE) {
-                $phpcsFile->fixer->replaceToken($i, '');
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+
+                for ($i = ($stackPtr + 1); $tokens[$i]['code'] === T_WHITESPACE; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
         }
-
-        $phpcsFile->fixer->endChangeset();
 
     }//end processTokenWithinScope()
 
