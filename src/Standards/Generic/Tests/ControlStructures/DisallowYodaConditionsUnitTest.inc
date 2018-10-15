@@ -30,11 +30,32 @@ if($value == null){}
 if(null === $value){}
 if(null == $value){}
 
+if(
+    $value
+    ===
+    null
+){}
+if(
+    null
+    ===
+    $value
+){}
+
 // check string comparison
 if($value === 'string'){}
 if($value == 'string'){}
 if('string' === $value){}
 if('string' == $value){}
+
+if([] === $value){}
+if($value === [] ){}
+if([] == $value){}
+if($value == [] ){}
+
+if($value === array()){}
+if($value == array()){}
+if(array() === $value){}
+if(array() == $value){}
 
 // check string comparison
 $assigned = $value === 'string';

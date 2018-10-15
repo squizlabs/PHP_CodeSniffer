@@ -34,9 +34,14 @@ class DisallowYodaConditionsUnitTest extends AbstractSniffUnitTest
             19 => 1,
             30 => 1,
             31 => 1,
-            36 => 1,
-            37 => 1,
-            41 => 1,
+            40 => 1,
+            47 => 1,
+            48 => 1,
+            50 => 1,
+            52 => 1,
+            57 => 1,
+            58 => 1,
+            62 => 1,
         ];
 
     }//end getErrorList()

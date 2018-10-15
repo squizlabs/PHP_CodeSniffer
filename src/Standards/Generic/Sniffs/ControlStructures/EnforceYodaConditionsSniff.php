@@ -45,7 +45,7 @@ class EnforceYodaConditionsSniff implements Sniff
         if (in_array(
             $tokens[$nextIndex]['code'],
             [
-                T_CLOSE_SHORT_ARRAY,
+                T_OPEN_SHORT_ARRAY,
                 T_TRUE,
                 T_FALSE,
                 T_NULL,
