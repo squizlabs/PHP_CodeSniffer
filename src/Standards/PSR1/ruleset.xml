@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="PSR1">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PSR1" xsi:noNamespaceSchemaLocation="../../../phpcs.xsd">
  <description>The PSR1 coding standard.</description>
 
  <!-- 2. Files -->

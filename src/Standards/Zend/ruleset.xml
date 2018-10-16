@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Zend">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Zend" xsi:noNamespaceSchemaLocation="../../../phpcs.xsd">
  <description>A coding standard based on an early Zend Framework coding standard. Note that this standard is out of date.</description>
 
  <!-- Include some sniffs from all around the place -->

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="PEAR">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PEAR" xsi:noNamespaceSchemaLocation="../../../phpcs.xsd">
  <description>The PEAR coding standard.</description>
 
  <!-- Include some additional sniffs from the Generic standard -->
