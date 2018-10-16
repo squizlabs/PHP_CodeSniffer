@@ -51,6 +51,7 @@ class EnforceYodaConditionsSniff implements Sniff
                 T_FALSE,
                 T_NULL,
                 T_LNUMBER,
+                T_DNUMBER,
                 T_CONSTANT_ENCAPSED_STRING,
             ],
             true

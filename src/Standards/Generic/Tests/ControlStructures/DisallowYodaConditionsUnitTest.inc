@@ -5,7 +5,7 @@ $value = '';
 if ($value === true) {}
 if ($value == true) {}
 if (true === $value) {}
-if(true == $value){}
+if (true == $value) {}
 
 if($value === true){}
 if($value == true){}
@@ -61,7 +61,57 @@ if(array() == $value){}
 $assigned = $value === 'string';
 $assigned = 'string' == $value;
 
-if(($otherValue) === $value){}
-if($otherValue === ($value)){}
+if(($value) === $otherValue){}
+if($value === ($otherValue)){}
+
 if(($value) === true){}
 if((true) === $value){}
+
+if(($value + 1 + 1) === $value){}
+if(($value + $value) === $value){}
+
+if($value == self::CONSTANT_1){}
+
+const CONSTANT1 = 1;
+if($value === CONSTANT1){}
+if(CONSTANT1 === $value){}
+
+if($value === ($value1 | $value2)){}
+if(($value1 | $value2) === $value){}
+
+// Check with objects
+if($object->myVar === $value){}
+if($value === $object->myVar){}
+
+if($object->function() === $value){}
+if($value === $object->function()){}
+
+// Check with functions
+if(myFunction() === $value){}
+if($value === myFunction()){}
+
+// check with multiple operations
+if($value === true && $value === 1 && $value === null){}
+if(($value === true && $value === 1) == ($value === null && $value === new stdClass())){}
+
+if(true === $value && 1 === $value && null === $value){}
+if((true === $value && 1 === $value) == (null === $value && new stdClass() === $value)){}
+
+// Add comments in the middle
+if(
+    //comment
+    true
+    // comment
+    ===
+    // comment
+    $value
+){}
+
+if(
+    //comment
+    $value
+    // comment
+    ===
+    // comment
+    true
+){}

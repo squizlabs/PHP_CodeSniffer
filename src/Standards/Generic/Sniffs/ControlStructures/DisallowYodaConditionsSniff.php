@@ -46,9 +46,10 @@ class DisallowYodaConditionsSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens    = $phpcsFile->getTokens();
-        $prevIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
-        if (in_array(
-            $tokens[$prevIndex]['code'],
+        $nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+
+        if ($nextIndex === false || in_array(
+            $tokens[$nextIndex]['code'],
             [
                 T_OPEN_SHORT_ARRAY,
                 T_ARRAY,
@@ -56,6 +57,7 @@ class DisallowYodaConditionsSniff implements Sniff
                 T_FALSE,
                 T_NULL,
                 T_LNUMBER,
+                T_DNUMBER,
                 T_CONSTANT_ENCAPSED_STRING,
             ],
             true
@@ -64,28 +66,34 @@ class DisallowYodaConditionsSniff implements Sniff
             return;
         }
 
-        if ($tokens[$prevIndex]['code'] === T_CLOSE_SHORT_ARRAY) {
-            $prevIndex = $tokens[$prevIndex]['bracket_opener'];
-        }
-
-        $prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prevIndex - 1), null, true);
-        if ($prevIndex === false) {
-            return;
-        }
-
-        if (in_array($tokens[$prevIndex]['code'], Tokens::$arithmeticTokens, true) === true) {
-            return;
-        }
-
-        if ($tokens[$prevIndex]['code'] === T_STRING_CONCAT) {
-            return;
-        }
-
-        $phpcsFile->addError(
-            'Usage of Yoda conditions is not allowed. Switch the expression order.',
-            $stackPtr,
-            'DisallowYodaCondition'
+        $skipTokens = array_merge(
+            [
+                T_CLOSE_PARENTHESIS => T_CLOSE_PARENTHESIS,
+                T_OPEN_PARENTHESIS  => T_OPEN_PARENTHESIS,
+            ],
+            Tokens::$emptyTokens
         );
+
+        $previousIndex = $phpcsFile->findPrevious($skipTokens, ($stackPtr - 1), null, true);
+        if ($previousIndex === false) {
+            return;
+        }
+
+        if (in_array(
+            $tokens[$previousIndex]['code'],
+            [
+                T_VARIABLE,
+                T_STRING,
+            ],
+            true
+        ) === false
+        ) {
+            $phpcsFile->addError(
+                'Usage of Yoda conditions is not allowed. Switch the expression order.',
+                $stackPtr,
+                'DisallowYodaCondition'
+            );
+        }
 
     }//end process()
 
