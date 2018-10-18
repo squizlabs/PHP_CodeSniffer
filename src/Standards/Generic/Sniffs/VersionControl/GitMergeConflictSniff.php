@@ -84,7 +84,7 @@ class GitMergeConflictSniff implements Sniff
                         && trim($tokens[($i + 2)]['content']) === '<<< HEAD'
                     ) {
                         $phpcsFile->addError($error, $i, 'OpenerFound', ['opener']);
-                        $i = ($i + 2);
+                        $i += 2;
                     }
                     break;
 
@@ -98,7 +98,7 @@ class GitMergeConflictSniff implements Sniff
                         && $tokens[($i + 4)]['content'] === ' '
                     ) {
                         $phpcsFile->addError($error, $i, 'CloserFound', ['closer']);
-                        $i = ($i + 4);
+                        $i += 4;
                     }
                     break;
 
@@ -111,7 +111,7 @@ class GitMergeConflictSniff implements Sniff
                         && $tokens[($i + 3)]['content'] === "\n"
                     ) {
                         $phpcsFile->addError($error, $i, 'DelimiterFound', ['delimiter']);
-                        $i = ($i + 3);
+                        $i += 3;
                     }
                     break;
 
@@ -159,7 +159,7 @@ class GitMergeConflictSniff implements Sniff
                         && trim($tokens[($i + 5)]['content']) === 'HEAD'
                     ) {
                         $phpcsFile->addError($error, $i, 'OpenerFound', ['opener']);
-                        $i = ($i + 5);
+                        $i += 5;
                     }
                     break;
 
@@ -172,7 +172,7 @@ class GitMergeConflictSniff implements Sniff
                         && $tokens[($i + 3)]['content'] === "\n"
                     ) {
                         $phpcsFile->addError($error, $i, 'DelimiterFound', ['delimiter']);
-                        $i = ($i + 3);
+                        $i += 3;
                     }
                     break;
 
@@ -184,7 +184,7 @@ class GitMergeConflictSniff implements Sniff
                         && $tokens[($i + 2)]['code'] === T_GREATER_THAN
                     ) {
                         $phpcsFile->addError($error, $i, 'CloserFound', ['closer']);
-                        $i = ($i + 2);
+                        $i += 2;
                     }
                     break;
 
