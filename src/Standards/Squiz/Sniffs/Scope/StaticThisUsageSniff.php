@@ -22,7 +22,7 @@ class StaticThisUsageSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct([T_CLASS], [T_FUNCTION]);
+        parent::__construct([T_CLASS, T_TRAIT, T_ANON_CLASS], [T_FUNCTION]);
 
     }//end __construct()
 
@@ -40,6 +40,14 @@ class StaticThisUsageSniff extends AbstractScopeSniff
     public function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
         $tokens = $phpcsFile->getTokens();
+
+        // Determine if this is a function which needs to be examined.
+        $conditions = $tokens[$stackPtr]['conditions'];
+        end($conditions);
+        $deepestScope = key($conditions);
+        if ($deepestScope !== $currScope) {
+            return;
+        }
 
         // Ignore abstract functions.
         if (isset($tokens[$stackPtr]['scope_closer']) === false) {
