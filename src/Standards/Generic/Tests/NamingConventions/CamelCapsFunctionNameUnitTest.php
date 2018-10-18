@@ -61,6 +61,8 @@ class CamelCapsFunctionNameUnitTest extends AbstractSniffUnitTest
             144 => 1,
             146 => 1,
             147 => 2,
+            154 => 1,
+            155 => 1,
         ];
 
         return $errors;
