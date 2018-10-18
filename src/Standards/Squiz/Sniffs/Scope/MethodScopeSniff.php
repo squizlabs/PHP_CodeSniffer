@@ -22,7 +22,7 @@ class MethodScopeSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct([T_CLASS, T_INTERFACE, T_TRAIT], [T_FUNCTION]);
+        parent::__construct(Tokens::$ooScopeTokens, [T_FUNCTION]);
 
     }//end __construct()
 
@@ -40,14 +40,17 @@ class MethodScopeSniff extends AbstractScopeSniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $methodName = $phpcsFile->getDeclarationName($stackPtr);
-        if ($methodName === null) {
-            // Ignore closures.
+        // Determine if this is a function which needs to be examined.
+        $conditions = $tokens[$stackPtr]['conditions'];
+        end($conditions);
+        $deepestScope = key($conditions);
+        if ($deepestScope !== $currScope) {
             return;
         }
 
-        if ($phpcsFile->hasCondition($stackPtr, T_FUNCTION) === true) {
-            // Ignore nested functions.
+        $methodName = $phpcsFile->getDeclarationName($stackPtr);
+        if ($methodName === null) {
+            // Ignore closures.
             return;
         }
 
