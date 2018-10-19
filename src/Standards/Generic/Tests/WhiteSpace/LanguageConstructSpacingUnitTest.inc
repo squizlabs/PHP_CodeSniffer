@@ -49,8 +49,11 @@ namespace MyClass;
 namespace    MyClass;
 namespace MyNamespace\MyClass;
 namespace    MyNamespace\MyClass;
+
+// Namespace operator, not language construct.
+namespace\MyNamespace\MyClass;
 namespace \MyNamespace\MyClass;
-namespace    \MyNamespace\MyClass;
+namespace   /*comment*/  \MyNamespace\MyClass;
 
 use MyClass;
 use    MyClass;
