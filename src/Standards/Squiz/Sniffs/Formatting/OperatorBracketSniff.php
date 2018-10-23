@@ -143,6 +143,7 @@ class OperatorBracketSniff implements Sniff
             T_CLOSE_SQUARE_BRACKET,
             T_MODULUS,
             T_NONE,
+            T_BITWISE_NOT,
         ];
 
         $allowed += Tokens::$operators;
