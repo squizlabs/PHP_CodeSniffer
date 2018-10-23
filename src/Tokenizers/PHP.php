@@ -1942,6 +1942,9 @@ class PHP extends Tokenizer
         case '|':
             $newToken['type'] = 'T_BITWISE_OR';
             break;
+        case '~':
+            $newToken['type'] = 'T_BITWISE_NOT';
+            break;
         case '<':
             $newToken['type'] = 'T_LESS_THAN';
             break;
