@@ -20,7 +20,7 @@ function foobar($a, &$b) {
     return (preg_match('/foo/', $a, $b) !== 0);
 }
 
-class Foo {
+class Foo implements Bar {
     function barfoo($a, $b) {
         // Empty body means interface method in many cases.
     }
@@ -78,3 +78,46 @@ function bar($x)
 $foo = function ($a, $b) {
     return $a * 2;
 };
+
+function foobar() {
+    return;
+}
+
+
+/*
+ * The function signature of methods in extended classes and implemented
+ * interfaces has to mirror the parent class/interface.
+ * The overloaded method may not use all params.
+ */
+
+class MyClass {
+    public function something($a, $b) {
+        return $a * 2;
+    }
+}
+
+class MyExtendedClass extends SomeClass {
+    public function something($a, $b) {
+        return $a * 2;
+    }
+}
+
+class MyExtendedClass implements SomeInterface {
+    public function something($a, $b) {
+        return $a * 2;
+    }
+}
+
+
+/*
+ * Functions may not use all params passed to them.
+ * Report different violations for params *before* and *after* the last param used.
+ */
+
+function something($a) {
+    return 'foobar';
+}
+
+function myCallback($a, $b, $c, $d) {
+    return $a * $c;
+}
