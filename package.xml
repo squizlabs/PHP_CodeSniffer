@@ -29,6 +29,27 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Generic.VersionControl.GitMergeConflict sniff
     -- Detects merge conflict artifacts left in files
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Generic.CodeAnalysis.UnusedFunctionParameter now only skips functions with empty bodies when the class implements an interface
+  - Generic.CodeAnalysis.UnusedFunctionParameter now has additional error codes to indicate where unused params were found
+    -- The new error code prefixes are:
+       --- FoundInExtendedClass: when the class extends another
+       --- FoundInImplementedInterface: when the class implements an interface
+       --- Found: used in all other cases, including closures
+    -- The new error code suffixes are:
+       --- BeforeLastUsed: the unused param was positioned before the last used param in the function signature
+       --- AfterLastUsed: the unused param was positioned after the last used param in the function signature
+    -- This makes the new error code list for this sniff:
+       --- Found
+       --- FoundBeforeLastUsed
+       --- FoundAfterLastUsed
+       --- FoundInExtendedClass
+       --- FoundInExtendedClassBeforeLastUsed
+       --- FoundInExtendedClassAfterLastUsed
+       --- FoundInImplementedInterface
+       --- FoundInImplementedInterfaceBeforeLastUsed
+       --- FoundInImplementedInterfaceAfterLastUsed
+    -- These errors code make it easier for specific cases to be ignored or promoted using a ruleset.xml file
+    -- Thanks to Juliette Reinders Folmer for the contribution
   - Generic.Classes.DuplicateClassName now inspects traits for duplicate names as well as classes and interfaces
     -- Thanks to Chris Wilkinson for the patch
   - Generic.Files.InlineHTML now ignores a BOM at the start of the file
