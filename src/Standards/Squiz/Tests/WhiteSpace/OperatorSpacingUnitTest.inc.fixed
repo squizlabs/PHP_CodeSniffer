@@ -250,3 +250,7 @@ $foo = is_array($bar) ? array_map(
     ) : $bar;
 
 function bar(): array {}
+
+if ($line{-1} === ':') {
+    $line = substr($line, 0, -1);
+}
