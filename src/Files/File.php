@@ -1918,7 +1918,7 @@ class File
     public function getTokensAsString($start, $length, $origContent=false)
     {
         if (is_int($start) === false || isset($this->tokens[$start]) === false) {
-            throw new RuntimeException('The $start position for getTokensAsString() must exist in the token stack.');
+            throw new RuntimeException('The $start position for getTokensAsString() must exist in the token stack');
         }
 
         if (is_int($length) === false || $length <= 0) {

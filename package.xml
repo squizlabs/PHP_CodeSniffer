@@ -30,9 +30,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- e.g., if you include a ruleset that defines forbidden functions, can you now add to that list instead of having to redefine it
     -- To use this feature, add extends="true" to the property tag
        --- e.g., property name="forbiddenFunctionNames" type="array" extend="true"
+    -- Thanks to Michael Moravec for the patch
   - The File::getMethodParamaters() method now includes a has_body array index in the return value
-      -- TRUE if the method has no body (as with abstract and interface methods) or FALSe otherwise
-      -- Thanks to Chris Wilkinson for the patch
+    -- TRUE if the method has no body (as with abstract and interface methods) or FALSe otherwise
+    -- Thanks to Chris Wilkinson for the patch
+  - The File::getTokensAsString() method now throws an exception if the $start param is invalid
+    -- If the $length param is invalid, an empty string will be returned
+    -- Stops an infinite loop when the function is passed invalid data
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Added new Generic.VersionControl.GitMergeConflict sniff
     -- Detects merge conflict artifacts left in files
     -- Thanks to Juliette Reinders Folmer for the contribution
