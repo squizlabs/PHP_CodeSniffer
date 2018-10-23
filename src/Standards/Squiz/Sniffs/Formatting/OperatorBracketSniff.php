@@ -284,6 +284,7 @@ class OperatorBracketSniff implements Sniff
             T_ISSET                    => true,
             T_ARRAY                    => true,
             T_NONE                     => true,
+            T_BITWISE_NOT              => true,
         ];
 
         // Find the first token in the expression.
