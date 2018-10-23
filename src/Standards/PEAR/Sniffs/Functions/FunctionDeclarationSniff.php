@@ -105,7 +105,7 @@ class FunctionDeclarationSniff implements Sniff
         // Unfinished closures are tokenized as T_FUNCTION however, and can be excluded
         // by checking for the scope_opener.
         if ($tokens[$stackPtr]['code'] === T_FUNCTION
-            && isset($tokens[$stackPtr]['scope_opener']) === true
+            && (isset($tokens[$stackPtr]['scope_opener']) === true || $phpcsFile->getMethodProperties($stackPtr)['has_body'] === false)
         ) {
             if ($tokens[($openBracket - 1)]['content'] === $phpcsFile->eolChar) {
                 $spaces = 'newline';
@@ -121,6 +121,27 @@ class FunctionDeclarationSniff implements Sniff
                 $fix   = $phpcsFile->addFixableError($error, $openBracket, 'SpaceBeforeOpenParen', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($openBracket - 1), '');
+                }
+            }
+
+            // Must be no space before semicolon in abstract/interface methods.
+            if ($phpcsFile->getMethodProperties($stackPtr)['has_body'] === false) {
+                $end = $phpcsFile->findNext(T_SEMICOLON, $closeBracket);
+                if ($tokens[($end - 1)]['content'] === $phpcsFile->eolChar) {
+                    $spaces = 'newline';
+                } else if ($tokens[($end - 1)]['code'] === T_WHITESPACE) {
+                    $spaces = strlen($tokens[($end - 1)]['content']);
+                } else {
+                    $spaces = 0;
+                }
+
+                if ($spaces !== 0) {
+                    $error = 'Expected 0 spaces before semicolon; %s found';
+                    $data  = [$spaces];
+                    $fix   = $phpcsFile->addFixableError($error, $end, 'SpaceBeforeSemicolon', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken(($end - 1), '');
+                    }
                 }
             }
         }//end if

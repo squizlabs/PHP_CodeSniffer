@@ -1463,6 +1463,7 @@ class File
      *    'is_abstract'          => false,    // true if the abstract keyword was found.
      *    'is_final'             => false,    // true if the final keyword was found.
      *    'is_static'            => false,    // true if the static keyword was found.
+     *    'has_body'             => false,    // true if the method has a body
      *   );
      * </code>
      *
@@ -1541,6 +1542,7 @@ class File
         $returnType         = '';
         $returnTypeToken    = false;
         $nullableReturnType = false;
+        $hasBody            = true;
 
         if (isset($this->tokens[$stackPtr]['parenthesis_closer']) === true) {
             $scopeOpener = null;
@@ -1576,6 +1578,9 @@ class File
                     $returnType .= $this->tokens[$i]['content'];
                 }
             }
+
+            $end     = $this->findNext([T_OPEN_CURLY_BRACKET, T_SEMICOLON], $this->tokens[$stackPtr]['parenthesis_closer']);
+            $hasBody = $this->tokens[$end]['code'] === T_OPEN_CURLY_BRACKET;
         }//end if
 
         if ($returnType !== '' && $nullableReturnType === true) {
@@ -1591,6 +1596,7 @@ class File
             'is_abstract'          => $isAbstract,
             'is_final'             => $isFinal,
             'is_static'            => $isStatic,
+            'has_body'             => $hasBody,
         ];
 
     }//end getMethodProperties()
