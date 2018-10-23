@@ -26,6 +26,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Array properties set inside a ruleset.xml file can now extend a previous value instead of always overwriting it
+    -- e.g., if you include a ruleset that defines forbidden functions, can you now add to that list instead of having to redefine it
+    -- To use this feature, add extends="true" to the property tag
+       --- e.g., property name="forbiddenFunctionNames" type="array" extend="true"
   - The File::getMethodParamaters() method now includes a has_body array index in the return value
       -- TRUE if the method has no body (as with abstract and interface methods) or FALSe otherwise
       -- Thanks to Chris Wilkinson for the patch
