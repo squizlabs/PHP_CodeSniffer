@@ -45,7 +45,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Generic.VersionControl.GitMergeConflict sniff
     -- Detects merge conflict artifacts left in files
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Added Generic.WhiteSpace.IncrementDecrementSpacing sniff
+    -- Ensures there is no space between the operator and the variable it applies to
+    -- Thanks to Juliette Reinders Folmer for the contribution
   - Generic.CodeAnalysis.UnusedFunctionParameter now only skips functions with empty bodies when the class implements an interface
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.CodeAnalysis.UnusedFunctionParameter now has additional error codes to indicate where unused params were found
     -- The new error code prefixes are:
        --- FoundInExtendedClass: when the class extends another
@@ -396,6 +400,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ArbitraryParenthesesSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentSniff.php" role="php" />
        </dir>
       </dir>
@@ -650,6 +655,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.js.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.1.js" role="test" />
