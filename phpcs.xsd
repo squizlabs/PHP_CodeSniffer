@@ -92,6 +92,14 @@
                     </xs:attribute>
                     <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
                     <xs:attribute name="value" type="xs:string"></xs:attribute>
+                    <xs:attribute name="extend">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="true"/>
+                                <xs:enumeration value="false"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
