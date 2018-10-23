@@ -116,7 +116,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff
                 $fixes[$static]       = '';
                 $fixes[($static + 1)] = '';
                 if (isset($fixes[$visibility]) === true) {
-                    $fixes[$visibility] = $fixes[$visibility].' static';
+                    $fixes[$visibility] .= ' static';
                 } else {
                     $fixes[$visibility] = $tokens[$visibility]['content'].' static';
                 }

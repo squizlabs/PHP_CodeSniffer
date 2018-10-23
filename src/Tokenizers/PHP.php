@@ -1063,7 +1063,7 @@ class PHP extends Tokenizer
                             // Non-empty content.
                             if (is_array($tokens[$x]) === true && $tokens[$x][0] === T_USE) {
                                 // Found a use statements, so search ahead for the closing parenthesis.
-                                for ($x = ($x + 1); $x < $numTokens; $x++) {
+                                for ($x += 1; $x < $numTokens; $x++) {
                                     if (is_array($tokens[$x]) === false && $tokens[$x] === ')') {
                                         continue(2);
                                     }
@@ -1090,7 +1090,7 @@ class PHP extends Tokenizer
                         $allowed += Util\Tokens::$emptyTokens;
 
                         // Find the start of the return type.
-                        for ($x = ($x + 1); $x < $numTokens; $x++) {
+                        for ($x += 1; $x < $numTokens; $x++) {
                             if (is_array($tokens[$x]) === true
                                 && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
                             ) {

@@ -106,7 +106,7 @@ class CSS extends PHP
                 && $tokens[($stackPtr + 1)]['content'] === 'PHPCS_CSS_T_OPEN_TAG'
             ) {
                 $content = '<?php';
-                for ($stackPtr = ($stackPtr + 3); $stackPtr < $numTokens; $stackPtr++) {
+                for ($stackPtr += 3; $stackPtr < $numTokens; $stackPtr++) {
                     if ($tokens[$stackPtr]['code'] === T_BITWISE_XOR
                         && $tokens[($stackPtr + 1)]['content'] === 'PHPCS_CSS_T_CLOSE_TAG'
                     ) {

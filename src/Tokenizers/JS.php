@@ -1013,7 +1013,7 @@ class JS extends Tokenizer
             echo "\t* found end of regular expression at token $regexEnd *".PHP_EOL;
         }
 
-        for ($next = ($next + 1); $next < $numChars; $next++) {
+        for ($next += 1; $next < $numChars; $next++) {
             if ($chars[$next] !== ' ') {
                 break;
             } else {
