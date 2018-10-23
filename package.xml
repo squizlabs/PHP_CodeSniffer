@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The File::getMethodParamaters() method now includes a has_body array index in the return value
+      -- TRUE if the method has no body (as with abstract and interface methods) or FALSe otherwise
+      -- Thanks to Chris Wilkinson for the patch
   - Added new Generic.VersionControl.GitMergeConflict sniff
     -- Detects merge conflict artifacts left in files
     -- Thanks to Juliette Reinders Folmer for the contribution
@@ -55,6 +58,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.Files.InlineHTML now ignores a BOM at the start of the file
     -- Thanks to Chris Wilkinson for the patch
   - Generic.PHP.CharacterBeforePHPOpeningTag now ignores a BOM at the start of the file
+    -- Thanks to Chris Wilkinson for the patch
+  - PEAR.Functions.FunctionDeclaration now checks spacing before the opening parenthesis of functions with no body
+    -- Thanks to Chris Wilkinson for the patch
+  - PEAR.Functions.FunctionDeclaration now enforces no space before the semicolon in functions with no body
     -- Thanks to Chris Wilkinson for the patch
   - PSR2.Methods.MethodDeclaration now checks method declarations inside traits
     -- Thanks to Chris Wilkinson for the patch
