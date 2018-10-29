@@ -89,6 +89,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2167 : Generic.WhiteSpace.ScopeIndent shows invalid error when scope opener indented inside inline HTML
   - Fixed bug #2178 : Generic.NamingConventions.ConstructorName matches methods in anon classes with same name as containing class
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2202 : Squiz.WhiteSpace.OperatorSpacing throws error for negative index when using curly braces for string access
+    -- Same issue fixed in Squiz.Formatting.OperatorBracket
+    -- Thanks to Andreas Buchenrieder for the patch
  </notes>
  <contents>
   <dir name="/">

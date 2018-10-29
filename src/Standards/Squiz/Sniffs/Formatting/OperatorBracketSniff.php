@@ -104,6 +104,7 @@ class OperatorBracketSniff implements Sniff
                 T_COLON               => true,
                 T_OPEN_PARENTHESIS    => true,
                 T_OPEN_SQUARE_BRACKET => true,
+                T_OPEN_CURLY_BRACKET  => true,
                 T_OPEN_SHORT_ARRAY    => true,
                 T_CASE                => true,
             ];
