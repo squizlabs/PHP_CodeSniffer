@@ -57,9 +57,8 @@ class MethodDeclarationSniff extends AbstractScopeSniff
         $abstract   = 0;
         $final      = 0;
 
-        $find   = Tokens::$methodPrefixes;
-        $find[] = T_WHITESPACE;
-        $prev   = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
+        $find = (Tokens::$methodPrefixes + Tokens::$emptyTokens);
+        $prev = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
 
         $prefix = $stackPtr;
         while (($prefix = $phpcsFile->findPrevious(Tokens::$methodPrefixes, ($prefix - 1), $prev)) !== false) {
