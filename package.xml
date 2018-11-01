@@ -94,6 +94,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Andreas Buchenrieder for the patch
   - Fixed bug #2211 : PSR2.Methods.MethodDeclaration gets confused over comments between modifier keywords
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2212 : FUNCTION and CONST in use groups being tokenised as T_FUNCTION and T_CONST
+    -- Thanks to Chris Wilkinson for the patch
   - Fixed bug #2214 : File::getMemberProperties() is recognizing method params as properties
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
