@@ -48,17 +48,18 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
      * @var array
      */
     protected $methodsDoubleUnderscore = [
-        'soapcall'               => true,
-        'getlastrequest'         => true,
-        'getlastresponse'        => true,
-        'getlastrequestheaders'  => true,
-        'getlastresponseheaders' => true,
-        'getfunctions'           => true,
-        'gettypes'               => true,
         'dorequest'              => true,
+        'getcookies'             => true,
+        'getfunctions'           => true,
+        'getlastrequest'         => true,
+        'getlastrequestheaders'  => true,
+        'getlastresponse'        => true,
+        'getlastresponseheaders' => true,
+        'gettypes'               => true,
         'setcookie'              => true,
         'setlocation'            => true,
         'setsoapheaders'         => true,
+        'soapcall'               => true,
     ];
 
     /**
