@@ -1656,6 +1656,18 @@ class File
             }
         }
 
+        // Make sure it's not a method parameter.
+        if (empty($this->tokens[$stackPtr]['nested_parenthesis']) === false) {
+            $parenthesis = array_keys($this->tokens[$stackPtr]['nested_parenthesis']);
+            $deepestOpen = array_pop($parenthesis);
+            if ($deepestOpen > $ptr
+                && isset($this->tokens[$deepestOpen]['parenthesis_owner']) === true
+                && $this->tokens[$this->tokens[$deepestOpen]['parenthesis_owner']]['code'] === T_FUNCTION
+            ) {
+                throw new TokenizerException('$stackPtr is not a class member var');
+            }
+        }
+
         $valid = [
             T_PUBLIC    => T_PUBLIC,
             T_PRIVATE   => T_PRIVATE,
