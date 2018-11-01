@@ -1389,7 +1389,7 @@ class PHP extends Tokenizer
                 // and T_CONST.
                 if (($newToken['code'] === T_FUNCTION
                     || $newToken['code'] === T_CONST)
-                    && $finalTokens[$lastNotEmptyToken]['code'] === T_USE
+                    && ($finalTokens[$lastNotEmptyToken]['code'] === T_USE || $insideUseGroup === true)
                 ) {
                     $newToken['code'] = T_STRING;
                     $newToken['type'] = 'T_STRING';
