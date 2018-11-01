@@ -6,12 +6,12 @@ class MyClass
     private function myFunction() {}
     function __myFunction() {}
     public static function myFunction() {}
-    static public function myFunction() {}
+    static public /*comment*/ function myFunction() {}
     final public function myFunction() {}
-    public final function myFunction() {}
+    public /*comment*/ final function myFunction() {}
     abstract private function myFunction();
-    private abstract function myFunction();
-    final public static function myFunction() {}
+    private /*comment*/ abstract function myFunction();
+    final public /*comment*/ static function myFunction() {}
     static protected final abstract function myFunction();
     public function _() {}
 }
@@ -32,11 +32,11 @@ trait MyTrait
     function __myFunction() {}
     public static function myFunction() {}
     static public function myFunction() {}
-    final public function myFunction() {}
+    final /*comment*/ public function myFunction() {}
     public final function myFunction() {}
     abstract private function myFunction();
     private abstract function myFunction();
     final public static function myFunction() {}
-    static protected final abstract function myFunction();
+    static /*comment*/ protected final abstract function myFunction();
     public function _() {}
 }
