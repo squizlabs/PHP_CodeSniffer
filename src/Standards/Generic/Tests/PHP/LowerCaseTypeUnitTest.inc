@@ -42,3 +42,6 @@ function foo(
 
 $foo = function (?Int $a, ?    Callable $b)
     :?INT{};
+
+$var = (BInARY) $string;
+$var = (binary)$string;

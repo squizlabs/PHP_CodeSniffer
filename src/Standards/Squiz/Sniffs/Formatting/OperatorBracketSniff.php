@@ -275,6 +275,7 @@ class OperatorBracketSniff implements Sniff
             T_DNUMBER                  => true,
             T_STRING                   => true,
             T_CONSTANT_ENCAPSED_STRING => true,
+            T_DOUBLE_QUOTED_STRING     => true,
             T_WHITESPACE               => true,
             T_NS_SEPARATOR             => true,
             T_THIS                     => true,
