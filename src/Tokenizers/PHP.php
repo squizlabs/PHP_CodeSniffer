@@ -655,7 +655,7 @@ class PHP extends Tokenizer
 
             if ($tokenIsArray === true
                 && $token[0] === T_STRING_CAST
-                && strtolower($token[1]) === '(binary)'
+                && preg_match('`^\(\s*binary\s*\)$`i', $token[1]) === 1
             ) {
                 $finalTokens[$newStackPtr] = [
                     'code'    => T_BINARY_CAST,

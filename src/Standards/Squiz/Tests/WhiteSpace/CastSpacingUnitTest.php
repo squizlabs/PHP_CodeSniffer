@@ -30,6 +30,7 @@ class CastSpacingUnitTest extends AbstractSniffUnitTest
             4 => 1,
             5 => 1,
             6 => 1,
+            9 => 1,
         ];
 
     }//end getErrorList()
