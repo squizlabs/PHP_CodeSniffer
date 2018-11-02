@@ -42,6 +42,13 @@ class SpaceAfterCastSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if ($tokens[$stackPtr]['code'] === T_BINARY_CAST
+            && $tokens[$stackPtr]['content'] === 'b'
+        ) {
+            // You can't replace a space after this type of binary casting.
+            return;
+        }
+
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $error = 'A cast statement must be followed by a single space';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpace');

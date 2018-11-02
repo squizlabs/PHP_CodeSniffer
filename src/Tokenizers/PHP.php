@@ -636,6 +636,37 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                Detect binary casting and assign the casts their own token.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_CONSTANT_ENCAPSED_STRING
+                && (substr($token[1], 0, 2) === 'b"'
+                || substr($token[1], 0, 2) === "b'")
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_BINARY_CAST,
+                    'type'    => 'T_BINARY_CAST',
+                    'content' => 'b',
+                ];
+                $newStackPtr++;
+                $token[1] = substr($token[1], 1);
+            }
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STRING_CAST
+                && strtolower($token[1]) === '(binary)'
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_BINARY_CAST,
+                    'type'    => 'T_BINARY_CAST',
+                    'content' => $token[1],
+                ];
+                $newStackPtr++;
+                continue;
+            }
+
+            /*
                 If this is a heredoc, PHP will tokenize the whole
                 thing which causes problems when heredocs don't
                 contain real PHP code, which is almost never.

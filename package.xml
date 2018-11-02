@@ -30,6 +30,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This token was previously tokenized as T_NONE
     -- Any sniffs specifically looking for T_NONE tokens with a tilde as the contents must now also look for T_BITWISE_NOT
     -- Sniffs can continue looking for T_NONE as well as T_BITWISE_NOT to support older PHP_CodeSniffer versions
+  - All types of binary casting are now tokenzied as T_BINARY_CAST
+    -- Previously, the 'b' in 'b"some string with $var"' would be a T_BINARY_CAST, but only when the string contained a var
+    -- This change ensures the 'b' is always tokenized as T_BINARY_CAST
+    -- This change also converts '(binary)' from T_STRING_CAST to T_BINARY_CAST
   - Array properties set inside a ruleset.xml file can now extend a previous value instead of always overwriting it
     -- e.g., if you include a ruleset that defines forbidden functions, can you now add to that list instead of having to redefine it
     -- To use this feature, add extends="true" to the property tag
