@@ -35,9 +35,8 @@ class ABC {
     public static $propA;
     protected static $propB;
     private static $propC;
-    static public $propD;
-    static
-        protected
-            $propE;
-    static private    /*comment*/   $propF;
+    public static $propD;
+    protected static
+        $propE;
+    private static /*comment*/   $propF;
 }
