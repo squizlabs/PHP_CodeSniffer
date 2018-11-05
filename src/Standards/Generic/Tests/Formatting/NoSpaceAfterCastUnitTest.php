@@ -48,6 +48,7 @@ class NoSpaceAfterCastUnitTest extends AbstractSniffUnitTest
             41 => 1,
             43 => 1,
             45 => 1,
+            50 => 1,
         ];
 
     }//end getErrorList()

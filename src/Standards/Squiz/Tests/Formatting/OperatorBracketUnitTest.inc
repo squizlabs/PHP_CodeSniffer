@@ -165,3 +165,5 @@ $a = 2 * ${x} - ${minus};
 $foo = $bar ?? $baz ?? '';
 
 $foo = $myString{-1};
+
+$value = (binary) $blah + b"binary $foo";
