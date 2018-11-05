@@ -147,3 +147,7 @@ $a = new class {
     function __my_function() {}
 
 };
+
+class FooBar extends \SoapClient {
+    public function __getCookies() {}
+}
