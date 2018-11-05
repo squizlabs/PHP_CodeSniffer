@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, the 'b' in 'b"some string with $var"' would be a T_BINARY_CAST, but only when the string contained a var
     -- This change ensures the 'b' is always tokenized as T_BINARY_CAST
     -- This change also converts '(binary)' from T_STRING_CAST to T_BINARY_CAST
+    -- Thanks to Juliette Reinders Folmer for the help with this patch
   - Array properties set inside a ruleset.xml file can now extend a previous value instead of always overwriting it
     -- e.g., if you include a ruleset that defines forbidden functions, can you now add to that list instead of having to redefine it
     -- To use this feature, add extends="true" to the property tag
