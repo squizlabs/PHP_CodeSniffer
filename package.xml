@@ -99,6 +99,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2202 : Squiz.WhiteSpace.OperatorSpacing throws error for negative index when using curly braces for string access
     -- Same issue fixed in Squiz.Formatting.OperatorBracket
     -- Thanks to Andreas Buchenrieder for the patch
+  - Fixed bug #2210 : Generic.NamingConventions.CamelCapsFunctionName not ignoring SoapClient __getCookies() method
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2211 : PSR2.Methods.MethodDeclaration gets confused over comments between modifier keywords
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2212 : FUNCTION and CONST in use groups being tokenised as T_FUNCTION and T_CONST
