@@ -33,6 +33,7 @@ class SelfMemberReferenceUnitTestExample
 
         // Remove ALL the newlines
         $testResults[] = self::selfMemberReferenceUnitTestFunction();
+
     }
 
 
