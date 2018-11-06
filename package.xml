@@ -51,6 +51,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added new Generic.CodeAnalysis.EmptyPHPStatement sniff
     -- Warns when it finds empty PHP open/close tag combinations or superfluous semicolons
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Added new Generic.Formatting.SpaceBeforeCast sniff
+    -- Ensures there is exactly 1 space before a type cast, unless the cast statement is indented or mutli-line
+    -- Thanks to Juliette Reinders Folmer for the contribution
   - Added new Generic.VersionControl.GitMergeConflict sniff
     -- Detects merge conflict artifacts left in files
     -- Thanks to Juliette Reinders Folmer for the contribution
