@@ -86,6 +86,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Chris Wilkinson for the patch
   - PEAR.Functions.FunctionDeclaration now enforces no space before the semicolon in functions with no body
     -- Thanks to Chris Wilkinson for the patch
+  - PSR2.Classes.PropertyDeclaration now checks the order of property modifier keywords
+    -- This is a rule that is documented in PSR-2 but was not enforced by the included PSR2 standard until now
+    -- This sniff is also able to fix the order of the modifier keywords if they are incorrect
+    -- Thanks to Juliette Reinders Folmer for the patch
   - PSR2.Methods.MethodDeclaration now checks method declarations inside traits
     -- Thanks to Chris Wilkinson for the patch
   - Squiz.Classes.ClassFileName now checks that a trait name matches the filename
