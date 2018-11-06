@@ -31,6 +31,9 @@ class StaticThisUsageUnitTest extends AbstractSniffUnitTest
             9  => 1,
             14 => 1,
             20 => 1,
+            61 => 1,
+            69 => 1,
+            76 => 1,
         ];
 
     }//end getErrorList()

@@ -151,3 +151,17 @@ $a = new class {
 class FooBar extends \SoapClient {
     public function __getCookies() {}
 }
+
+class Nested {
+    public function getAnonymousClass() {
+        return new class() {
+            public function nested_function() {}
+            function __something() {}
+        };
+    }
+}
+
+abstract class My_Class {
+    public function my_class() {}
+    public function _MY_CLASS() {}
+}

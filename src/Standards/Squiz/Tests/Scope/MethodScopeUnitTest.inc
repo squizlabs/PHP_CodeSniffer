@@ -32,3 +32,11 @@ trait Trait_Test {
 	private function func1() {}
 	protected function func1() {}
 }
+
+class Nested {
+    public function getAnonymousClass() {
+        return new class() {
+            function __something() {}
+        };
+    }
+}

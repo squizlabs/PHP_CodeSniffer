@@ -70,4 +70,12 @@ function ___tripleUnderscore() {} // Ok.
 class triple {
     public function ___tripleUnderscore() {} // Ok.
 }
-?>
+
+class Nested {
+    public function getAnonymousClass() {
+        return new class() {
+            public function nested_function() {}
+        };
+    }
+}
+

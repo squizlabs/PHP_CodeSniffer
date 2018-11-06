@@ -35,6 +35,7 @@ class CamelCapsMethodNameUnitTest extends AbstractSniffUnitTest
             21 => 1,
             25 => 1,
             26 => 1,
+            77 => 1,
         ];
 
     }//end getErrorList()

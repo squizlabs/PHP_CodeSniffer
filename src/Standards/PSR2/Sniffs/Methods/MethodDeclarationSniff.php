@@ -22,7 +22,7 @@ class MethodDeclarationSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct([T_CLASS, T_INTERFACE, T_TRAIT], [T_FUNCTION]);
+        parent::__construct(Tokens::$ooScopeTokens, [T_FUNCTION]);
 
     }//end __construct()
 
@@ -39,6 +39,14 @@ class MethodDeclarationSniff extends AbstractScopeSniff
     protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
     {
         $tokens = $phpcsFile->getTokens();
+
+        // Determine if this is a function which needs to be examined.
+        $conditions = $tokens[$stackPtr]['conditions'];
+        end($conditions);
+        $deepestScope = key($conditions);
+        if ($deepestScope !== $currScope) {
+            return;
+        }
 
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
         if ($methodName === null) {

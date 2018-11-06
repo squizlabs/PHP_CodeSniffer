@@ -35,6 +35,11 @@ class MethodDeclarationUnitTest extends AbstractSniffUnitTest
             36 => 1,
             38 => 1,
             40 => 3,
+            50 => 1,
+            52 => 1,
+            54 => 1,
+            56 => 3,
+            63 => 2,
         ];
 
     }//end getErrorList()
@@ -54,6 +59,8 @@ class MethodDeclarationUnitTest extends AbstractSniffUnitTest
             5  => 1,
             21 => 1,
             30 => 1,
+            46 => 1,
+            63 => 1,
         ];
 
     }//end getWarningList()

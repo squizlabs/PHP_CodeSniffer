@@ -205,3 +205,18 @@ $a = new class {
 };
 
 function send_system_email__to_user($body, $recipient){}
+
+class Nested {
+    public function getAnonymousClass() {
+        return new class() {
+            public function nested_function() {}
+            function __something() {}
+            private function something() {}
+        };
+    }
+}
+
+abstract class My_Class {
+    public function my_class() {}
+    public function _MY_CLASS() {}
+}
