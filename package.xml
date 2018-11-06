@@ -338,6 +338,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="CodeAnalysis">
         <file baseinstalldir="PHP/CodeSniffer" name="AssignmentInConditionSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EmptyPHPStatementSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyStatementSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopShouldBeWhileLoopSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopWithTestFunctionCallSniff.php" role="php" />
@@ -457,6 +458,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="CodeAnalysis">
         <file baseinstalldir="PHP/CodeSniffer" name="AssignmentInConditionUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="AssignmentInConditionUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EmptyPHPStatementUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EmptyPHPStatementUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EmptyPHPStatementUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyStatementUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopShouldBeWhileLoopUnitTest.inc" role="test" />

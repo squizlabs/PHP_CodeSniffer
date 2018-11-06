@@ -1,0 +1,49 @@
+<?php
+
+/*
+ * Test empty statement: two consecutive semi-colons without executable code between them.
+ */
+function_call(); // OK.
+
+// The below examples are all bad.
+function_call();
+
+function_call();
+
+function_call();
+/* some comment */
+
+function_call();
+/* some comment */
+
+?>
+<input name="<?php something_else(); ?>" />
+<input name="<?php something_else(); ?>" />
+
+/*
+ * Test empty statement: no code between PHP open and close tag.
+ */
+<input name="<?php something_else() ?>" /> <!-- OK. -->
+<input name="<?php something_else(); ?>" /> <!-- OK. -->
+<input name="<?php /* comment */ ?>" /> <!-- OK. -->
+
+<input name="" /> <!-- Bad. -->
+
+<input name="" /> <!-- Bad. -->
+
+<!--
+/*
+ * Test detecting & fixing a combination of the two above checks.
+ */
+-->
+
+<input name="" /> <!-- Bad. -->
+
+<!-- Tests with short open echo tag. -->
+<input name="<?= 'some text' ?>" /> <!-- OK. -->
+<input name="" /> <!-- Bad. -->
+<input name="" /> <!-- Bad. -->
+
+<?php
+// Guard against false positives for two consecutive semi-colons in a for statement.
+for ( $i = 0; ; $i++ ) {}
