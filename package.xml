@@ -48,6 +48,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If the $length param is invalid, an empty string will be returned
     -- Stops an infinite loop when the function is passed invalid data
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Added new Generic.CodeAnalysis.EmptyPHPStatement sniff
+    -- Warns when it finds empty PHP open/close tag combinations or superfluous semicolons
+    -- Thanks to Juliette Reinders Folmer for the contribution
   - Added new Generic.VersionControl.GitMergeConflict sniff
     -- Detects merge conflict artifacts left in files
     -- Thanks to Juliette Reinders Folmer for the contribution
