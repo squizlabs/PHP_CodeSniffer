@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- To use this feature, add extends="true" to the property tag
        --- e.g., property name="forbiddenFunctionNames" type="array" extend="true"
     -- Thanks to Michael Moravec for the patch
+  - If $XDG_CACHE_HOME is set and points to a valid directory, it will be used for caching instead of the system temp directory
   - The Squiz standard now ensures there is no space between an increment/decrement operator and its variable
   - The File::getMethodParamaters() method now includes a has_body array index in the return value
     -- TRUE if the method has no body (as with abstract and interface methods) or FALSe otherwise
