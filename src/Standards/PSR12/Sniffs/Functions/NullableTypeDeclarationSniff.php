@@ -68,12 +68,14 @@ class NullableTypeDeclarationSniff implements Sniff
             return;
         }
 
+        $error = 'There must not be a space between the question mark and the type in nullable type declarations';
+
         if ($validTokenFound === true) {
             // No other tokens then whitespace tokens found; fixable.
-            $fix = $phpcsFile->addFixableError('Superfluous whitespace after nullable', ($stackPtr + 1), 'WhitespaceFound');
+            $fix = $phpcsFile->addFixableError($error, $stackPtr, 'WhitespaceFound');
             if ($fix === true) {
-                for ($ptr = ($stackPtr + 1); $ptr < $nextNonEmptyPtr; $ptr++) {
-                    $phpcsFile->fixer->replaceToken($ptr, '');
+                for ($i = ($stackPtr + 1); $i < $nextNonEmptyPtr; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
                 }
             }
 
@@ -81,7 +83,7 @@ class NullableTypeDeclarationSniff implements Sniff
         }
 
         // Non-whitespace tokens found; trigger error but don't fix.
-        $phpcsFile->addError('Unexpected characters found after nullable', ($stackPtr + 1), 'UnexpectedCharactersFound');
+        $phpcsFile->addError($error, $stackPtr, 'UnexpectedCharactersFound');
 
     }//end process()
 

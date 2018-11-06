@@ -60,6 +60,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic.WhiteSpace.IncrementDecrementSpacing sniff
     -- Ensures there is no space between the operator and the variable it applies to
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Added PSR12.Functions.NullableTypeDeclaration sniff
+    -- Ensures there is no space after the question mark in a nullable type declaration
+    -- Thanks to Timo Schinkel for the contribution
   - A number of sniffs have improved support for methods in anonymous classes
     -- These sniffs would often throw the same error twice for functions in nested classes
     -- Error messages have also been changed to be less confusing
