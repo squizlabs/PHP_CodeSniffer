@@ -105,7 +105,13 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceBefore', $data);
 
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+                $phpcsFile->fixer->beginChangeset();
+
+                for ($i = ($stackPtr - 1); $tokens[$i]['code'] === T_WHITESPACE; $i--) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
         }
 
@@ -116,7 +122,13 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceAfter', $data);
 
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
+                $phpcsFile->fixer->beginChangeset();
+
+                for ($i = ($stackPtr + 1); $tokens[$i]['code'] === T_WHITESPACE; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
         }
 
