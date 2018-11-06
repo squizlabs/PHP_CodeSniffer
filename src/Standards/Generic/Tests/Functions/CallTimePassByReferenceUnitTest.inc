@@ -31,3 +31,9 @@ $foo = Bar(&$fooBar);
 
 myfunc($myvar&$myvar);
 myfunc($myvar[0]&$myvar);
+
+myfunc(myclass::MY_CONST&$myvar);
+myfunc(MY_CONST&$myvar);
+
+efg( true == &$b );
+efg( true === &$b );
