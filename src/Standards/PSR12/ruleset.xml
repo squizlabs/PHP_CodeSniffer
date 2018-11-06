@@ -183,6 +183,7 @@
     <!-- When you have a return type declaration present there MUST be one space after the colon followed by the type declaration. The colon and declaration MUST be on the same line as the argument list closing parentheses with no spaces between the two characters. -->
 
     <!-- In nullable type declarations there MUST NOT be a space between the question mark and the type. -->
+    <!-- checked by PSR12.Functions.NullableTypeDeclaration -->
 
     <!-- 4.6 abstract, final, and static -->
 
