@@ -60,6 +60,17 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic.WhiteSpace.IncrementDecrementSpacing sniff
     -- Ensures there is no space between the operator and the variable it applies to
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - A number of sniffs have improved support for methods in anonymous classes
+    -- These sniffs would often throw the same error twice for functions in nested classes
+    -- Error messages have also been changed to be less confusing
+    -- The full list of affected sniffs is:
+       --- Generic.NamingConventions.CamelCapsFunctionName
+       --- PEAR.NamingConventions.ValidFunctionName
+       --- PSR1.Methods.CamelCapsMethodName
+       --- PSR2.Methods.MethodDeclaration
+       --- Squiz.Scope.MethodScope
+       --- Squiz.Scope.StaticThisUsage
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.CodeAnalysis.UnusedFunctionParameter now only skips functions with empty bodies when the class implements an interface
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.CodeAnalysis.UnusedFunctionParameter now has additional error codes to indicate where unused params were found
