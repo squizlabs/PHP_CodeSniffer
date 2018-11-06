@@ -213,7 +213,7 @@ class Cache
             ksort($paths);
             $paths = array_reverse($paths);
 
-            $numFiles  = count($config->files);
+            $numFiles = count($config->files);
 
             $cacheFile = null;
             $cacheDir  = getenv('XDG_CACHE_HOME');
