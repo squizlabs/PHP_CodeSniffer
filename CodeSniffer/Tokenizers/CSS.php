@@ -390,7 +390,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
 
                     // Needs to be in the format "url(" for it to be a URL.
                     if ($finalTokens[$x]['code'] !== T_OPEN_PARENTHESIS) {
-                        continue;
+                        continue 2;
                     }
 
                     // Make sure the content isn't empty.
@@ -401,7 +401,7 @@ class PHP_CodeSniffer_Tokenizers_CSS extends PHP_CodeSniffer_Tokenizers_PHP
                     }
 
                     if ($finalTokens[$y]['code'] === T_CLOSE_PARENTHESIS) {
-                        continue;
+                        continue 2;
                     }
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
