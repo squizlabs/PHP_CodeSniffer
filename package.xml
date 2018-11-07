@@ -1854,6 +1854,27 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <changelog>
   <release>
    <version>
+    <release>2.9.2</release>
+    <api>2.9.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2018-11-08</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - PHPCS should now run under PHP 7.3 without deprecation warnings
+      -- Thanks to Nick Wilde for the patch
+    - Fixed bug #1496 : Squiz.Strings.DoubleQuoteUsage not unescaping dollar sign when fixing
+      -- Thanks to Michał Bundyra for the patch
+    - Fixed bug #1549 : Squiz.PHP.EmbeddedPhp fixer conflict with // comment before PHP close tag
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #1890 : Incorrect Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose error between catch and finally statements
+    </notes>
+  </release>
+  <release>
+   <version>
     <release>3.3.2</release>
     <api>3.3.2</api>
    </version>
@@ -2642,6 +2663,23 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Thanks to Michał Bundyra for the patch
     - Fixed bug #1501 : Interactive mode is broken
     - Fixed bug #1504 : PSR2.Namespaces.UseDeclaration hangs fixing use statement with no trailing code
+    </notes>
+  </release>
+  <release>
+   <version>
+    <release>2.9.1</release>
+    <api>2.9.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2017-05-22</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Fixed bug #1442 : T_NULLABLE detection not working for nullable parameters and return type hints in some cases
+    - Fixed bug #1448 : Generic.Classes.OpeningBraceSameLine doesn't detect comment before opening brace
+      -- Thanks to Juliette Reinders Folmer for the patch
     </notes>
   </release>
   <release>
