@@ -1,7 +1,7 @@
 <documentation title="Property Declarations">
     <standard>
     <![CDATA[
-    Property names should not be prefixed with an underscore to indicate visibility.  Visibility should be used to declare properties rather than the var keyword.  Only one property should be declared within a statement.
+    Property names should not be prefixed with an underscore to indicate visibility.  Visibility should be used to declare properties rather than the var keyword.  Only one property should be declared within a statement.  The static declaration must come after the visibility declaration.
     ]]>
     </standard>
     <code_comparison>
@@ -55,6 +55,25 @@ class Foo
 class Foo
 {
     private <em>$bar, $baz</em>;
+}
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: If declared as static, the static declaration must come after the visibility declaration.">
+        <![CDATA[
+class Foo
+{
+    public <em>static</em> $bar;
+    private $baz;
+}
+        ]]>
+        </code>
+        <code title="Invalid: Static declaration before the visibility declaration.">
+        <![CDATA[
+class Foo
+{
+    <em>static<em> protected $bar;
 }
         ]]>
         </code>
