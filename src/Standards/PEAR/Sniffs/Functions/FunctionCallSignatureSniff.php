@@ -546,7 +546,7 @@ class FunctionCallSignatureSniff implements Sniff
             // If we are within an argument we should be ignoring commas
             // as these are not signaling the end of an argument.
             if ($inArg === false && $tokens[$i]['code'] === T_COMMA) {
-                $next = $phpcsFile->findNext([T_WHITESPACE, T_COMMENT], ($i + 1), $closeBracket, true);
+                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), $closeBracket, true);
                 if ($next === false) {
                     continue;
                 }
