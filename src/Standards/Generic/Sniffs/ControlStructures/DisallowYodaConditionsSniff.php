@@ -66,34 +66,31 @@ class DisallowYodaConditionsSniff implements Sniff
             return;
         }
 
-        $skipTokens = array_merge(
-            [
-                T_CLOSE_PARENTHESIS => T_CLOSE_PARENTHESIS,
-                T_OPEN_PARENTHESIS  => T_OPEN_PARENTHESIS,
-            ],
-            Tokens::$emptyTokens
-        );
-
-        $previousIndex = $phpcsFile->findPrevious($skipTokens, ($stackPtr - 1), null, true);
-        if ($previousIndex === false) {
-            return;
-        }
-
-        if (in_array(
+        $previousIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        if ($previousIndex === false || in_array(
             $tokens[$previousIndex]['code'],
             [
                 T_VARIABLE,
                 T_STRING,
             ],
             true
-        ) === false
+        ) === true
         ) {
-            $phpcsFile->addError(
-                'Usage of Yoda conditions is not allowed. Switch the expression order.',
-                $stackPtr,
-                'DisallowYodaCondition'
-            );
+            return;
         }
+
+        if ($tokens[$previousIndex]['code'] === T_CLOSE_PARENTHESIS) {
+            $found = $phpcsFile->findPrevious([T_VARIABLE], ($previousIndex - 1), $tokens[$previousIndex]['parenthesis_opener']);
+            if ($found !== false) {
+                return;
+            }
+        }
+
+        $phpcsFile->addError(
+            'Usage of Yoda conditions is not allowed. Switch the expression order.',
+            $stackPtr,
+            'DisallowYodaCondition'
+        );
 
     }//end process()
 
