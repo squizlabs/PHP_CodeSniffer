@@ -22,6 +22,13 @@ class ObjectOperatorIndentSniff implements Sniff
      */
     public $indent = 4;
 
+    /**
+     * Indicates whether multilevel indenting is allowed.
+     *
+     * @var boolean
+     */
+    public $multilevel = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -71,12 +78,12 @@ class ObjectOperatorIndentSniff implements Sniff
             }
         }
 
-        $requiredIndent = 0;
-        if ($i >= 0 && $tokens[$i]['code'] === T_WHITESPACE) {
-            $requiredIndent = strlen($tokens[$i]['content']);
+        $baseIndent = 0;
+        if ($i >= 0 && $tokens[$i]['code'] === \T_WHITESPACE) {
+            $baseIndent = \strlen($tokens[$i]['content']);
         }
 
-        $requiredIndent += $this->indent;
+        $baseIndent += $this->indent;
 
         // Determine the scope of the original object operator.
         $origBrackets = null;
@@ -95,6 +102,8 @@ class ObjectOperatorIndentSniff implements Sniff
         if ($tokens[$stackPtr]['line'] > $tokens[$start]['line']) {
             $next = $stackPtr;
         }
+
+        $previousIndent = $baseIndent;
 
         while ($next !== false) {
             // Make sure it is in the same scope, otherwise don't check indent.
@@ -121,22 +130,34 @@ class ObjectOperatorIndentSniff implements Sniff
                         $foundIndent = 0;
                     }
 
-                    if ($foundIndent !== $requiredIndent) {
+                    $minIndent      = $previousIndent;
+                    $maxIndent      = $previousIndent;
+                    $expectedIndent = $previousIndent;
+
+                    if ($this->multilevel === true) {
+                        $minIndent      = \max(($previousIndent - $this->indent), $baseIndent);
+                        $maxIndent      = ($previousIndent + $this->indent);
+                        $expectedIndent = \min(\max($foundIndent, $minIndent), $maxIndent);
+                    }
+
+                    if ($foundIndent < $minIndent || $foundIndent > $maxIndent) {
                         $error = 'Object operator not indented correctly; expected %s spaces but found %s';
                         $data  = [
-                            $requiredIndent,
+                            $expectedIndent,
                             $foundIndent,
                         ];
 
                         $fix = $phpcsFile->addFixableError($error, $next, 'Incorrect', $data);
                         if ($fix === true) {
-                            $spaces = str_repeat(' ', $requiredIndent);
+                            $spaces = str_repeat(' ', $expectedIndent);
                             if ($foundIndent === 0) {
                                 $phpcsFile->fixer->addContentBefore($next, $spaces);
                             } else {
                                 $phpcsFile->fixer->replaceToken(($next - 1), $spaces);
                             }
                         }
+                    } else {
+                        $previousIndent = $foundIndent;
                     }
                 }//end if
 

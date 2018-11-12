@@ -38,6 +38,10 @@ class ObjectOperatorIndentUnitTest extends AbstractSniffUnitTest
             65 => 1,
             69 => 1,
             73 => 1,
+            79 => 1,
+            80 => 1,
+            81 => 1,
+            82 => 1,
         ];
 
     }//end getErrorList()

@@ -71,3 +71,12 @@ someclass::one()
 (new someclass())->one()
     ->two()
         ->three();
+
+// phpcs:set PEAR.WhiteSpace.ObjectOperatorIndent multilevel true
+
+$someObject
+    ->startSomething()
+                    ->someOtherFunc(23, 42)
+->endSomething()
+->doSomething(23, 42)
+->endEverything();
