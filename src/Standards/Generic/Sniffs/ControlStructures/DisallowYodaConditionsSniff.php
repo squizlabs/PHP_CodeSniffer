@@ -45,31 +45,12 @@ class DisallowYodaConditionsSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens    = $phpcsFile->getTokens();
-        $nextIndex = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
-
-        // Check the token after the comparison. If it is one of these then it is not a Yoda condition.
-        if ($nextIndex === false || in_array(
-            $tokens[$nextIndex]['code'],
-            [
-                T_OPEN_SHORT_ARRAY,
-                T_ARRAY,
-                T_TRUE,
-                T_FALSE,
-                T_NULL,
-                T_LNUMBER,
-                T_DNUMBER,
-                T_CONSTANT_ENCAPSED_STRING,
-            ],
-            true
-        ) === true
-        ) {
-            return;
-        }
-
+        $tokens        = $phpcsFile->getTokens();
         $previousIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 
-        if ($previousIndex === false || in_array($tokens[$previousIndex]['code'], [
+        if ($previousIndex === false || in_array(
+            $tokens[$previousIndex]['code'],
+            [
                 T_CLOSE_SHORT_ARRAY,
                 T_CLOSE_PARENTHESIS,
                 T_TRUE,
@@ -78,20 +59,26 @@ class DisallowYodaConditionsSniff implements Sniff
                 T_LNUMBER,
                 T_DNUMBER,
                 T_CONSTANT_ENCAPSED_STRING,
-            ], true) === false) {
+            ],
+            true
+        ) === false
+        ) {
             return;
         }
 
         if ($tokens[$previousIndex]['code'] === T_CLOSE_SHORT_ARRAY) {
             $previousIndex = $tokens[$previousIndex]['bracket_opener'];
         }
-        $prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, $previousIndex - 1, null, true);
+
+        $prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($previousIndex - 1), null, true);
         if ($prevIndex === false) {
             return;
         }
-        if (in_array($tokens[$prevIndex]['code'], Tokens::$arithmeticTokens, true)) {
+
+        if (in_array($tokens[$prevIndex]['code'], Tokens::$arithmeticTokens, true) === true) {
             return;
         }
+
         if ($tokens[$prevIndex]['code'] === T_STRING_CONCAT) {
             return;
         }
