@@ -156,9 +156,9 @@ class ObjectOperatorIndentSniff implements Sniff
                                 $phpcsFile->fixer->replaceToken(($next - 1), $spaces);
                             }
                         }
-                    } else {
-                        $previousIndent = $foundIndent;
                     }
+
+                    $previousIndent = $expectedIndent;
                 }//end if
 
                 // It cant be the last thing on the line either.
