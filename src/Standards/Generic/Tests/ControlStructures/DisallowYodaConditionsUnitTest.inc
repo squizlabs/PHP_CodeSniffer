@@ -115,3 +115,11 @@ if(
     // comment
     true
 ){}
+
+if(array($key => $val) === $value){}
+if(array($key => $val) == $value){}
+
+if([$key => $val] === $value){}
+if([$key => $val] == $value){}
+
+$config['checkAuthIn'] !== $event->getName();
