@@ -1294,6 +1294,15 @@ default:
     break;
 }
 
+function test() {
+    return [
+        <<<'SQLDATA'
+DATA
+SQLDATA
+,
+    ];
+}
+
 if ($foo) {
 if ($oo) {
     /*
@@ -1316,6 +1325,13 @@ if ($oo) {
     }
 
 ?>
+
+<div>
+    <?php if ($foo) {
+        echo $foo;
+    } ?>
+</div>
+
 <?php
     if (true) {
     }

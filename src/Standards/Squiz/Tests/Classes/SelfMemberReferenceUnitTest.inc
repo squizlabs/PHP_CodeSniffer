@@ -31,6 +31,19 @@ class SelfMemberReferenceUnitTestExample
         $testResults[] = self::  selfMemberReferenceUnitTestFunction();
         $testResults[] = self  :: selfMemberReferenceUnitTestFunction();
 
+        // Remove ALL the newlines
+        $testResults[] = self
+
+
+
+
+            ::
+
+
+
+
+            selfMemberReferenceUnitTestFunction();
+
     }
 
 

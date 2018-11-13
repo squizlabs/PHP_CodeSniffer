@@ -7,7 +7,8 @@ class MyClass
     $var = null;
 
     var $var = null;
-    public var $var = null;
+    static $var = null;
+    public var $var = null; // Parse error.
 
     public $_var = null;
     protected $_var = null;
@@ -17,6 +18,10 @@ class MyClass
     public $foo,
            $bar,
            $var = null;
+
+    protected
+        $foo,
+        $bar;
 }
 
 class foo
@@ -25,4 +30,14 @@ class foo
 qux
 BAZ;
 }
-?>
+
+class ABC {
+    public static $propA;
+    protected static $propB;
+    private static $propC;
+    static public $propD;
+    static
+        protected
+            $propE;
+    static private    /*comment*/   $propF;
+}

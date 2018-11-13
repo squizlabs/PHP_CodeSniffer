@@ -45,14 +45,16 @@ class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'DuplicateClassNameUnitTest.1.inc':
             return [
-                6 => 1,
-                7 => 1,
+                8  => 1,
+                9  => 1,
+                10 => 1,
             ];
             break;
         case 'DuplicateClassNameUnitTest.2.inc':
             return [
                 2 => 1,
                 3 => 1,
+                4 => 1,
             ];
             break;
         case 'DuplicateClassNameUnitTest.5.inc':

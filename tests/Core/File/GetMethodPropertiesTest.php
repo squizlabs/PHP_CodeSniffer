@@ -74,6 +74,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -107,6 +108,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -140,6 +142,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -173,6 +176,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -206,6 +210,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => true,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -239,6 +244,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => true,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -272,6 +278,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -305,6 +312,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -338,6 +346,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -371,6 +380,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -404,6 +414,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -437,6 +448,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => false,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => true,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -470,6 +482,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => true,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -503,6 +516,7 @@ class GetMethodPropertiesTest extends TestCase
             'is_abstract'          => true,
             'is_final'             => false,
             'is_static'            => false,
+            'has_body'             => false,
         ];
 
         $start    = ($this->phpcsFile->numTokens - 1);
@@ -519,6 +533,40 @@ class GetMethodPropertiesTest extends TestCase
         $this->assertSame($expected, $found);
 
     }//end testAbstractReturnMethod()
+
+
+    /**
+     * Test a basic interface method.
+     *
+     * @return void
+     */
+    public function testInterfaceMethod()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => false,
+        ];
+
+        $start    = ($this->phpcsFile->numTokens - 1);
+        $function = $this->phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            '/* testInterfaceMethod */'
+        );
+
+        $found = $this->phpcsFile->getMethodProperties(($function + 3));
+        unset($found['return_type_token']);
+        $this->assertSame($expected, $found);
+
+    }//end testInterfaceMethod()
 
 
 }//end class

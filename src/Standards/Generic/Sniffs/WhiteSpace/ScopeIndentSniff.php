@@ -583,7 +583,7 @@ class ScopeIndentSniff implements Sniff
                 }
 
                 if (isset($tokens[$scopeCloser]['scope_condition']) === true) {
-                    $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $tokens[$scopeCloser]['scope_condition'], true);
+                    $first = $phpcsFile->findFirstOnLine([T_WHITESPACE, T_INLINE_HTML], $tokens[$scopeCloser]['scope_condition'], true);
                     if ($this->debug === true) {
                         $line = $tokens[$first]['line'];
                         $type = $tokens[$first]['type'];
@@ -920,6 +920,7 @@ class ScopeIndentSniff implements Sniff
                 || $tokens[$i]['code'] === T_START_NOWDOC
             ) {
                 $i = $phpcsFile->findNext([T_END_HEREDOC, T_END_NOWDOC], ($i + 1));
+                $i = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
                 continue;
             }
 

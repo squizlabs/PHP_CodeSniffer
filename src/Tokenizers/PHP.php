@@ -636,6 +636,37 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                Detect binary casting and assign the casts their own token.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_CONSTANT_ENCAPSED_STRING
+                && (substr($token[1], 0, 2) === 'b"'
+                || substr($token[1], 0, 2) === "b'")
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_BINARY_CAST,
+                    'type'    => 'T_BINARY_CAST',
+                    'content' => 'b',
+                ];
+                $newStackPtr++;
+                $token[1] = substr($token[1], 1);
+            }
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STRING_CAST
+                && preg_match('`^\(\s*binary\s*\)$`i', $token[1]) === 1
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_BINARY_CAST,
+                    'type'    => 'T_BINARY_CAST',
+                    'content' => $token[1],
+                ];
+                $newStackPtr++;
+                continue;
+            }
+
+            /*
                 If this is a heredoc, PHP will tokenize the whole
                 thing which causes problems when heredocs don't
                 contain real PHP code, which is almost never.
@@ -1063,7 +1094,7 @@ class PHP extends Tokenizer
                             // Non-empty content.
                             if (is_array($tokens[$x]) === true && $tokens[$x][0] === T_USE) {
                                 // Found a use statements, so search ahead for the closing parenthesis.
-                                for ($x = ($x + 1); $x < $numTokens; $x++) {
+                                for ($x += 1; $x < $numTokens; $x++) {
                                     if (is_array($tokens[$x]) === false && $tokens[$x] === ')') {
                                         continue(2);
                                     }
@@ -1090,7 +1121,7 @@ class PHP extends Tokenizer
                         $allowed += Util\Tokens::$emptyTokens;
 
                         // Find the start of the return type.
-                        for ($x = ($x + 1); $x < $numTokens; $x++) {
+                        for ($x += 1; $x < $numTokens; $x++) {
                             if (is_array($tokens[$x]) === true
                                 && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
                             ) {
@@ -1389,7 +1420,7 @@ class PHP extends Tokenizer
                 // and T_CONST.
                 if (($newToken['code'] === T_FUNCTION
                     || $newToken['code'] === T_CONST)
-                    && $finalTokens[$lastNotEmptyToken]['code'] === T_USE
+                    && ($finalTokens[$lastNotEmptyToken]['code'] === T_USE || $insideUseGroup === true)
                 ) {
                     $newToken['code'] = T_STRING;
                     $newToken['type'] = 'T_STRING';
@@ -1941,6 +1972,9 @@ class PHP extends Tokenizer
             break;
         case '|':
             $newToken['type'] = 'T_BITWISE_OR';
+            break;
+        case '~':
+            $newToken['type'] = 'T_BITWISE_NOT';
             break;
         case '<':
             $newToken['type'] = 'T_LESS_THAN';

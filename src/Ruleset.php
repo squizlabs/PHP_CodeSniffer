@@ -950,6 +950,13 @@ class Ruleset
                         && (string) $prop['type'] === 'array'
                     ) {
                         $values = [];
+                        if (isset($prop['extend']) === true
+                            && (string) $prop['extend'] === 'true'
+                            && isset($this->ruleset[$code]['properties'][$name]) === true
+                        ) {
+                            $values = $this->ruleset[$code]['properties'][$name];
+                        }
+
                         if (isset($prop->element) === true) {
                             $printValue = '';
                             foreach ($prop->element as $element) {

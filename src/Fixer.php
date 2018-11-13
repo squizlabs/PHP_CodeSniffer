@@ -351,7 +351,7 @@ class Fixer
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt    = debug_backtrace();
+            $bt    = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             $sniff = $bt[1]['class'];
             $line  = $bt[0]['line'];
 
@@ -480,7 +480,7 @@ class Fixer
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt = debug_backtrace();
+            $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             if ($bt[1]['class'] === 'PHP_CodeSniffer\Fixer') {
                 $sniff = $bt[2]['class'];
                 $line  = $bt[1]['line'];
@@ -592,7 +592,7 @@ class Fixer
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt = debug_backtrace();
+            $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
             if ($bt[1]['class'] === 'PHP_CodeSniffer\Fixer') {
                 $sniff = $bt[2]['class'];
                 $line  = $bt[1]['line'];

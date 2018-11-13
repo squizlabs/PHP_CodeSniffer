@@ -11,7 +11,8 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util;
+use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Tokens;
 
 class LanguageConstructSpacingSniff implements Sniff
 {
@@ -68,6 +69,14 @@ class LanguageConstructSpacingSniff implements Sniff
         }
 
         $content = $tokens[$stackPtr]['content'];
+        if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
+            $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+            if ($nextNonEmpty !== false && $tokens[$nextNonEmpty]['code'] === T_NS_SEPARATOR) {
+                // Namespace keyword used as operator, not as the language construct.
+                return;
+            }
+        }
+
         if ($tokens[$stackPtr]['code'] === T_YIELD_FROM
             && strtolower($content) !== 'yield from'
         ) {
@@ -87,7 +96,7 @@ class LanguageConstructSpacingSniff implements Sniff
             }
 
             $error = 'Language constructs must be followed by a single space; expected 1 space between YIELD FROM found "%s"';
-            $data  = [Util\Common::prepareForOutput($found)];
+            $data  = [Common::prepareForOutput($found)];
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'IncorrectYieldFrom', $data);
             if ($fix === true) {
                 preg_match('/yield/i', $found, $yield);
@@ -113,7 +122,7 @@ class LanguageConstructSpacingSniff implements Sniff
             $content = $tokens[($stackPtr + 1)]['content'];
             if ($content !== ' ') {
                 $error = 'Language constructs must be followed by a single space; expected 1 space but found "%s"';
-                $data  = [Util\Common::prepareForOutput($content)];
+                $data  = [Common::prepareForOutput($content)];
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'IncorrectSingle', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');

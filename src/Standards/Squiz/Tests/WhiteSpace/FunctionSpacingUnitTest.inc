@@ -2,7 +2,7 @@
 /**
 * Comment
 */
-
+use Foo\{function bar, const BAZ};
 
 include $blah;
 

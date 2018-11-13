@@ -104,6 +104,7 @@ class OperatorBracketSniff implements Sniff
                 T_COLON               => true,
                 T_OPEN_PARENTHESIS    => true,
                 T_OPEN_SQUARE_BRACKET => true,
+                T_OPEN_CURLY_BRACKET  => true,
                 T_OPEN_SHORT_ARRAY    => true,
                 T_CASE                => true,
             ];
@@ -143,6 +144,7 @@ class OperatorBracketSniff implements Sniff
             T_CLOSE_SQUARE_BRACKET,
             T_MODULUS,
             T_NONE,
+            T_BITWISE_NOT,
         ];
 
         $allowed += Tokens::$operators;
@@ -273,6 +275,7 @@ class OperatorBracketSniff implements Sniff
             T_DNUMBER                  => true,
             T_STRING                   => true,
             T_CONSTANT_ENCAPSED_STRING => true,
+            T_DOUBLE_QUOTED_STRING     => true,
             T_WHITESPACE               => true,
             T_NS_SEPARATOR             => true,
             T_THIS                     => true,
@@ -283,6 +286,7 @@ class OperatorBracketSniff implements Sniff
             T_ISSET                    => true,
             T_ARRAY                    => true,
             T_NONE                     => true,
+            T_BITWISE_NOT              => true,
         ];
 
         // Find the first token in the expression.

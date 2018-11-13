@@ -105,7 +105,6 @@ class CallTimePassByReferenceSniff implements Sniff
                 continue;
             }
 
-            // Checking this: $value = my_function(...[*]$arg...).
             $tokenBefore = $phpcsFile->findPrevious(
                 Tokens::$emptyTokens,
                 ($nextSeparator - 1),
@@ -114,7 +113,13 @@ class CallTimePassByReferenceSniff implements Sniff
             );
 
             if ($tokens[$tokenBefore]['code'] === T_BITWISE_AND) {
-                // Checking this: $value = my_function(...[*]&$arg...).
+                if ($phpcsFile->isReference($tokenBefore) === false) {
+                    continue;
+                }
+
+                // We also want to ignore references used in assignment
+                // operations passed as function arguments, but isReference()
+                // sees them as valid references (which they are).
                 $tokenBefore = $phpcsFile->findPrevious(
                     Tokens::$emptyTokens,
                     ($tokenBefore - 1),
@@ -122,16 +127,7 @@ class CallTimePassByReferenceSniff implements Sniff
                     true
                 );
 
-                // We have to exclude all uses of T_BITWISE_AND that are not
-                // references. We use a blacklist approach as we prefer false
-                // positives to not identifying a pass-by-reference call at all.
-                $tokenCode = $tokens[$tokenBefore]['code'];
-                if ($tokenCode === T_VARIABLE
-                    || $tokenCode === T_CLOSE_PARENTHESIS
-                    || $tokenCode === T_CLOSE_SQUARE_BRACKET
-                    || $tokenCode === T_LNUMBER
-                    || isset(Tokens::$assignmentTokens[$tokenCode]) === true
-                ) {
+                if (isset(Tokens::$assignmentTokens[$tokens[$tokenBefore]['code']]) === true) {
                     continue;
                 }
 

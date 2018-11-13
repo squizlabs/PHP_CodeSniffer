@@ -117,3 +117,21 @@ $globalVariable = true;
 
 /* testNotAVariable */
 return;
+
+$a = ( $foo == $bar ? new stdClass() :
+	new class() {
+		/* testNestedProperty 1 */
+		public $var = true;
+
+		/* testNestedMethodParam 1 */
+		public function something($var = false) {}
+	}
+);
+
+function_call( 'param', new class {
+	/* testNestedProperty 2 */
+	public $year = 2017;
+
+	/* testNestedMethodParam 2 */
+	public function __construct( $open, $post_id ) {}
+}, 10, 2 );

@@ -213,9 +213,14 @@ class Cache
             ksort($paths);
             $paths = array_reverse($paths);
 
-            $numFiles  = count($config->files);
-            $tmpDir    = sys_get_temp_dir();
+            $numFiles = count($config->files);
+
             $cacheFile = null;
+            $cacheDir  = getenv('XDG_CACHE_HOME');
+            if ($cacheDir === false || is_dir($cacheDir) === false) {
+                $cacheDir = sys_get_temp_dir();
+            }
+
             foreach ($paths as $file => $count) {
                 if ($count !== $numFiles) {
                     unset($paths[$file]);
@@ -223,7 +228,7 @@ class Cache
                 }
 
                 $fileHash = substr(sha1($file), 0, 12);
-                $testFile = $tmpDir.DIRECTORY_SEPARATOR."phpcs.$fileHash.$cacheHash.cache";
+                $testFile = $cacheDir.DIRECTORY_SEPARATOR."phpcs.$fileHash.$cacheHash.cache";
                 if ($cacheFile === null) {
                     // This will be our default location if we can't find
                     // an existing file.
@@ -243,7 +248,7 @@ class Cache
 
             if ($cacheFile === null) {
                 // Unlikely, but just in case $paths is empty for some reason.
-                $cacheFile = $tmpDir.DIRECTORY_SEPARATOR."phpcs.$cacheHash.cache";
+                $cacheFile = $cacheDir.DIRECTORY_SEPARATOR."phpcs.$cacheHash.cache";
             }
         }//end if
 

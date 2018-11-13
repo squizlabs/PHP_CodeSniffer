@@ -302,6 +302,22 @@ class GetMemberPropertiesTest extends TestCase
                 '/* testInterfaceProperty */',
                 [],
             ],
+            [
+                '/* testNestedProperty 1 */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                ],
+            ],
+            [
+                '/* testNestedProperty 2 */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                ],
+            ],
         ];
 
     }//end dataGetMemberProperties()
@@ -346,9 +362,12 @@ class GetMemberPropertiesTest extends TestCase
     public function dataNotClassProperty()
     {
         return [
+            ['/* testMethodParam */'],
             ['/* testImportedGlobal */'],
             ['/* testLocalVariable */'],
             ['/* testGlobalVariable */'],
+            ['/* testNestedMethodParam 1 */'],
+            ['/* testNestedMethodParam 2 */'],
         ];
 
     }//end dataNotClassProperty()

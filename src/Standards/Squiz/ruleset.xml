@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Squiz">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Squiz" xsi:noNamespaceSchemaLocation="../../../phpcs.xsd">
     <description>The Squiz coding standard.</description>
 
     <!-- Include some specific sniffs -->
@@ -20,6 +20,7 @@
     <rule ref="Generic.Strings.UnnecessaryStringConcat"/>
     <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
     <rule ref="Generic.WhiteSpace.LanguageConstructSpacing"/>
+    <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>
     <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
     <rule ref="PEAR.Files.IncludingFile"/>

@@ -54,4 +54,25 @@ class MyClass
             }
         };
     }
+
+    public function getAnonymousClass() {
+        return new class() {
+			public static function something() {
+				$this->doSomething();
+            }
+        };
+    }
+}
+
+trait MyTrait {
+	public static function myFunc() {
+		$this->doSomething();
+	}
+}
+
+$b = new class()
+{
+	public static function myFunc() {
+		$this->doSomething();
+	}
 }

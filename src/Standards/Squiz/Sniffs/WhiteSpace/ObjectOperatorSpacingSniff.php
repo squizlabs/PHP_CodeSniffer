@@ -60,6 +60,15 @@ class ObjectOperatorSpacingSniff implements Sniff
             }
         }
 
+        $phpcsFile->recordMetric($stackPtr, 'Spacing before object operator', $before);
+        $this->checkSpacingBeforeOperator($phpcsFile, $stackPtr, $before);
+
+        if (isset($tokens[($stackPtr + 1)]) === false
+            || isset($tokens[($stackPtr + 2)]) === false
+        ) {
+            return;
+        }
+
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $after = 0;
         } else {
@@ -70,10 +79,7 @@ class ObjectOperatorSpacingSniff implements Sniff
             }
         }
 
-        $phpcsFile->recordMetric($stackPtr, 'Spacing before object operator', $before);
         $phpcsFile->recordMetric($stackPtr, 'Spacing after object operator', $after);
-
-        $this->checkSpacingBeforeOperator($phpcsFile, $stackPtr, $before);
         $this->checkSpacingAfterOperator($phpcsFile, $stackPtr, $after);
 
     }//end process()
