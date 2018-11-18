@@ -80,3 +80,5 @@ $someObject
 ->endSomething()
 ->doSomething(23, 42)
 ->endEverything();
+
+// phpcs:set PEAR.WhiteSpace.ObjectOperatorIndent multilevel false
