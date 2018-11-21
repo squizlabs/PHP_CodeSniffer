@@ -16,6 +16,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class SelfMemberReferenceSniff extends AbstractScopeSniff
 {
@@ -57,7 +58,12 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             return;
         }
 
-        $calledClassName = ($stackPtr - 1);
+        $calledClassName = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        if ($calledClassName === false) {
+            // Parse error.
+            return;
+        }
+
         if ($tokens[$calledClassName]['code'] === T_SELF) {
             if ($tokens[$calledClassName]['content'] !== 'self') {
                 $error = 'Must use "self::" for local static member reference; found "%s::"';
