@@ -108,9 +108,10 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
 
                     $phpcsFile->fixer->replaceToken($stackPtr, 'self::');
                     $phpcsFile->fixer->endChangeset();
-                }
 
-                return;
+                    // Fix potential whitespace issues in the next loop.
+                    return;
+                }
             }//end if
         }//end if
 
