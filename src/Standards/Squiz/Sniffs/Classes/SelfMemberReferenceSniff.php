@@ -44,6 +44,19 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        // Determine if this is a double colon which needs to be examined.
+        $conditions = $tokens[$stackPtr]['conditions'];
+        $conditions = array_reverse($conditions, true);
+        foreach ($conditions as $conditionToken => $tokenCode) {
+            if ($tokenCode === T_CLASS || $tokenCode === T_ANON_CLASS || $tokenCode === T_CLOSURE) {
+                break;
+            }
+        }
+
+        if ($conditionToken !== $currScope) {
+            return;
+        }
+
         $calledClassName = ($stackPtr - 1);
         if ($tokens[$calledClassName]['code'] === T_SELF) {
             if ($tokens[$calledClassName]['content'] !== 'self') {
@@ -76,25 +89,22 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             }
 
             if ($declarationName === $fullQualifiedClassName) {
-                // Class name is the same as the current class, which is not allowed
-                // except if being used inside a closure.
-                if ($phpcsFile->hasCondition($stackPtr, T_CLOSURE) === false) {
-                    $error = 'Must use "self::" for local static member reference';
-                    $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'NotUsed');
+                // Class name is the same as the current class, which is not allowed.
+                $error = 'Must use "self::" for local static member reference';
+                $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'NotUsed');
 
-                    if ($fix === true) {
-                        $prev = $phpcsFile->findPrevious([T_NS_SEPARATOR, T_STRING], ($stackPtr - 1), null, true);
-                        $phpcsFile->fixer->beginChangeset();
-                        for ($i = ($prev + 1); $i < $stackPtr; $i++) {
-                            $phpcsFile->fixer->replaceToken($i, '');
-                        }
-
-                        $phpcsFile->fixer->replaceToken($stackPtr, 'self::');
-                        $phpcsFile->fixer->endChangeset();
+                if ($fix === true) {
+                    $prev = $phpcsFile->findPrevious([T_NS_SEPARATOR, T_STRING], ($stackPtr - 1), null, true);
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($prev + 1); $i < $stackPtr; $i++) {
+                        $phpcsFile->fixer->replaceToken($i, '');
                     }
 
-                    return;
+                    $phpcsFile->fixer->replaceToken($stackPtr, 'self::');
+                    $phpcsFile->fixer->endChangeset();
                 }
+
+                return;
             }//end if
         }//end if
 
