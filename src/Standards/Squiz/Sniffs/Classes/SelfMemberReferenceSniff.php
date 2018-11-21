@@ -78,7 +78,8 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
         } else if ($tokens[$calledClassName]['code'] === T_STRING) {
             // If the class is called with a namespace prefix, build fully qualified
             // namespace calls for both current scope class and requested class.
-            if ($tokens[($calledClassName - 1)]['code'] === T_NS_SEPARATOR) {
+            $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($calledClassName - 1), null, true);
+            if ($prevNonEmpty !== false && $tokens[$prevNonEmpty]['code'] === T_NS_SEPARATOR) {
                 $declarationName        = $this->getDeclarationNameWithNamespace($tokens, $calledClassName);
                 $declarationName        = substr($declarationName, 1);
                 $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
@@ -100,10 +101,20 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
                 $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'NotUsed');
 
                 if ($fix === true) {
-                    $prev = $phpcsFile->findPrevious([T_NS_SEPARATOR, T_STRING], ($stackPtr - 1), null, true);
                     $phpcsFile->fixer->beginChangeset();
-                    for ($i = ($prev + 1); $i < $stackPtr; $i++) {
-                        $phpcsFile->fixer->replaceToken($i, '');
+
+                    $currentPointer = ($stackPtr - 1);
+                    while ($tokens[$currentPointer]['code'] === T_NS_SEPARATOR
+                        || $tokens[$currentPointer]['code'] === T_STRING
+                        || isset(Tokens::$emptyTokens[$tokens[$currentPointer]['code']]) === true
+                    ) {
+                        if (isset(Tokens::$emptyTokens[$tokens[$currentPointer]['code']]) === true) {
+                            --$currentPointer;
+                            continue;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($currentPointer, '');
+                        --$currentPointer;
                     }
 
                     $phpcsFile->fixer->replaceToken($stackPtr, 'self::');
@@ -111,7 +122,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
 
                     // Fix potential whitespace issues in the next loop.
                     return;
-                }
+                }//end if
             }//end if
         }//end if
 
@@ -119,7 +130,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             $found = strlen($tokens[($stackPtr - 1)]['content']);
             $error = 'Expected 0 spaces before double colon; %s found';
             $data  = [$found];
-            $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceBefore', $data);
+            $fix   = $phpcsFile->addFixableError($error, ($stackPtr - 1), 'SpaceBefore', $data);
 
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
@@ -136,7 +147,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             $found = strlen($tokens[($stackPtr + 1)]['content']);
             $error = 'Expected 0 spaces after double colon; %s found';
             $data  = [$found];
-            $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'SpaceAfter', $data);
+            $fix   = $phpcsFile->addFixableError($error, ($stackPtr - 1), 'SpaceAfter', $data);
 
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
@@ -182,9 +193,15 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
         $currentPointer = $stackPtr;
         while ($tokens[$currentPointer]['code'] === T_NS_SEPARATOR
             || $tokens[$currentPointer]['code'] === T_STRING
+            || isset(Tokens::$emptyTokens[$tokens[$currentPointer]['code']]) === true
         ) {
+            if (isset(Tokens::$emptyTokens[$tokens[$currentPointer]['code']]) === true) {
+                --$currentPointer;
+                continue;
+            }
+
             $nameParts[] = $tokens[$currentPointer]['content'];
-            $currentPointer--;
+            --$currentPointer;
         }
 
         $nameParts = array_reverse($nameParts);
