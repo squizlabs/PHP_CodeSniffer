@@ -28,6 +28,7 @@ class ObjectOperatorSpacingUnitTest extends AbstractSniffUnitTest
         return [
             3  => 1,
             4  => 2,
+            5  => 1,
             6  => 2,
             8  => 1,
             9  => 1,

@@ -104,7 +104,16 @@ class ObjectOperatorSpacingSniff implements Sniff
             $error = 'Space found before object operator';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Before');
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+                $tokens = $phpcsFile->getTokens();
+                $curPos = ($stackPtr - 1);
+
+                $phpcsFile->fixer->beginChangeset();
+                while ($tokens[$curPos]['code'] === T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken($curPos, '');
+                    --$curPos;
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
 
             return false;
@@ -134,7 +143,16 @@ class ObjectOperatorSpacingSniff implements Sniff
             $error = 'Space found after object operator';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'After');
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($stackPtr + 1), '');
+                $tokens = $phpcsFile->getTokens();
+                $curPos = ($stackPtr + 1);
+
+                $phpcsFile->fixer->beginChangeset();
+                while ($tokens[$curPos]['code'] === T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken($curPos, '');
+                    ++$curPos;
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
 
             return false;
