@@ -75,7 +75,7 @@ class Timing
             $time = round($time).'ms';
         }
 
-        $mem = round((memory_get_peak_usage(true) / (1024 * 1024)), 2).'Mb';
+        $mem = round((memory_get_peak_usage(true) / (1024 * 1024)), 2).'MB';
         echo "Time: $time; Memory: $mem".PHP_EOL.PHP_EOL;
 
         self::$printed = true;
