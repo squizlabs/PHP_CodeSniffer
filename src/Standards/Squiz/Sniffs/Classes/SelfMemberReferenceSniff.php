@@ -208,7 +208,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
         $namespaceDeclaration = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
 
         if ($namespaceDeclaration !== false) {
-            $endOfNamespaceDeclaration = $phpcsFile->findNext(T_SEMICOLON, $namespaceDeclaration);
+            $endOfNamespaceDeclaration = $phpcsFile->findNext([T_SEMICOLON, T_OPEN_CURLY_BRACKET], $namespaceDeclaration);
             $namespace = $this->getDeclarationNameWithNamespace(
                 $phpcsFile->getTokens(),
                 ($endOfNamespaceDeclaration - 1)
