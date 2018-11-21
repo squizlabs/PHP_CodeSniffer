@@ -132,6 +132,16 @@ class Foo
     function bar(){}
 }
 
+if ($foo) {
+}//end if
+// Another comment here.
+$foo++;
+
+if ($foo) {
+}//end if
+// another comment here.
+$foo++;
+
 /*
  * N.B.: The below test line must be the last test in the file.
  * Testing that a new line after an inline comment when it's the last non-whitespace

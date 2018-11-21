@@ -46,6 +46,7 @@ class InlineCommentUnitTest extends AbstractSniffUnitTest
                 118 => 1,
                 126 => 2,
                 130 => 2,
+                149 => 1,
             ];
 
             return $errors;
