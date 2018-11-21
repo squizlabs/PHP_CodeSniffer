@@ -81,7 +81,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($calledClassName - 1), null, true);
             if ($prevNonEmpty !== false && $tokens[$prevNonEmpty]['code'] === T_NS_SEPARATOR) {
                 $declarationName        = $this->getDeclarationNameWithNamespace($tokens, $calledClassName);
-                $declarationName        = substr($declarationName, 1);
+                $declarationName        = ltrim($declarationName, '\\');
                 $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
                 if ($fullQualifiedClassName === '\\') {
                     $fullQualifiedClassName = '';
