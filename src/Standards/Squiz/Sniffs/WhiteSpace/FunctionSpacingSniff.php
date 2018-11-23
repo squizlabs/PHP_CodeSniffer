@@ -166,7 +166,21 @@ class FunctionSpacingSniff implements Sniff
             } else {
                 $foundLines += ($tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line']);
             }
-        }
+
+            $sliced = array_slice($tokens, ($closer + 1), $phpcsFile->findEndOfStatement($closer + 1), true);
+            foreach ($sliced as $number => $token) {
+                if (in_array($token['code'], [T_COMMENT, T_WHITESPACE]) === true) {
+                    continue;
+                }
+
+                if ($token['type'] === 'T_CLOSE_CURLY_BRACKET' && $tokens[$token['scope_condition']]['code'] === T_FUNCTION) {
+                    // Is a nested function.
+                    $requiredSpacing = 0;
+                }
+
+                break;
+            }
+        }//end if
 
         if ($foundLines !== $requiredSpacing) {
             $error = 'Expected %s blank line';

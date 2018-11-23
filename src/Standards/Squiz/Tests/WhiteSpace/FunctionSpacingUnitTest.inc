@@ -411,3 +411,31 @@ class MyClass
      */
     function func2() {}
 }//end class
+
+function func1() {
+    function func2() {}
+
+    function func3() {
+        function func4() {}
+
+
+    }
+
+}
+
+class MyClass
+{
+
+    function func1() {
+        function func2() {}
+
+        function func3() {
+            function func4() {}
+
+
+        }
+
+
+    }
+
+}
