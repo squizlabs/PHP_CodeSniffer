@@ -134,7 +134,7 @@ class PHP_CodeSniffer_File
     /**
      * Comments not capitalised.
      *
-     * @param integer $one   comment
+     * @param integer $one   Comment
      * @param array   $two   -comment
      * @param MyClas  $three 0comment
      *
@@ -190,7 +190,7 @@ public function noReturnOutsideClass()
 /**
  * Missing param comment.
  *
- * @param integer $one comment
+ * @param integer $one Comment
  *
  * @see     wrong indent
  * @see

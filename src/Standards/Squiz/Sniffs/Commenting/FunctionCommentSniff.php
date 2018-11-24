@@ -552,8 +552,42 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             // Param comments must start with a capital letter and end with the full stop.
             if (preg_match('/^(\p{Ll}|\P{L})/u', $param['comment']) === 1) {
                 $error = 'Parameter comment must start with a capital letter';
-                $phpcsFile->addError($error, $param['tag'], 'ParamCommentNotCapital');
-            }
+                $fix   = $phpcsFile->addFixableError($error, $param['tag'], 'ParamCommentNotCapital');
+                if ($fix === true) {
+                    // Check number of spaces after the type.
+                    $spaces = ($maxType - strlen($param['type']) + 1);
+                    $phpcsFile->fixer->beginChangeset();
+
+                    $content  = $param['type'];
+                    $content .= str_repeat(' ', $spaces);
+                    $content .= $param['var'];
+                    $content .= str_repeat(' ', $param['var_space']);
+                    $content .= ucfirst($param['commentLines'][0]['comment']);
+                    $phpcsFile->fixer->replaceToken(($param['tag'] + 2), $content);
+
+                    // Fix up the indent of additional comment lines.
+                    $diff = ($param['type_space'] - $spaces);
+                    foreach ($param['commentLines'] as $lineNum => $line) {
+                        if ($lineNum === 0
+                            || $param['commentLines'][$lineNum]['indent'] === 0
+                        ) {
+                            continue;
+                        }
+
+                        $newIndent = ($param['commentLines'][$lineNum]['indent'] - $diff);
+                        if ($newIndent <= 0) {
+                            continue;
+                        }
+
+                        $phpcsFile->fixer->replaceToken(
+                            ($param['commentLines'][$lineNum]['token'] - 1),
+                            str_repeat(' ', $newIndent)
+                        );
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+            }//end if
 
             $lastChar = substr($param['comment'], -1);
             if ($lastChar !== '.') {
