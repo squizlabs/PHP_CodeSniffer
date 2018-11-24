@@ -13,14 +13,14 @@ abstract class Foo {
 }
 
 // Incorrect.
-Function Bar() {}
-$a = FUNCTION() {};
+function Bar() {}
+$a = function() {};
 
 abstract class Bar {
-	Public function PublicFunction() {}
-	Private function PrivateFunction() {}
-	Protected function ProtectedFunction() {}
-	Static function StaticFunction() {}
-	ABSTRACT proTECted FUNCTION AbstractProtectedFunction();
-	Final STATIC PUBLIC Function FinalStaticPublicFunction() {}
+	public function PublicFunction() {}
+	private function PrivateFunction() {}
+	protected function ProtectedFunction() {}
+	static function StaticFunction() {}
+	abstract protected function AbstractProtectedFunction();
+	final static public function FinalStaticPublicFunction() {}
 }
