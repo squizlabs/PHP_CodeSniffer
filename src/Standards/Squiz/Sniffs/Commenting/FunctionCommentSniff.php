@@ -40,7 +40,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
         $tokens = $phpcsFile->getTokens();
 
         // Skip constructor and destructor.
-        $methodName      = $phpcsFile->getDeclarationName($stackPtr);
+        $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         $return = null;
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
