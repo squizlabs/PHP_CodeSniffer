@@ -118,6 +118,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Chris Wilkinson for the patch
   - Squiz.Classes.SelfMemberReference now fixes multiple errors at once, increasing fixer performance
     -- Thanks to Gabriel Ostrolucký for the patch
+  - Squiz.Functions.LowercaseFunctionKeywords now checks abstract and final prefixes, and auto-fixes errors
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.ObjectOperatorSpacing is now more tolerant of parse errors
   - Squiz.WhiteSpace.ObjectOperatorSpacing now fixes errors more efficiently
     -- Thanks to Juliette Reinders Folmer for the patch
