@@ -1535,6 +1535,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="GlobalFunctionUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="GlobalFunctionUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseFunctionKeywordsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowercaseFunctionKeywordsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseFunctionKeywordsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="MultiLineFunctionDeclarationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="MultiLineFunctionDeclarationUnitTest.inc.fixed" role="test" />
