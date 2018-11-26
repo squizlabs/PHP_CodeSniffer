@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\CSS;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class SemicolonSpacingSniff implements Sniff
 {
@@ -48,21 +49,46 @@ class SemicolonSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-        if ($semicolon === false || $tokens[$semicolon]['line'] !== $tokens[$stackPtr]['line']) {
-            $error = 'Style definitions must end with a semicolon';
-            $phpcsFile->addError($error, $stackPtr, 'NotAtEnd');
+        $nextStatement = $phpcsFile->findNext([T_STYLE, T_CLOSE_CURLY_BRACKET], ($stackPtr + 1));
+        if ($nextStatement === false) {
             return;
         }
 
-        if ($tokens[($semicolon - 1)]['code'] === T_WHITESPACE) {
-            $length = strlen($tokens[($semicolon - 1)]['content']);
-            $error  = 'Expected 0 spaces before semicolon in style definition; %s found';
-            $data   = [$length];
-            $fix    = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceFound', $data);
-            if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($semicolon - 1), '');
+        $endOfThisStatement = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($nextStatement - 1), null, true);
+        if ($tokens[$endOfThisStatement]['code'] !== T_SEMICOLON) {
+            $error = 'Style definitions must end with a semicolon';
+            $phpcsFile->addError($error, $endOfThisStatement, 'NotAtEnd');
+            return;
+        }
+
+        if ($tokens[($endOfThisStatement - 1)]['code'] !== T_WHITESPACE) {
+            return;
+        }
+
+        // There is a semi-colon, so now find the last token in the statement.
+        $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($endOfThisStatement - 1), null, true);
+        $found        = $tokens[($endOfThisStatement - 1)]['length'];
+        if ($tokens[$prevNonEmpty]['line'] !== $tokens[$endOfThisStatement]['line']) {
+            $found = 'newline';
+        }
+
+        $error = 'Expected 0 spaces before semicolon in style definition; %s found';
+        $data  = [$found];
+        $fix   = $phpcsFile->addFixableError($error, $prevNonEmpty, 'SpaceFound', $data);
+        if ($fix === true) {
+            $phpcsFile->fixer->beginChangeset();
+            $phpcsFile->fixer->addContent($prevNonEmpty, ';');
+            $phpcsFile->fixer->replaceToken($endOfThisStatement, '');
+
+            for ($i = ($endOfThisStatement - 1); $i > $prevNonEmpty; $i--) {
+                if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                    break;
+                }
+
+                $phpcsFile->fixer->replaceToken($i, '');
             }
+
+            $phpcsFile->fixer->endChangeset();
         }
 
     }//end process()
