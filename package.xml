@@ -116,6 +116,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.InlineComment now has better detection of comment block boundaries
   - Squiz.Classes.ClassFileName now checks that a trait name matches the filename
     -- Thanks to Chris Wilkinson for the patch
+  - Squiz.Classes.SelfMemberReference now supports scoped declarations and anonymous classes
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Classes.SelfMemberReference now fixes multiple errors at once, increasing fixer performance
     -- Thanks to Gabriel Ostrolucký for the patch
   - Squiz.Functions.LowercaseFunctionKeywords now checks abstract and final prefixes, and auto-fixes errors
