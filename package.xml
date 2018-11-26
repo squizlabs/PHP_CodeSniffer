@@ -1502,6 +1502,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="NamedColoursUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NamedColoursUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpacityUnitTest.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpacityUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpacityUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SemicolonSpacingUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SemicolonSpacingUnitTest.php" role="test" />
