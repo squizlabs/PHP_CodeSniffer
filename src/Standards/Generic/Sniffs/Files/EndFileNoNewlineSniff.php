@@ -55,7 +55,7 @@ class EndFileNoNewlineSniff implements Sniff
         $stackPtr = ($phpcsFile->numTokens - 1);
 
         if ($tokens[$stackPtr]['content'] === '') {
-            $stackPtr--;
+            --$stackPtr;
         }
 
         $eolCharLen = strlen($phpcsFile->eolChar);
@@ -64,8 +64,18 @@ class EndFileNoNewlineSniff implements Sniff
             $error = 'File must not end with a newline character';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Found');
             if ($fix === true) {
-                $newContent = substr($tokens[$stackPtr]['content'], 0, ($eolCharLen * -1));
-                $phpcsFile->fixer->replaceToken($stackPtr, $newContent);
+                $phpcsFile->fixer->beginChangeset();
+
+                for ($i = $stackPtr; $i > 0; $i--) {
+                    $newContent = rtrim($tokens[$i]['content'], $phpcsFile->eolChar);
+                    $phpcsFile->fixer->replaceToken($i, $newContent);
+
+                    if ($newContent !== '') {
+                        break;
+                    }
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
         }
 
