@@ -1145,6 +1145,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.4.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.5.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.6.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.2.inc" role="test" />
