@@ -5,10 +5,10 @@ if ($something) {
 }
 
 if ($something) {
-} elseif ($somethingElse) {
+} else if ($somethingElse) {
 }
 
 if ($something) {
 } else if ($somethingElse) {
-} elseif ($another) {
+} else if ($another) {
 }
