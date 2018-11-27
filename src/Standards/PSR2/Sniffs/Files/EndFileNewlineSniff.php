@@ -57,7 +57,7 @@ class EndFileNewlineSniff implements Sniff
             $error = 'Expected 1 newline at end of file; 0 found';
             $fix   = $phpcsFile->addFixableError($error, $lastToken, 'NoneFound');
             if ($fix === true) {
-                $phpcsFile->fixer->addNewline($lastToken);
+                $phpcsFile->fixer->addContent($lastToken, "\n");
             }
 
             $phpcsFile->recordMetric($stackPtr, 'Number of newlines at EOF', '0');
@@ -90,7 +90,7 @@ class EndFileNewlineSniff implements Sniff
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
-                $phpcsFile->fixer->replaceToken($lastToken, $phpcsFile->eolChar);
+                $phpcsFile->fixer->replaceToken($lastToken, "\n");
                 $phpcsFile->fixer->endChangeset();
             }
         }
