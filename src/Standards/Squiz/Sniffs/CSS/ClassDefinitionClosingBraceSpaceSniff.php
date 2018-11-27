@@ -48,33 +48,57 @@ class ClassDefinitionClosingBraceSpaceSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+        $next   = $stackPtr;
+        while (true) {
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
+            if ($next === false) {
+                return;
+            }
 
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if ($next === false) {
-            return;
+            if (isset(Tokens::$emptyTokens[$tokens[$next]['code']]) === true
+                && $tokens[$next]['line'] === $tokens[$stackPtr]['line']
+            ) {
+                // Trailing comment.
+                continue;
+            }
+
+            break;
         }
 
         if ($tokens[$next]['code'] !== T_CLOSE_TAG) {
             $found = (($tokens[$next]['line'] - $tokens[$stackPtr]['line']) - 1);
             if ($found !== 1) {
                 $error = 'Expected one blank line after closing brace of class definition; %s found';
-                $data  = [$found];
+                $data  = [max(0, $found)];
                 $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterClose', $data);
 
                 if ($fix === true) {
-                    if ($found === 0) {
-                        $phpcsFile->fixer->addNewline($stackPtr);
+                    $firstOnLine = $next;
+                    while ($tokens[$firstOnLine]['column'] !== 1) {
+                        --$firstOnLine;
+                    }
+
+                    if ($found < 0) {
+                        // Next statement on same line as the closing brace.
+                        $phpcsFile->fixer->addContentBefore($next, $phpcsFile->eolChar.$phpcsFile->eolChar);
+                    } else if ($found === 0) {
+                        // Next statement on next line, no blank line.
+                        $phpcsFile->fixer->addContentBefore($firstOnLine, $phpcsFile->eolChar);
                     } else {
-                        $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                        // Too many blank lines.
                         $phpcsFile->fixer->beginChangeset();
-                        for ($i = ($stackPtr + 1); $i < ($nextContent - 1); $i++) {
+                        for ($i = ($firstOnLine - 1); $i > $stackPtr; $i--) {
+                            if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                                break;
+                            }
+
                             $phpcsFile->fixer->replaceToken($i, '');
                         }
 
-                        $phpcsFile->fixer->addNewline($i);
+                        $phpcsFile->fixer->addContentBefore($firstOnLine, $phpcsFile->eolChar.$phpcsFile->eolChar);
                         $phpcsFile->fixer->endChangeset();
                     }
-                }
+                }//end if
             }//end if
         }//end if
 
