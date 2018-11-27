@@ -21,20 +21,15 @@ class ObjectMemberCommaUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $testFile The name of the file being tested.
-     *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='ObjectMemberCommaUnitTest.js')
+    public function getErrorList()
     {
-        if ($testFile !== 'ObjectMemberCommaUnitTest.js') {
-            return [];
-        }
-
         return [
             1  => 1,
             22 => 1,
             38 => 1,
+            45 => 1,
         ];
 
     }//end getErrorList()
