@@ -10,3 +10,8 @@ li {
     background:url(<?php print $staticserver; ?>/images/<?php print $staticdir; ?>/bullet.gif) left <?php print $left; ?>px no-repeat; margin:0px; padding-left:10px; margin-bottom:<?php echo $marginBottom; ?>px; line-height:13px;
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#2e62a8, endColorstr=#123363);
 }
+
+/* Document handling of comments and annotations. */
+div#annotations {-webkit-tap-highlight-color:transparent;/* phpcs:disable Standard.Cat.SniffName */-webkit-touch-callout:none;/*phpcs:enable*/-webkit-user-select:none;}
+
+div#comments {height:100%;/*comment*/width:100%;}
