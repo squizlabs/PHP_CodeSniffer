@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class LowercaseClassKeywordsSniff implements Sniff
 {
@@ -23,17 +24,15 @@ class LowercaseClassKeywordsSniff implements Sniff
      */
     public function register()
     {
-        return [
-            T_CLASS,
-            T_INTERFACE,
-            T_TRAIT,
-            T_EXTENDS,
-            T_IMPLEMENTS,
-            T_ABSTRACT,
-            T_FINAL,
-            T_VAR,
-            T_CONST,
-        ];
+        $targets   = Tokens::$ooScopeTokens;
+        $targets[] = T_EXTENDS;
+        $targets[] = T_IMPLEMENTS;
+        $targets[] = T_ABSTRACT;
+        $targets[] = T_FINAL;
+        $targets[] = T_VAR;
+        $targets[] = T_CONST;
+
+        return $targets;
 
     }//end register()
 
@@ -51,18 +50,19 @@ class LowercaseClassKeywordsSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $content = $tokens[$stackPtr]['content'];
-        if ($content !== strtolower($content)) {
+        $content   = $tokens[$stackPtr]['content'];
+        $contentLc = strtolower($content);
+        if ($content !== $contentLc) {
             $error = '%s keyword must be lowercase; expected "%s" but found "%s"';
             $data  = [
                 strtoupper($content),
-                strtolower($content),
+                $contentLc,
                 $content,
             ];
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'FoundUppercase', $data);
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($stackPtr, strtolower($content));
+                $phpcsFile->fixer->replaceToken($stackPtr, $contentLc);
             }
         }
 

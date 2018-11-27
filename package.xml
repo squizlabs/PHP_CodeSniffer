@@ -1394,6 +1394,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DuplicatePropertyUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DuplicatePropertyUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseClassKeywordsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowercaseClassKeywordsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseClassKeywordsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SelfMemberReferenceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SelfMemberReferenceUnitTest.inc.fixed" role="test" />
