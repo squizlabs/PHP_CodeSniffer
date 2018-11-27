@@ -145,7 +145,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Chris Wilkinson for the patch
   - Fixed bug #2214 : File::getMemberProperties() is recognizing method params as properties
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #2236 : Memory info masurement unit is Mb but probably should be MB
+  - Fixed bug #2236 : Memory info measurement unit is Mb but probably should be MB
  </notes>
  <contents>
   <dir name="/">
