@@ -1600,6 +1600,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InnerFunctionsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InnerFunctionsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercasePHPFunctionsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowercasePHPFunctionsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercasePHPFunctionsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NonExecutableCodeUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NonExecutableCodeUnitTest.2.inc" role="test" />
