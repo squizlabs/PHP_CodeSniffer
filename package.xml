@@ -1648,7 +1648,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LogicalOperatorSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LogicalOperatorSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LogicalOperatorSpacingUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LogicalOperatorSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LogicalOperatorSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="MemberVarSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="MemberVarSpacingUnitTest.inc.fixed" role="test" />
