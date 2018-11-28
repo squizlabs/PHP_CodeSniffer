@@ -7,7 +7,7 @@ function test()
     // Valid comment.
 }
 
-function test() // This is a function
+function testing() // This is a function
 {
 
 }//end test()
@@ -22,3 +22,15 @@ class TestClass
 if (true || -1 == $b) { /* test */
 }
 $y = 10 + /* test */ -2;
+
+$a = function() {
+};//end closure
+
+$array = [
+	function($a) {
+	}, // phpcs:ignore Standard.Category.SniffName -- for reasons.
+	'key' => function($b) {
+	}, // comment.
+	'key' => 'value', // phpcs:ignore Standard.Category.SniffName -- for reasons.
+	'key' => 'value', // comment.
+];
