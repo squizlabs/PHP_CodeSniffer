@@ -1474,6 +1474,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDefinitionNameSpacingUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDefinitionNameSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDefinitionOpeningBraceSpaceUnitTest.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDefinitionOpeningBraceSpaceUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDefinitionOpeningBraceSpaceUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ColonSpacingUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ColonSpacingUnitTest.css.fixed" role="test" />
