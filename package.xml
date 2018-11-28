@@ -1492,8 +1492,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyStyleDefinitionUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenStylesUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenStylesUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.css" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.css.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.1.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.1.css.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.2.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseStyleDefinitionUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseStyleDefinitionUnitTest.php" role="test" />
