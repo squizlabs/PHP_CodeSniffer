@@ -1531,6 +1531,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.2.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.3.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.5.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.6.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.inc.fixed" role="test" />

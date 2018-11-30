@@ -214,8 +214,9 @@ class FunctionSpacingSniff implements Sniff
         if ($prevLineToken === null) {
             // Never found the previous line, which means
             // there are 0 blank lines before the function.
-            $foundLines  = 0;
-            $prevContent = 0;
+            $foundLines    = 0;
+            $prevContent   = 0;
+            $prevLineToken = 0;
         } else {
             $currentLine = $tokens[$stackPtr]['line'];
 
@@ -234,6 +235,8 @@ class FunctionSpacingSniff implements Sniff
                 // Account for function comments.
                 $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, ($tokens[$prevContent]['comment_opener'] - 1), null, true);
             }
+
+            $prevLineToken = $prevContent;
 
             // Before we throw an error, check that we are not throwing an error
             // for another function. We don't want to error for no blank lines after
@@ -291,18 +294,14 @@ class FunctionSpacingSniff implements Sniff
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, $errorCode, $data);
             if ($fix === true) {
-                if ($prevContent === 0) {
-                    $nextSpace = 0;
-                } else {
-                    $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($prevContent + 1), $stackPtr);
-                    if ($nextSpace === false) {
-                        $nextSpace = ($stackPtr - 1);
-                    }
+                $nextSpace = $phpcsFile->findNext(T_WHITESPACE, ($prevContent + 1), $stackPtr);
+                if ($nextSpace === false) {
+                    $nextSpace = ($stackPtr - 1);
                 }
 
                 if ($foundLines < $requiredSpacing) {
                     $padding = str_repeat($phpcsFile->eolChar, ($requiredSpacing - $foundLines));
-                    $phpcsFile->fixer->addContentBefore($nextSpace, $padding);
+                    $phpcsFile->fixer->addContent($prevLineToken, $padding);
                 } else {
                     $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), null, true);
                     $phpcsFile->fixer->beginChangeset();

@@ -21,50 +21,70 @@ class FunctionSpacingUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList($testFile='')
     {
-        return [
-            20  => 1,
-            29  => 1,
-            38  => 1,
-            45  => 1,
-            49  => 1,
-            55  => 1,
-            58  => 1,
-            60  => 1,
-            75  => 1,
-            94  => 1,
-            105 => 1,
-            107 => 1,
-            113 => 2,
-            135 => 1,
-            154 => 1,
-            167 => 2,
-            184 => 1,
-            218 => 2,
-            275 => 1,
-            276 => 1,
-            289 => 1,
-            291 => 1,
-            297 => 1,
-            321 => 1,
-            323 => 1,
-            332 => 1,
-            338 => 1,
-            339 => 1,
-            348 => 2,
-            349 => 1,
-            350 => 1,
-            354 => 2,
-            355 => 1,
-            356 => 1,
-            379 => 1,
-            393 => 1,
-            405 => 2,
-            412 => 2,
-        ];
+        switch ($testFile) {
+        case 'FunctionSpacingUnitTest.1.inc':
+            return [
+                20  => 1,
+                29  => 1,
+                38  => 1,
+                45  => 1,
+                49  => 1,
+                55  => 1,
+                58  => 1,
+                60  => 1,
+                75  => 1,
+                94  => 1,
+                105 => 1,
+                107 => 1,
+                113 => 2,
+                135 => 1,
+                154 => 1,
+                167 => 2,
+                184 => 1,
+                218 => 2,
+                275 => 1,
+                276 => 1,
+                289 => 1,
+                291 => 1,
+                297 => 1,
+                321 => 1,
+                323 => 1,
+                332 => 1,
+                338 => 1,
+                339 => 1,
+                348 => 2,
+                349 => 1,
+                350 => 1,
+                354 => 2,
+                355 => 1,
+                356 => 1,
+                379 => 1,
+                393 => 1,
+                405 => 2,
+                412 => 2,
+            ];
+
+        case 'FunctionSpacingUnitTest.2.inc':
+            return [2 => 1];
+
+        case 'FunctionSpacingUnitTest.3.inc':
+            return [7 => 1];
+
+        case 'FunctionSpacingUnitTest.5.inc':
+            return [5 => 1];
+
+        case 'FunctionSpacingUnitTest.6.inc':
+            return [10 => 1];
+
+        default:
+            return [];
+        }//end switch
 
     }//end getErrorList()
 
