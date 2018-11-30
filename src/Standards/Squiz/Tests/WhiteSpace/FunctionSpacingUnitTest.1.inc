@@ -419,3 +419,27 @@ class MyClass
 echo 'just some code to let the below line test blank lines before';
 echo 'something'; function testingFunctionNotOnOwnLine() {} echo 'somethingelse';
 echo 'just some code to let the above line test blank lines after';
+
+trait MyTrait {
+
+
+    public function a(){}
+
+
+
+
+    public function b(){}
+    public function c(){}
+}
+
+$anon_class = new class() {
+    public function a(){}
+
+    protected function b(){}
+
+
+
+
+    private function c(){}
+
+};
