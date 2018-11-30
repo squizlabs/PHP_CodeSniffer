@@ -116,6 +116,15 @@ class ComparisonOperatorUsageSniff implements Sniff
                         if (isset($tokens[$i]['scope_closer']) === true) {
                             break;
                         }
+                    } else if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
+                        // Stop if this is the start of a pair of
+                        // parentheses that surrounds the inline
+                        // IF statement.
+                        if (isset($tokens[$i]['parenthesis_opener']) === true
+                            && $tokens[$i]['parenthesis_closer'] >= $stackPtr
+                        ) {
+                            break;
+                        }
                     }
                 }//end for
 

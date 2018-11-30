@@ -134,3 +134,5 @@ function foo(string $bar, array $baz, ?MyClass $object) : MyClass {}
 
 if (empty($argTags > 0)) {
 }
+
+myFunction($var1 === true ? "" : "foobar");
