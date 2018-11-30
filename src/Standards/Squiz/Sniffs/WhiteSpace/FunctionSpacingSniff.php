@@ -40,7 +40,7 @@ class FunctionSpacingSniff implements Sniff
     /**
      * Original properties as set in a custom ruleset (if any).
      *
-     * @var array
+     * @var array|null
      */
     private $rulesetProperties = null;
 
@@ -142,12 +142,11 @@ class FunctionSpacingSniff implements Sniff
             }
         }
 
+        $requiredSpacing = $this->spacing;
+        $errorCode       = 'After';
         if ($isLast === true) {
             $requiredSpacing = $this->spacingAfterLast;
             $errorCode       = 'AfterLast';
-        } else {
-            $requiredSpacing = $this->spacing;
-            $errorCode       = 'After';
         }
 
         $foundLines = 0;
@@ -164,7 +163,7 @@ class FunctionSpacingSniff implements Sniff
                 // should be done by an EOF sniff.
                 $foundLines = $requiredSpacing;
             } else {
-                $foundLines += ($tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line']);
+                $foundLines = ($tokens[$nextContent]['line'] - $tokens[$nextLineToken]['line']);
             }
         }
 
@@ -202,7 +201,7 @@ class FunctionSpacingSniff implements Sniff
         */
 
         $prevLineToken = null;
-        for ($i = $stackPtr; $i > 0; $i--) {
+        for ($i = $stackPtr; $i >= 0; $i--) {
             if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
                 continue;
             } else {
@@ -252,7 +251,7 @@ class FunctionSpacingSniff implements Sniff
                         return;
                     }
                 } else if ($tokens[$i]['code'] === T_FUNCTION) {
-                    // Found another interface function.
+                    // Found another interface or abstract function.
                     return;
                 }
 
@@ -272,12 +271,11 @@ class FunctionSpacingSniff implements Sniff
             }//end while
         }//end if
 
+        $requiredSpacing = $this->spacing;
+        $errorCode       = 'Before';
         if ($isFirst === true) {
             $requiredSpacing = $this->spacingBeforeFirst;
             $errorCode       = 'BeforeFirst';
-        } else {
-            $requiredSpacing = $this->spacing;
-            $errorCode       = 'Before';
         }
 
         if ($foundLines !== $requiredSpacing) {
