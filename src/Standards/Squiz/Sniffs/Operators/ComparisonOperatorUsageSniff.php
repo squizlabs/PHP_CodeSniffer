@@ -125,7 +125,7 @@ class ComparisonOperatorUsageSniff implements Sniff
                         ) {
                             break;
                         }
-                    }
+                    }//end if
                 }//end for
 
                 $start = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
