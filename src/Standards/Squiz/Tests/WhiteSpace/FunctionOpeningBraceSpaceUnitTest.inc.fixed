@@ -8,7 +8,6 @@ function MyFunction1()
 
 function MyFunction2()
 {
-
     // Some code goes here.
     echo $code;
 }
@@ -23,7 +22,6 @@ class MyClass
 
     function MyFunction2()
     {
-
         // Some code goes here.
         echo $code;
     }
@@ -47,8 +45,5 @@ $a = function()
 
 $a = function()
 {
-
-
-
 	echo 'Testing a closure';
 };
