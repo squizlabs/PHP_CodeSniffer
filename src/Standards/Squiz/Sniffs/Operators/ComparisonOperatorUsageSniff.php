@@ -120,7 +120,7 @@ class ComparisonOperatorUsageSniff implements Sniff
                         // Stop if this is the start of a pair of
                         // parentheses that surrounds the inline
                         // IF statement.
-                        if (isset($tokens[$i]['parenthesis_opener']) === true
+                        if (isset($tokens[$i]['parenthesis_closer']) === true
                             && $tokens[$i]['parenthesis_closer'] >= $stackPtr
                         ) {
                             break;
