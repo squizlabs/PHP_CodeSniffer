@@ -40,7 +40,9 @@ class SuperfluousWhitespaceUnitTest extends AbstractSniffUnitTest
                 28 => 1,
                 33 => 1,
                 49 => 1,
-                55 => 1,
+                62 => 1,
+                65 => 1,
+                73 => 1,
             ];
             break;
         case 'SuperfluousWhitespaceUnitTest.2.inc':

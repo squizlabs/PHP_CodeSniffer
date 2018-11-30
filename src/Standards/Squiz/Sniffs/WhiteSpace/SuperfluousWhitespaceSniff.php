@@ -228,6 +228,13 @@ class SuperfluousWhitespaceSniff implements Sniff
                 && $tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line']
                 && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']
             ) {
+                // Spacing around properties and functions in nested classes has their own rules.
+                $conditions   = $tokens[$stackPtr]['conditions'];
+                $deepestScope = end($conditions);
+                if ($deepestScope === T_ANON_CLASS) {
+                    return;
+                }
+
                 // This is an empty line and the line before this one is not
                 // empty, so this could be the start of a multiple empty
                 // line block.
