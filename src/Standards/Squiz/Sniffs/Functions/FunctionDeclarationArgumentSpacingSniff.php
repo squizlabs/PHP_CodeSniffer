@@ -121,7 +121,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
                 // Check parameter default spacing.
                 $spacesBefore = 0;
                 if (($nextToken - $nextParam) > 1) {
-                    $spacesBefore = strlen($tokens[($nextParam + 1)]['content']);
+                    $spacesBefore = $tokens[($nextParam + 1)]['length'];
                 }
 
                 if ($spacesBefore !== $this->equalsSpacing) {
@@ -144,7 +144,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
 
                 $spacesAfter = 0;
                 if ($tokens[($nextToken + 1)]['code'] === T_WHITESPACE) {
-                    $spacesAfter = strlen($tokens[($nextToken + 1)]['content']);
+                    $spacesAfter = $tokens[($nextToken + 1)]['length'];
                 }
 
                 if ($spacesAfter !== $this->equalsSpacing) {
@@ -174,7 +174,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
                     $error = 'Expected 0 spaces between argument "%s" and comma; %s found';
                     $data  = [
                         $tokens[$nextParam]['content'],
-                        strlen($tokens[($nextComma - 1)]['content']),
+                        $tokens[($nextComma - 1)]['length'],
                     ];
 
                     $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeComma', $data);
@@ -211,7 +211,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
 
                 $gap = 0;
                 if ($tokens[$whitespace]['code'] === T_WHITESPACE) {
-                    $gap = strlen($tokens[$whitespace]['content']);
+                    $gap = $tokens[$whitespace]['length'];
                 }
 
                 if ($nextToken !== $nextParam) {
@@ -244,7 +244,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
                                 $phpcsFile->fixer->addContent($comma, ' ');
                             }
                         } else {
-                            $gap = strlen($tokens[($comma + 1)]['content']);
+                            $gap = $tokens[($comma + 1)]['length'];
                             if ($gap !== 1) {
                                 $error = 'Expected 1 space between comma and type hint "%s"; %s found';
                                 $data  = [
@@ -286,7 +286,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
             } else {
                 $gap = 0;
                 if ($tokens[$whitespace]['code'] === T_WHITESPACE) {
-                    $gap = strlen($tokens[$whitespace]['content']);
+                    $gap = $tokens[$whitespace]['length'];
                 }
 
                 $arg = $tokens[$nextParam]['content'];

@@ -140,7 +140,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
                     // each argument on a newline, which is valid, so ignore it.
                     $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextSeparator + 1), null, true);
                     if ($tokens[$next]['line'] === $tokens[$nextSeparator]['line']) {
-                        $space = strlen($tokens[($nextSeparator + 1)]['content']);
+                        $space = $tokens[($nextSeparator + 1)]['length'];
                         if ($space > 1) {
                             $error = 'Expected 1 space after comma in function call; %s found';
                             $data  = [$space];

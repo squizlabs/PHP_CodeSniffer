@@ -101,7 +101,7 @@ class OpeningBraceSameLineSniff implements Sniff
         } else if ($tokens[($openingBrace - 1)]['content'] === "\t") {
             $length = '\t';
         } else {
-            $length = strlen($tokens[($openingBrace - 1)]['content']);
+            $length = $tokens[($openingBrace - 1)]['length'];
         }
 
         if ($length !== 1) {

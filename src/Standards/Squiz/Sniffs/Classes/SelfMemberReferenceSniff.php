@@ -127,7 +127,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
         }//end if
 
         if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
-            $found = strlen($tokens[($stackPtr - 1)]['content']);
+            $found = $tokens[($stackPtr - 1)]['length'];
             $error = 'Expected 0 spaces before double colon; %s found';
             $data  = [$found];
             $fix   = $phpcsFile->addFixableError($error, ($stackPtr - 1), 'SpaceBefore', $data);
@@ -144,7 +144,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
         }
 
         if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
-            $found = strlen($tokens[($stackPtr + 1)]['content']);
+            $found = $tokens[($stackPtr + 1)]['length'];
             $error = 'Expected 0 spaces after double colon; %s found';
             $data  = [$found];
             $fix   = $phpcsFile->addFixableError($error, ($stackPtr - 1), 'SpaceAfter', $data);
