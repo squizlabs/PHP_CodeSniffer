@@ -30,33 +30,74 @@ class ForLoopDeclarationUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'ForLoopDeclarationUnitTest.inc':
             return [
-                8  => 2,
-                11 => 2,
-                14 => 2,
-                17 => 2,
-                21 => 6,
-                27 => 1,
-                30 => 1,
-                37 => 2,
-                39 => 2,
+                8   => 2,
+                11  => 2,
+                14  => 2,
+                17  => 2,
+                21  => 6,
+                27  => 1,
+                30  => 1,
+                37  => 2,
+                39  => 2,
+                43  => 1,
+                49  => 1,
+                50  => 1,
+                53  => 1,
+                54  => 1,
+                59  => 4,
+                62  => 1,
+                63  => 1,
+                64  => 1,
+                66  => 1,
+                69  => 1,
+                74  => 1,
+                77  => 1,
+                82  => 2,
+                86  => 2,
+                91  => 1,
+                95  => 1,
+                101 => 2,
+                105 => 2,
+                110 => 1,
+                116 => 2,
             ];
-             break;
+
         case 'ForLoopDeclarationUnitTest.js':
             return [
-                6  => 2,
-                9  => 2,
-                12 => 2,
-                15 => 2,
-                19 => 6,
-                33 => 1,
-                36 => 1,
-                43 => 2,
-                45 => 2,
+                6   => 2,
+                9   => 2,
+                12  => 2,
+                15  => 2,
+                19  => 6,
+                33  => 1,
+                36  => 1,
+                43  => 2,
+                45  => 2,
+                49  => 1,
+                55  => 1,
+                56  => 1,
+                59  => 1,
+                60  => 1,
+                65  => 4,
+                68  => 1,
+                69  => 1,
+                70  => 1,
+                72  => 1,
+                75  => 1,
+                80  => 1,
+                83  => 1,
+                88  => 2,
+                92  => 2,
+                97  => 1,
+                101 => 1,
+                107 => 2,
+                111 => 2,
+                116 => 1,
+                122 => 2,
             ];
-             break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()
@@ -68,11 +109,22 @@ class ForLoopDeclarationUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList($testFile='ForLoopDeclarationUnitTest.inc')
     {
-        return [];
+        switch ($testFile) {
+        case 'ForLoopDeclarationUnitTest.inc':
+            return [119 => 1];
+
+        case 'ForLoopDeclarationUnitTest.js':
+            return [125 => 1];
+
+        default:
+            return [];
+        }//end switch
 
     }//end getWarningList()
 
