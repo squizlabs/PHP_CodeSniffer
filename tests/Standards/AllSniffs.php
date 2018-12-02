@@ -40,8 +40,9 @@ class AllSniffs
      */
     public static function suite()
     {
-        $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']   = [];
-        $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'] = [];
+        $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']      = [];
+        $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']    = [];
+        $GLOBALS['PHP_CODESNIFFER_SNIFF_CASE_FILES'] = [];
 
         $suite = new TestSuite('PHP CodeSniffer Standards');
 
