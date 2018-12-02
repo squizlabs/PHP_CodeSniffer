@@ -78,7 +78,7 @@ class ForLoopDeclarationSniff implements Sniff
 
         if ($this->requiredSpacesAfterOpen === 0 && $tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
             $error = 'Space found after opening bracket of FOR loop';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterOpen');
+            $fix   = $phpcsFile->addFixableError($error, $openingBracket, 'SpacingAfterOpen');
             if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($openingBracket + 1), '');
             }
@@ -94,7 +94,7 @@ class ForLoopDeclarationSniff implements Sniff
                     $this->requiredSpacesAfterOpen,
                     $spaceAfterOpen,
                 ];
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterOpen', $data);
+                $fix   = $phpcsFile->addFixableError($error, $openingBracket, 'SpacingAfterOpen', $data);
                 if ($fix === true) {
                     $padding = str_repeat(' ', $this->requiredSpacesAfterOpen);
                     if ($spaceAfterOpen === 0) {
@@ -108,7 +108,7 @@ class ForLoopDeclarationSniff implements Sniff
 
         if ($this->requiredSpacesBeforeClose === 0 && $tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
             $error = 'Space found before closing bracket of FOR loop';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeClose');
+            $fix   = $phpcsFile->addFixableError($error, $closingBracket, 'SpacingBeforeClose');
             if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($closingBracket - 1), '');
             }
@@ -124,7 +124,7 @@ class ForLoopDeclarationSniff implements Sniff
                     $this->requiredSpacesBeforeClose,
                     $spaceBeforeClose,
                 ];
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeClose', $data);
+                $fix   = $phpcsFile->addFixableError($error, $closingBracket, 'SpacingBeforeClose', $data);
                 if ($fix === true) {
                     $padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
                     if ($spaceBeforeClose === 0) {
@@ -142,7 +142,7 @@ class ForLoopDeclarationSniff implements Sniff
         if ($firstSemicolon !== false) {
             if ($tokens[($firstSemicolon - 1)]['code'] === T_WHITESPACE) {
                 $error = 'Space found before first semicolon of FOR loop';
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeFirst');
+                $fix   = $phpcsFile->addFixableError($error, $firstSemicolon, 'SpacingBeforeFirst');
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($firstSemicolon - 1), '');
                 }
@@ -152,7 +152,7 @@ class ForLoopDeclarationSniff implements Sniff
                 && $tokens[($firstSemicolon + 1)]['code'] !== T_SEMICOLON
             ) {
                 $error = 'Expected 1 space after first semicolon of FOR loop; 0 found';
-                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfterFirst');
+                $fix   = $phpcsFile->addFixableError($error, $firstSemicolon, 'NoSpaceAfterFirst');
                 if ($fix === true) {
                     $phpcsFile->fixer->addContent($firstSemicolon, ' ');
                 }
@@ -161,7 +161,7 @@ class ForLoopDeclarationSniff implements Sniff
                     $spaces = strlen($tokens[($firstSemicolon + 1)]['content']);
                     $error  = 'Expected 1 space after first semicolon of FOR loop; %s found';
                     $data   = [$spaces];
-                    $fix    = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterFirst', $data);
+                    $fix    = $phpcsFile->addFixableError($error, $firstSemicolon, 'SpacingAfterFirst', $data);
                     if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($firstSemicolon + 1), ' ');
                     }
@@ -175,7 +175,7 @@ class ForLoopDeclarationSniff implements Sniff
                     && $tokens[($firstSemicolon + 1)]['code'] !== T_SEMICOLON
                 ) {
                     $error = 'Space found before second semicolon of FOR loop';
-                    $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeSecond');
+                    $fix   = $phpcsFile->addFixableError($error, $secondSemicolon, 'SpacingBeforeSecond');
                     if ($fix === true) {
                         $phpcsFile->fixer->replaceToken(($secondSemicolon - 1), '');
                     }
@@ -185,7 +185,7 @@ class ForLoopDeclarationSniff implements Sniff
                     && $tokens[($secondSemicolon + 1)]['code'] !== T_WHITESPACE
                 ) {
                     $error = 'Expected 1 space after second semicolon of FOR loop; 0 found';
-                    $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'NoSpaceAfterSecond');
+                    $fix   = $phpcsFile->addFixableError($error, $secondSemicolon, 'NoSpaceAfterSecond');
                     if ($fix === true) {
                         $phpcsFile->fixer->addContent($secondSemicolon, ' ');
                     }
@@ -195,13 +195,13 @@ class ForLoopDeclarationSniff implements Sniff
                         $data   = [$spaces];
                         if (($secondSemicolon + 2) === $closingBracket) {
                             $error = 'Expected no space after second semicolon of FOR loop; %s found';
-                            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterSecondNoThird', $data);
+                            $fix   = $phpcsFile->addFixableError($error, $secondSemicolon, 'SpacingAfterSecondNoThird', $data);
                             if ($fix === true) {
                                 $phpcsFile->fixer->replaceToken(($secondSemicolon + 1), '');
                             }
                         } else {
                             $error = 'Expected 1 space after second semicolon of FOR loop; %s found';
-                            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterSecond', $data);
+                            $fix   = $phpcsFile->addFixableError($error, $secondSemicolon, 'SpacingAfterSecond', $data);
                             if ($fix === true) {
                                 $phpcsFile->fixer->replaceToken(($secondSemicolon + 1), ' ');
                             }
