@@ -195,38 +195,41 @@ class ForLoopDeclarationSniff implements Sniff
             $humanReadableCode = ucfirst($humanReadableCount);
             $data = [$humanReadableCount];
 
-            if ($tokens[($semicolon - 1)]['code'] === T_WHITESPACE) {
-                $error     = 'Space found before %s semicolon of FOR loop';
-                $errorCode = 'SpacingBefore'.$humanReadableCode;
-                $fix       = $phpcsFile->addFixableError($error, $semicolon, $errorCode, $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken(($semicolon - 1), '');
+            // Only examine the space before the first semicolon if the first expression is not empty.
+            // If it *is* empty, leave it up to the `SpacingAfterOpen` logic.
+            $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($semicolon - 1), $openingBracket, true);
+            if ($semicolonCount !== 1 || $prevNonWhiteSpace !== $openingBracket) {
+                if ($tokens[($semicolon - 1)]['code'] === T_WHITESPACE) {
+                    $error     = 'Space found before %s semicolon of FOR loop';
+                    $errorCode = 'SpacingBefore'.$humanReadableCode;
+                    $fix       = $phpcsFile->addFixableError($error, $semicolon, $errorCode, $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken(($semicolon - 1), '');
+                    }
                 }
             }
 
-            if ($tokens[($semicolon + 1)]['code'] !== T_WHITESPACE
-                && $tokens[($semicolon + 1)]['code'] !== T_SEMICOLON
-                && ($semicolon + 1) !== $closingBracket
-            ) {
-                $error     = 'Expected 1 space after %s semicolon of FOR loop; 0 found';
-                $errorCode = 'NoSpaceAfter'.$humanReadableCode;
-                $fix       = $phpcsFile->addFixableError($error, $semicolon, $errorCode, $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->addContent($semicolon, ' ');
-                }
-            } else {
-                if (strlen($tokens[($semicolon + 1)]['content']) !== 1) {
+            // Only examine the space after the second semicolon if the last expression is not empty.
+            // If it *is* empty, leave it up to the `SpacingBeforeClose` logic.
+            $nextNonWhiteSpace = $phpcsFile->findNext(T_WHITESPACE, ($semicolon + 1), ($closingBracket + 1), true);
+            if ($semicolonCount !== 2 || $nextNonWhiteSpace !== $closingBracket) {
+                if ($tokens[($semicolon + 1)]['code'] !== T_WHITESPACE
+                    && $tokens[($semicolon + 1)]['code'] !== T_SEMICOLON
+                ) {
+                    $error     = 'Expected 1 space after %s semicolon of FOR loop; 0 found';
+                    $errorCode = 'NoSpaceAfter'.$humanReadableCode;
+                    $fix       = $phpcsFile->addFixableError($error, $semicolon, $errorCode, $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->addContent($semicolon, ' ');
+                    }
+                } else if ($tokens[($semicolon + 1)]['code'] === T_WHITESPACE
+                    && $tokens[$nextNonWhiteSpace]['code'] !== T_SEMICOLON
+                ) {
                     $spaces = strlen($tokens[($semicolon + 1)]['content']);
-                    $data[] = $spaces;
-                    if ($semicolonCount === 2 && ($semicolon + 2) === $closingBracket) {
-                        $error = 'Expected no space after second semicolon of FOR loop; %s found';
-                        $fix   = $phpcsFile->addFixableError($error, $semicolon, 'SpacingAfterSecondNoThird', $data);
-                        if ($fix === true) {
-                            $phpcsFile->fixer->replaceToken(($semicolon + 1), '');
-                        }
-                    } else {
+                    if ($spaces !== 1) {
                         $error     = 'Expected 1 space after %s semicolon of FOR loop; %s found';
                         $errorCode = 'SpacingAfter'.$humanReadableCode;
+                        $data[]    = $spaces;
                         $fix       = $phpcsFile->addFixableError($error, $semicolon, $errorCode, $data);
                         if ($fix === true) {
                             $phpcsFile->fixer->replaceToken(($semicolon + 1), ' ');
