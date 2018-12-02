@@ -176,13 +176,24 @@ class ForLoopDeclarationSniff implements Sniff
          * Check whitespace around each of the semicolon tokens.
          */
 
-        $semicolonCount = 0;
-        $semicolon      = $openingBracket;
+        $semicolonCount     = 0;
+        $semicolon          = $openingBracket;
+        $targetNestinglevel = 0;
+        if (isset($tokens[$openingBracket]['conditions']) === true) {
+            $targetNestinglevel += count($tokens[$openingBracket]['conditions']);
+        }
 
         do {
             $semicolon = $phpcsFile->findNext(T_SEMICOLON, ($semicolon + 1), $closingBracket);
             if ($semicolon === false) {
                 break;
+            }
+
+            if (isset($tokens[$semicolon]['conditions']) === true
+                && count($tokens[$semicolon]['conditions']) > $targetNestinglevel
+            ) {
+                // Semicolon doesn't belong to the for().
+                continue;
             }
 
             ++$semicolonCount;
