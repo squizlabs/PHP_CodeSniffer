@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class ForLoopDeclarationSniff implements Sniff
 {
@@ -124,24 +125,36 @@ class ForLoopDeclarationSniff implements Sniff
             }//end if
         }//end if
 
+        $prevNonWhiteSpace  = $phpcsFile->findPrevious(T_WHITESPACE, ($closingBracket - 1), $openingBracket, true);
+        $beforeClosefixable = true;
+        if ($tokens[$prevNonWhiteSpace]['line'] !== $tokens[$closingBracket]['line']
+            && isset(Tokens::$emptyTokens[$tokens[$prevNonWhiteSpace]['code']]) === true
+        ) {
+            $beforeClosefixable = false;
+        }
+
         if ($this->requiredSpacesBeforeClose === 0 && $tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
             $error = 'Whitespace found before closing bracket of FOR loop';
-            $fix   = $phpcsFile->addFixableError($error, $closingBracket, 'SpacingBeforeClose');
-            if ($fix === true) {
-                $phpcsFile->fixer->beginChangeset();
-                for ($i = ($closingBracket - 1); $i > $openingBracket; $i--) {
-                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                        break;
+
+            if ($beforeClosefixable === false) {
+                $phpcsFile->addError($error, $closingBracket, 'SpacingBeforeClose');
+            } else {
+                $fix = $phpcsFile->addFixableError($error, $closingBracket, 'SpacingBeforeClose');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($closingBracket - 1); $i > $openingBracket; $i--) {
+                        if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
                     }
 
-                    $phpcsFile->fixer->replaceToken($i, '');
+                    $phpcsFile->fixer->endChangeset();
                 }
-
-                $phpcsFile->fixer->endChangeset();
             }
         } else if ($this->requiredSpacesBeforeClose > 0) {
-            $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingBracket - 1), $openingBracket, true);
-            $spaceBeforeClose  = 0;
+            $spaceBeforeClose = 0;
             if ($tokens[$closingBracket]['line'] !== $tokens[$prevNonWhiteSpace]['line']) {
                 $spaceBeforeClose = 'newline';
             } else if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
@@ -154,19 +167,24 @@ class ForLoopDeclarationSniff implements Sniff
                     $this->requiredSpacesBeforeClose,
                     $spaceBeforeClose,
                 ];
-                $fix   = $phpcsFile->addFixableError($error, $closingBracket, 'SpacingBeforeClose', $data);
-                if ($fix === true) {
-                    $padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
-                    if ($spaceBeforeClose === 0) {
-                        $phpcsFile->fixer->addContentBefore($closingBracket, $padding);
-                    } else {
-                        $phpcsFile->fixer->beginChangeset();
-                        $phpcsFile->fixer->replaceToken(($closingBracket - 1), $padding);
-                        for ($i = ($closingBracket - 2); $i > $prevNonWhiteSpace; $i--) {
-                            $phpcsFile->fixer->replaceToken($i, '');
-                        }
 
-                        $phpcsFile->fixer->endChangeset();
+                if ($beforeClosefixable === false) {
+                    $phpcsFile->addError($error, $closingBracket, 'SpacingBeforeClose', $data);
+                } else {
+                    $fix = $phpcsFile->addFixableError($error, $closingBracket, 'SpacingBeforeClose', $data);
+                    if ($fix === true) {
+                        $padding = str_repeat(' ', $this->requiredSpacesBeforeClose);
+                        if ($spaceBeforeClose === 0) {
+                            $phpcsFile->fixer->addContentBefore($closingBracket, $padding);
+                        } else {
+                            $phpcsFile->fixer->beginChangeset();
+                            $phpcsFile->fixer->replaceToken(($closingBracket - 1), $padding);
+                            for ($i = ($closingBracket - 2); $i > $prevNonWhiteSpace; $i--) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }
                     }
                 }
             }//end if
