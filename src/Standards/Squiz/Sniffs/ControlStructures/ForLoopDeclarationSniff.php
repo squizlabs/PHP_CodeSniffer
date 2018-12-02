@@ -204,7 +204,12 @@ class ForLoopDeclarationSniff implements Sniff
                     $errorCode = 'SpacingBefore'.$humanReadableCode;
                     $fix       = $phpcsFile->addFixableError($error, $semicolon, $errorCode, $data);
                     if ($fix === true) {
-                        $phpcsFile->fixer->replaceToken(($semicolon - 1), '');
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($semicolon - 1); $i > $prevNonWhiteSpace; $i--) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
                     }
                 }
             }
@@ -236,7 +241,13 @@ class ForLoopDeclarationSniff implements Sniff
                         $data[]    = $spaces;
                         $fix       = $phpcsFile->addFixableError($error, $semicolon, $errorCode, $data);
                         if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
                             $phpcsFile->fixer->replaceToken(($semicolon + 1), ' ');
+                            for ($i = ($semicolon + 2); $i < $nextNonWhiteSpace; $i++) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
                         }
                     }
                 }//end if
