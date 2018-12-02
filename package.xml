@@ -892,7 +892,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Tests">
        <dir name="Classes">
-        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.php" role="test" />
        </dir>
        <dir name="Commenting">
