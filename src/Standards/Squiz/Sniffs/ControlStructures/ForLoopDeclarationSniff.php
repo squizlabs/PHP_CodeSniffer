@@ -80,7 +80,16 @@ class ForLoopDeclarationSniff implements Sniff
             $error = 'Whitespace found after opening bracket of FOR loop';
             $fix   = $phpcsFile->addFixableError($error, $openingBracket, 'SpacingAfterOpen');
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($openingBracket + 1), '');
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = ($openingBracket + 1); $i < $closingBracket; $i++) {
+                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                        break;
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
         } else if ($this->requiredSpacesAfterOpen > 0) {
             $nextNonWhiteSpace = $phpcsFile->findNext(T_WHITESPACE, ($openingBracket + 1), $closingBracket, true);
@@ -103,17 +112,32 @@ class ForLoopDeclarationSniff implements Sniff
                     if ($spaceAfterOpen === 0) {
                         $phpcsFile->fixer->addContent($openingBracket, $padding);
                     } else {
+                        $phpcsFile->fixer->beginChangeset();
                         $phpcsFile->fixer->replaceToken(($openingBracket + 1), $padding);
+                        for ($i = ($openingBracket + 2); $i < $nextNonWhiteSpace; $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
                     }
                 }
-            }
+            }//end if
         }//end if
 
         if ($this->requiredSpacesBeforeClose === 0 && $tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
             $error = 'Whitespace found before closing bracket of FOR loop';
             $fix   = $phpcsFile->addFixableError($error, $closingBracket, 'SpacingBeforeClose');
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken(($closingBracket - 1), '');
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = ($closingBracket - 1); $i > $openingBracket; $i--) {
+                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                        break;
+                    }
+
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
             }
         } else if ($this->requiredSpacesBeforeClose > 0) {
             $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingBracket - 1), $openingBracket, true);
@@ -136,10 +160,16 @@ class ForLoopDeclarationSniff implements Sniff
                     if ($spaceBeforeClose === 0) {
                         $phpcsFile->fixer->addContentBefore($closingBracket, $padding);
                     } else {
+                        $phpcsFile->fixer->beginChangeset();
                         $phpcsFile->fixer->replaceToken(($closingBracket - 1), $padding);
+                        for ($i = ($closingBracket - 2); $i > $prevNonWhiteSpace; $i--) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
                     }
                 }
-            }
+            }//end if
         }//end if
 
         $firstSemicolon = $phpcsFile->findNext(T_SEMICOLON, $openingBracket, $closingBracket);
