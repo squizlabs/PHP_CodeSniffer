@@ -77,15 +77,18 @@ class ForLoopDeclarationSniff implements Sniff
         $closingBracket = $tokens[$openingBracket]['parenthesis_closer'];
 
         if ($this->requiredSpacesAfterOpen === 0 && $tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
-            $error = 'Space found after opening bracket of FOR loop';
+            $error = 'Whitespace found after opening bracket of FOR loop';
             $fix   = $phpcsFile->addFixableError($error, $openingBracket, 'SpacingAfterOpen');
             if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($openingBracket + 1), '');
             }
         } else if ($this->requiredSpacesAfterOpen > 0) {
-            $spaceAfterOpen = 0;
-            if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
-                $spaceAfterOpen = strlen($tokens[($openingBracket + 1)]['content']);
+            $nextNonWhiteSpace = $phpcsFile->findNext(T_WHITESPACE, ($openingBracket + 1), $closingBracket, true);
+            $spaceAfterOpen    = 0;
+            if ($tokens[$openingBracket]['line'] !== $tokens[$nextNonWhiteSpace]['line']) {
+                $spaceAfterOpen = 'newline';
+            } else if ($tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
+                $spaceAfterOpen = $tokens[($openingBracket + 1)]['length'];
             }
 
             if ($spaceAfterOpen !== $this->requiredSpacesAfterOpen) {
@@ -107,15 +110,18 @@ class ForLoopDeclarationSniff implements Sniff
         }//end if
 
         if ($this->requiredSpacesBeforeClose === 0 && $tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
-            $error = 'Space found before closing bracket of FOR loop';
+            $error = 'Whitespace found before closing bracket of FOR loop';
             $fix   = $phpcsFile->addFixableError($error, $closingBracket, 'SpacingBeforeClose');
             if ($fix === true) {
                 $phpcsFile->fixer->replaceToken(($closingBracket - 1), '');
             }
         } else if ($this->requiredSpacesBeforeClose > 0) {
-            $spaceBeforeClose = 0;
-            if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
-                $spaceBeforeClose = strlen($tokens[($closingBracket - 1)]['content']);
+            $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingBracket - 1), $openingBracket, true);
+            $spaceBeforeClose  = 0;
+            if ($tokens[$closingBracket]['line'] !== $tokens[$prevNonWhiteSpace]['line']) {
+                $spaceBeforeClose = 'newline';
+            } else if ($tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
+                $spaceBeforeClose = $tokens[($closingBracket - 1)]['length'];
             }
 
             if ($this->requiredSpacesBeforeClose !== $spaceBeforeClose) {
