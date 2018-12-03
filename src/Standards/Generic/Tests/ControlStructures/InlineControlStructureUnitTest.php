@@ -76,7 +76,7 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
                 236 => 1,
                 238 => 1,
             ];
-            break;
+
         case 'InlineControlStructureUnitTest.js':
             return [
                 3  => 1,
@@ -88,10 +88,9 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
                 27 => 1,
                 30 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()

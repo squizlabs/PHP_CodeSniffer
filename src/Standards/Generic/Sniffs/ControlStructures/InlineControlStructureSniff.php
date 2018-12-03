@@ -110,6 +110,38 @@ class InlineControlStructureSniff implements Sniff
             }
         }//end if
 
+        if (isset($tokens[$stackPtr]['parenthesis_opener'], $tokens[$stackPtr]['parenthesis_closer']) === false
+            && $tokens[$stackPtr]['code'] !== T_ELSE
+        ) {
+            if ($tokens[$stackPtr]['code'] !== T_DO) {
+                // Live coding or parse error.
+                return;
+            }
+
+            $nextWhile = $phpcsFile->findNext(T_WHILE, ($stackPtr + 1));
+            if ($nextWhile !== false
+                && isset($tokens[$nextWhile]['parenthesis_opener'], $tokens[$nextWhile]['parenthesis_closer']) === false
+            ) {
+                // Live coding or parse error.
+                return;
+            }
+
+            unset($nextWhile);
+        }
+
+        $start = $stackPtr;
+        if (isset($tokens[$stackPtr]['parenthesis_closer']) === true) {
+            $start = $tokens[$stackPtr]['parenthesis_closer'];
+        }
+
+        $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($start + 1), null, true);
+        if ($nextNonEmpty === false) {
+            // Live coding or parse error.
+            return;
+        }
+
+        unset($nextNonEmpty, $start);
+
         // This is a control structure without an opening brace,
         // so it is an inline statement.
         if ($this->error === true) {
