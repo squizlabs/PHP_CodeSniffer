@@ -27,17 +27,8 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
      */
     public function testGetMemberProperties($identifier, $expected)
     {
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $delim    = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            $identifier
-        );
-        $variable = self::$phpcsFile->findNext(T_VARIABLE, ($delim + 1));
-
-        $result = self::$phpcsFile->getMemberProperties($variable);
+        $variable = $this->getTargetToken($identifier, T_VARIABLE);
+        $result   = self::$phpcsFile->getMemberProperties($variable);
         $this->assertSame($expected, $result);
 
     }//end testGetMemberProperties()
@@ -292,17 +283,8 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
      */
     public function testNotClassPropertyException($identifier)
     {
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $delim    = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            $identifier
-        );
-        $variable = self::$phpcsFile->findNext(T_VARIABLE, ($delim + 1));
-
-        $result = self::$phpcsFile->getMemberProperties($variable);
+        $variable = $this->getTargetToken($identifier, T_VARIABLE);
+        $result   = self::$phpcsFile->getMemberProperties($variable);
 
     }//end testNotClassPropertyException()
 
@@ -338,16 +320,7 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
      */
     public function testNotAVariableException()
     {
-        $start = (self::$phpcsFile->numTokens - 1);
-        $delim = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testNotAVariable */'
-        );
-        $next  = self::$phpcsFile->findNext(T_WHITESPACE, ($delim + 1), null, true);
-
+        $next   = $this->getTargetToken('/* testNotAVariable */', T_RETURN);
         $result = self::$phpcsFile->getMemberProperties($next);
 
     }//end testNotAVariableException()
