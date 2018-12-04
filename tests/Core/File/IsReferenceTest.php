@@ -9,54 +9,10 @@
 
 namespace PHP_CodeSniffer\Tests\Core\File;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Files\DummyFile;
-use PHPUnit\Framework\TestCase;
+use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 
-class IsReferenceTest extends TestCase
+class IsReferenceTest extends AbstractMethodUnitTest
 {
-
-    /**
-     * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
-     *
-     * @var \PHP_CodeSniffer\Files\File
-     */
-    private $phpcsFile;
-
-
-    /**
-     * Initialize & tokenize \PHP_CodeSniffer\Files\File with code from the test case file.
-     *
-     * Methods used for these tests can be found in a test case file in the same
-     * directory and with the same name, using the .inc extension.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-
-        $ruleset = new Ruleset($config);
-
-        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
-        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
-        $this->phpcsFile->process();
-
-    }//end setUp()
-
-
-    /**
-     * Clean up after finished test.
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        unset($this->phpcsFile);
-
-    }//end tearDown()
 
 
     /**
@@ -71,17 +27,17 @@ class IsReferenceTest extends TestCase
      */
     public function testIsReference($identifier, $expected)
     {
-        $start      = ($this->phpcsFile->numTokens - 1);
-        $delim      = $this->phpcsFile->findPrevious(
+        $start      = (self::$phpcsFile->numTokens - 1);
+        $delim      = self::$phpcsFile->findPrevious(
             T_COMMENT,
             $start,
             null,
             false,
             $identifier
         );
-        $bitwiseAnd = $this->phpcsFile->findNext(T_BITWISE_AND, ($delim + 1));
+        $bitwiseAnd = self::$phpcsFile->findNext(T_BITWISE_AND, ($delim + 1));
 
-        $result = $this->phpcsFile->isReference($bitwiseAnd);
+        $result = self::$phpcsFile->isReference($bitwiseAnd);
         $this->assertSame($expected, $result);
 
     }//end testIsReference()
