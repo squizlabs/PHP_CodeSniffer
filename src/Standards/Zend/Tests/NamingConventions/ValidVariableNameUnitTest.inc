@@ -108,3 +108,11 @@ interface Base
 
     public function __construct();
 }
+
+$anonClass = new class() {
+    public function foo($foo, $_foo, $foo_bar) {
+        $bar = 1;
+        $_bar = 2;
+        $bar_foo = 3;
+    }
+};

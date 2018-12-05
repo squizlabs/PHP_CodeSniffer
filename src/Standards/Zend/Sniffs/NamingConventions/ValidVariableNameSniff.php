@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Zend\Sniffs\NamingConventions;
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class ValidVariableNameSniff extends AbstractVariableSniff
 {
@@ -79,7 +80,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
                 // this: MyClass::$_variable, so we don't know its scope.
                 $inClass = true;
             } else {
-                $inClass = $phpcsFile->hasCondition($stackPtr, [T_CLASS, T_INTERFACE, T_TRAIT]);
+                $inClass = $phpcsFile->hasCondition($stackPtr, Tokens::$ooScopeTokens);
             }
 
             if ($inClass === true) {
