@@ -163,3 +163,8 @@ class C2
 {
 
 } // phpcs:ignore Standard.Category.Sniff
+
+class C3 extends
+ C2
+{
+}
