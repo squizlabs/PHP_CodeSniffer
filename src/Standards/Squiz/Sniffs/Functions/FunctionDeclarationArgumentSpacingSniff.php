@@ -310,9 +310,9 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
                     $fix   = $phpcsFile->addFixableError($error, $nextToken, 'SpacingAfterHint', $data);
                     if ($fix === true) {
                         if ($gap === 0) {
-                            $phpcsFile->fixer->addContent($nextToken, ' ');
+                            $phpcsFile->fixer->addContent($whitespace, ' ');
                         } else {
-                            $phpcsFile->fixer->replaceToken(($nextToken + 1), ' ');
+                            $phpcsFile->fixer->replaceToken($whitespace, ' ');
                         }
                     }
                 }
