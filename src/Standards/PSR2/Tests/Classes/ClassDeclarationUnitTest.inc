@@ -168,3 +168,11 @@ class C3 extends
  C2
 {
 }
+
+class C4 extends\C3
+{
+}
+
+class C5 extends/*comment*/C4
+{
+}
