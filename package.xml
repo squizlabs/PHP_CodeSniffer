@@ -1559,6 +1559,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ObjectInstantiationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ObjectInstantiationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ObjectMemberCommaUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ObjectMemberCommaUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ObjectMemberCommaUnitTest.php" role="test" />
        </dir>
        <dir name="Operators">

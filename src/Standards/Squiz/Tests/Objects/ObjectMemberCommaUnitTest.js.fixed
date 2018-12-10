@@ -1,4 +1,4 @@
-this.request({ action: 'getTypeFormatContents', });
+this.request({ action: 'getTypeFormatContents' });
 
 addTypeFormatButton.addClickEvent(function() {
    self.addNewTypeFormat();
@@ -19,7 +19,7 @@ var z = {
    VarTwo  : ['Alonzo played you', 'for a fool', 'esse'],
    VarThree: function(arg) {
        console.info(1);
-   },
+   }
 };
 
 var x = function() {
@@ -35,13 +35,13 @@ AssetListingEditWidgetType.prototype = {
 AssetListingEditWidgetType.prototype = {
    init: function(data, assetid, editables)
    {
-   },
+   }
 };
 
 AssetListingEditWidgetType.prototype = {
    // phpcs: disable Standard.Cat.SniffName -- testing annotation between closing brace and comma
    init: function(data, assetid, editables)
    {
-   },
+   }
    // phpcs:enable
 };
