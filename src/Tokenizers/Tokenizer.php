@@ -1079,7 +1079,8 @@ abstract class Tokenizer
                     }//end if
 
                     if ($tokenType === T_CLASS) {
-                        // Probably anonymous class inside an anonymous class, so process it manually.
+                        // Probably an anonymous class inside another anonymous class,
+                        // so process it manually.
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $type = $this->tokens[$stackPtr]['type'];
                             echo str_repeat("\t", $depth);
@@ -1087,7 +1088,7 @@ abstract class Tokenizer
                         }
 
                         if (isset($this->tokens[$i]['scope_closer']) === true) {
-                            // We've already processed this closure.
+                            // We've already processed this anon class.
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 echo str_repeat("\t", $depth);
                                 echo '* already processed, skipping *'.PHP_EOL;

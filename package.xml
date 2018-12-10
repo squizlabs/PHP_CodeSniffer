@@ -151,6 +151,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2214 : File::getMemberProperties() is recognizing method params as properties
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2236 : Memory info measurement unit is Mb but probably should be MB
+  - Fixed bug #2297 : Anonymous class not tokenized correctly when used as argument to another anon class
+    -- Thanks to Michał Bundyra for the patch
  </notes>
  <contents>
   <dir name="/">
