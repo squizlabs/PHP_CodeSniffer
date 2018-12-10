@@ -321,6 +321,11 @@ class File
 
         $this->parse();
 
+        // Check if tokenizer errors cause this file to be ignored.
+        if ($this->ignored === true) {
+            return;
+        }
+
         $this->fixer->startFile($this);
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
@@ -564,6 +569,7 @@ class File
             $this->tokenizer = new $tokenizerClass($this->content, $this->config, $this->eolChar);
             $this->tokens    = $this->tokenizer->getTokens();
         } catch (TokenizerException $e) {
+            $this->ignored = true;
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 echo "[$this->tokenizerType => tokenizer error]... ";
