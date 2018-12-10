@@ -52,19 +52,17 @@ if (class_exists('PHPUnit_Framework_TestResult') === true && class_exists('PHPUn
  */
 function printPHPCodeSnifferTestOutput()
 {
-    $codes = count($GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']);
-
-    echo PHP_EOL.PHP_EOL;
-    echo "Tests generated $codes unique error codes";
-    if ($codes > 0) {
-        $fixes   = count($GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']);
-        $percent = round(($fixes / $codes * 100), 2);
-        echo "; $fixes were fixable ($percent%)";
-    }
-
+    $codeCount = count($GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']);
     $files     = call_user_func_array('array_merge', $GLOBALS['PHP_CODESNIFFER_SNIFF_CASE_FILES']);
     $files     = array_unique($files);
     $fileCount = count($files);
-    echo PHP_EOL, PHP_EOL, "Examined $fileCount sniff test case files";
+
+    echo PHP_EOL.PHP_EOL;
+    echo "$fileCount sniff test files generated $codeCount unique error codes";
+    if ($codeCount > 0) {
+        $fixes   = count($GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']);
+        $percent = round(($fixes / $codeCount * 100), 2);
+        echo "; $fixes were fixable ($percent%)";
+    }
 
 }//end printPHPCodeSnifferTestOutput()
