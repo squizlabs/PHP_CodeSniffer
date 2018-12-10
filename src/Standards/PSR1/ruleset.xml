@@ -20,13 +20,13 @@
     <!-- 2.3. Side Effects -->
 
     <!-- A file SHOULD declare new symbols (classes, functions, constants, etc.) and cause no other side effects, or it SHOULD execute logic with side effects, but SHOULD NOT do both. -->
-    <!-- checked in Files/SideEffectsSniff -->
+    <!-- checked by PSR1.Files.SideEffects -->
 
     <!-- 3. Namespace and Class Names -->
 
     <!-- Namespaces and classes MUST follow PSR-0.
          This means each class is in a file by itself, and is in a namespace of at least one level: a top-level vendor name. -->
-    <!-- checked in Classes/ClassDeclarationSniff -->
+    <!-- checked by PSR1.Classes.ClassDeclaration -->
 
     <!-- Class names MUST be declared in StudlyCaps. -->
     <rule ref="Squiz.Classes.ValidClassName"/>
@@ -41,6 +41,6 @@
     <!-- 4.3. Methods -->
 
     <!-- Method names MUST be declared in camelCase(). -->
-    <!-- checked in Methods/CamelCapsMethodNameSniff -->
+    <!-- checked by PSR1.Methods.CamelCapsMethodName -->
 
 </ruleset>
