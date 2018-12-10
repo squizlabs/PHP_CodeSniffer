@@ -62,4 +62,9 @@ function printPHPCodeSnifferTestOutput()
         echo "; $fixes were fixable ($percent%)";
     }
 
+    $files     = call_user_func_array('array_merge', $GLOBALS['PHP_CODESNIFFER_SNIFF_CASE_FILES']);
+    $files     = array_unique($files);
+    $fileCount = count($files);
+    echo PHP_EOL, PHP_EOL, "Examined $fileCount sniff test case files";
+
 }//end printPHPCodeSnifferTestOutput()

@@ -127,6 +127,7 @@ abstract class AbstractSniffUnitTest extends TestCase
 
         // Get a list of all test files to check.
         $testFiles = $this->getTestFiles($testFileBase);
+        $GLOBALS['PHP_CODESNIFFER_SNIFF_CASE_FILES'][] = $testFiles;
 
         if (isset($GLOBALS['PHP_CODESNIFFER_CONFIG']) === true) {
             $config = $GLOBALS['PHP_CODESNIFFER_CONFIG'];
