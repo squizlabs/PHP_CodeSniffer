@@ -87,3 +87,11 @@ function foo( // comment
 
 function myFunc(/*...*/) {}
 function myFunc( /*...*/ ) {}
+
+function x(
+    ?array    $a,
+    ?MyNamespace\MyClass    $b,
+    ?array   $c,
+    ?int  $d
+) {
+}
