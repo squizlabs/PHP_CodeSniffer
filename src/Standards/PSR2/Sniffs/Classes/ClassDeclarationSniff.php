@@ -344,19 +344,32 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                         $prev = ($className - 1);
                     }
 
-                    $spaceBefore = strlen($tokens[$prev]['content']);
-                    if ($spaceBefore !== 1) {
+                    $last    = $phpcsFile->findPrevious(T_WHITESPACE, $prev, null, true);
+                    $content = $phpcsFile->getTokensAsString(($last + 1), ($prev - $last));
+                    if ($content !== ' ') {
+                        $found = strlen($content);
+
                         $error = 'Expected 1 space before "%s"; %s found';
                         $data  = [
                             $tokens[$className]['content'],
-                            $spaceBefore,
+                            $found,
                         ];
 
                         $fix = $phpcsFile->addFixableError($error, $className, 'SpaceBeforeName', $data);
                         if ($fix === true) {
-                            $phpcsFile->fixer->replaceToken($prev, ' ');
+                            if ($tokens[$prev]['code'] === T_WHITESPACE) {
+                                $phpcsFile->fixer->beginChangeset();
+                                $phpcsFile->fixer->replaceToken($prev, ' ');
+                                while ($tokens[--$prev]['code'] === T_WHITESPACE) {
+                                    $phpcsFile->fixer->replaceToken($prev, ' ');
+                                }
+
+                                $phpcsFile->fixer->endChangeset();
+                            } else {
+                                $phpcsFile->fixer->addContent($prev, ' ');
+                            }
                         }
-                    }
+                    }//end if
                 }//end if
             }//end if
 
