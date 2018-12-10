@@ -122,6 +122,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Gabriel Ostrolucký for the patch
   - Squiz.Functions.LowercaseFunctionKeywords now checks abstract and final prefixes, and auto-fixes errors
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Objects.ObjectMemberComma.Missing has been renamed to Squiz.Objects.ObjectMemberComma.Found
+    -- The error is thrown when the comma is found but not required, so the error code was incorrect
+    -- If you are referencing the old error code in a ruleset XML file, please use the new code instead
+    -- If you wish to maintain backwards compatibility, you can provide rules for both the old and new codes
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.WhiteSpace.ObjectOperatorSpacing is now more tolerant of parse errors
   - Squiz.WhiteSpace.ObjectOperatorSpacing now fixes errors more efficiently
     -- Thanks to Juliette Reinders Folmer for the patch
