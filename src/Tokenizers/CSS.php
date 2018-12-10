@@ -91,6 +91,7 @@ class CSS extends PHP
                 || $token['code'] === T_FOREACH
                 || $token['code'] === T_WHILE
                 || $token['code'] === T_DEC
+                || $token['code'] === T_NEW
             ) {
                 $token['type'] = 'T_STRING';
                 $token['code'] = T_STRING;
