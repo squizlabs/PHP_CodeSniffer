@@ -34,3 +34,15 @@ $array = [
 	'key' => 'value', // phpcs:ignore Standard.Category.SniffName -- for reasons.
 	'key' => 'value', // comment.
 ];
+
+// Verify that multi-line control structure with comments and annotations are left alone.
+for (
+    $i = 0; /* Start */
+    $i < 10; /* phpcs:ignore Standard.Category.SniffName -- for reasons. */
+    $i++ // comment
+
+) {}
+
+if ( $condition === true // comment
+    && $anotherCondition === false
+) {}

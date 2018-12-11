@@ -25,6 +25,23 @@ class PostStatementCommentSniff implements Sniff
         'JS',
     ];
 
+    /**
+     * Exceptions to the rule.
+     *
+     * If post statement comments are found within the condition
+     * parenthesis of these structures, leave them alone.
+     *
+     * @var array
+     */
+    private $controlStructureExceptions = [
+        T_IF      => true,
+        T_ELSEIF  => true,
+        T_SWITCH  => true,
+        T_WHILE   => true,
+        T_FOR     => true,
+        T_FOREACH => true,
+    ];
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -76,6 +93,18 @@ class PostStatementCommentSniff implements Sniff
             $lastContent = $phpcsFile->findPrevious(T_WHITESPACE, ($lastContent - 1), null, true);
             if ($lastContent === false || $tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
                 return;
+            }
+        }
+
+        // Special case for (trailing) comments within multi-line control structures.
+        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            $nestedParens = $tokens[$stackPtr]['nested_parenthesis'];
+            foreach ($nestedParens as $open => $close) {
+                if (isset($tokens[$open]['parenthesis_owner']) === true
+                    && isset($this->controlStructureExceptions[$tokens[$tokens[$open]['parenthesis_owner']]['code']]) === true
+                ) {
+                    return;
+                }
             }
         }
 

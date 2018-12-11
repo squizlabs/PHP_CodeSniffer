@@ -28,3 +28,9 @@ dfx.getIframeDocument = function(iframe)
     return doc;
 
 };//end dfx.getIframeDocument()
+
+// Verify that multi-line control structure with comments and annotations are left alone.
+if (condition // comment
+    && anotherCondition) {
+    condition = true;
+}
