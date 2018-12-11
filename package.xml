@@ -26,7 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Rule include patterns in a ruleset.xml file are not evaluated as OR instead of AND
+  - Rule include patterns in a ruleset.xml file are now evaluated as OR instead of AND
     -- Previously, a file had to match every include pattern and no exclude patterns to be included
     -- Now, a file must match at least one include pattern and no exclude patterns to be included
     -- This is a bug fix as include patterns are already documented to work this way
