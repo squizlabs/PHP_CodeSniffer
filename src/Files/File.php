@@ -970,6 +970,7 @@ class File
         }
 
         // Make sure we are not ignoring this file.
+        $included = null;
         foreach ($checkCodes as $checkCode) {
             $patterns = null;
 
@@ -1002,15 +1003,33 @@ class File
 
                 $pattern = '`'.strtr($pattern, $replacements).'`i';
                 $matched = preg_match($pattern, $this->path);
-                if (($matched === 1 && $excluding === true)
-                    || ($matched === 0 && $excluding === false)
-                ) {
-                    // This file path is being excluded, or not included.
+
+                if ($matched === 0) {
+                    if ($excluding === false && $included === null) {
+                        // This file path is not being included.
+                        $included = false;
+                    }
+
+                    continue;
+                }
+
+                if ($excluding === true) {
+                    // This file path is being excluded.
                     $this->ignoredCodes[$checkCode] = true;
                     return false;
                 }
+
+                // This file path is being included.
+                $included = true;
+                break;
             }//end foreach
         }//end foreach
+
+        if ($included === false) {
+            // There were include rules set, but this file
+            // path didn't match any of them.
+            return false;
+        }
 
         $messageCount++;
         if ($fixable === true) {
