@@ -49,6 +49,21 @@ class SpaceAfterCastUnitTest extends AbstractSniffUnitTest
             44 => 1,
             45 => 1,
             51 => 1,
+            53 => 1,
+            55 => 1,
+            58 => 1,
+            64 => 1,
+            72 => 1,
+            73 => 1,
+            75 => 1,
+            76 => 1,
+            78 => 1,
+            82 => 1,
+            84 => 1,
+            85 => 1,
+            86 => 1,
+            88 => 1,
+            93 => 1,
         ];
 
     }//end getErrorList()

@@ -5,6 +5,9 @@
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ *
+ * @deprecated 3.4.0 Use the Generic.Formatting.SpaceAfterCast sniff with
+ *                   the $spacing property set to 0 instead.
  */
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting;
