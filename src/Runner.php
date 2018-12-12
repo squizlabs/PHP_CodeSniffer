@@ -701,12 +701,16 @@ class Runner
 
                         // Fake a processed file so we can print progress output for the batch.
                         $file = new DummyFile(null, $this->ruleset, $this->config);
-                        $file->setErrorCounts(
-                            $childOutput['totalErrors'],
-                            $childOutput['totalWarnings'],
-                            $childOutput['totalFixable'],
-                            $childOutput['totalFixed']
-                        );
+
+                        if (isset($childOutput) === true) {
+                            $file->setErrorCounts(
+                                $childOutput['totalErrors'],
+                                $childOutput['totalWarnings'],
+                                $childOutput['totalFixable'],
+                                $childOutput['totalFixed']
+                            );
+                        }
+
                         $this->printProgress($file, $totalBatches, $numProcessed);
                     }//end if
                 }//end if
