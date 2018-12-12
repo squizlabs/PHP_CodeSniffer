@@ -231,11 +231,16 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
         $classCount         = count($classNames);
         $checkingImplements = false;
         $implementsToken    = null;
-        foreach ($classNames as $i => $className) {
+        $numberOfInterface  = 0;
+        foreach ($classNames as $n => $className) {
             if ($tokens[$className]['code'] === $keywordTokenType) {
                 $checkingImplements = true;
                 $implementsToken    = $className;
                 continue;
+            }
+
+            if ($implementsToken === true) {
+                $numberOfInterface += 1;
             }
 
             if ($checkingImplements === true
@@ -297,6 +302,15 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                         $phpcsFile->fixer->addNewline($prev);
                         $phpcsFile->fixer->endChangeset();
                     }
+                } else if ($n === ($classCount - 1) && $numberOfInterface === 1) {
+                    $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($className - 1), $implements, true);
+                    if ($tokens[$prev]['line'] !== $tokens[$className]['line']) {
+                        $error = 'Interface name should be in the same line as '.$keywordType.' keyword';
+                        $fix   = $phpcsFile->addFixableError($error, $className, 'InterfaceWrongLine');
+                        if ($fix === true) {
+                            $phpcsFile->fixer->replaceToken(($prev + 1), ' ');
+                        }
+                    }
                 } else {
                     $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($className - 1), $implements);
                     if ($tokens[$prev]['line'] !== $tokens[$className]['line']) {
@@ -344,19 +358,32 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                         $prev = ($className - 1);
                     }
 
-                    $spaceBefore = $tokens[$prev]['length'];
-                    if ($spaceBefore !== 1) {
+                    $last    = $phpcsFile->findPrevious(T_WHITESPACE, $prev, null, true);
+                    $content = $phpcsFile->getTokensAsString(($last + 1), ($prev - $last));
+                    if ($content !== ' ') {
+                        $found = strlen($content);
+
                         $error = 'Expected 1 space before "%s"; %s found';
                         $data  = [
                             $tokens[$className]['content'],
-                            $spaceBefore,
+                            $found,
                         ];
 
                         $fix = $phpcsFile->addFixableError($error, $className, 'SpaceBeforeName', $data);
                         if ($fix === true) {
-                            $phpcsFile->fixer->replaceToken($prev, ' ');
+                            if ($tokens[$prev]['code'] === T_WHITESPACE) {
+                                $phpcsFile->fixer->beginChangeset();
+                                $phpcsFile->fixer->replaceToken($prev, ' ');
+                                while ($tokens[--$prev]['code'] === T_WHITESPACE) {
+                                    $phpcsFile->fixer->replaceToken($prev, ' ');
+                                }
+
+                                $phpcsFile->fixer->endChangeset();
+                            } else {
+                                $phpcsFile->fixer->addContent($prev, ' ');
+                            }
                         }
-                    }
+                    }//end if
                 }//end if
             }//end if
 
@@ -364,7 +391,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                 && $tokens[($className + 1)]['code'] !== T_NS_SEPARATOR
                 && $tokens[($className + 1)]['code'] !== T_COMMA
             ) {
-                if ($i !== ($classCount - 1)) {
+                if ($n !== ($classCount - 1)) {
                     // This is not the last class name, and the comma
                     // is not where we expect it to be.
                     if ($tokens[($className + 2)]['code'] !== $keywordTokenType) {
