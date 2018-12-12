@@ -26,6 +26,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The Generic.Formatting.NoSpaceAfterCast sniff has been deprecated and will be removed in version 4
+      -- The functionality of this sniff is now available in the Generic.Formatting.SpaceAfterCast sniff
+         --- Include the Generic.Formatting.SpaceAfterCast sniff and set the "spacing" property to "0"
+      -- As soon as possible, replace all instances of the old sniff code with the new sniff code and property setting
+         --- The existing sniff will continue to work until version 4 has been released
+
   - Rule include patterns in a ruleset.xml file are now evaluated as OR instead of AND
     -- Previously, a file had to match every include pattern and no exclude patterns to be included
     -- Now, a file must match at least one include pattern and no exclude patterns to be included
@@ -110,6 +116,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Chris Wilkinson for the patch
   - Generic.PHP.CharacterBeforePHPOpeningTag now ignores a BOM at the start of the file
     -- Thanks to Chris Wilkinson for the patch
+  - Generic.Formatting.SpaceAfterCast now has a setting to specify how many spaces are required after a type cast
+    -- Default remains 1
+    -- Override the "spacing" setting in a ruleset.xml file to change
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.Formatting.SpaceAfterCast now has a setting to ignore newline characters after a type cast
+    -- Default remains FALSE, so newlines are not allowed
+    -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.Formatting.SpaceAfterNot now has a setting to specify how many spaces are required after a NOT operator
     -- Default remains 1
     -- Override the "spacing" setting in a ruleset.xml file to change

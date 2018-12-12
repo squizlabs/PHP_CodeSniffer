@@ -81,18 +81,10 @@ class SpaceAfterCastSniff implements Sniff
             return;
         }
 
-        $maybePlural = '';
-        if ($this->spacing !== 1) {
-            $maybePlural = 's';
-        }
-
         $nextNonWhitespace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($nextNonEmpty !== $nextNonWhitespace) {
-            $error = 'Expected %s space%s after cast statement; comment found';
-            $data  = [
-                $this->spacing,
-                $maybePlural,
-            ];
+            $error = 'Expected %s space(s) after cast statement; comment found';
+            $data  = [$this->spacing];
             $phpcsFile->addError($error, $stackPtr, 'CommentFound', $data);
 
             if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
@@ -117,10 +109,9 @@ class SpaceAfterCastSniff implements Sniff
             return;
         }
 
-        $error = 'Expected %s space%s after cast statement; %s found';
+        $error = 'Expected %s space(s) after cast statement; %s found';
         $data  = [
             $this->spacing,
-            $maybePlural,
             $found,
         ];
 
