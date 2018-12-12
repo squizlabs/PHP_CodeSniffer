@@ -82,20 +82,11 @@ class SpaceAfterNotSniff implements Sniff
             return;
         }
 
-        $maybePlural = '';
-        if ($this->spacing !== 1) {
-            $maybePlural = 's';
-        }
-
         $nextNonWhitespace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($nextNonEmpty !== $nextNonWhitespace) {
-            $error = 'Expected %s space%s after NOT operator; comment found';
-            $data  = [
-                $this->spacing,
-                $maybePlural,
-            ];
+            $error = 'Expected %s space(s) after NOT operator; comment found';
+            $data  = [$this->spacing];
             $phpcsFile->addError($error, $stackPtr, 'CommentFound', $data);
-
             return;
         }
 
@@ -110,14 +101,13 @@ class SpaceAfterNotSniff implements Sniff
             return;
         }
 
-        $error = 'Expected %s space%s after NOT operator; %s found';
+        $error = 'Expected %s space(s) after NOT operator; %s found';
         $data  = [
             $this->spacing,
-            $maybePlural,
             $found,
         ];
-        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
 
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'Incorrect', $data);
         if ($fix === true) {
             $padding = str_repeat(' ', $this->spacing);
             if ($found === 0) {

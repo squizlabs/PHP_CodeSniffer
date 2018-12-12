@@ -110,6 +110,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Chris Wilkinson for the patch
   - Generic.PHP.CharacterBeforePHPOpeningTag now ignores a BOM at the start of the file
     -- Thanks to Chris Wilkinson for the patch
+  - Generic.Formatting.SpaceAfterNot now has a setting to specify how many spaces are required after a NOT operator
+    -- Default remains 1
+    -- Override the "spacing" setting in a ruleset.xml file to change
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.Formatting.SpaceAfterNot now has a setting to ignore newline characters after the NOT operator
+    -- Default remains FALSE, so newlines are not allowed
+    -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
+    -- Thanks to Juliette Reinders Folmer for the patch
   - PEAR.Functions.FunctionDeclaration now checks spacing before the opening parenthesis of functions with no body
     -- Thanks to Chris Wilkinson for the patch
   - PEAR.Functions.FunctionDeclaration now enforces no space before the semicolon in functions with no body
