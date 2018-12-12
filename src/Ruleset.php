@@ -13,6 +13,7 @@ namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Util;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
+use SimpleXMLElement;
 
 class Ruleset
 {
@@ -46,7 +47,7 @@ class Ruleset
      * The key is the regular expression and the value is the type
      * of ignore pattern (absolute or relative).
      *
-     * @var array<string, string>
+     * @var array<string, array<string, string>>
      */
     public $ignorePatterns = [];
 
@@ -67,7 +68,7 @@ class Ruleset
      * The key is the fully qualified name of the sniff class
      * and the value is the sniff object.
      *
-     * @var array<string, \PHP_CodeSniffer\Sniff>
+     * @var array<string, \PHP_CodeSniffer\Sniffs\Sniff|string>
      */
     public $sniffs = [];
 
@@ -87,7 +88,7 @@ class Ruleset
      * The key is the token name being listened for and the value
      * is the sniff object.
      *
-     * @var array<int, \PHP_CodeSniffer\Sniff>
+     * @var array<int, \PHP_CodeSniffer\Sniffs\Sniff>
      */
     public $tokenListeners = [];
 
@@ -1182,7 +1183,6 @@ class Ruleset
         $this->tokenListeners = [];
 
         foreach ($this->sniffs as $sniffClass => $sniffObject) {
-            $this->sniffs[$sniffClass] = null;
             $this->sniffs[$sniffClass] = new $sniffClass();
 
             $sniffCode = Util\Common::getSniffCode($sniffClass);

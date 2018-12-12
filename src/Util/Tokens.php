@@ -355,7 +355,7 @@ final class Tokens
     /**
      * Tokens that are allowed to open scopes.
      *
-     * @var array<int, int>
+     * @var array<int|string, int>
      */
     public static $scopeOpeners = [
         T_CLASS      => T_CLASS,

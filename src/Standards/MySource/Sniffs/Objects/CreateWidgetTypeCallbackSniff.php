@@ -55,7 +55,7 @@ class CreateWidgetTypeCallbackSniff implements Sniff
         }
 
         // Search for a create method.
-        $create = $phpcsFile->findNext(T_PROPERTY, $stackPtr, $tokens[$stackPtr]['bracket_closer'], null, 'create');
+        $create = $phpcsFile->findNext(T_PROPERTY, $stackPtr, $tokens[$stackPtr]['bracket_closer'], false, 'create');
         if ($create === false) {
             return;
         }

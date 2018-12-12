@@ -681,13 +681,13 @@ class File
     /**
      * Records a warning against a specific token in the file.
      *
-     * @param string  $warning  The error message.
-     * @param int     $stackPtr The stack position where the error occurred.
-     * @param string  $code     A violation code unique to the sniff message.
-     * @param array   $data     Replacements for the warning message.
-     * @param int     $severity The severity level for this warning. A value of 0
-     *                          will be converted into the default severity level.
-     * @param boolean $fixable  Can the warning be fixed by the sniff?
+     * @param string   $warning  The error message.
+     * @param int|null $stackPtr The stack position where the error occurred.
+     * @param string   $code     A violation code unique to the sniff message.
+     * @param array    $data     Replacements for the warning message.
+     * @param int      $severity The severity level for this warning. A value of 0
+     *                           will be converted into the default severity level.
+     * @param boolean  $fixable  Can the warning be fixed by the sniff?
      *
      * @return boolean
      */
@@ -1131,18 +1131,6 @@ class File
         return $this->warningCount;
 
     }//end getWarningCount()
-
-
-    /**
-     * Returns the number of successes recorded.
-     *
-     * @return int
-     */
-    public function getSuccessCount()
-    {
-        return $this->successCount;
-
-    }//end getSuccessCount()
 
 
     /**
@@ -1945,10 +1933,10 @@ class File
      * Returns the content of the tokens from the specified start position in
      * the token stack for the specified length.
      *
-     * @param int $start       The position to start from in the token stack.
-     * @param int $length      The length of tokens to traverse from the start pos.
-     * @param int $origContent Whether the original content or the tab replaced
-     *                         content should be used.
+     * @param int       $start       The position to start from in the token stack.
+     * @param int       $length      The length of tokens to traverse from the start pos.
+     * @param int|false $origContent Whether the original content or the tab replaced
+     *                               content should be used.
      *
      * @return string The token contents.
      */

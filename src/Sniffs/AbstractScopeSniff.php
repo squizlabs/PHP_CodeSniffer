@@ -42,7 +42,7 @@ abstract class AbstractScopeSniff implements Sniff
     /**
      * The type of scope opener tokens that this test wishes to listen to.
      *
-     * @var string
+     * @var array
      */
     private $scopeTokens = [];
 

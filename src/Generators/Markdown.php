@@ -120,11 +120,11 @@ class Markdown extends Generator
     /**
      * Print a code comparison block found in a standard.
      *
-     * @param \DOMNode $node The DOMNode object for the code comparison block.
+     * @param \DOMElement $node The DOMNode object for the code comparison block.
      *
      * @return void
      */
-    protected function printCodeComparisonBlock(\DOMNode $node)
+    protected function printCodeComparisonBlock(\DOMElement $node)
     {
         $codeBlocks = $node->getElementsByTagName('code');
 

@@ -231,6 +231,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
         $classCount         = count($classNames);
         $checkingImplements = false;
         $implementsToken    = null;
+        $nextComma          = null;
         foreach ($classNames as $i => $className) {
             if ($tokens[$className]['code'] === $keywordTokenType) {
                 $checkingImplements = true;

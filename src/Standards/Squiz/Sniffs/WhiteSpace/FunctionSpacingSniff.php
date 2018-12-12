@@ -40,7 +40,7 @@ class FunctionSpacingSniff implements Sniff
     /**
      * The number of blank lines after the last function in a class.
      *
-     * @var integer
+     * @var array|null
      */
     private $rulesetProperties = null;
 

@@ -27,7 +27,7 @@ abstract class Tokenizer
      *
      * @var string
      */
-    protected $eolChar = [];
+    protected $eolChar = '';
 
     /**
      * A token-based representation of the content.
@@ -35,6 +35,13 @@ abstract class Tokenizer
      * @var array
      */
     protected $tokens = [];
+
+    /**
+     * The number of tokens
+     *
+     * @var integer
+     */
+    protected $numTokens = 0;
 
     /**
      * Known lengths of tokens.
@@ -49,6 +56,18 @@ abstract class Tokenizer
      * @var array
      */
     public $ignoredLines = [];
+
+    /**
+     * A list of tokens that are allowed to open a scope.
+     *
+     * This array also contains information about what kind of token the scope
+     * opener uses to open and close the scope, if the token strictly requires
+     * an opener, if the token can share a scope closer, and who it can be shared
+     * with. An example of a token that shares a scope closer is a CASE scope.
+     *
+     * @var array
+     */
+    public $scopeOpeners = [];
 
 
     /**
@@ -163,7 +182,7 @@ abstract class Tokenizer
         $encoding         = $this->config->encoding;
         $tabWidth         = $this->config->tabWidth;
 
-        $this->tokensWithTabs = [
+        $tokensWithTabs = [
             T_WHITESPACE               => true,
             T_COMMENT                  => true,
             T_DOC_COMMENT              => true,
@@ -186,7 +205,7 @@ abstract class Tokenizer
                 $length      = $this->knownLengths[$this->tokens[$i]['code']];
                 $currColumn += $length;
             } else if ($tabWidth === 0
-                || isset($this->tokensWithTabs[$this->tokens[$i]['code']]) === false
+                || isset($tokensWithTabs[$this->tokens[$i]['code']]) === false
                 || strpos($this->tokens[$i]['content'], "\t") === false
             ) {
                 // There are no tabs in this content, or we aren't replacing them.
