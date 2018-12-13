@@ -239,7 +239,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                 continue;
             }
 
-            if ($implementsToken === true) {
+            if ($checkingImplements === true) {
                 $numberOfInterface += 1;
             }
 
