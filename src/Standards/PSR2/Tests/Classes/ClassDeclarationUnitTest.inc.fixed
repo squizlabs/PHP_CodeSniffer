@@ -197,3 +197,23 @@ class C5 extends Foo implements
     Baz
 {
 }
+
+class C6 extends \Foo\Bar implements \Baz\Bar
+{
+}
+
+interface I4 extends \Baz\Bar
+{
+}
+
+interface I5 extends \Foo\Bar /* comment */
+{
+}
+
+interface I6 extends \Foo\Bar // comment
+{
+}
+
+class C7 extends \Foo\Bar implements \Baz\Bar // comment
+{
+}

@@ -168,15 +168,32 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     $fix   = $phpcsFile->addFixableError($error, $keyword, ucfirst($keywordType).'Line', $data);
                     if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
-                        for ($i = ($stackPtr + 1); $i < $keyword; $i++) {
-                            if ($tokens[$i]['line'] !== $tokens[($i + 1)]['line']) {
-                                $phpcsFile->fixer->substrToken($i, 0, (strlen($phpcsFile->eolChar) * -1));
+                        $comments = [];
+
+                        for ($i = ($stackPtr + 1); $i < $keyword; ++$i) {
+                            if ($tokens[$i]['code'] === T_COMMENT) {
+                                $comments[] = trim($tokens[$i]['content']);
+                            }
+
+                            if ($tokens[$i]['code'] === T_WHITESPACE
+                                || $tokens[$i]['code'] === T_COMMENT
+                            ) {
+                                $phpcsFile->fixer->replaceToken($i, ' ');
                             }
                         }
 
-                        $phpcsFile->fixer->addContentBefore($keyword, ' ');
+                        $phpcsFile->fixer->addContent($stackPtr, ' ');
+                        if (empty($comments) === false) {
+                            $i = $keyword;
+                            while ($tokens[($i + 1)]['line'] === $tokens[$keyword]['line']) {
+                                ++$i;
+                            }
+
+                            $phpcsFile->fixer->addContentBefore($i, ' '.implode(' ', $comments));
+                        }
+
                         $phpcsFile->fixer->endChangeset();
-                    }
+                    }//end if
                 } else {
                     // Check the whitespace before. Whitespace after is checked
                     // later by looking at the whitespace before the first class name
@@ -228,19 +245,28 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
             $nextClass    = $phpcsFile->findNext($find, ($nextClass + 1), ($openingBrace - 1));
         }
 
+        $skip = array_merge(
+            Tokens::$emptyTokens,
+            [
+                T_STRING,
+                T_NS_SEPARATOR,
+            ]
+        );
+
         $classCount         = count($classNames);
         $checkingImplements = false;
         $implementsToken    = null;
-        $numberOfInterface  = 0;
+        $oneInterface       = false;
         foreach ($classNames as $n => $className) {
             if ($tokens[$className]['code'] === $keywordTokenType) {
                 $checkingImplements = true;
                 $implementsToken    = $className;
-                continue;
-            }
 
-            if ($checkingImplements === true) {
-                $numberOfInterface += 1;
+                if (false === $phpcsFile->findNext($skip, ($implementsToken + 1), ($openingBrace - 1), true)) {
+                    $oneInterface = true;
+                }
+
+                continue;
             }
 
             if ($checkingImplements === true
@@ -302,15 +328,39 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                         $phpcsFile->fixer->addNewline($prev);
                         $phpcsFile->fixer->endChangeset();
                     }
-                } else if ($n === ($classCount - 1) && $numberOfInterface === 1) {
-                    $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($className - 1), $implements, true);
-                    if ($tokens[$prev]['line'] !== $tokens[$className]['line']) {
+                } else if ($oneInterface === true) {
+                    if ($tokens[$implementsToken]['line'] !== $tokens[$className]['line']) {
                         $error = 'Interface name should be in the same line as '.$keywordType.' keyword';
                         $fix   = $phpcsFile->addFixableError($error, $className, 'InterfaceWrongLine');
                         if ($fix === true) {
-                            $phpcsFile->fixer->replaceToken(($prev + 1), ' ');
-                        }
-                    }
+                            $phpcsFile->fixer->beginChangeset();
+                            $comments = [];
+
+                            for ($i = ($implementsToken + 1); $i < $className; ++$i) {
+                                if ($tokens[$i]['code'] === T_COMMENT) {
+                                    $comments[] = trim($tokens[$i]['content']);
+                                }
+
+                                if ($tokens[$i]['code'] === T_WHITESPACE
+                                    || $tokens[$i]['code'] === T_COMMENT
+                                ) {
+                                    $phpcsFile->fixer->replaceToken($i, '');
+                                }
+                            }
+
+                            $phpcsFile->fixer->addContent($implementsToken, ' ');
+                            if (empty($comments) === false) {
+                                $i = $className;
+                                while ($tokens[($i + 1)]['line'] === $tokens[$className]['line']) {
+                                    ++$i;
+                                }
+
+                                $phpcsFile->fixer->addContentBefore($i, ' '.implode(' ', $comments));
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }//end if
+                    }//end if
                 } else {
                     $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($className - 1), $implements);
                     if ($tokens[$prev]['line'] !== $tokens[$className]['line']) {
@@ -321,7 +371,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
 
                     $expected = ($classIndent + $this->indent);
                     if ($found !== $expected) {
-                        $error = 'Expected %s spaces before interface name; %s found';
+                        $error = 'Expected %s spaces before interface name; %s found - '.$n.' :: '.$classCount;
                         $data  = [
                             $expected,
                             $found,
