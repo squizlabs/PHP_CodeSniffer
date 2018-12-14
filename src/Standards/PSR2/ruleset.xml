@@ -23,7 +23,7 @@
     <!-- checked by PSR2.Files.EndFileNewline -->
 
     <!-- The closing ?> tag MUST be omitted from files containing only PHP. -->
-    <!-- checked by PSR2.Files.ClosingTagSniff -->
+    <!-- checked by PSR2.Files.ClosingTag -->
 
     <!-- 2.3 Lines -->
 
