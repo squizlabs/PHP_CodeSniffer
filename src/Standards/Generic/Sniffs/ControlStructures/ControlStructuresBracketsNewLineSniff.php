@@ -66,7 +66,7 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
         $braceLine            = $tokens[$openBrace]['line'];
 
         if ($braceLine === $controlStructureLine) {
-            $phpcsFile->recordMetric($stackPtr, 'Control Structure opening brace placement', 'same line');
+            $phpcsFile->recordMetric($stackPtr, 'Control structure opening brace placement', 'same line');
             $error = 'Opening brace of a %s must be on the line after the definition';
             $fix   = $phpcsFile->addFixableError($error, $openBrace, 'OpenBraceNewLine', $errorData);
 
@@ -83,10 +83,10 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
 
             return;
         } else {
-            $phpcsFile->recordMetric($stackPtr, 'Control Structure opening brace placement', 'new line');
+            $phpcsFile->recordMetric($stackPtr, 'Control structure opening brace placement', 'new line');
 
             if ($braceLine > ($controlStructureLine + 1)) {
-                $error = 'Opening brace of a %s must be on the line following the %s declaration.; Found %s line(s).';
+                $error = 'Opening brace of a %s must be on the line following the %s declaration; found %s line(s)';
                 $data  = [
                     $tokens[$stackPtr]['content'],
                     $tokens[$stackPtr]['content'],
@@ -113,7 +113,7 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
         }//end if
 
         if ($tokens[($openBrace + 1)]['content'] !== $phpcsFile->eolChar) {
-            $error = 'Opening %s brace must be on a line by itself.';
+            $error = 'Opening %s brace must be on a line by itself';
             $fix   = $phpcsFile->addFixableError($error, $openBrace, 'OpenBraceNotAlone', $errorData);
 
             if ($fix === true) {
@@ -188,7 +188,7 @@ class ControlStructuresBracketsNewLineSniff implements Sniff
 
                 // Skip all empty tokens on the same line as the opener.
                 if ($tokens[$next]['line'] === $tokens[$opener]['line']
-                    && (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$code]) === true
+                    && (isset(Tokens::$emptyTokens[$code]) === true
                     || $code === T_CLOSE_TAG)
                 ) {
                     continue;
