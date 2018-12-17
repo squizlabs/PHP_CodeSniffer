@@ -621,7 +621,7 @@ class Runner
             $file->addErrorOnLine($error, 1, 'Internal.Exception');
         }//end try
 
-        $this->reporter->cacheFileReport($file, $this->config);
+        $this->reporter->cacheFileReport($file);
 
         if ($this->config->interactive === true) {
             /*
@@ -656,7 +656,7 @@ class Runner
                     $file->ruleset->populateTokenListeners();
                     $file->reloadContent();
                     $file->process();
-                    $this->reporter->cacheFileReport($file, $this->config);
+                    $this->reporter->cacheFileReport($file);
                     break;
                 }
             }//end while

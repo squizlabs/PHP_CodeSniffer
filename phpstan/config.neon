@@ -1,0 +1,18 @@
+parameters:
+    ignoreErrors:
+        # wait for 0.11 :-(
+        #-
+        #    message: '~^Undefined variable: \$phpCodeSnifferConfig$~'
+        #    path: %currentWorkingDirectory%/Config.php
+        - '~^Undefined variable: \$phpCodeSnifferConfig$~'
+
+    dynamicConstantNames:
+        - PHP_CODESNIFFER_IN_TESTS
+        - PHP_CODESNIFFER_CBF
+        - PHP_CODESNIFFER_VERBOSITY
+
+services:
+    -
+        class: PHP_CodeSniffer\PHPStan\ConfigReflectionExtension
+        tags:
+            - phpstan.broker.propertiesClassReflectionExtension
