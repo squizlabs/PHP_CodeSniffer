@@ -51,6 +51,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
        --- e.g., property name="forbiddenFunctionNames" type="array" extend="true"
     -- Thanks to Michael Moravec for the patch
   - If $XDG_CACHE_HOME is set and points to a valid directory, it will be used for caching instead of the system temp directory
+  - PHPCBF now disables parallel running if you are passing content on STDIN
+    -- Stops an error from being shown after the fixed output is printed
   - The progress report now shows files with tokenizer errors as skipped (S) instead of a warning (W)
     -- The tokenizer error is still displayed in reports as normal
     -- Thanks to Juliette Reinders Folmer for the patch

@@ -175,6 +175,13 @@ class Runner
             // Init the run and load the rulesets to set additional config vars.
             $this->init();
 
+            // When processing STDIN, we only process one file at a time and
+            // we don't process all the way through, so we can't use the parallel
+            // running system.
+            if ($this->config->stdin === true) {
+                $this->config->parallel = 1;
+            }
+
             // Override some of the command line settings that might break the fixes.
             $this->config->generator    = null;
             $this->config->explain      = false;
