@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2018-09-24</date>
- <time>09:07:00</time>
+ <date>2018-12-20</date>
+ <time>10:54:00</time>
  <version>
   <release>3.4.0</release>
   <api>3.4.0</api>
@@ -27,10 +27,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - The Generic.Formatting.NoSpaceAfterCast sniff has been deprecated and will be removed in version 4
-      -- The functionality of this sniff is now available in the Generic.Formatting.SpaceAfterCast sniff
-         --- Include the Generic.Formatting.SpaceAfterCast sniff and set the "spacing" property to "0"
-      -- As soon as possible, replace all instances of the old sniff code with the new sniff code and property setting
-         --- The existing sniff will continue to work until version 4 has been released
+    -- The functionality of this sniff is now available in the Generic.Formatting.SpaceAfterCast sniff
+       --- Include the Generic.Formatting.SpaceAfterCast sniff and set the "spacing" property to "0"
+    -- As soon as possible, replace all instances of the old sniff code with the new sniff code and property setting
+       --- The existing sniff will continue to work until version 4 has been released
 
   - Rule include patterns in a ruleset.xml file are now evaluated as OR instead of AND
     -- Previously, a file had to match every include pattern and no exclude patterns to be included
@@ -1906,6 +1906,184 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>3.4.0</release>
+    <api>3.4.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2018-12-20</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - The Generic.Formatting.NoSpaceAfterCast sniff has been deprecated and will be removed in version 4
+      -- The functionality of this sniff is now available in the Generic.Formatting.SpaceAfterCast sniff
+         --- Include the Generic.Formatting.SpaceAfterCast sniff and set the "spacing" property to "0"
+      -- As soon as possible, replace all instances of the old sniff code with the new sniff code and property setting
+         --- The existing sniff will continue to work until version 4 has been released
+
+    - Rule include patterns in a ruleset.xml file are now evaluated as OR instead of AND
+      -- Previously, a file had to match every include pattern and no exclude patterns to be included
+      -- Now, a file must match at least one include pattern and no exclude patterns to be included
+      -- This is a bug fix as include patterns are already documented to work this way
+    - New token T_BITWISE_NOT added for the bitwise not operator
+      -- This token was previously tokenized as T_NONE
+      -- Any sniffs specifically looking for T_NONE tokens with a tilde as the contents must now also look for T_BITWISE_NOT
+      -- Sniffs can continue looking for T_NONE as well as T_BITWISE_NOT to support older PHP_CodeSniffer versions
+    - All types of binary casting are now tokenzied as T_BINARY_CAST
+      -- Previously, the 'b' in 'b"some string with $var"' would be a T_BINARY_CAST, but only when the string contained a var
+      -- This change ensures the 'b' is always tokenized as T_BINARY_CAST
+      -- This change also converts '(binary)' from T_STRING_CAST to T_BINARY_CAST
+      -- Thanks to Juliette Reinders Folmer for the help with this patch
+    - Array properties set inside a ruleset.xml file can now extend a previous value instead of always overwriting it
+      -- e.g., if you include a ruleset that defines forbidden functions, can you now add to that list instead of having to   redefine it
+      -- To use this feature, add extends="true" to the property tag
+         --- e.g., property name="forbiddenFunctionNames" type="array" extend="true"
+      -- Thanks to Michael Moravec for the patch
+    - If $XDG_CACHE_HOME is set and points to a valid directory, it will be used for caching instead of the system temp directory
+    - PHPCBF now disables parallel running if you are passing content on STDIN
+      -- Stops an error from being shown after the fixed output is printed
+    - The progress report now shows files with tokenizer errors as skipped (S) instead of a warning (W)
+      -- The tokenizer error is still displayed in reports as normal
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - The Squiz standard now ensures there is no space between an increment/decrement operator and its variable
+    - The File::getMethodParamaters() method now includes a has_body array index in the return value
+      -- TRUE if the method has no body (as with abstract and interface methods) or FALSe otherwise
+      -- Thanks to Chris Wilkinson for the patch
+    - The File::getTokensAsString() method now throws an exception if the $start param is invalid
+      -- If the $length param is invalid, an empty string will be returned
+      -- Stops an infinite loop when the function is passed invalid data
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Added new Generic.CodeAnalysis.EmptyPHPStatement sniff
+      -- Warns when it finds empty PHP open/close tag combinations or superfluous semicolons
+      -- Thanks to Juliette Reinders Folmer for the contribution
+    - Added new Generic.Formatting.SpaceBeforeCast sniff
+      -- Ensures there is exactly 1 space before a type cast, unless the cast statement is indented or mutli-line
+      -- Thanks to Juliette Reinders Folmer for the contribution
+    - Added new Generic.VersionControl.GitMergeConflict sniff
+      -- Detects merge conflict artifacts left in files
+      -- Thanks to Juliette Reinders Folmer for the contribution
+    - Added Generic.WhiteSpace.IncrementDecrementSpacing sniff
+      -- Ensures there is no space between the operator and the variable it applies to
+      -- Thanks to Juliette Reinders Folmer for the contribution
+    - Added PSR12.Functions.NullableTypeDeclaration sniff
+      -- Ensures there is no space after the question mark in a nullable type declaration
+      -- Thanks to Timo Schinkel for the contribution
+    - A number of sniffs have improved support for methods in anonymous classes
+      -- These sniffs would often throw the same error twice for functions in nested classes
+      -- Error messages have also been changed to be less confusing
+      -- The full list of affected sniffs is:
+         --- Generic.NamingConventions.CamelCapsFunctionName
+         --- PEAR.NamingConventions.ValidFunctionName
+         --- PSR1.Methods.CamelCapsMethodName
+         --- PSR2.Methods.MethodDeclaration
+         --- Squiz.Scope.MethodScope
+         --- Squiz.Scope.StaticThisUsage
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.CodeAnalysis.UnusedFunctionParameter now only skips functions with empty bodies when the class implements an   interface
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.CodeAnalysis.UnusedFunctionParameter now has additional error codes to indicate where unused params were found
+      -- The new error code prefixes are:
+         --- FoundInExtendedClass: when the class extends another
+         --- FoundInImplementedInterface: when the class implements an interface
+         --- Found: used in all other cases, including closures
+      -- The new error code suffixes are:
+         --- BeforeLastUsed: the unused param was positioned before the last used param in the function signature
+         --- AfterLastUsed: the unused param was positioned after the last used param in the function signature
+      -- This makes the new error code list for this sniff:
+         --- Found
+         --- FoundBeforeLastUsed
+         --- FoundAfterLastUsed
+         --- FoundInExtendedClass
+         --- FoundInExtendedClassBeforeLastUsed
+         --- FoundInExtendedClassAfterLastUsed
+         --- FoundInImplementedInterface
+         --- FoundInImplementedInterfaceBeforeLastUsed
+         --- FoundInImplementedInterfaceAfterLastUsed
+      -- These errors code make it easier for specific cases to be ignored or promoted using a ruleset.xml file
+      -- Thanks to Juliette Reinders Folmer for the contribution
+    - Generic.Classes.DuplicateClassName now inspects traits for duplicate names as well as classes and interfaces
+      -- Thanks to Chris Wilkinson for the patch
+    - Generic.Files.InlineHTML now ignores a BOM at the start of the file
+      -- Thanks to Chris Wilkinson for the patch
+    - Generic.PHP.CharacterBeforePHPOpeningTag now ignores a BOM at the start of the file
+      -- Thanks to Chris Wilkinson for the patch
+    - Generic.Formatting.SpaceAfterCast now has a setting to specify how many spaces are required after a type cast
+      -- Default remains 1
+      -- Override the "spacing" setting in a ruleset.xml file to change
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.Formatting.SpaceAfterCast now has a setting to ignore newline characters after a type cast
+      -- Default remains FALSE, so newlines are not allowed
+      -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.Formatting.SpaceAfterNot now has a setting to specify how many spaces are required after a NOT operator
+      -- Default remains 1
+      -- Override the "spacing" setting in a ruleset.xml file to change
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.Formatting.SpaceAfterNot now has a setting to ignore newline characters after the NOT operator
+      -- Default remains FALSE, so newlines are not allowed
+      -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - PEAR.Functions.FunctionDeclaration now checks spacing before the opening parenthesis of functions with no body
+      -- Thanks to Chris Wilkinson for the patch
+    - PEAR.Functions.FunctionDeclaration now enforces no space before the semicolon in functions with no body
+      -- Thanks to Chris Wilkinson for the patch
+    - PSR2.Classes.PropertyDeclaration now checks the order of property modifier keywords
+      -- This is a rule that is documented in PSR-2 but was not enforced by the included PSR2 standard until now
+      -- This sniff is also able to fix the order of the modifier keywords if they are incorrect
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - PSR2.Methods.MethodDeclaration now checks method declarations inside traits
+      -- Thanks to Chris Wilkinson for the patch
+    - Squiz.Commenting.InlineComment now has better detection of comment block boundaries
+    - Squiz.Classes.ClassFileName now checks that a trait name matches the filename
+      -- Thanks to Chris Wilkinson for the patch
+    - Squiz.Classes.SelfMemberReference now supports scoped declarations and anonymous classes
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Squiz.Classes.SelfMemberReference now fixes multiple errors at once, increasing fixer performance
+      -- Thanks to Gabriel Ostrolucký for the patch
+    - Squiz.Functions.LowercaseFunctionKeywords now checks abstract and final prefixes, and auto-fixes errors
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Squiz.Objects.ObjectMemberComma.Missing has been renamed to Squiz.Objects.ObjectMemberComma.Found
+      -- The error is thrown when the comma is found but not required, so the error code was incorrect
+      -- If you are referencing the old error code in a ruleset XML file, please use the new code instead
+      -- If you wish to maintain backwards compatibility, you can provide rules for both the old and new codes
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Squiz.WhiteSpace.ObjectOperatorSpacing is now more tolerant of parse errors
+    - Squiz.WhiteSpace.ObjectOperatorSpacing now fixes errors more efficiently
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2109 : Generic.Functions.CallTimePassByReference false positive for bitwise and used in function argument
+    - Fixed bug #2165 : Conflict between Squiz.Arrays.ArrayDeclaration and ScopeIndent sniffs when heredoc used in array
+    - Fixed bug #2167 : Generic.WhiteSpace.ScopeIndent shows invalid error when scope opener indented inside inline HTML
+    - Fixed bug #2178 : Generic.NamingConventions.ConstructorName matches methods in anon classes with same name as containing   class
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2190 : PEAR.Functions.FunctionCallSignature incorrect error when encountering trailing PHPCS annotation
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2194 : Generic.Whitespace.LanguageConstructSpacing should not be checking namespace operators
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2202 : Squiz.WhiteSpace.OperatorSpacing throws error for negative index when using curly braces for string   access
+      -- Same issue fixed in Squiz.Formatting.OperatorBracket
+      -- Thanks to Andreas Buchenrieder for the patch
+    - Fixed bug #2210 : Generic.NamingConventions.CamelCapsFunctionName not ignoring SoapClient __getCookies() method
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2211 : PSR2.Methods.MethodDeclaration gets confused over comments between modifier keywords
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2212 : FUNCTION and CONST in use groups being tokenised as T_FUNCTION and T_CONST
+      -- Thanks to Chris Wilkinson for the patch
+    - Fixed bug #2214 : File::getMemberProperties() is recognizing method params as properties
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2236 : Memory info measurement unit is Mb but probably should be MB
+    - Fixed bug #2246 : CSS tokenizer does not tokenize class names correctly when they contain the string NEW
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2278 : Squiz.Operators.ComparisonOperatorUsage false positive when inline IF contained in parentheses
+      -- Thanks to Arnout Boks for the patch
+    - Fixed bug #2284 : Squiz.Functions.FunctionDeclarationArgumentSpacing removing type hint during fixing
+      -- Thanks to Michał Bundyra for the patch
+    - Fixed bug #2297 : Anonymous class not tokenized correctly when used as argument to another anon class
+      -- Thanks to Michał Bundyra for the patch
+    </notes>
+  </release>
   <release>
    <version>
     <release>2.9.2</release>
