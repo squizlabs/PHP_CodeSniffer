@@ -410,3 +410,27 @@ abstract class SomeClass {
      */
     abstract public function getGroups();
 }
+
+class SomeClass {
+	/**
+	 * Validates something.
+	 *
+	 * @param string $method The set method parameter.
+	 *
+	 * @return string The validated method.
+	 *
+	 * @throws Prefix_Invalid_Argument_Exception The invalid argument exception.
+	 * @throws InvalidArgumentException          The invalid argument exception.
+	 */
+	protected function validate_something( $something ) {
+		if ( ! Prefix_Validator::is_string( $something ) ) {
+			throw Prefix_Invalid_Argument_Exception::invalid_string_parameter( $something, 'something' );
+		}
+
+		if ( ! in_array( $something, $this->valid_http_something, true ) ) {
+			throw new InvalidArgumentException( sprintf( '%s is not a valid HTTP something', $something ) );
+		}
+
+		return $something;
+	}
+}

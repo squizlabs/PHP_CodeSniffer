@@ -69,6 +69,7 @@ class FunctionCommentThrowTagSniff implements Sniff
         $thrownExceptions = [];
         $currPos          = $stackPtr;
         $foundThrows      = false;
+        $unknownCount     = 0;
         do {
             $currPos = $phpcsFile->findNext([T_THROW, T_ANON_CLASS, T_CLOSURE], ($currPos + 1), $stackPtrEnd);
             if ($currPos === false) {
@@ -156,6 +157,8 @@ class FunctionCommentThrowTagSniff implements Sniff
                         }
                     }
                 }
+            } else {
+                ++$unknownCount;
             }//end if
         } while ($currPos < $stackPtrEnd && $currPos !== false);
 
@@ -196,7 +199,7 @@ class FunctionCommentThrowTagSniff implements Sniff
         }
 
         // Make sure @throws tag count matches thrown count.
-        $thrownCount = count($thrownExceptions);
+        $thrownCount = (count($thrownExceptions) + $unknownCount);
         $tagCount    = count($throwTags);
         if ($thrownCount !== $tagCount) {
             $error = 'Expected %s @throws tag(s) in function comment; %s found';
