@@ -212,11 +212,19 @@ class FunctionCommentThrowTagSniff implements Sniff
         }
 
         foreach ($thrownExceptions as $throw) {
-            if (isset($throwTags[$throw]) === false) {
-                $error = 'Missing @throws tag for "%s" exception';
-                $data  = [$throw];
-                $phpcsFile->addError($error, $commentEnd, 'Missing', $data);
+            if (isset($throwTags[$throw]) === true) {
+                continue;
             }
+
+            foreach ($throwTags as $tag => $ignore) {
+                if (strrpos($tag, $throw) === (strlen($tag) - strlen($throw))) {
+                    continue 2;
+                }
+            }
+
+            $error = 'Missing @throws tag for "%s" exception';
+            $data  = [$throw];
+            $phpcsFile->addError($error, $commentEnd, 'Missing', $data);
         }
 
     }//end process()

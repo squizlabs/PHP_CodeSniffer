@@ -434,3 +434,53 @@ class SomeClass {
 		return $something;
 	}
 }
+
+namespace Test\Admin {
+	class NameSpacedClass {
+		/**
+		 * @throws \ExceptionFromGlobalNamespace
+		 */
+		public function ExceptionInGlobalNamespace() {
+			throw new \ExceptionFromGlobalNamespace();
+		}
+
+		/**
+		 * @throws ExceptionFromSameNamespace
+		 */
+		public function ExceptionInSameNamespace() {
+			throw new ExceptionFromSameNamespace();
+		}
+
+		/**
+		 * @throws \Test\Admin\ExceptionFromSameNamespace
+		 */
+		public function ExceptionInSameNamespaceToo() {
+			throw new ExceptionFromSameNamespace();
+		}
+
+		/**
+		 * @throws \Different\NameSpaceName\ExceptionFromDifferentNamespace
+		 */
+		public function ExceptionInSameNamespaceToo() {
+			throw new \Different\NameSpaceName\ExceptionFromDifferentNamespace();
+		}
+	}
+}
+
+namespace {
+	class GlobalNameSpaceClass {
+		/**
+		 * @throws SomeGlobalException
+		 */
+		public function ThrowGlobalException() {
+			throw new SomeGlobalException();
+		}
+
+		/**
+		 * @throws \SomeGlobalException
+		 */
+		public function ThrowGlobalExceptionToo() {
+			throw new SomeGlobalException();
+		}
+	}
+}
