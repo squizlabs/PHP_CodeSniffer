@@ -142,11 +142,12 @@ class ScopeIndentSniff implements Sniff
             }
         }
 
-        $lastOpenTag  = $stackPtr;
-        $lastCloseTag = null;
-        $openScopes   = [];
-        $adjustments  = [];
-        $setIndents   = [];
+        $lastOpenTag     = $stackPtr;
+        $lastCloseTag    = null;
+        $openScopes      = [];
+        $adjustments     = [];
+        $setIndents      = [];
+        $disableExactEnd = 0;
 
         $tokens  = $phpcsFile->getTokens();
         $first   = $phpcsFile->findFirstOnLine(T_INLINE_HTML, $stackPtr);
@@ -180,20 +181,65 @@ class ScopeIndentSniff implements Sniff
         $this->exact     = (bool) $this->exact;
         $this->tabIndent = (bool) $this->tabIndent;
 
+        $checkAnnotations = $phpcsFile->config->annotations;
+
         for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
             if ($i === false) {
                 // Something has gone very wrong; maybe a parse error.
                 break;
             }
 
+            if ($checkAnnotations === true
+                && $tokens[$i]['code'] === T_PHPCS_SET
+                && isset($tokens[$i]['sniffCode']) === true
+                && $tokens[$i]['sniffCode'] === 'Generic.WhiteSpace.ScopeIndent'
+                && $tokens[$i]['sniffProperty'] === 'exact'
+            ) {
+                $value = $tokens[$i]['sniffPropertyValue'];
+                if ($value === 'true') {
+                    $value = true;
+                } else if ($value === 'false') {
+                    $value = false;
+                } else {
+                    $value = (bool) $value;
+                }
+
+                $this->exact = $value;
+
+                if ($this->debug === true) {
+                    $line = $tokens[$i]['line'];
+                    if ($this->exact === true) {
+                        $value = 'true';
+                    } else {
+                        $value = 'false';
+                    }
+
+                    echo "* token $i on line $line set exact flag to $value *".PHP_EOL;
+                }
+            }//end if
+
             $checkToken  = null;
             $checkIndent = null;
 
-            $exact = (bool) $this->exact;
-            if ($exact === true && isset($tokens[$i]['nested_parenthesis']) === true) {
-                // Don't check indents exactly between parenthesis as they
-                // tend to have custom rules, such as with multi-line function calls
-                // and control structure conditions.
+            /*
+                Don't check indents exactly between parenthesis or arrays as they
+                tend to have custom rules, such as with multi-line function calls
+                and control structure conditions.
+            */
+
+            $exact = $this->exact;
+
+            if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
+                $disableExactEnd = max($disableExactEnd, $tokens[$i]['bracket_closer']);
+            }
+
+            if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS
+                && isset($tokens[$i]['parenthesis_closer']) === true
+            ) {
+                $disableExactEnd = max($disableExactEnd, $tokens[$i]['parenthesis_closer']);
+            }
+
+            if ($exact === true && $i < $disableExactEnd) {
                 $exact = false;
             }
 
