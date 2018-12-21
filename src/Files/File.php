@@ -392,26 +392,13 @@ class File
                 } else if (substr($commentTextLower, 0, 9) === 'phpcs:set'
                     || substr($commentTextLower, 0, 10) === '@phpcs:set'
                 ) {
-                    // If the @phpcs: syntax is being used, strip the @ to make
-                    // comparisons easier.
-                    if ($commentText[0] === '@') {
-                        $commentText = substr($commentText, 1);
-                    }
-
-                    // Need to maintain case here, to get the correct sniff code.
-                    $parts = explode(' ', substr($commentText, 10));
-                    if (count($parts) >= 2) {
-                        $sniffParts = explode('.', $parts[0]);
-                        if (count($sniffParts) >= 3) {
-                            // If the sniff code is not known to us, it has not been registered in this run.
-                            // But don't throw an error as it could be there for a different standard to use.
-                            if (isset($this->ruleset->sniffCodes[$parts[0]]) === true) {
-                                $listenerCode  = array_shift($parts);
-                                $propertyCode  = array_shift($parts);
-                                $propertyValue = rtrim(implode(' ', $parts), " */\r\n");
-                                $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
-                                $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
-                            }
+                    if (isset($token['sniffCode']) === true) {
+                        $listenerCode = $token['sniffCode'];
+                        if (isset($this->ruleset->sniffCodes[$listenerCode]) === true) {
+                            $propertyCode  = $token['sniffProperty'];
+                            $propertyValue = $token['sniffPropertyValue'];
+                            $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
+                            $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
                         }
                     }
                 }//end if

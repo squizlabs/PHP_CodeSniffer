@@ -369,6 +369,17 @@ abstract class Tokenizer
                             $this->ignoredLines[$this->tokens[$i]['line']] = ['.all' => true];
                         }
 
+                        // Need to maintain case here, to get the correct sniff code.
+                        $parts = explode(' ', substr($commentText, 10));
+                        if (count($parts) >= 2) {
+                            $sniffParts = explode('.', $parts[0]);
+                            if (count($sniffParts) >= 3) {
+                                $this->tokens[$i]['sniffCode']          = array_shift($parts);
+                                $this->tokens[$i]['sniffProperty']      = array_shift($parts);
+                                $this->tokens[$i]['sniffPropertyValue'] = rtrim(implode(' ', $parts), " */\r\n");
+                            }
+                        }
+
                         $this->tokens[$i]['code'] = T_PHPCS_SET;
                         $this->tokens[$i]['type'] = 'T_PHPCS_SET';
                     } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile') {
