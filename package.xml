@@ -1762,7 +1762,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <notes>
     - The Generic.Formatting.NoSpaceAfterCast sniff has been deprecated and will be removed in version 4
       -- The functionality of this sniff is now available in the Generic.Formatting.SpaceAfterCast sniff
-         --- Include the Generic.Formatting.SpaceAfterCast sniff and set the "spacing" property to "1"
+         --- Include the Generic.Formatting.SpaceAfterCast sniff and set the "spacing" property to "0"
       -- As soon as possible, replace all instances of the old sniff code with the new sniff code and property setting
          --- The existing sniff will continue to work until version 4 has been released
 
