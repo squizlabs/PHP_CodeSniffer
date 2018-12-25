@@ -38,8 +38,12 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
         // Detect multiple properties defined at the same time. Throw an error
         // for this, but also only process the first property in the list so we don't
         // repeat errors.
-        $find = Tokens::$scopeModifiers;
-        $find = array_merge($find, [T_VARIABLE, T_VAR, T_SEMICOLON, T_OPEN_CURLY_BRACKET]);
+        $find   = Tokens::$scopeModifiers;
+        $find[] = T_VARIABLE;
+        $find[] = T_VAR;
+        $find[] = T_SEMICOLON;
+        $find[] = T_OPEN_CURLY_BRACKET;
+
         $prev = $phpcsFile->findPrevious($find, ($stackPtr - 1));
         if ($tokens[$prev]['code'] === T_VARIABLE) {
             return;

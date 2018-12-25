@@ -260,10 +260,9 @@ abstract class AbstractPatternSniff implements Sniff
         $errors      = [];
         $found       = '';
 
-        $ignoreTokens = [T_WHITESPACE];
+        $ignoreTokens = [T_WHITESPACE => T_WHITESPACE];
         if ($this->ignoreComments === true) {
-            $ignoreTokens
-                = array_merge($ignoreTokens, Tokens::$commentTokens);
+            $ignoreTokens += Tokens::$commentTokens;
         }
 
         $origStackPtr = $stackPtr;
