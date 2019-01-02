@@ -8,15 +8,15 @@ matrix:
     - php: 5.4
     - php: 5.5
     - php: 5.5
-      env: CUSTOM_INI=1
-    - php: 5.6
-    - php: 7.0
-    - php: 7.0
       env: CUSTOM_INI=1 XMLLINT=1
       addons:
         apt:
           packages:
             - libxml2-utils
+    - php: 5.6
+    - php: 7.0
+    - php: 7.0
+      env: CUSTOM_INI=1 PEAR_VALIDATE=1
     - php: 7.1
     - php: 7.2
     - php: 7.3
@@ -39,6 +39,7 @@ script:
   - phpunit tests/AllTests.php
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
+  - if [[ $PEAR_VALIDATE == "1" ]]; then php scripts/validate-pear-package.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then composer validate --no-check-all --strict; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php scripts/build-phar.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php phpcs.phar; fi
