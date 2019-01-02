@@ -21,7 +21,7 @@ matrix:
     - php: 7.2
       env: PHPUNIT_INCOMPAT=1
     - php: 7.3
-      env: PHPUNIT_INCOMPAT=1
+      env: PHPUNIT_INCOMPAT=1 SNIFF_COMPLETE=1
     - php: "7.4snapshot"
       env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
       addons:
@@ -62,6 +62,7 @@ script:
   - if [[ $CUSTOM_INI != "1" ]]; then composer validate --no-check-all --strict; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php scripts/build-phar.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php phpcs.phar; fi
+  - if [[ $SNIFF_COMPLETE == "1" ]]; then php scripts/check-sniff-completeness.php -q; fi
   # Validate the xml ruleset files.
   # @link http://xmlsoft.org/xmllint.html
   - if [[ $XMLLINT == "1" ]]; then xmllint --noout --schema phpcs.xsd ./src/Standards/*/ruleset.xml; fi
