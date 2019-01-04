@@ -84,7 +84,7 @@ $this->attachRule(
 	{
 		protected $r;
 
-		public function __construct(RouterView $r)
+		public function __construct(RV $r)
 		{
 			$this->r = $r;
 		}
