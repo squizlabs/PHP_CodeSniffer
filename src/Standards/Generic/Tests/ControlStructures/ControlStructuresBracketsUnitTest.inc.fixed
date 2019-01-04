@@ -61,20 +61,20 @@ while ($a < $b)
 // Closure indentation tests
 function foo()
 {
-	// Sort the array by value of subarray
+	// Closure with control structures
 	usort(
-		$languages,
+		$c,
 		function($a, $b) use ($that)
 		{
-			$ordering = $that->getState('list.ordering');
+			$o = $that->getState('l.o');
 
-			if (strtolower($that->getState('list.direction')) === 'asc')
+			if (strtolower($that->getState('l.d')) === 'asc')
 			{
-				return StringHelper::strcmp($a->$ordering, $b->$ordering);
+				echo 'muh';
 			}
 			else
 			{
-				return StringHelper::strcmp($b->$ordering, $a->$ordering);
+				echo true;
 			}
 		}
 	);
@@ -82,134 +82,132 @@ function foo()
 
 // Anonymous classes test
 $this->attachRule(
-	new class($this) implements RulesInterface
+	new class($this) implements FooInterface
 	{
-		protected $router;
+		protected $r;
 
-		public function __construct(RouterView $router)
+		public function __construct(RV $r)
 		{
-			$this->router = $router;
+			$this->r = $r;
 		}
 
-		public function preprocess(&$query)
+		public function preprocess(&$q)
 		{
 		}
 
-		public function parse(&$segments, &$vars)
+		public function parse(&$s, &$v)
 		{
-			// Get the views and the currently active query vars
-			$views  = $this->router->getViews();
-			$active = $this->router->menu->getActive();
+			// Set fake vars before control structures
+			$v = $this->r->getV();
+			$a = $this->r->m->getA();
 
-			if ($active)
+			if ($a)
 			{
-				$vars = array_merge($active->query, $vars);
+				$v = array_merge($a->q, $v);
 			}
 
-			// We don't have a view or its not a view of this component! We stop here
-			if (!isset($vars['view']) || !isset($views[$vars['view']]))
+			// Comment before
+			if ($b)
 			{
 				return;
 			}
 
-			// Get the item from the segment
-			$segment = array_shift($segments);
+			// Get the item
+			$s = array_shift($shift);
 
-			if (strpos($segment, '-') === false)
+			if ($c === false)
 			{
-				throw new InvalidArgumentException('Invalid URL', 404);
+				throw new InvalidArgumentException('Invalid thing', 42);
 			}
-			list ($view, $jcItemId) = explode('-', $segment);
+			list ($v, $j) = explode('-', $s);
 
-			if (!isset($views[$view]))
+			if (!isset($vs[$v]))
 			{
-				throw new InvalidArgumentException('View not found', 404);
+				throw new InvalidArgumentException('Invalid thing two', 84);
 			}
 
-			$db = Factory::getDbo();
-			$vars['view'] = $view;
+			$d = Factory::getD();
+			$vr['v'] = $vw;
 
-			// Move forward based on view
-			switch ($view)
-			{
-				case 'tracker':
-					// Search the database for the appropriate tracker.
-					$db->setQuery(
-						$db->getQuery(true)
-							->select('tracker_id')
-							->from('#__code_trackers')
-							->where('jc_tracker_id = ' . (int) $jcItemId)
+			// Switch case closure case 1
+			switch ($v)
+				{
+				case 't':
+					// Search for t.
+					$d->setQ(
+						$d->getQ(true)
+							->select('t')
+							->from('#__c')
+							->where('j = ' . (int) $I)
 						,
 						0,
 						1
 					);
-					$trackerId = (int) $db->loadResult();
-					$vars['tracker_id'] = $jcItemId;
+					$t = (int) $d->loadR();
+					$v['t'] = $j;
 					break;
 
-				case 'issue';
-					// Search the database for the appropriate issue.
-					$db->setQuery(
-						$db->getQuery(true)
-							->select('issue_id')
-							->from('#__code_tracker_issues')
-							->where('jc_issue_id = ' . (int) $jcItemId)
+				case 'i';
+					// Set case.
+					$d->setQ(
+						$d->getQ(true)
+							->select('i')
+							->from('#__c')
+							->where('j = ' . (int) $I)
 						,
 						0,
 						1
 					);
-					$issueId = (int) $db->loadResult();
-					$vars['issue_id'] = $jcItemId;
+					$i = (int) $d->loadR();
+					$v['i'] = $j;
 					break;
-			}
+				}
 
-			return $vars;
+			return $v;
 		}
 	}
 );
 
 // Round 2 Closure indentation tests
 $i = 1;
-$func = function ($match) use ($query, $args, &$i)
+$func = function ($m) use ($q, $a, &$i)
 {
-	if (isset($match[6]) && $match[6] === '%')
+	if (isset($m[6]) && $m[6] === '%')
 	{
 		return '%';
 	}
-	// No argument required, do not increment the argument index.
-	switch ($match[5])
-	{
+	// Switch case with closure 2.
+	switch ($m[5])
+{
 		case 't':
-			return $query->currentTimestamp();
+			return $q->currentT();
 			break;
 		case 'z':
 			if (true)
 			{
-				return $query->nullDate(true);
+				return $q->nullD(true);
 			}
-			return $query->nullDate(false);
+			return $query->nullD(false);
 			break;
 		case 'Z':
-			return $query->nullDate(true);
+			return $query->nullD(true);
 			break;
 	}
 };
 
 class Foo
 {
-	public function format($format)
+	public function foo($foo)
 	{
-		$query = $this;
-		$args  = \array_slice(\func_get_args(), 1);
-		array_unshift($args, null);
-
+		$q = $this;
+		$a  = \array_slice(\func_get_args(), 1);
+		array_unshift($a, null);
 		$i    = 1;
-		$func = function ($match) use ($query, $args, &$i) {
-			if (isset($match[6]) && $match[6] === '%')
+		$func = function ($m) use ($q, $a, &$i) {
+			if (isset($m[6]) && $m[6] === '%')
 			{
 				return '%';
 			}
-
 		};
 	}
 }
