@@ -1,0 +1,1 @@
+PHP_CodeSniffer requires PHP version 5.4.0 or greater, although individual sniffs may have additional requirements such as external applications and scripts. See the [[Configuration Options]] manual page for a list of these requirements.
