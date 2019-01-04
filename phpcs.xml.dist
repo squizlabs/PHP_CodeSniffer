@@ -8,7 +8,8 @@
     <file>src</file>
     <file>tests</file>
 
-    <exclude-pattern>*/Standards/*/Tests/*\.(inc|css|js)</exclude-pattern>
+    <exclude-pattern>*/src/Standards/*/Tests/*\.(inc|css|js)$</exclude-pattern>
+    <exclude-pattern>*/tests/Core/*/*Test\.(inc|css|js)$</exclude-pattern>
 
     <arg name="basepath" value="."/>
     <arg name="colors"/>
