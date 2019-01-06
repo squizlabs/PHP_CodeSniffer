@@ -233,6 +233,7 @@ class Runner
      * Exits if the minimum requirements of PHP_CodSniffer are not met.
      *
      * @return array
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
      */
     public function checkRequirements()
     {
@@ -254,6 +255,7 @@ class Runner
      * Init the rulesets and other high-level settings.
      *
      * @return void
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
      */
     public function init()
     {
@@ -312,6 +314,8 @@ class Runner
      * Performs the run.
      *
      * @return int The number of errors and warnings found.
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
      */
     private function run()
     {
@@ -558,6 +562,7 @@ class Runner
      * @param int    $line    The line number the error was raised at.
      *
      * @return void
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
      */
     public function handleErrors($code, $message, $file, $line)
     {
@@ -577,6 +582,7 @@ class Runner
      * @param \PHP_CodeSniffer\Files\File $file The file to be processed.
      *
      * @return void
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
      */
     public function processFile($file)
     {
@@ -726,14 +732,14 @@ class Runner
     /**
      * Print progress information for a single processed file.
      *
-     * @param File $file         The file that was processed.
-     * @param int  $numFiles     The total number of files to process.
-     * @param int  $numProcessed The number of files that have been processed,
-     *                           including this one.
+     * @param \PHP_CodeSniffer\Files\File $file         The file that was processed.
+     * @param int                         $numFiles     The total number of files to process.
+     * @param int                         $numProcessed The number of files that have been processed,
+     *                                                  including this one.
      *
      * @return void
      */
-    public function printProgress($file, $numFiles, $numProcessed)
+    public function printProgress(File $file, $numFiles, $numProcessed)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 0
             || $this->config->showProgress === false

@@ -188,7 +188,7 @@ class Config
      * @param string $name The name of the property.
      *
      * @return mixed
-     * @throws RuntimeException If the setting name is invalid.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the setting name is invalid.
      */
     public function __get($name)
     {
@@ -208,7 +208,7 @@ class Config
      * @param mixed  $value The value of the property.
      *
      * @return void
-     * @throws RuntimeException If the setting name is invalid.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the setting name is invalid.
      */
     public function __set($name, $value)
     {
@@ -1555,7 +1555,7 @@ class Config
      *
      * @return bool
      * @see    getConfigData()
-     * @throws RuntimeException If the config file can not be written.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the config file can not be written.
      */
     public static function setConfigData($key, $value, $temp=false)
     {

@@ -23,7 +23,7 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
         /**
          * The composer autoloader.
          *
-         * @var Composer\Autoload\ClassLoader
+         * @var \Composer\Autoload\ClassLoader
          */
         private static $composerAutoloader = null;
 
