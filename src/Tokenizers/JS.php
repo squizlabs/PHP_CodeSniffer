@@ -832,7 +832,7 @@ class JS extends Tokenizer
                 $numLines   = count($tokenLines);
 
                 for ($i = 0; $i < $numLines; $i++) {
-                    $newToken['content'] = $tokenLines[$i];
+                    $newToken = ['content' => $tokenLines[$i]];
                     if ($i === ($numLines - 1)) {
                         if ($tokenLines[$i] === '') {
                             break;
