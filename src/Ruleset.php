@@ -410,7 +410,7 @@ class Ruleset
                     }
                 } else if (empty($newSniffs) === false) {
                     $newSniff = $newSniffs[0];
-                    if (in_array($newSniff, $ownSniffs) === false) {
+                    if (in_array($newSniff, $ownSniffs, true) === false) {
                         // Including a sniff that hasn't been included higher up, but
                         // only including a single message from it. So turn off all messages in
                         // the sniff, except this one.
@@ -578,7 +578,7 @@ class Ruleset
         // sniff list, but filter out any excluded sniffs.
         $files = [];
         foreach ($includedSniffs as $sniff) {
-            if (in_array($sniff, $excludedSniffs) === true) {
+            if (in_array($sniff, $excludedSniffs, true) === true) {
                 continue;
             } else {
                 $files[] = Util\Common::realpath($sniff);

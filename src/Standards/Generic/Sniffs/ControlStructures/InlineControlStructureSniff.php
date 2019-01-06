@@ -153,7 +153,7 @@ class InlineControlStructureSniff implements Sniff
                 break;
             }
 
-            if (in_array($tokens[$end]['code'], $fixableScopeOpeners) === true
+            if (in_array($tokens[$end]['code'], $fixableScopeOpeners, true) === true
                 && isset($tokens[$end]['scope_opener']) === false
             ) {
                 // The best way to fix nested inline scopes is middle-out.

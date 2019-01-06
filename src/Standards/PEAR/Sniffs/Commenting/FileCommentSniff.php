@@ -161,7 +161,7 @@ class FileCommentSniff implements Sniff
             T_PROPERTY,
         ];
 
-        if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+        if (in_array($tokens[$nextToken]['code'], $ignore, true) === true) {
             $phpcsFile->addError('Missing file doc comment', $stackPtr, 'Missing');
             $phpcsFile->recordMetric($stackPtr, 'File has doc comment', 'no');
             return ($phpcsFile->numTokens + 1);

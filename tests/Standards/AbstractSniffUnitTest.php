@@ -265,12 +265,12 @@ abstract class AbstractSniffUnitTest extends TestCase
                     $errorsTemp[] = $foundError['message'].' ('.$foundError['source'].')';
 
                     $source = $foundError['source'];
-                    if (in_array($source, $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES']) === false) {
+                    if (in_array($source, $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES'], true) === false) {
                         $GLOBALS['PHP_CODESNIFFER_SNIFF_CODES'][] = $source;
                     }
 
                     if ($foundError['fixable'] === true
-                        && in_array($source, $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES']) === false
+                        && in_array($source, $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'], true) === false
                     ) {
                         $GLOBALS['PHP_CODESNIFFER_FIXABLE_CODES'][] = $source;
                     }

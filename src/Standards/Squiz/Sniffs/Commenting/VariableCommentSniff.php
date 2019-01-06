@@ -111,7 +111,7 @@ class VariableCommentSniff extends AbstractVariableSniff
         $suggestedNames = [];
         foreach ($typeNames as $i => $typeName) {
             $suggestedName = Common::suggestType($typeName);
-            if (in_array($suggestedName, $suggestedNames) === false) {
+            if (in_array($suggestedName, $suggestedNames, true) === false) {
                 $suggestedNames[] = $suggestedName;
             }
         }

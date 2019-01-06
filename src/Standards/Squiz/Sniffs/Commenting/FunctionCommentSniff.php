@@ -78,7 +78,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 $suggestedNames = [];
                 foreach ($typeNames as $i => $typeName) {
                     $suggestedName = Common::suggestType($typeName);
-                    if (in_array($suggestedName, $suggestedNames) === false) {
+                    if (in_array($suggestedName, $suggestedNames, true) === false) {
                         $suggestedNames[] = $suggestedName;
                     }
                 }
@@ -397,7 +397,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $suggestedTypeHint = 'callable';
                 } else if (strpos($suggestedName, 'callback') !== false) {
                     $suggestedTypeHint = 'callable';
-                } else if (in_array($suggestedName, Common::$allowedTypes) === false) {
+                } else if (in_array($suggestedName, Common::$allowedTypes, true) === false) {
                     $suggestedTypeHint = $suggestedName;
                 }
 

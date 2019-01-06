@@ -86,7 +86,7 @@ class InlineCommentSniff implements Sniff
                 T_REQUIRE_ONCE,
             ];
 
-            if (in_array($tokens[$nextToken]['code'], $ignore) === true) {
+            if (in_array($tokens[$nextToken]['code'], $ignore, true) === true) {
                 return;
             }
 
@@ -266,7 +266,7 @@ class InlineCommentSniff implements Sniff
                 'or question marks' => '?',
             ];
 
-            if (in_array($commentCloser, $acceptedClosers) === false) {
+            if (in_array($commentCloser, $acceptedClosers, true) === false) {
                 $error = 'Inline comments must end in %s';
                 $ender = '';
                 foreach ($acceptedClosers as $closerName => $symbol) {
