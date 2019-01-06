@@ -9,8 +9,6 @@
 
 namespace PHP_CodeSniffer\Tests;
 
-use PHPUnit\TextUI\TestRunner;
-
 if (is_file(__DIR__.'/../autoload.php') === true) {
     include_once 'Core/AllTests.php';
     include_once 'Standards/AllSniffs.php';
