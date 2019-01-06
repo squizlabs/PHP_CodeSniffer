@@ -732,14 +732,14 @@ class Runner
     /**
      * Print progress information for a single processed file.
      *
-     * @param File $file         The file that was processed.
-     * @param int  $numFiles     The total number of files to process.
-     * @param int  $numProcessed The number of files that have been processed,
-     *                           including this one.
+     * @param \PHP_CodeSniffer\Files\File $file         The file that was processed.
+     * @param int                         $numFiles     The total number of files to process.
+     * @param int                         $numProcessed The number of files that have been processed,
+     *                                                  including this one.
      *
      * @return void
      */
-    public function printProgress($file, $numFiles, $numProcessed)
+    public function printProgress(File $file, $numFiles, $numProcessed)
     {
         if (PHP_CODESNIFFER_VERBOSITY > 0
             || $this->config->showProgress === false

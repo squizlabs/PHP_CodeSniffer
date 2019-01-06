@@ -836,10 +836,10 @@ class Ruleset
     /**
      * Processes a rule from a ruleset XML file, overriding built-in defaults.
      *
-     * @param SimpleXMLElement $rule      The rule object from a ruleset XML file.
-     * @param string[]         $newSniffs An array of sniffs that got included by this rule.
-     * @param int              $depth     How many nested processing steps we are in.
-     *                                    This is only used for debug output.
+     * @param \SimpleXMLElement $rule      The rule object from a ruleset XML file.
+     * @param string[]          $newSniffs An array of sniffs that got included by this rule.
+     * @param int               $depth     How many nested processing steps we are in.
+     *                                     This is only used for debug output.
      *
      * @return void
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If rule settings are invalid.
@@ -1073,7 +1073,7 @@ class Ruleset
     /**
      * Determine if an element should be processed or ignored.
      *
-     * @param SimpleXMLElement $element An object from a ruleset XML file.
+     * @param \SimpleXMLElement $element An object from a ruleset XML file.
      *
      * @return bool
      */
