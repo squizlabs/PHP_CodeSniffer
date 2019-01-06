@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This allows you change the "exact" rule for only some parts of a file
   - Generic.WhiteSpace.ScopeIndent now disables exact indent checking inside all arrays
     -- Previously, this was only done when using long array syntax, but it now works for short array syntax as well
+  - PSR12.Classes.ClassInstantiation has changed it's error code from MissingParenthesis to MissingParentheses
  </notes>
  <contents>
   <dir name="/">

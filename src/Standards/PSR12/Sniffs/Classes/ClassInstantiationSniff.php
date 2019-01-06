@@ -1,6 +1,6 @@
 <?php
 /**
- * Verifies that classes are instantiated with parenthesis.
+ * Verifies that classes are instantiated with parentheses.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
@@ -87,8 +87,8 @@ class ClassInstantiationSniff implements Sniff
             return;
         }
 
-        $error = 'Parenthesis must be used when instantiating a new class';
-        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MissingParenthesis');
+        $error = 'Parentheses must be used when instantiating a new class';
+        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'MissingParentheses');
         if ($fix === true) {
             $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($classNameEnd - 1), null, true);
             $phpcsFile->fixer->addContent($prev, '()');
