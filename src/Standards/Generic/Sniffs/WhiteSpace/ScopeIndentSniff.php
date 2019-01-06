@@ -776,7 +776,7 @@ class ScopeIndentSniff implements Sniff
 
             if ($checkToken !== null
                 && isset(Tokens::$scopeOpeners[$tokens[$checkToken]['code']]) === true
-                && in_array($tokens[$checkToken]['code'], $this->nonIndentingScopes) === false
+                && in_array($tokens[$checkToken]['code'], $this->nonIndentingScopes, true) === false
                 && isset($tokens[$checkToken]['scope_opener']) === true
             ) {
                 $exact = true;
@@ -1133,7 +1133,7 @@ class ScopeIndentSniff implements Sniff
 
                 $condition = $tokens[$tokens[$i]['scope_condition']]['code'];
                 if (isset(Tokens::$scopeOpeners[$condition]) === true
-                    && in_array($condition, $this->nonIndentingScopes) === false
+                    && in_array($condition, $this->nonIndentingScopes, true) === false
                 ) {
                     if ($this->debug === true) {
                         $line = $tokens[$i]['line'];

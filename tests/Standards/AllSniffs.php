@@ -70,7 +70,7 @@ class AllSniffs
                 $testPath = $details['path'];
             }
 
-            if (in_array($standard, $ignoreTestsForStandards) === true) {
+            if (in_array($standard, $ignoreTestsForStandards, true) === true) {
                 continue;
             }
 

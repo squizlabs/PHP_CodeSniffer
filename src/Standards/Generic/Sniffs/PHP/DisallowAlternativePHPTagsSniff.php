@@ -48,7 +48,7 @@ class DisallowAlternativePHPTagsSniff implements Sniff
         }
 
         if ($this->phpVersion < 70000) {
-            $this->aspTags = (boolean) ini_get('asp_tags');
+            $this->aspTags = (bool) ini_get('asp_tags');
         }
 
         return [

@@ -12,7 +12,6 @@ namespace PHP_CodeSniffer\Tests\Core\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Files\DummyFile;
-use PHP_CodeSniffer\Exceptions\TokenizerException;
 use PHPUnit\Framework\TestCase;
 
 class GetMemberPropertiesTest extends TestCase

@@ -115,7 +115,7 @@ class ForbiddenStylesSniff implements Sniff
             // Remove the pattern delimiters and modifier.
             $pattern = substr($pattern, 1, -2);
         } else {
-            if (in_array($style, $this->forbiddenStyleNames) === false) {
+            if (in_array($style, $this->forbiddenStyleNames, true) === false) {
                 return;
             }
         }//end if

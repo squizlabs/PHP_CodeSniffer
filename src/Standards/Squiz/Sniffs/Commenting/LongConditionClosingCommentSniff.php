@@ -93,7 +93,7 @@ class LongConditionClosingCommentSniff implements Sniff
         $endBrace       = $tokens[$stackPtr];
 
         // We are only interested in some code blocks.
-        if (in_array($startCondition['code'], self::$openers) === false) {
+        if (in_array($startCondition['code'], self::$openers, true) === false) {
             return;
         }
 

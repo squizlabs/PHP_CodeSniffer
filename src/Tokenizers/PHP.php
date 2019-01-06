@@ -782,8 +782,8 @@ class PHP extends Tokenizer
                 && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
             ) {
                 // Could be multi-line, so just the token stack.
-                $token[0] = T_YIELD_FROM;
-                $token[1] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+                $token[0]  = T_YIELD_FROM;
+                $token[1] .= $tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     for ($i = ($stackPtr + 1); $i <= ($stackPtr + 2); $i++) {
@@ -816,8 +816,8 @@ class PHP extends Tokenizer
                     && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
                 ) {
                     // Could be multi-line, so just just the token stack.
-                    $token[0] = T_YIELD_FROM;
-                    $token[1] = $token[1].$tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
+                    $token[0]  = T_YIELD_FROM;
+                    $token[1] .= $tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         for ($i = ($stackPtr + 1); $i <= ($stackPtr + 2); $i++) {
@@ -1001,7 +1001,7 @@ class PHP extends Tokenizer
                         $newToken['code'] = T_NULLABLE;
                         $newToken['type'] = 'T_NULLABLE';
                         break;
-                    } else if (in_array($tokenType, [T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '=', '{', ';']) === true) {
+                    } else if (in_array($tokenType, [T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '=', '{', ';'], true) === true) {
                         $newToken['code'] = T_INLINE_THEN;
                         $newToken['type'] = 'T_INLINE_THEN';
 

@@ -195,7 +195,7 @@ abstract class AbstractPatternSniff implements Sniff
 
         $tokens = $phpcsFile->getTokens();
 
-        if (in_array($tokens[$stackPtr]['code'], $this->supplementaryTokens) === true) {
+        if (in_array($tokens[$stackPtr]['code'], $this->supplementaryTokens, true) === true) {
             $this->processSupplementary($phpcsFile, $stackPtr);
         }
 

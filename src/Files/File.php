@@ -895,9 +895,9 @@ class File
         // due to the use of the --sniffs command line argument.
         if ($includeAll === false
             && ((empty($this->configCache['sniffs']) === false
-            && in_array(strtolower($listenerCode), $this->configCache['sniffs']) === false)
+            && in_array(strtolower($listenerCode), $this->configCache['sniffs'], true) === false)
             || (empty($this->configCache['exclude']) === false
-            && in_array(strtolower($listenerCode), $this->configCache['exclude']) === true))
+            && in_array(strtolower($listenerCode), $this->configCache['exclude'], true) === true))
         ) {
             return false;
         }
@@ -2346,7 +2346,7 @@ class File
         $conditions = $this->tokens[$stackPtr]['conditions'];
 
         foreach ($types as $type) {
-            if (in_array($type, $conditions) === true) {
+            if (in_array($type, $conditions, true) === true) {
                 // We found a token with the required type.
                 return true;
             }

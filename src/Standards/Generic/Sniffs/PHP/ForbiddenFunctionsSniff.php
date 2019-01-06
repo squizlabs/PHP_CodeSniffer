@@ -173,7 +173,7 @@ class ForbiddenFunctionsSniff implements Sniff
             // Remove the pattern delimiters and modifier.
             $pattern = substr($pattern, 1, -2);
         } else {
-            if (in_array($function, $this->forbiddenFunctionNames) === false) {
+            if (in_array($function, $this->forbiddenFunctionNames, true) === false) {
                 return;
             }
         }//end if
