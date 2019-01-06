@@ -305,7 +305,7 @@ class Ruleset
      *                            is only used for debug output.
      *
      * @return string[]
-     * @throws RuntimeException If the ruleset path is invalid.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the ruleset path is invalid.
      */
     public function processRuleset($rulesetPath, $depth=0)
     {
@@ -660,7 +660,7 @@ class Ruleset
      *                           is only used for debug output.
      *
      * @return array
-     * @throws RuntimeException If the reference is invalid.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the reference is invalid.
      */
     private function expandRulesetReference($ref, $rulesetDir, $depth=0)
     {
@@ -842,7 +842,7 @@ class Ruleset
      *                                    This is only used for debug output.
      *
      * @return void
-     * @throws RuntimeException If rule settings are invalid.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If rule settings are invalid.
      */
     private function processRule($rule, $newSniffs, $depth=0)
     {
@@ -1174,7 +1174,7 @@ class Ruleset
      * Populates the array of PHP_CodeSniffer_Sniff's for this file.
      *
      * @return void
-     * @throws RuntimeException If sniff registration fails.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If sniff registration fails.
      */
     public function populateTokenListeners()
     {

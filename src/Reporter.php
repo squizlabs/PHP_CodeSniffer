@@ -92,7 +92,7 @@ class Reporter
      * @param \PHP_CodeSniffer\Config $config The config data for the run.
      *
      * @return void
-     * @throws RuntimeException If a report is not available.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If a report is not available.
      */
     public function __construct(Config $config)
     {

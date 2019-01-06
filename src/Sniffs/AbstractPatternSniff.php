@@ -153,7 +153,7 @@ abstract class AbstractPatternSniff implements Sniff
      *
      * @return int The position in the pattern that this test should register
      *             as the listener.
-     * @throws RuntimeException If we could not determine a token to listen for.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If we could not determine a token to listen for.
      */
     private function getListenerTokenPos($pattern)
     {
