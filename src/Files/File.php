@@ -1279,15 +1279,15 @@ class File
      *                      to acquire the parameters for.
      *
      * @return array
-     * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the specified $stackPtr is not of
-     *                                                        type T_FUNCTION or T_CLOSURE.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified $stackPtr is not of
+     *                                                      type T_FUNCTION or T_CLOSURE.
      */
     public function getMethodParameters($stackPtr)
     {
         if ($this->tokens[$stackPtr]['code'] !== T_FUNCTION
             && $this->tokens[$stackPtr]['code'] !== T_CLOSURE
         ) {
-            throw new TokenizerException('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
+            throw new RuntimeException('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
         }
 
         $opener = $this->tokens[$stackPtr]['parenthesis_opener'];
@@ -1471,15 +1471,15 @@ class File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the specified position is not a
-     *                                                        T_FUNCTION token.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified position is not a
+     *                                                      T_FUNCTION token.
      */
     public function getMethodProperties($stackPtr)
     {
         if ($this->tokens[$stackPtr]['code'] !== T_FUNCTION
             && $this->tokens[$stackPtr]['code'] !== T_CLOSURE
         ) {
-            throw new TokenizerException('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
+            throw new RuntimeException('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
         }
 
         if ($this->tokens[$stackPtr]['code'] === T_FUNCTION) {
@@ -1620,14 +1620,14 @@ class File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the specified position is not a
-     *                                                        T_VARIABLE token, or if the position is not
-     *                                                        a class member variable.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified position is not a
+     *                                                      T_VARIABLE token, or if the position is not
+     *                                                      a class member variable.
      */
     public function getMemberProperties($stackPtr)
     {
         if ($this->tokens[$stackPtr]['code'] !== T_VARIABLE) {
-            throw new TokenizerException('$stackPtr must be of type T_VARIABLE');
+            throw new RuntimeException('$stackPtr must be of type T_VARIABLE');
         }
 
         $conditions = array_keys($this->tokens[$stackPtr]['conditions']);
@@ -1652,7 +1652,7 @@ class File
                     return [];
                 }
             } else {
-                throw new TokenizerException('$stackPtr is not a class member var');
+                throw new RuntimeException('$stackPtr is not a class member var');
             }
         }
 
@@ -1664,7 +1664,7 @@ class File
                 && isset($this->tokens[$deepestOpen]['parenthesis_owner']) === true
                 && $this->tokens[$this->tokens[$deepestOpen]['parenthesis_owner']]['code'] === T_FUNCTION
             ) {
-                throw new TokenizerException('$stackPtr is not a class member var');
+                throw new RuntimeException('$stackPtr is not a class member var');
             }
         }
 
@@ -1739,13 +1739,13 @@ class File
      *                      acquire the properties for.
      *
      * @return array
-     * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the specified position is not a
-     *                                                        T_CLASS token.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified position is not a
+     *                                                      T_CLASS token.
      */
     public function getClassProperties($stackPtr)
     {
         if ($this->tokens[$stackPtr]['code'] !== T_CLASS) {
-            throw new TokenizerException('$stackPtr must be of type T_CLASS');
+            throw new RuntimeException('$stackPtr must be of type T_CLASS');
         }
 
         $valid = [
@@ -1926,6 +1926,7 @@ class File
      *                          content should be used.
      *
      * @return string The token contents.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified position does not exist.
      */
     public function getTokensAsString($start, $length, $origContent=false)
     {

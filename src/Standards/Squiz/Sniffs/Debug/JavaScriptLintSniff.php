@@ -45,6 +45,7 @@ class JavaScriptLintSniff implements Sniff
      *                                               the token was found.
      *
      * @return void
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If Javascript Lint ran into trouble.
      */
     public function process(File $phpcsFile, $stackPtr)
     {

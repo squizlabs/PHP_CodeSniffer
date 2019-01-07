@@ -274,7 +274,7 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
      *
      * @param string $identifier Comment which precedes the test case.
      *
-     * @expectedException        PHP_CodeSniffer\Exceptions\TokenizerException
+     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
      * @expectedExceptionMessage $stackPtr is not a class member var
      *
      * @dataProvider dataNotClassProperty
@@ -313,7 +313,7 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
     /**
      * Test receiving an expected exception when a non variable is passed.
      *
-     * @expectedException        PHP_CodeSniffer\Exceptions\TokenizerException
+     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
      * @expectedExceptionMessage $stackPtr must be of type T_VARIABLE
      *
      * @return void
