@@ -72,7 +72,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
         }
 
         // If the next non-whitespace token after the function or method call
-        // is not an opening parenthesis then it cant really be a *call*.
+        // is not an opening parenthesis then it can't really be a *call*.
         $openBracket = $phpcsFile->findNext(Tokens::$emptyTokens, ($functionName + 1), null, true);
         if ($tokens[$openBracket]['code'] !== T_OPEN_PARENTHESIS) {
             return;

@@ -384,9 +384,9 @@ class Common
 
 
     /**
-     * Returns a valid variable type for param/var tag.
+     * Returns a valid variable type for param/var tags.
      *
-     * If type is not one of the standard type, it must be a custom type.
+     * If type is not one of the standard types, it must be a custom type.
      * Returns the correct type name suggestion if type name is invalid.
      *
      * @param string $varType The variable type to process.

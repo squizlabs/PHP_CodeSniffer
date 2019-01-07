@@ -79,7 +79,7 @@ class FileList
 
 
     /**
-     * Retrieve the filter file list as an array.
+     * Retrieve the filtered file list as an array.
      *
      * @return array
      */

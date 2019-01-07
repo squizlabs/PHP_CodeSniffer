@@ -230,7 +230,7 @@ class Runner
 
 
     /**
-     * Exits if the minimum requirements of PHP_CodSniffer are not met.
+     * Exits if the minimum requirements of PHP_CodeSniffer are not met.
      *
      * @return array
      * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
