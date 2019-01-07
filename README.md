@@ -8,6 +8,9 @@ PHP\_CodeSniffer is a set of two PHP scripts; the main `phpcs` script that token
 
 PHP\_CodeSniffer requires PHP version 5.4.0 or greater, although individual sniffs may have additional requirements such as external applications and scripts. See the [Configuration Options manual page](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Configuration-Options) for a list of these requirements.
 
+If you're using PHP_CodeSniffer as part of a team, or you're running it on a [CI](https://en.wikipedia.org/wiki/Continuous_integration) server, you'll want to configure your project's settings [using a configuration file](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#using-a-default-configuration-file).
+
+
 ## Installation
 
 The easiest way to get started with PHP\_CodeSniffer is to download the Phar files for each of the commands:
