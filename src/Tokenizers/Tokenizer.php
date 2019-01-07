@@ -9,7 +9,7 @@
 
 namespace PHP_CodeSniffer\Tokenizers;
 
-use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Exceptions\TokenizerException;
 use PHP_CodeSniffer\Util;
 
 abstract class Tokenizer
@@ -858,6 +858,7 @@ abstract class Tokenizer
      * @param int $ignore   How many curly braces we are ignoring.
      *
      * @return int The position in the stack that closed the scope.
+     * @throws \PHP_CodeSniffer\Exceptions\TokenizerException If the nesting level gets too deep.
      */
     private function recurseScopeMap($stackPtr, $depth=1, &$ignore=0)
     {
@@ -1194,7 +1195,7 @@ abstract class Tokenizer
                             echo '* reached maximum nesting level; aborting *'.PHP_EOL;
                         }
 
-                        throw new RuntimeException('Maximum nesting level reached; file could not be processed');
+                        throw new TokenizerException('Maximum nesting level reached; file could not be processed');
                     }
 
                     $oldDepth = $depth;

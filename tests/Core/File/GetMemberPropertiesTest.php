@@ -327,7 +327,7 @@ class GetMemberPropertiesTest extends TestCase
      *
      * @param string $identifier Comment which preceeds the test case.
      *
-     * @expectedException        PHP_CodeSniffer\Exceptions\TokenizerException
+     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
      * @expectedExceptionMessage $stackPtr is not a class member var
      *
      * @dataProvider dataNotClassProperty
@@ -375,7 +375,7 @@ class GetMemberPropertiesTest extends TestCase
     /**
      * Test receiving an expected exception when a non variable is passed.
      *
-     * @expectedException        PHP_CodeSniffer\Exceptions\TokenizerException
+     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
      * @expectedExceptionMessage $stackPtr must be of type T_VARIABLE
      *
      * @return void

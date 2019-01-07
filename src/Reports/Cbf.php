@@ -34,6 +34,7 @@ class Cbf implements Report
      * @param int                   $width       Maximum allowed line width.
      *
      * @return bool
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
      */
     public function generateFileReport($report, File $phpcsFile, $showSources=false, $width=80)
     {
