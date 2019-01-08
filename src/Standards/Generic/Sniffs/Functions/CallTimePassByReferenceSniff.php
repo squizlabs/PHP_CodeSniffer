@@ -45,10 +45,8 @@ class CallTimePassByReferenceSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $findTokens = array_merge(
-            Tokens::$emptyTokens,
-            [T_BITWISE_AND]
-        );
+        $findTokens   = Tokens::$emptyTokens;
+        $findTokens[] = T_BITWISE_AND;
 
         $prev = $phpcsFile->findPrevious($findTokens, ($stackPtr - 1), null, true);
 

@@ -24,20 +24,16 @@ class OperatorSpacingSniff extends SquizOperatorSpacingSniff
      */
     public function register()
     {
-        return array_unique(
-            array_merge(
-                Tokens::$comparisonTokens,
-                Tokens::$operators,
-                Tokens::$assignmentTokens,
-                Tokens::$booleanOperators,
-                [
-                    T_INLINE_THEN,
-                    T_INLINE_ELSE,
-                    T_STRING_CONCAT,
-                    T_INSTANCEOF,
-                ]
-            )
-        );
+        $targets   = Tokens::$comparisonTokens;
+        $targets  += Tokens::$operators;
+        $targets  += Tokens::$assignmentTokens;
+        $targets  += Tokens::$booleanOperators;
+        $targets[] = T_INLINE_THEN;
+        $targets[] = T_INLINE_ELSE;
+        $targets[] = T_STRING_CONCAT;
+        $targets[] = T_INSTANCEOF;
+
+        return $targets;
 
     }//end register()
 
