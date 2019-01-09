@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\CSS;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class OpacitySniff implements Sniff
 {
@@ -52,7 +53,10 @@ class OpacitySniff implements Sniff
             return;
         }
 
-        $next = $phpcsFile->findNext([T_COLON, T_WHITESPACE], ($stackPtr + 1), null, true);
+        $ignore   = Tokens::$emptyTokens;
+        $ignore[] = T_COLON;
+
+        $next = $phpcsFile->findNext($ignore, ($stackPtr + 1), null, true);
 
         if ($next === false
             || ($tokens[$next]['code'] !== T_DNUMBER

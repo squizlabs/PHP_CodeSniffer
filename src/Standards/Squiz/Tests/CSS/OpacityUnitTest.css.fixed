@@ -1,10 +1,10 @@
 .my-style {
     opacity: 0;
-    opacity: 0.0;
+    opacity: 0;
     opacity: 1;
-    opacity: 1.0;
+    opacity: 1;
     opacity: 1.5;
-    opacity: .5;
+    opacity: 0.5;
     opacity: 0.5;
     opacity: 2;
     opacity: -1;
@@ -29,7 +29,7 @@ div {
 .my-commented-style {
     opacity: /*comment*/ 0;
     opacity: /* phpcs:ignore Standard.Cat.Sniff -- for reasons */
-		0.0;
-    opacity: /*comment*/ 1.0;
-    opacity: /*comment*/ .5;
+		0;
+    opacity: /*comment*/ 1;
+    opacity: /*comment*/ 0.5;
 }
