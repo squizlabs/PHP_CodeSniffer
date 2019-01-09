@@ -29,6 +29,8 @@ class DisallowMultipleStyleDefinitionsUnitTest extends AbstractSniffUnitTest
             3  => 1,
             5  => 2,
             10 => 4,
+            15 => 2,
+            17 => 1,
         ];
 
     }//end getErrorList()
