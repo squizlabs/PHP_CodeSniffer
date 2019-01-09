@@ -433,9 +433,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.2.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.3.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.3.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.3.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.3.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.3.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.4.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.css" role="test" />
