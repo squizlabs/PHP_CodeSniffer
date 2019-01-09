@@ -33,7 +33,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.WhiteSpace.ScopeIndent now disables exact indent checking inside all arrays
     -- Previously, this was only done when using long array syntax, but it now works for short array syntax as well
   - PSR12.Classes.ClassInstantiation has changed it's error code from MissingParenthesis to MissingParentheses
-  - Squiz.CSS.Opacity how handles comments correctly
+  - Squiz.CSS.Opacity now handles comments correctly
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.CSS.SemicolonSpacing now handles comments and syntax errors correctly
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
