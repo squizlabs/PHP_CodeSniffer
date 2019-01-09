@@ -52,18 +52,19 @@ class LowercaseDeclarationSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $content = $tokens[$stackPtr]['content'];
-        if ($content !== strtolower($content)) {
+        $content   = $tokens[$stackPtr]['content'];
+        $contentLc = strtolower($content);
+        if ($content !== $contentLc) {
             $error = '%s keyword must be lowercase; expected "%s" but found "%s"';
             $data  = [
                 strtoupper($content),
-                strtolower($content),
+                $contentLc,
                 $content,
             ];
 
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'FoundUppercase', $data);
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($stackPtr, strtolower($content));
+                $phpcsFile->fixer->replaceToken($stackPtr, $contentLc);
             }
         }
 
