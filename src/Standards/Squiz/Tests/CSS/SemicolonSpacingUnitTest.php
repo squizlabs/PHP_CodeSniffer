@@ -26,8 +26,15 @@ class SemicolonSpacingUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            2 => 1,
-            7 => 1,
+            2  => 1,
+            7  => 1,
+            30 => 1,
+            34 => 1,
+            36 => 1,
+            39 => 1,
+            43 => 1,
+            45 => 1,
+            48 => 1,
         ];
 
     }//end getErrorList()

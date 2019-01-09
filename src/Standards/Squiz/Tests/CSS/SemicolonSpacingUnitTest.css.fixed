@@ -4,7 +4,7 @@
 }
 
 #MetadataAdminScreen-addField-add {
-    float: left ;
+    float: left;
 }
 
 .TableWidgetType .recover:hover {
@@ -40,15 +40,12 @@
 }
 
 #multi-line-style-whitespace {
-	padding: 0 /* phpcs:ignore Standard.Cat.Sniff -- for reasons */      ;
+	padding: 0; /* phpcs:ignore Standard.Cat.Sniff -- for reasons */
 	border:
-	    20    ;
+	    20;
 	margin:
 		10px /* top */
-		0px  /* right + left */
-
-
-	;
+		0px;  /* right + left */
 }
 
 /* Live coding. Has to be the last test in the file. */
