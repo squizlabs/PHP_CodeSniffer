@@ -1370,6 +1370,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ColonSpacingUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ColonSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ColourDefinitionUnitTest.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ColourDefinitionUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ColourDefinitionUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleStyleDefinitionsUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleStyleDefinitionsUnitTest.css.fixed" role="test" />
