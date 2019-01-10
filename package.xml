@@ -447,17 +447,25 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.3.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.3.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.6.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.2.inc" role="test" />
