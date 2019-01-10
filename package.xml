@@ -48,7 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <dir name="/">
    <file baseinstalldir="PHP/CodeSniffer" name="autoload.php" role="php">
     <tasks:replace from="@test_dir@" to="test_dir" type="pear-config" />
-  </file>
+   </file>
    <file baseinstalldir="PHP/CodeSniffer" name="CodeSniffer.conf.dist" role="data" />
    <file baseinstalldir="PHP/CodeSniffer" name="README.md" role="doc" />
    <file baseinstalldir="PHP/CodeSniffer" name="CONTRIBUTING.md" role="doc" />
@@ -136,6 +136,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <dir name="Reports">
      <file baseinstalldir="PHP/CodeSniffer" name="Cbf.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Checkstyle.php" role="php" />
+     <file baseinstalldir="PHP/CodeSniffer" name="Code.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Csv.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Diff.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Emacs.php" role="php" />
@@ -212,6 +213,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="MultipleStatementAlignmentStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSpaceAfterCastStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterCastStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotStandard.xml" role="php" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="CallTimePassByReferenceStandard.xml" role="php" />
@@ -312,6 +314,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="NoSpaceAfterCastSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterCastSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceBeforeCastSniff.php" role="php" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="CallTimePassByReferenceSniff.php" role="php" />
@@ -357,6 +360,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentSniff.php" role="php" />
        </dir>
       </dir>
@@ -517,6 +521,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceBeforeCastUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceBeforeCastUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceBeforeCastUnitTest.php" role="test" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="CallTimePassByReferenceUnitTest.inc" role="test" />
@@ -633,6 +640,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.1.js" role="test" />
@@ -1670,6 +1680,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.4.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.5.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.php" role="test" />
        </dir>
        <dir name="NamingConventions">
