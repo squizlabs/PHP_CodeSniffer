@@ -284,8 +284,9 @@ class ScopeIndentSniff implements Sniff
                     if (isset($tokens[$parenCloser]['nested_parenthesis']) === true
                         && empty($tokens[$parenCloser]['nested_parenthesis']) === false
                     ) {
-                        end($tokens[$parenCloser]['nested_parenthesis']);
-                        $parens = key($tokens[$parenCloser]['nested_parenthesis']);
+                        $parens = $tokens[$parenCloser]['nested_parenthesis'];
+                        end($parens);
+                        $parens = key($parens);
                         if ($this->debug === true) {
                             $line = $tokens[$parens]['line'];
                             echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
@@ -296,8 +297,9 @@ class ScopeIndentSniff implements Sniff
                     if (isset($tokens[$parenCloser]['conditions']) === true
                         && empty($tokens[$parenCloser]['conditions']) === false
                     ) {
-                        end($tokens[$parenCloser]['conditions']);
-                        $condition = key($tokens[$parenCloser]['conditions']);
+                        $condition = $tokens[$parenCloser]['conditions'];
+                        end($condition);
+                        $condition = key($condition);
                         if ($this->debug === true) {
                             $line = $tokens[$condition]['line'];
                             $type = $tokens[$condition]['type'];
@@ -557,8 +559,9 @@ class ScopeIndentSniff implements Sniff
                 && $tokens[$checkToken]['scope_opener'] === $checkToken))
             ) {
                 if (empty($tokens[$checkToken]['conditions']) === false) {
-                    end($tokens[$checkToken]['conditions']);
-                    $condition = key($tokens[$checkToken]['conditions']);
+                    $condition = $tokens[$checkToken]['conditions'];
+                    end($condition);
+                    $condition = key($condition);
                 } else {
                     $condition = $tokens[$checkToken]['scope_condition'];
                 }
@@ -699,8 +702,9 @@ class ScopeIndentSniff implements Sniff
                 if (isset($tokens[$scopeCloser]['nested_parenthesis']) === true
                     && empty($tokens[$scopeCloser]['nested_parenthesis']) === false
                 ) {
-                    end($tokens[$scopeCloser]['nested_parenthesis']);
-                    $parens = key($tokens[$scopeCloser]['nested_parenthesis']);
+                    $parens = $tokens[$scopeCloser]['nested_parenthesis'];
+                    end($parens);
+                    $parens = key($parens);
                     if ($this->debug === true) {
                         $line = $tokens[$parens]['line'];
                         echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
@@ -711,8 +715,9 @@ class ScopeIndentSniff implements Sniff
                 if (isset($tokens[$scopeCloser]['conditions']) === true
                     && empty($tokens[$scopeCloser]['conditions']) === false
                 ) {
-                    end($tokens[$scopeCloser]['conditions']);
-                    $condition = key($tokens[$scopeCloser]['conditions']);
+                    $condition = $tokens[$scopeCloser]['conditions'];
+                    end($condition);
+                    $condition = key($condition);
                     if ($this->debug === true) {
                         $line = $tokens[$condition]['line'];
                         $type = $tokens[$condition]['type'];
@@ -1227,8 +1232,9 @@ class ScopeIndentSniff implements Sniff
                 if (isset($tokens[$i]['nested_parenthesis']) === true
                     && empty($tokens[$i]['nested_parenthesis']) === false
                 ) {
-                    end($tokens[$i]['nested_parenthesis']);
-                    $parens = key($tokens[$i]['nested_parenthesis']);
+                    $parens = $tokens[$i]['nested_parenthesis'];
+                    end($parens);
+                    $parens = key($parens);
                     if ($this->debug === true) {
                         $line = $tokens[$parens]['line'];
                         echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
@@ -1239,8 +1245,9 @@ class ScopeIndentSniff implements Sniff
                 if (isset($tokens[$i]['conditions']) === true
                     && empty($tokens[$i]['conditions']) === false
                 ) {
-                    end($tokens[$i]['conditions']);
-                    $condition = key($tokens[$i]['conditions']);
+                    $condition = $tokens[$i]['conditions'];
+                    end($condition);
+                    $condition = key($condition);
                     if ($this->debug === true) {
                         $line = $tokens[$condition]['line'];
                         $type = $tokens[$condition]['type'];
