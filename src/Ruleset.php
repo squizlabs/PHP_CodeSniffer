@@ -315,10 +315,20 @@ class Ruleset
             echo 'Processing ruleset '.Util\Common::stripBasepath($rulesetPath, $this->config->basepath).PHP_EOL;
         }
 
-        $ruleset = @simplexml_load_string(file_get_contents($rulesetPath));
+        libxml_use_internal_errors(true);
+        $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
         if ($ruleset === false) {
-            throw new RuntimeException("Ruleset $rulesetPath is not valid");
+            $errorMsg = "Ruleset $rulesetPath is not valid".PHP_EOL;
+            $errors   = libxml_get_errors();
+            foreach ($errors as $error) {
+                $errorMsg .= '- On line '.$error->line.', column '.$error->column.': '.$error->message;
+            }
+
+            libxml_clear_errors();
+            throw new RuntimeException($errorMsg);
         }
+
+        libxml_use_internal_errors(false);
 
         $ownSniffs      = [];
         $includedSniffs = [];
