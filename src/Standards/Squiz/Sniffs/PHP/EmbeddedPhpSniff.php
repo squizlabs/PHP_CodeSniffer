@@ -328,7 +328,7 @@ class EmbeddedPhpSniff implements Sniff
         // The open tag token always contains a single space after it.
         $leadingSpace = 1;
         if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
-            $leadingSpace = (strlen($tokens[($stackPtr + 1)]['content']) + 1);
+            $leadingSpace = ($tokens[($stackPtr + 1)]['length'] + 1);
         }
 
         if ($leadingSpace !== 1) {
@@ -371,7 +371,7 @@ class EmbeddedPhpSniff implements Sniff
 
         $trailingSpace = 0;
         if ($tokens[($closeTag - 1)]['code'] === T_WHITESPACE) {
-            $trailingSpace = strlen($tokens[($closeTag - 1)]['content']);
+            $trailingSpace = $tokens[($closeTag - 1)]['length'];
         } else if (($tokens[($closeTag - 1)]['code'] === T_COMMENT
             || isset(Tokens::$phpcsCommentTokens[$tokens[($closeTag - 1)]['code']]) === true)
             && substr($tokens[($closeTag - 1)]['content'], -1) === ' '

@@ -83,14 +83,14 @@ class MultiLineAssignmentSniff implements Sniff
         }
 
         if ($tokens[$i]['code'] === T_WHITESPACE) {
-            $assignmentIndent = strlen($tokens[$i]['content']);
+            $assignmentIndent = $tokens[$i]['length'];
         }
 
         // Find the actual indent.
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1));
 
         $expectedIndent = ($assignmentIndent + $this->indent);
-        $foundIndent    = strlen($tokens[$prev]['content']);
+        $foundIndent    = $tokens[$prev]['length'];
         if ($foundIndent !== $expectedIndent) {
             $error = 'Multi-line assignment not indented correctly; expected %s spaces but found %s';
             $data  = [

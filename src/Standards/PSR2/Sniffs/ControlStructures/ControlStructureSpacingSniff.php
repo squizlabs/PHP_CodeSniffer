@@ -82,7 +82,7 @@ class ControlStructureSpacingSniff implements Sniff
             if (strpos($tokens[($parenOpener + 1)]['content'], $phpcsFile->eolChar) !== false) {
                 $spaceAfterOpen = 'newline';
             } else {
-                $spaceAfterOpen = strlen($tokens[($parenOpener + 1)]['content']);
+                $spaceAfterOpen = $tokens[($parenOpener + 1)]['length'];
             }
         }
 
