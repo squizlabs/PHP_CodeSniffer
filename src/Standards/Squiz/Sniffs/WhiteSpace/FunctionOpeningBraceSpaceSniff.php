@@ -55,7 +55,7 @@ class FunctionOpeningBraceSpaceSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            // Probably an interface method.
+            // Probably an interface or abstract method.
             return;
         }
 

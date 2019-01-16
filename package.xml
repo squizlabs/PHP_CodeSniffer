@@ -1612,7 +1612,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceSpaceUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceSpaceUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.inc.fixed" role="test" />
