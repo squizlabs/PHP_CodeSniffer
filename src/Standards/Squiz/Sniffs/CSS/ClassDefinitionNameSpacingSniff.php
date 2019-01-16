@@ -49,6 +49,11 @@ class ClassDefinitionNameSpacingSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[$stackPtr]['bracket_closer']) === false) {
+            // Syntax error or live coding, bow out.
+            return;
+        }
+
         // Do not check nested style definitions as, for example, in @media style rules.
         $nested = $phpcsFile->findNext(T_OPEN_CURLY_BRACKET, ($stackPtr + 1), $tokens[$stackPtr]['bracket_closer']);
         if ($nested !== false) {
