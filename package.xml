@@ -636,6 +636,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SubversionPropertiesUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SubversionPropertiesUnitTest.php" role="test" />
        </dir>
        <dir name="WhiteSpace">
         <file baseinstalldir="PHP/CodeSniffer" name="ArbitraryParenthesesSpacingUnitTest.inc" role="test" />
