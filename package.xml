@@ -61,6 +61,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.CSS.SemicolonSpacing now handles comments and syntax errors correctly
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.PHP.LowercasePHPFunctions now handles use statements, namespaces, and comments correctly
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
