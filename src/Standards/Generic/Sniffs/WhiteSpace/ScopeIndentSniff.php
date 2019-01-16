@@ -396,15 +396,20 @@ class ScopeIndentSniff implements Sniff
                                 echo "\t* previous is $type on line $line *".PHP_EOL;
                             }
 
-                            $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
-                            $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
-                            $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
+                            $first = $phpcsFile->findFirstOnLine([T_WHITESPACE, T_INLINE_HTML], $prev, true);
+                            if ($first !== false) {
+                                $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
+                                $first = $phpcsFile->findFirstOnLine([T_WHITESPACE, T_INLINE_HTML], $prev, true);
+                            } else {
+                                $first = $prev;
+                            }
+
                             if ($this->debug === true) {
                                 $line = $tokens[$first]['line'];
                                 $type = $tokens[$first]['type'];
                                 echo "\t* amended first token is $first ($type) on line $line *".PHP_EOL;
                             }
-                        }
+                        }//end if
 
                         if (isset($tokens[$first]['scope_closer']) === true
                             && $tokens[$first]['scope_closer'] === $first
@@ -435,7 +440,7 @@ class ScopeIndentSniff implements Sniff
                                 }
                             }//end if
                         } else {
-                            // Don't force current indent to divisible because there could be custom
+                            // Don't force current indent to be divisible because there could be custom
                             // rules in place between parenthesis, such as with arrays.
                             $currentIndent = ($tokens[$first]['column'] - 1);
                             if (isset($adjustments[$first]) === true) {

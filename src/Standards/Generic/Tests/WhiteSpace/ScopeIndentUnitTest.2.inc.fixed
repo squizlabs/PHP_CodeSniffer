@@ -1352,6 +1352,14 @@ function foo()
 	} ?>
 </div>
 
+<div>
+	<?php echo
+		foo(
+			$foo
+		);
+	?>
+</div>
+
 <?php
 if (true) {
 }
