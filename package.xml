@@ -1388,8 +1388,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LongConditionClosingCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.inc.fixed" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.js" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.js.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.1.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.1.js.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.2.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="VariableCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="VariableCommentUnitTest.inc.fixed" role="test" />
