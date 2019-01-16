@@ -1111,8 +1111,8 @@ class JS extends Tokenizer
                 && isset($this->tokens[$i]['scope_condition']) === false
                 && isset($this->tokens[$i]['bracket_closer']) === true
             ) {
-                $condition = end($this->tokens[$i]['conditions']);
-                reset($this->tokens[$i]['conditions']);
+                $condition = $this->tokens[$i]['conditions'];
+                $condition = end($condition);
                 if ($condition === T_CLASS) {
                     // Possibly an ES6 method. To be classified as one, the previous
                     // non-empty tokens need to be a set of parenthesis, and then a string

@@ -141,8 +141,9 @@ class CreateWidgetTypeCallbackSniff implements Sniff
 
                 // Note that we use this endBracket down further when checking
                 // for a RETURN statement.
-                $endBracket = end($tokens[$i]['nested_parenthesis']);
-                $bracket    = key($tokens[$i]['nested_parenthesis']);
+                $nestedParens = $tokens[$i]['nested_parenthesis'];
+                $endBracket   = end($nestedParens);
+                $bracket      = key($nestedParens);
 
                 $prev = $phpcsFile->findPrevious(
                     Tokens::$emptyTokens,

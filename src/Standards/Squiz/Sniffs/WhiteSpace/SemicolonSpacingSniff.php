@@ -62,7 +62,8 @@ class SemicolonSpacingSniff implements Sniff
         // Detect whether this is a semi-colons for a conditions in a `for()` control structure.
         $forCondition = false;
         if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            $closeParenthesis = end($tokens[$stackPtr]['nested_parenthesis']);
+            $nestedParens     = $tokens[$stackPtr]['nested_parenthesis'];
+            $closeParenthesis = end($nestedParens);
 
             if (isset($tokens[$closeParenthesis]['parenthesis_owner']) === true) {
                 $owner = $tokens[$closeParenthesis]['parenthesis_owner'];
