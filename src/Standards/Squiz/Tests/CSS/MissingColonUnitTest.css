@@ -15,3 +15,7 @@
 
 #foo { background-color: #FF0000;
 }
+
+/* Live coding. Has to be the last test in the file. */
+.intentional-parse-error {
+	float
