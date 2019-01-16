@@ -61,11 +61,16 @@ class LowercasePHPFunctionsSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        $content   = $tokens[$stackPtr]['content'];
+        $contentLc = strtolower($content);
+        if ($content === $contentLc) {
+            return;
+        }
+
         // Make sure it is an inbuilt PHP function.
         // PHP_CodeSniffer can possibly include user defined functions
         // through the use of vendor/autoload.php.
-        $content = $tokens[$stackPtr]['content'];
-        if (isset($this->builtInFunctions[strtolower($content)]) === false) {
+        if (isset($this->builtInFunctions[$contentLc]) === false) {
             return;
         }
 
@@ -89,13 +94,21 @@ class LowercasePHPFunctionsSniff implements Sniff
                 && $pprev !== false
                 && $tokens[$pprev]['code'] === T_USE
             ) {
-                $this->addError($phpcsFile, $stackPtr, 'Use statements for', 'UseStatementUppercase');
-                return;
+                $error = 'Use statements for PHP native functions must be lowercase; expected "%s" but found "%s"';
+                $data  = [
+                    $contentLc,
+                    $content,
+                ];
+
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'UseStatementUppercase', $data);
+                if ($fix === true) {
+                    $phpcsFile->fixer->replaceToken($stackPtr, $contentLc);
+                }
             }
 
             // No open parenthesis; not a "use function" statement nor a function call.
             return;
-        }
+        }//end if
 
         if ($tokens[$prev]['code'] === T_FUNCTION) {
             // Function declaration, not a function call.
@@ -128,45 +141,18 @@ class LowercasePHPFunctionsSniff implements Sniff
             return;
         }
 
-        $this->addError($phpcsFile, $stackPtr, 'Calls to', 'CallUppercase');
-
-    }//end process()
-
-
-    /**
-     * Potentially throw a fixable error.
-     *
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
-     * @param int                         $stackPtr  The position of the current token in
-     *                                               the stack passed in $tokens.
-     * @param string                      $phrase    Start of the error message phrase.
-     * @param string                      $errorCode The error code for the message.
-     *
-     * @return void
-     */
-    public function addError(File $phpcsFile, $stackPtr, $phrase, $errorCode)
-    {
-        $tokens    = $phpcsFile->getTokens();
-        $content   = $tokens[$stackPtr]['content'];
-        $contentLc = strtolower($content);
-
-        if ($content === $contentLc) {
-            return;
-        }
-
-        $error = '%s PHP native functions must be lowercase; expected "%s" but found "%s"';
+        $error = 'Calls to PHP native functions must be lowercase; expected "%s" but found "%s"';
         $data  = [
-            $phrase,
             $contentLc,
             $content,
         ];
 
-        $fix = $phpcsFile->addFixableError($error, $stackPtr, $errorCode, $data);
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'CallUppercase', $data);
         if ($fix === true) {
             $phpcsFile->fixer->replaceToken($stackPtr, $contentLc);
         }
 
-    }//end addError()
+    }//end process()
 
 
 }//end class
