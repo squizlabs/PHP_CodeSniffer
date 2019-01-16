@@ -25,10 +25,10 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
      *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='InlineControlStructureUnitTest.inc')
+    public function getErrorList($testFile='InlineControlStructureUnitTest.1.inc')
     {
         switch ($testFile) {
-        case 'InlineControlStructureUnitTest.inc':
+        case 'InlineControlStructureUnitTest.1.inc':
             return [
                 3   => 1,
                 7   => 1,
@@ -76,7 +76,7 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
                 236 => 1,
                 238 => 1,
             ];
-            break;
+
         case 'InlineControlStructureUnitTest.js':
             return [
                 3  => 1,
@@ -88,10 +88,9 @@ class InlineControlStructureUnitTest extends AbstractSniffUnitTest
                 27 => 1,
                 30 => 1,
             ];
-            break;
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getErrorList()
