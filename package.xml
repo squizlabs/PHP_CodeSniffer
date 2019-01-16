@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - T_PHPCS_SET tokens now contain sniffCode, sniffProperty, and sniffPropertyValue indexes
     -- Sniffs can use this information instead of having to parse the token content manually
+  - Added more guard code for syntax errors to various CSS sniffs
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.Files.LineEndings no longer adds superfluous new line at the end of JS and CSS files
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.WhiteSpace.ScopeIndent now respects changes to the "exact" property using phpcs:set mid-way through a file
