@@ -59,7 +59,7 @@ class LocalFile extends File
 
         $this->reloadContent();
 
-        return parent::__construct($this->path, $ruleset, $config);
+        parent::__construct($this->path, $ruleset, $config);
 
     }//end __construct()
 
@@ -88,7 +88,8 @@ class LocalFile extends File
         }
 
         if ($this->configCache['cache'] === false) {
-            return parent::process();
+            parent::process();
+            return;
         }
 
         $hash  = md5_file($this->path);

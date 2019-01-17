@@ -1372,7 +1372,7 @@ class ScopeIndentSniff implements Sniff
      * @param int                         $change    The difference in length between
      *                                               the old and new indent.
      *
-     * @return void
+     * @return bool
      */
     protected function adjustIndent(File $phpcsFile, $stackPtr, $length, $change)
     {

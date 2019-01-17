@@ -176,7 +176,7 @@ class FunctionCallSignatureSniff implements Sniff
      * @param array                       $tokens      The stack of tokens that make up
      *                                                 the file.
      *
-     * @return void
+     * @return bool
      */
     public function isMultiLineCall(File $phpcsFile, $stackPtr, $openBracket, $tokens)
     {

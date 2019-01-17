@@ -54,7 +54,7 @@ class DummyFile extends File
             $path = $config->stdinPath;
         }
 
-        return parent::__construct($path, $ruleset, $config);
+        parent::__construct($path, $ruleset, $config);
 
     }//end __construct()
 
