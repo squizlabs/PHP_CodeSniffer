@@ -64,7 +64,7 @@ class ValidatePEARPackageXML
      */
     public function __construct()
     {
-        $this->projectRoot = dirname(__DIR__).'/';
+        $this->projectRoot = dirname(dirname(__DIR__)).'/';
         $this->packageXML  = simplexml_load_file($this->projectRoot.'package.xml');
 
         $allFiles       = (new FileList($this->projectRoot, $this->projectRoot))->getList();
