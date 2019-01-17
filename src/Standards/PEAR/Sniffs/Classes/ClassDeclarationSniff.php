@@ -75,7 +75,7 @@ class ClassDeclarationSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'Class opening brace placement', 'new line');
 
             if ($braceLine > ($classLine + 1)) {
-                $error = 'Opening brace of a %s must be on the line following the %s declaration; found %s blank line(s)';
+                $error = 'Opening brace of a %s must be on the line following the %s declaration; found %s line(s)';
                 $data  = [
                     $tokens[$stackPtr]['content'],
                     $tokens[$stackPtr]['content'],
