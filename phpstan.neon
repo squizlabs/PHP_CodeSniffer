@@ -1,0 +1,13 @@
+parameters:
+    ignoreErrors:
+        -
+            message: '~^Undefined variable: \$phpCodeSnifferConfig$~'
+            path: %currentWorkingDirectory%/src/Config.php
+
+    dynamicConstantNames:
+        - PHP_CODESNIFFER_IN_TESTS
+        - PHP_CODESNIFFER_CBF
+        - PHP_CODESNIFFER_VERBOSITY
+
+    excludes_analyse:
+        - */Tests/*
