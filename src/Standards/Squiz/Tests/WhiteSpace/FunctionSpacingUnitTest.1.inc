@@ -411,3 +411,35 @@ class MyClass
      */
     function func2() {}
 }//end class
+
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 2
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 2
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 2
+
+echo 'just some code to let the below line test blank lines before';
+echo 'something'; function testingFunctionNotOnOwnLine() {} echo 'somethingelse';
+echo 'just some code to let the above line test blank lines after';
+
+trait MyTrait {
+
+
+    public function a(){}
+
+
+
+
+    public function b(){}
+    public function c(){}
+}
+
+$anon_class = new class() {
+    public function a(){}
+
+    protected function b(){}
+
+
+
+
+    private function c(){}
+
+};
