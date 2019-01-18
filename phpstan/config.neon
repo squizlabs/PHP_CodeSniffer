@@ -11,6 +11,13 @@ parameters:
         - PHP_CODESNIFFER_CBF
         - PHP_CODESNIFFER_VERBOSITY
 
+    excludes_analyse:
+        - */tests/TestSuite*
+        - */tests/AllTests.php
+        # slow to analyse
+        - */src/Ruleset.php
+        - */src/Tokenizers/Tokenizer.php
+
 services:
     -
         class: PHP_CodeSniffer\PHPStan\ConfigReflectionExtension
