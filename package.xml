@@ -467,6 +467,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.php" role="test" />
        </dir>
        <dir name="Debug">
+        <file baseinstalldir="PHP/CodeSniffer" name="ESLintUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ESLintUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="JSHintUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="JSHintUnitTest.php" role="test" />
        </dir>
