@@ -1311,6 +1311,9 @@ function foo() {
 	if ($foo) {
 			echo 'baz';
 	}
+	$this->foo()
+->bar()
+		->baz();
 }
 // phpcs:set Generic.WhiteSpace.ScopeIndent exact false
 
