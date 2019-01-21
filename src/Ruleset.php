@@ -161,8 +161,7 @@ class Ruleset
                     $this->name .= ', ';
                 }
 
-                $this->name   .= $standardName;
-                $this->paths[] = $standard;
+                $this->name .= $standardName;
 
                 // Allow autoloading of custom files inside this standard.
                 if (isset($ruleset['namespace']) === true) {
@@ -334,6 +333,7 @@ class Ruleset
         $includedSniffs = [];
         $excludedSniffs = [];
 
+        $this->paths[]       = $rulesetPath;
         $rulesetDir          = dirname($rulesetPath);
         $this->rulesetDirs[] = $rulesetDir;
 
