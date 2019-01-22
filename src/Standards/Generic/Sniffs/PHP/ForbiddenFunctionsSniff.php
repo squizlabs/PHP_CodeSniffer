@@ -74,15 +74,15 @@ class ForbiddenFunctionsSniff implements Sniff
 
         // If we are not pattern matching, we need to work out what
         // tokens to listen for.
-        $string = '<?php ';
+        $tokens = [];
         foreach ($this->forbiddenFunctionNames as $name) {
-            $string .= $name.'();';
+            $token = token_get_all(sprintf('<?php %s();', $name));
+            array_shift($token);
+            $tokens = array_merge($tokens, $token);
         }
 
         $register = [];
 
-        $tokens = token_get_all($string);
-        array_shift($tokens);
         foreach ($tokens as $token) {
             if (is_array($token) === true) {
                 $register[] = $token[0];
