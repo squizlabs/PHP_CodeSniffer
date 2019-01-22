@@ -74,9 +74,18 @@ class ForbiddenFunctionsSniff implements Sniff
 
         // If we are not pattern matching, we need to work out what
         // tokens to listen for.
-        $string = '<?php ';
+        $hasHaltCompiler = false;
+        $string          = '<?php ';
         foreach ($this->forbiddenFunctionNames as $name) {
-            $string .= $name.'();';
+            if ($name === '__halt_compiler') {
+                $hasHaltCompiler = true;
+            } else {
+                $string .= $name.'();';
+            }
+        }
+
+        if ($hasHaltCompiler === true) {
+            $string .= '__halt_compiler();';
         }
 
         $register = [];
