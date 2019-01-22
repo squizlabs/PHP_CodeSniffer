@@ -68,6 +68,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Commenting.FunctionCommentThrowTag now has improved support for unknown exception types and namespaces
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.CSS.ClassDefinitionOpeningBraceSpace now handles comments and indentation correctly
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.CSS.ClassDefinitionClosingBrace now handles comments, indentation, and multiple statements on the same line correctly
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.CSS.Opacity now handles comments correctly
