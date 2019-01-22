@@ -81,6 +81,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2337 : Generic.WhiteSpace.ScopeIndent incorrect error when multi-line function call starts on same line as open tag
   - Fixed bug #2348 : Cache not invalidated when changing a ruleset included by another
   - Fixed bug #2376 : Using __halt_compiler() breaks Generic.PHP.ForbiddenFunctions unless it's last in the function list
+    -- Thanks to Sijun Zhu for the patch
  </notes>
  <contents>
   <dir name="/">
