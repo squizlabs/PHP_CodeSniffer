@@ -1,13 +1,13 @@
 .HelpWidgetType-new-bug-title {
     float: left;
 }
-.HelpWidgetType-new-bug-title   {
+.HelpWidgetType-new-bug-title {
     float: left;
 }
-.HelpWidgetType-new-bug-title	{
+.HelpWidgetType-new-bug-title {
     float: left;
 }
-.HelpWidgetType-new-bug-title{
+.HelpWidgetType-new-bug-title {
     float: left;
 }
 .HelpWidgetType-new-bug-title {
@@ -24,6 +24,7 @@
 }
 
 @media screen and (max-device-width: 769px) {
+
     header #logo img {
         max-width: 100%;
     }
@@ -32,34 +33,32 @@
 
 @media screen and (max-device-width: 769px) {
 
-    
-
     header #logo img {
         max-width: 100%;
     }
 
 }
 
-.GUITextBox.container:after {}
+.GUITextBox.container:after {
+}
 
-.single-line {float: left;}
+.single-line {
+float: left;}
 
-#opening-brace-on-different-line
-
-
-{
+#opening-brace-on-different-line {
     color: #FFFFFF;
 }
 
-#opening-brace-on-different-line-and-inline-style
+#opening-brace-on-different-line-and-inline-style {
+color: #FFFFFF;}
 
+@media screen and (max-device-width: 769px) {
 
-{color: #FFFFFF;}
-
-@media screen and (max-device-width: 769px) { .everything-on-one-line { float: left; } }
+.everything-on-one-line {
+float: left; } }
 
 /* Document handling of comments in various places */
-.no-space-before-opening-with-comment /* comment*/{
+.no-space-before-opening-with-comment /* comment*/ {
     float: left;
 }
 
@@ -69,12 +68,12 @@
 }
 
 #opening-brace-on-different-line-with-comment-between
-/*comment*/
-{
+/*comment*/ {
     padding: 0;
 }
 
-.single-line-with-comment { /* comment*/ float: left; }
+.single-line-with-comment {
+/* comment*/ float: left; }
 
 .multi-line-with-trailing-comment { /* comment*/
     float: left;
@@ -82,6 +81,7 @@
 
 
 @media screen and (max-device-width: 769px) {
+
     /*comment*/
     .comment-line-after-nesting-class-opening {
     }
@@ -95,8 +95,6 @@
 }
 
 @media screen and (max-device-width: 769px) {
-
-
 
     /* phpcs:ignore Standard.Category.Sniffname -- for reasons */
     .blank-line-and-annotation-after-nesting-class-opening {
