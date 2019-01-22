@@ -554,6 +554,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleStatementsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleStatementsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleStatementsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="MultipleStatementAlignmentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="MultipleStatementAlignmentUnitTest.inc.fixed" role="test" />
