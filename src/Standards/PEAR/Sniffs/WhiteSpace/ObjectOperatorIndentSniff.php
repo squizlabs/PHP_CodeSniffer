@@ -73,7 +73,7 @@ class ObjectOperatorIndentSniff implements Sniff
 
         $requiredIndent = 0;
         if ($i >= 0 && $tokens[$i]['code'] === T_WHITESPACE) {
-            $requiredIndent = strlen($tokens[$i]['content']);
+            $requiredIndent = $tokens[$i]['length'];
         }
 
         $requiredIndent += $this->indent;

@@ -71,7 +71,8 @@ class ControlSignatureSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if (isset($tokens[($stackPtr + 1)]) === false) {
+        $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        if ($nextNonEmpty === false) {
             return;
         }
 
@@ -98,7 +99,7 @@ class ControlSignatureSniff implements Sniff
             if (strpos($tokens[($stackPtr + 1)]['content'], $phpcsFile->eolChar) !== false) {
                 $found = 'newline';
             } else {
-                $found = strlen($tokens[($stackPtr + 1)]['content']);
+                $found = $tokens[($stackPtr + 1)]['length'];
             }
         }
 
@@ -236,7 +237,7 @@ class ControlSignatureSniff implements Sniff
                 if (strpos($tokens[($closer + 1)]['content'], $phpcsFile->eolChar) !== false) {
                     $found = 'newline';
                 } else {
-                    $found = strlen($tokens[($closer + 1)]['content']);
+                    $found = $tokens[($closer + 1)]['length'];
                 }
             }
 
@@ -291,7 +292,7 @@ class ControlSignatureSniff implements Sniff
         } else if ($tokens[$closer]['line'] !== $tokens[$stackPtr]['line']) {
             $found = 'newline';
         } else if ($tokens[($closer + 1)]['content'] !== ' ') {
-            $found = strlen($tokens[($closer + 1)]['content']);
+            $found = $tokens[($closer + 1)]['length'];
         }
 
         if ($found !== 1) {

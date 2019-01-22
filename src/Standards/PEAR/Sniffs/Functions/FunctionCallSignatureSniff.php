@@ -176,7 +176,7 @@ class FunctionCallSignatureSniff implements Sniff
      * @param array                       $tokens      The stack of tokens that make up
      *                                                 the file.
      *
-     * @return void
+     * @return bool
      */
     public function isMultiLineCall(File $phpcsFile, $stackPtr, $openBracket, $tokens)
     {
@@ -230,7 +230,7 @@ class FunctionCallSignatureSniff implements Sniff
         } else if ($requiredSpacesAfterOpen > 0) {
             $spaceAfterOpen = 0;
             if ($tokens[($openBracket + 1)]['code'] === T_WHITESPACE) {
-                $spaceAfterOpen = strlen($tokens[($openBracket + 1)]['content']);
+                $spaceAfterOpen = $tokens[($openBracket + 1)]['length'];
             }
 
             if ($spaceAfterOpen !== $requiredSpacesAfterOpen) {
@@ -262,7 +262,7 @@ class FunctionCallSignatureSniff implements Sniff
         if ($tokens[$prev]['line'] !== $tokens[$closer]['line']) {
             $spaceBeforeClose = 'newline';
         } else if ($tokens[($closer - 1)]['code'] === T_WHITESPACE) {
-            $spaceBeforeClose = strlen($tokens[($closer - 1)]['content']);
+            $spaceBeforeClose = $tokens[($closer - 1)]['length'];
         }
 
         if ($spaceBeforeClose !== $requiredSpacesBeforeClose) {
@@ -505,7 +505,7 @@ class FunctionCallSignatureSniff implements Sniff
                             $foundIndent = 0;
                         }
                     } else {
-                        $foundIndent = strlen($tokens[$i]['content']);
+                        $foundIndent = $tokens[$i]['length'];
                     }
 
                     if ($foundIndent < $expectedIndent

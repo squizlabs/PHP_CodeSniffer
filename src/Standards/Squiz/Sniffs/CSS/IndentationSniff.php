@@ -70,6 +70,12 @@ class IndentationSniff implements Sniff
             if ($tokens[$i]['code'] === T_OPEN_CURLY_BRACKET) {
                 $indentLevel++;
 
+                if (isset($tokens[$i]['bracket_closer']) === false) {
+                    // Syntax error or live coding.
+                    // Anything after this would receive incorrect fixes, so bow out.
+                    return;
+                }
+
                 // Check for nested class definitions.
                 $found = $phpcsFile->findNext(
                     T_OPEN_CURLY_BRACKET,

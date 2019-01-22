@@ -1352,6 +1352,14 @@ if ($oo) {
 	} ?>
 </div>
 
+<div>
+	<?php echo
+		foo(
+			$foo
+		);
+	?>
+</div>
+
 <?php
 	if (true) {
 	}

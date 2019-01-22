@@ -37,6 +37,27 @@ abstract class Tokenizer
     protected $tokens = [];
 
     /**
+     * The number of tokens in the tokens array.
+     *
+     * @var integer
+     */
+    protected $numTokens = 0;
+
+    /**
+     * A list of tokens that are allowed to open a scope.
+     *
+     * @var array
+     */
+    public $scopeOpeners = [];
+
+    /**
+     * A list of tokens that end the scope.
+     *
+     * @var array
+     */
+    public $endScopeTokens = [];
+
+    /**
      * Known lengths of tokens.
      *
      * @var array<int, int>
@@ -163,7 +184,7 @@ abstract class Tokenizer
         $encoding         = $this->config->encoding;
         $tabWidth         = $this->config->tabWidth;
 
-        $this->tokensWithTabs = [
+        $tokensWithTabs = [
             T_WHITESPACE               => true,
             T_COMMENT                  => true,
             T_DOC_COMMENT              => true,
@@ -186,7 +207,7 @@ abstract class Tokenizer
                 $length      = $this->knownLengths[$this->tokens[$i]['code']];
                 $currColumn += $length;
             } else if ($tabWidth === 0
-                || isset($this->tokensWithTabs[$this->tokens[$i]['code']]) === false
+                || isset($tokensWithTabs[$this->tokens[$i]['code']]) === false
                 || strpos($this->tokens[$i]['content'], "\t") === false
             ) {
                 // There are no tabs in this content, or we aren't replacing them.

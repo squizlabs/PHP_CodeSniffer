@@ -113,7 +113,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
 
             // We changed lines.
             if ($tokens[($i + 1)]['code'] === T_WHITESPACE) {
-                $classIndent = strlen($tokens[($i + 1)]['content']);
+                $classIndent = $tokens[($i + 1)]['length'];
             }
 
             break;
@@ -181,7 +181,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     // Check the whitespace before. Whitespace after is checked
                     // later by looking at the whitespace before the first class name
                     // in the list.
-                    $gap = strlen($tokens[($keyword - 1)]['content']);
+                    $gap = $tokens[($keyword - 1)]['length'];
                     if ($gap !== 1) {
                         $error = 'Expected 1 space before '.$keywordType.' keyword; %s found';
                         $data  = [$gap];
@@ -302,7 +302,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     if ($tokens[$prev]['line'] !== $tokens[$className]['line']) {
                         $found = 0;
                     } else {
-                        $found = strlen($tokens[$prev]['content']);
+                        $found = $tokens[$prev]['length'];
                     }
 
                     $expected = ($classIndent + $this->indent);
@@ -344,7 +344,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                         $prev = ($className - 1);
                     }
 
-                    $spaceBefore = strlen($tokens[$prev]['content']);
+                    $spaceBefore = $tokens[$prev]['length'];
                     if ($spaceBefore !== 1) {
                         $error = 'Expected 1 space before "%s"; %s found';
                         $data  = [
@@ -371,7 +371,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                         $error = 'Expected 0 spaces between "%s" and comma; %s found';
                         $data  = [
                             $tokens[$className]['content'],
-                            strlen($tokens[($className + 1)]['content']),
+                            $tokens[($className + 1)]['length'],
                         ];
 
                         $fix = $phpcsFile->addFixableError($error, $className, 'SpaceBeforeComma', $data);

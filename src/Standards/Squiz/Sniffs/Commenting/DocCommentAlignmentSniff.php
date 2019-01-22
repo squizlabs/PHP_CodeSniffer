@@ -144,7 +144,7 @@ class DocCommentAlignmentSniff implements Sniff
                 && $tokens[($i + 1)]['content'] !== ' '
             ) {
                 $error = 'Expected 1 space after asterisk; %s found';
-                $data  = [strlen($tokens[($i + 1)]['content'])];
+                $data  = [$tokens[($i + 1)]['length']];
                 $fix   = $phpcsFile->addFixableError($error, $i, 'SpaceAfterStar', $data);
                 if ($fix === true) {
                     $phpcsFile->fixer->replaceToken(($i + 1), ' ');

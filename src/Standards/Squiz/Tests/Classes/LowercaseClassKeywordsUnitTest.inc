@@ -9,4 +9,5 @@ class MyClass
     Var $myVar = null;
     Const myConst = true;
 }
-?>
+
+$a = new CLASS() {};

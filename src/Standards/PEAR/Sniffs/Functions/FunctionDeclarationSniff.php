@@ -80,7 +80,7 @@ class FunctionDeclarationSniff implements Sniff
             if ($tokens[($stackPtr + 1)]['content'] === $phpcsFile->eolChar) {
                 $spaces = 'newline';
             } else if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
-                $spaces = strlen($tokens[($stackPtr + 1)]['content']);
+                $spaces = $tokens[($stackPtr + 1)]['length'];
             } else {
                 $spaces = 0;
             }
@@ -110,7 +110,7 @@ class FunctionDeclarationSniff implements Sniff
             if ($tokens[($openBracket - 1)]['content'] === $phpcsFile->eolChar) {
                 $spaces = 'newline';
             } else if ($tokens[($openBracket - 1)]['code'] === T_WHITESPACE) {
-                $spaces = strlen($tokens[($openBracket - 1)]['content']);
+                $spaces = $tokens[($openBracket - 1)]['length'];
             } else {
                 $spaces = 0;
             }
@@ -130,7 +130,7 @@ class FunctionDeclarationSniff implements Sniff
                 if ($tokens[($end - 1)]['content'] === $phpcsFile->eolChar) {
                     $spaces = 'newline';
                 } else if ($tokens[($end - 1)]['code'] === T_WHITESPACE) {
-                    $spaces = strlen($tokens[($end - 1)]['content']);
+                    $spaces = $tokens[($end - 1)]['length'];
                 } else {
                     $spaces = 0;
                 }
@@ -155,7 +155,7 @@ class FunctionDeclarationSniff implements Sniff
                 } else if ($tokens[($use + 1)]['content'] === "\t") {
                     $length = '\t';
                 } else {
-                    $length = strlen($tokens[($use + 1)]['content']);
+                    $length = $tokens[($use + 1)]['length'];
                 }
 
                 if ($length !== 1) {
@@ -176,7 +176,7 @@ class FunctionDeclarationSniff implements Sniff
                 } else if ($tokens[($use - 1)]['content'] === "\t") {
                     $length = '\t';
                 } else {
-                    $length = strlen($tokens[($use - 1)]['content']);
+                    $length = $tokens[($use - 1)]['length'];
                 }
 
                 if ($length !== 1) {
@@ -214,7 +214,7 @@ class FunctionDeclarationSniff implements Sniff
      * @param array                       $tokens      The stack of tokens that make up
      *                                                 the file.
      *
-     * @return void
+     * @return bool
      */
     public function isMultiLineDeclaration($phpcsFile, $stackPtr, $openBracket, $tokens)
     {
@@ -296,7 +296,7 @@ class FunctionDeclarationSniff implements Sniff
         $i++;
 
         if ($tokens[$i]['code'] === T_WHITESPACE) {
-            $functionIndent = strlen($tokens[$i]['content']);
+            $functionIndent = $tokens[$i]['length'];
         }
 
         // The closing parenthesis must be on a new line, even
@@ -377,7 +377,7 @@ class FunctionDeclarationSniff implements Sniff
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
                 } else {
-                    $foundIndent = strlen($tokens[$i]['content']);
+                    $foundIndent = $tokens[$i]['length'];
                 }
 
                 if ($expectedIndent !== $foundIndent) {

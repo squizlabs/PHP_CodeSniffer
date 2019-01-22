@@ -116,7 +116,7 @@ class Standards
         $installedStandards = [];
 
         foreach ($rulesets as $rulesetPath) {
-            $ruleset = simplexml_load_string(file_get_contents($rulesetPath));
+            $ruleset = @simplexml_load_string(file_get_contents($rulesetPath));
             if ($ruleset === false) {
                 continue;
             }

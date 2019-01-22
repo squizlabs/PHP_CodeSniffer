@@ -1,0 +1,39 @@
+<?php
+if (function_exists('myFunction') === TRUE) {
+    $retval = MyFunction(true);
+    $keys = array_keys($array);
+}
+
+function getType() {}
+
+$obj = new Date();
+
+$count = $object->Count();
+$count = $object::Count();
+$count = $object->count();
+$count = $object::count();
+class MyClass {
+    public function Count() {}
+}
+
+function &Sort() {
+
+}
+
+$connection = new Db\Adapter\Pdo\Mysql($config);
+
+namespace Strtolower\Silly;
+
+use function strtoupper as somethingElse;
+use function MyClass\WordsToUpper as UCWords; // Intentional redeclared function error.
+use function strToUpper\NotTheFunction;
+
+class ArrayUnique {}
+
+$sillyComments = strtolower /*comment*/ ($string);
+
+$callToGlobalFunction = \str_repeat($a, 2);
+$callToGlobalFunction = \ /*comment*/ str_repeat($a, 2);
+
+$callToNamespacedFunction = MyNamespace /* phpcs:ignore Standard */ \STR_REPEAT($a, 2);
+$callToNamespacedFunction = namespace\STR_REPEAT($a, 2); // Could potentially be false negative.

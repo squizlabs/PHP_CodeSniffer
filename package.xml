@@ -26,25 +26,64 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The PEAR installable version of PHPCS was missing some files, which have been re-included in this release
+    -- The code report was not previously available for PEAR installs
+    -- The Generic.Formatting.SpaceBeforeCast sniff was not previously available for PEAR installs
+    -- The Generic.WhiteSpace.LanguageConstructSpacing sniff was not previously available for PEAR installs
+    -- Thanks to Juliette Reinders Folmer for the patch
+
+  - Ruleset XML parsing errors are now displayed in a readable format so they are easier to correct
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - The PSR2 standard no longer throws duplicate errors for spacing around FOR loop parentheses
+    -- Thanks to Juliette Reinders Folmer for the patch
   - T_PHPCS_SET tokens now contain sniffCode, sniffProperty, and sniffPropertyValue indexes
     -- Sniffs can use this information instead of having to parse the token content manually
+  - Added more guard code for syntax errors to various CSS sniffs
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.ControlStructures.InlineControlStructure now handles syntax errors correctly
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.Debug.JSHint now longer requires rhino and can be run directly from the npm install
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.Files.LineEndings no longer adds superfluous new line at the end of JS and CSS files
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.WhiteSpace.ScopeIndent now respects changes to the "exact" property using phpcs:set mid-way through a file
     -- This allows you change the "exact" rule for only some parts of a file
   - Generic.WhiteSpace.ScopeIndent now disables exact indent checking inside all arrays
     -- Previously, this was only done when using long array syntax, but it now works for short array syntax as well
+  - PEAR.Classes.ClassDeclaration now has improved handling of PHPCS annotations and tab indents
   - PSR12.Classes.ClassInstantiation has changed it's error code from MissingParenthesis to MissingParentheses
+  - PSR12.Keywords.ShortFormTypeKeywords now ignores all spacing inside type casts during both checking and fixing
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Classes.LowercaseClassKeywords now examines the class keyword for anonymous classes
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.ControlStructures.ControlSignature now has improved handling of parse errors
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Commenting.PostStatementComment fixer no longer adds a blank line at the start of a JS file that begins with a comment
+    -- Fixes a conflict between this sniff and the Squiz.WhiteSpace.SuperfluousWhitespace sniff
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Commenting.PostStatementComment now ignores comments inside control structure conditions, such as FOR loops
+    -- Fixes a conflict between this sniff and the Squiz.ControlStructures.ForLoopDeclaration sniff
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.CSS.ClassDefinitionClosingBrace now handles comments, indentation, and multiple statements on the same line correctly
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.CSS.Opacity now handles comments correctly
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.CSS.SemicolonSpacing now handles comments and syntax errors correctly
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.PHP.LowercasePHPFunctions now handles use statements, namespaces, and comments correctly
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Standards.WhiteSpace.FunctionSpacing now fixes function spacing correctly when a function is the first content in a file
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Zend.Files.ClosingTag no longer adds a semi-colon during fixing of a file that only contains a comment
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2337 : Generic.WhiteSpace.ScopeIndent incorrect error when multi-line function call starts on same line as open tag
+  - Fixed bug #2348 : Cache not invalidated when changing a ruleset included by another
  </notes>
  <contents>
   <dir name="/">
    <file baseinstalldir="PHP/CodeSniffer" name="autoload.php" role="php">
     <tasks:replace from="@test_dir@" to="test_dir" type="pear-config" />
-  </file>
+   </file>
    <file baseinstalldir="PHP/CodeSniffer" name="CodeSniffer.conf.dist" role="data" />
    <file baseinstalldir="PHP/CodeSniffer" name="README.md" role="doc" />
    <file baseinstalldir="PHP/CodeSniffer" name="CONTRIBUTING.md" role="doc" />
@@ -132,6 +171,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <dir name="Reports">
      <file baseinstalldir="PHP/CodeSniffer" name="Cbf.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Checkstyle.php" role="php" />
+     <file baseinstalldir="PHP/CodeSniffer" name="Code.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Csv.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Diff.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Emacs.php" role="php" />
@@ -208,6 +248,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="MultipleStatementAlignmentStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSpaceAfterCastStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterCastStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotStandard.xml" role="php" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="CallTimePassByReferenceStandard.xml" role="php" />
@@ -308,6 +349,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="NoSpaceAfterCastSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterCastSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceBeforeCastSniff.php" role="php" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="CallTimePassByReferenceSniff.php" role="php" />
@@ -353,6 +395,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentSniff.php" role="php" />
        </dir>
       </dir>
@@ -417,11 +460,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="TodoUnitTest.php" role="test" />
        </dir>
        <dir name="ControlStructures">
-        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.php" role="test" />
+       </dir>
+       <dir name="Debug">
+        <file baseinstalldir="PHP/CodeSniffer" name="ESLintUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ESLintUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="JSHintUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="JSHintUnitTest.php" role="test" />
        </dir>
        <dir name="Files">
         <file baseinstalldir="PHP/CodeSniffer" name="ByteOrderMarkUnitTest.inc" role="test" />
@@ -443,17 +497,25 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.3.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.3.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.6.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.2.inc" role="test" />
@@ -464,9 +526,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineLengthUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineLengthUnitTest.2.inc" role="test" />
@@ -503,6 +567,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SpaceAfterNotUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceBeforeCastUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceBeforeCastUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpaceBeforeCastUnitTest.php" role="test" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="CallTimePassByReferenceUnitTest.inc" role="test" />
@@ -540,6 +607,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsUnitTest.inc" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsUnitTest.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsUnitTest.2.inc" role="test" />
@@ -593,6 +662,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="GitMergeConflictUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SubversionPropertiesUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SubversionPropertiesUnitTest.php" role="test" />
        </dir>
        <dir name="WhiteSpace">
         <file baseinstalldir="PHP/CodeSniffer" name="ArbitraryParenthesesSpacingUnitTest.inc" role="test" />
@@ -619,6 +690,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.1.js" role="test" />
@@ -789,7 +863,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Tests">
        <dir name="Classes">
-        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.php" role="test" />
        </dir>
        <dir name="Commenting">
@@ -1300,6 +1376,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DuplicatePropertyUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DuplicatePropertyUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseClassKeywordsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowercaseClassKeywordsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseClassKeywordsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SelfMemberReferenceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SelfMemberReferenceUnitTest.inc.fixed" role="test" />
@@ -1323,10 +1400,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyCatchCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyCatchCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.3.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentThrowTagUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentThrowTagUnitTest.php" role="test" />
@@ -1344,8 +1426,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LongConditionClosingCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.inc.fixed" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.js" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.js.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.1.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.1.js.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.2.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="PostStatementCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="VariableCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="VariableCommentUnitTest.inc.fixed" role="test" />
@@ -1403,8 +1486,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="EmptyStyleDefinitionUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenStylesUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenStylesUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.css" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.css.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.1.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.1.css.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.2.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="IndentationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseStyleDefinitionUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseStyleDefinitionUnitTest.php" role="test" />
@@ -1514,6 +1598,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InnerFunctionsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InnerFunctionsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercasePHPFunctionsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowercasePHPFunctionsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercasePHPFunctionsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NonExecutableCodeUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NonExecutableCodeUnitTest.2.inc" role="test" />
@@ -1553,10 +1638,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceSpaceUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceSpaceUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.js" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.2.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.3.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.5.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.6.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingUnitTest.inc.fixed" role="test" />
@@ -1655,6 +1752,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.4.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.5.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.6.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.7.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.7.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagUnitTest.php" role="test" />
        </dir>
        <dir name="NamingConventions">

@@ -26,8 +26,12 @@ class LowercasePHPFunctionsUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            2 => 1,
-            4 => 1,
+            2  => 1,
+            4  => 1,
+            27 => 1,
+            33 => 1,
+            35 => 1,
+            36 => 1,
         ];
 
     }//end getErrorList()

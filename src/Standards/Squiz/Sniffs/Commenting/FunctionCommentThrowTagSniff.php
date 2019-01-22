@@ -51,15 +51,8 @@ class FunctionCommentThrowTagSniff implements Sniff
         $find[] = T_WHITESPACE;
 
         $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
-        if ($tokens[$commentEnd]['code'] === T_COMMENT) {
-            // Function is using the wrong type of comment.
-            return;
-        }
-
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
-            && $tokens[$commentEnd]['code'] !== T_COMMENT
-        ) {
-            // Function doesn't have a doc comment.
+        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
+            // Function doesn't have a doc comment or is using the wrong type of comment.
             return;
         }
 

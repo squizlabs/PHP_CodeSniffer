@@ -289,3 +289,7 @@ if ($this) {
     if ($that)
         foo(${$a[$b]});
 }
+
+// Intentional parse error. This should be the last test in the file.
+foreach
+   // Some unrelated comment.

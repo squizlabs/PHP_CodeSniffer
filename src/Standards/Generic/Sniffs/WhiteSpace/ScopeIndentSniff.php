@@ -284,8 +284,9 @@ class ScopeIndentSniff implements Sniff
                     if (isset($tokens[$parenCloser]['nested_parenthesis']) === true
                         && empty($tokens[$parenCloser]['nested_parenthesis']) === false
                     ) {
-                        end($tokens[$parenCloser]['nested_parenthesis']);
-                        $parens = key($tokens[$parenCloser]['nested_parenthesis']);
+                        $parens = $tokens[$parenCloser]['nested_parenthesis'];
+                        end($parens);
+                        $parens = key($parens);
                         if ($this->debug === true) {
                             $line = $tokens[$parens]['line'];
                             echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
@@ -296,8 +297,9 @@ class ScopeIndentSniff implements Sniff
                     if (isset($tokens[$parenCloser]['conditions']) === true
                         && empty($tokens[$parenCloser]['conditions']) === false
                     ) {
-                        end($tokens[$parenCloser]['conditions']);
-                        $condition = key($tokens[$parenCloser]['conditions']);
+                        $condition = $tokens[$parenCloser]['conditions'];
+                        end($condition);
+                        $condition = key($condition);
                         if ($this->debug === true) {
                             $line = $tokens[$condition]['line'];
                             $type = $tokens[$condition]['type'];
@@ -394,15 +396,20 @@ class ScopeIndentSniff implements Sniff
                                 echo "\t* previous is $type on line $line *".PHP_EOL;
                             }
 
-                            $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
-                            $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
-                            $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $prev, true);
+                            $first = $phpcsFile->findFirstOnLine([T_WHITESPACE, T_INLINE_HTML], $prev, true);
+                            if ($first !== false) {
+                                $prev  = $phpcsFile->findStartOfStatement($first, T_COMMA);
+                                $first = $phpcsFile->findFirstOnLine([T_WHITESPACE, T_INLINE_HTML], $prev, true);
+                            } else {
+                                $first = $prev;
+                            }
+
                             if ($this->debug === true) {
                                 $line = $tokens[$first]['line'];
                                 $type = $tokens[$first]['type'];
                                 echo "\t* amended first token is $first ($type) on line $line *".PHP_EOL;
                             }
-                        }
+                        }//end if
 
                         if (isset($tokens[$first]['scope_closer']) === true
                             && $tokens[$first]['scope_closer'] === $first
@@ -433,7 +440,7 @@ class ScopeIndentSniff implements Sniff
                                 }
                             }//end if
                         } else {
-                            // Don't force current indent to divisible because there could be custom
+                            // Don't force current indent to be divisible because there could be custom
                             // rules in place between parenthesis, such as with arrays.
                             $currentIndent = ($tokens[$first]['column'] - 1);
                             if (isset($adjustments[$first]) === true) {
@@ -557,8 +564,9 @@ class ScopeIndentSniff implements Sniff
                 && $tokens[$checkToken]['scope_opener'] === $checkToken))
             ) {
                 if (empty($tokens[$checkToken]['conditions']) === false) {
-                    end($tokens[$checkToken]['conditions']);
-                    $condition = key($tokens[$checkToken]['conditions']);
+                    $condition = $tokens[$checkToken]['conditions'];
+                    end($condition);
+                    $condition = key($condition);
                 } else {
                     $condition = $tokens[$checkToken]['scope_condition'];
                 }
@@ -699,8 +707,9 @@ class ScopeIndentSniff implements Sniff
                 if (isset($tokens[$scopeCloser]['nested_parenthesis']) === true
                     && empty($tokens[$scopeCloser]['nested_parenthesis']) === false
                 ) {
-                    end($tokens[$scopeCloser]['nested_parenthesis']);
-                    $parens = key($tokens[$scopeCloser]['nested_parenthesis']);
+                    $parens = $tokens[$scopeCloser]['nested_parenthesis'];
+                    end($parens);
+                    $parens = key($parens);
                     if ($this->debug === true) {
                         $line = $tokens[$parens]['line'];
                         echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
@@ -711,8 +720,9 @@ class ScopeIndentSniff implements Sniff
                 if (isset($tokens[$scopeCloser]['conditions']) === true
                     && empty($tokens[$scopeCloser]['conditions']) === false
                 ) {
-                    end($tokens[$scopeCloser]['conditions']);
-                    $condition = key($tokens[$scopeCloser]['conditions']);
+                    $condition = $tokens[$scopeCloser]['conditions'];
+                    end($condition);
+                    $condition = key($condition);
                     if ($this->debug === true) {
                         $line = $tokens[$condition]['line'];
                         $type = $tokens[$condition]['type'];
@@ -1227,8 +1237,9 @@ class ScopeIndentSniff implements Sniff
                 if (isset($tokens[$i]['nested_parenthesis']) === true
                     && empty($tokens[$i]['nested_parenthesis']) === false
                 ) {
-                    end($tokens[$i]['nested_parenthesis']);
-                    $parens = key($tokens[$i]['nested_parenthesis']);
+                    $parens = $tokens[$i]['nested_parenthesis'];
+                    end($parens);
+                    $parens = key($parens);
                     if ($this->debug === true) {
                         $line = $tokens[$parens]['line'];
                         echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
@@ -1239,8 +1250,9 @@ class ScopeIndentSniff implements Sniff
                 if (isset($tokens[$i]['conditions']) === true
                     && empty($tokens[$i]['conditions']) === false
                 ) {
-                    end($tokens[$i]['conditions']);
-                    $condition = key($tokens[$i]['conditions']);
+                    $condition = $tokens[$i]['conditions'];
+                    end($condition);
+                    $condition = key($condition);
                     if ($this->debug === true) {
                         $line = $tokens[$condition]['line'];
                         $type = $tokens[$condition]['type'];
@@ -1360,7 +1372,7 @@ class ScopeIndentSniff implements Sniff
      * @param int                         $change    The difference in length between
      *                                               the old and new indent.
      *
-     * @return void
+     * @return bool
      */
     protected function adjustIndent(File $phpcsFile, $stackPtr, $length, $change)
     {

@@ -1121,18 +1121,6 @@ class File
 
 
     /**
-     * Returns the number of successes recorded.
-     *
-     * @return int
-     */
-    public function getSuccessCount()
-    {
-        return $this->successCount;
-
-    }//end getSuccessCount()
-
-
-    /**
      * Returns the number of fixable errors/warnings raised.
      *
      * @return int

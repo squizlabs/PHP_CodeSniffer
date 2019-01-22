@@ -48,6 +48,11 @@ class DuplicateStyleDefinitionSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if (isset($tokens[$stackPtr]['bracket_closer']) === false) {
+            // Syntax error or live coding, bow out.
+            return;
+        }
+
         // Find the content of each style definition name.
         $styleNames = [];
 

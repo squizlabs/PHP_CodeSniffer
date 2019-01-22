@@ -319,7 +319,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                             if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
                                 $indent = 0;
                                 if ($tokens[($i - 1)]['code'] === T_DOC_COMMENT_WHITESPACE) {
-                                    $indent = strlen($tokens[($i - 1)]['content']);
+                                    $indent = $tokens[($i - 1)]['length'];
                                 }
 
                                 $comment       .= ' '.$tokens[$i]['content'];

@@ -65,7 +65,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
             if (empty($propertyInfo) === true) {
                 return;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Turns out not to be a property after all.
             return;
         }
