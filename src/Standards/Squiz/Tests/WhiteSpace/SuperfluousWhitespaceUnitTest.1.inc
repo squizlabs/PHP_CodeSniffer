@@ -52,5 +52,23 @@ function myFunction2()
 
 // Уберём из системных свойств все кроме информации об услугах
 
+class Nested_Function {
+    public function getAnonymousClass() {
+        return new class() {
+
+
+            static private final function _nested_function() {
+                echo 'code here';
+
+
+                echo 'code here';
+         
+            }
+
+
+        };
+    }
+}
+
 ?>
 
