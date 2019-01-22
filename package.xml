@@ -78,7 +78,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.LowercasePHPFunctions now handles use statements, namespaces, and comments correctly
     -- Thanks to Juliette Reinders Folmer for the patch
-  - Standards.WhiteSpace.FunctionSpacing now fixes function spacing correctly when a function is the first content in a file
+  - Squiz.WhiteSpace.FunctionSpacing now fixes function spacing correctly when a function is the first content in a file
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.WhiteSpace.SuperfluousWhitespace no longer throws errors for spacing between functions and properties in anon classes
     -- Thanks to Juliette Reinders Folmer for the patch
   - Zend.Files.ClosingTag no longer adds a semi-colon during fixing of a file that only contains a comment
     -- Thanks to Juliette Reinders Folmer for the patch
