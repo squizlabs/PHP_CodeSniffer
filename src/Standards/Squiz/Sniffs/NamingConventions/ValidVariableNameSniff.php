@@ -54,9 +54,9 @@ class ValidVariableNameSniff extends AbstractVariableSniff
                     }
 
                     if (Common::isCamelCaps($objVarName, false, true, false) === false) {
-                        $error = 'Variable "%s" is not in valid camel caps format';
+                        $error = 'Property "%s" is not in valid camel caps format';
                         $data  = [$originalVarName];
-                        $phpcsFile->addError($error, $var, 'NotCamelCaps', $data);
+                        $phpcsFile->addError($error, $var, 'PropertyNotCamelCaps', $data);
                     }
                 }//end if
             }//end if
