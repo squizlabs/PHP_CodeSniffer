@@ -4,7 +4,7 @@
     border-bottom: 1px dotted #F0F0F0;
     border-top: 1px dotted #FF00FF;
     background: #8fb7db url(diag_lines_bg.gif) top left;
-    page-break-inside: 1;
+    tab-size: 1;
     margin: 8px 8px 8px 8px;
     margin: 8px 8px;
     margin: 0 0 0 0;
@@ -18,9 +18,28 @@
     border-width: 1px 2px 2px 4px;
     margin: 97px auto 0 auto;
     text-shadow: 0 1px 0 #fff;
+    border-width:
+        2px
+        4px
+        2px
+        4px;
 
-    /* These are black-listed style names. */
+    /* These are style names excluded from this rule. */
     background-position: 0 0;
     box-shadow: 2px 2px 2px 2px;
     transform-origin: 0 110% 0;
+
+    /* Sizes with comments between them will be ignored for the purposes of this sniff. */
+    margin: 8px /*top*/ 8px /*right*/ 8px /*bottom*/ 8px /*left*/;
+
+    /* Same with PHPCS annotations. */
+    border-width:
+        2px /* phpcs:ignore Standard.Category.SniffName -- for reasons */
+        4px
+        2px /* phpcs:disable Standard.Category.SniffName -- for reasons */
+        4px;
 }
+
+/* Intentional parse error. Live coding resilience. This has to be the last test in the file. */
+#live-coding {
+    margin: 8px 8px 8px 8px
