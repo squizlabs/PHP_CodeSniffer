@@ -1520,6 +1520,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="SemicolonSpacingUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SemicolonSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ShorthandSizeUnitTest.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ShorthandSizeUnitTest.css.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ShorthandSizeUnitTest.php" role="test" />
        </dir>
        <dir name="Debug">
