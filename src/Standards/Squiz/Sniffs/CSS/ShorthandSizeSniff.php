@@ -69,10 +69,16 @@ class ShorthandSizeSniff implements Sniff
             return;
         }
 
+        $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
+        if ($end === false) {
+            // Live coding or parse error.
+            return;
+        }
+
         // Get the whole style content.
-        $end         = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
         $origContent = $phpcsFile->getTokensAsString(($stackPtr + 1), ($end - $stackPtr - 1));
-        $origContent = trim($origContent, ': ');
+        $origContent = trim($origContent, ':');
+        $origContent = trim($origContent);
 
         // Account for a !important annotation.
         $content = $origContent;
@@ -85,7 +91,7 @@ class ShorthandSizeSniff implements Sniff
         $content = preg_replace('/\s+/', ' ', $content);
         $values  = [];
         $num     = preg_match_all(
-            '/([0-9]+)([a-zA-Z]{2}\s+|%\s+|\s+)/',
+            '/(?:[0-9]+)(?:[a-zA-Z]{2}\s+|%\s+|\s+)/',
             $content.' ',
             $values,
             PREG_SET_ORDER
@@ -107,7 +113,7 @@ class ShorthandSizeSniff implements Sniff
         }
 
         if ($num === 3) {
-            $expected = trim($content.' '.$values[1][1].$values[1][2]);
+            $expected = trim($content.' '.$values[1][0]);
             $error    = 'Shorthand syntax not allowed here; use %s instead';
             $data     = [$expected];
             $fix      = $phpcsFile->addFixableError($error, $stackPtr, 'NotAllowed', $data);
@@ -142,12 +148,10 @@ class ShorthandSizeSniff implements Sniff
 
         if ($values[0][0] === $values[1][0]) {
             // All values are the same.
-            $expected = $values[0][0];
+            $expected = trim($values[0][0]);
         } else {
-            $expected = $values[0][0].' '.$values[1][0];
+            $expected = trim($values[0][0]).' '.trim($values[1][0]);
         }
-
-        $expected = preg_replace('/\s+/', ' ', trim($expected));
 
         $error = 'Size definitions must use shorthand if available; expected "%s" but found "%s"';
         $data  = [
@@ -162,8 +166,8 @@ class ShorthandSizeSniff implements Sniff
                 $expected .= ' !important';
             }
 
-            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 2), null, true);
-            $phpcsFile->fixer->replaceToken($next, $expected);
+            $next = $phpcsFile->findNext(T_COLON, ($stackPtr + 1));
+            $phpcsFile->fixer->addContent($next, ' '.$expected);
             for ($next++; $next < $end; $next++) {
                 $phpcsFile->fixer->replaceToken($next, '');
             }
