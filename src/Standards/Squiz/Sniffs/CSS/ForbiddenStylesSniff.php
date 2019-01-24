@@ -26,7 +26,7 @@ class ForbiddenStylesSniff implements Sniff
      * A list of forbidden styles with their alternatives.
      *
      * The value is NULL if no alternative exists. i.e., the
-     * function should just not be used.
+     * style should just not be used.
      *
      * @var array<string, string|null>
      */
