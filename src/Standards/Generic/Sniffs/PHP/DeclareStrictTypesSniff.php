@@ -20,7 +20,7 @@ class DeclareStrictTypesSniff implements Sniff
      *
      * @var string
      */
-    public $format = 'declare(strict_types=1);';
+    private $format = 'declare(strict_types=1);';
 
     /**
      * Number of blank lines before declaration.
