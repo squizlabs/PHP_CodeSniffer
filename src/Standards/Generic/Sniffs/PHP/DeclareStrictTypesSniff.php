@@ -3,7 +3,7 @@
  * Checks that strict types are declared in the PHP file.
  *
  * @author    Michał Bundyra <contact@webimpress.com>
- * @copyright 2006-2018 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
