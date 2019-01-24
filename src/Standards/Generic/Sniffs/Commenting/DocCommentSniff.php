@@ -262,11 +262,12 @@ class DocCommentSniff implements Sniff
                 if ($paramGroupid === $groupid
                     && $tokens[$tag]['content'] !== '@param'
                 ) {
-                    $error = 'Tag cannot be grouped with parameter tags in a doc comment';
-                    $phpcsFile->addError($error, $tag, 'NonParamGroup');
+                    $error = 'Tag %s cannot be grouped with parameter tags in a doc comment';
+                    $data  = [$tokens[$tag]['content']];
+                    $phpcsFile->addError($error, $tag, 'NonParamGroup', $data);
                 }
 
-                $tagLength = strlen($tokens[$tag]['content']);
+                $tagLength = $tokens[$tag]['length'];
                 if ($tagLength > $maxLength) {
                     $maxLength = $tagLength;
                 }
@@ -274,7 +275,7 @@ class DocCommentSniff implements Sniff
                 // Check for a value. No value means no padding needed.
                 $string = $phpcsFile->findNext(T_DOC_COMMENT_STRING, $tag, $commentEnd);
                 if ($string !== false && $tokens[$string]['line'] === $tokens[$tag]['line']) {
-                    $paddings[$tag] = strlen($tokens[($tag + 1)]['content']);
+                    $paddings[$tag] = $tokens[($tag + 1)]['length'];
                 }
             }
 
@@ -306,11 +307,12 @@ class DocCommentSniff implements Sniff
 
             // Now check paddings.
             foreach ($paddings as $tag => $padding) {
-                $required = ($maxLength - strlen($tokens[$tag]['content']) + 1);
+                $required = ($maxLength - $tokens[$tag]['length'] + 1);
 
                 if ($padding !== $required) {
-                    $error = 'Tag value indented incorrectly; expected %s spaces but found %s';
+                    $error = 'Tag value for %s tag indented incorrectly; expected %s spaces but found %s';
                     $data  = [
+                        $tokens[$tag]['content'],
                         $required,
                         $padding,
                     ];

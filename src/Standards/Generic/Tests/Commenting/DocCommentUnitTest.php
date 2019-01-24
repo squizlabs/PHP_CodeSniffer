@@ -16,6 +16,21 @@ class DocCommentUnitTest extends AbstractSniffUnitTest
 
 
     /**
+     * Get a list of CLI values to set before the file is tested.
+     *
+     * @param string                  $testFile The name of the file being tested.
+     * @param \PHP_CodeSniffer\Config $config   The config data for the test run.
+     *
+     * @return void
+     */
+    public function setCliValues($testFile, $config)
+    {
+        $config->tabWidth = 4;
+
+    }//end setCliValues()
+
+
+    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
@@ -64,6 +79,15 @@ class DocCommentUnitTest extends AbstractSniffUnitTest
             206 => 1,
             211 => 1,
             214 => 4,
+            218 => 1,
+            220 => 2,
+            222 => 1,
+            224 => 3,
+            243 => 1,
+            244 => 1,
+            246 => 1,
+            248 => 1,
+            249 => 1,
         ];
 
     }//end getErrorList()
