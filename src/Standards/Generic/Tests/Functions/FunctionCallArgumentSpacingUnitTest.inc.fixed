@@ -133,3 +133,8 @@ my_function_call(
     'e', // phpcs:ignore Standard.Category.Sniff -- for reasons.
      'f'
 );
+
+$foobar = php73_function_call_trailing_comma(
+    $foo,
+    $bar,
+);
