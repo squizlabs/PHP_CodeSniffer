@@ -101,7 +101,7 @@ class ValidatePEARPackageXML
      */
     protected function checkContents()
     {
-        echo 'Checking Contents tag'.PHP_EOL;
+        echo PHP_EOL.'Checking Contents tag'.PHP_EOL;
         echo '====================='.PHP_EOL;
 
         $valid = true;
@@ -129,7 +129,7 @@ class ValidatePEARPackageXML
         $testsFiles = (new FileList(
             $this->projectRoot.'tests/',
             $this->projectRoot,
-            '`\.(css|inc|js|php)$`Di'
+            '`\.(css|inc|js|php|xml)$`Di'
         ))->getList();
         $files      = array_merge($srcFiles, $testsFiles);
 
@@ -256,7 +256,7 @@ class ValidatePEARPackageXML
      */
     protected function checkPHPRelease()
     {
-        echo 'Checking PHPRelease tags'.PHP_EOL;
+        echo PHP_EOL.'Checking PHPRelease tags'.PHP_EOL;
         echo '========================'.PHP_EOL;
 
         $valid       = true;
@@ -298,7 +298,7 @@ class ValidatePEARPackageXML
                 }
 
                 // Check validity of the tags for files in the tests root subdirectories.
-                if (preg_match('`^tests/.+\.(php|inc)$`', $name) === 1
+                if (preg_match('`^tests/.+\.(php|inc|js|css|xml)$`', $name) === 1
                     && $as === str_replace('tests/', 'CodeSniffer/', $name)
                 ) {
                     continue;
@@ -319,7 +319,7 @@ class ValidatePEARPackageXML
          * Verify that all files in the `tests` directory are listed in both `<phprelease>` tags.
          */
 
-        $testFiles = (new FileList($this->projectRoot.'tests/', $this->projectRoot, '`\.(inc|php)$`Di'))->getList();
+        $testFiles = (new FileList($this->projectRoot.'tests/', $this->projectRoot, '`\.(inc|php|js|css|xml)$`Di'))->getList();
 
         foreach ($testFiles as $file) {
             foreach ($listedFiles as $key => $listed) {
