@@ -5,24 +5,20 @@
     border-top: 1px dotted #FF00FF;
     background: #8fb7db url(diag_lines_bg.gif) top left;
     tab-size: 1;
-    margin: 8px 8px 8px 8px;
-    margin: 8px 8px;
-    margin: 0 0 0 0;
-    margin: 0 8px 0 8px;
-    margin: 8px 4px 8px 4px;
-    margin: 8px 4% 8px 4%;
+    margin: 8px;
+    margin: 8px;
+    margin: 0;
+    margin: 0 8px;
+    margin: 8px 4px;
+    margin: 8px 4%;
     margin: 6px 2px 9px 2px;
-    margin: 6px 2px 9px;
-    border-radius: 2px 2px 2px 2px !important;
-    border-width: 2px               2px   2px       2px;
+    margin: 6px 2px 9px 2px;
+    border-radius: 2px !important;
+    border-width: 2px;
     border-width: 1px 2px 2px 4px;
     margin: 97px auto 0 auto;
     text-shadow: 0 1px 0 #fff;
-    border-width:
-        2px
-        4px
-        2px
-        4px;
+    border-width: 2px 4px;
 
     /* These are style names excluded from this rule. */
     background-position: 0 0;
