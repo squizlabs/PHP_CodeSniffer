@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Sniffs can use this information instead of having to parse the token content manually
   - Added more guard code for syntax errors to various CSS sniffs
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.Commenting.DocComment error messages now contain the name of the comment tag that caused the error
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.ControlStructures.InlineControlStructure now handles syntax errors correctly
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.Debug.JSHint now longer requires rhino and can be run directly from the npm install
