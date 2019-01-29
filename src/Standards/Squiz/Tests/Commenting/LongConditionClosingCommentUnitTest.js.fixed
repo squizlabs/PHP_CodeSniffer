@@ -44,7 +44,7 @@ function long_function()
             // This is a short ELSE
             // statement
         }
-    }
+    }//end if
 
     if (longFunction) {
         // This is a long
@@ -94,7 +94,7 @@ function long_function()
         }
     } else {
         // Short ELSE
-    }
+    }//end if
 }
 
 for (variable=1; variable < 20; variable++) {
@@ -141,7 +141,7 @@ for (variable=1; variable < 20; variable++) {
     // Line 18
     // Line 19
     // Line 20
-}
+}//end for
 
 while (variable < 20) {
     // Line 1
@@ -187,7 +187,7 @@ while (variable < 20) {
     // Line 18
     // Line 19
     // Line 20
-}
+}//end while
 
 if (longFunction) {
     // This is a long
@@ -304,7 +304,7 @@ while (variable < 20) {
     // Line 18
     // Line 19
     // Line 20
-}//end for
+}//end while
 
 if (true) {
     // Line 1
@@ -398,7 +398,7 @@ if (something) {
     // Line 18
     // Line 19
     // Line 20
-}
+}//end if
 
 switch (something) {
     case '1':
@@ -436,9 +436,9 @@ switch (something) {
     // Line 4
     // Line 5
     break;
-}
+}//end switch
 
 // Wrong comment
 if (condition) {
     condition = true;
-}//end foreach
+}//end if
