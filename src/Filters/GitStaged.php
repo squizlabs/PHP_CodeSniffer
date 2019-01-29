@@ -49,6 +49,11 @@ class GitStaged extends ExactMatch
 
         foreach ($output as $path) {
             $path = Util\Common::realpath($path);
+            if ($path === false) {
+                // Skip deleted files.
+                continue;
+            }
+
             do {
                 $modified[$path] = true;
                 $path            = dirname($path);
