@@ -138,6 +138,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
      </dir>
+     <dir name="Filters">
+      <dir name="Filter">
+       <file baseinstalldir="" name="AcceptTest.xml" role="test" />
+       <file baseinstalldir="" name="AcceptTest.php" role="test" />
+      </dir>
+     </dir>
      <file baseinstalldir="" name="AllTests.php" role="test" />
      <file baseinstalldir="" name="ErrorSuppressionTest.php" role="test" />
      <file baseinstalldir="" name="IsCamelCapsTest.php" role="test" />
@@ -1856,6 +1862,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.inc" name="tests/Core/File/GetMethodPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
+   <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.php" name="tests/Core/Filters/Filter/AcceptTest.php" />
+   <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.xml" name="tests/Core/Filters/Filter/AcceptTest.xml" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -1889,6 +1897,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.inc" name="tests/Core/File/GetMethodPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
+   <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.php" name="tests/Core/Filters/Filter/AcceptTest.php" />
+   <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.xml" name="tests/Core/Filters/Filter/AcceptTest.xml" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />

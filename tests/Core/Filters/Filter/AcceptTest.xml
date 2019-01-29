@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="AcceptTest" xsi:noNamespaceSchemaLocation="phpcs.xsd">
+    <description>Ruleset to test the filtering based on exclude patterns.</description>
+
+	<!-- Directory pattern. -->
+	<exclude-pattern>*/something/*</exclude-pattern>
+	<!-- File pattern. -->
+	<exclude-pattern>*/Other/Main\.php$</exclude-pattern>
+
+    <rule ref="Generic">
+    	<!-- Standard specific directory pattern. -->
+        <exclude-pattern>/anything/*</exclude-pattern>
+    	<!-- Standard specific file pattern. -->
+        <exclude-pattern>/YetAnother/Main\.php</exclude-pattern>
+    </rule>
+</ruleset>
