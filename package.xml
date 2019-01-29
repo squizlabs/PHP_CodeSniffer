@@ -487,6 +487,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Debug">
         <file baseinstalldir="PHP/CodeSniffer" name="ClosureLinterUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosureLinterUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="CSSLintUnitTest.css" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="CSSLintUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ESLintUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ESLintUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="JSHintUnitTest.js" role="test" />
