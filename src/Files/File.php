@@ -1966,20 +1966,20 @@ class File
      *
      * Returns false if no token can be found.
      *
-     * @param int|array $types   The type(s) of tokens to search for.
-     * @param int       $start   The position to start searching from in the
-     *                           token stack.
-     * @param int       $end     The end position to fail if no token is found.
-     *                           if not specified or null, end will default to
-     *                           the start of the token stack.
-     * @param bool      $exclude If true, find the previous token that is NOT of
-     *                           the types specified in $types.
-     * @param string    $value   The value that the token(s) must be equal to.
-     *                           If value is omitted, tokens with any value will
-     *                           be returned.
-     * @param bool      $local   If true, tokens outside the current statement
-     *                           will not be checked. IE. checking will stop
-     *                           at the previous semi-colon found.
+     * @param int|string|array $types   The type(s) of tokens to search for.
+     * @param int              $start   The position to start searching from in the
+     *                                  token stack.
+     * @param int              $end     The end position to fail if no token is found.
+     *                                  if not specified or null, end will default to
+     *                                  the start of the token stack.
+     * @param bool             $exclude If true, find the previous token that is NOT of
+     *                                  the types specified in $types.
+     * @param string           $value   The value that the token(s) must be equal to.
+     *                                  If value is omitted, tokens with any value will
+     *                                  be returned.
+     * @param bool             $local   If true, tokens outside the current statement
+     *                                  will not be checked. IE. checking will stop
+     *                                  at the previous semi-colon found.
      *
      * @return int|bool
      * @see    findNext()
@@ -2047,20 +2047,20 @@ class File
      *
      * Returns false if no token can be found.
      *
-     * @param int|array $types   The type(s) of tokens to search for.
-     * @param int       $start   The position to start searching from in the
-     *                           token stack.
-     * @param int       $end     The end position to fail if no token is found.
-     *                           if not specified or null, end will default to
-     *                           the end of the token stack.
-     * @param bool      $exclude If true, find the next token that is NOT of
-     *                           a type specified in $types.
-     * @param string    $value   The value that the token(s) must be equal to.
-     *                           If value is omitted, tokens with any value will
-     *                           be returned.
-     * @param bool      $local   If true, tokens outside the current statement
-     *                           will not be checked. i.e., checking will stop
-     *                           at the next semi-colon found.
+     * @param int|string|array $types   The type(s) of tokens to search for.
+     * @param int              $start   The position to start searching from in the
+     *                                  token stack.
+     * @param int              $end     The end position to fail if no token is found.
+     *                                  if not specified or null, end will default to
+     *                                  the end of the token stack.
+     * @param bool             $exclude If true, find the next token that is NOT of
+     *                                  a type specified in $types.
+     * @param string           $value   The value that the token(s) must be equal to.
+     *                                  If value is omitted, tokens with any value will
+     *                                  be returned.
+     * @param bool             $local   If true, tokens outside the current statement
+     *                                  will not be checked. i.e., checking will stop
+     *                                  at the next semi-colon found.
      *
      * @return int|bool
      * @see    findPrevious()
@@ -2256,15 +2256,15 @@ class File
      *
      * Returns false if no token can be found.
      *
-     * @param int|array $types   The type(s) of tokens to search for.
-     * @param int       $start   The position to start searching from in the
-     *                           token stack. The first token matching on
-     *                           this line before this token will be returned.
-     * @param bool      $exclude If true, find the token that is NOT of
-     *                           the types specified in $types.
-     * @param string    $value   The value that the token must be equal to.
-     *                           If value is omitted, tokens with any value will
-     *                           be returned.
+     * @param int|string|array $types   The type(s) of tokens to search for.
+     * @param int              $start   The position to start searching from in the
+     *                                  token stack. The first token matching on
+     *                                  this line before this token will be returned.
+     * @param bool             $exclude If true, find the token that is NOT of
+     *                                  the types specified in $types.
+     * @param string           $value   The value that the token must be equal to.
+     *                                  If value is omitted, tokens with any value will
+     *                                  be returned.
      *
      * @return int | bool
      */
@@ -2313,8 +2313,8 @@ class File
     /**
      * Determine if the passed token has a condition of one of the passed types.
      *
-     * @param int       $stackPtr The position of the token we are checking.
-     * @param int|array $types    The type(s) of tokens to search for.
+     * @param int              $stackPtr The position of the token we are checking.
+     * @param int|string|array $types    The type(s) of tokens to search for.
      *
      * @return boolean
      */
@@ -2350,8 +2350,8 @@ class File
      *
      * Returns FALSE if the token does not have the condition.
      *
-     * @param int $stackPtr The position of the token we are checking.
-     * @param int $type     The type of token to search for.
+     * @param int        $stackPtr The position of the token we are checking.
+     * @param int|string $type     The type of token to search for.
      *
      * @return int
      */
