@@ -27,7 +27,7 @@ class File
     public $path = '';
 
     /**
-     * The absolute path to the file associated with this object.
+     * The content of the file.
      *
      * @var string
      */
