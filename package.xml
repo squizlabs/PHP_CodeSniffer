@@ -32,6 +32,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The Generic.WhiteSpace.LanguageConstructSpacing sniff was not previously available for PEAR installs
     -- Thanks to Juliette Reinders Folmer for the patch
 
+  - PHPCS will now refuse to run if any of the required PHP extensions are not loaded
+    -- Previously, PHPCS only relied on requirements being checked by PEAR and Composer
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Ruleset XML parsing errors are now displayed in a readable format so they are easier to correct
     -- Thanks to Juliette Reinders Folmer for the patch
   - The PSR2 standard no longer throws duplicate errors for spacing around FOR loop parentheses
