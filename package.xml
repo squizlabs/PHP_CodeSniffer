@@ -50,6 +50,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.Formatting.DisallowMultipleStatements no longer tries fix lines containing phpcs:ignore statements
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Generic.Functions.FunctionCallArgumentSpacing now has improved performance and anonymous class support
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.WhiteSpace.ScopeIndent now respects changes to the "exact" property using phpcs:set mid-way through a file
     -- This allows you change the "exact" rule for only some parts of a file
   - Generic.WhiteSpace.ScopeIndent now disables exact indent checking inside all arrays
