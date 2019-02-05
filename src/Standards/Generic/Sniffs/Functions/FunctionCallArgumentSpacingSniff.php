@@ -87,7 +87,6 @@ class FunctionCallArgumentSpacingSniff implements Sniff
 
         $find = [
             T_COMMA,
-            T_VARIABLE,
             T_CLOSURE,
             T_ANON_CLASS,
             T_OPEN_SHORT_ARRAY,
@@ -157,28 +156,6 @@ class FunctionCallArgumentSpacingSniff implements Sniff
                         }
                     }
                 }//end if
-            } else {
-                // Token is a variable.
-                $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($nextSeparator + 1), $closeBracket, true);
-                if ($nextToken !== false) {
-                    if ($tokens[$nextToken]['code'] === T_EQUAL) {
-                        if (($tokens[($nextToken - 1)]['code']) !== T_WHITESPACE) {
-                            $error = 'Expected 1 space before = sign of default value';
-                            $fix   = $phpcsFile->addFixableError($error, $nextToken, 'NoSpaceBeforeEquals');
-                            if ($fix === true) {
-                                $phpcsFile->fixer->addContentBefore($nextToken, ' ');
-                            }
-                        }
-
-                        if ($tokens[($nextToken + 1)]['code'] !== T_WHITESPACE) {
-                            $error = 'Expected 1 space after = sign of default value';
-                            $fix   = $phpcsFile->addFixableError($error, $nextToken, 'NoSpaceAfterEquals');
-                            if ($fix === true) {
-                                $phpcsFile->fixer->addContent($nextToken, ' ');
-                            }
-                        }
-                    }
-                }
             }//end if
         }//end while
 
