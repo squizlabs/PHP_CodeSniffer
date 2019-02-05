@@ -243,8 +243,34 @@ class Runner
             throw new DeepExitException($error, 3);
         }
 
-        if (extension_loaded('tokenizer') === false) {
-            $error = 'ERROR: PHP_CodeSniffer requires the tokenizer extension to be enabled.'.PHP_EOL;
+        $requiredExtensions = [
+            'tokenizer',
+            'xmlwriter',
+            'SimpleXML',
+        ];
+        $missingExtensions  = [];
+
+        foreach ($requiredExtensions as $extension) {
+            if (extension_loaded($extension) === false) {
+                $missingExtensions[] = $extension;
+            }
+        }
+
+        if (empty($missingExtensions) === false) {
+            $last      = array_pop($requiredExtensions);
+            $required  = implode(', ', $requiredExtensions);
+            $required .= ' and '.$last;
+
+            if (count($missingExtensions) === 1) {
+                $missing = $missingExtensions[0];
+            } else {
+                $last     = array_pop($missingExtensions);
+                $missing  = implode(', ', $missingExtensions);
+                $missing .= ' and '.$last;
+            }
+
+            $error = 'ERROR: PHP_CodeSniffer requires the %s extensions to be enabled. Please enable %s.'.PHP_EOL;
+            $error = sprintf($error, $required, $missing);
             throw new DeepExitException($error, 3);
         }
 
