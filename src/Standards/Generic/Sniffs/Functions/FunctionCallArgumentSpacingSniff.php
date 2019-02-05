@@ -24,13 +24,16 @@ class FunctionCallArgumentSpacingSniff implements Sniff
      */
     public function register()
     {
-        $tokens = Tokens::$functionNameTokens;
-
-        $tokens[] = T_VARIABLE;
-        $tokens[] = T_CLOSE_CURLY_BRACKET;
-        $tokens[] = T_CLOSE_PARENTHESIS;
-
-        return $tokens;
+        return[
+            T_STRING,
+            T_ISSET,
+            T_UNSET,
+            T_SELF,
+            T_STATIC,
+            T_VARIABLE,
+            T_CLOSE_CURLY_BRACKET,
+            T_CLOSE_PARENTHESIS,
+        ];
 
     }//end register()
 
@@ -86,11 +89,14 @@ class FunctionCallArgumentSpacingSniff implements Sniff
             T_COMMA,
             T_VARIABLE,
             T_CLOSURE,
+            T_ANON_CLASS,
             T_OPEN_SHORT_ARRAY,
         ];
 
         while (($nextSeparator = $phpcsFile->findNext($find, ($nextSeparator + 1), $closeBracket)) !== false) {
-            if ($tokens[$nextSeparator]['code'] === T_CLOSURE) {
+            if ($tokens[$nextSeparator]['code'] === T_CLOSURE
+                || $tokens[$nextSeparator]['code'] === T_ANON_CLASS
+            ) {
                 // Skip closures.
                 $nextSeparator = $tokens[$nextSeparator]['scope_closer'];
                 continue;

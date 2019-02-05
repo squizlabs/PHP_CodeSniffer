@@ -133,3 +133,19 @@ my_function_call(
     ,'e' // phpcs:ignore Standard.Category.Sniff -- for reasons.
     , 'f'
 );
+
+$foobar = php73_function_call_trailing_comma(
+    $foo,
+    $bar,
+);
+
+$foobar = functionCallAnonClassParam(
+    new class() {
+		public $foo=1;
+		public function methodName($param='foo',$paramTwo='bar') {
+			$bar=false;
+			$foo = array(1,2,3);
+		}
+	},
+	$args=array(),
+);
