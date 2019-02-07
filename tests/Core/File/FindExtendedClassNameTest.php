@@ -63,7 +63,7 @@ class FindExtendedClassNameTest extends TestCase
      * Test retrieving the name of the class being extended by another class
      * (or interface).
      *
-     * @param string $identifier Comment which preceeds the test case.
+     * @param string $identifier Comment which precedes the test case.
      * @param bool   $expected   Expected function output.
      *
      * @dataProvider dataExtendedClass

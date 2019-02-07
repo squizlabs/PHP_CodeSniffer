@@ -99,7 +99,7 @@
  * Short description
  * over multiple lines.
  *
- * Long descrption.
+ * Long description.
  *
  * @param
  *

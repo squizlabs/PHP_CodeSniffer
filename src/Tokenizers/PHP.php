@@ -1125,7 +1125,7 @@ class PHP extends Tokenizer
                             if (is_array($tokens[$x]) === true
                                 && isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true
                             ) {
-                                // Whitespace or coments before the return type.
+                                // Whitespace or comments before the return type.
                                 continue;
                             }
 

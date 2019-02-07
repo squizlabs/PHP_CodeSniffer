@@ -638,7 +638,7 @@ class Fixer
      *
      * @param int $stackPtr The position of the token in the token stack.
      * @param int $start    The first character to keep.
-     * @param int $length   The number of chacters to keep. If NULL, the content of
+     * @param int $length   The number of characters to keep. If NULL, the content of
      *                      the token from $start to the end of the content is kept.
      *
      * @return bool If the change was accepted.

@@ -534,7 +534,7 @@ abstract class Tokenizer
                         }
 
                         if ($lineHasOtherContent === false) {
-                            // Completely ignore the comment line, and set the folllowing
+                            // Completely ignore the comment line, and set the following
                             // line to include the ignore rules we've set.
                             $this->ignoredLines[$this->tokens[$i]['line']]       = ['.all' => true];
                             $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = $ignoreRules;

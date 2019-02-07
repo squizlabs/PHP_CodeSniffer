@@ -76,7 +76,7 @@ class FindEndOfStatementTest extends TestCase
 
 
     /**
-     * Test a direct call to a control strucutre.
+     * Test a direct call to a control structure.
      *
      * @return void
      */

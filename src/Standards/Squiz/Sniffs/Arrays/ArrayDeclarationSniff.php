@@ -514,7 +514,7 @@ class ArrayDeclarationSniff implements Sniff
             }//end if
         }//end for
 
-        // Check for mutli-line arrays that should be single-line.
+        // Check for multi-line arrays that should be single-line.
         $singleValue = false;
 
         if (empty($indices) === true) {

@@ -308,7 +308,7 @@ class Runner
         }
 
         // Saves passing the Config object into other objects that only need
-        // the verbostity flag for deubg output.
+        // the verbosity flag for debug output.
         if (defined('PHP_CODESNIFFER_VERBOSITY') === false) {
             define('PHP_CODESNIFFER_VERBOSITY', $this->config->verbosity);
         }

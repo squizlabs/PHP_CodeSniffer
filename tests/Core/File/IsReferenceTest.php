@@ -62,7 +62,7 @@ class IsReferenceTest extends TestCase
     /**
      * Test a class that extends another.
      *
-     * @param string $identifier Comment which preceeds the test case.
+     * @param string $identifier Comment which precedes the test case.
      * @param bool   $expected   Expected function output.
      *
      * @dataProvider dataIsReference

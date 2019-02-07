@@ -74,7 +74,7 @@ class FunctionClosingBraceSniff implements Sniff
                     continue;
                 }
 
-                // Don't remove any identation before the brace.
+                // Don't remove any indentation before the brace.
                 if ($tokens[$i]['line'] === $tokens[$closeBrace]['line']) {
                     break;
                 }

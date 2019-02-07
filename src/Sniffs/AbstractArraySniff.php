@@ -1,6 +1,6 @@
 <?php
 /**
- * Processes single and mutli-line arrays.
+ * Processes single and multi-line arrays.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)

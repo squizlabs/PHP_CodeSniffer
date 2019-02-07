@@ -16,7 +16,7 @@ class InlineIfDeclarationUnitTest extends AbstractSniffUnitTest
 
 
     /**
-     * Get a list of CLI values to set befor the file is tested.
+     * Get a list of CLI values to set before the file is tested.
      *
      * @param string $testFile The name of the file being tested.
      *

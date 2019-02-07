@@ -1115,7 +1115,7 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, $numWarnings);
         $this->assertCount(1, $warnings);
 
-        // Add to supression.
+        // Add to suppression.
         $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'// phpcs:ignore Generic.PHP.LowerCaseConstant'.PHP_EOL.'$var = FALSE; //TODO: write some code'.PHP_EOL.'$var = FALSE; //TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
