@@ -2264,7 +2264,7 @@ class File
      *                                  If value is omitted, tokens with any value will
      *                                  be returned.
      *
-     * @return int | bool
+     * @return int|bool
      */
     public function findFirstOnLine($types, $start, $exclude=false, $value=null)
     {

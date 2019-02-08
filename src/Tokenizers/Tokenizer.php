@@ -9,6 +9,7 @@
 
 namespace PHP_CodeSniffer\Tokenizers;
 
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Util;
 
@@ -75,9 +76,9 @@ abstract class Tokenizer
     /**
      * Initialise and run the tokenizer.
      *
-     * @param string                         $content The content to tokenize,
-     * @param \PHP_CodeSniffer\Config | null $config  The config data for the run.
-     * @param string                         $eolChar The EOL char used in the content.
+     * @param string      $content The content to tokenize,
+     * @param Config|null $config  The config data for the run.
+     * @param string      $eolChar The EOL char used in the content.
      */
     public function __construct($content, $config, $eolChar='\n')
     {

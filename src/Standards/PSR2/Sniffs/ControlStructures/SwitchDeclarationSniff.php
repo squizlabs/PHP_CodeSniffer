@@ -39,9 +39,9 @@ class SwitchDeclarationSniff implements Sniff
     /**
      * Processes this test, when one of its tokens is encountered.
      *
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
-     * @param int                         $stackPtr  The position of the current token in the
-     *                                               stack passed in $tokens.
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $stackPtr  The position of the current token in the
+     *                        stack passed in $tokens.
      *
      * @return void
      */
@@ -204,11 +204,11 @@ class SwitchDeclarationSniff implements Sniff
      *
      * Note that nested switches are ignored.
      *
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
-     * @param int                         $stackPtr  The position to start looking at.
-     * @param int                         $end       The position to stop looking at.
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $stackPtr  The position to start looking at.
+     * @param int  $end       The position to stop looking at.
      *
-     * @return int | bool
+     * @return int|bool
      */
     private function findNextCase($phpcsFile, $stackPtr, $end)
     {
@@ -231,9 +231,9 @@ class SwitchDeclarationSniff implements Sniff
     /**
      * Returns true if a nested terminating statement is found.
      *
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
-     * @param int                         $stackPtr  The position to start looking at.
-     * @param int                         $end       The position to stop looking at.
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $stackPtr  The position to start looking at.
+     * @param int  $end       The position to stop looking at.
      *
      * @return bool
      */
