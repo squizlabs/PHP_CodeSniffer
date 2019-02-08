@@ -162,11 +162,13 @@ class C2
 
 } // phpcs:ignore Standard.Category.Sniff
 
-interface I1 extends Foo
+interface I1 extends
+    Foo
 {
 }
 
-interface I2 extends Bar
+interface I2 extends
+    Bar
 {
 }
 
@@ -184,11 +186,13 @@ class C2 extends Bar
 {
 }
 
-class C3 extends Foo implements Bar
+class C3 extends Foo implements
+    Bar
 {
 }
 
-class C4 extends Foo implements Bar
+class C4 extends Foo implements
+    Bar
 {
 }
 
@@ -198,22 +202,27 @@ class C5 extends Foo implements
 {
 }
 
-class C6 extends \Foo\Bar implements \Baz\Bar
+class C6 extends \Foo\Bar implements
+    \Baz\Bar
 {
 }
 
-interface I4 extends \Baz\Bar
+interface I4 extends
+    \Baz\Bar
 {
 }
 
-interface I5 extends \Foo\Bar /* comment */
+interface I5 extends /* comment */
+    \Foo\Bar
 {
 }
 
-interface I6 extends \Foo\Bar // comment
+interface I6 extends // comment
+    \Foo\Bar
 {
 }
 
-class C7 extends \Foo\Bar implements \Baz\Bar // comment
+class C7 extends \Foo\Bar implements // comment
+    \Baz\Bar
 {
 }
