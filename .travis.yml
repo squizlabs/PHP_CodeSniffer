@@ -36,8 +36,9 @@ before_script:
   - if [[ $CUSTOM_INI == "1" ]] && [[ ${TRAVIS_PHP_VERSION:0:1} == "7" || $TRAVIS_PHP_VERSION == "nightly" ]]; then phpenv config-add php7-testingConfig.ini; fi
 
 script:
+  - composer install
   - php bin/phpcs --config-set php_path php
-  - phpunit tests/AllTests.php
+  - vendor/binphpunit tests/AllTests.php
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
   - if [[ $PEAR_VALIDATE == "1" ]]; then php scripts/validate-pear-package.php; fi
