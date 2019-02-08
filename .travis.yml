@@ -38,7 +38,7 @@ before_script:
 script:
   - composer install
   - php bin/phpcs --config-set php_path php
-  - vendor/binphpunit tests/AllTests.php
+  - vendor/bin/phpunit tests/AllTests.php
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
   - if [[ $PEAR_VALIDATE == "1" ]]; then php scripts/validate-pear-package.php; fi
