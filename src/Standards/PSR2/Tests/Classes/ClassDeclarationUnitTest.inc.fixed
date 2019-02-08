@@ -222,7 +222,6 @@ interface I6 extends // comment
 {
 }
 
-class C7 extends \Foo\Bar implements // comment
-    \Baz\Bar
+class C7 extends \Foo\Bar implements \Baz\Bar // comment
 {
 }
