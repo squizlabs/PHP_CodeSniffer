@@ -183,7 +183,7 @@ $var2      = 12;
 
 // Valid
 $error = false;
-while (list($h, $f) = each($handle)) {
+while (list($h, $f) = getKeyAndValue($handle)) {
     $error = true;
 }
 
