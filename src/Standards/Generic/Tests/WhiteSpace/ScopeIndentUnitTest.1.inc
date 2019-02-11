@@ -1361,6 +1361,31 @@ if ($oo) {
 </div>
 
 <?php
+
+if (true) {
+    ?>
+    <div>
+        <?php
+
+        if (true) {
+            ?>
+            <?php
+        }
+
+        if (true
+            || false) {
+            ?>
+            <?php
+        }
+
+        ?>
+    </div>
+    <?php
+}
+
+?>
+
+<?php
     if (true) {
     }
     else if (true) {

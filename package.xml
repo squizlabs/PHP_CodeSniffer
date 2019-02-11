@@ -104,6 +104,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sijun Zhu for the patch
   - Fixed bug #2393 : The gitmodified filter will infinitely loop when encountering deleted file paths
     -- Thanks to Lucas Manzke for the patch
+  - Fixed bug #2396 : Generic.WhiteSpace.ScopeIndent incorrect error when multi-line IF condition mixed with HTML
  </notes>
  <contents>
   <dir name="/">
