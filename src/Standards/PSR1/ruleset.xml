@@ -7,6 +7,7 @@
     <!-- 2.1. PHP Tags -->
 
     <!-- PHP code MUST use the long <?php ?> tags or the short-echo <?= ?> tags; it MUST NOT use the other tag variations. -->
+    <rule ref="Generic.PHP.DisallowAlternativePHPTags"/>
     <rule ref="Generic.PHP.DisallowShortOpenTag"/>
     <rule ref="Generic.PHP.DisallowShortOpenTag.EchoFound">
         <severity>0</severity>
