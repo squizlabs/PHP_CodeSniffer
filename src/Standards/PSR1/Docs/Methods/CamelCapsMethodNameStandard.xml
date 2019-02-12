@@ -1,11 +1,11 @@
 <documentation title="Method Name">
     <standard>
     <![CDATA[
-    Method names MUST be declared in camelCase().
+    Method names MUST be declared in camelCase.
     ]]>
     </standard>
     <code_comparison>
-        <code title="Valid: camel case used.">
+        <code title="Valid: method name in camelCase.">
         <![CDATA[
 class Foo
 {
@@ -15,7 +15,7 @@ class Foo
 }
         ]]>
         </code>
-        <code title="Invalid: snake case used.">
+        <code title="Invalid: method name not in camelCase.">
         <![CDATA[
 class Foo
 {
