@@ -269,6 +269,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LowercasedFilenameStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneClassPerFileStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneInterfacePerFileStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OneObjectStructurePerFileStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OneTraitPerFileStandard.xml" role="php" />
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleStatementsStandard.xml" role="php" />
@@ -2989,7 +2991,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
          --- The Squiz.Debug.JavaScriptLint sniff
          --- The Zend.Debug.CodeAnalyzer sniff
       -- Thanks to Klaus Purer for the report
-  
+
     - The indent property of PEAR.Classes.ClassDeclaration has been removed
       -- Instead of calculating the indent of the brace, it just ensures the brace is aligned with the class keyword
       -- Other sniffs can be used to ensure the class itself is indented correctly
@@ -3250,8 +3252,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
          --- The Squiz.Debug.JavaScriptLint sniff
          --- The Zend.Debug.CodeAnalyzer sniff
       -- Thanks to Klaus Purer for the report
-  
-  
+
+
     - The PHP-supplied T_COALESCE_EQUAL token has been replicated for PHP versions before 7.2
     - PEAR.Functions.FunctionDeclaration now reports an error for blank lines found inside a function declaration
     - PEAR.Functions.FunctionDeclaration no longer reports indent errors for blank lines in a function declaration

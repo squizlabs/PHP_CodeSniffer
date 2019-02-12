@@ -1,0 +1,29 @@
+<documentation title="One Trait Per File">
+    <standard>
+    <![CDATA[
+    There should only be one trait defined in a file.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Only one trait in the file.">
+        <![CDATA[
+<?php
+<em>trait Foo</em>
+{
+}
+        ]]>
+        </code>
+        <code title="Invalid: Multiple traits defined in one file.">
+        <![CDATA[
+<?php
+<em>trait Foo</em>
+{
+}
+
+<em>trait Bar</em>
+{
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
