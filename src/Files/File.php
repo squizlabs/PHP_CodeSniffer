@@ -2129,9 +2129,7 @@ class File
         if ($ignore !== null) {
             $ignore = (array) $ignore;
             foreach ($ignore as $code) {
-                if (isset($endTokens[$code]) === true) {
-                    unset($endTokens[$code]);
-                }
+                unset($endTokens[$code]);
             }
         }
 
@@ -2197,9 +2195,7 @@ class File
         if ($ignore !== null) {
             $ignore = (array) $ignore;
             foreach ($ignore as $code) {
-                if (isset($endTokens[$code]) === true) {
-                    unset($endTokens[$code]);
-                }
+                unset($endTokens[$code]);
             }
         }
 
