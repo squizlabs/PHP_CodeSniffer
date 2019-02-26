@@ -19,26 +19,35 @@ matrix:
       env: CUSTOM_INI=1 PEAR_VALIDATE=1
     - php: 7.1
     - php: 7.2
+      env: PHPUNIT_INCOMPAT=1
     - php: 7.3
+      env: PHPUNIT_INCOMPAT=1
+    - php: "7.4snapshot"
+      env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
+    # Nightly is PHP 8.0 since Feb 2019.
     - php: nightly
-      env: PHPSTAN=1
+      env: PHPUNIT_INCOMPAT=1
 
   allow_failures:
+    - php: "7.4snapshot"
     - php: nightly
 
 before_install:
   - export XMLLINT_INDENT="    "
   # Speed up build time by disabling Xdebug when its not needed.
   - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
+  # PHPUnit 8.x is not (yet) supported, so prevent issues with Travis images using it.
+  - if [[ $PHPUNIT_INCOMPAT == "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then composer install; fi
 
 before_script:
   - if [[ $CUSTOM_INI == "1" && ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then phpenv config-add php5-testingConfig.ini; fi
   - if [[ $CUSTOM_INI == "1" ]] && [[ ${TRAVIS_PHP_VERSION:0:1} == "7" || $TRAVIS_PHP_VERSION == "nightly" ]]; then phpenv config-add php7-testingConfig.ini; fi
 
 script:
-  - composer install
   - php bin/phpcs --config-set php_path php
-  - vendor/bin/phpunit tests/AllTests.php
+  - if [[ $PHPUNIT_INCOMPAT != "1" ]]; then phpunit tests/AllTests.php; fi
+  # Don't run the unit tests on nightly (PHP 8.0) as there is no compatible PHPUnit version available yet.
+  - if [[ $PHPUNIT_INCOMPAT == "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then vendor/bin/phpunit tests/AllTests.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
   - if [[ $PEAR_VALIDATE == "1" ]]; then php scripts/validate-pear-package.php; fi
