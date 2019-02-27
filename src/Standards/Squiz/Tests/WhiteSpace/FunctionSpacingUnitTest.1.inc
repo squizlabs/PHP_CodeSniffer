@@ -4,6 +4,12 @@
 */
 use Foo\{function bar, const BAZ};
 
+use /* comment */ function bar\math\{
+    Msin,
+    level\Mcos as BarCos,
+    Mcosh,
+};
+
 include $blah;
 
 

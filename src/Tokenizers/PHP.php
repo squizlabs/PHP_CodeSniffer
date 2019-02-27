@@ -504,7 +504,9 @@ class PHP extends Tokenizer
                 echo ": $type => $content";
             }//end if
 
-            if ($newStackPtr > 0 && $finalTokens[($newStackPtr - 1)]['code'] !== T_WHITESPACE) {
+            if ($newStackPtr > 0
+                && isset(Util\Tokens::$emptyTokens[$finalTokens[($newStackPtr - 1)]['code']]) === false
+            ) {
                 $lastNotEmptyToken = ($newStackPtr - 1);
             }
 
@@ -1281,6 +1283,7 @@ class PHP extends Tokenizer
                         T_NAMESPACE            => true,
                         T_PAAMAYIM_NEKUDOTAYIM => true,
                     ];
+
                     if (isset($context[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
                         // Special case for syntax like: return new self
                         // where self should not be a string.
