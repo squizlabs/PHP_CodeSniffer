@@ -146,7 +146,16 @@ abstract class Tokenizer
      *
      * @param string $string The string to tokenize.
      *
-     * @return array
+     * @return array An array of arrays. Each inner array is a token.
+     * Each inner token array shall be in the form:
+     * <code>
+     * $array = array(
+     *   'code'    => T_FOO,       // the value of the token type
+     *   'type'    => 'T_FOO',     // the name of the token type
+     *   'content' => 'Foo',       // the value of the token   
+     * );
+     * 
+     * </code>
      */
     abstract protected function tokenize($string);
 
