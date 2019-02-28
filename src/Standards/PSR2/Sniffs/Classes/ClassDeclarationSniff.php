@@ -168,15 +168,32 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                     $fix   = $phpcsFile->addFixableError($error, $keyword, ucfirst($keywordType).'Line', $data);
                     if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
-                        for ($i = ($stackPtr + 1); $i < $keyword; $i++) {
-                            if ($tokens[$i]['line'] !== $tokens[($i + 1)]['line']) {
-                                $phpcsFile->fixer->substrToken($i, 0, (strlen($phpcsFile->eolChar) * -1));
+                        $comments = [];
+
+                        for ($i = ($stackPtr + 1); $i < $keyword; ++$i) {
+                            if ($tokens[$i]['code'] === T_COMMENT) {
+                                $comments[] = trim($tokens[$i]['content']);
+                            }
+
+                            if ($tokens[$i]['code'] === T_WHITESPACE
+                                || $tokens[$i]['code'] === T_COMMENT
+                            ) {
+                                $phpcsFile->fixer->replaceToken($i, ' ');
                             }
                         }
 
-                        $phpcsFile->fixer->addContentBefore($keyword, ' ');
+                        $phpcsFile->fixer->addContent($stackPtr, ' ');
+                        if (empty($comments) === false) {
+                            $i = $keyword;
+                            while ($tokens[($i + 1)]['line'] === $tokens[$keyword]['line']) {
+                                ++$i;
+                            }
+
+                            $phpcsFile->fixer->addContentBefore($i, ' '.implode(' ', $comments));
+                        }
+
                         $phpcsFile->fixer->endChangeset();
-                    }
+                    }//end if
                 } else {
                     // Check the whitespace before. Whitespace after is checked
                     // later by looking at the whitespace before the first class name
@@ -231,10 +248,11 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
         $classCount         = count($classNames);
         $checkingImplements = false;
         $implementsToken    = null;
-        foreach ($classNames as $i => $className) {
+        foreach ($classNames as $n => $className) {
             if ($tokens[$className]['code'] === $keywordTokenType) {
                 $checkingImplements = true;
                 $implementsToken    = $className;
+
                 continue;
             }
 
@@ -344,19 +362,32 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                         $prev = ($className - 1);
                     }
 
-                    $spaceBefore = $tokens[$prev]['length'];
-                    if ($spaceBefore !== 1) {
+                    $last    = $phpcsFile->findPrevious(T_WHITESPACE, $prev, null, true);
+                    $content = $phpcsFile->getTokensAsString(($last + 1), ($prev - $last));
+                    if ($content !== ' ') {
+                        $found = strlen($content);
+
                         $error = 'Expected 1 space before "%s"; %s found';
                         $data  = [
                             $tokens[$className]['content'],
-                            $spaceBefore,
+                            $found,
                         ];
 
                         $fix = $phpcsFile->addFixableError($error, $className, 'SpaceBeforeName', $data);
                         if ($fix === true) {
-                            $phpcsFile->fixer->replaceToken($prev, ' ');
+                            if ($tokens[$prev]['code'] === T_WHITESPACE) {
+                                $phpcsFile->fixer->beginChangeset();
+                                $phpcsFile->fixer->replaceToken($prev, ' ');
+                                while ($tokens[--$prev]['code'] === T_WHITESPACE) {
+                                    $phpcsFile->fixer->replaceToken($prev, ' ');
+                                }
+
+                                $phpcsFile->fixer->endChangeset();
+                            } else {
+                                $phpcsFile->fixer->addContent($prev, ' ');
+                            }
                         }
-                    }
+                    }//end if
                 }//end if
             }//end if
 
@@ -364,7 +395,7 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                 && $tokens[($className + 1)]['code'] !== T_NS_SEPARATOR
                 && $tokens[($className + 1)]['code'] !== T_COMMA
             ) {
-                if ($i !== ($classCount - 1)) {
+                if ($n !== ($classCount - 1)) {
                     // This is not the last class name, and the comma
                     // is not where we expect it to be.
                     if ($tokens[($className + 2)]['code'] !== $keywordTokenType) {
