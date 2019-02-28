@@ -182,16 +182,18 @@ class GetConditionTest extends AbstractMethodUnitTest
     /**
      * Test retrieving a specific condition from a tokens "conditions" array.
      *
-     * @param string $testMarker      The comment which prefaces the target token in the test file.
-     * @param array  $expectedResults Array with the condition token type to search for as key
-     *                                and the marker for the expected stack pointer result as a value.
+     * @param string $testMarker              The comment which prefaces the target token in the test file.
+     * @param array  $expectedResults         Array with the condition token type to search for as key
+     *                                        and the marker for the expected stack pointer result as a value.
+     * @param array  $expectedResultsReversed Array with the condition token type to search for as key
+     *                                        and the marker for the expected stack pointer result as a value.
      *
      * @dataProvider dataGetCondition
      * @covers       \PHP_CodeSniffer\Util\Sniffs\Conditions::getCondition
      *
      * @return void
      */
-    public function testGetCondition($testMarker, $expectedResults)
+    public function testGetCondition($testMarker, $expectedResults, $expectedResultsReversed)
     {
         $stackPtr = $this->testTokens[$testMarker];
 
@@ -211,6 +213,19 @@ class GetConditionTest extends AbstractMethodUnitTest
             );
         }
 
+        foreach ($expectedResultsReversed as $conditionType => $expected) {
+            if ($expected !== false) {
+                $expected = $this->markerTokens[$expected];
+            }
+
+            $result = Conditions::getCondition(self::$phpcsFile, $stackPtr, constant($conditionType), true);
+            $this->assertSame(
+                $expected,
+                $result,
+                "Assertion failed for test marker '{$testMarker}' with condition {$conditionType} (reversed)"
+            );
+        }
+
     }//end testGetCondition()
 
 
@@ -227,7 +242,7 @@ class GetConditionTest extends AbstractMethodUnitTest
      */
     public function dataGetCondition()
     {
-        return [
+        $data = [
             'testSeriouslyNestedMethod' => [
                 '/* testSeriouslyNestedMethod */',
                 [
@@ -282,7 +297,72 @@ class GetConditionTest extends AbstractMethodUnitTest
             ],
         ];
 
+        // Set up the data for the reversed results.
+        $reversed         = $data['testSeriouslyNestedMethod'][1];
+        $reversed['T_IF'] = '/* condition 4: if */';
+        $data['testSeriouslyNestedMethod'][] = $reversed;
+
+        $reversed = $data['testDeepestNested'][1];
+        $reversed['T_FUNCTION']      = '/* condition 12: nested anonymous class method */';
+        $reversed['T_IF']            = '/* condition 10-1: if */';
+        $data['testDeepestNested'][] = $reversed;
+
+        $reversed = $data['testInException'][1];
+        $reversed['T_FUNCTION']    = '/* condition 6: class method */';
+        $reversed['T_IF']          = '/* condition 4: if */';
+        $data['testInException'][] = $reversed;
+
+        $reversed = $data['testInDefault'][1];
+        $reversed['T_FUNCTION']  = '/* condition 6: class method */';
+        $reversed['T_IF']        = '/* condition 4: if */';
+        $data['testInDefault'][] = $reversed;
+
+        return $data;
+
     }//end dataGetCondition()
+
+
+    /**
+     * Test retrieving a specific condition from a token's "conditions" array,
+     * with multiple allowed possibilities.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\Conditions::getCondition
+     *
+     * @return void
+     */
+    public function testGetConditionMultipleTypes()
+    {
+        $stackPtr = $this->testTokens['/* testInException */'];
+
+        $result = Conditions::getCondition(self::$phpcsFile, $stackPtr, [T_DO, T_FOR]);
+        $this->assertFalse(
+            $result,
+            'Failed asserting that "testInException" does not have a "do" nor a "for" condition'
+        );
+
+        $result = Conditions::getCondition(self::$phpcsFile, $stackPtr, [T_DO, T_FOR, T_FOREACH]);
+        $this->assertSame(
+            $this->markerTokens['/* condition 10-3: foreach */'],
+            $result,
+            'Failed asserting that "testInException" has a foreach condition based on the types "do", "for" and "foreach"'
+        );
+
+        $stackPtr = $this->testTokens['/* testDeepestNested */'];
+
+        $result = Conditions::getCondition(self::$phpcsFile, $stackPtr, [T_INTERFACE, T_TRAIT]);
+        $this->assertFalse(
+            $result,
+            'Failed asserting that "testDeepestNested" does not have an interface nor a trait condition'
+        );
+
+        $result = Conditions::getCondition(self::$phpcsFile, $stackPtr, Tokens::$ooScopeTokens);
+        $this->assertSame(
+            $this->markerTokens['/* condition 5: nested class */'],
+            $result,
+            'Failed asserting that "testDeepestNested" has a class condition based on the OO Scope token types'
+        );
+
+    }//end testGetConditionMultipleTypes()
 
 
     /**
@@ -294,6 +374,7 @@ class GetConditionTest extends AbstractMethodUnitTest
      *
      * @dataProvider dataHasCondition
      * @covers       \PHP_CodeSniffer\Util\Sniffs\Conditions::hasCondition
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\Conditions::getCondition
      *
      * @return void
      */
@@ -391,6 +472,7 @@ class GetConditionTest extends AbstractMethodUnitTest
      * Test whether a token has a condition of a certain type, with multiple allowed possibilities.
      *
      * @covers \PHP_CodeSniffer\Util\Sniffs\Conditions::hasCondition
+     * @covers \PHP_CodeSniffer\Util\Sniffs\Conditions::getCondition
      *
      * @return void
      */
