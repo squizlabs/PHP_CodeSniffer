@@ -2314,30 +2314,12 @@ class File
      * @param int|string|array $types    The type(s) of tokens to search for.
      *
      * @return boolean
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\Conditions::hasCondition() instead.
      */
     public function hasCondition($stackPtr, $types)
     {
-        // Check for the existence of the token.
-        if (isset($this->tokens[$stackPtr]) === false) {
-            return false;
-        }
-
-        // Make sure the token has conditions.
-        if (isset($this->tokens[$stackPtr]['conditions']) === false) {
-            return false;
-        }
-
-        $types      = (array) $types;
-        $conditions = $this->tokens[$stackPtr]['conditions'];
-
-        foreach ($types as $type) {
-            if (in_array($type, $conditions, true) === true) {
-                // We found a token with the required type.
-                return true;
-            }
-        }
-
-        return false;
+        return Util\Sniffs\Conditions::hasCondition($this, $stackPtr, $types);
 
     }//end hasCondition()
 
@@ -2351,27 +2333,12 @@ class File
      * @param int|string $type     The type of token to search for.
      *
      * @return int
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\Conditions::getCondition() instead.
      */
     public function getCondition($stackPtr, $type)
     {
-        // Check for the existence of the token.
-        if (isset($this->tokens[$stackPtr]) === false) {
-            return false;
-        }
-
-        // Make sure the token has conditions.
-        if (isset($this->tokens[$stackPtr]['conditions']) === false) {
-            return false;
-        }
-
-        $conditions = $this->tokens[$stackPtr]['conditions'];
-        foreach ($conditions as $token => $condition) {
-            if ($condition === $type) {
-                return $token;
-            }
-        }
-
-        return false;
+        return Util\Sniffs\Conditions::getCondition($this, $stackPtr, $type);
 
     }//end getCondition()
 

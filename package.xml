@@ -1747,6 +1747,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="PHP/CodeSniffer" name="Tokenizer.php" role="php" />
     </dir>
     <dir name="Util">
+     <dir name="Sniffs">
+      <file baseinstalldir="PHP/CodeSniffer" name="Conditions.php" role="php" />
+     </dir>
      <file baseinstalldir="PHP/CodeSniffer" name="Cache.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Common.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Standards.php" role="php" />
