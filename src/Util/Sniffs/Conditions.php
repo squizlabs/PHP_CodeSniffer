@@ -3,6 +3,7 @@
  * Utility functions for use when examining token conditions.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
@@ -90,6 +91,44 @@ class Conditions
         return (self::getCondition($phpcsFile, $stackPtr, $types) !== false);
 
     }//end hasCondition()
+
+
+    /**
+     * Return the position of the first condition of a certain type for the passed token.
+     *
+     * If no types are specified, the first condition for the token, independently of type,
+     * will be returned.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position of the token we are checking.
+     * @param int|string|array            $types     Optional. The type(s) of tokens to search for.
+     *
+     * @return int|false StackPtr to the condition or false if the token does not have the condition.
+     */
+    public static function getFirstCondition(File $phpcsFile, $stackPtr, $types=[])
+    {
+        return self::getCondition($phpcsFile, $stackPtr, $types, false);
+
+    }//end getFirstCondition()
+
+
+    /**
+     * Return the position of the last condition of a certain type for the passed token.
+     *
+     * If no types are specified, the last condition for the token, independently of type,
+     * will be returned.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position of the token we are checking.
+     * @param int|string|array            $types     Optional. The type(s) of tokens to search for.
+     *
+     * @return int|false StackPtr to the condition or false if the token does not have the condition.
+     */
+    public static function getLastCondition(File $phpcsFile, $stackPtr, $types=[])
+    {
+        return self::getCondition($phpcsFile, $stackPtr, $types, true);
+
+    }//end getLastCondition()
 
 
 }//end class

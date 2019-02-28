@@ -163,6 +163,8 @@ class GetConditionTest extends AbstractMethodUnitTest
      *
      * @covers \PHP_CodeSniffer\Util\Sniffs\Conditions::getCondition
      * @covers \PHP_CodeSniffer\Util\Sniffs\Conditions::hasCondition
+     * @covers \PHP_CodeSniffer\Util\Sniffs\Conditions::getFirstCondition
+     * @covers \PHP_CodeSniffer\Util\Sniffs\Conditions::getLastCondition
      *
      * @return void
      */
@@ -174,6 +176,12 @@ class GetConditionTest extends AbstractMethodUnitTest
         $this->assertFalse($result);
 
         $result = Conditions::hasCondition(self::$phpcsFile, $stackPtr, Tokens::$ooScopeTokens);
+        $this->assertFalse($result);
+
+        $result = Conditions::getFirstCondition(self::$phpcsFile, $stackPtr);
+        $this->assertFalse($result);
+
+        $result = Conditions::getLastCondition(self::$phpcsFile, $stackPtr);
         $this->assertFalse($result);
 
     }//end testNonConditionalToken()
@@ -507,6 +515,134 @@ class GetConditionTest extends AbstractMethodUnitTest
         );
 
     }//end testHasConditionMultipleTypes()
+
+
+    /**
+     * Test retrieving the first condition token pointer, in general and of specific types.
+     *
+     * @param string $testMarker The comment which prefaces the target token in the test file.
+     *
+     * @dataProvider dataGetFirstCondition
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\Conditions::getFirstCondition
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\Conditions::getCondition
+     *
+     * @return void
+     */
+    public function testGetFirstCondition($testMarker)
+    {
+        $stackPtr = $this->testTokens[$testMarker];
+
+        $result = Conditions::getFirstCondition(self::$phpcsFile, $stackPtr);
+        $this->assertSame($this->markerTokens['/* condition 0: namespace */'], $result);
+
+        $result = Conditions::getFirstCondition(self::$phpcsFile, $stackPtr, T_IF);
+        $this->assertSame($this->markerTokens['/* condition 1: if */'], $result);
+
+        $result = Conditions::getFirstCondition(self::$phpcsFile, $stackPtr, Tokens::$ooScopeTokens);
+        $this->assertSame($this->markerTokens['/* condition 5: nested class */'], $result);
+
+        $result = Conditions::getFirstCondition(self::$phpcsFile, $stackPtr, [T_ELSEIF]);
+        $this->assertFalse($result);
+
+    }//end testGetFirstCondition()
+
+
+    /**
+     * Data provider. Pass the markers for the test tokens on.
+     *
+     * @see testGetFirstCondition()
+     *
+     * @return array
+     */
+    public function dataGetFirstCondition()
+    {
+        $data = [];
+        foreach (self::$testTargets as $marker) {
+            $data[] = [$marker];
+        }
+
+        return $data;
+
+    }//end dataGetFirstCondition()
+
+
+    /**
+     * Test retrieving the last condition token pointer, in general and of specific types.
+     *
+     * @param string $testMarker The comment which prefaces the target token in the test file.
+     * @param array  $expected   The marker for the pointers to the expected condition
+     *                           results for the pre-set tests.
+     *
+     * @dataProvider dataGetLastCondition
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\Conditions::getLastCondition
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\Conditions::getCondition
+     *
+     * @return void
+     */
+    public function testGetLastCondition($testMarker, $expected)
+    {
+        $stackPtr = $this->testTokens[$testMarker];
+
+        $result = Conditions::getLastCondition(self::$phpcsFile, $stackPtr);
+        $this->assertSame($this->markerTokens[$expected['no type']], $result);
+
+        $result = Conditions::getLastCondition(self::$phpcsFile, $stackPtr, T_IF);
+        $this->assertSame($this->markerTokens[$expected['T_IF']], $result);
+
+        $result = Conditions::getLastCondition(self::$phpcsFile, $stackPtr, Tokens::$ooScopeTokens);
+        $this->assertSame($this->markerTokens[$expected['OO tokens']], $result);
+
+        $result = Conditions::getLastCondition(self::$phpcsFile, $stackPtr, [T_FINALLY]);
+        $this->assertFalse($result);
+
+    }//end testGetLastCondition()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testGetLastCondition()
+     *
+     * @return array
+     */
+    public function dataGetLastCondition()
+    {
+        return [
+            'testSeriouslyNestedMethod' => [
+                '/* testSeriouslyNestedMethod */',
+                [
+                    'no type'   => '/* condition 5: nested class */',
+                    'T_IF'      => '/* condition 4: if */',
+                    'OO tokens' => '/* condition 5: nested class */',
+                ],
+            ],
+            'testDeepestNested'         => [
+                '/* testDeepestNested */',
+                [
+                    'no type'   => '/* condition 13: closure */',
+                    'T_IF'      => '/* condition 10-1: if */',
+                    'OO tokens' => '/* condition 11-1: nested anonymous class */',
+                ],
+            ],
+            'testInException'           => [
+                '/* testInException */',
+                [
+                    'no type'   => '/* condition 11-3: catch */',
+                    'T_IF'      => '/* condition 4: if */',
+                    'OO tokens' => '/* condition 5: nested class */',
+                ],
+            ],
+            'testInDefault'             => [
+                '/* testInDefault */',
+                [
+                    'no type'   => '/* condition 8b: default */',
+                    'T_IF'      => '/* condition 4: if */',
+                    'OO tokens' => '/* condition 5: nested class */',
+                ],
+            ],
+        ];
+
+    }//end dataGetLastCondition()
 
 
 }//end class
