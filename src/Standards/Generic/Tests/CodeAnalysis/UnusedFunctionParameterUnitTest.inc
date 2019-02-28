@@ -121,3 +121,29 @@ function something($a) {
 function myCallback($a, $b, $c, $d) {
     return $a * $c;
 }
+
+$anonClass = new class() extends SomeClass {
+    public function something($a, $b) {
+        return $a * 2;
+    }
+};
+
+class ClassWithNestedAnonClass extends SomeClass {
+	public function getAnonClass() {
+		return new class() {
+		    public function something($a, $b) {
+		        return $a * 2;
+		    }
+		};
+	}
+}
+
+class ClassWithNestedExtendedAnonClass {
+	public function getAnonClass() {
+		return new class() extends SomeClass {
+		    public function something($a, $b) {
+		        return $a * 2;
+		    }
+		};
+	}
+}

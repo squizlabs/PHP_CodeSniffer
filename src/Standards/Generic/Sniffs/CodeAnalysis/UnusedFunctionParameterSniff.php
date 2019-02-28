@@ -62,7 +62,7 @@ class UnusedFunctionParameterSniff implements Sniff
         $errorCode  = 'Found';
         $implements = false;
         $extends    = false;
-        $classPtr   = Conditions::getCondition($phpcsFile, $stackPtr, T_CLASS);
+        $classPtr   = Conditions::getLastCondition($phpcsFile, $stackPtr, [T_CLASS, T_ANON_CLASS]);
         if ($classPtr !== false) {
             $implements = $phpcsFile->findImplementedInterfaceNames($classPtr);
             $extends    = $phpcsFile->findExtendedClassName($classPtr);
