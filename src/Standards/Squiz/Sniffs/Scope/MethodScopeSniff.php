@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Tokens;
 
 class MethodScopeSniff extends AbstractScopeSniff
@@ -41,9 +42,7 @@ class MethodScopeSniff extends AbstractScopeSniff
         $tokens = $phpcsFile->getTokens();
 
         // Determine if this is a function which needs to be examined.
-        $conditions = $tokens[$stackPtr]['conditions'];
-        end($conditions);
-        $deepestScope = key($conditions);
+        $deepestScope = Conditions::getLastCondition($phpcsFile, $stackPtr);
         if ($deepestScope !== $currScope) {
             return;
         }

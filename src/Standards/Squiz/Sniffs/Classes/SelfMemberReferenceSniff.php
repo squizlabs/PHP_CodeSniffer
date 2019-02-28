@@ -16,6 +16,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Tokens;
 
 class SelfMemberReferenceSniff extends AbstractScopeSniff
@@ -46,14 +47,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
         $tokens = $phpcsFile->getTokens();
 
         // Determine if this is a double colon which needs to be examined.
-        $conditions = $tokens[$stackPtr]['conditions'];
-        $conditions = array_reverse($conditions, true);
-        foreach ($conditions as $conditionToken => $tokenCode) {
-            if ($tokenCode === T_CLASS || $tokenCode === T_ANON_CLASS || $tokenCode === T_CLOSURE) {
-                break;
-            }
-        }
-
+        $conditionToken = Conditions::getLastCondition($phpcsFile, $stackPtr, [T_CLASS, T_ANON_CLASS, T_CLOSURE]);
         if ($conditionToken !== $currScope) {
             return;
         }

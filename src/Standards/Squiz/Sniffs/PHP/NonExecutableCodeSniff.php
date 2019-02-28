@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Tokens;
 
 class NonExecutableCodeSniff implements Sniff
@@ -151,12 +152,10 @@ class NonExecutableCodeSniff implements Sniff
             }
         }
 
-        $ourConditions = array_keys($tokens[$stackPtr]['conditions']);
+        $lastCondition = Conditions::getLastCondition($phpcsFile, $stackPtr);
 
-        if (empty($ourConditions) === false) {
-            $condition = array_pop($ourConditions);
-
-            if (isset($tokens[$condition]['scope_closer']) === false) {
+        if ($lastCondition !== false) {
+            if (isset($tokens[$lastCondition]['scope_closer']) === false) {
                 return;
             }
 
@@ -165,13 +164,13 @@ class NonExecutableCodeSniff implements Sniff
             // used to close a CASE statement, so it is most likely non-executable
             // code itself (as is the case when you put return; break; at the end of
             // a case). So we need to ignore this token.
-            if ($tokens[$condition]['code'] === T_SWITCH
+            if ($tokens[$lastCondition]['code'] === T_SWITCH
                 && $tokens[$stackPtr]['code'] === T_BREAK
             ) {
                 return;
             }
 
-            $closer = $tokens[$condition]['scope_closer'];
+            $closer = $tokens[$lastCondition]['scope_closer'];
 
             // If the closer for our condition is shared with other openers,
             // we will need to throw errors from this token to the next

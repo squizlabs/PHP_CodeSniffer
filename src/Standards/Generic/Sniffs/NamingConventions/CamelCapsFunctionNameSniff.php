@@ -10,9 +10,10 @@
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
-use PHP_CodeSniffer\Util\Common;
-use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Tokens;
 
 class CamelCapsFunctionNameSniff extends AbstractScopeSniff
 {
@@ -102,9 +103,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         $tokens = $phpcsFile->getTokens();
 
         // Determine if this is a function which needs to be examined.
-        $conditions = $tokens[$stackPtr]['conditions'];
-        end($conditions);
-        $deepestScope = key($conditions);
+        $deepestScope = Conditions::getLastCondition($phpcsFile, $stackPtr);
         if ($deepestScope !== $currScope) {
             return;
         }

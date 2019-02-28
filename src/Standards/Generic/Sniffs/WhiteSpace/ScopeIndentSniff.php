@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Config;
 
@@ -293,15 +294,13 @@ class ScopeIndentSniff implements Sniff
                         }
                     }
 
-                    $condition = 0;
-                    if (isset($tokens[$parenCloser]['conditions']) === true
-                        && empty($tokens[$parenCloser]['conditions']) === false
+                    $condition    = 0;
+                    $endCondition = Conditions::getLastCondition($phpcsFile, $parenCloser);
+                    if ($endCondition !== false
                         && (isset($tokens[$parenCloser]['parenthesis_owner']) === false
                         || $parens > 0)
                     ) {
-                        $condition = $tokens[$parenCloser]['conditions'];
-                        end($condition);
-                        $condition = key($condition);
+                        $condition = $endCondition;
                         if ($this->debug === true) {
                             $line = $tokens[$condition]['line'];
                             $type = $tokens[$condition]['type'];
@@ -327,8 +326,7 @@ class ScopeIndentSniff implements Sniff
 
                     $exact = false;
 
-                    $lastOpenTagConditions = array_keys($tokens[$lastOpenTag]['conditions']);
-                    $lastOpenTagCondition  = array_pop($lastOpenTagConditions);
+                    $lastOpenTagCondition = Conditions::getLastCondition($phpcsFile, $lastOpenTag);
 
                     if ($condition > 0 && $lastOpenTagCondition === $condition) {
                         if ($this->debug === true) {
@@ -566,9 +564,7 @@ class ScopeIndentSniff implements Sniff
                 && $tokens[$checkToken]['scope_opener'] === $checkToken))
             ) {
                 if (empty($tokens[$checkToken]['conditions']) === false) {
-                    $condition = $tokens[$checkToken]['conditions'];
-                    end($condition);
-                    $condition = key($condition);
+                    $condition = Conditions::getLastCondition($phpcsFile, $checkToken);
                 } else {
                     $condition = $tokens[$checkToken]['scope_condition'];
                 }
@@ -729,12 +725,8 @@ class ScopeIndentSniff implements Sniff
                 }
 
                 $condition = 0;
-                if (isset($tokens[$scopeCloser]['conditions']) === true
-                    && empty($tokens[$scopeCloser]['conditions']) === false
-                ) {
-                    $condition = $tokens[$scopeCloser]['conditions'];
-                    end($condition);
-                    $condition = key($condition);
+                if (empty($tokens[$scopeCloser]['conditions']) === false) {
+                    $condition = Conditions::getLastCondition($phpcsFile, $scopeCloser);
                     if ($this->debug === true) {
                         $line = $tokens[$condition]['line'];
                         $type = $tokens[$condition]['type'];
@@ -886,8 +878,7 @@ class ScopeIndentSniff implements Sniff
                     if ($close !== false
                         && $tokens[$checkToken]['conditions'] === $tokens[$close]['conditions']
                     ) {
-                        $conditions    = array_keys($tokens[$checkToken]['conditions']);
-                        $lastCondition = array_pop($conditions);
+                        $lastCondition = Conditions::getLastCondition($phpcsFile, $checkToken);
                         $lastOpener    = $tokens[$lastCondition]['scope_opener'];
                         $lastCloser    = $tokens[$lastCondition]['scope_closer'];
                         if ($tokens[$lastCloser]['line'] !== $tokens[$checkToken]['line']
@@ -1248,13 +1239,9 @@ class ScopeIndentSniff implements Sniff
 
                 $object = 0;
                 if ($phpcsFile->tokenizerType === 'JS') {
-                    $conditions = $tokens[$i]['conditions'];
-                    krsort($conditions, SORT_NUMERIC);
-                    foreach ($conditions as $token => $condition) {
-                        if ($condition === T_OBJECT) {
-                            $object = $token;
-                            break;
-                        }
+                    $objectCondition = Conditions::getLastCondition($phpcsFile, $i, T_OBJECT);
+                    if ($objectCondition !== false) {
+                        $object = $objectCondition;
                     }
 
                     if ($this->debug === true && $object !== 0) {
@@ -1277,12 +1264,8 @@ class ScopeIndentSniff implements Sniff
                 }
 
                 $condition = 0;
-                if (isset($tokens[$i]['conditions']) === true
-                    && empty($tokens[$i]['conditions']) === false
-                ) {
-                    $condition = $tokens[$i]['conditions'];
-                    end($condition);
-                    $condition = key($condition);
+                if (empty($tokens[$i]['conditions']) === false) {
+                    $condition = Conditions::getLastCondition($phpcsFile, $i);
                     if ($this->debug === true) {
                         $line = $tokens[$condition]['line'];
                         $type = $tokens[$condition]['type'];
