@@ -1630,15 +1630,10 @@ class File
             throw new RuntimeException('$stackPtr must be of type T_VARIABLE');
         }
 
-        $conditions = array_keys($this->tokens[$stackPtr]['conditions']);
-        $ptr        = array_pop($conditions);
-        if (isset($this->tokens[$ptr]) === false
-            || ($this->tokens[$ptr]['code'] !== T_CLASS
-            && $this->tokens[$ptr]['code'] !== T_ANON_CLASS
-            && $this->tokens[$ptr]['code'] !== T_TRAIT)
-        ) {
-            if (isset($this->tokens[$ptr]) === true
-                && $this->tokens[$ptr]['code'] === T_INTERFACE
+        if (Util\Sniffs\Conditions::isOOProperty($this, $stackPtr) === false) {
+            $lastCondition = Util\Sniffs\Conditions::getlastCondition($this, $stackPtr);
+            if ($lastCondition !== false
+                && $this->tokens[$lastCondition]['code'] === T_INTERFACE
             ) {
                 // T_VARIABLEs in interfaces can actually be method arguments
                 // but they wont be seen as being inside the method because there
@@ -1652,18 +1647,6 @@ class File
                     return [];
                 }
             } else {
-                throw new RuntimeException('$stackPtr is not a class member var');
-            }
-        }
-
-        // Make sure it's not a method parameter.
-        if (empty($this->tokens[$stackPtr]['nested_parenthesis']) === false) {
-            $parenthesis = array_keys($this->tokens[$stackPtr]['nested_parenthesis']);
-            $deepestOpen = array_pop($parenthesis);
-            if ($deepestOpen > $ptr
-                && isset($this->tokens[$deepestOpen]['parenthesis_owner']) === true
-                && $this->tokens[$this->tokens[$deepestOpen]['parenthesis_owner']]['code'] === T_FUNCTION
-            ) {
                 throw new RuntimeException('$stackPtr is not a class member var');
             }
         }
