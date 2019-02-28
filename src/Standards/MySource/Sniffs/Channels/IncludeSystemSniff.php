@@ -125,7 +125,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
         // calls outside our scope. If we are in a class, look outside the
         // class. If we are not, look outside the function.
         $condPtr = $currScope;
-        if ($phpcsFile->hasCondition($stackPtr, T_CLASS) === true) {
+        if (Conditions::hasCondition($phpcsFile, $stackPtr, T_CLASS) === true) {
             foreach ($tokens[$stackPtr]['conditions'] as $condPtr => $condType) {
                 if ($condType === T_CLASS) {
                     break;
@@ -149,7 +149,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
         // If we are in a testing class, we might have also included
         // some systems and classes in our setUp() method.
         $setupFunction = null;
-        if ($phpcsFile->hasCondition($stackPtr, T_CLASS) === true) {
+        if (Conditions::hasCondition($phpcsFile, $stackPtr, T_CLASS) === true) {
             foreach ($tokens[$stackPtr]['conditions'] as $condPtr => $condType) {
                 if ($condType === T_CLASS) {
                     // Is this is a testing class?

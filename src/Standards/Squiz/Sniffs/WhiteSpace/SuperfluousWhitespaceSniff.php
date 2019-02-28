@@ -15,6 +15,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 
 class SuperfluousWhitespaceSniff implements Sniff
 {
@@ -224,7 +225,7 @@ class SuperfluousWhitespaceSniff implements Sniff
                 Check for multiple blank lines in a function.
             */
 
-            if (($phpcsFile->hasCondition($stackPtr, [T_FUNCTION, T_CLOSURE]) === true)
+            if ((Conditions::hasCondition($phpcsFile, $stackPtr, [T_FUNCTION, T_CLOSURE]) === true)
                 && $tokens[($stackPtr - 1)]['line'] < $tokens[$stackPtr]['line']
                 && $tokens[($stackPtr - 2)]['line'] === $tokens[($stackPtr - 1)]['line']
             ) {

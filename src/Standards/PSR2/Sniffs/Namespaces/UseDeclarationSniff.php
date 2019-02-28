@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Tokens;
 
 class UseDeclarationSniff implements Sniff
@@ -287,7 +288,7 @@ class UseDeclarationSniff implements Sniff
         }
 
         // Ignore USE keywords for traits.
-        if ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT]) === true) {
+        if (Conditions::hasCondition($phpcsFile, $stackPtr, [T_CLASS, T_TRAIT]) === true) {
             return true;
         }
 

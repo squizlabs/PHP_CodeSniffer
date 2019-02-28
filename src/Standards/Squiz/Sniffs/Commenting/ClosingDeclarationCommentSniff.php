@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 
 class ClosingDeclarationCommentSniff implements Sniff
 {
@@ -55,7 +56,7 @@ class ClosingDeclarationCommentSniff implements Sniff
 
             // If this function is in an interface then we don't require
             // a closing comment.
-            if ($phpcsFile->hasCondition($stackPtr, T_INTERFACE) === true) {
+            if (Conditions::hasCondition($phpcsFile, $stackPtr, T_INTERFACE) === true) {
                 return;
             }
 

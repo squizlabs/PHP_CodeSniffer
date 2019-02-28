@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Tokens;
 
 class ControlStructureSpacingSniff implements Sniff
@@ -292,7 +293,7 @@ class ControlStructureSpacingSniff implements Sniff
             }
 
             if ($tokens[$owner]['code'] === T_CLOSURE
-                && ($phpcsFile->hasCondition($stackPtr, [T_FUNCTION, T_CLOSURE]) === true
+                && (Conditions::hasCondition($phpcsFile, $stackPtr, [T_FUNCTION, T_CLOSURE]) === true
                 || isset($tokens[$stackPtr]['nested_parenthesis']) === true)
             ) {
                 return;
