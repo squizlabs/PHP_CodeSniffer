@@ -11,6 +11,7 @@
 namespace PHP_CodeSniffer\Util\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class Conditions
 {
@@ -129,6 +130,143 @@ class Conditions
         return self::getCondition($phpcsFile, $stackPtr, $types, true);
 
     }//end getLastCondition()
+
+
+    /**
+     * Check whether a T_VARIABLE token is a class/trait property declaration.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               T_VARIABLE token to verify.
+     *
+     * @return bool
+     */
+    public static function isOOProperty(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if (isset($tokens[$stackPtr]) === false || $tokens[$stackPtr]['code'] !== T_VARIABLE) {
+            return false;
+        }
+
+        // Note: interfaces can not declare properties.
+        $validScopes = [
+            T_CLASS,
+            T_ANON_CLASS,
+            T_TRAIT,
+        ];
+
+        $scopePtr = self::validDirectScope($phpcsFile, $stackPtr, $validScopes);
+        if ($scopePtr !== false) {
+            // Make sure it's not a method parameter.
+            if (empty($tokens[$stackPtr]['nested_parenthesis']) === true) {
+                return true;
+            } else {
+                $parenthesis = $tokens[$stackPtr]['nested_parenthesis'];
+                $parenthesis = array_keys($parenthesis);
+                $deepestOpen = array_pop($parenthesis);
+                if ($deepestOpen < $scopePtr
+                    || isset($tokens[$deepestOpen]['parenthesis_owner']) === false
+                    || $tokens[$tokens[$deepestOpen]['parenthesis_owner']]['code'] !== T_FUNCTION
+                ) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }//end isOOProperty()
+
+
+    /**
+     * Check whether a T_CONST token is a class/interface constant declaration.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               T_CONST token to verify.
+     *
+     * @return bool
+     */
+    public static function isOOConstant(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if (isset($tokens[$stackPtr]) === false || $tokens[$stackPtr]['code'] !== T_CONST) {
+            return false;
+        }
+
+        // Note: traits can not declare constants.
+        $validScopes = [
+            T_CLASS,
+            T_ANON_CLASS,
+            T_INTERFACE,
+        ];
+
+        if (self::validDirectScope($phpcsFile, $stackPtr, $validScopes) !== false) {
+            return true;
+        }
+
+        return false;
+
+    }//end isOOConstant()
+
+
+    /**
+     * Check whether a T_FUNCTION token is a class/interface/trait method declaration.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               T_FUNCTION token to verify.
+     *
+     * @return bool
+     */
+    public static function isOOMethod(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if (isset($tokens[$stackPtr]) === false || $tokens[$stackPtr]['code'] !== T_FUNCTION) {
+            return false;
+        }
+
+        if (self::validDirectScope($phpcsFile, $stackPtr, Tokens::$ooScopeTokens) !== false) {
+            return true;
+        }
+
+        return false;
+
+    }//end isOOMethod()
+
+
+    /**
+     * Check whether the direct wrapping scope of a token is within a limited set of
+     * acceptable tokens.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile   The file where this token was found.
+     * @param int                         $stackPtr    The position in the stack of the
+     *                                                 token to verify.
+     * @param int|string|array            $validScopes Array of token constants.
+     *
+     * @return int|false StackPtr to the valid direct scope or false if no valid direct scope was found.
+     */
+    public static function validDirectScope(File $phpcsFile, $stackPtr, $validScopes)
+    {
+        $ptr = self::getLastCondition($phpcsFile, $stackPtr);
+
+        if ($ptr !== false) {
+            $tokens      = $phpcsFile->getTokens();
+            $validScopes = (array) $validScopes;
+
+            if (isset($tokens[$ptr]) === true
+                && in_array($tokens[$ptr]['code'], $validScopes, true) === true
+            ) {
+                return $ptr;
+            }
+        }
+
+        return false;
+
+    }//end validDirectScope()
 
 
 }//end class

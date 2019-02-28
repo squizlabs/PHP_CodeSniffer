@@ -83,6 +83,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Conditions">
         <file baseinstalldir="" name="GetConditionTest.inc" role="test" />
         <file baseinstalldir="" name="GetConditionTest.php" role="test" />
+        <file baseinstalldir="" name="IsOOConstantTest.inc" role="test" />
+        <file baseinstalldir="" name="IsOOConstantTest.php" role="test" />
+        <file baseinstalldir="" name="IsOOMethodTest.inc" role="test" />
+        <file baseinstalldir="" name="IsOOMethodTest.php" role="test" />
+        <file baseinstalldir="" name="IsOOPropertyTest.inc" role="test" />
+        <file baseinstalldir="" name="IsOOPropertyTest.php" role="test" />
        </dir>
       </dir>
      </dir>
@@ -1825,6 +1831,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.inc" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOConstantTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOConstantTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -1861,6 +1873,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.inc" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOConstantTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOConstantTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />
