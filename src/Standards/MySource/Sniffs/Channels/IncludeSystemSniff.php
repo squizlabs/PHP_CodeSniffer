@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Channels;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Tokens;
 
 class IncludeSystemSniff extends AbstractScopeSniff
@@ -94,7 +95,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
             $includedClasses[$matches[2]] = true;
 
             // Or a system it implements.
-            $class      = $phpcsFile->getCondition($stackPtr, T_CLASS);
+            $class      = Conditions::getCondition($phpcsFile, $stackPtr, T_CLASS);
             $implements = $phpcsFile->findNext(T_IMPLEMENTS, $class, ($class + 10));
             if ($implements !== false) {
                 $implementsClass     = $phpcsFile->findNext(T_STRING, $implements);

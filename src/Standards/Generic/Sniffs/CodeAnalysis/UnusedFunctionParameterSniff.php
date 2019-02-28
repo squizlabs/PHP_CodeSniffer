@@ -18,6 +18,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Tokens;
 
 class UnusedFunctionParameterSniff implements Sniff
@@ -61,7 +62,7 @@ class UnusedFunctionParameterSniff implements Sniff
         $errorCode  = 'Found';
         $implements = false;
         $extends    = false;
-        $classPtr   = $phpcsFile->getCondition($stackPtr, T_CLASS);
+        $classPtr   = Conditions::getCondition($phpcsFile, $stackPtr, T_CLASS);
         if ($classPtr !== false) {
             $implements = $phpcsFile->findImplementedInterfaceNames($classPtr);
             $extends    = $phpcsFile->findExtendedClassName($classPtr);
