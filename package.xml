@@ -78,6 +78,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
      </dir>
+     <dir name="Util">
+      <dir name="Sniffs">
+       <dir name="Conditions">
+        <file baseinstalldir="" name="GetConditionTest.inc" role="test" />
+        <file baseinstalldir="" name="GetConditionTest.php" role="test" />
+       </dir>
+      </dir>
+     </dir>
      <file baseinstalldir="" name="AbstractMethodUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllTests.php" role="test" />
      <file baseinstalldir="" name="ErrorSuppressionTest.php" role="test" />
@@ -1815,6 +1823,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.inc" name="tests/Core/File/GetMethodPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.inc" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -1849,6 +1859,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.inc" name="tests/Core/File/GetMethodPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.inc" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />
