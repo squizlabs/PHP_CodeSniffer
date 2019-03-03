@@ -35,6 +35,21 @@ class GetParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify function declaration without parameters.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testFunctionNoParams()
+    {
+        $expected = [];
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testFunctionNoParams()
+
+
+    /**
      * Verify pass-by-reference parsing.
      *
      * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
@@ -140,6 +155,54 @@ class GetParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify callable type hint parsing.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testCallableTypeHint()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => 'callable $var',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'callable',
+            'nullable_type'     => false,
+        ];
+
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testCallableTypeHint()
+
+
+    /**
+     * Verify nullable callable type hint parsing.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testNullableCallableTypeHint()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => '?callable $var',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?callable',
+            'nullable_type'     => true,
+        ];
+
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testNullableCallableTypeHint()
+
+
+    /**
      * Verify nullable type hint parsing.
      *
      * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
@@ -170,6 +233,30 @@ class GetParametersTest extends AbstractMethodUnitTest
         $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testNullableTypeHint()
+
+
+    /**
+     * Verify iterable type hint parsing.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testIterableTypeHint()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => 'iterable $var',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'iterable',
+            'nullable_type'     => false,
+        ];
+
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testIterableTypeHint()
 
 
     /**
@@ -256,6 +343,105 @@ class GetParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify default value parsing with array values.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testArrayDefaultValues()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var1',
+            'content'           => '$var1 = []',
+            'default'           => '[]',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$var2',
+            'content'           => '$var2 = array(1, 2, 3)',
+            'default'           => 'array(1, 2, 3)',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testArrayDefaultValues()
+
+
+    /**
+     * Verify having a T_STRING constant as a default value for the second parameter.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testConstantDefaultValueSecondParam()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var1',
+            'content'           => '$var1',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$var2',
+            'content'           => '$var2 = M_PI',
+            'default'           => 'M_PI',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testConstantDefaultValueSecondParam()
+
+
+    /**
+     * Verify using ellipsis with a typehint.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testVariableLengthArgument()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$unit',
+            'content'           => '$unit',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$intervals',
+            'content'           => 'DateInterval ...$intervals',
+            'pass_by_reference' => false,
+            'variable_length'   => true,
+            'type_hint'         => 'DateInterval',
+            'nullable_type'     => false,
+        ];
+
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testVariableLengthArgument()
+
+
+    /**
      * Verify "bitwise and" in default value !== pass-by-reference.
      *
      * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
@@ -278,6 +464,57 @@ class GetParametersTest extends AbstractMethodUnitTest
         $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testBitwiseAndConstantExpressionDefaultValue()
+
+
+    /**
+     * Verify a fully qualified class name being set as type declaration.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testFQCNTypeHint()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => '\MyNS\SubCat\MyClass $var',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '\MyNS\SubCat\MyClass',
+            'nullable_type'     => false,
+        ];
+
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testFQCNTypeHint()
+
+
+    /**
+     * Verify a fully qualified class name being set as type declaration interlaced
+     * with whitespace and comments.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testFQCNTypeHintWithCommentsAndWhiteSpace()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => '?\MyNS /* comment */
+        \SubCat // phpcs:ignore Standard.Cat.Sniff -- for reasons.
+            \MyClass $var',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?\MyNS\SubCat\MyClass',
+            'nullable_type'     => true,
+        ];
+
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testFQCNTypeHintWithCommentsAndWhiteSpace()
 
 
     /**
