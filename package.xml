@@ -91,6 +91,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="FindExtendedClassNameTest.php" role="test" />
         <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.inc" role="test" />
         <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.php" role="test" />
+        <file baseinstalldir="" name="GetClassPropertiesTest.inc" role="test" />
+        <file baseinstalldir="" name="GetClassPropertiesTest.php" role="test" />
        </dir>
        <dir name="Parentheses">
         <file baseinstalldir="" name="ParenthesesTest.inc" role="test" />
@@ -1845,6 +1847,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
@@ -1889,6 +1893,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
