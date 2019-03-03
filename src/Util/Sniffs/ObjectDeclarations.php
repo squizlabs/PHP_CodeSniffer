@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Util\Sniffs;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class ObjectDeclarations
 {
@@ -43,13 +44,9 @@ class ObjectDeclarations
             throw new RuntimeException('$stackPtr must be of type T_CLASS');
         }
 
-        $valid = [
-            T_FINAL       => T_FINAL,
-            T_ABSTRACT    => T_ABSTRACT,
-            T_WHITESPACE  => T_WHITESPACE,
-            T_COMMENT     => T_COMMENT,
-            T_DOC_COMMENT => T_DOC_COMMENT,
-        ];
+        $valid          = Tokens::$emptyTokens;
+        $valid[T_FINAL] = T_FINAL;
+        $valid[T_ABSTRACT] = T_ABSTRACT;
 
         $isAbstract = false;
         $isFinal    = false;

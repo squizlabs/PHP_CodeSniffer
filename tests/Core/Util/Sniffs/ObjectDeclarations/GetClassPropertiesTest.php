@@ -99,6 +99,20 @@ class GetClassPropertiesTest extends AbstractMethodUnitTest
                     'is_final'    => false,
                 ],
             ],
+            [
+                '/* testWithPHPCSAnnotation */',
+                [
+                    'is_abstract' => false,
+                    'is_final'    => true,
+                ],
+            ],
+            [
+                '/* testWithDocblockWithWeirdlyPlacedProperty */',
+                [
+                    'is_abstract' => false,
+                    'is_final'    => true,
+                ],
+            ],
         ];
 
     }//end dataGetClassProperties()
