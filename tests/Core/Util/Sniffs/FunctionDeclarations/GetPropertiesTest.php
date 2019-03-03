@@ -17,6 +17,24 @@ class GetPropertiesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test receiving an expected exception when a non function token is passed.
+     *
+     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
+     * @expectedExceptionMessage $stackPtr must be of type T_FUNCTION or T_CLOSURE
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
+     *
+     * @return void
+     */
+    public function testNotAFunctionException()
+    {
+        $interface = $this->getTargetToken('/* testNotAFunction */', T_INTERFACE);
+        $result    = FunctionDeclarations::getProperties(self::$phpcsFile, $interface);
+
+    }//end testNotAFunctionException()
+
+
+    /**
      * Test a basic function.
      *
      * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties

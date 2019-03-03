@@ -1,5 +1,8 @@
 <?php
 
+/* testNotAFunction */
+interface NotAFunction {}
+
 /* testBasicFunction */
 function myFunction() {}
 

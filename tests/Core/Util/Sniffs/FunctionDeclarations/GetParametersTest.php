@@ -17,6 +17,24 @@ class GetParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test receiving an expected exception when a non function token is passed.
+     *
+     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
+     * @expectedExceptionMessage $stackPtr must be of type T_FUNCTION or T_CLOSURE
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
+     *
+     * @return void
+     */
+    public function testNotAFunctionException()
+    {
+        $interface = $this->getTargetToken('/* testNotAFunction */', T_INTERFACE);
+        $result    = FunctionDeclarations::getParameters(self::$phpcsFile, $interface);
+
+    }//end testNotAFunctionException()
+
+
+    /**
      * Verify pass-by-reference parsing.
      *
      * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
