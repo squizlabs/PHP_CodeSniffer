@@ -22,54 +22,37 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
     /**
      * A list of all PHP magic methods.
      *
+     * Set from within the constructor.
+     *
      * @var array
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::$magicMethods instead.
      */
-    protected $magicMethods = [
-        'construct'  => true,
-        'destruct'   => true,
-        'call'       => true,
-        'callstatic' => true,
-        'get'        => true,
-        'set'        => true,
-        'isset'      => true,
-        'unset'      => true,
-        'sleep'      => true,
-        'wakeup'     => true,
-        'tostring'   => true,
-        'set_state'  => true,
-        'clone'      => true,
-        'invoke'     => true,
-        'debuginfo'  => true,
-    ];
+    protected $magicMethods = [];
 
     /**
      * A list of all PHP non-magic methods starting with a double underscore.
      *
      * These come from PHP modules such as SOAPClient.
      *
+     * Set from within the constructor.
+     *
      * @var array
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::$methodsDoubleUnderscore instead.
      */
-    protected $methodsDoubleUnderscore = [
-        'dorequest'              => true,
-        'getcookies'             => true,
-        'getfunctions'           => true,
-        'getlastrequest'         => true,
-        'getlastrequestheaders'  => true,
-        'getlastresponse'        => true,
-        'getlastresponseheaders' => true,
-        'gettypes'               => true,
-        'setcookie'              => true,
-        'setlocation'            => true,
-        'setsoapheaders'         => true,
-        'soapcall'               => true,
-    ];
+    protected $methodsDoubleUnderscore = [];
 
     /**
      * A list of all PHP magic functions.
      *
+     * Set from within the constructor.
+     *
      * @var array
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::$magicFunctions instead.
      */
-    protected $magicFunctions = ['autoload' => true];
+    protected $magicFunctions = [];
 
     /**
      * If TRUE, the string must not have two capital letters next to each other.
@@ -84,6 +67,22 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
+        // Preserve BC without code duplication.
+        $this->magicMethods   = array_combine(
+            FunctionDeclarations::$magicMethods,
+            array_fill(0, count(FunctionDeclarations::$magicMethods), true)
+        );
+        $this->magicFunctions = array_combine(
+            FunctionDeclarations::$magicFunctions,
+            array_fill(0, count(FunctionDeclarations::$magicFunctions), true)
+        );
+
+        $methodsDoubleUnderscore = array_keys(FunctionDeclarations::$methodsDoubleUnderscore);
+        foreach ($methodsDoubleUnderscore as $method) {
+            $method = ltrim($method, '_');
+            $this->methodsDoubleUnderscore[$method] = true;
+        }
+
         parent::__construct(Tokens::$ooScopeTokens, [T_FUNCTION], true);
 
     }//end __construct()

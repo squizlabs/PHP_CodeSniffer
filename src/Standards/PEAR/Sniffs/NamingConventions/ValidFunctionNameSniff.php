@@ -22,32 +22,24 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
     /**
      * A list of all PHP magic methods.
      *
+     * Set from within the constructor.
+     *
      * @var array
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::$magicMethods instead.
      */
-    protected $magicMethods = [
-        'construct'  => true,
-        'destruct'   => true,
-        'call'       => true,
-        'callstatic' => true,
-        'get'        => true,
-        'set'        => true,
-        'isset'      => true,
-        'unset'      => true,
-        'sleep'      => true,
-        'wakeup'     => true,
-        'tostring'   => true,
-        'set_state'  => true,
-        'clone'      => true,
-        'invoke'     => true,
-        'debuginfo'  => true,
-    ];
+    protected $magicMethods = [];
 
     /**
      * A list of all PHP magic functions.
      *
+     * Set from within the constructor.
+     *
      * @var array
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::$magicFunctions instead.
      */
-    protected $magicFunctions = ['autoload' => true];
+    protected $magicFunctions = [];
 
 
     /**
@@ -55,6 +47,16 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
+        // Preserve BC without code duplication.
+        $this->magicMethods   = array_combine(
+            FunctionDeclarations::$magicMethods,
+            array_fill(0, count(FunctionDeclarations::$magicMethods), true)
+        );
+        $this->magicFunctions = array_combine(
+            FunctionDeclarations::$magicFunctions,
+            array_fill(0, count(FunctionDeclarations::$magicFunctions), true)
+        );
+
         parent::__construct(Tokens::$ooScopeTokens, [T_FUNCTION], true);
 
     }//end __construct()

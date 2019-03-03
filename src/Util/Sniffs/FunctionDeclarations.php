@@ -15,6 +15,58 @@ use PHP_CodeSniffer\Files\File;
 class FunctionDeclarations
 {
 
+    /**
+     * A list of all PHP magic methods.
+     *
+     * @var array <string method name> => <string name without double underscore>
+     */
+    public static $magicMethods = [
+        '__construct'  => 'construct',
+        '__destruct'   => 'destruct',
+        '__call'       => 'call',
+        '__callstatic' => 'callstatic',
+        '__get'        => 'get',
+        '__set'        => 'set',
+        '__isset'      => 'isset',
+        '__unset'      => 'unset',
+        '__sleep'      => 'sleep',
+        '__wakeup'     => 'wakeup',
+        '__tostring'   => 'tostring',
+        '__set_state'  => 'set_state',
+        '__clone'      => 'clone',
+        '__invoke'     => 'invoke',
+        '__debuginfo'  => 'debuginfo',
+    ];
+
+    /**
+     * A list of all PHP non-magic methods starting with a double underscore.
+     *
+     * These come from PHP modules such as SOAPClient.
+     *
+     * @var array <string method name> => <string source extension name>
+     */
+    public static $methodsDoubleUnderscore = [
+        '__dorequest'              => 'SOAPClient',
+        '__getcookies'             => 'SOAPClient',
+        '__getfunctions'           => 'SOAPClient',
+        '__getlastrequest'         => 'SOAPClient',
+        '__getlastrequestheaders'  => 'SOAPClient',
+        '__getlastresponse'        => 'SOAPClient',
+        '__getlastresponseheaders' => 'SOAPClient',
+        '__gettypes'               => 'SOAPClient',
+        '__setcookie'              => 'SOAPClient',
+        '__setlocation'            => 'SOAPClient',
+        '__setsoapheaders'         => 'SOAPClient',
+        '__soapcall'               => 'SOAPClient',
+    ];
+
+    /**
+     * A list of all PHP magic functions.
+     *
+     * @var array <string function name> => <string name without double underscore>
+     */
+    public static $magicFunctions = ['__autoload' => 'autoload'];
+
 
     /**
      * Returns the parameters for the specified function token.
