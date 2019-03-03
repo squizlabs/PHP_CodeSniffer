@@ -16,6 +16,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations;
 
 class ConstructorNameSniff extends AbstractScopeSniff
 {
@@ -88,7 +89,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
             return;
         }
 
-        $parentClassName = strtolower($phpcsFile->findExtendedClassName($currScope));
+        $parentClassName = strtolower(ObjectDeclarations::findExtendedClassName($phpcsFile, $currScope));
         if ($parentClassName === false) {
             return;
         }
