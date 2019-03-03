@@ -3,6 +3,7 @@
  * Utility functions for use when examining object declaration statements.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
@@ -77,7 +78,10 @@ class ObjectDeclarations
 
     /**
      * Returns the name of the class that the specified class extends.
-     * (works for classes, anonymous classes and interfaces)
+     *
+     * Works for classes, anonymous classes and interfaces, though it is
+     * strongly recommended to use the findExtendedInterfaceNames() method
+     * to examine interfaces as they can extend multiple parent interfaces.
      *
      * Returns FALSE on error or if there is no extended class name.
      *
@@ -105,6 +109,31 @@ class ObjectDeclarations
         return $classes[0];
 
     }//end findExtendedClassName()
+
+
+    /**
+     * Returns the names of the interfaces that the specified interface extends.
+     *
+     * Returns FALSE on error or if there is no extended interface name.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The stack position of the interface keyword.
+     *
+     * @return array|false
+     */
+    public static function findExtendedInterfaceNames(File $phpcsFile, $stackPtr)
+    {
+        $validStructures = [T_INTERFACE => true];
+
+        $interfaces = self::findExtendedImplemented($phpcsFile, $stackPtr, $validStructures, T_EXTENDS);
+
+        if (empty($interfaces) === true) {
+            return false;
+        }
+
+        return $interfaces;
+
+    }//end findExtendedInterfaceNames()
 
 
     /**
