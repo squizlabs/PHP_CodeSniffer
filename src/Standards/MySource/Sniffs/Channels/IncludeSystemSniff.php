@@ -124,13 +124,10 @@ class IncludeSystemSniff extends AbstractScopeSniff
         // Now go searching for includeSystem, includeAsset or require/include
         // calls outside our scope. If we are in a class, look outside the
         // class. If we are not, look outside the function.
-        $condPtr = $currScope;
-        if (Conditions::hasCondition($phpcsFile, $stackPtr, T_CLASS) === true) {
-            foreach ($tokens[$stackPtr]['conditions'] as $condPtr => $condType) {
-                if ($condType === T_CLASS) {
-                    break;
-                }
-            }
+        $condPtr      = $currScope;
+        $classCondPtr = Conditions::getCondition($phpcsFile, $stackPtr, T_CLASS);
+        if ($classCondPtr !== false) {
+            $condPtr = $classCondPtr;
         }
 
         for ($i = 0; $i < $condPtr; $i++) {

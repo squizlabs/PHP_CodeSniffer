@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Channels;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 
 class UnusedSystemSniff implements Sniff
 {
@@ -78,14 +79,11 @@ class UnusedSystemSniff implements Sniff
                 if ($tokens[$stackPtr]['level'] === $level) {
                     // We are still in the base level, so this is the first
                     // time we have got here.
-                    $conditions = array_keys($tokens[$stackPtr]['conditions']);
-                    if (empty($conditions) === false) {
-                        $cond = array_pop($conditions);
-                        if ($tokens[$cond]['code'] === T_IF) {
-                            $i = $tokens[$cond]['scope_closer'];
-                            $level--;
-                            continue;
-                        }
+                    $directScope = Conditions::validDirectScope($phpcsFile, $stackPtr, T_IF);
+                    if ($directScope !== false) {
+                        $i = $tokens[$directScope]['scope_closer'];
+                        $level--;
+                        continue;
                     }
                 }
 

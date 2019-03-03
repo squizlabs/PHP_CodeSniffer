@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Tokens;
 
 class InlineCommentSniff implements Sniff
@@ -298,11 +299,8 @@ class InlineCommentSniff implements Sniff
             $errorCode = 'SpacingAfter';
 
             if (isset($tokens[$stackPtr]['conditions']) === true) {
-                $conditions   = $tokens[$stackPtr]['conditions'];
-                $type         = end($conditions);
-                $conditionPtr = key($conditions);
-
-                if (($type === T_FUNCTION || $type === T_CLOSURE)
+                $conditionPtr = Conditions::validDirectScope($phpcsFile, $stackPtr, [T_FUNCTION, T_CLOSURE]);
+                if ($conditionPtr !== false
                     && $tokens[$conditionPtr]['scope_closer'] === $next
                 ) {
                     $errorCode = 'SpacingAfterAtFunctionEnd';
