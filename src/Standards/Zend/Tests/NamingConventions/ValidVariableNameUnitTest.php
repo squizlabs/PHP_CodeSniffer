@@ -51,6 +51,7 @@ class ValidVariableNameUnitTest extends AbstractSniffUnitTest
             79  => 1,
             96  => 1,
             99  => 1,
+            107 => 1,
             113 => 1,
             116 => 1,
         ];
@@ -69,22 +70,21 @@ class ValidVariableNameUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return [
-            6   => 1,
-            14  => 1,
-            20  => 1,
-            26  => 1,
-            32  => 1,
-            39  => 1,
-            45  => 1,
-            51  => 1,
-            64  => 1,
-            70  => 1,
-            73  => 1,
-            76  => 1,
-            79  => 1,
-            82  => 1,
-            94  => 1,
-            107 => 1,
+            6  => 1,
+            14 => 1,
+            20 => 1,
+            26 => 1,
+            32 => 1,
+            39 => 1,
+            45 => 1,
+            51 => 1,
+            64 => 1,
+            70 => 1,
+            73 => 1,
+            76 => 1,
+            79 => 1,
+            82 => 1,
+            94 => 1,
         ];
 
     }//end getWarningList()
