@@ -106,41 +106,19 @@ function _My_Package() {}
 
 /* Test for magic functions */
 
-class Magic_Test {
-    function __construct() {}
-    function __destruct() {}
-    function __call($name, $args) {}
+class Magic_Test extends \SoapClient {
     static function __callStatic($name, $args) {}
-    function __get($name) {}
-    function __set($name, $value) {}
-    function __isset($name) {}
-    function __unset($name) {}
-    function __sleep() {}
     function __wakeup() {}
-    function __toString() {}
-    function __set_state() {}
-    function __clone() {}
+    function __getTypes() {}
     function __autoload() {}
-    function __invoke() {}
     function __myFunction() {}
     function __my_function() {}
 }
 
-function __construct() {}
-function __destruct() {}
 function __call() {}
-function __callStatic() {}
-function __get() {}
 function __set() {}
-function __isset() {}
-function __unset() {}
-function __sleep() {}
-function __wakeup() {}
-function __toString() {}
 function __set_state() {}
-function __clone() {}
 function __autoload($class) {}
-function __invoke() {}
 function __myFunction() {}
 function __my_function() {}
 
@@ -165,44 +143,7 @@ class MyClass
     public function __construct() {}
 }
 
-trait Foo
-{
-    function __call($name, $args) {}
-}
-
-class Magic_Case_Test {
-    function __Construct() {}
-    function __isSet($name) {}
-    function __tostring() {}
-}
-function __autoLoad($class) {}
 function _() {}
-
-function __debugInfo() {}
-class Foo {
-    function __debugInfo() {}
-}
-
-/* Magic methods in anonymous classes. */
-$a = new class {
-    function __construct() {}
-    function __destruct() {}
-    function __call($name, $args) {}
-    static function __callStatic($name, $args) {}
-    function __get($name) {}
-    function __set($name, $value) {}
-    function __isset($name) {}
-    function __unset($name) {}
-    function __sleep() {}
-    function __wakeup() {}
-    function __toString() {}
-    function __set_state() {}
-    function __clone() {}
-    function __autoload() {}
-    function __invoke() {}
-    function __myFunction() {}
-    function __my_function() {}
-};
 
 function send_system_email__to_user($body, $recipient){}
 
