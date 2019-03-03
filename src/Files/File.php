@@ -1724,44 +1724,12 @@ class File
      * @return array
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified position is not a
      *                                                      T_CLASS token.
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::getClassProperties() instead.
      */
     public function getClassProperties($stackPtr)
     {
-        if ($this->tokens[$stackPtr]['code'] !== T_CLASS) {
-            throw new RuntimeException('$stackPtr must be of type T_CLASS');
-        }
-
-        $valid = [
-            T_FINAL       => T_FINAL,
-            T_ABSTRACT    => T_ABSTRACT,
-            T_WHITESPACE  => T_WHITESPACE,
-            T_COMMENT     => T_COMMENT,
-            T_DOC_COMMENT => T_DOC_COMMENT,
-        ];
-
-        $isAbstract = false;
-        $isFinal    = false;
-
-        for ($i = ($stackPtr - 1); $i > 0; $i--) {
-            if (isset($valid[$this->tokens[$i]['code']]) === false) {
-                break;
-            }
-
-            switch ($this->tokens[$i]['code']) {
-            case T_ABSTRACT:
-                $isAbstract = true;
-                break;
-
-            case T_FINAL:
-                $isFinal = true;
-                break;
-            }
-        }//end for
-
-        return [
-            'is_abstract' => $isAbstract,
-            'is_final'    => $isFinal,
-        ];
+        return Util\Sniffs\ObjectDeclarations::getClassProperties($this, $stackPtr);
 
     }//end getClassProperties()
 
@@ -2330,46 +2298,12 @@ class File
      * @param int $stackPtr The stack position of the class.
      *
      * @return string|false
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::findExtendedClassName() instead.
      */
     public function findExtendedClassName($stackPtr)
     {
-        // Check for the existence of the token.
-        if (isset($this->tokens[$stackPtr]) === false) {
-            return false;
-        }
-
-        if ($this->tokens[$stackPtr]['code'] !== T_CLASS
-            && $this->tokens[$stackPtr]['code'] !== T_ANON_CLASS
-            && $this->tokens[$stackPtr]['code'] !== T_INTERFACE
-        ) {
-            return false;
-        }
-
-        if (isset($this->tokens[$stackPtr]['scope_opener']) === false) {
-            return false;
-        }
-
-        $classOpenerIndex = $this->tokens[$stackPtr]['scope_opener'];
-        $extendsIndex     = $this->findNext(T_EXTENDS, $stackPtr, $classOpenerIndex);
-        if (false === $extendsIndex) {
-            return false;
-        }
-
-        $find = [
-            T_NS_SEPARATOR,
-            T_STRING,
-            T_WHITESPACE,
-        ];
-
-        $end  = $this->findNext($find, ($extendsIndex + 1), ($classOpenerIndex + 1), true);
-        $name = $this->getTokensAsString(($extendsIndex + 1), ($end - $extendsIndex - 1));
-        $name = trim($name);
-
-        if ($name === '') {
-            return false;
-        }
-
-        return $name;
+        return Util\Sniffs\ObjectDeclarations::findExtendedClassName($this, $stackPtr);
 
     }//end findExtendedClassName()
 
@@ -2382,48 +2316,12 @@ class File
      * @param int $stackPtr The stack position of the class.
      *
      * @return array|false
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::findImplementedInterfaceNames() instead.
      */
     public function findImplementedInterfaceNames($stackPtr)
     {
-        // Check for the existence of the token.
-        if (isset($this->tokens[$stackPtr]) === false) {
-            return false;
-        }
-
-        if ($this->tokens[$stackPtr]['code'] !== T_CLASS
-            && $this->tokens[$stackPtr]['code'] !== T_ANON_CLASS
-        ) {
-            return false;
-        }
-
-        if (isset($this->tokens[$stackPtr]['scope_closer']) === false) {
-            return false;
-        }
-
-        $classOpenerIndex = $this->tokens[$stackPtr]['scope_opener'];
-        $implementsIndex  = $this->findNext(T_IMPLEMENTS, $stackPtr, $classOpenerIndex);
-        if ($implementsIndex === false) {
-            return false;
-        }
-
-        $find = [
-            T_NS_SEPARATOR,
-            T_STRING,
-            T_WHITESPACE,
-            T_COMMA,
-        ];
-
-        $end  = $this->findNext($find, ($implementsIndex + 1), ($classOpenerIndex + 1), true);
-        $name = $this->getTokensAsString(($implementsIndex + 1), ($end - $implementsIndex - 1));
-        $name = trim($name);
-
-        if ($name === '') {
-            return false;
-        } else {
-            $names = explode(',', $name);
-            $names = array_map('trim', $names);
-            return $names;
-        }
+        return Util\Sniffs\ObjectDeclarations::findImplementedInterfaceNames($this, $stackPtr);
 
     }//end findImplementedInterfaceNames()
 

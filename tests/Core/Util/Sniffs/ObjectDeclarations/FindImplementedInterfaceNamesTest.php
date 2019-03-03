@@ -1,15 +1,16 @@
 <?php
 /**
- * Tests for the \PHP_CodeSniffer\Files\File:findImplementedInterfaceNames method.
+ * Tests for the \PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::findImplementedInterfaceNames() method.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core\File;
+namespace PHP_CodeSniffer\Tests\Core\Util\Sniffs\ObjectDeclarations;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
+use PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations;
 
 class FindImplementedInterfaceNamesTest extends AbstractMethodUnitTest
 {
@@ -18,17 +19,18 @@ class FindImplementedInterfaceNamesTest extends AbstractMethodUnitTest
     /**
      * Test retrieving the name(s) of the interfaces being implemented by a class.
      *
-     * @param string $identifier Comment which precedes the test case.
-     * @param bool   $expected   Expected function output.
+     * @param string      $testMarker The comment which prefaces the target token in the test file.
+     * @param array|false $expected   Expected function output.
      *
      * @dataProvider dataImplementedInterface
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::findImplementedInterfaceNames
      *
      * @return void
      */
-    public function testFindImplementedInterfaceNames($identifier, $expected)
+    public function testFindImplementedInterfaceNames($testMarker, $expected)
     {
-        $OOToken = $this->getTargetToken($identifier, [T_CLASS, T_ANON_CLASS, T_INTERFACE]);
-        $result  = self::$phpcsFile->findImplementedInterfaceNames($OOToken);
+        $OOToken = $this->getTargetToken($testMarker, [T_CLASS, T_ANON_CLASS, T_INTERFACE]);
+        $result  = ObjectDeclarations::findImplementedInterfaceNames(self::$phpcsFile, $OOToken);
         $this->assertSame($expected, $result);
 
     }//end testFindImplementedInterfaceNames()

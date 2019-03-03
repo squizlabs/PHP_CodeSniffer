@@ -1,6 +1,6 @@
 <?php
 
-namespace PHP_CodeSniffer\Tests\Core\File;
+namespace PHP_CodeSniffer\Tests\Core\Util\Sniffs\ObjectDeclarations;
 
 interface testFIINInterface2 {}
 
