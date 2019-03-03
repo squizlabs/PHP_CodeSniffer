@@ -11,6 +11,9 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
+use PHP_CodeSniffer\Util\Tokens;
 
 class GlobalFunctionSniff implements Sniff
 {
@@ -39,21 +42,23 @@ class GlobalFunctionSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        if (empty($tokens[$stackPtr]['conditions']) === true) {
-            $functionName = $phpcsFile->getDeclarationName($stackPtr);
-            if ($functionName === null) {
-                return;
-            }
-
-            // Special exception for __autoload as it needs to be global.
-            if ($functionName !== '__autoload') {
-                $error = 'Consider putting global function "%s" in a static class';
-                $data  = [$functionName];
-                $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
-            }
+        if (Conditions::hasCondition($phpcsFile, $stackPtr, Tokens::$ooScopeTokens) === true) {
+            return;
         }
+
+        // Special exception for PHP magic functions as they need to be global.
+        if (FunctionDeclarations::isMagicFunction($phpcsFile, $stackPtr) === true) {
+            return;
+        }
+
+        $functionName = $phpcsFile->getDeclarationName($stackPtr);
+        if ($functionName === null) {
+            return;
+        }
+
+        $error = 'Consider putting global function "%s" in a static class';
+        $data  = [$functionName];
+        $phpcsFile->addWarning($error, $stackPtr, 'Found', $data);
 
     }//end process()
 

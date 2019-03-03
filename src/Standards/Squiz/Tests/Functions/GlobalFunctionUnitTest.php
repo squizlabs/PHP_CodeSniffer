@@ -40,7 +40,10 @@ class GlobalFunctionUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [2 => 1];
+        return [
+            2  => 1,
+            19 => 1,
+        ];
 
     }//end getWarningList()
 
