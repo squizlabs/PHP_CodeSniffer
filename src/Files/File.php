@@ -1517,7 +1517,7 @@ class File
         if ($lastOpener !== false) {
             $lastOwner = Util\Sniffs\Parentheses::lastOwnerIn($this, $stackPtr, [T_FUNCTION, T_CLOSURE]);
             if ($lastOwner !== false) {
-                $params = $this->getMethodParameters($lastOwner);
+                $params = Util\Sniffs\FunctionDeclarations::getParameters($this, $lastOwner);
                 foreach ($params as $param) {
                     $varToken = $tokenAfter;
                     if ($param['variable_length'] === true) {

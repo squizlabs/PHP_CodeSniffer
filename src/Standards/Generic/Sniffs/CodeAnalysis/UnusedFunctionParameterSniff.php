@@ -19,6 +19,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
@@ -75,7 +76,7 @@ class UnusedFunctionParameterSniff implements Sniff
         }
 
         $params       = [];
-        $methodParams = $phpcsFile->getMethodParameters($stackPtr);
+        $methodParams = FunctionDeclarations::getParameters($phpcsFile, $stackPtr);
 
         // Skip when no parameters found.
         $methodParamsCount = count($methodParams);

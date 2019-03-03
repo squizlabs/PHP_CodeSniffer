@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 
 class ValidDefaultValueSniff implements Sniff
 {
@@ -46,7 +47,7 @@ class ValidDefaultValueSniff implements Sniff
         // If there is a value without a default after this, it is an error.
         $defaultFound = false;
 
-        $params = $phpcsFile->getMethodParameters($stackPtr);
+        $params = FunctionDeclarations::getParameters($phpcsFile, $stackPtr);
         foreach ($params as $param) {
             if ($param['variable_length'] === true) {
                 continue;

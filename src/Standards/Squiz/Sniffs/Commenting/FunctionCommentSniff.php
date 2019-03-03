@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff as PEA
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 
 class FunctionCommentSniff extends PEARFunctionCommentSniff
 {
@@ -355,7 +356,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             ];
         }//end foreach
 
-        $realParams  = $phpcsFile->getMethodParameters($stackPtr);
+        $realParams  = FunctionDeclarations::getParameters($phpcsFile, $stackPtr);
         $foundParams = [];
 
         // We want to use ... for all variable length arguments, so added

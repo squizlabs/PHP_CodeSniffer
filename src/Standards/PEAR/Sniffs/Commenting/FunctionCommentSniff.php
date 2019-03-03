@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionCommentSniff implements Sniff
@@ -279,7 +280,7 @@ class FunctionCommentSniff implements Sniff
             ];
         }//end foreach
 
-        $realParams  = $phpcsFile->getMethodParameters($stackPtr);
+        $realParams  = FunctionDeclarations::getParameters($phpcsFile, $stackPtr);
         $foundParams = [];
 
         // We want to use ... for all variable length arguments, so add

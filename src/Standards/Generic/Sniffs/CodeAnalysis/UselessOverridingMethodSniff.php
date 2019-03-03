@@ -23,6 +23,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
 class UselessOverridingMethodSniff implements Sniff
@@ -64,8 +65,9 @@ class UselessOverridingMethodSniff implements Sniff
         $methodName = $phpcsFile->getDeclarationName($stackPtr);
 
         // Get all parameters from method signature.
-        $signature = [];
-        foreach ($phpcsFile->getMethodParameters($stackPtr) as $param) {
+        $signature  = [];
+        $parameters = FunctionDeclarations::getParameters($phpcsFile, $stackPtr);
+        foreach ($parameters as $param) {
             $signature[] = $param['name'];
         }
 
