@@ -67,10 +67,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="FindEndOfStatementTest.php" role="test" />
       <file baseinstalldir="" name="GetMemberPropertiesTest.inc" role="test" />
       <file baseinstalldir="" name="GetMemberPropertiesTest.php" role="test" />
-      <file baseinstalldir="" name="GetMethodParametersTest.inc" role="test" />
-      <file baseinstalldir="" name="GetMethodParametersTest.php" role="test" />
-      <file baseinstalldir="" name="GetMethodPropertiesTest.inc" role="test" />
-      <file baseinstalldir="" name="GetMethodPropertiesTest.php" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
      </dir>
@@ -85,6 +81,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="IsOOMethodTest.php" role="test" />
         <file baseinstalldir="" name="IsOOPropertyTest.inc" role="test" />
         <file baseinstalldir="" name="IsOOPropertyTest.php" role="test" />
+       </dir>
+       <dir name="FunctionDeclarations">
+        <file baseinstalldir="" name="GetParametersTest.inc" role="test" />
+        <file baseinstalldir="" name="GetParametersTest.php" role="test" />
+        <file baseinstalldir="" name="GetPropertiesTest.inc" role="test" />
+        <file baseinstalldir="" name="GetPropertiesTest.php" role="test" />
        </dir>
        <dir name="ObjectDeclarations">
         <file baseinstalldir="" name="FindExtendedClassNameTest.inc" role="test" />
@@ -1773,6 +1775,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <dir name="Util">
      <dir name="Sniffs">
       <file baseinstalldir="PHP/CodeSniffer" name="Conditions.php" role="php" />
+      <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="ObjectDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Parentheses.php" role="php" />
      </dir>
@@ -1831,10 +1834,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
    <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.php" name="tests/Core/File/GetMemberPropertiesTest.php" />
    <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.inc" name="tests/Core/File/GetMemberPropertiesTest.inc" />
-   <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
-   <install as="CodeSniffer/Core/File/GetMethodParametersTest.inc" name="tests/Core/File/GetMethodParametersTest.inc" />
-   <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.php" name="tests/Core/File/GetMethodPropertiesTest.php" />
-   <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.inc" name="tests/Core/File/GetMethodPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
@@ -1845,6 +1844,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" />
@@ -1879,10 +1882,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
    <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.php" name="tests/Core/File/GetMemberPropertiesTest.php" />
    <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.inc" name="tests/Core/File/GetMemberPropertiesTest.inc" />
-   <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
-   <install as="CodeSniffer/Core/File/GetMethodParametersTest.inc" name="tests/Core/File/GetMethodParametersTest.inc" />
-   <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.php" name="tests/Core/File/GetMethodPropertiesTest.php" />
-   <install as="CodeSniffer/Core/File/GetMethodPropertiesTest.inc" name="tests/Core/File/GetMethodPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
@@ -1893,6 +1892,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" />

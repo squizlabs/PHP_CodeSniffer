@@ -1,22 +1,25 @@
 <?php
 /**
- * Tests for the \PHP_CodeSniffer\Files\File:getMethodProperties method.
+ * Tests for the \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties() method.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core\File;
+namespace PHP_CodeSniffer\Tests\Core\Util\Sniffs\FunctionDeclarations;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 
-class GetMethodPropertiesTest extends AbstractMethodUnitTest
+class GetPropertiesTest extends AbstractMethodUnitTest
 {
 
 
     /**
      * Test a basic function.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -33,13 +36,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testBasicFunction()
 
 
     /**
      * Test a function with a return type.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -56,13 +61,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testReturnFunction()
 
 
     /**
      * Test a closure used as a function argument.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -79,13 +86,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testNestedClosure()
 
 
     /**
      * Test a basic method.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -102,13 +111,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testBasicMethod()
 
 
     /**
      * Test a private static method.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -125,13 +136,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testPrivateStaticMethod()
 
 
     /**
      * Test a basic final method.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -148,13 +161,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testFinalMethod()
 
 
     /**
      * Test a protected method with a return type.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -171,13 +186,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testProtectedReturnMethod()
 
 
     /**
      * Test a public method with a return type.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -194,13 +211,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testPublicReturnMethod()
 
 
     /**
      * Test a public method with a nullable return type.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -217,13 +236,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testNullableReturnMethod()
 
 
     /**
      * Test a public method with a nullable return type.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -240,13 +261,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testMessyNullableReturnMethod()
 
 
     /**
      * Test a method with a namespaced return type.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -263,13 +286,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testReturnNamespace()
 
 
     /**
      * Test a method with a messy namespaces return type.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -286,13 +311,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testReturnMultilineNamespace()
 
 
     /**
      * Test a basic abstract method.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -309,13 +336,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => false,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testAbstractMethod()
 
 
     /**
      * Test an abstract method with a return type.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -332,13 +361,15 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => false,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testAbstractReturnMethod()
 
 
     /**
      * Test a basic interface method.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getProperties
      *
      * @return void
      */
@@ -355,7 +386,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => false,
         ];
 
-        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testInterfaceMethod()
 
@@ -363,19 +394,19 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
     /**
      * Test helper.
      *
-     * @param string $commentString The comment which preceeds the test.
-     * @param array  $expected      The expected function output.
+     * @param string $testMarker The comment which prefaces the target token in the test file.
+     * @param array  $expected   The expected function output.
      *
      * @return void
      */
-    private function getMethodPropertiesTestHelper($commentString, $expected)
+    private function getPropertiesTestHelper($testMarker, $expected)
     {
-        $function = $this->getTargetToken($commentString, [T_FUNCTION, T_CLOSURE]);
-        $found    = self::$phpcsFile->getMethodProperties($function);
+        $function = $this->getTargetToken($testMarker, [T_FUNCTION, T_CLOSURE]);
+        $found    = FunctionDeclarations::getProperties(self::$phpcsFile, $function);
         unset($found['return_type_token']);
         $this->assertSame($expected, $found);
 
-    }//end getMethodPropertiesTestHelper()
+    }//end getPropertiesTestHelper()
 
 
 }//end class

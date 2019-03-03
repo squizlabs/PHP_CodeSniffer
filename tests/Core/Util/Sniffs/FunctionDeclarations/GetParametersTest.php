@@ -1,22 +1,25 @@
 <?php
 /**
- * Tests for the \PHP_CodeSniffer\Files\File:getMethodParameters method.
+ * Tests for the \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters() method.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core\File;
+namespace PHP_CodeSniffer\Tests\Core\Util\Sniffs\FunctionDeclarations;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 
-class GetMethodParametersTest extends AbstractMethodUnitTest
+class GetParametersTest extends AbstractMethodUnitTest
 {
 
 
     /**
      * Verify pass-by-reference parsing.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
      *
      * @return void
      */
@@ -32,13 +35,15 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'nullable_type'     => false,
         ];
 
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testPassByReference()
 
 
     /**
      * Verify array hint parsing.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
      *
      * @return void
      */
@@ -54,13 +59,15 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'nullable_type'     => false,
         ];
 
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testArrayHint()
 
 
     /**
      * Verify type hint parsing.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
      *
      * @return void
      */
@@ -85,13 +92,15 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'nullable_type'     => false,
         ];
 
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testTypeHint()
 
 
     /**
      * Verify self type hint parsing.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
      *
      * @return void
      */
@@ -107,13 +116,15 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'nullable_type'     => false,
         ];
 
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testSelfTypeHint()
 
 
     /**
      * Verify nullable type hint parsing.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
      *
      * @return void
      */
@@ -138,13 +149,15 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'nullable_type'     => true,
         ];
 
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testNullableTypeHint()
 
 
     /**
      * Verify variable.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
      *
      * @return void
      */
@@ -160,13 +173,15 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'nullable_type'     => false,
         ];
 
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testVariable()
 
 
     /**
      * Verify default value parsing with a single function param.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
      *
      * @return void
      */
@@ -183,13 +198,15 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'nullable_type'     => false,
         ];
 
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testSingleDefaultValue()
 
 
     /**
      * Verify default value parsing.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
      *
      * @return void
      */
@@ -215,13 +232,15 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'nullable_type'     => false,
         ];
 
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testDefaultValues()
 
 
     /**
      * Verify "bitwise and" in default value !== pass-by-reference.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations::getParameters
      *
      * @return void
      */
@@ -238,7 +257,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'nullable_type'     => false,
         ];
 
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+        $this->getParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testBitwiseAndConstantExpressionDefaultValue()
 
@@ -246,15 +265,15 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
     /**
      * Test helper.
      *
-     * @param string $commentString The comment which preceeds the test.
-     * @param array  $expected      The expected function output.
+     * @param string $testMarker The comment which prefaces the target token in the test file.
+     * @param array  $expected   The expected function output.
      *
      * @return void
      */
-    private function getMethodParametersTestHelper($commentString, $expected)
+    private function getParametersTestHelper($testMarker, $expected)
     {
-        $function = $this->getTargetToken($commentString, [T_FUNCTION]);
-        $found    = self::$phpcsFile->getMethodParameters($function);
+        $function = $this->getTargetToken($testMarker, [T_FUNCTION]);
+        $found    = FunctionDeclarations::getParameters(self::$phpcsFile, $function);
 
         foreach ($found as $key => $value) {
             unset($found[$key]['token'], $found[$key]['type_hint_token']);
@@ -262,7 +281,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
         $this->assertSame($expected, $found);
 
-    }//end getMethodParametersTestHelper()
+    }//end getParametersTestHelper()
 
 
 }//end class
