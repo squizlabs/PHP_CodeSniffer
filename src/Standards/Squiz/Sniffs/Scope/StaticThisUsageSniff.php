@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
 class StaticThisUsageSniff extends AbstractScopeSniff
@@ -59,7 +60,7 @@ class StaticThisUsageSniff extends AbstractScopeSniff
             return;
         }
 
-        $methodProps = $phpcsFile->getMethodProperties($stackPtr);
+        $methodProps = FunctionDeclarations::getProperties($phpcsFile, $stackPtr);
         if ($methodProps['is_static'] === false) {
             return;
         }

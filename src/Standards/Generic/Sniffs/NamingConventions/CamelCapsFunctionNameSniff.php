@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
 class CamelCapsFunctionNameSniff extends AbstractScopeSniff
@@ -150,7 +151,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         // Ignore first underscore in methods prefixed with "_".
         $methodName = ltrim($methodName, '_');
 
-        $methodProps = $phpcsFile->getMethodProperties($stackPtr);
+        $methodProps = FunctionDeclarations::getProperties($phpcsFile, $stackPtr);
         if (Common::isCamelCaps($methodName, false, true, $this->strict) === false) {
             if ($methodProps['scope_specified'] === true) {
                 $error = '%s method name "%s" is not in camel caps format';

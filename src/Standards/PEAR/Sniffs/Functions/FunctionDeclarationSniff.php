@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceKernighanRitchieSniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceBsdAllmanSniff;
@@ -105,7 +106,8 @@ class FunctionDeclarationSniff implements Sniff
         // Unfinished closures are tokenized as T_FUNCTION however, and can be excluded
         // by checking for the scope_opener.
         if ($tokens[$stackPtr]['code'] === T_FUNCTION
-            && (isset($tokens[$stackPtr]['scope_opener']) === true || $phpcsFile->getMethodProperties($stackPtr)['has_body'] === false)
+            && (isset($tokens[$stackPtr]['scope_opener']) === true
+            || FunctionDeclarations::getProperties($phpcsFile, $stackPtr)['has_body'] === false)
         ) {
             if ($tokens[($openBracket - 1)]['content'] === $phpcsFile->eolChar) {
                 $spaces = 'newline';
@@ -125,7 +127,7 @@ class FunctionDeclarationSniff implements Sniff
             }
 
             // Must be no space before semicolon in abstract/interface methods.
-            if ($phpcsFile->getMethodProperties($stackPtr)['has_body'] === false) {
+            if (FunctionDeclarations::getProperties($phpcsFile, $stackPtr)['has_body'] === false) {
                 $end = $phpcsFile->findNext(T_SEMICOLON, $closeBracket);
                 if ($tokens[($end - 1)]['content'] === $phpcsFile->eolChar) {
                     $spaces = 'newline';

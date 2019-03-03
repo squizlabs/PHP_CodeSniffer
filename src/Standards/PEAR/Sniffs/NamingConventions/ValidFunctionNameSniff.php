@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
 class ValidFunctionNameSniff extends AbstractScopeSniff
@@ -116,7 +117,7 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
             return;
         }
 
-        $methodProps    = $phpcsFile->getMethodProperties($stackPtr);
+        $methodProps    = FunctionDeclarations::getProperties($phpcsFile, $stackPtr);
         $scope          = $methodProps['scope'];
         $scopeSpecified = $methodProps['scope_specified'];
 

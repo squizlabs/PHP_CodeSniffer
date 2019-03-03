@@ -86,7 +86,7 @@ class LowerCaseTypeSniff implements Sniff
             'object'   => true,
         ];
 
-        $props = $phpcsFile->getMethodProperties($stackPtr);
+        $props = FunctionDeclarations::getProperties($phpcsFile, $stackPtr);
 
         // Strip off potential nullable indication.
         $returnType      = ltrim($props['return_type'], '?');

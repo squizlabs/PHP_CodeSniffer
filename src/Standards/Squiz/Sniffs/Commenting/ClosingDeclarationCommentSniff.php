@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 
 class ClosingDeclarationCommentSniff implements Sniff
 {
@@ -47,7 +48,7 @@ class ClosingDeclarationCommentSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] === T_FUNCTION) {
-            $methodProps = $phpcsFile->getMethodProperties($stackPtr);
+            $methodProps = FunctionDeclarations::getProperties($phpcsFile, $stackPtr);
 
             // Abstract methods do not require a closing comment.
             if ($methodProps['is_abstract'] === true) {
