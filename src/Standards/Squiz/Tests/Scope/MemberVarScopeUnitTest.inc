@@ -22,8 +22,8 @@ class Foo {
 }//end class
 
 class MyClass {
-    $anonFunc = function($foo) use ($bar) {};
-    public $anonFunc2 = function($foo2) use ($bar2) {};
+    $anonFunc = function($foo) use ($bar) {}; // Intentional parse error.
+    public $anonFunc2 = function($foo2) use ($bar2) {}; // Intentional parse error.
     public function method($var1, $var2) {
         $anon = new class {
             $p1 = null;
