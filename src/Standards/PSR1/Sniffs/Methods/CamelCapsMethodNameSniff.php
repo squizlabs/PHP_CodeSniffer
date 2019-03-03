@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunction
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 
 class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
 {
@@ -45,13 +46,8 @@ class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
         }
 
         // Ignore magic methods.
-        if (preg_match('|^__[^_]|', $methodName) !== 0) {
-            $magicPart = strtolower(substr($methodName, 2));
-            if (isset($this->magicMethods[$magicPart]) === true
-                || isset($this->methodsDoubleUnderscore[$magicPart]) === true
-            ) {
-                return;
-            }
+        if (FunctionDeclarations::isSpecialMethodName($methodName) === true) {
+            return;
         }
 
         $testName = ltrim($methodName, '_');

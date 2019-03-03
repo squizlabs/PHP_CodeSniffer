@@ -121,21 +121,18 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
 
         $errorData = [$className.'::'.$methodName];
 
-        $methodNameLc = strtolower($methodName);
-        $classNameLc  = strtolower($className);
-
-        // Is this a magic method. i.e., is prefixed with "__" ?
+        // Check is this method is prefixed with "__" and not magic.
         if (preg_match('|^__[^_]|', $methodName) !== 0) {
-            $magicPart = substr($methodNameLc, 2);
-            if (isset($this->magicMethods[$magicPart]) === true
-                || isset($this->methodsDoubleUnderscore[$magicPart]) === true
-            ) {
+            if (FunctionDeclarations::isSpecialMethodName($methodName) === true) {
                 return;
             }
 
             $error = 'Method name "%s" is invalid; only PHP magic methods should be prefixed with a double underscore';
             $phpcsFile->addError($error, $stackPtr, 'MethodDoubleUnderscore', $errorData);
         }
+
+        $methodNameLc = strtolower($methodName);
+        $classNameLc  = strtolower($className);
 
         // PHP4 constructors are allowed to break our rules.
         if ($methodNameLc === $classNameLc) {
@@ -192,10 +189,9 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
 
         $errorData = [$functionName];
 
-        // Is this a magic function. i.e., it is prefixed with "__".
+        // Check is this function is prefixed with "__" and not magic.
         if (preg_match('|^__[^_]|', $functionName) !== 0) {
-            $magicPart = strtolower(substr($functionName, 2));
-            if (isset($this->magicFunctions[$magicPart]) === true) {
+            if (FunctionDeclarations::isMagicFunctionName($functionName) === true) {
                 return;
             }
 
