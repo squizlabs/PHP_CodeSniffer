@@ -17,6 +17,22 @@ class FindImplementedInterfaceNamesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test getting a `false` result when a non-existent token is passed.
+     *
+     * @dataProvider dataImplementedInterface
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::findExtendedImplemented
+     *
+     * @return void
+     */
+    public function testNonExistentToken()
+    {
+        $result = ObjectDeclarations::findImplementedInterfaceNames(self::$phpcsFile, 100000);
+        $this->assertFalse($result);
+
+    }//end testNonExistentToken()
+
+
+    /**
      * Test retrieving the name(s) of the interfaces being implemented by a class.
      *
      * @param string      $testMarker The comment which prefaces the target token in the test file.
@@ -24,6 +40,7 @@ class FindImplementedInterfaceNamesTest extends AbstractMethodUnitTest
      *
      * @dataProvider dataImplementedInterface
      * @covers       \PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::findImplementedInterfaceNames
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::findExtendedImplemented
      *
      * @return void
      */
@@ -82,6 +99,10 @@ class FindImplementedInterfaceNamesTest extends AbstractMethodUnitTest
                     '\InterfaceA',
                     'InterfaceB',
                 ],
+            ],
+            [
+                '/* testImplementedClassWithComments */',
+                ['\PHP_CodeSniffer\Tests\Core\File\testFIINInterface'],
             ],
         ];
 

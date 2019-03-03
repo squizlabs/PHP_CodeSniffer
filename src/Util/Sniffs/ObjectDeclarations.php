@@ -89,45 +89,20 @@ class ObjectDeclarations
      */
     public static function findExtendedClassName(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        // Check for the existence of the token.
-        if (isset($tokens[$stackPtr]) === false) {
-            return false;
-        }
-
-        if ($tokens[$stackPtr]['code'] !== T_CLASS
-            && $tokens[$stackPtr]['code'] !== T_ANON_CLASS
-            && $tokens[$stackPtr]['code'] !== T_INTERFACE
-        ) {
-            return false;
-        }
-
-        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            return false;
-        }
-
-        $classOpenerIndex = $tokens[$stackPtr]['scope_opener'];
-        $extendsIndex     = $phpcsFile->findNext(T_EXTENDS, $stackPtr, $classOpenerIndex);
-        if (false === $extendsIndex) {
-            return false;
-        }
-
-        $find = [
-            T_NS_SEPARATOR,
-            T_STRING,
-            T_WHITESPACE,
+        $validStructures = [
+            T_CLASS      => true,
+            T_ANON_CLASS => true,
+            T_INTERFACE  => true,
         ];
 
-        $end  = $phpcsFile->findNext($find, ($extendsIndex + 1), ($classOpenerIndex + 1), true);
-        $name = $phpcsFile->getTokensAsString(($extendsIndex + 1), ($end - $extendsIndex - 1));
-        $name = trim($name);
+        $classes = self::findExtendedImplemented($phpcsFile, $stackPtr, $validStructures, T_EXTENDS);
 
-        if ($name === '') {
+        if (empty($classes) === true) {
             return false;
         }
 
-        return $name;
+        // Classes can only extend one parent class.
+        return $classes[0];
 
     }//end findExtendedClassName()
 
@@ -138,11 +113,45 @@ class ObjectDeclarations
      * Returns FALSE on error or if there are no implemented interface names.
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
-     * @param int                         $stackPtr  The stack position of the class.
+     * @param int                         $stackPtr  The stack position of the class keyword.
      *
      * @return array|false
      */
     public static function findImplementedInterfaceNames(File $phpcsFile, $stackPtr)
+    {
+        $validStructures = [
+            T_CLASS      => true,
+            T_ANON_CLASS => true,
+        ];
+
+        $interfaces = self::findExtendedImplemented($phpcsFile, $stackPtr, $validStructures, T_IMPLEMENTS);
+
+        if (empty($interfaces) === true) {
+            return false;
+        }
+
+        return $interfaces;
+
+    }//end findImplementedInterfaceNames()
+
+
+    /**
+     * Returns the names of the extended classes or interfaces or the implemented
+     * interfaces that the specific class/interface declaration extends/implements.
+     *
+     * Returns FALSE on error or if the object does not extend/implement another object.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The stack position of the
+     *                                               class/interface keyword.
+     * @param array                       $OOTypes   Array of accepted token types.
+     *                                               Array format <token constant> => true.
+     * @param int                         $keyword   The token constant for the keyword to examine.
+     *                                               Either `T_EXTENDS` or `T_IMPLEMENTS`.
+     *
+     * @return array|false
+     */
+    private static function findExtendedImplemented(File $phpcsFile, $stackPtr, array $OOTypes, $keyword)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -151,42 +160,50 @@ class ObjectDeclarations
             return false;
         }
 
-        if ($tokens[$stackPtr]['code'] !== T_CLASS
-            && $tokens[$stackPtr]['code'] !== T_ANON_CLASS
-        ) {
+        if (isset($OOTypes[$tokens[$stackPtr]['code']]) === false) {
             return false;
         }
 
-        if (isset($tokens[$stackPtr]['scope_closer']) === false) {
+        if (isset($tokens[$stackPtr]['scope_opener']) === false) {
             return false;
         }
 
-        $classOpenerIndex = $tokens[$stackPtr]['scope_opener'];
-        $implementsIndex  = $phpcsFile->findNext(T_IMPLEMENTS, $stackPtr, $classOpenerIndex);
-        if ($implementsIndex === false) {
+        $openerIndex  = $tokens[$stackPtr]['scope_opener'];
+        $keywordIndex = $phpcsFile->findNext($keyword, ($stackPtr + 1), $openerIndex);
+        if ($keywordIndex === false) {
             return false;
         }
 
-        $find = [
-            T_NS_SEPARATOR,
-            T_STRING,
-            T_WHITESPACE,
-            T_COMMA,
-        ];
+        $find   = Tokens::$emptyTokens;
+        $find[] = T_NS_SEPARATOR;
+        $find[] = T_STRING;
+        $find[] = T_COMMA;
 
-        $end  = $phpcsFile->findNext($find, ($implementsIndex + 1), ($classOpenerIndex + 1), true);
-        $name = $phpcsFile->getTokensAsString(($implementsIndex + 1), ($end - $implementsIndex - 1));
-        $name = trim($name);
+        $end   = $phpcsFile->findNext($find, ($keywordIndex + 1), ($openerIndex + 1), true);
+        $names = [];
+        $name  = '';
+        for ($i = ($keywordIndex + 1); $i < $end; $i++) {
+            if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
+                continue;
+            }
 
-        if ($name === '') {
-            return false;
-        } else {
-            $names = explode(',', $name);
-            $names = array_map('trim', $names);
-            return $names;
+            if ($tokens[$i]['code'] === T_COMMA && $name !== '') {
+                $names[] = $name;
+                $name    = '';
+                continue;
+            }
+
+            $name .= $tokens[$i]['content'];
         }
 
-    }//end findImplementedInterfaceNames()
+        // Add the last name.
+        if ($name !== '') {
+            $names[] = $name;
+        }
+
+        return $names;
+
+    }//end findExtendedImplemented()
 
 
 }//end class

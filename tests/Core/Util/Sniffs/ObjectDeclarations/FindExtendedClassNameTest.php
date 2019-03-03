@@ -25,6 +25,7 @@ class FindExtendedClassNameTest extends AbstractMethodUnitTest
      *
      * @dataProvider dataExtendedClass
      * @covers       \PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::findExtendedClassName
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations::findExtendedImplemented
      *
      * @return void
      */
@@ -86,6 +87,14 @@ class FindExtendedClassNameTest extends AbstractMethodUnitTest
             [
                 '/* testClassThatImplementsAndExtends */',
                 'testFECNClass',
+            ],
+            [
+                '/* testExtendedClassWithComments */',
+                '\PHP_CodeSniffer\Tests\testFECNClass',
+            ],
+            [
+                '/* testParseError */',
+                false,
             ],
         ];
 

@@ -35,3 +35,13 @@ class testFECNClassThatExtendsAndImplements extends testFECNClass implements Int
 
 /* testClassThatImplementsAndExtends */
 class testFECNClassThatImplementsAndExtends implements InterfaceA, InterfaceB extends testFECNClass {}
+
+/* testExtendedClassWithComments */
+class testFECNClassWithComments
+	extends 
+	/* a comment */
+	\PHP_CodeSniffer\Tests /* comment */ \ /* comment */ testFECNClass /* comment */ {}
+
+// Intentional parse error. Has to be the last test in the file.
+/* testParseError */
+class testFECNExtendedClass extends testFECNClass

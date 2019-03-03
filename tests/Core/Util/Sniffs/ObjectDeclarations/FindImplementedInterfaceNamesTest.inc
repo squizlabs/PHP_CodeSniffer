@@ -24,3 +24,13 @@ class testFECNClassThatExtendsAndImplements extends testFECNClass implements Int
 
 /* testClassThatImplementsAndExtends */
 class testFECNClassThatImplementsAndExtends implements \InterfaceA, InterfaceB extends testFECNClass {}
+
+/* testImplementedClassWithComments */
+class testFIINNamespacedClass
+	implements
+		//phpcs:ignore Standard.Cat.Sniff -- because
+		\PHP_CodeSniffer
+		/* comment */
+		\Tests\Core
+		//phpcs:disable Standard.Cat.Sniff -- because
+		\File         \			testFIINInterface {}
