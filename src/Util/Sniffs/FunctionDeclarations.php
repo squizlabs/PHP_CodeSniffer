@@ -3,6 +3,7 @@
  * Utility functions for use when examining function declaration statements.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
@@ -11,6 +12,7 @@ namespace PHP_CodeSniffer\Util\Sniffs;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionDeclarations
 {
@@ -421,6 +423,146 @@ class FunctionDeclarations
         ];
 
     }//end getProperties()
+
+
+    /**
+     * Checks if a given function is a PHP magic function.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The T_FUNCTION token to check.
+     *
+     * @return bool
+     */
+    public static function isMagicFunction(File $phpcsFile, $stackPtr)
+    {
+        if (Conditions::hasCondition($phpcsFile, $stackPtr, Tokens::$ooScopeTokens) === true) {
+            return false;
+        }
+
+        $name = $phpcsFile->getDeclarationName($stackPtr);
+        return self::isMagicFunctionName($name);
+
+    }//end isMagicFunction()
+
+
+    /**
+     * Verify if a given function name is the name of a PHP magic function.
+     *
+     * @param string $name The full function name.
+     *
+     * @return bool
+     */
+    public static function isMagicFunctionName($name)
+    {
+        $name = strtolower($name);
+        return (isset(self::$magicFunctions[$name]) === true);
+
+    }//end isMagicFunctionName()
+
+
+    /**
+     * Checks if a given function is a PHP magic method.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The T_FUNCTION token to check.
+     *
+     * @return bool
+     */
+    public static function isMagicMethod(File $phpcsFile, $stackPtr)
+    {
+        if (Conditions::isOOMethod($phpcsFile, $stackPtr) === false) {
+            return false;
+        }
+
+        $name = $phpcsFile->getDeclarationName($stackPtr);
+        return self::isMagicMethodName($name);
+
+    }//end isMagicMethod()
+
+
+    /**
+     * Verify if a given function name is the name of a PHP magic method.
+     *
+     * @param string $name The full function name.
+     *
+     * @return bool
+     */
+    public static function isMagicMethodName($name)
+    {
+        $name = strtolower($name);
+        return (isset(self::$magicMethods[$name]) === true);
+
+    }//end isMagicMethodName()
+
+
+    /**
+     * Checks if a given function is a PHP native double underscore method.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The T_FUNCTION token to check.
+     *
+     * @return bool
+     */
+    public static function isPHPDoubleUnderscoreMethod(File $phpcsFile, $stackPtr)
+    {
+        if (Conditions::isOOMethod($phpcsFile, $stackPtr) === false) {
+            return false;
+        }
+
+        $name = $phpcsFile->getDeclarationName($stackPtr);
+        return self::isPHPDoubleUnderscoreMethodName($name);
+
+    }//end isPHPDoubleUnderscoreMethod()
+
+
+    /**
+     * Verify if a given function name is the name of a PHP native double underscore method.
+     *
+     * @param string $name The full function name.
+     *
+     * @return bool
+     */
+    public static function isPHPDoubleUnderscoreMethodName($name)
+    {
+        $name = strtolower($name);
+        return (isset(self::$methodsDoubleUnderscore[$name]) === true);
+
+    }//end isPHPDoubleUnderscoreMethodName()
+
+
+    /**
+     * Checks if a given function is a magic method or a PHP native double underscore method.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The T_FUNCTION token to check.
+     *
+     * @return bool
+     */
+    public static function isSpecialMethod(File $phpcsFile, $stackPtr)
+    {
+        if (Conditions::isOOMethod($phpcsFile, $stackPtr) === false) {
+            return false;
+        }
+
+        $name = $phpcsFile->getDeclarationName($stackPtr);
+        return self::isSpecialMethodName($name);
+
+    }//end isSpecialMethod()
+
+
+    /**
+     * Verify if a given function name is the name of a magic method or a PHP native double underscore method.
+     *
+     * @param string $name The full function name.
+     *
+     * @return bool
+     */
+    public static function isSpecialMethodName($name)
+    {
+        $name = strtolower($name);
+        return (isset(self::$magicMethods[$name]) === true || isset(self::$methodsDoubleUnderscore[$name]) === true);
+
+    }//end isSpecialMethodName()
 
 
 }//end class

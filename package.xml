@@ -87,6 +87,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="GetParametersTest.php" role="test" />
         <file baseinstalldir="" name="GetPropertiesTest.inc" role="test" />
         <file baseinstalldir="" name="GetPropertiesTest.php" role="test" />
+        <file baseinstalldir="" name="IsMagicFunctionNameTest.php" role="test" />
+        <file baseinstalldir="" name="IsMagicMethodNameTest.php" role="test" />
+        <file baseinstalldir="" name="IsPHPDoubleUnderscoreMethodNameTest.php" role="test" />
+        <file baseinstalldir="" name="SpecialFunctionsTest.inc" role="test" />
+        <file baseinstalldir="" name="SpecialFunctionsTest.php" role="test" />
        </dir>
        <dir name="ObjectDeclarations">
         <file baseinstalldir="" name="FindExtendedClassNameTest.inc" role="test" />
@@ -1848,6 +1853,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/IsMagicFunctionNameTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/IsMagicFunctionNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/IsMagicMethodNameTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/IsMagicMethodNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/IsPHPDoubleUnderscoreMethodNameTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/IsPHPDoubleUnderscoreMethodNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" />
@@ -1896,6 +1906,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/IsMagicFunctionNameTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/IsMagicFunctionNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/IsMagicMethodNameTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/IsMagicMethodNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/IsPHPDoubleUnderscoreMethodNameTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/IsPHPDoubleUnderscoreMethodNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" />
