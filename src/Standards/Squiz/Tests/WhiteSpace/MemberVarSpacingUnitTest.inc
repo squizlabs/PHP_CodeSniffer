@@ -11,7 +11,7 @@ class MyClass
 }//end class
 
 
-interface MyInterface
+trait MyTrait
 {
 
     public $var1 = 'value';
@@ -45,7 +45,7 @@ class MyClass
 }//end class
 
 
-interface MyInterface
+trait MyTrait
 {
     public $var1 = 'value';
     function myFunction();
@@ -202,7 +202,7 @@ class MyClass
 
 }//end class
 
-interface MyInterface
+trait MyTrait
 {
 
     /* testing */
