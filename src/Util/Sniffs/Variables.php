@@ -256,4 +256,34 @@ class Variables
     }//end isSuperglobalName()
 
 
+    /**
+     * Determine if a variable is in the `as $key => $value` part of a foreach condition.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  Pointer to the variable.
+     *
+     * @return bool True if it is. False otherwise.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified position is not a
+     *                                                      T_VARIABLE token.
+     */
+    public static function isForeachAs(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if ($tokens[$stackPtr]['code'] !== T_VARIABLE) {
+            throw new RuntimeException('$stackPtr must be of type T_VARIABLE');
+        }
+
+        if (Parentheses::lastOwnerIn($phpcsFile, $stackPtr, T_FOREACH) === false) {
+            return false;
+        }
+
+        $openParenthesis  = Parentheses::getLastOpener($phpcsFile, $stackPtr);
+        $closeParenthesis = Parentheses::getLastCloser($phpcsFile, $stackPtr);
+        $asPtr            = $phpcsFile->findNext(T_AS, ($openParenthesis + 1), $closeParenthesis);
+        return ($asPtr !== false && $stackPtr > $asPtr);
+
+    }//end isForeachAs()
+
+
 }//end class
