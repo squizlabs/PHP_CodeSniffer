@@ -18,6 +18,27 @@ class Variables
 
 
     /**
+     * List of PHP Reserved variables.
+     *
+     * @var array
+     */
+    public static $phpReservedVars = [
+        '_SERVER'              => true,
+        '_GET'                 => true,
+        '_POST'                => true,
+        '_REQUEST'             => true,
+        '_SESSION'             => true,
+        '_ENV'                 => true,
+        '_COOKIE'              => true,
+        '_FILES'               => true,
+        'GLOBALS'              => true,
+        'http_response_header' => true,
+        'HTTP_RAW_POST_DATA'   => true,
+        'php_errormsg'         => true,
+    ];
+
+
+    /**
      * Returns the visibility and implementation properties of the class member
      * variable found at the specified position in the stack.
      *

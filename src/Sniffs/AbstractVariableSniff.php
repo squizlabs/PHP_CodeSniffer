@@ -17,6 +17,7 @@ namespace PHP_CodeSniffer\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\Variables;
 use PHP_CodeSniffer\Util\Tokens;
 
 abstract class AbstractVariableSniff extends AbstractScopeSniff
@@ -28,22 +29,13 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      *
      * Used by various naming convention sniffs.
      *
+     * Set from within the constructor.
+     *
      * @var array
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\Variables::$phpReservedVars instead.
      */
-    protected $phpReservedVars = [
-        '_SERVER'              => true,
-        '_GET'                 => true,
-        '_POST'                => true,
-        '_REQUEST'             => true,
-        '_SESSION'             => true,
-        '_ENV'                 => true,
-        '_COOKIE'              => true,
-        '_FILES'               => true,
-        'GLOBALS'              => true,
-        'http_response_header' => true,
-        'HTTP_RAW_POST_DATA'   => true,
-        'php_errormsg'         => true,
-    ];
+    protected $phpReservedVars = [];
 
 
     /**
@@ -51,6 +43,9 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
+        // Preserve BC without code duplication.
+        $this->phpReservedVars = Variables::$phpReservedVars;
+
         $scopes = Tokens::$ooScopeTokens;
 
         $listen = [
