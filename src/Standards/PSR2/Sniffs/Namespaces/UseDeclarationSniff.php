@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\UseStatements;
 use PHP_CodeSniffer\Util\Tokens;
 
 class UseDeclarationSniff implements Sniff
@@ -41,7 +41,7 @@ class UseDeclarationSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        if ($this->shouldIgnoreUse($phpcsFile, $stackPtr) === true) {
+        if (UseStatements::isImportUse($phpcsFile, $stackPtr) === false) {
             return;
         }
 
@@ -184,11 +184,8 @@ class UseDeclarationSniff implements Sniff
 
         // Only interested in the last USE statement from here onwards.
         $nextUse = $phpcsFile->findNext(T_USE, ($stackPtr + 1));
-        while ($this->shouldIgnoreUse($phpcsFile, $nextUse) === true) {
+        while ($nextUse !== false && UseStatements::isImportUse($phpcsFile, $nextUse) === false) {
             $nextUse = $phpcsFile->findNext(T_USE, ($nextUse + 1));
-            if ($nextUse === false) {
-                break;
-            }
         }
 
         if ($nextUse !== false) {
@@ -266,35 +263,6 @@ class UseDeclarationSniff implements Sniff
         }//end if
 
     }//end process()
-
-
-    /**
-     * Check if this use statement is part of the namespace block.
-     *
-     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
-     * @param int                         $stackPtr  The position of the current token in
-     *                                               the stack passed in $tokens.
-     *
-     * @return bool
-     */
-    private function shouldIgnoreUse($phpcsFile, $stackPtr)
-    {
-        $tokens = $phpcsFile->getTokens();
-
-        // Ignore USE keywords inside closures and during live coding.
-        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
-        if ($next === false || $tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
-            return true;
-        }
-
-        // Ignore USE keywords for traits.
-        if (Conditions::hasCondition($phpcsFile, $stackPtr, [T_CLASS, T_TRAIT]) === true) {
-            return true;
-        }
-
-        return false;
-
-    }//end shouldIgnoreUse()
 
 
 }//end class
