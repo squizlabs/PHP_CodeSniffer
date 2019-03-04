@@ -31,11 +31,10 @@ class ValidVariableNameSniff extends AbstractVariableSniff
      */
     protected function processVariable(File $phpcsFile, $stackPtr)
     {
-        $tokens  = $phpcsFile->getTokens();
-        $varName = ltrim($tokens[$stackPtr]['content'], '$');
+        $tokens = $phpcsFile->getTokens();
 
         // If it's a php reserved var, then its ok.
-        if (isset($this->phpReservedVars[$varName]) === true) {
+        if (Variables::isPHPReservedVarName($tokens[$stackPtr]['content']) === true) {
             return;
         }
 
@@ -68,6 +67,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         // There is no way for us to know if the var is public or private,
         // so we have to ignore a leading underscore if there is one and just
         // check the main part of the variable name.
+        $varName         = ltrim($tokens[$stackPtr]['content'], '$');
         $originalVarName = $varName;
         if (substr($varName, 0, 1) === '_') {
             $objOperator = $phpcsFile->findPrevious([T_WHITESPACE], ($stackPtr - 1), null, true);
@@ -161,7 +161,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
         if (preg_match_all('|[^\\\]\${?([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)|', $tokens[$stackPtr]['content'], $matches) !== 0) {
             foreach ($matches[1] as $varName) {
                 // If it's a php reserved var, then its ok.
-                if (isset($this->phpReservedVars[$varName]) === true) {
+                if (Variables::isPHPReservedVarName($varName) === true) {
                     continue;
                 }
 
