@@ -108,6 +108,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Variables">
         <file baseinstalldir="" name="GetMemberPropertiesTest.inc" role="test" />
         <file baseinstalldir="" name="GetMemberPropertiesTest.php" role="test" />
+        <file baseinstalldir="" name="IsPHPReservedVarNameTest.php" role="test" />
+        <file baseinstalldir="" name="IsSuperglobalTest.inc" role="test" />
+        <file baseinstalldir="" name="IsSuperglobalTest.php" role="test" />
        </dir>
       </dir>
      </dir>
@@ -1871,6 +1874,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/IsPHPReservedVarNameTest.php" name="tests/Core/Util/Sniffs/Variables/IsPHPReservedVarNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/IsSuperglobalTest.php" name="tests/Core/Util/Sniffs/Variables/IsSuperglobalTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/IsSuperglobalTest.inc" name="tests/Core/Util/Sniffs/Variables/IsSuperglobalTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -1924,6 +1930,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/IsPHPReservedVarNameTest.php" name="tests/Core/Util/Sniffs/Variables/IsPHPReservedVarNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/IsSuperglobalTest.php" name="tests/Core/Util/Sniffs/Variables/IsSuperglobalTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/IsSuperglobalTest.inc" name="tests/Core/Util/Sniffs/Variables/IsSuperglobalTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />

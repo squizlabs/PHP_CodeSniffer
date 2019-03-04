@@ -3,6 +3,7 @@
  * Utility functions for use when examining variables.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
@@ -159,6 +160,100 @@ class Variables
         ];
 
     }//end getMemberProperties()
+
+
+    /**
+     * Verify if a given variable name is the name of a PHP reserved variable.
+     *
+     * @param string $name The full variable name with or without leading dollar sign.
+     *                     This allows for passing an array key variable name, such as
+     *                     '_GET' retrieved from $GLOBALS['_GET'].
+     *                     Note: when passing an array key, string quotes are expected
+     *                     to have been stripped already.
+     *
+     * @return bool
+     */
+    public static function isPHPReservedVarName($name)
+    {
+        if (strpos($name, '$') === 0) {
+            $name = substr($name, 1);
+        }
+
+        return (isset(self::$phpReservedVars[$name]) === true);
+
+    }//end isPHPReservedVarName()
+
+
+    /**
+     * Verify if a given variable or array key token points to a PHP superglobal.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of a T_VARIABLE
+     *                                               token or the array key to a variable in $GLOBALS.
+     *
+     * @return bool
+     */
+    public static function isSuperglobal(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if ($tokens[$stackPtr]['code'] !== T_VARIABLE
+            && $tokens[$stackPtr]['code'] !== T_CONSTANT_ENCAPSED_STRING
+        ) {
+            return false;
+        }
+
+        $content = $tokens[$stackPtr]['content'];
+
+        if ($tokens[$stackPtr]['code'] === T_CONSTANT_ENCAPSED_STRING) {
+            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+            if ($prev === false || $tokens[$prev]['code'] !== T_OPEN_SQUARE_BRACKET
+                && $next === false || $tokens[$next]['code'] !== T_CLOSE_SQUARE_BRACKET
+            ) {
+                return false;
+            }
+
+            $pprev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prev - 1), null, true);
+            if ($pprev === false
+                || $tokens[$pprev]['code'] !== T_VARIABLE
+                || $tokens[$pprev]['content'] !== '$GLOBALS'
+            ) {
+                return false;
+            }
+
+            $content = preg_replace('`^([\'"])(.*)\1$`Ds', '$2', $content);
+        }
+
+        return self::isSuperglobalName($content);
+
+    }//end isSuperglobal()
+
+
+    /**
+     * Verify if a given variable name is the name of a PHP superglobal.
+     *
+     * @param string $name The full variable name with or without leading dollar sign.
+     *                     This allows for passing an array key variable name, such as
+     *                     '_GET' retrieved from $GLOBALS['_GET'].
+     *                     Note: when passing an array key, string quotes are expected
+     *                     to have been stripped already.
+     *
+     * @return bool
+     */
+    public static function isSuperglobalName($name)
+    {
+        if (strpos($name, '$') === 0) {
+            $name = substr($name, 1);
+        }
+
+        if (isset(self::$phpReservedVars[$name]) === false) {
+            return false;
+        }
+
+        return self::$phpReservedVars[$name];
+
+    }//end isSuperglobalName()
 
 
 }//end class
