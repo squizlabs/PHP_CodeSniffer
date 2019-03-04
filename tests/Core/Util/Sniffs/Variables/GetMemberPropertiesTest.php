@@ -1,15 +1,16 @@
 <?php
 /**
- * Tests for the \PHP_CodeSniffer\Files\File::getMemberProperties method.
+ * Tests for the \PHP_CodeSniffer\Util\Sniffs\Variables::getMemberProperties() method.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core\File;
+namespace PHP_CodeSniffer\Tests\Core\Util\Sniffs\Variables;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
+use PHP_CodeSniffer\Util\Sniffs\Variables;
 
 class GetMemberPropertiesTest extends AbstractMethodUnitTest
 {
@@ -18,17 +19,18 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
     /**
      * Test the getMemberProperties() method.
      *
-     * @param string $identifier Comment which precedes the test case.
-     * @param bool   $expected   Expected function output.
+     * @param string $testMarker The comment which prefaces the target token in the test file.
+     * @param array  $expected   Expected function output.
      *
      * @dataProvider dataGetMemberProperties
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\Variables::getMemberProperties
      *
      * @return void
      */
-    public function testGetMemberProperties($identifier, $expected)
+    public function testGetMemberProperties($testMarker, $expected)
     {
-        $variable = $this->getTargetToken($identifier, T_VARIABLE);
-        $result   = self::$phpcsFile->getMemberProperties($variable);
+        $variable = $this->getTargetToken($testMarker, T_VARIABLE);
+        $result   = Variables::getMemberProperties(self::$phpcsFile, $variable);
         $this->assertSame($expected, $result);
 
     }//end testGetMemberProperties()
@@ -272,19 +274,20 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
     /**
      * Test receiving an expected exception when a non property is passed.
      *
-     * @param string $identifier Comment which precedes the test case.
+     * @param string $testMarker The comment which prefaces the target token in the test file.
      *
      * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
      * @expectedExceptionMessage $stackPtr is not a class member var
      *
      * @dataProvider dataNotClassProperty
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\Variables::getMemberProperties
      *
      * @return void
      */
-    public function testNotClassPropertyException($identifier)
+    public function testNotClassPropertyException($testMarker)
     {
-        $variable = $this->getTargetToken($identifier, T_VARIABLE);
-        $result   = self::$phpcsFile->getMemberProperties($variable);
+        $variable = $this->getTargetToken($testMarker, T_VARIABLE);
+        $result   = Variables::getMemberProperties(self::$phpcsFile, $variable);
 
     }//end testNotClassPropertyException()
 
@@ -316,12 +319,14 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
      * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
      * @expectedExceptionMessage $stackPtr must be of type T_VARIABLE
      *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\Variables::getMemberProperties
+     *
      * @return void
      */
     public function testNotAVariableException()
     {
         $next   = $this->getTargetToken('/* testNotAVariable */', T_RETURN);
-        $result = self::$phpcsFile->getMemberProperties($next);
+        $result = Variables::getMemberProperties(self::$phpcsFile, $next);
 
     }//end testNotAVariableException()
 

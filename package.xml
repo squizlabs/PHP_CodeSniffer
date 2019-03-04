@@ -65,8 +65,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="File">
       <file baseinstalldir="" name="FindEndOfStatementTest.inc" role="test" />
       <file baseinstalldir="" name="FindEndOfStatementTest.php" role="test" />
-      <file baseinstalldir="" name="GetMemberPropertiesTest.inc" role="test" />
-      <file baseinstalldir="" name="GetMemberPropertiesTest.php" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
       <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
      </dir>
@@ -106,6 +104,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Parentheses">
         <file baseinstalldir="" name="ParenthesesTest.inc" role="test" />
         <file baseinstalldir="" name="ParenthesesTest.php" role="test" />
+       </dir>
+       <dir name="Variables">
+        <file baseinstalldir="" name="GetMemberPropertiesTest.inc" role="test" />
+        <file baseinstalldir="" name="GetMemberPropertiesTest.php" role="test" />
        </dir>
       </dir>
      </dir>
@@ -1783,6 +1785,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="ObjectDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Parentheses.php" role="php" />
+      <file baseinstalldir="PHP/CodeSniffer" name="Variables.php" role="php" />
      </dir>
      <file baseinstalldir="PHP/CodeSniffer" name="Cache.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Common.php" role="php" />
@@ -1837,8 +1840,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
-   <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.php" name="tests/Core/File/GetMemberPropertiesTest.php" />
-   <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.inc" name="tests/Core/File/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
@@ -1868,6 +1869,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -1890,8 +1893,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
-   <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.php" name="tests/Core/File/GetMemberPropertiesTest.php" />
-   <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.inc" name="tests/Core/File/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
@@ -1921,6 +1922,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />

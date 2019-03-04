@@ -1347,86 +1347,12 @@ class File
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified position is not a
      *                                                      T_VARIABLE token, or if the position is not
      *                                                      a class member variable.
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\Variables::getMemberProperties() instead.
      */
     public function getMemberProperties($stackPtr)
     {
-        if ($this->tokens[$stackPtr]['code'] !== T_VARIABLE) {
-            throw new RuntimeException('$stackPtr must be of type T_VARIABLE');
-        }
-
-        if (Util\Sniffs\Conditions::isOOProperty($this, $stackPtr) === false) {
-            $lastCondition = Util\Sniffs\Conditions::getlastCondition($this, $stackPtr);
-            if ($lastCondition !== false
-                && $this->tokens[$lastCondition]['code'] === T_INTERFACE
-            ) {
-                // T_VARIABLEs in interfaces can actually be method arguments
-                // but they wont be seen as being inside the method because there
-                // are no scope openers and closers for abstract methods. If it is in
-                // parentheses, we can be pretty sure it is a method argument.
-                if (isset($this->tokens[$stackPtr]['nested_parenthesis']) === false
-                    || empty($this->tokens[$stackPtr]['nested_parenthesis']) === true
-                ) {
-                    $error = 'Possible parse error: interfaces may not include member vars';
-                    $this->addWarning($error, $stackPtr, 'Internal.ParseError.InterfaceHasMemberVar');
-                    return [];
-                }
-            } else {
-                throw new RuntimeException('$stackPtr is not a class member var');
-            }
-        }
-
-        $valid = [
-            T_PUBLIC    => T_PUBLIC,
-            T_PRIVATE   => T_PRIVATE,
-            T_PROTECTED => T_PROTECTED,
-            T_STATIC    => T_STATIC,
-            T_VAR       => T_VAR,
-        ];
-
-        $valid += Util\Tokens::$emptyTokens;
-
-        $scope          = 'public';
-        $scopeSpecified = false;
-        $isStatic       = false;
-
-        $startOfStatement = $this->findPrevious(
-            [
-                T_SEMICOLON,
-                T_OPEN_CURLY_BRACKET,
-                T_CLOSE_CURLY_BRACKET,
-            ],
-            ($stackPtr - 1)
-        );
-
-        for ($i = ($startOfStatement + 1); $i < $stackPtr; $i++) {
-            if (isset($valid[$this->tokens[$i]['code']]) === false) {
-                break;
-            }
-
-            switch ($this->tokens[$i]['code']) {
-            case T_PUBLIC:
-                $scope          = 'public';
-                $scopeSpecified = true;
-                break;
-            case T_PRIVATE:
-                $scope          = 'private';
-                $scopeSpecified = true;
-                break;
-            case T_PROTECTED:
-                $scope          = 'protected';
-                $scopeSpecified = true;
-                break;
-            case T_STATIC:
-                $isStatic = true;
-                break;
-            }
-        }//end for
-
-        return [
-            'scope'           => $scope,
-            'scope_specified' => $scopeSpecified,
-            'is_static'       => $isStatic,
-        ];
+        return Util\Sniffs\Variables::getMemberProperties($this, $stackPtr);
 
     }//end getMemberProperties()
 
