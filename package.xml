@@ -105,6 +105,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="ParenthesesTest.inc" role="test" />
         <file baseinstalldir="" name="ParenthesesTest.php" role="test" />
        </dir>
+       <dir name="UseStatements">
+        <file baseinstalldir="" name="SplitImportUseStatementTest.inc" role="test" />
+        <file baseinstalldir="" name="SplitImportUseStatementTest.php" role="test" />
+        <file baseinstalldir="" name="UseTypeTest.inc" role="test" />
+        <file baseinstalldir="" name="UseTypeTest.php" role="test" />
+       </dir>
        <dir name="Variables">
         <file baseinstalldir="" name="GetMemberPropertiesTest.inc" role="test" />
         <file baseinstalldir="" name="GetMemberPropertiesTest.php" role="test" />
@@ -1790,6 +1796,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="ObjectDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Parentheses.php" role="php" />
+      <file baseinstalldir="PHP/CodeSniffer" name="UseStatements.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Variables.php" role="php" />
      </dir>
      <file baseinstalldir="PHP/CodeSniffer" name="Cache.php" role="php" />
@@ -1874,6 +1881,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/UseTypeTest.php" name="tests/Core/Util/Sniffs/UseStatements/UseTypeTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/UseTypeTest.inc" name="tests/Core/Util/Sniffs/UseStatements/UseTypeTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/IsForeachAsTest.php" name="tests/Core/Util/Sniffs/Variables/IsForeachAsTest.php" />
@@ -1932,6 +1943,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/UseTypeTest.php" name="tests/Core/Util/Sniffs/UseStatements/UseTypeTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/UseTypeTest.inc" name="tests/Core/Util/Sniffs/UseStatements/UseTypeTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" name="tests/Core/Util/Sniffs/Variables/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Variables/IsForeachAsTest.php" name="tests/Core/Util/Sniffs/Variables/IsForeachAsTest.php" />
