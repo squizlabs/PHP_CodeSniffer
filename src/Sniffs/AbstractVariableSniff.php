@@ -44,7 +44,10 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
     public function __construct()
     {
         // Preserve BC without code duplication.
-        $this->phpReservedVars = Variables::$phpReservedVars;
+        $this->phpReservedVars = array_combine(
+            array_keys(Variables::$phpReservedVars),
+            array_fill(0, count(Variables::$phpReservedVars), true)
+        );
 
         $scopes = Tokens::$ooScopeTokens;
 

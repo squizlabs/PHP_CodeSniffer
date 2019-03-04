@@ -20,7 +20,9 @@ class Variables
     /**
      * List of PHP Reserved variables.
      *
-     * @var array
+     * @var array <string variable name> => <bool is superglobal?>
+     *
+     * @link http://php.net/manual/en/reserved.variables.php
      */
     public static $phpReservedVars = [
         '_SERVER'              => true,
@@ -32,9 +34,24 @@ class Variables
         '_COOKIE'              => true,
         '_FILES'               => true,
         'GLOBALS'              => true,
-        'http_response_header' => true,
-        'HTTP_RAW_POST_DATA'   => true,
-        'php_errormsg'         => true,
+        'http_response_header' => false,
+        'argc'                 => false,
+        'argv'                 => false,
+
+        // Deprecated.
+        'php_errormsg'         => false,
+
+        // Removed PHP 5.4.0.
+        'HTTP_SERVER_VARS'     => false,
+        'HTTP_GET_VARS'        => false,
+        'HTTP_POST_VARS'       => false,
+        'HTTP_SESSION_VARS'    => false,
+        'HTTP_ENV_VARS'        => false,
+        'HTTP_COOKIE_VARS'     => false,
+        'HTTP_POST_FILES'      => false,
+
+        // Removed PHP 5.6.0.
+        'HTTP_RAW_POST_DATA'   => false,
     ];
 
 
