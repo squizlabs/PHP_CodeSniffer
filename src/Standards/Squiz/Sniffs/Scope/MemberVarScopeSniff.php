@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Scope;
 
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Variables;
 
 class MemberVarScopeSniff extends AbstractVariableSniff
 {
@@ -26,15 +27,14 @@ class MemberVarScopeSniff extends AbstractVariableSniff
      */
     protected function processMemberVar(File $phpcsFile, $stackPtr)
     {
-        $tokens     = $phpcsFile->getTokens();
-        $properties = $phpcsFile->getMemberProperties($stackPtr);
-
+        $properties = Variables::getMemberProperties($phpcsFile, $stackPtr);
         if ($properties === [] || $properties['scope_specified'] !== false) {
             return;
         }
 
-        $error = 'Scope modifier not specified for member variable "%s"';
-        $data  = [$tokens[$stackPtr]['content']];
+        $tokens = $phpcsFile->getTokens();
+        $error  = 'Scope modifier not specified for member variable "%s"';
+        $data   = [$tokens[$stackPtr]['content']];
         $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
 
     }//end processMemberVar()

@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\Variables;
 use PHP_CodeSniffer\Util\Tokens;
 
 class ValidVariableNameSniff extends AbstractVariableSniff
@@ -103,10 +104,7 @@ class ValidVariableNameSniff extends AbstractVariableSniff
      */
     protected function processMemberVar(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        $varName     = ltrim($tokens[$stackPtr]['content'], '$');
-        $memberProps = $phpcsFile->getMemberProperties($stackPtr);
+        $memberProps = Variables::getMemberProperties($phpcsFile, $stackPtr);
         if (empty($memberProps) === true) {
             // Couldn't get any info about this variable, which
             // generally means it is invalid or possibly has a parse
@@ -115,6 +113,8 @@ class ValidVariableNameSniff extends AbstractVariableSniff
             return;
         }
 
+        $tokens    = $phpcsFile->getTokens();
+        $varName   = ltrim($tokens[$stackPtr]['content'], '$');
         $public    = ($memberProps['scope'] !== 'private');
         $errorData = [$varName];
 

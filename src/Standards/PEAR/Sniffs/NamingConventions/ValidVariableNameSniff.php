@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Variables;
 
 class ValidVariableNameSniff extends AbstractVariableSniff
 {
@@ -27,13 +28,12 @@ class ValidVariableNameSniff extends AbstractVariableSniff
      */
     protected function processMemberVar(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        $memberProps = $phpcsFile->getMemberProperties($stackPtr);
+        $memberProps = Variables::getMemberProperties($phpcsFile, $stackPtr);
         if (empty($memberProps) === true) {
             return;
         }
 
+        $tokens         = $phpcsFile->getTokens();
         $memberName     = ltrim($tokens[$stackPtr]['content'], '$');
         $scope          = $memberProps['scope'];
         $scopeSpecified = $memberProps['scope_specified'];

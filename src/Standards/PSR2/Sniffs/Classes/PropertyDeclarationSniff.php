@@ -10,8 +10,9 @@
 namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes;
 
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
-use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Variables;
+use PHP_CodeSniffer\Util\Tokens;
 
 class PropertyDeclarationSniff extends AbstractVariableSniff
 {
@@ -60,13 +61,8 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
             $phpcsFile->addError($error, $stackPtr, 'Multiple');
         }
 
-        try {
-            $propertyInfo = $phpcsFile->getMemberProperties($stackPtr);
-            if (empty($propertyInfo) === true) {
-                return;
-            }
-        } catch (\Exception $e) {
-            // Turns out not to be a property after all.
+        $propertyInfo = Variables::getMemberProperties($phpcsFile, $stackPtr);
+        if (empty($propertyInfo) === true) {
             return;
         }
 
