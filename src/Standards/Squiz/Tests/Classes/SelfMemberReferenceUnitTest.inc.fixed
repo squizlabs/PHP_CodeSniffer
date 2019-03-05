@@ -160,3 +160,37 @@ namespace Foo /*comment*/ \ Bah {
         }
     }
 }
+
+namespace FoolBah;
+
+$a = namespace\functionCall();
+
+class Bah {
+
+    function myFunction()
+    {
+        \FoolBah\Whatever::something();
+        self::something();
+    }
+}
+
+namespace BahHumbug ?>
+
+<?php
+
+class Humbug {
+
+    function myFunction()
+    {
+        self::something();
+    }
+}
+
+namespace {
+	class BahHumbug {
+	    function myFunction()
+	    {
+	        self::something();
+	    }
+	}
+}

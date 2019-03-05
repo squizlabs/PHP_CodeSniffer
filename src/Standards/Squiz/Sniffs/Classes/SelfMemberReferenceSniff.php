@@ -17,6 +17,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\Namespaces;
 use PHP_CodeSniffer\Util\Tokens;
 
 class SelfMemberReferenceSniff extends AbstractScopeSniff
@@ -215,18 +216,12 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
      */
     protected function getNamespaceOfScope(File $phpcsFile, $stackPtr)
     {
-        $namespace            = '\\';
-        $namespaceDeclaration = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
-
-        if ($namespaceDeclaration !== false) {
-            $endOfNamespaceDeclaration = $phpcsFile->findNext([T_SEMICOLON, T_OPEN_CURLY_BRACKET], $namespaceDeclaration);
-            $namespace = $this->getDeclarationNameWithNamespace(
-                $phpcsFile->getTokens(),
-                ($endOfNamespaceDeclaration - 1)
-            );
+        $namespace = Namespaces::determineNamespace($phpcsFile, $stackPtr);
+        if ($namespace !== '') {
+            return $namespace;
         }
 
-        return $namespace;
+        return '\\';
 
     }//end getNamespaceOfScope()
 

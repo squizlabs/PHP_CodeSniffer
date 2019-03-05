@@ -172,3 +172,37 @@ namespace Foo /*comment*/ \ Bah {
         }
     }
 }
+
+namespace FoolBah;
+
+$a = namespace\functionCall();
+
+class Bah {
+
+    function myFunction()
+    {
+        \FoolBah\Whatever::something();
+        \FoolBah\Bah::something();
+    }
+}
+
+namespace BahHumbug ?>
+
+<?php
+
+class Humbug {
+
+    function myFunction()
+    {
+        \BahHumbug\Humbug::something();
+    }
+}
+
+namespace {
+	class BahHumbug {
+	    function myFunction()
+	    {
+	        BahHumbug::something();
+	    }
+	}
+}
