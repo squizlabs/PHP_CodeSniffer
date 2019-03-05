@@ -12,7 +12,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Common;
-use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Util\Sniffs\Namespaces;
 
 class LanguageConstructSpacingSniff implements Sniff
 {
@@ -69,12 +69,11 @@ class LanguageConstructSpacingSniff implements Sniff
         }
 
         $content = $tokens[$stackPtr]['content'];
-        if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
-            $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
-            if ($nextNonEmpty !== false && $tokens[$nextNonEmpty]['code'] === T_NS_SEPARATOR) {
-                // Namespace keyword used as operator, not as the language construct.
-                return;
-            }
+        if ($tokens[$stackPtr]['code'] === T_NAMESPACE
+            && Namespaces::isDeclaration($phpcsFile, $stackPtr) === false
+        ) {
+            // Namespace keyword used as operator, not as the language construct; or live coding.
+            return;
         }
 
         if ($tokens[$stackPtr]['code'] === T_YIELD_FROM
