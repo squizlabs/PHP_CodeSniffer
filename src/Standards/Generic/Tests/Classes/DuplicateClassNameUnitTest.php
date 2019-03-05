@@ -49,26 +49,37 @@ class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
                 9  => 1,
                 10 => 1,
             ];
-            break;
+
         case 'DuplicateClassNameUnitTest.2.inc':
             return [
                 2 => 1,
                 3 => 1,
                 4 => 1,
             ];
-            break;
+
         case 'DuplicateClassNameUnitTest.5.inc':
             return [
                 3 => 1,
                 7 => 1,
             ];
-            break;
+
         case 'DuplicateClassNameUnitTest.6.inc':
             return [10 => 1];
-            break;
+
+        case 'DuplicateClassNameUnitTest.8.inc':
+            return [
+                7 => 1,
+                8 => 1,
+            ];
+
+        case 'DuplicateClassNameUnitTest.9.inc':
+            return [
+                3 => 1,
+                4 => 1,
+            ];
+
         default:
             return [];
-            break;
         }//end switch
 
     }//end getWarningList()
