@@ -431,6 +431,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DuplicateClassNameUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DuplicateClassNameUnitTest.8.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DuplicateClassNameUnitTest.9.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DuplicateClassNameUnitTest.10.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DuplicateClassNameUnitTest.11.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DuplicateClassNameUnitTest.99.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DuplicateClassNameUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSameLineUnitTest.inc" role="test" />

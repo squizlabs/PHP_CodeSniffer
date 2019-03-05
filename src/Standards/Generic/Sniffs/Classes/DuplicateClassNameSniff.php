@@ -23,6 +23,20 @@ class DuplicateClassNameSniff implements Sniff
      */
     protected $foundClasses = [];
 
+    /**
+     * The name of the last file seen.
+     *
+     * @var string
+     */
+    private $currentFile = '';
+
+    /**
+     * The name of the current namespace.
+     *
+     * @var string
+     */
+    private $currentNamespace = '';
+
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -47,9 +61,14 @@ class DuplicateClassNameSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
+        $tokens   = $phpcsFile->getTokens();
+        $fileName = $phpcsFile->getFilename();
 
-        $namespace  = '';
+        if ($fileName !== $this->currentFile) {
+            $this->currentNamespace = '';
+            $this->currentFile      = $fileName;
+        }
+
         $findTokens = [
             T_CLASS,
             T_INTERFACE,
@@ -70,14 +89,19 @@ class DuplicateClassNameSniff implements Sniff
             if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
                 $newNamespace = Namespaces::getDeclaredName($phpcsFile, $stackPtr);
                 if ($newNamespace !== false) {
-                    $namespace = $newNamespace;
-                    $stackPtr  = $phpcsFile->findNext(Namespaces::$statementClosers, ($stackPtr + 1));
+                    $this->currentNamespace = $newNamespace;
+                    $stackPtr = $phpcsFile->findNext(Namespaces::$statementClosers, ($stackPtr + 1));
+
+                    if ($tokens[$stackPtr]['code'] === T_CLOSE_TAG) {
+                        // Namespace declaration ended on a close tag.
+                        return;
+                    }
                 }
             } else {
                 $nameToken = $phpcsFile->findNext(T_STRING, $stackPtr);
                 $name      = $tokens[$nameToken]['content'];
-                if ($namespace !== '') {
-                    $name = $namespace.'\\'.$name;
+                if ($this->currentNamespace !== '') {
+                    $name = $this->currentNamespace.'\\'.$name;
                 }
 
                 $compareName = strtolower($name);

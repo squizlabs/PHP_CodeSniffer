@@ -78,6 +78,9 @@ class DuplicateClassNameUnitTest extends AbstractSniffUnitTest
                 4 => 1,
             ];
 
+        case 'DuplicateClassNameUnitTest.11.inc':
+            return [13 => 1];
+
         default:
             return [];
         }//end switch
