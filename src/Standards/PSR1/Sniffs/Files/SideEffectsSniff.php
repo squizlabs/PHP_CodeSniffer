@@ -144,10 +144,8 @@ class SideEffectsSniff implements Sniff
                 continue;
             }
 
-            // Ignore entire namespace, declare, const and use statements.
-            if (($tokens[$i]['code'] === T_NAMESPACE
-                && Namespaces::isDeclaration($phpcsFile, $i) === true)
-                || $tokens[$i]['code'] === T_USE
+            // Ignore entire declare, const and use statements.
+            if ($tokens[$i]['code'] === T_USE
                 || $tokens[$i]['code'] === T_DECLARE
                 || $tokens[$i]['code'] === T_CONST
             ) {
@@ -160,6 +158,30 @@ class SideEffectsSniff implements Sniff
                     }
                 }
 
+                continue;
+            }
+
+            // Ignore namespace declarations.
+            if ($tokens[$i]['code'] === T_NAMESPACE
+                && Namespaces::isDeclaration($phpcsFile, $i) === true
+            ) {
+                if (isset($tokens[$i]['scope_opener']) === true) {
+                    $i = $tokens[$i]['scope_opener'];
+                } else {
+                    $declarationCloser = $phpcsFile->findNext(Namespaces::$statementClosers, ($i + 1));
+                    if ($declarationCloser !== false) {
+                        $i = $declarationCloser;
+                    }
+                }
+
+                continue;
+            }
+
+            // Ignore the close brace of a scoped namespace declaration.
+            if ($tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET
+                && isset($tokens[$i]['scope_condition']) === true
+                && $tokens[$tokens[$i]['scope_condition']]['code'] === T_NAMESPACE
+            ) {
                 continue;
             }
 
