@@ -36,11 +36,13 @@ class UseDeclarationUnitTest extends AbstractSniffUnitTest
                 7  => 1,
                 12 => 2,
             ];
+
         case 'UseDeclarationUnitTest.3.inc':
             return [
                 4 => 1,
                 6 => 1,
             ];
+
         case 'UseDeclarationUnitTest.5.inc':
             return [
                 5  => 1,
@@ -55,6 +57,7 @@ class UseDeclarationUnitTest extends AbstractSniffUnitTest
                 30 => 1,
                 35 => 1,
             ];
+
         case 'UseDeclarationUnitTest.10.inc':
         case 'UseDeclarationUnitTest.11.inc':
         case 'UseDeclarationUnitTest.12.inc':
@@ -63,12 +66,17 @@ class UseDeclarationUnitTest extends AbstractSniffUnitTest
         case 'UseDeclarationUnitTest.16.inc':
         case 'UseDeclarationUnitTest.17.inc':
             return [2 => 1];
+
         case 'UseDeclarationUnitTest.15.inc':
             return [
                 3 => 1,
                 4 => 1,
                 5 => 1,
             ];
+
+        case 'UseDeclarationUnitTest.19.inc':
+            return [4 => 1];
+
         default:
             return [];
         }//end switch

@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Namespaces;
 use PHP_CodeSniffer\Util\Sniffs\UseStatements;
 use PHP_CodeSniffer\Util\Tokens;
 
@@ -167,20 +168,28 @@ class UseDeclarationSniff implements Sniff
         }//end if
 
         // Make sure this USE comes after the first namespace declaration.
-        $prev = $phpcsFile->findPrevious(T_NAMESPACE, ($stackPtr - 1));
-        if ($prev !== false) {
+        $namespacePtr = Namespaces::findNamespacePtr($phpcsFile, $stackPtr);
+        if ($namespacePtr !== false) {
             $first = $phpcsFile->findNext(T_NAMESPACE, 1);
-            if ($prev !== $first) {
+            while ($first !== false && Namespaces::isDeclaration($phpcsFile, $first) === false) {
+                $first = $phpcsFile->findNext(T_NAMESPACE, ($first + 1));
+            }
+
+            if ($namespacePtr !== $first) {
                 $error = 'USE declarations must go after the first namespace declaration';
                 $phpcsFile->addError($error, $stackPtr, 'UseAfterNamespace');
             }
         } else {
             $next = $phpcsFile->findNext(T_NAMESPACE, ($stackPtr + 1));
+            while ($next !== false && Namespaces::isDeclaration($phpcsFile, $next) === false) {
+                $next = $phpcsFile->findNext(T_NAMESPACE, ($next + 1));
+            }
+
             if ($next !== false) {
                 $error = 'USE declarations must go after the namespace declaration';
                 $phpcsFile->addError($error, $stackPtr, 'UseBeforeNamespace');
             }
-        }
+        }//end if
 
         // Only interested in the last USE statement from here onwards.
         $nextUse = $phpcsFile->findNext(T_USE, ($stackPtr + 1));
