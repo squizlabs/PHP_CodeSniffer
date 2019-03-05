@@ -190,6 +190,12 @@ class SideEffectsSniff implements Sniff
                 continue;
             }
 
+            // Ignore closures.
+            if ($tokens[$i]['code'] === T_CLOSURE) {
+                $i = $tokens[$i]['scope_closer'];
+                continue;
+            }
+
             // Ignore anon classes.
             if ($tokens[$i]['code'] === T_ANON_CLASS) {
                 $i = $tokens[$i]['scope_closer'];

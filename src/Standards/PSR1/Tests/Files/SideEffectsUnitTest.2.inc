@@ -22,3 +22,7 @@ $c = new class extends Something{
     }
 
 };
+
+$closure = function() {
+	defined('APP_BASE_URL') or define('APP_BASE_URL', '/');
+};
