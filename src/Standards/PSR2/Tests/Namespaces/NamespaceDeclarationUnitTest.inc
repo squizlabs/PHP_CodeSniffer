@@ -20,3 +20,6 @@ namespace Vendor\
 
 Package;
 namespace Vendor\Package;
+
+$a = namespace\functionCall();
+$b = 'test';

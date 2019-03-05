@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Namespaces;
 
 class NamespaceDeclarationSniff implements Sniff
 {
@@ -39,6 +40,11 @@ class NamespaceDeclarationSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        if (Namespaces::isDeclaration($phpcsFile, $stackPtr) === false) {
+            // Namespace operator or live coding/parse error.
+            return;
+        }
+
         $tokens = $phpcsFile->getTokens();
 
         $end = $phpcsFile->findEndOfStatement($stackPtr);
