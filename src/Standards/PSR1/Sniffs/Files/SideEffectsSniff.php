@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Files;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Namespaces;
 use PHP_CodeSniffer\Util\Tokens;
 
 class SideEffectsSniff implements Sniff
@@ -144,7 +145,8 @@ class SideEffectsSniff implements Sniff
             }
 
             // Ignore entire namespace, declare, const and use statements.
-            if ($tokens[$i]['code'] === T_NAMESPACE
+            if (($tokens[$i]['code'] === T_NAMESPACE
+                && Namespaces::isDeclaration($phpcsFile, $i) === true)
                 || $tokens[$i]['code'] === T_USE
                 || $tokens[$i]['code'] === T_DECLARE
                 || $tokens[$i]['code'] === T_CONST
