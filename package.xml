@@ -91,6 +91,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="SpecialFunctionsTest.inc" role="test" />
         <file baseinstalldir="" name="SpecialFunctionsTest.php" role="test" />
        </dir>
+       <dir name="Namespaces">
+        <file baseinstalldir="" name="DetermineNamespaceTest.inc" role="test" />
+        <file baseinstalldir="" name="DetermineNamespaceTest.php" role="test" />
+        <file baseinstalldir="" name="GetDeclaredNameTest.inc" role="test" />
+        <file baseinstalldir="" name="GetDeclaredNameTest.php" role="test" />
+        <file baseinstalldir="" name="NamespaceTypeTest.inc" role="test" />
+        <file baseinstalldir="" name="NamespaceTypeTest.php" role="test" />
+       </dir>
        <dir name="ObjectDeclarations">
         <file baseinstalldir="" name="FindExtendedClassNameTest.inc" role="test" />
         <file baseinstalldir="" name="FindExtendedClassNameTest.php" role="test" />
@@ -1794,6 +1802,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="Sniffs">
       <file baseinstalldir="PHP/CodeSniffer" name="Conditions.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarations.php" role="php" />
+      <file baseinstalldir="PHP/CodeSniffer" name="Namespaces.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="ObjectDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Parentheses.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="UseStatements.php" role="php" />
@@ -1871,6 +1880,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/IsPHPDoubleUnderscoreMethodNameTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/IsPHPDoubleUnderscoreMethodNameTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/DetermineNamespaceTest.php" name="tests/Core/Util/Sniffs/Namespaces/DetermineNamespaceTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/DetermineNamespaceTest.inc" name="tests/Core/Util/Sniffs/Namespaces/DetermineNamespaceTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/GetDeclaredNameTest.php" name="tests/Core/Util/Sniffs/Namespaces/GetDeclaredNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/GetDeclaredNameTest.inc" name="tests/Core/Util/Sniffs/Namespaces/GetDeclaredNameTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/NamespaceTypeTest.php" name="tests/Core/Util/Sniffs/Namespaces/NamespaceTypeTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/NamespaceTypeTest.inc" name="tests/Core/Util/Sniffs/Namespaces/NamespaceTypeTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" />
@@ -1933,6 +1948,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/IsPHPDoubleUnderscoreMethodNameTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/IsPHPDoubleUnderscoreMethodNameTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/SpecialFunctionsTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/DetermineNamespaceTest.php" name="tests/Core/Util/Sniffs/Namespaces/DetermineNamespaceTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/DetermineNamespaceTest.inc" name="tests/Core/Util/Sniffs/Namespaces/DetermineNamespaceTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/GetDeclaredNameTest.php" name="tests/Core/Util/Sniffs/Namespaces/GetDeclaredNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/GetDeclaredNameTest.inc" name="tests/Core/Util/Sniffs/Namespaces/GetDeclaredNameTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/NamespaceTypeTest.php" name="tests/Core/Util/Sniffs/Namespaces/NamespaceTypeTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Namespaces/NamespaceTypeTest.inc" name="tests/Core/Util/Sniffs/Namespaces/NamespaceTypeTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindExtendedInterfaceNamesTest.php" />
