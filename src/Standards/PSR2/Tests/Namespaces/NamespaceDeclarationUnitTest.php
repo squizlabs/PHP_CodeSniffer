@@ -30,6 +30,8 @@ class NamespaceDeclarationUnitTest extends AbstractSniffUnitTest
             9  => 1,
             17 => 1,
             19 => 1,
+            27 => 1,
+            28 => 1,
         ];
 
     }//end getErrorList()

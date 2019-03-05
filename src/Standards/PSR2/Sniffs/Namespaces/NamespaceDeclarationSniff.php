@@ -46,8 +46,12 @@ class NamespaceDeclarationSniff implements Sniff
         }
 
         $tokens = $phpcsFile->getTokens();
+        $end    = $phpcsFile->findNext(Namespaces::$statementClosers, ($stackPtr + 1));
+        if ($tokens[$end]['code'] === T_CLOSE_TAG) {
+            // PHP close tags have their own rules.
+            return;
+        }
 
-        $end = $phpcsFile->findEndOfStatement($stackPtr);
         for ($i = ($end + 1); $i < ($phpcsFile->numTokens - 1); $i++) {
             if ($tokens[$i]['line'] === $tokens[$end]['line']) {
                 continue;

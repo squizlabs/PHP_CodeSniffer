@@ -23,3 +23,11 @@ namespace Vendor\Package;
 
 $a = namespace\functionCall();
 $b = 'test';
+
+namespace; /*comment*/
+namespace Vendor\Package {
+    class TestIt {}
+}
+
+namespace ?>
+<?php
