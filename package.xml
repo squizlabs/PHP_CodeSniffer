@@ -981,6 +981,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Classes">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.php" role="test" />
        </dir>
        <dir name="Files">

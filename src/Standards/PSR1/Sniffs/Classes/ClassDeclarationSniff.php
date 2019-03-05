@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Classes;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Namespaces;
 
 class ClassDeclarationSniff implements Sniff
 {
@@ -59,8 +60,8 @@ class ClassDeclarationSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'One class per file', 'yes');
         }
 
-        $namespace = $phpcsFile->findNext([T_NAMESPACE, T_CLASS, T_INTERFACE, T_TRAIT], 0);
-        if ($tokens[$namespace]['code'] !== T_NAMESPACE) {
+        $namespace = Namespaces::determineNamespace($phpcsFile, $stackPtr);
+        if ($namespace === '') {
             $error = 'Each %s must be in a namespace of at least one level (a top-level vendor name)';
             $phpcsFile->addError($error, $stackPtr, 'MissingNamespace', $errorData);
             $phpcsFile->recordMetric($stackPtr, 'Class defined in namespace', 'no');

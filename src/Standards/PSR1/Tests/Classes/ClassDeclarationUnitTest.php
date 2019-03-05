@@ -27,14 +27,28 @@ class ClassDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='')
     {
-        if ($testFile === 'ClassDeclarationUnitTest.2.inc') {
-            return [];
-        }
+        switch ($testFile) {
+        case 'ClassDeclarationUnitTest.1.inc':
+            return [
+                2 => 1,
+                3 => 2,
+            ];
 
-        return [
-            2 => 1,
-            3 => 2,
-        ];
+        case 'ClassDeclarationUnitTest.2.inc':
+            return [];
+
+        case 'ClassDeclarationUnitTest.3.inc':
+            return [4 => 1];
+
+        case 'ClassDeclarationUnitTest.4.inc':
+            return [3 => 1];
+
+        case 'ClassDeclarationUnitTest.5.inc':
+            return [4 => 1];
+
+        case 'ClassDeclarationUnitTest.6.inc':
+            return [8 => 2];
+        }//end switch
 
     }//end getErrorList()
 
