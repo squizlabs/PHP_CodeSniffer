@@ -33,7 +33,10 @@ class SelfMemberReferenceUnitTest extends AbstractSniffUnitTest
             31  => 1,
             32  => 2,
             40  => 2,
+            73  => 1,
+            74  => 1,
             92  => 1,
+            102 => 1,
             121 => 1,
             132 => 1,
             139 => 3,
@@ -42,8 +45,9 @@ class SelfMemberReferenceUnitTest extends AbstractSniffUnitTest
             162 => 1,
             171 => 1,
             185 => 1,
-            197 => 1,
-            205 => 1,
+            187 => 1,
+            199 => 1,
+            207 => 1,
         ];
 
     }//end getErrorList()

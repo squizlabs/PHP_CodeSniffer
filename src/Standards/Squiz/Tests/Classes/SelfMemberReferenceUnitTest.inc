@@ -70,8 +70,8 @@ class MyClass {
                         MyClass::test($value);
                     };
 
-        $array = array(1,2,3);
-        array_walk($array, $callback);
+        $array = MyClass::getValues(); // Non-namespaced relative, should be picked up.
+        $array = \MyClass::getValues(); // Non-namespaced absolute, should be picked up.
     }
 }
 
@@ -96,11 +96,11 @@ class Foo
 namespace TYPO3\CMS\Reports;
 
 class Status {
-    const NOTICE = -2;
-    const INFO = -1;
-    const OK = 0;
-    const WARNING = 1;
-    const ERROR = 2;
+
+	function test() {
+        $array = TYPO3\CMS\Reports\Status::getValues(); // Namespaced relative, should NOT be picked up.
+        $array = \TYPO3\CMS\Reports\Status::getValues(); // Namespaced absolute, should be picked up.
+	}
 }
 
 namespace TYPO3\CMS\Reports\Report\Status;
@@ -159,7 +159,7 @@ class Nested_Anon_Class {
 namespace Foo\Baz {
     class BarFoo {
         public function foo() {
-            echo Foo\Baz\BarFoo::$prop;
+            echo \Foo\Baz\BarFoo::$prop;
         }
     }
 }
@@ -168,7 +168,7 @@ namespace Foo\Baz {
 namespace Foo /*comment*/ \ Bah {
     class BarFoo {
         public function foo() {
-            echo Foo \ /*comment*/ Bah\BarFoo::$prop;
+            echo \Foo \ /*comment*/ Bah\BarFoo::$prop;
         }
     }
 }
@@ -183,6 +183,8 @@ class Bah {
     {
         \FoolBah\Whatever::something();
         \FoolBah\Bah::something();
+        FoolBah\Bah::something(); // Calls \FoolBah\FoolBah\Bah::something() !
+        Bah::something();
     }
 }
 

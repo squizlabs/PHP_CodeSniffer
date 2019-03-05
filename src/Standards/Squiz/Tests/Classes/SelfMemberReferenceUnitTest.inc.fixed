@@ -60,8 +60,8 @@ class MyClass {
                         MyClass::test($value);
                     };
 
-        $array = array(1,2,3);
-        array_walk($array, $callback);
+        $array = self::getValues(); // Non-namespaced relative, should be picked up.
+        $array = self::getValues(); // Non-namespaced absolute, should be picked up.
     }
 }
 
@@ -86,11 +86,11 @@ class Foo
 namespace TYPO3\CMS\Reports;
 
 class Status {
-    const NOTICE = -2;
-    const INFO = -1;
-    const OK = 0;
-    const WARNING = 1;
-    const ERROR = 2;
+
+	function test() {
+        $array = TYPO3\CMS\Reports\Status::getValues(); // Namespaced relative, should NOT be picked up.
+        $array = self::getValues(); // Namespaced absolute, should be picked up.
+	}
 }
 
 namespace TYPO3\CMS\Reports\Report\Status;
@@ -170,6 +170,8 @@ class Bah {
     function myFunction()
     {
         \FoolBah\Whatever::something();
+        self::something();
+        FoolBah\Bah::something(); // Calls \FoolBah\FoolBah\Bah::something() !
         self::something();
     }
 }

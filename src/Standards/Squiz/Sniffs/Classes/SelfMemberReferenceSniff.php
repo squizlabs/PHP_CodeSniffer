@@ -76,18 +76,20 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
             $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($calledClassName - 1), null, true);
             if ($prevNonEmpty !== false && $tokens[$prevNonEmpty]['code'] === T_NS_SEPARATOR) {
                 $declarationName        = $this->getDeclarationNameWithNamespace($tokens, $calledClassName);
-                $declarationName        = ltrim($declarationName, '\\');
-                $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
-                if ($fullQualifiedClassName === '\\') {
-                    $fullQualifiedClassName = '';
-                } else {
-                    $fullQualifiedClassName .= '\\';
-                }
+                $fullQualifiedClassName = '';
 
-                $fullQualifiedClassName .= $phpcsFile->getDeclarationName($currScope);
+                if (strpos($declarationName, '\\') === 0) {
+                    // Only bother with building the FQCN when this is an absolute reference.
+                    $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
+                    if ($fullQualifiedClassName !== '\\') {
+                        $fullQualifiedClassName .= '\\';
+                    }
+
+                    $fullQualifiedClassName .= $phpcsFile->getDeclarationName($currScope);
+                }
             } else {
-                $declarationName        = $phpcsFile->getDeclarationName($currScope);
-                $fullQualifiedClassName = $tokens[$calledClassName]['content'];
+                $declarationName        = $tokens[$calledClassName]['content'];
+                $fullQualifiedClassName = $phpcsFile->getDeclarationName($currScope);
             }
 
             if ($declarationName === $fullQualifiedClassName) {
@@ -216,12 +218,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
      */
     protected function getNamespaceOfScope(File $phpcsFile, $stackPtr)
     {
-        $namespace = Namespaces::determineNamespace($phpcsFile, $stackPtr);
-        if ($namespace !== '') {
-            return $namespace;
-        }
-
-        return '\\';
+        return '\\'.Namespaces::determineNamespace($phpcsFile, $stackPtr);
 
     }//end getNamespaceOfScope()
 
