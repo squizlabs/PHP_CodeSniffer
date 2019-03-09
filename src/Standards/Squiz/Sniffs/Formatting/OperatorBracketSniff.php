@@ -54,13 +54,6 @@ class OperatorBracketSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if ($phpcsFile->tokenizerType === 'JS' && $tokens[$stackPtr]['code'] === T_PLUS) {
-            // JavaScript uses the plus operator for string concatenation as well
-            // so we cannot accurately determine if it is a string concat or addition.
-            // So just ignore it.
-            return;
-        }
-
         // If the & is a reference, then we don't want to check for brackets.
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND
             && TokenIs::isReference($phpcsFile, $stackPtr) === true
@@ -69,35 +62,29 @@ class OperatorBracketSniff implements Sniff
         }
 
         // There is one instance where brackets aren't needed, which involves
-        // the minus sign being used to assign a negative number to a variable.
-        if ($tokens[$stackPtr]['code'] === T_MINUS) {
-            // Check to see if we are trying to return -n.
-            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-            if ($tokens[$prev]['code'] === T_RETURN) {
+        // the plus/minus sign being used to assign a positive/negative number to a variable.
+        if ($tokens[$stackPtr]['code'] === T_MINUS || $tokens[$stackPtr]['code'] === T_PLUS) {
+            if (TokenIs::isUnaryPlusMinus($phpcsFile, $stackPtr) === true) {
+                // This is a positive/negative assignment or comparison.
+                // We need to check that the sign and the number are adjacent.
+                $number = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                if (($tokens[$number]['code'] === T_LNUMBER || $tokens[$number]['code'] === T_DNUMBER)
+                    && (($number - $stackPtr) !== 1)
+                ) {
+                    $error = 'No space allowed between the unary sign and the number';
+                    $phpcsFile->addError($error, $stackPtr, 'SpacingAfterSign');
+                }
+
                 return;
             }
-
-            $number = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-            if ($tokens[$number]['code'] === T_LNUMBER || $tokens[$number]['code'] === T_DNUMBER) {
-                $previous = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-                if ($previous !== false) {
-                    $isAssignment = isset(Tokens::$assignmentTokens[$tokens[$previous]['code']]);
-                    $isEquality   = isset(Tokens::$equalityTokens[$tokens[$previous]['code']]);
-                    $isComparison = isset(Tokens::$comparisonTokens[$tokens[$previous]['code']]);
-                    if ($isAssignment === true || $isEquality === true || $isComparison === true) {
-                        // This is a negative assignment or comparison.
-                        // We need to check that the minus and the number are
-                        // adjacent.
-                        if (($number - $stackPtr) !== 1) {
-                            $error = 'No space allowed between minus sign and number';
-                            $phpcsFile->addError($error, $stackPtr, 'SpacingAfterMinus');
-                        }
-
-                        return;
-                    }
-                }
-            }
         }//end if
+
+        if ($phpcsFile->tokenizerType === 'JS' && $tokens[$stackPtr]['code'] === T_PLUS) {
+            // JavaScript uses the plus operator for string concatenation as well
+            // so we cannot accurately determine if it is a string concat or addition.
+            // So just ignore it.
+            return;
+        }
 
         $previousToken = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true, null, true);
         if ($previousToken !== false) {

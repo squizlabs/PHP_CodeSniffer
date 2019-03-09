@@ -116,3 +116,6 @@ if (something === true
 if (true === /^\d*\.?\d*$/.test(input)) return true;
 
 if ( ! /^(?:a|select)$/i.test( element.tagName ) ) return true;
+
+value = +
+    1;
