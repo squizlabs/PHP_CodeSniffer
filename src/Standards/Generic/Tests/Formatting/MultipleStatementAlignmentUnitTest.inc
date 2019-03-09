@@ -403,3 +403,11 @@ $foofoo   = new Foo([
     $b = new Bar(),
     $c = new Bar(),
 ]);
+
+// Handling of short list syntax.
+foreach ($files as $file) {
+    $saves[$file] = array();
+    $contents = stripslashes(file_get_contents($file));
+    [$assetid, $time, $content] = explode("\n", $contents);
+    $saves[$file]['assetid'] = $assetid;
+}
