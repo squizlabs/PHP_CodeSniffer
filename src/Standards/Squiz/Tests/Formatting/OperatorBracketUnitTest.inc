@@ -170,3 +170,6 @@ $value = (binary) $blah + b"binary $foo";
 
 $value = +
     1.1;
+
+$value = + /*comment*/
+    1.1;

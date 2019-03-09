@@ -22,7 +22,7 @@ $value = ($one + ($two + $three));
 $value++;
 $value--;
 $value = -1;
-$value = - 1;
+$value = -1;
 
 $value = (1 + 2);
 $value = (1 + 2);
@@ -106,7 +106,7 @@ class MyClass
 }//end class
 
 if ($index < -1) $index = 0;
-if ($index < - 1) $index = 0;
+if ($index < -1) $index = 0;
 
 $three = ceil($one / $two);
 $three = ceil(($one / $two) / $four);
@@ -127,7 +127,7 @@ $expectedPermission = array(
                        'denied'         => 1,
                        'cascade'        => TRUE,
                        'blockergranted' => 2,
-                       'blockerdenied'  => - 3,
+                       'blockerdenied'  => -3,
                        'effective'      => TRUE,
                       );
 
@@ -168,5 +168,7 @@ $foo = $myString{-1};
 
 $value = ((binary) $blah + b"binary $foo");
 
-$value = +
+$value = +1.1;
+
+$value = + /*comment*/
     1.1;

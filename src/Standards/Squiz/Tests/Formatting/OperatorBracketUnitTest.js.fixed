@@ -21,7 +21,7 @@ value = one + (two + three);
 value++;
 value--;
 value = -1;
-value = - 1;
+value = -1;
 
 value = (1 + 2);
 value = 1 + 2;
@@ -60,7 +60,7 @@ function myFunction()
 params['mode'] = id.replace(/WidgetType/, '');
 
 if (index < -1) index = 0;
-if (index < - 1) index = 0;
+if (index < -1) index = 0;
 
 var classN = prvId.replace(/\./g, '-');
 
@@ -117,5 +117,4 @@ if (true === /^\d*\.?\d*$/.test(input)) return true;
 
 if ( ! /^(?:a|select)$/i.test( element.tagName ) ) return true;
 
-value = +
-    1;
+value = +1;

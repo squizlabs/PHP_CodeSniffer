@@ -67,16 +67,30 @@ class OperatorBracketSniff implements Sniff
             if (TokenIs::isUnaryPlusMinus($phpcsFile, $stackPtr) === true) {
                 // This is a positive/negative assignment or comparison.
                 // We need to check that the sign and the number are adjacent.
-                $number = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                $number = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
                 if (($tokens[$number]['code'] === T_LNUMBER || $tokens[$number]['code'] === T_DNUMBER)
                     && (($number - $stackPtr) !== 1)
                 ) {
                     $error = 'No space allowed between the unary sign and the number';
-                    $phpcsFile->addError($error, $stackPtr, 'SpacingAfterSign');
+
+                    $nextNonWhitespace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                    if ($nextNonWhitespace === $number) {
+                        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingAfterSign');
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($i = ($stackPtr + 1); $i < $number; $i++) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }
+                    } else {
+                        $phpcsFile->addError($error, $stackPtr, 'SpacingAfterSign');
+                    }
                 }
 
                 return;
-            }
+            }//end if
         }//end if
 
         if ($phpcsFile->tokenizerType === 'JS' && $tokens[$stackPtr]['code'] === T_PLUS) {
