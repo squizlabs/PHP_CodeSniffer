@@ -1393,121 +1393,12 @@ class File
      * @param int $stackPtr The position of the T_BITWISE_AND token.
      *
      * @return boolean
+     *
+     * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\TokenIs::isReference() instead.
      */
     public function isReference($stackPtr)
     {
-        if ($this->tokens[$stackPtr]['code'] !== T_BITWISE_AND) {
-            return false;
-        }
-
-        $tokenBefore = $this->findPrevious(
-            Util\Tokens::$emptyTokens,
-            ($stackPtr - 1),
-            null,
-            true
-        );
-
-        if ($this->tokens[$tokenBefore]['code'] === T_FUNCTION) {
-            // Function returns a reference.
-            return true;
-        }
-
-        if ($this->tokens[$tokenBefore]['code'] === T_DOUBLE_ARROW) {
-            // Inside a foreach loop or array assignment, this is a reference.
-            return true;
-        }
-
-        if ($this->tokens[$tokenBefore]['code'] === T_AS) {
-            // Inside a foreach loop, this is a reference.
-            return true;
-        }
-
-        if (isset(Util\Tokens::$assignmentTokens[$this->tokens[$tokenBefore]['code']]) === true) {
-            // This is directly after an assignment. It's a reference. Even if
-            // it is part of an operation, the other tests will handle it.
-            return true;
-        }
-
-        $tokenAfter = $this->findNext(
-            Util\Tokens::$emptyTokens,
-            ($stackPtr + 1),
-            null,
-            true
-        );
-
-        if ($this->tokens[$tokenAfter]['code'] === T_NEW) {
-            return true;
-        }
-
-        $lastOpener = Util\Sniffs\Parentheses::getLastOpener($this, $stackPtr);
-        if ($lastOpener !== false) {
-            $lastOwner = Util\Sniffs\Parentheses::lastOwnerIn($this, $stackPtr, [T_FUNCTION, T_CLOSURE]);
-            if ($lastOwner !== false) {
-                $params = Util\Sniffs\FunctionDeclarations::getParameters($this, $lastOwner);
-                foreach ($params as $param) {
-                    $varToken = $tokenAfter;
-                    if ($param['variable_length'] === true) {
-                        $varToken = $this->findNext(
-                            (Util\Tokens::$emptyTokens + [T_ELLIPSIS]),
-                            ($stackPtr + 1),
-                            null,
-                            true
-                        );
-                    }
-
-                    if ($param['token'] === $varToken
-                        && $param['pass_by_reference'] === true
-                    ) {
-                        // Function parameter declared to be passed by reference.
-                        return true;
-                    }
-                }
-            } else if (isset($this->tokens[$lastOpener]['parenthesis_owner']) === false) {
-                $prev = false;
-                for ($t = ($lastOpener - 1); $t >= 0; $t--) {
-                    if ($this->tokens[$t]['code'] !== T_WHITESPACE) {
-                        $prev = $t;
-                        break;
-                    }
-                }
-
-                if ($prev !== false && $this->tokens[$prev]['code'] === T_USE) {
-                    // Closure use by reference.
-                    return true;
-                }
-            }//end if
-        }//end if
-
-        // Pass by reference in function calls and assign by reference in arrays.
-        if ($this->tokens[$tokenBefore]['code'] === T_OPEN_PARENTHESIS
-            || $this->tokens[$tokenBefore]['code'] === T_COMMA
-            || $this->tokens[$tokenBefore]['code'] === T_OPEN_SHORT_ARRAY
-        ) {
-            if ($this->tokens[$tokenAfter]['code'] === T_VARIABLE) {
-                return true;
-            } else {
-                $skip   = Util\Tokens::$emptyTokens;
-                $skip[] = T_NS_SEPARATOR;
-                $skip[] = T_SELF;
-                $skip[] = T_PARENT;
-                $skip[] = T_STATIC;
-                $skip[] = T_STRING;
-                $skip[] = T_NAMESPACE;
-                $skip[] = T_DOUBLE_COLON;
-
-                $nextSignificantAfter = $this->findNext(
-                    $skip,
-                    ($stackPtr + 1),
-                    null,
-                    true
-                );
-                if ($this->tokens[$nextSignificantAfter]['code'] === T_VARIABLE) {
-                    return true;
-                }
-            }//end if
-        }//end if
-
-        return false;
+        return Util\Sniffs\TokenIs::isReference($this, $stackPtr);
 
     }//end isReference()
 

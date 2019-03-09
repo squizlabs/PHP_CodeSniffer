@@ -1,7 +1,5 @@
 <?php
 
-namespace PHP_CodeSniffer\Tests\Core\File;
-
 /* testBitwiseAndA */
 error_reporting( E_NOTICE & E_STRICT );
 

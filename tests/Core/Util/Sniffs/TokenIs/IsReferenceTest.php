@@ -1,34 +1,36 @@
 <?php
 /**
- * Tests for the \PHP_CodeSniffer\Files\File:isReference method.
+ * Tests for the \PHP_CodeSniffer\Util\Sniffs\TokenIs::isReference() method.
  *
- * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
+ * @copyright 2018-2019 Juliette Reinders Folmer. All rights reserved.
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core\File;
+namespace PHP_CodeSniffer\Tests\Core\Util\Sniffs\TokenIs;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
+use PHP_CodeSniffer\Util\Sniffs\TokenIs;
 
 class IsReferenceTest extends AbstractMethodUnitTest
 {
 
 
     /**
-     * Test a class that extends another.
+     * Test whether a bitwise-and token is used as a reference.
      *
-     * @param string $identifier Comment which precedes the test case.
+     * @param string $testMarker The comment which prefaces the target token in the test file.
      * @param bool   $expected   Expected function output.
      *
      * @dataProvider dataIsReference
+     * @covers       \PHP_CodeSniffer\Util\Sniffs\TokenIs::isReference
      *
      * @return void
      */
-    public function testIsReference($identifier, $expected)
+    public function testIsReference($testMarker, $expected)
     {
-        $bitwiseAnd = $this->getTargetToken($identifier, T_BITWISE_AND);
-        $result     = self::$phpcsFile->isReference($bitwiseAnd);
+        $bitwiseAnd = $this->getTargetToken($testMarker, T_BITWISE_AND);
+        $result     = TokenIs::isReference(self::$phpcsFile, $bitwiseAnd);
         $this->assertSame($expected, $result);
 
     }//end testIsReference()

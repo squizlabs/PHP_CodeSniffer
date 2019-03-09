@@ -65,8 +65,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="File">
       <file baseinstalldir="" name="FindEndOfStatementTest.inc" role="test" />
       <file baseinstalldir="" name="FindEndOfStatementTest.php" role="test" />
-      <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
-      <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
      </dir>
      <dir name="Util">
       <dir name="Sniffs">
@@ -112,6 +110,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Parentheses">
         <file baseinstalldir="" name="ParenthesesTest.inc" role="test" />
         <file baseinstalldir="" name="ParenthesesTest.php" role="test" />
+       </dir>
+       <dir name="TokenIs">
+        <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
+        <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
        </dir>
        <dir name="UseStatements">
         <file baseinstalldir="" name="SplitImportUseStatementTest.inc" role="test" />
@@ -1823,6 +1825,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP/CodeSniffer" name="Namespaces.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="ObjectDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Parentheses.php" role="php" />
+      <file baseinstalldir="PHP/CodeSniffer" name="TokenIs.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="UseStatements.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Variables.php" role="php" />
      </dir>
@@ -1879,8 +1882,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
-   <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
-   <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.inc" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" />
@@ -1914,6 +1915,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/UseTypeTest.php" name="tests/Core/Util/Sniffs/UseStatements/UseTypeTest.php" />
@@ -1947,8 +1950,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
-   <install as="CodeSniffer/Core/File/IsReferenceTest.php" name="tests/Core/File/IsReferenceTest.php" />
-   <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.inc" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" />
@@ -1982,6 +1983,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/UseTypeTest.php" name="tests/Core/Util/Sniffs/UseStatements/UseTypeTest.php" />
