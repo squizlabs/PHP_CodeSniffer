@@ -17,6 +17,21 @@ class IsReferenceTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test that false is returned when a non-"bitwise and" token is passed.
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\TokenIs::isReference
+     *
+     * @return void
+     */
+    public function testNotBitwiseAndToken()
+    {
+        $target = $this->getTargetToken('/* testBitwiseAndA */', T_STRING);
+        $this->assertFalse(TokenIs::isReference(self::$phpcsFile, $target));
+
+    }//end testNotBitwiseAndToken()
+
+
+    /**
      * Test whether a bitwise-and token is used as a reference.
      *
      * @param string $testMarker The comment which prefaces the target token in the test file.
