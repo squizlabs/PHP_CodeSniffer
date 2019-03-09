@@ -1,5 +1,5 @@
 <?php
-array($a, array($b)) = $array;
+list($a, list($b)) = $array;
 
 function test()
 {

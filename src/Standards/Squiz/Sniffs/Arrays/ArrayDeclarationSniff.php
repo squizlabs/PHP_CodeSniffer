@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Parentheses;
+use PHP_CodeSniffer\Util\Sniffs\TokenIs;
 use PHP_CodeSniffer\Util\Tokens;
 
 class ArrayDeclarationSniff implements Sniff
@@ -45,6 +46,13 @@ class ArrayDeclarationSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+
+        if ($tokens[$stackPtr]['code'] === T_OPEN_SHORT_ARRAY
+            && TokenIs::isShortList($phpcsFile, $stackPtr) === true
+        ) {
+            // No need to examine nested subs of this short list.
+            return $tokens[$stackPtr]['bracket_closer'];
+        }
 
         if ($tokens[$stackPtr]['code'] === T_ARRAY) {
             $phpcsFile->recordMetric($stackPtr, 'Short array syntax used', 'no');

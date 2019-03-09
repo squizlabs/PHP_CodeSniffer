@@ -30,7 +30,6 @@ class ArrayDeclarationUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'ArrayDeclarationUnitTest.1.inc':
             return [
-                2   => 1,
                 8   => 2,
                 10  => 2,
                 22  => 1,
@@ -116,7 +115,6 @@ class ArrayDeclarationUnitTest extends AbstractSniffUnitTest
             ];
         case 'ArrayDeclarationUnitTest.2.inc':
             return [
-                2   => 1,
                 10  => 1,
                 23  => 2,
                 24  => 2,

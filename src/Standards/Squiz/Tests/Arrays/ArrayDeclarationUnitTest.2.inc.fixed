@@ -1,8 +1,5 @@
 <?php
-[
- $a,
- [$b],
-] = $array;
+[$a, [$b]] = $array;
 
 function test()
 {
