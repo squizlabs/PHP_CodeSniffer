@@ -1,0 +1,19 @@
+<documentation title="Disallow Long List Syntax">
+    <standard>
+    <![CDATA[
+    Short list syntax must be used.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Short form of list.">
+        <![CDATA[
+<em>[</em>$a, $b<em>]</em> = $array;
+        ]]>
+        </code>
+        <code title="Invalid: Long form of list.">
+        <![CDATA[
+<em>list(</em>$a, $b<em>)</em> = $array;
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

@@ -1,0 +1,21 @@
+<?php
+[$a] = $array;
+[$a] = $array;
+[$a, [$b, $c, $d]] = $array;
+[$a, [$b, $c, $d]] = $array;
+[$a[], [$a[], $a[], $a[],],] = $array;
+[
+    $a,
+    [
+        $b,
+        $c,
+        $d,
+    ],
+] = $array;
+
+/*comment*/[$a, $b, $c];
+
+list = $array; // Intentional parse error.
+
+// Intentional parse error. This has to be the last test in the file.
+list(

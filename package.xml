@@ -269,6 +269,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceKernighanRitchieStandard.xml" role="php" />
        </dir>
        <dir name="Lists">
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongListSyntaxStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxStandard.xml" role="php" />
        </dir>
        <dir name="Metrics">
@@ -373,6 +374,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceKernighanRitchieSniff.php" role="php" />
        </dir>
        <dir name="Lists">
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongListSyntaxSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxSniff.php" role="php" />
        </dir>
        <dir name="Metrics">
@@ -616,6 +618,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceKernighanRitchieUnitTest.php" role="test" />
        </dir>
        <dir name="Lists">
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongListSyntaxUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongListSyntaxUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongListSyntaxUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxUnitTest.php" role="test" />
