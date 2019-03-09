@@ -10,3 +10,6 @@ $foo = [
         2,
         3
        ];
+
+// Short list, not short array.
+[$a, $b] = $array;

@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\TokenIs;
 
 class DisallowShortArraySyntaxSniff implements Sniff
 {
@@ -39,13 +40,19 @@ class DisallowShortArraySyntaxSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        $tokens = $phpcsFile->getTokens();
+
+        if (TokenIs::isShortList($phpcsFile, $stackPtr) === true) {
+            // No need to examine nested subs of this short list.
+            return $tokens[$stackPtr]['bracket_closer'];
+        }
+
         $phpcsFile->recordMetric($stackPtr, 'Short array syntax used', 'yes');
 
         $error = 'Short array syntax is not allowed';
         $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Found');
 
         if ($fix === true) {
-            $tokens = $phpcsFile->getTokens();
             $opener = $tokens[$stackPtr]['bracket_opener'];
             $closer = $tokens[$stackPtr]['bracket_closer'];
 
