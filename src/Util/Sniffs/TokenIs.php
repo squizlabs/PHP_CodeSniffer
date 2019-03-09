@@ -207,4 +207,90 @@ class TokenIs
     }//end isShortList()
 
 
+    /**
+     * Determine whether a T_MINUS/T_PLUS token is a unary operator.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the plus/minus token.
+     *
+     * @return bool True if the token passed is a unary operator.
+     *              False otherwise or if the token is not a T_PLUS/T_MINUS token.
+     */
+    public static function isUnaryPlusMinus(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if (isset($tokens[$stackPtr]) === false
+            || ($tokens[$stackPtr]['code'] !== T_PLUS
+            && $tokens[$stackPtr]['code'] !== T_MINUS)
+        ) {
+            return false;
+        }
+
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        if ($next === false) {
+            // Live coding or parse error.
+            return false;
+        }
+
+        if (isset(Tokens::$operators[$tokens[$next]['code']]) === true) {
+            // Next token is an operator, so this is not a unary.
+            return false;
+        }
+
+        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+
+        if ($tokens[$prev]['code'] === T_RETURN) {
+            // Just returning a positive/negative value; eg. (return -1).
+            return true;
+        }
+
+        if (isset(Tokens::$operators[$tokens[$prev]['code']]) === true) {
+            // Just trying to operate on a positive/negative value; eg. ($var * -1).
+            return true;
+        }
+
+        if (isset(Tokens::$comparisonTokens[$tokens[$prev]['code']]) === true) {
+            // Just trying to compare a positive/negative value; eg. ($var === -1).
+            return true;
+        }
+
+        if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
+            // Just trying to compare a positive/negative value; eg. ($var || -1 === $b).
+            return true;
+        }
+
+        if (isset(Tokens::$assignmentTokens[$tokens[$prev]['code']]) === true) {
+            // Just trying to assign a positive/negative value; eg. ($var = -1).
+            return true;
+        }
+
+        if (isset(Tokens::$castTokens[$tokens[$prev]['code']]) === true) {
+            // Just casting a positive/negative value; eg. (string) -$var.
+            return true;
+        }
+
+        // Other indicators that a plus/minus sign is a unary operator.
+        $invalidTokens = [
+            T_COMMA               => true,
+            T_OPEN_PARENTHESIS    => true,
+            T_OPEN_SQUARE_BRACKET => true,
+            T_OPEN_SHORT_ARRAY    => true,
+            T_COLON               => true,
+            T_INLINE_THEN         => true,
+            T_INLINE_ELSE         => true,
+            T_CASE                => true,
+            T_OPEN_CURLY_BRACKET  => true,
+        ];
+
+        if (isset($invalidTokens[$tokens[$prev]['code']]) === true) {
+            // Just trying to use a positive/negative value; eg. myFunction($var, -2).
+            return true;
+        }
+
+        return false;
+
+    }//end isUnaryPlusMinus()
+
+
 }//end class

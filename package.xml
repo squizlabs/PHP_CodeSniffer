@@ -116,6 +116,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
         <file baseinstalldir="" name="IsShortListTest.inc" role="test" />
         <file baseinstalldir="" name="IsShortListTest.php" role="test" />
+        <file baseinstalldir="" name="IsUnaryPlusMinusJSTest.js" role="test" />
+        <file baseinstalldir="" name="IsUnaryPlusMinusJSTest.php" role="test" />
+        <file baseinstalldir="" name="IsUnaryPlusMinusTest.inc" role="test" />
+        <file baseinstalldir="" name="IsUnaryPlusMinusTest.php" role="test" />
        </dir>
        <dir name="UseStatements">
         <file baseinstalldir="" name="SplitImportUseStatementTest.inc" role="test" />
@@ -1937,6 +1941,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsShortListTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsShortListTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsShortListTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsShortListTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusJSTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusJSTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusJSTest.js" name="tests/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusJSTest.js" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/UseTypeTest.php" name="tests/Core/Util/Sniffs/UseStatements/UseTypeTest.php" />
@@ -2007,6 +2015,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsShortListTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsShortListTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsShortListTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsShortListTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusJSTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusJSTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusJSTest.js" name="tests/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusJSTest.js" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsUnaryPlusMinusTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" name="tests/Core/Util/Sniffs/UseStatements/SplitImportUseStatementTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/UseStatements/UseTypeTest.php" name="tests/Core/Util/Sniffs/UseStatements/UseTypeTest.php" />
