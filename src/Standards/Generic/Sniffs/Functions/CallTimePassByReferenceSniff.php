@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Parentheses;
+use PHP_CodeSniffer\Util\Sniffs\TokenIs;
 use PHP_CodeSniffer\Util\Tokens;
 
 class CallTimePassByReferenceSniff implements Sniff
@@ -111,7 +112,7 @@ class CallTimePassByReferenceSniff implements Sniff
             );
 
             if ($tokens[$tokenBefore]['code'] === T_BITWISE_AND) {
-                if ($phpcsFile->isReference($tokenBefore) === false) {
+                if (TokenIs::isReference($phpcsFile, $tokenBefore) === false) {
                     continue;
                 }
 

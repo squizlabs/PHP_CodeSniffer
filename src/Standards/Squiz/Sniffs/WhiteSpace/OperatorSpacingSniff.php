@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Parentheses;
+use PHP_CodeSniffer\Util\Sniffs\TokenIs;
 use PHP_CodeSniffer\Util\Tokens;
 
 class OperatorSpacingSniff implements Sniff
@@ -273,7 +274,7 @@ class OperatorSpacingSniff implements Sniff
         if ($tokens[$stackPtr]['code'] === T_BITWISE_AND) {
             // If it's not a reference, then we expect one space either side of the
             // bitwise operator.
-            if ($phpcsFile->isReference($stackPtr) === true) {
+            if (TokenIs::isReference($phpcsFile, $stackPtr) === true) {
                 return false;
             }
         }

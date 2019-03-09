@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Formatting;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Parentheses;
+use PHP_CodeSniffer\Util\Sniffs\TokenIs;
 use PHP_CodeSniffer\Util\Tokens;
 
 class OperatorBracketSniff implements Sniff
@@ -61,7 +62,9 @@ class OperatorBracketSniff implements Sniff
         }
 
         // If the & is a reference, then we don't want to check for brackets.
-        if ($tokens[$stackPtr]['code'] === T_BITWISE_AND && $phpcsFile->isReference($stackPtr) === true) {
+        if ($tokens[$stackPtr]['code'] === T_BITWISE_AND
+            && TokenIs::isReference($phpcsFile, $stackPtr) === true
+        ) {
             return;
         }
 
