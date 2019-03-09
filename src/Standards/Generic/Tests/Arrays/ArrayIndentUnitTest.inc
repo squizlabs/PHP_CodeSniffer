@@ -56,3 +56,15 @@ $var = [
         2 => 'two',
     /* three */ 3 => 'three',
     ];
+
+// phpcs:set Generic.Arrays.ArrayIndent indent 4
+
+// Short lists should not be touched.
+[
+ $a,
+ [
+  $b,
+  $c,
+  $d,
+ ],
+] = $array;
