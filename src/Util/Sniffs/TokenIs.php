@@ -3,6 +3,7 @@
  * Utility functions to determine what an ambiguous token represents.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
@@ -28,7 +29,7 @@ class TokenIs
      */
     public static function isReference(File $phpcsFile, $stackPtr)
     {
-		$tokens = $phpcsFile->getTokens();
+        $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] !== T_BITWISE_AND) {
             return false;
@@ -134,6 +135,76 @@ class TokenIs
         return false;
 
     }//end isReference()
+
+
+    /**
+     * Determine whether a T_OPEN/CLOSE_SHORT_ARRAY token is a short list() construct.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the array bracket token.
+     *
+     * @return bool True if the token passed is the open/close bracket of a short list.
+     *              False if the token is a short array bracket or not
+     *              a T_OPEN/CLOSE_SHORT_ARRAY token.
+     */
+    public static function isShortList(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Is this one of the tokens this function handles ?
+        if ($tokens[$stackPtr]['code'] !== T_OPEN_SHORT_ARRAY
+            && $tokens[$stackPtr]['code'] !== T_CLOSE_SHORT_ARRAY
+        ) {
+            return false;
+        }
+
+        switch ($tokens[$stackPtr]['code']) {
+        case T_OPEN_SHORT_ARRAY:
+            $opener = $stackPtr;
+            $closer = $tokens[$stackPtr]['bracket_closer'];
+            break;
+
+        case T_CLOSE_SHORT_ARRAY:
+            $opener = $tokens[$stackPtr]['bracket_opener'];
+            $closer = $stackPtr;
+            break;
+        }
+
+        $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($closer + 1), null, true, null, true);
+        if ($nextNonEmpty !== false && $tokens[$nextNonEmpty]['code'] === T_EQUAL) {
+            return true;
+        }
+
+        // Check for short list in foreach, i.e. `foreach($array as [$a, $b])`.
+        $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($opener - 1), null, true, null, true);
+        if ($prevNonEmpty !== false
+            && ($tokens[$prevNonEmpty]['code'] === T_AS
+            || $tokens[$prevNonEmpty]['code'] === T_DOUBLE_ARROW)
+            && Parentheses::lastOwnerIn($phpcsFile, $prevNonEmpty, T_FOREACH) !== false
+        ) {
+            return true;
+        }
+
+        // Maybe this is a short list syntax nested inside another short list syntax ?
+        $parentOpen = $opener;
+        do {
+            $parentOpen = $phpcsFile->findPrevious(
+                T_OPEN_SHORT_ARRAY,
+                ($parentOpen - 1),
+                null,
+                false,
+                null,
+                true
+            );
+
+            if ($parentOpen === false) {
+                return false;
+            }
+        } while ($tokens[$parentOpen]['bracket_closer'] < $opener);
+
+        return self::isShortList($phpcsFile, $parentOpen);
+
+    }//end isShortList()
 
 
 }//end class
