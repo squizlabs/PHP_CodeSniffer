@@ -268,6 +268,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceBsdAllmanStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceKernighanRitchieStandard.xml" role="php" />
        </dir>
+       <dir name="Lists">
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxStandard.xml" role="php" />
+       </dir>
        <dir name="Metrics">
         <file baseinstalldir="PHP/CodeSniffer" name="CyclomaticComplexityStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NestingLevelStandard.xml" role="php" />
@@ -368,6 +371,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCallArgumentSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceBsdAllmanSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceKernighanRitchieSniff.php" role="php" />
+       </dir>
+       <dir name="Lists">
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxSniff.php" role="php" />
        </dir>
        <dir name="Metrics">
         <file baseinstalldir="PHP/CodeSniffer" name="CyclomaticComplexitySniff.php" role="php" />
@@ -608,6 +614,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceKernighanRitchieUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceKernighanRitchieUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpeningFunctionBraceKernighanRitchieUnitTest.php" role="test" />
+       </dir>
+       <dir name="Lists">
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortListSyntaxUnitTest.php" role="test" />
        </dir>
        <dir name="Metrics">
         <file baseinstalldir="PHP/CodeSniffer" name="CyclomaticComplexityUnitTest.inc" role="test" />

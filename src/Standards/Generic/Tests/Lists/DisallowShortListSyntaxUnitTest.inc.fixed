@@ -1,0 +1,17 @@
+<?php
+// Short array, not short list.
+$var = [1,2,3];
+
+list($a) = $array;
+list($a) = $array;
+list($a, list($b, $c, $d)) = $array;
+list($a, list($b, $c, $d)) = $array;
+list($a[], list($a[], $a[], $a[],),) = $array;
+list(
+    $a,
+    list(
+        $b,
+        $c,
+        $d,
+    ),
+) = $array;
