@@ -260,3 +260,5 @@ function bar(): array {}
 if ($line{-1} === ':') {
     $line = substr($line, 0, -1);
 }
+
+$a = (bool) -1;

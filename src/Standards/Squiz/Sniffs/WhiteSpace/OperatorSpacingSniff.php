@@ -280,54 +280,11 @@ class OperatorSpacingSniff implements Sniff
         }
 
         if ($tokens[$stackPtr]['code'] === T_MINUS || $tokens[$stackPtr]['code'] === T_PLUS) {
-            // Check minus spacing, but make sure we aren't just assigning
-            // a minus value or returning one.
-            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-            if ($tokens[$prev]['code'] === T_RETURN) {
-                // Just returning a negative value; eg. (return -1).
+            // Check that we aren't just assigning a minus/plus value or returning one.
+            if (TokenIs::isUnaryPlusMinus($phpcsFile, $stackPtr) === true) {
                 return false;
             }
-
-            if (isset(Tokens::$operators[$tokens[$prev]['code']]) === true) {
-                // Just trying to operate on a negative value; eg. ($var * -1).
-                return false;
-            }
-
-            if (isset(Tokens::$comparisonTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to compare a negative value; eg. ($var === -1).
-                return false;
-            }
-
-            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
-                // Just trying to compare a negative value; eg. ($var || -1 === $b).
-                return false;
-            }
-
-            if (isset(Tokens::$assignmentTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to assign a negative value; eg. ($var = -1).
-                return false;
-            }
-
-            // A list of tokens that indicate that the token is not
-            // part of an arithmetic operation.
-            $invalidTokens = [
-                T_COMMA               => true,
-                T_OPEN_PARENTHESIS    => true,
-                T_OPEN_SQUARE_BRACKET => true,
-                T_OPEN_SHORT_ARRAY    => true,
-                T_DOUBLE_ARROW        => true,
-                T_COLON               => true,
-                T_INLINE_THEN         => true,
-                T_INLINE_ELSE         => true,
-                T_CASE                => true,
-                T_OPEN_CURLY_BRACKET  => true,
-            ];
-
-            if (isset($invalidTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to use a negative value; eg. myFunction($var, -2).
-                return false;
-            }
-        }//end if
+        }
 
         return true;
 
