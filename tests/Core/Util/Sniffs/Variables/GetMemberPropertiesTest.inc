@@ -94,7 +94,7 @@ class TestMemberProperties
     /* testMethodParam */
     public function methodName($param) {
         /* testImportedGlobal */
-        global $importedGlobal = true;
+        global $importedGlobal;
 
         /* testLocalVariable */
         $localVariable = true;
