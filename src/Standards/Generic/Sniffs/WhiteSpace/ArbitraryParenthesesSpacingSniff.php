@@ -58,7 +58,6 @@ class ArbitraryParenthesesSpacingSniff implements Sniff
         $this->ignoreTokens[T_CLOSE_SHORT_ARRAY]    = T_CLOSE_SHORT_ARRAY;
 
         $this->ignoreTokens[T_USE]        = T_USE;
-        $this->ignoreTokens[T_DECLARE]    = T_DECLARE;
         $this->ignoreTokens[T_THROW]      = T_THROW;
         $this->ignoreTokens[T_YIELD]      = T_YIELD;
         $this->ignoreTokens[T_YIELD_FROM] = T_YIELD_FROM;
