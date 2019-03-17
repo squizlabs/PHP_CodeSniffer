@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class NonExecutableCodeSniff implements Sniff
@@ -140,16 +141,8 @@ class NonExecutableCodeSniff implements Sniff
         // If we find a closing parenthesis that belongs to a condition
         // we should ignore this token.
         $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-        if (isset($tokens[$prev]['parenthesis_owner']) === true) {
-            $owner  = $tokens[$prev]['parenthesis_owner'];
-            $ignore = [
-                T_IF     => true,
-                T_ELSE   => true,
-                T_ELSEIF => true,
-            ];
-            if (isset($ignore[$tokens[$owner]['code']]) === true) {
-                return;
-            }
+        if (Parentheses::isOwnerIn($phpcsFile, $prev, [T_IF, T_ELSE, T_ELSEIF]) === true) {
+            return;
         }
 
         $lastCondition = Conditions::getLastCondition($phpcsFile, $stackPtr);
