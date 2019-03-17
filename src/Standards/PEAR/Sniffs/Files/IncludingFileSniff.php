@@ -13,6 +13,7 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Files;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class IncludingFileSniff implements Sniff
@@ -76,12 +77,8 @@ class IncludingFileSniff implements Sniff
         // Check to see if this including statement is within the parenthesis
         // of a condition. If that's the case then we need to process it as being
         // within a condition, as they are checking the return value.
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            foreach ($tokens[$stackPtr]['nested_parenthesis'] as $left => $right) {
-                if (isset($tokens[$left]['parenthesis_owner']) === true) {
-                    $inCondition = true;
-                }
-            }
+        if (Parentheses::hasOwner($phpcsFile, $stackPtr, Tokens::$parenthesisOpeners) === true) {
+            $inCondition = true;
         }
 
         // Check to see if they are assigning the return value of this
