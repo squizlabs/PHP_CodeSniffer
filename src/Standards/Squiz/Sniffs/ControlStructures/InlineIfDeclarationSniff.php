@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\ControlStructures;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 
 class InlineIfDeclarationSniff implements Sniff
 {
@@ -41,12 +42,10 @@ class InlineIfDeclarationSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $openBracket  = null;
-        $closeBracket = null;
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            $parens       = $tokens[$stackPtr]['nested_parenthesis'];
-            $openBracket  = array_pop($parens);
-            $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
+        $closeBracket    = null;
+        $lastParenCloser = Parentheses::getLastCloser($phpcsFile, $stackPtr);
+        if ($lastParenCloser !== false) {
+            $closeBracket = $lastParenCloser;
         }
 
         // Find the beginning of the statement. If we don't find a
