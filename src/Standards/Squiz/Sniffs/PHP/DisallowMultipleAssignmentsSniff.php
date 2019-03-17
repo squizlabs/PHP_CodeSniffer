@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class DisallowMultipleAssignmentsSniff implements Sniff
@@ -42,26 +43,14 @@ class DisallowMultipleAssignmentsSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Ignore default value assignments in function definitions.
-        $function = $phpcsFile->findPrevious([T_FUNCTION, T_CLOSURE], ($stackPtr - 1), null, false, null, true);
-        if ($function !== false) {
-            $opener = $tokens[$function]['parenthesis_opener'];
-            $closer = $tokens[$function]['parenthesis_closer'];
-            if ($opener < $stackPtr && $closer > $stackPtr) {
-                return;
-            }
+        // Ignore default value assignments in function definitions and assignments in WHILE loop conditions.
+        if (Parentheses::lastOwnerIn($phpcsFile, $stackPtr, [T_FUNCTION, T_CLOSURE]) !== false) {
+            return;
         }
 
         // Ignore assignments in WHILE loop conditions.
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            $nested = $tokens[$stackPtr]['nested_parenthesis'];
-            foreach ($nested as $opener => $closer) {
-                if (isset($tokens[$opener]['parenthesis_owner']) === true
-                    && $tokens[$tokens[$opener]['parenthesis_owner']]['code'] === T_WHILE
-                ) {
-                    return;
-                }
-            }
+        if (Parentheses::hasOwner($phpcsFile, $stackPtr, T_WHILE) === true) {
+            return;
         }
 
         /*
@@ -135,11 +124,10 @@ class DisallowMultipleAssignmentsSniff implements Sniff
         // Ignore the first part of FOR loops as we are allowed to
         // assign variables there even though the variable is not the
         // first thing on the line.
-        if ($tokens[$varToken]['code'] === T_OPEN_PARENTHESIS && isset($tokens[$varToken]['parenthesis_owner']) === true) {
-            $owner = $tokens[$varToken]['parenthesis_owner'];
-            if ($tokens[$owner]['code'] === T_FOR) {
-                return;
-            }
+        if ($tokens[$varToken]['code'] === T_OPEN_PARENTHESIS
+            && Parentheses::isOwnerIn($phpcsFile, $varToken, T_FOR) === true
+        ) {
+            return;
         }
 
         if ($tokens[$varToken]['code'] === T_VARIABLE
