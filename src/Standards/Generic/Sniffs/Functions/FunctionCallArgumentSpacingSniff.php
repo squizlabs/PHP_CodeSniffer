@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Functions;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionCallArgumentSpacingSniff implements Sniff
@@ -108,8 +109,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
 
             // Make sure the comma or variable belongs directly to this function call,
             // and is not inside a nested function call or array.
-            $brackets    = $tokens[$nextSeparator]['nested_parenthesis'];
-            $lastBracket = array_pop($brackets);
+            $lastBracket = Parentheses::getLastCloser($phpcsFile, $nextSeparator);
             if ($lastBracket !== $closeBracket) {
                 continue;
             }
