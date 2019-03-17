@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 
 class DisallowMultipleStatementsSniff implements Sniff
 {
@@ -59,18 +60,8 @@ class DisallowMultipleStatementsSniff implements Sniff
         } while ($tokens[$prev]['code'] === T_PHPCS_IGNORE);
 
         // Ignore multiple statements in a FOR condition.
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            foreach ($tokens[$stackPtr]['nested_parenthesis'] as $bracket) {
-                if (isset($tokens[$bracket]['parenthesis_owner']) === false) {
-                    // Probably a closure sitting inside a function call.
-                    continue;
-                }
-
-                $owner = $tokens[$bracket]['parenthesis_owner'];
-                if ($tokens[$owner]['code'] === T_FOR) {
-                    return;
-                }
-            }
+        if (Parentheses::hasOwner($phpcsFile, $stackPtr, T_FOR) === true) {
+            return;
         }
 
         if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
