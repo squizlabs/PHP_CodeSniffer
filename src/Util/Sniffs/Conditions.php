@@ -159,18 +159,12 @@ class Conditions
         $scopePtr = self::validDirectScope($phpcsFile, $stackPtr, $validScopes);
         if ($scopePtr !== false) {
             // Make sure it's not a method parameter.
-            if (empty($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            $deepestOpen = Parentheses::getLastOpener($phpcsFile, $stackPtr);
+            if ($deepestOpen === false
+                || $deepestOpen < $scopePtr
+                || Parentheses::isOwnerIn($phpcsFile, $deepestOpen, T_FUNCTION) === false
+            ) {
                 return true;
-            } else {
-                $parenthesis = $tokens[$stackPtr]['nested_parenthesis'];
-                $parenthesis = array_keys($parenthesis);
-                $deepestOpen = array_pop($parenthesis);
-                if ($deepestOpen < $scopePtr
-                    || isset($tokens[$deepestOpen]['parenthesis_owner']) === false
-                    || $tokens[$tokens[$deepestOpen]['parenthesis_owner']]['code'] !== T_FUNCTION
-                ) {
-                    return true;
-                }
             }
         }
 
