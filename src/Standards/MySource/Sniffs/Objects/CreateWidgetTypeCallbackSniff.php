@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Objects;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class CreateWidgetTypeCallbackSniff implements Sniff
@@ -133,17 +134,14 @@ class CreateWidgetTypeCallbackSniff implements Sniff
 
                 // Just make sure those brackets dont belong to anyone,
                 // like an IF or FOR statement.
-                foreach ($tokens[$i]['nested_parenthesis'] as $bracket) {
-                    if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
-                        continue(2);
-                    }
+                if (Parentheses::hasOwner($phpcsFile, $i, Tokens::$parenthesisOpeners) === true) {
+                    continue;
                 }
 
                 // Note that we use this endBracket down further when checking
                 // for a RETURN statement.
-                $nestedParens = $tokens[$i]['nested_parenthesis'];
-                $endBracket   = end($nestedParens);
-                $bracket      = key($nestedParens);
+                $endBracket = Parentheses::getLastOpener($phpcsFile, $i);
+                $bracket    = Parentheses::getLastCloser($phpcsFile, $i);
 
                 $prev = $phpcsFile->findPrevious(
                     Tokens::$emptyTokens,
