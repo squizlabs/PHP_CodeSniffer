@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Formatting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class OperatorBracketSniff implements Sniff
@@ -115,17 +116,11 @@ class OperatorBracketSniff implements Sniff
         }
 
         if ($tokens[$stackPtr]['code'] === T_BITWISE_OR
-            && isset($tokens[$stackPtr]['nested_parenthesis']) === true
+            && Parentheses::lastOwnerIn($phpcsFile, $stackPtr, T_CATCH) !== false
         ) {
-            $brackets    = $tokens[$stackPtr]['nested_parenthesis'];
-            $lastBracket = array_pop($brackets);
-            if (isset($tokens[$lastBracket]['parenthesis_owner']) === true
-                && $tokens[$tokens[$lastBracket]['parenthesis_owner']]['code'] === T_CATCH
-            ) {
-                // This is a pipe character inside a catch statement, so it is acting
-                // as an exception type separator and not an arithmetic operation.
-                return;
-            }
+            // This is a pipe character inside a catch statement, so it is acting
+            // as an exception type separator and not an arithmetic operation.
+            return;
         }
 
         // Tokens that are allowed inside a bracketed operation.
