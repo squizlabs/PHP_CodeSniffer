@@ -34,7 +34,7 @@ $var = myFunction(
      $this,
      !$directLinks,
      FALSE,
-    );
+    ),
 );
 
 for ($node = $fieldsTag->nextSibling; $node; $node = $node->nextSibling) {
@@ -54,3 +54,5 @@ $a = $b === true ? $c : $d;
 
 $this->_args = $this->_getArgs(($_SERVER['argv'] ?? []));
 $args = ($_SERVER['argv'] ?? []);
+
+function ignoreMe($a = !SOME_CONSTANT){}

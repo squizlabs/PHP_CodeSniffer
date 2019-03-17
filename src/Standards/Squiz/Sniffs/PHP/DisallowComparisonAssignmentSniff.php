@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class DisallowComparisonAssignmentSniff implements Sniff
@@ -43,13 +44,8 @@ class DisallowComparisonAssignmentSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Ignore default value assignments in function definitions.
-        $function = $phpcsFile->findPrevious(T_FUNCTION, ($stackPtr - 1), null, false, null, true);
-        if ($function !== false) {
-            $opener = $tokens[$function]['parenthesis_opener'];
-            $closer = $tokens[$function]['parenthesis_closer'];
-            if ($opener < $stackPtr && $closer > $stackPtr) {
-                return;
-            }
+        if (Parentheses::lastOwnerIn($phpcsFile, $stackPtr, T_FUNCTION) !== false) {
+            return;
         }
 
         // Ignore values in array definitions.
