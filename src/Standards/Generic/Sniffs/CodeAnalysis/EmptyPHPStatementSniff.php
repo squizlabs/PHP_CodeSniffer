@@ -14,6 +14,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class EmptyPHPStatementSniff implements Sniff
@@ -61,15 +62,9 @@ class EmptyPHPStatementSniff implements Sniff
                 return;
             }
 
-            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-                $nested     = $tokens[$stackPtr]['nested_parenthesis'];
-                $lastCloser = array_pop($nested);
-                if (isset($tokens[$lastCloser]['parenthesis_owner']) === true
-                    && $tokens[$tokens[$lastCloser]['parenthesis_owner']]['code'] === T_FOR
-                ) {
-                    // Empty for() condition.
-                    return;
-                }
+            if (Parentheses::lastOwnerIn($phpcsFile, $stackPtr, T_FOR) !== false) {
+                // Empty for() condition.
+                return;
             }
 
             $fix = $phpcsFile->addFixableWarning(
