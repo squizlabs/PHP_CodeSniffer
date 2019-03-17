@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class SemicolonSpacingSniff implements Sniff
@@ -61,18 +62,10 @@ class SemicolonSpacingSniff implements Sniff
 
         // Detect whether this is a semi-colons for a conditions in a `for()` control structure.
         $forCondition = false;
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            $nestedParens     = $tokens[$stackPtr]['nested_parenthesis'];
-            $closeParenthesis = end($nestedParens);
-
-            if (isset($tokens[$closeParenthesis]['parenthesis_owner']) === true) {
-                $owner = $tokens[$closeParenthesis]['parenthesis_owner'];
-
-                if ($tokens[$owner]['code'] === T_FOR) {
-                    $forCondition = true;
-                    $nonSpace     = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 2), null, true);
-                }
-            }
+        $owner        = Parentheses::getLastOwner($phpcsFile, $stackPtr);
+        if ($owner !== false && $tokens[$owner]['code'] === T_FOR) {
+            $forCondition = true;
+            $nonSpace     = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 2), null, true);
         }
 
         if ($tokens[$nonSpace]['code'] === T_SEMICOLON
