@@ -14,6 +14,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Formatting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class MultipleStatementAlignmentSniff implements Sniff
@@ -76,12 +77,8 @@ class MultipleStatementAlignmentSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Ignore assignments used in a condition, like an IF or FOR.
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            foreach ($tokens[$stackPtr]['nested_parenthesis'] as $start => $end) {
-                if (isset($tokens[$start]['parenthesis_owner']) === true) {
-                    return;
-                }
-            }
+        if (Parentheses::hasOwner($phpcsFile, $stackPtr, Tokens::$parenthesisOpeners) === true) {
+            return;
         }
 
         $lastAssign = $this->checkAlignment($phpcsFile, $stackPtr);
@@ -216,12 +213,8 @@ class MultipleStatementAlignmentSniff implements Sniff
                 }
 
                 // Make sure it is not assigned inside a condition (eg. IF, FOR).
-                if (isset($tokens[$assign]['nested_parenthesis']) === true) {
-                    foreach ($tokens[$assign]['nested_parenthesis'] as $start => $end) {
-                        if (isset($tokens[$start]['parenthesis_owner']) === true) {
-                            break(2);
-                        }
-                    }
+                if (Parentheses::hasOwner($phpcsFile, $assign, Tokens::$parenthesisOpeners) === true) {
+                    break;
                 }
             }//end if
 
