@@ -44,37 +44,7 @@ class DisallowComparisonAssignmentSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Ignore default value assignments in function definitions.
-        if (Parentheses::lastOwnerIn($phpcsFile, $stackPtr, T_FUNCTION) !== false) {
-            return;
-        }
-
-        // Ignore values in array definitions.
-        $array = $phpcsFile->findNext(
-            T_ARRAY,
-            ($stackPtr + 1),
-            null,
-            false,
-            null,
-            true
-        );
-
-        if ($array !== false) {
-            return;
-        }
-
-        // Ignore function calls.
-        $ignore = [
-            T_STRING,
-            T_WHITESPACE,
-            T_OBJECT_OPERATOR,
-        ];
-
-        $next = $phpcsFile->findNext($ignore, ($stackPtr + 1), null, true);
-        if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS
-            && $tokens[($next - 1)]['code'] === T_STRING
-        ) {
-            // Code will look like: $var = myFunction(
-            // and will be ignored.
+        if (Parentheses::lastOwnerIn($phpcsFile, $stackPtr, [T_FUNCTION, T_CLOSURE]) !== false) {
             return;
         }
 
@@ -86,6 +56,43 @@ class DisallowComparisonAssignmentSniff implements Sniff
         }
 
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
+            if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
+                continue;
+            }
+
+            // Skip over arrays.
+            if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
+                $i = $tokens[$i]['bracket_closer'];
+                continue;
+            }
+
+            if ($tokens[$i]['code'] === T_ARRAY && isset($tokens[$i]['parenthesis_closer']) === true) {
+                $i = $tokens[$i]['parenthesis_closer'];
+                continue;
+            }
+
+            // Skip over closures.
+            if ($tokens[$i]['code'] === T_CLOSURE) {
+                if (isset($tokens[$i]['scope_closer']) === false) {
+                    // Live coding.
+                    break;
+                }
+
+                $i = $tokens[$i]['scope_closer'];
+                continue;
+            }
+
+            // Skip over named function calls.
+            if ($tokens[$i]['code'] === T_STRING) {
+                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
+                if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS
+                    && isset($tokens[$next]['parenthesis_closer']) === true
+                ) {
+                    $i = $tokens[$next]['parenthesis_closer'];
+                    continue;
+                }
+            }
+
             if ((isset(Tokens::$comparisonTokens[$tokens[$i]['code']]) === true
                 && $tokens[$i]['code'] !== T_COALESCE)
                 || $tokens[$i]['code'] === T_INLINE_THEN
@@ -102,7 +109,7 @@ class DisallowComparisonAssignmentSniff implements Sniff
                 $phpcsFile->addError($error, $stackPtr, 'AssignedBool');
                 break;
             }
-        }
+        }//end for
 
     }//end process()
 

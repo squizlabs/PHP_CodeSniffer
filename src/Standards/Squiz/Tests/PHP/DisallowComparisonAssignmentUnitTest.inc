@@ -56,3 +56,14 @@ $this->_args = $this->_getArgs(($_SERVER['argv'] ?? []));
 $args = ($_SERVER['argv'] ?? []);
 
 function ignoreMe($a = !SOME_CONSTANT){}
+$closure = function ($a = !SOME_CONSTANT){};
+
+$var = /* comment */ myFunction(!$var);
+$var = namespace\myFunction(!$var);
+$var = self::myFunction(!$var);
+$var = myFunction($var) || $bar;
+
+$compound = $array + array(!$something);
+$compound = $array !== array($something);
+$compound = $array + [!$something];
+$compound = $array !== [$something];
