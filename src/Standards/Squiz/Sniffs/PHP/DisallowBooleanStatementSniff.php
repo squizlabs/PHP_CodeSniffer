@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class DisallowBooleanStatementSniff implements Sniff
@@ -40,14 +41,9 @@ class DisallowBooleanStatementSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            foreach ($tokens[$stackPtr]['nested_parenthesis'] as $open => $close) {
-                if (isset($tokens[$open]['parenthesis_owner']) === true) {
-                    // Any owner means we are not just a simple statement.
-                    return;
-                }
-            }
+        if (Parentheses::hasOwner($phpcsFile, $stackPtr, Tokens::$parenthesisOpeners) === true) {
+            // Any owner means we are not just a simple statement.
+            return;
         }
 
         $error = 'Boolean operators are not allowed outside of control structure conditions';
