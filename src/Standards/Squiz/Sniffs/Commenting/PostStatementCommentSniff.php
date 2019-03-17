@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 
 class PostStatementCommentSniff implements Sniff
 {
@@ -34,12 +35,12 @@ class PostStatementCommentSniff implements Sniff
      * @var array
      */
     private $controlStructureExceptions = [
-        T_IF      => true,
-        T_ELSEIF  => true,
-        T_SWITCH  => true,
-        T_WHILE   => true,
-        T_FOR     => true,
-        T_FOREACH => true,
+        T_IF,
+        T_ELSEIF,
+        T_SWITCH,
+        T_WHILE,
+        T_FOR,
+        T_FOREACH,
     ];
 
 
@@ -97,15 +98,8 @@ class PostStatementCommentSniff implements Sniff
         }
 
         // Special case for (trailing) comments within multi-line control structures.
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            $nestedParens = $tokens[$stackPtr]['nested_parenthesis'];
-            foreach ($nestedParens as $open => $close) {
-                if (isset($tokens[$open]['parenthesis_owner']) === true
-                    && isset($this->controlStructureExceptions[$tokens[$tokens[$open]['parenthesis_owner']]['code']]) === true
-                ) {
-                    return;
-                }
-            }
+        if (Parentheses::hasOwner($phpcsFile, $stackPtr, $this->controlStructureExceptions) === true) {
+            return;
         }
 
         $error = 'Comments may not appear after statements';
