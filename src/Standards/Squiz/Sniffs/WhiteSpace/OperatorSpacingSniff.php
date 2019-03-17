@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class OperatorSpacingSniff implements Sniff
@@ -255,18 +256,8 @@ class OperatorSpacingSniff implements Sniff
         if ($tokens[$stackPtr]['code'] === T_EQUAL
             || $tokens[$stackPtr]['code'] === T_MINUS
         ) {
-            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-                $parenthesis = array_keys($tokens[$stackPtr]['nested_parenthesis']);
-                $bracket     = array_pop($parenthesis);
-                if (isset($tokens[$bracket]['parenthesis_owner']) === true) {
-                    $function = $tokens[$bracket]['parenthesis_owner'];
-                    if ($tokens[$function]['code'] === T_FUNCTION
-                        || $tokens[$function]['code'] === T_CLOSURE
-                        || $tokens[$function]['code'] === T_DECLARE
-                    ) {
-                        return false;
-                    }
-                }
+            if (Parentheses::lastOwnerIn($phpcsFile, $stackPtr, [T_FUNCTION, T_CLOSURE, T_DECLARE]) !== false) {
+                return false;
             }
         }
 
