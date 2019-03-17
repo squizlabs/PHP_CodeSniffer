@@ -10,6 +10,7 @@
 namespace PHP_CodeSniffer\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 abstract class AbstractArraySniff implements Sniff
@@ -82,8 +83,7 @@ abstract class AbstractArraySniff implements Sniff
         for ($checkToken = ($stackPtr + 1); $checkToken <= $lastArrayToken; $checkToken++) {
             // Skip bracketed statements, like function calls.
             if ($tokens[$checkToken]['code'] === T_OPEN_PARENTHESIS
-                && (isset($tokens[$checkToken]['parenthesis_owner']) === false
-                || $tokens[$checkToken]['parenthesis_owner'] !== $stackPtr)
+                && Parentheses::getOwner($phpcsFile, $checkToken) !== $stackPtr
             ) {
                 $checkToken = $tokens[$checkToken]['parenthesis_closer'];
                 continue;
