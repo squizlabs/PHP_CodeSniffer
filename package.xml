@@ -111,6 +111,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="ParenthesesTest.inc" role="test" />
         <file baseinstalldir="" name="ParenthesesTest.php" role="test" />
        </dir>
+       <dir name="PassedParameters">
+        <file baseinstalldir="" name="GetParameterCountTest.inc" role="test" />
+        <file baseinstalldir="" name="GetParameterCountTest.php" role="test" />
+        <file baseinstalldir="" name="GetParametersTest.inc" role="test" />
+        <file baseinstalldir="" name="GetParametersTest.php" role="test" />
+        <file baseinstalldir="" name="HasParametersTest.inc" role="test" />
+        <file baseinstalldir="" name="HasParametersTest.php" role="test" />
+       </dir>
        <dir name="TokenIs">
         <file baseinstalldir="" name="IsReferenceTest.inc" role="test" />
         <file baseinstalldir="" name="IsReferenceTest.php" role="test" />
@@ -1847,6 +1855,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP/CodeSniffer" name="Namespaces.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="ObjectDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Parentheses.php" role="php" />
+      <file baseinstalldir="PHP/CodeSniffer" name="PassedParameters.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="TokenIs.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="UseStatements.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Variables.php" role="php" />
@@ -1937,6 +1946,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParametersTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetParametersTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParametersTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/GetParametersTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/HasParametersTest.php" name="tests/Core/Util/Sniffs/PassedParameters/HasParametersTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/HasParametersTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/HasParametersTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsShortListTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsShortListTest.php" />
@@ -2011,6 +2026,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParametersTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetParametersTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParametersTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/GetParametersTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/HasParametersTest.php" name="tests/Core/Util/Sniffs/PassedParameters/HasParametersTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/HasParametersTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/HasParametersTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" name="tests/Core/Util/Sniffs/TokenIs/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/TokenIs/IsShortListTest.php" name="tests/Core/Util/Sniffs/TokenIs/IsShortListTest.php" />
