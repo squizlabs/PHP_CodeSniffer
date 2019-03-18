@@ -3895,7 +3895,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <date>2015-04-29</date>
    <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
-    - The error message for PSR2.ControlStructures.SwitchDeclaration.WrongOpener case is now clearer (request #579)
+    - The error message for PSR2.ControlStructures.SwitchDeclaration.WrongOpenercase is now clearer (request #579)
     - Fixed bug #545 : Long list of CASE statements can cause tokenizer to reach a depth limit
     - Fixed bug #565 : Squiz.WhiteSpace.OperatorSpacing reports negative number in short array
       -- Thanks to Vašek Purchart for the patch
