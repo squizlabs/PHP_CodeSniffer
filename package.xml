@@ -78,6 +78,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="IsOOPropertyTest.inc" role="test" />
         <file baseinstalldir="" name="IsOOPropertyTest.php" role="test" />
        </dir>
+       <dir name="ConstructNames">
+        <file baseinstalldir="" name="IsCamelCapsTest.php" role="test" />
+       </dir>
        <dir name="FunctionDeclarations">
         <file baseinstalldir="" name="GetParametersTest.inc" role="test" />
         <file baseinstalldir="" name="GetParametersTest.php" role="test" />
@@ -160,7 +163,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="" name="AbstractMethodUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllTests.php" role="test" />
      <file baseinstalldir="" name="ErrorSuppressionTest.php" role="test" />
-     <file baseinstalldir="" name="IsCamelCapsTest.php" role="test" />
     </dir>
     <dir name="Standards">
      <file baseinstalldir="" name="AbstractSniffUnitTest.php" role="test" />
@@ -1922,7 +1924,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="tests/bootstrap.php" name="tests/bootstrap.php" />
    <install as="CodeSniffer/Core/AbstractMethodUnitTest.php" name="tests/Core/AbstractMethodUnitTest.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
-   <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
@@ -1934,6 +1935,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" name="tests/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" />
@@ -2009,7 +2011,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="tests/TestSuite7.php" name="tests/TestSuite7.php" />
    <install as="CodeSniffer/Core/AbstractMethodUnitTest.php" name="tests/Core/AbstractMethodUnitTest.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
-   <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
@@ -2021,6 +2022,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" name="tests/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetPropertiesTest.php" />

@@ -7,7 +7,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core;
+namespace PHP_CodeSniffer\Tests\Core\Util\Sniffs\ConstructNames;
 
 use PHP_CodeSniffer\Util\Common;
 use PHPUnit\Framework\TestCase;
