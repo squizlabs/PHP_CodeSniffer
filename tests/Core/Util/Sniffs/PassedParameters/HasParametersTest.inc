@@ -10,6 +10,12 @@ class Foo {
     }
 }
 
+/* testNotAVariableFunctionCall */
+if ($a === $b) {}
+
+/* testNotAClosureDeclarationWithCall1 */
+(new MyClass)->methodName();
+
 // Function calls: no parameters.
 
 /* testNoParamsFunctionCall1 */
@@ -38,6 +44,41 @@ class Bar {
         return new self(true);
     }
 }
+
+/* testHasParamsFunctionCall4 */
+${$functionname}(1,2,3);
+
+/* testHasParamsFunctionCall5 */
+$obj->{$var}('foo');
+
+/* testHasParamsFunctionCall6 */
+$this->{self::$methodname}([]);
+
+/* testHasParamsFunctionCall7 */
+${$this->functionname}(array(1));
+
+/* testHasParamsFunctionCall8 */
+${FUNCTION_NAME}(false);
+
+$closureCall = (function ($a, $b) {
+	/* testHasParamsFunctionCall9 */
+	})('a','b');
+
+/* testNotAClosureDeclarationWithCall2 */
+(function ($a, $b) {
+    /* testNotAClosureDeclarationWithCall3 */
+    return function ($c, $d)
+        /* testNotAClosureDeclarationWithCall4 */
+	    use ($a, $b)
+	{
+        echo $a, $b, $c, $d;
+    };
+/* testHasParamsFunctionCall10 */
+})
+    /* testHasParamsFunctionCall11 */
+    ('a','b')
+    /* testNotAClosureDeclarationWithCall5 */
+	('c','d');
 
 // Arrays: no parameters.
 

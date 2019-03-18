@@ -54,6 +54,44 @@ class HasParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test receiving an expected exception when T_CLOSE_CURLY_BRACKET is passed which isn't a function call.
+     *
+     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
+     * @expectedExceptionMessage The hasParameters() method expects a function call, array, list, isset or unset token to be passed. Received a "T_CLOSE_CURLY_BRACKET" which is not function call
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\PassedParameters::hasParameters
+     *
+     * @return void
+     */
+    public function testNotAVariableFunctionCall()
+    {
+        $self   = $this->getTargetToken('/* testNotAVariableFunctionCall */', T_CLOSE_CURLY_BRACKET);
+        $result = PassedParameters::hasParameters(self::$phpcsFile, $self);
+
+    }//end testNotAVariableFunctionCall()
+
+
+    /**
+     * Test receiving an expected exception when T_CLOSE_PARENTHESIS is passed which isn't a function call.
+     *
+     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
+     * @expectedExceptionMessage The hasParameters() method expects a function call, array, list, isset or unset token to be passed. Received a "T_CLOSE_PARENTHESIS" which is not function call
+     *
+     * @covers \PHP_CodeSniffer\Util\Sniffs\PassedParameters::hasParameters
+     *
+     * @return void
+     */
+    public function testNotAClosureDeclarationWithCall()
+    {
+        for ($i = 1; $i <= 5; $i++) {
+            $closeParen = $this->getTargetToken('/* testNotAClosureDeclarationWithCall'.$i.' */', T_CLOSE_PARENTHESIS);
+            $result     = PassedParameters::hasParameters(self::$phpcsFile, $closeParen);
+        }
+
+    }//end testNotAClosureDeclarationWithCall()
+
+
+    /**
      * Test correctly identifying whether parameters were passed to a function call or construct.
      *
      * @param string     $testMarker The comment which prefaces the target token in the test file.
@@ -118,6 +156,46 @@ class HasParametersTest extends AbstractMethodUnitTest
             [
                 '/* testHasParamsFunctionCall3 */',
                 T_SELF,
+                true,
+            ],
+            [
+                '/* testHasParamsFunctionCall4 */',
+                T_CLOSE_CURLY_BRACKET,
+                true,
+            ],
+            [
+                '/* testHasParamsFunctionCall5 */',
+                T_CLOSE_CURLY_BRACKET,
+                true,
+            ],
+            [
+                '/* testHasParamsFunctionCall6 */',
+                T_CLOSE_CURLY_BRACKET,
+                true,
+            ],
+            [
+                '/* testHasParamsFunctionCall7 */',
+                T_CLOSE_CURLY_BRACKET,
+                true,
+            ],
+            [
+                '/* testHasParamsFunctionCall8 */',
+                T_CLOSE_CURLY_BRACKET,
+                true,
+            ],
+            [
+                '/* testHasParamsFunctionCall9 */',
+                T_CLOSE_PARENTHESIS,
+                true,
+            ],
+            [
+                '/* testHasParamsFunctionCall10 */',
+                T_CLOSE_PARENTHESIS,
+                true,
+            ],
+            [
+                '/* testHasParamsFunctionCall11 */',
+                T_CLOSE_PARENTHESIS,
                 true,
             ],
 

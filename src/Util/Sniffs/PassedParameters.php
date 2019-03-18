@@ -24,15 +24,17 @@ class PassedParameters
      * @var array
      */
     private static $allowedConstructs = [
-        T_STRING           => true,
-        T_VARIABLE         => true,
-        T_SELF             => true,
-        T_STATIC           => true,
-        T_ARRAY            => true,
-        T_OPEN_SHORT_ARRAY => true,
-        T_ISSET            => true,
-        T_UNSET            => true,
-        T_LIST             => true,
+        T_STRING              => true,
+        T_VARIABLE            => true,
+        T_SELF                => true,
+        T_STATIC              => true,
+        T_CLOSE_CURLY_BRACKET => true,
+        T_CLOSE_PARENTHESIS   => true,
+        T_ARRAY               => true,
+        T_OPEN_SHORT_ARRAY    => true,
+        T_ISSET               => true,
+        T_UNSET               => true,
+        T_LIST                => true,
     ];
 
     /**
@@ -59,6 +61,8 @@ class PassedParameters
      * Extra features:
      * - If passed a T_SELF or T_STATIC stack pointer, it will accept it as a
      *   function call when used like `new self()`.
+     * - A T_CLOSE_CURLY_BRACKET and a T_CLOSE_PARENTHESIS stack pointer will be
+     *   checked as a function call.
      * - If passed a T_ARRAY or T_OPEN_SHORT_ARRAY stack pointer, it will detect
      *   whether the array (or short list) has values or is empty.
      * - If passed a T_ISSET, T_UNSET or T_LIST stack pointer, it will detect whether
@@ -83,6 +87,7 @@ class PassedParameters
             );
         }
 
+        // Weed out some of the obvious non-function calls.
         if ($tokens[$stackPtr]['code'] === T_SELF || $tokens[$stackPtr]['code'] === T_STATIC) {
             $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($tokens[$prev]['code'] !== T_NEW) {
@@ -90,7 +95,19 @@ class PassedParameters
                     'The hasParameters() method expects a function call, array, list, isset or unset token to be passed. Received "'.$tokens[$stackPtr]['type'].'" instead'
                 );
             }
-        }
+        } else if ($tokens[$stackPtr]['code'] === T_CLOSE_CURLY_BRACKET
+            && isset($tokens[$stackPtr]['scope_condition']) === true
+        ) {
+            throw new RuntimeException(
+                'The hasParameters() method expects a function call, array, list, isset or unset token to be passed. Received a "'.$tokens[$stackPtr]['type'].'" which is not function call'
+            );
+        } else if ($tokens[$stackPtr]['code'] === T_CLOSE_PARENTHESIS
+            && isset($tokens[$stackPtr]['parenthesis_owner']) === true
+        ) {
+            throw new RuntimeException(
+                'The hasParameters() method expects a function call, array, list, isset or unset token to be passed. Received a "'.$tokens[$stackPtr]['type'].'" which is not function call'
+            );
+        }//end if
 
         $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true, null, true);
 
