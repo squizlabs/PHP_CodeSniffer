@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\WhiteSpace;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Config;
 
@@ -281,18 +282,17 @@ class ScopeIndentSniff implements Sniff
 
                 $parenOpener = $tokens[$parenCloser]['parenthesis_opener'];
                 if ($tokens[$parenCloser]['line'] !== $tokens[$parenOpener]['line']) {
-                    $parens = 0;
-                    if (isset($tokens[$parenCloser]['nested_parenthesis']) === true
-                        && empty($tokens[$parenCloser]['nested_parenthesis']) === false
-                    ) {
-                        $parens = $tokens[$parenCloser]['nested_parenthesis'];
-                        end($parens);
-                        $parens = key($parens);
+                    $parens     = 0;
+                    $lastParens = Parentheses::getLastOpener($phpcsFile, $parenCloser);
+                    if ($lastParens !== false) {
+                        $parens = $lastParens;
                         if ($this->debug === true) {
                             $line = $tokens[$parens]['line'];
                             echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
                         }
                     }
+
+                    unset($lastParens);
 
                     $condition    = 0;
                     $endCondition = Conditions::getLastCondition($phpcsFile, $parenCloser);
@@ -711,18 +711,17 @@ class ScopeIndentSniff implements Sniff
                     }
                 }
 
-                $parens = 0;
-                if (isset($tokens[$scopeCloser]['nested_parenthesis']) === true
-                    && empty($tokens[$scopeCloser]['nested_parenthesis']) === false
-                ) {
-                    $parens = $tokens[$scopeCloser]['nested_parenthesis'];
-                    end($parens);
-                    $parens = key($parens);
+                $parens     = 0;
+                $lastParens = Parentheses::getLastOpener($phpcsFile, $scopeCloser);
+                if ($lastParens !== false) {
+                    $parens = $lastParens;
                     if ($this->debug === true) {
                         $line = $tokens[$parens]['line'];
                         echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
                     }
                 }
+
+                unset($lastParens);
 
                 $condition = 0;
                 if (empty($tokens[$scopeCloser]['conditions']) === false) {
@@ -1250,18 +1249,17 @@ class ScopeIndentSniff implements Sniff
                     }
                 }
 
-                $parens = 0;
-                if (isset($tokens[$i]['nested_parenthesis']) === true
-                    && empty($tokens[$i]['nested_parenthesis']) === false
-                ) {
-                    $parens = $tokens[$i]['nested_parenthesis'];
-                    end($parens);
-                    $parens = key($parens);
+                $parens     = 0;
+                $lastParens = Parentheses::getLastOpener($phpcsFile, $i);
+                if ($lastParens !== false) {
+                    $parens = $lastParens;
                     if ($this->debug === true) {
                         $line = $tokens[$parens]['line'];
                         echo "\t* token has nested parenthesis $parens on line $line *".PHP_EOL;
                     }
                 }
+
+                unset($lastParens);
 
                 $condition = 0;
                 if (empty($tokens[$i]['conditions']) === false) {
