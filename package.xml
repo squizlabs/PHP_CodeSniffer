@@ -3016,7 +3016,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - Added support for ES6 class declarations
-      -- Previously, these class were tokenized as JS objects but are now tokenzied as normal T_CLASS structures
+      -- Previously, these class were tokenized as JS objects but are now tokenized as normal T_CLASS structures
     - Added support for ES6 method declarations, where the "function" keyword is not used
       -- Previously, these methods were tokenized as JS objects (fixes bug #1251)
       -- The name of the ES6 method is now assigned the T_FUNCTION keyword and treated like a normal function
@@ -3193,7 +3193,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Thanks to Juliette Reinders Folmer for the patch
     - Generic.PHP.DisallowShortOpenTag now warns about possible short open tags even when short_open_tag is set to OFF
       -- Thanks to Juliette Reinders Folmer for the patch
-    - Generic.WhiteSpace.DisallowTabIndent now finds and fixes inproper use of spaces anywhere inside the line indent
+    - Generic.WhiteSpace.DisallowTabIndent now finds and fixes improper use of spaces anywhere inside the line indent
       -- Previously, only the first part of the indent was used to determine the indent type
       -- Thanks to Juliette Reinders Folmer for the patch
     - PEAR.Commenting.ClassComment now supports checking of traits as well as classes and interfaces
@@ -3211,7 +3211,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed bug #1364 : Yield From values are not recognised as returned values in Squiz FunctionComment sniff
     - Fixed bug #1373 : Error in tab expansion results in white-space of incorrect size
       -- Thanks to Mark Clements for the patch
-    - Fixed bug #1381 : Tokenizer: derefencing incorrectly identified as short array
+    - Fixed bug #1381 : Tokenizer: dereferencing incorrectly identified as short array
     - Fixed bug #1387 : Squiz.ControlStructures.ControlSignature does not handle alt syntax when checking space after closing   brace
     - Fixed bug #1392 : Scope indent calculated incorrectly when using array destructuring
     - Fixed bug #1394 : integer type hints appearing as TypeHintMissing instead of ScalarTypeHintMissing
@@ -3494,7 +3494,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Added a new --exclude CLI argument to exclude a list of sniffs from checking and fixing (request #904)
       -- Accepts the same sniff codes as the --sniffs command line argument, but provides the opposite functionality
     - Added a new -q command line argument to disable progress and verbose information from being printed (request #969)
-      -- Useful if a coding standard hard-codes progess or verbose output but you want PHPCS to be quiet
+      -- Useful if a coding standard hard-codes progress or verbose output but you want PHPCS to be quiet
       -- Use the command "phpcs --config-set quiet true" to turn quiet mode on by default
     - Generic LineLength sniff no longer errors for comments that cannot be broken out onto a new line (request #766)
       -- A typical case is a comment that contains a very long URL
@@ -3554,7 +3554,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed bug #974 : Error when file ends with "function"
     - Fixed bug #979 : Anonymous function with return type hint is not refactored as expected
     - Fixed bug #983 : Squiz.WhiteSpace.MemberVarSpacing.AfterComment fails to fix error when comment is not a docblock
-    - Fixed bug #1010 : Squiz NonExectuableCode sniff does not detect boolean OR
+    - Fixed bug #1010 : Squiz NonExecutableCode sniff does not detect boolean OR
       -- Thanks to Derek Henderson for the patch
     - Fixed bug #1015 : The Squiz.Commenting.FunctionComment sniff doesn't allow description in @return tag
       -- Thanks to Alexander Obuhovich for the patch
@@ -3792,10 +3792,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed bug #772 : Syntax error when using PHPCBF on alternative style foreach loops
     - Fixed bug #773 : Syntax error when stripping trailing PHP close tag and previous statement has no semicolon
     - Fixed bug #778 : PHPCBF creates invalid PHP for inline FOREACH containing multiple control structures
-    - Fixed bug #781 : Incorrect checking for PHP7 return types on multi-line function declartions
+    - Fixed bug #781 : Incorrect checking for PHP7 return types on multi-line function declarations
     - Fixed bug #782 : Conditional function declarations cause fixing conflicts in Squiz standard
       -- Squiz.ControlStructures.ControlSignature no longer enforces a single newline after open brace
-      -- Squiz.WhiteSpace.ControlStructureSpacing can be used to checl spacing at the start/end of control structures
+      -- Squiz.WhiteSpace.ControlStructureSpacing can be used to check spacing at the start/end of control structures
     </notes>
   </release>
   <release>
@@ -3895,7 +3895,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <date>2015-04-29</date>
    <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
-    - The error message for PSR2.ControlStructures.SwitchDeclaration.WrongOpenercase is now clearer (request #579)
+    - The error message for PSR2.ControlStructures.SwitchDeclaration.WrongOpener case is now clearer (request #579)
     - Fixed bug #545 : Long list of CASE statements can cause tokenizer to reach a depth limit
     - Fixed bug #565 : Squiz.WhiteSpace.OperatorSpacing reports negative number in short array
       -- Thanks to Vašek Purchart for the patch
@@ -4172,7 +4172,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Improved detection of function comments in Squiz FunctionCommentSpacingSniff
     - Improved fixing of lines after cases statements in Squiz SwitchDeclarationSniff
     - Fixed bug #311 : Suppression of function prototype breaks checking of lines within function
-    - Fixed bug #320 : Code sniffer identation issue
+    - Fixed bug #320 : Code sniffer indentation issue
     - Fixed bug #333 : Nested ternary operators causing problems
     </notes>
   </release>
@@ -4213,7 +4213,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed bug #302 : Fixing code in Squiz InlineComment sniff can remove some comment text
     - Fixed bug #303 : Open and close tag on same line can cause a PHP notice checking scope indent
     - Fixed bug #306 : File containing only a namespace declaration raises undefined index notice
-    - Fixed bug #307 : Conditional breaks in case statements get incorrect indentions
+    - Fixed bug #307 : Conditional breaks in case statements get incorrect indentations
     - Fixed bug #308 : Squiz InlineIfDeclarationSniff fails on ternary operators inside closure
     - Fixed bug #310 : Variadics not recognized by tokenizer
     </notes>
@@ -4427,7 +4427,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Removed dependence on PHP_Timer
     - PHP tokenizer now supports DEFAULT statements opened with a T_SEMICOLON
     - The Squiz and PHPCS standards have increased the max padding for statement alignment from 8 to 12
-    - Squiz EchoedStringsSniff now supports statments without a semicolon, such as PHP embedded in HTML
+    - Squiz EchoedStringsSniff now supports statements without a semicolon, such as PHP embedded in HTML
     - Squiz DoubleQuoteUsageSniff now properly replaces escaped double quotes when fixing a doubled quoted string
     - Improved detection of nested IF statements that use the alternate IF/ENDIF syntax
     - PSR1 CamelCapsMethodNameSniff now ignores magic methods
@@ -4484,7 +4484,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Sniff process() methods can not optionally return a token to ignore up to
       -- If returned, the sniff will not be executed again until the passed token is reached in the file
       -- Useful if you are looking for tokens like T_OPEN_TAG but only want to process the first one
-    - Removed the comment parser classes and replaced it with a simple comment tokenier
+    - Removed the comment parser classes and replaced it with a simple comment tokenizer
       -- T_DOC_COMMENT tokens are now tokenized into T_DOC_COMMENT_* tokens so they can be used more easily
       -- This change requires a significant rewrite of sniffs that use the comment parser
       -- This change requires minor changes to sniffs that listen for T_DOC_COMMENT tokens directly
@@ -4663,7 +4663,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed bug #20247 : The Squiz.WhiteSpace.ControlStructureSpacing sniff and do-while
       -- Thanks to Alexander Obuhovich for the patch
     - Fixed bug #20248 : The Squiz_Sniffs_WhiteSpace_ControlStructureSpacingSniff sniff and empty scope
-    - Fixed bug #20252 : Unitialized string offset when package name starts with underscore
+    - Fixed bug #20252 : Uninitialized string offset when package name starts with underscore
    </notes>
   </release>
   <release>
@@ -5327,7 +5327,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
     - All ignore patterns have been reverted to being checked against the absolute path of a file
-      -- Patterns can be specified to be relative in a rulset.xml file, but nowhere else
+      -- Patterns can be specified to be relative in a ruleset.xml file, but nowhere else
       -- e.g., [exclude-pattern type="relative"]^tests/*[/exclude-pattern] (with angle brackets, not square brackets)
     - Added support for PHP tokenizing of T_INLINE_ELSE colons, so this token type is now available
       -- Custom sniffs that rely on looking for T_COLON tokens inside inline if statements must be changed to use the new token
@@ -5400,7 +5400,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - PEAR ValidFunctionNameSniff no longer enforces exact case matching for PHP magic methods
     - Squiz SwitchDeclarationSniff now allows RETURN statements to close a CASE or DEFAULT statement
     - Squiz BlockCommentSniff now correctly reports an error for blank lines before blocks at the start of a control structure
-    - Fixed a PHP notice generated when loading custom array settings from a rulset.xml file
+    - Fixed a PHP notice generated when loading custom array settings from a ruleset.xml file
     - Fixed bug #17908 : CodeSniffer does not recognise optional @params
       -- Thanks to Pete Walker for the patch
     - Fixed bug #19538 : Function indentation code sniffer checks inside short arrays
@@ -5515,7 +5515,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- For example: ref="../MyStandard/Sniffs/Commenting/DisallowHashCommentsSniff.php"
     - Symlinked standards now work correctly, allowing aliasing of installed standards (request #19417)
       -- Thanks to Tom Klingenberg for the patch
-    - Squiz ObjectInstantiationSniff now allows objects to be returned without assinging them to a variable
+    - Squiz ObjectInstantiationSniff now allows objects to be returned without assigning them to a variable
     - Added Squiz.Commenting.FileComment.MissingShort error message for file comments that only contains tags
       -- Also stops undefined index errors being generated for these comments
     - Debug option -vv now shows tokenizer status for CSS files
@@ -5535,9 +5535,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed bug #19290 : Generic indent sniffer fails for anonymous functions
     - Fixed bug #19324 : Setting show_warnings configuration option does not work
     - Fixed bug #19354 : Not recognizing references passed to method
-    - Fixed bug #19361 : CSS tokenzier generates errors when PHP embedded in CSS file
+    - Fixed bug #19361 : CSS tokenizer generates errors when PHP embedded in CSS file
     - Fixed bug #19374 : HEREDOC/NOWDOC Indentation problems
-    - Fixed bug #19381 : traits and indetations in traits are not handled properly
+    - Fixed bug #19381 : traits and indentations in traits are not handled properly
     - Fixed bug #19394 : Notice in NonExecutableCodeSniff
     - Fixed bug #19402 : Syntax error when executing phpcs on Windows with parens in PHP path
       -- Thanks to Tom Klingenberg for the patch
@@ -5562,7 +5562,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <notes>
     - Added new Generic FixmeSniff that shows error messages for all FIXME comments left in your code
       -- Thanks to Sam Graham for the contribution
-    - The maxPercentage setting in the Squiz CommentedOutCodeSniff can now be overridden in a rulset.xml file
+    - The maxPercentage setting in the Squiz CommentedOutCodeSniff can now be overridden in a ruleset.xml file
       -- Thanks to Volker Dusch for the patch
     - The Checkstyle and XML reports now use XMLWriter
       -- Only change in output is that empty file tags are no longer produced for files with no violations
@@ -5875,7 +5875,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- Thanks to Christian Kaps for the patch
     - Generic UpperCaseConstantSniff no longer throws errors about namespaces
       -- Thanks to Christian Kaps for the patch
-    - Squiz OperatorBracketSniff now correctly checks value assignmnets in arrays
+    - Squiz OperatorBracketSniff now correctly checks value assignments in arrays
     - Squiz LongConditionClosingCommentSniff now requires a comment for long CASE statements that use curly braces
     - Squiz LongConditionClosingCommentSniff now requires an exact comment match on the brace
     - MySource IncludeSystemSniff now ignores DOMDocument usage
@@ -5890,7 +5890,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed bug #17144 : Deprecated: Function eregi() is deprecated
     - Fixed bug #17236 : PHP Warning due to token_get_all() in DoubleQuoteUsageSniff
     - Fixed bug #17243 : Alternate Switch Syntax causes endless loop of Notices in SwitchDeclaration
-    - Fixed bug #17313 : Bug with switch case struture
+    - Fixed bug #17313 : Bug with switch case structure
     - Fixed bug #17331 : Possible parse error: interfaces may not include member vars
     - Fixed bug #17337 : CSS tokenizer fails on quotes urls
     - Fixed bug #17420 : Uncaught exception when comment before function brace
@@ -5924,7 +5924,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - The reports now show the correct number of errors and warnings found
     - The isCamelCaps method now allows numbers in class names
     - The JS tokenizer now correctly identifies boolean and bitwise AND and OR tokens
-    - The JS tokenzier now correctly identifies regular expressions used in conditions
+    - The JS tokenizer now correctly identifies regular expressions used in conditions
     - PEAR ValidFunctionNameSniff now ignores closures
     - Squiz standard now uses the PEAR setting of 85 chars for LineLengthSniff
     - Squiz ControlStructureSpacingSniff now ensure there are no spaces around parentheses
@@ -5941,7 +5941,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Squiz DisallowComparisonAssignmentSniff now ignores the assigning of arrays
     - Squiz DisallowObjectStringIndexSniff now allows indexes that contain dots and reserved words
     - Squiz standard now throws nesting level and cyclomatic complexity errors at much higher levels
-    - Squiz CommentedOutCodeSniff now ignores common comment framing chacacters
+    - Squiz CommentedOutCodeSniff now ignores common comment framing characters
     - Squiz ClassCommentSniff now ensures the open comment tag is the only content on the first line
     - Squiz FileCommentSniff now ensures the open comment tag is the only content on the first line
     - Squiz FunctionCommentSniff now ensures the open comment tag is the only content on the first line
@@ -5999,7 +5999,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- If you put it in the first two lines the file wont even be tokenized, so it will be much quicker
     - Reports now print their file lists in alphabetical order
     - PEAR FunctionDeclarationSniff now reports error for incorrect closing bracket placement in multi-line definitions
-    - Added Generic CallTimePassByRefenceSniff to prohibit the passing of variables into functions by reference
+    - Added Generic CallTimePassByReferenceSniff to prohibit the passing of variables into functions by reference
       -- Thanks to Florian Grandel for the contribution
     - Added Squiz DisallowComparisonAssignmentSniff to ban the assignment of comparison values to a variable
     - Added Squiz DuplicateStyleDefinitionSniff to check for duplicate CSS styles in a single class block
@@ -6182,7 +6182,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Added Squiz DuplicatePropertySniff to check for duplicate property names in JS classes
     - Added Squiz ColonSpacingSniff to check for spacing around colons in CSS style definitions
     - Added Squiz SemicolonSpacingSniff to check for spacing around semicolons in CSS style definitions
-    - Added Squiz IdentationSniff to check for correct indentation of CSS files
+    - Added Squiz IndentationSniff to check for correct indentation of CSS files
     - Added Squiz ColourDefinitionSniff to check that CSS colours are defined in uppercase and using shorthand
     - Added Squiz EmptyStyleDefinitionSniff to check for CSS style definitions without content
     - Added Squiz EmptyClassDefinitionSniff to check for CSS class definitions without content
@@ -6226,8 +6226,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Squiz ControlStructureSpacingSniff now bans blank lines at the end of a control structure
     - Squiz ForLoopDeclarationSniff no longer throws errors for JS FOR loops without semicolons
     - Squiz MultipleStatementAlignmentSniff no longer throws errors if a statement would take more than 8 spaces to align
-    - Squiz standard now uses Genric TodoSniff
-    - Squiz standard now uses Genric UnnecessaryStringConcatSniff
+    - Squiz standard now uses Generic TodoSniff
+    - Squiz standard now uses Generic UnnecessaryStringConcatSniff
     - Squiz standard now uses PEAR MultiLineAssignmentSniff
     - Squiz standard now uses PEAR MultiLineConditionSniff
     - Zend standard now uses OpeningFunctionBraceBsdAllmanSniff (feature request #14647)
@@ -6275,7 +6275,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed error in Zend ValidVariableNameSniff when checking vars in form: $class->{$var}
     - Fixed bug #14077 : Fatal error: Uncaught PHP_CodeSniffer_Exception: $stackPtr is not a class member
     - Fixed bug #14168 : Global Function -> Static Method and __autoload()
-    - Fixed bug #14238 : Line length not checket at last line of a file
+    - Fixed bug #14238 : Line length not checked at last line of a file
     - Fixed bug #14249 : wrong detection of scope_opener
     - Fixed bug #14250 : ArrayDeclarationSniff emit warnings at malformed array
     - Fixed bug #14251 : --extensions option doesn't work
@@ -6300,7 +6300,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Fixed error in Zend ValidVariableNameSniff when checking vars in form: $class->{$var}
     - Fixed bug #14077 : Fatal error: Uncaught PHP_CodeSniffer_Exception: $stackPtr is not a class member
     - Fixed bug #14168 : Global Function -> Static Method and __autoload()
-    - Fixed bug #14238 : Line length not checket at last line of a file
+    - Fixed bug #14238 : Line length not checked at last line of a file
     - Fixed bug #14249 : wrong detection of scope_opener
     - Fixed bug #14250 : ArrayDeclarationSniff emit warnings at malformed array
     - Fixed bug #14251 : --extensions option doesn't work
@@ -6344,7 +6344,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Added support for multiple tokenizers so PHP_CodeSniffer can check more than just PHP files
       -- PHP_CodeSniffer now has a JS tokenizer for checking JavaScript files
       -- Sniffs need to be updated to work with additional tokenizers, or new sniffs written for them
-   - phpcs now exits with status 2 if the tokenier extension has been disabled (feature request #13269)
+   - phpcs now exits with status 2 if the tokenizer extension has been disabled (feature request #13269)
    - Added scripts/phpcs-svn-pre-commit that can be used as an SVN pre-commit hook
      -- Also reworked the way the phpcs script works to make it easier to wrap it with other functionality
      -- Thanks to Jack Bates for the contribution
@@ -6486,7 +6486,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Modified the scope map to keep checking after 3 lines for some tokens (feature request #12561)
       -- Those tokens that must have an opener (like T_CLASS) now keep looking until EOF
       -- Other tokens (like T_FUNCTION) still stop after 3 lines for performance
-    - You can now esacpe commas in ignore patterns so they can be matched in file names
+    - You can now escape commas in ignore patterns so they can be matched in file names
       -- Thanks to Carsten Wiedmann for the patch
     - Config data is now cached in a global var so the file system is not hit so often
       -- You can also set config data temporarily for the script if you are using your own external script
@@ -6533,7 +6533,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Generic LineLengthSniff no longer warns about @license lines with long URLs
     - Squiz FunctionCommentThrowTagSniff no longer complains about throwing variables
     - Squiz ComparisonOperatorUsageSniff no longer throws incorrect errors for inline IF statements
-    - Squiz DisllowMultipleAssignmentsSniff no longer throws errors for assignments in inline IF statements
+    - Squiz DisallowMultipleAssignmentsSniff no longer throws errors for assignments in inline IF statements
     - Fixed bug #12455 : CodeSniffer treats content inside heredoc as PHP code
     - Fixed bug #12471 : Checkstyle report is broken
     - Fixed bug #12476 : PHP4 destructors are reported as error
@@ -6635,7 +6635,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Squiz VariableCommentSniff now checks that short and long comments start with a capital letter
     - Fixed error with multi-token array indexes in Squiz ArrayDeclarationSniff
     - Fixed error with checking shorthand IF statements without a semicolon in Squiz InlineIfDeclarationSniff
-    - Fixed error where constants used as defulat values in function declarations were seen as type hints
+    - Fixed error where constants used as default values in function declarations were seen as type hints
     - Fixed bug #12316 : PEAR is no longer the default standard
     - Fixed bug #12321 : wrong detection of missing function docblock
    </notes>
