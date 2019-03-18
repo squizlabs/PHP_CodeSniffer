@@ -10,7 +10,7 @@
 namespace PHP_CodeSniffer\Sniffs;
 
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Sniffs\Parentheses;
+use PHP_CodeSniffer\Util\Sniffs\PassedParameters;
 use PHP_CodeSniffer\Util\Sniffs\TokenIs;
 use PHP_CodeSniffer\Util\Tokens;
 
@@ -85,123 +85,39 @@ abstract class AbstractArraySniff implements Sniff
             $lastToken = $stackPtr;
         }
 
-        $keyUsed = false;
-        $indices = [];
+        $arrayItems = PassedParameters::getParameters($phpcsFile, $stackPtr);
+        foreach ($arrayItems as $key => $item) {
+            $firstNonEmpty = $phpcsFile->findNext(
+                Tokens::$emptyTokens,
+                ($item['start'] + 1),
+                ($item['end'] + 1),
+                true
+            );
+            $doubleArrow   = PassedParameters::getDoubleArrowPosition($phpcsFile, $item['start'], $item['end']);
 
-        for ($checkToken = ($stackPtr + 1); $checkToken <= $lastArrayToken; $checkToken++) {
-            // Skip bracketed statements, like function calls.
-            if ($tokens[$checkToken]['code'] === T_OPEN_PARENTHESIS
-                && Parentheses::getOwner($phpcsFile, $checkToken) !== $stackPtr
-            ) {
-                $checkToken = $tokens[$checkToken]['parenthesis_closer'];
-                continue;
-            }
-
-            if ($tokens[$checkToken]['code'] === T_ARRAY
-                || $tokens[$checkToken]['code'] === T_OPEN_SHORT_ARRAY
-                || $tokens[$checkToken]['code'] === T_CLOSURE
-            ) {
-                // Let subsequent calls of this test handle nested arrays.
-                if ($tokens[$lastToken]['code'] !== T_DOUBLE_ARROW) {
-                    $indices[] = ['value_start' => $checkToken];
-                    $lastToken = $checkToken;
-                }
-
-                if ($tokens[$checkToken]['code'] === T_ARRAY) {
-                    $checkToken = $tokens[$tokens[$checkToken]['parenthesis_opener']]['parenthesis_closer'];
-                } else if ($tokens[$checkToken]['code'] === T_OPEN_SHORT_ARRAY) {
-                    $checkToken = $tokens[$checkToken]['bracket_closer'];
-                } else {
-                    // T_CLOSURE.
-                    $checkToken = $tokens[$checkToken]['scope_closer'];
-                }
-
-                $checkToken = $phpcsFile->findNext(T_WHITESPACE, ($checkToken + 1), null, true);
-                $lastToken  = $checkToken;
-                if ($tokens[$checkToken]['code'] !== T_COMMA) {
-                    $checkToken--;
-                }
-
-                continue;
-            }//end if
-
-            if ($tokens[$checkToken]['code'] !== T_DOUBLE_ARROW
-                && $tokens[$checkToken]['code'] !== T_COMMA
-                && $checkToken !== $arrayEnd
-            ) {
-                continue;
-            }
-
-            if ($tokens[$checkToken]['code'] === T_COMMA
-                || $checkToken === $arrayEnd
-            ) {
-                $stackPtrCount = 0;
-                if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-                    $stackPtrCount = count($tokens[$stackPtr]['nested_parenthesis']);
-                }
-
-                $commaCount = 0;
-                if (isset($tokens[$checkToken]['nested_parenthesis']) === true) {
-                    $commaCount = count($tokens[$checkToken]['nested_parenthesis']);
-                    if ($tokens[$stackPtr]['code'] === T_ARRAY) {
-                        // Remove parenthesis that are used to define the array.
-                        $commaCount--;
-                    }
-                }
-
-                if ($commaCount > $stackPtrCount) {
-                    // This comma is inside more parenthesis than the ARRAY keyword,
-                    // so it is actually a comma used to do things like
-                    // separate arguments in a function call.
-                    continue;
-                }
-
-                if ($keyUsed === false) {
-                    $valueContent = $phpcsFile->findNext(
-                        Tokens::$emptyTokens,
-                        ($lastToken + 1),
-                        $checkToken,
-                        true
-                    );
-
-                    $indices[] = ['value_start' => $valueContent];
-                }
-
-                $lastToken = $checkToken;
-                $keyUsed   = false;
-                continue;
-            }//end if
-
-            if ($tokens[$checkToken]['code'] === T_DOUBLE_ARROW) {
-                $keyUsed = true;
-
-                // Find the start of index that uses this double arrow.
-                $indexEnd   = $phpcsFile->findPrevious(T_WHITESPACE, ($checkToken - 1), $arrayStart, true);
-                $indexStart = $phpcsFile->findStartOfStatement($indexEnd);
-
-                // Find the value of this index.
-                $nextContent = $phpcsFile->findNext(
+            if ($doubleArrow === false) {
+                // This array item does not have an index.
+                $arrayItems[$key]['value_start'] = $firstNonEmpty;
+            } else {
+                $indexEnd   = $phpcsFile->findPrevious(T_WHITESPACE, ($doubleArrow - 1), $item['start'], true);
+                $valueStart = $phpcsFile->findNext(
                     Tokens::$emptyTokens,
-                    ($checkToken + 1),
-                    $arrayEnd,
+                    ($doubleArrow + 1),
+                    ($item['end'] + 1),
                     true
                 );
 
-                $indices[] = [
-                    'index_start' => $indexStart,
-                    'index_end'   => $indexEnd,
-                    'arrow'       => $checkToken,
-                    'value_start' => $nextContent,
-                ];
-
-                $lastToken = $checkToken;
-            }//end if
-        }//end for
+                $arrayItems[$key]['index_start'] = $firstNonEmpty;
+                $arrayItems[$key]['index_end']   = $indexEnd;
+                $arrayItems[$key]['arrow']       = $doubleArrow;
+                $arrayItems[$key]['value_start'] = $valueStart;
+            }
+        }//end foreach
 
         if ($tokens[$arrayStart]['line'] === $tokens[$arrayEnd]['line']) {
-            $this->processSingleLineArray($phpcsFile, $stackPtr, $arrayStart, $arrayEnd, $indices);
+            $this->processSingleLineArray($phpcsFile, $stackPtr, $arrayStart, $arrayEnd, $arrayItems);
         } else {
-            $this->processMultiLineArray($phpcsFile, $stackPtr, $arrayStart, $arrayEnd, $indices);
+            $this->processMultiLineArray($phpcsFile, $stackPtr, $arrayStart, $arrayEnd, $arrayItems);
         }
 
     }//end process()
