@@ -53,6 +53,18 @@ class PassedParameters
 
 
     /**
+     * The tokens to target to find the double arrow in an array item.
+     *
+     * @var array
+     */
+    private static $doubleArrowTargets = [
+        T_DOUBLE_ARROW,
+        T_ARRAY,
+        T_OPEN_SHORT_ARRAY,
+    ];
+
+
+    /**
      * Checks if any parameters have been passed.
      *
      * Expects to be passed the T_STRING or T_VARIABLE stack pointer for a function call.
@@ -331,6 +343,43 @@ class PassedParameters
         return count(self::getParameters($phpcsFile, $stackPtr));
 
     }//end getParameterCount()
+
+
+    /**
+     * Get the position of the double arrow within an array item.
+     *
+     * Expects to be passed the parameter start/end as retrieved via getParameters().
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being examined.
+     * @param int                         $start     Stack pointer to the start of the array item.
+     * @param int                         $end       Stack pointer to the end of the array item.
+     *
+     * @return int|false Pointer to the double arrow if this array item has an index or false otherwise.
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the start or end positions are invalid.
+     */
+    public static function getDoubleArrowPosition(File $phpcsFile, $start, $end)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if (isset($tokens[$start], $tokens[$end]) === false || $start > $end) {
+            throw new RuntimeException(
+                'Invalid start and/or end position passed to getDoubleArrowPosition(). Received: $start '.$start.', $end '.$end
+            );
+        }
+
+        $doubleArrow = $phpcsFile->findNext(
+            self::$doubleArrowTargets,
+            $start,
+            ($end + 1)
+        );
+
+        if ($doubleArrow !== false && $tokens[$doubleArrow]['code'] === T_DOUBLE_ARROW) {
+            return $doubleArrow;
+        }
+
+        return false;
+
+    }//end getDoubleArrowPosition()
 
 
 }//end class

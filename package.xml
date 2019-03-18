@@ -112,6 +112,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="ParenthesesTest.php" role="test" />
        </dir>
        <dir name="PassedParameters">
+        <file baseinstalldir="" name="GetDoubleArrowPositionTest.inc" role="test" />
+        <file baseinstalldir="" name="GetDoubleArrowPositionTest.php" role="test" />
         <file baseinstalldir="" name="GetParameterCountTest.inc" role="test" />
         <file baseinstalldir="" name="GetParameterCountTest.php" role="test" />
         <file baseinstalldir="" name="GetParametersTest.inc" role="test" />
@@ -1946,6 +1948,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParametersTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetParametersTest.php" />
@@ -2026,6 +2030,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.inc" name="tests/Core/Util/Sniffs/PassedParameters/GetParameterCountTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetParametersTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetParametersTest.php" />
