@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Arrays;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Parentheses;
 use PHP_CodeSniffer\Util\Tokens;
 
 class ArrayDeclarationSniff implements Sniff
@@ -229,12 +230,7 @@ class ArrayDeclarationSniff implements Sniff
         }//end while
 
         if ($valueCount > 0) {
-            $nestedParenthesis = false;
-            if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-                $nested            = $tokens[$stackPtr]['nested_parenthesis'];
-                $nestedParenthesis = array_pop($nested);
-            }
-
+            $nestedParenthesis = Parentheses::getLastCloser($phpcsFile, $stackPtr);
             if ($nestedParenthesis === false
                 || $tokens[$nestedParenthesis]['line'] !== $tokens[$stackPtr]['line']
             ) {
