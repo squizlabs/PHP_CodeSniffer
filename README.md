@@ -88,7 +88,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for information.
 
 ## Versioning
 
-PHP_CodeSniffer uses a `MAJOR.MINOR.PATCH` version number format.
+PHP_CodeSniffer follows [semantic versioning](https://semver.org/) in which `MAJOR.MINOR.PATCH` is the version number format.
 
 The `MAJOR` version is incremented when:
 - backwards-incompatible changes are made to how the `phpcs` or `phpcbf` commands are used, or
