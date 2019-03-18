@@ -1821,37 +1821,32 @@ class File
             return true;
         }
 
-        if (isset($this->tokens[$stackPtr]['nested_parenthesis']) === true) {
-            $brackets    = $this->tokens[$stackPtr]['nested_parenthesis'];
-            $lastBracket = array_pop($brackets);
-            if (isset($this->tokens[$lastBracket]['parenthesis_owner']) === true) {
-                $owner = $this->tokens[$this->tokens[$lastBracket]['parenthesis_owner']];
-                if ($owner['code'] === T_FUNCTION
-                    || $owner['code'] === T_CLOSURE
-                ) {
-                    $params = $this->getMethodParameters($this->tokens[$lastBracket]['parenthesis_owner']);
-                    foreach ($params as $param) {
-                        $varToken = $tokenAfter;
-                        if ($param['variable_length'] === true) {
-                            $varToken = $this->findNext(
-                                (Util\Tokens::$emptyTokens + [T_ELLIPSIS]),
-                                ($stackPtr + 1),
-                                null,
-                                true
-                            );
-                        }
-
-                        if ($param['token'] === $varToken
-                            && $param['pass_by_reference'] === true
-                        ) {
-                            // Function parameter declared to be passed by reference.
-                            return true;
-                        }
+        $lastOpener = Util\Sniffs\Parentheses::getLastOpener($this, $stackPtr);
+        if ($lastOpener !== false) {
+            $lastOwner = Util\Sniffs\Parentheses::lastOwnerIn($this, $stackPtr, [T_FUNCTION, T_CLOSURE]);
+            if ($lastOwner !== false) {
+                $params = $this->getMethodParameters($lastOwner);
+                foreach ($params as $param) {
+                    $varToken = $tokenAfter;
+                    if ($param['variable_length'] === true) {
+                        $varToken = $this->findNext(
+                            (Util\Tokens::$emptyTokens + [T_ELLIPSIS]),
+                            ($stackPtr + 1),
+                            null,
+                            true
+                        );
                     }
-                }//end if
-            } else {
+
+                    if ($param['token'] === $varToken
+                        && $param['pass_by_reference'] === true
+                    ) {
+                        // Function parameter declared to be passed by reference.
+                        return true;
+                    }
+                }
+            } else if (isset($this->tokens[$lastOpener]['parenthesis_owner']) === false) {
                 $prev = false;
-                for ($t = ($this->tokens[$lastBracket]['parenthesis_opener'] - 1); $t >= 0; $t--) {
+                for ($t = ($lastOpener - 1); $t >= 0; $t--) {
                     if ($this->tokens[$t]['code'] !== T_WHITESPACE) {
                         $prev = $t;
                         break;
