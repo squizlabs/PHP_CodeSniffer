@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Util\Sniffs;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\TextStrings;
 use PHP_CodeSniffer\Util\Tokens;
 
 class Variables
@@ -222,7 +223,7 @@ class Variables
                 return false;
             }
 
-            $content = preg_replace('`^([\'"])(.*)\1$`Ds', '$2', $content);
+            $content = TextStrings::stripQuotes($content);
         }
 
         return self::isSuperglobalName($content);
