@@ -11,6 +11,7 @@
 
 namespace PHP_CodeSniffer\Util\Sniffs;
 
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Tokens;
@@ -267,6 +268,63 @@ class ConstructNames
         return preg_replace('`[\pN]+`u', '', $name);
 
     }//end removeNumbers()
+
+
+    /**
+     * Transform consecutive uppercase characters to lowercase.
+     *
+     * Important: this function will only work on non-ascii strings when the MBString
+     * extension is enabled.
+     *
+     * @param string $name The string.
+     *
+     * @return string The adjusted name or the original name if no consecutive uppercase
+     *                characters where found or when MBString is not available and the input
+     *                was non-ascii.
+     */
+    public static function lowerConsecutiveCaps($name)
+    {
+        static $mbstring = null, $encoding = null;
+
+        if ($name === '') {
+            return '';
+        }
+
+        // Cache the results of MbString check and encoding. These values won't change during a run.
+        if (isset($mbstring) === false) {
+            $mbstring = function_exists('mb_strtolower');
+        }
+
+        if (isset($encoding) === false) {
+            $encoding = Config::getConfigData('encoding');
+            if ($encoding === null) {
+                $encoding = 'utf-8';
+            }
+        }
+
+        // MBString can mangle non-ascii text when the encoding is not correctly set and
+        // strtolower will mangle any non-ascii, so just return the name unchanged in that case.
+        if (utf8_decode($name) !== $name && $mbstring === false) {
+            return $name;
+        }
+
+        $name = preg_replace_callback(
+            '`([\p{Lt}\p{Lu}])([\p{Lt}\p{Lu}]+?)(\b|$|\PL|[\p{Lt}\p{Lu}](?=[^\p{Lt}\p{Lu}])\pL|(?=[^\p{Lt}\p{Lu}])\pL)`u',
+            function ($matches) use ($mbstring, $encoding) {
+                if ($mbstring === true) {
+                    $consecutiveChars = mb_strtolower($matches[2], $encoding);
+                } else {
+                    $consecutiveChars = strtolower($matches[2]);
+                }
+
+                return $matches[1].$consecutiveChars.$matches[3];
+            },
+            $name
+        );
+
+        return $name;
+
+    }//end lowerConsecutiveCaps()
 
 
 }//end class

@@ -84,6 +84,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="GetDeclarationNameJSTest.js" role="test" />
         <file baseinstalldir="" name="GetDeclarationNameJSTest.php" role="test" />
         <file baseinstalldir="" name="IsCamelCapsTest.php" role="test" />
+        <file baseinstalldir="" name="LowerConsecutiveCapsTest.php" role="test" />
         <file baseinstalldir="" name="NumbersTest.php" role="test" />
        </dir>
        <dir name="FunctionDeclarations">
@@ -1946,6 +1947,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.php" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.js" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.js" />
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" name="tests/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/LowerConsecutiveCapsTest.php" name="tests/Core/Util/Sniffs/ConstructNames/LowerConsecutiveCapsTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/NumbersTest.php" name="tests/Core/Util/Sniffs/ConstructNames/NumbersTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
@@ -2038,6 +2040,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.php" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.js" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.js" />
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" name="tests/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/LowerConsecutiveCapsTest.php" name="tests/Core/Util/Sniffs/ConstructNames/LowerConsecutiveCapsTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/NumbersTest.php" name="tests/Core/Util/Sniffs/ConstructNames/NumbersTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
