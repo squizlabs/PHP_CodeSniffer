@@ -11,7 +11,6 @@ namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods;
 
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff as GenericCamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
@@ -52,7 +51,7 @@ class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
         }
 
         $testName = ltrim($methodName, '_');
-        if ($testName !== '' &&  Common::isCamelCaps($testName, false, true, false) === false) {
+        if ($testName !== '' && ConstructNames::isCamelCaps($testName, false, true, false) === false) {
             $error     = 'Method name "%s" is not in camel caps format';
             $className = ConstructNames::getDeclarationName($phpcsFile, $currScope);
             if (isset($className) === false) {

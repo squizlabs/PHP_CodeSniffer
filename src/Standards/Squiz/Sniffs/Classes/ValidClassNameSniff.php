@@ -11,7 +11,6 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 
 class ValidClassNameSniff implements Sniff
@@ -61,7 +60,7 @@ class ValidClassNameSniff implements Sniff
         }
 
         // Check for PascalCase format.
-        $valid = Common::isCamelCaps($name, true, true, false);
+        $valid = ConstructNames::isCamelCaps($name, true, true, false);
         if ($valid === false) {
             $type  = ucfirst($tokens[$stackPtr]['content']);
             $error = '%s name "%s" is not in PascalCase format';

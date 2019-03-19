@@ -10,7 +10,6 @@
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions\ValidFunctionNameSniff as PEARValidFunctionNameSniff;
-use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 
@@ -45,7 +44,7 @@ class ValidFunctionNameSniff extends PEARValidFunctionNameSniff
             $functionName = ltrim($functionName, '_');
         }
 
-        if (Common::isCamelCaps($functionName, false, true, false) === false) {
+        if (ConstructNames::isCamelCaps($functionName, false, true, false) === false) {
             $error = 'Function name "%s" is not in camel caps format';
             $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $errorData);
         }

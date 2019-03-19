@@ -11,7 +11,6 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions;
 
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
@@ -152,7 +151,7 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
 
         $testMethodName = ltrim($methodName, '_');
 
-        if (Common::isCamelCaps($testMethodName, false, true, false) === false) {
+        if (ConstructNames::isCamelCaps($testMethodName, false, true, false) === false) {
             if ($scopeSpecified === true) {
                 $error = '%s method name "%s" is not in camel caps format';
                 $data  = [
@@ -242,7 +241,7 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
         $newCamelCapsPart = $camelCapsPart;
 
         // Every function must have a camel caps part, so check that first.
-        if (Common::isCamelCaps($camelCapsPart, false, true, false) === false) {
+        if (ConstructNames::isCamelCaps($camelCapsPart, false, true, false) === false) {
             $validName        = false;
             $newCamelCapsPart = strtolower($camelCapsPart{0}).substr($camelCapsPart, 1);
         }
