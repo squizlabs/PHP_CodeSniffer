@@ -182,7 +182,9 @@ class DocCommentSniff implements Sniff
                     }
                 }
 
-                if (Orthography::isFirstCharLowercase($tokens[$long]['content']) === true) {
+                // Allow for long comments in list format.
+                $longComment = ltrim($tokens[$long]['content'], '-');
+                if (Orthography::isFirstCharLowercase($longComment) === true) {
                     $error = 'Doc comment long description must start with a capital letter';
                     $phpcsFile->addError($error, $long, 'LongNotCapital');
                 }

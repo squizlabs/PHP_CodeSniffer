@@ -88,6 +88,7 @@ class DocCommentUnitTest extends AbstractSniffUnitTest
             246 => 1,
             248 => 1,
             249 => 1,
+            262 => 1,
         ];
 
     }//end getErrorList()

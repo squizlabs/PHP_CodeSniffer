@@ -248,3 +248,17 @@
  * @license	  	https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link		http://pear.php.net/package/PHP_CodeSniffer
  */
+
+/**
+ * Short description.
+ *
+ * - Long description in list format, correctly capitalized.
+ * - Second item long description in list format.
+ */
+
+/**
+ * Short description.
+ *
+ * - long description in list format, not capitalized
+ * - second item long description in list format
+ */
