@@ -75,6 +75,9 @@ class BlockCommentUnitTest extends AbstractSniffUnitTest
             227 => 1,
             232 => 1,
             233 => 1,
+            247 => 1,
+            257 => 1,
+            266 => 1,
         ];
 
         return $errors;

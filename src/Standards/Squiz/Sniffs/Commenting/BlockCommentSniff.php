@@ -254,7 +254,9 @@ class BlockCommentSniff implements Sniff
                 }
             }//end if
 
-            if (Orthography::isFirstCharLowercase($commentText) === true) {
+            // Make sure this check also works with leading asterixes and list comments.
+            $commentTextNoLeadingMarks = ltrim($commentText, '*- ');
+            if (Orthography::isFirstCharLowercase($commentTextNoLeadingMarks) === true) {
                 $error = 'Block comments must start with a capital letter';
                 $phpcsFile->addError($error, $commentLines[1], 'NoCapital');
             }

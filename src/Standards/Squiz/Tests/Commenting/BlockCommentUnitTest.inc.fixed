@@ -244,3 +244,26 @@ $y = 10 + /* test */ -2;
  * See: {@link https://github.com/squizlabs/PHP_CodeSniffer/issues/1918}
  * @phpcs:disable Standard.Category.Sniff
  */
+
+/*
+ * block comment with leading asterixes
+ * no capital letter.
+ */
+
+/*
+    - List comment, correctly capitalized.
+    - Another list item, correctly capitalized.
+*/
+
+/*
+    - list comment, no capital letter.
+*/
+
+/*
+ * - List comment, correctly capitalized.
+ * - Another list item, correctly capitalized.
+ */
+
+/*
+ * - list comment with leading asterixes, no capital letter
+ */
