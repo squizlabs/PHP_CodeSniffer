@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 
 class ValidClassNameSniff implements Sniff
 {
@@ -53,16 +54,10 @@ class ValidClassNameSniff implements Sniff
             return;
         }
 
-        // Determine the name of the class or interface. Note that we cannot
-        // simply look for the first T_STRING because a class name
-        // starting with the number will be multiple tokens.
-        $opener    = $tokens[$stackPtr]['scope_opener'];
-        $nameStart = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), $opener, true);
-        $nameEnd   = $phpcsFile->findNext(T_WHITESPACE, $nameStart, $opener);
-        if ($nameEnd === false) {
-            $name = $tokens[$nameStart]['content'];
-        } else {
-            $name = trim($phpcsFile->getTokensAsString($nameStart, ($nameEnd - $nameStart)));
+        $name = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
+        if (empty($name) === true) {
+            // Live coding or parse error.
+            return;
         }
 
         // Check for PascalCase format.
