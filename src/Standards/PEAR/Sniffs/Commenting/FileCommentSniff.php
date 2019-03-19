@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 
 class FileCommentSniff implements Sniff
 {
@@ -313,7 +313,7 @@ class FileCommentSniff implements Sniff
             }
 
             $content = $tokens[($tag + 2)]['content'];
-            if (Common::isUnderscoreName($content) !== true) {
+            if (ConstructNames::isUnderscoreName($content) !== true) {
                 $newContent = str_replace(' ', '_', $content);
                 $nameBits   = explode('_', $newContent);
                 $firstBit   = array_shift($nameBits);
@@ -355,7 +355,7 @@ class FileCommentSniff implements Sniff
             }
 
             $content = $tokens[($tag + 2)]['content'];
-            if (Common::isUnderscoreName($content) === true) {
+            if (ConstructNames::isUnderscoreName($content) === true) {
                 continue;
             }
 
@@ -408,7 +408,7 @@ class FileCommentSniff implements Sniff
             }
 
             $content = $tokens[($tag + 2)]['content'];
-            if (Common::isUnderscoreName($content) === true) {
+            if (ConstructNames::isUnderscoreName($content) === true) {
                 continue;
             }
 
