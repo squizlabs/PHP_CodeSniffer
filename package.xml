@@ -132,6 +132,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="PHP/CodeSniffer" name="Junit.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Notifysend.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Report.php" role="php" />
+     <file baseinstalldir="PHP/CodeSniffer" name="Sonar.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Source.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Summary.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Svnblame.php" role="php" />
