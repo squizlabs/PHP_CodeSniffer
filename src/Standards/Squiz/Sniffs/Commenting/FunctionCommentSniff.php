@@ -14,6 +14,7 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
+use PHP_CodeSniffer\Util\Sniffs\Orthography;
 
 class FunctionCommentSniff extends PEARFunctionCommentSniff
 {
@@ -227,8 +228,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 }
 
                 // Starts with a capital letter and ends with a fullstop.
-                $firstChar = $comment{0};
-                if (strtoupper($firstChar) !== $firstChar) {
+                if (Orthography::isFirstCharCapitalized($comment) === false) {
                     $error = '@throws tag comment must start with a capital letter';
                     $phpcsFile->addError($error, ($tag + 2), 'ThrowsNotCapital');
                 }
@@ -550,7 +550,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             $this->checkSpacingAfterParamName($phpcsFile, $param, $maxVar);
 
             // Param comments must start with a capital letter and end with a full stop.
-            if (preg_match('/^(\p{Ll}|\P{L})/u', $param['comment']) === 1) {
+            if (Orthography::isFirstCharCapitalized($param['comment']) === false) {
                 $error = 'Parameter comment must start with a capital letter';
                 $phpcsFile->addError($error, $param['tag'], 'ParamCommentNotCapital');
             }
