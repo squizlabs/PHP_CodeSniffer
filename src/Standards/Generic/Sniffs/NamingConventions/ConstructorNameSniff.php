@@ -16,6 +16,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\ObjectDeclarations;
 
 class ConstructorNameSniff extends AbstractScopeSniff
@@ -66,13 +67,13 @@ class ConstructorNameSniff extends AbstractScopeSniff
             return;
         }
 
-        $className = strtolower($phpcsFile->getDeclarationName($currScope));
+        $className = strtolower(ConstructNames::getDeclarationName($phpcsFile, $currScope));
         if ($className !== $this->currentClass) {
             $this->loadFunctionNamesInScope($phpcsFile, $currScope);
             $this->currentClass = $className;
         }
 
-        $methodName = strtolower($phpcsFile->getDeclarationName($stackPtr));
+        $methodName = strtolower(ConstructNames::getDeclarationName($phpcsFile, $stackPtr));
 
         if ($methodName === $className) {
             if (in_array('__construct', $this->functionList, true) === false) {
@@ -144,13 +145,16 @@ class ConstructorNameSniff extends AbstractScopeSniff
                 continue;
             }
 
-            $this->functionList[] = trim(strtolower($phpcsFile->getDeclarationName($i)));
+            $this->functionList[] = trim(strtolower(ConstructNames::getDeclarationName($phpcsFile, $i)));
 
             if (isset($tokens[$i]['scope_closer']) !== false) {
                 // Skip past nested functions and such.
                 $i = $tokens[$i]['scope_closer'];
             }
         }
+
+        // Remove any empties.
+        $this->functionList = array_filter($this->functionList);
 
     }//end loadFunctionNamesInScope()
 

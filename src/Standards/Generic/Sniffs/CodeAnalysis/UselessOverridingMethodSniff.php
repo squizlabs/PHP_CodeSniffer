@@ -23,6 +23,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
@@ -62,7 +63,11 @@ class UselessOverridingMethodSniff implements Sniff
         }
 
         // Get function name.
-        $methodName = $phpcsFile->getDeclarationName($stackPtr);
+        $methodName = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
+        if (empty($methodName) === true) {
+            // Live coding or parse error.
+            return;
+        }
 
         // Get all parameters from method signature.
         $signature  = [];

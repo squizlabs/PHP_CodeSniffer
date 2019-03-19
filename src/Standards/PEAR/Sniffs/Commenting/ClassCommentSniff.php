@@ -10,6 +10,7 @@
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Tokens;
 
 class ClassCommentSniff extends FileCommentSniff
@@ -54,7 +55,7 @@ class ClassCommentSniff extends FileCommentSniff
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
-            $errorData[] = $phpcsFile->getDeclarationName($stackPtr);
+            $errorData[] = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
             $phpcsFile->addError('Missing doc comment for %s %s', $stackPtr, 'Missing', $errorData);
             $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'no');
             return;

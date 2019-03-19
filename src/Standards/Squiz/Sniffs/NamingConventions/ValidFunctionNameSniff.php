@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions\ValidFunctionNameSniff as PEARValidFunctionNameSniff;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 
 class ValidFunctionNameSniff extends PEARValidFunctionNameSniff
 {
@@ -28,8 +29,9 @@ class ValidFunctionNameSniff extends PEARValidFunctionNameSniff
      */
     protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
     {
-        $functionName = $phpcsFile->getDeclarationName($stackPtr);
-        if ($functionName === null) {
+        $functionName = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
+        if (empty($functionName) === true) {
+            // Live coding or parse error.
             return;
         }
 

@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunction
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 
 class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
@@ -39,9 +40,9 @@ class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
             return;
         }
 
-        $methodName = $phpcsFile->getDeclarationName($stackPtr);
-        if ($methodName === null) {
-            // Ignore closures.
+        $methodName = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
+        if (empty($methodName) === true) {
+            // Live coding or parse error.
             return;
         }
 
@@ -53,7 +54,7 @@ class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
         $testName = ltrim($methodName, '_');
         if ($testName !== '' &&  Common::isCamelCaps($testName, false, true, false) === false) {
             $error     = 'Method name "%s" is not in camel caps format';
-            $className = $phpcsFile->getDeclarationName($currScope);
+            $className = ConstructNames::getDeclarationName($phpcsFile, $currScope);
             if (isset($className) === false) {
                 $className = '[Anonymous Class]';
             }

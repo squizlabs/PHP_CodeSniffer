@@ -17,6 +17,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\Namespaces;
 use PHP_CodeSniffer\Util\Tokens;
 
@@ -85,11 +86,11 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
                         $fullQualifiedClassName .= '\\';
                     }
 
-                    $fullQualifiedClassName .= $phpcsFile->getDeclarationName($currScope);
+                    $fullQualifiedClassName .= ConstructNames::getDeclarationName($phpcsFile, $currScope);
                 }
             } else {
                 $declarationName        = $tokens[$calledClassName]['content'];
-                $fullQualifiedClassName = $phpcsFile->getDeclarationName($currScope);
+                $fullQualifiedClassName = ConstructNames::getDeclarationName($phpcsFile, $currScope);
             }
 
             if ($declarationName === $fullQualifiedClassName) {

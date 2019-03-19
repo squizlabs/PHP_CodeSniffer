@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 
 class ClosingDeclarationCommentSniff implements Sniff
@@ -67,7 +68,7 @@ class ClosingDeclarationCommentSniff implements Sniff
                 return;
             }
 
-            $decName = $phpcsFile->getDeclarationName($stackPtr);
+            $decName = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
             $comment = '//end '.$decName.'()';
         } else if ($tokens[$stackPtr]['code'] === T_CLASS) {
             $comment = '//end class';

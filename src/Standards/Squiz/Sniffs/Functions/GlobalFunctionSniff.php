@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Functions;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
@@ -51,8 +52,9 @@ class GlobalFunctionSniff implements Sniff
             return;
         }
 
-        $functionName = $phpcsFile->getDeclarationName($stackPtr);
-        if ($functionName === null) {
+        $functionName = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
+        if (empty($functionName) === true) {
+            // Live coding or parse error.
             return;
         }
 

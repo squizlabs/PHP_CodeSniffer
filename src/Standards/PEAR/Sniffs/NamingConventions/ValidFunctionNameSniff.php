@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
@@ -82,13 +83,13 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
             return;
         }
 
-        $methodName = $phpcsFile->getDeclarationName($stackPtr);
-        if ($methodName === null) {
-            // Ignore closures.
+        $methodName = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
+        if (empty($methodName) === true) {
+            // Live coding or parse error.
             return;
         }
 
-        $className = $phpcsFile->getDeclarationName($currScope);
+        $className = ConstructNames::getDeclarationName($phpcsFile, $currScope);
         if (isset($className) === false) {
             $className = '[Anonymous Class]';
         }
@@ -179,9 +180,9 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
      */
     protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
     {
-        $functionName = $phpcsFile->getDeclarationName($stackPtr);
-        if ($functionName === null) {
-            // Ignore closures.
+        $functionName = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
+        if (empty($functionName) === true) {
+            // Live coding or parse error.
             return;
         }
 

@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Tokens;
 
 class MethodDeclarationSniff extends AbstractScopeSniff
@@ -47,9 +48,9 @@ class MethodDeclarationSniff extends AbstractScopeSniff
             return;
         }
 
-        $methodName = $phpcsFile->getDeclarationName($stackPtr);
-        if ($methodName === null) {
-            // Ignore closures.
+        $methodName = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
+        if (empty($methodName) === true) {
+            // Live coding or parse error.
             return;
         }
 

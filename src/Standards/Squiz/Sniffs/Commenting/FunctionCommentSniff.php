@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff as PEA
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Sniffs\Orthography;
 
@@ -55,7 +56,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
         }
 
         // Skip constructor and destructor.
-        $methodName      = $phpcsFile->getDeclarationName($stackPtr);
+        $methodName      = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
         $isSpecialMethod = ($methodName === '__construct' || $methodName === '__destruct');
         if ($isSpecialMethod === true) {
             return;

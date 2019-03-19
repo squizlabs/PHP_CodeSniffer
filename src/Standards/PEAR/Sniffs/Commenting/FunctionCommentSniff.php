@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Tokens;
 
@@ -60,7 +61,7 @@ class FunctionCommentSniff implements Sniff
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
-            $function = $phpcsFile->getDeclarationName($stackPtr);
+            $function = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
             $phpcsFile->addError(
                 'Missing doc comment for function %s()',
                 $stackPtr,
@@ -117,7 +118,7 @@ class FunctionCommentSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Skip constructor and destructor.
-        $methodName      = $phpcsFile->getDeclarationName($stackPtr);
+        $methodName      = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
         $isSpecialMethod = ($methodName === '__construct' || $methodName === '__destruct');
 
         $return = null;
