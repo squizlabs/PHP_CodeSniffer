@@ -35,3 +35,26 @@ class /* comment */
 
 // phpcs:ignore Standard.Cat.SniffName -- for reasons
     ClassWithCommentsAndNewLines {}
+
+/* testClassWithNumber */
+class ClassWith1Number extends MyClass {}
+
+/* testInterfaceWithNumbers */
+interface InterfaceWith12345Numbers implements MyClass {}
+
+/* testTraitStartingWithNumber */
+trait 5InvalidNameStartingWithNumber {}
+
+/* testClassEndingWithNumber */
+class ValidNameEndingWithNumber5{}
+
+/* testInterfaceFullyNumeric */
+interface 12345 {}
+
+/* testMissingInterfaceName */
+interface { // Intentional parse error.
+    public function someFunction();
+}
+
+/* testLiveCoding */
+abstract class // Intentional parse error.

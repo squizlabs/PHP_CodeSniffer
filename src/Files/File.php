@@ -1211,7 +1211,8 @@ class File
      *                      declared the class, interface, trait, or function.
      *
      * @return string|null The name of the class, interface, trait, or function;
-     *                     or NULL if the function or class is anonymous.
+     *                     NULL if the function or class is anonymous; or
+     *                     an empty string in case of a parse error/live coding.
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified token is not of type
      *                                                      T_FUNCTION, T_CLASS, T_TRAIT, or T_INTERFACE.
      *

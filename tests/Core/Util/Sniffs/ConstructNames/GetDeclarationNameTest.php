@@ -139,6 +139,34 @@ class GetDeclarationNameTest extends AbstractMethodUnitTest
                 '/* testClassWithCommentsAndNewLines */',
                 'ClassWithCommentsAndNewLines',
             ],
+            [
+                '/* testClassWithNumber */',
+                'ClassWith1Number',
+            ],
+            [
+                '/* testInterfaceWithNumbers */',
+                'InterfaceWith12345Numbers',
+            ],
+            [
+                '/* testTraitStartingWithNumber */',
+                '5InvalidNameStartingWithNumber',
+            ],
+            [
+                '/* testClassEndingWithNumber */',
+                'ValidNameEndingWithNumber5',
+            ],
+            [
+                '/* testInterfaceFullyNumeric */',
+                '12345',
+            ],
+            [
+                '/* testMissingInterfaceName */',
+                '',
+            ],
+            [
+                '/* testLiveCoding */',
+                '',
+            ],
         ];
 
     }//end dataGetDeclarationName()

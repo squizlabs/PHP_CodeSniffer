@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Util\Sniffs;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class ConstructNames
 {
@@ -25,7 +26,8 @@ class ConstructNames
      *                                               declared the class, interface, trait, or function.
      *
      * @return string|null The name of the class, interface, trait, or function;
-     *                     or NULL if the function or class is anonymous.
+     *                     NULL if the function or class is anonymous; or
+     *                     an empty string in case of a parse error/live coding.
      *
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified token is not of type
      *                                                      T_FUNCTION, T_CLASS, T_TRAIT, or T_INTERFACE.
@@ -55,15 +57,36 @@ class ConstructNames
             return $tokens[$stackPtr]['content'];
         }
 
-        $content = null;
-        for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
-            if ($tokens[$i]['code'] === T_STRING) {
-                $content = $tokens[$i]['content'];
-                break;
-            }
+        /*
+         * Determine the name. Note that we cannot simply look for the first T_STRING
+         * because an (invalid) class name starting with the number will be multiple tokens.
+         * Whitespace or comment are however not allowed within a name.
+         */
+
+        if ($tokenCode === T_FUNCTION && isset($tokens[$stackPtr]['parenthesis_opener']) === true) {
+            $opener = $tokens[$stackPtr]['parenthesis_opener'];
+        } else if (isset($tokens[$stackPtr]['scope_opener']) === true) {
+            $opener = $tokens[$stackPtr]['scope_opener'];
         }
 
-        return $content;
+        if (isset($opener) === false) {
+            // Live coding or parse error.
+            return '';
+        }
+
+        $nameStart = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), $opener, true);
+        if ($nameStart === false) {
+            // Live coding or parse error.
+            return '';
+        }
+
+        $nameEnd = $phpcsFile->findNext(Tokens::$emptyTokens, $nameStart, $opener);
+        if ($nameEnd === false) {
+            return $tokens[$nameStart]['content'];
+        }
+
+        // Name starts with number, so is composed of multiple tokens.
+        return trim($phpcsFile->getTokensAsString($nameStart, ($nameEnd - $nameStart)));
 
     }//end getDeclarationName()
 
