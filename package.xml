@@ -79,6 +79,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="IsOOPropertyTest.php" role="test" />
        </dir>
        <dir name="ConstructNames">
+        <file baseinstalldir="" name="GetDeclarationNameTest.inc" role="test" />
+        <file baseinstalldir="" name="GetDeclarationNameTest.php" role="test" />
+        <file baseinstalldir="" name="GetDeclarationNameJSTest.js" role="test" />
+        <file baseinstalldir="" name="GetDeclarationNameJSTest.php" role="test" />
         <file baseinstalldir="" name="IsCamelCapsTest.php" role="test" />
        </dir>
        <dir name="FunctionDeclarations">
@@ -1936,6 +1940,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameTest.php" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameTest.inc" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.php" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.js" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.js" />
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" name="tests/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
@@ -2023,6 +2031,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOMethodTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" name="tests/Core/Util/Sniffs/Conditions/IsOOPropertyTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameTest.php" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameTest.inc" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.php" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.js" name="tests/Core/Util/Sniffs/ConstructNames/GetDeclarationNameJSTest.js" />
    <install as="CodeSniffer/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" name="tests/Core/Util/Sniffs/ConstructNames/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" name="tests/Core/Util/Sniffs/FunctionDeclarations/GetParametersTest.inc" />
