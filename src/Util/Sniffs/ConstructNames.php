@@ -4,6 +4,7 @@
  * and variable names.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
@@ -212,6 +213,60 @@ class ConstructNames
         return $validName;
 
     }//end isUnderscoreName()
+
+
+    /**
+     * Verify whether a name contains numeric characters.
+     *
+     * @param string $name The string.
+     *
+     * @return bool
+     */
+    public static function hasNumbers($name)
+    {
+        if ($name === '') {
+            return false;
+        }
+
+        return preg_match('`\pN`u', $name) === 1;
+
+    }//end hasNumbers()
+
+
+    /**
+     * Remove numeric characters from the start of a string.
+     *
+     * @param string $name The string.
+     *
+     * @return string
+     */
+    public static function ltrimNumbers($name)
+    {
+        if ($name === '') {
+            return '';
+        }
+
+        return preg_replace('`^[\pN]+(\X*)`u', '$1', $name);
+
+    }//end ltrimNumbers()
+
+
+    /**
+     * Remove all numeric characters from a string.
+     *
+     * @param string $name The string.
+     *
+     * @return string
+     */
+    public static function removeNumbers($name)
+    {
+        if ($name === '') {
+            return '';
+        }
+
+        return preg_replace('`[\pN]+`u', '', $name);
+
+    }//end removeNumbers()
 
 
 }//end class
