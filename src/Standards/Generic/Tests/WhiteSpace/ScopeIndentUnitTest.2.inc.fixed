@@ -1383,6 +1383,18 @@ if (true) {
 	<?php
 }
 
+switch($foo)
+{
+	case 1:
+		$value = 1; break;
+	case 2:
+		if ($bar) {
+			break;
+		}
+	default:
+		$value = 0;
+}
+
 ?>
 
 <?php
