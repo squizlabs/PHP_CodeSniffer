@@ -107,6 +107,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="" name="GetClassPropertiesTest.inc" role="test" />
         <file baseinstalldir="" name="GetClassPropertiesTest.php" role="test" />
        </dir>
+       <dir name="Orthography">
+        <file baseinstalldir="" name="FirstCharTest.php" role="test" />
+        <file baseinstalldir="" name="IsLastCharPunctuationTest.php" role="test" />
+       </dir>
        <dir name="Parentheses">
         <file baseinstalldir="" name="ParenthesesTest.inc" role="test" />
         <file baseinstalldir="" name="ParenthesesTest.php" role="test" />
@@ -1861,6 +1865,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarations.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Namespaces.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="ObjectDeclarations.php" role="php" />
+      <file baseinstalldir="PHP/CodeSniffer" name="Orthography.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Parentheses.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="PassedParameters.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="TextStrings.php" role="php" />
@@ -1952,6 +1957,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Orthography/FirstCharTest.php" name="tests/Core/Util/Sniffs/Orthography/FirstCharTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Orthography/IsLastCharPunctuationTest.php" name="tests/Core/Util/Sniffs/Orthography/IsLastCharPunctuationTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.php" />
@@ -2037,6 +2044,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/FindImplementedInterfaceNamesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.php" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" name="tests/Core/Util/Sniffs/ObjectDeclarations/GetClassPropertiesTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Orthography/FirstCharTest.php" name="tests/Core/Util/Sniffs/Orthography/FirstCharTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Orthography/IsLastCharPunctuationTest.php" name="tests/Core/Util/Sniffs/Orthography/IsLastCharPunctuationTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" name="tests/Core/Util/Sniffs/Parentheses/ParenthesesTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.php" name="tests/Core/Util/Sniffs/PassedParameters/GetDoubleArrowPositionTest.php" />
