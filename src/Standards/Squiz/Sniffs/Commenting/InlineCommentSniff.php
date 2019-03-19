@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
+use PHP_CodeSniffer\Util\Sniffs\Orthography;
 use PHP_CodeSniffer\Util\Tokens;
 
 class InlineCommentSniff implements Sniff
@@ -252,7 +253,7 @@ class InlineCommentSniff implements Sniff
             return ($lastCommentToken + 1);
         }
 
-        if (preg_match('/^\p{Ll}/u', $commentText) === 1) {
+        if (Orthography::isFirstCharLowercase($commentText) === true) {
             $error = 'Inline comments must start with a capital letter';
             $phpcsFile->addError($error, $stackPtr, 'NotCapital');
         }

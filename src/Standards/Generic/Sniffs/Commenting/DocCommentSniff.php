@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Orthography;
 
 class DocCommentSniff implements Sniff
 {
@@ -155,7 +156,7 @@ class DocCommentSniff implements Sniff
                 }
             }
 
-            if (preg_match('/^\p{Ll}/u', $shortContent) === 1) {
+            if (Orthography::isFirstCharLowercase($shortContent) === true) {
                 $error = 'Doc comment short description must start with a capital letter';
                 $phpcsFile->addError($error, $short, 'ShortNotCapital');
             }
@@ -181,7 +182,7 @@ class DocCommentSniff implements Sniff
                     }
                 }
 
-                if (preg_match('/^\p{Ll}/u', $tokens[$long]['content']) === 1) {
+                if (Orthography::isFirstCharLowercase($tokens[$long]['content']) === true) {
                     $error = 'Doc comment long description must start with a capital letter';
                     $phpcsFile->addError($error, $long, 'LongNotCapital');
                 }

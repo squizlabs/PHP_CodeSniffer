@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Orthography;
 use PHP_CodeSniffer\Util\Tokens;
 
 class BlockCommentSniff implements Sniff
@@ -253,7 +254,7 @@ class BlockCommentSniff implements Sniff
                 }
             }//end if
 
-            if (preg_match('/^\p{Ll}/u', $commentText) === 1) {
+            if (Orthography::isFirstCharLowercase($commentText) === true) {
                 $error = 'Block comments must start with a capital letter';
                 $phpcsFile->addError($error, $commentLines[1], 'NoCapital');
             }
