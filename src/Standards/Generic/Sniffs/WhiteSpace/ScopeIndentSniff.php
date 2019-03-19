@@ -296,7 +296,8 @@ class ScopeIndentSniff implements Sniff
                     $condition = 0;
                     if (isset($tokens[$parenCloser]['conditions']) === true
                         && empty($tokens[$parenCloser]['conditions']) === false
-                        && isset($tokens[$parenCloser]['parenthesis_owner']) === false
+                        && (isset($tokens[$parenCloser]['parenthesis_owner']) === false
+                        || $parens > 0)
                     ) {
                         $condition = $tokens[$parenCloser]['conditions'];
                         end($condition);

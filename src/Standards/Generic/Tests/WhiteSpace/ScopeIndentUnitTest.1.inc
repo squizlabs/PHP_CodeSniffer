@@ -1383,6 +1383,16 @@ if (true) {
     <?php
 }
 
+foo(function () {
+    if ($conditionA &&
+        $conditionB
+    ) {
+        if ($conditionC) {
+            $a = 1;
+        }
+    }
+});
+
 switch($foo)
 {
     case 1:
