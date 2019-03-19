@@ -4,16 +4,25 @@
  *
  * Below is a test that listens to methods that exist only within classes:
  * <code>
- * class ClassScopeTest extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+ * use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+ * use PHP_CodeSniffer\Files\File;
+ * use PHP_CodeSniffer\Utils\Sniffs\ConstructNames;
+ *
+ * class ClassScopeTest extends AbstractScopeSniff
  * {
  *     public function __construct()
  *     {
  *         parent::__construct(array(T_CLASS), array(T_FUNCTION));
  *     }
  *
- *     protected function processTokenWithinScope(\PHP_CodeSniffer\Files\File $phpcsFile, $stackPtr, $currScope)
+ *     protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
  *     {
- *         $className = $phpcsFile->getDeclarationName($currScope);
+ *         $className = ConstructNames::getDeclarationName($phpcsFile, $currScope);
+ *         if (empty($className) === true) {
+ *             // Live coding or parse error.
+ *             return;
+ *         }
+ *
  *         echo 'encountered a method within class '.$className;
  *     }
  * }
