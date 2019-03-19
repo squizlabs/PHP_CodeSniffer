@@ -233,8 +233,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $phpcsFile->addError($error, ($tag + 2), 'ThrowsNotCapital');
                 }
 
-                $lastChar = substr($comment, -1);
-                if ($lastChar !== '.') {
+                if (Orthography::isLastCharPunctuation($comment, '.') === false) {
                     $error = '@throws tag comment must end with a full stop';
                     $phpcsFile->addError($error, ($tag + 2), 'ThrowsNoFullStop');
                 }
@@ -555,8 +554,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 $phpcsFile->addError($error, $param['tag'], 'ParamCommentNotCapital');
             }
 
-            $lastChar = substr($param['comment'], -1);
-            if ($lastChar !== '.') {
+            if (Orthography::isLastCharPunctuation($param['comment'], '.') === false) {
                 $error = 'Parameter comment must end with a full stop';
                 $phpcsFile->addError($error, $param['tag'], 'ParamCommentFullStop');
             }

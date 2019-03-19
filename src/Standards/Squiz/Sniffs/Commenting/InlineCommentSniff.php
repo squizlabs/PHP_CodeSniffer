@@ -261,14 +261,13 @@ class InlineCommentSniff implements Sniff
         // Only check the end of comment character if the start of the comment
         // is a letter, indicating that the comment is just standard text.
         if (preg_match('/^\p{L}/u', $commentText) === 1) {
-            $commentCloser   = $commentText[(strlen($commentText) - 1)];
             $acceptedClosers = [
                 'full-stops'        => '.',
                 'exclamation marks' => '!',
                 'or question marks' => '?',
             ];
 
-            if (in_array($commentCloser, $acceptedClosers, true) === false) {
+            if (Orthography::isLastCharPunctuation($commentText, implode('', $acceptedClosers)) === false) {
                 $error = 'Inline comments must end in %s';
                 $ender = '';
                 foreach ($acceptedClosers as $closerName => $symbol) {
