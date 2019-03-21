@@ -28,6 +28,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - Fixed bug #2414 : Indention false positive in switch/case/if combination
   - Fixed bug #2450 : Indentation false positive when closure containing nested IF conditions used as function argument
+  - Fixed bug #2452 : LowercasePHPFunctions sniff failing on "new \File()"
  </notes>
  <contents>
   <dir name="/">

@@ -117,7 +117,9 @@ class LowercasePHPFunctionsSniff implements Sniff
 
         if ($tokens[$prev]['code'] === T_NS_SEPARATOR) {
             if ($pprev !== false
-                && ($tokens[$pprev]['code'] === T_STRING || $tokens[$pprev]['code'] === T_NAMESPACE)
+                && ($tokens[$pprev]['code'] === T_STRING
+                || $tokens[$pprev]['code'] === T_NAMESPACE
+                || $tokens[$pprev]['code'] === T_NEW)
             ) {
                 // Namespaced class/function, not an inbuilt function.
                 // Could potentially give false negatives for non-namespaced files

@@ -37,3 +37,5 @@ $callToGlobalFunction = \ /*comment*/ str_Repeat($a, 2);
 
 $callToNamespacedFunction = MyNamespace /* phpcs:ignore Standard */ \STR_REPEAT($a, 2);
 $callToNamespacedFunction = namespace\STR_REPEAT($a, 2); // Could potentially be false negative.
+
+$filePath = new \File($path);
