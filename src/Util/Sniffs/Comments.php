@@ -13,7 +13,7 @@ class Comments
 {
 
     /**
-     * An array of variable types for param/var we will check.
+     * Valid variable types for param/var/return tags.
      *
      * Keys are short-form, values long-form.
      *
@@ -22,13 +22,21 @@ class Comments
     public static $allowedTypes = [
         'array'    => 'array',
         'bool'     => 'boolean',
+        'callable' => 'callable',
+        'false'    => 'false',
         'float'    => 'float',
         'int'      => 'integer',
+        'iterable' => 'iterable',
         'mixed'    => 'mixed',
+        'null'     => 'null',
         'object'   => 'object',
-        'string'   => 'string',
         'resource' => 'resource',
-        'callable' => 'callable',
+        'self'     => 'self',
+        'static'   => 'static',
+        'string'   => 'string',
+        'true'     => 'true',
+        'void'     => 'void',
+        '$this'    => '$this',
     ];
 
 
@@ -38,46 +46,51 @@ class Comments
      * If type is not one of the standard types, it must be a custom type.
      * Returns the correct type name suggestion if type name is invalid.
      *
-     * @param string $varType The variable type to process.
-     * @param string $form    Optional. Whether to prefer long-form or short-form
-     *                        types. This only affects the integer and boolean types.
-     *                        Accepted values: 'long', 'short'. Defaults to `short`.
+     * @param string     $varType      The variable type to process.
+     * @param string     $form         Optional. Whether to prefer long-form or short-form
+     *                                 types. By default, this only affects the integer and
+     *                                 boolean types.
+     *                                 Accepted values: 'long', 'short'. Defaults to `short`.
+     * @param array|null $allowedTypes Optional. Array of allowed variable types.
+     *                                 Keys are short form types, values long form.
+     *                                 Both lowercase.
+     *                                 If for a particular standard, long/short form does
+     *                                 not apply, keys and values should be the same.
      *
      * @return string
      */
-    public static function suggestType($varType, $form='short')
+    public static function suggestType($varType, $form='short', $allowedTypes=null)
     {
+        if ($allowedTypes === null) {
+            $allowedTypes = self::$allowedTypes;
+        }
+
         if ($varType === '') {
             return '';
         }
 
         $lowerVarType = strtolower(trim($varType));
 
-        if (($form === 'short' && isset(self::$allowedTypes[$lowerVarType]) === true)
-            || ($form === 'long' && in_array($lowerVarType, self::$allowedTypes, true) === true)
+        if (($form === 'short' && isset($allowedTypes[$lowerVarType]) === true)
+            || ($form === 'long' && in_array($lowerVarType, $allowedTypes, true) === true)
         ) {
             return $lowerVarType;
         }
 
+        // Check for short form use when long form is expected and visa versa.
+        if ($form === 'long' && isset($allowedTypes[$lowerVarType]) === true) {
+            return $allowedTypes[$lowerVarType];
+        }
+
+        if ($form === 'short' && in_array($lowerVarType, $allowedTypes, true) === true) {
+            return array_search($lowerVarType, $allowedTypes, true);
+        }
+
         // Not listed in allowed types, check for a limited set of known variations.
         switch ($lowerVarType) {
-        case 'bool':
-        case 'boolean':
-            if ($form === 'long') {
-                return 'boolean';
-            }
-            return 'bool';
-
         case 'double':
         case 'real':
             return 'float';
-
-        case 'int':
-        case 'integer':
-            if ($form === 'long') {
-                return 'integer';
-            }
-            return 'int';
 
         case 'array()':
             return 'array';
@@ -92,12 +105,12 @@ class Comments
             if (preg_match($pattern, $varType, $matches) === 1) {
                 $type1 = '';
                 if (isset($matches[1]) === true) {
-                    $type1 = self::suggestType($matches[1], $form);
+                    $type1 = self::suggestType($matches[1], $form, $allowedTypes);
                 }
 
                 $type2 = '';
                 if (isset($matches[2]) === true) {
-                    $type2 = self::suggestType($matches[2], $form);
+                    $type2 = self::suggestType($matches[2], $form, $allowedTypes);
                     if ($type2 !== '') {
                         $type2 = ' => '.$type2;
                     }

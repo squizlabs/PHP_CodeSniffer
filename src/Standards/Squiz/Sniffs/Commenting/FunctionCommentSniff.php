@@ -409,7 +409,9 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                         $suggestedTypeHint = 'int';
                     } else if ($suggestedName === 'float') {
                         $suggestedTypeHint = 'float';
-                    } else if ($suggestedName === 'bool' || $suggestedName === 'boolean') {
+                    } else if ($suggestedName === 'bool' || $suggestedName === 'boolean'
+                        || $suggestedName === 'true' || $suggestedName === 'false'
+                    ) {
                         $suggestedTypeHint = 'bool';
                     }
                 }
