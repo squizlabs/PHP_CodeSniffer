@@ -140,6 +140,15 @@ class Comments
                 }//end if
             }//end if
 
+            // Check if both null as well as nullable types are used and if so, remove nullable indicator.
+            if (array_search('null', $types, true) !== false) {
+                foreach ($types as $key => $type) {
+                    if (strpos($type, '?') === 0) {
+                        $types[$key] = ltrim($type, '?');
+                    }
+                }
+            }
+
             return implode('|', $types);
         }//end if
 
@@ -263,6 +272,11 @@ class Comments
         // Check for PSR-5 single type array format, like `int[]`.
         if (strpos($varType, '|') === false && substr($varType, -2) === '[]' && $varType !== '[]') {
             return self::suggestType(substr($varType, 0, -2), $form, $allowedTypes).'[]';
+        }
+
+        // Allow for nullable type format, like `?string`.
+        if (strpos($varType, '?') === 0) {
+            return '?'.self::suggestType(substr($varType, 1), $form, $allowedTypes);
         }
 
         // Must be a custom type name.

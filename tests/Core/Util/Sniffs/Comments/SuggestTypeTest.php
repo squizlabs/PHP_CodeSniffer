@@ -372,6 +372,13 @@ class SuggestTypeTest extends TestCase
                 'long'  => '(string|null)[]',
                 'short' => '(string|null)[]',
             ],
+
+            // Nullable types.
+            [
+                'input' => '?bool',
+                'long'  => '?boolean',
+                'short' => '?bool',
+            ],
         ];
 
     }//end dataSuggestTypeOther()

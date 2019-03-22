@@ -244,6 +244,18 @@ class SuggestTypeStringTest extends TestCase
                 'long'  => '\MyClass&\YourClass',
                 'short' => '\MyClass&\YourClass',
             ],
+
+            // Nullable types.
+            [
+                'input' => '?int|?real',
+                'long'  => '?integer|?float',
+                'short' => '?int|?float',
+            ],
+            [
+                'input' => '?int|?string|null',
+                'long'  => 'integer|string|null',
+                'short' => 'int|string|null',
+            ],
         ];
 
     }//end dataSuggestTypeString()
