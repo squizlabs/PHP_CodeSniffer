@@ -69,6 +69,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="Util">
       <dir name="Sniffs">
        <dir name="Comments">
+        <file baseinstalldir="" name="FindEndOfCommentTest.inc" role="test" />
+        <file baseinstalldir="" name="FindEndOfCommentTest.php" role="test" />
+        <file baseinstalldir="" name="FindStartOfCommentTest.inc" role="test" />
+        <file baseinstalldir="" name="FindStartOfCommentTest.php" role="test" />
         <file baseinstalldir="" name="SuggestTypeStringTest.php" role="test" />
         <file baseinstalldir="" name="SuggestTypeTest.php" role="test" />
        </dir>
@@ -1939,6 +1943,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/FindEndOfCommentTest.php" name="tests/Core/Util/Sniffs/Comments/FindEndOfCommentTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/FindEndOfCommentTest.inc" name="tests/Core/Util/Sniffs/Comments/FindEndOfCommentTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/FindStartOfCommentTest.php" name="tests/Core/Util/Sniffs/Comments/FindStartOfCommentTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/FindStartOfCommentTest.inc" name="tests/Core/Util/Sniffs/Comments/FindStartOfCommentTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Comments/SuggestTypeStringTest.php" name="tests/Core/Util/Sniffs/Comments/SuggestTypeStringTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Comments/SuggestTypeTest.php" name="tests/Core/Util/Sniffs/Comments/SuggestTypeTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
@@ -2034,6 +2042,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/FindEndOfCommentTest.php" name="tests/Core/Util/Sniffs/Comments/FindEndOfCommentTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/FindEndOfCommentTest.inc" name="tests/Core/Util/Sniffs/Comments/FindEndOfCommentTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/FindStartOfCommentTest.php" name="tests/Core/Util/Sniffs/Comments/FindStartOfCommentTest.php" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/FindStartOfCommentTest.inc" name="tests/Core/Util/Sniffs/Comments/FindStartOfCommentTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Comments/SuggestTypeStringTest.php" name="tests/Core/Util/Sniffs/Comments/SuggestTypeStringTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Comments/SuggestTypeTest.php" name="tests/Core/Util/Sniffs/Comments/SuggestTypeTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />

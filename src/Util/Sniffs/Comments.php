@@ -3,11 +3,16 @@
  * Utility functions for use when examining comments and docblocks.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
 namespace PHP_CodeSniffer\Util\Sniffs;
+
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Tokens;
 
 class Comments
 {
@@ -283,6 +288,281 @@ class Comments
         return $varType;
 
     }//end suggestType()
+
+
+    /**
+     * Find the end of a docblock, inline or block comment sequence.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               start of the comment.
+     *
+     * @return int Stack pointer to the end of the comment.
+     *
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified $stackPtr is
+     *                                                      not of type T_COMMENT or
+     *                                                      T_DOC_COMMENT_OPEN_TAG or if it
+     *                                                      is not the start of a comment.
+     */
+    public static function findEndOfComment(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if ($tokens[$stackPtr]['code'] !== T_COMMENT
+            && $tokens[$stackPtr]['code'] !== T_DOC_COMMENT_OPEN_TAG
+        ) {
+            throw new RuntimeException('$stackPtr must be of type T_COMMENT or T_DOC_COMMENT_OPEN_TAG');
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_OPEN_TAG) {
+            return $tokens[$stackPtr]['comment_closer'];
+        }
+
+        // Find the end of inline comment blocks.
+        if (strpos($tokens[$stackPtr]['content'], '//') === 0
+            || strpos($tokens[$stackPtr]['content'], '#') === 0
+        ) {
+            $commentPrefix = '//';
+            if (strpos($tokens[$stackPtr]['content'], '#') === 0) {
+                $commentPrefix = '#';
+            }
+
+            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            if ($prev !== false) {
+                if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
+                    // Stand-alone trailing comment.
+                    return $stackPtr;
+                } else if ($tokens[$prev]['line'] === ($tokens[$stackPtr]['line'] - 1)) {
+                    // Previous token was on the previous line.
+                    // Now make sure it wasn't a stand-alone trailing comment.
+                    if ($tokens[$prev]['code'] === T_COMMENT
+                        && strpos($tokens[$prev]['content'], $commentPrefix) === 0
+                    ) {
+                        $pprev = $phpcsFile->findPrevious(T_WHITESPACE, ($prev - 1), null, true);
+                        if ($pprev === false
+                            || $tokens[$pprev]['line'] !== $tokens[$prev]['line']
+                        ) {
+                            throw new RuntimeException('$stackPtr must point to the start of a comment');
+                        }
+                    }
+                }
+            }
+
+            $commentEnd = $stackPtr;
+            for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+                if ($tokens[$i]['code'] === T_WHITESPACE) {
+                    continue;
+                }
+
+                if ($tokens[$i]['code'] !== T_COMMENT
+                    && isset(Tokens::$phpcsCommentTokens[$tokens[$i]['code']]) === false
+                ) {
+                    break;
+                }
+
+                if (strpos($tokens[$i]['content'], $commentPrefix) !== 0) {
+                    // Not an inline comment or not same style comment, so not part of this comment sequence.
+                    break;
+                }
+
+                if ($tokens[$i]['line'] !== ($tokens[$commentEnd]['line'] + 1)) {
+                    // There must have been a blank line between these comments.
+                    break;
+                }
+
+                $commentEnd = $i;
+            }//end for
+
+            if (isset(Tokens::$phpcsCommentTokens[$tokens[$commentEnd]['code']]) === true) {
+                // Inline comment blocks can't end on a PHPCS annotation, so move one back.
+                // We already know that the previous token must exist and be a comment token,
+                // so no extra validation needed.
+                $commentEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($commentEnd - 1), null, true);
+            }
+
+            return $commentEnd;
+        }//end if
+
+        // Deal with block comments which start with a PHPCS annotation.
+        if (strpos($tokens[$stackPtr]['content'], '/*') !== 0) {
+            do {
+                $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+                if (isset(Tokens::$phpcsCommentTokens[$tokens[$prev]['code']]) === false) {
+                    throw new RuntimeException('$stackPtr must point to the start of a comment');
+                }
+
+                $stackPtr = $prev;
+
+                if (strpos($tokens[$prev]['content'], '/*') === 0) {
+                    break;
+                }
+            } while ($stackPtr >= 0);
+        }
+
+        // Find the end of block comments.
+        if (strpos($tokens[$stackPtr]['content'], '/*') === 0) {
+            if (substr($tokens[$stackPtr]['content'], -2) === '*/') {
+                // Single line block comment.
+                return $stackPtr;
+            }
+
+            $valid            = Tokens::$phpcsCommentTokens;
+            $valid[T_COMMENT] = T_COMMENT;
+
+            $commentEnd = $stackPtr;
+            $i          = ($stackPtr + 1);
+            while ($i < $phpcsFile->numTokens && isset($valid[$tokens[$i]['code']]) === true) {
+                $commentEnd = $i;
+                if (substr($tokens[$i]['content'], -2) === '*/') {
+                    // Found end of the comment.
+                    break;
+                }
+
+                ++$i;
+            }
+
+            return $commentEnd;
+        }//end if
+
+    }//end findEndOfComment()
+
+
+    /**
+     * Find the start of a docblock, inline or block comment sequence.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               end of the comment.
+     *
+     * @return int Stack pointer to the start of the comment.
+     *
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified $stackPtr is
+     *                                                      not of type T_COMMENT or
+     *                                                      T_DOC_COMMENT_CLOSE_TAG or if it
+     *                                                      is not the end of a comment.
+     */
+    public static function findStartOfComment(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if ($tokens[$stackPtr]['code'] !== T_COMMENT
+            && $tokens[$stackPtr]['code'] !== T_DOC_COMMENT_CLOSE_TAG
+        ) {
+            throw new RuntimeException('$stackPtr must be of type T_COMMENT or T_DOC_COMMENT_CLOSE_TAG');
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+            return $tokens[$stackPtr]['comment_opener'];
+        }
+
+        // Find the start of inline comment blocks.
+        if (strpos($tokens[$stackPtr]['content'], '//') === 0
+            || strpos($tokens[$stackPtr]['content'], '#') === 0
+        ) {
+            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            if ($prev !== false && $tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
+                // Stand-alone trailing comment.
+                return $stackPtr;
+            }
+
+            $commentPrefix = '//';
+            if (strpos($tokens[$stackPtr]['content'], '#') === 0) {
+                $commentPrefix = '#';
+            }
+
+            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+            if ($next !== false
+                && $tokens[$next]['code'] === T_COMMENT
+                && strpos($tokens[$next]['content'], $commentPrefix) === 0
+                && $tokens[$next]['line'] === ($tokens[$stackPtr]['line'] + 1)
+            ) {
+                throw new RuntimeException('$stackPtr must point to the end of a comment');
+            }
+
+            $commentStart = $stackPtr;
+            for ($i = ($stackPtr - 1); $i >= 0; $i--) {
+                if ($tokens[$i]['code'] === T_WHITESPACE) {
+                    continue;
+                }
+
+                if ($tokens[$i]['code'] !== T_COMMENT
+                    && isset(Tokens::$phpcsCommentTokens[$tokens[$i]['code']]) === false
+                ) {
+                    break;
+                }
+
+                if (strpos($tokens[$i]['content'], $commentPrefix) !== 0) {
+                    // Not an inline comment or not same style comment, so not part of this comment sequence.
+                    break;
+                }
+
+                if ($tokens[$i]['line'] !== ($tokens[$commentStart]['line'] - 1)) {
+                    // There must have been a blank line between these comments.
+                    break;
+                }
+
+                $commentStart = $i;
+            }//end for
+
+            if (isset(Tokens::$phpcsCommentTokens[$tokens[$commentStart]['code']]) === true) {
+                // Inline comment blocks can't start on a PHPCS annotation, so move one forward.
+                // We already know that the next token must exist and be a comment token,
+                // so no extra validation needed.
+                $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($commentStart + 1), null, true);
+            } else {
+                // Check that the current token we are at isn't a trailing comment.
+                $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($commentStart - 1), null, true);
+                if ($prev !== false && $tokens[$prev]['line'] === $tokens[$commentStart]['line']) {
+                    // Trailing comment, so move one forward.
+                    $commentStart = $phpcsFile->findNext(T_WHITESPACE, ($commentStart + 1), null, true);
+                }
+            }
+
+            return $commentStart;
+        }//end if
+
+        // Deal with block comments which end with a PHPCS annotation.
+        if (substr($tokens[$stackPtr]['content'], -2) !== '*/') {
+            do {
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+                if (isset(Tokens::$phpcsCommentTokens[$tokens[$next]['code']]) === false) {
+                    throw new RuntimeException('$stackPtr must point to the end of a comment');
+                }
+
+                $stackPtr = $next;
+
+                if (substr($tokens[$next]['content'], -2) === '*/') {
+                    break;
+                }
+            } while ($stackPtr >= 0);
+        }
+
+        // Find the start of block comments.
+        if (substr($tokens[$stackPtr]['content'], -2) === '*/') {
+            if (strpos($tokens[$stackPtr]['content'], '/*') === 0) {
+                // Single line block comment.
+                return $stackPtr;
+            }
+
+            $valid            = Tokens::$phpcsCommentTokens;
+            $valid[T_COMMENT] = T_COMMENT;
+
+            $commentStart = $stackPtr;
+            $i            = ($stackPtr - 1);
+            while ($i >= 0 && isset($valid[$tokens[$i]['code']]) === true) {
+                $commentStart = $i;
+                if (strpos($tokens[$i]['content'], '/*') === 0) {
+                    // Found start of the comment.
+                    break;
+                }
+
+                --$i;
+            }
+
+            return $commentStart;
+        }//end if
+
+    }//end findStartOfComment()
 
 
 }//end class
