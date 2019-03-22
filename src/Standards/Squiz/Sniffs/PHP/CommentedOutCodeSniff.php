@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Exceptions\TokenizerException;
 
@@ -67,40 +68,17 @@ class CommentedOutCodeSniff implements Sniff
         }
 
         $content      = '';
-        $lastLineSeen = $tokens[$stackPtr]['line'];
         $commentStyle = 'line';
         if (strpos($tokens[$stackPtr]['content'], '/*') === 0) {
             $commentStyle = 'block';
         }
 
-        $lastCommentBlockToken = $stackPtr;
-        for ($i = $stackPtr; $i < $phpcsFile->numTokens; $i++) {
-            if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === false) {
-                break;
-            }
-
-            if ($tokens[$i]['code'] === T_WHITESPACE) {
-                continue;
-            }
-
-            if (isset(Tokens::$phpcsCommentTokens[$tokens[$i]['code']]) === true) {
-                $lastLineSeen = $tokens[$i]['line'];
-                continue;
-            }
-
-            if ($commentStyle === 'line'
-                && ($lastLineSeen + 1) <= $tokens[$i]['line']
-                && strpos($tokens[$i]['content'], '/*') === 0
+        $lastCommentBlockToken = Comments::findEndOfComment($phpcsFile, $stackPtr);
+        for ($i = $stackPtr; $i <= $lastCommentBlockToken; $i++) {
+            if ($tokens[$i]['code'] === T_WHITESPACE
+                || isset(Tokens::$phpcsCommentTokens[$tokens[$i]['code']]) === true
             ) {
-                // First non-whitespace token on a new line is start of a different style comment.
-                break;
-            }
-
-            if ($commentStyle === 'line'
-                && ($lastLineSeen + 1) < $tokens[$i]['line']
-            ) {
-                // Blank line breaks a '//' style comment block.
-                break;
+                continue;
             }
 
             /*
@@ -109,7 +87,6 @@ class CommentedOutCodeSniff implements Sniff
             */
 
             $tokenContent = trim($tokens[$i]['content']);
-            $break        = false;
 
             if ($commentStyle === 'line') {
                 if (substr($tokenContent, 0, 2) === '//') {
@@ -130,7 +107,6 @@ class CommentedOutCodeSniff implements Sniff
 
                 if (substr($tokenContent, -2) === '*/') {
                     $tokenContent = substr($tokenContent, 0, -2);
-                    $break        = true;
                 }
 
                 if (substr($tokenContent, 0, 1) === '*') {
@@ -138,15 +114,7 @@ class CommentedOutCodeSniff implements Sniff
                 }
             }//end if
 
-            $content     .= $tokenContent.$phpcsFile->eolChar;
-            $lastLineSeen = $tokens[$i]['line'];
-
-            $lastCommentBlockToken = $i;
-
-            if ($break === true) {
-                // Closer of a block comment found.
-                break;
-            }
+            $content .= $tokenContent.$phpcsFile->eolChar;
         }//end for
 
         // Ignore typical warning suppression annotations from other tools.
