@@ -1,0 +1,29 @@
+<documentation title="One Object Structure Per File">
+    <standard>
+    <![CDATA[
+    There should only be one class or interface or trait defined in a file.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Only one object structure in the file.">
+        <![CDATA[
+<?php
+<em>trait Foo</em>
+{
+}
+        ]]>
+        </code>
+        <code title="Invalid: Multiple object structures defined in one file.">
+        <![CDATA[
+<?php
+<em>trait Foo</em>
+{
+}
+
+<em>class Bar</em>
+{
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

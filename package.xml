@@ -193,6 +193,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LowercasedFilenameStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneClassPerFileStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneInterfacePerFileStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OneObjectStructurePerFileStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OneTraitPerFileStandard.xml" role="php" />
        </dir>
        <dir name="Formatting">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowMultipleStatementsStandard.xml" role="php" />
