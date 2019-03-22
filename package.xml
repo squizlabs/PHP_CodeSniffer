@@ -68,6 +68,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
      </dir>
      <dir name="Util">
       <dir name="Sniffs">
+       <dir name="Comments">
+        <file baseinstalldir="" name="SuggestTypeTest.php" role="test" />
+       </dir>
        <dir name="Conditions">
         <file baseinstalldir="" name="GetConditionTest.inc" role="test" />
         <file baseinstalldir="" name="GetConditionTest.php" role="test" />
@@ -1935,6 +1938,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/SuggestTypeTest.php" name="tests/Core/Util/Sniffs/Comments/SuggestTypeTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.inc" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" />
@@ -2028,6 +2032,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
+   <install as="CodeSniffer/Core/Util/Sniffs/Comments/SuggestTypeTest.php" name="tests/Core/Util/Sniffs/Comments/SuggestTypeTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.php" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.php" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/GetConditionTest.inc" name="tests/Core/Util/Sniffs/Conditions/GetConditionTest.inc" />
    <install as="CodeSniffer/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" name="tests/Core/Util/Sniffs/Conditions/IsOOConstantTest.php" />
