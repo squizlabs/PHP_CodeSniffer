@@ -251,6 +251,43 @@ class SuggestTypeTest extends TestCase
                 'short' => 'array(bool => float)',
             ],
 
+            // Arrays with <> brackets.
+            [
+                'input' => 'Array<>',
+                'long'  => 'array',
+                'short' => 'array',
+            ],
+            [
+                'input' => 'array<real>',
+                'long'  => 'array<float>',
+                'short' => 'array<float>',
+            ],
+            [
+                'input' => 'array<int, object>',
+                'long'  => 'array<integer, object>',
+                'short' => 'array<int, object>',
+            ],
+            [
+                'input' => 'array<integer, resource>',
+                'long'  => 'array<integer, resource>',
+                'short' => 'array<int, resource>',
+            ],
+            [
+                'input' => 'array<string, array<int, ClassMetadata>>',
+                'long'  => 'array<string, array<integer, ClassMetadata>>',
+                'short' => 'array<string, array<int, ClassMetadata>>',
+            ],
+            [
+                'input' => 'ARRAY<BOOL, DOUBLE>',
+                'long'  => 'array<boolean, float>',
+                'short' => 'array<bool, float>',
+            ],
+            [
+                'input' => 'ARRAY<  BOOLEAN  ,  Real  >',
+                'long'  => 'array<boolean, float>',
+                'short' => 'array<bool, float>',
+            ],
+
             // Incomplete array type.
             [
                 'input' => 'array(int =>',

@@ -13,6 +13,21 @@ class Comments
 {
 
     /**
+     * Regex to match array(type), array(type1 => type2) types.
+     *
+     * @var string
+     */
+    const MATCH_ARRAY = '`^array\(\s*([^\s=>]*)(?:\s*=>\s*+(.*))?\s*\)`i';
+
+    /**
+     * Regex to match array<type1, type2> types.
+     *
+     * @var string
+     */
+    const MATCH_ARRAY_SQUARE = '`^array<\s*([^\s,]*)(?:\s*,\s*+(.*))?\s*>`i';
+
+
+    /**
      * Valid variable types for param/var/return tags.
      *
      * Keys are short-form, values long-form.
@@ -93,15 +108,26 @@ class Comments
             return 'float';
 
         case 'array()':
+        case 'array<>':
             return 'array';
         }//end switch
 
         // Handle more complex types, like arrays.
-        if (strpos($lowerVarType, 'array(') !== false) {
-            // Valid array declaration:
-            // array, array(type), array(type1 => type2).
+        if (strpos($lowerVarType, 'array(') !== false || strpos($lowerVarType, 'array<') !== false) {
+            // Valid array declarations:
+            // array, array(type), array(type1 => type2), array<type1, type2>.
+            $open    = '(';
+            $close   = ')';
+            $sep     = ' =>';
+            $pattern = self::MATCH_ARRAY;
+            if (strpos($lowerVarType, 'array<') !== false) {
+                $open    = '<';
+                $close   = '>';
+                $sep     = ',';
+                $pattern = self::MATCH_ARRAY_SQUARE;
+            }
+
             $matches = [];
-            $pattern = '/^array\(\s*([^\s=>]*)(?:\s*=>\s*+(.*))?\s*\)/i';
             if (preg_match($pattern, $varType, $matches) === 1) {
                 $type1 = '';
                 if (isset($matches[1]) === true) {
@@ -112,11 +138,11 @@ class Comments
                 if (isset($matches[2]) === true) {
                     $type2 = self::suggestType($matches[2], $form, $allowedTypes);
                     if ($type2 !== '') {
-                        $type2 = ' => '.$type2;
+                        $type2 = $sep.' '.$type2;
                     }
                 }
 
-                return "array($type1$type2)";
+                return 'array'.$open.$type1.$type2.$close;
             }//end if
 
             return 'array';
