@@ -21,6 +21,17 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 {
 
     /**
+     * Whether short or long form parameter/return types are preferred.
+     *
+     * Valid values: 'short' or 'long'. Defaults to 'long'.
+     *
+     * This applies to just two types: `int` vs `integer` and `bool` vs `boolean`.
+     *
+     * @var string
+     */
+    public $typeFormat = 'long';
+
+    /**
      * The current PHP version.
      *
      * @var integer
@@ -80,7 +91,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 $typeNames      = explode('|', $returnType);
                 $suggestedNames = [];
                 foreach ($typeNames as $i => $typeName) {
-                    $suggestedName = Comments::suggestType($typeName, 'long');
+                    $suggestedName = Comments::suggestType($typeName, $this->typeFormat);
                     if (in_array($suggestedName, $suggestedNames, true) === false) {
                         $suggestedNames[] = $suggestedName;
                     }
@@ -383,7 +394,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $typeName = substr($typeName, 1);
                 }
 
-                $suggestedName        = Comments::suggestType($typeName, 'long');
+                $suggestedName        = Comments::suggestType($typeName, $this->typeFormat);
                 $suggestedTypeNames[] = $suggestedName;
 
                 if (count($typeNames) > 1) {
@@ -398,7 +409,9 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $suggestedTypeHint = 'callable';
                 } else if (strpos($suggestedName, 'callback') !== false) {
                     $suggestedTypeHint = 'callable';
-                } else if (in_array($suggestedName, Comments::$allowedTypes, true) === false) {
+                } else if (isset(Comments::$allowedTypes[$suggestedName]) === false
+                    && $suggestedName !== 'boolean' && $suggestedName !== 'integer'
+                ) {
                     $suggestedTypeHint = $suggestedName;
                 }
 

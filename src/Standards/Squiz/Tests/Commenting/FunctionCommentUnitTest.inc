@@ -1000,3 +1000,19 @@ public function foo(object $a, ?object $b) {}
  * @return void
  */
 function foo($foo) {}
+
+// phpcs:set Squiz.Commenting.FunctionComment typeFormat short
+
+/**
+ * Test short form type preference.
+ *
+ * @param integer $fooLong  Comment.
+ * @param boolean $barLong  Comment.
+ * @param int     $fooShort Comment.
+ * @param bool    $barShort Comment.
+ *
+ * @return void
+ */
+public function shortForm($fooLong, $barLong, $fooShort, $barShort) {}
+
+// phpcs:set Squiz.Commenting.FunctionComment typeFormat long
