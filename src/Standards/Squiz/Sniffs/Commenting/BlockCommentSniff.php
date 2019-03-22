@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 use PHP_CodeSniffer\Util\Sniffs\Orthography;
 use PHP_CodeSniffer\Util\Tokens;
 
@@ -112,34 +113,8 @@ class BlockCommentSniff implements Sniff
             return;
         }//end if
 
-        $commentLines  = [$stackPtr];
-        $nextComment   = $stackPtr;
-        $lastLine      = $tokens[$stackPtr]['line'];
-        $commentString = $tokens[$stackPtr]['content'];
-
-        // Construct the comment into an array.
-        while (($nextComment = $phpcsFile->findNext(T_WHITESPACE, ($nextComment + 1), null, true)) !== false) {
-            if ($tokens[$nextComment]['code'] !== $tokens[$stackPtr]['code']
-                && isset(Tokens::$phpcsCommentTokens[$tokens[$nextComment]['code']]) === false
-            ) {
-                // Found the next bit of code.
-                break;
-            }
-
-            if (($tokens[$nextComment]['line'] - 1) !== $lastLine) {
-                // Not part of the block.
-                break;
-            }
-
-            $lastLine       = $tokens[$nextComment]['line'];
-            $commentLines[] = $nextComment;
-            $commentString .= $tokens[$nextComment]['content'];
-            if ($tokens[$nextComment]['code'] === T_DOC_COMMENT_CLOSE_TAG
-                || substr($tokens[$nextComment]['content'], -2) === '*/'
-            ) {
-                break;
-            }
-        }//end while
+        $lastCommentToken = Comments::findEndOfComment($phpcsFile, $stackPtr);
+        $commentString    = $phpcsFile->getTokensAsString($stackPtr, ($lastCommentToken - $stackPtr + 1));
 
         $commentText = str_replace($phpcsFile->eolChar, '', $commentString);
         $commentText = trim($commentText, "/* \t");
@@ -148,9 +123,7 @@ class BlockCommentSniff implements Sniff
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Empty');
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->replaceToken($stackPtr, '');
-                $lastToken = array_pop($commentLines);
-                for ($i = ($stackPtr + 1); $i <= $lastToken; $i++) {
+                for ($i = $stackPtr; $i <= $lastCommentToken; $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
@@ -160,7 +133,7 @@ class BlockCommentSniff implements Sniff
             return;
         }
 
-        if (count($commentLines) === 1) {
+        if ($stackPtr === $lastCommentToken) {
             $error = 'Single line block comment not allowed; use inline ("// text") comment instead';
 
             // Only fix comments when they are the last token on a line.
@@ -208,15 +181,16 @@ class BlockCommentSniff implements Sniff
         $hasStars   = false;
 
         // Make sure first line isn't blank.
-        if (trim($tokens[$commentLines[1]]['content']) === '') {
+        $firstLine = ($stackPtr + 1);
+        if (trim($tokens[$firstLine]['content']) === '') {
             $error = 'Empty line not allowed at start of comment';
-            $fix   = $phpcsFile->addFixableError($error, $commentLines[1], 'HasEmptyLine');
+            $fix   = $phpcsFile->addFixableError($error, $firstLine, 'HasEmptyLine');
             if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($commentLines[1], '');
+                $phpcsFile->fixer->replaceToken($firstLine, '');
             }
         } else {
             // Check indentation of first line.
-            $content      = $tokens[$commentLines[1]]['content'];
+            $content      = $tokens[$firstLine]['content'];
             $commentText  = ltrim($content);
             $leadingSpace = (strlen($content) - strlen($commentText));
 
@@ -238,10 +212,10 @@ class BlockCommentSniff implements Sniff
                 ];
 
                 $error = 'First line of comment not aligned correctly; expected %s but found %s';
-                $fix   = $phpcsFile->addFixableError($error, $commentLines[1], 'FirstLineIndent', $data);
+                $fix   = $phpcsFile->addFixableError($error, $firstLine, 'FirstLineIndent', $data);
                 if ($fix === true) {
-                    if (isset($tokens[$commentLines[1]]['orig_content']) === true
-                        && $tokens[$commentLines[1]]['orig_content'][0] === "\t"
+                    if (isset($tokens[$firstLine]['orig_content']) === true
+                        && $tokens[$firstLine]['orig_content'][0] === "\t"
                     ) {
                         // Line is indented using tabs.
                         $padding  = str_repeat("\t", floor($expected / $this->tabWidth));
@@ -250,7 +224,7 @@ class BlockCommentSniff implements Sniff
                         $padding = str_repeat(' ', $expected);
                     }
 
-                    $phpcsFile->fixer->replaceToken($commentLines[1], $padding.$commentText);
+                    $phpcsFile->fixer->replaceToken($firstLine, $padding.$commentText);
                 }
             }//end if
 
@@ -258,22 +232,14 @@ class BlockCommentSniff implements Sniff
             $commentTextNoLeadingMarks = ltrim($commentText, '*- ');
             if (Orthography::isFirstCharLowercase($commentTextNoLeadingMarks) === true) {
                 $error = 'Block comments must start with a capital letter';
-                $phpcsFile->addError($error, $commentLines[1], 'NoCapital');
+                $phpcsFile->addError($error, $firstLine, 'NoCapital');
             }
         }//end if
 
         // Check that each line of the comment is indented past the star.
-        foreach ($commentLines as $line) {
-            // First and last lines (comment opener and closer) are handled separately.
-            if ($line === $commentLines[(count($commentLines) - 1)] || $line === $commentLines[0]) {
-                continue;
-            }
-
-            // First comment line was handled above.
-            if ($line === $commentLines[1]) {
-                continue;
-            }
-
+        // First and last lines (comment opener and closer) are handled separately.
+        // And the first actual comment line was handled above.
+        for ($line = ($stackPtr + 2); $line < $lastCommentToken; $line++) {
             // If it's empty, continue.
             if (trim($tokens[$line]['content']) === '') {
                 continue;
@@ -315,15 +281,14 @@ class BlockCommentSniff implements Sniff
                     $phpcsFile->fixer->replaceToken($line, $padding.$commentText);
                 }
             }//end if
-        }//end foreach
+        }//end for
 
         // Finally, test the last line is correct.
-        $lastIndex   = (count($commentLines) - 1);
-        $content     = $tokens[$commentLines[$lastIndex]]['content'];
+        $content     = $tokens[$lastCommentToken]['content'];
         $commentText = ltrim($content);
         if ($commentText !== '*/' && $commentText !== '**/') {
             $error = 'Comment closer must be on a new line';
-            $phpcsFile->addError($error, $commentLines[$lastIndex], 'CloserSameLine');
+            $phpcsFile->addError($error, $lastCommentToken, 'CloserSameLine');
         } else {
             $leadingSpace = (strlen($content) - strlen($commentText));
 
@@ -344,7 +309,7 @@ class BlockCommentSniff implements Sniff
                 ];
 
                 $error = 'Last line of comment aligned incorrectly; expected %s but found %s';
-                $fix   = $phpcsFile->addFixableError($error, $commentLines[$lastIndex], 'LastLineIndent', $data);
+                $fix   = $phpcsFile->addFixableError($error, $lastCommentToken, 'LastLineIndent', $data);
                 if ($fix === true) {
                     if (isset($tokens[$line]['orig_content']) === true
                         && $tokens[$line]['orig_content'][0] === "\t"
@@ -356,7 +321,7 @@ class BlockCommentSniff implements Sniff
                         $padding = str_repeat(' ', $expected);
                     }
 
-                    $phpcsFile->fixer->replaceToken($commentLines[$lastIndex], $padding.$commentText);
+                    $phpcsFile->fixer->replaceToken($lastCommentToken, $padding.$commentText);
                 }
             }//end if
         }//end if
@@ -377,11 +342,10 @@ class BlockCommentSniff implements Sniff
             }
         }
 
-        $commentCloser = $commentLines[$lastIndex];
-        $contentAfter  = $phpcsFile->findNext(T_WHITESPACE, ($commentCloser + 1), null, true);
-        if ($contentAfter !== false && ($tokens[$contentAfter]['line'] - $tokens[$commentCloser]['line']) < 2) {
+        $contentAfter = $phpcsFile->findNext(T_WHITESPACE, ($lastCommentToken + 1), null, true);
+        if ($contentAfter !== false && ($tokens[$contentAfter]['line'] - $tokens[$lastCommentToken]['line']) < 2) {
             $error = 'Empty line required after block comment';
-            $phpcsFile->addError($error, $commentCloser, 'NoEmptyLineAfter');
+            $phpcsFile->addError($error, $lastCommentToken, 'NoEmptyLineAfter');
         }
 
     }//end process()
