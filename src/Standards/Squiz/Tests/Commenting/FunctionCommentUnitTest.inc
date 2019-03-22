@@ -1016,3 +1016,12 @@ function foo($foo) {}
 public function shortForm($fooLong, $barLong, $fooShort, $barShort) {}
 
 // phpcs:set Squiz.Commenting.FunctionComment typeFormat long
+
+/**
+ * Description
+ *
+ * @return (int|bool)[]
+ */
+function MultiTypeArrayReturn() {
+	return [];
+}

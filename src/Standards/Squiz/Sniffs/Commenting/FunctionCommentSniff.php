@@ -80,7 +80,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 $phpcsFile->addError($error, $return, 'MissingReturnType');
             } else {
                 // Support both a return type and a description.
-                preg_match('`^((?:\|?(?:array\([^\)]*\)|[\\\\a-z0-9\[\]]+))*)( .*)?`i', $content, $returnParts);
+                preg_match('`^((?:\|?(?:array(?:\([^\)]*\)|<[^>]*>+)|\(?[\\\\a-z0-9\[\]]+\)?))*)( .*)?`i', $content, $returnParts);
                 if (isset($returnParts[1]) === false) {
                     return;
                 }
@@ -88,16 +88,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 $returnType = $returnParts[1];
 
                 // Check return type (can be multiple, separated by '|').
-                $typeNames      = explode('|', $returnType);
-                $suggestedNames = [];
-                foreach ($typeNames as $i => $typeName) {
-                    $suggestedName = Comments::suggestType($typeName, $this->typeFormat);
-                    if (in_array($suggestedName, $suggestedNames, true) === false) {
-                        $suggestedNames[] = $suggestedName;
-                    }
-                }
-
-                $suggestedType = implode('|', $suggestedNames);
+                $suggestedType = Comments::suggestTypeString($returnType, $this->typeFormat);
                 if ($returnType !== $suggestedType) {
                     $error = 'Expected "%s" but found "%s" for function return type';
                     $data  = [
@@ -147,7 +138,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                             }
                         }
                     }//end if
-                } else if ($returnType !== 'mixed' && in_array('void', $typeNames, true) === false) {
+                } else if ($returnType !== 'mixed' && strpos($suggestedType, 'void') === false) {
                     // If return type is not void, there needs to be a return statement
                     // somewhere in the function that returns something.
                     if (isset($tokens[$stackPtr]['scope_closer']) === true) {
