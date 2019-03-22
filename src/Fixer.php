@@ -60,7 +60,7 @@ class Fixer
      * We don't allow the same token to be fixed more than once each time
      * through a file as this can easily cause conflicts between sniffs.
      *
-     * @var int[]
+     * @var integer[]
      */
     private $fixedTokens = [];
 

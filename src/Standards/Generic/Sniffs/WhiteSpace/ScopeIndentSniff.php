@@ -72,7 +72,7 @@ class ScopeIndentSniff implements Sniff
      * or PHP open/close tags can escape from here and have their own
      * rules elsewhere.
      *
-     * @var int[]
+     * @var string[]
      */
     public $ignoreIndentationTokens = [];
 
@@ -82,14 +82,14 @@ class ScopeIndentSniff implements Sniff
      * This is a cached copy of the public version of this var, which
      * can be set in a ruleset file, and some core ignored tokens.
      *
-     * @var int[]
+     * @var (integer|string)[]
      */
     private $ignoreIndentation = [];
 
     /**
      * Any scope openers that should not cause an indent.
      *
-     * @var int[]
+     * @var (integer|string)[]
      */
     protected $nonIndentingScopes = [];
 

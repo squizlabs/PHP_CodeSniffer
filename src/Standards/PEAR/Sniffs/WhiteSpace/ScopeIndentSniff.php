@@ -17,7 +17,7 @@ class ScopeIndentSniff extends GenericScopeIndentSniff
     /**
      * Any scope openers that should not cause an indent.
      *
-     * @var int[]
+     * @var (integer|string)[]
      */
     protected $nonIndentingScopes = [T_SWITCH];
 

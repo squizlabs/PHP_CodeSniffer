@@ -41,7 +41,7 @@ abstract class AbstractPatternSniff implements Sniff
     /**
      * Tokens that this sniff wishes to process outside of the patterns.
      *
-     * @var int[]
+     * @var (integer|string)[]
      * @see registerSupplementary()
      * @see processSupplementary()
      */
