@@ -50,7 +50,7 @@ class Fixer
      * else. This is the array that is updated as fixes are made, not the file's
      * token array. Imploding this array will give you the file content back.
      *
-     * @var array<int, string>
+     * @var array<integer, string>
      */
     private $tokens = [];
 
@@ -70,7 +70,7 @@ class Fixer
      * If a token is being "fixed" back to its last value, the fix is
      * probably conflicting with another.
      *
-     * @var array<int, string>
+     * @var array<integer, string>
      */
     private $oldTokenValues = [];
 

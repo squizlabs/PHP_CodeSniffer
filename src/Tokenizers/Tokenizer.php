@@ -60,7 +60,7 @@ abstract class Tokenizer
     /**
      * Known lengths of tokens.
      *
-     * @var array<int, int>
+     * @var array<integer|string, integer>
      */
     public $knownLengths = [];
 

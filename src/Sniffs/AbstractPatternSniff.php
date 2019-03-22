@@ -50,7 +50,7 @@ abstract class AbstractPatternSniff implements Sniff
     /**
      * Positions in the stack where errors have occurred.
      *
-     * @var array<int, bool>
+     * @var array<integer, boolean>
      */
     private $errorPos = [];
 
