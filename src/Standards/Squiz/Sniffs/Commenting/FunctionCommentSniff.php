@@ -471,7 +471,9 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 }//end if
             }//end foreach
 
-            $suggestedType = implode($suggestedTypeNames, '|');
+            $suggestedType = Comments::suggestTypeString($param['type'], $this->typeFormat);
+            // Don't allow prefixing with nullable indicator.
+            $suggestedType = str_replace('?', '', $suggestedType);
             if ($param['type'] !== $suggestedType) {
                 $error = 'Expected "%s" but found "%s" for parameter type';
                 $data  = [
