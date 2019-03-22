@@ -871,7 +871,7 @@ function returnTypeWithDescriptionD()
 /**
  * Yield from test
  *
- * @return int[]
+ * @return integer[]
  */
 function yieldFromTest()
 {
