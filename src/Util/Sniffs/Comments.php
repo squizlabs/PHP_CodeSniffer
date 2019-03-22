@@ -565,4 +565,191 @@ class Comments
     }//end findStartOfComment()
 
 
+    /**
+     * Find the related docblock/comment based on a T_CONST token.
+     *
+     * Note: As this function is based on the `T_CONST` token, it can not find
+     * individual docblocks for each constant in a multi-constant declaration.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               T_CONST token.
+     *
+     * @return int|false Integer stack pointer to the docblock/comment end (close) token;
+     *                   or false if no docblock or comment was found.
+     *
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified $stackPtr is
+     *                                                      not of type T_CONST.
+     */
+    public static function findConstantComment(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+        if ($tokens[$stackPtr]['code'] !== T_CONST) {
+            throw new RuntimeException('$stackPtr must be of type T_CONST');
+        }
+
+        $ignore = Tokens::$scopeModifiers;
+
+        return self::findCommentAbove($phpcsFile, $stackPtr, $ignore);
+
+    }//end findConstantComment()
+
+
+    /**
+     * Find the related docblock/comment based on a T_FUNCTION token.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               T_FUNCTION token.
+     *
+     * @return int|false Integer stack pointer to the docblock/comment end (close) token;
+     *                   or false if no docblock or comment was found.
+     *
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified $stackPtr is
+     *                                                      not of type T_FUNCTION.
+     */
+    public static function findFunctionComment(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+        if ($tokens[$stackPtr]['code'] !== T_FUNCTION) {
+            throw new RuntimeException('$stackPtr must be of type T_FUNCTION');
+        }
+
+        $ignore = Tokens::$methodPrefixes;
+
+        return self::findCommentAbove($phpcsFile, $stackPtr, $ignore);
+
+    }//end findFunctionComment()
+
+
+    /**
+     * Find the related docblock/comment based on a class/interface/trait token.
+     *
+     * Note: anonymous classes are not supported by this method as what tokens should
+     * be allowed to precede them is too arbitrary.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               OO construct to find the comment for.
+     *
+     * @return int|false Integer stack pointer to the docblock/comment end (close) token;
+     *                   or false if no docblock or comment was found.
+     *
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified $stackPtr is
+     *                                                      not a class, interface or trait
+     *                                                      token.
+     */
+    public static function findOOStructureComment(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+        if (isset(Tokens::$ooScopeTokens[$tokens[$stackPtr]['code']]) === false
+            || $tokens[$stackPtr]['code'] === T_ANON_CLASS
+        ) {
+            throw new RuntimeException('$stackPtr must be a class, interface or trait token');
+        }
+
+        $ignore = [];
+        if ($tokens[$stackPtr]['code'] === T_CLASS) {
+            // Only classes can be abstract/final.
+            $ignore = [
+                T_ABSTRACT => T_ABSTRACT,
+                T_FINAL    => T_FINAL,
+            ];
+        }
+
+        return self::findCommentAbove($phpcsFile, $stackPtr, $ignore);
+
+    }//end findOOStructureComment()
+
+
+    /**
+     * Find the related docblock/comment based on the T_VARIABLE token for a class/trait property.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               T_VARIABLE token.
+     *
+     * @return int|false Integer stack pointer to the docblock/comment end (close) token;
+     *                   or false if no docblock or comment was found.
+     *
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified $stackPtr is
+     *                                                      not an OO property.
+     */
+    public static function findPropertyComment(File $phpcsFile, $stackPtr)
+    {
+        if (Conditions::isOOProperty($phpcsFile, $stackPtr) === false) {
+            throw new RuntimeException('$stackPtr must be an OO property');
+        }
+
+        $ignore   = Tokens::$scopeModifiers;
+        $ignore[] = T_STATIC;
+        $ignore[] = T_VAR;
+
+        return self::findCommentAbove($phpcsFile, $stackPtr, $ignore);
+
+    }//end findPropertyComment()
+
+
+    /**
+     * Find docblock/comment based on construct token.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
+     * @param int                         $stackPtr  The position in the stack of the
+     *                                               construct to find the comment for.
+     * @param array                       $ignore    Array of tokens to ignore if found
+     *                                               before the construct token while looking
+     *                                               for the comment/docblock.
+     *                                               Note: T_WHITESPACE tokens and PHPCS
+     *                                               native annotations will always be
+     *                                               ignored.
+     *
+     * @return int|false Integer stack pointer to the docblock/comment end (close) token;
+     *                   or false if no docblock or comment was found.
+     */
+    public static function findCommentAbove(File $phpcsFile, $stackPtr, $ignore=[])
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Check for the existence of the token.
+        if (isset($tokens[$stackPtr]) === false) {
+            return false;
+        }
+
+        $customIgnore = $ignore;
+
+        $ignore[]   = T_WHITESPACE;
+        $ignore    += Tokens::$phpcsCommentTokens;
+        $commentEnd = $stackPtr;
+
+        // Find the right comment.
+        do {
+            $commentEnd = $phpcsFile->findPrevious($ignore, ($commentEnd - 1), null, true);
+
+            if ($commentEnd === false
+                || ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
+                && $tokens[$commentEnd]['code'] !== T_COMMENT)
+            ) {
+                return false;
+            }
+
+            $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($commentEnd - 1), null, true);
+
+            // Handle structures interlaced with inline comments where we need an earlier comment.
+            if (in_array($tokens[$prevNonEmpty]['code'], $customIgnore, true) === true) {
+                $commentEnd = $prevNonEmpty;
+                continue;
+            }
+
+            // Handle end comments for preceeding structures, such as control structures
+            // or function declarations. Assume the end comment belongs to the preceeding structure.
+            if ($tokens[$prevNonEmpty]['line'] === $tokens[$commentEnd]['line']) {
+                return false;
+            }
+
+            return $commentEnd;
+        } while (true);
+
+    }//end findCommentAbove()
+
+
 }//end class
