@@ -29,6 +29,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2414 : Indention false positive in switch/case/if combination
   - Fixed bug #2450 : Indentation false positive when closure containing nested IF conditions used as function argument
   - Fixed bug #2452 : LowercasePHPFunctions sniff failing on "new \File()"
+  - Fixed bug #2453 : Squiz.CSS.SemicolonSpacingSniff false positive when style name proceeded by an asterisk
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
