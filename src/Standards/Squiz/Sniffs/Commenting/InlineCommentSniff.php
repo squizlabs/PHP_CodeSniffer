@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 use PHP_CodeSniffer\Util\Sniffs\Conditions;
 use PHP_CodeSniffer\Util\Sniffs\Orthography;
 use PHP_CodeSniffer\Util\Tokens;
@@ -161,33 +162,15 @@ class InlineCommentSniff implements Sniff
 
         $commentTokens = [$stackPtr];
 
-        $nextComment = $stackPtr;
-        $lastComment = $stackPtr;
-        while (($nextComment = $phpcsFile->findNext(T_COMMENT, ($nextComment + 1), null, false)) !== false) {
-            if ($tokens[$nextComment]['line'] !== ($tokens[$lastComment]['line'] + 1)) {
-                break;
-            }
-
-            // Only want inline comments.
-            if (substr($tokens[$nextComment]['content'], 0, 2) !== '//') {
-                break;
-            }
-
-            // There is a comment on the very next line. If there is
-            // no code between the comments, they are part of the same
-            // comment block.
-            $prevNonWhitespace = $phpcsFile->findPrevious(T_WHITESPACE, ($nextComment - 1), $lastComment, true);
-            if ($prevNonWhitespace !== $lastComment) {
-                break;
-            }
-
-            $commentTokens[] = $nextComment;
-            $lastComment     = $nextComment;
-        }//end while
+        $lastCommentToken = Comments::findEndOfComment($phpcsFile, $stackPtr);
 
         $commentText = '';
-        foreach ($commentTokens as $lastCommentToken) {
-            $comment = rtrim($tokens[$lastCommentToken]['content']);
+        for ($current = $stackPtr; $current <= $lastCommentToken; $current++) {
+            if ($tokens[$current]['code'] === T_WHITESPACE) {
+                continue;
+            }
+
+            $comment = rtrim($tokens[$current]['content']);
 
             if (trim(substr($comment, 2)) === '') {
                 continue;
@@ -217,14 +200,14 @@ class InlineCommentSniff implements Sniff
                     ltrim(substr($comment, 2)),
                     $comment,
                 ];
-                $fix   = $phpcsFile->addFixableError($error, $lastCommentToken, 'TabBefore', $data);
+                $fix   = $phpcsFile->addFixableError($error, $current, 'TabBefore', $data);
             } else if ($spaceCount === 0) {
                 $error = 'No space found before comment text; expected "// %s" but found "%s"';
                 $data  = [
                     substr($comment, 2),
                     $comment,
                 ];
-                $fix   = $phpcsFile->addFixableError($error, $lastCommentToken, 'NoSpaceBefore', $data);
+                $fix   = $phpcsFile->addFixableError($error, $current, 'NoSpaceBefore', $data);
             } else if ($spaceCount > 1) {
                 $error = 'Expected 1 space before comment text but found %s; use block comment if you need indentation';
                 $data  = [
@@ -232,16 +215,16 @@ class InlineCommentSniff implements Sniff
                     substr($comment, (2 + $spaceCount)),
                     $comment,
                 ];
-                $fix   = $phpcsFile->addFixableError($error, $lastCommentToken, 'SpacingBefore', $data);
+                $fix   = $phpcsFile->addFixableError($error, $current, 'SpacingBefore', $data);
             }//end if
 
             if ($fix === true) {
-                $newComment = '// '.ltrim($tokens[$lastCommentToken]['content'], "/\t ");
-                $phpcsFile->fixer->replaceToken($lastCommentToken, $newComment);
+                $newComment = '// '.ltrim($tokens[$current]['content'], "/\t ");
+                $phpcsFile->fixer->replaceToken($current, $newComment);
             }
 
-            $commentText .= trim(substr($tokens[$lastCommentToken]['content'], 2));
-        }//end foreach
+            $commentText .= trim(substr($tokens[$current]['content'], 2));
+        }//end for
 
         if ($commentText === '') {
             $error = 'Blank comments are not allowed';
