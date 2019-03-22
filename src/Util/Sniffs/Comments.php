@@ -13,6 +13,14 @@ class Comments
 {
 
     /**
+     * Regex to split unioned type strings without splitting multi-type PSR-5
+     * array types or "old-style" array types.
+     *
+     * @var string
+     */
+    const SPLIT_UNION_TYPES = '`(?:^(?P<type>array\(\s*([^\s=>]*)(?:\s*=>\s*+(.*))?\s*\)|array<\s*([^\s,]*)(?:\s*,\s*+(.*))?\s*>|\([^)]+\)\[\]|[^|]+)(?=|)|(?<=|)(?P>type)$|(?<=|)(?P>type)(?=|))`i';
+
+    /**
      * Regex to match array(type), array(type1 => type2) types.
      *
      * @var string
@@ -53,6 +61,105 @@ class Comments
         'void'     => 'void',
         '$this'    => '$this',
     ];
+
+
+    /**
+     * Examine a complete variable type string for param/var tags.
+     *
+     * Examines the individual parts of unioned and intersectioned types.
+     * - Where relevant, will unduplicate types.
+     * - Where relevant, will combine multiple single/multi-types array types into one.
+     * - Where relevant, will remove duplicate union/intersect separators.
+     *
+     * @param string     $typeString   The complete variable type string to process.
+     * @param string     $form         Optional. Whether to prefer long-form or short-form
+     *                                 types. By default, this only affects the integer and
+     *                                 boolean types.
+     *                                 Accepted values: 'long', 'short'. Defaults to `short`.
+     * @param array|null $allowedTypes Optional. Array of allowed variable types.
+     *                                 Keys are short form types, values long form.
+     *                                 Both lowercase.
+     *                                 If for a particular standard, long/short form does
+     *                                 not apply, keys and values should be the same.
+     *
+     * @return string Valid variable type string.
+     */
+    public static function suggestTypeString($typeString, $form='short', $allowedTypes=null)
+    {
+        // Check for PSR-5 Union types, like `int|null`.
+        if (strpos($typeString, '|') !== false && $typeString !== '|') {
+            $arrayCount = substr_count($typeString, '[]');
+            $typeCount  = preg_match_all(self::SPLIT_UNION_TYPES, $typeString, $matches);
+            $types      = $matches[0];
+            if ($typeCount > 0) {
+                if ($arrayCount < 2) {
+                    // No or only one array type found, process like normal.
+                    $formArray    = array_fill(0, $typeCount, $form);
+                    $allowedArray = array_fill(0, $typeCount, $allowedTypes);
+                    $types        = array_map('self::suggestType', $types, $formArray, $allowedArray);
+                    $types        = array_unique($types);
+                } else {
+                    // Ok, so there were two or more array types in this type string. Let's combine them.
+                    $newTypes       = [];
+                    $arrayTypes     = [];
+                    $firstArrayType = null;
+                    foreach ($types as $order => $type) {
+                        if (substr($type, 0, 1) === '(' && substr($type, -3) === ')[]') {
+                            if ($firstArrayType === null) {
+                                $firstArrayType = $order;
+                            }
+
+                            $subTypes = explode('|', substr($type, 1, -3));
+                            // Remove empty entries.
+                            $subTypes = array_filter($subTypes);
+                            foreach ($subTypes as $subType) {
+                                $arrayTypes[] = self::suggestType($subType, $form, $allowedTypes);
+                            }
+                        } else if (substr($type, -2) === '[]') {
+                            if ($firstArrayType === null) {
+                                $firstArrayType = $order;
+                            }
+
+                            $arrayTypes[] = self::suggestType(substr($type, 0, -2), $form, $allowedTypes);
+                        } else {
+                            $newTypes[$order] = self::suggestTypeString($type, $form, $allowedTypes);
+                        }
+                    }//end foreach
+
+                    $newTypes       = array_unique($newTypes);
+                    $arrayTypes     = array_unique($arrayTypes);
+                    $arrayTypeCount = count($arrayTypes);
+                    if ($arrayTypeCount > 1) {
+                        $newTypes[$firstArrayType] = '('.implode('|', $arrayTypes).')[]';
+                    } else if ($arrayTypeCount === 1) {
+                        $newTypes[$firstArrayType] = implode('', $arrayTypes).'[]';
+                    }
+
+                    $types = $newTypes;
+                    ksort($types);
+                }//end if
+            }//end if
+
+            return implode('|', $types);
+        }//end if
+
+        // Check for PSR-5 Intersection types, like `\MyClass&\PHPUnit\Framework\MockObject\MockObject`.
+        if (strpos($typeString, '&') !== false && $typeString !== '&') {
+            $types = explode('&', $typeString);
+            // Remove empty entries.
+            $types        = array_filter($types);
+            $typeCount    = count($types);
+            $formArray    = array_fill(0, $typeCount, $form);
+            $allowedArray = array_fill(0, $typeCount, $allowedTypes);
+            $types        = array_map('self::suggestType', $types, $formArray, $allowedArray);
+            $types        = array_unique($types);
+            return implode('&', $types);
+        }
+
+        // Simple type.
+        return self::suggestType($typeString, $form, $allowedTypes);
+
+    }//end suggestTypeString()
 
 
     /**
@@ -131,12 +238,12 @@ class Comments
             if (preg_match($pattern, $varType, $matches) === 1) {
                 $type1 = '';
                 if (isset($matches[1]) === true) {
-                    $type1 = self::suggestType($matches[1], $form, $allowedTypes);
+                    $type1 = self::suggestTypeString($matches[1], $form, $allowedTypes);
                 }
 
                 $type2 = '';
                 if (isset($matches[2]) === true) {
-                    $type2 = self::suggestType($matches[2], $form, $allowedTypes);
+                    $type2 = self::suggestTypeString($matches[2], $form, $allowedTypes);
                     if ($type2 !== '') {
                         $type2 = $sep.' '.$type2;
                     }
@@ -147,6 +254,16 @@ class Comments
 
             return 'array';
         }//end if
+
+        // Check for PSR-5 multiple type array format, like `(int|string)[]`.
+        if (strpos($varType, '(') === 0 && substr($varType, -3) === ')[]' && $varType !== '()[]') {
+            return '('.self::suggestTypeString(substr($varType, 1, -3), $form, $allowedTypes).')[]';
+        }
+
+        // Check for PSR-5 single type array format, like `int[]`.
+        if (strpos($varType, '|') === false && substr($varType, -2) === '[]' && $varType !== '[]') {
+            return self::suggestType(substr($varType, 0, -2), $form, $allowedTypes).'[]';
+        }
 
         // Must be a custom type name.
         return $varType;

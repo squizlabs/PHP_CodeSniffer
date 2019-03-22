@@ -322,6 +322,9 @@ class Common
      * @return string
      *
      * @deprecated 3.5.0 Use PHP_CodeSniffer\Util\Sniffs\Comments::suggestType() instead.
+     *                   Note: the moved function has undergone significant changes
+     *                   compared to the original function.
+     *                   The call from this function preserves BC as much as possible.
      */
     public static function suggestType($varType)
     {

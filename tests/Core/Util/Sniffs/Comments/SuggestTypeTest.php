@@ -250,6 +250,16 @@ class SuggestTypeTest extends TestCase
                 'long'  => 'array(boolean => float)',
                 'short' => 'array(bool => float)',
             ],
+            [
+                'input' => 'array(string => string|null)',
+                'long'  => 'array(string => string|null)',
+                'short' => 'array(string => string|null)',
+            ],
+            [
+                'input' => 'array(integer|string => int||null)',
+                'long'  => 'array(integer|string => integer|null)',
+                'short' => 'array(int|string => int|null)',
+            ],
 
             // Arrays with <> brackets.
             [
@@ -287,6 +297,16 @@ class SuggestTypeTest extends TestCase
                 'long'  => 'array<boolean, float>',
                 'short' => 'array<bool, float>',
             ],
+            [
+                'input' => 'array<string, string|null>',
+                'long'  => 'array<string, string|null>',
+                'short' => 'array<string, string|null>',
+            ],
+            [
+                'input' => 'array<integer||string, int|null>',
+                'long'  => 'array<integer|string, integer|null>',
+                'short' => 'array<int|string, int|null>',
+            ],
 
             // Incomplete array type.
             [
@@ -302,9 +322,55 @@ class SuggestTypeTest extends TestCase
                 'short' => '<string> => <int>',
             ],
             [
+                'input' => '[]',
+                'long'  => '[]',
+                'short' => '[]',
+            ],
+
+            // Single type PSR-5 style arrays.
+            [
                 'input' => 'string[]',
                 'long'  => 'string[]',
                 'short' => 'string[]',
+            ],
+            [
+                'input' => 'BOOLEAN[]',
+                'long'  => 'boolean[]',
+                'short' => 'bool[]',
+            ],
+            [
+                'input' => 'int[]',
+                'long'  => 'integer[]',
+                'short' => 'int[]',
+            ],
+            [
+                'input' => 'double[]',
+                'long'  => 'float[]',
+                'short' => 'float[]',
+            ],
+
+            // Multi-type PSR-5 style arrays.
+            [
+                'input' => '(string|null)[]',
+                'long'  => '(string|null)[]',
+                'short' => '(string|null)[]',
+            ],
+            [
+                'input' => '(Int|False)[]',
+                'long'  => '(integer|false)[]',
+                'short' => '(int|false)[]',
+            ],
+            [
+                'input' => '(real|TRUE|resource)[]',
+                'long'  => '(float|true|resource)[]',
+                'short' => '(float|true|resource)[]',
+            ],
+
+            // Multi-type PSR-5 style array with duplicate `|`.
+            [
+                'input' => '(string||null)[]',
+                'long'  => '(string|null)[]',
+                'short' => '(string|null)[]',
             ],
         ];
 
