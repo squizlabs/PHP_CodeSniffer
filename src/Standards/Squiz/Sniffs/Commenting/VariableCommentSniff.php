@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 
 class VariableCommentSniff extends AbstractVariableSniff
 {
@@ -110,7 +110,7 @@ class VariableCommentSniff extends AbstractVariableSniff
         $typeNames      = explode('|', $varType);
         $suggestedNames = [];
         foreach ($typeNames as $i => $typeName) {
-            $suggestedName = Common::suggestType($typeName);
+            $suggestedName = Comments::suggestType($typeName);
             if (in_array($suggestedName, $suggestedNames, true) === false) {
                 $suggestedNames[] = $suggestedName;
             }

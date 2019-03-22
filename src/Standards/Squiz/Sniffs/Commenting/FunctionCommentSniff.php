@@ -13,6 +13,7 @@ use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff as PEA
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
 use PHP_CodeSniffer\Util\Sniffs\Orthography;
@@ -80,7 +81,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 $typeNames      = explode('|', $returnType);
                 $suggestedNames = [];
                 foreach ($typeNames as $i => $typeName) {
-                    $suggestedName = Common::suggestType($typeName);
+                    $suggestedName = Comments::suggestType($typeName);
                     if (in_array($suggestedName, $suggestedNames, true) === false) {
                         $suggestedNames[] = $suggestedName;
                     }
@@ -383,7 +384,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $typeName = substr($typeName, 1);
                 }
 
-                $suggestedName        = Common::suggestType($typeName);
+                $suggestedName        = Comments::suggestType($typeName);
                 $suggestedTypeNames[] = $suggestedName;
 
                 if (count($typeNames) > 1) {
