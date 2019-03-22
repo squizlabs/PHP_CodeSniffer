@@ -12,7 +12,6 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting\FunctionCommentSniff as PEARFunctionCommentSniff;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Sniffs\Comments;
 use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
@@ -399,7 +398,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $suggestedTypeHint = 'callable';
                 } else if (strpos($suggestedName, 'callback') !== false) {
                     $suggestedTypeHint = 'callable';
-                } else if (in_array($suggestedName, Common::$allowedTypes, true) === false) {
+                } else if (in_array($suggestedName, Comments::$allowedTypes, true) === false) {
                     $suggestedTypeHint = $suggestedName;
                 }
 
