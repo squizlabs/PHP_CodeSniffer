@@ -46,23 +46,22 @@ class Comments
             return '';
         }
 
-        if (in_array($varType, self::$allowedTypes, true) === true) {
-            return $varType;
+        $lowerVarType = strtolower(trim($varType));
+
+        if (in_array($lowerVarType, self::$allowedTypes, true) === true) {
+            return $lowerVarType;
         } else {
-            $lowerVarType = strtolower($varType);
             switch ($lowerVarType) {
             case 'bool':
             case 'boolean':
                 return 'boolean';
             case 'double':
             case 'real':
-            case 'float':
                 return 'float';
             case 'int':
             case 'integer':
                 return 'integer';
             case 'array()':
-            case 'array':
                 return 'array';
             }//end switch
 
@@ -70,31 +69,25 @@ class Comments
                 // Valid array declaration:
                 // array, array(type), array(type1 => type2).
                 $matches = [];
-                $pattern = '/^array\(\s*([^\s^=^>]*)(\s*=>\s*(.*))?\s*\)/i';
-                if (preg_match($pattern, $varType, $matches) !== 0) {
+                $pattern = '/^array\(\s*([^\s=>]*)(?:\s*=>\s*+(.*))?\s*\)/i';
+                if (preg_match($pattern, $varType, $matches) === 1) {
                     $type1 = '';
                     if (isset($matches[1]) === true) {
-                        $type1 = $matches[1];
+                        $type1 = self::suggestType($matches[1]);
                     }
 
                     $type2 = '';
-                    if (isset($matches[3]) === true) {
-                        $type2 = $matches[3];
-                    }
-
-                    $type1 = self::suggestType($type1);
-                    $type2 = self::suggestType($type2);
-                    if ($type2 !== '') {
-                        $type2 = ' => '.$type2;
+                    if (isset($matches[2]) === true) {
+                        $type2 = self::suggestType($matches[2]);
+                        if ($type2 !== '') {
+                            $type2 = ' => '.$type2;
+                        }
                     }
 
                     return "array($type1$type2)";
                 } else {
                     return 'array';
                 }//end if
-            } else if (in_array($lowerVarType, self::$allowedTypes, true) === true) {
-                // A valid type, but not lower cased.
-                return $lowerVarType;
             } else {
                 // Must be a custom type name.
                 return $varType;

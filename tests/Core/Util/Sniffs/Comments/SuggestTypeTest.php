@@ -197,6 +197,10 @@ class SuggestTypeTest extends TestCase
                 'array(string=>resource)',
                 'array(string => resource)',
             ],
+            [
+                'ARRAY(   BOOLEAN    =>    Real   )',
+                'array(boolean => float)',
+            ],
 
             // Incomplete array type.
             [
