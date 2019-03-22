@@ -50,49 +50,51 @@ class Comments
 
         if (in_array($lowerVarType, self::$allowedTypes, true) === true) {
             return $lowerVarType;
-        } else {
-            switch ($lowerVarType) {
-            case 'bool':
-            case 'boolean':
-                return 'boolean';
-            case 'double':
-            case 'real':
-                return 'float';
-            case 'int':
-            case 'integer':
-                return 'integer';
-            case 'array()':
-                return 'array';
-            }//end switch
+        }
 
-            if (strpos($lowerVarType, 'array(') !== false) {
-                // Valid array declaration:
-                // array, array(type), array(type1 => type2).
-                $matches = [];
-                $pattern = '/^array\(\s*([^\s=>]*)(?:\s*=>\s*+(.*))?\s*\)/i';
-                if (preg_match($pattern, $varType, $matches) === 1) {
-                    $type1 = '';
-                    if (isset($matches[1]) === true) {
-                        $type1 = self::suggestType($matches[1]);
+        // Not listed in allowed types, check for a limited set of known variations.
+        switch ($lowerVarType) {
+        case 'bool':
+        case 'boolean':
+            return 'boolean';
+        case 'double':
+        case 'real':
+            return 'float';
+        case 'int':
+        case 'integer':
+            return 'integer';
+        case 'array()':
+            return 'array';
+        }//end switch
+
+        // Handle more complex types, like arrays.
+        if (strpos($lowerVarType, 'array(') !== false) {
+            // Valid array declaration:
+            // array, array(type), array(type1 => type2).
+            $matches = [];
+            $pattern = '/^array\(\s*([^\s=>]*)(?:\s*=>\s*+(.*))?\s*\)/i';
+            if (preg_match($pattern, $varType, $matches) === 1) {
+                $type1 = '';
+                if (isset($matches[1]) === true) {
+                    $type1 = self::suggestType($matches[1]);
+                }
+
+                $type2 = '';
+                if (isset($matches[2]) === true) {
+                    $type2 = self::suggestType($matches[2]);
+                    if ($type2 !== '') {
+                        $type2 = ' => '.$type2;
                     }
+                }
 
-                    $type2 = '';
-                    if (isset($matches[2]) === true) {
-                        $type2 = self::suggestType($matches[2]);
-                        if ($type2 !== '') {
-                            $type2 = ' => '.$type2;
-                        }
-                    }
-
-                    return "array($type1$type2)";
-                } else {
-                    return 'array';
-                }//end if
-            } else {
-                // Must be a custom type name.
-                return $varType;
+                return "array($type1$type2)";
             }//end if
+
+            return 'array';
         }//end if
+
+        // Must be a custom type name.
+        return $varType;
 
     }//end suggestType()
 
