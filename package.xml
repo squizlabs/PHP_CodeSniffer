@@ -1869,6 +1869,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     </dir>
     <dir name="Util">
      <dir name="Sniffs">
+      <file baseinstalldir="PHP/CodeSniffer" name="Comments.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="Conditions.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="ConstructNames.php" role="php" />
       <file baseinstalldir="PHP/CodeSniffer" name="FunctionDeclarations.php" role="php" />
