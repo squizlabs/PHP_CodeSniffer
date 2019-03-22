@@ -15,18 +15,20 @@ class Comments
     /**
      * An array of variable types for param/var we will check.
      *
+     * Keys are short-form, values long-form.
+     *
      * @var string[]
      */
     public static $allowedTypes = [
-        'array',
-        'boolean',
-        'float',
-        'integer',
-        'mixed',
-        'object',
-        'string',
-        'resource',
-        'callable',
+        'array'    => 'array',
+        'bool'     => 'boolean',
+        'float'    => 'float',
+        'int'      => 'integer',
+        'mixed'    => 'mixed',
+        'object'   => 'object',
+        'string'   => 'string',
+        'resource' => 'resource',
+        'callable' => 'callable',
     ];
 
 
@@ -37,10 +39,13 @@ class Comments
      * Returns the correct type name suggestion if type name is invalid.
      *
      * @param string $varType The variable type to process.
+     * @param string $form    Optional. Whether to prefer long-form or short-form
+     *                        types. This only affects the integer and boolean types.
+     *                        Accepted values: 'long', 'short'. Defaults to `short`.
      *
      * @return string
      */
-    public static function suggestType($varType)
+    public static function suggestType($varType, $form='short')
     {
         if ($varType === '') {
             return '';
@@ -48,7 +53,9 @@ class Comments
 
         $lowerVarType = strtolower(trim($varType));
 
-        if (in_array($lowerVarType, self::$allowedTypes, true) === true) {
+        if (($form === 'short' && isset(self::$allowedTypes[$lowerVarType]) === true)
+            || ($form === 'long' && in_array($lowerVarType, self::$allowedTypes, true) === true)
+        ) {
             return $lowerVarType;
         }
 
@@ -56,13 +63,22 @@ class Comments
         switch ($lowerVarType) {
         case 'bool':
         case 'boolean':
-            return 'boolean';
+            if ($form === 'long') {
+                return 'boolean';
+            }
+            return 'bool';
+
         case 'double':
         case 'real':
             return 'float';
+
         case 'int':
         case 'integer':
-            return 'integer';
+            if ($form === 'long') {
+                return 'integer';
+            }
+            return 'int';
+
         case 'array()':
             return 'array';
         }//end switch
@@ -76,12 +92,12 @@ class Comments
             if (preg_match($pattern, $varType, $matches) === 1) {
                 $type1 = '';
                 if (isset($matches[1]) === true) {
-                    $type1 = self::suggestType($matches[1]);
+                    $type1 = self::suggestType($matches[1], $form);
                 }
 
                 $type2 = '';
                 if (isset($matches[2]) === true) {
-                    $type2 = self::suggestType($matches[2]);
+                    $type2 = self::suggestType($matches[2], $form);
                     if ($type2 !== '') {
                         $type2 = ' => '.$type2;
                     }

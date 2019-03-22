@@ -110,7 +110,7 @@ class VariableCommentSniff extends AbstractVariableSniff
         $typeNames      = explode('|', $varType);
         $suggestedNames = [];
         foreach ($typeNames as $i => $typeName) {
-            $suggestedName = Comments::suggestType($typeName);
+            $suggestedName = Comments::suggestType($typeName, 'long');
             if (in_array($suggestedName, $suggestedNames, true) === false) {
                 $suggestedNames[] = $suggestedName;
             }

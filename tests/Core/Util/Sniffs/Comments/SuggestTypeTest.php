@@ -33,17 +33,22 @@ class SuggestTypeTest extends TestCase
     /**
      * Test passing one of the allowed types to the suggestType() method.
      *
-     * @param string $varType The type.
+     * @param string $varType       The type.
+     * @param string $expectedLong  Expected suggested long-form type.
+     * @param string $expectedShort Expected suggested short-form type.
      *
      * @dataProvider dataSuggestTypeAllowedType
      * @covers       \PHP_CodeSniffer\Util\Sniffs\Comments::suggestType
      *
      * @return void
      */
-    public function testSuggestTypeAllowedType($varType)
+    public function testSuggestTypeAllowedType($varType, $expectedLong, $expectedShort)
     {
-        $result = Comments::suggestType($varType);
-        $this->assertSame($varType, $result);
+        $result = Comments::suggestType($varType, 'long');
+        $this->assertSame($expectedLong, $result);
+
+        $result = Comments::suggestType($varType, 'short');
+        $this->assertSame($expectedShort, $result);
 
     }//end testSuggestTypeAllowedType()
 
@@ -58,11 +63,28 @@ class SuggestTypeTest extends TestCase
     public function dataSuggestTypeAllowedType()
     {
         $types = Comments::$allowedTypes;
-        foreach ($types as $key => $type) {
-            $types[$key] = [$type];
+        $data  = [];
+        foreach ($types as $short => $long) {
+            $data[$long] = [
+                'input' => $short,
+                'long'  => $long,
+                'short' => $short,
+            ];
         }
 
-        return $types;
+        // Add tests for input being long form.
+        $data['int']  = [
+            'input' => 'integer',
+            'long'  => 'integer',
+            'short' => 'int',
+        ];
+        $data['bool'] = [
+            'input' => 'boolean',
+            'long'  => 'boolean',
+            'short' => 'bool',
+        ];
+
+        return $data;
 
     }//end dataSuggestTypeAllowedType()
 
@@ -70,18 +92,18 @@ class SuggestTypeTest extends TestCase
     /**
      * Test passing one of the allowed types in the wrong case to the suggestType() method.
      *
-     * @param string $varType  The type found.
-     * @param string $expected Expected suggested type.
+     * @param string $varType       The type.
+     * @param string $expectedLong  Expected suggested long-form type.
+     * @param string $expectedShort Expected suggested short-form type.
      *
      * @dataProvider dataSuggestTypeAllowedTypeWrongCase
      * @covers       \PHP_CodeSniffer\Util\Sniffs\Comments::suggestType
      *
      * @return void
      */
-    public function testSuggestTypeAllowedTypeWrongCase($varType, $expected)
+    public function testSuggestTypeAllowedTypeWrongCase($varType, $expectedLong, $expectedShort)
     {
-        $result = Comments::suggestType($varType);
-        $this->assertSame($expected, $result);
+        $this->testSuggestTypeAllowedType($varType, $expectedLong, $expectedShort);
 
     }//end testSuggestTypeAllowedTypeWrongCase()
 
@@ -97,16 +119,40 @@ class SuggestTypeTest extends TestCase
     {
         $types = Comments::$allowedTypes;
         $data  = [];
-        foreach ($types as $type) {
+        foreach ($types as $short => $long) {
             $data[] = [
-                ucfirst($type),
-                $type,
+                'input' => ucfirst($short),
+                'long'  => $long,
+                'short' => $short,
             ];
             $data[] = [
-                strtoupper($type),
-                $type,
+                'input' => strtoupper($short),
+                'long'  => $long,
+                'short' => $short,
             ];
         }
+
+        // Add tests for input being long form in non-lowercase.
+        $data[] = [
+            'input' => 'Integer',
+            'long'  => 'integer',
+            'short' => 'int',
+        ];
+        $data[] = [
+            'input' => 'INTEGER',
+            'long'  => 'integer',
+            'short' => 'int',
+        ];
+        $data[] = [
+            'input' => 'Boolean',
+            'long'  => 'boolean',
+            'short' => 'bool',
+        ];
+        $data[] = [
+            'input' => 'BOOLEAN',
+            'long'  => 'boolean',
+            'short' => 'bool',
+        ];
 
         return $data;
 
@@ -116,18 +162,22 @@ class SuggestTypeTest extends TestCase
     /**
      * Test the suggestType() method for all other cases.
      *
-     * @param string $varType  The type found.
-     * @param string $expected Expected suggested type.
+     * @param string $varType       The type found.
+     * @param string $expectedLong  Expected suggested long-form type.
+     * @param string $expectedShort Expected suggested short-form type.
      *
      * @dataProvider dataSuggestTypeOther
      * @covers       \PHP_CodeSniffer\Util\Sniffs\Comments::suggestType
      *
      * @return void
      */
-    public function testSuggestTypeOther($varType, $expected)
+    public function testSuggestTypeOther($varType, $expectedLong, $expectedShort)
     {
-        $result = Comments::suggestType($varType);
-        $this->assertSame($expected, $result);
+        $result = Comments::suggestType($varType, 'long');
+        $this->assertSame($expectedLong, $result);
+
+        $result = Comments::suggestType($varType, 'short');
+        $this->assertSame($expectedShort, $result);
 
     }//end testSuggestTypeOther()
 
@@ -142,80 +192,82 @@ class SuggestTypeTest extends TestCase
     public function dataSuggestTypeOther()
     {
         return [
-            // Short forms.
+            // Wrong form.
             [
-                'bool',
-                'boolean',
+                'input' => 'double',
+                'long'  => 'float',
+                'short' => 'float',
             ],
             [
-                'BOOL',
-                'boolean',
+                'input' => 'Real',
+                'long'  => 'float',
+                'short' => 'float',
             ],
             [
-                'double',
-                'float',
-            ],
-            [
-                'Real',
-                'float',
-            ],
-            [
-                'DoUbLe',
-                'float',
-            ],
-            [
-                'int',
-                'integer',
-            ],
-            [
-                'INT',
-                'integer',
+                'input' => 'DoUbLe',
+                'long'  => 'float',
+                'short' => 'float',
             ],
 
             // Array types.
             [
-                'Array()',
-                'array',
+                'input' => 'Array()',
+                'long'  => 'array',
+                'short' => 'array',
             ],
             [
-                'array(real)',
-                'array(float)',
+                'input' => 'array(real)',
+                'long'  => 'array(float)',
+                'short' => 'array(float)',
             ],
             [
-                'array(int => object)',
-                'array(integer => object)',
+                'input' => 'array(int => object)',
+                'long'  => 'array(integer => object)',
+                'short' => 'array(int => object)',
             ],
             [
-                'array(integer => array(string => resource))',
-                'array(integer => array(string => resource))',
+                'input' => 'array(integer => object)',
+                'long'  => 'array(integer => object)',
+                'short' => 'array(int => object)',
             ],
             [
-                'ARRAY(BOOL => DOUBLE)',
-                'array(boolean => float)',
+                'input' => 'array(integer => array(string => resource))',
+                'long'  => 'array(integer => array(string => resource))',
+                'short' => 'array(int => array(string => resource))',
             ],
             [
-                'array(string=>resource)',
-                'array(string => resource)',
+                'input' => 'ARRAY(BOOL => DOUBLE)',
+                'long'  => 'array(boolean => float)',
+                'short' => 'array(bool => float)',
             ],
             [
-                'ARRAY(   BOOLEAN    =>    Real   )',
-                'array(boolean => float)',
+                'input' => 'array(string=>resource)',
+                'long'  => 'array(string => resource)',
+                'short' => 'array(string => resource)',
+            ],
+            [
+                'input' => 'ARRAY(   BOOLEAN    =>    Real   )',
+                'long'  => 'array(boolean => float)',
+                'short' => 'array(bool => float)',
             ],
 
             // Incomplete array type.
             [
-                'array(int =>',
-                'array',
+                'input' => 'array(int =>',
+                'long'  => 'array',
+                'short' => 'array',
             ],
 
             // Custom types are returned unchanged.
             [
-                '<string> => <int>',
-                '<string> => <int>',
+                'input' => '<string> => <int>',
+                'long'  => '<string> => <int>',
+                'short' => '<string> => <int>',
             ],
             [
-                'string[]',
-                'string[]',
+                'input' => 'string[]',
+                'long'  => 'string[]',
+                'short' => 'string[]',
             ],
         ];
 

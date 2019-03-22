@@ -325,7 +325,7 @@ class Common
      */
     public static function suggestType($varType)
     {
-        return Sniffs\Comments::suggestType($varType);
+        return Sniffs\Comments::suggestType($varType, 'long');
 
     }//end suggestType()
 

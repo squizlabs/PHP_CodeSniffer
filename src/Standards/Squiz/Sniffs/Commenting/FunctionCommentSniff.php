@@ -80,7 +80,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 $typeNames      = explode('|', $returnType);
                 $suggestedNames = [];
                 foreach ($typeNames as $i => $typeName) {
-                    $suggestedName = Comments::suggestType($typeName);
+                    $suggestedName = Comments::suggestType($typeName, 'long');
                     if (in_array($suggestedName, $suggestedNames, true) === false) {
                         $suggestedNames[] = $suggestedName;
                     }
@@ -383,7 +383,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $typeName = substr($typeName, 1);
                 }
 
-                $suggestedName        = Comments::suggestType($typeName);
+                $suggestedName        = Comments::suggestType($typeName, 'long');
                 $suggestedTypeNames[] = $suggestedName;
 
                 if (count($typeNames) > 1) {
