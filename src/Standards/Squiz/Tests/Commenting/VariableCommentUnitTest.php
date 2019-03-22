@@ -58,6 +58,8 @@ class VariableCommentUnitTest extends AbstractSniffUnitTest
             336 => 1,
             351 => 1,
             361 => 1,
+            374 => 1,
+            379 => 1,
         ];
 
     }//end getErrorList()

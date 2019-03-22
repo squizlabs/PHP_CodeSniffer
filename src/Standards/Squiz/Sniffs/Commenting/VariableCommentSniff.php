@@ -110,7 +110,7 @@ class VariableCommentSniff extends AbstractVariableSniff
         }
 
          // Support both a var type and a description.
-        preg_match('`^((?:\|?(?:array\([^\)]*\)|[\\\\a-z0-9\[\]]+))*)( .*)?`i', $tokens[($foundVar + 2)]['content'], $varParts);
+        preg_match('`^((?:\|?(?:array(?:\([^\)]*\)|<[^>]*>+)|\(?[\\\\a-z0-9\[\]]+\)?))*)( .*)?`i', $tokens[($foundVar + 2)]['content'], $varParts);
         if (isset($varParts[1]) === false) {
             return;
         }
@@ -118,16 +118,7 @@ class VariableCommentSniff extends AbstractVariableSniff
         $varType = $varParts[1];
 
         // Check var type (can be multiple, separated by '|').
-        $typeNames      = explode('|', $varType);
-        $suggestedNames = [];
-        foreach ($typeNames as $i => $typeName) {
-            $suggestedName = Comments::suggestType($typeName, $this->typeFormat);
-            if (in_array($suggestedName, $suggestedNames, true) === false) {
-                $suggestedNames[] = $suggestedName;
-            }
-        }
-
-        $suggestedType = implode('|', $suggestedNames);
+        $suggestedType = Comments::suggestTypeString($varType, $this->typeFormat);
         if ($varType !== $suggestedType) {
             $error = 'Expected "%s" but found "%s" for @var tag in member variable comment';
             $data  = [

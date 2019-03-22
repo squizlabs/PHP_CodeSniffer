@@ -368,3 +368,15 @@ class ShortForm {
     public $barShort = 1;
 }
 // phpcs:set Squiz.Commenting.VariableComment typeFormat long
+
+class PSR5Types {
+    /**
+     * @var bool|int
+     */
+    public $foo = true;
+
+    /**
+     * @var real[]
+     */
+    public $bar = 1.5;
+}
