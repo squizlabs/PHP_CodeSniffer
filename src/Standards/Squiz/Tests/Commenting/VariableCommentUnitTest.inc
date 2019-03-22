@@ -139,7 +139,7 @@ class VariableCommentUnitTest
 
 
      /**
-     * Var type checking (array(int => string) v.s. array(int => string)).
+     * Var type checking (array(int => string) v.s. array(integer => string)).
      *
      * @var array(int => string)
      */
@@ -343,3 +343,28 @@ class Foo
      public static $variableName = array();
 
 }
+
+// phpcs:set Squiz.Commenting.VariableComment typeFormat short
+class ShortForm {
+
+    /**
+     * @var boolean
+     */
+    public $fooLong = true;
+
+    /**
+     * @var bool
+     */
+    public $fooShort = true;
+
+    /**
+     * @var integer
+     */
+    public $barLong = 1;
+
+    /**
+     * @var int
+     */
+    public $barShort = 1;
+}
+// phpcs:set Squiz.Commenting.VariableComment typeFormat long

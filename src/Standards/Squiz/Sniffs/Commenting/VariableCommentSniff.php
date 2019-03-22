@@ -16,6 +16,17 @@ use PHP_CodeSniffer\Util\Sniffs\Comments;
 class VariableCommentSniff extends AbstractVariableSniff
 {
 
+    /**
+     * Whether short or long form parameter/return types are preferred.
+     *
+     * Valid values: 'short' or 'long'. Defaults to 'long'.
+     *
+     * This applies to just two types: `int` vs `integer` and `bool` vs `boolean`.
+     *
+     * @var string
+     */
+    public $typeFormat = 'long';
+
 
     /**
      * Called to process class member vars.
@@ -110,7 +121,7 @@ class VariableCommentSniff extends AbstractVariableSniff
         $typeNames      = explode('|', $varType);
         $suggestedNames = [];
         foreach ($typeNames as $i => $typeName) {
-            $suggestedName = Comments::suggestType($typeName, 'long');
+            $suggestedName = Comments::suggestType($typeName, $this->typeFormat);
             if (in_array($suggestedName, $suggestedNames, true) === false) {
                 $suggestedNames[] = $suggestedName;
             }
