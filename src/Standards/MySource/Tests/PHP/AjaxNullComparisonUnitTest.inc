@@ -176,4 +176,21 @@ public static function addIssue(
     }
 
 }//end addIssue()
-?>
+
+
+/**
+ * Docblock.
+ *
+ * @param string  $title             Title of the new issue.
+ *
+ * @api            write
+ * @api-permission public
+ */
+function apiFunction( $title = NULL ) {
+    if (empty($title)) {}
+}//end apiFunction()
+
+function functionWithoutDocblock( $title ) {
+    if ($title === NULL) {}
+
+}//end functionWithoutDocblock()

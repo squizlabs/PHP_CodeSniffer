@@ -14,6 +14,7 @@ namespace PHP_CodeSniffer\Standards\MySource\Sniffs\PHP;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 
 class AjaxNullComparisonSniff implements Sniff
 {
@@ -42,11 +43,15 @@ class AjaxNullComparisonSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
+        $tokens     = $phpcsFile->getTokens();
+        $commentEnd = Comments::findFunctionComment($phpcsFile, $stackPtr);
+        if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
+            // Function doesn't have a doc comment or is using the wrong type of comment.
+            return;
+        }
 
         // Make sure it is an API function. We know this by the doc comment.
-        $commentEnd   = $phpcsFile->findPrevious(T_DOC_COMMENT_CLOSE_TAG, $stackPtr);
-        $commentStart = $phpcsFile->findPrevious(T_DOC_COMMENT_OPEN_TAG, ($commentEnd - 1));
+        $commentStart = $tokens[$commentEnd]['comment_opener'];
         $comment      = $phpcsFile->getTokensAsString($commentStart, ($commentEnd - $commentStart));
         if (strpos($comment, '* @api') === false) {
             return;
