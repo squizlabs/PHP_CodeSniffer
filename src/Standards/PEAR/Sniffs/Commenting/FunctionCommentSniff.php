@@ -11,9 +11,9 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
 use PHP_CodeSniffer\Util\Sniffs\FunctionDeclarations;
-use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionCommentSniff implements Sniff
 {
@@ -42,25 +42,8 @@ class FunctionCommentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-        $find   = Tokens::$methodPrefixes;
-        $find[] = T_WHITESPACE;
-
-        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
-        if ($tokens[$commentEnd]['code'] === T_COMMENT) {
-            // Inline comments might just be closing comments for
-            // control structures or functions instead of function comments
-            // using the wrong comment type. If there is other code on the line,
-            // assume they relate to that code.
-            $prev = $phpcsFile->findPrevious($find, ($commentEnd - 1), null, true);
-            if ($prev !== false && $tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
-                $commentEnd = $prev;
-            }
-        }
-
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
-            && $tokens[$commentEnd]['code'] !== T_COMMENT
-        ) {
+        $commentEnd = Comments::findFunctionComment($phpcsFile, $stackPtr);
+        if ($commentEnd === false) {
             $function = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
             $phpcsFile->addError(
                 'Missing doc comment for function %s()',
@@ -74,6 +57,7 @@ class FunctionCommentSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'Function has doc comment', 'yes');
         }
 
+        $tokens = $phpcsFile->getTokens();
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a function comment', $stackPtr, 'WrongStyle');
             return;

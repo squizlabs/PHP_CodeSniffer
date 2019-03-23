@@ -1025,3 +1025,8 @@ public function shortForm($fooLong, $barLong, $fooShort, $barShort) {}
 function MultiTypeArrayReturn() {
 	return [];
 }
+
+class FooBar {/** Unrelated trailing comment using wrong comment style. */
+
+	public static function NoDocblock() {}
+}

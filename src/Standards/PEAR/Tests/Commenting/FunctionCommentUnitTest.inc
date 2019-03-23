@@ -370,3 +370,10 @@ function process(File $phpcsFile, $stackPtr)
 {
 
 }//end process()
+
+class FooBar {
+	/**
+	 * Docblock
+	 */
+	public /* comment */ static function PickUpDocblockNotComment() {}
+}
