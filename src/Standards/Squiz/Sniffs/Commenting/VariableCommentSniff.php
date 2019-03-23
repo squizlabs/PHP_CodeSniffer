@@ -39,25 +39,13 @@ class VariableCommentSniff extends AbstractVariableSniff
      */
     public function processMemberVar(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-        $ignore = [
-            T_PUBLIC,
-            T_PRIVATE,
-            T_PROTECTED,
-            T_VAR,
-            T_STATIC,
-            T_WHITESPACE,
-        ];
-
-        $commentEnd = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
-        if ($commentEnd === false
-            || ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
-            && $tokens[$commentEnd]['code'] !== T_COMMENT)
-        ) {
+        $commentEnd = Comments::findPropertyComment($phpcsFile, $stackPtr);
+        if ($commentEnd === false) {
             $phpcsFile->addError('Missing member variable doc comment', $stackPtr, 'Missing');
             return;
         }
 
+        $tokens = $phpcsFile->getTokens();
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a member variable comment', $stackPtr, 'WrongStyle');
             return;

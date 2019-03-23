@@ -380,3 +380,8 @@ class PSR5Types {
      */
     public $bar = 1.5;
 }
+
+class CommentConfusion { /** This is a trailing end comment, not a property comment. */
+
+	public $prop;
+}
