@@ -12,8 +12,8 @@
 namespace PHP_CodeSniffer\Standards\MySource\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting\FunctionCommentSniff as SquizFunctionCommentSniff;
-use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 
 class FunctionCommentSniff extends SquizFunctionCommentSniff
 {
@@ -32,12 +32,9 @@ class FunctionCommentSniff extends SquizFunctionCommentSniff
     {
         parent::process($phpcsFile, $stackPtr);
 
-        $tokens = $phpcsFile->getTokens();
-        $find   = Tokens::$methodPrefixes;
-        $find[] = T_WHITESPACE;
-
-        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
+        $tokens     = $phpcsFile->getTokens();
+        $commentEnd = Comments::findFunctionComment($phpcsFile, $stackPtr);
+        if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
             return;
         }
 

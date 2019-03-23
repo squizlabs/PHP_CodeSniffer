@@ -98,4 +98,12 @@ private function functionCall() {}
  * @api read
  */
 private function functionCall() {}
-?>
+
+/**
+ * Short content.
+ *
+ * @api read
+ *
+ * @return void
+ */
+private /* comment */ function CorrectlyIdentifyDocblock() {}
