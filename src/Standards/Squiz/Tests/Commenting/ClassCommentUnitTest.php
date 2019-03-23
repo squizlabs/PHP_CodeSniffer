@@ -26,10 +26,11 @@ class ClassCommentUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            2  => 1,
-            15 => 1,
-            31 => 1,
-            54 => 1,
+            2   => 1,
+            15  => 1,
+            31  => 1,
+            54  => 1,
+            127 => 1,
         ];
 
     }//end getErrorList()

@@ -123,3 +123,5 @@ class Space_At_end
 {
 
 }//end class
+
+class NoCommentConfusedWithTrailingEndComment {}

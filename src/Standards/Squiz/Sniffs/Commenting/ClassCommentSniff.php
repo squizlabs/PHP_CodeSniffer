@@ -19,8 +19,8 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
-use PHP_CodeSniffer\Util\Tokens;
 
 class ClassCommentSniff implements Sniff
 {
@@ -49,14 +49,9 @@ class ClassCommentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-        $find   = Tokens::$methodPrefixes;
-        $find[] = T_WHITESPACE;
+        $commentEnd = Comments::findOOStructureComment($phpcsFile, $stackPtr);
 
-        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
-            && $tokens[$commentEnd]['code'] !== T_COMMENT
-        ) {
+        if ($commentEnd === false) {
             $class = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
             $phpcsFile->addError('Missing doc comment for class %s', $stackPtr, 'Missing', [$class]);
             $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'no');
@@ -65,6 +60,7 @@ class ClassCommentSniff implements Sniff
 
         $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'yes');
 
+        $tokens = $phpcsFile->getTokens();
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
             $phpcsFile->addError('You must use "/**" style comments for a class comment', $stackPtr, 'WrongStyle');
             return;
