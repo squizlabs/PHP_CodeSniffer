@@ -117,4 +117,6 @@ interface Empty_Interface_Doc
 trait Empty_Trait_Doc
 {
 
-}//end trait
+}/** Unrelated end comment for previous structure using wrong comment style. */
+
+class NoCommentConfusedWithTrailingEndComment {}

@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Util\Sniffs\ConstructNames;
-use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 
 class ClassCommentSniff extends FileCommentSniff
 {
@@ -44,17 +44,12 @@ class ClassCommentSniff extends FileCommentSniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens    = $phpcsFile->getTokens();
-        $type      = strtolower($tokens[$stackPtr]['content']);
-        $errorData = [$type];
+        $tokens     = $phpcsFile->getTokens();
+        $type       = strtolower($tokens[$stackPtr]['content']);
+        $errorData  = [$type];
+        $commentEnd = Comments::findOOStructureComment($phpcsFile, $stackPtr);
 
-        $find   = Tokens::$methodPrefixes;
-        $find[] = T_WHITESPACE;
-
-        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
-            && $tokens[$commentEnd]['code'] !== T_COMMENT
-        ) {
+        if ($commentEnd === false) {
             $errorData[] = ConstructNames::getDeclarationName($phpcsFile, $stackPtr);
             $phpcsFile->addError('Missing doc comment for %s %s', $stackPtr, 'Missing', $errorData);
             $phpcsFile->recordMetric($stackPtr, 'Class has doc comment', 'no');
