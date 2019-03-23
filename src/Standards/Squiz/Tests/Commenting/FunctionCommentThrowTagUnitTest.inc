@@ -482,5 +482,12 @@ namespace {
 		public function ThrowGlobalExceptionToo() {
 			throw new SomeGlobalException();
 		}
+
+        /**
+         * Missing throws tag.
+         */
+        public /* comment */ function ThrowGlobalExceptionToo() {
+            throw new SomeGlobalException();
+        }
 	}
 }

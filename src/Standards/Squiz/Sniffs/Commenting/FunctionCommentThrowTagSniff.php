@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Tokens;
+use PHP_CodeSniffer\Util\Sniffs\Comments;
 
 class FunctionCommentThrowTagSniff implements Sniff
 {
@@ -47,11 +47,8 @@ class FunctionCommentThrowTagSniff implements Sniff
             return;
         }
 
-        $find   = Tokens::$methodPrefixes;
-        $find[] = T_WHITESPACE;
-
-        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
-        if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
+        $commentEnd = Comments::findFunctionComment($phpcsFile, $stackPtr);
+        if ($commentEnd === false || $tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG) {
             // Function doesn't have a doc comment or is using the wrong type of comment.
             return;
         }
