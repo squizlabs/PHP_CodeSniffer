@@ -42,12 +42,17 @@ class ValidatePEARPackageXML
      * Valid file roles.
      *
      * @var array
+     *
+     * @link https://pear.php.net/manual/en/developers.packagedef.intro.php#developers.packagedef.roles
      */
     private $validRoles = [
         'data'   => true,
         'doc'    => true,
+        'ext'    => true,
+        'extsrc' => true,
         'php'    => true,
         'script' => true,
+        'src'    => true,
         'test'   => true,
     ];
 
@@ -223,6 +228,17 @@ class ValidatePEARPackageXML
                 if (isset($this->validRoles[$role]) === false) {
                     echo "- Role for file '{$name}' is invalid.".PHP_EOL;
                     $valid = false;
+                } else {
+                    // Limited validation of the "role" tags.
+                    if (strpos($name, 'Test.') !== false && $role !== 'test') {
+                        echo "- Test files should have the role 'test'. Found: '$role' for file '{$name}'.".PHP_EOL;
+                        $valid = false;
+                    } else if ((strpos($name, 'Standard.xml') !== false || strpos($name, 'Sniff.php') !== false)
+                        && $role !== 'php'
+                    ) {
+                        echo "- Sniff files, including sniff documentation files should have the role 'php'. Found: '$role' for file '{$name}'.".PHP_EOL;
+                        $valid = false;
+                    }
                 }
 
                 if (empty($baseinstalldir) === true) {
