@@ -1421,6 +1421,10 @@ class Config
         echo ' <standard>     The name or path of the coding standard to use'.PHP_EOL;
         echo ' <stdinPath>    If processing STDIN, the file path that STDIN will be processed as'.PHP_EOL;
         echo ' <tabWidth>     The number of spaces each tab represents'.PHP_EOL;
+        echo PHP_EOL;
+        echo 'For more detailed information about these options and information about the'.PHP_EOL;
+        echo 'non-runtime configuration options, please visit the wiki:'.PHP_EOL;
+        echo 'https://github.com/squizlabs/PHP_CodeSniffer/wiki/'.PHP_EOL;
 
     }//end printPHPCSUsage()
 
@@ -1474,6 +1478,10 @@ class Config
         echo ' <suffix>      Write modified files to a filename using this suffix'.PHP_EOL;
         echo '               ("diff" and "patch" are not used in this mode)'.PHP_EOL;
         echo ' <tabWidth>    The number of spaces each tab represents'.PHP_EOL;
+        echo PHP_EOL;
+        echo 'For more detailed information about these options and information about the'.PHP_EOL;
+        echo 'non-runtime configuration options, please visit the wiki:'.PHP_EOL;
+        echo 'https://github.com/squizlabs/PHP_CodeSniffer/wiki/'.PHP_EOL;
 
     }//end printPHPCBFUsage()
 
