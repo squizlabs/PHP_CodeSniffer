@@ -588,7 +588,7 @@ class Ruleset
         // sniff list, but filter out any excluded sniffs.
         $files = [];
         foreach ($includedSniffs as $sniff) {
-            if (in_array($sniff, $excludedSniffs, true) === true) {
+            if (in_array($sniff, $excludedSniffs) === true) {
                 continue;
             } else {
                 $files[] = Util\Common::realpath($sniff);
