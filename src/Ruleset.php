@@ -467,7 +467,7 @@ class Ruleset
                     } else {
                         $excludedSniffs = array_merge(
                             $excludedSniffs,
-                            $this->expandRulesetReference($exclude['name'], $rulesetDir, ($depth + 1))
+                            $this->expandRulesetReference((string) $exclude['name'], $rulesetDir, ($depth + 1))
                         );
                     }
                 }//end foreach

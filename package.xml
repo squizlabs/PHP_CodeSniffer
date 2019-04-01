@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2452 : LowercasePHPFunctions sniff failing on "new \File()"
   - Fixed bug #2453 : Squiz.CSS.SemicolonSpacingSniff false positive when style name proceeded by an asterisk
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2465 : Excluding a sniff by path is not working
  </notes>
  <contents>
   <dir name="/">
