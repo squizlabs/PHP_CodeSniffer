@@ -97,6 +97,9 @@ class CSS extends PHP
                 $token['code'] = T_STRING;
             }
 
+            $token['content'] = str_replace('^PHPCS_CSS_T_OPEN_TAG^', '<?php', $token['content']);
+            $token['content'] = str_replace('^PHPCS_CSS_T_CLOSE_TAG^', '?>', $token['content']);
+
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 $type    = $token['type'];
                 $content = Util\Common::prepareForOutput($token['content']);
