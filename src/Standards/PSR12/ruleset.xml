@@ -105,7 +105,7 @@
     <!-- Compound namespaces with a depth of more than two MUST NOT be used. -->
     <!-- checked by PSR12.Namespaces.CompoundNamespaceDepth -->
 
-    <!-- When wishing to declare strict types in files containing markup outside PHP opening and closing tags MUST, on the first line, include an opening PHP tag, the strict types declaration and closing tag. -->
+    <!-- When wishing to declare strict types in files containing markup outside PHP opening and closing tags, the declaration MUST be on the first line of the file and include an opening PHP tag, the strict types declaration and closing tag. -->
 
     <!-- Declare statements MUST contain no spaces and MUST be exactly declare(strict_types=1) (with an optional semi-colon terminator). -->
 
@@ -115,7 +115,7 @@
 
     <!-- Any closing brace MUST NOT be followed by any comment or statement on the same line. -->
 
-    <!-- When instantiating a new class, parenthesis MUST always be present even when there are no arguments passed to the constructor. -->
+    <!-- When instantiating a new class, parentheses MUST always be present even when there are no arguments passed to the constructor. -->
     <!-- checked by PSR12.Classes.ClassInstantiation -->
 
     <!-- 4.1 Extends and Implements -->
@@ -124,18 +124,18 @@
     <!-- The opening brace for the class MUST go on its own line; the closing brace for the class MUST go on the next line after the body. -->
     <!-- Opening braces MUST be on their own line and MUST NOT be preceded or followed by a blank line. -->
     <!-- Closing braces MUST be on their own line and MUST NOT be preceded by a blank line. -->
-    <!-- Lists of implements and extends MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line. -->
+    <!-- Lists of implements and, in the case of interfaces, extends MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line. -->
     <rule ref="PSR2.Classes.ClassDeclaration"/>
 
     <!-- 4.2 Using traits -->
 
     <!-- The use keyword used inside the classes to implement traits MUST be declared on the next line after the opening brace. -->
 
-    <!-- Each individual Trait that is imported into a class MUST be included one-per-line and each inclusion MUST have its own use import statement. -->
+    <!-- Each individual trait that is imported into a class MUST be included one-per-line and each inclusion MUST have its own use import statement. -->
 
     <!-- When the class has nothing after the use import statement, the class closing brace MUST be on the next line after the use import statement. Otherwise, it MUST have a blank line after the use import statement. -->
 
-    <!-- When using the insteadof and as operators they must be used as follows taking note of indentation, spacing and new lines. -->
+    <!-- When using the insteadof and as operators they must be used as follows taking note of indentation, spacing, and new lines. -->
 
     <!-- 4.3 Properties and Constants -->
 
@@ -163,12 +163,12 @@
         <message>Method name "%s" must not be prefixed with an underscore to indicate visibility</message>
     </rule>
 
-    <!-- Method and function names MUST NOT be declared with a space after the method name. The opening brace MUST go on its own line, and the closing brace MUST go on the next line following the body. There MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. -->
+    <!-- Method and function names MUST NOT be declared with space after the method name. The opening brace MUST go on its own line, and the closing brace MUST go on the next line following the body. There MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. -->
     <rule ref="PSR2.Methods.FunctionClosingBrace"/>
     <rule ref="Squiz.Functions.FunctionDeclaration"/>
     <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
 
-    <!-- 4.5 Method and function Arguments -->
+    <!-- 4.5 Method and Function Arguments -->
 
     <!-- In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma. -->
     <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
@@ -187,16 +187,16 @@
     When the argument list is split across multiple lines, the closing parenthesis and opening brace MUST be placed together on their own line with one space between them. -->
     <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
 
-    <!-- When you have a return type declaration present there MUST be one space after the colon followed by the type declaration. The colon and declaration MUST be on the same line as the argument list closing parentheses with no spaces between the two characters. -->
+    <!-- When you have a return type declaration present, there MUST be one space after the colon followed by the type declaration. The colon and declaration MUST be on the same line as the argument list closing parenthesis with no spaces between the two characters. -->
 
     <!-- In nullable type declarations, there MUST NOT be a space between the question mark and the type. -->
     <!-- checked by PSR12.Functions.NullableTypeDeclaration -->
 
     <!-- When using the reference operator & before an argument, there MUST NOT be a space after it. -->
 
-    <!-- There MUST NOT be a space between the variadic three dots and the argument name. -->
+    <!-- There MUST NOT be a space between the variadic three dot operator and the argument name. -->
 
-    <!-- When combining both the reference operator and the variadic three dots, there MUST NOT be any space between the two of them. -->
+    <!-- When combining both the reference operator and the variadic three dot operator, there MUST NOT be any space between the two of them. -->
 
     <!-- 4.6 abstract, final, and static -->
 
@@ -225,6 +225,7 @@
     There MUST NOT be a space before the closing parenthesis
     There MUST be one space between the closing parenthesis and the opening brace
     The structure body MUST be indented once
+    The body MUST be on the next line after the opening brace
     The closing brace MUST be on the next line after the body
     The body of each structure MUST be enclosed by braces. This standardizes how the structures look and reduces the likelihood of introducing errors as new lines get added to the body. -->
     <rule ref="Squiz.ControlStructures.ControlSignature"/>
@@ -270,7 +271,7 @@
 
     <!-- 5.3.2 do while -->
 
-    <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
+    <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
 
     <!-- 5.4 for -->
 
@@ -282,13 +283,27 @@
 
     <!-- 6. Operators -->
 
-    <!-- All binary and ternary operators MUST be preceded and followed by at least one space; multiple spaces MAY be used for readability purpose. This includes all arithmetic, comparison, assignment, bitwise, logical (excluding ! which is unary), string concatenation, type operators, trait operators (insteadof and as), and the single pipe operator (e.g. ExceptionType1 | ExceptionType2 $e). -->
-    <!-- checked by PSR12.Operators.OperatorSpacing -->
+    <!-- When space is permitted around an operator, multiple spaces MAY be used for readability purposes. -->
+    <!-- All operators not described here are left undefined. -->
 
-    <!-- There MUST NOT be any whitespace between the increment/decrement operators and the variable being incremented/decremented. -->
+    <!-- 6.1. Unary operators -->
+
+    <!-- The increment/decrement operators MUST NOT have any space between the operator and operand. -->
     <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>
 
-    <!-- Other operators are left undefined. -->
+    <!-- Type casting operators MUST NOT have any space within the parentheses. -->
+    <rule ref="Squiz.WhiteSpace.CastSpacing"/>
+
+    <!-- 6.2. Binary operators -->
+
+    <!-- All binary arithmetic, comparison, assignment, bitwise, logical, string, and type operators MUST be preceded and followed by at least one space. -->
+    <!-- checked by PSR12.Operators.OperatorSpacing -->
+
+    <!-- 6.3. Ternary operators -->
+
+    <!-- The conditional operator, also known simply as the ternary operator, MUST be preceded and followed by at least one space around both the ? and : characters. -->
+    <!-- When the middle operand of the conditional operator is omitted, the operator MUST follow the same style rules as other binary comparison operators. -->
+    <!-- checked by PSR12.Operators.OperatorSpacing -->
 
     <!-- 7. Closures -->
 
@@ -308,10 +323,5 @@
     <!-- Anonymous Classes MUST follow the same guidelines and principles as closures in the above section. -->
 
     <!-- The opening brace MAY be on the same line as the class keyword so long as the list of implements interfaces does not wrap. If the list of interfaces wraps, the brace MUST be placed on the line immediately following the last interface. -->
-
-    <!-- 9. Type Casting -->
-
-    <!-- There MUST NOT be any spaces inside the type casting parentheses. -->
-    <rule ref="Squiz.WhiteSpace.CastSpacing"/>
 
 </ruleset>
