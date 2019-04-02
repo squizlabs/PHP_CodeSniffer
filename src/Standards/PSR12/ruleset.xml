@@ -87,7 +87,7 @@
 
     <!-- The header of a PHP file may consist of a number of different blocks. If present, each of the blocks below MUST be separated by a single blank line, and MUST NOT contain a blank line. Each block MUST be in the order listed below, although blocks that are not relevant may be omitted.
 
-    Opening <?php tag.
+    Opening php tag.
     File-level docblock.
     One or more declare statements.
     The namespace declaration of the file.
@@ -98,7 +98,7 @@
 
     When a file contains a mix of HTML and PHP, any of the above sections may still be used. If so, they MUST be present at the top of the file, even if the remainder of the code consists of a closing PHP tag and then a mixture of HTML and PHP. -->
 
-    <!-- When the opening <?php tag is on the first line of the file, it MUST be on its own line with no other statements unless it is a file containing markup outside of PHP opening and closing tags. -->
+    <!-- When the opening php tag is on the first line of the file, it MUST be on its own line with no other statements unless it is a file containing markup outside of PHP opening and closing tags. -->
 
     <!-- Import statements MUST never begin with a leading backslash as they must always be fully qualified. -->
 
