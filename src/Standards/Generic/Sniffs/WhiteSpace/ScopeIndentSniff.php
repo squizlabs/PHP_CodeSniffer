@@ -667,11 +667,6 @@ class ScopeIndentSniff implements Sniff
                         $currentIndent += $adjustments[$first];
                     }
 
-                    // Make sure it is divisible by our expected indent.
-                    if ($tokens[$tokens[$scopeCloser]['scope_condition']]['code'] !== T_CLOSURE) {
-                        $currentIndent = (int) (ceil($currentIndent / $this->indent) * $this->indent);
-                    }
-
                     $setIndents[$scopeCloser] = $currentIndent;
 
                     if ($this->debug === true) {

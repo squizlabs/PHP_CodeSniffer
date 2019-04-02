@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2452 : LowercasePHPFunctions sniff failing on "new \File()"
   - Fixed bug #2453 : Squiz.CSS.SemicolonSpacingSniff false positive when style name proceeded by an asterisk
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2464 : Fixer conflict between Generic.WhiteSpace.ScopeIndent and Squiz.WhiteSpace.ScopeClosingBrace when class indented 1 space
   - Fixed bug #2465 : Excluding a sniff by path is not working
   - Fixed bug #2467 : PHP open/close tags inside CSS files are replaced with internal PHPCS token strings when auto fixing
  </notes>
@@ -666,6 +667,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.3.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.php" role="test" />
        </dir>
       </dir>
