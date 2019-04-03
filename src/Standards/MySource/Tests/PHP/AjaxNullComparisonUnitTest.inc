@@ -1,4 +1,8 @@
 <?php
+
+public static function foo() {
+}
+
 /**
  * Adds a new issue.
  *
@@ -176,4 +180,3 @@ public static function addIssue(
     }
 
 }//end addIssue()
-?>

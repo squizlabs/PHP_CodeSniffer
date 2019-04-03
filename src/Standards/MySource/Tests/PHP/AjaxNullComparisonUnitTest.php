@@ -41,12 +41,12 @@ class AjaxNullComparisonUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return [
-            37  => 1,
-            49  => 1,
-            60  => 1,
-            73  => 1,
-            88  => 1,
-            118 => 1,
+            41  => 1,
+            53  => 1,
+            64  => 1,
+            77  => 1,
+            92  => 1,
+            122 => 1,
         ];
 
     }//end getWarningList()
