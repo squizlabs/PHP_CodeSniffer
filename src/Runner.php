@@ -708,7 +708,7 @@ class Runner
      *
      * @param array $childProcs An array of child processes to wait for.
      *
-     * @return void
+     * @return bool
      */
     private function processChildProcs($childProcs)
     {
