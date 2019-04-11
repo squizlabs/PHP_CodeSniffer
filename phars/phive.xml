@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
 <repository xmlns="https://phar.io/repository" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://phar.io/repository https://phar.io/data/repository.xsd">
     <phar name="phpcs">
-        <release version="3.4.1" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcs-3.4.1.phar">
+        <release version="3.4.2" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcs-3.4.2.phar">
+            <signature type="gpg"/>
+            <hash type="sha-256" value="6966a9d41099caab6fe63728f20ff0dba4c9c5a2b157c735ece98b6367e16942"/>
+        </release>
+         <release version="3.4.1" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcs-3.4.1.phar">
             <signature type="gpg"/>
             <hash type="sha-256" value="805e214829bb79139c1fa260c0fbce5e26a9178dec8d5d79b65c01af2b92fc1f"/>
         </release>
@@ -39,6 +43,10 @@
         </release>
     </phar>
     <phar name="phpcbf">
+        <release version="3.4.2" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcbf-3.4.2.phar">
+            <signature type="gpg"/>
+            <hash type="sha-256" value="d7b9b36e92b674ebbaceb1d80cdf1fdd190bc8cfd00e1ce68ed2b712513e4423"/>
+        </release>
         <release version="3.4.1" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcbf-3.4.1.phar">
             <signature type="gpg"/>
             <hash type="sha-256" value="9bb55fe7bf231535e046d7711484d7d7c3d7b0b831ec4a8697aea6c1fed34e14"/>
