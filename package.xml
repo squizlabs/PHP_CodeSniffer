@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2019-04-11</date>
  <time>09:34:00</time>
  <version>
-  <release>3.4.2</release>
-  <api>3.4.2</api>
+  <release>3.5.0</release>
+  <api>3.5.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,19 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Squiz.Arrays.ArrayDeclaration now has improved handling of syntax errors
-  - Fixed an issue where the PCRE JIT on PHP 7.3 caused PHPCS to die when using the parallel option
-    -- PHPCS now disables the PCRE JIT before running
-  - Fixed bug #2368 : MySource.PHP.AjaxNullComparison throws error when first function has no doc comment 
-  - Fixed bug #2414 : Indention false positive in switch/case/if combination
-  - Fixed bug #2423 : Squiz.Formatting.OperatorBracket.MissingBrackets error with static
-  - Fixed bug #2450 : Indentation false positive when closure containing nested IF conditions used as function argument
-  - Fixed bug #2452 : LowercasePHPFunctions sniff failing on "new \File()"
-  - Fixed bug #2453 : Squiz.CSS.SemicolonSpacingSniff false positive when style name proceeded by an asterisk
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #2464 : Fixer conflict between Generic.WhiteSpace.ScopeIndent and Squiz.WhiteSpace.ScopeClosingBrace when class indented 1 space
-  - Fixed bug #2465 : Excluding a sniff by path is not working
-  - Fixed bug #2467 : PHP open/close tags inside CSS files are replaced with internal PHPCS token strings when auto fixing
+  - Fixed bug #2479 : Generic.WhiteSpace.ScopeIndent error when using array destructuring with exact indent checking
  </notes>
  <contents>
   <dir name="/">
