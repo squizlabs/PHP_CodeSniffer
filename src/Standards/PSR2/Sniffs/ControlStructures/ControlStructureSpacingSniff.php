@@ -79,7 +79,7 @@ class ControlStructureSpacingSniff implements Sniff
         $parenOpener = $tokens[$stackPtr]['parenthesis_opener'];
         $parenCloser = $tokens[$stackPtr]['parenthesis_closer'];
         $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($parenOpener + 1), null, true);
-        if (false === in_array($tokens[$nextContent]['code'], Tokens::$commentTokens, true)) {
+        if (in_array($tokens[$nextContent]['code'], Tokens::$commentTokens, true) === false) {
             $spaceAfterOpen = 0;
             if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
                 if (strpos($tokens[($parenOpener + 1)]['content'], $phpcsFile->eolChar) !== false) {
@@ -102,12 +102,10 @@ class ControlStructureSpacingSniff implements Sniff
                     $padding = str_repeat(' ', $this->requiredSpacesAfterOpen);
                     if ($spaceAfterOpen === 0) {
                         $phpcsFile->fixer->addContent($parenOpener, $padding);
+                    } else if ($spaceAfterOpen === 'newline') {
+                        $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
                     } else {
-                        if ($spaceAfterOpen === 'newline') {
-                            $phpcsFile->fixer->replaceToken(($parenOpener + 1), '');
-                        } else {
-                            $phpcsFile->fixer->replaceToken(($parenOpener + 1), $padding);
-                        }
+                        $phpcsFile->fixer->replaceToken(($parenOpener + 1), $padding);
                     }
                 }
             }

@@ -27,9 +27,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Added support for only checking files that have been locally staged in a git repo
-      -- Use --filter=gitstaged to check these files
-      -- You still need to give PHPCS a list of files or directories in which to apply the filter
-      -- Thanks to Juliette Reinders Folmer for the contribution
+    -- Use --filter=gitstaged to check these files
+    -- You still need to give PHPCS a list of files or directories in which to apply the filter
+    -- Thanks to Juliette Reinders Folmer for the contribution
+  - PSR2.ControlStructures.ControlStructureSpacing now allows whitespace after the opening parenthesis if followed by a comment
+    -- Thanks to Michał Bundyra for the patch
   - Fixed bug #2478 : FunctionCommentThrowTag.WrongNumber when exception is thrown once but built conditionally
   - Fixed bug #2479 : Generic.WhiteSpace.ScopeIndent error when using array destructuring with exact indent checking
  </notes>
