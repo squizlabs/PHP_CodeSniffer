@@ -922,6 +922,15 @@ class ScopeIndentSniff implements Sniff
                 $exact = true;
             }
 
+            // Don't perform strict checking on chained method calls since they
+            // are often covered by custom rules.
+            if ($checkToken !== null
+                && $tokens[$checkToken]['code'] === T_OBJECT_OPERATOR
+                && $exact === true
+            ) {
+                $exact = false;
+            }
+
             if ($checkIndent === null) {
                 $checkIndent = $currentIndent;
             }

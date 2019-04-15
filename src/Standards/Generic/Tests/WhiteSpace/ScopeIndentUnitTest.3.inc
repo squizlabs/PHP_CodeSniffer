@@ -22,3 +22,7 @@ if ($foo) {
       'compression' => $compression,
     ] = $options;
 }
+
+$this->foo()
+    ->bar()
+    ->baz();

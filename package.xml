@@ -32,6 +32,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Use --filter=gitstaged to check these files
     -- You still need to give PHPCS a list of files or directories in which to apply the filter
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - Generic.WhiteSpace.ScopeIndent no longer performs exact indents checking for chained method calls
+    -- Other sniffs can be used to enforce chained method call indent rules
+    -- Thanks to Pieter Frenssen for the patch
   - PSR2.ControlStructures.ControlStructureSpacing now allows whitespace after the opening parenthesis if followed by a comment
     -- Thanks to Michał Bundyra for the patch
   - The T_LIST token and it's opening and closing parentheses now contain references to each other in the tokens array
