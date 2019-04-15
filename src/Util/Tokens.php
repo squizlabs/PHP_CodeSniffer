@@ -340,6 +340,7 @@ final class Tokens
      */
     public static $parenthesisOpeners = [
         T_ARRAY    => T_ARRAY,
+        T_LIST     => T_LIST,
         T_FUNCTION => T_FUNCTION,
         T_CLOSURE  => T_CLOSURE,
         T_WHILE    => T_WHILE,
