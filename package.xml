@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - The PSR1 standard now correctly bans alternate PHP tags
+    -- Previously, it only banned short open tags and not the pre-7.0 alternate tags
   - Added support for only checking files that have been locally staged in a git repo
     -- Use --filter=gitstaged to check these files
     -- You still need to give PHPCS a list of files or directories in which to apply the filter
