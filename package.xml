@@ -34,6 +34,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the contribution
   - PSR2.ControlStructures.ControlStructureSpacing now allows whitespace after the opening parenthesis if followed by a comment
     -- Thanks to Michał Bundyra for the patch
+  - The T_LIST token and it's opening and closing parentheses now contain references to each other in the tokens array
+    -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2478 : FunctionCommentThrowTag.WrongNumber when exception is thrown once but built conditionally
   - Fixed bug #2479 : Generic.WhiteSpace.ScopeIndent error when using array destructuring with exact indent checking
  </notes>
