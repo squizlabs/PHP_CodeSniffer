@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Fixed bug #2478 : FunctionCommentThrowTag.WrongNumber when exception is thrown once but built conditionally
   - Fixed bug #2479 : Generic.WhiteSpace.ScopeIndent error when using array destructuring with exact indent checking
  </notes>
  <contents>

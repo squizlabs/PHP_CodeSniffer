@@ -412,75 +412,100 @@ abstract class SomeClass {
 }
 
 class SomeClass {
-	/**
-	 * Validates something.
-	 *
-	 * @param string $method The set method parameter.
-	 *
-	 * @return string The validated method.
-	 *
-	 * @throws Prefix_Invalid_Argument_Exception The invalid argument exception.
-	 * @throws InvalidArgumentException          The invalid argument exception.
-	 */
-	protected function validate_something( $something ) {
-		if ( ! Prefix_Validator::is_string( $something ) ) {
-			throw Prefix_Invalid_Argument_Exception::invalid_string_parameter( $something, 'something' );
-		}
+    /**
+     * Validates something.
+     *
+     * @param string $method The set method parameter.
+     *
+     * @return string The validated method.
+     *
+     * @throws Prefix_Invalid_Argument_Exception The invalid argument exception.
+     * @throws InvalidArgumentException          The invalid argument exception.
+     */
+    protected function validate_something( $something ) {
+        if ( ! Prefix_Validator::is_string( $something ) ) {
+            throw Prefix_Invalid_Argument_Exception::invalid_string_parameter( $something, 'something' );
+        }
 
-		if ( ! in_array( $something, $this->valid_http_something, true ) ) {
-			throw new InvalidArgumentException( sprintf( '%s is not a valid HTTP something', $something ) );
-		}
+        if ( ! in_array( $something, $this->valid_http_something, true ) ) {
+            throw new InvalidArgumentException( sprintf( '%s is not a valid HTTP something', $something ) );
+        }
 
-		return $something;
-	}
+        return $something;
+    }
+
+    /**
+     * Comment
+     *
+     * @throws Exception1 Comment.
+     * @throws Exception2 Comment.
+     * @throws Exception3 Comment.
+     */
+    public function foo() {
+        switch ($foo) {
+            case 1:
+                throw Exception1::a();
+            case 2:
+                throw Exception1::b();
+            case 3:
+                throw Exception1::c();
+            case 4:
+                throw Exception2::a();
+            case 5:
+                throw Exception2::b();
+            default:
+                throw new Exception3;
+
+        }
+    }
 }
 
 namespace Test\Admin {
-	class NameSpacedClass {
-		/**
-		 * @throws \ExceptionFromGlobalNamespace
-		 */
-		public function ExceptionInGlobalNamespace() {
-			throw new \ExceptionFromGlobalNamespace();
-		}
+    class NameSpacedClass {
+        /**
+         * @throws \ExceptionFromGlobalNamespace
+         */
+        public function ExceptionInGlobalNamespace() {
+            throw new \ExceptionFromGlobalNamespace();
+        }
 
-		/**
-		 * @throws ExceptionFromSameNamespace
-		 */
-		public function ExceptionInSameNamespace() {
-			throw new ExceptionFromSameNamespace();
-		}
+        /**
+         * @throws ExceptionFromSameNamespace
+         */
+        public function ExceptionInSameNamespace() {
+            throw new ExceptionFromSameNamespace();
+        }
 
-		/**
-		 * @throws \Test\Admin\ExceptionFromSameNamespace
-		 */
-		public function ExceptionInSameNamespaceToo() {
-			throw new ExceptionFromSameNamespace();
-		}
+        /**
+         * @throws \Test\Admin\ExceptionFromSameNamespace
+         */
+        public function ExceptionInSameNamespaceToo() {
+            throw new ExceptionFromSameNamespace();
+        }
 
-		/**
-		 * @throws \Different\NameSpaceName\ExceptionFromDifferentNamespace
-		 */
-		public function ExceptionInSameNamespaceToo() {
-			throw new \Different\NameSpaceName\ExceptionFromDifferentNamespace();
-		}
-	}
+        /**
+         * @throws \Different\NameSpaceName\ExceptionFromDifferentNamespace
+         */
+        public function ExceptionInSameNamespaceToo() {
+            throw new \Different\NameSpaceName\ExceptionFromDifferentNamespace();
+        }
+    }
 }
 
 namespace {
-	class GlobalNameSpaceClass {
-		/**
-		 * @throws SomeGlobalException
-		 */
-		public function ThrowGlobalException() {
-			throw new SomeGlobalException();
-		}
+    class GlobalNameSpaceClass {
+        /**
+         * @throws SomeGlobalException
+         */
+        public function ThrowGlobalException() {
+            throw new SomeGlobalException();
+        }
 
-		/**
-		 * @throws \SomeGlobalException
-		 */
-		public function ThrowGlobalExceptionToo() {
-			throw new SomeGlobalException();
-		}
-	}
+        /**
+         * @throws \SomeGlobalException
+         */
+        public function ThrowGlobalExceptionToo() {
+            throw new SomeGlobalException();
+        }
+    }
 }

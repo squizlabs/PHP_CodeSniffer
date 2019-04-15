@@ -58,7 +58,7 @@ class FunctionCommentThrowTagSniff implements Sniff
 
         $stackPtrEnd = $tokens[$stackPtr]['scope_closer'];
 
-        // Find all the exception type token within the current scope.
+        // Find all the exception type tokens within the current scope.
         $thrownExceptions = [];
         $currPos          = $stackPtr;
         $foundThrows      = false;
@@ -78,11 +78,11 @@ class FunctionCommentThrowTagSniff implements Sniff
 
             /*
                 If we can't find a NEW, we are probably throwing
-                a variable.
+                a variable or calling a method.
 
-                If we're throwing the same variable as the exception container
-                from the nearest 'catch' block, we take that exception, as it is
-                likely to be a re-throw.
+                If we're throwing a variable, and it's the same variable as the
+                exception container from the nearest 'catch' block, we take that exception
+                as it is likely to be a re-throw.
 
                 If we can't find a matching catch block, or the variable name
                 is different, it's probably a different variable, so we ignore it,
@@ -91,18 +91,25 @@ class FunctionCommentThrowTagSniff implements Sniff
             */
 
             $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($currPos + 1), null, true);
-            if ($tokens[$nextToken]['code'] === T_NEW) {
-                $currException = $phpcsFile->findNext(
-                    [
-                        T_NS_SEPARATOR,
-                        T_STRING,
-                    ],
-                    $currPos,
-                    $stackPtrEnd,
-                    false,
-                    null,
-                    true
-                );
+            if ($tokens[$nextToken]['code'] === T_NEW
+                || $tokens[$nextToken]['code'] === T_NS_SEPARATOR
+                || $tokens[$nextToken]['code'] === T_STRING
+            ) {
+                if ($tokens[$nextToken]['code'] === T_NEW) {
+                    $currException = $phpcsFile->findNext(
+                        [
+                            T_NS_SEPARATOR,
+                            T_STRING,
+                        ],
+                        $currPos,
+                        $stackPtrEnd,
+                        false,
+                        null,
+                        true
+                    );
+                } else {
+                    $currException = $nextToken;
+                }
 
                 if ($currException !== false) {
                     $endException = $phpcsFile->findNext(
