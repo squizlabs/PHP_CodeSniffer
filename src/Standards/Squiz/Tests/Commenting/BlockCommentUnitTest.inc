@@ -242,3 +242,17 @@ $y = 10 + /* test */ -2;
  * See: {@link https://github.com/squizlabs/PHP_CodeSniffer/issues/1918}
  * @phpcs:disable Standard.Category.Sniff
  */
+
+?>
+<?php
+/*
+ * No blank line required above the comment if it's the first non-empty token after a PHP open tag.
+ */
+
+?>
+<?php
+
+
+/*
+ * No blank line allowed above the comment if it's the first non-empty token after a PHP open tag.
+ */
