@@ -37,7 +37,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Pieter Frenssen for the patch
   - PSR2.ControlStructures.ControlStructureSpacing now allows whitespace after the opening parenthesis if followed by a comment
     -- Thanks to Michał Bundyra for the patch
-  - Squiz.Commenting.BlockComment no longer requires a blank line before the comment if it is the first content after the PHP open tag
+  - Squiz.Commenting.BlockComment no longer requires blank line before comment if it's the first content after the PHP open tag
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.PHP.DisallowMultipleAssignments now has a second error code for when assignments are found inside control structure conditions
+    -- The new error code is Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
+    -- All other multiple assignment cases use the existing error code Squiz.PHP.DisallowMultipleAssignments.Found
     -- Thanks to Juliette Reinders Folmer for the patch
   - The T_LIST token and it's opening and closing parentheses now contain references to each other in the tokens array
     -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
