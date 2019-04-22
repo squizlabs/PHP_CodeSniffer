@@ -63,7 +63,7 @@ class DisallowObjectStringIndexSniff implements Sniff
         // Allow indexes that have dots in them because we can't write
         // them in dot notation.
         $content = trim($tokens[$index]['content'], '"\' ');
-        if (strpos($content, '.') !== false) {
+        if (strpos($content, '.') !== false || strpos($content, '-') !== false) {
             return;
         }
 
