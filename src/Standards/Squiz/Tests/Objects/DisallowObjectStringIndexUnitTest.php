@@ -33,9 +33,9 @@ class DisallowObjectStringIndexUnitTest extends AbstractSniffUnitTest
 
         return [
             13 => 1,
-            17 => 1,
-            25 => 1,
-            35 => 1,
+            18 => 1,
+            26 => 1,
+            36 => 1,
         ];
 
     }//end getErrorList()
