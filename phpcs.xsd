@@ -9,20 +9,31 @@
                     <xs:complexType>
                         <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
                         <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+                        <xs:attributeGroup ref="applySelectively"/>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="file" type="xs:string" maxOccurs="unbounded" minOccurs="0"></xs:element>
+                <xs:element name="file" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attributeGroup ref="applySelectively"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+				</xs:element>
                 <xs:element name="exclude-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
                 <xs:element name="arg" maxOccurs="unbounded" minOccurs="0">
                     <xs:complexType>
                         <xs:attribute name="name" type="xs:string"></xs:attribute>
                         <xs:attribute name="value" type="xs:string"></xs:attribute>
+                        <xs:attributeGroup ref="applySelectively"/>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="ini" maxOccurs="unbounded" minOccurs="0">
                     <xs:complexType>
                         <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
                         <xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+                        <xs:attributeGroup ref="applySelectively"/>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="autoload" type="xs:string" maxOccurs="unbounded" minOccurs="0"></xs:element>
@@ -38,23 +49,34 @@
             <xs:element name="exclude" maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
                     <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+                    <xs:attributeGroup ref="applySelectively"/>
                 </xs:complexType>
             </xs:element>
             <xs:element name="message" type="xs:string" maxOccurs="1" minOccurs="0"></xs:element>
-            <xs:element name="severity" type="xs:integer" maxOccurs="1" minOccurs="0"></xs:element>
+            <xs:element name="severity" maxOccurs="1" minOccurs="0">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:integer">
+                            <xs:attributeGroup ref="applySelectively"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+			</xs:element>
             <xs:element name="type" maxOccurs="1" minOccurs="0">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="error"></xs:enumeration>
-                        <xs:enumeration value="warning"></xs:enumeration>
-                    </xs:restriction>
-                </xs:simpleType>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="messageType">
+                            <xs:attributeGroup ref="applySelectively"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
             </xs:element>
             <xs:element name="exclude-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
             <xs:element name="include-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
             <xs:element name="properties" type="propertiesType" maxOccurs="1" minOccurs="0"></xs:element>
         </xs:choice>
         <xs:attribute name="ref" type="xs:string" use="required"></xs:attribute>
+        <xs:attributeGroup ref="applySelectively"/>
     </xs:complexType>
 
     <xs:complexType name="patternType">
@@ -67,6 +89,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:attribute>
+                <xs:attributeGroup ref="applySelectively"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
@@ -92,17 +115,22 @@
                     </xs:attribute>
                     <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
                     <xs:attribute name="value" type="xs:string"></xs:attribute>
-                    <xs:attribute name="extend">
-                        <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                                <xs:enumeration value="true"/>
-                                <xs:enumeration value="false"/>
-                            </xs:restriction>
-                        </xs:simpleType>
-                    </xs:attribute>
+                    <xs:attribute name="extend" type="xs:boolean" default="false"/>
+                    <xs:attributeGroup ref="applySelectively"/>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
 
+    <xs:simpleType name="messageType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="error"></xs:enumeration>
+            <xs:enumeration value="warning"></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:attributeGroup name="applySelectively">
+        <xs:attribute name="phpcs-only" type="xs:boolean" default="false"/>
+        <xs:attribute name="phpcbf-only" type="xs:boolean" default="false"/>
+    </xs:attributeGroup>
 </xs:schema>
