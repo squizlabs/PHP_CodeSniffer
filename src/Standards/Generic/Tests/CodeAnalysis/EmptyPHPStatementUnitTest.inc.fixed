@@ -47,3 +47,14 @@ function_call();
 <?php
 // Guard against false positives for two consecutive semi-colons in a for statement.
 for ( $i = 0; ; $i++ ) {}
+
+// Test for useless semi-colons
+for ( $i = 0; ; $i++ ) {}
+
+if (true) {}
+
+while (true) {}
+
+// Do not break closure and anonymous class;
+$a = function () {};
+$b = new class {};

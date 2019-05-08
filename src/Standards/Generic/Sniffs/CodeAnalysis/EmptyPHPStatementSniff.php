@@ -21,6 +21,27 @@ class EmptyPHPStatementSniff implements Sniff
 
 
     /**
+     * Any token that should not have a scope_closer followed by a semi-colon.
+     *
+     * @var int[]
+     */
+    private $conditionTokens = [
+        T_IF,
+        T_SWITCH,
+        T_CASE,
+        T_WHILE,
+        T_ELSE,
+        T_ELSEIF,
+        T_FOR,
+        T_FOREACH,
+        T_DO,
+        T_TRY,
+        T_CATCH,
+        T_FINALLY,
+    ];
+
+
+    /**
      * Returns an array of tokens this test wants to listen for.
      *
      * @return int[]
@@ -58,7 +79,13 @@ class EmptyPHPStatementSniff implements Sniff
                 && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG
                 && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG_WITH_ECHO)
             ) {
-                return;
+                // Still detect `if (foo) {};`.
+                if ($tokens[$prevNonEmpty]['code'] !== T_CLOSE_CURLY_BRACKET
+                    || isset($tokens[$prevNonEmpty]['scope_condition']) === false
+                    || in_array($tokens[$tokens[$prevNonEmpty]['scope_condition']]['code'], $this->conditionTokens) === false
+                ) {
+                    return;
+                }
             }
 
             if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
