@@ -63,3 +63,4 @@ while (true) {};
 // Do not break closure and anonymous class;
 $a = function () {};
 $b = new class {};
+echo $a{0};
