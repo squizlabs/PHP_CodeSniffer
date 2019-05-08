@@ -60,6 +60,17 @@ if (true) {};
 
 while (true) {};
 
+class ABC {}   ;  ;
+
+switch ( $a ) {
+    case 1:
+        break;
+    case 2:
+        break;
+    default:
+        break;  ;
+};
+
 // Do not break closure and anonymous class;
 $a = function () {};
 $b = new class {};
