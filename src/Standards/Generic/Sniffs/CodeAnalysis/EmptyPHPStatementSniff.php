@@ -71,6 +71,7 @@ class EmptyPHPStatementSniff implements Sniff
                 if ($scopeOwner === T_CLOSURE || $scopeOwner === T_ANON_CLASS) {
                     return;
                 }
+
                 // Else, it's something like `if (foo) {};` and the semi-colon is not needed.
             }
 
