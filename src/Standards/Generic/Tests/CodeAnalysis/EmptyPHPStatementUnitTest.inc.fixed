@@ -66,7 +66,7 @@ switch ( $a ) {
         break;
 }
 
-// Do not break closure and anonymous class;
+// Do not break closures and anonymous classes and curlies without scope owners.
 $a = function () {};
 $b = new class {};
 echo $a{0};
