@@ -61,13 +61,17 @@ class EmptyPHPStatementSniff implements Sniff
                 && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG
                 && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG_WITH_ECHO
             ) {
-                // Still detect `if (foo) {};`.
                 if ($tokens[$prevNonEmpty]['code'] !== T_CLOSE_CURLY_BRACKET
                     || isset($tokens[$prevNonEmpty]['scope_condition']) === false
-                    || in_array($tokens[$tokens[$prevNonEmpty]['scope_condition']]['code'], [T_CLOSURE, T_ANON_CLASS]) === true
                 ) {
                     return;
                 }
+
+                $scopeOwner = $tokens[$tokens[$prevNonEmpty]['scope_condition']]['code'];
+                if ($scopeOwner === T_CLOSURE || $scopeOwner === T_ANON_CLASS) {
+                    return;
+                }
+                // Else, it's something like `if (foo) {};` and the semi-colon is not needed.
             }
 
             if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
