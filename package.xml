@@ -50,6 +50,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2478 : FunctionCommentThrowTag.WrongNumber when exception is thrown once but built conditionally
   - Fixed bug #2479 : Generic.WhiteSpace.ScopeIndent error when using array destructing with exact indent checking
   - Fixed bug #2498 : Squiz.Arrays.ArrayDeclaration.MultiLineNotAllowed autofix breaks heredoc
+  - Fixed bug #2502 : Generic.WhiteSpace.ScopeIndent false positives with nested switch indentation and case fall-through
  </notes>
  <contents>
   <dir name="/">

@@ -625,11 +625,7 @@ class ScopeIndentSniff implements Sniff
                 && $tokens[$checkToken]['scope_closer'] === $checkToken
                 && $tokens[$checkToken]['line'] !== $tokens[$tokens[$checkToken]['scope_opener']]['line']))
                 || ($checkToken === null
-                && isset($openScopes[$i]) === true
-                || (isset($tokens[$i]['scope_condition']) === true
-                && isset($tokens[$i]['scope_closer']) === true
-                && $tokens[$i]['scope_closer'] === $i
-                && $tokens[$i]['line'] !== $tokens[$tokens[$i]['scope_opener']]['line']))
+                && isset($openScopes[$i]) === true)
             ) {
                 if ($this->debug === true) {
                     if ($checkToken === null) {
