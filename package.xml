@@ -32,6 +32,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Use --filter=gitstaged to check these files
     -- You still need to give PHPCS a list of files or directories in which to apply the filter
     -- Thanks to Juliette Reinders Folmer for the contribution
+  - JSON reports now end with a newline character
+  - The T_LIST token and it's opening and closing parentheses now contain references to each other in the tokens array
+    -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.WhiteSpace.ScopeIndent no longer performs exact indents checking for chained method calls
     -- Other sniffs can be used to enforce chained method call indent rules
     -- Thanks to Pieter Frenssen for the patch
@@ -42,9 +46,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.PHP.DisallowMultipleAssignments now has a second error code for when assignments are found inside control structure conditions
     -- The new error code is Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
     -- All other multiple assignment cases use the existing error code Squiz.PHP.DisallowMultipleAssignments.Found
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - The T_LIST token and it's opening and closing parentheses now contain references to each other in the tokens array
-    -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2478 : FunctionCommentThrowTag.WrongNumber when exception is thrown once but built conditionally
   - Fixed bug #2479 : Generic.WhiteSpace.ScopeIndent error when using array destructing with exact indent checking
