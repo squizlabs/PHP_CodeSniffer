@@ -530,43 +530,47 @@ class ArrayDeclarationSniff implements Sniff
         }
 
         if ($singleValue === true) {
-            // Array cannot be empty, so this is a multi-line array with
-            // a single value. It should be defined on single line.
-            $error     = 'Multi-line array contains a single value; use single-line array instead';
-            $errorCode = 'MultiLineNotAllowed';
+            // Before we complain, make sure the single value isn't a here/nowdoc.
+            $next = $phpcsFile->findNext(Tokens::$heredocTokens, ($arrayStart + 1), ($arrayEnd - 1));
+            if ($next === false) {
+                // Array cannot be empty, so this is a multi-line array with
+                // a single value. It should be defined on single line.
+                $error     = 'Multi-line array contains a single value; use single-line array instead';
+                $errorCode = 'MultiLineNotAllowed';
 
-            $find    = Tokens::$phpcsCommentTokens;
-            $find[]  = T_COMMENT;
-            $comment = $phpcsFile->findNext($find, ($arrayStart + 1), $arrayEnd);
-            if ($comment === false) {
-                $fix = $phpcsFile->addFixableError($error, $stackPtr, $errorCode);
-            } else {
-                $fix = false;
-                $phpcsFile->addError($error, $stackPtr, $errorCode);
-            }
-
-            if ($fix === true) {
-                $phpcsFile->fixer->beginChangeset();
-                for ($i = ($arrayStart + 1); $i < $arrayEnd; $i++) {
-                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                        break;
-                    }
-
-                    $phpcsFile->fixer->replaceToken($i, '');
+                $find    = Tokens::$phpcsCommentTokens;
+                $find[]  = T_COMMENT;
+                $comment = $phpcsFile->findNext($find, ($arrayStart + 1), $arrayEnd);
+                if ($comment === false) {
+                    $fix = $phpcsFile->addFixableError($error, $stackPtr, $errorCode);
+                } else {
+                    $fix = false;
+                    $phpcsFile->addError($error, $stackPtr, $errorCode);
                 }
 
-                for ($i = ($arrayEnd - 1); $i > $arrayStart; $i--) {
-                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                        break;
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($arrayStart + 1); $i < $arrayEnd; $i++) {
+                        if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
                     }
 
-                    $phpcsFile->fixer->replaceToken($i, '');
+                    for ($i = ($arrayEnd - 1); $i > $arrayStart; $i--) {
+                        if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
                 }
 
-                $phpcsFile->fixer->endChangeset();
-            }
-
-            return;
+                return;
+            }//end if
         }//end if
 
         /*
