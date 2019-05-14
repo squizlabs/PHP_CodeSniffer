@@ -229,16 +229,6 @@ class ScopeIndentSniff implements Sniff
 
             $exact = $this->exact;
 
-            if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
-                $disableExactEnd = max($disableExactEnd, $tokens[$i]['bracket_closer']);
-                if ($this->debug === true) {
-                    $line = $tokens[$i]['line'];
-                    $type = $tokens[$disableExactEnd]['type'];
-                    echo "Opening short array bracket found on line $line".PHP_EOL;
-                    echo "\t=> disabling exact indent checking until $disableExactEnd ($type)".PHP_EOL;
-                }
-            }
-
             if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS
                 && isset($tokens[$i]['parenthesis_closer']) === true
             ) {
@@ -1001,7 +991,11 @@ class ScopeIndentSniff implements Sniff
                     $line = $tokens[$i]['line'];
                     $type = $tokens[$disableExactEnd]['type'];
                     echo "Opening short array bracket found on line $line".PHP_EOL;
-                    echo "\t=> disabling exact indent checking until $disableExactEnd ($type)".PHP_EOL;
+                    if ($disableExactEnd === $tokens[$i]['bracket_closer']) {
+                        echo "\t=> disabling exact indent checking until $disableExactEnd ($type)".PHP_EOL;
+                    } else {
+                        echo "\t=> continuing to disable exact indent checking until $disableExactEnd ($type)".PHP_EOL;
+                    }
                 }
             }
 
@@ -1010,10 +1004,26 @@ class ScopeIndentSniff implements Sniff
             if ($tokens[$i]['code'] === T_START_HEREDOC
                 || $tokens[$i]['code'] === T_START_NOWDOC
             ) {
-                $i = $phpcsFile->findNext([T_END_HEREDOC, T_END_NOWDOC], ($i + 1));
-                $i = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
+                if ($this->debug === true) {
+                    $line = $tokens[$i]['line'];
+                    $type = $tokens[$disableExactEnd]['type'];
+                    echo "Here/nowdoc found on line $line".PHP_EOL;
+                }
+
+                $i    = $phpcsFile->findNext([T_END_HEREDOC, T_END_NOWDOC], ($i + 1));
+                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
+                if ($tokens[$next]['code'] === T_COMMA) {
+                    $i = $next;
+                }
+
+                if ($this->debug === true) {
+                    $line = $tokens[$i]['line'];
+                    $type = $tokens[$i]['type'];
+                    echo "\t* skipping to token $i ($type) on line $line *".PHP_EOL;
+                }
+
                 continue;
-            }
+            }//end if
 
             // Completely skip multi-line strings as the indent is a part of the
             // content itself.
