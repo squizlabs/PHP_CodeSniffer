@@ -1,0 +1,23 @@
+<documentation title="Disallow Yoda conditions">
+    <standard>
+    <![CDATA[
+    Yoda conditions are disallowed.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: value to be asserted must go on the right side of the comparison.">
+        <![CDATA[
+if ($test === null) <em>{</em>
+    $var = 1;
+<em>}</em>
+        ]]>
+        </code>
+        <code title="Invalid: value to be asserted must not be on the left.">
+        <![CDATA[
+if (null === $test) <em>{</em>
+    $var = 1;
+<em>}</em>
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
