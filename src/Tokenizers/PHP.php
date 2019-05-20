@@ -999,7 +999,9 @@ class PHP extends Tokenizer
                         $prevNonEmpty = $tokenType;
                     }
 
-                    if ($tokenType === T_FUNCTION) {
+                    if ($tokenType === T_FUNCTION
+                        || isset(Util\Tokens::$methodPrefixes[$tokenType]) === true
+                    ) {
                         $newToken['code'] = T_NULLABLE;
                         $newToken['type'] = 'T_NULLABLE';
                         break;
