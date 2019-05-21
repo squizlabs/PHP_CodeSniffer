@@ -10,7 +10,7 @@ if (true == $value) {}
 if($value === true){}
 if($value == true){}
 if(false === $value){}
-if(false == $value){}
+if(!false == $value || true !== $value){}
 
 // check integer comparison
 if($value === 5){}
@@ -123,3 +123,12 @@ if([$key => $val] === $value){}
 if([$key => $val] == $value){}
 
 $config['checkAuthIn'] !== $event->getName();
+
+if ($var === "ab" || 'cd') {}
+if ("ab" || 'cd' === $var) {}
+if (2 > $value || 3 < $var) {}
+if ($value == true && (/* comment */ 2 > test())) {}
+if ((int) 5 > $var) {}
+if ((int) $var > (int) 5) {}
+if (true == function() { return false;}){}
+if (function() { return false;} == true){}
