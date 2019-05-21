@@ -2,7 +2,8 @@
 /**
  * Verifies that inline control statements are not present.
  *
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Mponos George
+ * @author    Mark Scherer
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
@@ -13,11 +14,6 @@ use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 
-/**
- * This sniff is copied from php-fig-rectified/psr2-r package.
- *
- * @see https://github.com/php-fig-rectified/psr2r-sniffer/blob/master/PSR2R/Sniffs/ControlStructures/ConditionalExpressionOrderSniff.php
- */
 class DisallowYodaConditionsSniff implements Sniff
 {
 
@@ -45,23 +41,21 @@ class DisallowYodaConditionsSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens        = $phpcsFile->getTokens();
-        $previousIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $tokens         = $phpcsFile->getTokens();
+        $previousIndex  = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+        $relevantTokens = [
+            T_CLOSE_SHORT_ARRAY,
+            T_CLOSE_PARENTHESIS,
+            T_TRUE,
+            T_FALSE,
+            T_NULL,
+            T_LNUMBER,
+            T_DNUMBER,
+            T_CONSTANT_ENCAPSED_STRING,
+        ];
 
-        if ($previousIndex === false || in_array(
-            $tokens[$previousIndex]['code'],
-            [
-                T_CLOSE_SHORT_ARRAY,
-                T_CLOSE_PARENTHESIS,
-                T_TRUE,
-                T_FALSE,
-                T_NULL,
-                T_LNUMBER,
-                T_DNUMBER,
-                T_CONSTANT_ENCAPSED_STRING,
-            ],
-            true
-        ) === false
+        if ($previousIndex === false
+            || in_array($tokens[$previousIndex]['code'], $relevantTokens, true) === false
         ) {
             return;
         }
@@ -86,7 +80,12 @@ class DisallowYodaConditionsSniff implements Sniff
         // Is it a parenthesis.
         if ($tokens[$previousIndex]['code'] === T_CLOSE_PARENTHESIS) {
             // Check what exists inside the parenthesis.
-            $closeParenthesisIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($tokens[$previousIndex]['parenthesis_opener'] - 1), null, true);
+            $closeParenthesisIndex = $phpcsFile->findPrevious(
+                Tokens::$emptyTokens,
+                ($tokens[$previousIndex]['parenthesis_opener'] - 1),
+                null,
+                true
+            );
 
             if ($closeParenthesisIndex === false || $tokens[$closeParenthesisIndex]['code'] !== T_ARRAY) {
                 if ($tokens[$closeParenthesisIndex]['code'] === T_STRING) {
@@ -94,19 +93,23 @@ class DisallowYodaConditionsSniff implements Sniff
                 }
 
                 // If it is not an array check what is inside.
-                $found = $phpcsFile->findPrevious([T_VARIABLE], ($previousIndex - 1), $tokens[$previousIndex]['parenthesis_opener']);
+                $found = $phpcsFile->findPrevious(
+                    T_VARIABLE,
+                    ($previousIndex - 1),
+                    $tokens[$previousIndex]['parenthesis_opener']
+                );
 
                 // If a variable exists it is not Yoda.
                 if ($found !== false) {
                     return;
                 }
             }
-        }
+        }//end if
 
         $phpcsFile->addError(
-            'Usage of Yoda conditions is not allowed. Switch the expression order.',
+            'Usage of Yoda conditions is not allowed; switch the expression order',
             $stackPtr,
-            'DisallowYodaCondition'
+            'Found'
         );
 
     }//end process()
