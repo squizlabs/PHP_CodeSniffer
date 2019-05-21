@@ -138,7 +138,7 @@ class Text extends Generator
                     $tempTitle         = '';
                 } else {
                     $firstTitleLines[] = $tempTitle;
-                    $tempTitle         = $word;
+                    $tempTitle         = $word.' ';
                 }
             } else {
                 $tempTitle .= $word.' ';
@@ -173,7 +173,7 @@ class Text extends Generator
                     $tempTitle          = '';
                 } else {
                     $secondTitleLines[] = $tempTitle;
-                    $tempTitle          = $word;
+                    $tempTitle          = $word.' ';
                 }
             } else {
                 $tempTitle .= $word.' ';
