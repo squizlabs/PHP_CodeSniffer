@@ -26,6 +26,14 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added support for PHP 7.4 typed properties
+    -- The nullable operator is now tokenized as T_NULLABLE inside property types, as it is elsewhere
+    -- To get the type of a member var, use the File::getMemberProperties() method, which now contains a "type" array index
+       --- This contains the type of the member var, or a blank string if not specified
+       --- If the type is nullable, the return type will contain the leading ?
+       --- If a type is specified, the position of the type token will be set in a "type_token" array index
+       --- If the type is nullable, a "nullable_type" array index will also be set to TRUE
+       --- If the type contains namespace information, it will be cleaned of whitespace and comments in the return value
   - The PSR1 standard now correctly bans alternate PHP tags
     -- Previously, it only banned short open tags and not the pre-7.0 alternate tags
   - Added support for only checking files that have been locally staged in a git repo

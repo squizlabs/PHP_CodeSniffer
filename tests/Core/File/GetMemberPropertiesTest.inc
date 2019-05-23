@@ -5,17 +5,32 @@ class TestMemberProperties
     /* testVar */
     var $varA = true;
 
+    /* testVarType */
+    var int $varA = true;
+
     /* testPublic */
     public $varB = true;
+
+    /* testPublicType */
+    public string $varB = true;
 
     /* testProtected */
     protected $varC = true;
 
+    /* testProtectedType */
+    protected bool $varC = true;
+
     /* testPrivate */
     private $varD = true;
 
+    /* testPrivateType */
+    private array $varD = true;
+
     /* testStatic */
     static $varE = true;
+
+    /* testStaticType */
+    static string $varE = true;
 
     /* testStaticVar */
     static var $varF = true;
@@ -62,6 +77,17 @@ class TestMemberProperties
      */
     private static $varJ = true;
 
+    public float
+    /* testGroupType 1 */
+    $x,
+    /* testGroupType 2 */
+    $y;
+
+    public static ?string
+    /* testGroupNullableType 1 */
+    $x = null,
+    /* testGroupNullableType 2 */
+    $y = null;
 
     protected static
         /* testGroupProtectedStatic 1 */
@@ -84,9 +110,9 @@ class TestMemberProperties
         $varS = ONE / self::THREE,
         /* testGroupPrivate 6 */
         $varT = [
-			'a' => 'a',
-			'b' => 'b'
-		],
+            'a' => 'a',
+            'b' => 'b'
+        ],
         /* testGroupPrivate 7 */
         $varU = __DIR__ . "/base";
 
@@ -103,6 +129,25 @@ class TestMemberProperties
     /* testPropertyAfterMethod */
     private static $varV = true;
 
+    /* testMessyNullableType */
+    public /* comment
+         */ ? //comment
+        array $foo = [];
+
+    /* testNamespaceType */
+    public \MyNamespace\MyClass $foo;
+
+    /* testNullableNamespaceType 1 */
+    private ?ClassName $nullableClassType;
+
+    /* testNullableNamespaceType 2 */
+    protected ?Folder\ClassName $nullableClassType2;
+
+    /* testMultilineNamespaceType */
+    public \MyNamespace /** comment *\/ comment */
+           \MyClass /* comment */
+           \Foo $foo;
+
 }
 
 interface Base
@@ -118,19 +163,19 @@ $globalVariable = true;
 return;
 
 $a = ( $foo == $bar ? new stdClass() :
-	new class() {
-		/* testNestedProperty 1 */
-		public $var = true;
+    new class() {
+        /* testNestedProperty 1 */
+        public $var = true;
 
-		/* testNestedMethodParam 1 */
-		public function something($var = false) {}
-	}
+        /* testNestedMethodParam 1 */
+        public function something($var = false) {}
+    }
 );
 
 function_call( 'param', new class {
-	/* testNestedProperty 2 */
-	public $year = 2017;
+    /* testNestedProperty 2 */
+    public $year = 2017;
 
-	/* testNestedMethodParam 2 */
-	public function __construct( $open, $post_id ) {}
+    /* testNestedMethodParam 2 */
+    public function __construct( $open, $post_id ) {}
 }, 10, 2 );
