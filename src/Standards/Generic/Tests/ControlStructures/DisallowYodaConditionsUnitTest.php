@@ -1,17 +1,17 @@
 <?php
 /**
- * Unit test class for the FunctionCallArgumentSpacing sniff.
+ * Unit test class for the DisallowYodaConditions sniff.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Standards\Generic\Tests\Functions;
+namespace PHP_CodeSniffer\Standards\Generic\Tests\ControlStructures;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class FunctionCallArgumentSpacingUnitTest extends AbstractSniffUnitTest
+class DisallowYodaConditionsUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -26,32 +26,37 @@ class FunctionCallArgumentSpacingUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            5   => 1,
-            6   => 1,
-            7   => 2,
+            7   => 1,
             8   => 1,
-            11  => 1,
             12  => 1,
-            13  => 1,
-            42  => 3,
-            43  => 3,
-            45  => 1,
-            46  => 2,
-            79  => 1,
-            82  => 1,
-            93  => 1,
+            13  => 2,
+            18  => 1,
+            19  => 1,
+            24  => 1,
+            25  => 1,
+            30  => 1,
+            31  => 1,
+            40  => 1,
+            47  => 1,
+            48  => 1,
+            50  => 1,
+            52  => 1,
+            57  => 1,
+            58  => 1,
+            62  => 1,
+            68  => 1,
+            97  => 3,
+            98  => 3,
             105 => 1,
-            107 => 1,
-            108 => 2,
-            114 => 1,
-            115 => 1,
             119 => 1,
-            125 => 2,
-            130 => 2,
+            120 => 1,
+            122 => 1,
+            123 => 1,
+            128 => 1,
+            129 => 2,
+            130 => 1,
             131 => 1,
-            132 => 2,
-            133 => 2,
-            134 => 1,
+            133 => 1,
         ];
 
     }//end getErrorList()

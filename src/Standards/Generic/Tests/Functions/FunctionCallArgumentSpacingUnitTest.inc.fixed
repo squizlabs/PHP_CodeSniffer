@@ -8,9 +8,9 @@ $result = myFunction($arg1, $arg2);
 $result = myFunction($arg1, $arg2, $arg3, $arg4, $arg5);
 $result = myFunction($arg1, $arg2, $arg3, $arg4, $arg5);
 $result = myFunction($arg1, $arg2 = array());
-$result = myFunction($arg1, $arg2 = array());
-$result = myFunction($arg1, $arg2 = array());
-$result = myFunction($arg1, $arg2 = array());
+$result = myFunction($arg1, $arg2 =array());
+$result = myFunction($arg1, $arg2= array());
+$result = myFunction($arg1, $arg2=array());
 
 $result = myFunction($arg1, 
                      $arg2 = array(), 
@@ -147,5 +147,5 @@ $foobar = functionCallAnonClassParam(
 			$foo = array(1,2,3);
 		}
 	},
-	$args = array(),
+	$args=array(),
 );
