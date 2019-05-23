@@ -229,6 +229,11 @@ class Filter extends \RecursiveFilterIterator
         }
 
         foreach ($ignorePatterns as $pattern => $type) {
+            // Ignore standard/sniff specific exclude rules.
+            if (is_array($type) === true) {
+                continue;
+            }
+
             // Maintains backwards compatibility in case the ignore pattern does
             // not have a relative/absolute value.
             if (is_int($pattern) === true) {

@@ -21,6 +21,7 @@ require_once 'File/GetMemberPropertiesTest.php';
 require_once 'File/GetMethodParametersTest.php';
 require_once 'File/GetMethodPropertiesTest.php';
 require_once 'File/IsReferenceTest.php';
+require_once 'Filters/Filter/AcceptTest.php';
 
 class AllTests
 {
@@ -55,6 +56,7 @@ class AllTests
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\GetMethodParametersTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\GetMethodPropertiesTest');
         $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\IsReferenceTest');
+        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\Filters\Filter\AcceptTest');
         return $suite;
 
     }//end suite()
