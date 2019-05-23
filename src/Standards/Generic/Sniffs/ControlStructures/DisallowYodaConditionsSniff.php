@@ -1,6 +1,6 @@
 <?php
 /**
- * Verifies that inline control statements are not present.
+ * Ban the use of Yoda conditions.
  *
  * @author    Mponos George
  * @author    Mark Scherer

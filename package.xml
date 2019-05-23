@@ -44,6 +44,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The T_LIST token and it's opening and closing parentheses now contain references to each other in the tokens array
     -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Added Generic.ControlStructures.DisallowYodaConditions sniff
+      -- Ban the use of Yoda conditions
+      -- Thanks to Mponos George for the contribution
   - Generic.WhiteSpace.ScopeIndent no longer performs exact indents checking for chained method calls
     -- Other sniffs can be used to enforce chained method call indent rules
     -- Thanks to Pieter Frenssen for the patch
@@ -204,6 +207,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="UnusedFunctionParameterStandard.xml" role="php" />
        </dir>
        <dir name="ControlStructures">
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowYodaConditionsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureStandard.xml" role="php" />
        </dir>
        <dir name="CodeAnalysis">
@@ -307,6 +311,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="TodoSniff.php" role="php" />
        </dir>
        <dir name="ControlStructures">
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowYodaConditionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureSniff.php" role="php" />
        </dir>
        <dir name="Debug">
@@ -447,6 +452,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="TodoUnitTest.php" role="test" />
        </dir>
        <dir name="ControlStructures">
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowYodaConditionsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowYodaConditionsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.2.inc" role="test" />
@@ -1896,7 +1903,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Squiz.Arrays.ArrayDeclaration now has improved handling of syntax errors
     - Fixed an issue where the PCRE JIT on PHP 7.3 caused PHPCS to die when using the parallel option
       -- PHPCS now disables the PCRE JIT before running
-    - Fixed bug #2368 : MySource.PHP.AjaxNullComparison throws error when first function has no doc comment 
+    - Fixed bug #2368 : MySource.PHP.AjaxNullComparison throws error when first function has no doc comment
     - Fixed bug #2414 : Indention false positive in switch/case/if combination
     - Fixed bug #2423 : Squiz.Formatting.OperatorBracket.MissingBrackets error with static
     - Fixed bug #2450 : Indentation false positive when closure containing nested IF conditions used as function argument
@@ -1925,7 +1932,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       -- The Generic.Formatting.SpaceBeforeCast sniff was not previously available for PEAR installs
       -- The Generic.WhiteSpace.LanguageConstructSpacing sniff was not previously available for PEAR installs
       -- Thanks to Juliette Reinders Folmer for the patch
-  
+
     - PHPCS will now refuse to run if any of the required PHP extensions are not loaded
       -- Previously, PHPCS only relied on requirements being checked by PEAR and Composer
       -- Thanks to Juliette Reinders Folmer for the patch
