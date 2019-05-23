@@ -45,8 +45,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
     -- Thanks to Juliette Reinders Folmer for the patch
   - Added Generic.ControlStructures.DisallowYodaConditions sniff
-      -- Ban the use of Yoda conditions
-      -- Thanks to Mponos George for the contribution
+    -- Ban the use of Yoda conditions
+    -- Thanks to Mponos George for the contribution
+  - Generic.Functions.FunctionCallArgumentSpacing no longer checks spacing around assignment operators inside function calls
+    -- Use the Squiz.WhiteSpace.OperatorSpacing sniff to enforce spacing around assignment operators
+       --- Note that this sniff checks spacing around all assignment operators, not just inside function calls
+    -- The Generic.Functions.FunctionCallArgumentSpacing.NoSpaceBeforeEquals error has been removed
+       --- use Squiz.WhiteSpace.OperatorSpacing.NoSpaceBefore instead
+    -- The Generic.Functions.FunctionCallArgumentSpacing.NoSpaceAfterEquals error has been removed
+       --- use Squiz.WhiteSpace.OperatorSpacing.NoSpaceAfter instead
+    -- This also changes the PEAR/PSR2/PSR12 standards so they no longer check assignment operators inside function calls
+       --- They were previously checking these operators when they should not have
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.WhiteSpace.ScopeIndent no longer performs exact indents checking for chained method calls
     -- Other sniffs can be used to enforce chained method call indent rules
     -- Thanks to Pieter Frenssen for the patch
