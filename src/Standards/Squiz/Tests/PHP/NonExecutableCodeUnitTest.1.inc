@@ -257,3 +257,42 @@ switch ($var) {
 
 end:
 echo 'j hit 17';
+
+// Issue 2512.
+class TestAlternativeControlStructures {
+
+    public function alternative_switch_in_function( $var ) {
+
+        switch ( $var ) :
+            case 'value1':
+                do_something();
+                break;
+
+            default:
+            case 'value2':
+                do_something_else();
+                break;
+        endswitch;
+    }
+
+    public function various_alternative_control_structures() {
+        $_while = 1;
+
+        for ( $a = 0; $a++ < 1; ) :
+            foreach ( [ 1 ] as $b ) :
+                while ( $_while-- ) :
+                    if ( 1 ) :
+                        switch ( 1 ) :
+                            default:
+                                echo 'yay, we made it!';
+                                break;
+                        endswitch;
+                    endif;
+                endwhile;
+            endforeach;
+        endfor;
+    }
+}
+
+$var_after_class_in_global_space = 1;
+do_something_else();
