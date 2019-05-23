@@ -1,9 +1,9 @@
 <?php
 /**
- * Verifies that inline control statements are not present.
+ * Ban the use of Yoda conditions.
  *
- * @author    Mponos George
- * @author    Mark Scherer
+ * @author    Mponos George <gmponos@gmail.com>
+ * @author    Mark Scherer <username@example.com>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */

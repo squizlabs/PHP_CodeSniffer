@@ -82,6 +82,7 @@ class GetMemberPropertiesTest extends TestCase
         $variable = $this->phpcsFile->findNext(T_VARIABLE, ($delim + 1));
 
         $result = $this->phpcsFile->getMemberProperties($variable);
+        unset($result['type_token']);
         $this->assertSame($expected, $result);
 
     }//end testGetMemberProperties()
@@ -103,6 +104,18 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => false,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testVarType */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => false,
+                    'is_static'       => false,
+                    'type'            => 'int',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -111,6 +124,18 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPublicType */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'string',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -119,6 +144,18 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'protected',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testProtectedType */',
+                [
+                    'scope'           => 'protected',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'bool',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -127,6 +164,18 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPrivateType */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'array',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -135,6 +184,18 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => false,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testStaticType */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => false,
+                    'is_static'       => true,
+                    'type'            => 'string',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -143,6 +204,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => false,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -151,6 +214,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => false,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -159,6 +224,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -167,6 +234,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'protected',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -175,6 +244,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -183,6 +254,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -191,6 +264,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'protected',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -199,6 +274,48 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testGroupType 1 */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'float',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testGroupType 2 */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'float',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testGroupNullableType 1 */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => true,
+                    'type'            => '?string',
+                    'nullable_type'   => true,
+                ],
+            ],
+            [
+                '/* testGroupNullableType 2 */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => true,
+                    'type'            => '?string',
+                    'nullable_type'   => true,
                 ],
             ],
             [
@@ -207,6 +324,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => false,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -215,6 +334,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'protected',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -223,6 +344,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'protected',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -231,6 +354,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'protected',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -239,6 +364,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -247,6 +374,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -255,6 +384,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -263,6 +394,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -271,6 +404,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -279,6 +414,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -287,6 +424,58 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testMessyNullableType */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => '?array',
+                    'nullable_type'   => true,
+                ],
+            ],
+            [
+                '/* testNamespaceType */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => '\MyNamespace\MyClass',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testNullableNamespaceType 1 */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => '?ClassName',
+                    'nullable_type'   => true,
+                ],
+            ],
+            [
+                '/* testNullableNamespaceType 2 */',
+                [
+                    'scope'           => 'protected',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => '?Folder\ClassName',
+                    'nullable_type'   => true,
+                ],
+            ],
+            [
+                '/* testMultilineNamespaceType */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => '\MyNamespace\MyClass\Foo',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -295,6 +484,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'private',
                     'scope_specified' => true,
                     'is_static'       => true,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -307,6 +498,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
             [
@@ -315,6 +508,8 @@ class GetMemberPropertiesTest extends TestCase
                     'scope'           => 'public',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
                 ],
             ],
         ];

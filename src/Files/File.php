@@ -1268,7 +1268,7 @@ class File
      *         'type_hint'         => string,  // The type hint for the variable.
      *         'type_hint_token'   => integer, // The stack pointer to the type hint
      *                                         // or false if there is no type hint.
-     *         'nullable_type'     => boolean, // Is the variable using a nullable type?
+     *         'nullable_type'     => boolean, // TRUE if the var type is nullable.
      *        )
      * </code>
      *
@@ -1451,19 +1451,19 @@ class File
     /**
      * Returns the visibility and implementation properties of a method.
      *
-     * The format of the array is:
+     * The format of the return value is:
      * <code>
      *   array(
-     *    'scope'                => 'public', // public protected or protected
-     *    'scope_specified'      => true,     // true is scope keyword was found.
-     *    'return_type'          => '',       // the return type of the method.
+     *    'scope'                => 'public', // Public, private, or protected
+     *    'scope_specified'      => true,     // TRUE if the scope keyword was found.
+     *    'return_type'          => '',       // The return type of the method.
      *    'return_type_token'    => integer,  // The stack pointer to the start of the return type
-     *                                        // or false if there is no return type.
-     *    'nullable_return_type' => false,    // true if the return type is nullable.
-     *    'is_abstract'          => false,    // true if the abstract keyword was found.
-     *    'is_final'             => false,    // true if the final keyword was found.
-     *    'is_static'            => false,    // true if the static keyword was found.
-     *    'has_body'             => false,    // true if the method has a body
+     *                                        // or FALSE if there is no return type.
+     *    'nullable_return_type' => false,    // TRUE if the return type is nullable.
+     *    'is_abstract'          => false,    // TRUE if the abstract keyword was found.
+     *    'is_final'             => false,    // TRUE if the final keyword was found.
+     *    'is_static'            => false,    // TRUE if the static keyword was found.
+     *    'has_body'             => false,    // TRUE if the method has a body
      *   );
      * </code>
      *
@@ -1603,16 +1603,19 @@ class File
 
 
     /**
-     * Returns the visibility and implementation properties of the class member
-     * variable found at the specified position in the stack.
+     * Returns the visibility and implementation properties of a class member var.
      *
-     * The format of the array is:
+     * The format of the return value is:
      *
      * <code>
      *   array(
-     *    'scope'           => 'public', // public protected or protected.
-     *    'scope_specified' => false,    // true if the scope was explicitly specified.
-     *    'is_static'       => false,    // true if the static keyword was found.
+     *    'scope'           => string,  // Public, private, or protected.
+     *    'scope_specified' => boolean, // TRUE if the scope was explicitly specified.
+     *    'is_static'       => boolean, // TRUE if the static keyword was found.
+     *    'type'            => string,  // The type of the var (empty if no type specifed).
+     *    'type_token'      => integer, // The stack pointer to the start of the type
+     *                                  // or FALSE if there is no type.
+     *    'nullable_type'   => boolean, // TRUE if the type is nullable.
      *   );
      * </code>
      *
@@ -1715,10 +1718,51 @@ class File
             }
         }//end for
 
+        $type         = '';
+        $typeToken    = false;
+        $nullableType = false;
+
+        if ($i < $stackPtr) {
+            // We've found a type.
+            $valid = [
+                T_STRING       => T_STRING,
+                T_CALLABLE     => T_CALLABLE,
+                T_SELF         => T_SELF,
+                T_PARENT       => T_PARENT,
+                T_NS_SEPARATOR => T_NS_SEPARATOR,
+            ];
+
+            for ($i; $i < $stackPtr; $i++) {
+                if ($this->tokens[$i]['code'] === T_VARIABLE) {
+                    // Hit another variable in a group definition.
+                    break;
+                }
+
+                if ($this->tokens[$i]['code'] === T_NULLABLE) {
+                    $nullableType = true;
+                }
+
+                if (isset($valid[$this->tokens[$i]['code']]) === true) {
+                    if ($typeToken === false) {
+                        $typeToken = $i;
+                    }
+
+                    $type .= $this->tokens[$i]['content'];
+                }
+            }
+
+            if ($type !== '' && $nullableType === true) {
+                $type = '?'.$type;
+            }
+        }//end if
+
         return [
             'scope'           => $scope,
             'scope_specified' => $scopeSpecified,
             'is_static'       => $isStatic,
+            'type'            => $type,
+            'type_token'      => $typeToken,
+            'nullable_type'   => $nullableType,
         ];
 
     }//end getMemberProperties()
@@ -1727,7 +1771,7 @@ class File
     /**
      * Returns the visibility and implementation properties of a class.
      *
-     * The format of the array is:
+     * The format of the return value is:
      * <code>
      *   array(
      *    'is_abstract' => false, // true if the abstract keyword was found.
