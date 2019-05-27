@@ -94,6 +94,54 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
 
 
     /**
+     * Processes single-line declarations.
+     *
+     * Just uses the Generic BSD-Allman brace sniff.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack passed in $tokens.
+     * @param array                       $tokens    The stack of tokens that make up
+     *                                               the file.
+     *
+     * @return void
+     */
+    public function processSingleLineDeclaration($phpcsFile, $stackPtr, $tokens)
+    {
+        // We do everything the parent sniff does, and a bit more because we
+        // define multi-line declarations a bit differently.
+        parent::processSingleLineDeclaration($phpcsFile, $stackPtr, $tokens);
+
+        $openingBracket = $tokens[$stackPtr]['parenthesis_opener'];
+        $closingBracket = $tokens[$stackPtr]['parenthesis_closer'];
+
+        $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($closingBracket - 1), $openingBracket, true);
+        if ($tokens[$prevNonWhiteSpace]['line'] !== $tokens[$closingBracket]['line']) {
+            $error = 'There must not be a newline before the closing parenthesis of a single-line function declaration';
+
+            if (isset(Tokens::$emptyTokens[$tokens[$prevNonWhiteSpace]['code']]) === true) {
+                $phpcsFile->addError($error, $closingBracket, 'CloseBracketNewLine');
+            } else {
+                $fix = $phpcsFile->addFixableError($error, $closingBracket, 'CloseBracketNewLine');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($closingBracket - 1); $i > $openingBracket; $i--) {
+                        if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }
+            }
+        }//end if
+
+    }//end processSingleLineDeclaration()
+
+
+    /**
      * Processes multi-line declarations.
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
