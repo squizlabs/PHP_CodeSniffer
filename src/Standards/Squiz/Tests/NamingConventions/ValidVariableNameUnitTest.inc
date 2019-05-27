@@ -12,18 +12,18 @@ class MyClass
     $_varName = 'hello';
 
     public $varName  = 'hello';
-    public $var_name = 'hello';
+    public bool $var_name = false;
     public $varname  = 'hello';
     public $_varName = 'hello';
 
     protected $varName  = 'hello';
-    protected $var_name = 'hello';
+    protected string $var_name = 'hello';
     protected $varname  = 'hello';
-    protected $_varName = 'hello';
+    protected ?string $_varName = 'hello';
 
     private $_varName  = 'hello';
     private $_var_name = 'hello';
-    private $_varname  = 'hello';
+    private int $_varname  = 1;
     private $varName   = 'hello';
 }
 

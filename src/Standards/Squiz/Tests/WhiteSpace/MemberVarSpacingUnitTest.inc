@@ -4,7 +4,7 @@ class MyClass
     public $var1 = 'value';
 
 
-    public $var2 = 'value';
+    public ?int $var2 = 'value';
 
     public $var3 = 'value';
 
@@ -17,7 +17,7 @@ interface MyInterface
     public $var1 = 'value';
 
 
-    public $var2 = 'value';
+    public ?Folder\ClassName $var2 = 'value';
 
     protected $var3 = 'value';
 }//end interface
@@ -27,9 +27,9 @@ class MyClass
 {
 
 
-    public $var1 = 'value';
+    public string $var1 = 'value';
 
-    private $var2 = 'value';
+    private string $var2 = 'value';
 
 
     protected $var3 = 'value';

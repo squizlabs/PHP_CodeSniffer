@@ -2,7 +2,7 @@
 class MyClass
 {
     private $var1 = null;
-    protected $var2 = null;
+    protected ?int $var2 = null;
     public $var3 = null;
     $var4 = null;
 }
@@ -54,7 +54,7 @@ class MyClass {
         $var = null;
     }
 
-    public $mCounter, $mSearchUser, $mSearchPeriodStart, $mSearchPeriodEnd,
+    public string $mCounter, $mSearchUser, $mSearchPeriodStart, $mSearchPeriodEnd,
     $mTestFilter;
 
     protected $mCounter,

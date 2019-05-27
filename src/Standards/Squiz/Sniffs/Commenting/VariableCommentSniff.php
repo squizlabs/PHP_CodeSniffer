@@ -36,6 +36,9 @@ class VariableCommentSniff extends AbstractVariableSniff
             T_VAR,
             T_STATIC,
             T_WHITESPACE,
+            T_STRING,
+            T_NS_SEPARATOR,
+            T_NULLABLE,
         ];
 
         $commentEnd = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
