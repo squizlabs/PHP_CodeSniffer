@@ -65,6 +65,8 @@ script:
   # Validate the xml ruleset files.
   # @link http://xmlsoft.org/xmllint.html
   - if [[ $XMLLINT == "1" ]]; then xmllint --noout --schema phpcs.xsd ./src/Standards/*/ruleset.xml; fi
+  - if [[ $XMLLINT == "1" ]]; then curl -O https://www.w3.org/2012/04/XMLSchema.xsd; fi
+  - if [[ $XMLLINT == "1" ]]; then xmllint --noout --schema ./XMLSchema.xsd ./phpcs.xsd; fi
   # Check the code-style consistency of the xml files.
   - if [[ $XMLLINT == "1" ]]; then diff -B ./phpcs.xml.dist <(xmllint --format "./phpcs.xml.dist"); fi
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/Generic/ruleset.xml <(xmllint --format "./src/Standards/Generic/ruleset.xml"); fi

@@ -41,6 +41,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- You still need to give PHPCS a list of files or directories in which to apply the filter
     -- Thanks to Juliette Reinders Folmer for the contribution
   - JSON reports now end with a newline character
+  - The phpcs.xsd schema now validates phpcs-only and phpcbf-only attributes correctly
+      -- Thanks to Juliette Reinders Folmer for the patch
   - The T_LIST token and it's opening and closing parentheses now contain references to each other in the tokens array
     -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
     -- Thanks to Juliette Reinders Folmer for the patch

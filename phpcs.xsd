@@ -20,7 +20,7 @@
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
-				</xs:element>
+                </xs:element>
                 <xs:element name="exclude-pattern" type="patternType" maxOccurs="unbounded" minOccurs="0"></xs:element>
                 <xs:element name="arg" maxOccurs="unbounded" minOccurs="0">
                     <xs:complexType>
@@ -61,7 +61,7 @@
                         </xs:extension>
                     </xs:simpleContent>
                 </xs:complexType>
-			</xs:element>
+            </xs:element>
             <xs:element name="type" maxOccurs="1" minOccurs="0">
                 <xs:complexType>
                     <xs:simpleContent>
