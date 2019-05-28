@@ -115,18 +115,12 @@ class FunctionSpacingSniff implements Sniff
         $ignore = (Tokens::$emptyTokens + Tokens::$methodPrefixes);
 
         $prev = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
-        if (isset($tokens[$prev]['scope_opener']) === true
-            && $tokens[$prev]['scope_opener'] === $prev
-            && isset(Tokens::$ooScopeTokens[$tokens[$tokens[$prev]['scope_condition']]['code']]) === true
-        ) {
+        if ($tokens[$prev]['code'] === T_OPEN_CURLY_BRACKET) {
             $isFirst = true;
         }
 
         $next = $phpcsFile->findNext($ignore, ($closer + 1), null, true);
-        if (isset($tokens[$next]['scope_closer']) === true
-            && $tokens[$next]['scope_closer'] === $next
-            && isset(Tokens::$ooScopeTokens[$tokens[$tokens[$next]['scope_condition']]['code']]) === true
-        ) {
+        if ($tokens[$next]['code'] === T_CLOSE_CURLY_BRACKET) {
             $isLast = true;
         }
 
@@ -202,12 +196,12 @@ class FunctionSpacingSniff implements Sniff
 
         $prevLineToken = null;
         for ($i = $stackPtr; $i >= 0; $i--) {
-            if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) === false) {
+            if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
                 continue;
-            } else {
-                $prevLineToken = $i;
-                break;
             }
+
+            $prevLineToken = $i;
+            break;
         }
 
         if ($prevLineToken === null) {
@@ -220,6 +214,7 @@ class FunctionSpacingSniff implements Sniff
             $currentLine = $tokens[$stackPtr]['line'];
 
             $prevContent = $phpcsFile->findPrevious(T_WHITESPACE, $prevLineToken, null, true);
+
             if ($tokens[$prevContent]['code'] === T_COMMENT
                 || isset(Tokens::$phpcsCommentTokens[$tokens[$prevContent]['code']]) === true
             ) {
@@ -243,15 +238,24 @@ class FunctionSpacingSniff implements Sniff
             $prevLine   = ($tokens[$prevContent]['line'] - 1);
             $i          = ($stackPtr - 1);
             $foundLines = 0;
-            while ($currentLine !== $prevLine && $currentLine > 1 && $i > 0) {
-                if (isset($tokens[$i]['scope_condition']) === true) {
-                    $scopeCondition = $tokens[$i]['scope_condition'];
-                    if ($tokens[$scopeCondition]['code'] === T_FUNCTION) {
-                        // Found a previous function.
-                        return;
-                    }
-                } else if ($tokens[$i]['code'] === T_FUNCTION) {
+
+            $stopAt = 0;
+            if (isset($tokens[$stackPtr]['conditions']) === true) {
+                $conditions = $tokens[$stackPtr]['conditions'];
+                $conditions = array_keys($conditions);
+                $stopAt     = array_pop($conditions);
+            }
+
+            while ($currentLine !== $prevLine && $currentLine > 1 && $i > $stopAt) {
+                if ($tokens[$i]['code'] === T_FUNCTION) {
                     // Found another interface or abstract function.
+                    return;
+                }
+
+                if ($tokens[$i]['code'] === T_CLOSE_CURLY_BRACKET
+                    && $tokens[$tokens[$i]['scope_condition']]['code'] === T_FUNCTION
+                ) {
+                    // Found a previous function.
                     return;
                 }
 

@@ -449,3 +449,34 @@ $anon_class = new class() {
     private function c(){}
 
 };
+
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 2
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 1
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 3
+
+class MyClass {
+    function a(){}
+    function b(){}
+    function c(){}
+}
+
+$bar = function () {
+    {
+        function forbiddenToo() {}
+    }
+};
+class Foo {
+    public function returnAnonymousClass() {
+        return new class() {
+            public function baz() {}
+        };
+    }
+
+    public function bar() {
+        function forbidden() {}
+    }
+}
+
+if (function_exists('foo') === false) {
+    function foo(){}
+}

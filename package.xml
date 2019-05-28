@@ -70,6 +70,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The new error code is Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
     -- All other multiple assignment cases use the existing error code Squiz.PHP.DisallowMultipleAssignments.Found
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.WhiteSpace.FunctionSpacing now applies beforeFirst and afterLast spacing rules to nested functions
+    -- Previously, these rules only applied to the first and last function in a class, interface, or trait
+    -- These rules now apply to functions nested in any statement block, including other functions and conditions
   - Fixed bug #2391 : Sniff-specific ignore rules inside rulesets are filtering out too many files
     -- Thanks to Juliette Reinders Folmer and Willington Vega for the patch
   - Fixed bug #2478 : FunctionCommentThrowTag.WrongNumber when exception is thrown once but built conditionally
