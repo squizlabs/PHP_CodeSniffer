@@ -462,7 +462,9 @@ class MyClass {
 
 $bar = function () {
     {
-        function forbiddenToo() {}
+        function a(){}
+        function b(){}
+        function c(){}
     }
 };
 class Foo {

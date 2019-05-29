@@ -79,12 +79,14 @@ class FunctionSpacingUnitTest extends AbstractSniffUnitTest
                 459 => 1,
                 460 => 1,
                 465 => 2,
-                469 => 1,
-                471 => 2,
-                473 => 1,
-                476 => 2,
-                477 => 1,
-                481 => 2,
+                466 => 1,
+                467 => 1,
+                471 => 1,
+                473 => 2,
+                475 => 1,
+                478 => 2,
+                479 => 1,
+                483 => 2,
             ];
 
         case 'FunctionSpacingUnitTest.2.inc':
