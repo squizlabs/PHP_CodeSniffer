@@ -43,6 +43,13 @@ class LineLengthSniff implements Sniff
      */
     public $ignoreComments = false;
 
+    /**
+     * Whether or not to ignore namespaces lines.
+     *
+     * @var boolean
+     */
+    public $ignoreUseStatementsLines = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -109,8 +116,11 @@ class LineLengthSniff implements Sniff
             $stackPtr--;
         }
 
+        $lineLength = ($tokens[$stackPtr]['column'] + $tokens[$stackPtr]['length'] - 1);
+        $endOfPrevSearch = ($stackPtr - $lineLength) > 0 ? $stackPtr - $lineLength : 0;
+
         if (isset(Tokens::$phpcsCommentTokens[$tokens[$stackPtr]['code']]) === true) {
-            $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+            $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), $endOfPrevSearch, true);
             if ($tokens[$stackPtr]['line'] !== $tokens[$prevNonWhiteSpace]['line']) {
                 // Ignore PHPCS annotation comments if they are on a line by themselves.
                 return;
@@ -119,7 +129,14 @@ class LineLengthSniff implements Sniff
             unset($prevNonWhiteSpace);
         }
 
-        $lineLength = ($tokens[$stackPtr]['column'] + $tokens[$stackPtr]['length'] - 1);
+        if ($this->ignoreUseStatementsLines) {
+            $prevUseToken = $phpcsFile->findPrevious(T_USE, ($stackPtr - 1), $endOfPrevSearch);
+            if ($tokens[$stackPtr]['line'] === $tokens[$prevUseToken]['line']) {
+                return;
+            }
+
+            unset($prevUseToken);
+        }
 
         // Record metrics for common line length groupings.
         if ($lineLength <= 80) {

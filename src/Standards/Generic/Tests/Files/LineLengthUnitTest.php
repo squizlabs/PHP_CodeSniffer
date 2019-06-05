@@ -43,21 +43,21 @@ class LineLengthUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='')
     {
         switch ($testFile) {
-        case 'LineLengthUnitTest.1.inc':
-            return [
-                31 => 1,
-                34 => 1,
-                45 => 1,
-                82 => 1,
-            ];
-            break;
-        case 'LineLengthUnitTest.2.inc':
-        case 'LineLengthUnitTest.3.inc':
-            return [7 => 1];
-            break;
-        default:
-            return [];
-            break;
+            case 'LineLengthUnitTest.1.inc':
+                return [
+                    31 => 1,
+                    34 => 1,
+                    45 => 1,
+                    82 => 1,
+                ];
+                break;
+            case 'LineLengthUnitTest.2.inc':
+            case 'LineLengthUnitTest.3.inc':
+                return [7 => 1];
+                break;
+            default:
+                return [];
+                break;
         }//end switch
 
     }//end getErrorList()
@@ -76,29 +76,35 @@ class LineLengthUnitTest extends AbstractSniffUnitTest
     public function getWarningList($testFile='')
     {
         switch ($testFile) {
-        case 'LineLengthUnitTest.1.inc':
-            return [
-                9  => 1,
-                15 => 1,
-                21 => 1,
-                24 => 1,
-                29 => 1,
-                37 => 1,
-                63 => 1,
-                73 => 1,
-                75 => 1,
-            ];
-            break;
-        case 'LineLengthUnitTest.2.inc':
-        case 'LineLengthUnitTest.3.inc':
-            return [6 => 1];
-            break;
-        case 'LineLengthUnitTest.4.inc':
-            return [10 => 1];
-            break;
-        default:
-            return [];
-            break;
+            case 'LineLengthUnitTest.1.inc':
+                return [
+                    9  => 1,
+                    15 => 1,
+                    21 => 1,
+                    24 => 1,
+                    29 => 1,
+                    37 => 1,
+                    63 => 1,
+                    73 => 1,
+                    75 => 1,
+                ];
+                break;
+            case 'LineLengthUnitTest.2.inc':
+            case 'LineLengthUnitTest.3.inc':
+                return [6 => 1];
+                break;
+            case 'LineLengthUnitTest.4.inc':
+                return [10 => 1];
+                break;
+            case 'LineLengthUnitTest.5.inc':
+                return [];
+                break;
+            case 'LineLengthUnitTest.6.inc':
+                return [5 => 1];
+                break;
+            default:
+                return [];
+                break;
         }//end switch
 
     }//end getWarningList()
