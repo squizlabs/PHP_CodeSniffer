@@ -96,6 +96,19 @@ class LineLengthUnitTest extends AbstractSniffUnitTest
         case 'LineLengthUnitTest.4.inc':
             return [10 => 1];
             break;
+        case 'LineLengthUnitTest.5.inc':
+            return [
+                9  => 1,
+                11 => 1,
+            ];
+            break;
+        case 'LineLengthUnitTest.6.inc':
+            return [
+                6  => 1,
+                9  => 1,
+                11 => 1,
+            ];
+            break;
         default:
             return [];
             break;
