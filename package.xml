@@ -66,6 +66,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Michał Bundyra for the patch
   - Squiz.Commenting.BlockComment no longer requires blank line before comment if it's the first content after the PHP open tag
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Operators.IncrementDecrementUsage now suggests pre-increment of variables instead of post-increment
+    -- This change does not enforce pre-increment over post-increment; only the suggestion has changed
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.PHP.DisallowMultipleAssignments now has a second error code for when assignments are found inside control structure conditions
     -- The new error code is Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure
     -- All other multiple assignment cases use the existing error code Squiz.PHP.DisallowMultipleAssignments.Found
