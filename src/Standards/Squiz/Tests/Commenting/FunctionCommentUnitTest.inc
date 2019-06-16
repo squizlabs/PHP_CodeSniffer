@@ -252,6 +252,18 @@ public function typeHint(MyClass $a1, $a2, myclass $a3, $a4)
 }//end typeHint()
 
 
+use MyOtherClass as MyAliasedClass;
+
+/**
+ * More type hint check for aliased type.
+ *
+ * @param MyOtherClass $a Comment here.
+ */
+public function aliasedTypeHint(MyAliasedClass $a) {
+
+}//end aliasedTypeHint()
+
+
 /**
  * Mixed variable type separated by a '|'.
  *
@@ -447,6 +459,9 @@ class MyClass() {
      * @return string[]
      */
     abstract final protected function myFunction();
+}
+
+class MyOtherClass() {
 }
 
 /**
@@ -666,7 +681,7 @@ class Baz {
  * Test
  *
  * @return void
- * @throws E 
+ * @throws E
  */
 function myFunction() {}
 
