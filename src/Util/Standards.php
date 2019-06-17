@@ -16,7 +16,9 @@ class Standards
 
 
     /**
-     * Get a list paths where standards are installed.
+     * Get a list of paths where standards are installed.
+     *
+     * Unresolvable relative paths will be excluded from the results.
      *
      * @return array
      */
@@ -34,6 +36,9 @@ class Standards
         foreach ($installedPaths as $installedPath) {
             if (substr($installedPath, 0, 1) === '.') {
                 $installedPath = Common::realPath(__DIR__.$ds.'..'.$ds.'..'.$ds.$installedPath);
+                if ($installedPath === false) {
+                    continue;
+                }
             }
 
             $resolvedInstalledPaths[] = $installedPath;
