@@ -234,6 +234,9 @@ class Standards
             // This could be a custom standard, installed outside our
             // standards directory.
             $standard = Common::realPath($standard);
+            if ($standard === false) {
+                return false;
+            }
 
             // Might be an actual ruleset file itUtil.
             // If it has an XML extension, let's at least try it.
@@ -287,7 +290,7 @@ class Standards
 
             $path = Common::realpath($standardPath.DIRECTORY_SEPARATOR.'ruleset.xml');
 
-            if (is_file($path) === true) {
+            if ($path !== false && is_file($path) === true) {
                 return $path;
             } else if (Common::isPharFile($standardPath) === true) {
                 $path = Common::realpath($standardPath);
