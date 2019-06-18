@@ -134,6 +134,7 @@ class LineLengthSniff implements Sniff
 
         if ($tokens[$stackPtr]['code'] === T_COMMENT
             || $tokens[$stackPtr]['code'] === T_DOC_COMMENT_STRING
+            || $tokens[$stackPtr]['code'] === T_PHPCS_IGNORE
         ) {
             if ($this->ignoreComments === true) {
                 return;
