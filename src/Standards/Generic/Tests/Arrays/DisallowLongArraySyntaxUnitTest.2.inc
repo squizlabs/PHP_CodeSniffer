@@ -8,10 +8,7 @@ function test()
     {
         $arr = array(
             'a' => 'a',
-<<<<<<< HEAD
-            'b' => 'b'
-=======
+            'b' => 'b',
             'c' => 'c'
->>>>>>> master
         );
     }
