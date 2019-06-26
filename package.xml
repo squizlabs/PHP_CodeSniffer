@@ -84,6 +84,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2502 : Generic.WhiteSpace.ScopeIndent false positives with nested switch indentation and case fall-through
   - Fixed bug #2504 : Generic.WhiteSpace.ScopeIndent false positives with nested arrays and nowdoc string
   - Fixed bug #2511 : PSR2 standard not checking if closing paren of single-line function declaration is on new line
+  - Fixed bug #2522 : Text generator throws error when code sample line is too long
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
