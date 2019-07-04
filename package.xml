@@ -49,6 +49,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic.ControlStructures.DisallowYodaConditions sniff
     -- Ban the use of Yoda conditions
     -- Thanks to Mponos George for the contribution
+  - Added Generic.PHP.RequireStrictTypes sniff
+    -- Enforce the use of a strict types declaration in PHP files
+  - Added PSR12.Files.DeclareStatement sniff
+    -- Enforce the formatting of declare statements within a file
   - Generic.Functions.FunctionCallArgumentSpacing no longer checks spacing around assignment operators inside function calls
     -- Use the Squiz.WhiteSpace.OperatorSpacing sniff to enforce spacing around assignment operators
        --- Note that this sniff checks spacing around all assignment operators, not just inside function calls
