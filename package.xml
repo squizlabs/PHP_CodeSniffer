@@ -402,6 +402,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseKeywordSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="SyntaxSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="UpperCaseConstantSniff.php" role="php" />
@@ -670,6 +671,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LowerCaseTypeUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NoSilencedErrorsUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SyntaxUnitTest.inc" role="test" />
@@ -1039,6 +1043,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Classes">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationSniff.php" role="php" />
        </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementSniff.php" role="php" />
+       </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationSniff.php" role="php" />
        </dir>
@@ -1057,6 +1064,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.php" role="test" />
+       </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementUnitTest.php" role="test" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationUnitTest.inc" role="test" />
