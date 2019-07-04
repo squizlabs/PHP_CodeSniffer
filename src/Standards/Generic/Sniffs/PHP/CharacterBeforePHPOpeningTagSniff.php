@@ -66,7 +66,6 @@ class CharacterBeforePHPOpeningTagSniff implements Sniff
             }
 
             // Allow a shebang line.
-            $tokens = $phpcsFile->getTokens();
             if (substr($tokens[0]['content'], 0, 2) === '#!') {
                 $expected++;
             }
