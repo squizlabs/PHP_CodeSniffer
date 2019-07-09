@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the ControlStructuresBracketsNewLineSniff
+ * Unit test class for the BracketsNewLineSniff
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2018 Squiz Pty Ltd (ABN 77 084 670 600)
@@ -12,7 +12,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Tests\ControlStructures;
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 
-class ControlStructuresBracketsNewLineUnitTest extends AbstractSniffUnitTest
+class BracketsNewLineUnitTest extends AbstractSniffUnitTest
 {
 
 
