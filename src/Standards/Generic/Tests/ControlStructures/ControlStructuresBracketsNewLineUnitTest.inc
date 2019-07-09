@@ -165,7 +165,7 @@ $this->attachRule(
 	}
 );
 
-// Round 2 Closure indentation tests
+// More Closure indentation tests
 $i = 1;
 $func = function ($m) use ($q, $a, &$i)
 {
@@ -206,5 +206,26 @@ class Foo
 				return '%';
 			}
 		};
+	}
+}
+
+// Closure combined with a chained function call test case
+class Application
+{
+	public function doThings($container)
+	{
+		$container->alias(MyClass::class, 'MyClass')
+			->share(
+				'MyClass',
+				function (Container $container) {
+					doThing();
+					if ($thing)
+						{
+						bar();
+				}
+					return foo();
+				},
+				true
+			);
 	}
 }
