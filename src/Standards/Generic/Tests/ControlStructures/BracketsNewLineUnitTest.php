@@ -27,7 +27,7 @@ class BracketsNewLineUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            6  => 1,
+            6   => 1,
             12  => 1,
             18  => 1,
             22  => 1,
@@ -38,8 +38,8 @@ class BracketsNewLineUnitTest extends AbstractSniffUnitTest
             53  => 1,
             70  => 1,
             74  => 1,
-            102  => 1,
-            108  => 1,
+            102 => 1,
+            108 => 1,
             116 => 1,
             122 => 1,
             131 => 1,
@@ -63,6 +63,7 @@ class BracketsNewLineUnitTest extends AbstractSniffUnitTest
     public function getWarningList()
     {
         return [];
+
     }//end getWarningList()
 
 
