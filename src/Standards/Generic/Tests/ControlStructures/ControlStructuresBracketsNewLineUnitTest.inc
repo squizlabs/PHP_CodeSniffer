@@ -222,7 +222,7 @@ class Application
 					if ($thing)
 						{
 						bar();
-				}
+					}
 					return foo();
 				},
 				true
