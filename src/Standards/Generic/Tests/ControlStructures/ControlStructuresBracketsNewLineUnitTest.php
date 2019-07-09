@@ -34,6 +34,8 @@ class ControlStructuresBracketsNewLineUnitTest extends AbstractSniffUnitTest
             29  => 1,
             34  => 1,
             40  => 1,
+            47  => 1,
+            53  => 1,
             70  => 1,
             74  => 1,
             102  => 1,
