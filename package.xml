@@ -407,6 +407,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpreadOperatorSpacingAfterStandard.xml" role="php" />
        </dir>
       </dir>
       <dir name="Sniffs">
@@ -514,6 +515,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LanguageConstructSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpreadOperatorSpacingAfterSniff.php" role="php" />
        </dir>
       </dir>
       <dir name="Tests">
@@ -833,6 +835,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.3.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ScopeIndentUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpreadOperatorSpacingAfterUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpreadOperatorSpacingAfterUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SpreadOperatorSpacingAfterUnitTest.php" role="test" />
        </dir>
       </dir>
       <file baseinstalldir="PHP/CodeSniffer" name="ruleset.xml" role="php" />

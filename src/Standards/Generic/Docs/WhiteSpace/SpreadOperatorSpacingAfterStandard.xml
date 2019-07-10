@@ -1,0 +1,34 @@
+<documentation title="Spacing After Spread Operator">
+    <standard>
+    <![CDATA[
+    There should be no space between the spread operator and the variable/function call it applies to.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: No space between the spread operator and the variable/function call it applies to.">
+        <![CDATA[
+function foo(<em>&...$spread</em>) {
+    bar(<em>...$spread</em>);
+
+    bar(
+        [<em>...$foo</em>],
+        <em>...array_values($keyedArray)</em>
+    );
+}
+        ]]>
+        </code>
+        <code title="Invalid: space found between the spread operator and the variable/function call it applies to.">
+        <![CDATA[
+function bar(<em>... </em>$spread) {
+    bar(<em>...
+        </em>$spread
+    );
+
+    bar(
+        [<em>...  </em>$foo ],<em>.../*comment*/</em>array_values($keyedArray)
+    );
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
