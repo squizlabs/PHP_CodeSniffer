@@ -978,12 +978,19 @@ class PHP extends Tokenizer
                 $newToken            = [];
                 $newToken['content'] = '?';
 
-                $prevNonEmpty = null;
+                $prevNonEmpty     = null;
+                $lastSeenNonEmpty = null;
+
                 for ($i = ($stackPtr - 1); $i >= 0; $i--) {
                     if (is_array($tokens[$i]) === true) {
                         $tokenType = $tokens[$i][0];
                     } else {
                         $tokenType = $tokens[$i];
+                    }
+
+                    if ($tokenType === T_STATIC && $lastSeenNonEmpty === T_DOUBLE_COLON) {
+                        $lastSeenNonEmpty = $tokenType;
+                        continue;
                     }
 
                     if ($prevNonEmpty === null
@@ -1011,6 +1018,10 @@ class PHP extends Tokenizer
 
                         $insideInlineIf[] = $stackPtr;
                         break;
+                    }
+
+                    if (isset(Util\Tokens::$emptyTokens[$tokenType]) === false) {
+                        $lastSeenNonEmpty = $tokenType;
                     }
                 }//end for
 
