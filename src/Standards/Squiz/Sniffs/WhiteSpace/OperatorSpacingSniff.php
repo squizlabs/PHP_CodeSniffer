@@ -99,6 +99,12 @@ class OperatorSpacingSniff implements Sniff
                 }
             }//end if
 
+            $hasNext = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+            if ($hasNext === false) {
+                // Live coding/parse error at end of file.
+                return;
+            }
+
             // Check there is one space after the & operator.
             if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
                 $error = 'Expected 1 space after "&" operator; 0 found';
@@ -179,7 +185,9 @@ class OperatorSpacingSniff implements Sniff
             }//end if
         }//end if
 
-        if (isset($tokens[($stackPtr + 1)]) === false) {
+        $hasNext = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($hasNext === false) {
+            // Live coding/parse error at end of file.
             return;
         }
 
