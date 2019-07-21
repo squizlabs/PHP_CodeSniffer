@@ -91,7 +91,7 @@ class DisallowSelfActionsSniff implements Sniff
             // We've found the function, now we need to find it and see if it is
             // public, private or protected. If it starts with an underscore we
             // can assume it is private.
-            if ($funcName{0} === '_') {
+            if ($funcName[0] === '_') {
                 continue;
             }
 

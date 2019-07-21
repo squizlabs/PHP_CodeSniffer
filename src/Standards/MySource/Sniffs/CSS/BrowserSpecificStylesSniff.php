@@ -76,7 +76,7 @@ class BrowserSpecificStylesSniff implements Sniff
         $tokens  = $phpcsFile->getTokens();
         $content = $tokens[$stackPtr]['content'];
 
-        if ($content{0} === '-') {
+        if ($content[0] === '-') {
             $error = 'Browser-specific styles are not allowed';
             $phpcsFile->addError($error, $stackPtr, 'ForbiddenStyle');
         }

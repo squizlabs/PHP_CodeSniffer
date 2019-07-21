@@ -371,7 +371,7 @@ class Common
                     continue;
                 }
 
-                if ($bit{0} !== strtoupper($bit{0})) {
+                if ($bit[0] !== strtoupper($bit[0])) {
                     $validName = false;
                     break;
                 }

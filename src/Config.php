@@ -417,7 +417,7 @@ class Config
                 continue;
             }
 
-            if ($arg{0} === '-') {
+            if ($arg[0] === '-') {
                 if ($arg === '-') {
                     // Asking to read from STDIN.
                     $this->stdin = true;
@@ -430,7 +430,7 @@ class Config
                     continue;
                 }
 
-                if ($arg{1} === '-') {
+                if ($arg[1] === '-') {
                     $this->processLongArgument(substr($arg, 2), $i);
                 } else {
                     $switches = str_split($arg);
@@ -886,7 +886,7 @@ class Config
                         // Passed cache file is a file in the current directory.
                         $this->cacheFile = getcwd().'/'.basename($this->cacheFile);
                     } else {
-                        if ($dir{0} === '/') {
+                        if ($dir[0] === '/') {
                             // An absolute path.
                             $dir = Util\Common::realpath($dir);
                         } else {
@@ -978,7 +978,7 @@ class Config
                         // Passed report file is a file in the current directory.
                         $this->reportFile = getcwd().'/'.basename($this->reportFile);
                     } else {
-                        if ($dir{0} === '/') {
+                        if ($dir[0] === '/') {
                             // An absolute path.
                             $dir = Util\Common::realpath($dir);
                         } else {
@@ -1056,7 +1056,7 @@ class Config
                                 // Passed report file is a filename in the current directory.
                                 $output = getcwd().'/'.basename($output);
                             } else {
-                                if ($dir{0} === '/') {
+                                if ($dir[0] === '/') {
                                     // An absolute path.
                                     $dir = Util\Common::realpath($dir);
                                 } else {
@@ -1253,7 +1253,7 @@ class Config
     public function processUnknownArgument($arg, $pos)
     {
         // We don't know about any additional switches; just files.
-        if ($arg{0} === '-') {
+        if ($arg[0] === '-') {
             if ($this->dieOnUnknownArg === false) {
                 return;
             }

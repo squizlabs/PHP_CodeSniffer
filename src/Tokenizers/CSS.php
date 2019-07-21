@@ -187,7 +187,7 @@ class CSS extends PHP
                 // Guard against PHP7+ syntax errors by stripping
                 // leading zeros so the content doesn't look like an invalid int.
                 $leadingZero = false;
-                if ($content{0} === '0') {
+                if ($content[0] === '0') {
                     $content     = '1'.$content;
                     $leadingZero = true;
                 }

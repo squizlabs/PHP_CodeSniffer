@@ -26,8 +26,8 @@ class Test2
 
 function test2()
 {
-    if ($str{0}) {
-        $chr = $str{0}; }
+    if ($str[0]) {
+        $chr = $str[0]; }
 
 
     if (!class_exists($class_name)) {
@@ -50,7 +50,7 @@ case 1:
     switch ($bar) {
     default:
         if ($something) {
-            echo $string{1};
+            echo $string[1];
         } else if ($else) {
             switch ($else) {
             case 1:

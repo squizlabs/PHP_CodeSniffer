@@ -67,7 +67,7 @@ if (substr($line, 0, 3) === '/**') {
     $line = substr($line, 3);
 } else if (substr($line, -2, 2) === '*/') {
     $line = substr(-2, 0, -2);
-} else if ($line{0} === '*') {
+} else if ($line[0] === '*') {
     $line = substr($line, 1);
 }
 
