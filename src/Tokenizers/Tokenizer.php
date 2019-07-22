@@ -1255,7 +1255,7 @@ abstract class Tokenizer
                         $ignore++;
                     } else {
                         // Make sure this is actually an opener and not a
-                        // string offset (e.g., $var[0]).
+                        // string offset (e.g., $var{0}).
                         for ($x = ($i - 1); $x > 0; $x--) {
                             if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === true) {
                                 continue;

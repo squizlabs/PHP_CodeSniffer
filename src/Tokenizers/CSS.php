@@ -180,7 +180,7 @@ class CSS extends PHP
             if ($token['code'] === T_COMMENT
                 && $multiLineComment === false
                 && (substr($token['content'], 0, 2) === '//'
-                || $token['content']{0} === '#')
+                || $token['content'][0] === '#')
             ) {
                 $content = ltrim($token['content'], '#/');
 
@@ -203,7 +203,7 @@ class CSS extends PHP
                     $content = substr($content, 1);
                 }
 
-                if ($token['content']{0} === '#') {
+                if ($token['content'][0] === '#') {
                     // The # character is not a comment in CSS files, so
                     // determine what it means in this context.
                     $firstContent = $commentTokens[0]['content'];
