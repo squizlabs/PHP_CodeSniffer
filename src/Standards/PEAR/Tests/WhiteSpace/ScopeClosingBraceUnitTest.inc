@@ -26,7 +26,7 @@ class Test2
 
 function test2()
 {
-    if ($str[0]) {
+    if ($str{0}) {
         $chr = $str{0}; }
 
 
