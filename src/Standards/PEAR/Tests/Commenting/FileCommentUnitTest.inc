@@ -39,6 +39,7 @@ declare(encoding='utf-8');
 * @summary    An unknown summary tag
 * @package    ''
 * @subpackage !!
+* @author     Code AUthor <author@gmail.consulting>
 */
 require_once '/some/path.php';
 ?>
