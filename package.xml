@@ -505,6 +505,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineControlStructureUnitTest.php" role="test" />
