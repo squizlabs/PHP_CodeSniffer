@@ -98,6 +98,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Matthew Peveler for the patch
   - Fixed bug #2561 : PHP 7.4 compatibility fix / implode argument order
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2566 : Author tag email validation doesn't support all TLDs
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
