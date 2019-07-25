@@ -141,7 +141,6 @@ class InlineControlStructureSniff implements Sniff
         }
 
         if ($tokens[$nextNonEmpty]['code'] === T_COLON) {
-            var_dump($tokens[$nextNonEmpty]);
             // Alternative control structure.
             // T_END... missing. Either live coding, parse error or end
             // tag in short open tags and scan run with short_open_tag=Off.
