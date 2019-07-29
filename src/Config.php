@@ -357,7 +357,7 @@ class Config
 
                 $lastDir    = $currentDir;
                 $currentDir = dirname($currentDir);
-            } while ($currentDir !== '.' && $currentDir !== $lastDir);
+            } while ($currentDir !== '.' && $currentDir !== $lastDir && @is_readable($currentDir) === true);
         }//end if
 
         if (defined('STDIN') === false
