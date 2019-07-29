@@ -94,6 +94,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2526 : XML report format has bad syntax on Windows
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2549 : Searching for a phpcs.xml file can throw warnings due to open_basedir restrictions
+    -- Thanks to Matthew Peveler for the patch
   - Fixed bug #2558 : PHP 7.4 throwing offset syntax with curly braces is deprecated message
     -- Thanks to Matthew Peveler for the patch
   - Fixed bug #2561 : PHP 7.4 compatibility fix / implode argument order
