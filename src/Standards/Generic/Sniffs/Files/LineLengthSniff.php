@@ -115,8 +115,6 @@ class LineLengthSniff implements Sniff
                 // Ignore PHPCS annotation comments if they are on a line by themselves.
                 return;
             }
-
-            unset($prevNonWhiteSpace);
         }
 
         $lineLength = ($tokens[$stackPtr]['column'] + $tokens[$stackPtr]['length'] - 1);
@@ -135,8 +133,14 @@ class LineLengthSniff implements Sniff
         if ($tokens[$stackPtr]['code'] === T_COMMENT
             || $tokens[$stackPtr]['code'] === T_DOC_COMMENT_STRING
         ) {
+            // The current line ends with a comment.
+            // If the comment is the only thing on the line and we are ignoring comments,
+            // we can stop processing the line here.
             if ($this->ignoreComments === true) {
-                return;
+                $prevNonWhiteSpace = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
+                if ($tokens[$stackPtr]['line'] !== $tokens[$prevNonWhiteSpace]['line']) {
+                    return;
+                }
             }
 
             // If this is a long comment, check if it can be broken up onto multiple lines.

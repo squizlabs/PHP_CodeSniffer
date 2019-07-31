@@ -53,6 +53,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Enforce the use of a strict types declaration in PHP files
   - Added PSR12.Files.DeclareStatement sniff
     -- Enforce the formatting of declare statements within a file
+  - Generic.Files.LineLength ignoreComments property now only ignores comments that are on a line by themselves
+      -- Previously, this property was incorrectly causing the sniff to ignore any line that ended with a comment
   - Generic.Functions.FunctionCallArgumentSpacing no longer checks spacing around assignment operators inside function calls
     -- Use the Squiz.WhiteSpace.OperatorSpacing sniff to enforce spacing around assignment operators
        --- Note that this sniff checks spacing around all assignment operators, not just inside function calls
