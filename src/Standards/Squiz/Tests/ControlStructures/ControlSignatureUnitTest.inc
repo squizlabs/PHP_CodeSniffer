@@ -290,6 +290,15 @@ if ($this) {
         foo(${$a[$b]});
 }
 
+while ( $level-- ) ob_end_clean();
+
+while ( $level-- )
+	ob_end_clean();
+
+while ( $level-- ):
+	ob_end_clean();
+endwhile;
+
 // Intentional parse error. This should be the last test in the file.
 foreach
    // Some unrelated comment.
