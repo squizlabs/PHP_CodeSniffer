@@ -108,6 +108,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2566 : Author tag email validation doesn't support all TLDs
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2575 : Custom error messages don't have data replaced when cache is enabled
  </notes>
  <contents>
   <dir name="/">

@@ -171,6 +171,13 @@ class File
     protected $fixedCount = 0;
 
     /**
+     * TRUE if errors are being replayed from the cache.
+     *
+     * @var boolean
+     */
+    protected $replayingErrors = false;
+
+    /**
      * An array of sniffs that are being ignored.
      *
      * @var array
@@ -1029,8 +1036,13 @@ class File
             return true;
         }
 
-        // Work out the error message.
-        if (isset($this->ruleset->ruleset[$sniffCode]['message']) === true) {
+        // See if there is a custom error message format to use.
+        // But don't do this if we are replaying errors because replayed
+        // errors have already used the custom format and have had their
+        // data replaced.
+        if ($this->replayingErrors === false
+            && isset($this->ruleset->ruleset[$sniffCode]['message']) === true
+        ) {
             $message = $this->ruleset->ruleset[$sniffCode]['message'];
         }
 
