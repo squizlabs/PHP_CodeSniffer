@@ -77,4 +77,64 @@ abstract class AbstractMethodUnitTest extends TestCase
     }//end tearDownAfterClass()
 
 
+    /**
+     * Get the token pointer for a target token based on a specific comment found on the line before.
+     *
+     * Note: the test delimiter comment MUST start with "/* test" to allow this function to
+     * distinguish between comments used *in* a test and test delimiters.
+     *
+     * @param string           $commentString The delimiter comment to look for.
+     * @param int|string|array $tokenType     The type of token(s) to look for.
+     * @param string           $tokenContent  Optional. The token content for the target token.
+     *
+     * @return int
+     */
+    public function getTargetToken($commentString, $tokenType, $tokenContent=null)
+    {
+        $start   = (self::$phpcsFile->numTokens - 1);
+        $comment = self::$phpcsFile->findPrevious(
+            T_COMMENT,
+            $start,
+            null,
+            false,
+            $commentString
+        );
+
+        $tokens = self::$phpcsFile->getTokens();
+        $end    = ($start + 1);
+
+        // Limit the token finding to between this and the next delimiter comment.
+        for ($i = ($comment + 1); $i < $end; $i++) {
+            if ($tokens[$i]['code'] !== T_COMMENT) {
+                continue;
+            }
+
+            if (stripos($tokens[$i]['content'], '/* test') === 0) {
+                $end = $i;
+                break;
+            }
+        }
+
+        $target = self::$phpcsFile->findNext(
+            $tokenType,
+            ($comment + 1),
+            $end,
+            false,
+            $tokenContent
+        );
+
+        if ($target === false) {
+            $msg = 'Failed to find test target token for comment string: '.$commentString;
+            if ($tokenContent !== null) {
+                $msg .= ' With token content: '.$tokenContent;
+            }
+
+            $this->assertFalse(true, $msg);
+        }
+
+        return $target;
+
+    }//end getTargetToken()
+
+
 }//end class
