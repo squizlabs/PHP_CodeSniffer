@@ -261,5 +261,9 @@ if ($line{-1} === ':') {
     $line = substr($line, 0, -1);
 }
 
+$a = $a instanceof $b;
+$a = $a  instanceof  $b;
+$a = ($a)instanceof$b;
+
 // phpcs:set Squiz.WhiteSpace.OperatorSpacing ignoreSpacingBeforeAssignments false
 $a  =  3;

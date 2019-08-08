@@ -55,6 +55,7 @@ class OperatorSpacingSniff implements Sniff
         $targets  += Tokens::$assignmentTokens;
         $targets[] = T_INLINE_THEN;
         $targets[] = T_INLINE_ELSE;
+        $targets[] = T_INSTANCEOF;
 
         return $targets;
 
