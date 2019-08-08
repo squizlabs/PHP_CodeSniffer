@@ -24,7 +24,7 @@ class FileList
      *
      * @var \DirectoryIterator
      */
-    protected $fileIterator;
+    public $fileIterator;
 
     /**
      * Base regex to use if no filter regex is provided.
