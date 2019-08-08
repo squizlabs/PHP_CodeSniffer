@@ -93,5 +93,5 @@ x >>>= y;
 
 var foo = bar.map(baz => baz.length);
 
-// phpcs:set Squiz.WhiteSpace.OperatorSpacing allowMultipleStatementsAlignment false
+// phpcs:set Squiz.WhiteSpace.OperatorSpacing ignoreSpacingBeforeAssignments false
 a = 3;

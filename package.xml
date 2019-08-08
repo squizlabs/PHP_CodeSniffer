@@ -85,6 +85,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.WhiteSpace.FunctionSpacing now applies beforeFirst and afterLast spacing rules to nested functions
     -- Previously, these rules only applied to the first and last function in a class, interface, or trait
     -- These rules now apply to functions nested in any statement block, including other functions and conditions
+  - Squiz.WhiteSpace.OperatorSpacing can now enforce a single space before assignment operators
+    -- Previously, the sniff this spacing as multiple assignment operators are sometimes aligned
+    -- Now, you can set the ignoreSpacingBeforeAssignments sniff property to FALSE to enable checking
+    -- Default remains TRUE, so spacing before assignments is not checked by default
+    -- Thanks to Jakub Chábek for the patch
   - Fixed bug #2391 : Sniff-specific ignore rules inside rulesets are filtering out too many files
     -- Thanks to Juliette Reinders Folmer and Willington Vega for the patch
   - Fixed bug #2478 : FunctionCommentThrowTag.WrongNumber when exception is thrown once but built conditionally

@@ -34,11 +34,13 @@ class OperatorSpacingSniff implements Sniff
     public $ignoreNewlines = false;
 
     /**
-     * Allow multiple assignment statements to be aligned (don't check space before assignment operator)
+     * Don't check spacing for assignment operators.
+     *
+     * This allows multiple assignment statements to be aligned.
      *
      * @var boolean
      */
-    public $allowMultipleStatementsAlignment = true;
+    public $ignoreSpacingBeforeAssignments = true;
 
 
     /**
@@ -152,10 +154,10 @@ class OperatorSpacingSniff implements Sniff
 
             $phpcsFile->recordMetric($stackPtr, 'Space before operator', 0);
         } else if (isset(Tokens::$assignmentTokens[$tokens[$stackPtr]['code']]) === false
-            || $this->allowMultipleStatementsAlignment === false
+            || $this->ignoreSpacingBeforeAssignments === false
         ) {
-            // Throw an error for assignments only if that behaviour is enabled using the sniff property,
-            // because other standards allow multiple spaces there to align multiple assignments.
+            // Throw an error for assignments only if enabled using the sniff property
+            // because other standards allow multiple spaces to align assignments.
             if ($tokens[($stackPtr - 2)]['line'] !== $tokens[$stackPtr]['line']) {
                 $found = 'newline';
             } else {

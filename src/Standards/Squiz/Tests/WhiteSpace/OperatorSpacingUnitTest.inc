@@ -261,5 +261,5 @@ if ($line{-1} === ':') {
     $line = substr($line, 0, -1);
 }
 
-// phpcs:set Squiz.WhiteSpace.OperatorSpacing allowMultipleStatementsAlignment false
+// phpcs:set Squiz.WhiteSpace.OperatorSpacing ignoreSpacingBeforeAssignments false
 $a  =  3;
