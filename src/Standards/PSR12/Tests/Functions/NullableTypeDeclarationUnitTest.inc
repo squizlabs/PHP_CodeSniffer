@@ -57,3 +57,11 @@ interface MyInterface {
 function testSelf( ? self $self ) : ? self {}
 function testParent( ? parent $parent ) : ? parent {}
 function testCallable( ? callable $callable ) : ? callable {}
+
+// Issue #2552.
+class TestTokenizingOfNullableVsInlineThen {
+    public function testStatic() {
+        $test = Something::one(self::CONSTANT) ?: '';
+        $test = Something::one(static::CONSTANT) ?: '';
+    }
+}
