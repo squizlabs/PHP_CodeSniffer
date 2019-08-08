@@ -33,18 +33,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testBasicFunction */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 2));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testBasicFunction()
 
@@ -67,18 +56,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testReturnFunction */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 2));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testReturnFunction()
 
@@ -101,18 +79,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testNestedClosure */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 1));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testNestedClosure()
 
@@ -135,18 +102,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testBasicMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 3));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testBasicMethod()
 
@@ -169,18 +125,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testPrivateStaticMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 7));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testPrivateStaticMethod()
 
@@ -203,18 +148,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testFinalMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 7));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testFinalMethod()
 
@@ -237,18 +171,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testProtectedReturnMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 5));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testProtectedReturnMethod()
 
@@ -271,18 +194,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testPublicReturnMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 5));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testPublicReturnMethod()
 
@@ -305,18 +217,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testNullableReturnMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 5));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testNullableReturnMethod()
 
@@ -339,18 +240,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testMessyNullableReturnMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 5));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testMessyNullableReturnMethod()
 
@@ -373,18 +263,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testReturnNamespace */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 3));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testReturnNamespace()
 
@@ -407,18 +286,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => true,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testReturnMultilineNamespace */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 3));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testReturnMultilineNamespace()
 
@@ -441,18 +309,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => false,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testAbstractMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 5));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testAbstractMethod()
 
@@ -475,18 +332,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => false,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testAbstractReturnMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 7));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testAbstractReturnMethod()
 
@@ -509,20 +355,27 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
             'has_body'             => false,
         ];
 
-        $start    = (self::$phpcsFile->numTokens - 1);
-        $function = self::$phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testInterfaceMethod */'
-        );
-
-        $found = self::$phpcsFile->getMethodProperties(($function + 3));
-        unset($found['return_type_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testInterfaceMethod()
+
+
+    /**
+     * Test helper.
+     *
+     * @param string $commentString The comment which preceeds the test.
+     * @param array  $expected      The expected function output.
+     *
+     * @return void
+     */
+    private function getMethodPropertiesTestHelper($commentString, $expected)
+    {
+        $function = $this->getTargetToken($commentString, [T_FUNCTION, T_CLOSURE]);
+        $found    = self::$phpcsFile->getMethodProperties($function);
+
+        $this->assertArraySubset($expected, $found, true);
+
+    }//end getMethodPropertiesTestHelper()
 
 
 }//end class
