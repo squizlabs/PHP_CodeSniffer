@@ -77,6 +77,14 @@ class MultipleStatementAlignmentSniff implements Sniff
 
         // Ignore assignments used in a condition, like an IF or FOR.
         if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            // If the parenthesis is on the same line as the assignment,
+            // then it should be ignored as it is specifically being grouped.
+            $parens    = $tokens[$stackPtr]['nested_parenthesis'];
+            $lastParen = array_pop($parens);
+            if ($tokens[$lastParen]['line'] === $tokens[$stackPtr]['line']) {
+                return;
+            }
+
             foreach ($tokens[$stackPtr]['nested_parenthesis'] as $start => $end) {
                 if (isset($tokens[$start]['parenthesis_owner']) === true) {
                     return;
@@ -217,6 +225,14 @@ class MultipleStatementAlignmentSniff implements Sniff
 
                 // Make sure it is not assigned inside a condition (eg. IF, FOR).
                 if (isset($tokens[$assign]['nested_parenthesis']) === true) {
+                    // If the parenthesis is on the same line as the assignment,
+                    // then it should be ignored as it is specifically being grouped.
+                    $parens    = $tokens[$assign]['nested_parenthesis'];
+                    $lastParen = array_pop($parens);
+                    if ($tokens[$lastParen]['line'] === $tokens[$assign]['line']) {
+                        break;
+                    }
+
                     foreach ($tokens[$assign]['nested_parenthesis'] as $start => $end) {
                         if (isset($tokens[$start]['parenthesis_owner']) === true) {
                             break(2);
