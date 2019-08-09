@@ -267,3 +267,6 @@ $a = ($a)instanceof$b;
 
 // phpcs:set Squiz.WhiteSpace.OperatorSpacing ignoreSpacingBeforeAssignments false
 $a  =  3;
+
+/* Intentional parse error. This has to be the last test in the file. */
+$a = 10 +
