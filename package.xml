@@ -390,7 +390,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ByteOrderMarkSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineSniff.php" role="php" />
-        <file baseinstalldir="PHP/CodeSniffer" name="FilePermissionsSniff.php" role"php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FilePermissionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineLengthSniff.php" role="php" />
