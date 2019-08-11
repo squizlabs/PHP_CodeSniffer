@@ -40,7 +40,7 @@ class FileExtensionSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens    = $phpcsFile->getTokens();
-        $fileName  = $phpcsFile->getFileName();
+        $fileName  = $phpcsFile->getFilename();
         $extension = substr($fileName, strrpos($fileName, '.'));
         $nextClass = $phpcsFile->findNext([T_CLASS, T_INTERFACE, T_TRAIT], $stackPtr);
 
