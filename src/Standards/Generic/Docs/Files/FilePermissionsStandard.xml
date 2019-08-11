@@ -1,0 +1,7 @@
+<documentation title="File Permissions">
+    <standard>
+    <![CDATA[
+    Files should not be executable.
+    ]]>
+    </standard>
+</documentation>
