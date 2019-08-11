@@ -14,6 +14,8 @@ use PHP_CodeSniffer\Files\File;
 
 class FileExtensionSniff implements Sniff
 {
+
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -37,14 +39,19 @@ class FileExtensionSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $perms = fileperms($phpcsFile->getFilename());
+        $filename = $phpcsFile->getFilename();
 
-        if ($perms & 0x0040 || $perms & 0x0008 || $perms & 0x0001) {
-            $error = "A PHP file must not be executable";
-            $phpcsFile->addError($error, $stackPtr, 'Executable');
+        if ($filename !== 'STDIN') {
+            $perms = fileperms($phpcsFile->getFilename());
+
+            if (($perms & 0x0040) !== 0 || ($perms & 0x0008) !== 0 || ($perms & 0x0001) !== 0) {
+                $error = "A PHP file must not be executable";
+                $phpcsFile->addError($error, $stackPtr, 'Executable');
+            }
+
+            // Ignore the rest of the file.
         }
 
-        // Ignore the rest of the file.
         return ($phpcsFile->numTokens + 1);
 
     }//end process()
