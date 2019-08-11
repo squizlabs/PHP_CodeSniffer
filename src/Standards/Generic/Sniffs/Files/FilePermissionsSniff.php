@@ -45,8 +45,9 @@ class FilePermissionsSniff implements Sniff
             $perms = fileperms($phpcsFile->getFilename());
 
             if (($perms & 0x0040) !== 0 || ($perms & 0x0008) !== 0 || ($perms & 0x0001) !== 0) {
-                $error = "A PHP file should not be executable";
-                $phpcsFile->addError($error, $stackPtr, 'Executable');
+                $error = "A PHP file should not be executable. Found file permission set to %s.";
+                $data  = [substr(sprintf('%o', $perms), -4)];
+                $phpcsFile->addError($error, 0, 'Executable', $data);
             }
         }
 
