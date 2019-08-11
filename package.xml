@@ -288,7 +288,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ByteOrderMarkStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineStandard.xml" role="php" />
-        <file baseinstalldir="PHP/CodeSniffer" name="FilePermissionsSniff.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FilePermissionsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineLengthStandard.xml" role="php" />
