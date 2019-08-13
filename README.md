@@ -74,6 +74,15 @@ You can also download the PHP_CodeSniffer source and run the `phpcs` and `phpcbf
     php bin/phpcs -h
     php bin/phpcbf -h
 
+## Simple Usage
+A few simple commands to run after a successful install are:
+
+    $ phpcs /path/to/code/myfile.php
+    $ phpcs /path/to/code-directory
+    
+More in-depth usage is available in the [phpcs wiki usage page](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage) or cli command help.
+
+
 ## Documentation
 
 The documentation for PHP_CodeSniffer is available on the [Github wiki](https://github.com/squizlabs/PHP_CodeSniffer/wiki).
