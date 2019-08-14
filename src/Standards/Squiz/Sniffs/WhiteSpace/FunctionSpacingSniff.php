@@ -161,6 +161,12 @@ class FunctionSpacingSniff implements Sniff
             }
         }
 
+        if ($isLast === true) {
+            $phpcsFile->recordMetric($stackPtr, 'Function spacing after last', $foundLines);
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Function spacing after', $foundLines);
+        }
+
         if ($foundLines !== $requiredSpacing) {
             $error = 'Expected %s blank line';
             if ($requiredSpacing !== 1) {
@@ -280,6 +286,10 @@ class FunctionSpacingSniff implements Sniff
         if ($isFirst === true) {
             $requiredSpacing = $this->spacingBeforeFirst;
             $errorCode       = 'BeforeFirst';
+
+            $phpcsFile->recordMetric($stackPtr, 'Function spacing before first', $foundLines);
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Function spacing before', $foundLines);
         }
 
         if ($foundLines !== $requiredSpacing) {
