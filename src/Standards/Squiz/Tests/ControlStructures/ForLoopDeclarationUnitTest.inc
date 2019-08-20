@@ -75,11 +75,11 @@ for (
 
 // Test fixing each error in one go. Note: lines 78 + 82 contain trailing whitespace on purpose.
 for (
-      
+
 
       $i = 0
 
-      ; 
+      ;
 
       $i < 10
 
@@ -110,6 +110,16 @@ for (
 ) {}
 // phpcs:set Squiz.ControlStructures.ForLoopDeclaration requiredSpacesAfterOpen 0
 // phpcs:set Squiz.ControlStructures.ForLoopDeclaration requiredSpacesBeforeClose 0
+
+// phpcs:set Squiz.ControlStructures.ForLoopDeclaration ignoreNewline true
+if (true) {
+    for (
+        $i = 0;
+        $i < 10;
+        $i++
+    ) {}
+}
+// phpcs:set Squiz.ControlStructures.ForLoopDeclaration ignoreNewline false
 
 // Test with semi-colon not belonging to for.
 for ($i = function() { return $this->i  ;    }; $i < function() { return $this->max; }; $i++) {}

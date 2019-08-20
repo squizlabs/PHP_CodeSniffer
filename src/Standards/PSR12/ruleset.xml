@@ -233,7 +233,11 @@
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose"/>
     <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
     <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
-    <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration">
+        <properties>
+            <property name="ignoreNewline" value="true"/>
+        </properties>
+    </rule>
     <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingAfterOpen">
         <severity>0</severity>
     </rule>
@@ -241,7 +245,11 @@
         <severity>0</severity>
     </rule>
     <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
-    <rule ref="PSR2.ControlStructures.ControlStructureSpacing"/>
+    <rule ref="PSR2.ControlStructures.ControlStructureSpacing">
+        <properties>
+            <property name="ignoreNewline" value="true"/>
+        </properties>
+    </rule>
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
 
     <!-- exclude this message as it is already checked in Generic.PHP.LowerCaseKeyword -->

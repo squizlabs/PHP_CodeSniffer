@@ -31,6 +31,13 @@ class ForLoopDeclarationSniff implements Sniff
     public $requiredSpacesBeforeClose = 0;
 
     /**
+     * If newlines should be ignored within parenthesis
+     *
+     * @var boolean
+     */
+    public $ignoreNewline = false;
+
+    /**
      * A list of tokenizers this sniff supports.
      *
      * @var array
@@ -77,7 +84,10 @@ class ForLoopDeclarationSniff implements Sniff
 
         $closingBracket = $tokens[$openingBracket]['parenthesis_closer'];
 
-        if ($this->requiredSpacesAfterOpen === 0 && $tokens[($openingBracket + 1)]['code'] === T_WHITESPACE) {
+        if ($this->requiredSpacesAfterOpen === 0
+            && $tokens[($openingBracket + 1)]['code'] === T_WHITESPACE
+            && $this->isIgnorableNewline($tokens[($openingBracket + 1)]['content'], $phpcsFile->eolChar) === false
+        ) {
             $error = 'Whitespace found after opening bracket of FOR loop';
             $fix   = $phpcsFile->addFixableError($error, $openingBracket, 'SpacingAfterOpen');
             if ($fix === true) {
@@ -133,7 +143,11 @@ class ForLoopDeclarationSniff implements Sniff
             $beforeClosefixable = false;
         }
 
-        if ($this->requiredSpacesBeforeClose === 0 && $tokens[($closingBracket - 1)]['code'] === T_WHITESPACE) {
+        if ($this->requiredSpacesBeforeClose === 0
+            && $tokens[($closingBracket - 1)]['code'] === T_WHITESPACE
+            && $this->isIgnorableNewline($tokens[($closingBracket - 1)]['content'], $phpcsFile->eolChar) === false
+            && $this->isIgnorableNewline($tokens[($closingBracket - 2)]['content'], $phpcsFile->eolChar) === false
+        ) {
             $error = 'Whitespace found before closing bracket of FOR loop';
 
             if ($beforeClosefixable === false) {
@@ -258,6 +272,7 @@ class ForLoopDeclarationSniff implements Sniff
                     }
                 } else if ($tokens[($semicolon + 1)]['code'] === T_WHITESPACE
                     && $tokens[$nextNonWhiteSpace]['code'] !== T_SEMICOLON
+                    && $this->isIgnorableNewline($tokens[($semicolon + 1)]['content'], $phpcsFile->eolChar) === false
                 ) {
                     $spaces = $tokens[($semicolon + 1)]['length'];
                     if ($tokens[$semicolon]['line'] !== $tokens[$nextNonWhiteSpace]['line']) {
@@ -284,6 +299,21 @@ class ForLoopDeclarationSniff implements Sniff
         } while ($semicolonCount < 2);
 
     }//end process()
+
+
+    /**
+     * Check if whitespace is a newline and can be ignored
+     *
+     * @param string $content The whitespace string
+     * @param string $eolChar The EOL character
+     *
+     * @return bool
+     */
+    private function isIgnorableNewline($content, $eolChar)
+    {
+        return $this->ignoreNewline === true && strpos($content, $eolChar) !== false;
+
+    }//end isIgnorableNewline()
 
 
 }//end class

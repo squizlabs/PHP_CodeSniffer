@@ -54,3 +54,35 @@ foreach ( $something as $blah => $that ) {}
 // phpcs:set PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 0
 
 $binary = b"binary string";
+
+// phpcs:set PSR2.ControlStructures.ControlStructureSpacing ignoreNewline true
+if (true) {
+    if (
+        $defaultPageDesign === 0
+        && $defaultCascade === TRUE
+        && $defaultChildDesign === 0
+    ) {
+        $settingsUpdated = FALSE;
+    }
+
+    for (
+        $i = 0;
+        $i < 10;
+        $i++
+    ) {
+        // for body
+    }
+
+    foreach (
+        $this
+        as
+        $that
+    ) {
+    }
+
+    while (
+        true
+    ) {
+    }
+}
+// phpcs:set PSR2.ControlStructures.ControlStructureSpacing ignoreNewline false

@@ -31,6 +31,13 @@ class ControlStructureSpacingSniff implements Sniff
      */
     public $requiredSpacesBeforeClose = 0;
 
+    /**
+     * If newlines should be ignored within parenthesis
+     *
+     * @var boolean
+     */
+    public $ignoreNewline = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -81,7 +88,9 @@ class ControlStructureSpacingSniff implements Sniff
         $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($parenOpener + 1), null, true);
         if (in_array($tokens[$nextContent]['code'], Tokens::$commentTokens, true) === false) {
             $spaceAfterOpen = 0;
-            if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE) {
+            if ($tokens[($parenOpener + 1)]['code'] === T_WHITESPACE
+                && $this->isIgnorableNewline($tokens[($parenOpener + 1)]['content'], $phpcsFile->eolChar) === false
+            ) {
                 if (strpos($tokens[($parenOpener + 1)]['content'], $phpcsFile->eolChar) !== false) {
                     $spaceAfterOpen = 'newline';
                 } else {
@@ -138,6 +147,21 @@ class ControlStructureSpacingSniff implements Sniff
         }//end if
 
     }//end process()
+
+
+    /**
+     * Check if whitespace is a newline and can be ignored
+     *
+     * @param string $content The whitespace string
+     * @param string $eolChar The EOL character
+     *
+     * @return bool
+     */
+    private function isIgnorableNewline($content, $eolChar)
+    {
+        return $this->ignoreNewline === true && strpos($content, $eolChar) !== false;
+
+    }//end isIgnorableNewline()
 
 
 }//end class
