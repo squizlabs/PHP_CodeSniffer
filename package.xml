@@ -1096,6 +1096,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Operators">
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingSniff.php" role="php" />
        </dir>
+       <dir name="Properties">
+        <file baseinstalldir="PHP/CodeSniffer" name="ConstantVisibilitySniff.php" role="php" />
+       </dir>
        <dir name="Traits">
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationSniff.php" role="php" />
        </dir>
@@ -1129,6 +1132,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingUnitTest.php" role="test" />
+       </dir>
+       <dir name="Properties">
+        <file baseinstalldir="PHP/CodeSniffer" name="ConstantVisibilityUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ConstantVisibilityUnitTest.php" role="test" />
        </dir>
        <dir name="Traits">
         <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.inc" role="test" />
