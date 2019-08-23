@@ -130,12 +130,10 @@
     <!-- 4.2 Using traits -->
 
     <!-- The use keyword used inside the classes to implement traits MUST be declared on the next line after the opening brace. -->
-
     <!-- Each individual trait that is imported into a class MUST be included one-per-line and each inclusion MUST have its own use import statement. -->
-
     <!-- When the class has nothing after the use import statement, the class closing brace MUST be on the next line after the use import statement. Otherwise, it MUST have a blank line after the use import statement. -->
-
     <!-- When using the insteadof and as operators they must be used as follows taking note of indentation, spacing, and new lines. -->
+    <!-- checked by PSR12.Traits.UseDeclaration -->
 
     <!-- 4.3 Properties and Constants -->
 
@@ -147,6 +145,7 @@
     <rule ref="PSR2.Classes.PropertyDeclaration"/>
 
     <!-- Visibility MUST be declared on all constants if your project PHP minimum version supports constant visibilities (PHP 7.1 or later). -->
+    <!-- checked by PSR12.Properties.ConstantVisibility -->
 
     <!-- There MUST be a space between type declaration and property name. -->
 

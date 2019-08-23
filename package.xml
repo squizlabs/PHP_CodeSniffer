@@ -53,6 +53,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Enforce the use of a strict types declaration in PHP files
   - Added PSR12.Files.DeclareStatement sniff
     -- Enforces the formatting of declare statements within a file
+  - Added PSR12.Properties.ConstantVisibility sniff
+    -- Enforces that constants must have their visibility defined
+    -- Uses a warning instead of an error due to this conditionally requiring the project to support PHP 7.1+
   - Added PSR12.Traits.UseDeclaration sniff
     -- Enforces the formatting of trait import statements within a class
   - Generic.Files.LineLength ignoreComments property now ignores comments at the end of a line
