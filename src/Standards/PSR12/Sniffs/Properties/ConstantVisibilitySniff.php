@@ -40,6 +40,10 @@ class ConstantVisibilitySniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        if (PHP_VERSION_ID < 70100) {
+            return;
+        }
+
         $tokens = $phpcsFile->getTokens();
         $prev   = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if (isset(Tokens::$scopeModifiers[$tokens[$prev]['code']]) === true) {
@@ -47,7 +51,7 @@ class ConstantVisibilitySniff implements Sniff
         }
 
         $error = 'Visibility must be declared on all constants if your project supports PHP 7.1 or later';
-        $phpcsFile->addWarning($error, $stackPtr, 'NotFound');
+        $phpcsFile->addError($error, $stackPtr, 'NotFound');
 
     }//end process()
 
