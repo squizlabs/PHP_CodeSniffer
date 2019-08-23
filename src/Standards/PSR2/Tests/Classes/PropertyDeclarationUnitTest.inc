@@ -62,3 +62,12 @@ class MyClass
         $foo,
         $bar;
 }
+
+class MyClass
+{
+    public string$var = null;
+    protected ?Folder\ClassName
+        $var = null;
+    public int   $var = null;
+    public static int/*comment*/$var = null;
+}

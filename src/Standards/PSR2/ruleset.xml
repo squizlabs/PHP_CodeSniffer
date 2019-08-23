@@ -101,6 +101,9 @@
          There MUST NOT be more than one property declared per statement.
          Property names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
     <!-- checked by PSR2.Classes.PropertyDeclaration -->
+    <rule ref="PSR2.Classes.PropertyDeclaration.SpacingAfterType">
+        <severity>0</severity>
+    </rule>
 
     <!-- 4.3 Methods -->
 

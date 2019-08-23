@@ -142,12 +142,11 @@
     <!-- There MUST NOT be more than one property declared per statement. -->
     <!-- Property names MUST NOT be prefixed with a single underscore to indicate protected or private visibility.
     That is, an underscore prefix explicitly has no meaning. -->
+    <!-- There MUST be a space between type declaration and property name. -->
     <rule ref="PSR2.Classes.PropertyDeclaration"/>
 
     <!-- Visibility MUST be declared on all constants if your project PHP minimum version supports constant visibilities (PHP 7.1 or later). -->
     <!-- checked by PSR12.Properties.ConstantVisibility -->
-
-    <!-- There MUST be a space between type declaration and property name. -->
 
     <!-- 4.4 Methods and Functions -->
 

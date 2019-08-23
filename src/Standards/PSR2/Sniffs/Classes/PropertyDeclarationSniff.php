@@ -70,6 +70,47 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
             return;
         }
 
+        if ($propertyInfo['type'] !== '') {
+            $typeToken = $propertyInfo['type_end_token'];
+            $error     = 'There must be 1 space after the property type declaration; %s found';
+            if ($tokens[($typeToken + 1)]['code'] !== T_WHITESPACE) {
+                $data = ['0'];
+                $fix  = $phpcsFile->addFixableError($error, $typeToken, 'SpacingAfterType', $data);
+                if ($fix === true) {
+                    $phpcsFile->fixer->addContent($typeToken, ' ');
+                }
+            } else if ($tokens[($typeToken + 1)]['content'] !== ' ') {
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($typeToken + 1), null, true);
+                if ($tokens[$next]['line'] !== $tokens[$typeToken]['line']) {
+                    $found = 'newline';
+                } else {
+                    $found = $tokens[($typeToken + 1)]['length'];
+                }
+
+                $data = [$found];
+
+                $nextNonWs = $phpcsFile->findNext(Tokens::$emptyTokens, ($typeToken + 1), null, true);
+                if ($nextNonWs !== $next) {
+                    $phpcsFile->addError($error, $typeToken, 'SpacingAfterType', $data);
+                } else {
+                    $fix = $phpcsFile->addFixableError($error, $typeToken, 'SpacingAfterType', $data);
+                    if ($fix === true) {
+                        if ($found === 'newline') {
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($x = ($typeToken + 1); $x < $next; $x++) {
+                                $phpcsFile->fixer->replaceToken($x, '');
+                            }
+
+                            $phpcsFile->fixer->addContent($typeToken, ' ');
+                            $phpcsFile->fixer->endChangeset();
+                        } else {
+                            $phpcsFile->fixer->replaceToken(($typeToken + 1), ' ');
+                        }
+                    }
+                }
+            }//end if
+        }//end if
+
         if ($propertyInfo['scope_specified'] === false) {
             $error = 'Visibility must be declared on property "%s"';
             $data  = [$tokens[$stackPtr]['content']];

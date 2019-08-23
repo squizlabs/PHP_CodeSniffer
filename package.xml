@@ -31,7 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- To get the type of a member var, use the File::getMemberProperties() method, which now contains a "type" array index
        --- This contains the type of the member var, or a blank string if not specified
        --- If the type is nullable, the return type will contain the leading ?
-       --- If a type is specified, the position of the type token will be set in a "type_token" array index
+       --- If a type is specified, the position of the first token in the type will be set in a "type_token" array index
+       --- If a type is specified, the position of the last token in the type will be set in a "type_end_token" array index
        --- If the type is nullable, a "nullable_type" array index will also be set to TRUE
        --- If the type contains namespace information, it will be cleaned of whitespace and comments in the return value
   - The PSR1 standard now correctly bans alternate PHP tags
@@ -78,6 +79,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Pieter Frenssen for the patch
   - PSR2.ControlStructures.ControlStructureSpacing now allows whitespace after the opening parenthesis if followed by a comment
     -- Thanks to Michał Bundyra for the patch
+  - PSR2.Classes.PropertyDeclaration now enforces a single space after a property type keyword
+    -- The PSR2 standard itself excludes this new check as it is not defined in the written standard
+    -- Using the PSR12 standard will enforce this check
   - Squiz.Commenting.BlockComment no longer requires blank line before comment if it's the first content after the PHP open tag
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Operators.IncrementDecrementUsage now suggests pre-increment of variables instead of post-increment
