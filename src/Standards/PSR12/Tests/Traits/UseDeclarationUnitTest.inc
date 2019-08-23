@@ -1,0 +1,78 @@
+<?php
+namespace Vendor\Package;
+
+use Vendor\Package\FirstTrait;
+use Vendor\Package\SecondTrait;
+use Vendor\Package\ThirdTrait;
+
+class ClassName1
+{
+    use FirstTrait;
+}
+
+class ClassName2
+{
+    use FirstTrait;
+
+}
+
+class ClassName3
+{
+    use FirstTrait;
+    use SecondTrait;
+    use ThirdTrait;
+}
+
+class ClassName4
+{
+
+    use FirstTrait; use SecondTrait;
+    use FirstTrait, SecondTrait;
+}
+
+class ClassName5
+{
+    use FirstTrait;
+
+    private $property;
+}
+
+class ClassName6
+{
+    use FirstTrait;
+    private $property;
+}
+
+class ClassName7
+{
+    use A, B, C {
+        B::smallTalk insteadof A;
+        A::bigTalk insteadof C;
+        C::mediumTalk as FooBar;
+    }
+}
+
+class ClassName8
+{
+    use A ,  B,
+    C
+    {
+
+        B::smallTalk  insteadof A;
+        A::bigTalk
+            insteadof  C ; C::mediumTalk as  FooBar;
+
+    }
+}
+
+class ClassName9
+{
+    use A, B, C {
+        B::smallTalk insteadof A; /* cant fix */ A::bigTalk insteadof C;
+        B::smallTalk  // phpcs:ignore Standard.Category.Sniff
+        insteadof     // phpcs:ignore Standard.Category.Sniff
+        A;
+        C::mediumTalk // phpcs:ignore Standard.Category.Sniff
+        as FooBar;
+    }
+}

@@ -52,7 +52,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added Generic.PHP.RequireStrictTypes sniff
     -- Enforce the use of a strict types declaration in PHP files
   - Added PSR12.Files.DeclareStatement sniff
-    -- Enforce the formatting of declare statements within a file
+    -- Enforces the formatting of declare statements within a file
+  - Added PSR12.Traits.UseDeclaration sniff
+    -- Enforces the formatting of trait import statements within a class
   - Generic.Files.LineLength ignoreComments property now ignores comments at the end of a line
       -- Previously, this property was incorrectly causing the sniff to ignore any line that ended with a comment
       -- Now, the trailing comment is not included in the line length, but the rest of the line is still checked
@@ -1091,6 +1093,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Operators">
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingSniff.php" role="php" />
        </dir>
+       <dir name="Traits">
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationSniff.php" role="php" />
+       </dir>
       </dir>
       <dir name="Tests">
        <dir name="Classes">
@@ -1121,6 +1126,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingUnitTest.php" role="test" />
+       </dir>
+       <dir name="Traits">
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationUnitTest.php" role="test" />
        </dir>
       </dir>
       <file baseinstalldir="PHP/CodeSniffer" name="ruleset.xml" role="php" />
