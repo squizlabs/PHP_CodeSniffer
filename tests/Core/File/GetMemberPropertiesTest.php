@@ -83,6 +83,7 @@ class GetMemberPropertiesTest extends TestCase
 
         $result = $this->phpcsFile->getMemberProperties($variable);
         unset($result['type_token']);
+        unset($result['type_end_token']);
         $this->assertSame($expected, $result);
 
     }//end testGetMemberProperties()

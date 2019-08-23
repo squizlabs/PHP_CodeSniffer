@@ -1627,6 +1627,8 @@ class File
      *    'type'            => string,  // The type of the var (empty if no type specifed).
      *    'type_token'      => integer, // The stack pointer to the start of the type
      *                                  // or FALSE if there is no type.
+     *    'type_end_token'  => integer, // The stack pointer to the end of the type
+     *                                  // or FALSE if there is no type.
      *    'nullable_type'   => boolean, // TRUE if the type is nullable.
      *   );
      * </code>
@@ -1732,6 +1734,7 @@ class File
 
         $type         = '';
         $typeToken    = false;
+        $typeEndToken = false;
         $nullableType = false;
 
         if ($i < $stackPtr) {
@@ -1755,6 +1758,7 @@ class File
                 }
 
                 if (isset($valid[$this->tokens[$i]['code']]) === true) {
+                    $typeEndToken = $i;
                     if ($typeToken === false) {
                         $typeToken = $i;
                     }
@@ -1774,6 +1778,7 @@ class File
             'is_static'       => $isStatic,
             'type'            => $type,
             'type_token'      => $typeToken,
+            'type_end_token'  => $typeEndToken,
             'nullable_type'   => $nullableType,
         ];
 
