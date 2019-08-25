@@ -49,6 +49,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - The PHP 7.4 T_BAD_CHARACTER token has been made available for older versions
     -- Allows you to safely look for this token, but it will not appear unless checking with PHP 7.4+
+  - Metrics are now available for Squiz.WhiteSpace.FunctionSpacing
+    -- Use the "info" report to see blank lines before/after functions
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Metrics are now available for Squiz.WhiteSpace.MemberVarSpacing
+    -- Use the "info" report to see blank lines before member vars
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Added Generic.ControlStructures.DisallowYodaConditions sniff
     -- Ban the use of Yoda conditions
     -- Thanks to Mponos George for the contribution
