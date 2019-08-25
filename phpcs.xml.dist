@@ -55,6 +55,7 @@
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
     <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace"/>
     <rule ref="Squiz.WhiteSpace.FunctionSpacing"/>
+    <rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
     <rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>

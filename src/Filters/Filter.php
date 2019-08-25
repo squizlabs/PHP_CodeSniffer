@@ -15,6 +15,7 @@ use PHP_CodeSniffer\Config;
 
 class Filter extends \RecursiveFilterIterator
 {
+
     /**
      * The top-level path we are filtering.
      *

@@ -16,7 +16,6 @@ use PHP_CodeSniffer\Util\Tokens;
 class ControlStructureSpacingSniff implements Sniff
 {
 
-
     /**
      * How many spaces should follow the opening bracket.
      *

@@ -16,7 +16,6 @@ use PHP_CodeSniffer\Util\Tokens;
 class IncrementDecrementSpacingSniff implements Sniff
 {
 
-
     /**
      * A list of tokenizers this sniff supports.
      *

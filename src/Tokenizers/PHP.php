@@ -14,7 +14,6 @@ use PHP_CodeSniffer\Util;
 class PHP extends Tokenizer
 {
 
-
     /**
      * A list of tokens that are allowed to open a scope.
      *
@@ -432,7 +431,6 @@ class PHP extends Tokenizer
         T_OPEN_SHORT_ARRAY         => 1,
         T_CLOSE_SHORT_ARRAY        => 1,
     ];
-
 
     /**
      * A cache of different token types, resolved into arrays.
