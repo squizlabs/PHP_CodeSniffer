@@ -131,6 +131,13 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
         }
 
         $foundLines = ($tokens[$first]['line'] - $tokens[$prev]['line'] - 1);
+
+        if ($errorCode === 'FirstIncorrect') {
+            $phpcsFile->recordMetric($stackPtr, 'Member var spacing before first', $foundLines);
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'Member var spacing before', $foundLines);
+        }
+
         if ($foundLines === $spacing) {
             if ($endOfStatement !== false) {
                 return $endOfStatement;
