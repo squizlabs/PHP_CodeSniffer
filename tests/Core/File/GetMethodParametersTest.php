@@ -88,6 +88,8 @@ class GetMethodParametersTest extends TestCase
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
         unset($found[0]['type_hint_token']);
+        unset($found[0]['type_hint_end_token']);
+        unset($found[0]['comma_token']);
         $this->assertSame($expected, $found);
 
     }//end testPassByReference()
@@ -122,6 +124,8 @@ class GetMethodParametersTest extends TestCase
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
         unset($found[0]['type_hint_token']);
+        unset($found[0]['type_hint_end_token']);
+        unset($found[0]['comma_token']);
         $this->assertSame($expected, $found);
 
     }//end testArrayHint()
@@ -167,6 +171,10 @@ class GetMethodParametersTest extends TestCase
         unset($found[1]['token']);
         unset($found[0]['type_hint_token']);
         unset($found[1]['type_hint_token']);
+        unset($found[0]['type_hint_end_token']);
+        unset($found[1]['type_hint_end_token']);
+        unset($found[0]['comma_token']);
+        unset($found[1]['comma_token']);
         $this->assertSame($expected, $found);
 
     }//end testTypeHint()
@@ -201,6 +209,8 @@ class GetMethodParametersTest extends TestCase
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
         unset($found[0]['type_hint_token']);
+        unset($found[0]['type_hint_end_token']);
+        unset($found[0]['comma_token']);
         $this->assertSame($expected, $found);
 
     }//end testSelfTypeHint()
@@ -246,6 +256,10 @@ class GetMethodParametersTest extends TestCase
         unset($found[1]['token']);
         unset($found[0]['type_hint_token']);
         unset($found[1]['type_hint_token']);
+        unset($found[0]['type_hint_end_token']);
+        unset($found[1]['type_hint_end_token']);
+        unset($found[0]['comma_token']);
+        unset($found[1]['comma_token']);
         $this->assertSame($expected, $found);
 
     }//end testNullableTypeHint()
@@ -280,6 +294,8 @@ class GetMethodParametersTest extends TestCase
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
         unset($found[0]['type_hint_token']);
+        unset($found[0]['type_hint_end_token']);
+        unset($found[0]['comma_token']);
         $this->assertSame($expected, $found);
 
     }//end testVariable()
@@ -315,6 +331,10 @@ class GetMethodParametersTest extends TestCase
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
         unset($found[0]['type_hint_token']);
+        unset($found[0]['type_hint_end_token']);
+        unset($found[0]['comma_token']);
+        unset($found[0]['default_token']);
+        unset($found[0]['default_equal_token']);
         $this->assertSame($expected, $found);
 
     }//end testSingleDefaultValue()
@@ -361,6 +381,14 @@ class GetMethodParametersTest extends TestCase
         unset($found[1]['token']);
         unset($found[0]['type_hint_token']);
         unset($found[1]['type_hint_token']);
+        unset($found[0]['type_hint_end_token']);
+        unset($found[1]['type_hint_end_token']);
+        unset($found[0]['comma_token']);
+        unset($found[1]['comma_token']);
+        unset($found[0]['default_token']);
+        unset($found[1]['default_token']);
+        unset($found[0]['default_equal_token']);
+        unset($found[1]['default_equal_token']);
         $this->assertSame($expected, $found);
 
     }//end testDefaultValues()
@@ -396,6 +424,10 @@ class GetMethodParametersTest extends TestCase
         $found = $this->phpcsFile->getMethodParameters(($function + 2));
         unset($found[0]['token']);
         unset($found[0]['type_hint_token']);
+        unset($found[0]['type_hint_end_token']);
+        unset($found[0]['comma_token']);
+        unset($found[0]['default_token']);
+        unset($found[0]['default_equal_token']);
         $this->assertSame($expected, $found);
 
     }//end testBitwiseAndConstantExpressionDefaultValue()

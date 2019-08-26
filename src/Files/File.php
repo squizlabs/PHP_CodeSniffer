@@ -1268,24 +1268,32 @@ class File
     /**
      * Returns the method parameters for the specified function token.
      *
+     * Also supports passing in a USE token for a closure use group.
+     *
      * Each parameter is in the following format:
      *
      * <code>
      *   0 => array(
-     *         'name'              => '$var',  // The variable name.
-     *         'token'             => integer, // The stack pointer to the variable name.
-     *         'content'           => string,  // The full content of the variable definition.
-     *         'pass_by_reference' => boolean, // Is the variable passed by reference?
-     *         'variable_length'   => boolean, // Is the param of variable length through use of `...` ?
-     *         'type_hint'         => string,  // The type hint for the variable.
-     *         'type_hint_token'   => integer, // The stack pointer to the type hint
-     *                                         // or false if there is no type hint.
-     *         'nullable_type'     => boolean, // TRUE if the var type is nullable.
+     *         'name'                => '$var',  // The variable name.
+     *         'token'               => integer, // The stack pointer to the variable name.
+     *         'content'             => string,  // The full content of the variable definition.
+     *         'pass_by_reference'   => boolean, // Is the variable passed by reference?
+     *         'variable_length'     => boolean, // Is the param of variable length through use of `...` ?
+     *         'type_hint'           => string,  // The type hint for the variable.
+     *         'type_hint_token'     => integer, // The stack pointer to the start of the type hint
+     *                                           // or FALSE if there is no type hint.
+     *         'type_hint_end_token' => integer, // The stack pointer to the end of the type hint
+     *                                           // or FALSE if there is no type hint.
+     *         'nullable_type'       => boolean, // TRUE if the var type is nullable.
+     *         'comma_token'         => boolean, // The stack pointer to the comma after the param
+     *                                           // or FALSE if this is the last param.
      *        )
      * </code>
      *
-     * Parameters with default values have an additional array index of
-     * 'default' with the value of the default as a string.
+     * Parameters with default values have an additional array indexs of:
+     *         'default'             => string,  // The full content of the default value.
+     *         'default_token'       => integer, // The stack pointer to the start of the default value.
+     *         'default_equal_token' => integer, // The stack pointer to the equals sign.
      *
      * @param int $stackPtr The position in the stack of the function token
      *                      to acquire the parameters for.
@@ -1298,23 +1306,34 @@ class File
     {
         if ($this->tokens[$stackPtr]['code'] !== T_FUNCTION
             && $this->tokens[$stackPtr]['code'] !== T_CLOSURE
+            && $this->tokens[$stackPtr]['code'] !== T_USE
         ) {
-            throw new TokenizerException('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
+            throw new TokenizerException('$stackPtr must be of type T_FUNCTION or T_CLOSURE or T_USE');
         }
 
-        $opener = $this->tokens[$stackPtr]['parenthesis_opener'];
-        $closer = $this->tokens[$stackPtr]['parenthesis_closer'];
+        if ($this->tokens[$stackPtr]['code'] === T_USE) {
+            $opener = $this->findNext(T_OPEN_PARENTHESIS, ($stackPtr + 1));
+            if ($opener === false || isset($this->tokens[$opener]['parenthesis_owner']) === true) {
+                throw new TokenizerException('$stackPtr was not a valid T_USE');
+            }
+        } else {
+            $opener = $this->tokens[$stackPtr]['parenthesis_opener'];
+        }
+
+        $closer = $this->tokens[$opener]['parenthesis_closer'];
 
         $vars            = [];
         $currVar         = null;
         $paramStart      = ($opener + 1);
         $defaultStart    = null;
+        $equalToken      = null;
         $paramCount      = 0;
         $passByReference = false;
         $variableLength  = false;
         $typeHint        = '';
         $typeHintToken   = false;
-        $nullableType    = false;
+        $typeHintEndToken = false;
+        $nullableType     = false;
 
         for ($i = $paramStart; $i <= $closer; $i++) {
             // Check to see if this token has a parenthesis or bracket opener. If it does
@@ -1352,7 +1371,8 @@ class File
                     $typeHintToken = $i;
                 }
 
-                $typeHint .= $this->tokens[$i]['content'];
+                $typeHint        .= $this->tokens[$i]['content'];
+                $typeHintEndToken = $i;
                 break;
             case T_SELF:
             case T_PARENT:
@@ -1363,7 +1383,8 @@ class File
                         $typeHintToken = $i;
                     }
 
-                    $typeHint .= $this->tokens[$i]['content'];
+                    $typeHint        .= $this->tokens[$i]['content'];
+                    $typeHintEndToken = $i;
                 }
                 break;
             case T_STRING:
@@ -1396,7 +1417,8 @@ class File
                         $typeHintToken = $i;
                     }
 
-                    $typeHint .= $this->tokens[$i]['content'];
+                    $typeHint        .= $this->tokens[$i]['content'];
+                    $typeHintEndToken = $i;
                 }
                 break;
             case T_NS_SEPARATOR:
@@ -1406,13 +1428,15 @@ class File
                         $typeHintToken = $i;
                     }
 
-                    $typeHint .= $this->tokens[$i]['content'];
+                    $typeHint        .= $this->tokens[$i]['content'];
+                    $typeHintEndToken = $i;
                 }
                 break;
             case T_NULLABLE:
                 if ($defaultStart === null) {
-                    $nullableType = true;
-                    $typeHint    .= $this->tokens[$i]['content'];
+                    $nullableType     = true;
+                    $typeHint        .= $this->tokens[$i]['content'];
+                    $typeHintEndToken = $i;
                 }
                 break;
             case T_CLOSE_PARENTHESIS:
@@ -1429,17 +1453,27 @@ class File
                 $vars[$paramCount]['content'] = trim($this->getTokensAsString($paramStart, ($i - $paramStart)));
 
                 if ($defaultStart !== null) {
-                    $vars[$paramCount]['default'] = trim($this->getTokensAsString($defaultStart, ($i - $defaultStart)));
+                    $vars[$paramCount]['default']       = trim($this->getTokensAsString($defaultStart, ($i - $defaultStart)));
+                    $vars[$paramCount]['default_token'] = $defaultStart;
+                    $vars[$paramCount]['default_equal_token'] = $equalToken;
                 }
 
-                $vars[$paramCount]['pass_by_reference'] = $passByReference;
-                $vars[$paramCount]['variable_length']   = $variableLength;
-                $vars[$paramCount]['type_hint']         = $typeHint;
-                $vars[$paramCount]['type_hint_token']   = $typeHintToken;
-                $vars[$paramCount]['nullable_type']     = $nullableType;
+                $vars[$paramCount]['pass_by_reference']   = $passByReference;
+                $vars[$paramCount]['variable_length']     = $variableLength;
+                $vars[$paramCount]['type_hint']           = $typeHint;
+                $vars[$paramCount]['type_hint_token']     = $typeHintToken;
+                $vars[$paramCount]['type_hint_end_token'] = $typeHintEndToken;
+                $vars[$paramCount]['nullable_type']       = $nullableType;
+
+                if ($this->tokens[$i]['code'] === T_COMMA) {
+                    $vars[$paramCount]['comma_token'] = $i;
+                } else {
+                    $vars[$paramCount]['comma_token'] = false;
+                }
 
                 // Reset the vars, as we are about to process the next parameter.
                 $defaultStart    = null;
+                $equalToken      = null;
                 $paramStart      = ($i + 1);
                 $passByReference = false;
                 $variableLength  = false;
@@ -1450,7 +1484,8 @@ class File
                 $paramCount++;
                 break;
             case T_EQUAL:
-                $defaultStart = ($i + 1);
+                $defaultStart = $this->findNext(Util\Tokens::$emptyTokens, ($i + 1), null, true);
+                $equalToken   = $i;
                 break;
             }//end switch
         }//end for
