@@ -59,6 +59,10 @@ class ReturnTypeDeclarationSniff implements Sniff
         }
 
         $returnType = $methodProperties['return_type_token'];
+        if ($methodProperties['nullable_return_type'] === true) {
+            $returnType = $phpcsFile->findPrevious(T_NULLABLE, ($returnType - 1));
+        }
+
         if ($tokens[($returnType - 1)]['code'] !== T_WHITESPACE
             || $tokens[($returnType - 1)]['content'] !== ' '
             || $tokens[($returnType - 2)]['code'] !== T_COLON

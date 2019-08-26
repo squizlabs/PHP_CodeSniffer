@@ -51,3 +51,8 @@ public function functionName(int $arg1, $arg2) /* can't fix */ : string {}
 public function functionName(int $arg1, $arg2) /* can't fix */
 : // phpcs:ignore Standard.Category.Sniff
 string {}
+
+function functionName(?string $arg1, ?int &$arg2): ?string {}
+function functionName(?string $arg1, ?int &$arg2): ?string {}
+function functionName(?string $arg1, ?int &$arg2): ?string {}
+function functionName(?string $arg1, ?int &$arg2): ?string {}
