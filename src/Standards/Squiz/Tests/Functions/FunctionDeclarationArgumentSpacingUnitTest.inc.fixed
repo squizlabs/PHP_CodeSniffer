@@ -33,7 +33,7 @@ function multiLineFunction(
 }
 
 $noArgs_longVars = function ($longVar1, $longerVar2=false) use (
-    $longVar1, $longerVar2=false,
+    $longVar1, $longerVar2,
     $muchLongerVar3
 )  {
     // body

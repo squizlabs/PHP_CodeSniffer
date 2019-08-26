@@ -99,6 +99,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Using the PSR12 standard will enforce this check
   - Squiz.Commenting.BlockComment no longer requires blank line before comment if it's the first content after the PHP open tag
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Squiz.Functions.FunctionDeclarationArgumentSpacing now has more accurate error messages
   - Squiz.Operators.IncrementDecrementUsage now suggests pre-increment of variables instead of post-increment
     -- This change does not enforce pre-increment over post-increment; only the suggestion has changed
     -- Thanks to Juliette Reinders Folmer for the patch

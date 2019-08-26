@@ -38,7 +38,7 @@ class FunctionDeclarationArgumentSpacingUnitTest extends AbstractSniffUnitTest
             16 => 4,
             18 => 2,
             35 => 2,
-            36 => 3,
+            36 => 2,
             44 => 2,
             45 => 1,
             46 => 1,

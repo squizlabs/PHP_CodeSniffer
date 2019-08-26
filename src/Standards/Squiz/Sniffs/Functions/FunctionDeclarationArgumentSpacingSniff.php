@@ -57,8 +57,8 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
      * Processes this test, when one of its tokens is encountered.
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
-     * @param int                         $stackPtr  The position of the current token in the
-     *                                               stack passed in $tokens.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack.
      *
      * @return void
      */
@@ -78,11 +78,10 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
         $this->requiredSpacesAfterOpen = (int) $this->requiredSpacesAfterOpen;
         $this->requiredSpacesBeforeClose = (int) $this->requiredSpacesBeforeClose;
 
-        $openBracket = $tokens[$stackPtr]['parenthesis_opener'];
-        $this->processBracket($phpcsFile, $openBracket);
+        $this->processBracket($phpcsFile, $tokens[$stackPtr]['parenthesis_opener']);
 
         if ($tokens[$stackPtr]['code'] === T_CLOSURE) {
-            $use = $phpcsFile->findNext(T_USE, ($tokens[$openBracket]['parenthesis_closer'] + 1), $tokens[$stackPtr]['scope_opener']);
+            $use = $phpcsFile->findNext(T_USE, ($tokens[$stackPtr]['parenthesis_closer'] + 1), $tokens[$stackPtr]['scope_opener']);
             if ($use !== false) {
                 $openBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, ($use + 1), null);
                 $this->processBracket($phpcsFile, $openBracket);
@@ -96,8 +95,8 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
      * Processes the contents of a single set of brackets.
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile   The file being scanned.
-     * @param int                         $openBracket The position of the open bracket
-     *                                                 in the stack passed in $tokens.
+     * @param int                         $openBracket The position of the open bracker
+     *                                                 in the stack.
      *
      * @return void
      */
@@ -107,219 +106,13 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
         $multiLine    = ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']);
 
-        $nextParam = $openBracket;
-        $params    = [];
-        while (($nextParam = $phpcsFile->findNext(T_VARIABLE, ($nextParam + 1), $closeBracket)) !== false) {
-            $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($nextParam + 1), ($closeBracket + 1), true);
-            if ($nextToken === false) {
-                break;
-            }
+        if (isset($tokens[$openBracket]['parenthesis_owner']) === true) {
+            $stackPtr = $tokens[$openBracket]['parenthesis_owner'];
+        } else {
+            $stackPtr = $phpcsFile->findPrevious(T_USE, ($openBracket - 1));
+        }
 
-            $nextCode = $tokens[$nextToken]['code'];
-
-            if ($nextCode === T_EQUAL) {
-                // Check parameter default spacing.
-                $spacesBefore = 0;
-                if (($nextToken - $nextParam) > 1) {
-                    $spacesBefore = $tokens[($nextParam + 1)]['length'];
-                }
-
-                if ($spacesBefore !== $this->equalsSpacing) {
-                    $error = 'Incorrect spacing between argument "%s" and equals sign; expected '.$this->equalsSpacing.' but found %s';
-                    $data  = [
-                        $tokens[$nextParam]['content'],
-                        $spacesBefore,
-                    ];
-
-                    $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeEquals', $data);
-                    if ($fix === true) {
-                        $padding = str_repeat(' ', $this->equalsSpacing);
-                        if ($spacesBefore === 0) {
-                            $phpcsFile->fixer->addContentBefore($nextToken, $padding);
-                        } else {
-                            $phpcsFile->fixer->replaceToken(($nextToken - 1), $padding);
-                        }
-                    }
-                }//end if
-
-                $spacesAfter = 0;
-                if ($tokens[($nextToken + 1)]['code'] === T_WHITESPACE) {
-                    $spacesAfter = $tokens[($nextToken + 1)]['length'];
-                }
-
-                if ($spacesAfter !== $this->equalsSpacing) {
-                    $error = 'Incorrect spacing between default value and equals sign for argument "%s"; expected '.$this->equalsSpacing.' but found %s';
-                    $data  = [
-                        $tokens[$nextParam]['content'],
-                        $spacesAfter,
-                    ];
-
-                    $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceAfterDefault', $data);
-                    if ($fix === true) {
-                        $padding = str_repeat(' ', $this->equalsSpacing);
-                        if ($spacesAfter === 0) {
-                            $phpcsFile->fixer->addContent($nextToken, $padding);
-                        } else {
-                            $phpcsFile->fixer->replaceToken(($nextToken + 1), $padding);
-                        }
-                    }
-                }//end if
-            }//end if
-
-            // Find and check the comma (if there is one).
-            $nextComma = $phpcsFile->findNext(T_COMMA, ($nextParam + 1), $closeBracket);
-            if ($nextComma !== false) {
-                // Comma found.
-                if ($tokens[($nextComma - 1)]['code'] === T_WHITESPACE) {
-                    $error = 'Expected 0 spaces between argument "%s" and comma; %s found';
-                    $data  = [
-                        $tokens[$nextParam]['content'],
-                        $tokens[($nextComma - 1)]['length'],
-                    ];
-
-                    $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeComma', $data);
-                    if ($fix === true) {
-                        $phpcsFile->fixer->replaceToken(($nextComma - 1), '');
-                    }
-                }
-            }
-
-            $checkToken = ($nextParam - 1);
-            $prev       = $phpcsFile->findPrevious(T_WHITESPACE, $checkToken, null, true);
-            if ($tokens[$prev]['code'] === T_ELLIPSIS) {
-                $checkToken = ($prev - 1);
-            }
-
-            // Take references into account when expecting the
-            // location of whitespace.
-            if ($phpcsFile->isReference($checkToken) === true) {
-                $whitespace = ($checkToken - 1);
-            } else {
-                $whitespace = $checkToken;
-            }
-
-            if (empty($params) === false) {
-                // This is not the first argument in the function declaration.
-                $arg = $tokens[$nextParam]['content'];
-
-                // Before we throw an error, make sure there is no type hint.
-                $comma     = $phpcsFile->findPrevious(T_COMMA, ($nextParam - 1));
-                $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($comma + 1), null, true);
-                if ($phpcsFile->isReference($nextToken) === true) {
-                    $nextToken++;
-                }
-
-                $gap = 0;
-                if ($tokens[$whitespace]['code'] === T_WHITESPACE) {
-                    $gap = $tokens[$whitespace]['length'];
-                }
-
-                if ($nextToken !== $nextParam) {
-                    // There was a type hint, so check the spacing between
-                    // the hint and the variable as well.
-                    $hint = $tokens[$nextToken]['content'];
-
-                    if ($gap !== 1) {
-                        $error = 'Expected 1 space between type hint and argument "%s"; %s found';
-                        $data  = [
-                            $arg,
-                            $gap,
-                        ];
-                        $fix   = $phpcsFile->addFixableError($error, $nextToken, 'SpacingAfterHint', $data);
-                        if ($fix === true) {
-                            if ($gap === 0) {
-                                $phpcsFile->fixer->addContent($whitespace, ' ');
-                            } else {
-                                $phpcsFile->fixer->replaceToken($whitespace, ' ');
-                            }
-                        }
-                    }
-
-                    if ($multiLine === false) {
-                        if ($tokens[($comma + 1)]['code'] !== T_WHITESPACE) {
-                            $error = 'Expected 1 space between comma and type hint "%s"; 0 found';
-                            $data  = [$hint];
-                            $fix   = $phpcsFile->addFixableError($error, $nextToken, 'NoSpaceBeforeHint', $data);
-                            if ($fix === true) {
-                                $phpcsFile->fixer->addContent($comma, ' ');
-                            }
-                        } else {
-                            $gap = $tokens[($comma + 1)]['length'];
-                            if ($gap !== 1) {
-                                $error = 'Expected 1 space between comma and type hint "%s"; %s found';
-                                $data  = [
-                                    $hint,
-                                    $gap,
-                                ];
-                                $fix   = $phpcsFile->addFixableError($error, $nextToken, 'SpacingBeforeHint', $data);
-                                if ($fix === true) {
-                                    $phpcsFile->fixer->replaceToken(($comma + 1), ' ');
-                                }
-                            }
-                        }//end if
-                    }//end if
-                } else {
-                    // No type hint.
-                    if ($gap === 0) {
-                        $error = 'Expected 1 space between comma and argument "%s"; 0 found';
-                        $data  = [$arg];
-                        $fix   = $phpcsFile->addFixableError($error, $nextToken, 'NoSpaceBeforeArg', $data);
-                        if ($fix === true) {
-                            $phpcsFile->fixer->addContent($whitespace, ' ');
-                        }
-                    } else if ($gap !== 1) {
-                        // Just make sure this is not actually an indent.
-                        if ($tokens[$whitespace]['line'] === $tokens[($whitespace - 1)]['line']) {
-                            $error = 'Expected 1 space between comma and argument "%s"; %s found';
-                            $data  = [
-                                $arg,
-                                $gap,
-                            ];
-
-                            $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpacingBeforeArg', $data);
-                            if ($fix === true) {
-                                $phpcsFile->fixer->replaceToken($whitespace, ' ');
-                            }
-                        }
-                    }//end if
-                }//end if
-            } else {
-                $gap = 0;
-                if ($tokens[$whitespace]['code'] === T_WHITESPACE) {
-                    $gap = $tokens[$whitespace]['length'];
-                }
-
-                $arg = $tokens[$nextParam]['content'];
-
-                // Before we throw an error, make sure there is no type hint.
-                $bracket   = $phpcsFile->findPrevious(T_OPEN_PARENTHESIS, ($nextParam - 1));
-                $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($bracket + 1), null, true);
-                if ($phpcsFile->isReference($nextToken) === true) {
-                    $nextToken++;
-                }
-
-                if ($gap !== 1
-                    && $tokens[$nextToken]['code'] !== T_ELLIPSIS
-                    && $nextToken !== $nextParam
-                ) {
-                    $error = 'Expected 1 space between type hint and argument "%s"; %s found';
-                    $data  = [
-                        $arg,
-                        $gap,
-                    ];
-                    $fix   = $phpcsFile->addFixableError($error, $nextToken, 'SpacingAfterHint', $data);
-                    if ($fix === true) {
-                        if ($gap === 0) {
-                            $phpcsFile->fixer->addContent($whitespace, ' ');
-                        } else {
-                            $phpcsFile->fixer->replaceToken($whitespace, ' ');
-                        }
-                    }
-                }
-            }//end if
-
-            $params[] = $nextParam;
-        }//end while
+        $params = $phpcsFile->getMethodParameters($stackPtr);
 
         if (empty($params) === true) {
             // Check spacing around parenthesis.
@@ -338,6 +131,168 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
                 return;
             }
         }
+
+        foreach ($params as $paramNumber => $param) {
+            if (isset($param['default_equal_token']) === true) {
+                $equalToken = $param['default_equal_token'];
+
+                $spacesBefore = 0;
+                if (($equalToken - $param['token']) > 1) {
+                    $spacesBefore = $tokens[($param['token'] + 1)]['length'];
+                }
+
+                if ($spacesBefore !== $this->equalsSpacing) {
+                    $error = 'Incorrect spacing between argument "%s" and equals sign; expected '.$this->equalsSpacing.' but found %s';
+                    $data  = [
+                        $param['name'],
+                        $spacesBefore,
+                    ];
+
+                    $fix = $phpcsFile->addFixableError($error, $equalToken, 'SpaceBeforeEquals', $data);
+                    if ($fix === true) {
+                        $padding = str_repeat(' ', $this->equalsSpacing);
+                        if ($spacesBefore === 0) {
+                            $phpcsFile->fixer->addContentBefore($equalToken, $padding);
+                        } else {
+                            $phpcsFile->fixer->replaceToken(($equalToken - 1), $padding);
+                        }
+                    }
+                }//end if
+
+                $spacesAfter = 0;
+                if ($tokens[($equalToken + 1)]['code'] === T_WHITESPACE) {
+                    $spacesAfter = $tokens[($equalToken + 1)]['length'];
+                }
+
+                if ($spacesAfter !== $this->equalsSpacing) {
+                    $error = 'Incorrect spacing between default value and equals sign for argument "%s"; expected '.$this->equalsSpacing.' but found %s';
+                    $data  = [
+                        $param['name'],
+                        $spacesAfter,
+                    ];
+
+                    $fix = $phpcsFile->addFixableError($error, $equalToken, 'SpaceAfterDefault', $data);
+                    if ($fix === true) {
+                        $padding = str_repeat(' ', $this->equalsSpacing);
+                        if ($spacesAfter === 0) {
+                            $phpcsFile->fixer->addContent($equalToken, $padding);
+                        } else {
+                            $phpcsFile->fixer->replaceToken(($equalToken + 1), $padding);
+                        }
+                    }
+                }//end if
+            }//end if
+
+            if ($param['type_hint_token'] !== false) {
+                $typeHintToken = $param['type_hint_end_token'];
+
+                $gap = 0;
+                if ($tokens[($typeHintToken + 1)]['code'] === T_WHITESPACE) {
+                    $gap = $tokens[($typeHintToken + 1)]['length'];
+                }
+
+                if ($gap !== 1) {
+                    $error = 'Expected 1 space between type hint and argument "%s"; %s found';
+                    $data  = [
+                        $param['name'],
+                        $gap,
+                    ];
+                    $fix   = $phpcsFile->addFixableError($error, $typeHintToken, 'SpacingAfterHint', $data);
+                    if ($fix === true) {
+                        if ($gap === 0) {
+                            $phpcsFile->fixer->addContent($typeHintToken, ' ');
+                        } else {
+                            $phpcsFile->fixer->replaceToken(($typeHintToken + 1), ' ');
+                        }
+                    }
+                }
+            }//end if
+
+            $commaToken = false;
+            if ($paramNumber > 0 && $params[($paramNumber - 1)]['comma_token'] !== false) {
+                $commaToken = $params[($paramNumber - 1)]['comma_token'];
+            }
+
+            if ($commaToken !== false) {
+                if ($tokens[($commaToken - 1)]['code'] === T_WHITESPACE) {
+                    $error = 'Expected 0 spaces between argument "%s" and comma; %s found';
+                    $data  = [
+                        $param['name'],
+                        $tokens[($commaToken - 1)]['length'],
+                    ];
+
+                    $fix = $phpcsFile->addFixableError($error, $commaToken, 'SpaceBeforeComma', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken(($commaToken - 1), '');
+                    }
+                }
+
+                // Don't check spacing after the comma if it is the last content on the line.
+                $checkComma = true;
+                if ($multiLine === true) {
+                    $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($commaToken + 1), $closeBracket, true);
+                    if ($tokens[$next]['line'] !== $tokens[$commaToken]['line']) {
+                        $checkComma = false;
+                    }
+                }
+
+                if ($checkComma === true) {
+                    if ($param['type_hint_token'] === false) {
+                        $spacesAfter = 0;
+                        if ($tokens[($commaToken + 1)]['code'] === T_WHITESPACE) {
+                            $spacesAfter = $tokens[($commaToken + 1)]['length'];
+                        }
+
+                        if ($spacesAfter === 0) {
+                            $error = 'Expected 1 space between comma and argument "%s"; 0 found';
+                            $data  = [$param['name']];
+                            $fix   = $phpcsFile->addFixableError($error, $commaToken, 'NoSpaceBeforeArg', $data);
+                            if ($fix === true) {
+                                $phpcsFile->fixer->addContent($commaToken, ' ');
+                            }
+                        } else if ($spacesAfter !== 1) {
+                            $error = 'Expected 1 space between comma and argument "%s"; %s found';
+                            $data  = [
+                                $param['name'],
+                                $spacesAfter,
+                            ];
+
+                            $fix = $phpcsFile->addFixableError($error, $commaToken, 'SpacingBeforeArg', $data);
+                            if ($fix === true) {
+                                $phpcsFile->fixer->replaceToken(($commaToken + 1), ' ');
+                            }
+                        }//end if
+                    } else {
+                        $hint = $phpcsFile->getTokensAsString($param['type_hint_token'], (($param['type_hint_end_token'] - $param['type_hint_token']) + 1));
+                        if ($param['nullable_type'] === true) {
+                            $hint = '?'.$hint;
+                        }
+
+                        if ($tokens[($commaToken + 1)]['code'] !== T_WHITESPACE) {
+                            $error = 'Expected 1 space between comma and type hint "%s"; 0 found';
+                            $data  = [$hint];
+                            $fix   = $phpcsFile->addFixableError($error, $commaToken, 'NoSpaceBeforeHint', $data);
+                            if ($fix === true) {
+                                $phpcsFile->fixer->addContent($commaToken, ' ');
+                            }
+                        } else {
+                            $gap = $tokens[($commaToken + 1)]['length'];
+                            if ($gap !== 1) {
+                                $error = 'Expected 1 space between comma and type hint "%s"; %s found';
+                                $data  = [
+                                    $hint,
+                                    $gap,
+                                ];
+                                $fix   = $phpcsFile->addFixableError($error, $commaToken, 'SpacingBeforeHint', $data);
+                                if ($fix === true) {
+                                    $phpcsFile->fixer->replaceToken(($commaToken + 1), ' ');
+                                }
+                            }
+                        }//end if
+                    }//end if
+                }//end if
+            }//end if
+        }//end foreach
 
         // Only check spacing around parenthesis for single line definitions.
         if ($multiLine === true) {
