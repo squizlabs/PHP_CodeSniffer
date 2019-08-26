@@ -691,13 +691,26 @@ abstract class Tokenizer
                 $this->tokens[$i]['parenthesis_closer'] = null;
                 $this->tokens[$i]['parenthesis_owner']  = $i;
                 $openOwner = $i;
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", (count($openers) + 1));
+                    echo "=> Found parenthesis owner at $i".PHP_EOL;
+                }
             } else if ($this->tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
                 $openers[] = $i;
                 $this->tokens[$i]['parenthesis_opener'] = $i;
                 if ($openOwner !== null) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", count($openers));
+                        echo "=> Found parenthesis opener at $i for $openOwner".PHP_EOL;
+                    }
+
                     $this->tokens[$openOwner]['parenthesis_opener'] = $i;
                     $this->tokens[$i]['parenthesis_owner']          = $openOwner;
                     $openOwner = null;
+                } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", count($openers));
+                    echo "=> Found unowned parenthesis opener at $i".PHP_EOL;
                 }
             } else if ($this->tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
                 // Did we set an owner for this set of parenthesis?
@@ -709,12 +722,20 @@ abstract class Tokenizer
 
                         $this->tokens[$owner]['parenthesis_closer'] = $i;
                         $this->tokens[$i]['parenthesis_owner']      = $owner;
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", (count($openers) + 1));
+                            echo "=> Found parenthesis closer at $i for $owner".PHP_EOL;
+                        }
+                    } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", (count($openers) + 1));
+                        echo "=> Found unowned parenthesis closer at $i for $opener".PHP_EOL;
                     }
 
                     $this->tokens[$i]['parenthesis_opener']      = $opener;
                     $this->tokens[$i]['parenthesis_closer']      = $i;
                     $this->tokens[$opener]['parenthesis_closer'] = $i;
-                }
+                }//end if
             }//end if
 
             /*
