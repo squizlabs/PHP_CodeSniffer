@@ -133,6 +133,48 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
         }
 
         foreach ($params as $paramNumber => $param) {
+            if ($param['pass_by_reference'] === true) {
+                $refToken = $param['reference_token'];
+
+                $gap = 0;
+                if ($tokens[($refToken + 1)]['code'] === T_WHITESPACE) {
+                    $gap = $tokens[($refToken + 1)]['length'];
+                }
+
+                if ($gap !== 0) {
+                    $error = 'Expected 0 spaces after reference operator for argument "%s"; %s found';
+                    $data  = [
+                        $param['name'],
+                        $gap,
+                    ];
+                    $fix   = $phpcsFile->addFixableError($error, $refToken, 'SpacingAfterReference', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken(($refToken + 1), '');
+                    }
+                }
+            }//end if
+
+            if ($param['variable_length'] === true) {
+                $variadicToken = $param['variadic_token'];
+
+                $gap = 0;
+                if ($tokens[($variadicToken + 1)]['code'] === T_WHITESPACE) {
+                    $gap = $tokens[($variadicToken + 1)]['length'];
+                }
+
+                if ($gap !== 0) {
+                    $error = 'Expected 0 spaces after variadic operator for argument "%s"; %s found';
+                    $data  = [
+                        $param['name'],
+                        $gap,
+                    ];
+                    $fix   = $phpcsFile->addFixableError($error, $variadicToken, 'SpacingAfterVariadic', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken(($variadicToken + 1), '');
+                    }
+                }
+            }//end if
+
             if (isset($param['default_equal_token']) === true) {
                 $equalToken = $param['default_equal_token'];
 

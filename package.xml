@@ -49,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If a default is specified, the position of the first token in the default value will be set in a "default_token" array index
     -- If a default is specified, the position of the equals sign will be set in a "default_equal_token" array index
     -- If the paramater is not the last, the position of the comma will be set in a "comma_token" array index
+    -- If the param is passed by reference, the position of the reference operator will be set in a "reference_token" array index
+    -- If the param is variable length, the position of the variadic operator will be set in a "variadic_token" array index
   - The T_LIST token and it's opening and closing parentheses now contain references to each other in the tokens array
     -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
     -- Thanks to Juliette Reinders Folmer for the patch
@@ -100,6 +102,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.BlockComment no longer requires blank line before comment if it's the first content after the PHP open tag
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Functions.FunctionDeclarationArgumentSpacing now has more accurate error messages
+  - Squiz.Functions.FunctionDeclarationArgumentSpacing now checks for no space after a reference operator
+    -- If you don't want this new behaviour, exclude the SpacingAfterReference error message in a ruleset.xml file
+  - Squiz.Functions.FunctionDeclarationArgumentSpacing now checks for no space after a variadic operator
+    -- If you don't want this new behaviour, exclude the SpacingAfterVariadic error message in a ruleset.xml file
   - Squiz.Operators.IncrementDecrementUsage now suggests pre-increment of variables instead of post-increment
     -- This change does not enforce pre-increment over post-increment; only the suggestion has changed
     -- Thanks to Juliette Reinders Folmer for the patch

@@ -168,13 +168,13 @@
     <!-- 4.5 Method and Function Arguments -->
 
     <!-- In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma. -->
+    <!-- When using the reference operator & before an argument, there MUST NOT be a space after it. -->
+    <!-- There MUST NOT be a space between the variadic three dot operator and the argument name. -->
+    <!-- When combining both the reference operator and the variadic three dot operator, there MUST NOT be any space between the two of them. -->
     <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
         <properties>
             <property name="equalsSpacing" value="1"/>
         </properties>
-    </rule>
-    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterHint">
-        <severity>0</severity>
     </rule>
 
     <!-- Method and function arguments with default values MUST go at the end of the argument list. -->
@@ -189,12 +189,6 @@
 
     <!-- In nullable type declarations, there MUST NOT be a space between the question mark and the type. -->
     <!-- checked by PSR12.Functions.NullableTypeDeclaration -->
-
-    <!-- When using the reference operator & before an argument, there MUST NOT be a space after it. -->
-
-    <!-- There MUST NOT be a space between the variadic three dot operator and the argument name. -->
-
-    <!-- When combining both the reference operator and the variadic three dot operator, there MUST NOT be any space between the two of them. -->
 
     <!-- 4.6 abstract, final, and static -->
 
