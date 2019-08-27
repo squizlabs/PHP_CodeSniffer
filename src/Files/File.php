@@ -1278,14 +1278,18 @@ class File
      *         'token'               => integer, // The stack pointer to the variable name.
      *         'content'             => string,  // The full content of the variable definition.
      *         'pass_by_reference'   => boolean, // Is the variable passed by reference?
+     *         'reference_token'     => integer, // The stack pointer to the reference operator
+     *                                           // or FALSE if the param is not passed by reference.
      *         'variable_length'     => boolean, // Is the param of variable length through use of `...` ?
+     *         'variadic_token'      => integer, // The stack pointer to the ... operator
+     *                                           // or FALSE if the param is not variable length.
      *         'type_hint'           => string,  // The type hint for the variable.
      *         'type_hint_token'     => integer, // The stack pointer to the start of the type hint
      *                                           // or FALSE if there is no type hint.
      *         'type_hint_end_token' => integer, // The stack pointer to the end of the type hint
      *                                           // or FALSE if there is no type hint.
      *         'nullable_type'       => boolean, // TRUE if the var type is nullable.
-     *         'comma_token'         => boolean, // The stack pointer to the comma after the param
+     *         'comma_token'         => integer, // The stack pointer to the comma after the param
      *                                           // or FALSE if this is the last param.
      *        )
      * </code>
@@ -1329,7 +1333,9 @@ class File
         $equalToken      = null;
         $paramCount      = 0;
         $passByReference = false;
+        $referenceToken  = false;
         $variableLength  = false;
+        $variadicToken   = false;
         $typeHint        = '';
         $typeHintToken   = false;
         $typeHintEndToken = false;
@@ -1358,6 +1364,7 @@ class File
             case T_BITWISE_AND:
                 if ($defaultStart === null) {
                     $passByReference = true;
+                    $referenceToken  = $i;
                 }
                 break;
             case T_VARIABLE:
@@ -1365,6 +1372,7 @@ class File
                 break;
             case T_ELLIPSIS:
                 $variableLength = true;
+                $variadicToken  = $i;
                 break;
             case T_CALLABLE:
                 if ($typeHintToken === false) {
@@ -1459,7 +1467,9 @@ class File
                 }
 
                 $vars[$paramCount]['pass_by_reference']   = $passByReference;
+                $vars[$paramCount]['reference_token']     = $referenceToken;
                 $vars[$paramCount]['variable_length']     = $variableLength;
+                $vars[$paramCount]['variadic_token']      = $variadicToken;
                 $vars[$paramCount]['type_hint']           = $typeHint;
                 $vars[$paramCount]['type_hint_token']     = $typeHintToken;
                 $vars[$paramCount]['type_hint_end_token'] = $typeHintEndToken;
@@ -1476,7 +1486,9 @@ class File
                 $equalToken      = null;
                 $paramStart      = ($i + 1);
                 $passByReference = false;
+                $referenceToken  = false;
                 $variableLength  = false;
+                $variadicToken   = false;
                 $typeHint        = '';
                 $typeHintToken   = false;
                 $nullableType    = false;

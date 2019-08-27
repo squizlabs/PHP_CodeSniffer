@@ -90,6 +90,8 @@ class GetMethodParametersTest extends TestCase
         unset($found[0]['type_hint_token']);
         unset($found[0]['type_hint_end_token']);
         unset($found[0]['comma_token']);
+        unset($found[0]['reference_token']);
+        unset($found[0]['variadic_token']);
         $this->assertSame($expected, $found);
 
     }//end testPassByReference()
@@ -126,6 +128,8 @@ class GetMethodParametersTest extends TestCase
         unset($found[0]['type_hint_token']);
         unset($found[0]['type_hint_end_token']);
         unset($found[0]['comma_token']);
+        unset($found[0]['reference_token']);
+        unset($found[0]['variadic_token']);
         $this->assertSame($expected, $found);
 
     }//end testArrayHint()
@@ -175,6 +179,10 @@ class GetMethodParametersTest extends TestCase
         unset($found[1]['type_hint_end_token']);
         unset($found[0]['comma_token']);
         unset($found[1]['comma_token']);
+        unset($found[0]['reference_token']);
+        unset($found[1]['reference_token']);
+        unset($found[0]['variadic_token']);
+        unset($found[1]['variadic_token']);
         $this->assertSame($expected, $found);
 
     }//end testTypeHint()
@@ -211,6 +219,8 @@ class GetMethodParametersTest extends TestCase
         unset($found[0]['type_hint_token']);
         unset($found[0]['type_hint_end_token']);
         unset($found[0]['comma_token']);
+        unset($found[0]['reference_token']);
+        unset($found[0]['variadic_token']);
         $this->assertSame($expected, $found);
 
     }//end testSelfTypeHint()
@@ -260,6 +270,10 @@ class GetMethodParametersTest extends TestCase
         unset($found[1]['type_hint_end_token']);
         unset($found[0]['comma_token']);
         unset($found[1]['comma_token']);
+        unset($found[0]['reference_token']);
+        unset($found[1]['reference_token']);
+        unset($found[0]['variadic_token']);
+        unset($found[1]['variadic_token']);
         $this->assertSame($expected, $found);
 
     }//end testNullableTypeHint()
@@ -296,6 +310,8 @@ class GetMethodParametersTest extends TestCase
         unset($found[0]['type_hint_token']);
         unset($found[0]['type_hint_end_token']);
         unset($found[0]['comma_token']);
+        unset($found[0]['reference_token']);
+        unset($found[0]['variadic_token']);
         $this->assertSame($expected, $found);
 
     }//end testVariable()
@@ -333,6 +349,8 @@ class GetMethodParametersTest extends TestCase
         unset($found[0]['type_hint_token']);
         unset($found[0]['type_hint_end_token']);
         unset($found[0]['comma_token']);
+        unset($found[0]['reference_token']);
+        unset($found[0]['variadic_token']);
         unset($found[0]['default_token']);
         unset($found[0]['default_equal_token']);
         $this->assertSame($expected, $found);
@@ -385,6 +403,10 @@ class GetMethodParametersTest extends TestCase
         unset($found[1]['type_hint_end_token']);
         unset($found[0]['comma_token']);
         unset($found[1]['comma_token']);
+        unset($found[0]['reference_token']);
+        unset($found[1]['reference_token']);
+        unset($found[0]['variadic_token']);
+        unset($found[1]['variadic_token']);
         unset($found[0]['default_token']);
         unset($found[1]['default_token']);
         unset($found[0]['default_equal_token']);
@@ -426,6 +448,8 @@ class GetMethodParametersTest extends TestCase
         unset($found[0]['type_hint_token']);
         unset($found[0]['type_hint_end_token']);
         unset($found[0]['comma_token']);
+        unset($found[0]['reference_token']);
+        unset($found[0]['variadic_token']);
         unset($found[0]['default_token']);
         unset($found[0]['default_equal_token']);
         $this->assertSame($expected, $found);
