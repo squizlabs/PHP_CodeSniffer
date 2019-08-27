@@ -101,6 +101,7 @@
     <!-- When the opening php tag is on the first line of the file, it MUST be on its own line with no other statements unless it is a file containing markup outside of PHP opening and closing tags. -->
 
     <!-- Import statements MUST never begin with a leading backslash as they must always be fully qualified. -->
+    <!-- checked by PSR12.Files.ImportStatement -->
 
     <!-- Compound namespaces with a depth of more than two MUST NOT be used. -->
     <!-- checked by PSR12.Namespaces.CompoundNamespaceDepth -->
