@@ -104,6 +104,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Squiz.Commenting.BlockComment no longer requires blank line before comment if it's the first content after the PHP open tag
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Functions.FunctionDeclarationArgumentSpacing now has more accurate error messages
+    -- This includes renaming the SpaceAfterDefault error code to SpaceAfterEquals, which reflects the real error
   - Squiz.Functions.FunctionDeclarationArgumentSpacing now checks for no space after a reference operator
     -- If you don't want this new behaviour, exclude the SpacingAfterReference error message in a ruleset.xml file
   - Squiz.Functions.FunctionDeclarationArgumentSpacing now checks for no space after a variadic operator

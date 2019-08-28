@@ -213,7 +213,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
                         $spacesAfter,
                     ];
 
-                    $fix = $phpcsFile->addFixableError($error, $equalToken, 'SpaceAfterDefault', $data);
+                    $fix = $phpcsFile->addFixableError($error, $equalToken, 'SpaceAfterEquals', $data);
                     if ($fix === true) {
                         $padding = str_repeat(' ', $this->equalsSpacing);
                         if ($spacesAfter === 0) {
