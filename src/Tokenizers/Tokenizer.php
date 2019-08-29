@@ -1291,6 +1291,7 @@ abstract class Tokenizer
                                     T_OBJECT_OPERATOR  => true,
                                     T_COMMA            => true,
                                     T_OPEN_PARENTHESIS => true,
+                                    T_SEMICOLON        => true,
                                 ];
 
                                 if (isset($disallowed[$this->tokens[$x]['code']]) === true) {

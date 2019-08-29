@@ -238,3 +238,9 @@ if ($bar)
 if (true) $callable = function () {
     return true;
 };
+
+foreach ([] as $a)
+echo 'bar';
+{
+    echo 'baz';
+}
