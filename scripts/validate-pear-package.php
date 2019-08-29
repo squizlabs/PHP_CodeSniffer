@@ -12,7 +12,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-require_once __DIR__.'/ValidatePEAR/FileList.php';
+require_once dirname(__DIR__).'/tests/FileList.php';
 require_once __DIR__.'/ValidatePEAR/ValidatePEARPackageXML.php';
 
 $validate = new ValidatePEARPackageXML();

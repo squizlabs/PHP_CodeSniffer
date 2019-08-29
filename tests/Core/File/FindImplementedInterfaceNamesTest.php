@@ -9,54 +9,10 @@
 
 namespace PHP_CodeSniffer\Tests\Core\File;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Files\DummyFile;
-use PHPUnit\Framework\TestCase;
+use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 
-class FindImplementedInterfaceNamesTest extends TestCase
+class FindImplementedInterfaceNamesTest extends AbstractMethodUnitTest
 {
-
-    /**
-     * The \PHP_CodeSniffer\Files\File object containing parsed contents of the test case file.
-     *
-     * @var \PHP_CodeSniffer\Files\File
-     */
-    private $phpcsFile;
-
-
-    /**
-     * Initialize & tokenize \PHP_CodeSniffer\Files\File with code from the test case file.
-     *
-     * Methods used for these tests can be found in a test case file in the same
-     * directory and with the same name, using the .inc extension.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-
-        $ruleset = new Ruleset($config);
-
-        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
-        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
-        $this->phpcsFile->process();
-
-    }//end setUp()
-
-
-    /**
-     * Clean up after finished test.
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        unset($this->phpcsFile);
-
-    }//end tearDown()
 
 
     /**
@@ -71,17 +27,8 @@ class FindImplementedInterfaceNamesTest extends TestCase
      */
     public function testFindImplementedInterfaceNames($identifier, $expected)
     {
-        $start   = ($this->phpcsFile->numTokens - 1);
-        $delim   = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            $identifier
-        );
-        $OOToken = $this->phpcsFile->findNext([T_CLASS, T_ANON_CLASS, T_INTERFACE], ($delim + 1));
-
-        $result = $this->phpcsFile->findImplementedInterfaceNames($OOToken);
+        $OOToken = $this->getTargetToken($identifier, [T_CLASS, T_ANON_CLASS, T_INTERFACE]);
+        $result  = self::$phpcsFile->findImplementedInterfaceNames($OOToken);
         $this->assertSame($expected, $result);
 
     }//end testFindImplementedInterfaceNames()

@@ -9,54 +9,10 @@
 
 namespace PHP_CodeSniffer\Tests\Core\File;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Files\DummyFile;
-use PHPUnit\Framework\TestCase;
+use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 
-class GetMemberPropertiesTest extends TestCase
+class GetMemberPropertiesTest extends AbstractMethodUnitTest
 {
-
-    /**
-     * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
-     *
-     * @var \PHP_CodeSniffer\Files\File
-     */
-    private $phpcsFile;
-
-
-    /**
-     * Initialize & tokenize PHP_CodeSniffer_File with code from the test case file.
-     *
-     * Methods used for these tests can be found in a test case file in the same
-     * directory and with the same name, using the .inc extension.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-
-        $ruleset = new Ruleset($config);
-
-        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
-        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
-        $this->phpcsFile->process();
-
-    }//end setUp()
-
-
-    /**
-     * Clean up after finished test.
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        unset($this->phpcsFile);
-
-    }//end tearDown()
 
 
     /**
@@ -71,20 +27,10 @@ class GetMemberPropertiesTest extends TestCase
      */
     public function testGetMemberProperties($identifier, $expected)
     {
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $delim    = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            $identifier
-        );
-        $variable = $this->phpcsFile->findNext(T_VARIABLE, ($delim + 1));
+        $variable = $this->getTargetToken($identifier, T_VARIABLE);
+        $result   = self::$phpcsFile->getMemberProperties($variable);
 
-        $result = $this->phpcsFile->getMemberProperties($variable);
-        unset($result['type_token']);
-        unset($result['type_end_token']);
-        $this->assertSame($expected, $result);
+        $this->assertArraySubset($expected, $result, true);
 
     }//end testGetMemberProperties()
 
@@ -532,17 +478,8 @@ class GetMemberPropertiesTest extends TestCase
      */
     public function testNotClassPropertyException($identifier)
     {
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $delim    = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            $identifier
-        );
-        $variable = $this->phpcsFile->findNext(T_VARIABLE, ($delim + 1));
-
-        $result = $this->phpcsFile->getMemberProperties($variable);
+        $variable = $this->getTargetToken($identifier, T_VARIABLE);
+        $result   = self::$phpcsFile->getMemberProperties($variable);
 
     }//end testNotClassPropertyException()
 
@@ -578,17 +515,8 @@ class GetMemberPropertiesTest extends TestCase
      */
     public function testNotAVariableException()
     {
-        $start = ($this->phpcsFile->numTokens - 1);
-        $delim = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testNotAVariable */'
-        );
-        $next  = $this->phpcsFile->findNext(T_WHITESPACE, ($delim + 1), null, true);
-
-        $result = $this->phpcsFile->getMemberProperties($next);
+        $next   = $this->getTargetToken('/* testNotAVariable */', T_RETURN);
+        $result = self::$phpcsFile->getMemberProperties($next);
 
     }//end testNotAVariableException()
 

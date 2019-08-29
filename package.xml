@@ -209,6 +209,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <file baseinstalldir="" name="AcceptTest.php" role="test" />
       </dir>
      </dir>
+     <file baseinstalldir="" name="AbstractMethodUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllTests.php" role="test" />
      <file baseinstalldir="" name="ErrorSuppressionTest.php" role="test" />
      <file baseinstalldir="" name="IsCamelCapsTest.php" role="test" />
@@ -219,6 +220,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     </dir>
     <file baseinstalldir="" name="AllTests.php" role="test" />
     <file baseinstalldir="" name="bootstrap.php" role="test" />
+    <file baseinstalldir="" name="FileList.php" role="test" />
     <file baseinstalldir="" name="TestSuite.php" role="test" />
     <file baseinstalldir="" name="TestSuite7.php" role="test" />
    </dir>
@@ -1962,9 +1964,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="LICENCE" name="licence.txt" />
    <install as="phpunit.xml" name="phpunit.xml.dist" />
    <install as="AllTests.php" name="tests/AllTests.php" />
+   <install as="FileList.php" name="tests/FileList.php" />
    <install as="TestSuite.php" name="tests/TestSuite.php" />
    <install as="TestSuite7.php" name="tests/TestSuite7.php" />
    <install as="tests/bootstrap.php" name="tests/bootstrap.php" />
+   <install as="CodeSniffer/Core/AbstractMethodUnitTest.php" name="tests/Core/AbstractMethodUnitTest.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
@@ -1998,8 +2002,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="phpunit.xml" name="phpunit.xml.dist" />
    <install as="tests/AllTests.php" name="tests/AllTests.php" />
    <install as="tests/bootstrap.php" name="tests/bootstrap.php" />
+   <install as="tests/FileList.php" name="tests/FileList.php" />
    <install as="tests/TestSuite.php" name="tests/TestSuite.php" />
    <install as="tests/TestSuite7.php" name="tests/TestSuite7.php" />
+   <install as="CodeSniffer/Core/AbstractMethodUnitTest.php" name="tests/Core/AbstractMethodUnitTest.php" />
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />

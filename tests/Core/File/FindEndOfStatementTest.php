@@ -9,54 +9,10 @@
 
 namespace PHP_CodeSniffer\Tests\Core\File;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Files\DummyFile;
-use PHPUnit\Framework\TestCase;
+use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 
-class FindEndOfStatementTest extends TestCase
+class FindEndOfStatementTest extends AbstractMethodUnitTest
 {
-
-    /**
-     * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
-     *
-     * @var \PHP_CodeSniffer\Files\File
-     */
-    private $phpcsFile;
-
-
-    /**
-     * Initialize & tokenize \PHP_CodeSniffer\Files\File with code from the test case file.
-     *
-     * Methods used for these tests can be found in a test case file in the same
-     * directory and with the same name, using the .inc extension.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-
-        $ruleset = new Ruleset($config);
-
-        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
-        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
-        $this->phpcsFile->process();
-
-    }//end setUp()
-
-
-    /**
-     * Clean up after finished test.
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        unset($this->phpcsFile);
-
-    }//end tearDown()
 
 
     /**
@@ -66,10 +22,10 @@ class FindEndOfStatementTest extends TestCase
      */
     public function testSimpleAssignment()
     {
-        $start = ($this->phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testSimpleAssignment */') + 2);
-        $found = $this->phpcsFile->findEndOfStatement($start);
+        $start = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testSimpleAssignment */') + 2);
+        $found = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 5)], $tokens[$found]);
 
     }//end testSimpleAssignment()
@@ -82,10 +38,10 @@ class FindEndOfStatementTest extends TestCase
      */
     public function testControlStructure()
     {
-        $start = ($this->phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testControlStructure */') + 2);
-        $found = $this->phpcsFile->findEndOfStatement($start);
+        $start = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testControlStructure */') + 2);
+        $found = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 6)], $tokens[$found]);
 
     }//end testControlStructure()
@@ -98,10 +54,10 @@ class FindEndOfStatementTest extends TestCase
      */
     public function testClosureAssignment()
     {
-        $start = ($this->phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testClosureAssignment */') + 2);
-        $found = $this->phpcsFile->findEndOfStatement($start);
+        $start = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testClosureAssignment */') + 2);
+        $found = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 13)], $tokens[$found]);
 
     }//end testClosureAssignment()
@@ -115,24 +71,24 @@ class FindEndOfStatementTest extends TestCase
     public function testHeredocFunctionArg()
     {
         // Find the end of the function.
-        $start = ($this->phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testHeredocFunctionArg */') + 2);
-        $found = $this->phpcsFile->findEndOfStatement($start);
+        $start = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testHeredocFunctionArg */') + 2);
+        $found = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 10)], $tokens[$found]);
 
         // Find the end of the heredoc.
         $start += 2;
-        $found  = $this->phpcsFile->findEndOfStatement($start);
+        $found  = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 4)], $tokens[$found]);
 
         // Find the end of the last arg.
         $start = ($found + 2);
-        $found = $this->phpcsFile->findEndOfStatement($start);
+        $found = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[$start], $tokens[$found]);
 
     }//end testHeredocFunctionArg()
@@ -146,24 +102,24 @@ class FindEndOfStatementTest extends TestCase
     public function testSwitch()
     {
         // Find the end of the switch.
-        $start = ($this->phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testSwitch */') + 2);
-        $found = $this->phpcsFile->findEndOfStatement($start);
+        $start = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testSwitch */') + 2);
+        $found = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 28)], $tokens[$found]);
 
         // Find the end of the case.
         $start += 9;
-        $found  = $this->phpcsFile->findEndOfStatement($start);
+        $found  = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 8)], $tokens[$found]);
 
         // Find the end of default case.
         $start += 11;
-        $found  = $this->phpcsFile->findEndOfStatement($start);
+        $found  = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 6)], $tokens[$found]);
 
     }//end testSwitch()
@@ -177,24 +133,24 @@ class FindEndOfStatementTest extends TestCase
     public function testStatementAsArrayValue()
     {
         // Test short array syntax.
-        $start = ($this->phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testStatementAsArrayValue */') + 7);
-        $found = $this->phpcsFile->findEndOfStatement($start);
+        $start = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testStatementAsArrayValue */') + 7);
+        $found = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 2)], $tokens[$found]);
 
         // Test long array syntax.
         $start += 12;
-        $found  = $this->phpcsFile->findEndOfStatement($start);
+        $found  = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 2)], $tokens[$found]);
 
         // Test same statement outside of array.
         $start += 10;
-        $found  = $this->phpcsFile->findEndOfStatement($start);
+        $found  = self::$phpcsFile->findEndOfStatement($start);
 
-        $tokens = $this->phpcsFile->getTokens();
+        $tokens = self::$phpcsFile->getTokens();
         $this->assertSame($tokens[($start + 3)], $tokens[$found]);
 
     }//end testStatementAsArrayValue()

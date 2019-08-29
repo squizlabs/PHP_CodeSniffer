@@ -9,54 +9,10 @@
 
 namespace PHP_CodeSniffer\Tests\Core\File;
 
-use PHP_CodeSniffer\Config;
-use PHP_CodeSniffer\Ruleset;
-use PHP_CodeSniffer\Files\DummyFile;
-use PHPUnit\Framework\TestCase;
+use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 
-class GetMethodParametersTest extends TestCase
+class GetMethodParametersTest extends AbstractMethodUnitTest
 {
-
-    /**
-     * The PHP_CodeSniffer_File object containing parsed contents of the test case file.
-     *
-     * @var \PHP_CodeSniffer\Files\File
-     */
-    private $phpcsFile;
-
-
-    /**
-     * Initialize & tokenize PHP_CodeSniffer_File with code from the test case file.
-     *
-     * Methods used for these tests can be found in a test case file in the same
-     * directory and with the same name, using the .inc extension.
-     *
-     * @return void
-     */
-    public function setUp()
-    {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-
-        $ruleset = new Ruleset($config);
-
-        $pathToTestFile  = dirname(__FILE__).'/'.basename(__FILE__, '.php').'.inc';
-        $this->phpcsFile = new DummyFile(file_get_contents($pathToTestFile), $ruleset, $config);
-        $this->phpcsFile->process();
-
-    }//end setUp()
-
-
-    /**
-     * Clean up after finished test.
-     *
-     * @return void
-     */
-    public function tearDown()
-    {
-        unset($this->phpcsFile);
-
-    }//end tearDown()
 
 
     /**
@@ -76,23 +32,7 @@ class GetMethodParametersTest extends TestCase
             'nullable_type'     => false,
         ];
 
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $function = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testPassByReference */'
-        );
-
-        $found = $this->phpcsFile->getMethodParameters(($function + 2));
-        unset($found[0]['token']);
-        unset($found[0]['type_hint_token']);
-        unset($found[0]['type_hint_end_token']);
-        unset($found[0]['comma_token']);
-        unset($found[0]['reference_token']);
-        unset($found[0]['variadic_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testPassByReference()
 
@@ -114,23 +54,7 @@ class GetMethodParametersTest extends TestCase
             'nullable_type'     => false,
         ];
 
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $function = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testArrayHint */'
-        );
-
-        $found = $this->phpcsFile->getMethodParameters(($function + 2));
-        unset($found[0]['token']);
-        unset($found[0]['type_hint_token']);
-        unset($found[0]['type_hint_end_token']);
-        unset($found[0]['comma_token']);
-        unset($found[0]['reference_token']);
-        unset($found[0]['variadic_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testArrayHint()
 
@@ -161,29 +85,7 @@ class GetMethodParametersTest extends TestCase
             'nullable_type'     => false,
         ];
 
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $function = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testTypeHint */'
-        );
-
-        $found = $this->phpcsFile->getMethodParameters(($function + 2));
-        unset($found[0]['token']);
-        unset($found[1]['token']);
-        unset($found[0]['type_hint_token']);
-        unset($found[1]['type_hint_token']);
-        unset($found[0]['type_hint_end_token']);
-        unset($found[1]['type_hint_end_token']);
-        unset($found[0]['comma_token']);
-        unset($found[1]['comma_token']);
-        unset($found[0]['reference_token']);
-        unset($found[1]['reference_token']);
-        unset($found[0]['variadic_token']);
-        unset($found[1]['variadic_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testTypeHint()
 
@@ -205,23 +107,7 @@ class GetMethodParametersTest extends TestCase
             'nullable_type'     => false,
         ];
 
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $function = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testSelfTypeHint */'
-        );
-
-        $found = $this->phpcsFile->getMethodParameters(($function + 2));
-        unset($found[0]['token']);
-        unset($found[0]['type_hint_token']);
-        unset($found[0]['type_hint_end_token']);
-        unset($found[0]['comma_token']);
-        unset($found[0]['reference_token']);
-        unset($found[0]['variadic_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testSelfTypeHint()
 
@@ -252,29 +138,7 @@ class GetMethodParametersTest extends TestCase
             'nullable_type'     => true,
         ];
 
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $function = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testNullableTypeHint */'
-        );
-
-        $found = $this->phpcsFile->getMethodParameters(($function + 2));
-        unset($found[0]['token']);
-        unset($found[1]['token']);
-        unset($found[0]['type_hint_token']);
-        unset($found[1]['type_hint_token']);
-        unset($found[0]['type_hint_end_token']);
-        unset($found[1]['type_hint_end_token']);
-        unset($found[0]['comma_token']);
-        unset($found[1]['comma_token']);
-        unset($found[0]['reference_token']);
-        unset($found[1]['reference_token']);
-        unset($found[0]['variadic_token']);
-        unset($found[1]['variadic_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testNullableTypeHint()
 
@@ -296,23 +160,7 @@ class GetMethodParametersTest extends TestCase
             'nullable_type'     => false,
         ];
 
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $function = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testVariable */'
-        );
-
-        $found = $this->phpcsFile->getMethodParameters(($function + 2));
-        unset($found[0]['token']);
-        unset($found[0]['type_hint_token']);
-        unset($found[0]['type_hint_end_token']);
-        unset($found[0]['comma_token']);
-        unset($found[0]['reference_token']);
-        unset($found[0]['variadic_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testVariable()
 
@@ -335,25 +183,7 @@ class GetMethodParametersTest extends TestCase
             'nullable_type'     => false,
         ];
 
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $function = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testSingleDefaultValue */'
-        );
-
-        $found = $this->phpcsFile->getMethodParameters(($function + 2));
-        unset($found[0]['token']);
-        unset($found[0]['type_hint_token']);
-        unset($found[0]['type_hint_end_token']);
-        unset($found[0]['comma_token']);
-        unset($found[0]['reference_token']);
-        unset($found[0]['variadic_token']);
-        unset($found[0]['default_token']);
-        unset($found[0]['default_equal_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testSingleDefaultValue()
 
@@ -385,33 +215,7 @@ class GetMethodParametersTest extends TestCase
             'nullable_type'     => false,
         ];
 
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $function = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testDefaultValues */'
-        );
-
-        $found = $this->phpcsFile->getMethodParameters(($function + 2));
-        unset($found[0]['token']);
-        unset($found[1]['token']);
-        unset($found[0]['type_hint_token']);
-        unset($found[1]['type_hint_token']);
-        unset($found[0]['type_hint_end_token']);
-        unset($found[1]['type_hint_end_token']);
-        unset($found[0]['comma_token']);
-        unset($found[1]['comma_token']);
-        unset($found[0]['reference_token']);
-        unset($found[1]['reference_token']);
-        unset($found[0]['variadic_token']);
-        unset($found[1]['variadic_token']);
-        unset($found[0]['default_token']);
-        unset($found[1]['default_token']);
-        unset($found[0]['default_equal_token']);
-        unset($found[1]['default_equal_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testDefaultValues()
 
@@ -434,27 +238,27 @@ class GetMethodParametersTest extends TestCase
             'nullable_type'     => false,
         ];
 
-        $start    = ($this->phpcsFile->numTokens - 1);
-        $function = $this->phpcsFile->findPrevious(
-            T_COMMENT,
-            $start,
-            null,
-            false,
-            '/* testBitwiseAndConstantExpressionDefaultValue */'
-        );
-
-        $found = $this->phpcsFile->getMethodParameters(($function + 2));
-        unset($found[0]['token']);
-        unset($found[0]['type_hint_token']);
-        unset($found[0]['type_hint_end_token']);
-        unset($found[0]['comma_token']);
-        unset($found[0]['reference_token']);
-        unset($found[0]['variadic_token']);
-        unset($found[0]['default_token']);
-        unset($found[0]['default_equal_token']);
-        $this->assertSame($expected, $found);
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testBitwiseAndConstantExpressionDefaultValue()
+
+
+    /**
+     * Test helper.
+     *
+     * @param string $commentString The comment which preceeds the test.
+     * @param array  $expected      The expected function output.
+     *
+     * @return void
+     */
+    private function getMethodParametersTestHelper($commentString, $expected)
+    {
+        $function = $this->getTargetToken($commentString, [T_FUNCTION]);
+        $found    = self::$phpcsFile->getMethodParameters($function);
+
+        $this->assertArraySubset($expected, $found, true);
+
+    }//end getMethodParametersTestHelper()
 
 
 }//end class

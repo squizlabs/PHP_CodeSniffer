@@ -1,19 +1,14 @@
 <?php
 /**
- * Retrieve a filtered file list.
+ * Class to retrieve a filtered file list.
  *
- * PHP version 5
- *
- * @category  PHP
- * @package   PHP_CodeSniffer
  * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
  * @copyright 2019 Juliette Reinders Folmer. All rights reserved.
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-/**
- * Class to create a file list with filtering.
- */
+namespace PHP_CodeSniffer\Tests;
+
 class FileList
 {
 
@@ -29,7 +24,7 @@ class FileList
      *
      * @var \DirectoryIterator
      */
-    protected $fileIterator;
+    public $fileIterator;
 
     /**
      * Base regex to use if no filter regex is provided.

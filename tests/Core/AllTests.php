@@ -3,25 +3,16 @@
  * A test class for testing the core.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
+ * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
 namespace PHP_CodeSniffer\Tests\Core;
 
+use PHP_CodeSniffer\Tests\FileList;
 use PHPUnit\TextUI\TestRunner;
 use PHPUnit\Framework\TestSuite;
-
-require_once 'IsCamelCapsTest.php';
-require_once 'ErrorSuppressionTest.php';
-require_once 'File/FindEndOfStatementTest.php';
-require_once 'File/FindExtendedClassNameTest.php';
-require_once 'File/FindImplementedInterfaceNamesTest.php';
-require_once 'File/GetMemberPropertiesTest.php';
-require_once 'File/GetMethodParametersTest.php';
-require_once 'File/GetMethodPropertiesTest.php';
-require_once 'File/IsReferenceTest.php';
-require_once 'Filters/Filter/AcceptTest.php';
 
 class AllTests
 {
@@ -47,16 +38,23 @@ class AllTests
     public static function suite()
     {
         $suite = new TestSuite('PHP CodeSniffer Core');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\IsCamelCapsTest');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\ErrorSuppressionTest');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\FindEndOfStatementTest');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\FindExtendedClassNameTest');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\FindImplementedInterfaceNamesTest');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\GetMemberPropertiesTest');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\GetMethodParametersTest');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\GetMethodPropertiesTest');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\File\IsReferenceTest');
-        $suite->addTestSuite('PHP_CodeSniffer\Tests\Core\Filters\Filter\AcceptTest');
+
+        $testFileIterator = new FileList(__DIR__, '', '`Test\.php$`Di');
+        foreach ($testFileIterator->fileIterator as $file) {
+            if (strpos($file, 'AbstractMethodUnitTest.php') !== false) {
+                continue;
+            }
+
+            include_once $file;
+
+            $class = str_replace(__DIR__, '', $file);
+            $class = str_replace('.php', '', $class);
+            $class = str_replace('/', '\\', $class);
+            $class = 'PHP_CodeSniffer\Tests\Core'.$class;
+
+            $suite->addTestSuite($class);
+        }
+
         return $suite;
 
     }//end suite()
