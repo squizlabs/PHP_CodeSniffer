@@ -69,6 +69,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Enforce the use of a strict types declaration in PHP files
   - Added PSR12.Files.DeclareStatement sniff
     -- Enforces the formatting of declare statements within a file
+  - Added PSR12.Files.FileHeader sniff
+    -- Enforces the order and formatting of file header blocks
   - Added PSR12.Files.ImportStatement sniff
     -- Enforces the formatting of import statements within a file
   - Added PSR12.Functions.ReturnTypeDeclaration sniff
@@ -1114,6 +1116,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Files">
         <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementSniff.php" role="php" />
        </dir>
        <dir name="Functions">
@@ -1146,6 +1149,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.php" role="test" />
        </dir>
