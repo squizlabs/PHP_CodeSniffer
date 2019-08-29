@@ -26,3 +26,6 @@ switch ($a) {
 $a = [new Datetime];
 $a = array(new Datetime);
 $a = new Datetime;
+
+/* testUseGroup */
+use Vendor\Package\{ClassA as A, ClassB, ClassC as C};

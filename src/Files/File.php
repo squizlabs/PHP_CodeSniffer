@@ -2343,6 +2343,11 @@ class File
                 && $i === $this->tokens[$i]['parenthesis_opener']
             ) {
                 $i = $this->tokens[$i]['parenthesis_closer'];
+            } else if ($this->tokens[$i]['code'] === T_OPEN_USE_GROUP) {
+                $end = $this->findNext(T_CLOSE_USE_GROUP, ($i + 1));
+                if ($end !== false) {
+                    $i = $end;
+                }
             }
 
             if (isset(Util\Tokens::$emptyTokens[$this->tokens[$i]['code']]) === false) {
