@@ -1151,8 +1151,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.4.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.php" role="test" />

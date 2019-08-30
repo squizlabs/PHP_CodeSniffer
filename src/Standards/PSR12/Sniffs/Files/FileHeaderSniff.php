@@ -147,8 +147,27 @@ class FileHeaderSniff implements Sniff
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($line['end'] + 1), null, true);
                 if ($tokens[$next]['line'] !== ($tokens[$line['end']]['line'] + 2)) {
                     $error = 'Header blocks must be followed by a single blank line';
-                    $phpcsFile->addError($error, $line['end'], 'SpacingAfterBlock');
-                }
+                    $fix = $phpcsFile->addFixableError($error, $line['end'], 'SpacingAfterBlock');
+                    if ($fix === true) {
+                        if ($tokens[$next]['line'] === $tokens[$line['end']]['line']) {
+                            $phpcsFile->fixer->addNewlineBefore($next);
+                            $phpcsFile->fixer->addNewlineBefore($next);
+                        } else if ($tokens[$next]['line'] === ($tokens[$line['end']]['line'] + 1)) {
+                            $phpcsFile->fixer->addNewline($line['end']);
+                        } else {
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($i = ($line['end'] + 1); $i < $next; $i++) {
+                                if ($tokens[$i]['line'] === ($tokens[$line['end']]['line'] + 2)) {
+                                    break;
+                                }
+
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }
+                    }//end if
+                }//end if
 
                 // Make sure we haven't seen this next block before.
                 if (isset($headerLines[($i + 1)]) === true
@@ -168,7 +187,23 @@ class FileHeaderSniff implements Sniff
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($line['end'] + 1), null, true);
                 if ($tokens[$next]['line'] > ($tokens[$line['end']]['line'] + 1)) {
                     $error = 'Header blocks must not contain blank lines';
-                    $phpcsFile->addError($error, $line['end'], 'SpacingInsideBlock');
+                    $fix   = $phpcsFile->addFixableError($error, $line['end'], 'SpacingInsideBlock');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($line['end'] + 1); $i < $next; $i++) {
+                            if ($tokens[$i]['line'] === $tokens[$line['end']]['line']) {
+                                continue;
+                            }
+
+                            if ($tokens[$i]['line'] === $tokens[$next]['line']) {
+                                break;
+                            }
+
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
+                    }
                 }
             }//end if
 
