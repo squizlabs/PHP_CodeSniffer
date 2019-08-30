@@ -48,6 +48,8 @@ class FileHeaderUnitTest extends AbstractSniffUnitTest
                 3 => 1,
                 7 => 1,
             ];
+        case 'FileHeaderUnitTest.5.inc':
+            return [4 => 1];
         default:
             return [];
         }//end switch

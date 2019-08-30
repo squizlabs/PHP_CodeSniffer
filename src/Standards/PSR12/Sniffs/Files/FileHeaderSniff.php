@@ -130,6 +130,13 @@ class FileHeaderSniff implements Sniff
             $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
         } while ($next !== false);
 
+        if (count($headerLines) === 1) {
+            // This is only an open tag and doesn't contain the file header.
+            // We need to keep checking for one in case they put it further
+            // down in the file.
+            return;
+        }
+
         /*
             Next, check the spacing and grouping of the statements
             inside each header block.
@@ -213,7 +220,7 @@ class FileHeaderSniff implements Sniff
         }//end foreach
 
         /*
-            Finally, check that the order of the header blocks
+            Next, check that the order of the header blocks
             is correct:
                 Opening php tag.
                 File-level docblock.
@@ -268,6 +275,18 @@ class FileHeaderSniff implements Sniff
                 $phpcsFile->addError($error, $found[$type]['start'], 'IncorrectOrder', $data);
             }//end if
         }//end foreach
+
+        /*
+            Finally, make sure this header block is at the very
+            top of the file.
+        */
+
+        if ($stackPtr !== 0) {
+            $error = 'The file header must be the first content in the file';
+            $phpcsFile->addError($error, $stackPtr, 'HeaderPosition');
+        }
+
+        return $phpcsFile->numTokens;
 
     }//end process()
 
