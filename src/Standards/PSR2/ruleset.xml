@@ -146,7 +146,7 @@
     <!-- 4.6 Method and Function Calls -->
 
     <!-- When making a method or function call, there MUST NOT be a space between the method or function name and the opening parenthesis, there MUST NOT be a space after the opening parenthesis, and there MUST NOT be a space before the closing parenthesis. In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma.
-         Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line. -->
+    Argument lists MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one argument per line. -->
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
     <rule ref="PSR2.Methods.FunctionCallSignature.SpaceAfterCloseBracket">
         <severity>0</severity>
@@ -179,8 +179,16 @@
     <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
     <!-- checked by PSR2.ControlStructures.ControlStructureSpacing -->
 
-    <!-- exclude this message as it is already checked Generic.PHP.LowerCaseKeyword -->
+    <!-- exclude this message as it is already checked by Generic.PHP.LowerCaseKeyword -->
     <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.AsNotLower">
+        <severity>0</severity>
+    </rule>
+
+    <!-- exclude these messages as they are already checked by PSR2.ControlStructures.ControlStructureSpacing -->
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceAfterOpen">
+        <severity>0</severity>
+    </rule>
+    <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration.SpaceBeforeClose">
         <severity>0</severity>
     </rule>
 
