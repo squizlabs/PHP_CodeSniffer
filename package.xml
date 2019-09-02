@@ -73,6 +73,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Enforces the order and formatting of file header blocks
   - Added PSR12.Files.ImportStatement sniff
     -- Enforces the formatting of import statements within a file
+  - Added PSR12.Files.OpenTag sniff
+    -- Enforces that the open tag is on a line by itself when used at the start of a php-only file
   - Added PSR12.Functions.ReturnTypeDeclaration sniff
     -- Enforces the formatting of return type declarations in functions and closures
   - Added PSR12.Properties.ConstantVisibility sniff
@@ -1118,6 +1120,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpenTagSniff.php" role="php" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationSniff.php" role="php" />
@@ -1159,6 +1162,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.2.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.php" role="test" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationUnitTest.inc" role="test" />
