@@ -67,6 +67,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Mponos George for the contribution
   - Added Generic.PHP.RequireStrictTypes sniff
     -- Enforce the use of a strict types declaration in PHP files
+  - Added PSR12.ControlStructures.BooleanOperatorPlacement sniff
+    -- Enforces that boolean operators between conditions are consistently at the start or end of the line
   - Added PSR12.Files.DeclareStatement sniff
     -- Enforces the formatting of declare statements within a file
   - Added PSR12.Files.FileHeader sniff
@@ -1116,6 +1118,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Classes">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationSniff.php" role="php" />
        </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementSniff.php" role="php" />
+       </dir>
        <dir name="Files">
         <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderSniff.php" role="php" />
@@ -1147,6 +1152,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.php" role="test" />
+       </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementUnitTest.php" role="test" />
        </dir>
        <dir name="Files">
         <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementUnitTest.inc" role="test" />
