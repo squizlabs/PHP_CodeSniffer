@@ -54,6 +54,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The T_LIST token and it's opening and closing parentheses now contain references to each other in the tokens array
     -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
     -- Thanks to Juliette Reinders Folmer for the patch
+  - The T_ANON_CLASS token and it's opening and closing parentheses now contain references to each other in the tokens array
+    -- Uses the same parenthesis_opener/closer/owner indexes as other tokens
+    -- Only applicable if the anon class is passing arguments to the constructor
+    -- Thanks to Juliette Reinders Folmer for the patch
   - The PHP 7.4 T_BAD_CHARACTER token has been made available for older versions
     -- Allows you to safely look for this token, but it will not appear unless checking with PHP 7.4+
   - Metrics are now available for Squiz.WhiteSpace.FunctionSpacing

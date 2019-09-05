@@ -7,11 +7,11 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core\Tokenizer\PHP;
+namespace PHP_CodeSniffer\Tests\Core\Tokenizer;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 
-class T_AnonClassParenthesisOwnerTest extends AbstractMethodUnitTest
+class AnonClassParenthesisOwnerTest extends AbstractMethodUnitTest
 {
 
 
