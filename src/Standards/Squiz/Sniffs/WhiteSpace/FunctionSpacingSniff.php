@@ -310,6 +310,10 @@ class FunctionSpacingSniff implements Sniff
                 if ($nextSpace === false) {
                     $nextSpace = ($stackPtr - 1);
                 }
+                
+                if ($requiredSpacing === 0) {
+                    $nextSpace++;
+                }
 
                 if ($foundLines < $requiredSpacing) {
                     $padding = str_repeat($phpcsFile->eolChar, ($requiredSpacing - $foundLines));
