@@ -344,18 +344,19 @@ final class Tokens
      * @var array<int, int>
      */
     public static $parenthesisOpeners = [
-        T_ARRAY    => T_ARRAY,
-        T_LIST     => T_LIST,
-        T_FUNCTION => T_FUNCTION,
-        T_CLOSURE  => T_CLOSURE,
-        T_WHILE    => T_WHILE,
-        T_FOR      => T_FOR,
-        T_FOREACH  => T_FOREACH,
-        T_SWITCH   => T_SWITCH,
-        T_IF       => T_IF,
-        T_ELSEIF   => T_ELSEIF,
-        T_CATCH    => T_CATCH,
-        T_DECLARE  => T_DECLARE,
+        T_ARRAY      => T_ARRAY,
+        T_LIST       => T_LIST,
+        T_FUNCTION   => T_FUNCTION,
+        T_CLOSURE    => T_CLOSURE,
+        T_ANON_CLASS => T_ANON_CLASS,
+        T_WHILE      => T_WHILE,
+        T_FOR        => T_FOR,
+        T_FOREACH    => T_FOREACH,
+        T_SWITCH     => T_SWITCH,
+        T_IF         => T_IF,
+        T_ELSEIF     => T_ELSEIF,
+        T_CATCH      => T_CATCH,
+        T_DECLARE    => T_DECLARE,
     ];
 
     /**

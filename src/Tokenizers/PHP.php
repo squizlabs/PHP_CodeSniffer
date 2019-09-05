@@ -1559,6 +1559,23 @@ class PHP extends Tokenizer
                         echo "\t* token $i on line $line changed from T_CLASS to T_ANON_CLASS".PHP_EOL;
                     }
 
+                    if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS
+                        && isset($this->tokens[$x]['parenthesis_closer']) === true
+                    ) {
+                        $closer = $this->tokens[$x]['parenthesis_closer'];
+
+                        $this->tokens[$i]['parenthesis_opener']     = $x;
+                        $this->tokens[$i]['parenthesis_closer']     = $closer;
+                        $this->tokens[$i]['parenthesis_owner']      = $i;
+                        $this->tokens[$x]['parenthesis_owner']      = $i;
+                        $this->tokens[$closer]['parenthesis_owner'] = $i;
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $line = $this->tokens[$i]['line'];
+                            echo "\t\t* added parenthesis keys to T_ANON_CLASS token $i on line $line".PHP_EOL;
+                        }
+                    }
+
                     for ($x = ($this->tokens[$i]['scope_opener'] + 1); $x < $this->tokens[$i]['scope_closer']; $x++) {
                         if (isset($this->tokens[$x]['conditions'][$i]) === false) {
                             continue;
@@ -1570,7 +1587,7 @@ class PHP extends Tokenizer
                             echo "\t\t* cleaned $x ($type) *".PHP_EOL;
                         }
                     }
-                }
+                }//end if
 
                 continue;
             } else if ($this->tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
