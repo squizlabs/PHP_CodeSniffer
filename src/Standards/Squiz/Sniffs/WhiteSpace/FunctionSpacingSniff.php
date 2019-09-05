@@ -310,7 +310,7 @@ class FunctionSpacingSniff implements Sniff
                 if ($nextSpace === false) {
                     $nextSpace = ($stackPtr - 1);
                 }
-                
+
                 if ($requiredSpacing === 0) {
                     $nextSpace++;
                 }
