@@ -115,6 +115,7 @@
     <!-- 4. Classes, Properties, and Methods -->
 
     <!-- Any closing brace MUST NOT be followed by any comment or statement on the same line. -->
+    <!-- checked by PSR12.Classes.ClosingBrace -->
 
     <!-- When instantiating a new class, parentheses MUST always be present even when there are no arguments passed to the constructor. -->
     <!-- checked by PSR12.Classes.ClassInstantiation -->

@@ -67,6 +67,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Mponos George for the contribution
   - Added Generic.PHP.RequireStrictTypes sniff
     -- Enforce the use of a strict types declaration in PHP files
+  - Added PSR12.Classes.ClosingBrace sniff
+    -- Enforces that closing braces of classes/interfaces/traits/functions are not followed by a comment or statement
   - Added PSR12.ControlStructures.BooleanOperatorPlacement sniff
     -- Enforces that boolean operators between conditions are consistently at the start or end of the line
   - Added PSR12.ControlStructures.ControlStructureSpacing sniff
@@ -1119,6 +1121,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <dir name="Sniffs">
        <dir name="Classes">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceSniff.php" role="php" />
        </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementSniff.php" role="php" />
@@ -1155,6 +1158,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceUnitTest.php" role="test" />
        </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementUnitTest.inc" role="test" />
