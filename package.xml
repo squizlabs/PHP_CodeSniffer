@@ -224,10 +224,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
      </dir>
      <dir name="Tokenizer">
-      <dir name="PHP">
-       <file baseinstalldir="" name="T_AnonClassParenthesisOwnerTest.inc" role="test" />
-       <file baseinstalldir="" name="T_AnonClassParenthesisOwnerTest.php" role="test" />
-      </dir>
+      <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.inc" role="test" />
+      <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.php" role="test" />
      </dir>
      <file baseinstalldir="" name="AbstractMethodUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllTests.php" role="test" />
@@ -2039,8 +2037,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.php" name="tests/Core/Filters/Filter/AcceptTest.php" />
    <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.xml" name="tests/Core/Filters/Filter/AcceptTest.xml" />
-   <install as="CodeSniffer/Core/Tokenizer/PHP/T_AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/PHP/T_AnonClassParenthesisOwnerTest.php" />
-   <install as="CodeSniffer/Core/Tokenizer/PHP/T_AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/PHP/T_AnonClassParenthesisOwnerTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -2078,8 +2076,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.php" name="tests/Core/Filters/Filter/AcceptTest.php" />
    <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.xml" name="tests/Core/Filters/Filter/AcceptTest.xml" />
-   <install as="CodeSniffer/Core/Tokenizer/PHP/T_AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/PHP/T_AnonClassParenthesisOwnerTest.php" />
-   <install as="CodeSniffer/Core/Tokenizer/PHP/T_AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/PHP/T_AnonClassParenthesisOwnerTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />
