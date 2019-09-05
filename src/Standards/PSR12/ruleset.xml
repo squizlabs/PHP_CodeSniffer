@@ -251,6 +251,9 @@
     <rule ref="PSR2.ControlStructures.ElseIfDeclaration"/>
 
     <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line with one space between them. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
+    <!-- checked by PSR12.ControlStructures.ControlStructureSpacing -->
+    <!-- checked by PSR12.ControlStructures.BooleanOperatorPlacement -->
+    <!-- checked by Squiz.ControlStructures.ControlSignature -->
 
     <!-- 5.2 switch, case -->
 
@@ -258,18 +261,30 @@
     <rule ref="PSR2.ControlStructures.SwitchDeclaration"/>
 
     <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line with one space between them. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
+    <!-- checked by PSR12.ControlStructures.ControlStructureSpacing -->
+    <!-- checked by PSR12.ControlStructures.BooleanOperatorPlacement -->
+    <!-- checked by Squiz.ControlStructures.ControlSignature -->
 
     <!-- 5.3.1 while -->
 
     <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line with one space between them. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
+    <!-- checked by PSR12.ControlStructures.ControlStructureSpacing -->
+    <!-- checked by PSR12.ControlStructures.BooleanOperatorPlacement -->
+    <!-- checked by Squiz.ControlStructures.ControlSignature -->
 
     <!-- 5.3.2 do while -->
 
     <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first condition MUST be on the next line. Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both. -->
+    <!-- checked by PSR12.ControlStructures.ControlStructureSpacing -->
+    <!-- checked by PSR12.ControlStructures.BooleanOperatorPlacement -->
+    <!-- checked by Squiz.ControlStructures.ControlSignature -->
 
     <!-- 5.4 for -->
 
     <!-- Expressions in parentheses MAY be split across multiple lines, where each subsequent line is indented at least once. When doing so, the first expression MUST be on the next line. The closing parenthesis and opening brace MUST be placed together on their own line with one space between them. -->
+    <!-- checked by PSR12.ControlStructures.ControlStructureSpacing -->
+    <!-- checked by PSR12.ControlStructures.BooleanOperatorPlacement -->
+    <!-- checked by Squiz.ControlStructures.ControlSignature -->
 
     <!-- 5.5 foreach -->
 
