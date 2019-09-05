@@ -235,7 +235,6 @@
         <severity>0</severity>
     </rule>
     <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
-    <rule ref="PSR2.ControlStructures.ControlStructureSpacing"/>
     <rule ref="Generic.ControlStructures.InlineControlStructure"/>
 
     <!-- exclude this message as it is already checked in Generic.PHP.LowerCaseKeyword -->
