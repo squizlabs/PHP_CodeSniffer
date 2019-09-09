@@ -584,6 +584,7 @@ class Config
      * @param int    $pos The position of the argument on the command line.
      *
      * @return void
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
      */
     public function processShortArgument($arg, $pos)
     {
@@ -688,6 +689,7 @@ class Config
      * @param int    $pos The position of the argument on the command line.
      *
      * @return void
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
      */
     public function processLongArgument($arg, $pos)
     {
@@ -1249,6 +1251,7 @@ class Config
      * @param int    $pos The position of the argument on the command line.
      *
      * @return void
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
      */
     public function processUnknownArgument($arg, $pos)
     {
@@ -1274,6 +1277,7 @@ class Config
      * @param string $path The path to the file to add.
      *
      * @return void
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
      */
     public function processFilePath($path)
     {
@@ -1560,7 +1564,7 @@ class Config
      *
      * @return bool
      * @see    getConfigData()
-     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the config file can not be written.
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException If the config file can not be written.
      */
     public static function setConfigData($key, $value, $temp=false)
     {
@@ -1641,6 +1645,7 @@ class Config
      *
      * @return array<string, string>
      * @see    getConfigData()
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException If the config file could not be read.
      */
     public static function getAllConfigData()
     {

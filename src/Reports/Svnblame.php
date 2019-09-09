@@ -49,6 +49,7 @@ class Svnblame extends VersionControl
      * @param string $filename File to blame.
      *
      * @return array
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException
      */
     protected function getBlameContent($filename)
     {

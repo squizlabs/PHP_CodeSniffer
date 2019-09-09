@@ -136,6 +136,7 @@ class FileList implements \Iterator, \Countable
      * Get the class name of the filter being used for the run.
      *
      * @return string
+     * @throws \PHP_CodeSniffer\Exceptions\DeepExitException If the specified filter could not be found.
      */
     private function getFilterClass()
     {
