@@ -482,3 +482,19 @@ class Foo {
 if (function_exists('foo') === false) {
     function foo(){}
 }
+
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 0
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 0
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 0
+
+interface OneBlankLineBeforeFirstFunctionClassInterface
+{
+
+
+    /** @return mixed */
+    public function interfaceMethod();
+}
+
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 2
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 2
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 2

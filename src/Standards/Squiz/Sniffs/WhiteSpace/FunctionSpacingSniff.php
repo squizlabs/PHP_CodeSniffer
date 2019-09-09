@@ -318,6 +318,10 @@ class FunctionSpacingSniff implements Sniff
                     $nextContent = $phpcsFile->findNext(T_WHITESPACE, ($nextSpace + 1), null, true);
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = $nextSpace; $i < $nextContent; $i++) {
+                        if ($tokens[$i]['line'] === $tokens[$prevContent]['line']) {
+                            continue;
+                        }
+
                         if ($tokens[$i]['line'] === $tokens[$nextContent]['line']) {
                             $phpcsFile->fixer->addContentBefore($i, str_repeat($phpcsFile->eolChar, $requiredSpacing));
                             break;
@@ -327,7 +331,7 @@ class FunctionSpacingSniff implements Sniff
                     }
 
                     $phpcsFile->fixer->endChangeset();
-                }
+                }//end if
             }//end if
         }//end if
 
