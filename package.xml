@@ -126,6 +126,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- If you don't want this new behaviour, exclude the SpacingAfterReference error message in a ruleset.xml file
   - Squiz.Functions.FunctionDeclarationArgumentSpacing now checks for no space after a variadic operator
     -- If you don't want this new behaviour, exclude the SpacingAfterVariadic error message in a ruleset.xml file
+  - Squiz.Functions.MultiLineFunctionDeclaration now has improved fixing for the FirstParamSpacing and UseFirstParamSpacing errors
   - Squiz.Operators.IncrementDecrementUsage now suggests pre-increment of variables instead of post-increment
     -- This change does not enforce pre-increment over post-increment; only the suggestion has changed
     -- Thanks to Juliette Reinders Folmer for the patch

@@ -203,3 +203,9 @@ public function hello(string $greeting // phpcs:ignore Standard.Category.Sniff -
 )
 {
 }
+
+function foo(
+    $foo,
+    $bar
+) {
+}

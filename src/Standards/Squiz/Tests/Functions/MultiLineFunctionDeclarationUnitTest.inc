@@ -189,3 +189,11 @@ public function hello(string $greeting // cant fix this
 public function hello(string $greeting // phpcs:ignore Standard.Category.Sniff -- for reasons.
 ) {
 }
+
+function foo(
+
+
+    $foo,
+    $bar
+) {
+}
