@@ -82,6 +82,26 @@ class FunctionCallArgumentSpacingSniff implements Sniff
             return;
         }
 
+        $this->checkSpacing($phpcsFile, $stackPtr, $openBracket);
+
+    }//end process()
+
+
+    /**
+     * Checks the spacing around commas.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile   The file being scanned.
+     * @param int                         $stackPtr    The position of the current token in the
+     *                                                 stack passed in $tokens.
+     * @param int                         $openBracket The position of the opening bracket
+     *                                                 in the stack passed in $tokens.
+     *
+     * @return void
+     */
+    public function checkSpacing(File $phpcsFile, $stackPtr, $openBracket)
+    {
+        $tokens = $phpcsFile->getTokens();
+
         $closeBracket  = $tokens[$openBracket]['parenthesis_closer'];
         $nextSeparator = $openBracket;
 
@@ -117,7 +137,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
                 if ($tokens[($nextSeparator - 1)]['code'] === T_WHITESPACE) {
                     $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($nextSeparator - 2), null, true);
                     if (isset(Tokens::$heredocTokens[$tokens[$prev]['code']]) === false) {
-                        $error = 'Space found before comma in function call';
+                        $error = 'Space found before comma in argument list';
                         $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'SpaceBeforeComma');
                         if ($fix === true) {
                             $phpcsFile->fixer->beginChangeset();
@@ -135,7 +155,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
                 }//end if
 
                 if ($tokens[($nextSeparator + 1)]['code'] !== T_WHITESPACE) {
-                    $error = 'No space found after comma in function call';
+                    $error = 'No space found after comma in argument list';
                     $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'NoSpaceAfterComma');
                     if ($fix === true) {
                         $phpcsFile->fixer->addContent($nextSeparator, ' ');
@@ -147,7 +167,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
                     if ($tokens[$next]['line'] === $tokens[$nextSeparator]['line']) {
                         $space = $tokens[($nextSeparator + 1)]['length'];
                         if ($space > 1) {
-                            $error = 'Expected 1 space after comma in function call; %s found';
+                            $error = 'Expected 1 space after comma in argument list; %s found';
                             $data  = [$space];
                             $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'TooMuchSpaceAfterComma', $data);
                             if ($fix === true) {
@@ -159,7 +179,7 @@ class FunctionCallArgumentSpacingSniff implements Sniff
             }//end if
         }//end while
 
-    }//end process()
+    }//end checkSpacing()
 
 
 }//end class

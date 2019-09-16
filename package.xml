@@ -74,6 +74,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Mponos George for the contribution
   - Added Generic.PHP.RequireStrictTypes sniff
     -- Enforce the use of a strict types declaration in PHP files
+  - Added PSR12.Classes.AnonClassDeclaration sniff
+    -- Enforces the formatting of anonymous classes
   - Added PSR12.Classes.ClosingBrace sniff
     -- Enforces that closing braces of classes/interfaces/traits/functions are not followed by a comment or statement
   - Added PSR12.ControlStructures.BooleanOperatorPlacement sniff
@@ -1133,6 +1135,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Sniffs">
        <dir name="Classes">
+        <file baseinstalldir="PHP/CodeSniffer" name="AnonClassDeclarationSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceSniff.php" role="php" />
        </dir>
@@ -1168,6 +1171,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Tests">
        <dir name="Classes">
+        <file baseinstalldir="PHP/CodeSniffer" name="AnonClassDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="AnonClassDeclarationUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="AnonClassDeclarationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.php" role="test" />

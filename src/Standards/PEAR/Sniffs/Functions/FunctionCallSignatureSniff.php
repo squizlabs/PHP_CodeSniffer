@@ -205,12 +205,12 @@ class FunctionCallSignatureSniff implements Sniff
      */
     public function processSingleLineCall(File $phpcsFile, $stackPtr, $openBracket, $tokens)
     {
-        // If the function call has no arguments or comments, enforce 0 spaces.
         $closer = $tokens[$openBracket]['parenthesis_closer'];
         if ($openBracket === ($closer - 1)) {
             return;
         }
 
+        // If the function call has no arguments or comments, enforce 0 spaces.
         $next = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), $closer, true);
         if ($next === false) {
             $requiredSpacesAfterOpen   = 0;
