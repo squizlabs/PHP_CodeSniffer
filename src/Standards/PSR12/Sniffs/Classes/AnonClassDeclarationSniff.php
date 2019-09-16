@@ -25,6 +25,20 @@ class AnonClassDeclarationSniff extends ClassDeclarationSniff
      */
     public $indent = 4;
 
+    /**
+     * The PSR2 MultiLineFunctionDeclarations sniff.
+     *
+     * @var MultiLineFunctionDeclarationSniff
+     */
+    private $multiLineSniff = null;
+
+    /**
+     * The Generic FunctionCallArgumentSpacing sniff.
+     *
+     * @var FunctionCallArgumentSpacingSniff
+     */
+    private $functionCallSniff = null;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -54,18 +68,21 @@ class AnonClassDeclarationSniff extends ClassDeclarationSniff
             return;
         }
 
+        $this->multiLineSniff    = new MultiLineFunctionDeclarationSniff();
+        $this->functionCallSniff = new FunctionCallArgumentSpacingSniff();
+
         $this->processOpen($phpcsFile, $stackPtr);
         $this->processClose($phpcsFile, $stackPtr);
 
         if (isset($tokens[$stackPtr]['parenthesis_opener']) === true) {
             $openBracket = $tokens[$stackPtr]['parenthesis_opener'];
-            if (MultiLineFunctionDeclarationSniff::isMultiLineDeclaration($phpcsFile, $stackPtr, $openBracket, $tokens) === true) {
+            if ($this->multiLineSniff->isMultiLineDeclaration($phpcsFile, $stackPtr, $openBracket, $tokens) === true) {
                 $this->processMultiLineArgumentList($phpcsFile, $stackPtr);
             } else {
                 $this->processSingleLineArgumentList($phpcsFile, $stackPtr);
             }
 
-            FunctionCallArgumentSpacingSniff::checkSpacing($phpcsFile, $stackPtr, $openBracket);
+            $this->functionCallSniff->checkSpacing($phpcsFile, $stackPtr, $openBracket);
         }
 
         $opener = $tokens[$stackPtr]['scope_opener'];
@@ -223,8 +240,8 @@ class AnonClassDeclarationSniff extends ClassDeclarationSniff
 
         $openBracket = $tokens[$stackPtr]['parenthesis_opener'];
 
-        MultiLineFunctionDeclarationSniff::processBracket($phpcsFile, $openBracket, $tokens, 'argument');
-        MultiLineFunctionDeclarationSniff::processArgumentList($phpcsFile, $stackPtr, $this->indent, 'argument');
+        $this->multiLineSniff->processBracket($phpcsFile, $openBracket, $tokens, 'argument');
+        $this->multiLineSniff->processArgumentList($phpcsFile, $stackPtr, $this->indent, 'argument');
 
     }//end processMultiLineArgumentList()
 
