@@ -1319,6 +1319,20 @@ abstract class Tokenizer
 
                     $opener = $i;
                 }
+            } else if ($tokenType === T_SEMICOLON
+                && $opener === null
+                && (isset($this->tokens[$stackPtr]['parenthesis_closer']) === false
+                || $i > $this->tokens[$stackPtr]['parenthesis_closer'])
+            ) {
+                // Found the end of a statement but still haven't
+                // found our opener, so we are never going to find one.
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $type = $this->tokens[$stackPtr]['type'];
+                    echo str_repeat("\t", $depth);
+                    echo "=> Found end of statement before scope opener for $stackPtr:$type, continuing".PHP_EOL;
+                }
+
+                return ($i - 1);
             } else if ($tokenType === T_OPEN_PARENTHESIS) {
                 if (isset($this->tokens[$i]['parenthesis_owner']) === true) {
                     $owner = $this->tokens[$i]['parenthesis_owner'];
@@ -1328,7 +1342,7 @@ abstract class Tokenizer
                         // If we get into here, then we opened a parenthesis for
                         // a scope (eg. an if or else if) so we need to update the
                         // start of the line so that when we check to see
-                        // if the closing parenthesis is more than 3 lines away from
+                        // if the closing parenthesis is more than n lines away from
                         // the statement, we check from the closing parenthesis.
                         $startLine = $this->tokens[$this->tokens[$i]['parenthesis_closer']]['line'];
                     }
