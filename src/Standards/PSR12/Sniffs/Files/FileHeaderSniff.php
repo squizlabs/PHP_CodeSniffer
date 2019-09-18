@@ -72,7 +72,9 @@ class FileHeaderSniff implements Sniff
                 // Make sure this is not a code-level docblock.
                 $end      = $tokens[$next]['comment_closer'];
                 $docToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
-                if (isset(Tokens::$scopeOpeners[$tokens[$docToken]['code']]) === false) {
+                if (isset(Tokens::$scopeOpeners[$tokens[$docToken]['code']]) === false
+                    && isset(Tokens::$methodPrefixes[$tokens[$docToken]['code']]) === false
+                ) {
                     $foundDocblock = true;
                     $headerLines[] = [
                         'type'  => 'docblock',
