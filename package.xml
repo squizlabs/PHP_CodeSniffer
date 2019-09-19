@@ -181,6 +181,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2575 : Custom error messages don't have data replaced when cache is enabled
   - Fixed bug #2601 : Squiz.WhiteSpace.FunctionSpacing incorrect fix when spacing is 0
+  - Fixed bug #2608 : PSR2 throws errors for use statements when multiple namespaces are defined in a file
  </notes>
  <contents>
   <dir name="/">
