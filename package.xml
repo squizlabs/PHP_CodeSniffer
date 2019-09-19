@@ -167,6 +167,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2526 : XML report format has bad syntax on Windows
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2529 : Generic.Formatting.MultipleStatementAlignment wrong error for assign in string concat
+  - Fixed bug #2541 : Text doc generator does not allow for multi-line rule explanations
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2549 : Searching for a phpcs.xml file can throw warnings due to open_basedir restrictions
     -- Thanks to Matthew Peveler for the patch
   - Fixed bug #2558 : PHP 7.4 throwing offset syntax with curly braces is deprecated message
