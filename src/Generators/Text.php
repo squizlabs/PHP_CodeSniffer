@@ -75,18 +75,28 @@ class Text extends Generator
         $text = str_replace('<em>', '*', $text);
         $text = str_replace('</em>', '*', $text);
 
-        $lines    = [];
-        $tempLine = '';
-        $words    = explode(' ', $text);
+        $nodeLines = explode("\n", $text);
+        $lines     = [];
 
-        foreach ($words as $word) {
-            if (strlen($tempLine.$word) >= 99) {
-                if (strlen($tempLine.$word) === 99) {
-                    // Adding the extra space will push us to the edge
-                    // so we are done.
-                    $lines[]  = $tempLine.$word;
-                    $tempLine = '';
-                } else if (strlen($tempLine.$word) === 100) {
+        foreach ($nodeLines as $currentLine) {
+            $currentLine = trim($currentLine);
+            if ($currentLine === '') {
+                // The text contained a blank line. Respect this.
+                $lines[] = '';
+                continue;
+            }
+
+            $tempLine = '';
+            $words    = explode(' ', $currentLine);
+
+            foreach ($words as $word) {
+                $currentLength = strlen($tempLine.$word);
+                if ($currentLength < 99) {
+                    $tempLine .= $word.' ';
+                    continue;
+                }
+
+                if ($currentLength === 99 || $currentLength === 100) {
                     // We are already at the edge, so we are done.
                     $lines[]  = $tempLine.$word;
                     $tempLine = '';
@@ -94,14 +104,12 @@ class Text extends Generator
                     $lines[]  = rtrim($tempLine);
                     $tempLine = $word.' ';
                 }
-            } else {
-                $tempLine .= $word.' ';
+            }//end foreach
+
+            if ($tempLine !== '') {
+                $lines[] = rtrim($tempLine);
             }
         }//end foreach
-
-        if ($tempLine !== '') {
-            $lines[] = rtrim($tempLine);
-        }
 
         echo implode(PHP_EOL, $lines).PHP_EOL.PHP_EOL;
 
