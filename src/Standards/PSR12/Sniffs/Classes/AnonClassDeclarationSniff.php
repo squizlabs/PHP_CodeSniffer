@@ -19,13 +19,6 @@ class AnonClassDeclarationSniff extends ClassDeclarationSniff
 {
 
     /**
-     * The number of spaces code should be indented.
-     *
-     * @var integer
-     */
-    public $indent = 4;
-
-    /**
      * The PSR2 MultiLineFunctionDeclarations sniff.
      *
      * @var MultiLineFunctionDeclarationSniff
