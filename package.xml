@@ -75,6 +75,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Mponos George for the contribution
   - Added Generic.PHP.RequireStrictTypes sniff
     -- Enforce the use of a strict types declaration in PHP files
+  - Added Generic.WhiteSpace.SpreadOperatorSpacingAfter sniff
+    -- Checks whitespace between the spread operator and the variable/function call it applies to
+    -- Thanks to Juliette Reinders Folmer for the contribution
   - Added PSR12.Classes.AnonClassDeclaration sniff
     -- Enforces the formatting of anonymous classes
   - Added PSR12.Classes.ClosingBrace sniff
