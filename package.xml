@@ -119,6 +119,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.WhiteSpace.ScopeIndent no longer performs exact indents checking for chained method calls
     -- Other sniffs can be used to enforce chained method call indent rules
     -- Thanks to Pieter Frenssen for the patch
+  - PEAR.WhiteSpace.ObjectOperatorIndent now supports multi-line chained statements
+    -- When enabled, chained calls must be indented 1 level more or less than the previous line
+    -- Set the new "multiline" setting to TRUE in a ruleset.xml file to enable this behaviour
+    -- Thanks to Marcos Passos for the patch
   - PSR2.ControlStructures.ControlStructureSpacing now allows whitespace after the opening parenthesis if followed by a comment
     -- Thanks to Michał Bundyra for the patch
   - PSR2.Classes.PropertyDeclaration now enforces a single space after a property type keyword
