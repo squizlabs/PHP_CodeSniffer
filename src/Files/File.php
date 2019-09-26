@@ -1321,7 +1321,17 @@ class File
                 throw new RuntimeException('$stackPtr was not a valid T_USE');
             }
         } else {
+            if (isset($this->tokens[$stackPtr]['parenthesis_opener']) === false) {
+                // Live coding or syntax error, so no params to find.
+                return [];
+            }
+
             $opener = $this->tokens[$stackPtr]['parenthesis_opener'];
+        }
+
+        if (isset($this->tokens[$opener]['parenthesis_closer']) === false) {
+            // Live coding or syntax error, so no params to find.
+            return [];
         }
 
         $closer = $this->tokens[$opener]['parenthesis_closer'];
