@@ -15,6 +15,7 @@ if (is_file(__DIR__.'/../autoload.php') === true) {
 } else {
     include_once 'CodeSniffer/Core/AllTests.php';
     include_once 'CodeSniffer/Standards/AllSniffs.php';
+    include_once 'FileList.php';
 }
 
 // PHPUnit 7 made the TestSuite run() method incompatible with
