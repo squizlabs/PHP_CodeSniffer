@@ -356,6 +356,7 @@ class Runner
             include $bootstrap;
         }
 
+        $todo = new FileList($this->config, $this->ruleset);
         if ($this->config->stdin === true) {
             $fileContents = $this->config->stdinContent;
             if ($fileContents === null) {
@@ -365,40 +366,37 @@ class Runner
                 fclose($handle);
             }
 
-            $todo  = new FileList($this->config, $this->ruleset);
             $dummy = new DummyFile($fileContents, $this->ruleset, $this->config);
             $todo->addFile($dummy->path, $dummy);
-        } else {
-            if (empty($this->config->files) === true) {
-                $error  = 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
-                $error .= $this->config->printShortUsage(true);
-                throw new DeepExitException($error, 3);
+        }
+
+        if (empty($this->config->files) === true && $this->config->stdinContent === null) {
+            $error  = 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
+            $error .= $this->config->printShortUsage(true);
+            throw new DeepExitException($error, 3);
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+            echo 'Creating file list... ';
+        }
+
+        if (PHP_CODESNIFFER_VERBOSITY > 0) {
+            $numFiles = count($todo);
+            echo "DONE ($numFiles files in queue)".PHP_EOL;
+        }
+
+        if ($this->config->cache === true) {
+            if (PHP_CODESNIFFER_VERBOSITY > 0) {
+                echo 'Loading cache... ';
             }
+
+            Cache::load($this->ruleset, $this->config);
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                echo 'Creating file list... ';
+                $size = Cache::getSize();
+                echo "DONE ($size files in cache)".PHP_EOL;
             }
-
-            $todo = new FileList($this->config, $this->ruleset);
-
-            if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                $numFiles = count($todo);
-                echo "DONE ($numFiles files in queue)".PHP_EOL;
-            }
-
-            if ($this->config->cache === true) {
-                if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                    echo 'Loading cache... ';
-                }
-
-                Cache::load($this->ruleset, $this->config);
-
-                if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                    $size = Cache::getSize();
-                    echo "DONE ($size files in cache)".PHP_EOL;
-                }
-            }
-        }//end if
+        }
 
         // Turn all sniff errors into exceptions.
         set_error_handler([$this, 'handleErrors']);
