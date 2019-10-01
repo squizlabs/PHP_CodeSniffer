@@ -41,7 +41,13 @@ class ConstantVisibilitySniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $prev   = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
+
+        // Make sure this is a class constant.
+        if ($phpcsFile->hasCondition($stackPtr, Tokens::$ooScopeTokens) === false) {
+            return;
+        }
+
+        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if (isset(Tokens::$scopeModifiers[$tokens[$prev]['code']]) === true) {
             return;
         }

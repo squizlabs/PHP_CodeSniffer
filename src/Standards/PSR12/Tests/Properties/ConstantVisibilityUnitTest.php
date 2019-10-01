@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\PSR12\Tests\Properties;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class UseDeclarationUnitTest extends AbstractSniffUnitTest
+class ConstantVisibilityUnitTest extends AbstractSniffUnitTest
 {
 
 
