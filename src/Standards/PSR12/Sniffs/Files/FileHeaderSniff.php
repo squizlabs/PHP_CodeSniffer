@@ -130,7 +130,7 @@ class FileHeaderSniff implements Sniff
             }//end switch
 
             $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
-        } while ($next !== false);
+        } while ($next !== false && ($next !== $phpcsFile->numTokens - 1));
 
         if (count($headerLines) === 1) {
             // This is only an open tag and doesn't contain the file header.
