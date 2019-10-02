@@ -120,11 +120,18 @@ class UseDeclarationSniff implements Sniff
                             $phpcsFile->fixer->replaceToken($x, '');
                         }
 
-                        $padding = str_repeat(' ', ($tokens[$firstUse]['column'] - 1));
                         $phpcsFile->fixer->addNewline($prev);
-                        $phpcsFile->fixer->addContent($prev, $padding);
+                        if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
+                            if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
+                                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
+                            }
+
+                            $padding = str_repeat(' ', ($tokens[$firstUse]['column'] - 1));
+                            $phpcsFile->fixer->addContent($prev, $padding);
+                        }
+
                         $phpcsFile->fixer->endChangeset();
-                    }
+                    }//end if
                 }//end if
             }//end if
         }//end if

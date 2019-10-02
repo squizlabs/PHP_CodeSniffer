@@ -76,3 +76,12 @@ class ClassName9
         as FooBar;
     }
 }
+
+class ClassName10
+{
+    use TransactionTrait;
+
+    use PermissionAwareTrait;
+
+    use FirstTrait; use SecondTrait; use ThirdTrait;
+}

@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2619 : PSR12.Files.FileHeader locks up when inline comment is the last content in a file
   - Fixed bug #2621 : PSR12.Classes.AnonClassDeclaration.CloseBraceSameLine false positive for anon class passed as function argument
     -- Thanks to Martins Sipenko for the patch
+  - Fixed bug #2624 : PSR12.Traits.UseDeclaration doesnt apply the correct indent during auto fixing
  </notes>
  <contents>
   <dir name="/">
