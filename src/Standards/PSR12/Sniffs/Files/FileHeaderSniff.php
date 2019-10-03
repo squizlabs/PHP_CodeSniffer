@@ -302,8 +302,19 @@ class FileHeaderSniff implements Sniff
         */
 
         if ($stackPtr !== 0) {
-            $error = 'The file header must be the first content in the file';
-            $phpcsFile->addError($error, $stackPtr, 'HeaderPosition');
+            // Allow for hashbang lines.
+            $hashbang = false;
+            if ($tokens[($stackPtr - 1)]['code'] === T_INLINE_HTML) {
+                $content = trim($tokens[($stackPtr - 1)]['content']);
+                if (substr($content, 0, 2) === '#!') {
+                    $hashbang = true;
+                }
+            }
+
+            if ($hashbang === false) {
+                $error = 'The file header must be the first content in the file';
+                $phpcsFile->addError($error, $stackPtr, 'HeaderPosition');
+            }
         }
 
         return $phpcsFile->numTokens;
