@@ -154,7 +154,7 @@ class FileHeaderSniff implements Sniff
                 // Make sure there is a single blank line after
                 // this block.
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($line['end'] + 1), null, true);
-                if ($tokens[$next]['line'] !== ($tokens[$line['end']]['line'] + 2)) {
+                if ($next !== false && $tokens[$next]['line'] !== ($tokens[$line['end']]['line'] + 2)) {
                     $error = 'Header blocks must be followed by a single blank line';
                     $fix   = $phpcsFile->addFixableError($error, $line['end'], 'SpacingAfterBlock');
                     if ($fix === true) {
