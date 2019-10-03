@@ -60,3 +60,16 @@ $i < 10;
     $i++;
 ) {
 }
+
+if (
+    foo(
+            'this
+            is a
+            string',
+            <<<EOD
+foobar!
+EOD
+        )
+) {
+    return;
+}

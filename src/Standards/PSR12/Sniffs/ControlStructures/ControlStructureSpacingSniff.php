@@ -103,6 +103,13 @@ class ControlStructureSpacingSniff implements Sniff
                 break;
             }
 
+            // Leave indentation inside multi-line strings.
+            if (isset(Tokens::$textStringTokens[$tokens[$i]['code']]) === true
+                || isset(Tokens::$heredocTokens[$tokens[$i]['code']]) === true
+            ) {
+                continue;
+            }
+
             if ($tokens[$i]['code'] !== T_WHITESPACE) {
                 $foundIndent = 0;
             } else {
