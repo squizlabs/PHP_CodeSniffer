@@ -61,6 +61,11 @@ class FileHeaderSniff implements Sniff
 
         $foundDocblock = false;
 
+        $commentOpeners = Tokens::$scopeOpeners;
+        unset($commentOpeners[T_NAMESPACE]);
+        unset($commentOpeners[T_DECLARE]);
+        unset($commentOpeners[T_USE]);
+
         do {
             switch ($tokens[$next]['code']) {
             case T_DOC_COMMENT_OPEN_TAG:
@@ -72,16 +77,29 @@ class FileHeaderSniff implements Sniff
                 // Make sure this is not a code-level docblock.
                 $end      = $tokens[$next]['comment_closer'];
                 $docToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
-                if (isset(Tokens::$scopeOpeners[$tokens[$docToken]['code']]) === false
+                if (isset($commentOpeners[$tokens[$docToken]['code']]) === false
                     && isset(Tokens::$methodPrefixes[$tokens[$docToken]['code']]) === false
                 ) {
-                    $foundDocblock = true;
-                    $headerLines[] = [
-                        'type'  => 'docblock',
-                        'start' => $next,
-                        'end'   => $end,
-                    ];
-                }
+                    // Check for an @var annotation.
+                    $annotation = false;
+                    for ($i = $next; $i < $end; $i++) {
+                        if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG
+                            && strtolower($tokens[$i]['content']) === '@var'
+                        ) {
+                            $annotation = true;
+                            break;
+                        }
+                    }
+
+                    if ($annotation === false) {
+                        $foundDocblock = true;
+                        $headerLines[] = [
+                            'type'  => 'docblock',
+                            'start' => $next,
+                            'end'   => $end,
+                        ];
+                    }
+                }//end if
 
                 $next = $end;
                 break;

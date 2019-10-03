@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - PSR12.Files.FileHeader now has better detection of file comments
+    -- No longer ignores comments preceding a use, namespace, or declare statement
   - Fixed bug #2615 : Constant visibility false positive on non-class constants
   - Fixed bug #2616 : PSR12.Files.FileHeader false positive when file only contains docblock
   - Fixed bug #2619 : PSR12.Files.FileHeader locks up when inline comment is the last content in a file
@@ -33,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Martins Sipenko for the patch
   - Fixed bug #2623 : PSR12.ControlStructures.ControlStructureSpacing not ignoring indentation inside multi-line string arguments
   - Fixed bug #2624 : PSR12.Traits.UseDeclaration doesnt apply the correct indent during auto fixing
+  - Fixed bug #2626 : PSR12.Files.FileHeader detects @var annotations as file docblocks
  </notes>
  <contents>
   <dir name="/">
