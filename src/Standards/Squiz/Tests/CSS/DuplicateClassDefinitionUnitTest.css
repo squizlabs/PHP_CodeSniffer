@@ -71,3 +71,33 @@
 
 .foo /* any comment */
 { color: red; }
+
+/* print comment */
+@media print {
+    /* any comment */
+    td {
+    }
+
+    /* any comment */
+    img {
+    }
+
+    /* any comment */
+    td {
+    }
+}
+
+@media handheld /* handheld comment */
+{
+    td /* any comment */
+    {
+    }
+
+    img /* any comment */
+    {
+    }
+
+    td /* any comment */
+    {
+    }
+}
