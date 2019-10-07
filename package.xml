@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2623 : PSR12.ControlStructures.ControlStructureSpacing not ignoring indentation inside multi-line string arguments
   - Fixed bug #2624 : PSR12.Traits.UseDeclaration doesnt apply the correct indent during auto fixing
   - Fixed bug #2626 : PSR12.Files.FileHeader detects @var annotations as file docblocks
+  - Fixed bug #2641 : PSR12.Functions.NullableTypeDeclaration false positive when using new static()
  </notes>
  <contents>
   <dir name="/">

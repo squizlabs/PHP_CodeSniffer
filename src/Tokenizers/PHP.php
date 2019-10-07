@@ -986,7 +986,10 @@ class PHP extends Tokenizer
                         $tokenType = $tokens[$i];
                     }
 
-                    if ($tokenType === T_STATIC && $lastSeenNonEmpty === T_DOUBLE_COLON) {
+                    if ($tokenType === T_STATIC
+                        && ($lastSeenNonEmpty === T_DOUBLE_COLON
+                        || $lastSeenNonEmpty === '(')
+                    ) {
                         $lastSeenNonEmpty = $tokenType;
                         continue;
                     }
@@ -998,6 +1001,11 @@ class PHP extends Tokenizer
                         if ($tokenType === ':' || $tokenType === ',') {
                             $newToken['code'] = T_NULLABLE;
                             $newToken['type'] = 'T_NULLABLE';
+
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo "\t\t* token $stackPtr changed from ? to T_NULLABLE".PHP_EOL;
+                            }
+
                             break;
                         }
 
@@ -1007,10 +1015,18 @@ class PHP extends Tokenizer
                     if ($tokenType === T_FUNCTION
                         || isset(Util\Tokens::$methodPrefixes[$tokenType]) === true
                     ) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo "\t\t* token $stackPtr changed from ? to T_NULLABLE".PHP_EOL;
+                        }
+
                         $newToken['code'] = T_NULLABLE;
                         $newToken['type'] = 'T_NULLABLE';
                         break;
                     } else if (in_array($tokenType, [T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '=', '{', ';'], true) === true) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo "\t\t* token $stackPtr changed from ? to T_INLINE_THEN".PHP_EOL;
+                        }
+
                         $newToken['code'] = T_INLINE_THEN;
                         $newToken['type'] = 'T_INLINE_THEN';
 

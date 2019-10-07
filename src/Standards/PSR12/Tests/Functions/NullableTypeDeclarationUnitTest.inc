@@ -65,3 +65,8 @@ class TestTokenizingOfNullableVsInlineThen {
         $test = Something::one(static::CONSTANT) ?: '';
     }
 }
+
+$foo = new static(
+    is_null($a) ? foo($a) : $a,
+    is_null($b) ? $b : $c
+);
