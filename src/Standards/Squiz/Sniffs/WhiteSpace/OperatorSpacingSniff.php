@@ -9,8 +9,8 @@
 
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 
 class OperatorSpacingSniff implements Sniff
@@ -42,6 +42,13 @@ class OperatorSpacingSniff implements Sniff
      */
     public $ignoreSpacingBeforeAssignments = true;
 
+    /**
+     * A list of tokens that aren't considered as operands.
+     *
+     * @var string[]
+     */
+    private $nonOperandTokens = [];
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -56,6 +63,43 @@ class OperatorSpacingSniff implements Sniff
         $targets[] = T_INLINE_THEN;
         $targets[] = T_INLINE_ELSE;
         $targets[] = T_INSTANCEOF;
+
+        // Trying to operate on a negative value; eg. ($var * -1).
+        $this->nonOperandTokens = Tokens::$operators;
+        // Trying to compare a negative value; eg. ($var === -1).
+        $this->nonOperandTokens += Tokens::$comparisonTokens;
+        // Trying to compare a negative value; eg. ($var || -1 === $b).
+        $this->nonOperandTokens += Tokens::$booleanOperators;
+        // Trying to assign a negative value; eg. ($var = -1).
+        $this->nonOperandTokens += Tokens::$assignmentTokens;
+        $this->nonOperandTokens += [
+            // Returning/printing a negative value; eg. (return -1).
+            T_RETURN              => T_RETURN,
+            T_ECHO                => T_ECHO,
+            T_PRINT               => T_PRINT,
+            T_YIELD               => T_YIELD,
+
+            // Trying to use a negative value; eg. myFunction($var, -2).
+            T_COMMA               => T_COMMA,
+            T_OPEN_PARENTHESIS    => T_OPEN_PARENTHESIS,
+            T_OPEN_SQUARE_BRACKET => T_OPEN_SQUARE_BRACKET,
+            T_OPEN_SHORT_ARRAY    => T_OPEN_SHORT_ARRAY,
+            T_DOUBLE_ARROW        => T_DOUBLE_ARROW,
+            T_COLON               => T_COLON,
+            T_INLINE_THEN         => T_INLINE_THEN,
+            T_INLINE_ELSE         => T_INLINE_ELSE,
+            T_CASE                => T_CASE,
+            T_OPEN_CURLY_BRACKET  => T_OPEN_CURLY_BRACKET,
+
+            // Casting a negative value; eg. (array) -$a.
+            T_ARRAY_CAST          => T_ARRAY_CAST,
+            T_BOOL_CAST           => T_BOOL_CAST,
+            T_DOUBLE_CAST         => T_DOUBLE_CAST,
+            T_INT_CAST            => T_INT_CAST,
+            T_OBJECT_CAST         => T_OBJECT_CAST,
+            T_STRING_CAST         => T_STRING_CAST,
+            T_UNSET_CAST          => T_UNSET_CAST,
+        ];
 
         return $targets;
 
@@ -311,48 +355,7 @@ class OperatorSpacingSniff implements Sniff
             // Check minus spacing, but make sure we aren't just assigning
             // a minus value or returning one.
             $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-            if ($tokens[$prev]['code'] === T_RETURN) {
-                // Just returning a negative value; eg. (return -1).
-                return false;
-            }
-
-            if (isset(Tokens::$operators[$tokens[$prev]['code']]) === true) {
-                // Just trying to operate on a negative value; eg. ($var * -1).
-                return false;
-            }
-
-            if (isset(Tokens::$comparisonTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to compare a negative value; eg. ($var === -1).
-                return false;
-            }
-
-            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
-                // Just trying to compare a negative value; eg. ($var || -1 === $b).
-                return false;
-            }
-
-            if (isset(Tokens::$assignmentTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to assign a negative value; eg. ($var = -1).
-                return false;
-            }
-
-            // A list of tokens that indicate that the token is not
-            // part of an arithmetic operation.
-            $invalidTokens = [
-                T_COMMA               => true,
-                T_OPEN_PARENTHESIS    => true,
-                T_OPEN_SQUARE_BRACKET => true,
-                T_OPEN_SHORT_ARRAY    => true,
-                T_DOUBLE_ARROW        => true,
-                T_COLON               => true,
-                T_INLINE_THEN         => true,
-                T_INLINE_ELSE         => true,
-                T_CASE                => true,
-                T_OPEN_CURLY_BRACKET  => true,
-            ];
-
-            if (isset($invalidTokens[$tokens[$prev]['code']]) === true) {
-                // Just trying to use a negative value; eg. myFunction($var, -2).
+            if (isset($this->nonOperandTokens[$tokens[$prev]['code']]) === true) {
                 return false;
             }
         }//end if
