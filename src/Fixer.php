@@ -355,8 +355,10 @@ class Fixer
             $sniff = $bt[1]['class'];
             $line  = $bt[0]['line'];
 
+            $sniff = Util\Common::getSniffCode($sniff);
+
             @ob_end_clean();
-            echo "\t=> Changeset started by $sniff (line $line)".PHP_EOL;
+            echo "\t=> Changeset started by $sniff:$line".PHP_EOL;
             ob_start();
         }
 
@@ -434,10 +436,12 @@ class Fixer
                     $line  = $bt[0]['line'];
                 }
 
+                $sniff = Util\Common::getSniffCode($sniff);
+
                 $numChanges = count($this->changeset);
 
                 @ob_end_clean();
-                echo "\t\tR: $sniff (line $line) rolled back the changeset ($numChanges changes)".PHP_EOL;
+                echo "\t\tR: $sniff:$line rolled back the changeset ($numChanges changes)".PHP_EOL;
                 echo "\t=> Changeset rolled back".PHP_EOL;
                 ob_start();
             }
@@ -489,8 +493,11 @@ class Fixer
                 $line  = $bt[0]['line'];
             }
 
+            $sniff = Util\Common::getSniffCode($sniff);
+
             $tokens     = $this->currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
+            $tokenLine  = $tokens[$stackPtr]['line'];
             $oldContent = Common::prepareForOutput($this->tokens[$stackPtr]);
             $newContent = Common::prepareForOutput($content);
             if (trim($this->tokens[$stackPtr]) === '' && isset($this->tokens[($stackPtr + 1)]) === true) {
@@ -506,7 +513,7 @@ class Fixer
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                 @ob_end_clean();
-                echo "\t\tQ: $sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
+                echo "\t\tQ: $sniff:$line replaced token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\"".PHP_EOL;
                 ob_start();
             }
 
@@ -532,8 +539,8 @@ class Fixer
                     $loop = $this->oldTokenValues[$stackPtr]['loop'];
 
                     @ob_end_clean();
-                    echo "$indent**** $sniff (line $line) has possible conflict with another sniff on loop $loop; caused by the following change ****".PHP_EOL;
-                    echo "$indent**** replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\" ****".PHP_EOL;
+                    echo "$indent**** $sniff:$line has possible conflict with another sniff on loop $loop; caused by the following change ****".PHP_EOL;
+                    echo "$indent**** replaced token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\" ****".PHP_EOL;
                 }
 
                 if ($this->oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
@@ -569,7 +576,7 @@ class Fixer
                 ob_end_clean();
             }
 
-            echo "$indent$sniff (line $line) replaced token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
+            echo "$indent$sniff:$line replaced token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\"".PHP_EOL;
             ob_start();
         }
 
@@ -601,8 +608,11 @@ class Fixer
                 $line  = $bt[0]['line'];
             }
 
+            $sniff = Util\Common::getSniffCode($sniff);
+
             $tokens     = $this->currentFile->getTokens();
             $type       = $tokens[$stackPtr]['type'];
+            $tokenLine  = $tokens[$stackPtr]['line'];
             $oldContent = Common::prepareForOutput($this->tokens[$stackPtr]);
             $newContent = Common::prepareForOutput($this->fixedTokens[$stackPtr]);
             if (trim($this->tokens[$stackPtr]) === '' && isset($tokens[($stackPtr + 1)]) === true) {
@@ -624,7 +634,7 @@ class Fixer
             }
 
             @ob_end_clean();
-            echo "$indent$sniff (line $line) reverted token $stackPtr ($type) \"$oldContent\" => \"$newContent\"".PHP_EOL;
+            echo "$indent$sniff:$line reverted token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\"".PHP_EOL;
             ob_start();
         }
 

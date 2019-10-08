@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Verbose diff report output has slightly changed to improve readability
+    -- Fully qualified class names are now replaced with sniff codes
+    -- Tokens being changed now display the line number they are on
   - PSR12.Files.FileHeader no longer ignores comments preceding a use, namespace, or declare statement
   - PSR12.Files.FileHeader now allows a hashbang line at the top of the file
   - Fixed bug #2615 : Constant visibility false positive on non-class constants
