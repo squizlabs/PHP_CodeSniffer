@@ -67,37 +67,74 @@ class UseDeclarationSniff implements Sniff
             break;
         } while ($firstUse !== false);
 
-        if ($firstUse === $stackPtr
-            && $tokens[$firstUse]['line'] !== ($tokens[$opener]['line'] + 1)
-        ) {
-            $error = 'The first trait import statement must be declared on the line after the %s opening brace';
-            $data  = [strtolower($tokens[$ooToken]['content'])];
+        if ($firstUse === $stackPtr) {
+            // The first non-comment line must be the use line.
+            $lastValidContent = $stackPtr;
+            for ($i = ($stackPtr - 1); $i > $opener; $i--) {
+                if ($tokens[$i]['code'] === T_WHITESPACE
+                    && ($tokens[($i - 1)]['line'] === $tokens[$i]['line']
+                    || $tokens[($i + 1)]['line'] === $tokens[$i]['line'])
+                ) {
+                    continue;
+                }
 
-            // Figure out if we can fix this error.
-            $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), ($opener - 1), true);
-            if ($tokens[$prev]['line'] === $tokens[$opener]['line']) {
-                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'UseAfterBrace', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->beginChangeset();
-                    for ($i = ($opener + 1); $i < $stackPtr; $i++) {
-                        if ($tokens[$i]['line'] === $tokens[$opener]['line']) {
-                            continue;
-                        }
-
-                        if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
-                            // Don't remove indents.
-                            break;
-                        }
-
-                        $phpcsFile->fixer->replaceToken($i, '');
+                if (isset(Tokens::$commentTokens[$tokens[$i]['code']]) === true) {
+                    if ($tokens[$i]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+                        // Skip past the comment.
+                        $i = $tokens[$i]['comment_opener'];
                     }
 
-                    $phpcsFile->fixer->endChangeset();
+                    $lastValidContent = $i;
                 }
-            } else {
-                $phpcsFile->addError($error, $stackPtr, 'UseAfterBrace', $data);
+
+                break;
+            }
+
+            if ($tokens[$lastValidContent]['line'] !== ($tokens[$opener]['line'] + 1)) {
+                $error = 'The first trait import statement must be declared on the first non-comment line after the %s opening brace';
+                $data  = [strtolower($tokens[$ooToken]['content'])];
+
+                // Figure out if we can fix this error.
+                $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), ($opener - 1), true);
+                if ($tokens[$prev]['line'] === $tokens[$opener]['line']) {
+                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'UseAfterBrace', $data);
+                    if ($fix === true) {
+                        // We know that the USE statements is the first non-comment content
+                        // in the class, so we just need to remove blank lines.
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = ($stackPtr - 1); $i > $opener; $i--) {
+                            if ($tokens[$i]['line'] === $tokens[$opener]['line']) {
+                                break;
+                            }
+
+                            if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
+                                continue;
+                            }
+
+                            if ($tokens[$i]['code'] === T_WHITESPACE
+                                && $tokens[($i - 1)]['line'] !== $tokens[$i]['line']
+                                && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
+                            ) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            if (isset(Tokens::$commentTokens[$tokens[$i]['code']]) === true) {
+                                if ($tokens[$i]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+                                    // Skip past the comment.
+                                    $i = $tokens[$i]['comment_opener'];
+                                }
+
+                                $lastValidContent = $i;
+                            }
+                        }//end for
+
+                        $phpcsFile->fixer->endChangeset();
+                    }//end if
+                } else {
+                    $phpcsFile->addError($error, $stackPtr, 'UseAfterBrace', $data);
+                }//end if
             }//end if
-        } else if ($firstUse !== $stackPtr) {
+        } else {
             // Make sure this use statement immediately follows the previous one.
             $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
             if ($prev !== false && $tokens[$prev]['line'] !== ($tokens[$stackPtr]['line'] - 1)) {

@@ -85,3 +85,49 @@ class ClassName10
 
     use FirstTrait; use SecondTrait; use ThirdTrait;
 }
+
+class Foo implements Bar
+{
+    /**
+     * Comment here;
+     */
+    use Baz;
+}
+
+class Foo implements Bar
+{
+
+    /**
+     * Comment here;
+     */
+    use Baz;
+}
+
+class Foo implements Bar
+{
+    /**
+     * Comment here;
+     */
+
+    use Baz;
+}
+
+class Foo implements Bar
+{
+
+    /**
+     * Comment here;
+     */
+
+    use Baz;
+}
+
+class Foo implements Bar
+{
+    public $foo;
+    /**
+     * Comment here;
+     */
+
+    use Baz;
+}
