@@ -116,18 +116,6 @@ class BooleanOperatorPlacementSniff implements Sniff
 
                 continue;
             }
-
-            if ($position === null) {
-                $position = 'middle';
-            }
-
-            // Error here regardless as boolean operators need to be at start/end of line.
-            $msg = 'Boolean operators between conditions must be at the beginning or end of the line';
-            $phpcsFile->addError($msg, $next, 'FoundMiddle');
-
-            if ($position !== 'middle') {
-                $error = true;
-            }
         } while ($operator !== false);
 
         if ($error === false) {

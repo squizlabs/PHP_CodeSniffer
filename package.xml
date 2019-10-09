@@ -34,6 +34,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This check has been missing from these standards, but has now been implemented
     -- When using the PEAR standard, the error code is PEAR.Functions.FunctionCallSignature.FirstArgumentPosition
     -- When using PSR2 or PSR12, the error code is PSR2.Methods.FunctionCallSignature.FirstArgumentPosition
+  - PSR12.ControlStructures.BooleanOperatorPlacement no longer complains when multiple expression appears on the same line
+    -- Previously, boolean operators were enforce to appear at the start or end of lines only
+    -- Boolean operators can now appear in the middle of the line
   - PSR12.Files.FileHeader no longer ignores comments preceding a use, namespace, or declare statement
   - PSR12.Files.FileHeader now allows a hashbang line at the top of the file
   - Fixed bug #2615 : Constant visibility false positive on non-class constants
