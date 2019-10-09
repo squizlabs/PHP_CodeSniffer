@@ -1429,6 +1429,11 @@ FOO
 	$a,
 ];
 
+$query = Model::query()
+   ->when($a, function () {
+		static $b = '';
+   });
+
 ?>
 
 <?php
