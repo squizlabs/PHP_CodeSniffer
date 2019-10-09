@@ -421,6 +421,28 @@ class FunctionCallSignatureSniff implements Sniff
 
         // Start processing at the first argument.
         $i = $phpcsFile->findNext(T_WHITESPACE, ($openBracket + 1), null, true);
+
+        if ($tokens[$i]['line'] > ($tokens[$openBracket]['line'] + 1)) {
+            $error = 'The first argument in a multi-line function call must be on the line after the opening parenthesis';
+            $fix   = $phpcsFile->addFixableError($error, $i, 'FirstArgumentPosition');
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($x = ($openBracket + 1); $x < $i; $x++) {
+                    if ($tokens[$x]['line'] === $tokens[$openBracket]['line']) {
+                        continue;
+                    }
+
+                    if ($tokens[$x]['line'] === $tokens[$i]['line']) {
+                        break;
+                    }
+
+                    $phpcsFile->fixer->replaceToken($x, '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
+        }//end if
+
         if ($tokens[($i - 1)]['code'] === T_WHITESPACE
             && $tokens[($i - 1)]['line'] === $tokens[$i]['line']
         ) {

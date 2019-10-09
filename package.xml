@@ -30,6 +30,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Output is printed when running PHPCS with the --report=diff and -vvv command line arguments
     -- Fully qualified class names have been replaced with sniff codes
     -- Tokens being changed now display the line number they are on
+  - PSR2, PSR12, and PEAR standards now correctly check for blank lines at the start of function calls
+    -- This check has been missing from these standards, but has now been implemented
+    -- When using the PEAR standard, the error code is PEAR.Functions.FunctionCallSignature.FirstArgumentPosition
+    -- When using PSR2 or PSR12, the error code is PSR2.Methods.FunctionCallSignature.FirstArgumentPosition
   - PSR12.Files.FileHeader no longer ignores comments preceding a use, namespace, or declare statement
   - PSR12.Files.FileHeader now allows a hashbang line at the top of the file
   - Fixed bug #2615 : Constant visibility false positive on non-class constants

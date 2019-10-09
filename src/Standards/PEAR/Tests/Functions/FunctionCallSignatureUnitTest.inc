@@ -416,3 +416,18 @@ functionCall(
 );
 
 // phpcs:set PEAR.Functions.FunctionCallSignature allowMultipleArguments true
+
+$this->foo(
+
+    ['a','b'],
+    true
+
+);
+
+$this->foo(
+
+    // Comment
+    ['a','b'],
+    true
+
+);
