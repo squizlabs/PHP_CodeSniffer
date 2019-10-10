@@ -217,7 +217,7 @@ class FunctionCommentSniff implements Sniff
 
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = [];
-                preg_match('/([^$&.]+)(?:((?:\.\.\.)?(?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
+                preg_match('/((?:(?![$.]|&(?=\$)).)*)(?:((?:\.\.\.)?(?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
 
                 if (empty($matches) === false) {
                     $typeLen   = strlen($matches[1]);
@@ -297,43 +297,45 @@ class FunctionCommentSniff implements Sniff
 
             $foundParams[] = $param['var'];
 
-            // Check number of spaces after the type.
-            $spaces = ($maxType - strlen($param['type']) + 1);
-            if ($param['type_space'] !== $spaces) {
-                $error = 'Expected %s spaces after parameter type; %s found';
-                $data  = [
-                    $spaces,
-                    $param['type_space'],
-                ];
+            if (trim($param['type']) !== '') {
+                // Check number of spaces after the type.
+                $spaces = ($maxType - strlen($param['type']) + 1);
+                if ($param['type_space'] !== $spaces) {
+                    $error = 'Expected %s spaces after parameter type; %s found';
+                    $data  = [
+                        $spaces,
+                        $param['type_space'],
+                    ];
 
-                $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamType', $data);
-                if ($fix === true) {
-                    $commentToken = ($param['tag'] + 2);
+                    $fix = $phpcsFile->addFixableError($error, $param['tag'], 'SpacingAfterParamType', $data);
+                    if ($fix === true) {
+                        $commentToken = ($param['tag'] + 2);
 
-                    $content  = $param['type'];
-                    $content .= str_repeat(' ', $spaces);
-                    $content .= $param['var'];
-                    $content .= str_repeat(' ', $param['var_space']);
+                        $content  = $param['type'];
+                        $content .= str_repeat(' ', $spaces);
+                        $content .= $param['var'];
+                        $content .= str_repeat(' ', $param['var_space']);
 
-                    $wrapLength = ($tokens[$commentToken]['length'] - $param['type_space'] - $param['var_space'] - strlen($param['type']) - strlen($param['var']));
+                        $wrapLength = ($tokens[$commentToken]['length'] - $param['type_space'] - $param['var_space'] - strlen($param['type']) - strlen($param['var']));
 
-                    $star        = $phpcsFile->findPrevious(T_DOC_COMMENT_STAR, $param['tag']);
-                    $spaceLength = (strlen($content) + $tokens[($commentToken - 1)]['length'] + $tokens[($commentToken - 2)]['length']);
+                        $star        = $phpcsFile->findPrevious(T_DOC_COMMENT_STAR, $param['tag']);
+                        $spaceLength = (strlen($content) + $tokens[($commentToken - 1)]['length'] + $tokens[($commentToken - 2)]['length']);
 
-                    $padding  = str_repeat(' ', ($tokens[$star]['column'] - 1));
-                    $padding .= '* ';
-                    $padding .= str_repeat(' ', $spaceLength);
+                        $padding  = str_repeat(' ', ($tokens[$star]['column'] - 1));
+                        $padding .= '* ';
+                        $padding .= str_repeat(' ', $spaceLength);
 
-                    $content .= wordwrap(
-                        $param['comment'],
-                        $wrapLength,
-                        $phpcsFile->eolChar.$padding
-                    );
+                        $content .= wordwrap(
+                            $param['comment'],
+                            $wrapLength,
+                            $phpcsFile->eolChar.$padding
+                        );
 
-                    $phpcsFile->fixer->replaceToken($commentToken, $content);
-                    for ($i = ($commentToken + 1); $i <= $param['comment_end']; $i++) {
-                        $phpcsFile->fixer->replaceToken($i, '');
-                    }
+                        $phpcsFile->fixer->replaceToken($commentToken, $content);
+                        for ($i = ($commentToken + 1); $i <= $param['comment_end']; $i++) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+                    }//end if
                 }//end if
             }//end if
 

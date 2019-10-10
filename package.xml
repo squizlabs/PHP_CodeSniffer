@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Boolean operators can now appear in the middle of the line
   - PSR12.Files.FileHeader no longer ignores comments preceding a use, namespace, or declare statement
   - PSR12.Files.FileHeader now allows a hashbang line at the top of the file
+  - Fixed bug #2530 : PEAR.Commenting.FunctionComment does not support intersection types in comments
   - Fixed bug #2615 : Constant visibility false positive on non-class constants
   - Fixed bug #2616 : PSR12.Files.FileHeader false positive when file only contains docblock
   - Fixed bug #2619 : PSR12.Files.FileHeader locks up when inline comment is the last content in a file
