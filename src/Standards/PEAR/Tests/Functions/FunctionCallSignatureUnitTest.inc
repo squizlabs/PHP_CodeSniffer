@@ -442,3 +442,18 @@ function m()
             ) . '
     ' : '');
 }
+
+class C
+{
+
+    public function m()
+    {
+        $a = [];
+        $t =
+            "SELECT * FROM t
+WHERE f IN(" . implode(
+                ",",
+                $a
+            ) . ")";
+    }
+}
