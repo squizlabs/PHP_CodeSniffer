@@ -1355,10 +1355,12 @@ class Config
 
     }//end printShortUsage()
 
+
     /**
      * Suggest a sniff code by only combining first three elements.
      *
-     * @param string $sniff
+     * @param string $sniff Sniff code
+     *
      * @return string
      */
     public function getSuggestedSniffCode($sniff)
@@ -1367,7 +1369,9 @@ class Config
         $elements = array_slice($elements, 0, 3);
 
         return implode('.', $elements);
-    }
+
+    }//end getSuggestedSniffCode()
+
 
     /**
      * Prints out the usage information for PHPCS.
