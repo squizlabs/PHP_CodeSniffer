@@ -431,3 +431,14 @@ $this->foo(
     true
 
 );
+
+function m()
+{
+    $t = '
+    ' . (empty(true) ? '
+    ' . f(
+                '1',
+                '2',
+            ) . '
+    ' : '');
+}

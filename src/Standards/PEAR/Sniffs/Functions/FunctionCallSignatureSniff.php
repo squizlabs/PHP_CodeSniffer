@@ -350,7 +350,9 @@ class FunctionCallSignatureSniff implements Sniff
 
         $foundFunctionIndent = 0;
         if ($first !== false) {
-            if ($tokens[$first]['code'] === T_INLINE_HTML) {
+            if ($tokens[$first]['code'] === T_INLINE_HTML
+                || $tokens[$first]['code'] === T_CONSTANT_ENCAPSED_STRING
+            ) {
                 $trimmed = ltrim($tokens[$first]['content']);
                 if ($trimmed === '') {
                     $foundFunctionIndent = strlen($tokens[$first]['content']);
