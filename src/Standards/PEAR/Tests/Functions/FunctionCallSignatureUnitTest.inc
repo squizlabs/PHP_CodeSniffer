@@ -457,3 +457,10 @@ WHERE f IN(" . implode(
             ) . ")";
     }
 }
+
+$notices = array(
+    'index' => sprintf(
+        translation_function('a text string with %s placeholder'),
+    'replacement'
+    ),
+);
