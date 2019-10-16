@@ -2113,7 +2113,7 @@ class File
     ) {
         $types = (array) $types;
 
-        if ($end === null) {
+        if ($end === null || \is_bool($end) === true) {
             $end = 0;
         }
 
