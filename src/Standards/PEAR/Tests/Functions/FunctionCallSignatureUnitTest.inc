@@ -464,3 +464,45 @@ $notices = array(
     'replacement'
     ),
 );
+
+$componentType = $this->componentTypeRepository->findByType($this->identifier) ?:
+    $this->componentTypeFactory->createForType(
+        $this->identifier,
+        $this->className,
+        true,
+        $this->isPrototypal
+    );
+
+return [
+    'export-path' => 'exports/database/'
+        . env(
+            'APP_CUSTOMER',
+            'not-configured'
+        )
+        . '/' . env(
+            'APP_IDENTIFIER',
+            'not-configured'
+        ),
+];
+
+$methods .=
+    str_replace(
+        array_keys($replacements),
+        array_values($replacements),
+        $methodTemplate
+    )
+    . PHP_EOL . PHP_EOL . str_repeat(' ', 4);
+
+$rangeValues['min'] =
+    $this->adjustLowerThreshold(
+        $this->normalizeRatingForFilter($rangeValues['min'])
+    );
+
+$salesOrderThresholdTransfer->fromArray($salesOrderThresholdEntity->toArray(), true)
+    ->setSalesOrderThresholdValue(
+        $this->mapSalesOrderThresholdValueTransfer($salesOrderThresholdTransfer, $salesOrderThresholdEntity)
+    )->setCurrency(
+        (new CurrencyTransfer())->fromArray($salesOrderThresholdEntity->getCurrency()->toArray(), true)
+    )->setStore(
+        (new StoreTransfer())->fromArray($salesOrderThresholdEntity->getStore()->toArray(), true)
+    );

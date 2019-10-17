@@ -339,11 +339,16 @@ class FunctionCallSignatureSniff implements Sniff
         // call itself is, so we can work out how far to
         // indent the arguments.
         $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr, true);
-        if ($tokens[$first]['code'] !== T_OBJECT_OPERATOR) {
-            // This is not a chained method, so go back and look for the
-            // start of the statement and take our indent from there.
-            $start = $phpcsFile->findStartOfStatement($stackPtr, true);
-            $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $start, true);
+        if ($tokens[$first]['code'] === T_CONSTANT_ENCAPSED_STRING
+            && $tokens[($first - 1)]['code'] === T_CONSTANT_ENCAPSED_STRING
+        ) {
+            // We are in a multi-line string, so find the start and use
+            // the indent from there.
+            $prev  = $phpcsFile->findPrevious(T_CONSTANT_ENCAPSED_STRING, ($first - 2), null, true);
+            $first = $phpcsFile->findFirstOnLine(Tokens::$emptyTokens, $prev, true);
+            if ($first === false) {
+                $first = ($prev + 1);
+            }
         }
 
         $foundFunctionIndent = 0;
