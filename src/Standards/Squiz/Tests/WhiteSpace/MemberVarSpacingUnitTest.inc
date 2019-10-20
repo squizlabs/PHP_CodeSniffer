@@ -304,3 +304,31 @@ class Foo
     /* no error here because after function */
     private $bar = false;
 }
+
+class CommentedOutCodeAtStartOfClass {
+
+    /**
+     * Description.
+     *
+     * @var bool
+     */
+    //public $commented_out_property = true;
+
+    /**
+     * Description.
+     *
+     * @var bool
+     */
+    public $property = true;
+}
+
+class CommentedOutCodeAtStartOfClassNoBlankLine {
+
+    // phpcs:disable Stnd.Cat.Sniff -- For reasons.
+    /**
+     * Description.
+     *
+     * @var bool
+     */
+    public $property = true;
+}
