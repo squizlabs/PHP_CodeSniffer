@@ -2100,6 +2100,8 @@ class File
      *                                  will not be checked. IE. checking will stop
      *                                  at the previous semi-colon found.
      *
+     * @thorw \InvalidArgumentException
+     *
      * @return int|bool
      * @see    findNext()
      */
@@ -2113,8 +2115,11 @@ class File
     ) {
         $types = (array) $types;
 
-        if ($end === null || \is_bool($end) === true) {
+        if ($end === null) {
             $end = 0;
+        } elseif (\is_bool($end) === true) {
+            throw new \InvalidArgumentException('$end must be a boolean. 
+                Maybe you\'ve used findPrevious and he did not found anything.');
         }
 
         for ($i = $start; $i >= $end; $i--) {
