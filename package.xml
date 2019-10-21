@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Squiz.WhiteSpace.SemicolonSpacing.Incorrect error message now escapes newlines and tabs
+    -- Provides a clearer error message as whitespace is now visible
+    -- Also allows for better output for report types such as CSV and XML
   - Fixed bug #2654 : Incorrect indentation for arguments of multiline function calls
   - Fixed bug #2656 : Squiz.WhiteSpace.MemberVarSpacing removes comments before first member var during auto fixing
     -- Thanks to Juliette Reinders Folmer for the patch

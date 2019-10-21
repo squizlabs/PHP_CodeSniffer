@@ -84,6 +84,9 @@ class SemicolonSpacingSniff implements Sniff
 
         $expected = $tokens[$nonSpace]['content'].';';
         $found    = $phpcsFile->getTokensAsString($nonSpace, ($stackPtr - $nonSpace)).';';
+        $found    = str_replace("\n", '\n', $found);
+        $found    = str_replace("\r", '\r', $found);
+        $found    = str_replace("\t", '\t', $found);
         $error    = 'Space found before semicolon; expected "%s" but found "%s"';
         $data     = [
             $expected,
