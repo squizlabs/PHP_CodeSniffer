@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Generic.ControlStructures.DisallowYodaConditions now returns less false positives
+    -- False positives were being returned for array comparisions, or when performing some function calls
   - Squiz.WhiteSpace.SemicolonSpacing.Incorrect error message now escapes newlines and tabs
     -- Provides a clearer error message as whitespace is now visible
     -- Also allows for better output for report types such as CSV and XML

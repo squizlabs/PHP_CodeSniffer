@@ -62,6 +62,9 @@ class DisallowYodaConditionsSniff implements Sniff
 
         if ($tokens[$previousIndex]['code'] === T_CLOSE_SHORT_ARRAY) {
             $previousIndex = $tokens[$previousIndex]['bracket_opener'];
+            if ($this->isArrayStatic($phpcsFile, $previousIndex) === false) {
+                return;
+            }
         }
 
         $prevIndex = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($previousIndex - 1), null, true);
@@ -99,11 +102,22 @@ class DisallowYodaConditionsSniff implements Sniff
                     $tokens[$previousIndex]['parenthesis_opener']
                 );
 
-                // If a variable exists it is not Yoda.
+                // If a variable exists, it is not Yoda.
                 if ($found !== false) {
                     return;
                 }
-            }
+
+                // If there is nothing inside the parenthesis, it it not a Yoda.
+                $opener = $tokens[$previousIndex]['parenthesis_opener'];
+                $prev   = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($previousIndex - 1), ($opener + 1), true);
+                if ($prev === false) {
+                    return;
+                }
+            } else if ($tokens[$closeParenthesisIndex]['code'] === T_ARRAY
+                && $this->isArrayStatic($phpcsFile, $closeParenthesisIndex) === false
+            ) {
+                return;
+            }//end if
         }//end if
 
         $phpcsFile->addError(
@@ -113,6 +127,62 @@ class DisallowYodaConditionsSniff implements Sniff
         );
 
     }//end process()
+
+
+    /**
+     * Determines if an array is a static definition.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile  The file being scanned.
+     * @param int                         $arrayToken The position of the array token.
+     *
+     * @return bool
+     */
+    public function isArrayStatic(File $phpcsFile, $arrayToken)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        $arrayEnd = null;
+        if ($tokens[$arrayToken]['code'] === T_OPEN_SHORT_ARRAY) {
+            $start = $arrayToken;
+            $end   = $tokens[$arrayToken]['bracket_closer'];
+        } else if ($tokens[$arrayToken]['code'] === T_ARRAY) {
+            $start = $tokens[$arrayToken]['parenthesis_opener'];
+            $end   = $tokens[$arrayToken]['parenthesis_closer'];
+        } else {
+            return true;
+        }
+
+        $staticTokens  = Tokens::$emptyTokens;
+        $staticTokens += Tokens::$textStringTokens;
+        $staticTokens += Tokens::$assignmentTokens;
+        $staticTokens += Tokens::$equalityTokens;
+        $staticTokens += Tokens::$comparisonTokens;
+        $staticTokens += Tokens::$arithmeticTokens;
+        $staticTokens += Tokens::$operators;
+        $staticTokens += Tokens::$booleanOperators;
+        $staticTokens += Tokens::$castTokens;
+        $staticTokens += Tokens::$bracketTokens;
+        $staticTokens += [
+            T_DOUBLE_ARROW => T_DOUBLE_ARROW,
+            T_COMMA        => T_COMMA,
+            T_TRUE         => T_TRUE,
+            T_FALSE        => T_FALSE,
+        ];
+
+        for ($i = ($start + 1); $i < $end; $i++) {
+            if (isset($tokens[$i]['scope_closer']) === true) {
+                $i = $tokens[$i]['scope_closer'];
+                continue;
+            }
+
+            if (isset($staticTokens[$tokens[$i]['code']]) === false) {
+                return false;
+            }
+        }
+
+        return true;
+
+    }//end isArrayStatic()
 
 
 }//end class
