@@ -35,6 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2654 : Incorrect indentation for arguments of multiline function calls
   - Fixed bug #2656 : Squiz.WhiteSpace.MemberVarSpacing removes comments before first member var during auto fixing
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2664 : PSR12.Files.OpenTag incorrectly identifies PHP file with only an opening tag
  </notes>
  <contents>
   <dir name="/">
@@ -1074,6 +1075,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.php" role="test" />
        </dir>
        <dir name="Functions">
