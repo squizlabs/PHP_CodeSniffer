@@ -48,6 +48,11 @@ class ImportStatementSniff implements Sniff
             return;
         }
 
+        if ($phpcsFile->hasCondition($stackPtr, Tokens::$ooScopeTokens) === true) {
+            // This rule inly applies to import statements.
+            return;
+        }
+
         if ($tokens[$next]['code'] === T_STRING
             && (strtolower($tokens[$next]['content']) === 'function'
             || strtolower($tokens[$next]['content']) === 'const')

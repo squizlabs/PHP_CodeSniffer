@@ -29,7 +29,6 @@ class ImportStatementUnitTest extends AbstractSniffUnitTest
             2  => 1,
             4  => 1,
             7  => 1,
-            14 => 1,
         ];
 
     }//end getErrorList()
