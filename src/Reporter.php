@@ -143,7 +143,7 @@ class Reporter
             }
 
             $reportClass = new $reportClassName();
-            if (false === ($reportClass instanceof Report)) {
+            if (($reportClass instanceof Report) === false) {
                 throw new RuntimeException('Class "'.$reportClassName.'" must implement the "PHP_CodeSniffer\Report" interface.');
             }
 

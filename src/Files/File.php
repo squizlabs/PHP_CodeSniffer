@@ -2529,7 +2529,7 @@ class File
 
         $classOpenerIndex = $this->tokens[$stackPtr]['scope_opener'];
         $extendsIndex     = $this->findNext(T_EXTENDS, $stackPtr, $classOpenerIndex);
-        if (false === $extendsIndex) {
+        if ($extendsIndex === false) {
             return false;
         }
 
