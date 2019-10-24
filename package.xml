@@ -37,6 +37,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2654 : Incorrect indentation for arguments of multiline function calls
   - Fixed bug #2656 : Squiz.WhiteSpace.MemberVarSpacing removes comments before first member var during auto fixing
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2663 : Generic.NamingConventions.ConstructorName complains about old constructor in interfaces
   - Fixed bug #2664 : PSR12.Files.OpenTag incorrectly identifies PHP file with only an opening tag
  </notes>
  <contents>

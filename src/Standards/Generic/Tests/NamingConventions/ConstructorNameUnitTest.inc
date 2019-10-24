@@ -84,9 +84,14 @@ class Nested extends Another {
 
             public function __construct() {
                 parent::Another(); // OK.
-			}
+            }
         };
     }
 
     abstract public function nested();
+}
+
+interface CustomChildCreator
+{
+    public function customChildCreator($elementName, Project $project);
 }

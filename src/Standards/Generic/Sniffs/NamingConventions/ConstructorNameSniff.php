@@ -39,7 +39,7 @@ class ConstructorNameSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct([T_CLASS, T_ANON_CLASS, T_INTERFACE], [T_FUNCTION], true);
+        parent::__construct([T_CLASS, T_ANON_CLASS], [T_FUNCTION], true);
 
     }//end __construct()
 
