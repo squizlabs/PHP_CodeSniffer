@@ -40,6 +40,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2663 : Generic.NamingConventions.ConstructorName complains about old constructor in interfaces
   - Fixed bug #2664 : PSR12.Files.OpenTag incorrectly identifies PHP file with only an opening tag
   - Fixed bug #2665 : PSR12.Files.ImportStatement should not apply to traits
+  - Fixed bug #2673 : PSR12.Traits.UseDeclaration does not allow comments or blank lines between use statements
  </notes>
  <contents>
   <dir name="/">

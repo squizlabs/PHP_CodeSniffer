@@ -135,10 +135,10 @@ class UseDeclarationSniff implements Sniff
                 }//end if
             }//end if
         } else {
-            // Make sure this use statement immediately follows the previous one.
+            // Make sure this use statement is not on the same line as the previous one.
             $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-            if ($prev !== false && $tokens[$prev]['line'] !== ($tokens[$stackPtr]['line'] - 1)) {
-                $error     = 'Each imported trait must be on the line after the previous import';
+            if ($prev !== false && $tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
+                $error     = 'Each imported trait must be on it\'s own line';
                 $prevNonWs = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
                 if ($prevNonWs !== $prev) {
                     $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeImport');

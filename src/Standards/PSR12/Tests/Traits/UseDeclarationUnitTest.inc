@@ -131,3 +131,21 @@ class Foo implements Bar
 
     use Baz;
 }
+
+class ClassName
+{
+    /**
+     * DocBlockContent
+     */
+    use FirstTrait;
+
+    /**
+     * DocBlockContent
+     */
+    use SecondTrait;
+
+    /**
+     * DocBlockContent
+     */
+    use ThirdTrait;
+}
