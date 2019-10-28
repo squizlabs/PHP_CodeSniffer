@@ -259,7 +259,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
                 if ($tokens[($commaToken - 1)]['code'] === T_WHITESPACE) {
                     $error = 'Expected 0 spaces between argument "%s" and comma; %s found';
                     $data  = [
-                        $param['name'],
+                        $params[($paramNumber - 1)]['name'],
                         $tokens[($commaToken - 1)]['length'],
                     ];
 

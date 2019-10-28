@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2019-10-28</date>
  <time>15:31:00</time>
  <version>
-  <release>3.5.2</release>
-  <api>3.5.2</api>
+  <release>3.5.3</release>
+  <api>3.5.3</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,21 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Generic.ControlStructures.DisallowYodaConditions now returns less false positives
-    -- False positives were being returned for array comparisions, or when performing some function calls
-  - Squiz.WhiteSpace.SemicolonSpacing.Incorrect error message now escapes newlines and tabs
-    -- Provides a clearer error message as whitespace is now visible
-    -- Also allows for better output for report types such as CSV and XML
-  - The error message for PSR12.Files.FileHeader.SpacingAfterBlock has been made clearer
-    -- It now uses the wording from the published PSR-12 standard to indicate that blocks must be separated by a blank line
-    -- Thanks to Craig Duncan for the patch
-  - Fixed bug #2654 : Incorrect indentation for arguments of multiline function calls
-  - Fixed bug #2656 : Squiz.WhiteSpace.MemberVarSpacing removes comments before first member var during auto fixing
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #2663 : Generic.NamingConventions.ConstructorName complains about old constructor in interfaces
-  - Fixed bug #2664 : PSR12.Files.OpenTag incorrectly identifies PHP file with only an opening tag
-  - Fixed bug #2665 : PSR12.Files.ImportStatement should not apply to traits
-  - Fixed bug #2673 : PSR12.Traits.UseDeclaration does not allow comments or blank lines between use statements
+  - Fixed bug #2674 : Squiz.Functions.FunctionDeclarationArgumentSpacing prints wrong argument name in error message
  </notes>
  <contents>
   <dir name="/">
