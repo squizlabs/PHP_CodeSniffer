@@ -88,6 +88,7 @@ class DuplicateClassDefinitionSniff implements Sniff
             $name = trim($name);
             $name = str_replace("\n", ' ', $name);
             $name = preg_replace('|[\s]+|', ' ', $name);
+            $name = preg_replace('|\s*/\*.*\*/\s*|', '', $name);
             $name = str_replace(', ', ',', $name);
 
             $names = explode(',', $name);
