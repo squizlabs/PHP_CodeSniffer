@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Fixed bug #2638 : Squiz.CSS.DuplicateClassDefinitionSniff sees comments as part of the class name
+    -- Thanks to Raphael Horber for the patch
   - Fixed bug #2674 : Squiz.Functions.FunctionDeclarationArgumentSpacing prints wrong argument name in error message
  </notes>
  <contents>

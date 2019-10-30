@@ -74,30 +74,30 @@
 
 /* print comment */
 @media print {
-    /* any comment */
+    /* comment1 */
     td {
     }
 
-    /* any comment */
+    /* comment2 */
     img {
     }
 
-    /* any comment */
+    /* comment3 */
     td {
     }
 }
 
 @media handheld /* handheld comment */
 {
-    td /* any comment */
+    td /* comment1 */
     {
     }
 
-    img /* any comment */
+    img /* comment2 */
     {
     }
 
-    td /* any comment */
+    td /* comment3 */
     {
     }
 }
