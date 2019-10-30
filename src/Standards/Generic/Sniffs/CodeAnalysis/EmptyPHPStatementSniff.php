@@ -53,12 +53,26 @@ class EmptyPHPStatementSniff implements Sniff
         case 'T_SEMICOLON':
             $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
 
-            if ($prevNonEmpty === false
-                || ($tokens[$prevNonEmpty]['code'] !== T_SEMICOLON
-                && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG
-                && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG_WITH_ECHO)
-            ) {
+            if ($prevNonEmpty === false) {
                 return;
+            }
+
+            if ($tokens[$prevNonEmpty]['code'] !== T_SEMICOLON
+                && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG
+                && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG_WITH_ECHO
+            ) {
+                if ($tokens[$prevNonEmpty]['code'] !== T_CLOSE_CURLY_BRACKET
+                    || isset($tokens[$prevNonEmpty]['scope_condition']) === false
+                ) {
+                    return;
+                }
+
+                $scopeOwner = $tokens[$tokens[$prevNonEmpty]['scope_condition']]['code'];
+                if ($scopeOwner === T_CLOSURE || $scopeOwner === T_ANON_CLASS) {
+                    return;
+                }
+
+                // Else, it's something like `if (foo) {};` and the semi-colon is not needed.
             }
 
             if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {

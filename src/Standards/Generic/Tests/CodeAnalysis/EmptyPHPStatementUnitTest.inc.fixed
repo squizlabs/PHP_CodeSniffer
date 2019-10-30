@@ -47,3 +47,26 @@ function_call();
 <?php
 // Guard against false positives for two consecutive semi-colons in a for statement.
 for ( $i = 0; ; $i++ ) {}
+
+// Test for useless semi-colons
+for ( $i = 0; ; $i++ ) {}
+
+if (true) {}
+
+while (true) {}
+
+class ABC {}
+
+switch ( $a ) {
+    case 1:
+        break;
+    case 2:
+        break;
+    default:
+        break;
+}
+
+// Do not break closures and anonymous classes and curlies without scope owners.
+$a = function () {};
+$b = new class {};
+echo $a{0};
