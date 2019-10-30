@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2638 : Squiz.CSS.DuplicateClassDefinitionSniff sees comments as part of the class name
     -- Thanks to Raphael Horber for the patch
   - Fixed bug #2674 : Squiz.Functions.FunctionDeclarationArgumentSpacing prints wrong argument name in error message
+  - Fixed bug #2676 : PSR12.Files.FileHeader locks up when file ends with multiple inline comments
  </notes>
  <contents>
   <dir name="/">
@@ -1062,6 +1063,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.8.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.9.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.10.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.php" role="test" />

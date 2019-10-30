@@ -139,6 +139,11 @@ class FileHeaderSniff implements Sniff
                 // Skip comments as PSR-12 doesn't say if these are allowed or not.
                 if (isset(Tokens::$commentTokens[$tokens[$next]['code']]) === true) {
                     $next = $phpcsFile->findNext(Tokens::$commentTokens, ($next + 1), null, true);
+                    if ($next === false) {
+                        // We reached the end of the file.
+                        break(2);
+                    }
+
                     $next--;
                     break;
                 }
@@ -148,7 +153,7 @@ class FileHeaderSniff implements Sniff
             }//end switch
 
             $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
-        } while ($next !== false && ($next !== $phpcsFile->numTokens - 1));
+        } while ($next !== false);
 
         if (count($headerLines) === 1) {
             // This is only an open tag and doesn't contain the file header.
