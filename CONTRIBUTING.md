@@ -8,6 +8,8 @@ Before you contribute code to PHP\_CodeSniffer, please make sure it conforms to 
 
 Which should display no coding standard errors. And then:
 
-    phpunit
+    ./vendor/bin/phpunit
 
 Which should give you no failures or errors. You can ignore any skipped tests as these are for external tools.
+
+Check the [README](./README.md) for and how to get the dependencies.
