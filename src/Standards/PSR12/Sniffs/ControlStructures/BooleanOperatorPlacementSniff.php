@@ -74,8 +74,13 @@ class BooleanOperatorPlacementSniff implements Sniff
             T_BOOLEAN_OR,
         ];
 
+        if ($this->allowOnly === 'first' || $this->allowOnly === 'last') {
+            $position = $this->allowOnly;
+        } else {
+            $position = null;
+        }
+
         $operator  = $parenOpener;
-        $position  = $this->getDefaultPosition();
         $error     = false;
         $operators = [];
 
@@ -189,24 +194,6 @@ class BooleanOperatorPlacementSniff implements Sniff
         $phpcsFile->fixer->endChangeset();
 
     }//end process()
-
-
-    /**
-     * Default to null value if the option is not 'first' or 'last'
-     *
-     * @return string|null
-     */
-    private function getDefaultPosition()
-    {
-        switch ($this->allowOnly) {
-        case 'first':
-        case 'last':
-            return $this->allowOnly;
-        default:
-            return null;
-        }
-
-    }//end getDefaultPosition()
 
 
 }//end class
