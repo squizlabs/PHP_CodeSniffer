@@ -79,3 +79,6 @@ $foo->bar(
         // ...
     },
 );
+
+foo(new class {
+});

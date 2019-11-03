@@ -229,3 +229,6 @@ class C7 extends \Foo\Bar implements \Baz\Bar // comment
 class C8
 {
 }
+
+foo(new class {
+});

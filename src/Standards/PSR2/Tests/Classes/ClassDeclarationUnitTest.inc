@@ -236,3 +236,6 @@ class
 C8
 {
 }
+
+foo(new class {
+});

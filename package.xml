@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Raphael Horber for the patch
   - Fixed bug #2674 : Squiz.Functions.FunctionDeclarationArgumentSpacing prints wrong argument name in error message
   - Fixed bug #2676 : PSR12.Files.FileHeader locks up when file ends with multiple inline comments
+  - Fixed bug #2678 : PSR12.Classes.AnonClassDeclaration incorrectly enforcing that closing brace be on a line by itself
  </notes>
  <contents>
   <dir name="/">
