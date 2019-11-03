@@ -16,6 +16,14 @@ use PHP_CodeSniffer\Util\Tokens;
 class BooleanOperatorPlacementSniff implements Sniff
 {
 
+    /**
+     * Used to restrict the placement of the boolean operator
+     * Allowed value are 'first' or 'last'
+     *
+     * @var string|null
+     */
+    public $allowOnly = null;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -67,7 +75,7 @@ class BooleanOperatorPlacementSniff implements Sniff
         ];
 
         $operator  = $parenOpener;
-        $position  = null;
+        $position  = $this->getDefaultPosition();
         $error     = false;
         $operators = [];
 
@@ -181,6 +189,24 @@ class BooleanOperatorPlacementSniff implements Sniff
         $phpcsFile->fixer->endChangeset();
 
     }//end process()
+
+
+    /**
+     * Default to null value if the option is not 'first' or 'last'
+     *
+     * @return string|null
+     */
+    private function getDefaultPosition()
+    {
+        switch ($this->allowOnly) {
+        case 'first':
+        case 'last':
+            return $this->allowOnly;
+        default:
+            return null;
+        }
+
+    }//end getDefaultPosition()
 
 
 }//end class
