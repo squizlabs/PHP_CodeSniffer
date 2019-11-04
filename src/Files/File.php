@@ -1543,14 +1543,15 @@ class File
      *
      * @return array
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified position is not a
-     *                                                      T_FUNCTION token.
+     *                                                      T_FUNCTION, T_CLOSURE, or T_FN token.
      */
     public function getMethodProperties($stackPtr)
     {
         if ($this->tokens[$stackPtr]['code'] !== T_FUNCTION
             && $this->tokens[$stackPtr]['code'] !== T_CLOSURE
+            && $this->tokens[$stackPtr]['code'] !== T_FN
         ) {
-            throw new RuntimeException('$stackPtr must be of type T_FUNCTION or T_CLOSURE');
+            throw new RuntimeException('$stackPtr must be of type T_FUNCTION or T_CLOSURE or T_FN');
         }
 
         if ($this->tokens[$stackPtr]['code'] === T_FUNCTION) {
@@ -1650,8 +1651,14 @@ class File
                 }
             }
 
-            $end     = $this->findNext([T_OPEN_CURLY_BRACKET, T_SEMICOLON], $this->tokens[$stackPtr]['parenthesis_closer']);
-            $hasBody = $this->tokens[$end]['code'] === T_OPEN_CURLY_BRACKET;
+            if ($this->tokens[$stackPtr]['code'] === T_FN) {
+                $bodyToken = T_DOUBLE_ARROW;
+            } else {
+                $bodyToken = T_OPEN_CURLY_BRACKET;
+            }
+
+            $end     = $this->findNext([$bodyToken, T_SEMICOLON], $this->tokens[$stackPtr]['parenthesis_closer']);
+            $hasBody = $this->tokens[$end]['code'] === $bodyToken;
         }//end if
 
         if ($returnType !== '' && $nullableReturnType === true) {

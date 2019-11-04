@@ -361,6 +361,29 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test a static arrow function.
+     *
+     * @return void
+     */
+    public function testArrowFunction()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'int',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => true,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testArrowFunction()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.
@@ -370,7 +393,7 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
      */
     private function getMethodPropertiesTestHelper($commentString, $expected)
     {
-        $function = $this->getTargetToken($commentString, [T_FUNCTION, T_CLOSURE]);
+        $function = $this->getTargetToken($commentString, [T_FUNCTION, T_CLOSURE, T_FN]);
         $found    = self::$phpcsFile->getMethodProperties($function);
 
         $this->assertArraySubset($expected, $found, true);

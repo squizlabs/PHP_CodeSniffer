@@ -60,3 +60,9 @@ interface MyInterface
     /* testInterfaceMethod */
     function myFunction();
 }
+
+$result = array_map(
+    /* testArrowFunction */
+    static fn(int $number) : int => $number + 1,
+    $numbers
+);

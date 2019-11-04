@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- T_FN represents the fn string used for arrow functions
     -- The token is associated with the opening and closing parenthesis of the statement
   - File::getMethodParameters() now supports arrow functions
+  - File::getMethodProperties() now supports arrow functions
   - Generic.CodeAnalysis.EmptyPhpStatement now reports unnecessary semicolons after control structure closing braces
     -- Thanks to Vincent Langlet for the patch
   - Fixed bug #2638 : Squiz.CSS.DuplicateClassDefinitionSniff sees comments as part of the class name
