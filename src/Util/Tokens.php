@@ -119,6 +119,10 @@ if (defined('T_BAD_CHARACTER') === false) {
     define('T_BAD_CHARACTER', 'PHPCS_T_BAD_CHARACTER');
 }
 
+if (defined('T_FN') === false) {
+    define('T_FN', 'PHPCS_T_FN');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');

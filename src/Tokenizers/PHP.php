@@ -1045,7 +1045,7 @@ class PHP extends Tokenizer
             }//end if
 
             /*
-                Tokens after a double colon may be look like scope openers,
+                Tokens after a double colon may look like scope openers,
                 such as when writing code like Foo::NAMESPACE, but they are
                 only ever variables or strings.
             */
@@ -1606,6 +1606,34 @@ class PHP extends Tokenizer
                 }//end if
 
                 continue;
+            } else if ($this->tokens[$i]['code'] === T_STRING
+                && strtolower($this->tokens[$i]['content']) === 'fn'
+            ) {
+                // Possible arrow function.
+                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
+                        // Non-whitespace content.
+                        break;
+                    }
+                }
+
+                if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_STRING to T_FN".PHP_EOL;
+                    }
+
+                    $this->tokens[$i]['code'] = T_FN;
+                    $this->tokens[$i]['type'] = 'T_FN';
+                    $this->tokens[$i]['parenthesis_owner'] = $i;
+                    $this->tokens[$i]['parenthesis_opener'] = $x;
+                    $this->tokens[$i]['parenthesis_closer'] = $this->tokens[$x]['parenthesis_closer'];
+
+                    $opener = $this->tokens[$i]['parenthesis_opener'];
+                    $closer = $this->tokens[$i]['parenthesis_closer'];
+                    $this->tokens[$opener]['parenthesis_owner'] = $i;
+                    $this->tokens[$closer]['parenthesis_owner'] = $i;
+                }
             } else if ($this->tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
                 if (isset($this->tokens[$i]['bracket_closer']) === false) {
                     continue;
