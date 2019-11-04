@@ -32,7 +32,7 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
             ['/* testFunctionName */'],
         ];
 
-    }//end dataAnonClassNoParentheses()
+    }//end dataBackfill()
 
 
     /**
@@ -63,7 +63,7 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
         $this->assertTrue(array_key_exists('parenthesis_owner', $tokens[$closer]), 'Closing parenthesis owner is not set');
         $this->assertSame($tokens[$closer]['parenthesis_owner'], $token, 'Closing parenthesis owner is not the T_FN token');
 
-    }//end testAnonClassNoParentheses()
+    }//end testBackfill()
 
 
 }//end class

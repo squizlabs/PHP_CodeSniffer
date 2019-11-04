@@ -1625,7 +1625,7 @@ class PHP extends Tokenizer
 
                     $this->tokens[$i]['code'] = T_FN;
                     $this->tokens[$i]['type'] = 'T_FN';
-                    $this->tokens[$i]['parenthesis_owner'] = $i;
+                    $this->tokens[$i]['parenthesis_owner']  = $i;
                     $this->tokens[$i]['parenthesis_opener'] = $x;
                     $this->tokens[$i]['parenthesis_closer'] = $this->tokens[$x]['parenthesis_closer'];
 
