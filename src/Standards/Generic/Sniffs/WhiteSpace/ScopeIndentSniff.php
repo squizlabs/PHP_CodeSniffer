@@ -846,7 +846,8 @@ class ScopeIndentSniff implements Sniff
                 $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($checkToken + 1), null, true);
                 if ($next === false
                     || ($tokens[$next]['code'] !== T_CLOSURE
-                    && $tokens[$next]['code'] !== T_VARIABLE)
+                    && $tokens[$next]['code'] !== T_VARIABLE
+                    && $tokens[$next]['code'] !== T_FN)
                 ) {
                     if ($this->debug === true) {
                         $line = $tokens[$checkToken]['line'];

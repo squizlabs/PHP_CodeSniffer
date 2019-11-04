@@ -1434,6 +1434,11 @@ $query = Model::query()
         static $b = '';
    });
 
+$result = array_map(
+    static fn(int $number) : int => $number + 1,
+    $numbers
+);
+
 ?>
 
 <?php
