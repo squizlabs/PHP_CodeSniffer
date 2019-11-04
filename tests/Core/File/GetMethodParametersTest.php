@@ -244,6 +244,37 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify that arrow functions are supported.
+     *
+     * @return void
+     */
+    public function testArrowFunction()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$a',
+            'content'           => 'int $a',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'int',
+            'nullable_type'     => false,
+        ];
+
+        $expected[1] = [
+            'name'              => '$b',
+            'content'           => '...$b',
+            'pass_by_reference' => false,
+            'variable_length'   => true,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testArrowFunction()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.
@@ -253,7 +284,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
      */
     private function getMethodParametersTestHelper($commentString, $expected)
     {
-        $function = $this->getTargetToken($commentString, [T_FUNCTION]);
+        $function = $this->getTargetToken($commentString, [T_FUNCTION, T_FN]);
         $found    = self::$phpcsFile->getMethodParameters($function);
 
         $this->assertArraySubset($expected, $found, true);
