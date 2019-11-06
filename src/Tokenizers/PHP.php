@@ -1218,6 +1218,28 @@ class PHP extends Tokenizer
             }
 
             /*
+                Backfill the T_FN token for PHP versions < 7.4.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STRING
+                && strtolower($token[1]) === 'fn'
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'content' => $token[1],
+                    'code'    => T_FN,
+                    'type'    => 'T_FN',
+                ];
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr changed from T_STRING to T_FN".PHP_EOL;
+                }
+
+                $newStackPtr++;
+                continue;
+            }
+
+            /*
                 PHP doesn't assign a token to goto labels, so we have to.
                 These are just string tokens with a single colon after them. Double
                 colons are already tokenized and so don't interfere with this check.
@@ -1606,9 +1628,7 @@ class PHP extends Tokenizer
                 }//end if
 
                 continue;
-            } else if ($this->tokens[$i]['code'] === T_STRING
-                && strtolower($this->tokens[$i]['content']) === 'fn'
-            ) {
+            } else if ($this->tokens[$i]['code'] === T_FN) {
                 // Possible arrow function.
                 for ($x = ($i + 1); $i < $numTokens; $x++) {
                     if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
@@ -1618,22 +1638,84 @@ class PHP extends Tokenizer
                 }
 
                 if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $line = $this->tokens[$i]['line'];
-                        echo "\t* token $i on line $line changed from T_STRING to T_FN".PHP_EOL;
+                    $ignore  = Util\Tokens::$emptyTokens;
+                    $ignore += [
+                        T_STRING => T_STRING,
+                        T_COLON  => T_COLON,
+                    ];
+
+                    $closer = $this->tokens[$x]['parenthesis_closer'];
+                    for ($arrow = ($closer + 1); $arrow < $numTokens; $arrow++) {
+                        if (isset($ignore[$this->tokens[$arrow]['code']]) === false) {
+                            break;
+                        }
                     }
 
-                    $this->tokens[$i]['code'] = T_FN;
-                    $this->tokens[$i]['type'] = 'T_FN';
-                    $this->tokens[$i]['parenthesis_owner']  = $i;
-                    $this->tokens[$i]['parenthesis_opener'] = $x;
-                    $this->tokens[$i]['parenthesis_closer'] = $this->tokens[$x]['parenthesis_closer'];
+                    if ($this->tokens[$arrow]['code'] === T_DOUBLE_ARROW) {
+                        $endTokens = [
+                            T_COLON                => true,
+                            T_COMMA                => true,
+                            T_DOUBLE_ARROW         => true,
+                            T_SEMICOLON            => true,
+                            T_CLOSE_PARENTHESIS    => true,
+                            T_CLOSE_SQUARE_BRACKET => true,
+                            T_CLOSE_CURLY_BRACKET  => true,
+                            T_CLOSE_SHORT_ARRAY    => true,
+                            T_OPEN_TAG             => true,
+                            T_CLOSE_TAG            => true,
+                        ];
 
-                    $opener = $this->tokens[$i]['parenthesis_opener'];
-                    $closer = $this->tokens[$i]['parenthesis_closer'];
-                    $this->tokens[$opener]['parenthesis_owner'] = $i;
-                    $this->tokens[$closer]['parenthesis_owner'] = $i;
-                }
+                        for ($scopeCloser = ($arrow + 1); $scopeCloser < $numTokens; $scopeCloser++) {
+                            if (isset($endTokens[$this->tokens[$scopeCloser]['code']]) === true) {
+                                break;
+                            }
+
+                            if (isset($this->tokens[$scopeCloser]['scope_closer']) === true) {
+                                // We minus 1 here in case the closer can be shared with us.
+                                $scopeCloser = ($this->tokens[$scopeCloser]['scope_closer'] - 1);
+                                continue;
+                            }
+
+                            if (isset($this->tokens[$scopeCloser]['parenthesis_closer']) === true) {
+                                $scopeCloser = $this->tokens[$scopeCloser]['parenthesis_closer'];
+                                continue;
+                            }
+
+                            if (isset($this->tokens[$scopeCloser]['bracket_closer']) === true) {
+                                $scopeCloser = $this->tokens[$scopeCloser]['bracket_closer'];
+                                continue;
+                            }
+                        }//end for
+
+                        if ($scopeCloser !== $numTokens) {
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $line = $this->tokens[$i]['line'];
+                                echo "\t* token $i on line $line changed from T_STRING to T_FN".PHP_EOL;
+                            }
+
+                            $this->tokens[$i]['code']            = T_FN;
+                            $this->tokens[$i]['type']            = 'T_FN';
+                            $this->tokens[$i]['scope_condition'] = $i;
+                            $this->tokens[$i]['scope_opener']    = $arrow;
+                            $this->tokens[$i]['scope_closer']    = $scopeCloser;
+                            $this->tokens[$i]['parenthesis_owner']  = $i;
+                            $this->tokens[$i]['parenthesis_opener'] = $x;
+                            $this->tokens[$i]['parenthesis_closer'] = $this->tokens[$x]['parenthesis_closer'];
+
+                            $this->tokens[$arrow]['scope_condition']       = $i;
+                            $this->tokens[$arrow]['scope_opener']          = $arrow;
+                            $this->tokens[$arrow]['scope_closer']          = $scopeCloser;
+                            $this->tokens[$scopeCloser]['scope_condition'] = $i;
+                            $this->tokens[$scopeCloser]['scope_opener']    = $arrow;
+                            $this->tokens[$scopeCloser]['scope_closer']    = $scopeCloser;
+
+                            $opener = $this->tokens[$i]['parenthesis_opener'];
+                            $closer = $this->tokens[$i]['parenthesis_closer'];
+                            $this->tokens[$opener]['parenthesis_owner'] = $i;
+                            $this->tokens[$closer]['parenthesis_owner'] = $i;
+                        }//end if
+                    }//end if
+                }//end if
             } else if ($this->tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
                 if (isset($this->tokens[$i]['bracket_closer']) === false) {
                     continue;
