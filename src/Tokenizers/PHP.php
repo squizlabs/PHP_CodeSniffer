@@ -1631,7 +1631,9 @@ class PHP extends Tokenizer
             } else if ($this->tokens[$i]['code'] === T_FN) {
                 // Possible arrow function.
                 for ($x = ($i + 1); $i < $numTokens; $x++) {
-                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false
+                        && $this->tokens[$x]['code'] !== T_BITWISE_AND
+                    ) {
                         // Non-whitespace content.
                         break;
                     }

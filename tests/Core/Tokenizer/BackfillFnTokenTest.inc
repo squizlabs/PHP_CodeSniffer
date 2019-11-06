@@ -15,11 +15,16 @@ $fn1 = fn /* comment here */ ($x) => $x + $y;
 /* testFunctionName */
 function fn() {}
 
-/* testNested */
-$fn = fn($x) => fn($y) => $x * $y + $z;
+/* testNestedOuter */
+$fn = fn($x) => /* testNestedInner */ fn($y) => $x * $y + $z;
 
 /* testFunctionCall */
 $extended = fn($c) => $callable($factory($c), $c);
+
+/* testChainedFunctionCall */
+$result = Collection::from([1, 2])
+    ->map(fn($v) => $v * 2)
+    ->reduce(/* testFunctionArgument */ fn($tmp, $v) => $tmp + $v, 0);
 
 /* testClosure */
 $extended = fn($c) => $callable(function() {
@@ -35,3 +40,9 @@ $result = array_map(
     static fn(int $number) : int => $number + 1,
     $numbers
 );
+
+/* testReference */
+fn&($x) => $x;
+
+/* testGrouped */
+(fn($x) => $x) + $y;
