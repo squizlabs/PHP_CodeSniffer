@@ -1692,7 +1692,7 @@ class PHP extends Tokenizer
                         if ($scopeCloser !== $numTokens) {
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $line = $this->tokens[$i]['line'];
-                                echo "\t* token $i on line $line changed from T_STRING to T_FN".PHP_EOL;
+                                echo "\t* token $i on line $line processed as arrow function".PHP_EOL;
                             }
 
                             $this->tokens[$i]['code']            = T_FN;
