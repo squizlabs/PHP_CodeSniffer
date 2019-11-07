@@ -1935,7 +1935,9 @@ class File
             true
         );
 
-        if ($this->tokens[$tokenBefore]['code'] === T_FUNCTION) {
+        if ($this->tokens[$tokenBefore]['code'] === T_FUNCTION
+            || $this->tokens[$tokenBefore]['code'] === T_FN
+        ) {
             // Function returns a reference.
             return true;
         }

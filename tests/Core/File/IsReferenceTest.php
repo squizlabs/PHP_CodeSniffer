@@ -224,6 +224,10 @@ class IsReferenceTest extends AbstractMethodUnitTest
                 '/* testUseByReference */',
                 true,
             ],
+            [
+                '/* testArrowFunctionReturnByReference */',
+                true,
+            ],
         ];
 
     }//end dataIsReference()

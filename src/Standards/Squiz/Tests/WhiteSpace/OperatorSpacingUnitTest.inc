@@ -265,6 +265,8 @@ $a = $a instanceof $b;
 $a = $a  instanceof  $b;
 $a = ($a)instanceof$b;
 
+fn&($x) => $x;
+
 // phpcs:set Squiz.WhiteSpace.OperatorSpacing ignoreSpacingBeforeAssignments false
 $a  =  3;
 
