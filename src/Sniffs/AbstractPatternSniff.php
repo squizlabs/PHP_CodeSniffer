@@ -614,7 +614,9 @@ abstract class AbstractPatternSniff implements Sniff
                     $stackPtr = ($tokens[$next][$pattern[$i]['to']] + 1);
                 }//end if
             } else if ($pattern[$i]['type'] === 'string') {
-                if ($tokens[$stackPtr]['code'] !== T_STRING) {
+                if ($tokens[$stackPtr]['code'] !== T_STRING
+                    && $tokens[$stackPtr]['code'] !== T_FN
+                ) {
                     $hasError = true;
                 }
 
