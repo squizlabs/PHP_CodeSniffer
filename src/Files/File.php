@@ -1654,7 +1654,7 @@ class File
             }
 
             if ($this->tokens[$stackPtr]['code'] === T_FN) {
-                $bodyToken = T_DOUBLE_ARROW;
+                $bodyToken = T_FN_ARROW;
             } else {
                 $bodyToken = T_OPEN_CURLY_BRACKET;
             }

@@ -1704,6 +1704,9 @@ class PHP extends Tokenizer
                             $this->tokens[$i]['parenthesis_opener'] = $x;
                             $this->tokens[$i]['parenthesis_closer'] = $this->tokens[$x]['parenthesis_closer'];
 
+                            $this->tokens[$arrow]['code'] = T_FN_ARROW;
+                            $this->tokens[$arrow]['type'] = 'T_FN_ARROW';
+
                             $this->tokens[$arrow]['scope_condition']       = $i;
                             $this->tokens[$arrow]['scope_opener']          = $arrow;
                             $this->tokens[$arrow]['scope_closer']          = $scopeCloser;

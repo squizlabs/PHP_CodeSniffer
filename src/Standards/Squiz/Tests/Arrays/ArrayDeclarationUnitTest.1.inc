@@ -410,6 +410,14 @@ $foo = array(<<<JSON
 JSON
        );
 
+$array = array(
+          'a'   => fn() => return 1,
+          'bb'  => fn() => return 2,
+          'ccc' => ( true ) ?
+              fn() => return 1 :
+              fn() => return 2,
+         );
+
 // Intentional syntax error.
 $a = array(
       'a' =>
