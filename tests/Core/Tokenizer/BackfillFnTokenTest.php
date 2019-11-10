@@ -376,6 +376,34 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test arrow functions that are used as array values.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testArrayValue()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testArrayValue */', T_FN);
+        $this->backfillHelper($token);
+
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 4), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 9), 'Scope closer is not the comma token');
+
+        $opener = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 4), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 9), 'Opener scope closer is not the comma token');
+
+        $closer = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 4), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 9), 'Closer scope closer is not the comma token');
+
+    }//end testArrayValue()
+
+
+    /**
      * Test that anonymous class tokens without parenthesis do not get assigned a parenthesis owner.
      *
      * @param string $token The T_FN token to check.

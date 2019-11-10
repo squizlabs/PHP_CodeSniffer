@@ -172,4 +172,20 @@ class FindEndOfStatementTest extends AbstractMethodUnitTest
     }//end testUseGroup()
 
 
+    /**
+     * Test a use group.
+     *
+     * @return void
+     */
+    public function testArrowFunctionArrayValue()
+    {
+        $start = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testArrowFunctionArrayValue */') + 7);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $tokens = self::$phpcsFile->getTokens();
+        $this->assertSame($tokens[($start + 9)], $tokens[$found]);
+
+    }//end testArrowFunctionArrayValue()
+
+
 }//end class

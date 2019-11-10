@@ -2354,7 +2354,10 @@ class File
                 && ($i === $this->tokens[$i]['scope_opener']
                 || $i === $this->tokens[$i]['scope_condition'])
             ) {
-                if ($i === $start && isset(Util\Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true) {
+                if ($i === $start
+                    && (isset(Util\Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true
+                    || $this->tokens[$i]['code'] === T_FN)
+                ) {
                     return $this->tokens[$i]['scope_closer'];
                 }
 
@@ -2372,7 +2375,7 @@ class File
                 if ($end !== false) {
                     $i = $end;
                 }
-            }
+            }//end if
 
             if (isset(Util\Tokens::$emptyTokens[$this->tokens[$i]['code']]) === false) {
                 $lastNotEmpty = $i;

@@ -46,3 +46,8 @@ fn&($x) => $x;
 
 /* testGrouped */
 (fn($x) => $x) + $y;
+
+/* testArrayValue */
+$a = [
+    'a' => fn() => return 1,
+];
