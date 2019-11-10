@@ -82,13 +82,7 @@ class DisallowComparisonAssignmentSniff implements Sniff
             return;
         }
 
-        $endStatement = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-        if ($tokens[$stackPtr]['conditions'] !== $tokens[$endStatement]['conditions']) {
-            // This statement doesn't end with a semicolon, which is the case for
-            // the last expression in a for loop.
-            return;
-        }
-
+        $endStatement = $phpcsFile->findEndOfStatement($stackPtr);
         for ($i = ($stackPtr + 1); $i < $endStatement; $i++) {
             if ((isset(Tokens::$comparisonTokens[$tokens[$i]['code']]) === true
                 && $tokens[$i]['code'] !== T_COALESCE)
