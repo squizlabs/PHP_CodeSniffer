@@ -1692,7 +1692,7 @@ class PHP extends Tokenizer
                         if ($scopeCloser !== $numTokens) {
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $line = $this->tokens[$i]['line'];
-                                echo "\t* token $i on line $line processed as arrow function".PHP_EOL;
+                                echo "\t=> token $i on line $line processed as arrow function".PHP_EOL;
                             }
 
                             $this->tokens[$i]['code']            = T_FN;
@@ -1718,6 +1718,11 @@ class PHP extends Tokenizer
                             $closer = $this->tokens[$i]['parenthesis_closer'];
                             $this->tokens[$opener]['parenthesis_owner'] = $i;
                             $this->tokens[$closer]['parenthesis_owner'] = $i;
+
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                $line = $this->tokens[$arrow]['line'];
+                                echo "\t\t* token $arrow on line $line changed from T_DOUBLE_ARROW to T_FN_ARROW".PHP_EOL;
+                            }
                         }//end if
                     }//end if
                 }//end if
