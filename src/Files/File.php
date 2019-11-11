@@ -1496,16 +1496,18 @@ class File
                 }
 
                 // Reset the vars, as we are about to process the next parameter.
-                $defaultStart    = null;
-                $equalToken      = null;
-                $paramStart      = ($i + 1);
-                $passByReference = false;
-                $referenceToken  = false;
-                $variableLength  = false;
-                $variadicToken   = false;
-                $typeHint        = '';
-                $typeHintToken   = false;
-                $nullableType    = false;
+                $currVar          = null;
+                $paramStart       = ($i + 1);
+                $defaultStart     = null;
+                $equalToken       = null;
+                $passByReference  = false;
+                $referenceToken   = false;
+                $variableLength   = false;
+                $variadicToken    = false;
+                $typeHint         = '';
+                $typeHintToken    = false;
+                $typeHintEndToken = false;
+                $nullableType     = false;
 
                 $paramCount++;
                 break;
