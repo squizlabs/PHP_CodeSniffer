@@ -55,3 +55,16 @@ foreach (  $something as $blah => $that  ) {}
 // phpcs:set PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 0
 
 $binary = b"binary string";
+
+if ($expr1
+    && $expr2             ) {
+}
+
+if ($expr1
+    && $expr2     /* comment */   ) {
+}
+
+if ($expr1
+    && $expr2
+    /* comment */   ) {
+}

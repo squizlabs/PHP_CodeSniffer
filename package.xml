@@ -37,6 +37,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.CodeAnalysis.EmptyPhpStatement now reports unnecessary semicolons after control structure closing braces
     -- Thanks to Vincent Langlet for the patch
   - Generic.WhiteSpace.ScopeIndent now supports static arrow functions
+  - PSR2.ControlStructures.ControlStructureSpacing now checks whitespace before the closing parenthesis of multi-line control structures
+    -- Previously, it incorrectly applied the whitespace check for single-line definitions only
   - Fixed bug #2638 : Squiz.CSS.DuplicateClassDefinitionSniff sees comments as part of the class name
     -- Thanks to Raphael Horber for the patch
   - Fixed bug #2674 : Squiz.Functions.FunctionDeclarationArgumentSpacing prints wrong argument name in error message

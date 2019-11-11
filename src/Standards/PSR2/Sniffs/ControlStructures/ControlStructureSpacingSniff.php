@@ -108,7 +108,8 @@ class ControlStructureSpacingSniff implements Sniff
             }
         }//end if
 
-        if ($tokens[$parenOpener]['line'] === $tokens[$parenCloser]['line']) {
+        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($parenCloser - 1), $parenOpener, true);
+        if ($tokens[$prev]['line'] === $tokens[$parenCloser]['line']) {
             $spaceBeforeClose = 0;
             if ($tokens[($parenCloser - 1)]['code'] === T_WHITESPACE) {
                 $spaceBeforeClose = strlen(ltrim($tokens[($parenCloser - 1)]['content'], $phpcsFile->eolChar));
