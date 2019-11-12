@@ -221,6 +221,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ByteOrderMarkStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FilePermissionsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineLengthStandard.xml" role="php" />
@@ -323,6 +324,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ByteOrderMarkSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FilePermissionsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineLengthSniff.php" role="php" />
@@ -517,6 +519,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.6.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FilePermissionsUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FilePermissionsUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FilePermissionsUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.3.inc" role="test" />
