@@ -894,8 +894,6 @@ class ScopeIndentSniff implements Sniff
                         }
                     }
                 }
-
-                $checkIndent = (int) (ceil($checkIndent / $this->indent) * $this->indent);
             }//end if
 
             // Close tags needs to be indented to exact column positions.
