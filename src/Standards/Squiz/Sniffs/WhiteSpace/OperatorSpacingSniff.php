@@ -57,29 +57,34 @@ class OperatorSpacingSniff implements Sniff
      */
     public function register()
     {
-        $targets   = Tokens::$comparisonTokens;
-        $targets  += Tokens::$operators;
-        $targets  += Tokens::$assignmentTokens;
-        $targets[] = T_INLINE_THEN;
-        $targets[] = T_INLINE_ELSE;
-        $targets[] = T_INSTANCEOF;
+        /*
+            First we setup an array of all the tokens that can come before
+            a T_MINUS or T_PLUS token to indicate that the token is not being
+            used as an operator.
+        */
 
         // Trying to operate on a negative value; eg. ($var * -1).
         $this->nonOperandTokens = Tokens::$operators;
+
         // Trying to compare a negative value; eg. ($var === -1).
         $this->nonOperandTokens += Tokens::$comparisonTokens;
+
         // Trying to compare a negative value; eg. ($var || -1 === $b).
         $this->nonOperandTokens += Tokens::$booleanOperators;
+
         // Trying to assign a negative value; eg. ($var = -1).
         $this->nonOperandTokens += Tokens::$assignmentTokens;
-        $this->nonOperandTokens += [
-            // Returning/printing a negative value; eg. (return -1).
-            T_RETURN              => T_RETURN,
-            T_ECHO                => T_ECHO,
-            T_PRINT               => T_PRINT,
-            T_YIELD               => T_YIELD,
 
-            // Trying to use a negative value; eg. myFunction($var, -2).
+        // Returning/printing a negative value; eg. (return -1).
+        $this->nonOperandTokens += [
+            T_RETURN => T_RETURN,
+            T_ECHO   => T_ECHO,
+            T_PRINT  => T_PRINT,
+            T_YIELD  => T_YIELD,
+        ];
+
+        // Trying to use a negative value; eg. myFunction($var, -2).
+        $this->nonOperandTokens += [
             T_COMMA               => T_COMMA,
             T_OPEN_PARENTHESIS    => T_OPEN_PARENTHESIS,
             T_OPEN_SQUARE_BRACKET => T_OPEN_SQUARE_BRACKET,
@@ -90,16 +95,29 @@ class OperatorSpacingSniff implements Sniff
             T_INLINE_ELSE         => T_INLINE_ELSE,
             T_CASE                => T_CASE,
             T_OPEN_CURLY_BRACKET  => T_OPEN_CURLY_BRACKET,
-
-            // Casting a negative value; eg. (array) -$a.
-            T_ARRAY_CAST          => T_ARRAY_CAST,
-            T_BOOL_CAST           => T_BOOL_CAST,
-            T_DOUBLE_CAST         => T_DOUBLE_CAST,
-            T_INT_CAST            => T_INT_CAST,
-            T_OBJECT_CAST         => T_OBJECT_CAST,
-            T_STRING_CAST         => T_STRING_CAST,
-            T_UNSET_CAST          => T_UNSET_CAST,
         ];
+
+        // Casting a negative value; eg. (array) -$a.
+        $this->nonOperandTokens += [
+            T_ARRAY_CAST  => T_ARRAY_CAST,
+            T_BOOL_CAST   => T_BOOL_CAST,
+            T_DOUBLE_CAST => T_DOUBLE_CAST,
+            T_INT_CAST    => T_INT_CAST,
+            T_OBJECT_CAST => T_OBJECT_CAST,
+            T_STRING_CAST => T_STRING_CAST,
+            T_UNSET_CAST  => T_UNSET_CAST,
+        ];
+
+        /*
+            These are the tokens the sniff is looking for.
+        */
+
+        $targets   = Tokens::$comparisonTokens;
+        $targets  += Tokens::$operators;
+        $targets  += Tokens::$assignmentTokens;
+        $targets[] = T_INLINE_THEN;
+        $targets[] = T_INLINE_ELSE;
+        $targets[] = T_INSTANCEOF;
 
         return $targets;
 
