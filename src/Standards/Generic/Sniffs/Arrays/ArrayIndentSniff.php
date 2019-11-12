@@ -62,12 +62,11 @@ class ArrayIndentSniff extends AbstractArraySniff
         $first          = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr, true);
         $expectedIndent = ($tokens[$first]['column'] - 1 + $this->indent);
 
-        foreach ($indices as $index) {
-            if (isset($index['index_start']) === true) {
-                $start = $index['index_start'];
-            } else {
-                $start = $index['value_start'];
-            }
+        $preppedIndices = $this->prepareIndices($phpcsFile, $indices, $arrayEnd);
+
+        foreach ($preppedIndices as $index) {
+            $start = $index['start'];
+            $end   = $index['end'];
 
             $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($start - 1), null, true);
             if ($tokens[$prev]['line'] === $tokens[$start]['line']) {
@@ -78,27 +77,10 @@ class ArrayIndentSniff extends AbstractArraySniff
 
             $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $start, true);
 
-            $foundIndent = ($tokens[$first]['column'] - 1);
-            if ($foundIndent === $expectedIndent) {
-                continue;
-            }
-
-            $error = 'Array key not indented correctly; expected %s spaces but found %s';
-            $data  = [
-                $expectedIndent,
-                $foundIndent,
-            ];
-            $fix   = $phpcsFile->addFixableError($error, $first, 'KeyIncorrect', $data);
-            if ($fix === false) {
-                continue;
-            }
-
-            $padding = str_repeat(' ', $expectedIndent);
-            if ($foundIndent === 0) {
-                $phpcsFile->fixer->addContentBefore($first, $padding);
-            } else {
-                $phpcsFile->fixer->replaceToken(($first - 1), $padding);
-            }
+            while ($first !== false) {
+                $this->processIndex($phpcsFile, $first, $expectedIndent);
+                $first = $this->findFirstIndexOnNextLine($phpcsFile, $first, $end);
+            }//end while
         }//end foreach
 
         $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($arrayEnd - 1), null, true);
@@ -138,6 +120,169 @@ class ArrayIndentSniff extends AbstractArraySniff
         }
 
     }//end processMultiLineArray()
+
+
+    /**
+     * Prepares the indices by calculating the start and end of each index.
+     *
+     * The prepared indices will contain the tokens that define the start and end
+     * of each index.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The current file being checked.
+     * @param array                       $indices   An array of token positions for the array keys,
+     *                                               double arrows, and values.
+     * @param int                         $arrayEnd  The token that ends the array definition.
+     *
+     * @return array
+     */
+    protected function prepareIndices($phpcsFile, $indices, $arrayEnd)
+    {
+        $lastKey         = null;
+        $preparedIndices = [];
+
+        foreach ($indices as $key => $index) {
+            if (isset($index['index_start']) === true) {
+                $start = $index['index_start'];
+            } else {
+                $start = $index['value_start'];
+            }
+
+            $preparedIndices[$key]['start'] = $start;
+
+            if ($lastKey !== null) {
+                $end = $phpcsFile->findPrevious(T_COMMA, $start, $preparedIndices[$lastKey]['start']);
+
+                $preparedIndices[$lastKey]['end'] = $end;
+            }
+
+            $lastKey = $key;
+        }
+
+        if ($lastKey === null) {
+            return $preparedIndices;
+        }
+
+        $commaEnd = $phpcsFile->findPrevious(T_COMMA, ($arrayEnd - 1), $preparedIndices[$lastKey]['start']);
+        if ($commaEnd !== false) {
+            $preparedIndices[$lastKey]['end'] = $commaEnd;
+
+            return $preparedIndices;
+        }
+
+        $whitespaceEnd = $phpcsFile->findPrevious(T_WHITESPACE, ($arrayEnd - 1), null, true);
+
+        $preparedIndices[$lastKey]['end'] = $whitespaceEnd;
+
+        return $preparedIndices;
+
+    }//end prepareIndices()
+
+
+    /**
+     * Processes an array index from start to end.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile      The current file being checked.
+     * @param int                         $start          The token to start processing from.
+     * @param int                         $expectedIndent The number of spaces each line should be tabbed.
+     *
+     * @return void
+     */
+    protected function processIndex($phpcsFile, $start, $expectedIndent)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        $foundIndent = ($tokens[$start]['column'] - 1);
+        if ($foundIndent === $expectedIndent) {
+            return;
+        }
+
+        $error = 'Array index not indented correctly; expected %s spaces but found %s';
+        $data  = [
+            $expectedIndent,
+            $foundIndent,
+        ];
+        $fix   = $phpcsFile->addFixableError($error, $start, 'KeyIncorrect', $data);
+        if ($fix === false) {
+            return;
+        }
+
+        $padding = str_repeat(' ', $expectedIndent);
+        if ($foundIndent === 0) {
+            $phpcsFile->fixer->addContentBefore($start, $padding);
+
+            return;
+        }
+
+        $phpcsFile->fixer->replaceToken(($start - 1), $padding);
+
+    }//end processIndex()
+
+
+    /**
+     * Gets the first non-whitespace index of the next viable line.
+     *
+     * Skips over any scopes or arrays found while looking for the next line.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The current file being checked.
+     * @param int                         $start     The token to start finding from.
+     * @param int                         $end       The token to stop finding at.
+     *
+     * @return int|bool
+     */
+    protected function findFirstIndexOnNextLine($phpcsFile, $start, $end)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        $prevToken        = null;
+        $viableStart      = $start;
+        $invalidTokenList = (Tokens::$scopeOpeners + Tokens::$blockOpeners + [T_ARRAY => T_ARRAY, T_OPEN_SHORT_ARRAY => T_OPEN_SHORT_ARRAY]);
+
+        while ($prevToken !== $viableStart) {
+            $prevToken = $viableStart;
+
+            $invalidToken = $phpcsFile->findNext($invalidTokenList, $viableStart, $end);
+            if ($invalidToken === false
+                || $tokens[$viableStart]['line'] !== $tokens[$invalidToken]['line']
+            ) {
+                continue;
+            }
+
+            $keys   = array_keys($tokens[$invalidToken]);
+            $result = preg_grep('/^\w+\_closer$/', $keys);
+            if ($result === []) {
+                $viableStart = ($invalidToken + 1);
+            } else {
+                $viableStart = $tokens[$invalidToken][reset($result)];
+            }
+        }//end while
+
+        if ($prevToken === null) {
+            $nextLineStart = $start;
+        } else {
+            $nextLineStart = $prevToken;
+        }
+
+        $newline = $phpcsFile->findNext(T_WHITESPACE, $nextLineStart, $end, false, PHP_EOL);
+        if ($newline === false
+            || $tokens[($newline + 1)]['line'] > $tokens[$end]['line']
+        ) {
+            return false;
+        }
+
+        $nextNewline = $phpcsFile->findNext(T_WHITESPACE, ($newline + 1), $end, false, PHP_EOL);
+        if ($nextNewline === false) {
+            $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $end, true);
+        } else {
+            $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $nextNewline, true);
+        }
+
+        if (in_array($tokens[$first]['code'], [T_ARRAY, T_OPEN_SHORT_ARRAY]) !== true) {
+            return false;
+        }
+
+        return $first;
+
+    }//end findFirstIndexOnNextLine()
 
 
 }//end class
