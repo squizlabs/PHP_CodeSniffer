@@ -12,7 +12,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Files;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
 
-class FilePermissionsSniff implements Sniff
+class ExecutableFileSniff implements Sniff
 {
 
 

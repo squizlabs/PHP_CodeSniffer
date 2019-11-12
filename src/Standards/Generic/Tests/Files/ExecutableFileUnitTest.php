@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the FilePermissions sniff.
+ * Unit test class for the ExecutableFile sniff.
  *
  * @author    Matthew Peveler <matt.peveler@gmail.com>
  * @copyright 2019 Matthew Peveler
@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Tests\Files;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class FilePermissionsUnitTest extends AbstractSniffUnitTest
+class ExecutableFileUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -28,7 +28,7 @@ class FilePermissionsUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='')
     {
         switch ($testFile) {
-        case 'FilePermissionsUnitTest.2.inc':
+        case 'ExecutableFileUnitTest.2.inc':
             return [1 => 1];
         default:
             return [];

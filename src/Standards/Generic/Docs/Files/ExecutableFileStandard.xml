@@ -1,4 +1,4 @@
-<documentation title="File Permissions">
+<documentation title="Executable Files">
     <standard>
     <![CDATA[
     Files should not be executable.
