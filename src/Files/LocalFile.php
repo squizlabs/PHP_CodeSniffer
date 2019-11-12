@@ -93,6 +93,7 @@ class LocalFile extends File
         }
 
         $hash  = md5_file($this->path);
+        $hash .= fileperms($this->path);
         $cache = Cache::get($this->path);
         if ($cache !== false && $cache['hash'] === $hash) {
             // We can't filter metrics, so just load all of them.

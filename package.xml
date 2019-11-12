@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The token after the statement (normally a semicolon) becomes the scope closer
     -- The token is also associated with the opening and closing parenthesis of the statement
     -- Any functions named "fn" will cause have a T_FN token for the function name, but have no scope information
+  - The PHPCS file cache now takes file permissions into account
+    -- The cache is now invalidated for a file when its permissions are changed
   - File::getMethodParameters() now supports arrow functions
   - File::getMethodProperties() now supports arrow functions
   - Generic.CodeAnalysis.EmptyPhpStatement now reports unnecessary semicolons after control structure closing braces
