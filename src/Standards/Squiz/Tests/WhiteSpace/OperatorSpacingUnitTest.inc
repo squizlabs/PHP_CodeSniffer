@@ -463,5 +463,12 @@ $a = [$a, - $b];
 $a = $a[- $b];
 $a = $a ? - $b : - $b;
 
+class HelloWorld {
+    use HelloTrait {
+        method1  as  methodA;
+        method2  insteadof  methodB;
+    }
+}
+
 /* Intentional parse error. This has to be the last test in the file. */
 $a = 10 +

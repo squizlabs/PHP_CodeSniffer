@@ -118,6 +118,8 @@ class OperatorSpacingSniff implements Sniff
         $targets[] = T_INLINE_THEN;
         $targets[] = T_INLINE_ELSE;
         $targets[] = T_INSTANCEOF;
+        $targets[] = T_INSTEADOF;
+        $targets[] = T_AS;
 
         return $targets;
 
