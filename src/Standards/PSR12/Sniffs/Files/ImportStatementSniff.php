@@ -49,7 +49,7 @@ class ImportStatementSniff implements Sniff
         }
 
         if ($phpcsFile->hasCondition($stackPtr, Tokens::$ooScopeTokens) === true) {
-            // This rule inly applies to import statements.
+            // This rule only applies to import statements.
             return;
         }
 
