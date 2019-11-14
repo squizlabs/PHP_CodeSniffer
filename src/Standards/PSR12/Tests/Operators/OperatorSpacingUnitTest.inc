@@ -46,3 +46,13 @@ $foo = $foo?:'bar';
 try {
 } catch (ExceptionType1|ExceptionType2 $e) {
 }
+
+if (strpos($tokenContent, 'b"') === 0 && substr($tokenContent, -1) === '"') {}
+
+$oldConstructorPos = +1;
+return -$content;
+
+function name($a = -1) {}
+
+$a =& $ref;
+$a = [ 'a' => &$something ];

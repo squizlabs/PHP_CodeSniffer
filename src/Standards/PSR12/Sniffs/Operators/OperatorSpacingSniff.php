@@ -24,6 +24,8 @@ class OperatorSpacingSniff extends SquizOperatorSpacingSniff
      */
     public function register()
     {
+        parent::register();
+
         $targets   = Tokens::$comparisonTokens;
         $targets  += Tokens::$operators;
         $targets  += Tokens::$assignmentTokens;
