@@ -49,14 +49,6 @@ return [
     ]
 ];
 
-// phpcs:set Generic.Arrays.ArrayIndent indent 2
-
-$var = [
-1 => 'one',
-        2 => 'two',
-    /* three */ 3 => 'three',
-    ];
-
 $array = [
     'foo' => 'foo',
     'bar' => $baz ?
@@ -66,3 +58,11 @@ $array = [
         ['one'] ??
         ['two'],
 ];
+
+// phpcs:set Generic.Arrays.ArrayIndent indent 2
+
+$var = [
+1 => 'one',
+        2 => 'two',
+    /* three */ 3 => 'three',
+    ];

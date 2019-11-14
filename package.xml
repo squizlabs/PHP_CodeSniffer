@@ -54,6 +54,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2678 : PSR12.Classes.AnonClassDeclaration incorrectly enforcing that closing brace be on a line by itself
   - Fixed bug #2685 : File::getMethodParameters() setting typeHintEndToken for vars with no type hint
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2694 : AbstractArraySniff produces invalid indices when using ternary operator
+    -- Thanks to Michał Bundyra for the patch
  </notes>
  <contents>
   <dir name="/">
