@@ -56,3 +56,13 @@ $var = [
         2 => 'two',
     /* three */ 3 => 'three',
     ];
+
+$array = [
+    'foo' => 'foo',
+    'bar' => $baz ?
+        ['abc'] :
+        ['def'],
+    'hey' => $baz ??
+        ['one'] ??
+        ['two'],
+];
