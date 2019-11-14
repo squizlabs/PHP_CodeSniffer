@@ -89,6 +89,13 @@ abstract class AbstractArraySniff implements Sniff
                 continue;
             }
 
+            if ($tokens[$checkToken]['code'] === T_INLINE_THEN
+                || $tokens[$checkToken]['code'] === T_COALESCE
+            ) {
+                $checkToken = $phpcsFile->findEndOfStatement($checkToken);
+                continue;
+            }
+
             if ($tokens[$checkToken]['code'] === T_ARRAY
                 || $tokens[$checkToken]['code'] === T_OPEN_SHORT_ARRAY
                 || $tokens[$checkToken]['code'] === T_CLOSURE
