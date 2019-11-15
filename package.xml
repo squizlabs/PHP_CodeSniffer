@@ -44,6 +44,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Generic.WhiteSpace.ScopeIndent now supports static arrow functions
   - PSR2.ControlStructures.ControlStructureSpacing now checks whitespace before the closing parenthesis of multi-line control structures
     -- Previously, it incorrectly applied the whitespace check for single-line definitions only
+  - PSR12.Traits.UseDeclaration now ensures all trait import statements are grouped together
+    -- Previously, the trait import section of the class ended when the first non-import statement was found
+    -- Checking now continues throughout the class to ensure all statements are grouped together
+    -- This also ensures that empty lines are not requested after an import statement that isn't the last one
   - Fixed bug #2586 : Generic.WhiteSpace.ScopeIndent false positives when indenting open tags at a non tab-stop
   - Fixed bug #2638 : Squiz.CSS.DuplicateClassDefinitionSniff sees comments as part of the class name
     -- Thanks to Raphael Horber for the patch

@@ -49,203 +49,222 @@ class UseDeclarationSniff implements Sniff
             return;
         }
 
-        // If this is the first use statement inside the class, it needs
-        // to be defined right after the opening brace.
-        $ooToken  = key($conditions);
-        $opener   = $tokens[$ooToken]['scope_opener'];
-        $firstUse = $opener;
-        do {
-            $firstUse = $phpcsFile->findNext(T_USE, ($firstUse + 1), $tokens[$ooToken]['scope_closer']);
-            if ($firstUse === false) {
-                break;
+        $ooToken = key($conditions);
+        $opener  = $tokens[$ooToken]['scope_opener'];
+
+        // Figure out where all the use statements are.
+        $useTokens = [$stackPtr];
+        for ($i = ($stackPtr + 1); $i < $tokens[$ooToken]['scope_closer']; $i++) {
+            if ($tokens[$i]['code'] === T_USE) {
+                $useTokens[] = $i;
             }
 
-            if ($tokens[$firstUse]['conditions'] !== $conditions) {
-                continue;
-            }
-
-            break;
-        } while ($firstUse !== false);
-
-        if ($firstUse === $stackPtr) {
-            // The first non-comment line must be the use line.
-            $lastValidContent = $stackPtr;
-            for ($i = ($stackPtr - 1); $i > $opener; $i--) {
-                if ($tokens[$i]['code'] === T_WHITESPACE
-                    && ($tokens[($i - 1)]['line'] === $tokens[$i]['line']
-                    || $tokens[($i + 1)]['line'] === $tokens[$i]['line'])
-                ) {
-                    continue;
-                }
-
-                if (isset(Tokens::$commentTokens[$tokens[$i]['code']]) === true) {
-                    if ($tokens[$i]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
-                        // Skip past the comment.
-                        $i = $tokens[$i]['comment_opener'];
-                    }
-
-                    $lastValidContent = $i;
-                }
-
-                break;
-            }
-
-            if ($tokens[$lastValidContent]['line'] !== ($tokens[$opener]['line'] + 1)) {
-                $error = 'The first trait import statement must be declared on the first non-comment line after the %s opening brace';
-                $data  = [strtolower($tokens[$ooToken]['content'])];
-
-                // Figure out if we can fix this error.
-                $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), ($opener - 1), true);
-                if ($tokens[$prev]['line'] === $tokens[$opener]['line']) {
-                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'UseAfterBrace', $data);
-                    if ($fix === true) {
-                        // We know that the USE statements is the first non-comment content
-                        // in the class, so we just need to remove blank lines.
-                        $phpcsFile->fixer->beginChangeset();
-                        for ($i = ($stackPtr - 1); $i > $opener; $i--) {
-                            if ($tokens[$i]['line'] === $tokens[$opener]['line']) {
-                                break;
-                            }
-
-                            if ($tokens[$i]['line'] === $tokens[$stackPtr]['line']) {
-                                continue;
-                            }
-
-                            if ($tokens[$i]['code'] === T_WHITESPACE
-                                && $tokens[($i - 1)]['line'] !== $tokens[$i]['line']
-                                && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
-                            ) {
-                                $phpcsFile->fixer->replaceToken($i, '');
-                            }
-
-                            if (isset(Tokens::$commentTokens[$tokens[$i]['code']]) === true) {
-                                if ($tokens[$i]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
-                                    // Skip past the comment.
-                                    $i = $tokens[$i]['comment_opener'];
-                                }
-
-                                $lastValidContent = $i;
-                            }
-                        }//end for
-
-                        $phpcsFile->fixer->endChangeset();
-                    }//end if
-                } else {
-                    $phpcsFile->addError($error, $stackPtr, 'UseAfterBrace', $data);
-                }//end if
-            }//end if
-        } else {
-            // Make sure this use statement is not on the same line as the previous one.
-            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-            if ($prev !== false && $tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
-                $error     = 'Each imported trait must be on it\'s own line';
-                $prevNonWs = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-                if ($prevNonWs !== $prev) {
-                    $phpcsFile->addError($error, $stackPtr, 'SpacingBeforeImport');
-                } else {
-                    $fix = $phpcsFile->addFixableError($error, $stackPtr, 'SpacingBeforeImport');
-                    if ($fix === true) {
-                        $phpcsFile->fixer->beginChangeset();
-                        for ($x = ($stackPtr - 1); $x > $prev; $x--) {
-                            if ($tokens[$stackPtr]['line'] > $tokens[$firstUse]['line']
-                                && $tokens[$x]['line'] === $tokens[$stackPtr]['line']
-                            ) {
-                                // Preserve indent.
-                                continue;
-                            }
-
-                            $phpcsFile->fixer->replaceToken($x, '');
-                        }
-
-                        $phpcsFile->fixer->addNewline($prev);
-                        if ($tokens[$prev]['line'] === $tokens[$stackPtr]['line']) {
-                            if ($tokens[($stackPtr - 1)]['code'] === T_WHITESPACE) {
-                                $phpcsFile->fixer->replaceToken(($stackPtr - 1), '');
-                            }
-
-                            $padding = str_repeat(' ', ($tokens[$firstUse]['column'] - 1));
-                            $phpcsFile->fixer->addContent($prev, $padding);
-                        }
-
-                        $phpcsFile->fixer->endChangeset();
-                    }//end if
-                }//end if
-            }//end if
-        }//end if
-
-        if (isset($tokens[$stackPtr]['scope_opener']) === true) {
-            $this->processUseGroup($phpcsFile, $stackPtr);
-            $end = $tokens[$stackPtr]['scope_closer'];
-        } else {
-            $this->processUseStatement($phpcsFile, $stackPtr);
-            $end = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1));
-            if ($end === false) {
-                // Syntax error.
-                return;
+            if (isset($tokens[$i]['scope_closer']) === true) {
+                $i = $tokens[$i]['scope_closer'];
             }
         }
 
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
-        if ($next === $tokens[$ooToken]['scope_closer']) {
-            // Last content in the class.
-            $closer = $tokens[$ooToken]['scope_closer'];
-            if ($tokens[$closer]['line'] > ($tokens[$end]['line'] + 1)) {
-                $error = 'There must be no blank line after the last trait import statement at the bottom of a %s';
-                $data  = [strtolower($tokens[$ooToken]['content'])];
-                $fix   = $phpcsFile->addFixableError($error, $end, 'BlankLineAfterLastUse', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->beginChangeset();
-                    for ($i = ($end + 1); $i < $closer; $i++) {
-                        if ($tokens[$i]['line'] === $tokens[$end]['line']) {
+        $numUseTokens = count($useTokens);
+        foreach ($useTokens as $usePos => $useToken) {
+            if ($usePos === 0) {
+                /*
+                    This is the first use statement.
+                */
+
+                // The first non-comment line must be the use line.
+                $lastValidContent = $useToken;
+                for ($i = ($useToken - 1); $i > $opener; $i--) {
+                    if ($tokens[$i]['code'] === T_WHITESPACE
+                        && ($tokens[($i - 1)]['line'] === $tokens[$i]['line']
+                        || $tokens[($i + 1)]['line'] === $tokens[$i]['line'])
+                    ) {
+                        continue;
+                    }
+
+                    if (isset(Tokens::$commentTokens[$tokens[$i]['code']]) === true) {
+                        if ($tokens[$i]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+                            // Skip past the comment.
+                            $i = $tokens[$i]['comment_opener'];
+                        }
+
+                        $lastValidContent = $i;
+                    }
+
+                    break;
+                }
+
+                if ($tokens[$lastValidContent]['line'] !== ($tokens[$opener]['line'] + 1)) {
+                    $error = 'The first trait import statement must be declared on the first non-comment line after the %s opening brace';
+                    $data  = [strtolower($tokens[$ooToken]['content'])];
+
+                    // Figure out if we can fix this error.
+                    $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($useToken - 1), ($opener - 1), true);
+                    if ($tokens[$prev]['line'] === $tokens[$opener]['line']) {
+                        $fix = $phpcsFile->addFixableError($error, $useToken, 'UseAfterBrace', $data);
+                        if ($fix === true) {
+                            // We know that the USE statements is the first non-comment content
+                            // in the class, so we just need to remove blank lines.
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($i = ($useToken - 1); $i > $opener; $i--) {
+                                if ($tokens[$i]['line'] === $tokens[$opener]['line']) {
+                                    break;
+                                }
+
+                                if ($tokens[$i]['line'] === $tokens[$useToken]['line']) {
+                                    continue;
+                                }
+
+                                if ($tokens[$i]['code'] === T_WHITESPACE
+                                    && $tokens[($i - 1)]['line'] !== $tokens[$i]['line']
+                                    && $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
+                                ) {
+                                    $phpcsFile->fixer->replaceToken($i, '');
+                                }
+
+                                if (isset(Tokens::$commentTokens[$tokens[$i]['code']]) === true) {
+                                    if ($tokens[$i]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
+                                        // Skip past the comment.
+                                        $i = $tokens[$i]['comment_opener'];
+                                    }
+
+                                    $lastValidContent = $i;
+                                }
+                            }//end for
+
+                            $phpcsFile->fixer->endChangeset();
+                        }//end if
+                    } else {
+                        $phpcsFile->addError($error, $useToken, 'UseAfterBrace', $data);
+                    }//end if
+                }//end if
+            } else {
+                // Make sure this use statement is not on the same line as the previous one.
+                $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($useToken - 1), null, true);
+                if ($prev !== false && $tokens[$prev]['line'] === $tokens[$useToken]['line']) {
+                    $error     = 'Each imported trait must be on it\'s own line';
+                    $prevNonWs = $phpcsFile->findPrevious(T_WHITESPACE, ($useToken - 1), null, true);
+                    if ($prevNonWs !== $prev) {
+                        $phpcsFile->addError($error, $useToken, 'SpacingBeforeImport');
+                    } else {
+                        $fix = $phpcsFile->addFixableError($error, $useToken, 'SpacingBeforeImport');
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($x = ($useToken - 1); $x > $prev; $x--) {
+                                if ($tokens[$x]['line'] === $tokens[$useToken]['line']
+                                ) {
+                                    // Preserve indent.
+                                    continue;
+                                }
+
+                                $phpcsFile->fixer->replaceToken($x, '');
+                            }
+
+                            $phpcsFile->fixer->addNewline($prev);
+                            if ($tokens[$prev]['line'] === $tokens[$useToken]['line']) {
+                                if ($tokens[($useToken - 1)]['code'] === T_WHITESPACE) {
+                                    $phpcsFile->fixer->replaceToken(($useToken - 1), '');
+                                }
+
+                                $padding = str_repeat(' ', ($tokens[$useTokens[0]]['column'] - 1));
+                                $phpcsFile->fixer->addContent($prev, $padding);
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }//end if
+                    }//end if
+                }//end if
+            }//end if
+
+            // Check the formatting of the statement.
+            if (isset($tokens[$useToken]['scope_opener']) === true) {
+                $this->processUseGroup($phpcsFile, $useToken);
+                $end = $tokens[$useToken]['scope_closer'];
+            } else {
+                $this->processUseStatement($phpcsFile, $useToken);
+                $end = $phpcsFile->findNext(T_SEMICOLON, ($useToken + 1));
+                if ($end === false) {
+                    // Syntax error.
+                    return;
+                }
+            }
+
+            if ($usePos === ($numUseTokens - 1)) {
+                /*
+                    This is the last use statement.
+                */
+
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($end + 1), null, true);
+                if ($next === $tokens[$ooToken]['scope_closer']) {
+                    // Last content in the class.
+                    $closer = $tokens[$ooToken]['scope_closer'];
+                    if ($tokens[$closer]['line'] > ($tokens[$end]['line'] + 1)) {
+                        $error = 'There must be no blank line after the last trait import statement at the bottom of a %s';
+                        $data  = [strtolower($tokens[$ooToken]['content'])];
+                        $fix   = $phpcsFile->addFixableError($error, $end, 'BlankLineAfterLastUse', $data);
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            for ($i = ($end + 1); $i < $closer; $i++) {
+                                if ($tokens[$i]['line'] === $tokens[$end]['line']) {
+                                    continue;
+                                }
+
+                                if ($tokens[$i]['line'] === $tokens[$closer]['line']) {
+                                    // Don't remove indents.
+                                    break;
+                                }
+
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }
+                    }//end if
+                } else if ($tokens[$next]['code'] !== T_USE) {
+                    // Comments are allowed on the same line as the use statement, so make sure
+                    // we don't error for those.
+                    for ($next = ($end + 1); $next < $tokens[$ooToken]['scope_closer']; $next++) {
+                        if ($tokens[$next]['code'] === T_WHITESPACE) {
                             continue;
                         }
 
-                        if ($tokens[$i]['line'] === $tokens[$closer]['line']) {
-                            // Don't remove indents.
-                            break;
+                        if (isset(Tokens::$commentTokens[$tokens[$next]['code']]) === true
+                            && $tokens[$next]['line'] === $tokens[$end]['line']
+                        ) {
+                            continue;
                         }
 
-                        $phpcsFile->fixer->replaceToken($i, '');
+                        break;
                     }
 
-                    $phpcsFile->fixer->endChangeset();
-                }
-            }//end if
-        } else if ($tokens[$next]['code'] !== T_USE) {
-            // Comments are allowed on the same line as the use statement, so make sure
-            // we don't error for those.
-            for ($next = ($end + 1); $next < $tokens[$ooToken]['scope_closer']; $next++) {
-                if ($tokens[$next]['code'] === T_WHITESPACE) {
-                    continue;
-                }
+                    if ($tokens[$next]['line'] <= ($tokens[$end]['line'] + 1)) {
+                        $error = 'There must be a blank line following the last trait import statement';
+                        $fix   = $phpcsFile->addFixableError($error, $end, 'NoBlankLineAfterUse');
+                        if ($fix === true) {
+                            if ($tokens[$next]['line'] === $tokens[$useToken]['line']) {
+                                $phpcsFile->fixer->addContentBefore($next, $phpcsFile->eolChar.$phpcsFile->eolChar);
+                            } else {
+                                for ($i = ($next - 1); $i > $end; $i--) {
+                                    if ($tokens[$i]['line'] !== $tokens[$next]['line']) {
+                                        break;
+                                    }
+                                }
 
-                if (isset(Tokens::$commentTokens[$tokens[$next]['code']]) === true
-                    && $tokens[$next]['line'] === $tokens[$end]['line']
-                ) {
-                    continue;
-                }
-
-                break;
-            }
-
-            if ($tokens[$next]['line'] <= ($tokens[$end]['line'] + 1)) {
-                $error = 'There must be a blank line following the last trait import statement';
-                $fix   = $phpcsFile->addFixableError($error, $end, 'NoBlankLineAfterUse');
-                if ($fix === true) {
-                    if ($tokens[$next]['line'] === $tokens[$stackPtr]['line']) {
-                        $phpcsFile->fixer->addContentBefore($next, $phpcsFile->eolChar.$phpcsFile->eolChar);
-                    } else {
-                        for ($i = ($next - 1); $i > $end; $i--) {
-                            if ($tokens[$i]['line'] !== $tokens[$next]['line']) {
-                                break;
+                                $phpcsFile->fixer->addNewlineBefore(($i + 1));
                             }
                         }
-
-                        $phpcsFile->fixer->addNewlineBefore(($i + 1));
                     }
+                }//end if
+            } else {
+                // Ensure use statements are grouped.
+                $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
+                if ($next !== $useTokens[($usePos + 1)]) {
+                    $error = 'Imported traits must be grouped together';
+                    $phpcsFile->addError($error, $useTokens[($usePos + 1)], 'NotGrouped');
                 }
-            }
-        }//end if
+            }//end if
+        }//end foreach
+
+        return $tokens[$ooToken]['scope_closer'];
 
     }//end process()
 
