@@ -483,12 +483,7 @@ class ScopeIndentSniff implements Sniff
 
                 $arrayOpener = $tokens[$arrayCloser]['bracket_opener'];
                 if ($tokens[$arrayCloser]['line'] !== $tokens[$arrayOpener]['line']) {
-                    $first       = $phpcsFile->findFirstOnLine(T_WHITESPACE, $arrayOpener, true);
-                    $checkIndent = ($tokens[$first]['column'] - 1);
-                    if (isset($adjustments[$first]) === true) {
-                        $checkIndent += $adjustments[$first];
-                    }
-
+                    $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $arrayOpener, true);
                     $exact = false;
 
                     if ($this->debug === true) {
@@ -522,6 +517,11 @@ class ScopeIndentSniff implements Sniff
                         }
                     } else if ($tokens[$first]['code'] === T_WHITESPACE) {
                         $first = $phpcsFile->findNext(T_WHITESPACE, ($first + 1), null, true);
+                    }
+
+                    $checkIndent = ($tokens[$first]['column'] - 1);
+                    if (isset($adjustments[$first]) === true) {
+                        $checkIndent += $adjustments[$first];
                     }
 
                     if (isset($tokens[$first]['scope_closer']) === true

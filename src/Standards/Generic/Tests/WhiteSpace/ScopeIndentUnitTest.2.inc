@@ -1439,6 +1439,12 @@ $result = array_map(
 	$numbers
 );
 
+$a = $a === true ? [
+	'a' => 1,
+	] : [
+	'a' => 100,
+];
+
 ?>
 
 	 <?php if (true) : ?>

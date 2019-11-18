@@ -66,6 +66,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2694 : AbstractArraySniff produces invalid indices when using ternary operator
     -- Thanks to Michał Bundyra for the patch
+  - Fixed bug #2702 : Generic.WhiteSpace.ScopeIndent false positive when using ternary operator with short arrays
  </notes>
  <contents>
   <dir name="/">
