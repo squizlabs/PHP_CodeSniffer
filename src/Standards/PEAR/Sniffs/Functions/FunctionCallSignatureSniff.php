@@ -449,6 +449,8 @@ class FunctionCallSignatureSniff implements Sniff
             }
         }//end if
 
+        $i = $phpcsFile->findNext(Tokens::$emptyTokens, ($openBracket + 1), null, true);
+
         if ($tokens[($i - 1)]['code'] === T_WHITESPACE
             && $tokens[($i - 1)]['line'] === $tokens[$i]['line']
         ) {
@@ -548,9 +550,14 @@ class FunctionCallSignatureSniff implements Sniff
 
                         $fix = $phpcsFile->addFixableError($error, $i, 'Indent', $data);
                         if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+
                             $padding = str_repeat(' ', $expectedIndent);
                             if ($foundIndent === 0) {
                                 $phpcsFile->fixer->addContentBefore($i, $padding);
+                                if (isset($tokens[$i]['scope_opener']) === true) {
+                                    $phpcsFile->fixer->changeCodeBlockIndent($i, $tokens[$i]['scope_closer'], $expectedIndent);
+                                }
                             } else {
                                 if ($tokens[$i]['code'] === T_COMMENT) {
                                     $comment = $padding.ltrim($tokens[$i]['content']);
@@ -558,8 +565,14 @@ class FunctionCallSignatureSniff implements Sniff
                                 } else {
                                     $phpcsFile->fixer->replaceToken($i, $padding);
                                 }
+
+                                if (isset($tokens[($i + 1)]['scope_opener']) === true) {
+                                    $phpcsFile->fixer->changeCodeBlockIndent(($i + 1), $tokens[($i + 1)]['scope_closer'], ($expectedIndent - $foundIndent));
+                                }
                             }
-                        }
+
+                            $phpcsFile->fixer->endChangeset();
+                        }//end if
                     }//end if
                 } else {
                     $nextCode = $i;
@@ -609,6 +622,93 @@ class FunctionCallSignatureSniff implements Sniff
         }//end for
 
     }//end processMultiLineCall()
+
+
+    /**
+     * Processes this test, when one of its tokens is encountered.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile All the tokens found in the document.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack passed in $tokens.
+     * @param int                         $length    The length of the new indent.
+     * @param int                         $change    The difference in length between
+     *                                               the old and new indent.
+     *
+     * @return bool
+     */
+    protected function adjustIndent(File $phpcsFile, $stackPtr, $length, $change)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // We don't adjust indents outside of PHP.
+        if ($tokens[$stackPtr]['code'] === T_INLINE_HTML) {
+            return false;
+        }
+
+        $padding = '';
+        if ($length > 0) {
+            if ($this->tabIndent === true) {
+                $numTabs = floor($length / $this->tabWidth);
+                if ($numTabs > 0) {
+                    $numSpaces = ($length - ($numTabs * $this->tabWidth));
+                    $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
+                }
+            } else {
+                $padding = str_repeat(' ', $length);
+            }
+        }
+
+        if ($tokens[$stackPtr]['column'] === 1) {
+            $trimmed  = ltrim($tokens[$stackPtr]['content']);
+            $accepted = $phpcsFile->fixer->replaceToken($stackPtr, $padding.$trimmed);
+        } else {
+            // Easier to just replace the entire indent.
+            $accepted = $phpcsFile->fixer->replaceToken(($stackPtr - 1), $padding);
+        }
+
+        if ($accepted === false) {
+            return false;
+        }
+
+        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_OPEN_TAG) {
+            // We adjusted the start of a comment, so adjust the rest of it
+            // as well so the alignment remains correct.
+            for ($x = ($stackPtr + 1); $x < $tokens[$stackPtr]['comment_closer']; $x++) {
+                if ($tokens[$x]['column'] !== 1) {
+                    continue;
+                }
+
+                $length = 0;
+                if ($tokens[$x]['code'] === T_DOC_COMMENT_WHITESPACE) {
+                    $length = $tokens[$x]['length'];
+                }
+
+                $padding = ($length + $change);
+                if ($padding > 0) {
+                    if ($this->tabIndent === true) {
+                        $numTabs   = floor($padding / $this->tabWidth);
+                        $numSpaces = ($padding - ($numTabs * $this->tabWidth));
+                        $padding   = str_repeat("\t", $numTabs).str_repeat(' ', $numSpaces);
+                    } else {
+                        $padding = str_repeat(' ', $padding);
+                    }
+                } else {
+                    $padding = '';
+                }
+
+                $phpcsFile->fixer->replaceToken($x, $padding);
+                if ($this->debug === true) {
+                    $length = strlen($padding);
+                    $line   = $tokens[$x]['line'];
+                    $type   = $tokens[$x]['type'];
+                    echo "\t=> Indent adjusted to $length for $type on line $line".PHP_EOL;
+                }
+            }//end for
+        }//end if
+
+        return true;
+
+    }//end adjustIndent()
 
 
 }//end class

@@ -351,11 +351,14 @@ class Fixer
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $bt    = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-            $sniff = $bt[1]['class'];
-            $line  = $bt[0]['line'];
+            $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            if ($bt[1]['class'] === __CLASS__) {
+                $sniff = 'Fixer';
+            } else {
+                $sniff = Util\Common::getSniffCode($bt[1]['class']);
+            }
 
-            $sniff = Util\Common::getSniffCode($sniff);
+            $line = $bt[0]['line'];
 
             @ob_end_clean();
             echo "\t=> Changeset started by $sniff:$line".PHP_EOL;
@@ -728,6 +731,68 @@ class Fixer
         return $this->replaceToken($stackPtr, $content.$current);
 
     }//end addContentBefore()
+
+
+    /**
+     * Adjust the indent of a code block.
+     *
+     * @param int $start  The position of the token in the token stack
+     *                    to start adjusting the indent from.
+     * @param int $end    The position of the token in the token stack
+     *                    to end adjusting the indent.
+     * @param int $change The number of spaces to adjust the indent by
+     *                    (positive or negative).
+     *
+     * @return bool If the change was accepted.
+     */
+    public function changeCodeBlockIndent($start, $end, $change)
+    {
+        $tokens = $this->currentFile->getTokens();
+
+        $baseIndent = '';
+        if ($change > 0) {
+            $baseIndent = str_repeat(' ', $change);
+        }
+
+        $useChangeset = false;
+        if ($this->inChangeset === false) {
+            $this->beginChangeset();
+            $useChangeset = true;
+        }
+
+        for ($i = $start; $i <= $end; $i++) {
+            if ($tokens[$i]['column'] !== 1
+                || $tokens[($i + 1)]['line'] !== $tokens[$i]['line']
+            ) {
+                continue;
+            }
+
+            $length = 0;
+            if ($tokens[$i]['code'] === T_WHITESPACE
+                || $tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE
+            ) {
+                $length = $tokens[$i]['length'];
+
+                $padding = ($length + $change);
+                if ($padding > 0) {
+                    $padding = str_repeat(' ', $padding);
+                } else {
+                    $padding = '';
+                }
+
+                $newContent = $padding.ltrim($tokens[$i]['content']);
+            } else {
+                $newContent = $baseIndent.$tokens[$i]['content'];
+            }
+
+            $this->replaceToken($i, $newContent);
+        }//end for
+
+        if ($useChangeset === true) {
+            $this->endChangeset();
+        }
+
+    }//end changeCodeBlockIndent()
 
 
 }//end class

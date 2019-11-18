@@ -36,12 +36,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The cache is now invalidated for a file when its permissions are changed
   - File::getMethodParameters() now supports arrow functions
   - File::getMethodProperties() now supports arrow functions
+  - Added Fixer::changeCodeBlockIndent() to change the indent of a code block while auto-fixing
+    -- Can be used to either increase or decrease the indent
+    -- Useful when moving the start position of something like a closure, where you want the content to also move
   - Added Generic.Files.ExecutableFile sniff
     -- Ensures that files are not executable
     -- Thanks to Matthew Peveler for the contribution
   - Generic.CodeAnalysis.EmptyPhpStatement now reports unnecessary semicolons after control structure closing braces
     -- Thanks to Vincent Langlet for the patch
   - Generic.WhiteSpace.ScopeIndent now supports static arrow functions
+  - PEAR.Functions.FunctionCallSignature now adjusts the indent of function argument contents during auto-fixing
+    -- Previously, only the first line of an argument was changed, leading to inconsistent indents
+    -- This change also applies to PSR2.Methods.FunctionCallSignature
   - PSR2.ControlStructures.ControlStructureSpacing now checks whitespace before the closing parenthesis of multi-line control structures
     -- Previously, it incorrectly applied the whitespace check for single-line definitions only
   - PSR12.Traits.UseDeclaration now ensures all trait import statements are grouped together
