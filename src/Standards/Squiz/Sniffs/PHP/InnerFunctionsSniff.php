@@ -48,7 +48,7 @@ class InnerFunctionsSniff implements Sniff
         }
 
         $class = $phpcsFile->getCondition($stackPtr, T_ANON_CLASS);
-        if ($class !== false && $class > $function) {
+        if ($class !== false && $class < $stackPtr) {
             // Ignore methods in anon classes.
             return;
         }

@@ -27,3 +27,19 @@ function test()
         }
     };
 }
+
+$anon_class = new class {
+
+    public function foo()
+    {
+        return new class {
+
+            public function bar() {
+
+                // do something
+
+            }
+
+        };
+    }
+};
