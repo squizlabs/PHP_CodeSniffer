@@ -1708,10 +1708,10 @@ class PHP extends Tokenizer
                 if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
                     $ignore  = Util\Tokens::$emptyTokens;
                     $ignore += [
-                        T_STRING        => T_STRING,
-                        T_COLON         => T_COLON,
-                        T_NS_SEPARATOR  => T_COLON,
-                        T_NULLABLE      => T_COLON,
+                        T_STRING       => T_STRING,
+                        T_COLON        => T_COLON,
+                        T_NS_SEPARATOR => T_COLON,
+                        T_NULLABLE     => T_COLON,
                     ];
 
                     $closer = $this->tokens[$x]['parenthesis_closer'];
