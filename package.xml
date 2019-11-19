@@ -48,6 +48,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Matthew Peveler for the contribution
   - Generic.CodeAnalysis.EmptyPhpStatement now reports unnecessary semicolons after control structure closing braces
     -- Thanks to Vincent Langlet for the patch
+  - Generic.PHP.LowerCaseKeyword now enforces that the "fn" keyword is lowercase
+    -- Thanks to Michał Bundyra for the patch
   - Generic.WhiteSpace.ScopeIndent now supports static arrow functions
   - PEAR.Functions.FunctionCallSignature now adjusts the indent of function argument contents during auto-fixing
     -- Previously, only the first line of an argument was changed, leading to inconsistent indents
@@ -58,6 +60,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, the trait import section of the class ended when the first non-import statement was found
     -- Checking now continues throughout the class to ensure all statements are grouped together
     -- This also ensures that empty lines are not requested after an import statement that isn't the last one
+  - Squiz.Functions.LowercaseFunctionKeywords now enforces that the "fn" keyword is lowercase
+    -- Thanks to Michał Bundyra for the patch
   - Fixed bug #2586 : Generic.WhiteSpace.ScopeIndent false positives when indenting open tags at a non tab-stop
   - Fixed bug #2638 : Squiz.CSS.DuplicateClassDefinitionSniff sees comments as part of the class name
     -- Thanks to Raphael Horber for the patch
