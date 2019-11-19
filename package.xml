@@ -56,6 +56,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This change also applies to PSR2.Methods.FunctionCallSignature
   - PSR2.ControlStructures.ControlStructureSpacing now checks whitespace before the closing parenthesis of multi-line control structures
     -- Previously, it incorrectly applied the whitespace check for single-line definitions only
+  - PSR12.Functions.ReturnTypeDeclaration now checks the return type of arrow functions
+    -- Thanks to Michał Bundyra for the patch
   - PSR12.Traits.UseDeclaration now ensures all trait import statements are grouped together
     -- Previously, the trait import section of the class ended when the first non-import statement was found
     -- Checking now continues throughout the class to ensure all statements are grouped together
