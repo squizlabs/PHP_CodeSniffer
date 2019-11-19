@@ -1083,7 +1083,7 @@ class PHP extends Tokenizer
                         $newToken['code'] = T_NULLABLE;
                         $newToken['type'] = 'T_NULLABLE';
                         break;
-                    } else if (in_array($tokenType, [T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '=', '{', ';'], true) === true) {
+                    } else if (in_array($tokenType, [T_DOUBLE_ARROW, T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, '=', '{', ';'], true) === true) {
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* token $stackPtr changed from ? to T_INLINE_THEN".PHP_EOL;
                         }
@@ -1486,7 +1486,7 @@ class PHP extends Tokenizer
                             }
                         }
 
-                        if ($tokens[$i][0] === T_FUNCTION || $tokens[$i][0] === T_USE) {
+                        if ($tokens[$i][0] === T_FUNCTION || $tokens[$i][0] === T_FN || $tokens[$i][0] === T_USE) {
                             $isReturnType = true;
                         }
                     }//end if
