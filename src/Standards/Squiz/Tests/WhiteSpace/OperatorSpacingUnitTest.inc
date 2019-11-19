@@ -463,5 +463,7 @@ $a = [$a, - $b];
 $a = $a[- $b];
 $a = $a ? - $b : - $b;
 
+static fn ($x)  =>  yield 'k'  =>  $x;
+
 /* Intentional parse error. This has to be the last test in the file. */
 $a = 10 +

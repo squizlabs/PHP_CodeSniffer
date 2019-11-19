@@ -99,6 +99,7 @@ class OperatorSpacingUnitTest extends AbstractSniffUnitTest
                 265 => 2,
                 266 => 2,
                 271 => 2,
+                466 => 4,
             ];
             break;
         case 'OperatorSpacingUnitTest.js':
