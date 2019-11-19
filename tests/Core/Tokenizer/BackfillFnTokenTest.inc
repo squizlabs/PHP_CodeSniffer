@@ -54,3 +54,6 @@ $a = [
 
 /* testYield */
 $a = fn($x) => yield 'k' => $x;
+
+/* testNullableNamespace */
+$a = fn(?\DateTime $x) : ?\DateTime => $x;

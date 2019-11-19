@@ -1073,6 +1073,7 @@ class PHP extends Tokenizer
                     }
 
                     if ($tokenType === T_FUNCTION
+                        || $tokenType === T_FN
                         || isset(Util\Tokens::$methodPrefixes[$tokenType]) === true
                     ) {
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
@@ -1285,6 +1286,11 @@ class PHP extends Tokenizer
                 && $token[0] === T_STRING
                 && strtolower($token[1]) === 'fn'
             ) {
+                // Modify the original token stack so that
+                // future checks (like looking for T_NULLABLE) can
+                // detect the T_FN token more easily.
+                $tokens[$stackPtr][0] = T_FN;
+
                 $finalTokens[$newStackPtr] = [
                     'content' => $token[1],
                     'code'    => T_FN,
@@ -1702,8 +1708,10 @@ class PHP extends Tokenizer
                 if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
                     $ignore  = Util\Tokens::$emptyTokens;
                     $ignore += [
-                        T_STRING => T_STRING,
-                        T_COLON  => T_COLON,
+                        T_STRING        => T_STRING,
+                        T_COLON         => T_COLON,
+                        T_NS_SEPARATOR  => T_COLON,
+                        T_NULLABLE      => T_COLON,
                     ];
 
                     $closer = $this->tokens[$x]['parenthesis_closer'];
