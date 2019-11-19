@@ -24,3 +24,5 @@ abstract class Bar {
 	abstract protected function AbstractProtectedFunction();
 	final static public function FinalStaticPublicFunction() {}
 }
+
+$a = fn($x) => $x;

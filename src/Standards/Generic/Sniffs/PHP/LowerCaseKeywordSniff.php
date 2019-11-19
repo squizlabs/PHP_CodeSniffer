@@ -56,6 +56,7 @@ class LowerCaseKeywordSniff implements Sniff
             T_EXTENDS,
             T_FINAL,
             T_FINALLY,
+            T_FN,
             T_FOR,
             T_FOREACH,
             T_FUNCTION,

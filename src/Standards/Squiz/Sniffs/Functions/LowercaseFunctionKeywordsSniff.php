@@ -27,6 +27,7 @@ class LowercaseFunctionKeywordsSniff implements Sniff
         $tokens   = Tokens::$methodPrefixes;
         $tokens[] = T_FUNCTION;
         $tokens[] = T_CLOSURE;
+        $tokens[] = T_FN;
 
         return $tokens;
 

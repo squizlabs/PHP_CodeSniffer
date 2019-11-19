@@ -28,4 +28,5 @@ class X extends Y {
         self::n();
     }
 }
+fn ($x) => $x;
 function
