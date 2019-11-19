@@ -418,6 +418,12 @@ $array = array(
               fn() => return 2,
          );
 
+$array = array(
+          1 => '1',
+          2 => fn ($x) => yield 'a' => $x,
+          3 => '3',
+         );
+
 // Intentional syntax error.
 $a = array(
       'a' =>
