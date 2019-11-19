@@ -1,6 +1,6 @@
 <?php
 /**
- * Ensure return types are defined correctly for fucnctions and closures.
+ * Ensure return types are defined correctly for functions and closures.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
