@@ -969,6 +969,66 @@ class PHP extends Tokenizer
             }
 
             /*
+                Before PHP 7.4, underscores inside T_LNUMBER and T_DNUMBER
+                tokens split the token with a T_STRING. So look for
+                and change these tokens in earlier versions.
+            */
+
+            if ($tokenIsArray === true
+                && ($token[0] === T_LNUMBER
+                || $token[0] === T_DNUMBER)
+                && isset($tokens[($stackPtr + 1)]) === true
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === T_STRING
+                && $tokens[($stackPtr + 1)][1][0] === '_'
+            ) {
+                $newContent = $token[1];
+                $newType    = $token[0];
+                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                    if (is_array($tokens[$i]) === false) {
+                        break;
+                    }
+
+                    if ($tokens[$i][0] === T_LNUMBER
+                        || $tokens[$i][0] === T_DNUMBER
+                        || ($tokens[$i][0] === T_STRING
+                        && $tokens[$i][1][0] === '_')
+                    ) {
+                        $newContent .= $tokens[$i][1];
+
+                        // Any T_DNUMBER token needs to make the
+                        // new number a T_DNUMBER as well.
+                        if ($tokens[$i][0] === T_DNUMBER) {
+                            $newType = T_DNUMBER;
+                        }
+
+                        // Support floats.
+                        if ($tokens[$i][0] === T_STRING
+                            && substr(strtolower($tokens[$i][1]), -1) === 'e'
+                            && $tokens[($i + 1)] === '-'
+                        ) {
+                            $newContent .= '-';
+                            $i++;
+                        }
+
+                        continue;
+                    }
+
+                    break;
+                }//end for
+
+                $newToken            = [];
+                $newToken['code']    = $newType;
+                $newToken['type']    = Util\Tokens::tokenName($token[0]);
+                $newToken['content'] = $newContent;
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr = ($i - 1);
+                continue;
+            }//end if
+
+            /*
                 Convert ? to T_NULLABLE OR T_INLINE_THEN
             */
 

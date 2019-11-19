@@ -32,6 +32,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The token after the statement (normally a semicolon) becomes the scope closer
     -- The token is also associated with the opening and closing parenthesis of the statement
     -- Any functions named "fn" will cause have a T_FN token for the function name, but have no scope information
+  - PHP 7.4 numeric separators are now tokenized in the same way when using older PHP versions
+    -- Previously, a number like 1_000 would tokenize as T_LNUMBER (1), T_STRING (_000)
+    -- Now, the number tokenizes as T_LNUMBER (1_000)
+    -- Sniff developers should consider how numbers with underscores impact their custom sniffs
   - The PHPCS file cache now takes file permissions into account
     -- The cache is now invalidated for a file when its permissions are changed
   - File::getMethodParameters() now supports arrow functions
@@ -125,6 +129,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.php" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.inc" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.php" role="test" />
+      <file baseinstalldir="" name="BackfillNumericSeparatorTest.inc" role="test" />
+      <file baseinstalldir="" name="BackfillNumericSeparatorTest.php" role="test" />
      </dir>
      <file baseinstalldir="" name="AbstractMethodUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllTests.php" role="test" />
@@ -1960,6 +1966,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.php" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -2001,6 +2009,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.php" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />
