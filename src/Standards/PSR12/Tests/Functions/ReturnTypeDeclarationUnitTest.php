@@ -37,6 +37,7 @@ class ReturnTypeDeclarationUnitTest extends AbstractSniffUnitTest
             59 => 1,
             60 => 1,
             62 => 1,
+            64 => 1,
         ];
 
     }//end getErrorList()

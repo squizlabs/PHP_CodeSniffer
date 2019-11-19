@@ -60,3 +60,5 @@ function functionName(?string $arg1, ?int &$arg2):?string {}
 function functionName(?string $arg1, ?int &$arg2):  ?string {}
 function functionName(?string $arg1, ?int &$arg2):
 ?string {}
+
+fn (?\DateTime $arg) : ?\DateTime => $arg;
