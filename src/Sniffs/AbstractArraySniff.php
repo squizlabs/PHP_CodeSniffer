@@ -99,6 +99,7 @@ abstract class AbstractArraySniff implements Sniff
             if ($tokens[$checkToken]['code'] === T_ARRAY
                 || $tokens[$checkToken]['code'] === T_OPEN_SHORT_ARRAY
                 || $tokens[$checkToken]['code'] === T_CLOSURE
+                || $tokens[$checkToken]['code'] === T_FN
             ) {
                 // Let subsequent calls of this test handle nested arrays.
                 if ($tokens[$lastToken]['code'] !== T_DOUBLE_ARROW) {
