@@ -9,8 +9,8 @@
 
 namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Namespaces;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 class NamespaceDeclarationSniff implements Sniff
 {

@@ -9,9 +9,9 @@
 
 namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Methods;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff as GenericCamelCapsFunctionNameSniff;
 use PHP_CodeSniffer\Util\Common;
-use PHP_CodeSniffer\Files\File;
 
 class CamelCapsMethodNameSniff extends GenericCamelCapsFunctionNameSniff
 {

@@ -9,9 +9,9 @@
 
 namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Util\Tokens;
-use PHP_CodeSniffer\Files\File;
 
 class PropertyDeclarationSniff extends AbstractVariableSniff
 {

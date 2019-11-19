@@ -9,8 +9,8 @@
 
 namespace PHP_CodeSniffer\Standards\PSR12\Sniffs\Namespaces;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 class CompoundNamespaceDepthSniff implements Sniff
 {

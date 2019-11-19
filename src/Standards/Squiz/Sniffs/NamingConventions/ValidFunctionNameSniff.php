@@ -9,9 +9,9 @@
 
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Standards\PEAR\Sniffs\NamingConventions\ValidFunctionNameSniff as PEARValidFunctionNameSniff;
 use PHP_CodeSniffer\Util\Common;
-use PHP_CodeSniffer\Files\File;
 
 class ValidFunctionNameSniff extends PEARValidFunctionNameSniff
 {

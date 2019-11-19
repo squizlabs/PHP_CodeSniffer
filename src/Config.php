@@ -12,8 +12,8 @@
 
 namespace PHP_CodeSniffer;
 
-use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 class Config
 {

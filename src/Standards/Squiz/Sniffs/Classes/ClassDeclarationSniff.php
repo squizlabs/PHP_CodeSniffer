@@ -9,8 +9,8 @@
 
 namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes;
 
-use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\ClassDeclarationSniff as PSR2ClassDeclarationSniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Standards\PSR2\Sniffs\Classes\ClassDeclarationSniff as PSR2ClassDeclarationSniff;
 use PHP_CodeSniffer\Util\Tokens;
 
 class ClassDeclarationSniff extends PSR2ClassDeclarationSniff

@@ -9,9 +9,9 @@
 
 namespace PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Util\Tokens;
-use PHP_CodeSniffer\Files\File;
 
 class MethodDeclarationSniff extends AbstractScopeSniff
 {

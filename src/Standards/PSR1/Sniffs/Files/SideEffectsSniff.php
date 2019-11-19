@@ -9,8 +9,8 @@
 
 namespace PHP_CodeSniffer\Standards\PSR1\Sniffs\Files;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
 
 class SideEffectsSniff implements Sniff

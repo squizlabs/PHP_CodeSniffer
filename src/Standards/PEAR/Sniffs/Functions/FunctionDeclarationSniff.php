@@ -9,11 +9,11 @@
 
 namespace PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Tokens;
-use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceKernighanRitchieSniff;
+use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceBsdAllmanSniff;
+use PHP_CodeSniffer\Standards\Generic\Sniffs\Functions\OpeningFunctionBraceKernighanRitchieSniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionDeclarationSniff implements Sniff
 {

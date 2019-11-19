@@ -9,10 +9,10 @@
 
 namespace PHP_CodeSniffer;
 
-use PHP_CodeSniffer\Reports\Report;
-use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
+use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Reports\Report;
 use PHP_CodeSniffer\Util\Common;
 
 class Reporter

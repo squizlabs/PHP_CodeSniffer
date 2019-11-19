@@ -10,8 +10,8 @@
 namespace PHP_CodeSniffer\Standards\PSR12\Sniffs\Operators;
 
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Standards\Squiz\Sniffs\WhiteSpace\OperatorSpacingSniff as SquizOperatorSpacingSniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class OperatorSpacingSniff extends SquizOperatorSpacingSniff
 {
