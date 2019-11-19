@@ -1717,7 +1717,6 @@ class PHP extends Tokenizer
                         $endTokens = [
                             T_COLON                => true,
                             T_COMMA                => true,
-                            T_DOUBLE_ARROW         => true,
                             T_SEMICOLON            => true,
                             T_CLOSE_PARENTHESIS    => true,
                             T_CLOSE_SQUARE_BRACKET => true,

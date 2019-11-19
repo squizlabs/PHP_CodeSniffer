@@ -404,6 +404,34 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test arrow functions that use the yield keyword.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testYield()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testYield */', T_FN);
+        $this->backfillHelper($token);
+
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 5), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 14), 'Scope closer is not the semicolon token');
+
+        $opener = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 5), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 14), 'Opener scope closer is not the semicolon token');
+
+        $closer = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 5), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 14), 'Closer scope closer is not the semicolon token');
+
+    }//end testYield()
+
+
+    /**
      * Test that anonymous class tokens without parenthesis do not get assigned a parenthesis owner.
      *
      * @param string $token The T_FN token to check.

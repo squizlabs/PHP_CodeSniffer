@@ -51,3 +51,6 @@ fn&($x) => $x;
 $a = [
     'a' => fn() => return 1,
 ];
+
+/* testYield */
+$a = fn($x) => yield 'k' => $x;
