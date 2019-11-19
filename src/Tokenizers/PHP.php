@@ -1710,8 +1710,8 @@ class PHP extends Tokenizer
                     $ignore += [
                         T_STRING       => T_STRING,
                         T_COLON        => T_COLON,
-                        T_NS_SEPARATOR => T_COLON,
-                        T_NULLABLE     => T_COLON,
+                        T_NS_SEPARATOR => T_NS_SEPARATOR,
+                        T_NULLABLE     => T_NULLABLE,
                     ];
 
                     $closer = $this->tokens[$x]['parenthesis_closer'];
