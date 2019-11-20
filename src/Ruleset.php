@@ -11,8 +11,8 @@
 
 namespace PHP_CodeSniffer;
 
-use PHP_CodeSniffer\Util;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Util;
 
 class Ruleset
 {

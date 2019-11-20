@@ -9,10 +9,10 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 
+use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Tokens;
-use PHP_CodeSniffer\Files\File;
 
 class CamelCapsFunctionNameSniff extends AbstractScopeSniff
 {

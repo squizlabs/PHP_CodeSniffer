@@ -10,9 +10,9 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
 
-use PHP_CodeSniffer\Sniffs\Sniff;
-use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Sniffs\Sniff;
 
 class JSHintSniff implements Sniff
 {
