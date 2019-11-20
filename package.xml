@@ -32,6 +32,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- The token after the statement (normally a semicolon) becomes the scope closer
     -- The token is also associated with the opening and closing parenthesis of the statement
     -- Any functions named "fn" will cause have a T_FN token for the function name, but have no scope information
+    -- Thanks to Michał Bundyra for the help with this change
   - PHP 7.4 numeric separators are now tokenized in the same way when using older PHP versions
     -- Previously, a number like 1_000 would tokenize as T_LNUMBER (1), T_STRING (_000)
     -- Now, the number tokenizes as T_LNUMBER (1_000)
