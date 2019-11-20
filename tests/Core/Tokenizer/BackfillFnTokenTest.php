@@ -460,6 +460,42 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test arrow functions that use self/parent/callable return types.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testKeywordReturnTypes()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $testMarkers = [
+            'Self',
+            'Parent',
+            'Callable',
+        ];
+
+        foreach ($testMarkers as $marker) {
+            $token = $this->getTargetToken('/* test'.$marker.'ReturnType */', T_FN);
+            $this->backfillHelper($token);
+
+            $this->assertSame($tokens[$token]['scope_opener'], ($token + 11), "Scope opener is not the arrow token (for $marker)");
+            $this->assertSame($tokens[$token]['scope_closer'], ($token + 14), "Scope closer is not the semicolon token(for $marker)");
+
+            $opener = $tokens[$token]['scope_opener'];
+            $this->assertSame($tokens[$opener]['scope_opener'], ($token + 11), "Opener scope opener is not the arrow token(for $marker)");
+            $this->assertSame($tokens[$opener]['scope_closer'], ($token + 14), "Opener scope closer is not the semicolon token(for $marker)");
+
+            $closer = $tokens[$token]['scope_opener'];
+            $this->assertSame($tokens[$closer]['scope_opener'], ($token + 11), "Closer scope opener is not the arrow token(for $marker)");
+            $this->assertSame($tokens[$closer]['scope_closer'], ($token + 14), "Closer scope closer is not the semicolon token(for $marker)");
+        }
+
+    }//end testKeywordReturnTypes()
+
+
+    /**
      * Test that anonymous class tokens without parenthesis do not get assigned a parenthesis owner.
      *
      * @param string $token The T_FN token to check.

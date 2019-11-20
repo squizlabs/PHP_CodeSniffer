@@ -57,3 +57,12 @@ $a = fn($x) => yield 'k' => $x;
 
 /* testNullableNamespace */
 $a = fn(?\DateTime $x) : ?\DateTime => $x;
+
+/* testSelfReturnType */
+fn(self $a) : self => $a;
+
+/* testParentReturnType */
+fn(parent $a) : parent => $a;
+
+/* testCallableReturnType */
+fn(callable $a) : callable => $a;
