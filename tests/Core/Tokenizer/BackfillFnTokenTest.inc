@@ -66,3 +66,6 @@ fn(parent $a) : parent => $a;
 
 /* testCallableReturnType */
 fn(callable $a) : callable => $a;
+
+/* testTernary */
+$fn = fn($a) => $a ? /* testTernaryThen */ fn() : string => 'a' : /* testTernaryElse */ fn() : string => 'b';

@@ -1737,12 +1737,16 @@ class PHP extends Tokenizer
                             T_CLOSE_TAG            => true,
                         ];
 
+                        $inTernary = false;
+
                         for ($scopeCloser = ($arrow + 1); $scopeCloser < $numTokens; $scopeCloser++) {
                             if (isset($endTokens[$this->tokens[$scopeCloser]['code']]) === true) {
                                 break;
                             }
 
-                            if (isset($this->tokens[$scopeCloser]['scope_closer']) === true) {
+                            if (isset($this->tokens[$scopeCloser]['scope_closer']) === true
+                                && $this->tokens[$scopeCloser]['code'] !== T_INLINE_ELSE
+                            ) {
                                 // We minus 1 here in case the closer can be shared with us.
                                 $scopeCloser = ($this->tokens[$scopeCloser]['scope_closer'] - 1);
                                 continue;
@@ -1755,6 +1759,20 @@ class PHP extends Tokenizer
 
                             if (isset($this->tokens[$scopeCloser]['bracket_closer']) === true) {
                                 $scopeCloser = $this->tokens[$scopeCloser]['bracket_closer'];
+                                continue;
+                            }
+
+                            if ($this->tokens[$scopeCloser]['code'] === T_INLINE_THEN) {
+                                $inTernary = true;
+                                continue;
+                            }
+
+                            if ($this->tokens[$scopeCloser]['code'] === T_INLINE_ELSE) {
+                                if ($inTernary === false) {
+                                    break;
+                                }
+
+                                $inTernary = false;
                                 continue;
                             }
                         }//end for
