@@ -98,5 +98,7 @@ $closure = function ($arg1, $arg2='hello') {};
 // Invalid closure
 $closure = function(array $arg2=array(), array $arg1) {}
 
+$fn = fn($a = [], $b) => $a[] = $b;
+
 // Intentional syntax error. Must be last thing in the file.
 function
