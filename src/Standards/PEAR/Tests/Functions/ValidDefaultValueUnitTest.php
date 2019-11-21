@@ -26,14 +26,14 @@ class ValidDefaultValueUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            29 => 1,
-            34 => 1,
-            39 => 1,
-            71 => 1,
-            76 => 1,
-            81 => 1,
-            91 => 1,
-            99 => 1,
+            29  => 1,
+            34  => 1,
+            39  => 1,
+            71  => 1,
+            76  => 1,
+            81  => 1,
+            91  => 1,
+            99  => 1,
             101 => 1,
         ];
 
