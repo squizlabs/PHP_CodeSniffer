@@ -75,4 +75,8 @@ $b = new class()
 	public static function myFunc() {
 		$this->doSomething();
 	}
+
+	public static function other() {
+	    return fn () => $this->name;
+    }
 }
