@@ -34,6 +34,7 @@ class UnusedFunctionParameterSniff implements Sniff
         return [
             T_FUNCTION,
             T_CLOSURE,
+            T_FN,
         ];
 
     }//end register()
