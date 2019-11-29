@@ -108,4 +108,10 @@ $b = new class()
         }) {
         };
     }
+
+    public static function thisMustBeLowercase() {
+        $This = 'hey';
+
+        return $This;
+    }
 }
