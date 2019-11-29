@@ -107,3 +107,5 @@ $a = function ($var1, $var2=false) use (
     $longVar2 ,  &$longerVar2,
     $muchLongerVar3
 ) {};
+
+fn ($a,$b = null) => $a($b);
