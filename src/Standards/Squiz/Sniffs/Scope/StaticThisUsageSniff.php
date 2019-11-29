@@ -75,7 +75,7 @@ class StaticThisUsageSniff extends AbstractScopeSniff
             } else if ($tokens[$next]['code'] === T_ANON_CLASS) {
                 $next = $tokens[$next]['scope_closer'];
                 continue;
-            } else if (strtolower($tokens[$next]['content']) !== '$this') {
+            } else if ($tokens[$next]['content'] !== '$this') {
                 continue;
             }
 
