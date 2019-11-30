@@ -1692,6 +1692,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementUsageUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="IncrementDecrementUsageUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ValidLogicalOperatorsUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ValidLogicalOperatorsUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ValidLogicalOperatorsUnitTest.php" role="test" />
        </dir>
        <dir name="PHP">
