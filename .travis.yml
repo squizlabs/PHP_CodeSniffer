@@ -23,6 +23,8 @@ matrix:
     - php: 7.3
       env: PHPUNIT_INCOMPAT=1
     - php: "7.4snapshot"
+      env: PHPUNIT_INCOMPAT=1
+    - php: "7.4snapshot"
       env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
       addons:
         apt:
@@ -38,6 +40,7 @@ matrix:
 
   allow_failures:
     - php: "7.4snapshot"
+      env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
     - php: nightly
 
 before_install:
