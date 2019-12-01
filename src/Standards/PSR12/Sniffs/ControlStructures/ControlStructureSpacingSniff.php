@@ -95,6 +95,7 @@ class ControlStructureSpacingSniff implements Sniff
         for ($i = $parenOpener; $i < $parenCloser; $i++) {
             if ($tokens[$i]['column'] !== 1
                 || $tokens[($i + 1)]['line'] > $tokens[$i]['line']
+                || isset(Tokens::$commentTokens[$tokens[$i]['code']]) === true
             ) {
                 continue;
             }
