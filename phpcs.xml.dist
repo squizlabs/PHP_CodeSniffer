@@ -15,6 +15,9 @@
     <arg name="colors"/>
     <arg name="parallel" value="75"/>
     <arg value="np"/>
+    <arg name="report-gitblame"/>
+    <arg name="report-full"/>
+    <arg name="report-junit" value="./build/logs/phpcs/junit.xml"/>
 
     <!-- Don't hide tokenizer exceptions -->
     <rule ref="Internal.Tokenizer.Exception">
