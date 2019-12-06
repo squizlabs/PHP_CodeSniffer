@@ -64,139 +64,33 @@ abstract class AbstractArraySniff implements Sniff
         if ($tokens[$lastContent]['code'] === T_COMMA) {
             // Last array item ends with a comma.
             $phpcsFile->recordMetric($stackPtr, 'Array end comma', 'yes');
-            $lastArrayToken = $lastContent;
         } else {
             $phpcsFile->recordMetric($stackPtr, 'Array end comma', 'no');
-            $lastArrayToken = $arrayEnd;
         }
 
-        if ($tokens[$stackPtr]['code'] === T_ARRAY) {
-            $lastToken = $tokens[$stackPtr]['parenthesis_opener'];
-        } else {
-            $lastToken = $stackPtr;
-        }
-
-        $keyUsed = false;
         $indices = [];
 
-        for ($checkToken = ($stackPtr + 1); $checkToken <= $lastArrayToken; $checkToken++) {
-            // Skip bracketed statements, like function calls.
-            if ($tokens[$checkToken]['code'] === T_OPEN_PARENTHESIS
-                && (isset($tokens[$checkToken]['parenthesis_owner']) === false
-                || $tokens[$checkToken]['parenthesis_owner'] !== $stackPtr)
-            ) {
-                $checkToken = $tokens[$checkToken]['parenthesis_closer'];
-                continue;
-            }
+        $current = $arrayStart;
+        while (($next = $phpcsFile->findNext(Tokens::$emptyTokens, ($current + 1), $arrayEnd, true)) !== false) {
+            $end = $this->getNext($phpcsFile, $next, $arrayEnd);
 
-            if ($tokens[$checkToken]['code'] === T_INLINE_THEN
-                || $tokens[$checkToken]['code'] === T_COALESCE
-            ) {
-                $checkToken = $phpcsFile->findEndOfStatement($checkToken);
-                continue;
-            }
-
-            if ($tokens[$checkToken]['code'] === T_ARRAY
-                || $tokens[$checkToken]['code'] === T_OPEN_SHORT_ARRAY
-                || $tokens[$checkToken]['code'] === T_CLOSURE
-                || $tokens[$checkToken]['code'] === T_FN
-            ) {
-                // Let subsequent calls of this test handle nested arrays.
-                if ($tokens[$lastToken]['code'] !== T_DOUBLE_ARROW) {
-                    $indices[] = ['value_start' => $checkToken];
-                    $lastToken = $checkToken;
-                }
-
-                if ($tokens[$checkToken]['code'] === T_ARRAY) {
-                    $checkToken = $tokens[$tokens[$checkToken]['parenthesis_opener']]['parenthesis_closer'];
-                } else if ($tokens[$checkToken]['code'] === T_OPEN_SHORT_ARRAY) {
-                    $checkToken = $tokens[$checkToken]['bracket_closer'];
-                } else {
-                    // T_CLOSURE.
-                    $checkToken = $tokens[$checkToken]['scope_closer'];
-                }
-
-                $checkToken = $phpcsFile->findNext(T_WHITESPACE, ($checkToken + 1), null, true);
-                $lastToken  = $checkToken;
-                if ($tokens[$checkToken]['code'] !== T_COMMA) {
-                    $checkToken--;
-                }
-
-                continue;
-            }//end if
-
-            if ($tokens[$checkToken]['code'] !== T_DOUBLE_ARROW
-                && $tokens[$checkToken]['code'] !== T_COMMA
-                && $checkToken !== $arrayEnd
-            ) {
-                continue;
-            }
-
-            if ($tokens[$checkToken]['code'] === T_COMMA
-                || $checkToken === $arrayEnd
-            ) {
-                $stackPtrCount = 0;
-                if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-                    $stackPtrCount = count($tokens[$stackPtr]['nested_parenthesis']);
-                }
-
-                $commaCount = 0;
-                if (isset($tokens[$checkToken]['nested_parenthesis']) === true) {
-                    $commaCount = count($tokens[$checkToken]['nested_parenthesis']);
-                    if ($tokens[$stackPtr]['code'] === T_ARRAY) {
-                        // Remove parenthesis that are used to define the array.
-                        $commaCount--;
-                    }
-                }
-
-                if ($commaCount > $stackPtrCount) {
-                    // This comma is inside more parenthesis than the ARRAY keyword,
-                    // so it is actually a comma used to do things like
-                    // separate arguments in a function call.
-                    continue;
-                }
-
-                if ($keyUsed === false) {
-                    $valueContent = $phpcsFile->findNext(
-                        Tokens::$emptyTokens,
-                        ($lastToken + 1),
-                        $checkToken,
-                        true
-                    );
-
-                    $indices[] = ['value_start' => $valueContent];
-                }
-
-                $lastToken = $checkToken;
-                $keyUsed   = false;
-                continue;
-            }//end if
-
-            if ($tokens[$checkToken]['code'] === T_DOUBLE_ARROW) {
-                $keyUsed = true;
-
-                // Find the start of index that uses this double arrow.
-                $indexEnd   = $phpcsFile->findPrevious(T_WHITESPACE, ($checkToken - 1), $arrayStart, true);
-                $indexStart = $phpcsFile->findStartOfStatement($indexEnd);
-
-                // Find the value of this index.
-                $nextContent = $phpcsFile->findNext(
-                    Tokens::$emptyTokens,
-                    ($checkToken + 1),
-                    $arrayEnd,
-                    true
-                );
+            if ($tokens[$end]['code'] === T_DOUBLE_ARROW) {
+                $indexEnd   = $phpcsFile->findPrevious(T_WHITESPACE, ($end - 1), null, true);
+                $valueStart = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
 
                 $indices[] = [
-                    'index_start' => $indexStart,
+                    'index_start' => $next,
                     'index_end'   => $indexEnd,
-                    'arrow'       => $checkToken,
-                    'value_start' => $nextContent,
+                    'arrow'       => $end,
+                    'value_start' => $valueStart,
                 ];
+            } else {
+                $valueStart = $next;
+                $indices[]  = ['value_start' => $valueStart];
+            }
 
-                $lastToken = $checkToken;
-            }//end if
-        }//end for
+            $current = $this->getNext($phpcsFile, $valueStart, $arrayEnd);
+        }
 
         if ($tokens[$arrayStart]['line'] === $tokens[$arrayEnd]['line']) {
             $this->processSingleLineArray($phpcsFile, $stackPtr, $arrayStart, $arrayEnd, $indices);
@@ -205,6 +99,42 @@ abstract class AbstractArraySniff implements Sniff
         }
 
     }//end process()
+
+
+    /**
+     * Find next separator in array - either: comma or double arrow.
+     *
+     * @param File $phpcsFile The current file being checked.
+     * @param int  $ptr       The position of current token.
+     * @param int  $arrayEnd  The token that ends the array definition.
+     *
+     * @return int
+     */
+    private function getNext(File $phpcsFile, $ptr, $arrayEnd)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        while ($ptr < $arrayEnd) {
+            if (isset($tokens[$ptr]['scope_closer']) === true) {
+                $ptr = $tokens[$ptr]['scope_closer'];
+            } else if (isset($tokens[$ptr]['parenthesis_closer']) === true) {
+                $ptr = $tokens[$ptr]['parenthesis_closer'];
+            } else if (isset($tokens[$ptr]['bracket_closer']) === true) {
+                $ptr = $tokens[$ptr]['bracket_closer'];
+            }
+
+            if ($tokens[$ptr]['code'] === T_COMMA
+                || $tokens[$ptr]['code'] === T_DOUBLE_ARROW
+            ) {
+                return $ptr;
+            }
+
+            ++$ptr;
+        }
+
+        return $ptr;
+
+    }//end getNext()
 
 
     /**
