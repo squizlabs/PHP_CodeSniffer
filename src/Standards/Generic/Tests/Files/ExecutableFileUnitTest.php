@@ -16,6 +16,20 @@ class ExecutableFileUnitTest extends AbstractSniffUnitTest
 
 
     /**
+     * Should this test be skipped for some reason.
+     *
+     * @return void
+     */
+    protected function shouldSkipTest()
+    {
+        // PEAR doesn't preserve the executable flag, so skip
+        // tests when running in a PEAR install.
+        return $GLOBALS['PHP_CODESNIFFER_PEAR'];
+
+    }//end shouldSkipTest()
+
+
+    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value

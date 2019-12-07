@@ -132,7 +132,8 @@ class Filter extends \RecursiveFilterIterator
      */
     public function getChildren()
     {
-        $children = new static(
+        $filterClass = get_called_class();
+        $children    = new $filterClass(
             new \RecursiveDirectoryIterator($this->current(), (\RecursiveDirectoryIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS)),
             $this->basedir,
             $this->config,

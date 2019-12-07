@@ -9,6 +9,8 @@
 
 namespace PHP_CodeSniffer\Tests;
 
+$GLOBALS['PHP_CODESNIFFER_PEAR'] = false;
+
 if (is_file(__DIR__.'/../autoload.php') === true) {
     include_once 'Core/AllTests.php';
     include_once 'Standards/AllSniffs.php';
@@ -16,6 +18,7 @@ if (is_file(__DIR__.'/../autoload.php') === true) {
     include_once 'CodeSniffer/Core/AllTests.php';
     include_once 'CodeSniffer/Standards/AllSniffs.php';
     include_once 'FileList.php';
+    $GLOBALS['PHP_CODESNIFFER_PEAR'] = true;
 }
 
 // PHPUnit 7 made the TestSuite run() method incompatible with
