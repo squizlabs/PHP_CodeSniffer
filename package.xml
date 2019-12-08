@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Fixed bug #2698 : PHPCS throws errors determining auto report width when shell_exec is disabled
+    -- Thanks to Matthew Peveler for the patch
   - Fixed bug #2751 : Autoload relative paths first to avoid confusion with files from the global include path
     -- Thanks to Klaus Purer for the patch
  </notes>
