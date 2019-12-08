@@ -22,9 +22,9 @@ matrix:
       env: PHPUNIT_INCOMPAT=1
     - php: 7.3
       env: PHPUNIT_INCOMPAT=1
-    - php: "7.4snapshot"
+    - php: 7.4
       env: PHPUNIT_INCOMPAT=1
-    - php: "7.4snapshot"
+    - php: 7.4
       env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
       addons:
         apt:
@@ -39,7 +39,7 @@ matrix:
             - libonig-dev
 
   allow_failures:
-    - php: "7.4snapshot"
+    - php: 7.4
       env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
     - php: nightly
 
