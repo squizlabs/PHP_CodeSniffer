@@ -219,7 +219,10 @@ class Config
         switch ($name) {
         case 'reportWidth' :
             // Support auto terminal width.
-            if ($value === 'auto' && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1) {
+            if ($value === 'auto'
+                && function_exists('shell_exec') === true
+                && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1
+            ) {
                 $value = (int) $matches[1];
             } else {
                 $value = (int) $value;
