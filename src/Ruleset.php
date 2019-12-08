@@ -349,7 +349,7 @@ class Ruleset
             $ownSniffs = $this->expandSniffDirectory($sniffDir, $depth);
         }
 
-        // Included custom autoloaders.
+        // Include custom autoloaders.
         foreach ($ruleset->{'autoload'} as $autoload) {
             if ($this->shouldProcessElement($autoload) === false) {
                 continue;
@@ -360,7 +360,7 @@ class Ruleset
             // Try relative autoload paths first.
             $relativePath = Util\Common::realPath(dirname($rulesetPath).DIRECTORY_SEPARATOR.$autoloadPath);
 
-            if ($relativePath !== false && is_file($$relativePath) === true) {
+            if ($relativePath !== false && is_file($relativePath) === true) {
                 $autoloadPath = $relativePath;
             } else if (is_file($autoloadPath) === false) {
                 throw new RuntimeException('The specified autoload file "'.$autoload.'" does not exist');
