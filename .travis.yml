@@ -81,4 +81,4 @@ script:
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/Squiz/ruleset.xml <(xmllint --format "./src/Standards/Squiz/ruleset.xml"); fi
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/Zend/ruleset.xml <(xmllint --format "./src/Standards/Zend/ruleset.xml"); fi
   # Run PHPStan
-  - if [[ $PHPSTAN == "1" ]]; then composer require --dev phpstan/phpstan && php vendor/bin/phpstan analyse src --level=0 --configuration=phpstan.neon --autoload-file=tests/bootstrap.php; fi
+  - if [[ $PHPSTAN == "1" ]]; then composer require --dev phpstan/phpstan && php vendor/bin/phpstan analyse --configuration=phpstan.neon; fi
