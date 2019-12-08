@@ -69,8 +69,3 @@ fn(callable $a) : callable => $a;
 
 /* testTernary */
 $fn = fn($a) => $a ? /* testTernaryThen */ fn() : string => 'a' : /* testTernaryElse */ fn() : string => 'b';
-
-/* testEndOfStatement */
-static fn ($a) => $a;
-
-return 0;

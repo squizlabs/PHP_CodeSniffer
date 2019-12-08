@@ -188,4 +188,22 @@ class FindEndOfStatementTest extends AbstractMethodUnitTest
     }//end testArrowFunctionArrayValue()
 
 
+    /**
+     * Test end of statement for fn closure.
+     *
+     * @return void
+     */
+    public function testArrayFunctionEndOfStatement()
+    {
+        $static = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testArrowFunctionEndOfStatement */') + 2);
+        $fn     = self::$phpcsFile->findNext(T_FN, ($static + 1));
+
+        $endOfStatementStatic = self::$phpcsFile->findEndOfStatement($static);
+        $endOfStatementFn     = self::$phpcsFile->findEndOfStatement($fn);
+
+        $this->assertSame($endOfStatementFn, $endOfStatementStatic);
+
+    }//end testArrayFunctionEndOfStatement()
+
+
 }//end class

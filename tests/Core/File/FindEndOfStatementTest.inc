@@ -35,3 +35,8 @@ $a = [
     'a' => fn() => return 1,
     'b' => fn() => return 1,
 ];
+
+/* testArrowFunctionEndOfStatement */
+static fn ($a) => $a;
+
+return 0;

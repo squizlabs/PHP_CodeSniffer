@@ -594,23 +594,4 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
     }//end backfillHelper()
 
 
-    /**
-     * Test end of statement for fn closure.
-     *
-     * @return void
-     */
-    public function testEndOfStatement()
-    {
-        $token = $this->getTargetToken('/* testEndOfStatement */', T_FN);
-        $this->backfillHelper($token);
-
-        $static = self::$phpcsFile->findPrevious(T_STATIC, ($token - 1));
-        $endOfStatementStatic = self::$phpcsFile->findEndOfStatement($static);
-        $endOfStatementFn     = self::$phpcsFile->findEndOfStatement($token);
-
-        $this->assertSame($endOfStatementFn, $endOfStatementStatic);
-
-    }//end testEndOfStatement()
-
-
 }//end class
