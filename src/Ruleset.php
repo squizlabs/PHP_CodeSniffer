@@ -356,11 +356,13 @@ class Ruleset
             }
 
             $autoloadPath = (string) $autoload;
-            if (is_file($autoloadPath) === false) {
-                $autoloadPath = Util\Common::realPath(dirname($rulesetPath).DIRECTORY_SEPARATOR.$autoloadPath);
-            }
 
-            if ($autoloadPath === false) {
+            // Try relative autoload paths first.
+            $relativePath = Util\Common::realPath(dirname($rulesetPath).DIRECTORY_SEPARATOR.$autoloadPath);
+
+            if ($relativePath !== false && is_file($$relativePath) === true) {
+                $autoloadPath = $relativePath;
+            } else if (is_file($autoloadPath) === false) {
                 throw new RuntimeException('The specified autoload file "'.$autoload.'" does not exist');
             }
 
