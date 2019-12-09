@@ -1,6 +1,12 @@
 parameters:
+    level: 0
+    paths:
+        - src
+    autoload_files:
+        - tests/bootstrap.php
     ignoreErrors:
         -
+            count: 1
             message: '~^Undefined variable: \$phpCodeSnifferConfig$~'
             path: %currentWorkingDirectory%/src/Config.php
 
@@ -8,6 +14,3 @@ parameters:
         - PHP_CODESNIFFER_IN_TESTS
         - PHP_CODESNIFFER_CBF
         - PHP_CODESNIFFER_VERBOSITY
-
-    excludes_analyse:
-        - */Tests/*
