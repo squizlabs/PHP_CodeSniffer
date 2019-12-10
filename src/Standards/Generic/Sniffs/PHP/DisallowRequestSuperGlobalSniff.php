@@ -45,9 +45,8 @@ class DisallowRequestSuperGlobalSniff implements Sniff
             return;
         }
 
-        $type  = 'RequestSuperGlobalAccessed';
         $error = 'The $_REQUEST super global should not be used. Use $_GET, $_POST or $_COOKIE instead';
-        $phpcsFile->addError($error, $stackPtr, $type, []);
+        $phpcsFile->addError($error, $stackPtr, 'Found');
 
     }//end process()
 
