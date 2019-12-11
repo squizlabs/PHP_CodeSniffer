@@ -78,7 +78,7 @@ abstract class AbstractArraySniff implements Sniff
                 $indexEnd   = $phpcsFile->findPrevious(T_WHITESPACE, ($end - 1), null, true);
                 $valueStart = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
 
-                $indices[] = [
+                $index = [
                     'index_start' => $next,
                     'index_end'   => $indexEnd,
                     'arrow'       => $end,
@@ -86,11 +86,16 @@ abstract class AbstractArraySniff implements Sniff
                 ];
             } else {
                 $valueStart = $next;
-                $indices[]  = ['value_start' => $valueStart];
+                $index      = ['value_start' => $valueStart];
             }
 
             $current = $this->getNext($phpcsFile, $valueStart, $arrayEnd);
-        }
+            if ($tokens[$current]['code'] === T_COMMA) {
+                $index['comma'] = $current;
+            }
+
+            $indices[] = $index;
+        }//end while
 
         if ($tokens[$arrayStart]['line'] === $tokens[$arrayEnd]['line']) {
             $this->processSingleLineArray($phpcsFile, $stackPtr, $arrayStart, $arrayEnd, $indices);

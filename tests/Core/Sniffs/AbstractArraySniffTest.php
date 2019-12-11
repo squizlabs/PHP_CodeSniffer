@@ -52,8 +52,14 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
         self::$sniff->process(self::$phpcsFile, $token);
 
         $expected = [
-            0 => ['value_start' => ($token + 1)],
-            1 => ['value_start' => ($token + 3)],
+            0 => [
+                'value_start' => ($token + 1),
+                'comma'       => ($token + 2),
+            ],
+            1 => [
+                'value_start' => ($token + 3),
+                'comma'       => ($token + 4),
+            ],
             2 => ['value_start' => ($token + 5)],
         ];
 
@@ -78,12 +84,14 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
                 'index_end'   => ($token + 1),
                 'arrow'       => ($token + 2),
                 'value_start' => ($token + 3),
+                'comma'       => ($token + 4),
             ],
             1 => [
                 'index_start' => ($token + 5),
                 'index_end'   => ($token + 5),
                 'arrow'       => ($token + 6),
                 'value_start' => ($token + 7),
+                'comma'       => ($token + 8),
             ],
             2 => [
                 'index_start' => ($token + 9),
@@ -114,9 +122,11 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
                 'index_end'   => ($token + 1),
                 'arrow'       => ($token + 2),
                 'value_start' => ($token + 3),
+                'comma'       => ($token + 4),
             ],
             1 => [
                 'value_start' => ($token + 5),
+                'comma'       => ($token + 6),
             ],
             2 => [
                 'index_start' => ($token + 7),
@@ -147,12 +157,14 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
                 'index_end'   => ($token + 8),
                 'arrow'       => ($token + 10),
                 'value_start' => ($token + 12),
+                'comma'       => ($token + 13),
             ],
             1 => [
                 'index_start' => ($token + 16),
                 'index_end'   => ($token + 20),
                 'arrow'       => ($token + 22),
                 'value_start' => ($token + 24),
+                'comma'       => ($token + 25),
             ],
         ];
 
@@ -177,12 +189,15 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
                 'index_end'   => ($token + 3),
                 'arrow'       => ($token + 5),
                 'value_start' => ($token + 7),
+                'comma'       => ($token + 28),
             ],
             1 => [
                 'value_start' => ($token + 31),
+                'comma'       => ($token + 36),
             ],
             2 => [
                 'value_start' => ($token + 39),
+                'comma'       => ($token + 52),
             ],
         ];
 
@@ -207,18 +222,21 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
                 'index_end'   => ($token + 3),
                 'arrow'       => ($token + 5),
                 'value_start' => ($token + 7),
+                'comma'       => ($token + 29),
             ],
             1 => [
                 'index_start' => ($token + 32),
                 'index_end'   => ($token + 32),
                 'arrow'       => ($token + 34),
                 'value_start' => ($token + 36),
+                'comma'       => ($token + 69),
             ],
             2 => [
                 'index_start' => ($token + 72),
                 'index_end'   => ($token + 72),
                 'arrow'       => ($token + 74),
                 'value_start' => ($token + 76),
+                'comma'       => ($token + 83),
             ],
         ];
 
@@ -240,9 +258,11 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
         $expected = [
             0 => [
                 'value_start' => ($token + 4),
+                'comma'       => ($token + 7),
             ],
             1 => [
                 'value_start' => ($token + 10),
+                'comma'       => ($token + 14),
             ],
         ];
 
@@ -267,18 +287,21 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
                 'index_end'   => ($token + 4),
                 'arrow'       => ($token + 6),
                 'value_start' => ($token + 8),
+                'comma'       => ($token + 9),
             ],
             1 => [
                 'index_start' => ($token + 12),
                 'index_end'   => ($token + 12),
                 'arrow'       => ($token + 14),
                 'value_start' => ($token + 16),
+                'comma'       => ($token + 31),
             ],
             2 => [
                 'index_start' => ($token + 34),
                 'index_end'   => ($token + 34),
                 'arrow'       => ($token + 36),
                 'value_start' => ($token + 38),
+                'comma'       => ($token + 39),
             ],
         ];
 
