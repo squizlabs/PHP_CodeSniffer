@@ -139,6 +139,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="UndoNamespacedNameSingleTokenTest.inc" role="test" />
       <file baseinstalldir="" name="UndoNamespacedNameSingleTokenTest.php" role="test" />
      </dir>
+     <dir name="Util">
+      <dir name="Standards">
+       <file baseinstalldir="" name="GetInstalledStandardDetailsTest.php" role="test" />
+      </dir>
+     </dir>
      <file baseinstalldir="" name="AbstractMethodUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllTests.php" role="test" />
      <file baseinstalldir="" name="ErrorSuppressionTest.php" role="test" />
@@ -2018,6 +2023,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
+   <install as="CodeSniffer/Core/Util/Standards/GetInstalledStandardDetailsTest.php" name="tests/Core/Util/Standards/GetInstalledStandardDetailsTest.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -2083,6 +2089,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
+   <install as="CodeSniffer/Core/Util/Standards/GetInstalledStandardDetailsTest.php" name="tests/Core/Util/Standards/GetInstalledStandardDetailsTest.php" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />
