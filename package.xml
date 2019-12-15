@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Matthew Peveler for the patch
   - Fixed bug #2751 : Autoload relative paths first to avoid confusion with files from the global include path
     -- Thanks to Klaus Purer for the patch
+  - Fixed bug #2768 : Generic.Files.LineLength false positive for non-breakable strings at exactly the soft limit
+    -- Thanks to Alex Miles for the patch
  </notes>
  <contents>
   <dir name="/">

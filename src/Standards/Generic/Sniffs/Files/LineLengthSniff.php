@@ -158,7 +158,7 @@ class LineLengthSniff implements Sniff
             // to ignore the line length in these cases if the URL would be longer than the max
             // line length once you indent it to the correct level.
             if ($lineLength > $this->lineLimit) {
-                $oldLength = $tokens[$stackPtr]['length'];
+                $oldLength = strlen($tokens[$stackPtr]['content']);
                 $newLength = strlen(ltrim($tokens[$stackPtr]['content'], "/#\t "));
                 $indent    = (($tokens[$stackPtr]['column'] - 1) + ($oldLength - $newLength));
 
