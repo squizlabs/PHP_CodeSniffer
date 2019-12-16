@@ -9,6 +9,9 @@ $foo = 1_000_000_000;
 /* testFloat */
 $foo = 6.674_083e-11;
 
+/* testFloat2 */
+$foo = 6.674_083e+11;
+
 /* testHex */
 $foo = 0xCAFE_F00D;
 

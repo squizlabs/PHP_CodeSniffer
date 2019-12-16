@@ -1005,9 +1005,10 @@ class PHP extends Tokenizer
                         // Support floats.
                         if ($tokens[$i][0] === T_STRING
                             && substr(strtolower($tokens[$i][1]), -1) === 'e'
-                            && $tokens[($i + 1)] === '-'
+                            && ($tokens[($i + 1)] === '-'
+                            || $tokens[($i + 1)] === '+')
                         ) {
-                            $newContent .= '-';
+                            $newContent .= $tokens[($i + 1)];
                             $i++;
                         }
 

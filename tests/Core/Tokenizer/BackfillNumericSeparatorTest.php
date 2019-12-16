@@ -67,6 +67,13 @@ class BackfillNumericSeparatorTest extends AbstractMethodUnitTest
             ],
             [
                 [
+                    'marker' => '/* testFloat2 */',
+                    'type'   => T_DNUMBER,
+                    'value'  => '6.674_083e+11',
+                ],
+            ],
+            [
+                [
                     'marker' => '/* testHex */',
                     'type'   => T_LNUMBER,
                     'value'  => '0xCAFE_F00D',
