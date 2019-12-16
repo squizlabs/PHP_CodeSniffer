@@ -974,13 +974,14 @@ class PHP extends Tokenizer
                 and change these tokens in earlier versions.
             */
 
-            if ($tokenIsArray === true
+            if (PHP_VERSION_ID < 70400
+                && ($tokenIsArray === true
                 && ($token[0] === T_LNUMBER
                 || $token[0] === T_DNUMBER)
                 && isset($tokens[($stackPtr + 1)]) === true
                 && is_array($tokens[($stackPtr + 1)]) === true
                 && $tokens[($stackPtr + 1)][0] === T_STRING
-                && $tokens[($stackPtr + 1)][1][0] === '_'
+                && $tokens[($stackPtr + 1)][1][0] === '_')
             ) {
                 $newContent = $token[1];
                 $newType    = $token[0];
