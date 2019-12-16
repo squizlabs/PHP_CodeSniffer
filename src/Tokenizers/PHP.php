@@ -1014,7 +1014,7 @@ class PHP extends Tokenizer
                         }
 
                         continue;
-                    }
+                    }//end if
 
                     break;
                 }//end for
