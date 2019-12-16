@@ -315,3 +315,19 @@ switch ($foo) {
         'bar'
     );
 }
+
+$foo = $foo ?
+    function () {
+        switch ($a) {
+            case 'a':
+                break;
+
+            case (preg_match('/foo/i', $foo) ? $a : $b):
+                echo 'really?'
+                break;
+
+            default:
+                break;
+        }
+    } :
+    null;

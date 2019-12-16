@@ -1450,7 +1450,7 @@ class PHP extends Tokenizer
                 // inline IF statement.
                 if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
                     // Make sure this isn't the return type separator of a closure.
-                    $isReturnType = false;
+                    $isInlineIf = true;
                     for ($i = ($stackPtr - 1); $i > 0; $i--) {
                         if (is_array($tokens[$i]) === false
                             || ($tokens[$i][0] !== T_DOC_COMMENT
@@ -1487,14 +1487,44 @@ class PHP extends Tokenizer
                         }
 
                         if ($tokens[$i][0] === T_FUNCTION || $tokens[$i][0] === T_FN || $tokens[$i][0] === T_USE) {
-                            $isReturnType = true;
+                            $isInlineIf = false;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo "\t\t* token is function return type, not T_INLINE_ELSE".PHP_EOL;
+                            }
                         }
                     }//end if
 
-                    if ($isReturnType === false) {
+                    // Check to see if this is a CASE or DEFAULT opener.
+                    $inlineIfToken = $insideInlineIf[(count($insideInlineIf) - 1)];
+                    for ($i = $stackPtr; $i > $inlineIfToken; $i--) {
+                        if (is_array($tokens[$i]) === true
+                            && ($tokens[$i][0] === T_CASE
+                            || $tokens[$i][0] === T_DEFAULT)
+                        ) {
+                            $isInlineIf = false;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo "\t\t* token is T_CASE or T_DEFAULT opener, not T_INLINE_ELSE".PHP_EOL;
+                            }
+
+                            break;
+                        }
+
+                        if (is_array($tokens[$i]) === false
+                            && ($tokens[$i] === ';'
+                            || $tokens[$i] === '{')
+                        ) {
+                            break;
+                        }
+                    }
+
+                    if ($isInlineIf === true) {
                         array_pop($insideInlineIf);
                         $newToken['code'] = T_INLINE_ELSE;
                         $newToken['type'] = 'T_INLINE_ELSE';
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo "\t\t* token changed from T_COLON to T_INLINE_ELSE".PHP_EOL;
+                        }
                     }
                 }//end if
 
