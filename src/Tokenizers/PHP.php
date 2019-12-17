@@ -997,12 +997,6 @@ class PHP extends Tokenizer
                     ) {
                         $newContent .= $tokens[$i][1];
 
-                        // Any T_DNUMBER token needs to make the
-                        // new number a T_DNUMBER as well.
-                        if ($tokens[$i][0] === T_DNUMBER) {
-                            $newType = T_DNUMBER;
-                        }
-
                         // Support floats.
                         if ($tokens[$i][0] === T_STRING
                             && substr(strtolower($tokens[$i][1]), -1) === 'e'
@@ -1019,9 +1013,21 @@ class PHP extends Tokenizer
                     break;
                 }//end for
 
+                if ($newType === T_LNUMBER
+                    && ((stripos($newContent, '0x') === 0 && hexdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
+                    || (stripos($newContent, '0b') === 0 && bindec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
+                    || (stripos($newContent, '0x') !== 0
+                    && stripos($newContent, 'e') !== false || strpos($newContent, '.') !== false)
+                    || (strpos($newContent, '0') === 0 && stripos($newContent, '0x') !== 0
+                    && stripos($newContent, '0b') !== 0 && octdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
+                    || (strpos($newContent, '0') !== 0 && str_replace('_', '', $newContent) > PHP_INT_MAX))
+                ) {
+                    $newType = T_DNUMBER;
+                }
+
                 $newToken            = [];
                 $newToken['code']    = $newType;
-                $newToken['type']    = Util\Tokens::tokenName($token[0]);
+                $newToken['type']    = Util\Tokens::tokenName($newType);
                 $newToken['content'] = $newContent;
                 $finalTokens[$newStackPtr] = $newToken;
 
