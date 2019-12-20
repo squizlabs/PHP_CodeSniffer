@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the DisallowRequestSuperGlobal sniff.
+ * Unit test class for the DisallowRequestSuperglobal sniff.
  *
  * @author    Jeantwan Teuma <jeant.m24@gmail.com>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
@@ -10,7 +10,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Tests\PHP;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class DisallowRequestSuperGlobalUnitTest extends AbstractSniffUnitTest
+class DisallowRequestSuperglobalUnitTest extends AbstractSniffUnitTest
 {
 
 

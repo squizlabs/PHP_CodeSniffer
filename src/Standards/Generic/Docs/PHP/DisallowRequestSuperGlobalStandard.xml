@@ -1,7 +1,0 @@
-<documentation title="$_REQUEST Super Global">
-    <standard>
-        <![CDATA[
-    $_REQUEST should never be used due to the ambiguity created to identify where the data is coming from. Use $_POST, $_GET or $_COOKIE instead
-    ]]>
-    </standard>
-</documentation>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Ensures the $_REQUEST super global is not used
+ * Ensures the $_REQUEST superglobal is not used
  *
  * @author    Jeantwan Teuma <jeant.m24@gmail.com>
  * @copyright 2006-2019 Squiz Pty Ltd (ABN 77 084 670 600)
@@ -12,7 +12,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
-class DisallowRequestSuperGlobalSniff implements Sniff
+class DisallowRequestSuperglobalSniff implements Sniff
 {
 
 
@@ -45,7 +45,7 @@ class DisallowRequestSuperGlobalSniff implements Sniff
             return;
         }
 
-        $error = 'The $_REQUEST super global should not be used. Use $_GET, $_POST or $_COOKIE instead';
+        $error = 'The $_REQUEST superglobal should not be used; use $_GET, $_POST, or $_COOKIE instead';
         $phpcsFile->addError($error, $stackPtr, 'Found');
 
     }//end process()

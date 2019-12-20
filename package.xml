@@ -28,6 +28,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - The PHP 7.4 numeric separator backfill now works correctly for more float formats
   - The PHP 7.4 numeric separator backfill is no longer run on PHP versions 7.4.0 or greater
+  - Added Generic.PHP.DisallowRequestSuperglobal to ban the use of the $_REQUEST superglobal
+    -- Thanks to Morerice for the contribution
   - Fixed bug #2688 : Case statements not tokenized correctly when switch is contained within ternary
   - Fixed bug #2698 : PHPCS throws errors determining auto report width when shell_exec is disabled
     -- Thanks to Matthew Peveler for the patch
@@ -249,7 +251,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsStandard.xml" role="php" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowRequestSuperGlobalStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowRequestSuperglobalStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DiscourageGotoStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForbiddenFunctionsStandard.xml" role="php" />
@@ -353,7 +355,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsSniff.php" role="php" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowRequestSuperGlobalSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowRequestSuperglobalSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DiscourageGotoSniff.php" role="php" />
@@ -613,8 +615,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowAlternativePHPTagsUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowRequestSuperGlobalUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowRequestSuperGlobalUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowRequestSuperglobalUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowRequestSuperglobalUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortOpenTagUnitTest.2.inc" role="test" />
