@@ -1,0 +1,27 @@
+<documentation title="Unused Use Statements">
+    <standard>
+    <![CDATA[
+    Unused use statements are not allowed.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: use statement for a class that is used in the file">
+        <![CDATA[
+use Foo\Bar;
+new Bar();
+        ]]>
+        </code>
+        <code title="Invalid: use statement that is not used">
+        <![CDATA[
+use Foo\Bar
+        ]]>
+        </code>
+        <code title="Invalid: use statement for class in same namespace">
+        <![CDATA[
+namespace Foo;
+use Foo\Bar;
+new Bar();
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
