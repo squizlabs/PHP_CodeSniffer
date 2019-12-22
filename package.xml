@@ -240,8 +240,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="CyclomaticComplexityStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NestingLevelStandard.xml" role="php" />
        </dir>
-       <dir name="Namespace">
-        <file baseinstalldir="PHP/CodeSniffer" name="UnusedUseStandard.xml" role="test" />
+       <dir name="Namespaces">
+        <file baseinstalldir="PHP/CodeSniffer" name="UnusedUseStandard.xml" role="php" />
        </dir>
        <dir name="NamingConventions">
         <file baseinstalldir="PHP/CodeSniffer" name="CamelCapsFunctionNameStandard.xml" role="php" />
@@ -348,8 +348,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="CyclomaticComplexitySniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NestingLevelSniff.php" role="php" />
        </dir>
-       <dir name="Namespace">
-        <file baseinstalldir="PHP/CodeSniffer" name="UnusedUseSniff.php" role="test" />
+       <dir name="Namespaces">
+        <file baseinstalldir="PHP/CodeSniffer" name="UnusedUseSniff.php" role="php" />
        </dir>
        <dir name="NamingConventions">
         <file baseinstalldir="PHP/CodeSniffer" name="CamelCapsFunctionNameSniff.php" role="php" />
@@ -596,7 +596,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="NestingLevelUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="NestingLevelUnitTest.php" role="test" />
        </dir>
-       <dir name="Namespace">
+       <dir name="Namespaces">
         <file baseinstalldir="PHP/CodeSniffer" name="UnusedUseUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnusedUseUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnusedUseUnitTest.php" role="test" />
