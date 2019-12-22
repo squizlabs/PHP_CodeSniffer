@@ -227,20 +227,23 @@ class UnusedUseSniff implements Sniff
      */
     private function getNamespace(File $phpcsFile, $stackPtr)
     {
-        $namespacePtr = $phpcsFile->findPrevious([T_NAMESPACE], $stackPtr);
+        $namespacePtr = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
+        while ($namespacePtr !== false && $this->isNamespace($phpcsFile, $namespacePtr) === false) {
+            $phpcsFile->findPrevious(T_NAMESPACE, $namespacePtr - 1);
+        }
+
+        if ($namespacePtr === false) {
+            return false;
+        }
 
         $namespaceEnd = $phpcsFile->findNext(
-            [
-                T_NS_SEPARATOR,
-                T_STRING,
-                T_WHITESPACE,
-            ],
+            [T_NS_SEPARATOR, T_STRING, T_WHITESPACE],
             ($namespacePtr + 1),
             null,
             true
         );
 
-        if ($namespacePtr === false || $namespaceEnd === false) {
+        if ($namespaceEnd === false) {
             return false;
         }
 
@@ -293,6 +296,28 @@ class UnusedUseSniff implements Sniff
 
 
     /**
+     * Check if this is a namespace keyword not used as operator.
+     *
+     * @param File $phpcsFile
+     * @param int  $stackPtr
+     *
+     * @return bool
+     */
+    private function isNamespace(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        if ($tokens[$stackPtr]['code'] !== T_NAMESPACE) {
+            return false;
+        }
+
+        $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+
+        return $nextNonEmpty === false || $tokens[$nextNonEmpty]['code'] !== T_NS_SEPARATOR;
+    }
+
+
+    /**
      * Check if the use statement is used in the code.
      *
      * @param File $phpcsFile The file being scanned.
@@ -309,7 +334,7 @@ class UnusedUseSniff implements Sniff
 
         // Search where the class name is used.
         $classUsed = $phpcsFile->findNext([T_STRING, T_NAMESPACE], ($classPtr + 1));
-        while ($classUsed !== false && $tokens[$classUsed]['code'] !== T_NAMESPACE) {
+        while ($classUsed !== false && $this->isNamespace($phpcsFile, $classUsed) === false) {
             if (strtolower($tokens[$classUsed]['content']) === $lowerClassName) {
                 $beforeUsage = $phpcsFile->findPrevious(
                     Tokens::$emptyTokens,
@@ -344,19 +369,20 @@ class UnusedUseSniff implements Sniff
         }//end while
 
         // More checks.
-        $i = $classPtr;
-        while (isset($tokens[$i]) && T_NAMESPACE !== $tokens[$i]['code']) {
-            // Check for doc params @...
-            if (T_DOC_COMMENT_TAG === $tokens[$i]['code']) {
+        $i = $phpcsFile->findNext(
+            [T_DOC_COMMENT_TAG, T_DOC_COMMENT_STRING, T_NAMESPACE],
+            ($classPtr + 1)
+        );
+        while (false !== $i && $this->isNamespace($phpcsFile, $i) === false) {
+            switch ($tokens[$i]['code']) {
+            case T_DOC_COMMENT_TAG:
                 // Handle comment tag as @Route(..) or @ORM\Id.
                 if (preg_match('/^@'.$lowerClassName.'(?![a-zA-Z])/i', $tokens[$i]['content']) === 1) {
                     return true;
                 }
-            }
-
-            // Check for @param Truc or @return Machin.
-            if (T_DOC_COMMENT_STRING === $tokens[$i]['code']) {
-                // Handle comment tag inside a string like @UniqueConstraint
+                break;
+            case T_DOC_COMMENT_STRING:
+                // Handle comment tag inside a string like @UniqueConstraint.
                 if (preg_match('/@'.$lowerClassName.'(?![a-zA-Z])/i', $tokens[$i]['content']) === 1) {
                     return true;
                 }
@@ -379,9 +405,13 @@ class UnusedUseSniff implements Sniff
                         return true;
                     }
                 }
-            }
+                break;
+            }//end switch
 
-            $i++;
+            $i = $phpcsFile->findNext(
+                [T_DOC_COMMENT_TAG, T_DOC_COMMENT_STRING, T_NAMESPACE],
+                ($i + 1)
+            );
         }//end while
 
         return false;

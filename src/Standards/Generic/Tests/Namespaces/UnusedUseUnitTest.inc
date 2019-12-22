@@ -94,7 +94,7 @@ use Unused;
 use Somewhere\SomethingElse;
 use AnotherProject\Thing;
 
-//echo namespace\my_function();
+echo namespace\my_function();
 
 class ThirdContainer
 {
