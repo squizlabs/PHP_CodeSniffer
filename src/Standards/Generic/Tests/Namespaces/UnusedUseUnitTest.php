@@ -36,6 +36,8 @@ class UnusedUseUnitTest extends AbstractSniffUnitTest
             21 => 1,
             22 => 1,
             23 => 1,
+            93 => 1,
+            95 => 1,
         ];
 
     }//end getErrorList()

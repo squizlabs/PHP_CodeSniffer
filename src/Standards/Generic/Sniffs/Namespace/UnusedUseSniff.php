@@ -308,8 +308,8 @@ class UnusedUseSniff implements Sniff
         $lowerClassName = strtolower($tokens[$classPtr]['content']);
 
         // Search where the class name is used.
-        $classUsed = $phpcsFile->findNext(T_STRING, ($classPtr + 1));
-        while ($classUsed !== false) {
+        $classUsed = $phpcsFile->findNext([T_STRING, T_NAMESPACE], ($classPtr + 1));
+        while ($classUsed !== false && $tokens[$classUsed]['code'] !== T_NAMESPACE) {
             if (strtolower($tokens[$classUsed]['content']) === $lowerClassName) {
                 $beforeUsage = $phpcsFile->findPrevious(
                     Tokens::$emptyTokens,
@@ -340,26 +340,32 @@ class UnusedUseSniff implements Sniff
                 }
             }//end if
 
-            $classUsed = $phpcsFile->findNext([T_STRING], ($classUsed + 1));
+            $classUsed = $phpcsFile->findNext([T_STRING, T_NAMESPACE], ($classUsed + 1));
         }//end while
 
         // More checks.
-        foreach ($tokens as $token) {
+        $i = $classPtr;
+        while (isset($tokens[$i]) && T_NAMESPACE !== $tokens[$i]['code']) {
             // Check for doc params @...
-            if (T_DOC_COMMENT_TAG === $token['code']) {
+            if (T_DOC_COMMENT_TAG === $tokens[$i]['code']) {
                 // Handle comment tag as @Route(..) or @ORM\Id.
-                if (preg_match('/^@'.$lowerClassName.'(?![a-zA-Z])/i', $token['content']) === 1) {
+                if (preg_match('/^@'.$lowerClassName.'(?![a-zA-Z])/i', $tokens[$i]['content']) === 1) {
                     return true;
                 }
             }
 
             // Check for @param Truc or @return Machin.
-            if (T_DOC_COMMENT_STRING === $token['code']) {
-                if (trim(strtolower($token['content'])) === $lowerClassName
+            if (T_DOC_COMMENT_STRING === $tokens[$i]['code']) {
+                // Handle comment tag inside a string like @UniqueConstraint
+                if (preg_match('/@'.$lowerClassName.'(?![a-zA-Z])/i', $tokens[$i]['content']) === 1) {
+                    return true;
+                }
+
+                if (trim(strtolower($tokens[$i]['content'])) === $lowerClassName
                     // Handle @var Machin[]|Machine|AnotherMachin $machin.
-                    || preg_match('/^'.$lowerClassName.'(\|| |\[)/i', trim($token['content'])) === 1
-                    || preg_match('/(\|| )'.$lowerClassName.'(\|| |\[)/i', trim($token['content'])) === 1
-                    || preg_match('/(\|| )'.$lowerClassName.'$/i', trim($token['content'])) === 1
+                    || preg_match('/^'.$lowerClassName.'(\|| |\[)/i', trim($tokens[$i]['content'])) === 1
+                    || preg_match('/(\|| )'.$lowerClassName.'(\|| |\[)/i', trim($tokens[$i]['content'])) === 1
+                    || preg_match('/(\|| )'.$lowerClassName.'$/i', trim($tokens[$i]['content'])) === 1
                 ) {
                     $beforeUsage = $phpcsFile->findPrevious(
                         Tokens::$emptyTokens,
@@ -374,7 +380,9 @@ class UnusedUseSniff implements Sniff
                     }
                 }
             }
-        }//end foreach
+
+            $i++;
+        }//end while
 
         return false;
 

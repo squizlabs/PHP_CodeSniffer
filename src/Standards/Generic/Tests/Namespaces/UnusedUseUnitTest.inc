@@ -21,6 +21,7 @@ use const SomeNamespace\ConstB;
 use SomeNamespace\{ClassD, ClassF as F, ClassE};
 use function SomeNamespace\{fn_d, fn_e};
 use const SomeNamespace\{ConstD, ConstE};
+use SomeException, SomeFooException;
 
 class Container
 {
@@ -69,8 +70,49 @@ class Container
         return $d;
     }
 
+    function test5()
+    {
+        try {
+            throw new SomeException();
+        } catch (SomeFooException $e) {
+            return;
+        }
+    }
+}
+
+class SecondContainer
+{
     /**
      * @var Test|TestA|TestB|TestC|TestD|TestE
      */
     public $test;
 }
+
+namespace AnotherProject;
+
+use Unused;
+use Somewhere\SomethingElse;
+use AnotherProject\Thing;
+
+//echo namespace\my_function();
+
+class ThirdContainer
+{
+    /**
+     * @var Thing|SomethingElse
+     */
+    public $test;
+}
+
+//function () use ($tax) {}
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+
+/**
+ * @ORM\Table(name="whatever", uniqueConstraints={@UniqueConstraint(name="idx_whatever_code_UNIQUE", columns={"code"})})
+ * @ORM\Entity
+ */
+class Whatever {}
