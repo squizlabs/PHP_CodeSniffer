@@ -2,6 +2,7 @@
 /**
  * Checks for "use" statements that are not needed in a file.
  *
+ * @author    Michał Bundyra <contact@webimpress.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2007-2014 Mayflower GmbH
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -20,7 +21,7 @@ class UnusedUseSniff implements Sniff
     /**
      * Returns an array of tokens this test wants to listen for.
      *
-     * @return array
+     * @return int[]
      */
     public function register()
     {
@@ -35,271 +36,450 @@ class UnusedUseSniff implements Sniff
      * @param File $phpcsFile The file being scanned.
      * @param int  $stackPtr  The position of the current token in the stack passed in $tokens.
      *
-     * @return void
+     * @return int|void
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
         // Only check use statements in the global scope.
-        if (empty($tokens[$stackPtr]['conditions']) === false) {
+        if ($this->isGlobalUse($phpcsFile, $stackPtr) === false) {
             return;
         }
 
-        $namespacePrefix = null;
-        $start           = $phpcsFile->findNext([T_STRING], $stackPtr);
-        $startOfGroup    = $start;
-        $end = $phpcsFile->findNext(
-            [
-                T_COMMA,
-                T_SEMICOLON,
-                T_OPEN_USE_GROUP,
-                T_CLOSE_USE_GROUP,
-            ],
-            $start
-        );
+        $tokens = $phpcsFile->getTokens();
 
-        while ($end !== false) {
-            $classPtr = $phpcsFile->findPrevious([T_STRING], ($end - 1));
+        $semiColon = $phpcsFile->findEndOfStatement($stackPtr);
+        $prev      = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($semiColon - 1), null, true);
 
-            switch ($tokens[$end]['code']) {
-            case T_SEMICOLON:
-                if ($this->isSameNamespace($phpcsFile, $start, $end, $namespacePrefix) === true
-                    || $this->isUsed($phpcsFile, $classPtr) === false
-                ) {
-                    $this->removeUse($phpcsFile, $stackPtr, $start, $end);
+        if ($tokens[$prev]['code'] === T_CLOSE_USE_GROUP) {
+            $to   = $prev;
+            $from = $phpcsFile->findPrevious(T_OPEN_USE_GROUP, ($prev - 1));
+
+            // Empty group is invalid syntax.
+            if ($phpcsFile->findNext(Tokens::$emptyTokens, ($from + 1), null, true) === $to) {
+                $error = 'Empty use group';
+
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'EmptyUseGroup');
+                if ($fix === true) {
+                    $this->removeUse($phpcsFile, $stackPtr, $semiColon);
                 }
 
-                $end = false;
+                return;
+            }
 
-                break;
-            case T_CLOSE_USE_GROUP:
-                if ($this->isSameNamespace($phpcsFile, $start, $end, $namespacePrefix) === true
-                    || $this->isUsed($phpcsFile, $classPtr) === false
-                ) {
-                    $this->removeUse($phpcsFile, $stackPtr, $startOfGroup, $end);
+            $comma = $phpcsFile->findNext(T_COMMA, ($from + 1), $to);
+            if ($comma === false
+                || $phpcsFile->findNext(Tokens::$emptyTokens, ($comma + 1), $to, true) === false
+            ) {
+                $error = 'Redundant use group for one declaration';
+
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'RedundantUseGroup');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    $phpcsFile->fixer->replaceToken($from, '');
+                    $i = ($from + 1);
+
+                    while ($tokens[$i]['code'] === T_WHITESPACE) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                        ++$i;
+                    }
+
+                    if ($comma !== false) {
+                        $phpcsFile->fixer->replaceToken($comma, '');
+                    }
+
+                    $phpcsFile->fixer->replaceToken($to, '');
+                    $i = ($to - 1);
+                    while ($tokens[$i]['code'] === T_WHITESPACE) {
+                        $phpcsFile->fixer->replaceToken($i, '');
+                        --$i;
+                    }
+
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+
+                return;
+            }//end if
+
+            $skip = (Tokens::$emptyTokens + [T_COMMA => T_COMMA]);
+
+            $classPtr = $phpcsFile->findPrevious($skip, ($to - 1), ($from + 1), true);
+            while ($classPtr !== false) {
+                $to = $phpcsFile->findPrevious(T_COMMA, ($classPtr - 1), ($from + 1));
+
+                if ($this->isClassUsed($phpcsFile, $stackPtr, $classPtr) === false) {
+                    $error = 'Unused use statement "%s"';
+                    $data  = [$tokens[$classPtr]['content']];
+
+                    $fix = $phpcsFile->addFixableError($error, $classPtr, 'UnusedUseInGroup', $data);
+                    if ($fix === true) {
+                        if ($to === false) {
+                            $first = ($from + 1);
+                        } else {
+                            $first = $to;
+                        }
+
+                        $last = $classPtr;
+                        if ($to === false) {
+                            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($classPtr + 1), null, true);
+                            if ($tokens[$next]['code'] === T_COMMA) {
+                                $last = $next;
+                            }
+                        }
+
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($i = $first; $i <= $last; ++$i) {
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
+                    }//end if
+                }//end if
+
+                if ($to === false) {
+                    break;
                 }
 
-                $end = false;
+                $classPtr = $phpcsFile->findPrevious($skip, ($to - 1), ($from + 1), true);
+            }//end while
 
+            return;
+        }//end if
+
+        do {
+            $classPtr = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($semiColon - 1), null, true);
+            if ($this->isClassUsed($phpcsFile, $stackPtr, $classPtr) === false) {
+                $warning = 'Unused use statement "%s"';
+                $data    = [$tokens[$classPtr]['content']];
+                $fix     = $phpcsFile->addFixableError($warning, $stackPtr, 'UnusedUse', $data);
+
+                if ($fix === true) {
+                    $prev = $phpcsFile->findPrevious(
+                        (Tokens::$emptyTokens + [
+                            T_STRING       => T_STRING,
+                            T_NS_SEPARATOR => T_NS_SEPARATOR,
+                            T_AS           => T_AS,
+                        ]),
+                        $classPtr,
+                        null,
+                        true
+                    );
+
+                    $to = $semiColon;
+                    if ($tokens[$prev]['code'] === T_COMMA) {
+                        $from = $prev;
+                        $to   = $classPtr;
+                    } else if ($tokens[$semiColon]['code'] === T_SEMICOLON) {
+                        $from = $stackPtr;
+                    } else {
+                        $from = $phpcsFile->findNext(Tokens::$emptyTokens, ($prev + 1), null, true);
+                        if ($tokens[$from]['code'] === T_STRING
+                            && in_array(strtolower($tokens[$from]['content']), ['const', 'function'], true) === true
+                        ) {
+                            $from = $phpcsFile->findNext(Tokens::$emptyTokens, ($from + 1), null, true);
+                        }
+                    }
+
+                    $this->removeUse($phpcsFile, $from, $to);
+                }//end if
+            }//end if
+
+            if ($tokens[$semiColon]['code'] === T_SEMICOLON) {
                 break;
-            case T_COMMA:
-                if ($this->isSameNamespace($phpcsFile, $start, $end, $namespacePrefix) === true
-                    || $this->isUsed($phpcsFile, $classPtr) === false
-                ) {
-                    $this->removeUse($phpcsFile, $stackPtr, $start, $end);
-                }
+            }
 
-                $start = $phpcsFile->findNext([T_STRING], $end);
-                $end   = $phpcsFile->findNext(
-                    [
-                        T_COMMA,
-                        T_SEMICOLON,
-                        T_OPEN_USE_GROUP,
-                        T_CLOSE_USE_GROUP,
-                    ],
-                    $start
-                );
-
-                break;
-            default:
-                // Case T_OPEN_USE_GROUP.
-                $namespacePrefix = $this->getUseNamespace($phpcsFile, $start, $end);
-                $startOfGroup    = $start;
-
-                $start = $phpcsFile->findNext([T_STRING], $end);
-                $end   = $phpcsFile->findNext(
-                    [
-                        T_COMMA,
-                        T_SEMICOLON,
-                        T_OPEN_USE_GROUP,
-                        T_CLOSE_USE_GROUP,
-                    ],
-                    $start
-                );
-            }//end switch
-        }//end while
+            $semiColon = $phpcsFile->findEndOfStatement($semiColon + 1);
+        } while ($semiColon !== false);
 
     }//end process()
 
 
     /**
-     * Add fixable error for the unused use
+     * Check if the use is global.
      *
      * @param File $phpcsFile The file being scanned.
-     * @param int  $stackPtr  The position of the use token in the stack passed in $tokens.
-     * @param int  $start     The start of the use statement.
-     * @param int  $end       The end of the use statement.
+     * @param int  $stackPtr  The position of the current token in the stack passed in $tokens.
+     *
+     * @return bool
+     */
+    private function isGlobalUse(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Ignore USE keywords inside closures.
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
+            return false;
+        }
+
+        // Ignore USE keywords for traits.
+        if ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT, T_ANON_CLASS]) === true) {
+            return false;
+        }
+
+        return true;
+
+    }//end isGlobalUse()
+
+
+    /**
+     * Remove the use.
+     *
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $from      The start of the use to remove.
+     * @param int  $to        The end of the use to remove.
      *
      * @return void
      */
-    private function removeUse(File $phpcsFile, $stackPtr, $start, $end)
+    private function removeUse(File $phpcsFile, $from, $to)
     {
         $tokens = $phpcsFile->getTokens();
-        $fix    = $phpcsFile->addFixableError('Unused use statement', $start, 'UnusedUse');
 
-        if ($fix === true) {
-            $phpcsFile->fixer->beginChangeset();
+        $phpcsFile->fixer->beginChangeset();
 
-            $nextEnd = $phpcsFile->findNext([T_COMMA, T_SEMICOLON], $end);
-            $next    = $nextEnd;
+        // Remote whitespaces before in the same line.
+        if ($tokens[($from - 1)]['code'] === T_WHITESPACE
+            && $tokens[($from - 1)]['line'] === $tokens[$from]['line']
+            && $tokens[($from - 2)]['line'] !== $tokens[$from]['line']
+        ) {
+            $phpcsFile->fixer->replaceToken(($from - 1), '');
+        }
 
-            // Try to remove the whole use statement line only if it's the last one.
-            if (T_SEMICOLON === $tokens[$nextEnd]['code']) {
-                $start = $stackPtr;
-            }
+        for ($i = $from; $i <= $to; ++$i) {
+            $phpcsFile->fixer->replaceToken($i, '');
+        }
 
-            // Remove empty space after comma.
-            if (T_COMMA === $tokens[$nextEnd]['code']) {
-                $next = ($phpcsFile->findNext([T_WHITESPACE], ($nextEnd + 1), null, true) - 1);
-            }
+        // Also remove whitespace after the semicolon (new lines).
+        if (isset($tokens[($to + 1)]) === true && $tokens[($to + 1)]['code'] === T_WHITESPACE) {
+            $phpcsFile->fixer->replaceToken(($to + 1), '');
+        }
 
-            for ($i = $next; $i >= $start; $i--) {
-                $phpcsFile->fixer->replaceToken($i, '');
-
-                if (T_COMMA === $tokens[($i - 1)]['code'] && ($i - 1) !== $nextEnd) {
-                    $phpcsFile->fixer->replaceToken(($i - 1), $tokens[$end]['content']);
-
-                    // Case of T_CLOSE_USE_GROUP, we have to add the comma or the semicolon again.
-                    if ($tokens[$end]['content'] !== $tokens[$nextEnd]['content']) {
-                        $phpcsFile->fixer->addContent(($i - 1), $tokens[$nextEnd]['content']);
-                    }
-
-                    break;
-                }
-            }
-
-            // Also remove the empty line.
-            if (T_WHITESPACE === $tokens[$i]['code']) {
-                if (strpos($tokens[$i]['content'], $phpcsFile->eolChar) !== false) {
-                    $phpcsFile->fixer->replaceToken($i, '');
-                }
-            }
-
-            $phpcsFile->fixer->endChangeset();
-        }//end if
+        $phpcsFile->fixer->endChangeset();
 
     }//end removeUse()
 
 
     /**
-     * Check if the use is from the same namespace than the file.
+     * Check if the class is used.
      *
-     * @param File        $phpcsFile       The file being scanned.
-     * @param int         $start           The start of the use statement.
-     * @param int         $end             The end of the use statement.
-     * @param string|null $namespacePrefix Possible namespacePrefix for group use.
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $usePtr    The position of the current use.
+     * @param int  $classPtr  The position of the class to check.
      *
      * @return bool
      */
-    private function isSameNamespace(File $phpcsFile, $start, $end, $namespacePrefix)
-    {
-        // Check if the use statement does aliasing with the "as" keyword.
-        // Aliasing is allowed even in the same namespace.
-        $aliasUsed = $phpcsFile->findPrevious(T_AS, $end, $start);
-        if ($aliasUsed !== false) {
-            return false;
-        }
-
-        $namespace    = $this->getNamespace($phpcsFile, $start);
-        $useNamespace = $this->getUseNamespace($phpcsFile, $start, $end);
-
-        if ($namespace === false || $useNamespace === false) {
-            return false;
-        }
-
-        if ($namespacePrefix !== null) {
-            $useNamespace = rtrim("$namespacePrefix\\$useNamespace", '\\');
-        }
-
-        return strcasecmp($namespace, $useNamespace) === 0;
-
-    }//end isSameNamespace()
-
-
-    /**
-     * Return the namespace of the file.
-     *
-     * @param File $phpcsFile The file being scanned.
-     * @param int  $stackPtr  The position of the use token in the stack passed in $tokens.
-     *
-     * @return bool|string
-     */
-    private function getNamespace(File $phpcsFile, $stackPtr)
-    {
-        $namespacePtr = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
-        while ($namespacePtr !== false && $this->isNamespace($phpcsFile, $namespacePtr) === false) {
-            $phpcsFile->findPrevious(T_NAMESPACE, $namespacePtr - 1);
-        }
-
-        if ($namespacePtr === false) {
-            return false;
-        }
-
-        $namespaceEnd = $phpcsFile->findNext(
-            [T_NS_SEPARATOR, T_STRING, T_WHITESPACE],
-            ($namespacePtr + 1),
-            null,
-            true
-        );
-
-        if ($namespaceEnd === false) {
-            return false;
-        }
-
-        return trim(
-            $phpcsFile->getTokensAsString(
-                ($namespacePtr + 1),
-                ($namespaceEnd - $namespacePtr - 1)
-            )
-        );
-
-    }//end getNamespace()
-
-
-    /**
-     * Return the namespace of the use statement.
-     *
-     * @param File $phpcsFile The file being scanned.
-     * @param int  $start     The start of the use statement.
-     * @param int  $end       The end of the use statement.
-     *
-     * @return bool|string
-     */
-    private function getUseNamespace(File $phpcsFile, $start, $end)
+    private function isClassUsed(File $phpcsFile, $usePtr, $classPtr)
     {
         $tokens = $phpcsFile->getTokens();
 
-        $useNamespacePtr = $phpcsFile->findNext([T_STRING], $start);
+        // Search where the class name is used. PHP treats class names case
+        // insensitive, that's why we cannot search for the exact class name string
+        // and need to iterate over all T_STRING tokens in the file.
+        $classUsed = $phpcsFile->findNext(
+            [
+                T_STRING,
+                T_DOC_COMMENT_STRING,
+                T_DOC_COMMENT_TAG,
+                T_NAMESPACE,
+            ],
+            ($classPtr + 1)
+        );
+        $className = $tokens[$classPtr]['content'];
 
-        if ($tokens[$useNamespacePtr]['content'] === 'const'
-            || $tokens[$useNamespacePtr]['content'] === 'function'
+        // Check if the referenced class is in the same namespace as the current
+        // file. If it is then the use statement is not necessary.
+        $namespacePtr = $phpcsFile->findPrevious(T_NAMESPACE, $usePtr);
+        while ($namespacePtr !== false && $this->isNamespace($phpcsFile, $namespacePtr) === false) {
+            $phpcsFile->findPrevious(T_NAMESPACE, ($namespacePtr - 1));
+        }
+
+        $namespaceEnd = null;
+        if ($namespacePtr !== false && isset($tokens[$namespacePtr]['scope_closer']) === true) {
+            $namespaceEnd = $tokens[$namespacePtr]['scope_closer'];
+        }
+
+        $type = 'class';
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($usePtr + 1), null, true);
+        if ($tokens[$next]['code'] === T_STRING
+            && in_array(strtolower($tokens[$next]['content']), ['const', 'function'], true) === true
         ) {
-            $useNamespacePtr = $phpcsFile->findNext([T_STRING], ($useNamespacePtr + 1));
+            $type = strtolower($tokens[$next]['content']);
         }
 
-        if ($useNamespacePtr === false) {
-            return false;
+        if ($type === 'const') {
+            $searchName = $className;
+        } else {
+            $searchName = strtolower($className);
         }
 
-        return trim(
-            rtrim(
-                $phpcsFile->getTokensAsString(
-                    $useNamespacePtr,
-                    ($end - $useNamespacePtr - 1)
-                ),
-                '\\'
-            )
+        $prev = $phpcsFile->findPrevious(
+            (Tokens::$emptyTokens + [
+                T_STRING       => T_STRING,
+                T_NS_SEPARATOR => T_NS_SEPARATOR,
+            ]),
+            ($classPtr - 1),
+            null,
+            $usePtr
         );
 
-    }//end getUseNamespace()
+        // Only if alias is not used.
+        if ($tokens[$prev]['code'] !== T_AS) {
+            $isGroup = $tokens[$prev]['code'] === T_OPEN_USE_GROUP
+                || $phpcsFile->findPrevious(T_OPEN_USE_GROUP, $prev, $usePtr) !== false;
+
+            $useNamespace = '';
+            if ($isGroup === true || $tokens[$prev]['code'] !== T_COMMA) {
+                if ($type === 'class') {
+                    $useNamespacePtr = $next;
+                } else {
+                    $useNamespacePtr = ($next + 1);
+                }
+
+                $useNamespace = $this->getNamespace(
+                    $phpcsFile,
+                    $useNamespacePtr,
+                    [
+                        T_OPEN_USE_GROUP,
+                        T_COMMA,
+                        T_AS,
+                        T_SEMICOLON,
+                    ]
+                );
+
+                if ($isGroup === true) {
+                    $useNamespace .= '\\';
+                }
+            }//end if
+
+            if ($tokens[$prev]['code'] === T_COMMA || $tokens[$prev]['code'] === T_OPEN_USE_GROUP) {
+                $useNamespace .= $this->getNamespace(
+                    $phpcsFile,
+                    ($prev + 1),
+                    [
+                        T_CLOSE_USE_GROUP,
+                        T_COMMA,
+                        T_AS,
+                        T_SEMICOLON,
+                    ]
+                );
+            }
+
+            $pos = strrpos($useNamespace, '\\');
+            if ($pos === false) {
+                $pos = 0;
+            }
+
+            $useNamespace = substr($useNamespace, 0, $pos);
+
+            if ($namespacePtr !== false) {
+                $namespace = $this->getNamespace($phpcsFile, ($namespacePtr + 1), [T_CURLY_OPEN, T_SEMICOLON]);
+
+                if (strcasecmp($namespace, $useNamespace) === 0) {
+                    $classUsed = false;
+                }
+            } else if ($namespacePtr === false && $useNamespace === '') {
+                $classUsed = false;
+            }
+        }//end if
+
+        $emptyTokens = Tokens::$emptyTokens;
+        unset($emptyTokens[T_DOC_COMMENT_TAG]);
+
+        while ($classUsed !== false && $this->isNamespace($phpcsFile, $classUsed) === false) {
+            $isStringToken = $tokens[$classUsed]['code'] === T_STRING;
+
+            $match = null;
+
+            if (($isStringToken === true
+                && (($type !== 'const' && strtolower($tokens[$classUsed]['content']) === $searchName)
+                || ($type === 'const' && $tokens[$classUsed]['content'] === $searchName)))
+                || ($type === 'class'
+                && (($tokens[$classUsed]['code'] === T_DOC_COMMENT_STRING
+                && preg_match(
+                    '/(\s|\||\(|^)'.preg_quote($searchName, '/').'(\s|\||\\\\|$|\[\])/i',
+                    $tokens[$classUsed]['content']
+                ) === 1)
+                || ($tokens[$classUsed]['code'] === T_DOC_COMMENT_TAG
+                && preg_match(
+                    '/@'.preg_quote($searchName, '/').'(\(|\\\\|$)/i',
+                    $tokens[$classUsed]['content']
+                ) === 1)
+                || ($isStringToken === false
+                && preg_match(
+                    '/"[^"]*'.preg_quote($searchName, '/').'\b[^"]*"/i',
+                    $tokens[$classUsed]['content']
+                ) !== 1
+                && preg_match(
+                    '/(?<!")@'.preg_quote($searchName, '/').'\b/i',
+                    $tokens[$classUsed]['content'],
+                    $match
+                ) === 1)))
+            ) {
+                $emptyTokensToUse = $emptyTokens;
+                if ($isStringToken === true) {
+                    $emptyTokensToUse = Tokens::$emptyTokens;
+                }
+
+                $beforeUsage = $phpcsFile->findPrevious(
+                    $emptyTokensToUse,
+                    ($classUsed - 1),
+                    null,
+                    true
+                );
+
+                if ($isStringToken === true) {
+                    if ($this->determineType($phpcsFile, $beforeUsage, $classUsed) === $type) {
+                        return true;
+                    }
+                } else if (T_DOC_COMMENT_STRING === $tokens[$classUsed]['code']) {
+                    if (T_DOC_COMMENT_TAG === $tokens[$beforeUsage]['code']
+                        && in_array(
+                            $tokens[$beforeUsage]['content'],
+                            [
+                                '@var',
+                                '@param',
+                                '@return',
+                                '@throws',
+                                '@method',
+                                '@property',
+                                '@property-read',
+                                '@property-write',
+                            ],
+                            true
+                        ) === true
+                    ) {
+                        return true;
+                    }
+
+                    if ($match !== null) {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }//end if
+            }//end if
+
+            $classUsed = $phpcsFile->findNext(
+                [
+                    T_STRING,
+                    T_DOC_COMMENT_STRING,
+                    T_DOC_COMMENT_TAG,
+                    T_NAMESPACE,
+                ],
+                ($classUsed + 1),
+                $namespaceEnd
+            );
+        }//end while
+
+        return false;
+
+    }//end isClassUsed()
 
 
     /**
-     * Check if this is a namespace keyword not used as operator.
+     * Check if the stackPtr is a namespace construct.
      *
-     * @param File $phpcsFile
-     * @param int  $stackPtr
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $stackPtr  The position of the current token in the stack passed in $tokens.
      *
      * @return bool
      */
@@ -314,109 +494,195 @@ class UnusedUseSniff implements Sniff
         $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 
         return $nextNonEmpty === false || $tokens[$nextNonEmpty]['code'] !== T_NS_SEPARATOR;
-    }
+
+    }//end isNamespace()
 
 
     /**
-     * Check if the use statement is used in the code.
+     * Return the nasmespace of the class.
      *
-     * @param File $phpcsFile The file being scanned.
-     * @param int  $classPtr  The position of the use token in the stack passed in $tokens.
+     * @param File  $phpcsFile The file being scanned.
+     * @param int   $ptr       The position of the current token.
+     * @param array $stop      List of token to end the namespace.
      *
-     * @return bool
+     * @return string
      */
-    private function isUsed(File $phpcsFile, $classPtr)
+    private function getNamespace(File $phpcsFile, $ptr, array $stop)
     {
         $tokens = $phpcsFile->getTokens();
 
-        // PHP treats class names case insensitive.
-        $lowerClassName = strtolower($tokens[$classPtr]['content']);
+        $result = '';
+        while (in_array($tokens[$ptr]['code'], $stop, true) === false) {
+            if (in_array($tokens[$ptr]['code'], [T_STRING, T_NS_SEPARATOR], true) === true) {
+                $result .= $tokens[$ptr]['content'];
+            }
 
-        // Search where the class name is used.
-        $classUsed = $phpcsFile->findNext([T_STRING, T_NAMESPACE], ($classPtr + 1));
-        while ($classUsed !== false && $this->isNamespace($phpcsFile, $classUsed) === false) {
-            if (strtolower($tokens[$classUsed]['content']) === $lowerClassName) {
-                $beforeUsage = $phpcsFile->findPrevious(
-                    Tokens::$emptyTokens,
-                    ($classUsed - 1),
-                    null,
-                    true
-                );
+            ++$ptr;
+        }
 
-                if (in_array(
-                    $tokens[$beforeUsage]['code'],
-                    [
-                        T_USE,
-                        // If a backslash is used before the class name then this is some other use statement.
-                        T_NS_SEPARATOR,
-                        // If an object operator is used before the class name then is a class property.
-                        T_OBJECT_OPERATOR,
-                    ]
-                ) === false
-                ) {
-                    return true;
-                }
+        return trim(trim($result), '\\');
 
-                // Trait use statement within a class.
-                if ($tokens[$beforeUsage]['code'] === T_USE
-                    && empty($tokens[$beforeUsage]['conditions']) === false
-                ) {
-                    return true;
-                }
-            }//end if
+    }//end getNamespace()
 
-            $classUsed = $phpcsFile->findNext([T_STRING, T_NAMESPACE], ($classUsed + 1));
-        }//end while
 
-        // More checks.
-        $i = $phpcsFile->findNext(
-            [T_DOC_COMMENT_TAG, T_DOC_COMMENT_STRING, T_NAMESPACE],
-            ($classPtr + 1)
-        );
-        while (false !== $i && $this->isNamespace($phpcsFile, $i) === false) {
-            switch ($tokens[$i]['code']) {
-            case T_DOC_COMMENT_TAG:
-                // Handle comment tag as @Route(..) or @ORM\Id.
-                if (preg_match('/^@'.$lowerClassName.'(?![a-zA-Z])/i', $tokens[$i]['content']) === 1) {
-                    return true;
-                }
-                break;
-            case T_DOC_COMMENT_STRING:
-                // Handle comment tag inside a string like @UniqueConstraint.
-                if (preg_match('/@'.$lowerClassName.'(?![a-zA-Z])/i', $tokens[$i]['content']) === 1) {
-                    return true;
-                }
+    /**
+     * Return the type of the current token.
+     *
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $beforePtr The position of the previous token.
+     * @param int  $ptr       The position of the current token.
+     *
+     * @return string|null
+     */
+    private function determineType(File $phpcsFile, $beforePtr, $ptr)
+    {
+        $tokens = $phpcsFile->getTokens();
 
-                if (trim(strtolower($tokens[$i]['content'])) === $lowerClassName
-                    // Handle @var Machin[]|Machine|AnotherMachin $machin.
-                    || preg_match('/^'.$lowerClassName.'(\|| |\[)/i', trim($tokens[$i]['content'])) === 1
-                    || preg_match('/(\|| )'.$lowerClassName.'(\|| |\[)/i', trim($tokens[$i]['content'])) === 1
-                    || preg_match('/(\|| )'.$lowerClassName.'$/i', trim($tokens[$i]['content'])) === 1
-                ) {
-                    $beforeUsage = $phpcsFile->findPrevious(
-                        Tokens::$emptyTokens,
-                        ($classUsed - 1),
-                        null,
-                        true
-                    );
+        $beforeCode = $tokens[$beforePtr]['code'];
 
-                    // If a backslash is used before the class name then this is some other use statement.
-                    if (T_USE !== $tokens[$beforeUsage]['code'] && T_NS_SEPARATOR !== $tokens[$beforeUsage]['code']) {
-                        return true;
-                    }
-                }
-                break;
-            }//end switch
+        if (in_array(
+            $beforeCode,
+            [
+                T_NS_SEPARATOR,
+                T_OBJECT_OPERATOR,
+                T_DOUBLE_COLON,
+                T_FUNCTION,
+                T_CONST,
+                T_AS,
+                T_INSTEADOF,
+            ],
+            true
+        ) === true
+        ) {
+            return null;
+        }
 
-            $i = $phpcsFile->findNext(
-                [T_DOC_COMMENT_TAG, T_DOC_COMMENT_STRING, T_NAMESPACE],
-                ($i + 1)
+        if (in_array(
+            $beforeCode,
+            [
+                T_NEW,
+                T_NULLABLE,
+                T_EXTENDS,
+                T_IMPLEMENTS,
+                T_INSTANCEOF,
+            ],
+            true
+        ) === true
+        ) {
+            return 'class';
+        }
+
+        // Trait usage.
+        if ($beforeCode === T_USE) {
+            if ($this->isTraitUse($phpcsFile, $beforePtr) === true) {
+                return 'class';
+            }
+
+            return null;
+        }
+
+        if ($beforeCode === T_COMMA) {
+            $prev = $phpcsFile->findPrevious(
+                (Tokens::$emptyTokens + [
+                    T_STRING       => T_STRING,
+                    T_NS_SEPARATOR => T_NS_SEPARATOR,
+                    T_COMMA        => T_COMMA,
+                ]),
+                ($beforePtr - 1),
+                null,
+                true
             );
-        }//end while
 
-        return false;
+            if ($tokens[$prev]['code'] === T_IMPLEMENTS || $tokens[$prev]['code'] === T_EXTENDS) {
+                return 'class';
+            }
+        }
 
-    }//end isUsed()
+        $afterPtr  = $phpcsFile->findNext(Tokens::$emptyTokens, ($ptr + 1), null, true);
+        $afterCode = $tokens[$afterPtr]['code'];
+
+        if ($afterCode === T_AS) {
+            return null;
+        }
+
+        if ($afterCode === T_OPEN_PARENTHESIS) {
+            return 'function';
+        }
+
+        if (in_array(
+            $afterCode,
+            [
+                T_DOUBLE_COLON,
+                T_VARIABLE,
+                T_ELLIPSIS,
+                T_NS_SEPARATOR,
+                T_OPEN_CURLY_BRACKET,
+            ],
+            true
+        ) === true
+        ) {
+            return 'class';
+        }
+
+        if ($beforeCode === T_COLON) {
+            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($beforePtr - 1), null, true);
+            if ($prev !== false
+                && $tokens[$prev]['code'] === T_CLOSE_PARENTHESIS
+                && isset($tokens[$prev]['parenthesis_owner']) === true
+                && $tokens[$tokens[$prev]['parenthesis_owner']]['code'] === T_FUNCTION
+            ) {
+                return 'class';
+            }
+        }
+
+        if ($afterCode === T_BITWISE_OR) {
+            $next = $phpcsFile->findNext(
+                (Tokens::$emptyTokens + [
+                    T_BITWISE_OR   => T_BITWISE_OR,
+                    T_STRING       => T_STRING,
+                    T_NS_SEPARATOR => T_NS_SEPARATOR,
+                ]),
+                $afterPtr,
+                null,
+                true
+            );
+
+            if ($tokens[$next]['code'] === T_VARIABLE) {
+                return 'class';
+            }
+        }
+
+        return 'const';
+
+    }//end determineType()
+
+
+    /**
+     * Check if using a trait.
+     *
+     * @param File $phpcsFile The file being scanned.
+     * @param int  $stackPtr  The position of the current token in the stack passed in $tokens.
+     *
+     * @return bool
+     */
+    private function isTraitUse(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Ignore USE keywords inside closures.
+        $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
+        if ($tokens[$next]['code'] === T_OPEN_PARENTHESIS) {
+            return false;
+        }
+
+        // Ignore global USE keywords.
+        if ($phpcsFile->hasCondition($stackPtr, [T_CLASS, T_TRAIT, T_ANON_CLASS]) === false) {
+            return false;
+        }
+
+        return true;
+
+    }//end isTraitUse()
 
 
 }//end class
