@@ -10,6 +10,7 @@
 namespace PHP_CodeSniffer\Util;
 
 use PHP_CodeSniffer\Config;
+use Phar;
 
 class Standards
 {
@@ -33,9 +34,17 @@ class Standards
         }
 
         $resolvedInstalledPaths = [];
+
+        $phar = Phar::running(false);
+        if (strlen($phar) > 0) {
+            $baseDir = dirname($phar);
+        } else {
+            $baseDir = __DIR__.$ds.'..'.$ds.'..';
+        }
+
         foreach ($installedPaths as $installedPath) {
             if (substr($installedPath, 0, 1) === '.') {
-                $installedPath = Common::realPath(__DIR__.$ds.'..'.$ds.'..'.$ds.$installedPath);
+                $installedPath = Common::realPath($baseDir.$ds.$installedPath);
                 if ($installedPath === false) {
                     continue;
                 }
