@@ -62,3 +62,16 @@ $closureWithDefaultParamter = function(array $testArray=array()) {};
 while ( ( $csvdata = fgetcsv( $handle, 2000, $separator ) ) !== false ) {
 	// Do something.
 }
+
+// Issue #2787.
+class Foo {
+    protected ?int $id = null;
+}
+
+class Bar
+{
+    // Multi-property assignments.
+    private $a = false, $b = true; // Non-typed.
+    public bool $c = false, $d = true;
+    protected int $e = 123, $f = 987;
+}
