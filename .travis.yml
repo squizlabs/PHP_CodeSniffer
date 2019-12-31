@@ -1,8 +1,8 @@
-sudo: false
+os: linux
+dist: xenial
 language: php
-dist: trusty
 
-matrix:
+jobs:
   fast_finish: true
   include:
     - php: 7.2
