@@ -1038,6 +1038,65 @@ class PHP extends Tokenizer
                 $newToken            = [];
                 $newToken['content'] = '?';
 
+                /*
+                 * Check if the next non-empty token is one of the tokens which can be used
+                 * in type declarations. If not, it's definitely a ternary.
+                 * At this point, the only token types which need to be taken into consideration
+                 * as potential type declarations are T_STRING, T_ARRAY, T_CALLABLE and T_NS_SEPARATOR.
+                 */
+
+                $lastRelevantNonEmpty = null;
+
+                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                    if (is_array($tokens[$i]) === true) {
+                        $tokenType = $tokens[$i][0];
+                    } else {
+                        $tokenType = $tokens[$i];
+                    }
+
+                    if (isset(Util\Tokens::$emptyTokens[$tokenType]) === true) {
+                        continue;
+                    }
+
+                    if ($tokenType === T_STRING
+                        || $tokenType === T_ARRAY
+                        || $tokenType === T_NS_SEPARATOR
+                    ) {
+                        $lastRelevantNonEmpty = $tokenType;
+                        continue;
+                    }
+
+                    if (($tokenType !== T_CALLABLE
+                        && isset($lastRelevantNonEmpty) === false)
+                        || ($lastRelevantNonEmpty === T_ARRAY
+                        && $tokenType === '(')
+                        || ($lastRelevantNonEmpty === T_STRING
+                        && ($tokenType === T_DOUBLE_COLON
+                        || $tokenType === '('
+                        || $tokenType === ':'))
+                    ) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo "\t\t* token $stackPtr changed from ? to T_INLINE_THEN".PHP_EOL;
+                        }
+
+                        $newToken['code'] = T_INLINE_THEN;
+                        $newToken['type'] = 'T_INLINE_THEN';
+
+                        $insideInlineIf[] = $stackPtr;
+
+                        $finalTokens[$newStackPtr] = $newToken;
+                        $newStackPtr++;
+                        continue 2;
+                    }
+
+                    break;
+                }//end for
+
+                /*
+                 * This can still be a nullable type or a ternary.
+                 * Do additional checking.
+                 */
+
                 $prevNonEmpty     = null;
                 $lastSeenNonEmpty = null;
 
