@@ -1,0 +1,8 @@
+<?php
+
+$var = array(1,2,3);
+$var = array (1,2,3);
+$var = array
+(1,2,3);
+$var = array //comment
+(1,2,3);

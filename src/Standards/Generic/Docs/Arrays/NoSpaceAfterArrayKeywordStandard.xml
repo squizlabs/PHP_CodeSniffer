@@ -1,0 +1,23 @@
+<documentation title="No Space after array keyword">
+    <standard>
+    <![CDATA[
+    There must be no space between the "array" keyword and the opening parenthesis.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: No spaces between the array keyword and the opening parenthesis">
+        <![CDATA[
+$arr = <em>array(</em>
+    'foo' => 'bar',
+);
+        ]]>
+        </code>
+        <code title="Invalid: spaces between the array keyword and the opening parenthesis">
+        <![CDATA[
+$arr = <em>array   (</em>
+    'foo' => 'bar',
+);
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
