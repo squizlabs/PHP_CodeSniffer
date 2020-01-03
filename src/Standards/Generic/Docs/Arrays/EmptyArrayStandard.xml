@@ -1,0 +1,19 @@
+<documentation title="Long Array Syntax">
+    <standard>
+    <![CDATA[
+    Empty arrays should not have space between the parentheses.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: no spaces between the parentheses">
+        <![CDATA[
+$arr = array();
+        ]]>
+        </code>
+        <code title="Invalid: spaces between the parentheses">
+        <![CDATA[
+$arr = array(     );
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
