@@ -22,6 +22,13 @@ class ArrayCommaSniff extends AbstractArraySniff
      */
     public $trailingComma = true;
 
+    /**
+     * If the php version is < 7.3, we have to ignore hereDoc and nowDoc to avoid syntax errors.
+     *
+     * @var boolean
+     */
+    public $ignoreHereDocAndNowDoc = true;
+
 
     /**
      * Processes a single-line array definition.
@@ -49,7 +56,7 @@ class ArrayCommaSniff extends AbstractArraySniff
             }
         }
 
-        $this->processCommaCheck($phpcsFile, $indices);
+        $this->processCommaCheck($phpcsFile, $stackPtr, $indices);
 
     }//end processSingleLineArray()
 
@@ -88,7 +95,7 @@ class ArrayCommaSniff extends AbstractArraySniff
             }
         }
 
-        $this->processCommaCheck($phpcsFile, $indices);
+        $this->processCommaCheck($phpcsFile, $stackPtr, $indices);
 
     }//end processMultiLineArray()
 
@@ -97,12 +104,14 @@ class ArrayCommaSniff extends AbstractArraySniff
      * Processes a multi-line array definition.
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The current file being checked.
+     * @param int                         $stackPtr  The position of the current token
+     *                                               in the stack passed in $tokens.
      * @param array                       $indices   An array of token positions for the array keys,
      *                                               double arrows, and values.
      *
      * @return void
      */
-    private function processCommaCheck($phpcsFile, $indices)
+    private function processCommaCheck($phpcsFile, $stackPtr, $indices)
     {
         $tokens = $phpcsFile->getTokens();
 
@@ -140,6 +149,15 @@ class ArrayCommaSniff extends AbstractArraySniff
             }//end if
 
             if ($tokens[($comma - 1)]['code'] === T_WHITESPACE) {
+                if ($this->ignoreHereDocAndNowDoc === true) {
+                    $previous = $phpcsFile->findPrevious(T_WHITESPACE, $comma - 1, $stackPtr, true);
+                    $previousCode = $tokens[$previous]['code'];
+
+                    if ($previousCode === T_END_HEREDOC || $previousCode === T_END_NOWDOC) {
+                        return;
+                    }
+                }
+
                 $content     = $tokens[($comma - 2)]['content'];
                 $spaceLength = $tokens[($comma - 1)]['length'];
                 $error       = 'Expected 0 spaces between "%s" and comma; %s found';
