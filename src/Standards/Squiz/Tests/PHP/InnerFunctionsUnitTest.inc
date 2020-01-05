@@ -27,3 +27,24 @@ function test()
         }
     };
 }
+
+new class {
+    public function valueObject(): object
+    {
+         return new class {
+            public function string(): string {
+                 return 'string';
+            }
+        };
+    }
+};
+
+new class {
+    public function outer()
+    {
+        if (!function_exists('inner')) {
+            function inner() {
+            }
+        }
+    }
+};

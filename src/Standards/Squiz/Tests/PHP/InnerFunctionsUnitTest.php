@@ -25,7 +25,10 @@ class InnerFunctionsUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [5 => 1];
+        return [
+            5  => 1,
+            46 => 1,
+        ];
 
     }//end getErrorList()
 

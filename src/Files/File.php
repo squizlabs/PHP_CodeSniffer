@@ -2490,10 +2490,14 @@ class File
      *
      * @param int        $stackPtr The position of the token we are checking.
      * @param int|string $type     The type of token to search for.
+     * @param bool       $first    If TRUE, will return the matched condition
+     *                             furtherest away from the passed token.
+     *                             If FALSE, will return the matched condition
+     *                             closest to the passed token.
      *
      * @return int|false
      */
-    public function getCondition($stackPtr, $type)
+    public function getCondition($stackPtr, $type, $first=true)
     {
         // Check for the existence of the token.
         if (isset($this->tokens[$stackPtr]) === false) {
@@ -2506,6 +2510,10 @@ class File
         }
 
         $conditions = $this->tokens[$stackPtr]['conditions'];
+        if ($first === false) {
+            $conditions = array_reverse($conditions, true);
+        }
+
         foreach ($conditions as $token => $condition) {
             if ($condition === $type) {
                 return $token;

@@ -28,8 +28,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <notes>
   - The PHP 7.4 numeric separator backfill now works correctly for more float formats
   - The PHP 7.4 numeric separator backfill is no longer run on PHP version 7.4.0 or greater
+  - File::getCondition() now accepts a 3rd argument that allows for the closest matching token to be returned
+    -- By default, it continues to return the first matched token found from the top of the file
   - Added Generic.PHP.DisallowRequestSuperglobal to ban the use of the $_REQUEST superglobal
     -- Thanks to Morerice for the contribution
+  - Squiz.PHP.InnerFunctions now handles multiple nested anon classes correctly
   - Fixed bug #2688 : Case statements not tokenized correctly when switch is contained within ternary
   - Fixed bug #2698 : PHPCS throws errors determining auto report width when shell_exec is disabled
     -- Thanks to Matthew Peveler for the patch
