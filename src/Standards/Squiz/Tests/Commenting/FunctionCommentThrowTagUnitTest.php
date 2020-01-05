@@ -31,12 +31,13 @@ class FunctionCommentThrowTagUnitTest extends AbstractSniffUnitTest
             35  => 1,
             47  => 1,
             61  => 2,
-            106 => 1,
-            123 => 1,
-            200 => 1,
-            219 => 1,
-            287 => 1,
-            397 => 1,
+            112 => 1,
+            124 => 1,
+            141 => 1,
+            218 => 1,
+            237 => 1,
+            305 => 1,
+            415 => 1,
         ];
 
     }//end getErrorList()

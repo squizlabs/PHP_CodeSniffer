@@ -97,6 +97,24 @@ class FunctionCommentThrowTagUnitTest
 
     }//end thisShouldWorkOK()
 
+    /**
+     * @throws PHP_Exception1|PHP_Exception2|PHP_Exception3
+     */
+    public function thisShouldWorkOKInline()
+    {
+        throw new PHP_Exception1('Error');
+        throw new PHP_Exception2('Error');
+        throw new PHP_Exception3('Error');
+    }//end thisShouldWorkOKInline()
+
+    /**
+     * @throws PHP_Exception1||PHP_Exception2
+     */
+    public function extraInlineSeperator()
+    {
+        throw new PHP_Exception1('Error');
+        throw new PHP_Exception2('Error');
+    }//end extraInlineSeperator()
 
     /**
      * This is not OK, missing 2 @throws tag.
