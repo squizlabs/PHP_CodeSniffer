@@ -15,6 +15,13 @@ use PHP_CodeSniffer\Util\Tokens;
 class ArrayCommaSniff extends AbstractArraySniff
 {
 
+    /**
+     * Does a multi-line array should have a trailing comma ?
+     *
+     * @var boolean
+     */
+    public $trailingComma = true;
+
 
     /**
      * Processes a single-line array definition.
@@ -65,12 +72,19 @@ class ArrayCommaSniff extends AbstractArraySniff
         $tokens = $phpcsFile->getTokens();
 
         $lastContent = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($arrayEnd - 1), null, true);
-        if ($tokens[$lastContent]['code'] !== T_COMMA) {
+        if ($tokens[$lastContent]['code'] !== T_COMMA && $this->trailingComma === true) {
             $error = 'Comma required after last value in array declaration';
             $fix   = $phpcsFile->addFixableError($error, $lastContent, 'NoCommaAfterLast');
 
             if ($fix === true) {
                 $phpcsFile->fixer->addContent($lastContent, ',');
+            }
+        } else if ($tokens[$lastContent]['code'] === T_COMMA && $this->trailingComma === false) {
+            $error = 'Comma not allowed after last value in array declaration';
+            $fix   = $phpcsFile->addFixableError($error, $lastContent, 'CommaAfterLast');
+
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($lastContent, '');
             }
         }
 

@@ -34,6 +34,14 @@ class ArrayCommaUnitTest extends AbstractSniffUnitTest
             21 => 1,
             24 => 1,
             30 => 1,
+            34 => 5,
+            36 => 1,
+            38 => 1,
+            44 => 1,
+            49 => 4,
+            53 => 1,
+            61 => 1,
+            62 => 1,
         ];
 
     }//end getErrorList()
