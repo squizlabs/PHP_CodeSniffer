@@ -27,7 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - The PHP 7.4 numeric separator backfill now works correctly for more float formats
-  - The PHP 7.4 numeric separator backfill is no longer run on PHP versions 7.4.0 or greater
+  - The PHP 7.4 numeric separator backfill is no longer run on PHP version 7.4.0 or greater
   - Added Generic.PHP.DisallowRequestSuperglobal to ban the use of the $_REQUEST superglobal
     -- Thanks to Morerice for the contribution
   - Fixed bug #2688 : Case statements not tokenized correctly when switch is contained within ternary
@@ -37,6 +37,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Klaus Purer for the patch
   - Fixed bug #2768 : Generic.Files.LineLength false positive for non-breakable strings at exactly the soft limit
     -- Thanks to Alex Miles for the patch
+  - Fixed bug #2791 : PSR12.Functions.NullableTypeDeclaration false positive when ternary operator used with instanceof
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
