@@ -2115,7 +2115,7 @@ class File
      *                                  will not be checked. IE. checking will stop
      *                                  at the previous semi-colon found.
      *
-     * @return int|bool
+     * @return int|false
      * @see    findNext()
      */
     public function findPrevious(
@@ -2196,7 +2196,7 @@ class File
      *                                  will not be checked. i.e., checking will stop
      *                                  at the next semi-colon found.
      *
-     * @return int|bool
+     * @return int|false
      * @see    findPrevious()
      */
     public function findNext(
@@ -2404,7 +2404,7 @@ class File
      *                                  If value is omitted, tokens with any value will
      *                                  be returned.
      *
-     * @return int|bool
+     * @return int|false
      */
     public function findFirstOnLine($types, $start, $exclude=false, $value=null)
     {
@@ -2491,7 +2491,7 @@ class File
      * @param int        $stackPtr The position of the token we are checking.
      * @param int|string $type     The type of token to search for.
      *
-     * @return int
+     * @return int|false
      */
     public function getCondition($stackPtr, $type)
     {
