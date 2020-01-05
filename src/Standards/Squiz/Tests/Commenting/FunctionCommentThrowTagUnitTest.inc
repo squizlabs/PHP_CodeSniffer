@@ -98,13 +98,13 @@ class FunctionCommentThrowTagUnitTest
     }//end thisShouldWorkOK()
 
     /**
-     * @throws PHP_Exception1|PHP_Exception2|PHP_Exception3
+     * @throws PHP_Exception1|PHP_Exception2|\Exception test inline exceptions comment
      */
     public function thisShouldWorkOKInline()
     {
         throw new PHP_Exception1('Error');
         throw new PHP_Exception2('Error');
-        throw new PHP_Exception3('Error');
+        throw new \Exception('Error');
     }//end thisShouldWorkOKInline()
 
     /**

@@ -177,15 +177,15 @@ class FunctionCommentThrowTagSniff implements Sniff
             }
 
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
-                $exceptions = $tokens[($tag + 2)]['content'];
-                if (strpos($exceptions, '|') !== false) {
-                    // filter out all spaces and create array containing every exception
-                    $exceptions = explode('|', str_replace(' ', '', $exceptions));
+                $commentContents = $tokens[($tag + 2)]['content'];
+                if (strpos($commentContents, '|') !== false) {
+                    $exceptions = explode('|', $commentContents);
                     foreach ($exceptions as $exception) {
+                        $exception = $this->filterExceptionName($exception);
                         $throwTags[$exception] = true;
                     }
                 } else {
-                    $exception = $this->filterWhiteSpace($exceptions);
+                    $exception = $this->filterExceptionName($commentContents);
                     $throwTags[$exception] = true;
                 }
             }
@@ -233,19 +233,24 @@ class FunctionCommentThrowTagSniff implements Sniff
 
     }//end process()
 
+
     /**
-     * @param string $exception
+     * Remove any extra characters after the exception name.
+     *
+     * @param string $exception Exception name to be filtered
+     *
      * @return string
      */
-    private function filterWhiteSpace($exception)
+    private function filterExceptionName($exception)
     {
-        $space     = strpos($exception, ' ');
-        // Remove any whitespace after the exception
+        $space = strpos($exception, ' ');
         if ($space !== false) {
             $exception = substr($exception, 0, $space);
         }
 
         return $exception;
-    }
+
+    }//end filterExceptionName()
+
 
 }//end class
