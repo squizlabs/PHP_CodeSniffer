@@ -37,6 +37,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set the allowOnly property to "first" to enforce all boolean operators to be at the start of a line
     -- Set the allowOnly property to "last" to enforce all boolean operators to be at the end of a line
     -- Thanks to Vincent Langlet for the patch
+  - PSR12.Files.ImportStatement now auto-fixes import statements by removing the leading slash
+    -- Thanks to Michał Bundyra for the patch
   - Squiz.PHP.InnerFunctions now handles multiple nested anon classes correctly
   - Fixed bug #2688 : Case statements not tokenized correctly when switch is contained within ternary
   - Fixed bug #2698 : PHPCS throws errors determining auto report width when shell_exec is disabled
