@@ -26,10 +26,15 @@ class BooleanOperatorPlacementUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            10 => 1,
-            16 => 1,
-            28 => 1,
-            34 => 1,
+            10  => 1,
+            16  => 1,
+            28  => 1,
+            34  => 1,
+            75  => 1,
+            81  => 1,
+            90  => 1,
+            98  => 1,
+            104 => 1,
         ];
 
     }//end getErrorList()
