@@ -193,9 +193,9 @@ class FindEndOfStatementTest extends AbstractMethodUnitTest
      *
      * @return void
      */
-    public function testArrayFunctionEndOfStatement()
+    public function testArrowFunction()
     {
-        $static = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testArrowFunctionEndOfStatement */') + 2);
+        $static = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testArrowFunction */') + 2);
         $fn     = self::$phpcsFile->findNext(T_FN, ($static + 1));
 
         $endOfStatementStatic = self::$phpcsFile->findEndOfStatement($static);
@@ -203,7 +203,7 @@ class FindEndOfStatementTest extends AbstractMethodUnitTest
 
         $this->assertSame($endOfStatementFn, $endOfStatementStatic);
 
-    }//end testArrayFunctionEndOfStatement()
+    }//end testArrowFunction()
 
 
 }//end class

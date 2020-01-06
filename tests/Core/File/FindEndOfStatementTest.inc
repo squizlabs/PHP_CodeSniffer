@@ -36,7 +36,7 @@ $a = [
     'b' => fn() => return 1,
 ];
 
-/* testArrowFunctionEndOfStatement */
+/* testArrowFunction */
 static fn ($a) => $a;
 
 return 0;
