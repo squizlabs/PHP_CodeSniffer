@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - The PHP 7.4 numeric separator backfill now works correctly for more float formats
+    -- Thanks to Juliette Reinders Folmer for the patch
   - The PHP 7.4 numeric separator backfill is no longer run on PHP version 7.4.0 or greater
   - File::getCondition() now accepts a 3rd argument that allows for the closest matching token to be returned
     -- By default, it continues to return the first matched token found from the top of the file
