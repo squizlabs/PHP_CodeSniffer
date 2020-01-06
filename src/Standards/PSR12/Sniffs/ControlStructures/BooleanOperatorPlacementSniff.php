@@ -16,8 +16,9 @@ class BooleanOperatorPlacementSniff implements Sniff
 {
 
     /**
-     * Used to restrict the placement of the boolean operator
-     * Allowed value are 'first' or 'last'
+     * Used to restrict the placement of the boolean operator.
+     *
+     * Allowed value are "first" or "last".
      *
      * @var string|null
      */
