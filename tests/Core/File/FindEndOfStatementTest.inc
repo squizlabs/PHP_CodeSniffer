@@ -36,7 +36,10 @@ $a = [
     'b' => fn() => return 1,
 ];
 
-/* testArrowFunction */
+/* testStaticArrowFunction */
 static fn ($a) => $a;
+
+/* testArrowFunctionReturnValue */
+fn(): array => [a($a, $b)];
 
 return 0;

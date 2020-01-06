@@ -1816,6 +1816,7 @@ class PHP extends Tokenizer
                     $ignore  = Util\Tokens::$emptyTokens;
                     $ignore += [
                         T_STRING       => T_STRING,
+                        T_ARRAY        => T_ARRAY,
                         T_COLON        => T_COLON,
                         T_NS_SEPARATOR => T_NS_SEPARATOR,
                         T_NULLABLE     => T_NULLABLE,

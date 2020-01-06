@@ -54,6 +54,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2763 : PSR12 standard reports errors for multi-line FOR definitions
   - Fixed bug #2768 : Generic.Files.LineLength false positive for non-breakable strings at exactly the soft limit
     -- Thanks to Alex Miles for the patch
+  - Fixed bug #2773 : PSR2.Methods.FunctionCallSignature false positive when arrow function has array return type
   - Fixed bug #2791 : PSR12.Functions.NullableTypeDeclaration false positive when ternary operator used with instanceof
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>

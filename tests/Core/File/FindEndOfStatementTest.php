@@ -189,13 +189,13 @@ class FindEndOfStatementTest extends AbstractMethodUnitTest
 
 
     /**
-     * Test end of statement for fn closure.
+     * Test static arrow function.
      *
      * @return void
      */
-    public function testArrowFunction()
+    public function testStaticArrowFunction()
     {
-        $static = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testArrowFunction */') + 2);
+        $static = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testStaticArrowFunction */') + 2);
         $fn     = self::$phpcsFile->findNext(T_FN, ($static + 1));
 
         $endOfStatementStatic = self::$phpcsFile->findEndOfStatement($static);
@@ -203,7 +203,23 @@ class FindEndOfStatementTest extends AbstractMethodUnitTest
 
         $this->assertSame($endOfStatementFn, $endOfStatementStatic);
 
-    }//end testArrowFunction()
+    }//end testStaticArrowFunction()
+
+
+    /**
+     * Test arrow function with return value.
+     *
+     * @return void
+     */
+    public function testArrowFunctionReturnValue()
+    {
+        $start = (self::$phpcsFile->findNext(T_COMMENT, 0, null, false, '/* testArrowFunctionReturnValue */') + 2);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $tokens = self::$phpcsFile->getTokens();
+        $this->assertSame($tokens[($start + 18)], $tokens[$found]);
+
+    }//end testArrowFunctionReturnValue()
 
 
 }//end class
