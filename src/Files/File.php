@@ -2356,10 +2356,12 @@ class File
                 && ($i === $this->tokens[$i]['scope_opener']
                 || $i === $this->tokens[$i]['scope_condition'])
             ) {
-                if ($i === $start
-                    && (isset(Util\Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true
-                    || $this->tokens[$i]['code'] === T_FN)
-                ) {
+                if ($this->tokens[$i]['code'] === T_FN) {
+                    $i = ($this->tokens[$i]['scope_closer'] - 1);
+                    continue;
+                }
+
+                if ($i === $start && isset(Util\Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true) {
                     return $this->tokens[$i]['scope_closer'];
                 }
 
