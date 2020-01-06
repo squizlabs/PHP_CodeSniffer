@@ -88,10 +88,12 @@ class UseDeclarationSniff implements Sniff
                         }
 
                         $lastValidContent = $i;
+
+                        continue;
                     }
 
                     break;
-                }
+                }//end for
 
                 if ($tokens[$lastValidContent]['line'] !== ($tokens[$opener]['line'] + 1)) {
                     $error = 'The first trait import statement must be declared on the first non-comment line after the %s opening brace';
