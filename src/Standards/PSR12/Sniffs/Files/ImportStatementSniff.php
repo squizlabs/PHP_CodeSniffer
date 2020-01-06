@@ -65,7 +65,11 @@ class ImportStatementSniff implements Sniff
         }
 
         $error = 'Import statements must not begin with a leading backslash';
-        $phpcsFile->addError($error, $next, 'LeadingSlash');
+        $fix   = $phpcsFile->addFixableError($error, $next, 'LeadingSlash');
+
+        if ($fix === true) {
+            $phpcsFile->fixer->replaceToken($next, '');
+        }
 
     }//end process()
 
