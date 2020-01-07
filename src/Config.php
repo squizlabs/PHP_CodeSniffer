@@ -972,29 +972,14 @@ class Config
                 if ($this->reportFile === false) {
                     $this->reportFile = substr($arg, 12);
 
-                    $dir = dirname($this->reportFile);
+                    $dir = Util\Common::realpath(dirname($this->reportFile));
                     if (is_dir($dir) === false) {
                         $error  = 'ERROR: The specified report file path "'.$this->reportFile.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
                         $error .= $this->printShortUsage(true);
                         throw new DeepExitException($error, 3);
                     }
 
-                    if ($dir === '.') {
-                        // Passed report file is a file in the current directory.
-                        $this->reportFile = getcwd().'/'.basename($this->reportFile);
-                    } else {
-                        if ($dir[0] === '/') {
-                            // An absolute path.
-                            $dir = Util\Common::realpath($dir);
-                        } else {
-                            $dir = Util\Common::realpath(getcwd().'/'.$dir);
-                        }
-
-                        if ($dir !== false) {
-                            // Report file path is relative.
-                            $this->reportFile = $dir.'/'.basename($this->reportFile);
-                        }
-                    }
+                    $this->reportFile = $dir.'/'.basename($this->reportFile);
                 }//end if
 
                 self::$overriddenDefaults['reportFile'] = true;
@@ -1050,28 +1035,19 @@ class Config
                         if ($output === false) {
                             $output = null;
                         } else {
-                            $dir = dirname($output);
+                            $dir = Util\Common::realpath(dirname($output));
                             if (is_dir($dir) === false) {
                                 $error  = 'ERROR: The specified '.$report.' report file path "'.$output.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
                                 $error .= $this->printShortUsage(true);
                                 throw new DeepExitException($error, 3);
                             }
 
-                            if ($dir === '.') {
-                                // Passed report file is a filename in the current directory.
-                                $output = getcwd().'/'.basename($output);
-                            } else {
-                                if ($dir[0] === '/') {
-                                    // An absolute path.
-                                    $dir = Util\Common::realpath($dir);
-                                } else {
-                                    $dir = Util\Common::realpath(getcwd().'/'.$dir);
-                                }
+                            $output = $dir.'/'.basename($output);
 
-                                if ($dir !== false) {
-                                    // Report file path is relative.
-                                    $output = $dir.'/'.basename($output);
-                                }
+                            if (is_dir($output) === true) {
+                                $error  = 'ERROR: The specified '.$report.' report file path "'.$output.'" is a directory'.PHP_EOL.PHP_EOL;
+                                $error .= $this->printShortUsage(true);
+                                throw new DeepExitException($error, 3);
                             }
                         }//end if
                     }//end if
