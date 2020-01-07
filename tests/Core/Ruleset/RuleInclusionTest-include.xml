@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="RuleInclusionTest-include" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
+	<rule ref="Generic.Metrics.NestingLevel">
+	    <properties>
+	        <property name="nestingLevel" value="2" />
+	    </properties>
+	</rule>
+
+</ruleset>
