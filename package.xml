@@ -44,6 +44,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Default remains FALSE, so newlines are not allowed within FOR definitions
     -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
   - Squiz.PHP.InnerFunctions now handles multiple nested anon classes correctly
+  - Fixed bug #2497 : Sniff properties not set when referencing a sniff using relative paths or non-native slashes
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2688 : Case statements not tokenized correctly when switch is contained within ternary
   - Fixed bug #2698 : PHPCS throws errors determining auto report width when shell_exec is disabled
     -- Thanks to Matthew Peveler for the patch
