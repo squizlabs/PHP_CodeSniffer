@@ -73,3 +73,14 @@ EOD
 ) {
     return;
 }
+
+    if (
+        isset($foo) === true
+        && $bar > $foo
+        /*
+         * A multi-line comment.
+         */
+        && $foo === true
+    ) {
+        break;
+    }
