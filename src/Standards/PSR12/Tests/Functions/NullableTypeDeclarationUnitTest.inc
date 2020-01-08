@@ -66,7 +66,19 @@ class TestTokenizingOfNullableVsInlineThen {
     }
 }
 
+// Issue #2641.
 $foo = new static(
     is_null($a) ? foo($a) : $a,
     is_null($b) ? $b : $c
 );
+
+// Issue #2791.
+class testInstanceOf() {
+    function testIt() {
+        $foo = $value instanceof static ? '(' . $value . ')' : $value;
+        $bar = $value instanceof static ? function_call($value) : $value;
+        $baz = $value instanceof static ? array($value) : $value;
+        $bal = $value instanceof static ? \className::$property : $value;
+        $bal = $value instanceof static ? CONSTANT_NAME : $value;
+    }
+}

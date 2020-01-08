@@ -62,3 +62,49 @@ if (
 ) {
     return $n;
 }
+
+// phpcs:set PSR12.ControlStructures.BooleanOperatorPlacement allowOnly first
+if (
+    $expr1
+    && $expr2
+    && ($expr3
+    || $expr4)
+    && $expr5
+) {
+    // if body
+} elseif (
+    $expr1 &&
+    ($expr3 || $expr4)
+    && $expr5
+) {
+    // elseif body
+} elseif (
+    $expr1
+    && ($expr3 || $expr4) &&
+    $expr5
+) {
+    // elseif body
+}
+
+// phpcs:set PSR12.ControlStructures.BooleanOperatorPlacement allowOnly last
+if (
+    $expr1
+    && $expr2
+    && ($expr3
+    || $expr4)
+    && $expr5
+) {
+    // if body
+} elseif (
+    $expr1 &&
+    ($expr3 || $expr4)
+    && $expr5
+) {
+    // elseif body
+} elseif (
+    $expr1
+    && ($expr3 || $expr4) &&
+    $expr5
+) {
+    // elseif body
+}

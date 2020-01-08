@@ -15,6 +15,15 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class BooleanOperatorPlacementSniff implements Sniff
 {
 
+    /**
+     * Used to restrict the placement of the boolean operator.
+     *
+     * Allowed value are "first" or "last".
+     *
+     * @var string|null
+     */
+    public $allowOnly = null;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -65,8 +74,13 @@ class BooleanOperatorPlacementSniff implements Sniff
             T_BOOLEAN_OR,
         ];
 
+        if ($this->allowOnly === 'first' || $this->allowOnly === 'last') {
+            $position = $this->allowOnly;
+        } else {
+            $position = null;
+        }
+
         $operator  = $parenOpener;
-        $position  = null;
         $error     = false;
         $operators = [];
 

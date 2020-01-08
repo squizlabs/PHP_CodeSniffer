@@ -27,16 +27,39 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - The PHP 7.4 numeric separator backfill now works correctly for more float formats
-  - The PHP 7.4 numeric separator backfill is no longer run on PHP versions 7.4.0 or greater
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - The PHP 7.4 numeric separator backfill is no longer run on PHP version 7.4.0 or greater
+  - File::getCondition() now accepts a 3rd argument that allows for the closest matching token to be returned
+    -- By default, it continues to return the first matched token found from the top of the file
   - Added Generic.PHP.DisallowRequestSuperglobal to ban the use of the $_REQUEST superglobal
     -- Thanks to Morerice for the contribution
+  - PSR12.ControlStructures.BooleanOperatorPlacement can now be configured to enforce a specific operator position
+    -- By default, the sniff ensures that operators are all at the begining or end of lines, but not a mix of both
+    -- Set the allowOnly property to "first" to enforce all boolean operators to be at the start of a line
+    -- Set the allowOnly property to "last" to enforce all boolean operators to be at the end of a line
+    -- Thanks to Vincent Langlet for the patch
+  - PSR12.Files.ImportStatement now auto-fixes import statements by removing the leading slash
+    -- Thanks to Michał Bundyra for the patch
+  - Squiz.ControlStructures.ForLoopDeclaration now has a setting to ignore newline characters
+    -- Default remains FALSE, so newlines are not allowed within FOR definitions
+    -- Override the "ignoreNewlines" setting in a ruleset.xml file to change
+  - Squiz.PHP.InnerFunctions now handles multiple nested anon classes correctly
+  - Fixed bug #2497 : Sniff properties not set when referencing a sniff using relative paths or non-native slashes
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2688 : Case statements not tokenized correctly when switch is contained within ternary
   - Fixed bug #2698 : PHPCS throws errors determining auto report width when shell_exec is disabled
     -- Thanks to Matthew Peveler for the patch
+  - Fixed bug #2748 : Wrong end of statement for fn closures
+    -- Thanks to Michał Bundyra for the patch
   - Fixed bug #2751 : Autoload relative paths first to avoid confusion with files from the global include path
     -- Thanks to Klaus Purer for the patch
+  - Fixed bug #2763 : PSR12 standard reports errors for multi-line FOR definitions
   - Fixed bug #2768 : Generic.Files.LineLength false positive for non-breakable strings at exactly the soft limit
     -- Thanks to Alex Miles for the patch
+  - Fixed bug #2773 : PSR2.Methods.FunctionCallSignature false positive when arrow function has array return type
+  - Fixed bug #2791 : PSR12.Functions.NullableTypeDeclaration false positive when ternary operator used with instanceof
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2802 : Can't specify a report file path using the tilde shortcut
  </notes>
  <contents>
   <dir name="/">
@@ -89,6 +112,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <file baseinstalldir="" name="AcceptTest.xml" role="test" />
        <file baseinstalldir="" name="AcceptTest.php" role="test" />
       </dir>
+     </dir>
+     <dir name="Ruleset">
+      <file baseinstalldir="" name="RuleInclusionTest.php" role="test" />
+      <file baseinstalldir="" name="RuleInclusionTest.xml" role="test" />
+      <file baseinstalldir="" name="RuleInclusionTest-include.xml" role="test" />
+      <file baseinstalldir="" name="RuleInclusionAbsoluteLinuxTest.php" role="test" />
+      <file baseinstalldir="" name="RuleInclusionAbsoluteLinuxTest.xml" role="test" />
+      <file baseinstalldir="" name="RuleInclusionAbsoluteWindowsTest.php" role="test" />
+      <file baseinstalldir="" name="RuleInclusionAbsoluteWindowsTest.xml" role="test" />
      </dir>
      <dir name="Tokenizer">
       <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.inc" role="test" />
@@ -1084,6 +1116,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.10.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OpenTagUnitTest.2.inc" role="test" />
@@ -1932,6 +1965,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.php" name="tests/Core/Filters/Filter/AcceptTest.php" />
    <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.xml" name="tests/Core/Filters/Filter/AcceptTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionTest.php" name="tests/Core/Ruleset/RuleInclusionTest.php" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionTest.xml" name="tests/Core/Ruleset/RuleInclusionTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionTest-include.xml" name="tests/Core/Ruleset/RuleInclusionTest-include.xml" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.php" name="tests/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.php" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
@@ -1975,6 +2015,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/IsReferenceTest.inc" name="tests/Core/File/IsReferenceTest.inc" />
    <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.php" name="tests/Core/Filters/Filter/AcceptTest.php" />
    <install as="CodeSniffer/Core/Filters/Filter/AcceptTest.xml" name="tests/Core/Filters/Filter/AcceptTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionTest.php" name="tests/Core/Ruleset/RuleInclusionTest.php" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionTest.xml" name="tests/Core/Ruleset/RuleInclusionTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionTest-include.xml" name="tests/Core/Ruleset/RuleInclusionTest-include.xml" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.php" name="tests/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.php" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" />
+   <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />

@@ -992,20 +992,24 @@ class PHP extends Tokenizer
 
                     if ($tokens[$i][0] === T_LNUMBER
                         || $tokens[$i][0] === T_DNUMBER
-                        || ($tokens[$i][0] === T_STRING
-                        && $tokens[$i][1][0] === '_')
+                    ) {
+                        $newContent .= $tokens[$i][1];
+                        continue;
+                    }
+
+                    if ($tokens[$i][0] === T_STRING
+                        && $tokens[$i][1][0] === '_'
+                        && ((strpos($newContent, '0x') === 0
+                        && preg_match('`^((?<!\.)_[0-9A-F][0-9A-F\.]*)+$`iD', $tokens[$i][1]) === 1)
+                        || (strpos($newContent, '0x') !== 0
+                        && substr($newContent, -1) !== '.'
+                        && substr(strtolower($newContent), -1) !== 'e'
+                        && preg_match('`^(?:(?<![\.e])_[0-9][0-9e\.]*)+$`iD', $tokens[$i][1]) === 1))
                     ) {
                         $newContent .= $tokens[$i][1];
 
-                        // Any T_DNUMBER token needs to make the
-                        // new number a T_DNUMBER as well.
-                        if ($tokens[$i][0] === T_DNUMBER) {
-                            $newType = T_DNUMBER;
-                        }
-
                         // Support floats.
-                        if ($tokens[$i][0] === T_STRING
-                            && substr(strtolower($tokens[$i][1]), -1) === 'e'
+                        if (substr(strtolower($tokens[$i][1]), -1) === 'e'
                             && ($tokens[($i + 1)] === '-'
                             || $tokens[($i + 1)] === '+')
                         ) {
@@ -1019,9 +1023,21 @@ class PHP extends Tokenizer
                     break;
                 }//end for
 
+                if ($newType === T_LNUMBER
+                    && ((stripos($newContent, '0x') === 0 && hexdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
+                    || (stripos($newContent, '0b') === 0 && bindec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
+                    || (stripos($newContent, '0x') !== 0
+                    && stripos($newContent, 'e') !== false || strpos($newContent, '.') !== false)
+                    || (strpos($newContent, '0') === 0 && stripos($newContent, '0x') !== 0
+                    && stripos($newContent, '0b') !== 0 && octdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
+                    || (strpos($newContent, '0') !== 0 && str_replace('_', '', $newContent) > PHP_INT_MAX))
+                ) {
+                    $newType = T_DNUMBER;
+                }
+
                 $newToken            = [];
                 $newToken['code']    = $newType;
-                $newToken['type']    = Util\Tokens::tokenName($token[0]);
+                $newToken['type']    = Util\Tokens::tokenName($newType);
                 $newToken['content'] = $newContent;
                 $finalTokens[$newStackPtr] = $newToken;
 
@@ -1037,6 +1053,65 @@ class PHP extends Tokenizer
             if ($tokenIsArray === false && $token[0] === '?') {
                 $newToken            = [];
                 $newToken['content'] = '?';
+
+                /*
+                 * Check if the next non-empty token is one of the tokens which can be used
+                 * in type declarations. If not, it's definitely a ternary.
+                 * At this point, the only token types which need to be taken into consideration
+                 * as potential type declarations are T_STRING, T_ARRAY, T_CALLABLE and T_NS_SEPARATOR.
+                 */
+
+                $lastRelevantNonEmpty = null;
+
+                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                    if (is_array($tokens[$i]) === true) {
+                        $tokenType = $tokens[$i][0];
+                    } else {
+                        $tokenType = $tokens[$i];
+                    }
+
+                    if (isset(Util\Tokens::$emptyTokens[$tokenType]) === true) {
+                        continue;
+                    }
+
+                    if ($tokenType === T_STRING
+                        || $tokenType === T_ARRAY
+                        || $tokenType === T_NS_SEPARATOR
+                    ) {
+                        $lastRelevantNonEmpty = $tokenType;
+                        continue;
+                    }
+
+                    if (($tokenType !== T_CALLABLE
+                        && isset($lastRelevantNonEmpty) === false)
+                        || ($lastRelevantNonEmpty === T_ARRAY
+                        && $tokenType === '(')
+                        || ($lastRelevantNonEmpty === T_STRING
+                        && ($tokenType === T_DOUBLE_COLON
+                        || $tokenType === '('
+                        || $tokenType === ':'))
+                    ) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo "\t\t* token $stackPtr changed from ? to T_INLINE_THEN".PHP_EOL;
+                        }
+
+                        $newToken['code'] = T_INLINE_THEN;
+                        $newToken['type'] = 'T_INLINE_THEN';
+
+                        $insideInlineIf[] = $stackPtr;
+
+                        $finalTokens[$newStackPtr] = $newToken;
+                        $newStackPtr++;
+                        continue 2;
+                    }
+
+                    break;
+                }//end for
+
+                /*
+                 * This can still be a nullable type or a ternary.
+                 * Do additional checking.
+                 */
 
                 $prevNonEmpty     = null;
                 $lastSeenNonEmpty = null;
@@ -1741,6 +1816,7 @@ class PHP extends Tokenizer
                     $ignore  = Util\Tokens::$emptyTokens;
                     $ignore += [
                         T_STRING       => T_STRING,
+                        T_ARRAY        => T_ARRAY,
                         T_COLON        => T_COLON,
                         T_NS_SEPARATOR => T_NS_SEPARATOR,
                         T_NULLABLE     => T_NULLABLE,

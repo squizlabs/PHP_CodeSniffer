@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="RuleInclusionAbsoluteLinuxTest" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
+	<!-- %path_slash_forward% will be replaced on the fly -->
+	<rule ref="%path_slash_forward%/src/Standards/Generic/Sniffs/Formatting/SpaceAfterNotSniff.php">
+	    <properties>
+	        <property name="spacing" value="10" />
+	    </properties>
+	</rule>
+
+</ruleset>

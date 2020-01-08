@@ -117,7 +117,7 @@ class ForLoopDeclarationUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'ForLoopDeclarationUnitTest.inc':
-            return [119 => 1];
+            return [129 => 1];
 
         case 'ForLoopDeclarationUnitTest.js':
             return [125 => 1];

@@ -2115,7 +2115,7 @@ class File
      *                                  will not be checked. IE. checking will stop
      *                                  at the previous semi-colon found.
      *
-     * @return int|bool
+     * @return int|false
      * @see    findNext()
      */
     public function findPrevious(
@@ -2196,7 +2196,7 @@ class File
      *                                  will not be checked. i.e., checking will stop
      *                                  at the next semi-colon found.
      *
-     * @return int|bool
+     * @return int|false
      * @see    findPrevious()
      */
     public function findNext(
@@ -2356,10 +2356,12 @@ class File
                 && ($i === $this->tokens[$i]['scope_opener']
                 || $i === $this->tokens[$i]['scope_condition'])
             ) {
-                if ($i === $start
-                    && (isset(Util\Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true
-                    || $this->tokens[$i]['code'] === T_FN)
-                ) {
+                if ($this->tokens[$i]['code'] === T_FN) {
+                    $i = ($this->tokens[$i]['scope_closer'] - 1);
+                    continue;
+                }
+
+                if ($i === $start && isset(Util\Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true) {
                     return $this->tokens[$i]['scope_closer'];
                 }
 
@@ -2404,7 +2406,7 @@ class File
      *                                  If value is omitted, tokens with any value will
      *                                  be returned.
      *
-     * @return int|bool
+     * @return int|false
      */
     public function findFirstOnLine($types, $start, $exclude=false, $value=null)
     {
@@ -2490,10 +2492,14 @@ class File
      *
      * @param int        $stackPtr The position of the token we are checking.
      * @param int|string $type     The type of token to search for.
+     * @param bool       $first    If TRUE, will return the matched condition
+     *                             furtherest away from the passed token.
+     *                             If FALSE, will return the matched condition
+     *                             closest to the passed token.
      *
-     * @return int
+     * @return int|false
      */
-    public function getCondition($stackPtr, $type)
+    public function getCondition($stackPtr, $type, $first=true)
     {
         // Check for the existence of the token.
         if (isset($this->tokens[$stackPtr]) === false) {
@@ -2506,6 +2512,10 @@ class File
         }
 
         $conditions = $this->tokens[$stackPtr]['conditions'];
+        if ($first === false) {
+            $conditions = array_reverse($conditions, true);
+        }
+
         foreach ($conditions as $token => $condition) {
             if ($condition === $type) {
                 return $token;

@@ -863,11 +863,17 @@ class Ruleset
         $ref  = (string) $rule['ref'];
         $todo = [$ref];
 
-        $parts = explode('.', $ref);
-        if (count($parts) <= 2) {
-            // We are processing a standard or a category of sniffs.
+        $parts      = explode('.', $ref);
+        $partsCount = count($parts);
+        if ($partsCount <= 2 || $partsCount > count(array_filter($parts))) {
+            // We are processing a standard, a category of sniffs or a relative path inclusion.
             foreach ($newSniffs as $sniffFile) {
-                $parts         = explode(DIRECTORY_SEPARATOR, $sniffFile);
+                $parts = explode(DIRECTORY_SEPARATOR, $sniffFile);
+                if (count($parts) === 1 && DIRECTORY_SEPARATOR === '\\') {
+                    // Path using forward slashes while running on Windows.
+                    $parts = explode('/', $sniffFile);
+                }
+
                 $sniffName     = array_pop($parts);
                 $sniffCategory = array_pop($parts);
                 array_pop($parts);
