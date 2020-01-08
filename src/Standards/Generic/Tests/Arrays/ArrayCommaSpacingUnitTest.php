@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the ArrayComma sniff.
+ * Unit test class for the ArrayCommaSpacing sniff.
  *
  * @author    Vincent Langlet  <vincentlanglet@example.com>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Tests\Arrays;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class ArrayCommaUnitTest extends AbstractSniffUnitTest
+class ArrayCommaSpacingUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -26,23 +26,9 @@ class ArrayCommaUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            2  => 5,
+            2  => 4,
             4  => 1,
-            6  => 1,
-            12 => 1,
-            17 => 4,
-            21 => 1,
-            24 => 1,
-            30 => 1,
-            34 => 5,
-            36 => 1,
-            38 => 1,
-            44 => 1,
-            49 => 4,
-            53 => 1,
-            61 => 1,
-            62 => 1,
-            85 => 1,
+            29 => 1,
         ];
 
     }//end getErrorList()

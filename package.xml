@@ -325,7 +325,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Sniffs">
        <dir name="Arrays">
-        <file baseinstalldir="PHP/CodeSniffer" name="ArrayCommaSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayCommaSpacingSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortArraySyntaxSniff.php" role="php" />
@@ -436,9 +436,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
       <dir name="Tests">
        <dir name="Arrays">
-        <file baseinstalldir="PHP/CodeSniffer" name="ArrayCommaUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="ArrayCommaUnitTest.inc.fixed" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="ArrayCommaUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayCommaSpacingUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayCommaSpacingUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayCommaSpacingUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentUnitTest.php" role="test" />

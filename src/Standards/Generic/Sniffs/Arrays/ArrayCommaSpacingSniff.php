@@ -1,6 +1,6 @@
 <?php
 /**
- * Ensures that arrays have comma after last value only for multi-line array.
+ * Ensure there is no space after and one after comma in array definition.
  *
  * @author    Vincent Langlet <vincentlanglet@example.com>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
@@ -12,15 +12,8 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays;
 use PHP_CodeSniffer\Sniffs\AbstractArraySniff;
 use PHP_CodeSniffer\Util\Tokens;
 
-class ArrayCommaSniff extends AbstractArraySniff
+class ArrayCommaSpacingSniff extends AbstractArraySniff
 {
-
-    /**
-     * Does a multi-line array should have a trailing comma ?
-     *
-     * @var boolean
-     */
-    public $trailingComma = true;
 
     /**
      * If the php version is < 7.3, we have to ignore hereDoc and nowDoc to avoid syntax errors.
@@ -45,17 +38,6 @@ class ArrayCommaSniff extends AbstractArraySniff
      */
     public function processSingleLineArray($phpcsFile, $stackPtr, $arrayStart, $arrayEnd, $indices)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        $lastContent = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($arrayEnd - 1), null, true);
-        if ($tokens[$lastContent]['code'] === T_COMMA) {
-            $error = 'Comma not allowed after last value in single-line array declaration';
-            $fix   = $phpcsFile->addFixableError($error, $lastContent, 'CommaAfterLast');
-            if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($lastContent, '');
-            }
-        }
-
         $this->processCommaCheck($phpcsFile, $stackPtr, $indices);
 
     }//end processSingleLineArray()
@@ -76,25 +58,6 @@ class ArrayCommaSniff extends AbstractArraySniff
      */
     public function processMultiLineArray($phpcsFile, $stackPtr, $arrayStart, $arrayEnd, $indices)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        $lastContent = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($arrayEnd - 1), null, true);
-        if ($tokens[$lastContent]['code'] !== T_COMMA && $this->trailingComma === true) {
-            $error = 'Comma required after last value in array declaration';
-            $fix   = $phpcsFile->addFixableError($error, $lastContent, 'NoCommaAfterLast');
-
-            if ($fix === true) {
-                $phpcsFile->fixer->addContent($lastContent, ',');
-            }
-        } else if ($tokens[$lastContent]['code'] === T_COMMA && $this->trailingComma === false) {
-            $error = 'Comma not allowed after last value in array declaration';
-            $fix   = $phpcsFile->addFixableError($error, $lastContent, 'CommaAfterLast');
-
-            if ($fix === true) {
-                $phpcsFile->fixer->replaceToken($lastContent, '');
-            }
-        }
-
         $this->processCommaCheck($phpcsFile, $stackPtr, $indices);
 
     }//end processMultiLineArray()
@@ -150,7 +113,7 @@ class ArrayCommaSniff extends AbstractArraySniff
 
             if ($tokens[($comma - 1)]['code'] === T_WHITESPACE) {
                 if ($this->ignoreHereDocAndNowDoc === true) {
-                    $previous = $phpcsFile->findPrevious(T_WHITESPACE, $comma - 1, $stackPtr, true);
+                    $previous     = $phpcsFile->findPrevious(T_WHITESPACE, ($comma - 1), $stackPtr, true);
                     $previousCode = $tokens[$previous]['code'];
 
                     if ($previousCode === T_END_HEREDOC || $previousCode === T_END_NOWDOC) {
