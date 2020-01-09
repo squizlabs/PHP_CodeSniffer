@@ -1152,6 +1152,7 @@ class PHP extends Tokenizer
                     if ($tokenType === T_FUNCTION
                         || $tokenType === T_FN
                         || isset(Util\Tokens::$methodPrefixes[$tokenType]) === true
+                        || $tokenType === T_VAR
                     ) {
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             echo "\t\t* token $stackPtr changed from ? to T_NULLABLE".PHP_EOL;

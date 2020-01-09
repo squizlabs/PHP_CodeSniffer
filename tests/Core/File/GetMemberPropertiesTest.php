@@ -61,8 +61,8 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'scope'           => 'public',
                     'scope_specified' => false,
                     'is_static'       => false,
-                    'type'            => 'int',
-                    'nullable_type'   => false,
+                    'type'            => '?int',
+                    'nullable_type'   => true,
                 ],
             ],
             [
@@ -141,8 +141,8 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'scope'           => 'public',
                     'scope_specified' => false,
                     'is_static'       => true,
-                    'type'            => 'string',
-                    'nullable_type'   => false,
+                    'type'            => '?string',
+                    'nullable_type'   => true,
                 ],
             ],
             [

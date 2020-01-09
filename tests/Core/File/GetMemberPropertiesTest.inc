@@ -6,7 +6,7 @@ class TestMemberProperties
     var $varA = true;
 
     /* testVarType */
-    var int $varA = true;
+    var ?int $varA = true;
 
     /* testPublic */
     public $varB = true;
@@ -30,7 +30,7 @@ class TestMemberProperties
     static $varE = true;
 
     /* testStaticType */
-    static string $varE = true;
+    static ?string $varE = true;
 
     /* testStaticVar */
     static var $varF = true;
