@@ -1,9 +1,9 @@
 <?php
 /**
- * Ensures that constant names are all uppercase.
+ * Discourages the use of not strict operators.
  *
  * @author    Vincent Langlet <vincentlanglet@exemple.com>
- * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2020 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
@@ -33,10 +33,7 @@ class StrictComparisonSniff implements Sniff
      */
     public function register()
     {
-        return [
-            T_IS_EQUAL,
-            T_IS_NOT_EQUAL,
-        ];
+        return array_keys($this->operators);
 
     }//end register()
 
@@ -55,7 +52,7 @@ class StrictComparisonSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         $phpcsFile->addError(
-            'The %s comparator is forbidden, use %s instead',
+            'Using the %s operator is forbidden, use %s instead',
             $stackPtr,
             'NotStrict',
             [
