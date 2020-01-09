@@ -1801,9 +1801,9 @@ class PHP extends Tokenizer
                 }//end if
 
                 continue;
-            } else if ($this->tokens[$i]['code'] === T_FN) {
+            } else if ($this->tokens[$i]['code'] === T_FN && isset($this->tokens[($i + 1)]) === true) {
                 // Possible arrow function.
-                for ($x = ($i + 1); $i < $numTokens; $x++) {
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
                     if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false
                         && $this->tokens[$x]['code'] !== T_BITWISE_AND
                     ) {
@@ -1812,7 +1812,7 @@ class PHP extends Tokenizer
                     }
                 }
 
-                if ($this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
+                if (isset($this->tokens[$x]) === true && $this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
                     $ignore  = Util\Tokens::$emptyTokens;
                     $ignore += [
                         T_STRING       => T_STRING,

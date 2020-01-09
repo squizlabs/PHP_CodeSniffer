@@ -69,3 +69,7 @@ fn(callable $a) : callable => $a;
 
 /* testTernary */
 $fn = fn($a) => $a ? /* testTernaryThen */ fn() : string => 'a' : /* testTernaryElse */ fn() : string => 'b';
+
+/* testLiveCoding */
+// Intentional parse error. This has to be the last test in the file.
+$fn = fn

@@ -552,7 +552,31 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
-     * Test that anonymous class tokens without parenthesis do not get assigned a parenthesis owner.
+     * Test that the backfill presumes T_FN during live coding, but doesn't set the additional index keys.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testLiveCoding()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testLiveCoding */', [T_STRING, T_FN]);
+        $this->assertSame($tokens[$token]['code'], T_FN, 'Token not tokenized as T_FN');
+
+        $this->assertArrayNotHasKey('scope_condition', $tokens[$token], 'Scope condition is set');
+        $this->assertArrayNotHasKey('scope_opener', $tokens[$token], 'Scope opener is set');
+        $this->assertArrayNotHasKey('scope_closer', $tokens[$token], 'Scope closer is set');
+        $this->assertArrayNotHasKey('parenthesis_owner', $tokens[$token], 'Parenthesis owner is set');
+        $this->assertArrayNotHasKey('parenthesis_opener', $tokens[$token], 'Parenthesis opener is set');
+        $this->assertArrayNotHasKey('parenthesis_closer', $tokens[$token], 'Parenthesis closer is set');
+
+    }//end testLiveCoding()
+
+
+    /**
+     * Helper function to check that all token keys are correctly set for T_FN tokens.
      *
      * @param string $token The T_FN token to check.
      *
