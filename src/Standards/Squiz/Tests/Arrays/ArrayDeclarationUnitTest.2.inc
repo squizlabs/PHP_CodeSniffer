@@ -179,7 +179,7 @@ $listItems[$aliasPath] = [
                           'itemContent' => implode('<br/>', $aliases)
                          ];
 
-$x = 
+$x =
      [
       $x,
       $y,

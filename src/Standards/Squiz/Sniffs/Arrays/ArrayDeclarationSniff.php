@@ -243,7 +243,13 @@ class ArrayDeclarationSniff implements Sniff
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     $phpcsFile->fixer->addNewline($arrayStart);
-                    $phpcsFile->fixer->addNewlineBefore($arrayEnd);
+
+                    if ($tokens[($arrayEnd - 1)]['code'] === T_WHITESPACE) {
+                        $phpcsFile->fixer->replaceToken(($arrayEnd - 1), $phpcsFile->eolChar);
+                    } else {
+                        $phpcsFile->fixer->addNewlineBefore($arrayEnd);
+                    }
+
                     $phpcsFile->fixer->endChangeset();
                 }
 
@@ -394,9 +400,7 @@ class ArrayDeclarationSniff implements Sniff
                 continue;
             }//end if
 
-            if ($tokens[$nextToken]['code'] !== T_DOUBLE_ARROW
-                && $tokens[$nextToken]['code'] !== T_COMMA
-            ) {
+            if ($tokens[$nextToken]['code'] !== T_DOUBLE_ARROW && $tokens[$nextToken]['code'] !== T_COMMA) {
                 continue;
             }
 
