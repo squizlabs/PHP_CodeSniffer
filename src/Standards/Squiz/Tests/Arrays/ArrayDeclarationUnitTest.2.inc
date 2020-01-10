@@ -383,6 +383,18 @@ HERE
       ,
        ];
 
+[
+ lorem(
+     1
+ ), 2,
+];
+
+[
+ 1 => lorem(
+     1
+ ), 2 => 2,
+];
+
 $foo = [
         'тип'  => 'авто',
         'цвет' => 'синий',
@@ -417,6 +429,12 @@ $foo = [
         $this->fn => 'value',
         $foo->fn => 'value',
        ];
+
+[$a, $b,
+$c];
+
+['a' => $a, 'b' => $b,
+'c' => $c];
 
 // Intentional syntax error.
 $a = [
