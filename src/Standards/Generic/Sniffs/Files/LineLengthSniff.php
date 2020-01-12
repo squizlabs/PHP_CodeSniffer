@@ -92,7 +92,7 @@ class LineLengthSniff implements Sniff
      * @param array                       $tokens    The token stack.
      * @param int                         $stackPtr  The first token on the next line.
      *
-     * @return null|false
+     * @return void
      */
     protected function checkLineLength($phpcsFile, $tokens, $stackPtr)
     {
