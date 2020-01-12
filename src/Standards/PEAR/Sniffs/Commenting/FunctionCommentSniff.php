@@ -16,6 +16,14 @@ use PHP_CodeSniffer\Util\Tokens;
 class FunctionCommentSniff implements Sniff
 {
 
+    /**
+     * Disable the check for functions with a lower visibility than the value given.
+     * Allowed values are public, protected and private.
+     *
+     * @var string
+     */
+    public $minimumVisibility = 'private';
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -41,16 +49,29 @@ class FunctionCommentSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        $find   = Tokens::$methodPrefixes;
-        $find[] = T_WHITESPACE;
 
-        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
+        $ignore   = Tokens::$emptyTokens;
+        $ignore[] = T_STATIC;
+
+        $scopeModifier = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
+        if ($tokens[$scopeModifier]['code'] === T_PROTECTED
+            && $this->minimumVisibility === 'public'
+            || $tokens[$scopeModifier]['code'] === T_PRIVATE
+            && ($this->minimumVisibility === 'public' || $this->minimumVisibility === 'protected')
+        ) {
+            return;
+        }
+
+        $ignore   = Tokens::$methodPrefixes;
+        $ignore[] = T_WHITESPACE;
+
+        $commentEnd = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
         if ($tokens[$commentEnd]['code'] === T_COMMENT) {
             // Inline comments might just be closing comments for
             // control structures or functions instead of function comments
             // using the wrong comment type. If there is other code on the line,
             // assume they relate to that code.
-            $prev = $phpcsFile->findPrevious($find, ($commentEnd - 1), null, true);
+            $prev = $phpcsFile->findPrevious($ignore, ($commentEnd - 1), null, true);
             if ($prev !== false && $tokens[$prev]['line'] === $tokens[$commentEnd]['line']) {
                 $commentEnd = $prev;
             }
