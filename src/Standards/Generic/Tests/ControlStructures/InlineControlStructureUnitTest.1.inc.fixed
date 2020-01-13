@@ -46,10 +46,9 @@ foreach ($array as $element) :
     echo 'hello';
 endforeach;
 
-while (!$this->readLine($tokens, $tag)) {}
-while (!$this->readLine($tokens, $tag)) { 
-//skip to end of file
-}
+while (!$this->readLine($tokens, $tag));
+while (!$this->readLine($tokens, $tag)); //skip to end of file
+
 foreach ($cookies as $cookie) {
     if ($cookie->match($uri, $matchSessionCookies, $now)) {
         $ret[] = $cookie;
@@ -254,14 +253,12 @@ if ($this) {
     }
 }
 
-while (!$this->readLine($tokens, $tag)) {} //phpcs:ignore Standard.Category.Sniff
+while (!$this->readLine($tokens, $tag)); //phpcs:ignore Standard.Category.Sniff
 
-while (!$this->readLine($tokens, $tag)) { 
-// comment
-}
-while (!$this->readLine($tokens, $tag)) { /* comment */
+while (!$this->readLine($tokens, $tag)); // comment
 
-}
+while (!$this->readLine($tokens, $tag)); /* comment */
+
 foreach ($stringParade as $hit) {
     $hitParade[] = $hit + 0; // phpcs:ignore Standard.Category.Sniff
 }
@@ -280,3 +277,9 @@ echo 'bar';
 {
     echo 'baz';
 }
+
+// Issue 2822.
+$i = 10;
+while ($i > 0 && --$i);
+
+for ($i = 1, $j = 0; $i <= 10; $j += $i, print $i, $i++);

@@ -81,16 +81,18 @@ class InlineControlStructureSniff implements Sniff
             }
         }
 
-        if ($tokens[$stackPtr]['code'] === T_WHILE) {
-            // This could be from a DO WHILE, which doesn't have an opening brace.
-            $lastContent = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-            if ($tokens[$lastContent]['code'] === T_CLOSE_CURLY_BRACKET) {
-                $brace = $tokens[$lastContent];
-                if (isset($brace['scope_condition']) === true) {
-                    $condition = $tokens[$brace['scope_condition']];
-                    if ($condition['code'] === T_DO) {
-                        return;
-                    }
+        if ($tokens[$stackPtr]['code'] === T_WHILE || $tokens[$stackPtr]['code'] === T_FOR) {
+            // This could be from a DO WHILE, which doesn't have an opening brace or a while/for without body.
+            if (isset($tokens[$stackPtr]['parenthesis_closer']) === true) {
+                $afterParensCloser = $phpcsFile->findNext(Tokens::$emptyTokens, ($tokens[$stackPtr]['parenthesis_closer'] + 1), null, true);
+                if ($afterParensCloser === false) {
+                    // Live coding.
+                    return;
+                }
+
+                if ($tokens[$afterParensCloser]['code'] === T_SEMICOLON) {
+                    $phpcsFile->recordMetric($stackPtr, 'Control structure defined inline', 'no');
+                    return;
                 }
             }
 
@@ -98,7 +100,7 @@ class InlineControlStructureSniff implements Sniff
             // is only valid if a single statement is present between the DO and
             // the WHILE. We can detect this by checking only a single semicolon
             // is present between them.
-            if ($phpcsFile->tokenizerType === 'JS') {
+            if ($tokens[$stackPtr]['code'] === T_WHILE && $phpcsFile->tokenizerType === 'JS') {
                 $lastDo        = $phpcsFile->findPrevious(T_DO, ($stackPtr - 1));
                 $lastSemicolon = $phpcsFile->findPrevious(T_SEMICOLON, ($stackPtr - 1));
                 if ($lastDo !== false && $lastSemicolon !== false && $lastDo < $lastSemicolon) {
