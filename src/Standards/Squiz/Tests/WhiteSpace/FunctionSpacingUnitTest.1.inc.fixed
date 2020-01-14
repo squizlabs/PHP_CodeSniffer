@@ -577,6 +577,53 @@ interface OneBlankLineBeforeFirstFunctionClassInterface
     public function interfaceMethod();
 }
 
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 1
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 0
+// phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 0
+
+class MyClass {
+
+    // phpcs:disable Stnd.Cat.Sniff -- For reasons.
+
+    /**
+     * Description.
+     */
+    function a(){}
+
+    /**
+     * Description.
+     */
+    function b(){}
+
+    /**
+     * Description.
+     */
+    function c(){}
+
+    // phpcs:enable
+}
+
+class MyClass {
+    // Some unrelated comment
+
+    /**
+     * Description.
+     */
+    function a(){}
+
+    /**
+     * Description.
+     */
+    function b(){}
+
+    /**
+     * Description.
+     */
+    function c(){}
+
+    // function d() {}
+}
+
 // phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 2
 // phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 2
 // phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 2
