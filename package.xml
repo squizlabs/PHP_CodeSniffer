@@ -126,6 +126,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="RuleInclusionAbsoluteWindowsTest.php" role="test" />
       <file baseinstalldir="" name="RuleInclusionAbsoluteWindowsTest.xml" role="test" />
      </dir>
+     <dir name="Sniffs">
+      <file baseinstalldir="" name="AbstractArraySniffTest.inc" role="test" />
+      <file baseinstalldir="" name="AbstractArraySniffTest.php" role="test" />
+      <file baseinstalldir="" name="AbstractArraySniffTestable.php" role="test" />
+     </dir>
      <dir name="Tokenizer">
       <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.inc" role="test" />
       <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.php" role="test" />
@@ -1976,6 +1981,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" />
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" />
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" />
+   <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTest.inc" name="tests/Core/Sniffs/AbstractArraySniffTest.inc" />
+   <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTest.php" name="tests/Core/Sniffs/AbstractArraySniffTest.php" />
+   <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTestable.php" name="tests/Core/Sniffs/AbstractArraySniffTestable.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
@@ -2026,6 +2034,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" />
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" />
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" />
+   <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTest.inc" name="tests/Core/Sniffs/AbstractArraySniffTest.inc" />
+   <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTest.php" name="tests/Core/Sniffs/AbstractArraySniffTest.php" />
+   <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTestable.php" name="tests/Core/Sniffs/AbstractArraySniffTestable.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
