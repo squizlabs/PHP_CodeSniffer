@@ -198,7 +198,7 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
      */
     public function testTernaryValues()
     {
-        $token = $this->getTargetToken('/* testTernaryValues */', T_ARRAY);
+        $token = $this->getTargetToken('/* testTernaryValues */', T_OPEN_SHORT_ARRAY);
         self::$sniff->process(self::$phpcsFile, $token);
 
         $expected = [

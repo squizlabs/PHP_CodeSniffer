@@ -51,6 +51,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Matthew Peveler for the patch
   - Fixed bug #2730 : PSR12.ControlStructures.ControlStructureSpacing does not ignore comments between conditions
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2745 : AbstractArraySniff wrong indices when mixed coalesce and ternary values
+    -- Thanks to Michał Bundyra for the patch
   - Fixed bug #2748 : Wrong end of statement for fn closures
     -- Thanks to Michał Bundyra for the patch
   - Fixed bug #2751 : Autoload relative paths first to avoid confusion with files from the global include path
