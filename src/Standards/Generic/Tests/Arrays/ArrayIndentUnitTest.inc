@@ -59,6 +59,8 @@ $array = [
         ['two'],
     'fn' =>
         fn ($x) => yield 'k' => $x,
+  $a ?? $b,
+  $c ? $d : $e,
 ];
 
 // phpcs:set Generic.Arrays.ArrayIndent indent 2
