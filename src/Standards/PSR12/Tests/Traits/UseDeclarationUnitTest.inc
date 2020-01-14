@@ -170,3 +170,40 @@ class MyExample
     use Trait3;
 
 }
+
+class Foo implements Bar
+{
+    /*
+     * Comment here;
+     */
+    use Baz;
+}
+
+class Foo implements Bar
+{
+    // Comment here;
+    use Baz;
+}
+
+class Foo implements Bar
+{
+    /**
+     * Comment here;
+     */
+    /**
+     * Another Comment here;
+     */
+    use Baz;
+}
+
+class Foo implements Bar
+{
+    /**
+     * Comment here;
+     */
+    public $foo;
+    /**
+     * Comment here;
+     */
+    use Baz;
+}
