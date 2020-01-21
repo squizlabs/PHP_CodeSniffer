@@ -31,6 +31,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - The PHP 7.4 numeric separator backfill is no longer run on PHP version 7.4.0 or greater
   - File::getCondition() now accepts a 3rd argument that allows for the closest matching token to be returned
     -- By default, it continues to return the first matched token found from the top of the file
+  - Fixed detection of array return types for arrow functions
   - Added Generic.PHP.DisallowRequestSuperglobal to ban the use of the $_REQUEST superglobal
     -- Thanks to Morerice for the contribution
   - PSR12.ControlStructures.BooleanOperatorPlacement can now be configured to enforce a specific operator position

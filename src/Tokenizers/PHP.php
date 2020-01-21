@@ -1216,7 +1216,8 @@ class PHP extends Tokenizer
             */
 
             if ($tokenIsArray === true
-                && $token[0] === T_FUNCTION
+                && ($token[0] === T_FUNCTION
+                || $token[0] === T_FN)
                 && $finalTokens[$lastNotEmptyToken]['code'] !== T_USE
             ) {
                 for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
