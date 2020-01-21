@@ -474,6 +474,7 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
             'Self',
             'Parent',
             'Callable',
+            'Array',
         ];
 
         foreach ($testMarkers as $marker) {

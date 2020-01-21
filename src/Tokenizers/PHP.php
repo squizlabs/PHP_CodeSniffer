@@ -1209,6 +1209,21 @@ class PHP extends Tokenizer
             }
 
             /*
+                Backfill the T_FN token for PHP versions < 7.4.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STRING
+                && strtolower($token[1]) === 'fn'
+            ) {
+                // Modify the original token stack so that
+                // future checks (like looking for T_NULLABLE) can
+                // detect the T_FN token more easily.
+                $tokens[$stackPtr][0] = T_FN;
+                $token[0] = T_FN;
+            }
+
+            /*
                 The string-like token after a function keyword should always be
                 tokenized as T_STRING even if it appears to be a different token,
                 such as when writing code like: function default(): foo
@@ -1354,33 +1369,6 @@ class PHP extends Tokenizer
 
                 $newStackPtr++;
                 $stackPtr++;
-                continue;
-            }
-
-            /*
-                Backfill the T_FN token for PHP versions < 7.4.
-            */
-
-            if ($tokenIsArray === true
-                && $token[0] === T_STRING
-                && strtolower($token[1]) === 'fn'
-            ) {
-                // Modify the original token stack so that
-                // future checks (like looking for T_NULLABLE) can
-                // detect the T_FN token more easily.
-                $tokens[$stackPtr][0] = T_FN;
-
-                $finalTokens[$newStackPtr] = [
-                    'content' => $token[1],
-                    'code'    => T_FN,
-                    'type'    => 'T_FN',
-                ];
-
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo "\t\t* token $stackPtr changed from T_STRING to T_FN".PHP_EOL;
-                }
-
-                $newStackPtr++;
                 continue;
             }
 
