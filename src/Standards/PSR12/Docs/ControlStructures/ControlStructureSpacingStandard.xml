@@ -1,0 +1,42 @@
+<documentation title="Control Structures Spacing">
+    <standard>
+        <![CDATA[
+    There MUST be one space after the control structure keyword
+    There MUST NOT be a space after the opening parenthesis
+    There MUST NOT be a space before the closing parenthesis
+    There MUST be one space between the closing parenthesis and the opening brace
+    The closing brace MUST be on the next line after the body
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: correct indention.">
+            <![CDATA[
+if (
+<em>    </em>$expr1
+<em>    </em>&& $expr2
+<em>    </em>&& $expr3
+) {
+    // if body
+} elseif (
+<em>    </em>$expr4
+<em>    </em>&& $expr5
+) {
+    // elseif body
+}
+        ]]>
+        </code>
+        <code title="Invalid: inconsistent indention.">
+            <![CDATA[
+if (<em></em>$expr1 &&
+<em></em>$expr2) {
+    // if body
+} elseif (
+<em></em>$expr4
+<em></em>&& $expr5
+<em>    </em>) {// closing parenthesis not on the same level as start of the control structure
+    // elseif body
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

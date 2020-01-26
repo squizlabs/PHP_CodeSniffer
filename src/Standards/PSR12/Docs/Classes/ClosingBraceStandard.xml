@@ -1,0 +1,23 @@
+<documentation title="Closing Brace">
+    <standard>
+    <![CDATA[
+    Any closing brace MUST NOT be followed by any comment or statement on the same line.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Not followed by any comment or statement on the same line.">
+        <![CDATA[
+function foo() {
+    // code
+}
+        ]]>
+        </code>
+        <code title="Invalid: Comment or statement on same line.">
+        <![CDATA[
+function foo() {
+
+}<em> // invalid</em>
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

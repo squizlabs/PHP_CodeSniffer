@@ -1,0 +1,43 @@
+<documentation title="Return Type Declarations Functions">
+    <standard>
+        <![CDATA[
+    When you have a return type declaration present, there MUST be one space after the colon followed by the type declaration.
+    The colon and declaration MUST be on the same line as the argument list closing parenthesis with no spaces between the two characters.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: One whitespace used.">
+            <![CDATA[
+public function functionName(int $arg1, $arg2): string
+{
+    return 'foo';
+}
+
+public function anotherFunction(
+    string $foo,
+    string $bar,
+    int $baz
+): string {
+    return 'foo';
+}
+        ]]>
+        </code>
+        <code title="Invalid: superfluous whitespace used.">
+        <![CDATA[
+public function functionName(int $arg1, $arg2)<em> </em>: string
+{
+    return 'foo';
+}
+
+public function anotherFunction(
+    string $foo,
+    string $bar,
+    int $baz
+)<em>
+</em>: string {
+    return 'foo';
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
