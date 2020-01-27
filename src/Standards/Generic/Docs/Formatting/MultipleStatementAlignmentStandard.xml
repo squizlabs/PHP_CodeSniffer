@@ -9,14 +9,14 @@
         <![CDATA[
 $shortVar        <em>=</em> (1 + 2);
 $veryLongVarName <em>=</em> 'string';
-$var             <em>=</em> foo($bar, $baz, $quux);
+$var             <em>=</em> foo($bar, $baz);
         ]]>
         </code>
         <code title="Not aligned; harder to read">
         <![CDATA[
 $shortVar <em>=</em> (1 + 2);
 $veryLongVarName <em>=</em> 'string';
-$var <em>=</em> foo($bar, $baz, $quux);
+$var <em>=</em> foo($bar, $baz);
         ]]>
         </code>
     </code_comparison>

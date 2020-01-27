@@ -96,7 +96,7 @@ class FunctionDeclarationArgumentSpacingSniff implements Sniff
      * Processes the contents of a single set of brackets.
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile   The file being scanned.
-     * @param int                         $openBracket The position of the open bracker
+     * @param int                         $openBracket The position of the open bracket
      *                                                 in the stack.
      *
      * @return void

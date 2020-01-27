@@ -1469,12 +1469,12 @@ abstract class Tokenizer
                 echo str_repeat("\t", ($level + 1));
                 echo "Process token $i on line $line [col:$col;len:$len;lvl:$level;";
                 if (empty($conditions) !== true) {
-                    $condString = 'conds;';
+                    $conditionString = 'conds;';
                     foreach ($conditions as $condition) {
-                        $condString .= Util\Tokens::tokenName($condition).',';
+                        $conditionString .= Util\Tokens::tokenName($condition).',';
                     }
 
-                    echo rtrim($condString, ',').';';
+                    echo rtrim($conditionString, ',').';';
                 }
 
                 echo "]: $type => $content".PHP_EOL;
