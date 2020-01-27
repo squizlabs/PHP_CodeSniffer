@@ -118,7 +118,7 @@ class ObjectOperatorIndentSniff implements Sniff
             }
 
             if ($origBrackets === $brackets && $origConditions === $conditions) {
-                // Make sure it starts a line, otherwise dont check indent.
+                // Make sure it starts a line, otherwise don't check indent.
                 $prev   = $phpcsFile->findPrevious(T_WHITESPACE, ($next - 1), $stackPtr, true);
                 $indent = $tokens[($next - 1)];
                 if ($tokens[$prev]['line'] !== $tokens[$next]['line']
