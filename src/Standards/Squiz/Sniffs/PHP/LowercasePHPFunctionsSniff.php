@@ -84,15 +84,15 @@ class LowercasePHPFunctionsSniff implements Sniff
         $ignore   = Tokens::$emptyTokens;
         $ignore[] = T_BITWISE_AND;
         $prev     = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
-        $pprev    = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prev - 1), null, true);
+        $prevPrev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prev - 1), null, true);
 
         if ($tokens[$next]['code'] !== T_OPEN_PARENTHESIS) {
             // Is this a use statement importing a PHP native function ?
             if ($tokens[$next]['code'] !== T_NS_SEPARATOR
                 && $tokens[$prev]['code'] === T_STRING
                 && $tokens[$prev]['content'] === 'function'
-                && $pprev !== false
-                && $tokens[$pprev]['code'] === T_USE
+                && $prevPrev !== false
+                && $tokens[$prevPrev]['code'] === T_USE
             ) {
                 $error = 'Use statements for PHP native functions must be lowercase; expected "%s" but found "%s"';
                 $data  = [
@@ -116,10 +116,10 @@ class LowercasePHPFunctionsSniff implements Sniff
         }
 
         if ($tokens[$prev]['code'] === T_NS_SEPARATOR) {
-            if ($pprev !== false
-                && ($tokens[$pprev]['code'] === T_STRING
-                || $tokens[$pprev]['code'] === T_NAMESPACE
-                || $tokens[$pprev]['code'] === T_NEW)
+            if ($prevPrev !== false
+                && ($tokens[$prevPrev]['code'] === T_STRING
+                || $tokens[$prevPrev]['code'] === T_NAMESPACE
+                || $tokens[$prevPrev]['code'] === T_NEW)
             ) {
                 // Namespaced class/function, not an inbuilt function.
                 // Could potentially give false negatives for non-namespaced files

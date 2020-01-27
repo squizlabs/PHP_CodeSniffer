@@ -220,7 +220,7 @@ class Fixer
      * @param string  $filePath Optional file path to diff the file against.
      *                          If not specified, the original version of the
      *                          file will be used.
-     * @param boolean $colors   Print colored output or not.
+     * @param boolean $colors   Print coloured output or not.
      *
      * @return string
      */

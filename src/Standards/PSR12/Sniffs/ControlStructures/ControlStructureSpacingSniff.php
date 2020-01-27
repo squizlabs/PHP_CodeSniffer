@@ -146,7 +146,7 @@ class ControlStructureSpacingSniff implements Sniff
                 } else {
                     $phpcsFile->fixer->beginChangeset();
                     for ($i = ($prev + 1); $i < $parenCloser; $i++) {
-                        // Maintian existing newline.
+                        // Maintain existing newline.
                         if ($tokens[$i]['line'] === $tokens[$prev]['line']) {
                             continue;
                         }

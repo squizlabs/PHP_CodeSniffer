@@ -2,7 +2,7 @@
 /**
  * Detects for-loops that can be simplified to a while-loop.
  *
- * This rule is based on the PMD rule catalog. Detects for-loops that can be
+ * This rule is based on the PMD rule catalogue. Detects for-loops that can be
  * simplified as a while-loop.
  *
  * <code>

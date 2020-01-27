@@ -1191,7 +1191,7 @@ class Ruleset
 
 
     /**
-     * Populates the array of PHP_CodeSniffer_Sniff's for this file.
+     * Populates the array of PHP_CodeSniffer_Sniff objects for this file.
      *
      * @return void
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If sniff registration fails.

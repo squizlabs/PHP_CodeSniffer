@@ -2,7 +2,7 @@
 /**
  * Bans PHP 4 style constructors.
  *
- * Favor PHP 5 constructor syntax, which uses "function __construct()".
+ * Favour PHP 5 constructor syntax, which uses "function __construct()".
  * Avoid PHP 4 constructor syntax, which uses "function ClassName()".
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>

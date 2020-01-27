@@ -215,7 +215,7 @@ class Common
      * Prepares token content for output to screen.
      *
      * Replaces invisible characters so they are visible. On non-Windows
-     * OSes it will also colour the invisible characters.
+     * operating systems it will also colour the invisible characters.
      *
      * @param string   $content The content to prepare.
      * @param string[] $exclude A list of characters to leave invisible.

@@ -145,7 +145,7 @@ class LongConditionClosingCommentSniff implements Sniff
                 if ($tokens[$nextToken]['code'] === T_CATCH
                     || $tokens[$nextToken]['code'] === T_FINALLY
                 ) {
-                    // The end brace becomes the CATCH's end brace.
+                    // The end brace becomes the CATCH end brace.
                     $stackPtr = $tokens[$nextToken]['scope_closer'];
                     $endBrace = $tokens[$stackPtr];
                 } else {

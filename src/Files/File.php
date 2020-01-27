@@ -1296,7 +1296,7 @@ class File
      *        )
      * </code>
      *
-     * Parameters with default values have an additional array indexs of:
+     * Parameters with default values have an additional array indexes of:
      *         'default'             => string,  // The full content of the default value.
      *         'default_token'       => integer, // The stack pointer to the start of the default value.
      *         'default_equal_token' => integer, // The stack pointer to the equals sign.

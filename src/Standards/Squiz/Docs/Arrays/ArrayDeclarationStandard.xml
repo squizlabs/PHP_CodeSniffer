@@ -12,12 +12,12 @@
     <code_comparison>
         <code title="Valid: array keyword lowercase">
         <![CDATA[
-$array = <em>a</em>rray('val1', 'val2');
+$array = array('val1', 'val2');
         ]]>
         </code>
         <code title="Invalid: first letter capitalised">
         <![CDATA[
-$array = <em>A</em>rray('val1', 'val2');
+$array = Array('val1', 'val2');
         ]]>
         </code>
     </code_comparison>
@@ -30,14 +30,14 @@ $array = <em>A</em>rray('val1', 'val2');
         <code title="Valid: first key on second line">
         <![CDATA[
 $array = array(
-          <em>'key1'</em> => 'value1',
+          'key1' => 'value1',
           'key2' => 'value2',
          );
         ]]>
         </code>
         <code title="Invalid: first key on same line">
         <![CDATA[
-$array = array(<em>'key1'</em> => 'value1',
+$array = array('key1' => 'value1',
           'key2' => 'value2',
          );
         ]]>

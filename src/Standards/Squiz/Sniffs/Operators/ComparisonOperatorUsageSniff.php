@@ -158,9 +158,9 @@ class ComparisonOperatorUsageSniff implements Sniff
             $end   = $tokens[$stackPtr]['parenthesis_closer'];
         }//end if
 
-        $requiredOps = 0;
-        $foundOps    = 0;
-        $foundBools  = 0;
+        $requiredOps   = 0;
+        $foundOps      = 0;
+        $foundBooleans = 0;
 
         $lastNonEmpty = $start;
 
@@ -188,7 +188,7 @@ class ComparisonOperatorUsageSniff implements Sniff
             }
 
             if ($tokens[$i]['code'] === T_TRUE || $tokens[$i]['code'] === T_FALSE) {
-                $foundBools++;
+                $foundBooleans++;
             }
 
             if ($phpcsFile->tokenizerType !== 'JS'
@@ -223,7 +223,7 @@ class ComparisonOperatorUsageSniff implements Sniff
 
         if ($phpcsFile->tokenizerType !== 'JS'
             && $foundOps < $requiredOps
-            && ($requiredOps !== $foundBools)
+            && ($requiredOps !== $foundBooleans)
         ) {
             $error = 'Implicit true comparisons prohibited; use === TRUE instead';
             $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');

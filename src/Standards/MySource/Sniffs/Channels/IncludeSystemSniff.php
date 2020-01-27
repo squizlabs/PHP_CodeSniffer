@@ -242,7 +242,7 @@ class IncludeSystemSniff extends AbstractScopeSniff
         for ($i = 0; $i < $stackPtr; $i++) {
             // Skip classes and functions as will we never get
             // into their scopes when including this file, although
-            // we have a chance of getting into IF's, WHILE's etc.
+            // we have a chance of getting into IF, WHILE etc.
             if (($tokens[$i]['code'] === T_CLASS
                 || $tokens[$i]['code'] === T_INTERFACE
                 || $tokens[$i]['code'] === T_FUNCTION)
