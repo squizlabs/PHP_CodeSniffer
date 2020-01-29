@@ -42,10 +42,86 @@ class FileHeaderSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        /*
-            First, gather information about the statements inside
-            the file header.
-        */
+        $possibleHeaders = [];
+
+        $searchFor = Tokens::$ooScopeTokens;
+        $searchFor[T_OPEN_TAG] = T_OPEN_TAG;
+
+        $openTag = $stackPtr;
+        do {
+            $headerLines = $this->getHeaderLines($phpcsFile, $openTag);
+            if (empty($headerLines) === true && $openTag === $stackPtr) {
+                // No content in the file.
+                return;
+            }
+
+            $possibleHeaders[$openTag] = $headerLines;
+            if (count($headerLines) > 1) {
+                break;
+            }
+
+            $next = $phpcsFile->findNext($searchFor, ($openTag + 1));
+            if (isset(Tokens::$ooScopeTokens[$tokens[$next]['code']]) === true) {
+                // Once we find an OO token, the file content has
+                // definitely started.
+                break;
+            }
+
+            $openTag = $next;
+        } while ($openTag !== false);
+
+        if ($openTag === false) {
+            // We never found a proper file header
+            // so use the first one as the header.
+            $openTag = $stackPtr;
+        } else if (count($possibleHeaders) > 1) {
+            // There are other PHP blocks before the file header.
+            $error = 'The file header must be the first content in the file';
+            $phpcsFile->addError($error, $openTag, 'HeaderPosition');
+        } else {
+            // The first possible header was the file header block,
+            // so make sure it is the first content in the file.
+            if ($openTag !== 0) {
+                // Allow for hashbang lines.
+                $hashbang = false;
+                if ($tokens[($openTag - 1)]['code'] === T_INLINE_HTML) {
+                    $content = trim($tokens[($openTag - 1)]['content']);
+                    if (substr($content, 0, 2) === '#!') {
+                        $hashbang = true;
+                    }
+                }
+
+                if ($hashbang === false) {
+                    $error = 'The file header must be the first content in the file';
+                    $phpcsFile->addError($error, $openTag, 'HeaderPosition');
+                }
+            }
+        }//end if
+
+        $this->processHeaderLines($phpcsFile, $possibleHeaders[$openTag]);
+
+        return $phpcsFile->numTokens;
+
+    }//end process()
+
+
+    /**
+     * Gather information about the statements inside a possible file header.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current
+     *                                               token in the stack.
+     *
+     * @return array
+     */
+    public function getHeaderLines(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+        if ($next === false) {
+            return [];
+        }
 
         $headerLines   = [];
         $headerLines[] = [
@@ -54,17 +130,18 @@ class FileHeaderSniff implements Sniff
             'end'   => $stackPtr,
         ];
 
-        $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-        if ($next === false) {
-            return;
-        }
-
         $foundDocblock = false;
 
         $commentOpeners = Tokens::$scopeOpeners;
         unset($commentOpeners[T_NAMESPACE]);
         unset($commentOpeners[T_DECLARE]);
         unset($commentOpeners[T_USE]);
+        unset($commentOpeners[T_IF]);
+        unset($commentOpeners[T_WHILE]);
+        unset($commentOpeners[T_FOR]);
+        unset($commentOpeners[T_FOREACH]);
+        unset($commentOpeners[T_DO]);
+        unset($commentOpeners[T_TRY]);
 
         do {
             switch ($tokens[$next]['code']) {
@@ -77,6 +154,7 @@ class FileHeaderSniff implements Sniff
                 // Make sure this is not a code-level docblock.
                 $end      = $tokens[$next]['comment_closer'];
                 $docToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($end + 1), null, true);
+
                 if (isset($commentOpeners[$tokens[$docToken]['code']]) === false
                     && isset(Tokens::$methodPrefixes[$tokens[$docToken]['code']]) === false
                 ) {
@@ -155,17 +233,23 @@ class FileHeaderSniff implements Sniff
             $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
         } while ($next !== false);
 
-        if (count($headerLines) === 1) {
-            // This is only an open tag and doesn't contain the file header.
-            // We need to keep checking for one in case they put it further
-            // down in the file.
-            return;
-        }
+        return $headerLines;
 
-        /*
-            Next, check the spacing and grouping of the statements
-            inside each header block.
-        */
+    }//end getHeaderLines()
+
+
+    /**
+     * Check the spacing and grouping of the statements inside each header block.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile   The file being scanned.
+     * @param array                       $headerLines Header information, as sourced
+     *                                                 from getHeaderLines().
+     *
+     * @return int|null
+     */
+    public function processHeaderLines(File $phpcsFile, $headerLines)
+    {
+        $tokens = $phpcsFile->getTokens();
 
         $found = [];
 
@@ -301,30 +385,7 @@ class FileHeaderSniff implements Sniff
             }//end if
         }//end foreach
 
-        /*
-            Finally, make sure this header block is at the very
-            top of the file.
-        */
-
-        if ($stackPtr !== 0) {
-            // Allow for hashbang lines.
-            $hashbang = false;
-            if ($tokens[($stackPtr - 1)]['code'] === T_INLINE_HTML) {
-                $content = trim($tokens[($stackPtr - 1)]['content']);
-                if (substr($content, 0, 2) === '#!') {
-                    $hashbang = true;
-                }
-            }
-
-            if ($hashbang === false) {
-                $error = 'The file header must be the first content in the file';
-                $phpcsFile->addError($error, $stackPtr, 'HeaderPosition');
-            }
-        }
-
-        return $phpcsFile->numTokens;
-
-    }//end process()
+    }//end processHeaderLines()
 
 
 }//end class
