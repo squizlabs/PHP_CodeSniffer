@@ -1128,9 +1128,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.7.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.7.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.8.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.9.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.10.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.10.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.11.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.11.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.12.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.12.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.13.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc.fixed" role="test" />
