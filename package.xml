@@ -72,6 +72,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2802 : Can't specify a report file path using the tilde shortcut
   - Fixed bug #2804 : PHP4-style typed properties not tokenized correctly
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #2843 : Tokenizer does not support alternative syntax for declare statements
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
