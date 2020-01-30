@@ -34,6 +34,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed detection of array return types for arrow functions
   - Added Generic.PHP.DisallowRequestSuperglobal to ban the use of the $_REQUEST superglobal
     -- Thanks to Morerice for the contribution
+  - Generic.ControlStructures.InlineControlStructure no longer shows errors for WHILE and FOR statements without a body
+    -- Previously it required these to have curly braces, but there were no statements to enclose in them
+    -- Thanks to Juliette Reinders Folmer for the patch
   - PSR12.ControlStructures.BooleanOperatorPlacement can now be configured to enforce a specific operator position
     -- By default, the sniff ensures that operators are all at the begining or end of lines, but not a mix of both
     -- Set the allowOnly property to "first" to enforce all boolean operators to be at the start of a line
