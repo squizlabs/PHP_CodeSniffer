@@ -36,40 +36,25 @@ class CommentedOutCodeUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
-     * @param string $testFile The name of the file being tested.
-     *
      * @return array<int, int>
      */
-    public function getWarningList($testFile='CommentedOutCodeUnitTest.inc')
+    public function getWarningList()
     {
-        switch ($testFile) {
-        case 'CommentedOutCodeUnitTest.inc':
-            return [
-                6   => 1,
-                8   => 1,
-                15  => 1,
-                19  => 1,
-                35  => 1,
-                87  => 1,
-                91  => 1,
-                97  => 1,
-                109 => 1,
-                116 => 1,
-                128 => 1,
-                147 => 1,
-                158 => 1,
-            ];
-            break;
-        case 'CommentedOutCodeUnitTest.css':
-            return [
-                7  => 1,
-                16 => 1,
-            ];
-            break;
-        default:
-            return [];
-            break;
-        }//end switch
+        return [
+            6   => 1,
+            8   => 1,
+            15  => 1,
+            19  => 1,
+            35  => 1,
+            87  => 1,
+            91  => 1,
+            97  => 1,
+            109 => 1,
+            116 => 1,
+            128 => 1,
+            147 => 1,
+            158 => 1,
+        ];
 
     }//end getWarningList()
 

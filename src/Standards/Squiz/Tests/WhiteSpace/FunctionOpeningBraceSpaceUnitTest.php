@@ -21,31 +21,15 @@ class FunctionOpeningBraceSpaceUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $testFile The name of the file being tested.
-     *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='FunctionOpeningBraceSpaceUnitTest.inc')
+    public function getErrorList()
     {
-        switch ($testFile) {
-        case 'FunctionOpeningBraceSpaceUnitTest.inc':
-            return [
-                10 => 1,
-                25 => 1,
-                49 => 1,
-            ];
-
-        case 'FunctionOpeningBraceSpaceUnitTest.js':
-            return [
-                11 => 1,
-                31 => 1,
-                38 => 1,
-                88 => 1,
-            ];
-
-        default:
-            return [];
-        }//end switch
+        return [
+            10 => 1,
+            25 => 1,
+            49 => 1,
+        ];
 
     }//end getErrorList()
 

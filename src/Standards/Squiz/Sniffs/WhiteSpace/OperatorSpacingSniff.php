@@ -17,16 +17,6 @@ class OperatorSpacingSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
-
-    /**
      * Allow newlines instead of spaces.
      *
      * @var boolean

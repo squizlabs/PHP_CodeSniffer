@@ -12,20 +12,11 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 use PHP_CodeSniffer\Exceptions\TokenizerException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Tokenizers\PHP;
 use PHP_CodeSniffer\Util\Tokens;
 
 class CommentedOutCodeSniff implements Sniff
 {
-
-    /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'CSS',
-    ];
 
     /**
      * If a comment is more than $maxPercentage% code, a warning will be shown.
@@ -168,18 +159,15 @@ class CommentedOutCodeSniff implements Sniff
             return ($lastCommentBlockToken + 1);
         }
 
-        if ($phpcsFile->tokenizerType === 'PHP') {
-            $content = '<?php '.$content.' ?>';
-        }
+        $content = '<?php '.$content.' ?>';
 
         // Because we are not really parsing code, the tokenizer can throw all sorts
         // of errors that don't mean anything, so ignore them.
         $oldErrors = ini_get('error_reporting');
         ini_set('error_reporting', 0);
         try {
-            $tokenizerClass = get_class($phpcsFile->tokenizer);
-            $tokenizer      = new $tokenizerClass($content, $phpcsFile->config, $phpcsFile->eolChar);
-            $stringTokens   = $tokenizer->getTokens();
+            $tokenizer    = new PHP($content, $phpcsFile->config, $phpcsFile->eolChar);
+            $stringTokens = $tokenizer->getTokens();
         } catch (TokenizerException $e) {
             // We couldn't check the comment, so ignore it.
             ini_set('error_reporting', $oldErrors);
@@ -215,17 +203,15 @@ class CommentedOutCodeSniff implements Sniff
             --$numTokens;
         }
 
-        // Second last token is always whitespace or a comment, depending
+        // The second last token is always whitespace or a comment, depending
         // on the code inside the comment.
-        if ($phpcsFile->tokenizerType === 'PHP') {
-            if (isset(Tokens::$emptyTokens[$stringTokens[($numTokens - 1)]['code']]) === false) {
-                return ($lastCommentBlockToken + 1);
-            }
+        if (isset(Tokens::$emptyTokens[$stringTokens[($numTokens - 1)]['code']]) === false) {
+            return ($lastCommentBlockToken + 1);
+        }
 
-            if ($stringTokens[($numTokens - 1)]['code'] === T_WHITESPACE) {
-                array_pop($stringTokens);
-                --$numTokens;
-            }
+        if ($stringTokens[($numTokens - 1)]['code'] === T_WHITESPACE) {
+            array_pop($stringTokens);
+            --$numTokens;
         }
 
         $emptyTokens  = [

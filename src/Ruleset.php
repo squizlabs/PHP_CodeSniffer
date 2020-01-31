@@ -1204,16 +1204,6 @@ class Ruleset
                 }
             }
 
-            $tokenizers = [];
-            $vars       = get_class_vars($sniffClass);
-            if (isset($vars['supportedTokenizers']) === true) {
-                foreach ($vars['supportedTokenizers'] as $tokenizer) {
-                    $tokenizers[$tokenizer] = $tokenizer;
-                }
-            } else {
-                $tokenizers = ['PHP' => 'PHP'];
-            }
-
             $tokens = $this->sniffs[$sniffClass]->register();
             if (is_array($tokens) === false) {
                 $msg = "Sniff $sniffClass register() method must return an array";
@@ -1249,11 +1239,10 @@ class Ruleset
 
                 if (isset($this->tokenListeners[$token][$sniffClass]) === false) {
                     $this->tokenListeners[$token][$sniffClass] = [
-                        'class'      => $sniffClass,
-                        'source'     => $sniffCode,
-                        'tokenizers' => $tokenizers,
-                        'ignore'     => $ignorePatterns,
-                        'include'    => $includePatterns,
+                        'class'   => $sniffClass,
+                        'source'  => $sniffCode,
+                        'ignore'  => $ignorePatterns,
+                        'include' => $includePatterns,
                     ];
                 }
             }

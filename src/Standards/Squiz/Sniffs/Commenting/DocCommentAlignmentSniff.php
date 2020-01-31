@@ -16,16 +16,6 @@ use PHP_CodeSniffer\Util\Tokens;
 class DocCommentAlignmentSniff implements Sniff
 {
 
-    /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
-
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -53,14 +43,7 @@ class DocCommentAlignmentSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // We are only interested in function/class/interface doc block comments.
-        $ignore = Tokens::$emptyTokens;
-        if ($phpcsFile->tokenizerType === 'JS') {
-            $ignore[] = T_EQUAL;
-            $ignore[] = T_STRING;
-            $ignore[] = T_OBJECT_OPERATOR;
-        }
-
-        $nextToken = $phpcsFile->findNext($ignore, ($stackPtr + 1), null, true);
+        $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         $ignore    = [
             T_CLASS     => true,
             T_INTERFACE => true,

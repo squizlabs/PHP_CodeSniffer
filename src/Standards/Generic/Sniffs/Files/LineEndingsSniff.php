@@ -16,17 +16,6 @@ class LineEndingsSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-        'CSS',
-    ];
-
-    /**
      * The valid EOL character.
      *
      * @var string
@@ -118,11 +107,6 @@ class LineEndingsSniff implements Sniff
                         $tokenContent = $tokens[$i]['orig_content'];
                     } else {
                         $tokenContent = $tokens[$i]['content'];
-                    }
-
-                    if ($tokenContent === '') {
-                        // Special case for JS/CSS close tag.
-                        continue;
                     }
 
                     $newContent  = rtrim($tokenContent, "\r\n");

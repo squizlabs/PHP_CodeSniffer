@@ -20,17 +20,6 @@ class SuperfluousWhitespaceSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-        'CSS',
-    ];
-
-    /**
      * If TRUE, whitespace rules are not checked for blank lines.
      *
      * Blank lines are those that contain only whitespace.
@@ -77,40 +66,26 @@ class SuperfluousWhitespaceSniff implements Sniff
                 Check for start of file whitespace.
             */
 
-            if ($phpcsFile->tokenizerType !== 'PHP') {
-                // The first token is always the open tag inserted when tokenized
-                // and the second token is always the first piece of content in
-                // the file. If the second token is whitespace, there was
-                // whitespace at the start of the file.
-                if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+            // If it's the first token, then there is no space.
+            if ($stackPtr === 0) {
+                return;
+            }
+
+            $beforeOpen = '';
+
+            for ($i = ($stackPtr - 1); $i >= 0; $i--) {
+                // If we find something that isn't inline html then there is something previous in the file.
+                if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
                     return;
                 }
 
-                if ($phpcsFile->fixer->enabled === true) {
-                    $stackPtr = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-                }
-            } else {
-                // If it's the first token, then there is no space.
-                if ($stackPtr === 0) {
-                    return;
-                }
+                $beforeOpen .= $tokens[$i]['content'];
+            }
 
-                $beforeOpen = '';
-
-                for ($i = ($stackPtr - 1); $i >= 0; $i--) {
-                    // If we find something that isn't inline html then there is something previous in the file.
-                    if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
-                        return;
-                    }
-
-                    $beforeOpen .= $tokens[$i]['content'];
-                }
-
-                // If we have ended up with inline html make sure it isn't just whitespace.
-                if (preg_match('`^[\pZ\s]+$`u', $beforeOpen) !== 1) {
-                    return;
-                }
-            }//end if
+            // If we have ended up with inline html make sure it isn't just whitespace.
+            if (preg_match('`^[\pZ\s]+$`u', $beforeOpen) !== 1) {
+                return;
+            }
 
             $fix = $phpcsFile->addFixableError('Additional whitespace found at start of file', $stackPtr, 'StartFile');
             if ($fix === true) {
@@ -126,56 +101,30 @@ class SuperfluousWhitespaceSniff implements Sniff
                 Check for end of file whitespace.
             */
 
-            if ($phpcsFile->tokenizerType === 'PHP') {
-                if (isset($tokens[($stackPtr + 1)]) === false) {
-                    // The close PHP token is the last in the file.
+            if (isset($tokens[($stackPtr + 1)]) === false) {
+                // The close PHP token is the last in the file.
+                return;
+            }
+
+            $afterClose = '';
+
+            for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
+                // If we find something that isn't inline HTML then there
+                // is more to the file.
+                if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
                     return;
                 }
 
-                $afterClose = '';
+                $afterClose .= $tokens[$i]['content'];
+            }
 
-                for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
-                    // If we find something that isn't inline HTML then there
-                    // is more to the file.
-                    if ($tokens[$i]['type'] !== 'T_INLINE_HTML') {
-                        return;
-                    }
-
-                    $afterClose .= $tokens[$i]['content'];
-                }
-
-                // If we have ended up with inline html make sure it isn't just whitespace.
-                if (preg_match('`^[\pZ\s]+$`u', $afterClose) !== 1) {
-                    return;
-                }
-            } else {
-                // The last token is always the close tag inserted when tokenized
-                // and the second last token is always the last piece of content in
-                // the file. If the second last token is whitespace, there was
-                // whitespace at the end of the file.
-                $stackPtr--;
-
-                // The pointer is now looking at the last content in the file and
-                // not the fake PHP end tag the tokenizer inserted.
-                if ($tokens[$stackPtr]['code'] !== T_WHITESPACE) {
-                    return;
-                }
-
-                // Allow a single newline at the end of the last line in the file.
-                if ($tokens[($stackPtr - 1)]['code'] !== T_WHITESPACE
-                    && $tokens[$stackPtr]['content'] === $phpcsFile->eolChar
-                ) {
-                    return;
-                }
-            }//end if
+            // If we have ended up with inline html make sure it isn't just whitespace.
+            if (preg_match('`^[\pZ\s]+$`u', $afterClose) !== 1) {
+                return;
+            }
 
             $fix = $phpcsFile->addFixableError('Additional whitespace found at end of file', $stackPtr, 'EndFile');
             if ($fix === true) {
-                if ($phpcsFile->tokenizerType !== 'PHP') {
-                    $prev     = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-                    $stackPtr = ($prev + 1);
-                }
-
                 $phpcsFile->fixer->beginChangeset();
                 for ($i = ($stackPtr + 1); $i < $phpcsFile->numTokens; $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');

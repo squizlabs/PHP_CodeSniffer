@@ -17,16 +17,6 @@ class ComparisonOperatorUsageSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
-
-    /**
      * A list of valid comparison operators.
      *
      * @var array
@@ -47,15 +37,9 @@ class ComparisonOperatorUsageSniff implements Sniff
      * @var array<int, string>
      */
     private static $invalidOps = [
-        'PHP' => [
-            T_IS_EQUAL     => '===',
-            T_IS_NOT_EQUAL => '!==',
-            T_BOOLEAN_NOT  => '=== FALSE',
-        ],
-        'JS'  => [
-            T_IS_EQUAL     => '===',
-            T_IS_NOT_EQUAL => '!==',
-        ],
+        T_IS_EQUAL     => '===',
+        T_IS_NOT_EQUAL => '!==',
+        T_BOOLEAN_NOT  => '=== FALSE',
     ];
 
 
@@ -88,8 +72,7 @@ class ComparisonOperatorUsageSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens    = $phpcsFile->getTokens();
-        $tokenizer = $phpcsFile->tokenizerType;
+        $tokens = $phpcsFile->getTokens();
 
         if ($tokens[$stackPtr]['code'] === T_INLINE_THEN) {
             $end = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
@@ -166,11 +149,11 @@ class ComparisonOperatorUsageSniff implements Sniff
 
         for ($i = $start; $i <= $end; $i++) {
             $type = $tokens[$i]['code'];
-            if (isset(self::$invalidOps[$tokenizer][$type]) === true) {
+            if (isset(self::$invalidOps[$type]) === true) {
                 $error = 'Operator %s prohibited; use %s instead';
                 $data  = [
                     $tokens[$i]['content'],
-                    self::$invalidOps[$tokenizer][$type],
+                    self::$invalidOps[$type],
                 ];
                 $phpcsFile->addError($error, $i, 'NotAllowed', $data);
                 $foundOps++;
@@ -191,9 +174,8 @@ class ComparisonOperatorUsageSniff implements Sniff
                 $foundBooleans++;
             }
 
-            if ($phpcsFile->tokenizerType !== 'JS'
-                && ($tokens[$i]['code'] === T_BOOLEAN_AND
-                || $tokens[$i]['code'] === T_BOOLEAN_OR)
+            if ($tokens[$i]['code'] === T_BOOLEAN_AND
+                || $tokens[$i]['code'] === T_BOOLEAN_OR
             ) {
                 $requiredOps++;
 
@@ -221,10 +203,7 @@ class ComparisonOperatorUsageSniff implements Sniff
 
         $requiredOps++;
 
-        if ($phpcsFile->tokenizerType !== 'JS'
-            && $foundOps < $requiredOps
-            && ($requiredOps !== $foundBooleans)
-        ) {
+        if ($foundOps < $requiredOps && $requiredOps !== $foundBooleans) {
             $error = 'Implicit true comparisons prohibited; use === TRUE instead';
             $phpcsFile->addError($error, $stackPtr, 'ImplicitTrue');
         }

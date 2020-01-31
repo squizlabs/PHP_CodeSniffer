@@ -15,16 +15,6 @@ use PHP_CodeSniffer\Util\Tokens;
 class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
 {
 
-    /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
-
 
     /**
      * Determine if this is a multi-line function declaration.

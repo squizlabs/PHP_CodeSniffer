@@ -17,16 +17,6 @@ class SpaceAfterNotSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
-
-    /**
      * The number of spaces desired after the NOT operator.
      *
      * @var integer

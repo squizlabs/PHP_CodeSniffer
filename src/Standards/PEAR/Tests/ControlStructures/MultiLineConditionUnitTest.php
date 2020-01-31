@@ -21,13 +21,11 @@ class MultiLineConditionUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $testFile The name of the file being tested.
-     *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='MultiLineConditionUnitTest.inc')
+    public function getErrorList()
     {
-        $errors = [
+        return [
             21  => 1,
             22  => 1,
             35  => 1,
@@ -54,6 +52,7 @@ class MultiLineConditionUnitTest extends AbstractSniffUnitTest
             153 => 2,
             168 => 1,
             177 => 1,
+            183 => 1,
             194 => 2,
             202 => 2,
             215 => 1,
@@ -63,12 +62,6 @@ class MultiLineConditionUnitTest extends AbstractSniffUnitTest
             240 => 2,
             248 => 2,
         ];
-
-        if ($testFile === 'MultiLineConditionUnitTest.inc') {
-            $errors[183] = 1;
-        }
-
-        return $errors;
 
     }//end getErrorList()
 

@@ -21,26 +21,14 @@ class DisallowInlineIfUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $testFile The name of the file being tested.
-     *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='DisallowInlineIfUnitTest.inc')
+    public function getErrorList()
     {
-        switch ($testFile) {
-        case 'DisallowInlineIfUnitTest.inc':
-            return [
-                8  => 1,
-                18 => 1,
-            ];
-            break;
-        case 'DisallowInlineIfUnitTest.js':
-            return [1 => 1];
-            break;
-        default:
-            return [];
-            break;
-        }//end switch
+        return [
+            8  => 1,
+            18 => 1,
+        ];
 
     }//end getErrorList()
 

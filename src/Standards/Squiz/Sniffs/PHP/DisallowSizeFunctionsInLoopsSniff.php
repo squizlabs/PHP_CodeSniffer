@@ -16,27 +16,14 @@ class DisallowSizeFunctionsInLoopsSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
-
-    /**
      * An array of functions we don't want in the condition of loops.
      *
      * @var array
      */
     protected $forbiddenFunctions = [
-        'PHP' => [
-            'sizeof' => true,
-            'strlen' => true,
-            'count'  => true,
-        ],
-        'JS'  => ['length' => true],
+        'sizeof' => true,
+        'strlen' => true,
+        'count'  => true,
     ];
 
 
@@ -67,7 +54,6 @@ class DisallowSizeFunctionsInLoopsSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens       = $phpcsFile->getTokens();
-        $tokenizer    = $phpcsFile->tokenizerType;
         $openBracket  = $tokens[$stackPtr]['parenthesis_opener'];
         $closeBracket = $tokens[$stackPtr]['parenthesis_closer'];
 
@@ -82,25 +68,16 @@ class DisallowSizeFunctionsInLoopsSniff implements Sniff
 
         for ($i = ($start + 1); $i < $end; $i++) {
             if ($tokens[$i]['code'] === T_STRING
-                && isset($this->forbiddenFunctions[$tokenizer][$tokens[$i]['content']]) === true
+                && isset($this->forbiddenFunctions[$tokens[$i]['content']]) === true
             ) {
                 $functionName = $tokens[$i]['content'];
-                if ($tokenizer === 'JS') {
-                    // Needs to be in the form object.function to be valid.
-                    $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($i - 1), null, true);
-                    if ($prev === false || $tokens[$prev]['code'] !== T_OBJECT_OPERATOR) {
-                        continue;
-                    }
 
-                    $functionName = 'object.'.$functionName;
-                } else {
-                    // Make sure it isn't a member var.
-                    if ($tokens[($i - 1)]['code'] === T_OBJECT_OPERATOR) {
-                        continue;
-                    }
-
-                    $functionName .= '()';
+                // Make sure it isn't a member var.
+                if ($tokens[($i - 1)]['code'] === T_OBJECT_OPERATOR) {
+                    continue;
                 }
+
+                $functionName .= '()';
 
                 $error = 'The use of %s inside a loop condition is not allowed; assign the return value to a variable and use the variable in the loop condition instead';
                 $data  = [$functionName];

@@ -16,17 +16,6 @@ class DisallowTabIndentSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-        'CSS',
-    ];
-
-    /**
      * The --tab-width CLI value that is being used.
      *
      * @var integer

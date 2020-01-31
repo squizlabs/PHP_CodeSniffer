@@ -23,16 +23,6 @@ class ControlSignatureSniff implements Sniff
      */
     public $requiredSpacesBeforeColon = 1;
 
-    /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
-
 
     /**
      * Returns an array of tokens this test wants to listen for.

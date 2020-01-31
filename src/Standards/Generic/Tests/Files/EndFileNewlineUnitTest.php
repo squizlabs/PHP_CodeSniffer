@@ -29,8 +29,6 @@ class EndFileNewlineUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'EndFileNewlineUnitTest.3.inc':
-        case 'EndFileNewlineUnitTest.3.js':
-        case 'EndFileNewlineUnitTest.3.css':
         case 'EndFileNewlineUnitTest.4.inc':
             return [2 => 1];
         default:

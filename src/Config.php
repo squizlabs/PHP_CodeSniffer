@@ -82,8 +82,8 @@ class Config
      * string   stdinContent    Content passed directly to PHPCS on STDIN.
      * string   stdinPath       The path to use for content passed on STDIN.
      *
-     * array<string, string>      extensions File extensions that should be checked, and what tokenizer to use.
-     *                                       E.g., array('inc' => 'PHP');
+     * array<string, string>      extensions File extensions that should be checked.
+     *                                       E.g., array('php', 'inc');
      * array<string, string|null> reports    The reports to use for printing output after the run.
      *                                       The format of the array is:
      *                                           array(
@@ -477,10 +477,8 @@ class Config
         $this->tabWidth        = 0;
         $this->encoding        = 'utf-8';
         $this->extensions      = [
-            'php' => 'PHP',
-            'inc' => 'PHP',
-            'js'  => 'JS',
-            'css' => 'CSS',
+            'php',
+            'inc',
         ];
         $this->sniffs          = [];
         $this->exclude         = [];
@@ -1092,25 +1090,7 @@ class Config
                     break;
                 }
 
-                $extensions    = explode(',', substr($arg, 11));
-                $newExtensions = [];
-                foreach ($extensions as $ext) {
-                    $slash = strpos($ext, '/');
-                    if ($slash !== false) {
-                        // They specified the tokenizer too.
-                        list($ext, $tokenizer) = explode('/', $ext);
-                        $newExtensions[$ext]   = strtoupper($tokenizer);
-                        continue;
-                    }
-
-                    if (isset($this->extensions[$ext]) === true) {
-                        $newExtensions[$ext] = $this->extensions[$ext];
-                    } else {
-                        $newExtensions[$ext] = 'PHP';
-                    }
-                }
-
-                $this->extensions = $newExtensions;
+                $this->extensions = explode(',', substr($arg, 11));
                 self::$overriddenDefaults['extensions'] = true;
             } else if (substr($arg, 0, 7) === 'suffix=') {
                 if (isset(self::$overriddenDefaults['suffix']) === true) {
@@ -1381,8 +1361,7 @@ class Config
         echo ' <bootstrap>    A comma separated list of files to run before processing begins'.PHP_EOL;
         echo ' <encoding>     The encoding of the files being checked (default is utf-8)'.PHP_EOL;
         echo ' <extensions>   A comma separated list of file extensions to check'.PHP_EOL;
-        echo '                The type of the file can be specified using: ext/type'.PHP_EOL;
-        echo '                e.g., module/php,es/js'.PHP_EOL;
+        echo '                e.g., php,inc,module'.PHP_EOL;
         echo ' <file>         One or more files and/or directories to check'.PHP_EOL;
         echo ' <fileList>     A file containing a list of files and/or directories to check (one per line)'.PHP_EOL;
         echo ' <filter>       Use either the "gitmodified" or "gitstaged" filter,'.PHP_EOL;
@@ -1443,8 +1422,7 @@ class Config
         echo ' <bootstrap>   A comma separated list of files to run before processing begins'.PHP_EOL;
         echo ' <encoding>    The encoding of the files being fixed (default is utf-8)'.PHP_EOL;
         echo ' <extensions>  A comma separated list of file extensions to fix'.PHP_EOL;
-        echo '               The type of the file can be specified using: ext/type'.PHP_EOL;
-        echo '               e.g., module/php,es/js'.PHP_EOL;
+        echo '               e.g., php,inc,module'.PHP_EOL;
         echo ' <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo ' <fileList>    A file containing a list of files and/or directories to fix (one per line)'.PHP_EOL;
         echo ' <filter>      Use either the "gitmodified" or "gitstaged" filter,'.PHP_EOL;

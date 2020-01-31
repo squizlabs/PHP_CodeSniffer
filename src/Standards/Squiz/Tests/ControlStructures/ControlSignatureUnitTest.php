@@ -21,13 +21,11 @@ class ControlSignatureUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $testFile The name of the file being tested.
-     *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='ControlSignatureUnitTest.inc')
+    public function getErrorList()
     {
-        $errors = [
+        return [
             7   => 1,
             12  => 1,
             15  => 1,
@@ -48,37 +46,32 @@ class ControlSignatureUnitTest extends AbstractSniffUnitTest
             99  => 1,
             108 => 1,
             112 => 1,
+            122 => 1,
+            130 => 2,
+            134 => 1,
+            150 => 1,
+            153 => 1,
+            158 => 1,
+            165 => 1,
+            170 => 2,
+            185 => 1,
+            190 => 2,
+            191 => 2,
+            195 => 1,
+            227 => 1,
+            234 => 1,
+            239 => 2,
+            243 => 2,
+            244 => 2,
+            248 => 1,
+            259 => 1,
+            262 => 1,
+            267 => 1,
+            269 => 1,
+            276 => 1,
+            279 => 1,
+            283 => 1,
         ];
-
-        if ($testFile === 'ControlSignatureUnitTest.inc') {
-            $errors[122] = 1;
-            $errors[130] = 2;
-            $errors[134] = 1;
-            $errors[150] = 1;
-            $errors[153] = 1;
-            $errors[158] = 1;
-            $errors[165] = 1;
-            $errors[170] = 2;
-            $errors[185] = 1;
-            $errors[190] = 2;
-            $errors[191] = 2;
-            $errors[195] = 1;
-            $errors[227] = 1;
-            $errors[234] = 1;
-            $errors[239] = 2;
-            $errors[243] = 2;
-            $errors[244] = 2;
-            $errors[248] = 1;
-            $errors[259] = 1;
-            $errors[262] = 1;
-            $errors[267] = 1;
-            $errors[269] = 1;
-            $errors[276] = 1;
-            $errors[279] = 1;
-            $errors[283] = 1;
-        }//end if
-
-        return $errors;
 
     }//end getErrorList()
 

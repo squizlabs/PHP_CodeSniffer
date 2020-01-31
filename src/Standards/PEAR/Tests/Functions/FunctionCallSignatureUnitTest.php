@@ -21,35 +21,10 @@ class FunctionCallSignatureUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $testFile The name of the file being tested.
-     *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='FunctionCallSignatureUnitTest.inc')
+    public function getErrorList()
     {
-        if ($testFile === 'FunctionCallSignatureUnitTest.js') {
-            return [
-                5  => 1,
-                6  => 2,
-                7  => 1,
-                8  => 1,
-                9  => 2,
-                10 => 3,
-                17 => 1,
-                18 => 1,
-                21 => 1,
-                24 => 1,
-                28 => 2,
-                30 => 2,
-                35 => 1,
-                49 => 1,
-                51 => 1,
-                54 => 1,
-                70 => 1,
-                71 => 1,
-            ];
-        }//end if
-
         return [
             5   => 1,
             6   => 2,

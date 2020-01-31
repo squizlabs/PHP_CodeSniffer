@@ -20,16 +20,6 @@ class MultipleStatementAlignmentSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
-
-    /**
      * If true, an error will be thrown; otherwise a warning.
      *
      * @var boolean

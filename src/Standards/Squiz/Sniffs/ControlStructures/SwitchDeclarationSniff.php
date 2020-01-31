@@ -17,16 +17,6 @@ class SwitchDeclarationSniff implements Sniff
 {
 
     /**
-     * A list of tokenizers this sniff supports.
-     *
-     * @var array
-     */
-    public $supportedTokenizers = [
-        'PHP',
-        'JS',
-    ];
-
-    /**
      * The number of spaces code should be indented.
      *
      * @var integer

@@ -21,29 +21,20 @@ class IncrementDecrementSpacingUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
-     * @param string $testFile The name of the file being tested.
-     *
      * @return array<int, int>
      */
-    public function getErrorList($testFile='IncrementDecrementSpacingUnitTest.inc')
+    public function getErrorList()
     {
-        switch ($testFile) {
-        case 'IncrementDecrementSpacingUnitTest.inc':
-        case 'IncrementDecrementSpacingUnitTest.js':
-            return [
-                5  => 1,
-                6  => 1,
-                8  => 1,
-                10 => 1,
-                13 => 1,
-                14 => 1,
-                16 => 1,
-                17 => 1,
-            ];
-
-        default:
-            return [];
-        }//end switch
+        return [
+            5  => 1,
+            6  => 1,
+            8  => 1,
+            10 => 1,
+            13 => 1,
+            14 => 1,
+            16 => 1,
+            17 => 1,
+        ];
 
     }//end getErrorList()
 

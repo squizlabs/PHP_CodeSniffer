@@ -174,11 +174,11 @@ class Filter extends \RecursiveFilterIterator
         $extensions = [];
         array_shift($fileParts);
         foreach ($fileParts as $part) {
-            $extensions[implode('.', $fileParts)] = 1;
+            $extensions[] = implode('.', $fileParts);
             array_shift($fileParts);
         }
 
-        $matches = array_intersect_key($extensions, $this->config->extensions);
+        $matches = array_intersect($extensions, $this->config->extensions);
         if (empty($matches) === true) {
             return false;
         }

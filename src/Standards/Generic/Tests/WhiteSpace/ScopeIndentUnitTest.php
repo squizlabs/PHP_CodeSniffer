@@ -47,33 +47,6 @@ class ScopeIndentUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='ScopeIndentUnitTest.inc')
     {
-        if ($testFile === 'ScopeIndentUnitTest.1.js') {
-            return [
-                6   => 1,
-                14  => 1,
-                21  => 1,
-                30  => 1,
-                32  => 1,
-                33  => 1,
-                34  => 1,
-                39  => 1,
-                42  => 1,
-                59  => 1,
-                60  => 1,
-                75  => 1,
-                120 => 1,
-                121 => 1,
-                122 => 1,
-                123 => 1,
-                141 => 1,
-                142 => 1,
-                155 => 1,
-                156 => 1,
-                168 => 1,
-                184 => 1,
-            ];
-        }//end if
-
         if ($testFile === 'ScopeIndentUnitTest.3.inc') {
             return [
                 6  => 1,
