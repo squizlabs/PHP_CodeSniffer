@@ -14,3 +14,5 @@ The file documents changes to the PHP_CodeSniffer project.
     - Previously, setting an array value used the string syntax `print=>echo,create_function=>null`
     - Now, individual array elements are specified using an `element` tag with `key` and `value` attributes
         - For example, `<element key="print" value="echo">`
+- Removed the unused `T_ARRAY_HINT` token
+- Removed the unused `T_RETURN_TYPE` token
