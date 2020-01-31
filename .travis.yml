@@ -5,18 +5,13 @@ dist: trusty
 matrix:
   fast_finish: true
   include:
-    - php: 5.4
-    - php: 5.5
-    - php: 5.5
+    - php: 7.0
+    - php: 7.0
       env: CUSTOM_INI=1 XMLLINT=1
       addons:
         apt:
           packages:
             - libxml2-utils
-    - php: 5.6
-    - php: 7.0
-    - php: 7.0
-      env: CUSTOM_INI=1 PEAR_VALIDATE=1
     - php: 7.1
     - php: 7.2
       env: PHPUNIT_INCOMPAT=1
@@ -73,7 +68,6 @@ script:
   # Check the code-style consistency of the xml files.
   - if [[ $XMLLINT == "1" ]]; then diff -B ./phpcs.xml.dist <(xmllint --format "./phpcs.xml.dist"); fi
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/Generic/ruleset.xml <(xmllint --format "./src/Standards/Generic/ruleset.xml"); fi
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/MySource/ruleset.xml <(xmllint --format "./src/Standards/MySource/ruleset.xml"); fi
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/PEAR/ruleset.xml <(xmllint --format "./src/Standards/PEAR/ruleset.xml"); fi
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/PSR1/ruleset.xml <(xmllint --format "./src/Standards/PSR1/ruleset.xml"); fi
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/PSR2/ruleset.xml <(xmllint --format "./src/Standards/PSR2/ruleset.xml"); fi
