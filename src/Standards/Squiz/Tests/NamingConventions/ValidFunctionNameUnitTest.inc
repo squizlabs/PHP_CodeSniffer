@@ -18,10 +18,10 @@ function xmlParser() {}
 
 echo preg_replace_callback('~-([a-z])~', function ($match) { return strtoupper($match[1]); }, 'hello-world');
 
-/* @codingStandardsIgnoreStart */
+/* phpcs:disable */
 class MyClass
 {
-    /* @codingStandardsIgnoreEnd */
+    /* phpcs:enable */
     public function __construct() {}
 }
 ?>

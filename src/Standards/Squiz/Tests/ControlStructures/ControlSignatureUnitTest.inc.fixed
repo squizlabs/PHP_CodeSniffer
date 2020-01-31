@@ -215,7 +215,7 @@ else :
     echo 'not 1';
 endif;
 
-// @codingStandardsChangeSetting Squiz.ControlStructures.ControlSignature requiredSpacesBeforeColon 0
+// phpcs:set Squiz.ControlStructures.ControlSignature requiredSpacesBeforeColon 0
 
 if ($a == 5):
     echo "a equals 5";

@@ -358,35 +358,7 @@ class File
             ) {
                 $commentText      = ltrim($this->tokens[$stackPtr]['content'], ' /*');
                 $commentTextLower = strtolower($commentText);
-                if (strpos($commentText, '@codingStandards') !== false) {
-                    if (strpos($commentText, '@codingStandardsIgnoreFile') !== false) {
-                        // Ignoring the whole file, just a little late.
-                        $this->errors       = [];
-                        $this->warnings     = [];
-                        $this->errorCount   = 0;
-                        $this->warningCount = 0;
-                        $this->fixableCount = 0;
-                        return;
-                    } else if (strpos($commentText, '@codingStandardsChangeSetting') !== false) {
-                        $start   = strpos($commentText, '@codingStandardsChangeSetting');
-                        $comment = substr($commentText, ($start + 30));
-                        $parts   = explode(' ', $comment);
-                        if (count($parts) >= 2) {
-                            $sniffParts = explode('.', $parts[0]);
-                            if (count($sniffParts) >= 3) {
-                                // If the sniff code is not known to us, it has not been registered in this run.
-                                // But don't throw an error as it could be there for a different standard to use.
-                                if (isset($this->ruleset->sniffCodes[$parts[0]]) === true) {
-                                    $listenerCode  = array_shift($parts);
-                                    $propertyCode  = array_shift($parts);
-                                    $propertyValue = rtrim(implode(' ', $parts), " */\r\n");
-                                    $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
-                                    $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
-                                }
-                            }
-                        }
-                    }//end if
-                } else if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile'
+                if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile'
                     || substr($commentTextLower, 0, 17) === '@phpcs:ignorefile'
                 ) {
                     // Ignoring the whole file, just a little late.

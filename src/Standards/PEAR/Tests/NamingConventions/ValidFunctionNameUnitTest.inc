@@ -158,10 +158,10 @@ function test() {
     $foo = function() { echo 'foo'; };
 }
 
-/* @codingStandardsIgnoreStart */
+/* phpcs:disable */
 class MyClass
 {
-    /* @codingStandardsIgnoreEnd */
+    /* phpcs:enable */
     public function __construct() {}
 }
 

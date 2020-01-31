@@ -253,56 +253,7 @@ abstract class Tokenizer
                 $commentText      = ltrim($this->tokens[$i]['content'], " \t/*");
                 $commentText      = rtrim($commentText, " */\t\r\n");
                 $commentTextLower = strtolower($commentText);
-                if (strpos($commentText, '@codingStandards') !== false) {
-                    // If this comment is the only thing on the line, it tells us
-                    // to ignore the following line. If the line contains other content
-                    // then we are just ignoring this one single line.
-                    $ownLine = false;
-                    if ($i > 0) {
-                        for ($prev = ($i - 1); $prev >= 0; $prev--) {
-                            if ($this->tokens[$prev]['code'] === T_WHITESPACE) {
-                                continue;
-                            }
-
-                            break;
-                        }
-
-                        if ($this->tokens[$prev]['line'] !== $this->tokens[$i]['line']) {
-                            $ownLine = true;
-                        }
-                    }
-
-                    if ($ignoring === null
-                        && strpos($commentText, '@codingStandardsIgnoreStart') !== false
-                    ) {
-                        $ignoring = ['.all' => true];
-                        if ($ownLine === true) {
-                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
-                        }
-                    } else if ($ignoring !== null
-                        && strpos($commentText, '@codingStandardsIgnoreEnd') !== false
-                    ) {
-                        if ($ownLine === true) {
-                            $this->ignoredLines[$this->tokens[$i]['line']] = ['.all' => true];
-                        } else {
-                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
-                        }
-
-                        $ignoring = null;
-                    } else if ($ignoring === null
-                        && strpos($commentText, '@codingStandardsIgnoreLine') !== false
-                    ) {
-                        $ignoring = ['.all' => true];
-                        if ($ownLine === true) {
-                            $this->ignoredLines[$this->tokens[$i]['line']]       = $ignoring;
-                            $this->ignoredLines[($this->tokens[$i]['line'] + 1)] = $ignoring;
-                        } else {
-                            $this->ignoredLines[$this->tokens[$i]['line']] = $ignoring;
-                        }
-
-                        $ignoring = null;
-                    }//end if
-                } else if (substr($commentTextLower, 0, 6) === 'phpcs:'
+                if (substr($commentTextLower, 0, 6) === 'phpcs:'
                     || substr($commentTextLower, 0, 7) === '@phpcs:'
                 ) {
                     // If the @phpcs: syntax is being used, strip the @ to make

@@ -47,9 +47,7 @@ class LocalFile extends File
                 $firstContent .= fgets($handle);
                 fclose($handle);
 
-                if (strpos($firstContent, '@codingStandardsIgnoreFile') !== false
-                    || stripos($firstContent, 'phpcs:ignorefile') !== false
-                ) {
+                if (stripos($firstContent, 'phpcs:ignorefile') !== false) {
                     // We are ignoring the whole file.
                     $this->ignored = true;
                     return;
