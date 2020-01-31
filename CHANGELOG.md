@@ -4,12 +4,15 @@ The file documents changes to the PHP_CodeSniffer project.
 ## [Unreleased]
 
 ### Changes
+- The default coding standard has changed from `PEAR` to `PSR12`
 - The `--extensions` command line argument no longer accepts the tokenizer along with the extension
     - Previously, you would check `.module` files as PHP files using `--extensions=module/php`
     - Now, you use `--extensions=module`
 - Composer installs no longer include any test files
 
 ### Removed
+- Removed support for installing via PEAR
+    - Use composer or the phar files
 - Support for checking the coding standards of JS files has been removed
 - Support for checking the coding standards of CSS files has been removed
 - Support for the deprecated `@codingStandard` annotation syntax has been removed

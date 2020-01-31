@@ -61,11 +61,6 @@ You will then be able to run PHP_CodeSniffer from the tools directory:
     ./tools/phpcs -h
     ./tools/phpcbf -h
 
-### PEAR
-If you use PEAR, you can install PHP_CodeSniffer using the PEAR installer. This will make the `phpcs` and `phpcbf` commands immediately available for use. To install PHP_CodeSniffer using the PEAR installer, first ensure you have [installed PEAR](http://pear.php.net/manual/en/installation.getting.php) and then run the following command:
-
-    pear install PHP_CodeSniffer
-
 ### Git Clone
 You can also download the PHP_CodeSniffer source and run the `phpcs` and `phpcbf` commands directly from the Git clone:
 
@@ -76,7 +71,7 @@ You can also download the PHP_CodeSniffer source and run the `phpcs` and `phpcbf
 
 ## Getting Started
 
-The default coding standard used by PHP_CodeSniffer is the PEAR coding standard. To check a file against the PEAR coding standard, simply specify the file's location:
+The default coding standard used by PHP_CodeSniffer is the PSR12 coding standard. To check a file against the PEAR coding standard, simply specify the file's location:
 
     $ phpcs /path/to/code/myfile.php
 

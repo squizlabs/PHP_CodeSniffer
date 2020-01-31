@@ -55,8 +55,6 @@ script:
   # Don't run the unit tests on nightly (PHP 8.0) as there is no compatible PHPUnit version available yet.
   - if [[ $PHPUNIT_INCOMPAT == "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then vendor/bin/phpunit tests/AllTests.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
-  - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
-  - if [[ $PEAR_VALIDATE == "1" ]]; then php scripts/validate-pear-package.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then composer validate --no-check-all --strict; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php scripts/build-phar.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php phpcs.phar; fi
