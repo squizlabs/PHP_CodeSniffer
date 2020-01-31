@@ -1,5 +1,14 @@
+/tests export-ignore
+/src/Standards/Generic/Tests export-ignore
+/src/Standards/MySource/Tests export-ignore
+/src/Standards/PEAR/Tests export-ignore
+/src/Standards/PSR1/Tests export-ignore
+/src/Standards/PSR2/Tests export-ignore
+/src/Standards/PSR12/Tests export-ignore
+/src/Standards/Squiz/Tests export-ignore
+/src/Standards/Zend/Tests export-ignore
+.cspell.json export-ignore
 .travis.yml export-ignore
-package.xml export-ignore
 phpunit.xml.dist export-ignore
 php5-testingConfig.ini export-ignore
 php7-testingConfig.ini export-ignore

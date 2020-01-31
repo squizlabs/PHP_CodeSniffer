@@ -2,6 +2,10 @@
 The file documents changes to the PHP_CodeSniffer project.
 
 ## [Unreleased]
+
+### Changes
+- Composer installs no longer include any test files
+
 ### Removed
 - Support for the deprecated `@codingStandard` annotation syntax has been removed
     - Use the `phpcs:` or `@phpcs:` syntax instead
