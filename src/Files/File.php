@@ -1683,8 +1683,7 @@ class File
                 if (isset($this->tokens[$stackPtr]['nested_parenthesis']) === false
                     || empty($this->tokens[$stackPtr]['nested_parenthesis']) === true
                 ) {
-                    $error = 'Possible parse error: interfaces may not include member vars';
-                    $this->addWarning($error, $stackPtr, 'Internal.ParseError.InterfaceHasMemberVar');
+                    // Parse error or live coding.
                     return [];
                 }
             } else {

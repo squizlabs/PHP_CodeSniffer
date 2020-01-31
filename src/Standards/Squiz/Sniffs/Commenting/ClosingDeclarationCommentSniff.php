@@ -60,8 +60,7 @@ class ClosingDeclarationCommentSniff implements Sniff
             }
 
             if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-                $error = 'Possible parse error: non-abstract method defined as abstract';
-                $phpcsFile->addWarning($error, $stackPtr, 'Abstract');
+                // Parse error or live coding.
                 return;
             }
 
@@ -74,9 +73,7 @@ class ClosingDeclarationCommentSniff implements Sniff
         }//end if
 
         if (isset($tokens[$stackPtr]['scope_closer']) === false) {
-            $error = 'Possible parse error: %s missing opening or closing brace';
-            $data  = [$tokens[$stackPtr]['content']];
-            $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $data);
+            // Parse error or live coding.
             return;
         }
 

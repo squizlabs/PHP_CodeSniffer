@@ -71,7 +71,7 @@ class ForLoopDeclarationUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [129 => 1];
+        return [];
 
     }//end getWarningList()
 

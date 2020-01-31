@@ -67,8 +67,7 @@ class ForLoopDeclarationSniff implements Sniff
 
         $openingBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
         if ($openingBracket === false) {
-            $error = 'Possible parse error: no opening parenthesis for FOR keyword';
-            $phpcsFile->addWarning($error, $stackPtr, 'NoOpenBracket');
+            // Parse error or live coding.
             return;
         }
 

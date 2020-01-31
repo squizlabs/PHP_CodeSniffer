@@ -123,8 +123,7 @@ class SwitchDeclarationSniff implements Sniff
             }
 
             if (isset($tokens[$nextCase]['scope_opener']) === false) {
-                $error = 'Possible parse error: CASE missing opening colon';
-                $phpcsFile->addWarning($error, $nextCase, 'MissingColon');
+                // Parse error or live coding.
                 continue;
             }
 

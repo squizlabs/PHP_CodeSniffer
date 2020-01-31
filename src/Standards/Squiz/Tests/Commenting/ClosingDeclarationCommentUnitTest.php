@@ -49,7 +49,7 @@ class ClosingDeclarationCommentUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [71 => 1];
+        return [];
 
     }//end getWarningList()
 

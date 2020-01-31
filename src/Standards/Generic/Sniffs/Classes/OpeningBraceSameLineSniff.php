@@ -48,8 +48,7 @@ class OpeningBraceSameLineSniff implements Sniff
         $errorData       = [strtolower($tokens[$stackPtr]['content']).' '.$tokens[$scopeIdentifier]['content']];
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            $error = 'Possible parse error: %s missing opening or closing brace';
-            $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $errorData);
+            // Parse error or live coding.
             return;
         }
 

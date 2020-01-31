@@ -47,9 +47,7 @@ class ValidClassNameSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         if (isset($tokens[$stackPtr]['scope_opener']) === false) {
-            $error = 'Possible parse error: %s missing opening or closing brace';
-            $data  = [$tokens[$stackPtr]['content']];
-            $phpcsFile->addWarning($error, $stackPtr, 'MissingBrace', $data);
+            // Parse error or live coding.
             return;
         }
 

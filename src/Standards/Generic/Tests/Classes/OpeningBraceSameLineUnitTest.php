@@ -53,7 +53,7 @@ class OpeningBraceSameLineUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [51 => 1];
+        return [];
 
     }//end getWarningList()
 

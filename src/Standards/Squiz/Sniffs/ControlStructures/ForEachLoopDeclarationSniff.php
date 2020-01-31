@@ -59,14 +59,12 @@ class ForEachLoopDeclarationSniff implements Sniff
 
         $openingBracket = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
         if ($openingBracket === false) {
-            $error = 'Possible parse error: FOREACH has no opening parenthesis';
-            $phpcsFile->addWarning($error, $stackPtr, 'MissingOpenParenthesis');
+            // Parse error or live coding.
             return;
         }
 
         if (isset($tokens[$openingBracket]['parenthesis_closer']) === false) {
-            $error = 'Possible parse error: FOREACH has no closing parenthesis';
-            $phpcsFile->addWarning($error, $stackPtr, 'MissingCloseParenthesis');
+            // Parse error or live coding.
             return;
         }
 
@@ -134,8 +132,7 @@ class ForEachLoopDeclarationSniff implements Sniff
 
         $asToken = $phpcsFile->findNext(T_AS, $openingBracket);
         if ($asToken === false) {
-            $error = 'Possible parse error: FOREACH has no AS statement';
-            $phpcsFile->addWarning($error, $stackPtr, 'MissingAs');
+            // Parse error or live coding.
             return;
         }
 

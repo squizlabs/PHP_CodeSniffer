@@ -8,6 +8,9 @@ The file documents changes to the PHP_CodeSniffer project.
 - The `--extensions` command line argument no longer accepts the tokenizer along with the extension
     - Previously, you would check `.module` files as PHP files using `--extensions=module/php`
     - Now, you use `--extensions=module`
+- None of the included sniffs will warn about possible parse errors any more
+    - This improves the experience when the file is being checked inside an editor during live coding
+    - If you want to detect parse errors, use a linter instead
 - Composer installs no longer include any test files
 
 ### Removed
