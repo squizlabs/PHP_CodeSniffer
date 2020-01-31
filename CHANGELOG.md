@@ -28,15 +28,17 @@ The file documents changes to the PHP_CodeSniffer project.
         - For example, `<element key="print" value="echo">`
 - Removed the unused `T_ARRAY_HINT` token
 - Removed the unused `T_RETURN_TYPE` token
-- Removed sniff `Generic.Debug.ClosureLinter`
-- Removed sniff `Generic.Debug.CSSLint`
-- Removed sniff `Generic.Debug.ESLint`
-- Removed sniff `Generic.Debug.JSHint`
-- Removed sniff `Squiz.Classes.DuplicateProperty`
-- Removed sniff `Squiz.Debug.JavaScriptLint`
-- Removed sniff `Squiz.Debug.JSLint`
-- Removed sniff `Squiz.Objects.DisallowObjectStringIndex`
-- Removed sniff `Squiz.Objects.ObjectMemberComment`
-- Removed sniff `Squiz.WhiteSpace.PropertyLabelSpacing`
+- Removed JS-specific sniff `Generic.Debug.ClosureLinter`
+- Removed CSS-specific sniff `Generic.Debug.CSSLint`
+- Removed JS-specific sniff `Generic.Debug.ESLint`
+- Removed JS-specific sniff `Generic.Debug.JSHint`
+- Removed JS-specific sniff `Squiz.Classes.DuplicateProperty`
+- Removed JS-specific sniff `Squiz.Debug.JavaScriptLint`
+- Removed JS-specific sniff `Squiz.Debug.JSLint`
+- Removed JS-specific sniff `Squiz.Objects.DisallowObjectStringIndex`
+- Removed JS-specific sniff `Squiz.Objects.ObjectMemberComment`
+- Removed deprecated sniff `Squiz.WhiteSpace.LanguageConstructSpacing`
+    - Use `Generic.WhiteSpace.LanguageConstructSpacing` instead
+- Removed JS-specific sniff `Squiz.WhiteSpace.PropertyLabelSpacing`
 - Removed the entire `Squiz.CSS` category, and sniffs within
 - Removed the entire `MySource` standard, and all sniffs within
