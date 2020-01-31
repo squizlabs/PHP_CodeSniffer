@@ -996,18 +996,7 @@ class Ruleset
                             }
 
                             $printValue = rtrim($printValue, ',');
-                        } else {
-                            $value      = (string) $prop['value'];
-                            $printValue = $value;
-                            foreach (explode(',', $value) as $val) {
-                                list($k, $v) = explode('=>', $val.'=>');
-                                if ($v !== '') {
-                                    $values[trim($k)] = trim($v);
-                                } else {
-                                    $values[] = trim($k);
-                                }
-                            }
-                        }//end if
+                        }
 
                         $this->ruleset[$code]['properties'][$name] = $values;
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
