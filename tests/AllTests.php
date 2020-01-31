@@ -9,8 +9,8 @@
 
 namespace PHP_CodeSniffer\Tests;
 
-include_once 'Core/AllTests.php';
-include_once 'Standards/AllSniffs.php';
+require_once 'Core/AllTests.php';
+require_once 'Standards/AllSniffs.php';
 
 // PHPUnit 7 made the TestSuite run() method incompatible with
 // older PHPUnit versions due to return type hints, so maintain
