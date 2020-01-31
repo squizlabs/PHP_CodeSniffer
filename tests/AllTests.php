@@ -9,7 +9,7 @@
 
 namespace PHP_CodeSniffer\Tests;
 
-$GLOBALS['PHP_CODESNIFFER_PEAR'] = false;
+$GLOBALS['PHP_CODESNIFFER_PEAR'] = (getenv("PHP_CODESNIFFER_PEAR") ? true : false);
 
 if (is_file(__DIR__.'/../autoload.php') === true) {
     include_once 'Core/AllTests.php';
