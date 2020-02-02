@@ -43,5 +43,5 @@ The file documents changes to the PHP_CodeSniffer project.
 - Removed deprecated sniff `Squiz.WhiteSpace.LanguageConstructSpacing`
     - Use `Generic.WhiteSpace.LanguageConstructSpacing` instead
 - Removed JS-specific sniff `Squiz.WhiteSpace.PropertyLabelSpacing`
-- Removed the entire `Squiz.CSS` category, and sniffs within
+- Removed the entire `Squiz.CSS` category, and all sniffs within
 - Removed the entire `MySource` standard, and all sniffs within
