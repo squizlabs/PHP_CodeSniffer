@@ -1445,6 +1445,15 @@ $a = $a === true ? [
     'a' => 100,
 ];
 
+return [
+    Url::make('View Song', fn($song) => $song->url())
+        ->onlyOnDetail(),
+
+    new Panel('Information', [
+        Text::make('Title')
+    ]),
+];
+
 ?>
 
      <?php if (true) : ?>
