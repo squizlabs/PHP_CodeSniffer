@@ -71,17 +71,6 @@
         <severity>0</severity>
     </rule>
 
-    <!-- We don't want gsjlint throwing errors for things we already check -->
-    <rule ref="Generic.Debug.ClosureLinter">
-        <properties>
-            <property name="errorCodes" type="array" value="0210"/>
-            <property name="ignoreCodes" type="array" value="0001,0110,0240"/>
-        </properties>
-    </rule>
-    <rule ref="Generic.Debug.ClosureLinter.ExternalToolError">
-        <message>%2$s</message>
-    </rule>
-
     <!-- Only one argument per line in multi-line function calls -->
     <rule ref="PEAR.Functions.FunctionCallSignature">
         <properties>
