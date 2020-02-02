@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Fixed bug #2848 : PSR12.Files.FileHeader false positive for file with mixed PHP and HTML and no file header
+  - Fixed bug #2849 : Generic.WhiteSpace.ScopeIndent false positive with arrow function inside array
  </notes>
  <contents>
   <dir name="/">
