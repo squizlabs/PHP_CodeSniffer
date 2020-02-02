@@ -71,8 +71,22 @@ class FileHeaderSniff implements Sniff
         } while ($openTag !== false);
 
         if ($openTag === false) {
-            // We never found a proper file header
-            // so use the first one as the header.
+            // We never found a proper file header.
+            // If the file has multiple PHP open tags, we know
+            // that it must be a mix of PHP and HTML (or similar)
+            // so the header rules do not apply.
+            if (count($possibleHeaders) > 1) {
+                return $phpcsFile->numTokens;
+            }
+
+            // There is only one possible header.
+            // If it is the first content in the file, it technically
+            // serves as the file header, and the open tag needs to
+            // have a newline after it. Otherwise, ignore it.
+            if ($stackPtr > 0) {
+                return $phpcsFile->numTokens;
+            }
+
             $openTag = $stackPtr;
         } else if (count($possibleHeaders) > 1) {
             // There are other PHP blocks before the file header.

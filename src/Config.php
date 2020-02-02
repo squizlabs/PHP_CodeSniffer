@@ -23,14 +23,14 @@ class Config
      *
      * @var string
      */
-    const VERSION = '3.5.4';
+    const VERSION = '4.0.0';
 
     /**
      * Package stability; either stable, beta or alpha.
      *
      * @var string
      */
-    const STABILITY = 'stable';
+    const STABILITY = 'alpha';
 
     /**
      * An array of settings that PHPCS and PHPCBF accept.
