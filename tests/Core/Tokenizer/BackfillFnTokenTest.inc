@@ -73,6 +73,49 @@ fn(array $a) : array => $a;
 /* testTernary */
 $fn = fn($a) => $a ? /* testTernaryThen */ fn() : string => 'a' : /* testTernaryElse */ fn() : string => 'b';
 
+/* testConstantDeclaration */
+const FN = 'a';
+
+class Foo {
+    /* testStaticMethodName */
+    public static function fn($param) {
+        /* testNestedInMethod */
+        $fn = fn($c) => $callable($factory($c), $c);
+    }
+
+    public function foo() {
+        /* testPropertyAssignment */
+        $this->fn = 'a';
+    }
+}
+
+$anon = new class() {
+    /* testAnonClassMethodName */
+    protected function fn($param) {
+    }
+}
+
+/* testNonArrowStaticMethodCall */
+$a = Foo::fn($param);
+
+/* testNonArrowStaticMethodCallWithChaining */
+$a = Foo::fn($param)->another();
+
+/* testNonArrowStaticConstant */
+$a = MyClass::FN;
+
+/* testNonArrowStaticConstantDeref */
+$a = MyClass::FN[$a];
+
+/* testNonArrowObjectMethodCall */
+$a = $obj->fn($param);
+
+/* testNonArrowNamespacedFunctionCall */
+$a = MyNS\Sub\fn($param);
+
+/* testNonArrowNamespaceOperatorFunctionCall */
+$a = namespace\fn($param);
+
 /* testLiveCoding */
 // Intentional parse error. This has to be the last test in the file.
 $fn = fn
