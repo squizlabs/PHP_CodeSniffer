@@ -102,28 +102,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
-     * Test a function called fn.
-     *
-     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
-     *
-     * @return void
-     */
-    public function testFunctionName()
-    {
-        $tokens = self::$phpcsFile->getTokens();
-
-        $token = $this->getTargetToken('/* testFunctionName */', T_FN);
-        $this->assertFalse(array_key_exists('scope_condition', $tokens[$token]), 'Scope condition is set');
-        $this->assertFalse(array_key_exists('scope_opener', $tokens[$token]), 'Scope opener is set');
-        $this->assertFalse(array_key_exists('scope_closer', $tokens[$token]), 'Scope closer is set');
-        $this->assertFalse(array_key_exists('parenthesis_owner', $tokens[$token]), 'Parenthesis owner is set');
-        $this->assertFalse(array_key_exists('parenthesis_opener', $tokens[$token]), 'Parenthesis opener is set');
-        $this->assertFalse(array_key_exists('parenthesis_closer', $tokens[$token]), 'Parenthesis closer is set');
-
-    }//end testFunctionName()
-
-
-    /**
      * Test nested arrow functions.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
@@ -553,27 +531,85 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
-     * Test that the backfill presumes T_FN during live coding, but doesn't set the additional index keys.
+     * Test arrow function nested within a method declaration.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
      *
      * @return void
      */
-    public function testLiveCoding()
+    public function testNestedInMethod()
     {
         $tokens = self::$phpcsFile->getTokens();
 
-        $token = $this->getTargetToken('/* testLiveCoding */', [T_STRING, T_FN]);
-        $this->assertSame($tokens[$token]['code'], T_FN, 'Token not tokenized as T_FN');
+        $token = $this->getTargetToken('/* testNestedInMethod */', T_FN);
+        $this->backfillHelper($token);
 
-        $this->assertArrayNotHasKey('scope_condition', $tokens[$token], 'Scope condition is set');
-        $this->assertArrayNotHasKey('scope_opener', $tokens[$token], 'Scope opener is set');
-        $this->assertArrayNotHasKey('scope_closer', $tokens[$token], 'Scope closer is set');
-        $this->assertArrayNotHasKey('parenthesis_owner', $tokens[$token], 'Parenthesis owner is set');
-        $this->assertArrayNotHasKey('parenthesis_opener', $tokens[$token], 'Parenthesis opener is set');
-        $this->assertArrayNotHasKey('parenthesis_closer', $tokens[$token], 'Parenthesis closer is set');
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 5), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 17), 'Scope closer is not the semicolon token');
 
-    }//end testLiveCoding()
+        $opener = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 5), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 17), 'Opener scope closer is not the semicolon token');
+
+        $closer = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 5), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 17), 'Closer scope closer is not the semicolon token');
+
+    }//end testNestedInMethod()
+
+
+    /**
+     * Verify that "fn" keywords which are not arrow functions get tokenized as T_STRING and don't
+     * have the extra token array indexes.
+     *
+     * @param string $testMarker The comment prefacing the target token.
+     *
+     * @dataProvider dataNotAnArrowFunction
+     * @covers       PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testNotAnArrowFunction($testMarker)
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token      = $this->getTargetToken('/* testFunctionName */', [T_STRING, T_FN], 'fn');
+        $tokenArray = $tokens[$token];
+
+        $this->assertSame('T_STRING', $tokenArray['type'], 'Token tokenized as '.$tokenArray['type'].', not T_STRING');
+
+        $this->assertArrayNotHasKey('scope_condition', $tokenArray, 'Scope condition is set');
+        $this->assertArrayNotHasKey('scope_opener', $tokenArray, 'Scope opener is set');
+        $this->assertArrayNotHasKey('scope_closer', $tokenArray, 'Scope closer is set');
+        $this->assertArrayNotHasKey('parenthesis_owner', $tokenArray, 'Parenthesis owner is set');
+        $this->assertArrayNotHasKey('parenthesis_opener', $tokenArray, 'Parenthesis opener is set');
+        $this->assertArrayNotHasKey('parenthesis_closer', $tokenArray, 'Parenthesis closer is set');
+
+    }//end testNotAnArrowFunction()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testNotAnArrowFunction()
+     *
+     * @return array
+     */
+    public function dataNotAnArrowFunction()
+    {
+        return [
+            ['/* testFunctionName */'],
+            ['/* testStaticMethodName */'],
+            ['/* testAnonClassMethodName */'],
+            ['/* testNonArrowStaticMethodCall */'],
+            ['/* testNonArrowStaticMethodCallWithChaining */'],
+            ['/* testNonArrowObjectMethodCall */'],
+            ['/* testNonArrowNamespacedFunctionCall */'],
+            ['/* testNonArrowNamespaceOperatorFunctionCall */'],
+            ['/* testLiveCoding */'],
+        ];
+
+    }//end dataNotAnArrowFunction()
 
 
     /**

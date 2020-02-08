@@ -1894,7 +1894,7 @@ class PHP extends Tokenizer
                             $this->tokens[$i]['scope_closer']    = $scopeCloser;
                             $this->tokens[$i]['parenthesis_owner']  = $i;
                             $this->tokens[$i]['parenthesis_opener'] = $x;
-                            $this->tokens[$i]['parenthesis_closer'] = $this->tokens[$x]['parenthesis_closer'];
+                            $this->tokens[$i]['parenthesis_closer'] = $closer;
 
                             $this->tokens[$arrow]['code'] = T_FN_ARROW;
                             $this->tokens[$arrow]['type'] = 'T_FN_ARROW';
@@ -1918,6 +1918,12 @@ class PHP extends Tokenizer
                         }//end if
                     }//end if
                 }//end if
+
+                // If after all that, the extra tokens are not set, this is not an arrow function.
+                if (isset($this->tokens[$i]['scope_closer']) === false) {
+                    $this->tokens[$i]['code'] = T_STRING;
+                    $this->tokens[$i]['type'] = 'T_STRING';
+                }
             } else if ($this->tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET) {
                 if (isset($this->tokens[$i]['bracket_closer']) === false) {
                     continue;
