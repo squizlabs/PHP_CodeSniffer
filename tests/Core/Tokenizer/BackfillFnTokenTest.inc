@@ -76,6 +76,9 @@ $fn = fn($a) => $a ? /* testTernaryThen */ fn() : string => 'a' : /* testTernary
 /* testConstantDeclaration */
 const FN = 'a';
 
+/* testConstantDeclarationLower */
+const fn = 'a';
+
 class Foo {
     /* testStaticMethodName */
     public static function fn($param) {
@@ -101,8 +104,14 @@ $a = Foo::fn($param);
 /* testNonArrowConstantAccess */
 $a = MyClass::FN;
 
+/* testNonArrowConstantAccessMixed */
+$a = MyClass::Fn;
+
 /* testNonArrowObjectMethodCall */
 $a = $obj->fn($param);
+
+/* testNonArrowObjectMethodCallUpper */
+$a = $obj->FN($param);
 
 /* testNonArrowNamespacedFunctionCall */
 $a = MyNS\Sub\Fn($param);

@@ -604,6 +604,10 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
                 '/* testConstantDeclaration */',
                 'FN',
             ],
+            [
+                '/* testConstantDeclarationLower */',
+                'fn',
+            ],
             ['/* testStaticMethodName */'],
             ['/* testPropertyAssignment */'],
             [
@@ -615,12 +619,19 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
                 '/* testNonArrowConstantAccess */',
                 'FN',
             ],
+            [
+                '/* testNonArrowConstantAccessMixed */',
+                'Fn',
+            ],
             ['/* testNonArrowObjectMethodCall */'],
             [
                 '/* testNonArrowNamespacedFunctionCall */',
                 'Fn',
             ],
-            ['/* testNonArrowNamespaceOperatorFunctionCall */'],
+            [
+                '/* testNonArrowObjectMethodCallUpper */',
+                'FN',
+            ],
             ['/* testLiveCoding */'],
         ];
 
