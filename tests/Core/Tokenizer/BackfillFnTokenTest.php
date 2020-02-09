@@ -562,18 +562,19 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      * Verify that "fn" keywords which are not arrow functions get tokenized as T_STRING and don't
      * have the extra token array indexes.
      *
-     * @param string $testMarker The comment prefacing the target token.
+     * @param string $testMarker  The comment prefacing the target token.
+     * @param string $testContent The token content to look for.
      *
      * @dataProvider dataNotAnArrowFunction
      * @covers       PHP_CodeSniffer\Tokenizers\PHP::processAdditional
      *
      * @return void
      */
-    public function testNotAnArrowFunction($testMarker)
+    public function testNotAnArrowFunction($testMarker, $testContent='fn')
     {
         $tokens = self::$phpcsFile->getTokens();
 
-        $token      = $this->getTargetToken($testMarker, [T_STRING, T_FN], 'fn');
+        $token      = $this->getTargetToken($testMarker, [T_STRING, T_FN], $testContent);
         $tokenArray = $tokens[$token];
 
         $this->assertSame('T_STRING', $tokenArray['type'], 'Token tokenized as '.$tokenArray['type'].', not T_STRING');
@@ -598,16 +599,27 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
     public function dataNotAnArrowFunction()
     {
         return [
-            ['/* testConstantDeclaration */'],
             ['/* testFunctionName */'],
+            [
+                '/* testConstantDeclaration */',
+                'FN',
+            ],
             ['/* testStaticMethodName */'],
-            ['/* testAnonClassMethodName */'],
+            ['/* testPropertyAssignment */'],
+            [
+                '/* testAnonClassMethodName */',
+                'fN',
+            ],
             ['/* testNonArrowStaticMethodCall */'],
-            ['/* testNonArrowStaticMethodCallWithChaining */'],
-            ['/* testNonArrowStaticConstant */'],
-            ['/* testNonArrowStaticConstantDeref */'],
+            [
+                '/* testNonArrowConstantAccess */',
+                'FN',
+            ],
             ['/* testNonArrowObjectMethodCall */'],
-            ['/* testNonArrowNamespacedFunctionCall */'],
+            [
+                '/* testNonArrowNamespacedFunctionCall */',
+                'Fn',
+            ],
             ['/* testNonArrowNamespaceOperatorFunctionCall */'],
             ['/* testLiveCoding */'],
         ];
