@@ -632,6 +632,7 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
                 '/* testNonArrowObjectMethodCallUpper */',
                 'FN',
             ],
+            ['/* testNonArrowNamespaceOperatorFunctionCall */'],
             ['/* testLiveCoding */'],
         ];
 
