@@ -573,7 +573,7 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
     {
         $tokens = self::$phpcsFile->getTokens();
 
-        $token      = $this->getTargetToken('/* testFunctionName */', [T_STRING, T_FN], 'fn');
+        $token      = $this->getTargetToken($testMarker, [T_STRING, T_FN], 'fn');
         $tokenArray = $tokens[$token];
 
         $this->assertSame('T_STRING', $tokenArray['type'], 'Token tokenized as '.$tokenArray['type'].', not T_STRING');
@@ -598,11 +598,14 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
     public function dataNotAnArrowFunction()
     {
         return [
+            ['/* testConstantDeclaration */'],
             ['/* testFunctionName */'],
             ['/* testStaticMethodName */'],
             ['/* testAnonClassMethodName */'],
             ['/* testNonArrowStaticMethodCall */'],
             ['/* testNonArrowStaticMethodCallWithChaining */'],
+            ['/* testNonArrowStaticConstant */'],
+            ['/* testNonArrowStaticConstantDeref */'],
             ['/* testNonArrowObjectMethodCall */'],
             ['/* testNonArrowNamespacedFunctionCall */'],
             ['/* testNonArrowNamespaceOperatorFunctionCall */'],
