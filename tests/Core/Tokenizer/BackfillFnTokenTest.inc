@@ -74,7 +74,7 @@ fn(array $a) : array => $a;
 $fn = fn($a) => $a ? /* testTernaryThen */ fn() : string => 'a' : /* testTernaryElse */ fn() : string => 'b';
 
 /* testConstantDeclaration */
-const fn = 'a';
+const FN = 'a';
 
 class Foo {
     /* testStaticMethodName */
@@ -91,27 +91,21 @@ class Foo {
 
 $anon = new class() {
     /* testAnonClassMethodName */
-    protected function fn($param) {
+    protected function fN($param) {
     }
 }
 
 /* testNonArrowStaticMethodCall */
 $a = Foo::fn($param);
 
-/* testNonArrowStaticMethodCallWithChaining */
-$a = Foo::fn($param)->another();
-
-/* testNonArrowStaticConstant */
-$a = MyClass::fn;
-
-/* testNonArrowStaticConstantDeref */
-$a = MyClass::fn[$a];
+/* testNonArrowConstantAccess */
+$a = MyClass::FN;
 
 /* testNonArrowObjectMethodCall */
 $a = $obj->fn($param);
 
 /* testNonArrowNamespacedFunctionCall */
-$a = MyNS\Sub\fn($param);
+$a = MyNS\Sub\Fn($param);
 
 /* testNonArrowNamespaceOperatorFunctionCall */
 $a = namespace\fn($param);
