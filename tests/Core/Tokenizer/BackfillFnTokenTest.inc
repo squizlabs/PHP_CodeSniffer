@@ -74,7 +74,7 @@ fn(array $a) : array => $a;
 $fn = fn($a) => $a ? /* testTernaryThen */ fn() : string => 'a' : /* testTernaryElse */ fn() : string => 'b';
 
 /* testConstantDeclaration */
-const FN = 'a';
+const fn = 'a';
 
 class Foo {
     /* testStaticMethodName */
@@ -102,10 +102,10 @@ $a = Foo::fn($param);
 $a = Foo::fn($param)->another();
 
 /* testNonArrowStaticConstant */
-$a = MyClass::FN;
+$a = MyClass::fn;
 
 /* testNonArrowStaticConstantDeref */
-$a = MyClass::FN[$a];
+$a = MyClass::fn[$a];
 
 /* testNonArrowObjectMethodCall */
 $a = $obj->fn($param);
