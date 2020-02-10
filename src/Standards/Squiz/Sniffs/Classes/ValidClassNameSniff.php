@@ -72,7 +72,7 @@ class ValidClassNameSniff implements Sniff
                 $type,
                 $name,
             ];
-            $phpcsFile->addError($error, $stackPtr, 'NotCamelCaps', $data);
+            $phpcsFile->addError($error, $stackPtr, 'NotPascalCase', $data);
             $phpcsFile->recordMetric($stackPtr, 'PascalCase class name', 'no');
         } else {
             $phpcsFile->recordMetric($stackPtr, 'PascalCase class name', 'yes');

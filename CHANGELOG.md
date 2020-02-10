@@ -11,6 +11,8 @@ The file documents changes to the PHP_CodeSniffer project.
 - None of the included sniffs will warn about possible parse errors any more
     - This improves the experience when the file is being checked inside an editor during live coding
     - If you want to detect parse errors, use a linter instead
+- Changed the error code `Squiz.Classes.ValidClassName.NotCamelCaps` to `Squiz.Classes.ValidClassName.NotPascalCase`
+    - This reflects that the sniff is actually checking for `ClassName` and not `className`
 - Composer installs no longer include any test files
 
 ### Removed
