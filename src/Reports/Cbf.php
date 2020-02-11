@@ -15,7 +15,8 @@ namespace PHP_CodeSniffer\Reports;
 
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Files\File;
-use PHP_CodeSniffer\Util;
+use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Timing;
 
 class Cbf implements Report
 {
@@ -41,9 +42,8 @@ class Cbf implements Report
         $errors = $phpcsFile->getFixableCount();
         if ($errors !== 0) {
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                ob_end_clean();
                 $startTime = microtime(true);
-                echo "\t=> Fixing file: $errors/$errors violations remaining";
+                Common::forcePrintStatusMessage("=> Fixing file: $errors/$errors violations remaining", 1, true);
             }
 
             $fixed = $phpcsFile->fixer->fixFile();
@@ -63,18 +63,18 @@ class Cbf implements Report
 
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             if ($fixed === false) {
-                echo 'ERROR';
+                Common::forcePrintStatusMessage('ERROR', 0, true);
             } else {
-                echo 'DONE';
+                Common::forcePrintStatusMessage('DONE', 0, true);
             }
 
             $timeTaken = ((microtime(true) - $startTime) * 1000);
             if ($timeTaken < 1000) {
                 $timeTaken = round($timeTaken);
-                echo " in {$timeTaken}ms".PHP_EOL;
+                Common::forcePrintStatusMessage(" in {$timeTaken}ms");
             } else {
                 $timeTaken = round(($timeTaken / 1000), 2);
-                echo " in $timeTaken secs".PHP_EOL;
+                Common::forcePrintStatusMessage(" in $timeTaken secs");
             }
         }
 
@@ -92,9 +92,9 @@ class Cbf implements Report
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 if ($newFilename === $report['filename']) {
-                    echo "\t=> File was overwritten".PHP_EOL;
+                    Common::forcePrintStatusMessage("=> File was overwritten", 1);
                 } else {
-                    echo "\t=> Fixed file written to ".basename($newFilename).PHP_EOL;
+                    Common::forcePrintStatusMessage("=> Fixed file written to ".basename($newFilename), 1);
                 }
             }
         }
@@ -239,10 +239,6 @@ class Cbf implements Report
         }
 
         echo PHP_EOL.str_repeat('-', $width).PHP_EOL.PHP_EOL;
-
-        if ($toScreen === true && $interactive === false) {
-            Util\Timing::printRunTime();
-        }
 
     }//end generate()
 

@@ -29,6 +29,13 @@ class Common
         'callable',
     ];
 
+    /**
+     * If TRUE, requests to print a status message will be ignored.
+     *
+     * @var boolean
+     */
+    public static $statusMessagesPaused = false;
+
 
     /**
      * Return TRUE if the path is a PHAR file.
@@ -258,6 +265,83 @@ class Common
         return $content;
 
     }//end prepareForOutput()
+
+
+    /**
+     * Prints a status message to STDERR.
+     *
+     * If status messages have been paused, the message will be not be output.
+     * Use forcePrintStatusMessage() to forcibly print a message in this case.
+     *
+     * @param string $message         The message to print.
+     * @param int    $indent          How many levels to indent the message.
+     *                                Tabs are used to indent status
+     *                                messages.
+     * @param bool   $suppressNewline If TRUE, the message will not be followed
+     *                                by a newline character.
+     *
+     * @return void
+     */
+    public static function printStatusMessage($message, $indent=0, $suppressNewline=false)
+    {
+        if (self::$statusMessagesPaused === true) {
+            return;
+        }
+
+        self::forcePrintStatusMessage($message, $indent, $suppressNewline);
+
+    }//end printStatusMessage()
+
+
+    /**
+     * Prints a status message to STDERR, even if status messages have been paused.
+     *
+     * @param string $message         The message to print.
+     * @param int    $indent          How many levels to indent the message.
+     *                                Tabs are used to indent status
+     *                                messages.
+     * @param bool   $suppressNewline If TRUE, the message will not be followed
+     *                                by a newline character.
+     *
+     * @return void
+     */
+    public static function forcePrintStatusMessage($message, $indent=0, $suppressNewline=false)
+    {
+        if ($indent > 0) {
+            $message = str_repeat("\t", $indent).$message;
+        }
+
+        if ($suppressNewline === false) {
+            $message .= PHP_EOL;
+        }
+
+        fwrite(STDERR, $message);
+
+    }//end forcePrintStatusMessage()
+
+
+    /**
+     * Pauses the printing of status messages.
+     *
+     * @return void
+     */
+    public static function pauseStatusMessages()
+    {
+        self::$statusMessagesPaused = true;
+
+    }//end pauseStatusMessages()
+
+
+    /**
+     * Resumes the printing of status messages.
+     *
+     * @return void
+     */
+    public static function resumeStatusMessages()
+    {
+        self::$statusMessagesPaused = false;
+
+    }//end resumeStatusMessages()
 
 
     /**

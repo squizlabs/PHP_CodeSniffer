@@ -13,6 +13,11 @@ The file documents changes to the PHP_CodeSniffer project.
     - If you want to detect parse errors, use a linter instead
 - Changed the error code `Squiz.Classes.ValidClassName.NotCamelCaps` to `Squiz.Classes.ValidClassName.NotPascalCase`
     - This reflects that the sniff is actually checking for `ClassName` and not `className`
+- All status, debug, and progress output is now sent to STDERR instead of STDOUT
+    - Only report output now goes through STDOUT
+    - Piping output to a file will now only include report output
+        - Pipe both STDERR and STDOUT to the same file to capture the entire output of the run
+    - The `--report-file` functionality remains untouched
 - Composer installs no longer include any test files
 
 ### Removed

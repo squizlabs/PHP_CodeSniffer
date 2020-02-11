@@ -352,10 +352,6 @@ class Code implements Report
 
         echo $cachedData;
 
-        if ($toScreen === true && $interactive === false) {
-            Util\Timing::printRunTime();
-        }
-
     }//end generate()
 
 

@@ -12,7 +12,8 @@ namespace PHP_CodeSniffer\Files;
 use PHP_CodeSniffer\Ruleset;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Fixer;
-use PHP_CodeSniffer\Util;
+use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Tokens;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Exceptions\TokenizerException;
 use PHP_CodeSniffer\Tokenizers\PHP;
@@ -259,7 +260,7 @@ class File
         $this->tokens  = [];
 
         try {
-            $this->eolChar = Util\Common::detectLineEndings($content);
+            $this->eolChar = Common::detectLineEndings($content);
         } catch (RuntimeException $e) {
             $this->addWarningOnLine($e->getMessage(), 1, 'Internal.DetectLineEndings');
             return;
@@ -321,7 +322,7 @@ class File
         $this->fixer->startFile($this);
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
-            echo "\t*** START TOKEN PROCESSING ***".PHP_EOL;
+            Common::printStatusMessage('*** START TOKEN PROCESSING ***', 1);
         }
 
         $foundCode        = false;
@@ -370,8 +371,8 @@ class File
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
                 $type    = $token['type'];
-                $content = Util\Common::prepareForOutput($token['content']);
-                echo "\t\tProcess token $stackPtr: $type => $content".PHP_EOL;
+                $content = Common::prepareForOutput($token['content']);
+                Common::printStatusMessage("Process token $stackPtr: $type => $content", 2);
             }
 
             if ($token['code'] !== T_INLINE_HTML) {
@@ -440,7 +441,7 @@ class File
 
                 if (PHP_CODESNIFFER_VERBOSITY > 2) {
                     $startTime = microtime(true);
-                    echo "\t\t\tProcessing ".$this->activeListener.'... ';
+                    Common::printStatusMessage('Processing '.$this->activeListener.'... ', 3, true);
                 }
 
                 $ignoreTo = $this->ruleset->sniffs[$class]->process($this, $stackPtr);
@@ -457,7 +458,7 @@ class File
                     $this->listenerTimes[$this->activeListener] += $timeTaken;
 
                     $timeTaken = round(($timeTaken), 4);
-                    echo "DONE in $timeTaken seconds".PHP_EOL;
+                    Common::printStatusMessage("DONE in $timeTaken seconds");
                 }
 
                 $this->activeListener = '';
@@ -479,16 +480,16 @@ class File
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
-            echo "\t*** END TOKEN PROCESSING ***".PHP_EOL;
-            echo "\t*** START SNIFF PROCESSING REPORT ***".PHP_EOL;
+            Common::printStatusMessage("*** END TOKEN PROCESSING ***", 1);
+            Common::printStatusMessage("*** START SNIFF PROCESSING REPORT ***", 1);
 
             asort($this->listenerTimes, SORT_NUMERIC);
             $this->listenerTimes = array_reverse($this->listenerTimes, true);
             foreach ($this->listenerTimes as $listener => $timeTaken) {
-                echo "\t$listener: ".round(($timeTaken), 4).' secs'.PHP_EOL;
+                Common::printStatusMessage("$listener: ".round(($timeTaken), 4).' secs', 1);
             }
 
-            echo "\t*** END SNIFF PROCESSING REPORT ***".PHP_EOL;
+            Common::printStatusMessage("*** END SNIFF PROCESSING REPORT ***", 1);
         }
 
         $this->fixedCount += $this->fixer->getFixCount();
@@ -515,9 +516,9 @@ class File
             $this->ignored = true;
             $this->addWarning($e->getMessage(), null, 'Internal.Tokenizer.Exception');
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                echo "[tokenizer error]... ";
+                Common::printStatusMessage('[tokenizer error]... ', 0, true);
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo PHP_EOL;
+                    Common::printStatusMessage(PHP_EOL, 0, true);
                 }
             }
 
@@ -547,9 +548,9 @@ class File
                 $numLines = $this->tokens[($this->numTokens - 1)]['line'];
             }
 
-            echo "[$this->numTokens tokens in $numLines lines]... ";
+            Common::printStatusMessage("[$this->numTokens tokens in $numLines lines]... ", 0, true);
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo PHP_EOL;
+                Common::printStatusMessage(PHP_EOL, 0, true);
             }
         }
 
@@ -791,7 +792,7 @@ class File
         $parts = explode('.', $code);
         if ($parts[0] === 'Internal') {
             // An internal message.
-            $listenerCode = Util\Common::getSniffCode($this->activeListener);
+            $listenerCode = Common::getSniffCode($this->activeListener);
             $sniffCode    = $code;
             $checkCodes   = [$sniffCode];
         } else {
@@ -800,7 +801,7 @@ class File
                 $sniffCode    = $code;
                 $listenerCode = substr($sniffCode, 0, strrpos($sniffCode, '.'));
             } else {
-                $listenerCode = Util\Common::getSniffCode($this->activeListener);
+                $listenerCode = Common::getSniffCode($this->activeListener);
                 $sniffCode    = $listenerCode.'.'.$code;
                 $parts        = explode('.', $sniffCode);
             }
@@ -1019,9 +1020,7 @@ class File
             && $this->fixer->enabled === true
             && $fixable === true
         ) {
-            @ob_end_clean();
-            echo "\tE: [Line $line] $message ($sniffCode)".PHP_EOL;
-            ob_start();
+            Common::forcePrintStatusMessage("E: [Line $line] $message ($sniffCode)", 1);
         }
 
         return true;
@@ -1459,7 +1458,7 @@ class File
                 $paramCount++;
                 break;
             case T_EQUAL:
-                $defaultStart = $this->findNext(Util\Tokens::$emptyTokens, ($i + 1), null, true);
+                $defaultStart = $this->findNext(Tokens::$emptyTokens, ($i + 1), null, true);
                 $equalToken   = $i;
                 break;
             }//end switch
@@ -1709,7 +1708,7 @@ class File
             T_VAR       => T_VAR,
         ];
 
-        $valid += Util\Tokens::$emptyTokens;
+        $valid += Tokens::$emptyTokens;
 
         $scope          = 'public';
         $scopeSpecified = false;
@@ -1877,7 +1876,7 @@ class File
         }
 
         $tokenBefore = $this->findPrevious(
-            Util\Tokens::$emptyTokens,
+            Tokens::$emptyTokens,
             ($stackPtr - 1),
             null,
             true
@@ -1900,14 +1899,14 @@ class File
             return true;
         }
 
-        if (isset(Util\Tokens::$assignmentTokens[$this->tokens[$tokenBefore]['code']]) === true) {
+        if (isset(Tokens::$assignmentTokens[$this->tokens[$tokenBefore]['code']]) === true) {
             // This is directly after an assignment. It's a reference. Even if
             // it is part of an operation, the other tests will handle it.
             return true;
         }
 
         $tokenAfter = $this->findNext(
-            Util\Tokens::$emptyTokens,
+            Tokens::$emptyTokens,
             ($stackPtr + 1),
             null,
             true
@@ -1930,7 +1929,7 @@ class File
                         $varToken = $tokenAfter;
                         if ($param['variable_length'] === true) {
                             $varToken = $this->findNext(
-                                (Util\Tokens::$emptyTokens + [T_ELLIPSIS]),
+                                (Tokens::$emptyTokens + [T_ELLIPSIS]),
                                 ($stackPtr + 1),
                                 null,
                                 true
@@ -1969,7 +1968,7 @@ class File
             if ($this->tokens[$tokenAfter]['code'] === T_VARIABLE) {
                 return true;
             } else {
-                $skip   = Util\Tokens::$emptyTokens;
+                $skip   = Tokens::$emptyTokens;
                 $skip[] = T_NS_SEPARATOR;
                 $skip[] = T_SELF;
                 $skip[] = T_PARENT;
@@ -2196,7 +2195,7 @@ class File
      */
     public function findStartOfStatement($start, $ignore=null)
     {
-        $endTokens = Util\Tokens::$blockOpeners;
+        $endTokens = Tokens::$blockOpeners;
 
         $endTokens[T_COLON]            = true;
         $endTokens[T_COMMA]            = true;
@@ -2240,7 +2239,7 @@ class File
                 $i = $this->tokens[$i]['parenthesis_opener'];
             }
 
-            if (isset(Util\Tokens::$emptyTokens[$this->tokens[$i]['code']]) === false) {
+            if (isset(Tokens::$emptyTokens[$this->tokens[$i]['code']]) === false) {
                 $lastNotEmpty = $i;
             }
         }//end for
@@ -2308,7 +2307,7 @@ class File
                     continue;
                 }
 
-                if ($i === $start && isset(Util\Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true) {
+                if ($i === $start && isset(Tokens::$scopeOpeners[$this->tokens[$i]['code']]) === true) {
                     return $this->tokens[$i]['scope_closer'];
                 }
 
@@ -2328,7 +2327,7 @@ class File
                 }
             }//end if
 
-            if (isset(Util\Tokens::$emptyTokens[$this->tokens[$i]['code']]) === false) {
+            if (isset(Tokens::$emptyTokens[$this->tokens[$i]['code']]) === false) {
                 $lastNotEmpty = $i;
             }
         }//end for

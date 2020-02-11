@@ -147,63 +147,58 @@ class Fixer
 
         $this->enabled = true;
 
+        Common::pauseStatusMessages();
+
         $this->loops = 0;
         while ($this->loops < 50) {
-            ob_start();
-
             // Only needed once file content has changed.
             $contents = $this->getContents();
 
             if (PHP_CODESNIFFER_VERBOSITY > 2) {
-                @ob_end_clean();
-                echo '---START FILE CONTENT---'.PHP_EOL;
+                Common::forcePrintStatusMessage('---START FILE CONTENT---');
                 $lines = explode($this->currentFile->eolChar, $contents);
                 $max   = strlen(count($lines));
                 foreach ($lines as $lineNum => $line) {
                     $lineNum++;
-                    echo str_pad($lineNum, $max, ' ', STR_PAD_LEFT).'|'.$line.PHP_EOL;
+                    Common::forcePrintStatusMessage(str_pad($lineNum, $max, ' ', STR_PAD_LEFT).'|'.$line);
                 }
 
-                echo '--- END FILE CONTENT ---'.PHP_EOL;
-                ob_start();
+                Common::forcePrintStatusMessage('--- END FILE CONTENT ---');
             }
 
             $this->inConflict = false;
             $this->currentFile->ruleset->populateTokenListeners();
             $this->currentFile->setContent($contents);
             $this->currentFile->process();
-            ob_end_clean();
 
             $this->loops++;
 
             if (PHP_CODESNIFFER_CBF === true && PHP_CODESNIFFER_VERBOSITY > 0) {
-                echo "\r".str_repeat(' ', 80)."\r";
-                echo "\t=> Fixing file: $this->numFixes/$fixable violations remaining [made $this->loops pass";
+                Common::forcePrintStatusMessage("\r".str_repeat(' ', 80)."\r", 0, true);
+                $statusMessage = "=> Fixing file: $this->numFixes/$fixable violations remaining [made $this->loops pass";
                 if ($this->loops > 1) {
-                    echo 'es';
+                    $statusMessage .= 'es';
                 }
 
-                echo ']... ';
+                $statusMessage .= ']... ';
+                Common::forcePrintStatusMessage($statusMessage, 1, true);
             }
 
             if ($this->numFixes === 0 && $this->inConflict === false) {
                 // Nothing left to do.
                 break;
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\t* fixed $this->numFixes violations, starting loop ".($this->loops + 1).' *'.PHP_EOL;
+                Common::forcePrintStatusMessage("* fixed $this->numFixes violations, starting loop ".($this->loops + 1).' *', 1);
             }
         }//end while
 
         $this->enabled = false;
 
+        Common::resumeStatusMessages();
+
         if ($this->numFixes > 0) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                if (ob_get_level() > 0) {
-                    ob_end_clean();
-                }
-
-                echo "\t*** Reached maximum number of loops with $this->numFixes violations left unfixed ***".PHP_EOL;
-                ob_start();
+                Common::forcePrintStatusMessage("*** Reached maximum number of loops with $this->numFixes violations left unfixed ***", 1);
             }
 
             return false;
@@ -360,9 +355,7 @@ class Fixer
 
             $line = $bt[0]['line'];
 
-            @ob_end_clean();
-            echo "\t=> Changeset started by $sniff:$line".PHP_EOL;
-            ob_start();
+            Common::forcePrintStatusMessage("=> Changeset started by $sniff:$line", 1);
         }
 
         $this->changeset   = [];
@@ -402,15 +395,11 @@ class Fixer
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                @ob_end_clean();
-                echo "\t=> Changeset failed to apply".PHP_EOL;
-                ob_start();
+                Common::forcePrintStatusMessage('=> Changeset failed to apply', 1);
             }
         } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
             $fixes = count($this->changeset);
-            @ob_end_clean();
-            echo "\t=> Changeset ended: $fixes changes applied".PHP_EOL;
-            ob_start();
+            Common::forcePrintStatusMessage("=> Changeset ended: $fixes changes applied", 1);
         }
 
         $this->changeset = [];
@@ -443,10 +432,8 @@ class Fixer
 
                 $numChanges = count($this->changeset);
 
-                @ob_end_clean();
-                echo "\t\tR: $sniff:$line rolled back the changeset ($numChanges changes)".PHP_EOL;
-                echo "\t=> Changeset rolled back".PHP_EOL;
-                ob_start();
+                Common::forcePrintStatusMessage("R: $sniff:$line rolled back the changeset ($numChanges changes)", 2);
+                Common::forcePrintStatusMessage('=> Changeset rolled back', 1);
             }
 
             $this->changeset = [];
@@ -472,15 +459,13 @@ class Fixer
         if ($this->inChangeset === false
             && isset($this->fixedTokens[$stackPtr]) === true
         ) {
-            $indent = "\t";
+            $depth = 1;
             if (empty($this->changeset) === false) {
-                $indent .= "\t";
+                $depth = 2;
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                @ob_end_clean();
-                echo "$indent* token $stackPtr has already been modified, skipping *".PHP_EOL;
-                ob_start();
+                Common::forcePrintStatusMessage("* token $stackPtr has already been modified, skipping *", $depth);
             }
 
             return false;
@@ -515,9 +500,7 @@ class Fixer
             $this->changeset[$stackPtr] = $content;
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                @ob_end_clean();
-                echo "\t\tQ: $sniff:$line replaced token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\"".PHP_EOL;
-                ob_start();
+                Common::forcePrintStatusMessage("Q: $sniff:$line replaced token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\"", 2);
             }
 
             return true;
@@ -534,27 +517,22 @@ class Fixer
                 && $this->oldTokenValues[$stackPtr]['loop'] === ($this->loops - 1)
             ) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $indent = "\t";
+                    $depth = 1;
                     if (empty($this->changeset) === false) {
-                        $indent .= "\t";
+                        $depth = 2;
                     }
 
                     $loop = $this->oldTokenValues[$stackPtr]['loop'];
 
-                    @ob_end_clean();
-                    echo "$indent**** $sniff:$line has possible conflict with another sniff on loop $loop; caused by the following change ****".PHP_EOL;
-                    echo "$indent**** replaced token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\" ****".PHP_EOL;
+                    Common::forcePrintStatusMessage("**** $sniff:$line has possible conflict with another sniff on loop $loop; caused by the following change ****", $depth);
+                    Common::forcePrintStatusMessage("**** replaced token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\" ****", $depth);
                 }
 
                 if ($this->oldTokenValues[$stackPtr]['loop'] >= ($this->loops - 1)) {
                     $this->inConflict = true;
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo "$indent**** ignoring all changes until next loop ****".PHP_EOL;
+                        Common::forcePrintStatusMessage('**** ignoring all changes until next loop ****', $depth);
                     }
-                }
-
-                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    ob_start();
                 }
 
                 return false;
@@ -570,17 +548,14 @@ class Fixer
         $this->numFixes++;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $indent = "\t";
+            $statusMessage = "$sniff:$line replaced token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\"";
+            $depth         = 1;
             if (empty($this->changeset) === false) {
-                $indent .= "\tA: ";
+                $statusMessage = 'A: '.$statusMessage;
+                $depth         = 2;
             }
 
-            if (ob_get_level() > 0) {
-                ob_end_clean();
-            }
-
-            echo "$indent$sniff:$line replaced token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\"".PHP_EOL;
-            ob_start();
+            Common::forcePrintStatusMessage($statusMessage, $depth);
         }
 
         return true;
@@ -631,14 +606,14 @@ class Fixer
         $this->numFixes--;
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            $indent = "\t";
+            $statusMessage = "$sniff:$line reverted token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\"";
+            $depth         = 1;
             if (empty($this->changeset) === false) {
-                $indent .= "\tR: ";
+                $statusMessage = 'R: '.$statusMessage;
+                $depth         = 2;
             }
 
-            @ob_end_clean();
-            echo "$indent$sniff:$line reverted token $stackPtr ($type on line $tokenLine) \"$oldContent\" => \"$newContent\"".PHP_EOL;
-            ob_start();
+            Common::forcePrintStatusMessage($statusMessage, $depth);
         }
 
         return true;

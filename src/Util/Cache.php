@@ -46,7 +46,8 @@ class Cache
         // At this point, the loaded class list contains the core PHPCS code
         // and all sniffs that have been loaded as part of the run.
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo PHP_EOL."\tGenerating loaded file list for code hash".PHP_EOL;
+            Common::printStatusMessage(PHP_EOL, 0, true);
+            Common::printStatusMessage('Generating loaded file list for code hash', 1);
         }
 
         $codeHashFiles = [];
@@ -66,10 +67,10 @@ class Cache
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo "\t\t=> external file: $file".PHP_EOL;
+                    Common::printStatusMessage("=> external file: $file", 2);
                 }
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\t\t=> internal sniff: $file".PHP_EOL;
+                Common::printStatusMessage("=> internal sniff: $file", 2);
             }
 
             $codeHashFiles[] = $file;
@@ -82,10 +83,10 @@ class Cache
         foreach ($rulesets as $file) {
             if (substr($file, 0, $standardDirLen) !== $standardDir) {
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo "\t\t=> external ruleset: $file".PHP_EOL;
+                    Common::printStatusMessage("=> external ruleset: $file", 2);
                 }
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\t\t=> internal ruleset: $file".PHP_EOL;
+                Common::printStatusMessage("=> internal ruleset: $file", 2);
             }
 
             $codeHashFiles[] = $file;
@@ -126,7 +127,7 @@ class Cache
         $iterator = new \RecursiveIteratorIterator($filter);
         foreach ($iterator as $file) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\t\t=> core file: $file".PHP_EOL;
+                Common::printStatusMessage("=> core file: $file", 2);
             }
 
             $codeHashFiles[] = $file->getPathname();
@@ -159,12 +160,12 @@ class Cache
         $cacheHash    = substr(sha1($configString), 0, 12);
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\tGenerating cache key data".PHP_EOL;
+            Common::printStatusMessage('Generating cache key data', 1);
             foreach ($configData as $key => $value) {
                 if (is_array($value) === true) {
-                    echo "\t\t=> $key:".PHP_EOL;
+                    Common::printStatusMessage("=> $key:", 2);
                     foreach ($value as $subKey => $subValue) {
-                        echo "\t\t\t=> $subKey: $subValue".PHP_EOL;
+                        Common::printStatusMessage("=> $subKey: $subValue", 3);
                     }
 
                     continue;
@@ -174,10 +175,10 @@ class Cache
                     $value = (int) $value;
                 }
 
-                echo "\t\t=> $key: $value".PHP_EOL;
+                Common::printStatusMessage("=> $key: $value", 2);
             }
 
-            echo "\t\t=> cacheHash: $cacheHash".PHP_EOL;
+            Common::printStatusMessage("=> cacheHash: $cacheHash", 2);
         }//end if
 
         if ($config->cacheFile !== null) {
@@ -187,7 +188,7 @@ class Cache
             // We can use this to locate an existing cache file, or to
             // determine where to create a new one.
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "\tChecking possible cache file paths".PHP_EOL;
+                Common::printStatusMessage('Checking possible cache file paths', 1);
             }
 
             $paths = [];
@@ -236,8 +237,8 @@ class Cache
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo "\t\t=> $testFile".PHP_EOL;
-                    echo "\t\t\t * based on shared location: $file *".PHP_EOL;
+                    Common::printStatusMessage("=> $testFile", 2);
+                    Common::printStatusMessage("* based on shared location: $file *", 3);
                 }
 
                 if (file_exists($testFile) === true) {
@@ -254,7 +255,7 @@ class Cache
 
         self::$path = $cacheFile;
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t=> Using cache file: ".self::$path.PHP_EOL;
+            Common::printStatusMessage('=> Using cache file: '.self::$path, 1);
         }
 
         if (file_exists(self::$path) === true) {
@@ -264,11 +265,11 @@ class Cache
             if (self::$cache['config'] !== $configData) {
                 self::$cache = [];
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo "\t* cache was invalid and has been cleared *".PHP_EOL;
+                    Common::printStatusMessage('* cache was invalid and has been cleared *', 1);
                 }
             }
         } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t* cache file does not exist *".PHP_EOL;
+            Common::printStatusMessage('* cache file does not exist *', 1);
         }
 
         self::$cache['config'] = $configData;

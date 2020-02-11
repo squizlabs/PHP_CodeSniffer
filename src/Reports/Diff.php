@@ -10,6 +10,7 @@
 namespace PHP_CodeSniffer\Reports;
 
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util\Common;
 
 class Diff implements Report
 {
@@ -41,9 +42,9 @@ class Diff implements Report
         if (empty($tokens) === true) {
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
                 $startTime = microtime(true);
-                echo 'DIFF report is parsing '.basename($report['filename']).' ';
+                Common::printStatusMessage('DIFF report is parsing '.basename($report['filename']).' ', 0, true);
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo 'DIFF report is forcing parse of '.$report['filename'].PHP_EOL;
+                Common::printStatusMessage('DIFF report is forcing parse of '.$report['filename']);
             }
 
             $phpcsFile->parse();
@@ -52,28 +53,24 @@ class Diff implements Report
                 $timeTaken = ((microtime(true) - $startTime) * 1000);
                 if ($timeTaken < 1000) {
                     $timeTaken = round($timeTaken);
-                    echo "DONE in {$timeTaken}ms";
+                    Common::printStatusMessage("DONE in {$timeTaken}ms");
                 } else {
                     $timeTaken = round(($timeTaken / 1000), 2);
-                    echo "DONE in $timeTaken secs";
+                    Common::printStatusMessage("DONE in $timeTaken secs");
                 }
-
-                echo PHP_EOL;
             }
 
             $phpcsFile->fixer->startFile($phpcsFile);
         }//end if
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            ob_end_clean();
-            echo "\t*** START FILE FIXING ***".PHP_EOL;
+            Common::printStatusMessage('*** START FILE FIXING ***', 1);
         }
 
         $fixed = $phpcsFile->fixer->fixFile();
 
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-            echo "\t*** END FILE FIXING ***".PHP_EOL;
-            ob_start();
+            Common::printStatusMessage('*** END FILE FIXING ***', 1);
         }
 
         if ($fixed === false) {
@@ -120,9 +117,6 @@ class Diff implements Report
         $toScreen=true
     ) {
         echo $cachedData;
-        if ($toScreen === true && $cachedData !== '') {
-            echo PHP_EOL;
-        }
 
     }//end generate()
 

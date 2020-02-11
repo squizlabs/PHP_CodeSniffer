@@ -76,7 +76,7 @@ class Timing
         }
 
         $mem = round((memory_get_peak_usage(true) / (1024 * 1024)), 2).'MB';
-        echo "Time: $time; Memory: $mem".PHP_EOL.PHP_EOL;
+        Common::printStatusMessage("Time: $time; Memory: $mem");
 
         self::$printed = true;
 

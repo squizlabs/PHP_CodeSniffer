@@ -162,10 +162,6 @@ class Info implements Report
 
         echo str_repeat('-', 70).PHP_EOL;
 
-        if ($toScreen === true && $interactive === false) {
-            Timing::printRunTime();
-        }
-
     }//end generate()
 
 

@@ -114,19 +114,9 @@ class Runner
             $numErrors = $this->run();
 
             // Print all the reports for this run.
-            $toScreen = $this->reporter->printReports();
+            $this->reporter->printReports();
 
-            // Only print timer output if no reports were
-            // printed to the screen so we don't put additional output
-            // in something like an XML report. If we are printing to screen,
-            // the report types would have already worked out who should
-            // print the timer info.
-            if ($this->config->interactive === false
-                && ($toScreen === false
-                || (($this->reporter->totalErrors + $this->reporter->totalWarnings) === 0 && $this->config->showProgress === true))
-            ) {
-                Util\Timing::printRunTime();
-            }
+            Util\Timing::printRunTime();
         } catch (DeepExitException $e) {
             echo $e->getMessage();
             return $e->getCode();
@@ -376,26 +366,26 @@ class Runner
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                echo 'Creating file list... ';
+                Common::printStatusMessage('Creating file list... ', 0, true);
             }
 
             $todo = new FileList($this->config, $this->ruleset);
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 $numFiles = count($todo);
-                echo "DONE ($numFiles files in queue)".PHP_EOL;
+                Common::printStatusMessage("DONE ($numFiles files in queue)");
             }
 
             if ($this->config->cache === true) {
                 if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                    echo 'Loading cache... ';
+                    Common::printStatusMessage('Loading cache... ', 0, true);
                 }
 
                 Cache::load($this->ruleset, $this->config);
 
                 if (PHP_CODESNIFFER_VERBOSITY > 0) {
                     $size = Cache::getSize();
-                    echo "DONE ($size files in cache)".PHP_EOL;
+                    Common::printStatusMessage("DONE ($size files in cache)");
                 }
             }
         }//end if
@@ -425,7 +415,7 @@ class Runner
                     $currDir = dirname($path);
                     if ($lastDir !== $currDir) {
                         if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                            echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
+                            Common::printStatusMessage('Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath));
                         }
 
                         $lastDir = $currDir;
@@ -433,7 +423,7 @@ class Runner
 
                     $this->processFile($file);
                 } else if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                    echo 'Skipping '.basename($file->path).PHP_EOL;
+                    Common::printStatusMessage('Skipping '.basename($file->path));
                 }
 
                 $numProcessed++;
@@ -493,7 +483,7 @@ class Runner
                         $currDir = dirname($path);
                         if ($lastDir !== $currDir) {
                             if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                                echo 'Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath).PHP_EOL;
+                                Common::printStatusMessage('Changing into directory '.Common::stripBasepath($currDir, $this->config->basepath));
                             }
 
                             $lastDir = $currDir;
@@ -551,7 +541,7 @@ class Runner
             && $this->config->interactive === false
             && $this->config->showProgress === true
         ) {
-            echo PHP_EOL.PHP_EOL;
+            Common::printStatusMessage(PHP_EOL, 0, true);
         }
 
         if ($this->config->cache === true) {
@@ -620,9 +610,9 @@ class Runner
     {
         if (PHP_CODESNIFFER_VERBOSITY > 0) {
             $startTime = microtime(true);
-            echo 'Processing '.basename($file->path).' ';
+            Common::printStatusMessage('Processing '.basename($file->path).' ', 0, true);
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo PHP_EOL;
+                Common::printStatusMessage(PHP_EOL, 0, true);
             }
         }
 
@@ -633,19 +623,19 @@ class Runner
                 $timeTaken = ((microtime(true) - $startTime) * 1000);
                 if ($timeTaken < 1000) {
                     $timeTaken = round($timeTaken);
-                    echo "DONE in {$timeTaken}ms";
+                    Common::printStatusMessage("DONE in {$timeTaken}ms", 0, true);
                 } else {
                     $timeTaken = round(($timeTaken / 1000), 2);
-                    echo "DONE in $timeTaken secs";
+                    Common::printStatusMessage("DONE in $timeTaken secs", 0, true);
                 }
 
                 if (PHP_CODESNIFFER_CBF === true) {
                     $errors = $file->getFixableCount();
-                    echo " ($errors fixable violations)".PHP_EOL;
+                    Common::printStatusMessage(" ($errors fixable violations)");
                 } else {
                     $errors   = $file->getErrorCount();
                     $warnings = $file->getWarningCount();
-                    echo " ($errors errors, $warnings warnings)".PHP_EOL;
+                    Common::printStatusMessage(" ($errors errors, $warnings warnings)");
                 }
             }
         } catch (\Exception $e) {
@@ -793,7 +783,7 @@ class Runner
 
         // Show progress information.
         if ($file->ignored === true) {
-            echo 'S';
+            Common::printStatusMessage('S', 0, true);
         } else {
             $errors   = $file->getErrorCount();
             $warnings = $file->getWarningCount();
@@ -806,26 +796,26 @@ class Runner
                 // Files with no errors or warnings are . (black).
                 if ($fixable > 0) {
                     if ($this->config->colors === true) {
-                        echo "\033[31m";
+                        Common::printStatusMessage("\033[31m", 0, true);
                     }
 
-                    echo 'E';
+                    Common::printStatusMessage('E', 0, true);
 
                     if ($this->config->colors === true) {
-                        echo "\033[0m";
+                        Common::printStatusMessage("\033[0m", 0, true);
                     }
                 } else if ($fixed > 0) {
                     if ($this->config->colors === true) {
-                        echo "\033[32m";
+                        Common::printStatusMessage("\033[32m", 0, true);
                     }
 
-                    echo 'F';
+                    Common::printStatusMessage('F', 0, true);
 
                     if ($this->config->colors === true) {
-                        echo "\033[0m";
+                        Common::printStatusMessage("\033[0m", 0, true);
                     }
                 } else {
-                    echo '.';
+                    Common::printStatusMessage('.', 0, true);
                 }//end if
             } else {
                 // Files with errors are E (red).
@@ -836,33 +826,33 @@ class Runner
                 if ($errors > 0) {
                     if ($this->config->colors === true) {
                         if ($fixable > 0) {
-                            echo "\033[32m";
+                            Common::printStatusMessage("\033[32m", 0, true);
                         } else {
-                            echo "\033[31m";
+                            Common::printStatusMessage("\033[31m", 0, true);
                         }
                     }
 
-                    echo 'E';
+                    Common::printStatusMessage('E', 0, true);
 
                     if ($this->config->colors === true) {
-                        echo "\033[0m";
+                        Common::printStatusMessage("\033[0m", 0, true);
                     }
                 } else if ($warnings > 0) {
                     if ($this->config->colors === true) {
                         if ($fixable > 0) {
-                            echo "\033[32m";
+                            Common::printStatusMessage("\033[32m", 0, true);
                         } else {
-                            echo "\033[33m";
+                            Common::printStatusMessage("\033[33m", 0, true);
                         }
                     }
 
-                    echo 'W';
+                    Common::printStatusMessage('W', 0, true);
 
                     if ($this->config->colors === true) {
-                        echo "\033[0m";
+                        Common::printStatusMessage("\033[0m", 0, true);
                     }
                 } else {
-                    echo '.';
+                    Common::printStatusMessage('.', 0, true);
                 }//end if
             }//end if
         }//end if
@@ -878,7 +868,7 @@ class Runner
             $padding += ($numPerLine - ($numFiles - (floor($numFiles / $numPerLine) * $numPerLine)));
         }
 
-        echo str_repeat(' ', $padding)." $numProcessed / $numFiles ($percent%)".PHP_EOL;
+        Common::printStatusMessage(str_repeat(' ', $padding)." $numProcessed / $numFiles ($percent%)");
 
     }//end printProgress()
 
