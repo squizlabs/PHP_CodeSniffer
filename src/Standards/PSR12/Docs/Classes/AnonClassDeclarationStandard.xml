@@ -1,0 +1,54 @@
+<documentation title="Anonymous Classes">
+    <standard>
+    <![CDATA[
+    Anonymous Classes MUST follow the same guidelines and principles as closures.
+    The opening brace MAY be on the same line as the class keyword so long as the list of implements interfaces does not wrap. If the list of interfaces wraps, the brace MUST be placed on the line immediately following the last interface.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Opening brace on same line when interfaces DO NOT wrap.">
+            <![CDATA[
+$instance = new class<em> {}</em>;
+
+
+$instance = new class implements \Interface<em> {</em>
+    // Class content
+};
+        ]]>
+        </code>
+        <code title="Invalid: Opening brace on next line.">
+            <![CDATA[
+$instance = new class<em>
+{}</em>;
+
+$instance = new class implements \Interface<em>
+{</em>
+    // Class content
+};
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: Opening brace on next line when interfaces DO wrap.">
+            <![CDATA[
+$instance = new class extends \Foo implements
+    \ArrayAccess,
+    \Countable,
+    \Serializable<em>
+{</em>
+    // Class content
+};
+        ]]>
+        </code>
+        <code title="Invalid: Opening brace on same line.">
+            <![CDATA[
+$instance = new class extends \Foo implements
+    \ArrayAccess,
+    \Countable,
+    \Serializable<em> {</em>
+    // Class content
+};
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

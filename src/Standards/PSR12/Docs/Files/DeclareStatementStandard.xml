@@ -1,0 +1,96 @@
+<documentation title="Closing Brace">
+    <standard>
+    <![CDATA[
+    Declare statements MUST contain no spaces (with an optional semi-colon terminator).
+    Directives in declare statements MUST be lowercase.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: First line after opening tag.">
+            <![CDATA[
+<?php
+
+/**
+ * File header
+ */
+
+declare(strict_types=1);
+
+declare(ticks=1)<em> {
+    // some code
+}</em>
+        ]]>
+        </code>
+        <code title="Invalid: Any statement between opening tag or header and declare statement.">
+            <![CDATA[
+<?php
+
+/**
+ * File header
+ */
+
+<em>$foo = 'bar';</em>
+
+declare(strict_types=1);
+
+declare(ticks=1)<em>{}</em>
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: No whitespace in declare statements.">
+            <![CDATA[
+<?php
+declare(strict_types=1);
+        ]]>
+        </code>
+        <code title="Invalid: Whitespace in declare statements.">
+            <![CDATA[
+<?php
+declare<em> </em>(<em> </em>strict_types<em> </em>=<em> </em>1<em> </em>)<em> </em>;
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: Lowercase directive in declare statement.">
+            <![CDATA[
+<?php
+declare(<em>strict_types</em>=1);
+        ]]>
+        </code>
+        <code title="Invalid: Non-lowercase directive.">
+            <![CDATA[
+<?php
+declare(<em>Strict_TYPES</em>=1)
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: Same line in files containing markup outside PHP opening and closing tags.">
+            <![CDATA[
+<?php<em> declare(strict_types=1) </em>?>
+<html>
+<body>
+    <?php
+        // ... additional PHP code ...
+    ?>
+</body>
+</html>
+        ]]>
+        </code>
+        <code title="Invalid: Next line in files containing markup outside PHP opening and closing tags.">
+            <![CDATA[
+<?php<em>
+declare(strict_types=1)
+</em>?>
+<html>
+<body>
+    <?php
+        // ... additional PHP code ...
+    ?>
+</body>
+</html>
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

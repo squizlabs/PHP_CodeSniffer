@@ -1,0 +1,48 @@
+<documentation title="Use Declaration">
+    <standard>
+        <![CDATA[
+    The use keyword used inside the classes to implement traits MUST be declared on the next line after the opening brace.
+    Each individual trait that is imported into a class MUST be included one-per-line and each inclusion MUST have its own use import statement.
+    When the class has nothing after the use import statement, the class closing brace MUST be on the next line after the use import statement.
+    Otherwise, it MUST have a blank line after the use import statement.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Correct spacing.">
+            <![CDATA[
+namespace Vendor\Package;
+
+use Vendor\Package\FirstTrait;
+use Vendor\Package\SecondTrait;
+use Vendor\Package\ThirdTrait;
+
+class ClassName
+{
+    use FirstTrait;
+    use SecondTrait;
+    use ThirdTrait;
+
+    private $property;
+}
+        ]]>
+        </code>
+        <code title="Invalid: superfluous whitespace and blank lines used.">
+        <![CDATA[
+namespace Vendor\Package;
+
+use Vendor\Package\FirstTrait;
+use Vendor\Package\SecondTrait;
+use Vendor\Package\ThirdTrait;
+
+class ClassName
+{
+    private $property;
+    use FirstTrait;
+    use SecondTrait;use ThirdTrait;
+
+
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

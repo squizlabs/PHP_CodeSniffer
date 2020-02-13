@@ -1,0 +1,79 @@
+<documentation title="File Header">
+    <standard>
+        <![CDATA[
+    The header of a PHP file may consist of a number of different blocks.
+    If present, each of the blocks below MUST be separated by a single blank line, and MUST NOT contain a blank line.
+    Each block MUST be in the order listed below, although blocks that are not relevant may be omitted.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Correct ordered blocks and separated by a single blank line.">
+            <![CDATA[
+<?php
+
+/**
+ * This file contains an
+ * example of coding styles.
+ */
+
+declare(strict_types=1);
+
+namespace Vendor\Package;
+
+use Vendor\Package\{
+    ClassA as A,
+    ClassB,
+    ClassC as C
+};
+use Vendor\Package\Namespace\ClassD as D;
+use Vendor\Package\OtherNamespace\ClassE;
+
+use function Vendor\Package\{
+    functionA,
+    functionB,
+    functionC
+};
+use function Another\Vendor\functionD;
+
+use const Vendor\Package\{
+    CONSTANT_A,
+    CONSTANT_B,
+    CONSTANT_C
+};
+use const Another\Vendor\CONSTANT_D;
+        ]]>
+        </code>
+        <code title="Invalid: Unordered blocks.">
+            <![CDATA[
+<?php
+/**
+ * File-level docblock
+ *
+ * must not contain blank lines.
+ */
+declare(strict_types=1);
+namespace Vendor\Package;
+
+use Vendor\Package\{
+    ClassA as A,
+    ClassB,
+    ClassC as C
+};
+use function Vendor\Package\{
+    functionA,
+    functionB,
+    functionC
+};
+use Vendor\Package\SomeNamespace\ClassD as D;
+use const Vendor\Package\{
+    CONSTANT_A,
+    CONSTANT_B,
+    CONSTANT_C
+};
+use function Another\Vendor\functionD;
+use Vendor\Package\AnotherNamespace\ClassE as E;
+use const Another\Vendor\CONSTANT_D;
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

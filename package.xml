@@ -1131,10 +1131,23 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="PSR12">
       <dir name="Docs">
        <dir name="Classes">
+        <file baseinstalldir="PHP/CodeSniffer" name="AnonClassDeclarationStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceStandard.xml" role="php" />
+       </dir>
+       <dir name="ControlStructures">
+        <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ControlStructureSpacingStandard.xml" role="php" />
+       </dir>
+       <dir name="Files">
+        <file baseinstalldir="PHP/CodeSniffer" name="DeclareStatementStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpenTagStandard.xml" role="php" />
        </dir>
        <dir name="Functions">
         <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ReturnTypeDeclarationStandard.xml" role="php" />
        </dir>
        <dir name="Keywords">
         <file baseinstalldir="PHP/CodeSniffer" name="ShortFormTypeKeywordsStandard.xml" role="php" />
@@ -1144,6 +1157,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
        </dir>
        <dir name="Operators">
         <file baseinstalldir="PHP/CodeSniffer" name="OperatorSpacingStandard.xml" role="php" />
+       </dir>
+       <dir name="Properties">
+        <file baseinstalldir="PHP/CodeSniffer" name="ConstantVisibilityStandard.xml" role="php" />
+       </dir>
+       <dir name="Traits">
+        <file baseinstalldir="PHP/CodeSniffer" name="UseDeclarationStandard.xml" role="php" />
        </dir>
       </dir>
       <dir name="Sniffs">
