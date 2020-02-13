@@ -33,8 +33,10 @@ if (<em></em>$expr1 &&
 } elseif (
 <em></em>$expr4
 <em></em>&& $expr5
-<em>    </em>) {// closing parenthesis not on the same level as start of the control structure
-    // elseif body
+<em>    </em>) {// closing parenthesis not on the same
+       // level as start of the
+       // control structure
+   // elseif body
 }
         ]]>
         </code>

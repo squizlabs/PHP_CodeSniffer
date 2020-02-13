@@ -12,21 +12,34 @@
 <?php
 
 /**
- * This file contains an example of coding styles.
+ * This file contains an
+ * example of coding styles.
  */
 
 declare(strict_types=1);
 
 namespace Vendor\Package;
 
-use Vendor\Package\{ClassA as A, ClassB, ClassC as C};
-use Vendor\Package\SomeNamespace\ClassD as D;
-use Vendor\Package\AnotherNamespace\ClassE as E;
+use Vendor\Package\{
+    ClassA as A,
+    ClassB,
+    ClassC as C
+};
+use Vendor\Package\Namespace\ClassD as D;
+use Vendor\Package\OtherNamespace\ClassE;
 
-use function Vendor\Package\{functionA, functionB, functionC};
+use function Vendor\Package\{
+    functionA,
+    functionB,
+    functionC
+};
 use function Another\Vendor\functionD;
 
-use const Vendor\Package\{CONSTANT_A, CONSTANT_B, CONSTANT_C};
+use const Vendor\Package\{
+    CONSTANT_A,
+    CONSTANT_B,
+    CONSTANT_C
+};
 use const Another\Vendor\CONSTANT_D;
         ]]>
         </code>
@@ -41,10 +54,22 @@ use const Another\Vendor\CONSTANT_D;
 declare(strict_types=1);
 namespace Vendor\Package;
 
-use Vendor\Package\{ClassA as A, ClassB, ClassC as C};
-use function Vendor\Package\{functionA, functionB, functionC};
+use Vendor\Package\{
+    ClassA as A,
+    ClassB,
+    ClassC as C
+};
+use function Vendor\Package\{
+    functionA,
+    functionB,
+    functionC
+};
 use Vendor\Package\SomeNamespace\ClassD as D;
-use const Vendor\Package\{CONSTANT_A, CONSTANT_B, CONSTANT_C};
+use const Vendor\Package\{
+    CONSTANT_A,
+    CONSTANT_B,
+    CONSTANT_C
+};
 use function Another\Vendor\functionD;
 use Vendor\Package\AnotherNamespace\ClassE as E;
 use const Another\Vendor\CONSTANT_D;

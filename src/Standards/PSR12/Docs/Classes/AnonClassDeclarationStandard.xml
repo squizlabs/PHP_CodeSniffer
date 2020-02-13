@@ -9,8 +9,9 @@
         <code title="Valid: Opening brace on same line when interfaces DO NOT wrap.">
             <![CDATA[
 $instance = new class<em> {}</em>;
-// Brace on the same line
-$instance = new class extends \Foo implements \HandleableInterface<em> {</em>
+
+
+$instance = new class implements \Interface<em> {</em>
     // Class content
 };
         ]]>
@@ -20,7 +21,7 @@ $instance = new class extends \Foo implements \HandleableInterface<em> {</em>
 $instance = new class<em>
 {}</em>;
 
-$instance = new class extends \Foo implements \HandleableInterface<em>
+$instance = new class implements \Interface<em>
 {</em>
     // Class content
 };
@@ -30,7 +31,6 @@ $instance = new class extends \Foo implements \HandleableInterface<em>
     <code_comparison>
         <code title="Valid: Opening brace on next line when interfaces DO wrap.">
             <![CDATA[
-// Brace on the next line
 $instance = new class extends \Foo implements
     \ArrayAccess,
     \Countable,

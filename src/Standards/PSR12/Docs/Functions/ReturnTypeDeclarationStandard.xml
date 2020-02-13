@@ -8,8 +8,10 @@
     <code_comparison>
         <code title="Valid: One whitespace used.">
             <![CDATA[
-public function functionName(int $arg1, $arg2): string
-{
+public function functionName(
+    int $arg1,
+    $arg2
+): string {
     return 'foo';
 }
 
@@ -24,8 +26,10 @@ public function anotherFunction(
         </code>
         <code title="Invalid: superfluous whitespace used.">
         <![CDATA[
-public function functionName(int $arg1, $arg2)<em> </em>: string
-{
+public function functionName(
+    int $arg1,
+    $arg2
+)<em> </em>: string {
     return 'foo';
 }
 
