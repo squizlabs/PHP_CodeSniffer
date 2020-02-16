@@ -14,7 +14,60 @@ namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
-
+/**
+ * Class Config
+ *
+ * @property string[] $files           The files and directories to check.
+ * @property string[] $standards       The standards being used for checking.
+ * @property int      $verbosity       How verbose the output should be.
+ *                                     0: no unnecessary output
+ *                                     1: basic output for files being checked
+ *                                     2: ruleset and file parsing output
+ *                                     3: sniff execution output
+ * @property bool     $interactive     Enable interactive checking mode.
+ * @property bool     $parallel        Check files in parallel.
+ * @property bool     $cache           Enable the use of the file cache.
+ * @property bool     $cacheFile       A file where the cache data should be written
+ * @property bool     $colors          Display colours in output.
+ * @property bool     $explain         Explain the coding standards.
+ * @property bool     $local           Process local files in directories only (no recursion).
+ * @property bool     $showSources     Show sniff source codes in report output.
+ * @property bool     $showProgress    Show basic progress information while running.
+ * @property bool     $quiet           Quiet mode; disables progress and verbose output.
+ * @property bool     $annotations     Process phpcs: annotations.
+ * @property int      $tabWidth        How many spaces each tab is worth.
+ * @property string   $encoding        The encoding of the files being checked.
+ * @property string[] $sniffs          The sniffs that should be used for checking.
+ *                                     If empty, all sniffs in the supplied standards will be used.
+ * @property string[] $exclude         The sniffs that should be excluded from checking.
+ *                                     If empty, all sniffs in the supplied standards will be used.
+ * @property string[] $ignored         Regular expressions used to ignore files and folders during checking.
+ * @property string   $reportFile      A file where the report output should be written.
+ * @property string   $generator       The documentation generator to use.
+ * @property string   $filter          The filter to use for the run.
+ * @property string[] $bootstrap       One of more files to include before the run begins.
+ * @property int      $reportWidth     The maximum number of columns that reports should use for output.
+ *                                     Set to "auto" for have this value changed to the width of the terminal.
+ * @property int      $errorSeverity   The minimum severity an error must have to be displayed.
+ * @property int      $warningSeverity The minimum severity a warning must have to be displayed.
+ * @property bool     $recordErrors    Record the content of error messages as well as error counts.
+ * @property string   $suffix          A suffix to add to fixed files.
+ * @property string   $basepath        A file system location to strip from the paths of files shown in reports.
+ * @property bool     $stdin           Read content from STDIN instead of supplied files.
+ * @property string   $stdinContent    Content passed directly to PHPCS on STDIN.
+ * @property string   $stdinPath       The path to use for content passed on STDIN.
+ * @property array<string, string>   $extensions File extensions that should be checked, and what tokenizer to use.
+ *                                               E.g., array('inc' => 'PHP');
+ * @property array<string, string|null> $reports The reports to use for printing output after the run.
+ *                                               The format of the array is:
+ *                                                   array(
+ *                                                    'reportName1' => 'outputFile',
+ *                                                    'reportName2' => null,
+ *                                                   );
+ *                                               If the array value is NULL, the report will be written to the screen.
+ * @property string[] $unknown Any arguments gathered on the command line that are unknown to us.
+ *                             E.g., using `phpcs -c` will give array('c');
+ */
 class Config
 {
 
@@ -40,60 +93,7 @@ class Config
      * can be used to validate the values. For example, to set the verbosity level to
      * level 2, use $this->verbosity = 2; instead of accessing this property directly.
      *
-     * The list of settings are:
-     *
-     * string[] files           The files and directories to check.
-     * string[] standards       The standards being used for checking.
-     * int      verbosity       How verbose the output should be.
-     *                          0: no unnecessary output
-     *                          1: basic output for files being checked
-     *                          2: ruleset and file parsing output
-     *                          3: sniff execution output
-     * bool     interactive     Enable interactive checking mode.
-     * bool     parallel        Check files in parallel.
-     * bool     cache           Enable the use of the file cache.
-     * bool     cacheFile       A file where the cache data should be written
-     * bool     colors          Display colours in output.
-     * bool     explain         Explain the coding standards.
-     * bool     local           Process local files in directories only (no recursion).
-     * bool     showSources     Show sniff source codes in report output.
-     * bool     showProgress    Show basic progress information while running.
-     * bool     quiet           Quiet mode; disables progress and verbose output.
-     * bool     annotations     Process phpcs: annotations.
-     * int      tabWidth        How many spaces each tab is worth.
-     * string   encoding        The encoding of the files being checked.
-     * string[] sniffs          The sniffs that should be used for checking.
-     *                          If empty, all sniffs in the supplied standards will be used.
-     * string[] exclude         The sniffs that should be excluded from checking.
-     *                          If empty, all sniffs in the supplied standards will be used.
-     * string[] ignored         Regular expressions used to ignore files and folders during checking.
-     * string   reportFile      A file where the report output should be written.
-     * string   generator       The documentation generator to use.
-     * string   filter          The filter to use for the run.
-     * string[] bootstrap       One of more files to include before the run begins.
-     * int      reportWidth     The maximum number of columns that reports should use for output.
-     *                          Set to "auto" for have this value changed to the width of the terminal.
-     * int      errorSeverity   The minimum severity an error must have to be displayed.
-     * int      warningSeverity The minimum severity a warning must have to be displayed.
-     * bool     recordErrors    Record the content of error messages as well as error counts.
-     * string   suffix          A suffix to add to fixed files.
-     * string   basepath        A file system location to strip from the paths of files shown in reports.
-     * bool     stdin           Read content from STDIN instead of supplied files.
-     * string   stdinContent    Content passed directly to PHPCS on STDIN.
-     * string   stdinPath       The path to use for content passed on STDIN.
-     *
-     * array<string, string>      extensions File extensions that should be checked, and what tokenizer to use.
-     *                                       E.g., array('inc' => 'PHP');
-     * array<string, string|null> reports    The reports to use for printing output after the run.
-     *                                       The format of the array is:
-     *                                           array(
-     *                                            'reportName1' => 'outputFile',
-     *                                            'reportName2' => null,
-     *                                           );
-     *                                       If the array value is NULL, the report will be written to the screen.
-     *
-     * string[] unknown Any arguments gathered on the command line that are unknown to us.
-     *                  E.g., using `phpcs -c` will give array('c');
+     * All of those are described in class annotation as @property
      *
      * @var array<string, mixed>
      */
