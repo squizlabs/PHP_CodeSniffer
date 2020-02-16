@@ -19,26 +19,18 @@ class Ruleset
 {
 
     /**
-     * The name of the coding standard being used.
+     * A list of CLI args found while processing.
      *
-     * If a top-level standard includes other standards, or sniffs
-     * from other standards, only the name of the top-level standard
-     * will be stored in here.
-     *
-     * If multiple top-level standards are being loaded into
-     * a single ruleset object, this will store a comma separated list
-     * of the top-level standard names.
-     *
-     * @var string
+     * @var []
      */
-    public $name = '';
+    private $cliArgs = [];
 
     /**
-     * A list of file paths for the ruleset files being used.
+     * The config data for the run.
      *
-     * @var string[]
+     * @var \PHP_CodeSniffer\Config
      */
-    public $paths = [];
+    private $config = null;
 
     /**
      * A list of regular expressions used to ignore specific sniffs for files and folders.
@@ -63,34 +55,26 @@ class Ruleset
     public $includePatterns = [];
 
     /**
-     * An array of sniff objects that are being used to check files.
+     * The name of the coding standard being used.
      *
-     * The key is the fully qualified name of the sniff class
-     * and the value is the sniff object.
+     * If a top-level standard includes other standards, or sniffs
+     * from other standards, only the name of the top-level standard
+     * will be stored in here.
      *
-     * @var array<string, \PHP_CodeSniffer\Sniffs\Sniff>
+     * If multiple top-level standards are being loaded into
+     * a single ruleset object, this will store a comma separated list
+     * of the top-level standard names.
+     *
+     * @var string
      */
-    public $sniffs = [];
+    public $name = '';
 
     /**
-     * A mapping of sniff codes to fully qualified class names.
+     * A list of file paths for the ruleset files being used.
      *
-     * The key is the sniff code and the value
-     * is the fully qualified name of the sniff class.
-     *
-     * @var array<string, string>
+     * @var string[]
      */
-    public $sniffCodes = [];
-
-    /**
-     * An array of token types and the sniffs that are listening for them.
-     *
-     * The key is the token name being listened for and the value
-     * is the sniff object.
-     *
-     * @var array<int, \PHP_CodeSniffer\Sniffs\Sniff>
-     */
-    public $tokenListeners = [];
+    public $paths = [];
 
     /**
      * An array of rules from the ruleset.xml file.
@@ -110,11 +94,34 @@ class Ruleset
     protected $rulesetDirs = [];
 
     /**
-     * The config data for the run.
+     * A mapping of sniff codes to fully qualified class names.
      *
-     * @var \PHP_CodeSniffer\Config
+     * The key is the sniff code and the value
+     * is the fully qualified name of the sniff class.
+     *
+     * @var array<string, string>
      */
-    private $config = null;
+    public $sniffCodes = [];
+
+    /**
+     * An array of sniff objects that are being used to check files.
+     *
+     * The key is the fully qualified name of the sniff class
+     * and the value is the sniff object.
+     *
+     * @var array<string, \PHP_CodeSniffer\Sniffs\Sniff>
+     */
+    public $sniffs = [];
+
+    /**
+     * An array of token types and the sniffs that are listening for them.
+     *
+     * The key is the token name being listened for and the value
+     * is the sniff object.
+     *
+     * @var array<int, \PHP_CodeSniffer\Sniffs\Sniff>
+     */
+    public $tokenListeners = [];
 
 
     /**
@@ -228,6 +235,18 @@ class Ruleset
         }
 
     }//end __construct()
+
+
+    /**
+     * Get the config that this ruleset is using.
+     *
+     * @return \PHP_CodeSniffer\Config
+     */
+    public function getConfig()
+    {
+        return $this->config;
+
+    }//end getConfig()
 
 
     /**
@@ -348,190 +367,187 @@ class Ruleset
             $ownSniffs = $this->expandSniffDirectory($sniffDir, $depth);
         }
 
-        // Include custom autoloaders.
-        foreach ($ruleset->{'autoload'} as $autoload) {
-            if ($this->shouldProcessElement($autoload) === false) {
+        foreach ($ruleset->children() as $child) {
+            if ($this->shouldProcessElement($child) === false) {
                 continue;
             }
 
-            $autoloadPath = (string) $autoload;
-
-            // Try relative autoload paths first.
-            $relativePath = Common::realPath(dirname($rulesetPath).DIRECTORY_SEPARATOR.$autoloadPath);
-
-            if ($relativePath !== false && is_file($relativePath) === true) {
-                $autoloadPath = $relativePath;
-            } else if (is_file($autoloadPath) === false) {
-                throw new RuntimeException('The specified autoload file "'.$autoload.'" does not exist');
-            }
-
-            include_once $autoloadPath;
-
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                Common::printStatusMessage("=> included autoloader $autoloadPath", ($depth + 1));
-            }
-        }//end foreach
-
-        // Process custom sniff config settings.
-        foreach ($ruleset->{'config'} as $config) {
-            if ($this->shouldProcessElement($config) === false) {
-                continue;
-            }
-
-            Config::setConfigData((string) $config['name'], (string) $config['value'], true);
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                Common::printStatusMessage("=> set config value ".(string) $config['name'].': '.(string) $config['value'], ($depth + 1));
-            }
-        }
-
-        foreach ($ruleset->rule as $rule) {
-            if (isset($rule['ref']) === false
-                || $this->shouldProcessElement($rule) === false
-            ) {
-                continue;
-            }
-
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                Common::printStatusMessage("Processing rule \"".$rule['ref'].'"', ($depth + 1));
-            }
-
-            $expandedSniffs = $this->expandRulesetReference((string) $rule['ref'], $rulesetDir, $depth);
-            $newSniffs      = array_diff($expandedSniffs, $includedSniffs);
-            $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
-
-            $parts = explode('.', $rule['ref']);
-            if (count($parts) === 4
-                && $parts[0] !== ''
-                && $parts[1] !== ''
-                && $parts[2] !== ''
-            ) {
-                $sniffCode = $parts[0].'.'.$parts[1].'.'.$parts[2];
-                if (isset($this->ruleset[$sniffCode]['severity']) === true
-                    && $this->ruleset[$sniffCode]['severity'] === 0
-                ) {
-                    // This sniff code has already been turned off, but now
-                    // it is being explicitly included again, so turn it back on.
-                    $this->ruleset[(string) $rule['ref']]['severity'] = 5;
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        Common::printStatusMessage("* disabling sniff exclusion for specific message code *", ($depth + 2));
-                        Common::printStatusMessage("=> severity set to 5", ($depth + 2));
+            switch ($child->getName()) {
+            case 'arg':
+                // Process custom command line arguments.
+                if (isset($child['name']) === true) {
+                    $argString = '--'.(string) $child['name'];
+                    if (isset($child['value']) === true) {
+                        $argString .= '='.(string) $child['value'];
                     }
-                } else if (empty($newSniffs) === false) {
-                    $newSniff = $newSniffs[0];
-                    if (in_array($newSniff, $ownSniffs, true) === false) {
-                        // Including a sniff that hasn't been included higher up, but
-                        // only including a single message from it. So turn off all messages in
-                        // the sniff, except this one.
-                        $this->ruleset[$sniffCode]['severity']            = 0;
-                        $this->ruleset[(string) $rule['ref']]['severity'] = 5;
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            Common::printStatusMessage("Excluding sniff \"".$sniffCode.'" except for "'.$parts[3].'"', ($depth + 2));
-                        }
-                    }
-                }//end if
-            }//end if
-
-            if (isset($rule->exclude) === true) {
-                foreach ($rule->exclude as $exclude) {
-                    if (isset($exclude['name']) === false) {
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            Common::printStatusMessage("* ignoring empty exclude rule *", ($depth + 2));
-                            Common::printStatusMessage("=> ".$exclude->asXML(), ($depth + 3));
-                        }
-
-                        continue;
-                    }
-
-                    if ($this->shouldProcessElement($exclude) === false) {
-                        continue;
-                    }
-
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        Common::printStatusMessage("Excluding rule \"".$exclude['name'].'"', ($depth + 2));
-                    }
-
-                    // Check if a single code is being excluded, which is a shortcut
-                    // for setting the severity of the message to 0.
-                    $parts = explode('.', $exclude['name']);
-                    if (count($parts) === 4) {
-                        $this->ruleset[(string) $exclude['name']]['severity'] = 0;
-                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            Common::printStatusMessage('=> severity set to 0', ($depth + 2));
-                        }
-                    } else {
-                        $excludedSniffs = array_merge(
-                            $excludedSniffs,
-                            $this->expandRulesetReference((string) $exclude['name'], $rulesetDir, ($depth + 1))
-                        );
-                    }
-                }//end foreach
-            }//end if
-
-            $this->processRule($rule, $newSniffs, $depth);
-        }//end foreach
-
-        // Process custom command line arguments.
-        $cliArgs = [];
-        foreach ($ruleset->{'arg'} as $arg) {
-            if ($this->shouldProcessElement($arg) === false) {
-                continue;
-            }
-
-            if (isset($arg['name']) === true) {
-                $argString = '--'.(string) $arg['name'];
-                if (isset($arg['value']) === true) {
-                    $argString .= '='.(string) $arg['value'];
+                } else {
+                    $argString = '-'.(string) $child['value'];
                 }
-            } else {
-                $argString = '-'.(string) $arg['value'];
-            }
 
-            $cliArgs[] = $argString;
+                $this->cliArgs[] = $argString;
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                Common::printStatusMessage("=> set command line value $argString", ($depth + 1));
-            }
-        }//end foreach
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    Common::printStatusMessage("=> set command line value $argString", ($depth + 1));
+                }
+                break;
+            case 'autoload':
+                // Include custom autoloaders.
+                $autoloadPath = (string) $child;
 
-        // Set custom php ini values as CLI args.
-        foreach ($ruleset->{'ini'} as $arg) {
-            if ($this->shouldProcessElement($arg) === false) {
-                continue;
-            }
+                // Try relative autoload paths first.
+                $relativePath = Common::realPath(dirname($rulesetPath).DIRECTORY_SEPARATOR.$autoloadPath);
 
-            if (isset($arg['name']) === false) {
-                continue;
-            }
+                if ($relativePath !== false && is_file($relativePath) === true) {
+                    $autoloadPath = $relativePath;
+                } else if (is_file($autoloadPath) === false) {
+                    throw new RuntimeException('The specified autoload file "'.$autoloadPath.'" does not exist');
+                }
 
-            $name      = (string) $arg['name'];
-            $argString = $name;
-            if (isset($arg['value']) === true) {
-                $value      = (string) $arg['value'];
-                $argString .= "=$value";
-            } else {
-                $value = 'true';
-            }
+                include_once $autoloadPath;
 
-            $cliArgs[] = '-d';
-            $cliArgs[] = $argString;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    Common::printStatusMessage("=> included autoloader $autoloadPath", ($depth + 1));
+                }
+                break;
+            case 'config':
+                // Process custom sniff config settings.
+                Config::setConfigData((string) $child['name'], (string) $child['value'], true);
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    Common::printStatusMessage("=> set config value ".(string) $child['name'].': '.(string) $child['value'], ($depth + 1));
+                }
+                break;
+            case 'exclude-pattern':
+                // Process custom ignore pattern rules.
+                if (isset($child['type']) === false) {
+                    $child['type'] = 'absolute';
+                }
 
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                Common::printStatusMessage("=> set PHP ini value $name to $value", ($depth + 1));
-            }
-        }//end foreach
+                $this->ignorePatterns[(string) $child] = (string) $child['type'];
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    Common::printStatusMessage("=> added global ".(string) $child['type'].' ignore pattern: '.(string) $child, ($depth + 1));
+                }
+                break;
+            case 'file':
+                // Process hard-coded file paths.
+                if (empty($this->config->files) === false) {
+                    break;
+                }
 
-        if (empty($this->config->files) === true) {
-            // Process hard-coded file paths.
-            foreach ($ruleset->{'file'} as $file) {
-                $file      = (string) $file;
-                $cliArgs[] = $file;
+                $file            = (string) $child;
+                $this->cliArgs[] = $file;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     Common::printStatusMessage("=> added \"$file\" to the file list", ($depth + 1));
                 }
-            }
-        }
+                break;
+            case 'ini':
+                // Set custom php ini values as CLI args.
+                if (isset($child['name']) === false) {
+                    break;
+                }
 
-        if (empty($cliArgs) === false) {
+                $name      = (string) $child['name'];
+                $argString = $name;
+                if (isset($child['value']) === true) {
+                    $value      = (string) $child['value'];
+                    $argString .= "=$value";
+                } else {
+                    $value = 'true';
+                }
+
+                $this->cliArgs[] = '-d';
+                $this->cliArgs[] = $argString;
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    Common::printStatusMessage("=> set PHP ini value $name to $value", ($depth + 1));
+                }
+                break;
+            case 'rule':
+                if (isset($child['ref']) === false) {
+                    break;
+                }
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    Common::printStatusMessage("Processing rule \"".$child['ref'].'"', ($depth + 1));
+                }
+
+                $expandedSniffs = $this->expandRulesetReference((string) $child['ref'], $rulesetDir, $depth);
+                $newSniffs      = array_diff($expandedSniffs, $includedSniffs);
+                $includedSniffs = array_merge($includedSniffs, $expandedSniffs);
+
+                $parts = explode('.', $child['ref']);
+                if (count($parts) === 4
+                    && $parts[0] !== ''
+                    && $parts[1] !== ''
+                    && $parts[2] !== ''
+                ) {
+                    $sniffCode = $parts[0].'.'.$parts[1].'.'.$parts[2];
+                    if (isset($this->ruleset[$sniffCode]['severity']) === true
+                        && $this->ruleset[$sniffCode]['severity'] === 0
+                    ) {
+                        // This sniff code has already been turned off, but now
+                        // it is being explicitly included again, so turn it back on.
+                        $this->ruleset[(string) $child['ref']]['severity'] = 5;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            Common::printStatusMessage("* disabling sniff exclusion for specific message code *", ($depth + 2));
+                            Common::printStatusMessage("=> severity set to 5", ($depth + 2));
+                        }
+                    } else if (empty($newSniffs) === false) {
+                        $newSniff = $newSniffs[0];
+                        if (in_array($newSniff, $ownSniffs, true) === false) {
+                            // Including a sniff that hasn't been included higher up, but
+                            // only including a single message from it. So turn off all messages in
+                            // the sniff, except this one.
+                            $this->ruleset[$sniffCode]['severity'] = 0;
+                            $this->ruleset[(string) $child['ref']]['severity'] = 5;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                Common::printStatusMessage("Excluding sniff \"".$sniffCode.'" except for "'.$parts[3].'"', ($depth + 2));
+                            }
+                        }
+                    }//end if
+                }//end if
+
+                if (isset($child->exclude) === true) {
+                    foreach ($child->exclude as $exclude) {
+                        if (isset($exclude['name']) === false) {
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                Common::printStatusMessage("* ignoring empty exclude rule *", ($depth + 2));
+                                Common::printStatusMessage("=> ".$exclude->asXML(), ($depth + 3));
+                            }
+
+                            continue;
+                        }
+
+                        if ($this->shouldProcessElement($exclude) === false) {
+                            continue;
+                        }
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            Common::printStatusMessage("Excluding rule \"".$exclude['name'].'"', ($depth + 2));
+                        }
+
+                        // Check if a single code is being excluded, which is a shortcut
+                        // for setting the severity of the message to 0.
+                        $parts = explode('.', $exclude['name']);
+                        if (count($parts) === 4) {
+                            $this->ruleset[(string) $exclude['name']]['severity'] = 0;
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                Common::printStatusMessage('=> severity set to 0', ($depth + 2));
+                            }
+                        } else {
+                            $excludedSniffs = array_merge(
+                                $excludedSniffs,
+                                $this->expandRulesetReference((string) $exclude['name'], $rulesetDir, ($depth + 1))
+                            );
+                        }
+                    }//end foreach
+                }//end if
+
+                $this->processRule($child, $newSniffs, $depth);
+                break;
+            }//end switch
+        }//end foreach
+
+        if ($depth === 0 && empty($this->cliArgs) === false) {
             // Change the directory so all relative paths are worked
             // out based on the location of the ruleset instead of
             // the location of the user.
@@ -541,26 +557,10 @@ class Ruleset
                 chdir($rulesetDir);
             }
 
-            $this->config->setCommandLineValues($cliArgs);
+            $this->config->setCommandLineValues($this->cliArgs);
 
             if ($inPhar === false) {
                 chdir($currentDir);
-            }
-        }
-
-        // Process custom ignore pattern rules.
-        foreach ($ruleset->{'exclude-pattern'} as $pattern) {
-            if ($this->shouldProcessElement($pattern) === false) {
-                continue;
-            }
-
-            if (isset($pattern['type']) === false) {
-                $pattern['type'] = 'absolute';
-            }
-
-            $this->ignorePatterns[(string) $pattern] = (string) $pattern['type'];
-            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                Common::printStatusMessage("=> added global ".(string) $pattern['type'].' ignore pattern: '.(string) $pattern, ($depth + 1));
             }
         }
 

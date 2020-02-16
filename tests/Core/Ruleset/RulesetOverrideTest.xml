@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset>
+    <!-- Need something to stop the "no sniffs registered" error. -->
+    <rule ref="PSR1"/>
+
+    <!-- All these values should be overridden. -->
+    <config name="configOverrideTestValue1" value="modified"/>
+    <ini name="highlight.string" value="modified"/>
+
+    <!-- The included ruleset turns on colors, but it should be ignored due to this line. -->
+    <arg name="no-colors"/>
+
+    <!-- Include the overrides. -->
+    <rule ref="./RulesetOverrideTestInclude.xml"/>
+
+    <!-- The included ruleset sets the report-width, so this should be ignored. -->
+    <arg name="report-width" value="120"/>
+
+    <!-- None of these values should be overridden. -->
+    <config name="configOverrideTestValue2" value="modified"/>
+    <ini name="highlight.keyword" value="modified"/>
+</ruleset>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset>
+    <config name="configOverrideTestValue1" value="included"/>
+    <config name="configOverrideTestValue2" value="included"/>
+
+    <ini name="highlight.string" value="included"/>
+    <ini name="highlight.keyword" value="included"/>
+
+    <arg name="colors"/>
+    <arg name="report-width" value="80"/>
+</ruleset>

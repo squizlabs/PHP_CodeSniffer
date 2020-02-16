@@ -8,6 +8,16 @@ The file documents changes to the PHP_CodeSniffer project.
 - The `--extensions` command line argument no longer accepts the tokenizer along with the extension
     - Previously, you would check `.module` files as PHP files using `--extensions=module/php`
     - Now, you use `--extensions=module`
+- Rulesets now process their rules from top to bottom instead of in defined groups
+    - Previously, rulesets processed tags in the following order, no matter where they appeared in the file:
+        1. `<autoload>`
+        2. `<config>`
+        3. `<rule>`
+        4. `<arg>`
+        5. `<ini>`
+        6. `<file>`
+        7. `<exclude-pattern>`
+    - Now, tags are processed as they are encountered when parsing the file top to bottom
 - None of the included sniffs will warn about possible parse errors any more
     - This improves the experience when the file is being checked inside an editor during live coding
     - If you want to detect parse errors, use a linter instead
