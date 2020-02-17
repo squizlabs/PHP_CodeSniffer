@@ -14,8 +14,9 @@ namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
+
 /**
- * Class Config
+ * Stores the configuration used to run PHPCS and PHPCBF.
  *
  * @property string[] $files           The files and directories to check.
  * @property string[] $standards       The standards being used for checking.
@@ -56,15 +57,17 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
  * @property bool     $stdin           Read content from STDIN instead of supplied files.
  * @property string   $stdinContent    Content passed directly to PHPCS on STDIN.
  * @property string   $stdinPath       The path to use for content passed on STDIN.
- * @property array<string, string>   $extensions File extensions that should be checked, and what tokenizer to use.
- *                                               E.g., array('inc' => 'PHP');
- * @property array<string, string|null> $reports The reports to use for printing output after the run.
- *                                               The format of the array is:
- *                                                   array(
- *                                                    'reportName1' => 'outputFile',
- *                                                    'reportName2' => null,
- *                                                   );
- *                                               If the array value is NULL, the report will be written to the screen.
+ *
+ * @property array<string, string>      $extensions File extensions that should be checked, and what tokenizer to use.
+ *                                                  E.g., array('inc' => 'PHP');
+ * @property array<string, string|null> $reports    The reports to use for printing output after the run.
+ *                                                  The format of the array is:
+ *                                                      array(
+ *                                                          'reportName1' => 'outputFile',
+ *                                                          'reportName2' => null,
+ *                                                      );
+ *                                                  If the array value is NULL, the report will be written to the screen.
+ *
  * @property string[] $unknown Any arguments gathered on the command line that are unknown to us.
  *                             E.g., using `phpcs -c` will give array('c');
  */
@@ -93,7 +96,7 @@ class Config
      * can be used to validate the values. For example, to set the verbosity level to
      * level 2, use $this->verbosity = 2; instead of accessing this property directly.
      *
-     * All of those are described in class annotation as @property
+     * Each of these settings is described in the class comment property list.
      *
      * @var array<string, mixed>
      */
