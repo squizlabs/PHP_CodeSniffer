@@ -35,9 +35,6 @@ class DeprecatedFunctionsSniff extends ForbiddenFunctionsSniff
 
         foreach ($functions['internal'] as $functionName) {
             $function = new \ReflectionFunction($functionName);
-            if (method_exists($function, 'isDeprecated') === false) {
-                break;
-            }
 
             if ($function->isDeprecated() === true) {
                 $this->forbiddenFunctions[$functionName] = null;
