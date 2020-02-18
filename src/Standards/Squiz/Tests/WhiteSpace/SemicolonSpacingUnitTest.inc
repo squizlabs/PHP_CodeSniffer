@@ -29,6 +29,13 @@ for ( ; ; ) {}
 for ( /* Deliberately left empty. */ ; $ptr >= 0; $ptr-- ) {}
 for ( $i = 1 ; /* Deliberately left empty. */ ; $i++ ) {}
 
+switch ($foo) {
+    case 'foo':
+    ;
+    break
+    ;
+}
+
 // This is an empty statement and should be ignored.
 if ($foo) {
 ;

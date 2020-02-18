@@ -37,6 +37,7 @@ class SemicolonSpacingUnitTest extends AbstractSniffUnitTest
             18 => 1,
             29 => 1,
             30 => 2,
+            36 => 1,
         ];
 
     }//end getErrorList()
