@@ -28,3 +28,8 @@ for ( ; ; ) {}
 // But it should when the semi-colon in a `for` follows a comment (but shouldn't move the semi-colon).
 for ( /* Deliberately left empty. */ ; $ptr >= 0; $ptr-- ) {}
 for ( $i = 1 ; /* Deliberately left empty. */ ; $i++ ) {}
+
+// This is an empty statement and should be ignored.
+if ($foo) {
+;
+}
