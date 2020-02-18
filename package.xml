@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2848 : PSR12.Files.FileHeader false positive for file with mixed PHP and HTML and no file header
   - Fixed bug #2849 : Generic.WhiteSpace.ScopeIndent false positive with arrow function inside array
+  - Fixed bug #2850 : Generic.PHP.LowerCaseKeyword complains __HALT_COMPILER is uppercase
   - Fixed bug #2853 : Undefined variable error when using Info report
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
