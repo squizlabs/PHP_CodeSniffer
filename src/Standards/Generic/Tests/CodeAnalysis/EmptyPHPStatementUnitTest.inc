@@ -75,3 +75,7 @@ switch ( $a ) {
 $a = function () {};
 $b = new class {};
 echo $a{0};
+
+if ($foo) {
+;
+}

@@ -61,8 +61,12 @@ class EmptyPHPStatementSniff implements Sniff
                 && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG
                 && $tokens[$prevNonEmpty]['code'] !== T_OPEN_TAG_WITH_ECHO
             ) {
-                if ($tokens[$prevNonEmpty]['code'] !== T_CLOSE_CURLY_BRACKET
-                    || isset($tokens[$prevNonEmpty]['scope_condition']) === false
+                if (isset($tokens[$prevNonEmpty]['scope_condition']) === false) {
+                    return;
+                }
+
+                if ($tokens[$prevNonEmpty]['scope_opener'] !== $prevNonEmpty
+                    && $tokens[$prevNonEmpty]['code'] !== T_CLOSE_CURLY_BRACKET
                 ) {
                     return;
                 }
