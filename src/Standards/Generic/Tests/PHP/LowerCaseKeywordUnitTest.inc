@@ -29,4 +29,5 @@ class X extends Y {
     }
 }
 FN ($x) => $x;
+__HALT_COMPILER(); // An exception due to phar support.
 function
