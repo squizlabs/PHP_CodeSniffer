@@ -3,6 +3,10 @@ The file documents changes to the PHP_CodeSniffer project.
 
 ## [Unreleased]
 
+### Added
+- An error message is now displayed if no files were checked during a run
+    - This occurs when all of the specified files matched exclusion rules, or none matched filtering rules
+
 ### Changes
 - The default coding standard has changed from `PEAR` to `PSR12`
 - The `--extensions` command line argument no longer accepts the tokenizer along with the extension

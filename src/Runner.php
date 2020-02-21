@@ -390,6 +390,13 @@ class Runner
             }
         }//end if
 
+        $numFiles = count($todo);
+        if ($numFiles === 0) {
+            $error  = 'ERROR: No files were checked'.PHP_EOL;
+            $error .= 'All specified files were excluded or did not match filtering rules'.PHP_EOL.PHP_EOL;
+            throw new DeepExitException($error, 3);
+        }
+
         // Turn all sniff errors into exceptions.
         set_error_handler([$this, 'handleErrors']);
 
@@ -404,8 +411,7 @@ class Runner
             $this->config->parallel = 1;
         }
 
-        $lastDir  = '';
-        $numFiles = count($todo);
+        $lastDir = '';
 
         if ($this->config->parallel === 1) {
             // Running normally.
