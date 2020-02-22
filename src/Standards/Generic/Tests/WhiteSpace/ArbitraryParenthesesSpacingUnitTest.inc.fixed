@@ -147,3 +147,7 @@ $a = (
     null !== $extra
 );
 // phpcs:set Generic.WhiteSpace.ArbitraryParenthesesSpacing ignoreNewlines false
+
+if (true) {} (1+2) === 3 ? $a = 1 : $a = 2;
+class A {} (1+2) === 3 ? $a = 1 : $a = 2;
+function foo() {} (1+2) === 3 ? $a = 1 : $a = 2;
