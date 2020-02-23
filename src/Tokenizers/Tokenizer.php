@@ -284,6 +284,7 @@ abstract class Tokenizer
                             }
 
                             if ($this->tokens[$prev]['code'] === T_WHITESPACE
+                                || $this->tokens[$prev]['code'] === T_DOC_COMMENT_WHITESPACE
                                 || ($this->tokens[$prev]['code'] === T_INLINE_HTML
                                 && trim($this->tokens[$prev]['content']) === '')
                             ) {
@@ -292,7 +293,9 @@ abstract class Tokenizer
 
                             $lineHasOtherTokens = true;
 
-                            if ($this->tokens[$prev]['code'] === T_OPEN_TAG) {
+                            if ($this->tokens[$prev]['code'] === T_OPEN_TAG
+                                || $this->tokens[$prev]['code'] === T_DOC_COMMENT_STAR
+                            ) {
                                 continue;
                             }
 
@@ -319,6 +322,7 @@ abstract class Tokenizer
                             }
 
                             if ($this->tokens[$next]['code'] === T_WHITESPACE
+                                || $this->tokens[$next]['code'] === T_DOC_COMMENT_WHITESPACE
                                 || ($this->tokens[$next]['code'] === T_INLINE_HTML
                                 && trim($this->tokens[$next]['content']) === '')
                             ) {
