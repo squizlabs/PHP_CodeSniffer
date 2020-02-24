@@ -102,7 +102,10 @@ class ArbitraryParenthesesSpacingSniff implements Sniff
         }
 
         $preOpener = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($opener - 1), null, true);
-        if ($preOpener !== false && isset($this->ignoreTokens[$tokens[$preOpener]['code']]) === true) {
+        if ($preOpener !== false
+            && isset($this->ignoreTokens[$tokens[$preOpener]['code']]) === true
+            && isset($tokens[$preOpener]['scope_condition']) === false
+        ) {
             // Function or language construct call.
             return;
         }
