@@ -187,10 +187,10 @@ class HTML extends Generator
     /**
      * Process the documentation for a single sniff.
      *
-     * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                      It represents the "documentation" tag in the XML
-     *                      standard file.
-     * @param string $ruleName Name of the rule for usage example.
+     * @param \DOMNode $doc      The DOMNode object for the sniff.
+     *                           It represents the "documentation"
+     *                           tag in the XML standard file.
+     * @param string   $ruleName Name of the rule for usage example.
      *
      * @return void
      */
