@@ -31,7 +31,7 @@
         </properties>
     </rule>
 
-    <rule ref="./../PHP_CodeSniffer/src/Standards/Generic/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php">
+    <rule ref="./../%path_root_dir%/src/Standards/Generic/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php">
         <properties>
             <property name="strict" value="false" />
         </properties>
