@@ -865,7 +865,10 @@ class Ruleset
 
         $parts      = explode('.', $ref);
         $partsCount = count($parts);
-        if ($partsCount <= 2 || $partsCount > count(array_filter($parts))) {
+        if ($partsCount <= 2
+            || $partsCount > count(array_filter($parts))
+            || in_array($ref, $newSniffs) === true
+        ) {
             // We are processing a standard, a category of sniffs or a relative path inclusion.
             foreach ($newSniffs as $sniffFile) {
                 $parts = explode(DIRECTORY_SEPARATOR, $sniffFile);

@@ -1,46 +1,46 @@
 <?xml version="1.0"?>
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="RuleInclusionTest" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
 
-	<rule ref="PSR1">
-	    <properties>
-	        <property name="setforallsniffs" value="true" />
-	    </properties>
-	</rule>
+    <rule ref="PSR1">
+        <properties>
+            <property name="setforallsniffs" value="true" />
+        </properties>
+    </rule>
 
-	<rule ref="Zend.NamingConventions">
-	    <properties>
-	        <property name="setforallincategory" value="true" />
-	    </properties>
-	</rule>
+    <rule ref="Zend.NamingConventions">
+        <properties>
+            <property name="setforallincategory" value="true" />
+        </properties>
+    </rule>
 
-	<rule ref="Generic.Arrays.ArrayIndent">
-	    <properties>
-	        <property name="indent" value="2" />
-	    </properties>
-	</rule>
+    <rule ref="Generic.Arrays.ArrayIndent">
+        <properties>
+            <property name="indent" value="2" />
+        </properties>
+    </rule>
 
-	<rule ref="Generic.Metrics.CyclomaticComplexity.MaxExceeded">
-	    <properties>
-	        <property name="complexity" value="50" />
-	    </properties>
-	</rule>
+    <rule ref="Generic.Metrics.CyclomaticComplexity.MaxExceeded">
+        <properties>
+            <property name="complexity" value="50" />
+        </properties>
+    </rule>
 
-	<rule ref="./src/Standards/Generic/Sniffs/Files/LineLengthSniff.php">
-	    <properties>
-	        <property name="lineLimit" value="10" />
-	    </properties>
-	</rule>
+    <rule ref="./src/Standards/Generic/Sniffs/Files/LineLengthSniff.php">
+        <properties>
+            <property name="lineLimit" value="10" />
+        </properties>
+    </rule>
 
-	<rule ref="./../PHP_CodeSniffer/src/Standards/Generic/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php">
-	    <properties>
-	        <property name="strict" value="false" />
-	    </properties>
-	</rule>
+    <rule ref="./../%path_root_dir%/src/Standards/Generic/Sniffs/NamingConventions/CamelCapsFunctionNameSniff.php">
+        <properties>
+            <property name="strict" value="false" />
+        </properties>
+    </rule>
 
-	<rule ref="./RuleInclusionTest-include.xml">
-	    <properties>
-	        <property name="setforsniffsinincludedruleset" value="true" />
-	    </properties>
-	</rule>
+    <rule ref="./RuleInclusionTest-include.xml">
+        <properties>
+            <property name="setforsniffsinincludedruleset" value="true" />
+        </properties>
+    </rule>
 
 </ruleset>

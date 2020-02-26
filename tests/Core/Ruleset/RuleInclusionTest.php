@@ -23,6 +23,20 @@ class RuleInclusionTest extends TestCase
      */
     protected static $ruleset;
 
+    /**
+     * Path to the ruleset file.
+     *
+     * @var string
+     */
+    private static $standard = '';
+
+    /**
+     * The original content of the ruleset.
+     *
+     * @var string
+     */
+    private static $contents = '';
+
 
     /**
      * Initialize the test.
@@ -53,11 +67,43 @@ class RuleInclusionTest extends TestCase
             return;
         }
 
-        $standard      = __DIR__.'/'.basename(__FILE__, '.php').'.xml';
+        $standard       = __DIR__.'/'.basename(__FILE__, '.php').'.xml';
+        self::$standard = $standard;
+
+        // On-the-fly adjust the ruleset test file to be able to test
+        // sniffs included with relative paths.
+        $contents       = file_get_contents($standard);
+        self::$contents = $contents;
+
+        $repoRootDir = basename(dirname(dirname(dirname(__DIR__))));
+
+        $newPath = $repoRootDir;
+        if (DIRECTORY_SEPARATOR === '\\') {
+            $newPath = str_replace('\\', '/', $repoRootDir);
+        }
+
+        $adjusted = str_replace('%path_root_dir%', $newPath, $contents);
+
+        if (file_put_contents($standard, $adjusted) === false) {
+            self::markTestSkipped('On the fly ruleset adjustment failed');
+        }
+
         $config        = new Config(["--standard=$standard"]);
         self::$ruleset = new Ruleset($config);
 
     }//end setUpBeforeClass()
+
+
+    /**
+     * Reset ruleset file.
+     *
+     * @return void
+     */
+    public function tearDown()
+    {
+        file_put_contents(self::$standard, self::$contents);
+
+    }//end tearDown()
 
 
     /**
