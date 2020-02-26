@@ -54,7 +54,7 @@ abstract class Generator
             $docFile = str_replace('Sniff.php', 'Standard.xml', $docFile);
 
             if (is_file($docFile) === true) {
-                $this->docFiles[] = $docFile;
+                $this->docFiles[array_search($className, $ruleset->sniffCodes)] = $docFile;
             }
         }
 
@@ -89,11 +89,11 @@ abstract class Generator
      */
     public function generate()
     {
-        foreach ($this->docFiles as $file) {
+        foreach ($this->docFiles as $ruleName => $file) {
             $doc = new \DOMDocument();
             $doc->load($file);
             $documentation = $doc->getElementsByTagName('documentation')->item(0);
-            $this->processSniff($documentation);
+            $this->processSniff($documentation, $ruleName);
         }
 
     }//end generate()
@@ -107,11 +107,12 @@ abstract class Generator
      * @param \DOMNode $doc The DOMNode object for the sniff.
      *                      It represents the "documentation" tag in the XML
      *                      standard file.
+     * @param string $ruleName Name of the rule for usage example.
      *
      * @return void
      * @see    generate()
      */
-    abstract protected function processSniff(\DOMNode $doc);
+    abstract protected function processSniff(\DOMNode $doc, $ruleName);
 
 
 }//end class

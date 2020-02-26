@@ -21,12 +21,13 @@ class Text extends Generator
      * @param \DOMNode $doc The DOMNode object for the sniff.
      *                      It represents the "documentation" tag in the XML
      *                      standard file.
+     * @param string $ruleName Name of the rule for usage example.
      *
      * @return void
      */
-    public function processSniff(\DOMNode $doc)
+    public function processSniff(\DOMNode $doc, $ruleName)
     {
-        $this->printTitle($doc);
+        $this->printTitle($doc, $ruleName);
 
         foreach ($doc->childNodes as $node) {
             if ($node->nodeName === 'standard') {
@@ -45,10 +46,11 @@ class Text extends Generator
      * @param \DOMNode $doc The DOMNode object for the sniff.
      *                      It represents the "documentation" tag in the XML
      *                      standard file.
+     * @param string $ruleName Name of the rule for usage example.
      *
      * @return void
      */
-    protected function printTitle(\DOMNode $doc)
+    protected function printTitle(\DOMNode $doc, $ruleName)
     {
         $title    = $this->getTitle($doc);
         $standard = $this->ruleset->name;
@@ -56,7 +58,8 @@ class Text extends Generator
         echo PHP_EOL;
         echo str_repeat('-', (strlen("$standard CODING STANDARD: $title") + 4));
         echo strtoupper(PHP_EOL."| $standard CODING STANDARD: $title |".PHP_EOL);
-        echo str_repeat('-', (strlen("$standard CODING STANDARD: $title") + 4));
+        echo str_repeat('-', (strlen("$standard CODING STANDARD: $title") + 4)).PHP_EOL;
+        echo 'Usage: ' . $ruleName;
         echo PHP_EOL.PHP_EOL;
 
     }//end printTitle()

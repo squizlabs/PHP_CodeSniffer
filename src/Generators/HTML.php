@@ -31,11 +31,11 @@ class HTML extends Generator
         $this->printHeader();
         $this->printToc();
 
-        foreach ($this->docFiles as $file) {
+        foreach ($this->docFiles as $ruleName => $file) {
             $doc = new \DOMDocument();
             $doc->load($file);
             $documentation = $doc->getElementsByTagName('documentation')->item(0);
-            $this->processSniff($documentation);
+            $this->processSniff($documentation, $ruleName);
         }
 
         $this->printFooter();
@@ -82,6 +82,11 @@ class HTML extends Generator
                         font-size: 16px;
                         font-weight: normal;
                         margin-top: 50px;
+                    }
+
+                    h3 {
+                        font-size: 15px;
+                        font-weight: normal;
                     }
 
                     .code-comparison {
@@ -185,14 +190,16 @@ class HTML extends Generator
      * @param \DOMNode $doc The DOMNode object for the sniff.
      *                      It represents the "documentation" tag in the XML
      *                      standard file.
+     * @param string $ruleName Name of the rule for usage example.
      *
      * @return void
      */
-    public function processSniff(\DOMNode $doc)
+    public function processSniff(\DOMNode $doc, $ruleName)
     {
         $title = $this->getTitle($doc);
         echo '  <a name="'.str_replace(' ', '-', $title).'" />'.PHP_EOL;
         echo "  <h2>$title</h2>".PHP_EOL;
+        echo "  <h3>Usage: <span class='code-comparison-code'>{$ruleName}</span></h3>".PHP_EOL;
 
         foreach ($doc->childNodes as $node) {
             if ($node->nodeName === 'standard') {
