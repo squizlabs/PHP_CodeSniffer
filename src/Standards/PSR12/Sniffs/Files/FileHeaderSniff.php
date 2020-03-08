@@ -280,8 +280,7 @@ class FileHeaderSniff implements Sniff
                     $fix   = $phpcsFile->addFixableError($error, $line['end'], 'SpacingAfterBlock');
                     if ($fix === true) {
                         if ($tokens[$next]['line'] === $tokens[$line['end']]['line']) {
-                            $phpcsFile->fixer->addNewlineBefore($next);
-                            $phpcsFile->fixer->addNewlineBefore($next);
+                            $phpcsFile->fixer->addContentBefore($next, $phpcsFile->eolChar.$phpcsFile->eolChar);
                         } else if ($tokens[$next]['line'] === ($tokens[$line['end']]['line'] + 1)) {
                             $phpcsFile->fixer->addNewline($line['end']);
                         } else {
