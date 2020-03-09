@@ -424,6 +424,11 @@ $array = array(
           3 => '3',
          );
 
+$foo = array(
+        $this->fn => 'value',
+        $foo->fn => 'value',
+       );
+
 // Intentional syntax error.
 $a = array(
       'a' =>

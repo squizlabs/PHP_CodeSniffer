@@ -1227,6 +1227,9 @@ class PHP extends Tokenizer
                 // detect the T_FN token more easily.
                 $tokens[$stackPtr][0] = T_FN;
                 $token[0] = T_FN;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $stackPtr changed from T_STRING to T_FN".PHP_EOL;
+                }
             }
 
             /*
@@ -1241,18 +1244,25 @@ class PHP extends Tokenizer
                 || $token[0] === T_FN)
                 && $finalTokens[$lastNotEmptyToken]['code'] !== T_USE
             ) {
-                for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
-                    if (is_array($tokens[$x]) === false
-                        || isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
-                    ) {
-                        // Non-empty content.
-                        break;
+                if ($token[0] === T_FUNCTION) {
+                    for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
+                        if (is_array($tokens[$x]) === false
+                            || isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                        ) {
+                            // Non-empty content.
+                            break;
+                        }
                     }
-                }
 
-                if ($x < $numTokens && is_array($tokens[$x]) === true) {
-                    $tokens[$x][0] = T_STRING;
-                }
+                    if ($x < $numTokens && is_array($tokens[$x]) === true) {
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $oldType = Util\Tokens::tokenName($tokens[$x][0]);
+                            echo "\t\t* token $x changed from $oldType to T_STRING".PHP_EOL;
+                        }
+
+                        $tokens[$x][0] = T_STRING;
+                    }
+                }//end if
 
                 /*
                     This is a special condition for T_ARRAY tokens used for
