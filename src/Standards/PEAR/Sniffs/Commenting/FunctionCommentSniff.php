@@ -53,10 +53,10 @@ class FunctionCommentSniff implements Sniff
         $ignore   = Tokens::$emptyTokens;
         $ignore[] = T_STATIC;
 
-        $scopeModifier = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
-        if ($tokens[$scopeModifier]['code'] === T_PROTECTED
+        $scopeModifier = $phpcsFile->getMethodProperties($stackPtr)['scope'];
+        if ($scopeModifier === 'protected'
             && $this->minimumVisibility === 'public'
-            || $tokens[$scopeModifier]['code'] === T_PRIVATE
+            || $scopeModifier === 'private'
             && ($this->minimumVisibility === 'public' || $this->minimumVisibility === 'protected')
         ) {
             return;
