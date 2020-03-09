@@ -413,6 +413,11 @@ $array = [
           3 => '3',
          ];
 
+$foo = [
+        $this->fn => 'value',
+        $foo->fn => 'value',
+       ];
+
 // Intentional syntax error.
 $a = [
       'a' =>

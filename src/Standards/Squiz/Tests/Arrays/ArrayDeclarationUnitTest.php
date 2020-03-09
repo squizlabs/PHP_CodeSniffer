@@ -113,6 +113,7 @@ class ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                 370 => 1,
                 383 => 1,
                 394 => 1,
+                429 => 1,
             ];
         case 'ArrayDeclarationUnitTest.2.inc':
             return [
@@ -188,6 +189,7 @@ class ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                 358 => 1,
                 372 => 1,
                 383 => 1,
+                418 => 1,
             ];
         default:
             return [];
