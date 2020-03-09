@@ -30,6 +30,13 @@ class MultipleStatementAlignmentSniff implements Sniff
      */
     public $maxPadding = 1000;
 
+    /**
+     * Controls which side of the assignment token is used for alignment.
+     *
+     * @var boolean
+     */
+    public $alignAtEnd = true;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -236,6 +243,10 @@ class MultipleStatementAlignmentSniff implements Sniff
             // padding length if they aligned with us.
             $varEnd    = $tokens[($var + 1)]['column'];
             $assignLen = $tokens[$assign]['length'];
+            if ($this->alignAtEnd !== true) {
+                $assignLen = 1;
+            }
+
             if ($assign !== $stackPtr) {
                 if ($prevAssign === null) {
                     // Processing an inner block but no assignments found.
