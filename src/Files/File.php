@@ -2333,7 +2333,6 @@ class File
         }
 
         $lastNotEmpty = $start;
-
         for ($i = $start; $i < $this->numTokens; $i++) {
             if ($i !== $start && isset($endTokens[$this->tokens[$i]['code']]) === true) {
                 // Found the end of the statement.
@@ -2356,7 +2355,8 @@ class File
                 || $i === $this->tokens[$i]['scope_condition'])
             ) {
                 if ($this->tokens[$i]['code'] === T_FN) {
-                    $i = ($this->tokens[$i]['scope_closer'] - 1);
+                    $lastNotEmpty = $this->tokens[$i]['scope_closer'];
+                    $i            = ($this->tokens[$i]['scope_closer'] - 1);
                     continue;
                 }
 

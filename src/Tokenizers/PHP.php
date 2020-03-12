@@ -1851,10 +1851,18 @@ class PHP extends Tokenizer
                             T_CLOSE_TAG            => true,
                         ];
 
-                        $inTernary = false;
+                        $inTernary    = false;
+                        $lastEndToken = null;
 
                         for ($scopeCloser = ($arrow + 1); $scopeCloser < $numTokens; $scopeCloser++) {
                             if (isset($endTokens[$this->tokens[$scopeCloser]['code']]) === true) {
+                                if ($lastEndToken !== null
+                                    && $this->tokens[$scopeCloser]['code'] === T_CLOSE_PARENTHESIS
+                                    && $this->tokens[$scopeCloser]['parenthesis_opener'] < $arrow
+                                ) {
+                                    $scopeCloser = $lastEndToken;
+                                }
+
                                 break;
                             }
 
@@ -1867,12 +1875,14 @@ class PHP extends Tokenizer
                             }
 
                             if (isset($this->tokens[$scopeCloser]['parenthesis_closer']) === true) {
-                                $scopeCloser = $this->tokens[$scopeCloser]['parenthesis_closer'];
+                                $scopeCloser  = $this->tokens[$scopeCloser]['parenthesis_closer'];
+                                $lastEndToken = $scopeCloser;
                                 continue;
                             }
 
                             if (isset($this->tokens[$scopeCloser]['bracket_closer']) === true) {
-                                $scopeCloser = $this->tokens[$scopeCloser]['bracket_closer'];
+                                $scopeCloser  = $this->tokens[$scopeCloser]['bracket_closer'];
+                                $lastEndToken = $scopeCloser;
                                 continue;
                             }
 
@@ -1895,6 +1905,10 @@ class PHP extends Tokenizer
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
                                 $line = $this->tokens[$i]['line'];
                                 echo "\t=> token $i on line $line processed as arrow function".PHP_EOL;
+                                echo "\t\t* scope opener set to $arrow *".PHP_EOL;
+                                echo "\t\t* scope closer set to $scopeCloser *".PHP_EOL;
+                                echo "\t\t* parenthesis opener set to $x *".PHP_EOL;
+                                echo "\t\t* parenthesis closer set to $closer *".PHP_EOL;
                             }
 
                             $this->tokens[$i]['code']            = T_FN;

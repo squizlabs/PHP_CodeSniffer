@@ -42,4 +42,14 @@ static fn ($a) => $a;
 /* testArrowFunctionReturnValue */
 fn(): array => [a($a, $b)];
 
+/* testArrowFunctionAsArgument */
+$foo = foo(
+    fn() => bar()
+);
+
+/* testArrowFunctionWithArrayAsArgument */
+$foo = foo(
+    fn() => [$row[0], $row[3]]
+);
+
 return 0;
