@@ -1931,6 +1931,12 @@ class PHP extends Tokenizer
 
                 // If after all that, the extra tokens are not set, this is not an arrow function.
                 if (isset($this->tokens[$i]['scope_closer']) === false) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line    = $this->tokens[$i]['line'];
+                        $oldCode = $this->tokens[$i]['code'];
+                        echo "\t\t* token $i on line $line changed from $oldCode to T_STRING: not an arrow function after all".PHP_EOL;
+                    }
+
                     $this->tokens[$i]['code'] = T_STRING;
                     $this->tokens[$i]['type'] = 'T_STRING';
                 }
