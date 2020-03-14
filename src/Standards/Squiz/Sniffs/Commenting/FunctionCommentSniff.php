@@ -401,16 +401,14 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $suggestedTypeHint = $suggestedName;
                 }
 
-                if ($this->phpVersion >= 70000) {
-                    if ($suggestedName === 'string') {
-                        $suggestedTypeHint = 'string';
-                    } else if ($suggestedName === 'int' || $suggestedName === 'integer') {
-                        $suggestedTypeHint = 'int';
-                    } else if ($suggestedName === 'float') {
-                        $suggestedTypeHint = 'float';
-                    } else if ($suggestedName === 'bool' || $suggestedName === 'boolean') {
-                        $suggestedTypeHint = 'bool';
-                    }
+                if ($suggestedName === 'string') {
+                    $suggestedTypeHint = 'string';
+                } else if ($suggestedName === 'int' || $suggestedName === 'integer') {
+                    $suggestedTypeHint = 'int';
+                } else if ($suggestedName === 'float') {
+                    $suggestedTypeHint = 'float';
+                } else if ($suggestedName === 'bool' || $suggestedName === 'boolean') {
+                    $suggestedTypeHint = 'bool';
                 }
 
                 if ($this->phpVersion >= 70200) {
