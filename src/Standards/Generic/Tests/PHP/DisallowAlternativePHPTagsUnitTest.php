@@ -16,33 +16,6 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
 
 
     /**
-     * Get a list of all test files to check.
-     *
-     * @param string $testFileBase The base path that the unit tests files will have.
-     *
-     * @return string[]
-     */
-    protected function getTestFiles($testFileBase)
-    {
-        $testFiles = [$testFileBase.'1.inc'];
-
-        $aspTags = false;
-        if (PHP_VERSION_ID < 70000) {
-            $aspTags = (bool) ini_get('asp_tags');
-        }
-
-        if ($aspTags === true) {
-            $testFiles[] = $testFileBase.'2.inc';
-        } else {
-            $testFiles[] = $testFileBase.'3.inc';
-        }
-
-        return $testFiles;
-
-    }//end getTestFiles()
-
-
-    /**
      * Returns the lines where errors should occur.
      *
      * The key of the array should represent the line number and the value
@@ -62,13 +35,7 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
                 8  => 1,
                 11 => 1,
             ];
-        case 'DisallowAlternativePHPTagsUnitTest.2.inc':
-            return [
-                2 => 1,
-                3 => 1,
-                4 => 1,
-                5 => 1,
-            ];
+
         default:
             return [];
         }//end switch
@@ -88,12 +55,12 @@ class DisallowAlternativePHPTagsUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList($testFile='')
     {
-        if ($testFile === 'DisallowAlternativePHPTagsUnitTest.3.inc') {
+        if ($testFile === 'DisallowAlternativePHPTagsUnitTest.2.inc') {
             return [
+                2 => 1,
                 3 => 1,
                 4 => 1,
                 5 => 1,
-                6 => 1,
             ];
         }
 
