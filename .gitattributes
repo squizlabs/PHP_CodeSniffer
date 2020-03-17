@@ -3,3 +3,5 @@ package.xml export-ignore
 phpunit.xml.dist export-ignore
 php5-testingConfig.ini export-ignore
 php7-testingConfig.ini export-ignore
+phpstan.neon export-ignore
+phpstan-baseline.neon export-ignore

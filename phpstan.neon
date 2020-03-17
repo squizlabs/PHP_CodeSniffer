@@ -1,5 +1,8 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
-    level: 0
+    level: max
     paths:
         - src
     autoload_files:
