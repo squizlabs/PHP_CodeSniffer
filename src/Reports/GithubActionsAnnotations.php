@@ -80,7 +80,7 @@ class GithubActionsAnnotations implements Report
         $interactive=false,
         $toScreen=true
     ) {
-       // echo $cachedData;
+       echo $cachedData;
 
     }//end generate()
 
