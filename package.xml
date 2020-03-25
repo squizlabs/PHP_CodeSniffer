@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2853 : Undefined variable error when using Info report
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2865 : Double arrow tokenized as T_STRING when placed after function named "fn"
+  - Fixed bug #2867 : Incorrect scope matching when arrow function used inside IF condition
   - Fixed bug #2868 : phpcs:ignore annotation doesnt work inside a docblock
   - Fixed bug #2878 : PSR12.Files.FileHeader conflicts with Generic.Files.LineEndings
   - Fixed bug #2895 : PSR2.Methods.FunctionCallSignature.MultipleArguments false positive with arrow function argument
