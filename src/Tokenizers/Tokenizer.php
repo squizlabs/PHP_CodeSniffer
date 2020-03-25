@@ -1231,14 +1231,29 @@ abstract class Tokenizer
                 }//end if
 
                 if ($ignore === 0 || $tokenType !== T_OPEN_CURLY_BRACKET) {
-                    // We found the opening scope token for $currType.
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $type = $this->tokens[$stackPtr]['type'];
-                        Common::printStatusMessage("=> Found scope opener for $stackPtr:$type", $depth);
-                    }
+                    $openerNested = isset($this->tokens[$i]['nested_parenthesis']);
+                    $ownerNested  = isset($this->tokens[$stackPtr]['nested_parenthesis']);
 
-                    $opener = $i;
-                }
+                    if (($openerNested === true && $ownerNested === false)
+                        || ($openerNested === false && $ownerNested === true)
+                        || ($openerNested === true
+                        && $this->tokens[$i]['nested_parenthesis'] !== $this->tokens[$stackPtr]['nested_parenthesis'])
+                    ) {
+                        // We found the a token that looks like the opener, but it's nested differently.
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $this->tokens[$i]['type'];
+                            Common::printStatusMessage("* ignoring possible opener $i:$type as nested parenthesis don't match *", $depth);
+                        }
+                    } else {
+                        // We found the opening scope token for $currType.
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = $this->tokens[$stackPtr]['type'];
+                            Common::printStatusMessage("=> Found scope opener for $stackPtr:$type", $depth);
+                        }
+
+                        $opener = $i;
+                    }
+                }//end if
             } else if ($tokenType === T_SEMICOLON
                 && $opener === null
                 && (isset($this->tokens[$stackPtr]['parenthesis_closer']) === false
