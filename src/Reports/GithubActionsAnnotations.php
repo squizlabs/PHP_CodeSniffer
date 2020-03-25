@@ -39,10 +39,14 @@ class GithubActionsAnnotations implements Report
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    $filename = str_replace('"', '\"', $report['filename']);
+	                // Note this does not correspond to PHPCS warning/error, rather is used to annotate which
+	                // errors can be automatically fixed in CI and which need attention.
+	                $type     = (boolean) $error['fixable'] ? 'warning' : 'error';
+
+	                $filename = str_replace('"', '\"', $report['filename']);
                     $message  = str_replace('"', '\"', $error['message']);
-                    $type     = strtolower($error['type']);
                     $source   = $error['source'];
+
                     echo "::{$type} file={$filename},line={$line},col=$column::{$message}\n$source".PHP_EOL;
                 }
             }
