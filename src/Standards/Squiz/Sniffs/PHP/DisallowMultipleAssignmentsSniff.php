@@ -64,6 +64,16 @@ class DisallowMultipleAssignmentsSniff implements Sniff
             }
         }
 
+        // Ignore member var definitions.
+        if (empty($tokens[$stackPtr]['conditions']) === false) {
+            $conditions = $tokens[$stackPtr]['conditions'];
+            end($conditions);
+            $deepestScope = key($conditions);
+            if (isset(Tokens::$ooScopeTokens[$tokens[$deepestScope]['code']]) === true) {
+                return;
+            }
+        }
+
         /*
             The general rule is:
             Find an equal sign and go backwards along the line. If you hit an
@@ -122,14 +132,6 @@ class DisallowMultipleAssignmentsSniff implements Sniff
             && $tokens[$varToken]['code'] !== T_OPEN_SQUARE_BRACKET
         ) {
             $varToken = $start;
-        }
-
-        // Ignore member var definitions.
-        if (isset(Tokens::$scopeModifiers[$tokens[$varToken]['code']]) === true
-            || $tokens[$varToken]['code'] === T_VAR
-            || $tokens[$varToken]['code'] === T_STATIC
-        ) {
-            return;
         }
 
         // Ignore the first part of FOR loops as we are allowed to
