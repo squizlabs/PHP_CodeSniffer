@@ -43,11 +43,13 @@ class GithubActionsAnnotations implements Report
 	                // errors can be automatically fixed in CI and which need attention.
 	                $type     = (boolean) $error['fixable'] ? 'warning' : 'error';
 
-	                $filename = str_replace('"', '\"', $report['filename']);
-                    $message  = str_replace('"', '\"', $error['message']);
+	                $filename = $report['filename'];
+	                $message = explode("\n", $error['message']);
                     $source   = $error['source'];
 
-                    echo "::{$type} file={$filename},line={$line},col=$column::{$message}\n$source".PHP_EOL;
+	                $log = $message . '%0A' . $source;
+
+	                echo "::{$type} file={$filename},line={$line},col=$column::{$log}".PHP_EOL;
                 }
             }
         }
