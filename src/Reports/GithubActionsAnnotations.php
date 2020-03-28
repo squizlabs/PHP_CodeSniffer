@@ -46,10 +46,8 @@ class GitHubActionsAnnotations implements Report
 	                $type     = (boolean) $error['fixable'] ? 'warning' : 'error';
 
 	                $filename = $report['filename'];
-	                $message = explode("\n", $error['message']);
-                    $source   = $error['source'];
+                    $log = $error['message'].'%0A'.$error['source'];
 
-	                $log = $message . '%0A' . $source;
 
 	                echo "::{$type} file={$filename},line={$line},col=$column::{$log}".PHP_EOL;
                 }
