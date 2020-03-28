@@ -40,19 +40,22 @@ class GitHubActionsAnnotations implements Report
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
+                    // Note this does not correspond to PHPCS warning/error, rather is used to annotate which
+                    // errors can be automatically fixed in CI and which need attention.
+                    if ($error['fixable'] === true) {
+                        $type = 'warning';
+                    } else {
+                        $type = 'error';
+                    }
 
-	                // Note this does not correspond to PHPCS warning/error, rather is used to annotate which
-	                // errors can be automatically fixed in CI and which need attention.
-	                $type     = (boolean) $error['fixable'] ? 'warning' : 'error';
+                    $filename = $report['filename'];
 
-	                $filename = $report['filename'];
                     $log = $error['message'].'%0A'.$error['source'];
 
-
-	                echo "::{$type} file={$filename},line={$line},col=$column::{$log}".PHP_EOL;
+                    echo "::{$type} file={$filename},line={$line},col=$column::{$log}".PHP_EOL;
                 }
             }
-        }
+        }//end foreach
 
         return true;
 
@@ -86,7 +89,7 @@ class GitHubActionsAnnotations implements Report
         $interactive=false,
         $toScreen=true
     ) {
-       echo $cachedData;
+        echo $cachedData;
 
     }//end generate()
 
