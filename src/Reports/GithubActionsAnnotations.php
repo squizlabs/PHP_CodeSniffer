@@ -1,7 +1,8 @@
 <?php
 /**
- * CSV report for PHP_CodeSniffer.
+ * GitHub Actions annotations format report for PHP_CodeSniffer.
  *
+ * @author    Brian Henry <BrianHenryIE@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -39,6 +40,7 @@ class GithubActionsAnnotations implements Report
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
+
 	                // Note this does not correspond to PHPCS warning/error, rather is used to annotate which
 	                // errors can be automatically fixed in CI and which need attention.
 	                $type     = (boolean) $error['fixable'] ? 'warning' : 'error';
@@ -60,7 +62,7 @@ class GithubActionsAnnotations implements Report
 
 
     /**
-     * Generates a csv report.
+     * Generates a report with lines parsable by GitHub Actions.
      *
      * @param string $cachedData    Any partial report data that was returned from
      *                              generateFileReport during the run.
