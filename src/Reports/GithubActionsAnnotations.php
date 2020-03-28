@@ -50,7 +50,7 @@ class GitHubActionsAnnotations implements Report
 
                     $filename = $report['filename'];
 
-                    $log = $error['message'].'%0A'.$error['source'];
+                    $log = $error['message'].'%0A%0A'.$error['source'];
 
                     echo "::{$type} file={$filename},line={$line},col=$column::{$log}".PHP_EOL;
                 }
