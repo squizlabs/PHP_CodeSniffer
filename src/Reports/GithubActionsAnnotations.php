@@ -12,7 +12,7 @@ namespace PHP_CodeSniffer\Reports;
 
 use PHP_CodeSniffer\Files\File;
 
-class GithubActionsAnnotations implements Report
+class GitHubActionsAnnotations implements Report
 {
 
 
