@@ -3,7 +3,7 @@
  * GitHub Actions annotations format report for PHP_CodeSniffer.
  *
  * There is a maximum "10 warning annotations and 10 error annotations per [GitHub Actions workflow] step".
- * @see https://github.community/t5/GitHub-Actions/Maximum-number-of-annotations-that-can-be-created-using-GitHub/m-p/40663/highlight/true#M4310
+ * as per https://github.community/t5/GitHub-Actions/Maximum-number-of-annotations-that-can-be-created-using-GitHub/m-p/40663/highlight/true#M4310
  *
  * @author    Brian Henry <BrianHenryIE@gmail.com>
  * @author    Greg Sherwood <gsherwood@squiz.net>
