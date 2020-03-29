@@ -1000,3 +1000,14 @@ public function foo(object $a, ?object $b) {}
  * @return void
  */
 function foo($foo) {}
+
+/**
+ * @param (Foo&Bar)|null $a Comment.
+ * @param string         $b Comment.
+ *
+ * @return void
+ */
+public function setTranslator($a, &$b): void
+{
+    $this->translator = $translator;
+}
