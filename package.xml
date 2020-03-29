@@ -172,6 +172,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="PHP/CodeSniffer" name="Emacs.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Full.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Gitblame.php" role="php" />
+     <file baseinstalldir="PHP/CodeSniffer" name="GitHubActionsAnnotations.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Hgblame.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Info.php" role="php" />
      <file baseinstalldir="PHP/CodeSniffer" name="Json.php" role="php" />
