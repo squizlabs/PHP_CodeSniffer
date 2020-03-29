@@ -103,7 +103,6 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
             792  => 1,
             794  => 1,
             797  => 1,
-            801  => 1,
             828  => 1,
             840  => 1,
             852  => 1,
@@ -131,6 +130,7 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
             $errors[575]  = 2;
             $errors[627]  = 1;
             $errors[1002] = 1;
+            $errors[1056] = 1;
         } else {
             $errors[729] = 4;
             $errors[740] = 2;

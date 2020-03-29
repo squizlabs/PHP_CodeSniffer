@@ -1042,7 +1042,18 @@ public function ignored() {
 
 // phpcs:set Squiz.Commenting.FunctionComment specialMethods[] __construct,__destruct
 
-/** 
+/**
  * @return void
  * @throws Exception If any other error occurs. */
 function throwCommentOneLine() {}
+
+/**
+ * @param (Foo&Bar)|null $a Comment.
+ * @param string         $b Comment.
+ *
+ * @return void
+ */
+public function setTranslator($a, &$b): void
+{
+    $this->translator = $translator;
+}
