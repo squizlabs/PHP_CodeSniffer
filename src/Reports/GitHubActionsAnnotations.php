@@ -43,13 +43,7 @@ class GitHubActionsAnnotations implements Report
         foreach ($report['messages'] as $line => $lineErrors) {
             foreach ($lineErrors as $column => $colErrors) {
                 foreach ($colErrors as $error) {
-                    // Note this does not correspond to PHPCS warning/error, rather is used to annotate which
-                    // errors can be automatically fixed in CI and which need attention.
-                    if ($error['fixable'] === true) {
-                        $type = 'warning';
-                    } else {
-                        $type = 'error';
-                    }
+                    $type = strtolower($error['type']);
 
                     $filename = $report['filename'];
 
