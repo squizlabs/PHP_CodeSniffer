@@ -25,6 +25,16 @@ class FunctionCommentSniff implements Sniff
      */
     public $minimumVisibility = 'private';
 
+    /**
+     * Array of methods which do not require a return type.
+     *
+     * @var array
+     */
+    public $specialMethods = [
+        '__construct',
+        '__destruct',
+    ];
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -135,7 +145,7 @@ class FunctionCommentSniff implements Sniff
 
         // Skip constructor and destructor.
         $methodName      = $phpcsFile->getDeclarationName($stackPtr);
-        $isSpecialMethod = ($methodName === '__construct' || $methodName === '__destruct');
+        $isSpecialMethod = in_array($methodName,  $this->specialMethods, true);
 
         $return = null;
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
@@ -150,10 +160,6 @@ class FunctionCommentSniff implements Sniff
             }
         }
 
-        if ($isSpecialMethod === true) {
-            return;
-        }
-
         if ($return !== null) {
             $content = $tokens[($return + 2)]['content'];
             if (empty($content) === true || $tokens[($return + 2)]['code'] !== T_DOC_COMMENT_STRING) {
@@ -161,6 +167,10 @@ class FunctionCommentSniff implements Sniff
                 $phpcsFile->addError($error, $return, 'MissingReturnType');
             }
         } else {
+            if ($isSpecialMethod === true) {
+                return;
+            }
+
             $error = 'Missing @return tag in function comment';
             $phpcsFile->addError($error, $tokens[$commentStart]['comment_closer'], 'MissingReturn');
         }//end if

@@ -67,10 +67,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 
         // Skip constructor and destructor.
         $methodName      = $phpcsFile->getDeclarationName($stackPtr);
-        $isSpecialMethod = ($methodName === '__construct' || $methodName === '__destruct');
-        if ($isSpecialMethod === true) {
-            return;
-        }
+        $isSpecialMethod = in_array($methodName,  $this->specialMethods, true);
 
         if ($return !== null) {
             $content = $tokens[($return + 2)]['content'];
@@ -181,6 +178,10 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 }//end if
             }//end if
         } else {
+            if ($isSpecialMethod === true) {
+                return;
+            }
+
             $error = 'Missing @return tag in function comment';
             $phpcsFile->addError($error, $tokens[$commentStart]['comment_closer'], 'MissingReturn');
         }//end if
