@@ -124,6 +124,7 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
             1002 => 1,
             1004 => 2,
             1006 => 1,
+            1029 => 1,
         ];
 
         // Mixed type hints only work from PHP 8.0 onwards.

@@ -666,7 +666,7 @@ class Baz {
  * Test
  *
  * @return void
- * @throws E 
+ * @throws E
  */
 function myFunction() {}
 
@@ -1021,3 +1021,23 @@ public function foo($a, $b) {}
  * @return mixed
  */
 public function foo(mixed $a): mixed {}
+
+// phpcs:set Squiz.Commenting.FunctionComment specialMethods[]
+class Bar {
+    /**
+     * The PHP5 constructor
+     */
+    public function __construct() {
+
+    }
+}
+
+// phpcs:set Squiz.Commenting.FunctionComment specialMethods[] ignored
+/**
+ * Should be ok
+ */
+public function ignored() {
+
+}
+
+// phpcs:set Squiz.Commenting.FunctionComment specialMethods[] __construct,__destruct
