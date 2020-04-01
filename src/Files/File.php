@@ -1464,7 +1464,7 @@ class File
                 // If it's null, then there must be no parameters for this
                 // method.
                 if ($currVar === null) {
-                    continue 2;
+                    break;
                 }
 
                 $vars[$paramCount]            = [];
