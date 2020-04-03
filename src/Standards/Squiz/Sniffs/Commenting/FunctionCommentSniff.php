@@ -382,7 +382,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                         $error = 'Doc comment for parameter %s does not match ';
                         if (strtolower($param['var']) === strtolower($realName)) {
                             $error .= 'case of ';
-                            $code = 'ParamNameNoCaseMatch';
+                            $code   = 'ParamNameNoCaseMatch';
                         }
 
                         $error .= 'actual variable name %s';
@@ -391,7 +391,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     } else {
                         $pos = $index;
                     }
-                }
+                }//end if
             } else if (substr($param['var'], -4) !== ',...') {
                 // We must have an extra parameter comment.
                 $error = 'Superfluous parameter comment';
