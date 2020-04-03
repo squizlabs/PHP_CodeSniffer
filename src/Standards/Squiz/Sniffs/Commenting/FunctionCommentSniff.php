@@ -367,6 +367,37 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
         }
 
         foreach ($params as $pos => $param) {
+            // Make sure the param name is correct.
+            if (isset($realParams[$pos]) === true) {
+                $realName = $realParams[$pos]['name'];
+                if ($realName !== $param['var']) {
+                    $index = array_search($param['var'], array_column($realParams, 'name'));
+                    if ($index === false) {
+                        $code = 'ParamNameNoMatch';
+                        $data = [
+                            $param['var'],
+                            $realName,
+                        ];
+
+                        $error = 'Doc comment for parameter %s does not match ';
+                        if (strtolower($param['var']) === strtolower($realName)) {
+                            $error .= 'case of ';
+                            $code = 'ParamNameNoCaseMatch';
+                        }
+
+                        $error .= 'actual variable name %s';
+
+                        $phpcsFile->addError($error, $param['tag'], $code, $data);
+                    } else {
+                        $pos = $index;
+                    }
+                }
+            } else if (substr($param['var'], -4) !== ',...') {
+                // We must have an extra parameter comment.
+                $error = 'Superfluous parameter comment';
+                $phpcsFile->addError($error, $param['tag'], 'ExtraParamComment');
+            }//end if
+
             // If the type is empty, the whole line is empty.
             if ($param['type'] === '') {
                 continue;
@@ -514,32 +545,6 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 
             // Check number of spaces after the type.
             $this->checkSpacingAfterParamType($phpcsFile, $param, $maxType);
-
-            // Make sure the param name is correct.
-            if (isset($realParams[$pos]) === true) {
-                $realName = $realParams[$pos]['name'];
-                if ($realName !== $param['var']) {
-                    $code = 'ParamNameNoMatch';
-                    $data = [
-                        $param['var'],
-                        $realName,
-                    ];
-
-                    $error = 'Doc comment for parameter %s does not match ';
-                    if (strtolower($param['var']) === strtolower($realName)) {
-                        $error .= 'case of ';
-                        $code   = 'ParamNameNoCaseMatch';
-                    }
-
-                    $error .= 'actual variable name %s';
-
-                    $phpcsFile->addError($error, $param['tag'], $code, $data);
-                }
-            } else if (substr($param['var'], -4) !== ',...') {
-                // We must have an extra parameter comment.
-                $error = 'Superfluous parameter comment';
-                $phpcsFile->addError($error, $param['tag'], 'ExtraParamComment');
-            }//end if
 
             if ($param['comment'] === '') {
                 continue;
