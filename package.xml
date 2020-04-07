@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed an issue where including sniffs using paths containing multiple dots would silently fail
   - Generic.CodeAnalysis.EmptyPHPStatement now detects empty statements at the start of control structures
+  - Error wording in PEAR.Functions.FunctionCallSignature now always uses "parenthesis" instead of sometimes using "bracket"
+    -- Thanks to Vincent Langlet for the patch
   - Fixed bug #2787 : Squiz.PHP.DisallowMultipleAssignments not ignoring typed property declarations
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2810 : PHPCBF fails to fix file with empty statement at start on control structure
