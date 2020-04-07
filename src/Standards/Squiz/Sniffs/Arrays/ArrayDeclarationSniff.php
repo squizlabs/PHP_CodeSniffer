@@ -243,7 +243,13 @@ class ArrayDeclarationSniff implements Sniff
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
                     $phpcsFile->fixer->addNewline($arrayStart);
-                    $phpcsFile->fixer->addNewlineBefore($arrayEnd);
+
+                    if ($tokens[($arrayEnd - 1)]['code'] === T_WHITESPACE) {
+                        $phpcsFile->fixer->replaceToken(($arrayEnd - 1), $phpcsFile->eolChar);
+                    } else {
+                        $phpcsFile->fixer->addNewlineBefore($arrayEnd);
+                    }
+
                     $phpcsFile->fixer->endChangeset();
                 }
 
@@ -394,9 +400,7 @@ class ArrayDeclarationSniff implements Sniff
                 continue;
             }//end if
 
-            if ($tokens[$nextToken]['code'] !== T_DOUBLE_ARROW
-                && $tokens[$nextToken]['code'] !== T_COMMA
-            ) {
+            if ($tokens[$nextToken]['code'] !== T_DOUBLE_ARROW && $tokens[$nextToken]['code'] !== T_COMMA) {
                 continue;
             }
 
@@ -437,7 +441,6 @@ class ArrayDeclarationSniff implements Sniff
                             && $tokens[$prev]['code'] !== T_END_NOWDOC)
                             || $tokens[($nextToken - 1)]['line'] === $tokens[$nextToken]['line']
                         ) {
-                            $content = $tokens[($nextToken - 2)]['content'];
                             if ($tokens[($nextToken - 1)]['content'] === $phpcsFile->eolChar) {
                                 $spaceLength = 'newline';
                             } else {
@@ -607,8 +610,7 @@ class ArrayDeclarationSniff implements Sniff
                 $phpcsFile->recordMetric($stackPtr, 'Array end comma', 'yes');
             }
 
-            $lastValueLine = false;
-            foreach ($indices as $value) {
+            foreach ($indices as $valuePosition => $value) {
                 if (empty($value['value']) === true) {
                     // Array was malformed and we couldn't figure out
                     // the array value correctly, so we have to ignore it.
@@ -616,20 +618,32 @@ class ArrayDeclarationSniff implements Sniff
                     continue;
                 }
 
-                if ($lastValueLine !== false && $tokens[$value['value']]['line'] === $lastValueLine) {
-                    $error = 'Each value in a multi-line array must be on a new line';
-                    $fix   = $phpcsFile->addFixableError($error, $value['value'], 'ValueNoNewline');
-                    if ($fix === true) {
-                        if ($tokens[($value['value'] - 1)]['code'] === T_WHITESPACE) {
-                            $phpcsFile->fixer->replaceToken(($value['value'] - 1), '');
-                        }
+                $valuePointer = $value['value'];
 
-                        $phpcsFile->fixer->addNewlineBefore($value['value']);
+                $previous = $phpcsFile->findPrevious([T_WHITESPACE, T_COMMA], ($valuePointer - 1), ($arrayStart + 1), true);
+                if ($previous === false) {
+                    $previous = $stackPtr;
+                }
+
+                $previousIsWhitespace = $tokens[($valuePointer - 1)]['code'] === T_WHITESPACE;
+                if ($tokens[$previous]['line'] === $tokens[$valuePointer]['line']) {
+                    $error = 'Each value in a multi-line array must be on a new line';
+                    if ($valuePosition === 0) {
+                        $error = 'The first value in a multi-value array must be on a new line';
                     }
-                } else if ($tokens[($value['value'] - 1)]['code'] === T_WHITESPACE) {
+
+                    $fix = $phpcsFile->addFixableError($error, $valuePointer, 'ValueNoNewline');
+                    if ($fix === true) {
+                        if ($previousIsWhitespace === true) {
+                            $phpcsFile->fixer->replaceToken(($valuePointer - 1), $phpcsFile->eolChar);
+                        } else {
+                            $phpcsFile->fixer->addNewlineBefore($valuePointer);
+                        }
+                    }
+                } else if ($previousIsWhitespace === true) {
                     $expected = $keywordStart;
 
-                    $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $value['value'], true);
+                    $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $valuePointer, true);
                     $found = ($tokens[$first]['column'] - 1);
                     if ($found !== $expected) {
                         $error = 'Array value not aligned correctly; expected %s spaces but found %s';
@@ -638,18 +652,16 @@ class ArrayDeclarationSniff implements Sniff
                             $found,
                         ];
 
-                        $fix = $phpcsFile->addFixableError($error, $value['value'], 'ValueNotAligned', $data);
+                        $fix = $phpcsFile->addFixableError($error, $valuePointer, 'ValueNotAligned', $data);
                         if ($fix === true) {
                             if ($found === 0) {
-                                $phpcsFile->fixer->addContent(($value['value'] - 1), str_repeat(' ', $expected));
+                                $phpcsFile->fixer->addContent(($valuePointer - 1), str_repeat(' ', $expected));
                             } else {
-                                $phpcsFile->fixer->replaceToken(($value['value'] - 1), str_repeat(' ', $expected));
+                                $phpcsFile->fixer->replaceToken(($valuePointer - 1), str_repeat(' ', $expected));
                             }
                         }
                     }
                 }//end if
-
-                $lastValueLine = $tokens[$value['value']]['line'];
             }//end foreach
         }//end if
 
@@ -680,82 +692,68 @@ class ArrayDeclarationSniff implements Sniff
             to be moved back one space however, then both errors would be fixed.
         */
 
-        $numValues = count($indices);
-
-        $indicesStart  = ($keywordStart + 1);
-        $indexLine     = $tokens[$stackPtr]['line'];
-        $lastIndexLine = null;
-        foreach ($indices as $index) {
-            if ($index['value'] === false) {
+        $indicesStart = ($keywordStart + 1);
+        foreach ($indices as $valuePosition => $index) {
+            $valuePointer = $index['value'];
+            if ($valuePointer === false) {
                 // Syntax error or live coding.
                 continue;
             }
 
             if (isset($index['index']) === false) {
                 // Array value only.
-                if ($tokens[$index['value']]['line'] === $tokens[$stackPtr]['line'] && $numValues > 1) {
-                    $error = 'The first value in a multi-value array must be on a new line';
-                    $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'FirstValueNoNewline');
-                    if ($fix === true) {
-                        $phpcsFile->fixer->addNewlineBefore($index['value']);
-                    }
-                }
-
                 continue;
             }
 
-            $lastIndexLine = $indexLine;
-            $indexLine     = $tokens[$index['index']]['line'];
+            $indexPointer = $index['index'];
+            $indexLine    = $tokens[$indexPointer]['line'];
 
-            if ($indexLine === $tokens[$stackPtr]['line']) {
-                $error = 'The first index in a multi-value array must be on a new line';
-                $fix   = $phpcsFile->addFixableError($error, $index['index'], 'FirstIndexNoNewline');
-                if ($fix === true) {
-                    $phpcsFile->fixer->addNewlineBefore($index['index']);
-                }
-
-                continue;
+            $previous = $phpcsFile->findPrevious([T_WHITESPACE, T_COMMA], ($indexPointer - 1), ($arrayStart + 1), true);
+            if ($previous === false) {
+                $previous = $stackPtr;
             }
 
-            if ($indexLine === $lastIndexLine) {
+            if ($tokens[$previous]['line'] === $indexLine) {
                 $error = 'Each index in a multi-line array must be on a new line';
-                $fix   = $phpcsFile->addFixableError($error, $index['index'], 'IndexNoNewline');
-                if ($fix === true) {
-                    if ($tokens[($index['index'] - 1)]['code'] === T_WHITESPACE) {
-                        $phpcsFile->fixer->replaceToken(($index['index'] - 1), '');
-                    }
+                if ($valuePosition === 0) {
+                    $error = 'The first index in a multi-value array must be on a new line';
+                }
 
-                    $phpcsFile->fixer->addNewlineBefore($index['index']);
+                $fix = $phpcsFile->addFixableError($error, $indexPointer, 'IndexNoNewline');
+                if ($fix === true) {
+                    if ($tokens[($indexPointer - 1)]['code'] === T_WHITESPACE) {
+                        $phpcsFile->fixer->replaceToken(($indexPointer - 1), $phpcsFile->eolChar);
+                    } else {
+                        $phpcsFile->fixer->addNewlineBefore($indexPointer);
+                    }
                 }
 
                 continue;
             }
 
-            if ($tokens[$index['index']]['column'] !== $indicesStart
-                && ($index['index'] - 1) !== $arrayStart
-            ) {
+            if ($tokens[$indexPointer]['column'] !== $indicesStart && ($indexPointer - 1) !== $arrayStart) {
                 $expected = ($indicesStart - 1);
-                $found    = ($tokens[$index['index']]['column'] - 1);
+                $found    = ($tokens[$indexPointer]['column'] - 1);
                 $error    = 'Array key not aligned correctly; expected %s spaces but found %s';
                 $data     = [
                     $expected,
                     $found,
                 ];
 
-                $fix = $phpcsFile->addFixableError($error, $index['index'], 'KeyNotAligned', $data);
+                $fix = $phpcsFile->addFixableError($error, $indexPointer, 'KeyNotAligned', $data);
                 if ($fix === true) {
-                    if ($found === 0 || $tokens[($index['index'] - 1)]['code'] !== T_WHITESPACE) {
-                        $phpcsFile->fixer->addContent(($index['index'] - 1), str_repeat(' ', $expected));
+                    if ($found === 0 || $tokens[($indexPointer - 1)]['code'] !== T_WHITESPACE) {
+                        $phpcsFile->fixer->addContent(($indexPointer - 1), str_repeat(' ', $expected));
                     } else {
-                        $phpcsFile->fixer->replaceToken(($index['index'] - 1), str_repeat(' ', $expected));
+                        $phpcsFile->fixer->replaceToken(($indexPointer - 1), str_repeat(' ', $expected));
                     }
                 }
             }
 
-            $arrowStart = ($tokens[$index['index']]['column'] + $maxLength + 1);
+            $arrowStart = ($tokens[$indexPointer]['column'] + $maxLength + 1);
             if ($tokens[$index['arrow']]['column'] !== $arrowStart) {
-                $expected = ($arrowStart - ($index['index_length'] + $tokens[$index['index']]['column']));
-                $found    = ($tokens[$index['arrow']]['column'] - ($index['index_length'] + $tokens[$index['index']]['column']));
+                $expected = ($arrowStart - ($index['index_length'] + $tokens[$indexPointer]['column']));
+                $found    = ($tokens[$index['arrow']]['column'] - ($index['index_length'] + $tokens[$indexPointer]['column']));
                 $error    = 'Array double arrow not aligned correctly; expected %s space(s) but found %s';
                 $data     = [
                     $expected,
@@ -775,9 +773,9 @@ class ArrayDeclarationSniff implements Sniff
             }
 
             $valueStart = ($arrowStart + 3);
-            if ($tokens[$index['value']]['column'] !== $valueStart) {
+            if ($tokens[$valuePointer]['column'] !== $valueStart) {
                 $expected = ($valueStart - ($tokens[$index['arrow']]['length'] + $tokens[$index['arrow']]['column']));
-                $found    = ($tokens[$index['value']]['column'] - ($tokens[$index['arrow']]['length'] + $tokens[$index['arrow']]['column']));
+                $found    = ($tokens[$valuePointer]['column'] - ($tokens[$index['arrow']]['length'] + $tokens[$index['arrow']]['column']));
                 if ($found < 0) {
                     $found = 'newline';
                 }
@@ -791,25 +789,24 @@ class ArrayDeclarationSniff implements Sniff
                 $fix = $phpcsFile->addFixableError($error, $index['arrow'], 'ValueNotAligned', $data);
                 if ($fix === true) {
                     if ($found === 'newline') {
-                        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($index['value'] - 1), null, true);
+                        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($valuePointer - 1), null, true);
                         $phpcsFile->fixer->beginChangeset();
-                        for ($i = ($prev + 1); $i < $index['value']; $i++) {
+                        for ($i = ($prev + 1); $i < $valuePointer; $i++) {
                             $phpcsFile->fixer->replaceToken($i, '');
                         }
 
-                        $phpcsFile->fixer->replaceToken(($index['value'] - 1), str_repeat(' ', $expected));
+                        $phpcsFile->fixer->replaceToken(($valuePointer - 1), str_repeat(' ', $expected));
                         $phpcsFile->fixer->endChangeset();
                     } else if ($found === 0) {
-                        $phpcsFile->fixer->addContent(($index['value'] - 1), str_repeat(' ', $expected));
+                        $phpcsFile->fixer->addContent(($valuePointer - 1), str_repeat(' ', $expected));
                     } else {
-                        $phpcsFile->fixer->replaceToken(($index['value'] - 1), str_repeat(' ', $expected));
+                        $phpcsFile->fixer->replaceToken(($valuePointer - 1), str_repeat(' ', $expected));
                     }
                 }
             }//end if
 
             // Check each line ends in a comma.
-            $valueStart = $index['value'];
-            $valueLine  = $tokens[$index['value']]['line'];
+            $valueStart = $valuePointer;
             $nextComma  = false;
 
             $end = $phpcsFile->findEndOfStatement($valueStart);
@@ -833,11 +830,11 @@ class ArrayDeclarationSniff implements Sniff
 
             if ($nextComma === false || ($tokens[$nextComma]['line'] !== $valueLine)) {
                 $error = 'Each line in an array declaration must end in a comma';
-                $fix   = $phpcsFile->addFixableError($error, $index['value'], 'NoComma');
+                $fix   = $phpcsFile->addFixableError($error, $valuePointer, 'NoComma');
 
                 if ($fix === true) {
                     // Find the end of the line and put a comma there.
-                    for ($i = ($index['value'] + 1); $i <= $arrayEnd; $i++) {
+                    for ($i = ($valuePointer + 1); $i <= $arrayEnd; $i++) {
                         if ($tokens[$i]['line'] > $valueLine) {
                             break;
                         }
