@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2020-01-31</date>
- <time>09:20:00</time>
+ <date>2020-04-17</date>
+ <time>11:07:00</time>
  <version>
   <release>3.5.5</release>
   <api>3.5.5</api>
@@ -2044,6 +2044,43 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>3.5.5</release>
+    <api>3.5.5</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2020-04-17</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - The T_FN backfill now works more reliably so T_FN tokens only ever represent real arrow functions
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed an issue where including sniffs using paths containing multiple dots would silently fail
+    - Generic.CodeAnalysis.EmptyPHPStatement now detects empty statements at the start of control structures
+    - Error wording in PEAR.Functions.FunctionCallSignature now always uses "parenthesis" instead of sometimes using "bracket"
+      -- Thanks to Vincent Langlet for the patch
+    - Fixed bug #2787 : Squiz.PHP.DisallowMultipleAssignments not ignoring typed property declarations
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2810 : PHPCBF fails to fix file with empty statement at start on control structure
+    - Fixed bug #2812 : Squiz.Arrays.ArrayDeclaration not detecting some arrays with multiple arguments on the same line
+      -- Thanks to Jakub Chábek for the patch
+    - Fixed bug #2826 : Generic.WhiteSpace.ArbitraryParenthesesSpacing doesn't detect issues for statements directly after a   control structure
+      -- Thanks to Vincent Langlet for the patch
+    - Fixed bug #2848 : PSR12.Files.FileHeader false positive for file with mixed PHP and HTML and no file header
+    - Fixed bug #2849 : Generic.WhiteSpace.ScopeIndent false positive with arrow function inside array
+    - Fixed bug #2850 : Generic.PHP.LowerCaseKeyword complains __HALT_COMPILER is uppercase
+    - Fixed bug #2853 : Undefined variable error when using Info report
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #2865 : Double arrow tokenized as T_STRING when placed after function named "fn"
+    - Fixed bug #2867 : Incorrect scope matching when arrow function used inside IF condition
+    - Fixed bug #2868 : phpcs:ignore annotation doesnt work inside a docblock
+    - Fixed bug #2878 : PSR12.Files.FileHeader conflicts with Generic.Files.LineEndings
+    - Fixed bug #2895 : PSR2.Methods.FunctionCallSignature.MultipleArguments false positive with arrow function argument
+    </notes>
+  </release>
   <release>
    <version>
     <release>3.5.4</release>
