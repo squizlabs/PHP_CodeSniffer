@@ -90,7 +90,7 @@ $bar = new stdClass(
     4,
     5,
     6
-   
+
 );
 
 $bar = new stdClass(
@@ -199,7 +199,7 @@ function foo()
     myFunction(
         'string'.
         // comment
-        // comment 
+        // comment
         'string'.
         /* comment
          * comment
@@ -522,3 +522,6 @@ return trim(preg_replace_callback(
                 },
                 $search
             ));
+
+$a = ['a' => function ($b) { return $b; }];
+$a['a']( 1 );
