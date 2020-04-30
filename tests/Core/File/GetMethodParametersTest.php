@@ -287,7 +287,26 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $function = $this->getTargetToken($commentString, [T_FUNCTION, T_FN]);
         $found    = self::$phpcsFile->getMethodParameters($function);
 
-        $this->assertArraySubset($expected, $found, true);
+        $blacklist = [
+            'comma_token',
+            'default_token',
+            'default_equal_token',
+            'reference_token',
+            'token',
+            'type_hint_token',
+            'type_hint_end_token',
+            'variadic_token',
+        ];
+
+        foreach ($found as $i => $data) {
+            foreach ($blacklist as $b) {
+                if (isset($found[$i][$b]) === true) {
+                    unset($found[$i][$b]);
+                }
+            }
+        }
+
+        $this->assertEquals($expected, $found);
 
     }//end getMethodParametersTestHelper()
 

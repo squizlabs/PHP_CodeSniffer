@@ -29,7 +29,7 @@ class RulesetOverrideTest extends TestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $standard      = __DIR__.'/RulesetOverrideTest.xml';
         $config        = new Config(["--standard=$standard"]);

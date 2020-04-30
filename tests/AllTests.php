@@ -11,23 +11,7 @@ namespace PHP_CodeSniffer\Tests;
 
 require_once 'Core/AllTests.php';
 require_once 'Standards/AllSniffs.php';
-
-// PHPUnit 7 made the TestSuite run() method incompatible with
-// older PHPUnit versions due to return type hints, so maintain
-// two different suite objects.
-$phpunit7 = false;
-if (class_exists('\PHPUnit\Runner\Version') === true) {
-    $version = \PHPUnit\Runner\Version::id();
-    if ($version[0] === '7') {
-        $phpunit7 = true;
-    }
-}
-
-if ($phpunit7 === true) {
-    include_once 'TestSuite7.php';
-} else {
-    include_once 'TestSuite.php';
-}
+require_once 'TestSuite.php';
 
 class PHP_CodeSniffer_AllTests
 {

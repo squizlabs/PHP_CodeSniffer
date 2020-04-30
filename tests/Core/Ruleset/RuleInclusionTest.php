@@ -43,7 +43,7 @@ class RuleInclusionTest extends TestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $standard       = __DIR__.'/'.basename(__FILE__, '.php').'.xml';
         self::$standard = $standard;
@@ -77,7 +77,7 @@ class RuleInclusionTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         file_put_contents(self::$standard, self::$contents);
 

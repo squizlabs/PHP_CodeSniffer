@@ -38,7 +38,7 @@ class AcceptTest extends TestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $standard      = __DIR__.'/'.basename(__FILE__, '.php').'.xml';
         self::$config  = new Config(["--standard=$standard", "--ignore=*/somethingelse/*"]);

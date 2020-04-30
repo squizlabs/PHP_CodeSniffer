@@ -28,9 +28,20 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
     public function testGetMemberProperties($identifier, $expected)
     {
         $variable = $this->getTargetToken($identifier, T_VARIABLE);
-        $result   = self::$phpcsFile->getMemberProperties($variable);
+        $found    = self::$phpcsFile->getMemberProperties($variable);
 
-        $this->assertArraySubset($expected, $result, true);
+        $blacklist = [
+            'type_token',
+            'type_end_token',
+        ];
+
+        foreach ($blacklist as $b) {
+            if (isset($found[$b]) === true) {
+                unset($found[$b]);
+            }
+        }
+
+        $this->assertEquals($expected, $found);
 
     }//end testGetMemberProperties()
 
@@ -469,15 +480,15 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
      *
      * @param string $identifier Comment which precedes the test case.
      *
-     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
-     * @expectedExceptionMessage $stackPtr is not a class member var
-     *
      * @dataProvider dataNotClassProperty
      *
      * @return void
      */
     public function testNotClassPropertyException($identifier)
     {
+        $this->expectException('PHP_CodeSniffer\Exceptions\RuntimeException');
+        $this->expectExceptionMessage('$stackPtr is not a class member var');
+
         $variable = $this->getTargetToken($identifier, T_VARIABLE);
         $result   = self::$phpcsFile->getMemberProperties($variable);
 
@@ -508,13 +519,13 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
     /**
      * Test receiving an expected exception when a non variable is passed.
      *
-     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
-     * @expectedExceptionMessage $stackPtr must be of type T_VARIABLE
-     *
      * @return void
      */
     public function testNotAVariableException()
     {
+        $this->expectException('PHP_CodeSniffer\Exceptions\RuntimeException');
+        $this->expectExceptionMessage('$stackPtr must be of type T_VARIABLE');
+
         $next   = $this->getTargetToken('/* testNotAVariable */', T_RETURN);
         $result = self::$phpcsFile->getMemberProperties($next);
 

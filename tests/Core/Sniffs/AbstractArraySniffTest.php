@@ -33,7 +33,7 @@ class AbstractArraySniffTest extends AbstractMethodUnitTest
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$sniff = new AbstractArraySniffTestable();
         parent::setUpBeforeClass();

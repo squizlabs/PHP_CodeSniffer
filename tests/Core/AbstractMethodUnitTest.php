@@ -43,7 +43,7 @@ abstract class AbstractMethodUnitTest extends TestCase
      *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         $config            = new Config();
         $config->standards = ['PSR1'];
@@ -70,7 +70,7 @@ abstract class AbstractMethodUnitTest extends TestCase
      *
      * @return void
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::$phpcsFile = null;
 
