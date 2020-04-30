@@ -8,6 +8,7 @@ The file documents changes to the PHP_CodeSniffer project.
     - This occurs when all of the specified files matched exclusion rules, or none matched filtering rules
 
 ### Changes
+- The minimum required PHP version has changed from 5.4.0 to 7.2.0
 - The default coding standard has changed from `PEAR` to `PSR12`
 - The `--extensions` command line argument no longer accepts the tokenizer along with the extension
     - Previously, you would check `.module` files as PHP files using `--extensions=module/php`
