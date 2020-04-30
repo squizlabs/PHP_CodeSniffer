@@ -37,14 +37,15 @@ before_install:
   - export XMLLINT_INDENT="    "
   # Speed up build time by disabling Xdebug when its not needed.
   - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
-  - composer install
+  - if [[ $TRAVIS_PHP_VERSION != "nightly" ]]; then composer install; fi
 
 before_script:
   - if [[ $CUSTOM_INI == "1" ]]; then phpenv config-add testingConfig.ini; fi
 
 script:
   - php bin/phpcs --config-set php_path php
-  - vendor/bin/phpunit tests/AllTests.php
+  # Don't run the unit tests on nightly (PHP 8.0) as there is no compatible PHPUnit version available yet.
+  - if [[ $TRAVIS_PHP_VERSION != "nightly" ]]; then vendor/bin/phpunit tests/AllTests.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" ]]; then composer validate --no-check-all --strict; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php scripts/build-phar.php; fi
