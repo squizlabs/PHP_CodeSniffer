@@ -5,22 +5,17 @@ dist: trusty
 matrix:
   fast_finish: true
   include:
-    - php: 7.0
-    - php: 7.0
+    - php: 7.2
       env: CUSTOM_INI=1 XMLLINT=1
       addons:
         apt:
           packages:
             - libxml2-utils
-    - php: 7.1
     - php: 7.2
-      env: PHPUNIT_INCOMPAT=1
     - php: 7.3
-      env: PHPUNIT_INCOMPAT=1
     - php: 7.4
-      env: PHPUNIT_INCOMPAT=1
     - php: 7.4
-      env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
+      env: PHPSTAN=1
       addons:
         apt:
           packages:
@@ -35,25 +30,21 @@ matrix:
 
   allow_failures:
     - php: 7.4
-      env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
+      env: PHPSTAN=1
     - php: nightly
 
 before_install:
   - export XMLLINT_INDENT="    "
   # Speed up build time by disabling Xdebug when its not needed.
   - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
-  # PHPUnit 8.x is not (yet) supported, so prevent issues with Travis images using it.
-  - if [[ $PHPUNIT_INCOMPAT == "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then composer install; fi
+  - composer install
 
 before_script:
-  - if [[ $CUSTOM_INI == "1" && ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then phpenv config-add php5-testingConfig.ini; fi
-  - if [[ $CUSTOM_INI == "1" ]] && [[ ${TRAVIS_PHP_VERSION:0:1} == "7" || $TRAVIS_PHP_VERSION == "nightly" ]]; then phpenv config-add php7-testingConfig.ini; fi
+  - if [[ $CUSTOM_INI == "1" ]]; then phpenv config-add testingConfig.ini; fi
 
 script:
   - php bin/phpcs --config-set php_path php
-  - if [[ $PHPUNIT_INCOMPAT != "1" ]]; then phpunit tests/AllTests.php; fi
-  # Don't run the unit tests on nightly (PHP 8.0) as there is no compatible PHPUnit version available yet.
-  - if [[ $PHPUNIT_INCOMPAT == "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then vendor/bin/phpunit tests/AllTests.php; fi
+  - phpunit tests/AllTests.php; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" ]]; then composer validate --no-check-all --strict; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php scripts/build-phar.php; fi
