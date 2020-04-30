@@ -44,7 +44,7 @@ before_script:
 
 script:
   - php bin/phpcs --config-set php_path php
-  - phpunit tests/AllTests.php
+  - vendor/bin/phpunit tests/AllTests.php
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" ]]; then composer validate --no-check-all --strict; fi
   - if [[ $CUSTOM_INI != "1" ]]; then php scripts/build-phar.php; fi
