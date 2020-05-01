@@ -80,7 +80,7 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      *
      * @return void
      */
-    public function testComments()
+    public function testComment()
     {
         $tokens = self::$phpcsFile->getTokens();
 
@@ -98,7 +98,35 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
         $this->assertSame($tokens[$closer]['scope_opener'], ($token + 8), 'Closer scope opener is not the arrow token');
         $this->assertSame($tokens[$closer]['scope_closer'], ($token + 15), 'Closer scope closer is not the semicolon token');
 
-    }//end testComments()
+    }//end testComment()
+
+
+    /**
+     * Test heredocs inside arrow function definitions.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testHeredoc()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testHeredoc */', T_FN);
+        $this->backfillHelper($token);
+
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 4), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 9), 'Scope closer is not the semicolon token');
+
+        $opener = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 4), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 9), 'Opener scope closer is not the semicolon token');
+
+        $closer = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 4), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 9), 'Closer scope closer is not the semicolon token');
+
+    }//end testHeredoc()
 
 
     /**
