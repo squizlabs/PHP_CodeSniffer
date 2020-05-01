@@ -36,6 +36,7 @@ class ClosingTagUnitTest extends AbstractSniffUnitTest
             return [1 => 1];
 
         case 'ClosingTagUnitTest.6.inc':
+        case 'ClosingTagUnitTest.7.inc':
             return [5 => 1];
 
         default:

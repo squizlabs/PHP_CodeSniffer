@@ -67,6 +67,7 @@ class ClosingTagSniff implements Sniff
                 $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($last - 1), null, true);
                 if ($tokens[$prev]['code'] !== T_SEMICOLON
                     && $tokens[$prev]['code'] !== T_CLOSE_CURLY_BRACKET
+                    && $tokens[$prev]['code'] !== T_OPEN_TAG
                 ) {
                     $phpcsFile->fixer->addContent($prev, ';');
                 }
@@ -77,7 +78,7 @@ class ClosingTagSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'PHP closing tag at end of PHP-only file', 'yes');
         } else {
             $phpcsFile->recordMetric($stackPtr, 'PHP closing tag at end of PHP-only file', 'no');
-        }
+        }//end if
 
         // Ignore the rest of the file.
         return $phpcsFile->numTokens;
