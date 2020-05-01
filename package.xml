@@ -26,6 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Fixed bug #2926 : phpcs hangs when using arrow functions that return heredoc
   - Fixed bug #2943 : Redundant semicolon added to a file when fixing PSR2.Files.ClosingTag.NotAllowed
  </notes>
  <contents>

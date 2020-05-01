@@ -1868,6 +1868,8 @@ class PHP extends Tokenizer
 
                             if (isset($this->tokens[$scopeCloser]['scope_closer']) === true
                                 && $this->tokens[$scopeCloser]['code'] !== T_INLINE_ELSE
+                                && $this->tokens[$scopeCloser]['code'] !== T_END_HEREDOC
+                                && $this->tokens[$scopeCloser]['code'] !== T_END_NOWDOC
                             ) {
                                 // We minus 1 here in case the closer can be shared with us.
                                 $scopeCloser = ($this->tokens[$scopeCloser]['scope_closer'] - 1);

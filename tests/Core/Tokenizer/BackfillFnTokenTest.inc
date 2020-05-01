@@ -12,6 +12,11 @@ $fn1 = fn ($x) => $x + $y;
 /* testComment */
 $fn1 = fn /* comment here */ ($x) => $x + $y;
 
+/* testHeredoc */
+$fn1 = fn() => <<<HTML
+fn
+HTML;
+
 /* testFunctionName */
 function fn() {}
 
