@@ -384,6 +384,29 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test a function with return type "static".
+     *
+     * @return void
+     */
+    public function testReturnTypeStatic()
+    {
+        $expected = [
+            'scope'                => 'private',
+            'scope_specified'      => true,
+            'return_type'          => 'static',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testReturnTypeStatic()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.

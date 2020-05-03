@@ -66,3 +66,10 @@ $result = array_map(
     static fn(int $number) : int => $number + 1,
     $numbers
 );
+
+class ReturnMe {
+    /* testReturnTypeStatic */
+    private function myFunction(): static {
+        return $this;
+    }
+}
