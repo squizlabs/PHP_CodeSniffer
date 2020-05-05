@@ -17,6 +17,15 @@ class Filter extends \RecursiveFilterIterator
 {
 
     /**
+     * A list of file paths we've already accepted.
+     *
+     * Used to ensure we aren't following circular symlinks.
+     *
+     * @var array
+     */
+    protected $acceptedPaths = [];
+
+    /**
      * The top-level path we are filtering.
      *
      * @var string
@@ -29,13 +38,6 @@ class Filter extends \RecursiveFilterIterator
      * @var \PHP_CodeSniffer\Config
      */
     protected $config = null;
-
-    /**
-     * The ruleset used for the run.
-     *
-     * @var \PHP_CodeSniffer\Ruleset
-     */
-    protected $ruleset = null;
 
     /**
      * A list of ignore patterns that apply to directories only.
@@ -52,13 +54,18 @@ class Filter extends \RecursiveFilterIterator
     protected $ignoreFilePatterns = null;
 
     /**
-     * A list of file paths we've already accepted.
+     * TRUE if the basedir is actually a directory.
      *
-     * Used to ensure we aren't following circular symlinks.
-     *
-     * @var array
+     * @var boolean
      */
-    protected $acceptedPaths = [];
+    protected $isBasedirDir = false;
+
+    /**
+     * The ruleset used for the run.
+     *
+     * @var \PHP_CodeSniffer\Ruleset
+     */
+    protected $ruleset = null;
 
 
     /**
@@ -77,6 +84,10 @@ class Filter extends \RecursiveFilterIterator
         $this->basedir = $basedir;
         $this->config  = $config;
         $this->ruleset = $ruleset;
+
+        if (is_dir($basedir) === true || Util\Common::isPharFile($basedir) === true) {
+            $this->isBasedirDir = true;
+        }
 
     }//end __construct()
 
@@ -166,7 +177,17 @@ class Filter extends \RecursiveFilterIterator
         $fileName  = basename($path);
         $fileParts = explode('.', $fileName);
         if ($fileParts[0] === $fileName || $fileParts[0] === '') {
-            return false;
+            if ($this->isBasedirDir === true) {
+                // We are recursing a directory, so ignore any
+                // files with no extension.
+                return false;
+            }
+
+            // We are processing a single file, so always
+            // accept files with no extension as they have been
+            // explicitly requested and there is no config setting
+            // to ignore them.
+            return true;
         }
 
         // Checking multi-part file extensions, so need to create a

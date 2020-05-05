@@ -10,6 +10,9 @@ The file documents changes to the PHP_CodeSniffer project.
 ### Changes
 - The minimum required PHP version has changed from 5.4.0 to 7.2.0
 - The default coding standard has changed from `PEAR` to `PSR12`
+- Files with no extension are no longer ignored if the path is passed in directly
+    - Previously, files with no extension would always be ignored
+    - Now, files with no extension are checked if passed on the command line or specified in a ruleset
 - The `--extensions` command line argument no longer accepts the tokenizer along with the extension
     - Previously, you would check `.module` files as PHP files using `--extensions=module/php`
     - Now, you use `--extensions=module`

@@ -3,7 +3,8 @@
     <description>The coding standard for PHP_CodeSniffer itself.</description>
 
     <file>autoload.php</file>
-    <file>bin</file>
+    <file>bin/phpcs</file>
+    <file>bin/phpcbf</file>
     <file>scripts</file>
     <file>src</file>
     <file>tests</file>
