@@ -25,7 +25,7 @@ The file documents changes to the PHP_CodeSniffer project.
     - Now, tags are processed as they are encountered when parsing the file top to bottom
 - None of the included sniffs will warn about possible parse errors any more
     - This improves the experience when the file is being checked inside an editor during live coding
-    - If you want to detect parse errors, use a linter instead
+    - If you want to detect parse errors, use the `Generic.PHP.Syntax` sniff or a dedicated linter instead
 - Changed the error code `Squiz.Classes.ValidClassName.NotCamelCaps` to `Squiz.Classes.ValidClassName.NotPascalCase`
     - This reflects that the sniff is actually checking for `ClassName` and not `className`
 - All status, debug, and progress output is now sent to STDERR instead of STDOUT
