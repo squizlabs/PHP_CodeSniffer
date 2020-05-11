@@ -17,13 +17,6 @@ class UnnecessaryStringConcatSniff implements Sniff
 {
 
     /**
-     * If true, an error will be thrown; otherwise a warning.
-     *
-     * @var boolean
-     */
-    public $error = true;
-
-    /**
      * If true, strings concatenated over multiple lines are allowed.
      *
      * Useful if you break strings over multiple lines to work
@@ -86,11 +79,7 @@ class UnnecessaryStringConcatSniff implements Sniff
                 }
 
                 $error = 'String concat is not required here; use a single string instead';
-                if ($this->error === true) {
-                    $phpcsFile->addError($error, $stackPtr, 'Found');
-                } else {
-                    $phpcsFile->addWarning($error, $stackPtr, 'Found');
-                }
+                $phpcsFile->addError($error, $stackPtr, 'Found');
             }//end if
         }//end if
 

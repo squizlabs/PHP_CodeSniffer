@@ -20,13 +20,6 @@ class MultipleStatementAlignmentSniff implements Sniff
 {
 
     /**
-     * If true, an error will be thrown; otherwise a warning.
-     *
-     * @var boolean
-     */
-    public $error = false;
-
-    /**
      * The maximum amount of padding before the alignment is ignored.
      *
      * If the amount of padding required to align this assignment with the
@@ -355,11 +348,7 @@ class MultipleStatementAlignmentSniff implements Sniff
                 $foundText,
             ];
 
-            if ($this->error === true) {
-                $fix = $phpcsFile->addFixableError($error, $assignment, $type, $errorData);
-            } else {
-                $fix = $phpcsFile->addFixableWarning($error, $assignment, $type.'Warning', $errorData);
-            }
+            $fix = $phpcsFile->addFixableWarning($error, $assignment, $type, $errorData);
 
             $errorGenerated = true;
 

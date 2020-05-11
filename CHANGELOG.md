@@ -70,3 +70,24 @@ The file documents changes to the PHP_CodeSniffer project.
 - Removed JS-specific sniff `Squiz.WhiteSpace.PropertyLabelSpacing`
 - Removed the entire `Squiz.CSS` category, and all sniffs within
 - Removed the entire `MySource` standard, and all sniffs within
+- Removed `error` property of sniff `Generic.Strings.UnnecessaryStringConcat`
+    - This sniff now always produces errors
+    - To make this sniff produce warnings, include the following in a `ruleset.xml` file:
+        ```xml
+        <rule ref="Generic.Strings.UnnecessaryStringConcat">
+            <type>warning</type>
+        </rule>
+        ```
+- Removed `error` property of sniff `Generic.Formatting.MultipleStatementAlignment`
+    - This sniff now always produces warnings
+    - Also removes the `Generic.Formatting.MultipleStatementAlignment.IncorrectWarning` sniff message
+        - Now renamed to `Generic.Formatting.MultipleStatementAlignment.Incorrect`
+    - Also removes the `Generic.Formatting.MultipleStatementAlignment.NotSameWarning` sniff message
+        - Now renamed to `Generic.Formatting.MultipleStatementAlignment.NotSame`
+    - To make this sniff produce errors, include the following in a `ruleset.xml` file:
+        ```xml
+        <rule ref="Generic.Formatting.MultipleStatementAlignment">
+            <type>error</type>
+        </rule>
+        ```
+
