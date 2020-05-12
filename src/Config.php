@@ -161,7 +161,7 @@ class Config
      *
      * @var array<string, TRUE>
      */
-    private static $overriddenDefaults = [];
+    private $overriddenDefaults = [];
 
     /**
      * Config file data that has been loaded for the run.
@@ -340,7 +340,7 @@ class Config
         $this->restoreDefaults();
         $this->setCommandLineValues($cliArgs);
 
-        if (isset(self::$overriddenDefaults['standards']) === false) {
+        if (isset($this->overriddenDefaults['standards']) === false) {
             // They did not supply a standard to use.
             // Look for a default ruleset in the current directory or higher.
             $currentDir = getcwd();
@@ -395,8 +395,8 @@ class Config
             if (trim($fileContents) !== '') {
                 $this->stdin        = true;
                 $this->stdinContent = $fileContents;
-                self::$overriddenDefaults['stdin']        = true;
-                self::$overriddenDefaults['stdinContent'] = true;
+                $this->overriddenDefaults['stdin']        = true;
+                $this->overriddenDefaults['stdinContent'] = true;
             }
         }//end if
 
@@ -427,7 +427,7 @@ class Config
                 if ($arg === '-') {
                     // Asking to read from STDIN.
                     $this->stdin = true;
-                    self::$overriddenDefaults['stdin'] = true;
+                    $this->overriddenDefaults['stdin'] = true;
                     continue;
                 }
 
@@ -613,23 +613,23 @@ class Config
             }
 
             $this->verbosity++;
-            self::$overriddenDefaults['verbosity'] = true;
+            $this->overriddenDefaults['verbosity'] = true;
             break;
         case 'l' :
             $this->local = true;
-            self::$overriddenDefaults['local'] = true;
+            $this->overriddenDefaults['local'] = true;
             break;
         case 's' :
             $this->showSources = true;
-            self::$overriddenDefaults['showSources'] = true;
+            $this->overriddenDefaults['showSources'] = true;
             break;
         case 'a' :
             $this->interactive = true;
-            self::$overriddenDefaults['interactive'] = true;
+            $this->overriddenDefaults['interactive'] = true;
             break;
         case 'e':
             $this->explain = true;
-            self::$overriddenDefaults['explain'] = true;
+            $this->overriddenDefaults['explain'] = true;
             break;
         case 'p' :
             if ($this->quiet === true) {
@@ -638,7 +638,7 @@ class Config
             }
 
             $this->showProgress = true;
-            self::$overriddenDefaults['showProgress'] = true;
+            $this->overriddenDefaults['showProgress'] = true;
             break;
         case 'q' :
             // Quiet mode disables a few other settings as well.
@@ -646,11 +646,11 @@ class Config
             $this->showProgress = false;
             $this->verbosity    = 0;
 
-            self::$overriddenDefaults['quiet'] = true;
+            $this->overriddenDefaults['quiet'] = true;
             break;
         case 'm' :
             $this->recordErrors = false;
-            self::$overriddenDefaults['recordErrors'] = true;
+            $this->overriddenDefaults['recordErrors'] = true;
             break;
         case 'd' :
             $ini = explode('=', $this->cliArgs[($pos + 1)]);
@@ -662,15 +662,15 @@ class Config
             }
             break;
         case 'n' :
-            if (isset(self::$overriddenDefaults['warningSeverity']) === false) {
+            if (isset($this->overriddenDefaults['warningSeverity']) === false) {
                 $this->warningSeverity = 0;
-                self::$overriddenDefaults['warningSeverity'] = true;
+                $this->overriddenDefaults['warningSeverity'] = true;
             }
             break;
         case 'w' :
-            if (isset(self::$overriddenDefaults['warningSeverity']) === false) {
+            if (isset($this->overriddenDefaults['warningSeverity']) === false) {
                 $this->warningSeverity = $this->errorSeverity;
-                self::$overriddenDefaults['warningSeverity'] = true;
+                $this->overriddenDefaults['warningSeverity'] = true;
             }
             break;
         default:
@@ -709,46 +709,46 @@ class Config
             $output .= 'by Squiz (http://www.squiz.net)'.PHP_EOL;
             throw new DeepExitException($output, 0);
         case 'colors':
-            if (isset(self::$overriddenDefaults['colors']) === true) {
+            if (isset($this->overriddenDefaults['colors']) === true) {
                 break;
             }
 
             $this->colors = true;
-            self::$overriddenDefaults['colors'] = true;
+            $this->overriddenDefaults['colors'] = true;
             break;
         case 'no-colors':
-            if (isset(self::$overriddenDefaults['colors']) === true) {
+            if (isset($this->overriddenDefaults['colors']) === true) {
                 break;
             }
 
             $this->colors = false;
-            self::$overriddenDefaults['colors'] = true;
+            $this->overriddenDefaults['colors'] = true;
             break;
         case 'cache':
-            if (isset(self::$overriddenDefaults['cache']) === true) {
+            if (isset($this->overriddenDefaults['cache']) === true) {
                 break;
             }
 
             if (defined('PHP_CODESNIFFER_IN_TESTS') === false) {
                 $this->cache = true;
-                self::$overriddenDefaults['cache'] = true;
+                $this->overriddenDefaults['cache'] = true;
             }
             break;
         case 'no-cache':
-            if (isset(self::$overriddenDefaults['cache']) === true) {
+            if (isset($this->overriddenDefaults['cache']) === true) {
                 break;
             }
 
             $this->cache = false;
-            self::$overriddenDefaults['cache'] = true;
+            $this->overriddenDefaults['cache'] = true;
             break;
         case 'ignore-annotations':
-            if (isset(self::$overriddenDefaults['annotations']) === true) {
+            if (isset($this->overriddenDefaults['annotations']) === true) {
                 break;
             }
 
             $this->annotations = false;
-            self::$overriddenDefaults['annotations'] = true;
+            $this->overriddenDefaults['annotations'] = true;
             break;
         case 'config-set':
             if (isset($this->cliArgs[($pos + 1)]) === false
@@ -821,16 +821,16 @@ class Config
             $value = $this->cliArgs[($pos + 2)];
             $this->cliArgs[($pos + 1)] = '';
             $this->cliArgs[($pos + 2)] = '';
-            self::setConfigData($key, $value, true);
-            if (isset(self::$overriddenDefaults['runtime-set']) === false) {
-                self::$overriddenDefaults['runtime-set'] = [];
+            $this->setConfigData($key, $value, true);
+            if (isset($this->overriddenDefaults['runtime-set']) === false) {
+                $this->overriddenDefaults['runtime-set'] = [];
             }
 
-            self::$overriddenDefaults['runtime-set'][$key] = true;
+            $this->overriddenDefaults['runtime-set'][$key] = true;
             break;
         default:
             if (substr($arg, 0, 7) === 'sniffs=') {
-                if (isset(self::$overriddenDefaults['sniffs']) === true) {
+                if (isset($this->overriddenDefaults['sniffs']) === true) {
                     break;
                 }
 
@@ -844,9 +844,9 @@ class Config
                 }
 
                 $this->sniffs = $sniffs;
-                self::$overriddenDefaults['sniffs'] = true;
+                $this->overriddenDefaults['sniffs'] = true;
             } else if (substr($arg, 0, 8) === 'exclude=') {
-                if (isset(self::$overriddenDefaults['exclude']) === true) {
+                if (isset($this->overriddenDefaults['exclude']) === true) {
                     break;
                 }
 
@@ -860,20 +860,20 @@ class Config
                 }
 
                 $this->exclude = $sniffs;
-                self::$overriddenDefaults['exclude'] = true;
+                $this->overriddenDefaults['exclude'] = true;
             } else if (defined('PHP_CODESNIFFER_IN_TESTS') === false
                 && substr($arg, 0, 6) === 'cache='
             ) {
-                if ((isset(self::$overriddenDefaults['cache']) === true
+                if ((isset($this->overriddenDefaults['cache']) === true
                     && $this->cache === false)
-                    || isset(self::$overriddenDefaults['cacheFile']) === true
+                    || isset($this->overriddenDefaults['cacheFile']) === true
                 ) {
                     break;
                 }
 
                 // Turn caching on.
                 $this->cache = true;
-                self::$overriddenDefaults['cache'] = true;
+                $this->overriddenDefaults['cache'] = true;
 
                 $this->cacheFile = Util\Common::realpath(substr($arg, 6));
 
@@ -906,7 +906,7 @@ class Config
                     }
                 }//end if
 
-                self::$overriddenDefaults['cacheFile'] = true;
+                $this->overriddenDefaults['cacheFile'] = true;
 
                 if (is_dir($this->cacheFile) === true) {
                     $error  = 'ERROR: The specified cache file path "'.$this->cacheFile.'" is a directory'.PHP_EOL.PHP_EOL;
@@ -928,7 +928,7 @@ class Config
                 }
 
                 $this->bootstrap = array_merge($this->bootstrap, $bootstrap);
-                self::$overriddenDefaults['bootstrap'] = true;
+                $this->overriddenDefaults['bootstrap'] = true;
             } else if (substr($arg, 0, 10) === 'file-list=') {
                 $fileList = substr($arg, 10);
                 $path     = Util\Common::realpath($fileList);
@@ -950,7 +950,7 @@ class Config
                     $this->processFilePath($inputFile);
                 }
             } else if (substr($arg, 0, 11) === 'stdin-path=') {
-                if (isset(self::$overriddenDefaults['stdinPath']) === true) {
+                if (isset($this->overriddenDefaults['stdinPath']) === true) {
                     break;
                 }
 
@@ -961,9 +961,9 @@ class Config
                     $this->stdinPath = trim(substr($arg, 11));
                 }
 
-                self::$overriddenDefaults['stdinPath'] = true;
+                $this->overriddenDefaults['stdinPath'] = true;
             } else if (PHP_CODESNIFFER_CBF === false && substr($arg, 0, 12) === 'report-file=') {
-                if (isset(self::$overriddenDefaults['reportFile']) === true) {
+                if (isset($this->overriddenDefaults['reportFile']) === true) {
                     break;
                 }
 
@@ -983,7 +983,7 @@ class Config
                     $this->reportFile = $dir.'/'.basename($this->reportFile);
                 }//end if
 
-                self::$overriddenDefaults['reportFile'] = true;
+                $this->overriddenDefaults['reportFile'] = true;
 
                 if (is_dir($this->reportFile) === true) {
                     $error  = 'ERROR: The specified report file path "'.$this->reportFile.'" is a directory'.PHP_EOL.PHP_EOL;
@@ -991,18 +991,18 @@ class Config
                     throw new DeepExitException($error, 3);
                 }
             } else if (substr($arg, 0, 13) === 'report-width=') {
-                if (isset(self::$overriddenDefaults['reportWidth']) === true) {
+                if (isset($this->overriddenDefaults['reportWidth']) === true) {
                     break;
                 }
 
                 $this->reportWidth = substr($arg, 13);
-                self::$overriddenDefaults['reportWidth'] = true;
+                $this->overriddenDefaults['reportWidth'] = true;
             } else if (substr($arg, 0, 9) === 'basepath=') {
-                if (isset(self::$overriddenDefaults['basepath']) === true) {
+                if (isset($this->overriddenDefaults['basepath']) === true) {
                     break;
                 }
 
-                self::$overriddenDefaults['basepath'] = true;
+                $this->overriddenDefaults['basepath'] = true;
 
                 if (substr($arg, 9) === '') {
                     $this->basepath = null;
@@ -1056,7 +1056,7 @@ class Config
                     $reports[$report] = $output;
                 } else {
                     // This is a single report.
-                    if (isset(self::$overriddenDefaults['reports']) === true) {
+                    if (isset($this->overriddenDefaults['reports']) === true) {
                         break;
                     }
 
@@ -1067,74 +1067,74 @@ class Config
                 }//end if
 
                 // Remove the default value so the CLI value overrides it.
-                if (isset(self::$overriddenDefaults['reports']) === false) {
+                if (isset($this->overriddenDefaults['reports']) === false) {
                     $this->reports = $reports;
                 } else {
                     $this->reports = array_merge($this->reports, $reports);
                 }
 
-                self::$overriddenDefaults['reports'] = true;
+                $this->overriddenDefaults['reports'] = true;
             } else if (substr($arg, 0, 7) === 'filter=') {
-                if (isset(self::$overriddenDefaults['filter']) === true) {
+                if (isset($this->overriddenDefaults['filter']) === true) {
                     break;
                 }
 
                 $this->filter = substr($arg, 7);
-                self::$overriddenDefaults['filter'] = true;
+                $this->overriddenDefaults['filter'] = true;
             } else if (substr($arg, 0, 9) === 'standard=') {
                 $standards = trim(substr($arg, 9));
                 if ($standards !== '') {
                     $this->standards = explode(',', $standards);
                 }
 
-                self::$overriddenDefaults['standards'] = true;
+                $this->overriddenDefaults['standards'] = true;
             } else if (substr($arg, 0, 11) === 'extensions=') {
-                if (isset(self::$overriddenDefaults['extensions']) === true) {
+                if (isset($this->overriddenDefaults['extensions']) === true) {
                     break;
                 }
 
                 $this->extensions = explode(',', substr($arg, 11));
-                self::$overriddenDefaults['extensions'] = true;
+                $this->overriddenDefaults['extensions'] = true;
             } else if (substr($arg, 0, 7) === 'suffix=') {
-                if (isset(self::$overriddenDefaults['suffix']) === true) {
+                if (isset($this->overriddenDefaults['suffix']) === true) {
                     break;
                 }
 
                 $this->suffix = substr($arg, 7);
-                self::$overriddenDefaults['suffix'] = true;
+                $this->overriddenDefaults['suffix'] = true;
             } else if (substr($arg, 0, 9) === 'parallel=') {
-                if (isset(self::$overriddenDefaults['parallel']) === true) {
+                if (isset($this->overriddenDefaults['parallel']) === true) {
                     break;
                 }
 
                 $this->parallel = max((int) substr($arg, 9), 1);
-                self::$overriddenDefaults['parallel'] = true;
+                $this->overriddenDefaults['parallel'] = true;
             } else if (substr($arg, 0, 9) === 'severity=') {
                 $this->errorSeverity   = (int) substr($arg, 9);
                 $this->warningSeverity = $this->errorSeverity;
-                if (isset(self::$overriddenDefaults['errorSeverity']) === false) {
-                    self::$overriddenDefaults['errorSeverity'] = true;
+                if (isset($this->overriddenDefaults['errorSeverity']) === false) {
+                    $this->overriddenDefaults['errorSeverity'] = true;
                 }
 
-                if (isset(self::$overriddenDefaults['warningSeverity']) === false) {
-                    self::$overriddenDefaults['warningSeverity'] = true;
+                if (isset($this->overriddenDefaults['warningSeverity']) === false) {
+                    $this->overriddenDefaults['warningSeverity'] = true;
                 }
             } else if (substr($arg, 0, 15) === 'error-severity=') {
-                if (isset(self::$overriddenDefaults['errorSeverity']) === true) {
+                if (isset($this->overriddenDefaults['errorSeverity']) === true) {
                     break;
                 }
 
                 $this->errorSeverity = (int) substr($arg, 15);
-                self::$overriddenDefaults['errorSeverity'] = true;
+                $this->overriddenDefaults['errorSeverity'] = true;
             } else if (substr($arg, 0, 17) === 'warning-severity=') {
-                if (isset(self::$overriddenDefaults['warningSeverity']) === true) {
+                if (isset($this->overriddenDefaults['warningSeverity']) === true) {
                     break;
                 }
 
                 $this->warningSeverity = (int) substr($arg, 17);
-                self::$overriddenDefaults['warningSeverity'] = true;
+                $this->overriddenDefaults['warningSeverity'] = true;
             } else if (substr($arg, 0, 7) === 'ignore=') {
-                if (isset(self::$overriddenDefaults['ignored']) === true) {
+                if (isset($this->overriddenDefaults['ignored']) === true) {
                     break;
                 }
 
@@ -1156,30 +1156,30 @@ class Config
                 }
 
                 $this->ignored = $ignored;
-                self::$overriddenDefaults['ignored'] = true;
+                $this->overriddenDefaults['ignored'] = true;
             } else if (substr($arg, 0, 10) === 'generator='
                 && PHP_CODESNIFFER_CBF === false
             ) {
-                if (isset(self::$overriddenDefaults['generator']) === true) {
+                if (isset($this->overriddenDefaults['generator']) === true) {
                     break;
                 }
 
                 $this->generator = substr($arg, 10);
-                self::$overriddenDefaults['generator'] = true;
+                $this->overriddenDefaults['generator'] = true;
             } else if (substr($arg, 0, 9) === 'encoding=') {
-                if (isset(self::$overriddenDefaults['encoding']) === true) {
+                if (isset($this->overriddenDefaults['encoding']) === true) {
                     break;
                 }
 
                 $this->encoding = strtolower(substr($arg, 9));
-                self::$overriddenDefaults['encoding'] = true;
+                $this->overriddenDefaults['encoding'] = true;
             } else if (substr($arg, 0, 10) === 'tab-width=') {
-                if (isset(self::$overriddenDefaults['tabWidth']) === true) {
+                if (isset($this->overriddenDefaults['tabWidth']) === true) {
                     break;
                 }
 
                 $this->tabWidth = (int) substr($arg, 10);
-                self::$overriddenDefaults['tabWidth'] = true;
+                $this->overriddenDefaults['tabWidth'] = true;
             } else {
                 if ($this->dieOnUnknownArg === false) {
                     $eqPos = strpos($arg, '=');
@@ -1263,7 +1263,7 @@ class Config
             $files       = $this->files;
             $files[]     = $file;
             $this->files = $files;
-            self::$overriddenDefaults['files'] = true;
+            $this->overriddenDefaults['files'] = true;
         }
 
     }//end processFilePath()
@@ -1526,10 +1526,10 @@ class Config
      * @see    getConfigData()
      * @throws \PHP_CodeSniffer\Exceptions\DeepExitException If the config file can not be written.
      */
-    public static function setConfigData($key, $value, $temp=false)
+    public function setConfigData($key, $value, $temp=false)
     {
-        if (isset(self::$overriddenDefaults['runtime-set']) === true
-            && isset(self::$overriddenDefaults['runtime-set'][$key]) === true
+        if (isset($this->overriddenDefaults['runtime-set']) === true
+            && isset($this->overriddenDefaults['runtime-set'][$key]) === true
         ) {
             return false;
         }

@@ -411,7 +411,7 @@ class Ruleset
                 break;
             case 'config':
                 // Process custom sniff config settings.
-                Config::setConfigData((string) $child['name'], (string) $child['value'], true);
+                $this->config->setConfigData((string) $child['name'], (string) $child['value'], true);
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     Common::printStatusMessage("=> set config value ".(string) $child['name'].': '.(string) $child['value'], ($depth + 1));
                 }

@@ -7,7 +7,7 @@ The file documents changes to the PHP_CodeSniffer project.
 - An error message is now displayed if no files were checked during a run
     - This occurs when all of the specified files matched exclusion rules, or none matched filtering rules
 
-### Changes
+### Changed
 - The minimum required PHP version has changed from 5.4.0 to 7.2.0
 - The default coding standard has changed from `PEAR` to `PSR12`
 - Files with no extension are no longer ignored if the path is passed in directly
@@ -37,6 +37,7 @@ The file documents changes to the PHP_CodeSniffer project.
         - Pipe both STDERR and STDOUT to the same file to capture the entire output of the run
     - The `--report-file` functionality remains untouched
 - Composer installs no longer include any test files
+- The `Config::setConfigData()` method is no longer static
 
 ### Removed
 - Removed support for installing via PEAR
@@ -90,4 +91,3 @@ The file documents changes to the PHP_CodeSniffer project.
             <type>error</type>
         </rule>
         ```
-
