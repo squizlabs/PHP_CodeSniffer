@@ -79,7 +79,7 @@ class CodeAnalyzerSniff implements Sniff
                 // > Zend Code Analyzer 1.2.2
                 // > Analyzing <filename>...
                 // So skip these...
-                $res = preg_match("/^.+\(line ([0-9]+)\):(.+)$/", $finding, $regs);
+                $res = preg_match('/^.+\(line ([0-9]+)\):(.+)$/', $finding, $regs);
                 if (empty($regs) === true || $res === false) {
                     continue;
                 }

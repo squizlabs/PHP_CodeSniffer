@@ -56,7 +56,7 @@ class Json implements Report
                     $messagesObject->column  = $column;
                     $messagesObject->fixable = $fixable;
 
-                    $messages .= json_encode($messagesObject).",";
+                    $messages .= json_encode($messagesObject).',';
                 }
             }
         }//end foreach
@@ -98,7 +98,7 @@ class Json implements Report
     ) {
         echo '{"totals":{"errors":'.$totalErrors.',"warnings":'.$totalWarnings.',"fixable":'.$totalFixable.'},"files":{';
         echo rtrim($cachedData, ',');
-        echo "}}".PHP_EOL;
+        echo '}}'.PHP_EOL;
 
     }//end generate()
 

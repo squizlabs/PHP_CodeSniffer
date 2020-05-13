@@ -125,7 +125,7 @@ class Comment
                 $stackPtr++;
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    Common::printStatusMessage("Create comment token: T_DOC_COMMENT_STAR => *", 2);
+                    Common::printStatusMessage('Create comment token: T_DOC_COMMENT_STAR => *', 2);
                 }
             }
 

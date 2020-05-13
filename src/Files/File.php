@@ -480,8 +480,8 @@ class File
         }
 
         if (PHP_CODESNIFFER_VERBOSITY > 2) {
-            Common::printStatusMessage("*** END TOKEN PROCESSING ***", 1);
-            Common::printStatusMessage("*** START SNIFF PROCESSING REPORT ***", 1);
+            Common::printStatusMessage('*** END TOKEN PROCESSING ***', 1);
+            Common::printStatusMessage('*** START SNIFF PROCESSING REPORT ***', 1);
 
             asort($this->listenerTimes, SORT_NUMERIC);
             $this->listenerTimes = array_reverse($this->listenerTimes, true);
@@ -489,7 +489,7 @@ class File
                 Common::printStatusMessage("$listener: ".round(($timeTaken), 4).' secs', 1);
             }
 
-            Common::printStatusMessage("*** END SNIFF PROCESSING REPORT ***", 1);
+            Common::printStatusMessage('*** END SNIFF PROCESSING REPORT ***', 1);
         }
 
         $this->fixedCount += $this->fixer->getFixCount();

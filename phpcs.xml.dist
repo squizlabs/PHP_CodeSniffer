@@ -53,6 +53,7 @@
     <rule ref="Squiz.PHP.DisallowInlineIf"/>
     <rule ref="Squiz.Scope.MethodScope"/>
     <rule ref="Squiz.Strings.ConcatenationSpacing"/>
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
     <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace"/>
     <rule ref="Squiz.WhiteSpace.FunctionSpacing"/>

@@ -92,9 +92,9 @@ class Cbf implements Report
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
                 if ($newFilename === $report['filename']) {
-                    Common::forcePrintStatusMessage("=> File was overwritten", 1);
+                    Common::forcePrintStatusMessage('=> File was overwritten', 1);
                 } else {
-                    Common::forcePrintStatusMessage("=> Fixed file written to ".basename($newFilename), 1);
+                    Common::forcePrintStatusMessage('=> Fixed file written to '.basename($newFilename), 1);
                 }
             }
         }

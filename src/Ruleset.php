@@ -361,7 +361,7 @@ class Ruleset
         $sniffDir = $rulesetDir.DIRECTORY_SEPARATOR.'Sniffs';
         if (is_dir($sniffDir) === true) {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                Common::printStatusMessage("Adding sniff files from ".Common::stripBasepath($sniffDir, $this->config->basepath).' directory', ($depth + 1));
+                Common::printStatusMessage('Adding sniff files from '.Common::stripBasepath($sniffDir, $this->config->basepath).' directory', ($depth + 1));
             }
 
             $ownSniffs = $this->expandSniffDirectory($sniffDir, $depth);
@@ -413,7 +413,7 @@ class Ruleset
                 // Process custom sniff config settings.
                 $this->config->setConfigData((string) $child['name'], (string) $child['value'], true);
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    Common::printStatusMessage("=> set config value ".(string) $child['name'].': '.(string) $child['value'], ($depth + 1));
+                    Common::printStatusMessage('=> set config value '.(string) $child['name'].': '.(string) $child['value'], ($depth + 1));
                 }
                 break;
             case 'exclude-pattern':
@@ -424,7 +424,7 @@ class Ruleset
 
                 $this->ignorePatterns[(string) $child] = (string) $child['type'];
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    Common::printStatusMessage("=> added global ".(string) $child['type'].' ignore pattern: '.(string) $child, ($depth + 1));
+                    Common::printStatusMessage('=> added global '.(string) $child['type'].' ignore pattern: '.(string) $child, ($depth + 1));
                 }
                 break;
             case 'file':
@@ -467,7 +467,7 @@ class Ruleset
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    Common::printStatusMessage("Processing rule \"".$child['ref'].'"', ($depth + 1));
+                    Common::printStatusMessage('Processing rule "'.$child['ref'].'"', ($depth + 1));
                 }
 
                 $expandedSniffs = $this->expandRulesetReference((string) $child['ref'], $rulesetDir, $depth);
@@ -488,8 +488,8 @@ class Ruleset
                         // it is being explicitly included again, so turn it back on.
                         $this->ruleset[(string) $child['ref']]['severity'] = 5;
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            Common::printStatusMessage("* disabling sniff exclusion for specific message code *", ($depth + 2));
-                            Common::printStatusMessage("=> severity set to 5", ($depth + 2));
+                            Common::printStatusMessage('* disabling sniff exclusion for specific message code *', ($depth + 2));
+                            Common::printStatusMessage('=> severity set to 5', ($depth + 2));
                         }
                     } else if (empty($newSniffs) === false) {
                         $newSniff = $newSniffs[0];
@@ -500,7 +500,7 @@ class Ruleset
                             $this->ruleset[$sniffCode]['severity'] = 0;
                             $this->ruleset[(string) $child['ref']]['severity'] = 5;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                Common::printStatusMessage("Excluding sniff \"".$sniffCode.'" except for "'.$parts[3].'"', ($depth + 2));
+                                Common::printStatusMessage('Excluding sniff "'.$sniffCode.'" except for "'.$parts[3].'"', ($depth + 2));
                             }
                         }
                     }//end if
@@ -510,8 +510,8 @@ class Ruleset
                     foreach ($child->exclude as $exclude) {
                         if (isset($exclude['name']) === false) {
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                Common::printStatusMessage("* ignoring empty exclude rule *", ($depth + 2));
-                                Common::printStatusMessage("=> ".$exclude->asXML(), ($depth + 3));
+                                Common::printStatusMessage('* ignoring empty exclude rule *', ($depth + 2));
+                                Common::printStatusMessage('=> '.$exclude->asXML(), ($depth + 3));
                             }
 
                             continue;
@@ -522,7 +522,7 @@ class Ruleset
                         }
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            Common::printStatusMessage("Excluding rule \"".$exclude['name'].'"', ($depth + 2));
+                            Common::printStatusMessage('Excluding rule "'.$exclude['name'].'"', ($depth + 2));
                         }
 
                         // Check if a single code is being excluded, which is a shortcut
@@ -637,7 +637,7 @@ class Ruleset
             }
 
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                Common::printStatusMessage("=> ".Common::stripBasepath($path, $this->config->basepath), ($depth + 2));
+                Common::printStatusMessage('=> '.Common::stripBasepath($path, $this->config->basepath), ($depth + 2));
             }
 
             $sniffs[] = $path;
@@ -666,7 +666,7 @@ class Ruleset
         // hide and change internal messages.
         if (substr($ref, 0, 9) === 'Internal.') {
             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                Common::printStatusMessage("* ignoring internal sniff code *", ($depth + 2));
+                Common::printStatusMessage('* ignoring internal sniff code *', ($depth + 2));
             }
 
             return [];
@@ -681,7 +681,7 @@ class Ruleset
             if ($realpath !== false) {
                 $ref = $realpath;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    Common::printStatusMessage("=> ".Common::stripBasepath($ref, $this->config->basepath), ($depth + 2));
+                    Common::printStatusMessage('=> '.Common::stripBasepath($ref, $this->config->basepath), ($depth + 2));
                 }
             }
         }
@@ -693,7 +693,7 @@ class Ruleset
             if ($realpath !== false) {
                 $ref = $realpath;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    Common::printStatusMessage("=> ".Common::stripBasepath($ref, $this->config->basepath), ($depth + 2));
+                    Common::printStatusMessage('=> '.Common::stripBasepath($ref, $this->config->basepath), ($depth + 2));
                 }
             }
         }
@@ -719,7 +719,7 @@ class Ruleset
             if ($path !== null) {
                 $ref = $path;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    Common::printStatusMessage("=> ".Common::stripBasepath($ref, $this->config->basepath), ($depth + 2));
+                    Common::printStatusMessage('=> '.Common::stripBasepath($ref, $this->config->basepath), ($depth + 2));
                 }
             } else if (is_dir($ref) === false) {
                 // Work out the sniff path.
@@ -778,7 +778,7 @@ class Ruleset
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    Common::printStatusMessage("=> ".Common::stripBasepath($ref, $this->config->basepath), ($depth + 2));
+                    Common::printStatusMessage('=> '.Common::stripBasepath($ref, $this->config->basepath), ($depth + 2));
                 }
             }//end if
         }//end if

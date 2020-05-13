@@ -325,7 +325,7 @@ class ScopeIndentSniff implements Sniff
 
                     if ($condition > 0 && $lastOpenTagCondition === $condition) {
                         if ($this->debug === true) {
-                            Common::printStatusMessage("* open tag is inside condition; using open tag *", 1);
+                            Common::printStatusMessage('* open tag is inside condition; using open tag *', 1);
                         }
 
                         $checkIndent = ($tokens[$lastOpenTag]['column'] - 1);
@@ -377,7 +377,7 @@ class ScopeIndentSniff implements Sniff
                             if ($this->debug === true) {
                                 $line = $tokens[$first]['line'];
                                 $type = $tokens[$first]['type'];
-                                Common::printStatusMessage("* first token is the parenthesis opener *", 1);
+                                Common::printStatusMessage('* first token is the parenthesis opener *', 1);
                                 Common::printStatusMessage("* amended first token is $first ($type) on line $line *", 1);
                             }
                         }
@@ -410,7 +410,7 @@ class ScopeIndentSniff implements Sniff
                             && $tokens[$first]['scope_closer'] === $first
                         ) {
                             if ($this->debug === true) {
-                                Common::printStatusMessage("* first token is a scope closer *", 1);
+                                Common::printStatusMessage('* first token is a scope closer *', 1);
                             }
 
                             if (isset($tokens[$first]['scope_condition']) === true) {
@@ -451,7 +451,7 @@ class ScopeIndentSniff implements Sniff
                         }//end if
                     }//end if
                 } else if ($this->debug === true) {
-                    Common::printStatusMessage("* ignoring single-line definition *", 1);
+                    Common::printStatusMessage('* ignoring single-line definition *', 1);
                 }//end if
             }//end if
 
@@ -522,7 +522,7 @@ class ScopeIndentSniff implements Sniff
                         // been processed and set the indent level correctly, so
                         // don't adjust it again.
                         if ($this->debug === true) {
-                            Common::printStatusMessage("* first token is a scope closer; ignoring closing short array bracket *", 1);
+                            Common::printStatusMessage('* first token is a scope closer; ignoring closing short array bracket *', 1);
                         }
 
                         if (isset($setIndents[$first]) === true) {
@@ -547,7 +547,7 @@ class ScopeIndentSniff implements Sniff
                         }
                     }//end if
                 } else if ($this->debug === true) {
-                    Common::printStatusMessage("* ignoring single-line definition *", 1);
+                    Common::printStatusMessage('* ignoring single-line definition *', 1);
                 }//end if
             }//end if
 
@@ -593,7 +593,7 @@ class ScopeIndentSniff implements Sniff
                     if ($this->debug === true) {
                         $line = $tokens[$checkToken]['line'];
                         $type = $tokens[$checkToken]['type'];
-                        Common::printStatusMessage("=> add adjustment of ".$adjustments[$checkToken]." for token $checkToken ($type) on line $line", 1);
+                        Common::printStatusMessage('=> add adjustment of '.$adjustments[$checkToken]." for token $checkToken ($type) on line $line", 1);
                     }
                 }//end if
             }//end if
@@ -855,7 +855,7 @@ class ScopeIndentSniff implements Sniff
                     if ($accepted === true && $this->debug === true) {
                         $line = $tokens[$checkToken]['line'];
                         $type = $tokens[$checkToken]['type'];
-                        Common::printStatusMessage("=> add adjustment of ".$adjustments[$checkToken]." for token $checkToken ($type) on line $line", 1);
+                        Common::printStatusMessage('=> add adjustment of '.$adjustments[$checkToken]." for token $checkToken ($type) on line $line", 1);
                     }
                 }
             }//end if
@@ -1160,14 +1160,14 @@ class ScopeIndentSniff implements Sniff
 
                 if ($parens > $condition) {
                     if ($this->debug === true) {
-                        Common::printStatusMessage("* using parenthesis *", 1);
+                        Common::printStatusMessage('* using parenthesis *', 1);
                     }
 
                     $prev      = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($parens - 1), null, true);
                     $condition = 0;
                 } else if ($condition > 0) {
                     if ($this->debug === true) {
-                        Common::printStatusMessage("* using condition *", 1);
+                        Common::printStatusMessage('* using condition *', 1);
                     }
 
                     $prev   = $condition;
@@ -1179,7 +1179,7 @@ class ScopeIndentSniff implements Sniff
                     if ($prev === false) {
                         $prev = $i;
                         if ($this->debug === true) {
-                            Common::printStatusMessage("* could not find a previous T_EQUAL or T_RETURN token; will use current token *", 1);
+                            Common::printStatusMessage('* could not find a previous T_EQUAL or T_RETURN token; will use current token *', 1);
                         }
                     }
                 }
@@ -1223,13 +1223,13 @@ class ScopeIndentSniff implements Sniff
                     && $tokens[$first]['scope_closer'] === $first
                 ) {
                     if ($this->debug === true) {
-                        Common::printStatusMessage("* first token is a scope closer *", 1);
+                        Common::printStatusMessage('* first token is a scope closer *', 1);
                     }
 
                     if ($condition === 0 || $tokens[$condition]['scope_opener'] < $first) {
                         $currentIndent = $setIndents[$first];
                     } else if ($this->debug === true) {
-                        Common::printStatusMessage("* ignoring scope closer *", 1);
+                        Common::printStatusMessage('* ignoring scope closer *', 1);
                     }
                 }
 

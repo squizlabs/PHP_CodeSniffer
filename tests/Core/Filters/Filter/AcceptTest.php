@@ -41,7 +41,7 @@ class AcceptTest extends TestCase
     public static function setUpBeforeClass(): void
     {
         $standard      = __DIR__.'/'.basename(__FILE__, '.php').'.xml';
-        self::$config  = new Config(["--standard=$standard", "--ignore=*/somethingelse/*"]);
+        self::$config  = new Config(["--standard=$standard", '--ignore=*/somethingelse/*']);
         self::$ruleset = new Ruleset(self::$config);
 
     }//end setUpBeforeClass()

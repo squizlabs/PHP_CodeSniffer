@@ -718,7 +718,7 @@ class PHP extends Tokenizer
                     // a heredoc.
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $type = $finalTokens[$newStackPtr]['type'];
-                        Common::printStatusMessage("* failed to find the end of the here/nowdoc", 2);
+                        Common::printStatusMessage('* failed to find the end of the here/nowdoc', 2);
                         Common::printStatusMessage("* token $stackPtr changed from $type to T_STRING", 2);
                     }
 
@@ -1231,7 +1231,7 @@ class PHP extends Tokenizer
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         Common::printStatusMessage("* token $stackPtr changed from T_STRING to T_GOTO_LABEL", 2);
-                        Common::printStatusMessage("* skipping T_COLON token ".($stackPtr + 1), 2);
+                        Common::printStatusMessage('* skipping T_COLON token '.($stackPtr + 1), 2);
                     }
 
                     $newStackPtr++;
@@ -1377,7 +1377,7 @@ class PHP extends Tokenizer
                         if ($tokens[$i][0] === T_FUNCTION || $tokens[$i][0] === T_FN || $tokens[$i][0] === T_USE) {
                             $isInlineIf = false;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                Common::printStatusMessage("* token is function return type, not T_INLINE_ELSE", 2);
+                                Common::printStatusMessage('* token is function return type, not T_INLINE_ELSE', 2);
                             }
                         }
                     }//end if
@@ -1391,7 +1391,7 @@ class PHP extends Tokenizer
                         ) {
                             $isInlineIf = false;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                Common::printStatusMessage("* token is T_CASE or T_DEFAULT opener, not T_INLINE_ELSE", 2);
+                                Common::printStatusMessage('* token is T_CASE or T_DEFAULT opener, not T_INLINE_ELSE', 2);
                             }
 
                             break;
@@ -1411,7 +1411,7 @@ class PHP extends Tokenizer
                         $newToken['type'] = 'T_INLINE_ELSE';
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            Common::printStatusMessage("* token changed from T_COLON to T_INLINE_ELSE", 2);
+                            Common::printStatusMessage('* token changed from T_COLON to T_INLINE_ELSE', 2);
                         }
                     }
                 }//end if
