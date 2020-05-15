@@ -41,13 +41,21 @@ class Junit implements Report
         $out->writeAttribute('name', $report['filename']);
         $out->writeAttribute('errors', 0);
 
+        $classname = pathinfo($report['filename'])['filename'];
+
+        # successful tests
         if (count($report['messages']) === 0) {
             $out->writeAttribute('tests', 1);
             $out->writeAttribute('failures', 0);
 
             $out->startElement('testcase');
-            $out->writeAttribute('name', $report['filename']);
+            $out->writeAttribute('classname', $classname);
+            $out->writeAttribute('file', $report['filename']);
+            # use a generic testcase name if no sniffs were triggered
+            $out->writeAttribute('name', 'PHP_CodeSniffer');
             $out->endElement();
+
+        # test failures
         } else {
             $failures = ($report['errors'] + $report['warnings']);
             $out->writeAttribute('tests', $failures);
@@ -57,7 +65,12 @@ class Junit implements Report
                 foreach ($lineErrors as $column => $colErrors) {
                     foreach ($colErrors as $error) {
                         $out->startElement('testcase');
-                        $out->writeAttribute('name', $error['source'].' at '.$report['filename']." ($line:$column)");
+                        $out->writeAttribute('classname', $classname);
+                        $out->writeAttribute('file', $report['filename']);
+
+                        # add line and column to the sniff name to ensure a testcase has a unique
+                        # name even if the same sniff reports more than one violation per file
+                        $out->writeAttribute('name', $error['source']." ($line:$column)");
 
                         $error['type'] = strtolower($error['type']);
                         if ($phpcsFile->config->encoding !== 'utf-8') {
@@ -66,7 +79,7 @@ class Junit implements Report
 
                         $out->startElement('failure');
                         $out->writeAttribute('type', $error['type']);
-                        $out->writeAttribute('message', $error['message']);
+                        $out->writeAttribute('message', $error['message']." (line $line, column $column)");
                         $out->endElement();
 
                         $out->endElement();
