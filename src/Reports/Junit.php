@@ -44,20 +44,19 @@ class Junit implements Report
 
         $classname = pathinfo($report['filename'])['filename'];
 
-        # successful tests
         if (count($report['messages']) === 0) {
+            // Handle successful tests.
             $out->writeAttribute('tests', 1);
             $out->writeAttribute('failures', 0);
 
             $out->startElement('testcase');
             $out->writeAttribute('classname', $classname);
             $out->writeAttribute('file', $report['filename']);
-            # use a generic testcase name if no sniffs were triggered
+            // Use a generic testcase name if no sniffs were triggered.
             $out->writeAttribute('name', 'PHP_CodeSniffer');
             $out->endElement();
-
-        # test failures
         } else {
+            // Handle test failures.
             $failures = ($report['errors'] + $report['warnings']);
             $out->writeAttribute('tests', $failures);
             $out->writeAttribute('failures', $failures);
@@ -69,8 +68,11 @@ class Junit implements Report
                         $out->writeAttribute('classname', $classname);
                         $out->writeAttribute('file', $report['filename']);
 
-                        # add line and column to the sniff name to ensure a testcase has a unique
-                        # name even if the same sniff reports more than one violation per file
+                        /*
+                         * Add line and column to the sniff name to ensure a testcase has a unique
+                         * name even if the same sniff reports more than one violation per file.
+                         */
+
                         $out->writeAttribute('name', $error['source']." ($line:$column)");
 
                         $error['type'] = strtolower($error['type']);
@@ -84,9 +86,9 @@ class Junit implements Report
                         $out->endElement();
 
                         $out->endElement();
-                    }
-                }
-            }
+                    }//end foreach
+                }//end foreach
+            }//end foreach
         }//end if
 
         $out->endElement();
@@ -136,9 +138,9 @@ class Junit implements Report
         $failures = ($totalErrors + $totalWarnings);
 
         $dom = new \DOMDocument();
-        $dom->formatOutput = True;
-        $dom->encoding = "UTF-8";
-        $dom->preserveWhiteSpace = False;
+        $dom->formatOutput       = true;
+        $dom->encoding           = "UTF-8";
+        $dom->preserveWhiteSpace = false;
 
         $testsuites = $dom->createElement("testsuites");
         $testsuites->setAttribute("name", 'PHP_CodeSniffer '.Config::VERSION);
@@ -147,17 +149,22 @@ class Junit implements Report
         $testsuites->setAttribute("failures", $failures);
 
         $fragment = $dom->createDocumentFragment();
-        # using XML that is partially formatted in appendXML() results in
-        # dom->formatOutput ignoring the fragment during formatting
+
+        /*
+         * Using XML that is partially formatted in appendXML() results in
+         * dom->formatOutput ignoring the fragment during formatting.
+         */
+
         $fragment->appendXML($cachedData);
 
         $testsuites->appendChild($fragment);
         $dom->appendChild($testsuites);
 
-        # saving and loading the string forces pretty formatting
+        // Saving and loading the string forces pretty formatting.
         $tmp = $dom->saveXML();
         $dom->loadXML($tmp);
         echo $dom->saveXML();
+
     }//end generate()
 
 
