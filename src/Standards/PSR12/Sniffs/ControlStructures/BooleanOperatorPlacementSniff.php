@@ -154,8 +154,18 @@ class BooleanOperatorPlacementSniff implements Sniff
             return;
         }
 
-        $error = 'Boolean operators between conditions must be at the beginning or end of the line, but not both';
-        $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'FoundMixed');
+        switch ($this->allowOnly) {
+        case 'first':
+            $error = 'Boolean operators between conditions must be at the beginning of the line';
+            break;
+        case 'last':
+            $error = 'Boolean operators between conditions must be at the end of the line';
+            break;
+        default:
+            $error = 'Boolean operators between conditions must be at the beginning or end of the line, but not both';
+        }
+
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, 'FoundMixed');
         if ($fix === false) {
             return;
         }
