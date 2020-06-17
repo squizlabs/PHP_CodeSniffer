@@ -79,10 +79,14 @@ class ConcatenationSpacingSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'Spacing before string concat', $before);
         }
 
-        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
+        if (isset($tokens[($stackPtr + 1)]) === false
+            || $tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE
+        ) {
             $after = 0;
         } else {
-            if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
+            if (isset($tokens[($stackPtr + 2)]) === true
+                && $tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']
+            ) {
                 $after = 'newline';
             } else {
                 $after = $tokens[($stackPtr + 1)]['length'];
