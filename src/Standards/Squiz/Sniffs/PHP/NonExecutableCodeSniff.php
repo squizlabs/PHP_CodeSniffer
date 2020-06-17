@@ -216,7 +216,9 @@ class NonExecutableCodeSniff implements Sniff
                 continue;
             }
 
-            if (isset($tokens[$start]['bracket_closer']) === true) {
+            if (isset($tokens[$start]['bracket_closer']) === true
+                && $tokens[$start]['code'] === T_OPEN_CURLY_BRACKET
+            ) {
                 $start = $tokens[$start]['bracket_closer'];
                 continue;
             }
