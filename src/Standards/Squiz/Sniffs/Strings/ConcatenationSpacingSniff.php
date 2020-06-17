@@ -55,6 +55,10 @@ class ConcatenationSpacingSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+        if (isset($tokens[($stackPtr + 2)]) === false) {
+            // Syntax error or live coding, bow out.
+            return;
+        }
 
         $ignoreBefore = false;
         $prev         = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
@@ -79,14 +83,10 @@ class ConcatenationSpacingSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'Spacing before string concat', $before);
         }
 
-        if (isset($tokens[($stackPtr + 1)]) === false
-            || $tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE
-        ) {
+        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $after = 0;
         } else {
-            if (isset($tokens[($stackPtr + 2)]) === true
-                && $tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']
-            ) {
+            if ($tokens[($stackPtr + 2)]['line'] !== $tokens[$stackPtr]['line']) {
                 $after = 'newline';
             } else {
                 $after = $tokens[($stackPtr + 1)]['length'];
