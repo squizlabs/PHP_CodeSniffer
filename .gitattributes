@@ -1,5 +1,11 @@
 .travis.yml export-ignore
+.cspell.json export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+phpcs.xml.dist export-ignore
+phpstan.neon export-ignore
 package.xml export-ignore
 phpunit.xml.dist export-ignore
 php5-testingConfig.ini export-ignore
 php7-testingConfig.ini export-ignore
+scripts/ export-ignore
