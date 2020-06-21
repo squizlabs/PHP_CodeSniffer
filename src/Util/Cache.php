@@ -150,6 +150,8 @@ class Cache
             'encoding'     => $config->encoding,
             'recordErrors' => $config->recordErrors,
             'annotations'  => $config->annotations,
+            'sniffs'       => $config->sniffs,
+            'exclude'      => $config->exclude,
             'configData'   => Config::getAllConfigData(),
             'codeHash'     => $codeHash,
             'rulesetHash'  => $rulesetHash,
