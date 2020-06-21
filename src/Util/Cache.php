@@ -105,6 +105,11 @@ class Cache
                     return false;
                 }
 
+                // Skip non-php files.
+                if ($file->isFile() === true && substr($filename, -4) !== '.php') {
+                    return false;
+                }
+
                 $filePath = Common::realpath($file->getPathname());
                 if ($filePath === false) {
                     return false;
