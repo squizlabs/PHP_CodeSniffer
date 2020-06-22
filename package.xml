@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Vincent Langlet for the patch
   - Fixed bug #2926 : phpcs hangs when using arrow functions that return heredoc
   - Fixed bug #2943 : Redundant semicolon added to a file when fixing PSR2.Files.ClosingTag.NotAllowed
+  - Fixed bug #2977 : File::isReference() does not detect return by reference for closures
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
