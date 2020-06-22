@@ -1937,6 +1937,7 @@ class File
         );
 
         if ($this->tokens[$tokenBefore]['code'] === T_FUNCTION
+            || $this->tokens[$tokenBefore]['code'] === T_CLOSURE
             || $this->tokens[$tokenBefore]['code'] === T_FN
         ) {
             // Function returns a reference.
