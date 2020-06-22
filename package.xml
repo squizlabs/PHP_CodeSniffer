@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - File::getMethodProperties() now detects the PHP 8.0 static return type
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Scope.StaticThisUsage now detects usage of $this inside closures and arrow Functions
     -- Thanks to Michał Bundyra for the patch
   - Fixed bug #2877 : PEAR.Functions.FunctionCallSignature false positive for array of functions
