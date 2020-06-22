@@ -143,16 +143,18 @@ class Cache
         // Along with the code hash, use various settings that can affect
         // the results of a run to create a new hash. This hash will be used
         // in the cache file name.
-        $rulesetHash = md5(var_export($ruleset->ignorePatterns, true).var_export($ruleset->includePatterns, true));
-        $configData  = [
-            'phpVersion'   => PHP_VERSION_ID,
-            'tabWidth'     => $config->tabWidth,
-            'encoding'     => $config->encoding,
-            'recordErrors' => $config->recordErrors,
-            'annotations'  => $config->annotations,
-            'configData'   => Config::getAllConfigData(),
-            'codeHash'     => $codeHash,
-            'rulesetHash'  => $rulesetHash,
+        $rulesetHash       = md5(var_export($ruleset->ignorePatterns, true).var_export($ruleset->includePatterns, true));
+        $phpExtensionsHash = md5(var_export(get_loaded_extensions(), true));
+        $configData        = [
+            'phpVersion'    => PHP_VERSION_ID,
+            'phpExtensions' => $phpExtensionsHash,
+            'tabWidth'      => $config->tabWidth,
+            'encoding'      => $config->encoding,
+            'recordErrors'  => $config->recordErrors,
+            'annotations'   => $config->annotations,
+            'configData'    => Config::getAllConfigData(),
+            'codeHash'      => $codeHash,
+            'rulesetHash'   => $rulesetHash,
         ];
 
         $configString = var_export($configData, true);
