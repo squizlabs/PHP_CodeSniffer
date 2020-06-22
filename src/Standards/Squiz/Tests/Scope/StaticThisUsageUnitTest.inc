@@ -57,22 +57,61 @@ class MyClass
 
     public function getAnonymousClass() {
         return new class() {
-			public static function something() {
-				$this->doSomething();
+            public static function something() {
+                $this->doSomething();
             }
         };
     }
 }
 
 trait MyTrait {
-	public static function myFunc() {
-		$this->doSomething();
-	}
+    public static function myFunc() {
+        $this->doSomething();
+    }
 }
 
 $b = new class()
 {
-	public static function myFunc() {
-		$this->doSomething();
-	}
+    public static function myFunc() {
+        $this->doSomething();
+    }
+
+    public static function other() {
+        return fn () => $this->name;
+    }
+
+    public static function anonClassUseThis() {
+        return new class($this) {
+            public function __construct($class) {
+            }
+        };
+    }
+
+    public static function anonClassAnotherThis() {
+        return new class() {
+            public function __construct() {
+                $this->id = 1;
+            }
+        };
+    }
+
+    public static function anonClassNestedUseThis() {
+        return new class(new class($this) {}) {
+        };
+    }
+
+    public static function anonClassNestedAnotherThis() {
+        return new class(new class() {
+            public function __construct() {
+                $this->id = 1;
+            }
+        }) {
+        };
+    }
+
+    public static function thisMustBeLowercase() {
+        $This = 'hey';
+
+        return $This;
+    }
 }
