@@ -197,6 +197,13 @@ class FileHeaderSniff implements Sniff
                 break;
             case T_DECLARE:
             case T_NAMESPACE:
+                if (isset($tokens[$next]['scope_opener']) === true) {
+                    // If this statement is using bracketed syntax, it doesn't
+                    // apply to the entire files and so is not part of header.
+                    // The header has now ended and the main code block begins.
+                    break(2);
+                }
+
                 $end = $phpcsFile->findEndOfStatement($next);
 
                 $headerLines[] = [
