@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Squiz.Scope.StaticThisUsage now detects usage of $this inside closures and arrow Functions
+    -- Thanks to Michał Bundyra for the patch
   - Fixed bug #2926 : phpcs hangs when using arrow functions that return heredoc
   - Fixed bug #2943 : Redundant semicolon added to a file when fixing PSR2.Files.ClosingTag.NotAllowed
  </notes>
