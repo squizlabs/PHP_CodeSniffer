@@ -204,7 +204,7 @@ function foo()
     myFunction(
         'string'.
         // comment
-        // comment 
+        // comment
         'string'.
         /* comment
          * comment
@@ -534,3 +534,6 @@ return trim(
         $search
     )
 );
+
+$a = ['a' => function ($b) { return $b; }];
+$a['a'](1);
