@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Michał Bundyra for the patch
   - Fixed bug #2877 : PEAR.Functions.FunctionCallSignature false positive for array of functions
     -- Thanks to Vincent Langlet for the patch
+  - Fixed bug #2888 : PSR12.Files.FileHeader blank line error with multiple namespaces in one file
   - Fixed bug #2926 : phpcs hangs when using arrow functions that return heredoc
   - Fixed bug #2943 : Redundant semicolon added to a file when fixing PSR2.Files.ClosingTag.NotAllowed
   - Fixed bug #2977 : File::isReference() does not detect return by reference for closures
@@ -1106,6 +1107,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.13.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.14.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.15.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.16.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc.fixed" role="test" />
