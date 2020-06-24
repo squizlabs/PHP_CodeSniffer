@@ -309,6 +309,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopShouldBeWhileLoopSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopWithTestFunctionCallSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="JumbledIncrementerSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LoopWithNoBodySniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnconditionalIfStatementSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnnecessaryFinalModifierSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnusedFunctionParameterSniff.php" role="php" />
@@ -442,6 +443,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ForLoopWithTestFunctionCallUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="JumbledIncrementerUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="JumbledIncrementerUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LoopWithNoBodyUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LoopWithNoBodyUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnconditionalIfStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnconditionalIfStatementUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UnnecessaryFinalModifierUnitTest.inc" role="test" />
