@@ -211,7 +211,9 @@ class NonExecutableCodeSniff implements Sniff
                 break;
             }
 
-            if (isset($tokens[$start]['parenthesis_closer']) === true) {
+            if (isset($tokens[$start]['parenthesis_closer']) === true
+                && $tokens[$start]['code'] === T_OPEN_PARENTHESIS
+            ) {
                 $start = $tokens[$start]['parenthesis_closer'];
                 continue;
             }
