@@ -479,6 +479,128 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'nullable_type'   => true,
                 ],
             ],
+            [
+                '/* testPHP8UnionTypesSimple */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'int|float',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8UnionTypesTwoClasses */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'MyClassA|\Package\MyClassB',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8UnionTypesAllBaseTypes */',
+                [
+                    'scope'           => 'protected',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'array|bool|int|float|NULL|object|string',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8UnionTypesAllPseudoTypes */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => false,
+                    'is_static'       => false,
+                    // Note: "Resource" is not a type, but seen as a class name.
+                    'type'            => 'false|mixed|self|parent|iterable|Resource',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8UnionTypesIllegalTypes */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    // Missing static, but that's OK as it's not an allowed syntax.
+                    'type'            => 'callable||void',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8UnionTypesNullable */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => '?int|float',
+                    'nullable_type'   => true,
+                ],
+            ],
+            [
+                '/* testPHP8PseudoTypeNull */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'null',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8PseudoTypeFalse */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'false',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8PseudoTypeFalseAndBool */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'bool|FALSE',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8ObjectAndClass */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'object|ClassName',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8PseudoTypeIterableAndArray */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'iterable|array|Traversable',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8DuplicateTypeInUnion */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'int|string|INT',
+                    'nullable_type'   => false,
+                ],
+            ],
         ];
 
     }//end dataGetMemberProperties()

@@ -1813,7 +1813,10 @@ class File
                 T_CALLABLE     => T_CALLABLE,
                 T_SELF         => T_SELF,
                 T_PARENT       => T_PARENT,
+                T_FALSE        => T_FALSE,
+                T_NULL         => T_NULL,
                 T_NS_SEPARATOR => T_NS_SEPARATOR,
+                T_BITWISE_OR   => T_BITWISE_OR,
             ];
 
             for ($i; $i < $stackPtr; $i++) {
