@@ -1443,6 +1443,9 @@ class File
                 break;
             case T_NAMESPACE:
             case T_NS_SEPARATOR:
+            case T_TYPE_UNION:
+            case T_FALSE:
+            case T_NULL:
                 // Part of a type hint or default value.
                 if ($defaultStart === null) {
                     if ($typeHintToken === false) {
