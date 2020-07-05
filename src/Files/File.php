@@ -1442,6 +1442,9 @@ class File
                 }
                 break;
             case T_NS_SEPARATOR:
+            case T_BITWISE_OR:
+            case T_FALSE:
+            case T_NULL:
                 // Part of a type hint or default value.
                 if ($defaultStart === null) {
                     if ($typeHintToken === false) {
