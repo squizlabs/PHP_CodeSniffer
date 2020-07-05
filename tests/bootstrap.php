@@ -44,6 +44,13 @@ if (class_exists('PHPUnit_Framework_TestResult') === true && class_exists('PHPUn
     class_alias('PHPUnit_Framework_TestResult', 'PHPUnit'.'\Framework\TestResult');
 }
 
+// Determine whether this is a PEAR install or not.
+$GLOBALS['PHP_CODESNIFFER_PEAR'] = false;
+
+if (is_file(__DIR__.'/../autoload.php') === false) {
+    $GLOBALS['PHP_CODESNIFFER_PEAR'] = true;
+}
+
 
 /**
  * A global util function to help print unit test fixing data.
