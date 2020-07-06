@@ -111,9 +111,13 @@ class AcceptTest extends TestCase
                     '/path/to/src/Main.php',
                     '/path/to/src/Something/Main.php',
                     '/path/to/src/Somethingelse/Main.php',
+                    '/path/to/src/SomethingelseEvenLonger/Main.php',
                     '/path/to/src/Other/Main.php',
                 ],
-                ['/path/to/src/Main.php'],
+                [
+                    '/path/to/src/Main.php',
+                    '/path/to/src/SomethingelseEvenLonger/Main.php',
+                ],
             ],
 
             // Test ignoring standard/sniff specific exclude patterns.
