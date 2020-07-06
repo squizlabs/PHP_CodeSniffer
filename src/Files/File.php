@@ -1288,7 +1288,8 @@ class File
      *                                           // or FALSE if there is no type hint.
      *         'type_hint_end_token' => integer, // The stack pointer to the end of the type hint
      *                                           // or FALSE if there is no type hint.
-     *         'nullable_type'       => boolean, // TRUE if the var type is nullable.
+     *         'nullable_type'       => boolean, // TRUE if the type is preceded by the nullability
+     *                                           // operator.
      *         'comma_token'         => integer, // The stack pointer to the comma after the param
      *                                           // or FALSE if this is the last param.
      *        )
