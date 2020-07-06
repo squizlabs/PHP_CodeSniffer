@@ -1698,7 +1698,8 @@ class File
      *                                  // or FALSE if there is no type.
      *    'type_end_token'  => integer, // The stack pointer to the end of the type
      *                                  // or FALSE if there is no type.
-     *    'nullable_type'   => boolean, // TRUE if the type is nullable.
+     *    'nullable_type'   => boolean, // TRUE if the type is preceded by the nullability
+     *                                  // operator.
      *   );
      * </code>
      *
