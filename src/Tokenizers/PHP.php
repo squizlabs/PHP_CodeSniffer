@@ -16,6 +16,13 @@ class PHP extends Tokenizer
 {
 
     /**
+     * Regular expression to check if a given identifier name is valid for use in PHP.
+     *
+     * @var string
+     */
+    const PHP_LABEL_REGEX = '`^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$`';
+
+    /**
      * A list of tokens that are allowed to open a scope.
      *
      * This array also contains information about what kind of token the scope
@@ -950,6 +957,92 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                Before PHP 8.0, namespaced names were not tokenized as a single token.
+
+                Note: reserved keywords are allowed within the "single token" names, so
+                no check is done on the token type following a namespace separator _on purpose_.
+                As long as it is not an empty token and the token contents complies with the
+                "name" requirements in PHP, we'll accept it.
+            */
+
+            if (PHP_VERSION_ID < 80000
+                && $tokenIsArray === true
+                && ($token[0] === T_STRING
+                || $token[0] === T_NAMESPACE
+                || ($token[0] === T_NS_SEPARATOR
+                && isset($tokens[($stackPtr + 1)]) === true
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && isset(Tokens::$emptyTokens[$tokens[($stackPtr + 1)][0]]) === false
+                && preg_match(self::PHP_LABEL_REGEX, $tokens[($stackPtr + 1)][1]) === 1))
+            ) {
+                $nameStart           = $stackPtr;
+                $i                   = $stackPtr;
+                $newToken            = [];
+                $newToken['content'] = $token[1];
+
+                switch ($token[0]) {
+                case T_STRING:
+                    $newToken['code'] = T_NAME_QUALIFIED;
+                    $newToken['type'] = 'T_NAME_QUALIFIED';
+                    break;
+                case T_NAMESPACE:
+                    $newToken['code'] = T_NAME_RELATIVE;
+                    $newToken['type'] = 'T_NAME_RELATIVE';
+                    break;
+                case T_NS_SEPARATOR:
+                    $newToken['code'] = T_NAME_FULLY_QUALIFIED;
+                    $newToken['type'] = 'T_NAME_FULLY_QUALIFIED';
+
+                    if (is_array($tokens[($i - 1)]) === true
+                        && isset(Tokens::$emptyTokens[$tokens[($i - 1)][0]]) === false
+                        && preg_match(self::PHP_LABEL_REGEX, $tokens[($i - 1)][1]) === 1
+                    ) {
+                        // The namespaced name starts with a reserved keyword. Move one token back.
+                        $newToken['code']    = T_NAME_QUALIFIED;
+                        $newToken['type']    = 'T_NAME_QUALIFIED';
+                        $newToken['content'] = $tokens[($i - 1)][1];
+                        --$nameStart;
+                        --$i;
+                        break;
+                    }
+
+                    ++$i;
+                    $newToken['content'] .= $tokens[$i][1];
+                    break;
+                }//end switch
+
+                while (isset($tokens[($i + 1)], $tokens[($i + 2)]) === true
+                    && is_array($tokens[($i + 1)]) === true && $tokens[($i + 1)][0] === T_NS_SEPARATOR
+                    && is_array($tokens[($i + 2)]) === true
+                    && isset(Tokens::$emptyTokens[$tokens[($i + 2)][0]]) === false
+                    && preg_match(self::PHP_LABEL_REGEX, $tokens[($i + 2)][1]) === 1
+                ) {
+                    $newToken['content'] .= $tokens[($i + 1)][1].$tokens[($i + 2)][1];
+                    $i = ($i + 2);
+                }
+
+                if ($i !== $nameStart) {
+                    if ($nameStart !== $stackPtr) {
+                        // This must be a qualified name starting with a reserved keyword.
+                        // We need to overwrite the previously set final token.
+                        --$newStackPtr;
+                    }
+
+                    $finalTokens[$newStackPtr] = $newToken;
+                    $newStackPtr++;
+                    $stackPtr = $i;
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $type    = $newToken['type'];
+                        $content = $newToken['content'];
+                        Common::printStatusMessage("* token $nameStart to $i ($content) retokenized to $type", 2);
+                    }
+
+                    continue;
+                }
+            }//end if
+
+            /*
                 Convert ? to T_NULLABLE OR T_INLINE_THEN
             */
 
@@ -961,7 +1054,7 @@ class PHP extends Tokenizer
                  * Check if the next non-empty token is one of the tokens which can be used
                  * in type declarations. If not, it's definitely a ternary.
                  * At this point, the only token types which need to be taken into consideration
-                 * as potential type declarations are T_STRING, T_ARRAY, T_CALLABLE and T_NS_SEPARATOR.
+                 * as potential type declarations are identifier names, T_ARRAY, T_CALLABLE and T_NS_SEPARATOR.
                  */
 
                 $lastRelevantNonEmpty = null;
@@ -978,6 +1071,9 @@ class PHP extends Tokenizer
                     }
 
                     if ($tokenType === T_STRING
+                        || $tokenType === T_NAME_FULLY_QUALIFIED
+                        || $tokenType === T_NAME_RELATIVE
+                        || $tokenType === T_NAME_QUALIFIED
                         || $tokenType === T_ARRAY
                         || $tokenType === T_NAMESPACE
                         || $tokenType === T_NS_SEPARATOR
@@ -990,7 +1086,10 @@ class PHP extends Tokenizer
                         && isset($lastRelevantNonEmpty) === false)
                         || ($lastRelevantNonEmpty === T_ARRAY
                         && $tokenType === '(')
-                        || ($lastRelevantNonEmpty === T_STRING
+                        || (($lastRelevantNonEmpty === T_STRING
+                        || $lastRelevantNonEmpty === T_NAME_FULLY_QUALIFIED
+                        || $lastRelevantNonEmpty === T_NAME_RELATIVE
+                        || $lastRelevantNonEmpty === T_NAME_QUALIFIED)
                         && ($tokenType === T_DOUBLE_COLON
                         || $tokenType === '('
                         || $tokenType === ':'))
@@ -1135,6 +1234,10 @@ class PHP extends Tokenizer
                 tokenized as T_STRING even if it appears to be a different token,
                 such as when writing code like: function default(): foo
                 so go forward and change the token type before it is processed.
+
+                Note: this should not be done for `function Level\Name` within a
+                group use statement. The PHP 8 identifier name tokens should
+                remain as they are for those.
             */
 
             if ($tokenIsArray === true
@@ -1152,7 +1255,11 @@ class PHP extends Tokenizer
                         }
                     }
 
-                    if ($x < $numTokens && is_array($tokens[$x]) === true) {
+                    if ($x < $numTokens
+                        && is_array($tokens[$x]) === true
+                        && $tokens[$x][0] !== T_NAME_QUALIFIED
+                        && $tokens[$x][0] !== T_NAME_FULLY_QUALIFIED
+                    ) {
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $oldType = Tokens::tokenName($tokens[$x][0]);
                             Common::printStatusMessage("* token $x changed from $oldType to T_STRING", 2);
@@ -1208,14 +1315,17 @@ class PHP extends Tokenizer
                         && $tokens[$x] === ':'
                     ) {
                         $allowed = [
-                            T_ARRAY        => T_ARRAY,
-                            T_CALLABLE     => T_CALLABLE,
-                            T_NAMESPACE    => T_NAMESPACE,
-                            T_NS_SEPARATOR => T_NS_SEPARATOR,
-                            T_PARENT       => T_PARENT,
-                            T_SELF         => T_SELF,
-                            T_STATIC       => T_STATIC,
-                            T_STRING       => T_STRING,
+                            T_STRING               => T_STRING,
+                            T_NAME_FULLY_QUALIFIED => T_NAME_FULLY_QUALIFIED,
+                            T_NAME_RELATIVE        => T_NAME_RELATIVE,
+                            T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
+                            T_ARRAY                => T_ARRAY,
+                            T_CALLABLE             => T_CALLABLE,
+                            T_SELF                 => T_SELF,
+                            T_PARENT               => T_PARENT,
+                            T_STATIC               => T_STATIC,
+                            T_NAMESPACE            => T_NAMESPACE,
+                            T_NS_SEPARATOR         => T_NS_SEPARATOR,
                         ];
 
                         $allowed += Tokens::$emptyTokens;
@@ -1904,14 +2014,16 @@ class PHP extends Tokenizer
                 */
 
                 $allowed = [
-                    T_STRING       => T_STRING,
-                    T_CALLABLE     => T_CALLABLE,
-                    T_SELF         => T_SELF,
-                    T_PARENT       => T_PARENT,
-                    T_STATIC       => T_STATIC,
-                    T_FALSE        => T_FALSE,
-                    T_NULL         => T_NULL,
-                    T_NS_SEPARATOR => T_NS_SEPARATOR,
+                    T_STRING               => T_STRING,
+                    T_NAME_FULLY_QUALIFIED => T_NAME_FULLY_QUALIFIED,
+                    T_NAME_RELATIVE        => T_NAME_RELATIVE,
+                    T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
+                    T_CALLABLE             => T_CALLABLE,
+                    T_SELF                 => T_SELF,
+                    T_PARENT               => T_PARENT,
+                    T_STATIC               => T_STATIC,
+                    T_FALSE                => T_FALSE,
+                    T_NULL                 => T_NULL,
                 ];
 
                 $suspectedType  = null;
