@@ -1475,6 +1475,7 @@ class PHP extends Tokenizer
                             T_SELF                 => T_SELF,
                             T_PARENT               => T_PARENT,
                             T_NAMESPACE            => T_NAMESPACE,
+                            T_STATIC               => T_STATIC,
                             T_NS_SEPARATOR         => T_NS_SEPARATOR,
                         ];
 
@@ -1509,12 +1510,14 @@ class PHP extends Tokenizer
                         }//end for
 
                         // Any T_ARRAY tokens we find between here and the next
-                        // token that can't be part of the return type need to be
+                        // token that can't be part of the return type, need to be
                         // converted to T_STRING tokens.
                         for ($x; $x < $numTokens; $x++) {
-                            if (is_array($tokens[$x]) === false || isset($allowed[$tokens[$x][0]]) === false) {
+                            if ((is_array($tokens[$x]) === false && $tokens[$x] !== '|')
+                                || (is_array($tokens[$x]) === true && isset($allowed[$tokens[$x][0]]) === false)
+                            ) {
                                 break;
-                            } else if ($tokens[$x][0] === T_ARRAY) {
+                            } else if (is_array($tokens[$x]) === true && $tokens[$x][0] === T_ARRAY) {
                                 $tokens[$x][0] = T_STRING;
 
                                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
