@@ -15,7 +15,7 @@ $foo = (int) $bar;
 $foo = (integer) $bar;
 $foo = (bool) $bar;
 $foo = (string) $bar;
-$foo = (array) $bar;
+$foo = ( array ) $bar;
 
 function foo(int $a, string $b, bool $c, array $d, Foo\Bar $e) : int {}
 function foo(int $a, string $b, bool $c, array $d, Foo\Bar $e) : Foo\Bar {}
