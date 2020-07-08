@@ -16,6 +16,29 @@ use PHP_CodeSniffer\Util\Tokens;
 class LowerCaseTypeSniff implements Sniff
 {
 
+    /**
+     * Native types supported by PHP.
+     *
+     * @var array
+     */
+    private $phpTypes = [
+        'self'     => true,
+        'parent'   => true,
+        'array'    => true,
+        'callable' => true,
+        'bool'     => true,
+        'float'    => true,
+        'int'      => true,
+        'string'   => true,
+        'iterable' => true,
+        'void'     => true,
+        'object'   => true,
+        'mixed'    => true,
+        'static'   => true,
+        'false'    => true,
+        'null'     => true,
+    ];
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -71,20 +94,6 @@ class LowerCaseTypeSniff implements Sniff
             return;
         }//end if
 
-        $phpTypes = [
-            'self'     => true,
-            'parent'   => true,
-            'array'    => true,
-            'callable' => true,
-            'bool'     => true,
-            'float'    => true,
-            'int'      => true,
-            'string'   => true,
-            'iterable' => true,
-            'void'     => true,
-            'object'   => true,
-        ];
-
         $props = $phpcsFile->getMethodProperties($stackPtr);
 
         // Strip off potential nullable indication.
@@ -92,7 +101,7 @@ class LowerCaseTypeSniff implements Sniff
         $returnTypeLower = strtolower($returnType);
 
         if ($returnType !== ''
-            && isset($phpTypes[$returnTypeLower]) === true
+            && isset($this->phpTypes[$returnTypeLower]) === true
         ) {
             // A function return type.
             if ($returnTypeLower !== $returnType) {
@@ -129,7 +138,7 @@ class LowerCaseTypeSniff implements Sniff
             $typeHintLower = strtolower($typeHint);
 
             if ($typeHint !== ''
-                && isset($phpTypes[$typeHintLower]) === true
+                && isset($this->phpTypes[$typeHintLower]) === true
             ) {
                 // A function return type.
                 if ($typeHintLower !== $typeHint) {
