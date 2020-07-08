@@ -70,29 +70,20 @@ class LowerCaseTypeSniff implements Sniff
 
         if (isset(Tokens::$castTokens[$tokens[$stackPtr]['code']]) === true) {
             // A cast token.
-            if (strtolower($tokens[$stackPtr]['content']) !== $tokens[$stackPtr]['content']) {
-                if ($tokens[$stackPtr]['content'] === strtoupper($tokens[$stackPtr]['content'])) {
-                    $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'upper');
-                } else {
-                    $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'mixed');
-                }
-
-                $error = 'PHP type casts must be lowercase; expected "%s" but found "%s"';
-                $data  = [
-                    strtolower($tokens[$stackPtr]['content']),
-                    $tokens[$stackPtr]['content'],
-                ];
-
-                $fix = $phpcsFile->addFixableError($error, $stackPtr, 'TypeCastFound', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken($stackPtr, strtolower($tokens[$stackPtr]['content']));
-                }
-            } else {
-                $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'lower');
-            }//end if
+            $this->processType(
+                $phpcsFile,
+                $stackPtr,
+                $tokens[$stackPtr]['content'],
+                'PHP type casts must be lowercase; expected "%s" but found "%s"',
+                'TypeCastFound'
+            );
 
             return;
-        }//end if
+        }
+
+        /*
+         * Check function return type.
+         */
 
         $props = $phpcsFile->getMethodProperties($stackPtr);
 
@@ -103,29 +94,15 @@ class LowerCaseTypeSniff implements Sniff
         if ($returnType !== ''
             && isset($this->phpTypes[$returnTypeLower]) === true
         ) {
-            // A function return type.
-            if ($returnTypeLower !== $returnType) {
-                if ($returnType === strtoupper($returnType)) {
-                    $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'upper');
-                } else {
-                    $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'mixed');
-                }
+            $error     = 'PHP return type declarations must be lowercase; expected "%s" but found "%s"';
+            $errorCode = 'ReturnTypeFound';
 
-                $error = 'PHP return type declarations must be lowercase; expected "%s" but found "%s"';
-                $token = $props['return_type_token'];
-                $data  = [
-                    $returnTypeLower,
-                    $returnType,
-                ];
+            $this->processType($phpcsFile, $props['return_type_token'], $returnType, $error, $errorCode);
+        }
 
-                $fix = $phpcsFile->addFixableError($error, $token, 'ReturnTypeFound', $data);
-                if ($fix === true) {
-                    $phpcsFile->fixer->replaceToken($token, $returnTypeLower);
-                }
-            } else {
-                $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'lower');
-            }//end if
-        }//end if
+        /*
+         * Check function parameter types.
+         */
 
         $params = $phpcsFile->getMethodParameters($stackPtr);
         if (empty($params) === true) {
@@ -140,32 +117,53 @@ class LowerCaseTypeSniff implements Sniff
             if ($typeHint !== ''
                 && isset($this->phpTypes[$typeHintLower]) === true
             ) {
-                // A function return type.
-                if ($typeHintLower !== $typeHint) {
-                    if ($typeHint === strtoupper($typeHint)) {
-                        $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'upper');
-                    } else {
-                        $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'mixed');
-                    }
+                $error     = 'PHP parameter type declarations must be lowercase; expected "%s" but found "%s"';
+                $errorCode = 'ParamTypeFound';
 
-                    $error = 'PHP parameter type declarations must be lowercase; expected "%s" but found "%s"';
-                    $token = $param['type_hint_token'];
-                    $data  = [
-                        $typeHintLower,
-                        $typeHint,
-                    ];
-
-                    $fix = $phpcsFile->addFixableError($error, $token, 'ParamTypeFound', $data);
-                    if ($fix === true) {
-                        $phpcsFile->fixer->replaceToken($token, $typeHintLower);
-                    }
-                } else {
-                    $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'lower');
-                }//end if
-            }//end if
-        }//end foreach
+                $this->processType($phpcsFile, $param['type_hint_token'], $typeHint, $error, $errorCode);
+            }
+        }
 
     }//end process()
+
+
+    /**
+     * Processes a type cast or a singular type declaration.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the type token.
+     * @param string                      $type      The type found.
+     * @param string                      $error     Error message template.
+     * @param string                      $errorCode The error code.
+     *
+     * @return void
+     */
+    protected function processType(File $phpcsFile, $stackPtr, $type, $error, $errorCode)
+    {
+        $typeLower = strtolower($type);
+
+        if ($typeLower === $type) {
+            $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'lower');
+            return;
+        }
+
+        if ($type === strtoupper($type)) {
+            $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'upper');
+        } else {
+            $phpcsFile->recordMetric($stackPtr, 'PHP type case', 'mixed');
+        }
+
+        $data = [
+            $typeLower,
+            $type,
+        ];
+
+        $fix = $phpcsFile->addFixableError($error, $stackPtr, $errorCode, $data);
+        if ($fix === true) {
+            $phpcsFile->fixer->replaceToken($stackPtr, $typeLower);
+        }
+
+    }//end processType()
 
 
 }//end class
