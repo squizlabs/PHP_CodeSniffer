@@ -88,16 +88,23 @@ class LowerCaseTypeSniff implements Sniff
         $props = $phpcsFile->getMethodProperties($stackPtr);
 
         // Strip off potential nullable indication.
-        $returnType      = ltrim($props['return_type'], '?');
-        $returnTypeLower = strtolower($returnType);
+        $returnType = ltrim($props['return_type'], '?');
 
-        if ($returnType !== ''
-            && isset($this->phpTypes[$returnTypeLower]) === true
-        ) {
+        if ($returnType !== '') {
             $error     = 'PHP return type declarations must be lowercase; expected "%s" but found "%s"';
             $errorCode = 'ReturnTypeFound';
 
-            $this->processType($phpcsFile, $props['return_type_token'], $returnType, $error, $errorCode);
+            if (strpos($returnType, '|') !== false) {
+                $this->processUnionType(
+                    $phpcsFile,
+                    $props['return_type_token'],
+                    $props['return_type_end_token'],
+                    $error,
+                    $errorCode
+                );
+            } else if (isset($this->phpTypes[strtolower($returnType)]) === true) {
+                $this->processType($phpcsFile, $props['return_type_token'], $returnType, $error, $errorCode);
+            }
         }
 
         /*
@@ -111,20 +118,75 @@ class LowerCaseTypeSniff implements Sniff
 
         foreach ($params as $param) {
             // Strip off potential nullable indication.
-            $typeHint      = ltrim($param['type_hint'], '?');
-            $typeHintLower = strtolower($typeHint);
+            $typeHint = ltrim($param['type_hint'], '?');
 
-            if ($typeHint !== ''
-                && isset($this->phpTypes[$typeHintLower]) === true
-            ) {
+            if ($typeHint !== '') {
                 $error     = 'PHP parameter type declarations must be lowercase; expected "%s" but found "%s"';
                 $errorCode = 'ParamTypeFound';
 
-                $this->processType($phpcsFile, $param['type_hint_token'], $typeHint, $error, $errorCode);
+                if (strpos($typeHint, '|') !== false) {
+                    $this->processUnionType(
+                        $phpcsFile,
+                        $param['type_hint_token'],
+                        $param['type_hint_end_token'],
+                        $error,
+                        $errorCode
+                    );
+                } else if (isset($this->phpTypes[strtolower($typeHint)]) === true) {
+                    $this->processType($phpcsFile, $param['type_hint_token'], $typeHint, $error, $errorCode);
+                }
             }
-        }
+        }//end foreach
 
     }//end process()
+
+
+    /**
+     * Processes a union type declaration.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile     The file being scanned.
+     * @param int                         $typeDeclStart The position of the start of the type token.
+     * @param int                         $typeDeclEnd   The position of the end of the type token.
+     * @param string                      $error         Error message template.
+     * @param string                      $errorCode     The error code.
+     *
+     * @return void
+     */
+    protected function processUnionType(File $phpcsFile, $typeDeclStart, $typeDeclEnd, $error, $errorCode)
+    {
+        $tokens  = $phpcsFile->getTokens();
+        $current = $typeDeclStart;
+
+        do {
+            $endOfType = $phpcsFile->findNext(T_TYPE_UNION, $current, $typeDeclEnd);
+            if ($endOfType === false) {
+                // This must be the last type in the union.
+                $endOfType = ($typeDeclEnd + 1);
+            }
+
+            $hasNsSep = $phpcsFile->findNext(T_NS_SEPARATOR, $current, $endOfType);
+            if ($hasNsSep !== false) {
+                // Multi-token class based type. Ignore.
+                $current = ($endOfType + 1);
+                continue;
+            }
+
+            // Type consisting of a single token.
+            $startOfType = $phpcsFile->findNext(Tokens::$emptyTokens, $current, $endOfType, true);
+            if ($startOfType === false) {
+                // Parse error.
+                return;
+            }
+
+            $type = $tokens[$startOfType]['content'];
+            if (isset($this->phpTypes[strtolower($type)]) === true) {
+                $this->processType($phpcsFile, $startOfType, $type, $error, $errorCode);
+            }
+
+            $current = ($endOfType + 1);
+        } while ($current <= $typeDeclEnd);
+
+    }//end processUnionType()
 
 
     /**
