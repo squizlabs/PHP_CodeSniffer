@@ -45,3 +45,11 @@ $foo = function (?Int $a, ?    Callable $b)
 
 $var = (BInARY) $string;
 $var = (binary)$string;
+
+function unionParamTypesA (bool|array| /* nullability operator not allowed in union */ NULL $var) {}
+
+function unionParamTypesB (\Package\ClassName | Int | \Package\Other_Class | FALSE $var) {}
+
+function unionReturnTypesA ($var): bool|array| /* nullability operator not allowed in union */ NULL {}
+
+function unionReturnTypesB ($var): \Package\ClassName | Int | \Package\Other_Class | FALSE {}

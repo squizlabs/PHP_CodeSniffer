@@ -45,6 +45,10 @@ class LowerCaseTypeUnitTest extends AbstractSniffUnitTest
             43 => 2,
             44 => 1,
             46 => 1,
+            49 => 1,
+            51 => 2,
+            53 => 1,
+            55 => 2,
         ];
 
     }//end getErrorList()
