@@ -53,3 +53,23 @@ function unionParamTypesB (\Package\ClassName | Int | \Package\Other_Class | FAL
 function unionReturnTypesA ($var): bool|array| /* nullability operator not allowed in union */ NULL {}
 
 function unionReturnTypesB ($var): \Package\ClassName | Int | \Package\Other_Class | FALSE {}
+
+class TypedProperties
+{
+    protected ClassName $class;
+    public Int $int;
+    private ?BOOL $bool;
+    public Self $self;
+    protected PaRenT $parent;
+    private ARRAY $array;
+    public Float $float;
+    protected ?STRING $string;
+    private IterablE $iterable;
+    public Object $object;
+    protected Mixed $mixed;
+
+    public Iterable|FALSE|NULL $unionTypeA;
+    protected SELF|Parent /* comment */ |\Fully\Qualified\ClassName|UnQualifiedClass $unionTypeB;
+    private ClassName|/*comment*/Float|STRING|False $unionTypeC;
+    public sTRing | aRRaY | FaLSe $unionTypeD;
+}
