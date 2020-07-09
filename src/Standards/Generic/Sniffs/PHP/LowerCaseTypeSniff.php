@@ -9,6 +9,7 @@
 
 namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use PHP_CodeSniffer\Util\Tokens;
@@ -50,6 +51,7 @@ class LowerCaseTypeSniff implements Sniff
         $tokens   = Tokens::$castTokens;
         $tokens[] = T_FUNCTION;
         $tokens[] = T_CLOSURE;
+        $tokens[] = T_VARIABLE;
         return $tokens;
 
     }//end register()
@@ -80,6 +82,41 @@ class LowerCaseTypeSniff implements Sniff
 
             return;
         }
+
+        /*
+         * Check property types.
+         */
+
+        if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
+            try {
+                $props = $phpcsFile->getMemberProperties($stackPtr);
+            } catch (RuntimeException $e) {
+                // Not an OO property.
+                return;
+            }
+
+            // Strip off potential nullable indication.
+            $type = ltrim($props['type'], '?');
+
+            if ($type !== '') {
+                $error     = 'PHP property type declarations must be lowercase; expected "%s" but found "%s"';
+                $errorCode = 'PropertyTypeFound';
+
+                if (strpos($type, '|') !== false) {
+                    $this->processUnionType(
+                        $phpcsFile,
+                        $props['type_token'],
+                        $props['type_end_token'],
+                        $error,
+                        $errorCode
+                    );
+                } else if (isset($this->phpTypes[strtolower($type)]) === true) {
+                    $this->processType($phpcsFile, $props['type_token'], $type, $error, $errorCode);
+                }
+            }
+
+            return;
+        }//end if
 
         /*
          * Check function return type.
