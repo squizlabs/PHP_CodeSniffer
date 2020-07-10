@@ -113,6 +113,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="BackfillFnTokenTest.php" role="test" />
       <file baseinstalldir="" name="BackfillNumericSeparatorTest.inc" role="test" />
       <file baseinstalldir="" name="BackfillNumericSeparatorTest.php" role="test" />
+      <file baseinstalldir="" name="ShortArrayTest.inc" role="test" />
+      <file baseinstalldir="" name="ShortArrayTest.php" role="test" />
      </dir>
      <file baseinstalldir="" name="AbstractMethodUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllTests.php" role="test" />
@@ -1977,6 +1979,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.php" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.php" name="tests/Core/Tokenizer/ShortArrayTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.inc" name="tests/Core/Tokenizer/ShortArrayTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -2030,6 +2034,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.php" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.php" name="tests/Core/Tokenizer/ShortArrayTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.inc" name="tests/Core/Tokenizer/ShortArrayTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />

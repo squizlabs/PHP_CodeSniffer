@@ -1973,6 +1973,7 @@ class PHP extends Tokenizer
                     T_STRING                   => T_STRING,
                     T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
                 ];
+                $allowed     += Util\Tokens::$magicConstants;
 
                 for ($x = ($i - 1); $x >= 0; $x--) {
                     // If we hit a scope opener, the statement has ended
