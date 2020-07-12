@@ -3,3 +3,7 @@ package.xml export-ignore
 phpunit.xml.dist export-ignore
 php5-testingConfig.ini export-ignore
 php7-testingConfig.ini export-ignore
+
+# Declare files that should always have CRLF line endings on checkout.
+*WinTest.inc text eol=crlf
+*WinTest.php text eol=crlf
