@@ -617,6 +617,178 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify recognition of PHP8 constructor property promotion without type declaration, with defaults.
+     *
+     * @return void
+     */
+    public function testPHP8ConstructorPropertyPromotionNoTypes()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'                => '$x',
+            'content'             => 'public $x = 0.0',
+            'default'             => '0.0',
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => '',
+            'nullable_type'       => false,
+            'property_visibility' => 'public',
+        ];
+        $expected[1] = [
+            'name'                => '$y',
+            'content'             => 'protected $y = \'\'',
+            'default'             => "''",
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => '',
+            'nullable_type'       => false,
+            'property_visibility' => 'protected',
+        ];
+        $expected[2] = [
+            'name'                => '$z',
+            'content'             => 'private $z = null',
+            'default'             => 'null',
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => '',
+            'nullable_type'       => false,
+            'property_visibility' => 'private',
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8ConstructorPropertyPromotionNoTypes()
+
+
+    /**
+     * Verify recognition of PHP8 constructor property promotion with type declarations.
+     *
+     * @return void
+     */
+    public function testPHP8ConstructorPropertyPromotionWithTypes()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'                => '$x',
+            'content'             => 'protected float|int $x',
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => 'float|int',
+            'nullable_type'       => false,
+            'property_visibility' => 'protected',
+        ];
+        $expected[1] = [
+            'name'                => '$y',
+            'content'             => 'public ?string &$y = \'test\'',
+            'default'             => "'test'",
+            'pass_by_reference'   => true,
+            'variable_length'     => false,
+            'type_hint'           => '?string',
+            'nullable_type'       => true,
+            'property_visibility' => 'public',
+        ];
+        $expected[2] = [
+            'name'                => '$z',
+            'content'             => 'private mixed $z',
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => 'mixed',
+            'nullable_type'       => false,
+            'property_visibility' => 'private',
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8ConstructorPropertyPromotionWithTypes()
+
+
+    /**
+     * Verify recognition of PHP8 constructor with both property promotion as well as normal parameters.
+     *
+     * @return void
+     */
+    public function testPHP8ConstructorPropertyPromotionAndNormalParam()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'                => '$promotedProp',
+            'content'             => 'public int $promotedProp',
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => 'int',
+            'nullable_type'       => false,
+            'property_visibility' => 'public',
+        ];
+        $expected[1] = [
+            'name'              => '$normalArg',
+            'content'           => '?int $normalArg',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?int',
+            'nullable_type'     => true,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8ConstructorPropertyPromotionAndNormalParam()
+
+
+    /**
+     * Verify behaviour when a non-constructor function uses PHP 8 property promotion syntax.
+     *
+     * @return void
+     */
+    public function testPHP8ConstructorPropertyPromotionGlobalFunction()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'                => '$x',
+            'content'             => 'private $x',
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => '',
+            'nullable_type'       => false,
+            'property_visibility' => 'private',
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8ConstructorPropertyPromotionGlobalFunction()
+
+
+    /**
+     * Verify behaviour when an abstract constructor uses PHP 8 property promotion syntax.
+     *
+     * @return void
+     */
+    public function testPHP8ConstructorPropertyPromotionAbstractMethod()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'                => '$y',
+            'content'             => 'public callable $y',
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => 'callable',
+            'nullable_type'       => false,
+            'property_visibility' => 'public',
+        ];
+        $expected[1] = [
+            'name'                => '$x',
+            'content'             => 'private ...$x',
+            'pass_by_reference'   => false,
+            'variable_length'     => true,
+            'type_hint'           => '',
+            'nullable_type'       => false,
+            'property_visibility' => 'private',
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8ConstructorPropertyPromotionAbstractMethod()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.
