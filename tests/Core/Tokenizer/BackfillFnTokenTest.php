@@ -466,7 +466,7 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
-     * Test arrow functions that use self/parent/callable return types.
+     * Test arrow functions that use self/parent/callable/array/static return types.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
      *
@@ -481,6 +481,7 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
             'Parent',
             'Callable',
             'Array',
+            'Static',
         ];
 
         foreach ($testMarkers as $marker) {

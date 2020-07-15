@@ -1829,6 +1829,7 @@ class PHP extends Tokenizer
                         T_CALLABLE     => T_CALLABLE,
                         T_PARENT       => T_PARENT,
                         T_SELF         => T_SELF,
+                        T_STATIC       => T_STATIC,
                     ];
 
                     $closer = $this->tokens[$x]['parenthesis_closer'];
