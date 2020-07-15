@@ -654,12 +654,12 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
             ],
             ['/* testNonArrowObjectMethodCall */'],
             [
-                '/* testNonArrowNamespacedFunctionCall */',
-                'Fn',
-            ],
-            [
                 '/* testNonArrowObjectMethodCallUpper */',
                 'FN',
+            ],
+            [
+                '/* testNonArrowNamespacedFunctionCall */',
+                'Fn',
             ],
             ['/* testNonArrowNamespaceOperatorFunctionCall */'],
             ['/* testLiveCoding */'],
