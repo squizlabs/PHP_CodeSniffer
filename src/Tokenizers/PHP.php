@@ -2177,6 +2177,177 @@ class PHP extends Tokenizer
                 }
 
                 continue;
+            } else if ($this->tokens[$i]['code'] === T_BITWISE_OR) {
+                /*
+                    Convert "|" to T_TYPE_UNION or leave as T_BITWISE_OR.
+                */
+
+                $allowed = [
+                    T_STRING       => T_STRING,
+                    T_CALLABLE     => T_CALLABLE,
+                    T_SELF         => T_SELF,
+                    T_PARENT       => T_PARENT,
+                    T_STATIC       => T_STATIC,
+                    T_FALSE        => T_FALSE,
+                    T_NULL         => T_NULL,
+                    T_NS_SEPARATOR => T_NS_SEPARATOR,
+                ];
+
+                $suspectedType  = null;
+                $typeTokenCount = 0;
+
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === true) {
+                        continue;
+                    }
+
+                    if (isset($allowed[$this->tokens[$x]['code']]) === true) {
+                        ++$typeTokenCount;
+                        continue;
+                    }
+
+                    if ($typeTokenCount > 0
+                        && ($this->tokens[$x]['code'] === T_BITWISE_AND
+                        || $this->tokens[$x]['code'] === T_ELLIPSIS)
+                    ) {
+                        // Skip past reference and variadic indicators for parameter types.
+                        ++$x;
+                        continue;
+                    }
+
+                    if ($this->tokens[$x]['code'] === T_VARIABLE) {
+                        // Parameter/Property defaults can not contain variables, so this could be a type.
+                        $suspectedType = 'property or parameter';
+                        break;
+                    }
+
+                    if ($this->tokens[$x]['code'] === T_DOUBLE_ARROW) {
+                        // Possible arrow function.
+                        $suspectedType = 'return';
+                        break;
+                    }
+
+                    if ($this->tokens[$x]['code'] === T_SEMICOLON) {
+                        // Possible abstract method or interface method.
+                        $suspectedType = 'return';
+                        break;
+                    }
+
+                    if ($this->tokens[$x]['code'] === T_OPEN_CURLY_BRACKET
+                        && isset($this->tokens[$x]['scope_condition']) === true
+                        && $this->tokens[$this->tokens[$x]['scope_condition']]['code'] === T_FUNCTION
+                    ) {
+                        $suspectedType = 'return';
+                    }
+
+                    break;
+                }//end for
+
+                if ($typeTokenCount === 0 || isset($suspectedType) === false) {
+                    // Definitely not a union type, move on.
+                    continue;
+                }
+
+                $typeTokenCount = 0;
+                $unionOperators = [$i];
+                $confirmed      = false;
+
+                for ($x = ($i - 1); $x >= 0; $x--) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === true) {
+                        continue;
+                    }
+
+                    if (isset($allowed[$this->tokens[$x]['code']]) === true) {
+                        ++$typeTokenCount;
+                        continue;
+                    }
+
+                    // Union types can't use the nullable operator, but be tolerant to parse errors.
+                    if ($typeTokenCount > 0 && $this->tokens[$x]['code'] === T_NULLABLE) {
+                        continue;
+                    }
+
+                    if ($this->tokens[$x]['code'] === T_BITWISE_OR) {
+                        $unionOperators[] = $x;
+                        continue;
+                    }
+
+                    if ($suspectedType === 'return' && $this->tokens[$x]['code'] === T_COLON) {
+                        $confirmed = true;
+                        break;
+                    }
+
+                    if ($suspectedType === 'property or parameter'
+                        && (isset(Util\Tokens::$scopeModifiers[$this->tokens[$x]['code']]) === true
+                        || $this->tokens[$x]['code'] === T_VAR)
+                    ) {
+                        // This will also confirm constructor property promotion parameters, but that's fine.
+                        $confirmed = true;
+                    }
+
+                    break;
+                }//end for
+
+                if ($confirmed === false
+                    && $suspectedType === 'property or parameter'
+                    && isset($this->tokens[$i]['nested_parenthesis']) === true
+                ) {
+                    $parens = $this->tokens[$i]['nested_parenthesis'];
+                    $last   = end($parens);
+
+                    if (isset($this->tokens[$last]['parenthesis_owner']) === true
+                        && $this->tokens[$this->tokens[$last]['parenthesis_owner']]['code'] === T_FUNCTION
+                    ) {
+                        $confirmed = true;
+                    } else {
+                        // No parenthesis owner set, this may be an arrow function which has not yet
+                        // had additional processing done.
+                        if (isset($this->tokens[$last]['parenthesis_opener']) === true) {
+                            for ($x = ($this->tokens[$last]['parenthesis_opener'] - 1); $x >= 0; $x--) {
+                                if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === true) {
+                                    continue;
+                                }
+
+                                break;
+                            }
+
+                            if ($this->tokens[$x]['code'] === T_FN) {
+                                for (--$x; $x >= 0; $x--) {
+                                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === true
+                                        || $this->tokens[$x]['code'] === T_BITWISE_AND
+                                    ) {
+                                        continue;
+                                    }
+
+                                    break;
+                                }
+
+                                if ($this->tokens[$x]['code'] !== T_FUNCTION) {
+                                    $confirmed = true;
+                                }
+                            }
+                        }//end if
+                    }//end if
+
+                    unset($parens, $last);
+                }//end if
+
+                if ($confirmed === false) {
+                    // Not a union type after all, move on.
+                    continue;
+                }
+
+                foreach ($unionOperators as $x) {
+                    $this->tokens[$x]['code'] = T_TYPE_UNION;
+                    $this->tokens[$x]['type'] = 'T_TYPE_UNION';
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$x]['line'];
+                        echo "\t* token $x on line $line changed from T_BITWISE_OR to T_TYPE_UNION".PHP_EOL;
+                    }
+                }
+
+                continue;
             } else if ($this->tokens[$i]['code'] === T_STATIC) {
                 for ($x = ($i - 1); $x > 0; $x--) {
                     if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
