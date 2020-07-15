@@ -476,6 +476,259 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify recognition of PHP8 union type declaration.
+     *
+     * @return void
+     */
+    public function testPHP8UnionTypesSimple()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'int|float',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8UnionTypesSimple()
+
+
+    /**
+     * Verify recognition of PHP8 union type declaration with two classes.
+     *
+     * @return void
+     */
+    public function testPHP8UnionTypesTwoClasses()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'MyClassA|\Package\MyClassB',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8UnionTypesTwoClasses()
+
+
+    /**
+     * Verify recognition of PHP8 union type declaration with all base types.
+     *
+     * @return void
+     */
+    public function testPHP8UnionTypesAllBaseTypes()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'array|bool|callable|int|float|null|Object|string',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8UnionTypesAllBaseTypes()
+
+
+    /**
+     * Verify recognition of PHP8 union type declaration with all pseudo types.
+     *
+     * @return void
+     */
+    public function testPHP8UnionTypesAllPseudoTypes()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'false|MIXED|self|parent|static|iterable|Resource|void',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8UnionTypesAllPseudoTypes()
+
+
+    /**
+     * Verify recognition of PHP8 union type declaration with (illegal) nullability.
+     *
+     * @return void
+     */
+    public function testPHP8UnionTypesNullable()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '?int|float',
+            'nullable_return_type' => true,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8UnionTypesNullable()
+
+
+    /**
+     * Verify recognition of PHP8 type declaration with (illegal) single type null.
+     *
+     * @return void
+     */
+    public function testPHP8PseudoTypeNull()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'null',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8PseudoTypeNull()
+
+
+    /**
+     * Verify recognition of PHP8 type declaration with (illegal) single type false.
+     *
+     * @return void
+     */
+    public function testPHP8PseudoTypeFalse()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'false',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8PseudoTypeFalse()
+
+
+    /**
+     * Verify recognition of PHP8 type declaration with (illegal) type false combined with type bool.
+     *
+     * @return void
+     */
+    public function testPHP8PseudoTypeFalseAndBool()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'bool|false',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8PseudoTypeFalseAndBool()
+
+
+    /**
+     * Verify recognition of PHP8 type declaration with (illegal) type object combined with a class name.
+     *
+     * @return void
+     */
+    public function testPHP8ObjectAndClass()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'object|ClassName',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8ObjectAndClass()
+
+
+    /**
+     * Verify recognition of PHP8 type declaration with (illegal) type iterable combined with array/Traversable.
+     *
+     * @return void
+     */
+    public function testPHP8PseudoTypeIterableAndArray()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => true,
+            'return_type'          => 'iterable|array|Traversable',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => false,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8PseudoTypeIterableAndArray()
+
+
+    /**
+     * Verify recognition of PHP8 type declaration with (illegal) duplicate types.
+     *
+     * @return void
+     */
+    public function testPHP8DuplicateTypeInUnionWhitespaceAndComment()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'int|string|INT',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8DuplicateTypeInUnionWhitespaceAndComment()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.

@@ -532,6 +532,62 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test arrow function with a union parameter type.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testUnionParamType()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testUnionParamType */', T_FN);
+        $this->backfillHelper($token);
+
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 13), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 21), 'Scope closer is not the semicolon token');
+
+        $opener = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 13), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 21), 'Opener scope closer is not the semicolon token');
+
+        $closer = $tokens[$token]['scope_closer'];
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 13), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 21), 'Closer scope closer is not the semicolon token');
+
+    }//end testUnionParamType()
+
+
+    /**
+     * Test arrow function with a union return type.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testUnionReturnType()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testUnionReturnType */', T_FN);
+        $this->backfillHelper($token);
+
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 11), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 18), 'Scope closer is not the semicolon token');
+
+        $opener = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 11), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 18), 'Opener scope closer is not the semicolon token');
+
+        $closer = $tokens[$token]['scope_closer'];
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 11), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 18), 'Closer scope closer is not the semicolon token');
+
+    }//end testUnionReturnType()
+
+
+    /**
      * Test arrow functions used in ternary operators.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
@@ -690,6 +746,7 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
                 'Fn',
             ],
             ['/* testNonArrowNamespaceOperatorFunctionCall */'],
+            ['/* testNonArrowFunctionNameWithUnionTypes */'],
             ['/* testLiveCoding */'],
         ];
 
