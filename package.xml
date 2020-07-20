@@ -26,7 +26,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added support for PHP 8.0 magic constant dereferencing
+    -- Thanks to Juliette Reinders Folmer for the patch
   - File::getMethodProperties() now detects the PHP 8.0 static return type
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - The PHP 8.0 static return type is now supported for arrow functions
     -- Thanks to Juliette Reinders Folmer for the patch
   - The cache is no longer used if the list of loaded PHP extensions changes
     -- Thanks to Juliette Reinders Folmer for the patch
