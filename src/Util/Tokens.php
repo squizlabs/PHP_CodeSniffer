@@ -589,6 +589,24 @@ final class Tokens
         T_TRAIT      => T_TRAIT,
     ];
 
+    /**
+     * Tokens representing PHP magic constants.
+     *
+     * @var array <int|string> => <int|string>
+     *
+     * @link https://www.php.net/language.constants.predefined PHP Manual on magic constants
+     */
+    public static $magicConstants = [
+        T_CLASS_C  => T_CLASS_C,
+        T_DIR      => T_DIR,
+        T_FILE     => T_FILE,
+        T_FUNC_C   => T_FUNC_C,
+        T_LINE     => T_LINE,
+        T_METHOD_C => T_METHOD_C,
+        T_NS_C     => T_NS_C,
+        T_TRAIT_C  => T_TRAIT_C,
+    ];
+
 
     /**
      * Given a token, returns the name of the token.
