@@ -1,13 +1,16 @@
-sudo: false
+os: linux
+dist: xenial
 language: php
-dist: trusty
 
-matrix:
+jobs:
   fast_finish: true
   include:
     - php: 5.4
+      dist: trusty
     - php: 5.5
+      dist: trusty
     - php: 5.5
+      dist: trusty
       env: CUSTOM_INI=1 XMLLINT=1
       addons:
         apt:
@@ -19,20 +22,16 @@ matrix:
       env: CUSTOM_INI=1 PEAR_VALIDATE=1
     - php: 7.1
     - php: 7.2
-      env: PHPUNIT_INCOMPAT=1
     - php: 7.3
-      env: PHPUNIT_INCOMPAT=1
     - php: 7.4
-      env: PHPUNIT_INCOMPAT=1
     - php: 7.4
-      env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
+      env: PHPSTAN=1
       addons:
         apt:
           packages:
             - libonig-dev
     # Nightly is PHP 8.0 since Feb 2019.
     - php: nightly
-      env: PHPUNIT_INCOMPAT=1
       addons:
         apt:
           packages:
@@ -40,7 +39,7 @@ matrix:
 
   allow_failures:
     - php: 7.4
-      env: PHPSTAN=1 PHPUNIT_INCOMPAT=1
+      env: PHPSTAN=1
     - php: nightly
 
 before_install:
@@ -49,9 +48,9 @@ before_install:
   - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
   # PHPUnit 8.x is not (yet) supported, so prevent issues with Travis images using it.
   - |
-    if [[ $PHPUNIT_INCOMPAT == "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then
+    if [[ $TRAVIS_PHP_VERSION != "nightly" ]]; then
       composer install
-    elif [[ $PHPUNIT_INCOMPAT == "1" && $TRAVIS_PHP_VERSION == "nightly" ]]; then
+    elif [[ $TRAVIS_PHP_VERSION == "nightly" ]]; then
       // Allow installing "incompatible" PHPUnit version on PHP 8/nightly.
       composer install --ignore-platform-reqs
     fi
@@ -62,12 +61,7 @@ before_script:
 
 script:
   - php bin/phpcs --config-set php_path php
-  - |
-    if [[ $PHPUNIT_INCOMPAT != "1" ]]; then
-      phpunit tests/AllTests.php
-    else
-      vendor/bin/phpunit tests/AllTests.php
-    fi
+  - vendor/bin/phpunit tests/AllTests.php
   - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
   - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
   - if [[ $PEAR_VALIDATE == "1" ]]; then php scripts/validate-pear-package.php; fi
