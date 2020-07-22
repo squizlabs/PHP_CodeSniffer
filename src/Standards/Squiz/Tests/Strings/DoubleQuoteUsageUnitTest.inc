@@ -32,6 +32,12 @@ echo ""
 $string = "Hello
 			there";
 
+// phpcs:set Squiz.Strings.DoubleQuoteUsage allowVariables 1
+$string = "Hello $there";
+$string = 'Hello'."$there '".'hi';
+// phpcs:set Squiz.Strings.DoubleQuoteUsage allowVariables 0
+
 function test() {
+    // this syntax error is here on purpose
     echo "It Worked';
 }

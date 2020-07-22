@@ -15,6 +15,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class DoubleQuoteUsageSniff implements Sniff
 {
 
+    /**
+     * Allow variables in double quoted strings
+     *
+     * @var boolean
+     */
+    public $allowVariables = false;
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -42,6 +49,7 @@ class DoubleQuoteUsageSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        $this->allowVariables = (bool) $this->allowVariables;
         $tokens = $phpcsFile->getTokens();
 
         // If tabs are being converted to spaces by the tokeniser, the
@@ -82,6 +90,10 @@ class DoubleQuoteUsageSniff implements Sniff
             $stringTokens = token_get_all('<?php '.$workingString);
             foreach ($stringTokens as $token) {
                 if (is_array($token) === true && $token[0] === T_VARIABLE) {
+                    if ($this->allowVariables === true) {
+                        return $skipTo;
+                    }
+
                     $error = 'Variable "%s" not allowed in double quoted string; use concatenation instead';
                     $data  = [$token[1]];
                     $phpcsFile->addError($error, $stackPtr, 'ContainsVar', $data);
