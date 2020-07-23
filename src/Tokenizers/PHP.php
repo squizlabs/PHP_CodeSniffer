@@ -567,6 +567,47 @@ class PHP extends Tokenizer
             }
 
             /*
+                PHP 8 tokenizes a new line after a slash comment to the next whitespace token.
+            */
+
+            if (PHP_VERSION_ID >= 80000
+                && $tokenIsArray === true
+                && ($token[0] === T_COMMENT && strpos($token[1], '//') === 0)
+                && isset($tokens[($stackPtr + 1)]) === true
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === T_WHITESPACE
+            ) {
+                $nextToken = $tokens[($stackPtr + 1)];
+
+                // If the next token is a single new line, merge it into the comment token
+                // and set to it up to be skipped.
+                if ($nextToken[1] === "\n" || $nextToken[1] === "\r\n" || $nextToken[1] === "\n\r") {
+                    $token[1] .= $nextToken[1];
+                    $tokens[($stackPtr + 1)] = null;
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* merged newline after comment into comment token $stackPtr".PHP_EOL;
+                    }
+                } else {
+                    // This may be a whitespace token consisting of multiple new lines.
+                    if (strpos($nextToken[1], "\r\n") === 0) {
+                        $token[1] .= "\r\n";
+                        $tokens[($stackPtr + 1)][1] = substr($nextToken[1], 2);
+                    } else if (strpos($nextToken[1], "\n\r") === 0) {
+                        $token[1] .= "\n\r";
+                        $tokens[($stackPtr + 1)][1] = substr($nextToken[1], 2);
+                    } else if (strpos($nextToken[1], "\n") === 0) {
+                        $token[1] .= "\n";
+                        $tokens[($stackPtr + 1)][1] = substr($nextToken[1], 1);
+                    }
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* stripped first newline after comment and added it to comment token $stackPtr".PHP_EOL;
+                    }
+                }//end if
+            }//end if
+
+            /*
                 If this is a double quoted string, PHP will tokenize the whole
                 thing which causes problems with the scope map when braces are
                 within the string. So we need to merge the tokens together to
