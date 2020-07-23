@@ -38,6 +38,9 @@ The file documents changes to the PHP_CodeSniffer project.
     - The `--report-file` functionality remains untouched
 - Composer installs no longer include any test files
 - The `Config::setConfigData()` method is no longer static
+- T_USE tokens now contain parenthesis information if they are being used to pass variables to a closure
+    - Previously, you had to find the opening and closing parenthesis by looking forward through the token stack
+    - Now, you can use the `parenthesis_opener` and `parenthesis_closer` array indexes
 
 ### Removed
 - Removed support for installing via PEAR

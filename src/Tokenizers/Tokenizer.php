@@ -700,6 +700,10 @@ abstract class Tokenizer
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     Common::printStatusMessage("=> Found square bracket opener at $i", (count($squareOpeners) + count($curlyOpeners)));
                 }
+
+                if ($openOwner !== null) {
+                    $openOwner = null;
+                }
                 break;
             case T_OPEN_CURLY_BRACKET:
                 if (isset($this->tokens[$i]['scope_closer']) === false) {
@@ -708,6 +712,10 @@ abstract class Tokenizer
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         Common::printStatusMessage("=> Found curly bracket opener at $i", (count($squareOpeners) + count($curlyOpeners)));
                     }
+                }
+
+                if ($openOwner !== null) {
+                    $openOwner = null;
                 }
                 break;
             case T_CLOSE_SQUARE_BRACKET:

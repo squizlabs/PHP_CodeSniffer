@@ -1265,19 +1265,12 @@ class File
             throw new RuntimeException('$stackPtr must be of type T_FUNCTION or T_CLOSURE or T_USE or T_FN');
         }
 
-        if ($this->tokens[$stackPtr]['code'] === T_USE) {
-            $opener = $this->findNext(T_OPEN_PARENTHESIS, ($stackPtr + 1));
-            if ($opener === false || isset($this->tokens[$opener]['parenthesis_owner']) === true) {
-                throw new RuntimeException('$stackPtr was not a valid T_USE');
-            }
-        } else {
-            if (isset($this->tokens[$stackPtr]['parenthesis_opener']) === false) {
-                // Live coding or syntax error, so no params to find.
-                return [];
-            }
-
-            $opener = $this->tokens[$stackPtr]['parenthesis_opener'];
+        if (isset($this->tokens[$stackPtr]['parenthesis_opener']) === false) {
+            // Live coding or syntax error, so no params to find.
+            return [];
         }
+
+        $opener = $this->tokens[$stackPtr]['parenthesis_opener'];
 
         if (isset($this->tokens[$opener]['parenthesis_closer']) === false) {
             // Live coding or syntax error, so no params to find.

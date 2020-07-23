@@ -118,19 +118,13 @@ abstract class AbstractVariableSniff extends AbstractScopeSniff
         if ($inFunction === false && isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
             foreach ($tokens[$stackPtr]['nested_parenthesis'] as $opener => $closer) {
                 if (isset($tokens[$opener]['parenthesis_owner']) === false) {
-                    // Check if this is a USE statement for a closure.
-                    $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($opener - 1), null, true);
-                    if ($tokens[$prev]['code'] === T_USE) {
-                        $inFunction = true;
-                        break;
-                    }
-
                     continue;
                 }
 
                 $owner = $tokens[$opener]['parenthesis_owner'];
                 if ($tokens[$owner]['code'] === T_FUNCTION
                     || $tokens[$owner]['code'] === T_CLOSURE
+                    || $tokens[$owner]['code'] === T_USE
                 ) {
                     $inFunction = true;
                     break;

@@ -351,6 +351,7 @@ final class Tokens
         T_LIST       => T_LIST,
         T_FUNCTION   => T_FUNCTION,
         T_CLOSURE    => T_CLOSURE,
+        T_USE        => T_USE,
         T_ANON_CLASS => T_ANON_CLASS,
         T_WHILE      => T_WHILE,
         T_FOR        => T_FOR,
