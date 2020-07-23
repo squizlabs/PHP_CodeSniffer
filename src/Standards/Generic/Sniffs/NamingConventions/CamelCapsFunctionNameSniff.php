@@ -26,7 +26,7 @@ class CamelCapsFunctionNameSniff extends AbstractScopeSniff
         'construct'   => true,
         'destruct'    => true,
         'call'        => true,
-        'callstatic ' => true,
+        'callstatic'  => true,
         'get'         => true,
         'set'         => true,
         'isset'       => true,
