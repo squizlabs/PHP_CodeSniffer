@@ -67,3 +67,14 @@ if ($expr1
     && $expr2
     /* comment */) {
 }
+
+$r = match ($x) {};
+$r = match ($x) {};
+
+// phpcs:set PSR2.ControlStructures.ControlStructureSpacing requiredSpacesAfterOpen 1
+// phpcs:set PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 1
+$r = match ( $x ) {};
+$r = match ( $x ) {};
+$r = match ( $x ) {};
+// phpcs:set PSR2.ControlStructures.ControlStructureSpacing requiredSpacesAfterOpen 0
+// phpcs:set PSR2.ControlStructures.ControlStructureSpacing requiredSpacesBeforeClose 0
