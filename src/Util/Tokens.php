@@ -385,6 +385,7 @@ final class Tokens
         T_ELSEIF     => T_ELSEIF,
         T_CATCH      => T_CATCH,
         T_DECLARE    => T_DECLARE,
+        T_MATCH      => T_MATCH,
     ];
 
     /**
@@ -417,6 +418,7 @@ final class Tokens
         T_PROPERTY   => T_PROPERTY,
         T_OBJECT     => T_OBJECT,
         T_USE        => T_USE,
+        T_MATCH      => T_MATCH,
     ];
 
     /**
