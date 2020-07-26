@@ -29,5 +29,11 @@ class X extends Y {
     }
 }
 fn ($x) => $x;
+$r = match ($x) {
+    1 => 1,
+    2 => 2,
+    default, => 3,
+};
+
 __HALT_COMPILER(); // An exception due to phar support.
 function
