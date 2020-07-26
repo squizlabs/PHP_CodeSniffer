@@ -439,6 +439,7 @@ class PHP extends Tokenizer
         T_BACKTICK                 => 1,
         T_OPEN_SHORT_ARRAY         => 1,
         T_CLOSE_SHORT_ARRAY        => 1,
+        T_TYPE_UNION               => 1,
     ];
 
     /**
