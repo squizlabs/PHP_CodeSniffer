@@ -20,3 +20,5 @@ if ($condition) {
 try {
 } catch (Exception $e) {
 }
+
+$r = match ($x) {};
