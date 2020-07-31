@@ -44,14 +44,15 @@ class ClassInstantiationSniff implements Sniff
 
         // Find the class name.
         $allowed = [
-            T_STRING          => T_STRING,
-            T_NS_SEPARATOR    => T_NS_SEPARATOR,
-            T_SELF            => T_SELF,
-            T_STATIC          => T_STATIC,
-            T_VARIABLE        => T_VARIABLE,
-            T_DOLLAR          => T_DOLLAR,
-            T_OBJECT_OPERATOR => T_OBJECT_OPERATOR,
-            T_DOUBLE_COLON    => T_DOUBLE_COLON,
+            T_STRING                   => T_STRING,
+            T_NS_SEPARATOR             => T_NS_SEPARATOR,
+            T_SELF                     => T_SELF,
+            T_STATIC                   => T_STATIC,
+            T_VARIABLE                 => T_VARIABLE,
+            T_DOLLAR                   => T_DOLLAR,
+            T_OBJECT_OPERATOR          => T_OBJECT_OPERATOR,
+            T_NULLSAFE_OBJECT_OPERATOR => T_NULLSAFE_OBJECT_OPERATOR,
+            T_DOUBLE_COLON             => T_DOUBLE_COLON,
         ];
 
         $allowed += Tokens::$emptyTokens;
