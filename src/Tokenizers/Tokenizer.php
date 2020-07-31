@@ -1291,11 +1291,12 @@ abstract class Tokenizer
                                 // a new statement, it isn't a scope opener.
                                 $disallowed  = Util\Tokens::$assignmentTokens;
                                 $disallowed += [
-                                    T_DOLLAR           => true,
-                                    T_VARIABLE         => true,
-                                    T_OBJECT_OPERATOR  => true,
-                                    T_COMMA            => true,
-                                    T_OPEN_PARENTHESIS => true,
+                                    T_DOLLAR                   => true,
+                                    T_VARIABLE                 => true,
+                                    T_OBJECT_OPERATOR          => true,
+                                    T_NULLSAFE_OBJECT_OPERATOR => true,
+                                    T_COMMA                    => true,
+                                    T_OPEN_PARENTHESIS         => true,
                                 ];
 
                                 if (isset($disallowed[$this->tokens[$x]['code']]) === true) {

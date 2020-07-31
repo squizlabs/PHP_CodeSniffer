@@ -62,6 +62,8 @@ $a = (new Foo( array(1, array(4, 5), 3) ))[1][0];
 /* testClassMemberDereferencingOnClone */
 echo (clone $iterable)[20];
 
+/* testNullsafeMethodCallDereferencing */
+$var = $obj?->function_call()[$x];
 
 /*
  * Short array brackets.
