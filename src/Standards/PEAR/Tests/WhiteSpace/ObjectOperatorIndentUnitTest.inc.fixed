@@ -110,3 +110,27 @@ $rootNode
         ->five();
 
 // phpcs:set PEAR.WhiteSpace.ObjectOperatorIndent multilevel false
+
+$object
+    ?->setBar($foo)
+    ?->setFoo($bar);
+
+$someObject?->someFunction("some", "parameter")
+    ->someOtherFunc(23, 42)
+    ?->someOtherFunc2($one, $two)
+
+    ->someOtherFunc3(23, 42)
+    ?->andAThirdFunction();
+
+// phpcs:set PEAR.WhiteSpace.ObjectOperatorIndent multilevel true
+$object
+    ?->setBar($foo)
+        ?->setFoo($bar);
+
+$someObject?->someFunction("some", "parameter")
+    ->someOtherFunc(23, 42)
+        ?->someOtherFunc2($one, $two)
+
+    ->someOtherFunc3(23, 42)
+    ?->andAThirdFunction();
+// phpcs:set PEAR.WhiteSpace.ObjectOperatorIndent multilevel false
