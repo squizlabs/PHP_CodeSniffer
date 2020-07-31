@@ -142,3 +142,7 @@ $anonClass = new class() {
     }
 };
 
+echo $obj?->varName;
+echo $obj?->var_name;
+echo $obj?->varname;
+echo $obj?->_varName;
