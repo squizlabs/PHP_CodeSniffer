@@ -70,7 +70,6 @@ class DisallowComparisonAssignmentSniff implements Sniff
         $ignore = [
             T_STRING,
             T_WHITESPACE,
-            T_OBJECT_OPERATOR,
         ];
 
         $next = $phpcsFile->findNext($ignore, ($stackPtr + 1), null, true);
