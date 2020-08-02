@@ -251,3 +251,13 @@ echo 'hi';
     ?>
     <?php endforeach; ?>
 <?php endforeach; ?>
+
+<?php
+
+$expr = match( $foo ){
+
+    1 => 1,
+    2 => 2,
+
+};
+echo $expr;
