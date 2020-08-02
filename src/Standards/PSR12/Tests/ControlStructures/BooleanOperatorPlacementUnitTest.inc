@@ -118,3 +118,14 @@ if (
 ) {
     return 5;
 }
+
+// Reset to default.
+// phpcs:set PSR12.ControlStructures.BooleanOperatorPlacement allowOnly
+
+match (
+    $expr1
+    && $expr2 &&
+    $expr3
+) {
+    // structure body
+};
