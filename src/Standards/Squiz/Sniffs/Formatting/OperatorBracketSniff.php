@@ -155,6 +155,7 @@ class OperatorBracketSniff implements Sniff
                     || $prevCode === T_NAME_FULLY_QUALIFIED
                     || $prevCode === T_NAME_RELATIVE
                     || $prevCode === T_SWITCH
+                    || $prevCode === T_MATCH
                 ) {
                     // We allow simple operations to not be bracketed.
                     // For example, ceil($one / $two).
@@ -194,8 +195,8 @@ class OperatorBracketSniff implements Sniff
                 if (in_array($prevCode, Tokens::$scopeOpeners, true) === true) {
                     // This operation is inside a control structure like FOREACH
                     // or IF, but has no bracket of it's own.
-                    // The only control structure allowed to do this is SWITCH.
-                    if ($prevCode !== T_SWITCH) {
+                    // The only control structures allowed to do this are SWITCH and MATCH.
+                    if ($prevCode !== T_SWITCH && $prevCode !== T_MATCH) {
                         break;
                     }
                 }
