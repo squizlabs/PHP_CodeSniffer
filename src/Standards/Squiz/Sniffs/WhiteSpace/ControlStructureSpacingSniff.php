@@ -46,6 +46,7 @@ class ControlStructureSpacingSniff implements Sniff
             T_TRY,
             T_CATCH,
             T_FINALLY,
+            T_MATCH,
         ];
 
     }//end register()
@@ -231,6 +232,16 @@ class ControlStructureSpacingSniff implements Sniff
                 $phpcsFile->recordMetric($stackPtr, 'Blank lines at end of control structure', 0);
             }//end if
         }//end if
+
+        if ($tokens[$stackPtr]['code'] === T_MATCH) {
+            // Move the scope closer to the semicolon/comma.
+            $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($scopeCloser + 1), null, true);
+            if ($next !== false
+                && ($tokens[$next]['code'] === T_SEMICOLON || $tokens[$next]['code'] === T_COMMA)
+            ) {
+                $scopeCloser = $next;
+            }
+        }
 
         $trailingContent = $phpcsFile->findNext(
             T_WHITESPACE,
