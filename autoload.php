@@ -169,6 +169,17 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             $className  = null;
             $newClasses = array_reverse(array_diff(get_declared_classes(), $classes));
             foreach ($newClasses as $name) {
+                // With PHP 7.4 the behavior of method get_declared_classes() has changed
+                // please visit https://www.php.net/manual/en/function.get-declared-classes.php for details.
+                // With this in mind it is not possible to overwrite a sniff that extends a certain one, thus it is
+                // simply checked, whether the current name is the same as the path name (only working with PSR-0 or
+                // PSR-4) and if not, it continues to the next class, thus the parent class is not registered and
+                // would set it as a "loaded" file. Furthermore the overwritten class has to have a different name than
+                // the parent class.
+                if (substr($name, (strrpos($name, '\\') + 1)) !== basename($path, '.php')) {
+                    continue;
+                }
+
                 if (isset(self::$loadedFiles[$name]) === false) {
                     $className = $name;
                     break;
