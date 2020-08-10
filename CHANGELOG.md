@@ -95,6 +95,42 @@ The file documents changes to the PHP_CodeSniffer project.
         </rule>
         ```
 
+## [3.5.6] - 2020-08-10
+### Added
+- Added support for PHP 8.0 magic constant dereferencing
+    - Thanks to Juliette Reinders Folmer for the patch
+- Added support for changes to the way PHP 8.0 tokenizes comments
+    - The existing PHP 5-7 behaviour has been replicated for version 8, so no sniff changes are required
+    - Thanks to Juliette Reinders Folmer for the patch
+- `File::getMethodProperties()` now detects the PHP 8.0 static return type
+    - Thanks to Juliette Reinders Folmer for the patch
+- The PHP 8.0 static return type is now supported for arrow functions
+    - Thanks to Juliette Reinders Folmer for the patch
+
+### Changed
+- The cache is no longer used if the list of loaded PHP extensions changes
+    - Thanks to Juliette Reinders Folmer for the patch
+- `Generic.NamingConventions.CamelCapsFunctionName` no longer reports `__serialize` and `__unserialize` as invalid names
+    - Thanks to Filip Š for the patch
+- `PEAR.NamingConventions.ValidFunctionName` no longer reports `__serialize` and `__unserialize` as invalid names
+    - Thanks to Filip Š for the patch
+- `Squiz.Scope.StaticThisUsage` now detects usage of `$this` inside closures and arrow functions
+    - Thanks to Michał Bundyra for the patch
+
+### Fixed
+- Fixed bug #2877 : PEAR.Functions.FunctionCallSignature false positive for array of functions
+    - Thanks to Vincent Langlet for the patch
+- Fixed bug #2888 : PSR12.Files.FileHeader blank line error with multiple namespaces in one file
+- Fixed bug #2926 : phpcs hangs when using arrow functions that return heredoc
+- Fixed bug #2943 : Redundant semicolon added to a file when fixing PSR2.Files.ClosingTag.NotAllowed
+- Fixed bug #2967 : Markdown generator does not output headings correctly
+    - Thanks to Petr Bugyík for the patch
+- Fixed bug #2977 : File::isReference() does not detect return by reference for closures
+    - Thanks to Juliette Reinders Folmer for the patch
+- Fixed bug #2994 : Generic.Formatting.DisallowMultipleStatements false positive for FOR loop with no body
+- Fixed bug #3033 : Error generated during tokenizing of goto statements on PHP 8
+    - Thanks to Juliette Reinders Folmer for the patch
+
 ## [3.5.5] - 2020-04-17
 ### Changed
 - The T_FN backfill now works more reliably so T_FN tokens only ever represent real arrow functions
