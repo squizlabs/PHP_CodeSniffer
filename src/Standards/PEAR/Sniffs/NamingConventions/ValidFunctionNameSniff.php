@@ -23,21 +23,23 @@ class ValidFunctionNameSniff extends AbstractScopeSniff
      * @var array
      */
     protected $magicMethods = [
-        'construct'  => true,
-        'destruct'   => true,
-        'call'       => true,
-        'callstatic' => true,
-        'get'        => true,
-        'set'        => true,
-        'isset'      => true,
-        'unset'      => true,
-        'sleep'      => true,
-        'wakeup'     => true,
-        'tostring'   => true,
-        'set_state'  => true,
-        'clone'      => true,
-        'invoke'     => true,
-        'debuginfo'  => true,
+        'construct'   => true,
+        'destruct'    => true,
+        'call'        => true,
+        'callstatic'  => true,
+        'get'         => true,
+        'set'         => true,
+        'isset'       => true,
+        'unset'       => true,
+        'sleep'       => true,
+        'wakeup'      => true,
+        'serialize'   => true,
+        'unserialize' => true,
+        'tostring'    => true,
+        'invoke'      => true,
+        'set_state'   => true,
+        'clone'       => true,
+        'debuginfo'   => true,
     ];
 
     /**
