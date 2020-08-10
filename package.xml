@@ -49,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2977 : File::isReference() does not detect return by reference for closures
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #2994 : Generic.Formatting.DisallowMultipleStatements false positive for FOR loop with no body
+  - Fixed bug #3033 : Error generated during tokenizing of goto statements on PHP 8
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
