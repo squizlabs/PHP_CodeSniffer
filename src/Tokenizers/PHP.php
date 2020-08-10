@@ -1441,7 +1441,8 @@ class PHP extends Tokenizer
                 && $token[0] === T_STRING
                 && isset($tokens[($stackPtr + 1)]) === true
                 && $tokens[($stackPtr + 1)] === ':'
-                && $tokens[($stackPtr - 1)][0] !== T_PAAMAYIM_NEKUDOTAYIM
+                && (is_array($tokens[($stackPtr - 1)]) === false
+                || $tokens[($stackPtr - 1)][0] !== T_PAAMAYIM_NEKUDOTAYIM)
             ) {
                 $stopTokens = [
                     T_CASE               => true,
