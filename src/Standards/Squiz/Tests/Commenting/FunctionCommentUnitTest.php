@@ -122,6 +122,8 @@ class FunctionCommentUnitTest extends AbstractSniffUnitTest
             978  => 1,
             997  => 1,
             1002 => 1,
+            1004 => 2,
+            1006 => 1,
         ];
 
         return $errors;
