@@ -18,6 +18,13 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 {
 
     /**
+     * Whether to skip inheritdoc comments.
+     *
+     * @var bool
+     */
+    public $skipIfInheritdoc = false;
+
+    /**
      * The current PHP version.
      *
      * @var integer
@@ -40,6 +47,14 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
         $tokens = $phpcsFile->getTokens();
         $return = null;
 
+        if ($this->skipIfInheritdoc) {
+            for ($i = $commentStart; $i <= $tokens[$commentStart]['comment_closer']; $i++) {
+                $trimmedContent = strtolower(trim($tokens[$i]['content']));
+                if ($trimmedContent === '{@inheritdoc}') {
+                    return;
+                }
+            }
+        }
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             if ($tokens[$tag]['content'] === '@return') {
                 if ($return !== null) {
@@ -189,6 +204,15 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
     {
         $tokens = $phpcsFile->getTokens();
 
+        if ($this->skipIfInheritdoc) {
+            for ($i = $commentStart; $i <= $tokens[$commentStart]['comment_closer']; $i++) {
+                $trimmedContent = strtolower(trim($tokens[$i]['content']));
+                if ($trimmedContent === '{@inheritdoc}') {
+                    return;
+                }
+            }
+        }
+
         foreach ($tokens[$commentStart]['comment_tags'] as $pos => $tag) {
             if ($tokens[$tag]['content'] !== '@throws') {
                 continue;
@@ -263,6 +287,15 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
         }
 
         $tokens = $phpcsFile->getTokens();
+
+        if ($this->skipIfInheritdoc) {
+            for ($i = $commentStart; $i <= $tokens[$commentStart]['comment_closer']; $i++) {
+                $trimmedContent = strtolower(trim($tokens[$i]['content']));
+                if ($trimmedContent === '{@inheritdoc}') {
+                    return;
+                }
+            }
+        }
 
         $params  = [];
         $maxType = 0;
