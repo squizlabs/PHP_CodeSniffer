@@ -20,7 +20,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
     /**
      * Whether to skip inheritdoc comments.
      *
-     * @var bool
+     * @var boolean
      */
     public $skipIfInheritdoc = false;
 
@@ -47,7 +47,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
         $tokens = $phpcsFile->getTokens();
         $return = null;
 
-        if ($this->skipIfInheritdoc) {
+        if ($this->skipIfInheritdoc === true) {
             for ($i = $commentStart; $i <= $tokens[$commentStart]['comment_closer']; $i++) {
                 $trimmedContent = strtolower(trim($tokens[$i]['content']));
                 if ($trimmedContent === '{@inheritdoc}') {
@@ -55,6 +55,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 }
             }
         }
+
         foreach ($tokens[$commentStart]['comment_tags'] as $tag) {
             if ($tokens[$tag]['content'] === '@return') {
                 if ($return !== null) {
@@ -204,7 +205,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if ($this->skipIfInheritdoc) {
+        if ($this->skipIfInheritdoc === true) {
             for ($i = $commentStart; $i <= $tokens[$commentStart]['comment_closer']; $i++) {
                 $trimmedContent = strtolower(trim($tokens[$i]['content']));
                 if ($trimmedContent === '{@inheritdoc}') {
@@ -288,7 +289,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 
         $tokens = $phpcsFile->getTokens();
 
-        if ($this->skipIfInheritdoc) {
+        if ($this->skipIfInheritdoc === true) {
             for ($i = $commentStart; $i <= $tokens[$commentStart]['comment_closer']; $i++) {
                 $trimmedContent = strtolower(trim($tokens[$i]['content']));
                 if ($trimmedContent === '{@inheritdoc}') {
