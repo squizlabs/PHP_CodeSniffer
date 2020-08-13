@@ -1,0 +1,25 @@
+parameters:
+    level: 1
+    paths:
+        - tests/Core
+        - tests/Standards
+    autoload_files:
+        - tests/bootstrap.php
+    ignoreErrors:
+        -
+            count: 1
+            message: '~^Method PHP_CodeSniffer\\Tests\\Standards\\AbstractSniffUnitTest::getErrorList\(\) invoked with 1 parameter, 0 required\.$~'
+            path: /tests/Standards/AbstractSniffUnitTest.php
+        -
+            count: 1
+            message: '~^Method PHP_CodeSniffer\\Tests\\Standards\\AbstractSniffUnitTest::getWarningList\(\) invoked with 1 parameter, 0 required\.$~'
+            path: /tests/Standards/AbstractSniffUnitTest.php
+
+    dynamicConstantNames:
+        - PHP_CODESNIFFER_IN_TESTS
+        - PHP_CODESNIFFER_CBF
+        - PHP_CODESNIFFER_VERBOSITY
+
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
