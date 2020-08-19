@@ -63,6 +63,13 @@ $array = [
   $c ? $d : $e,
 ];
 
+$foo =
+[
+    'bar' =>
+   [
+    ],
+];
+
 // phpcs:set Generic.Arrays.ArrayIndent indent 2
 
 $var = [
