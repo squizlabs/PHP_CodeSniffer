@@ -1574,7 +1574,7 @@ class PHP extends Tokenizer
                 // Convert colons that are actually the ELSE component of an
                 // inline IF statement.
                 if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
-                    // Make sure this isn't the return type separator of a closure.
+                    // Make sure this isn't a return type separator.
                     $isInlineIf = true;
                     for ($i = ($stackPtr - 1); $i > 0; $i--) {
                         if (is_array($tokens[$i]) === false
@@ -1600,12 +1600,15 @@ class PHP extends Tokenizer
                         }
 
                         // We've found the open parenthesis, so if the previous
-                        // non-empty token is FUNCTION or USE, this is a closure.
+                        // non-empty token is FUNCTION or USE, this is a return type.
+                        // Note that we need to skip T_STRING tokens here as these
+                        // can be function names.
                         for ($i--; $i > 0; $i--) {
                             if (is_array($tokens[$i]) === false
                                 || ($tokens[$i][0] !== T_DOC_COMMENT
                                 && $tokens[$i][0] !== T_COMMENT
-                                && $tokens[$i][0] !== T_WHITESPACE)
+                                && $tokens[$i][0] !== T_WHITESPACE
+                                && $tokens[$i][0] !== T_STRING)
                             ) {
                                 break;
                             }
@@ -1614,7 +1617,7 @@ class PHP extends Tokenizer
                         if ($tokens[$i][0] === T_FUNCTION || $tokens[$i][0] === T_FN || $tokens[$i][0] === T_USE) {
                             $isInlineIf = false;
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                echo "\t\t* token is function return type, not T_INLINE_ELSE".PHP_EOL;
+                                echo "\t\t* token is return type, not T_INLINE_ELSE".PHP_EOL;
                             }
                         }
                     }//end if
