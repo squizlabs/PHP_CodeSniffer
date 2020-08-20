@@ -2278,6 +2278,8 @@ class File
             if (isset($this->tokens[$i]['scope_opener']) === true
                 && $i === $this->tokens[$i]['scope_closer']
                 && $this->tokens[$i]['code'] !== T_CLOSE_PARENTHESIS
+                && $this->tokens[$i]['code'] !== T_END_NOWDOC
+                && $this->tokens[$i]['code'] !== T_END_HEREDOC
             ) {
                 // Found the end of the previous scope block.
                 return $lastNotEmpty;
