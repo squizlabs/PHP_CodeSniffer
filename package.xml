@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - Fixed bug #2882 : Generic.Arrays.ArrayIndent can request close brace indent to be less than the statement indent level
+  - Fixed bug #2883 : Generic.WhiteSpace.ScopeIndent.Incorrect issue after NOWDOC
   - Fixed bug #2975 : Undefined offset in PSR12.Functions.ReturnTypeDeclaration when checking function return type inside ternary
  </notes>
  <contents>
