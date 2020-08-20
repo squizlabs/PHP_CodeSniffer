@@ -1454,6 +1454,22 @@ return [
     ]),
 ];
 
+return [
+    'lor' =>
+        <<<'INTRO'
+        lorem ipsum
+        INTRO,
+    'em' => [
+        [
+            '',
+        ],
+    ],
+    'abc' => [
+        'a' => 'wop wop',
+        'b' => 'ola ola.',
+    ],
+];
+
 ?>
 
      <?php if (true) : ?>
