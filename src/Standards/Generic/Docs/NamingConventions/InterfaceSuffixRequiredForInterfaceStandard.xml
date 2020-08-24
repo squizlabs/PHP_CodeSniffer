@@ -1,0 +1,23 @@
+<documentation title="Interface name">
+    <standard>
+    <![CDATA[
+    Interfaces MUST be suffixed by Interface: e.g. Psr\Foo\BarInterface.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: ">
+        <![CDATA[
+interface FooInterface
+{
+}
+        ]]>
+        </code>
+        <code title="Invalid: ">
+        <![CDATA[
+interface IFoo
+{
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

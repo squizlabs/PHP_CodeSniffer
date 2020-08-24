@@ -1,0 +1,23 @@
+<documentation title="Trait name">
+    <standard>
+    <![CDATA[
+    Traits MUST be suffixed by Trait: e.g. Psr\Foo\BarTrait.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: ">
+        <![CDATA[
+trait BarTrait
+{
+}
+        ]]>
+        </code>
+        <code title="Invalid: ">
+        <![CDATA[
+trait Bar
+{
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
