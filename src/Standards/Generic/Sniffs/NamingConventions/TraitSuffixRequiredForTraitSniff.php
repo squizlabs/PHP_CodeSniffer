@@ -43,7 +43,7 @@ class TraitSuffixRequiredForTraitSniff implements Sniff
             return;
         }
 
-        $suffix = substr($traitName, - 5);
+        $suffix = substr($traitName, -5);
         if (strtolower($suffix) !== 'trait') {
             $phpcsFile->addError('Traits MUST be suffixed by Trait: e.g. BarTrait. Found: %s', $stackPtr, 'Missing', [$traitName]);
         }
