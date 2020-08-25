@@ -1,20 +1,20 @@
 <documentation title="Abstract class name">
     <standard>
     <![CDATA[
-    Abstract classes MUST be prefixed by Abstract: e.g. Psr\Foo\AbstractBar.
+    Abstract classes MUST be prefixed by Abstract: e.g. AbstractBar.
     ]]>
     </standard>
     <code_comparison>
         <code title="Valid: ">
         <![CDATA[
-abstract class AbstractFoo
+abstract class <em>AbstractBar</em>
 {
 }
         ]]>
         </code>
         <code title="Invalid: ">
         <![CDATA[
-abstract class Foo
+abstract class <em>Bar</em>
 {
 }
         ]]>

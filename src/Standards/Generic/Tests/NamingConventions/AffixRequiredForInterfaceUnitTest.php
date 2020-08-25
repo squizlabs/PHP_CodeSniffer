@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the InterfaceSuffixRequiredForInterface sniff.
+ * Unit test class for the AffixRequiredForInterface sniff.
  *
  * @author  Anna Borzenko <annnechko@gmail.com>
  * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -10,7 +10,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Tests\NamingConventions;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class InterfaceSuffixRequiredForInterfaceUnitTest extends AbstractSniffUnitTest
+class AffixRequiredForInterfaceUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -24,7 +24,13 @@ class InterfaceSuffixRequiredForInterfaceUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [8 => 1];
+        return [
+            8  => 1,
+            32 => 1,
+            51 => 1,
+            62 => 1,
+            70 => 1,
+        ];
 
     }//end getErrorList()
 

@@ -1,20 +1,20 @@
 <documentation title="Interface name">
     <standard>
     <![CDATA[
-    Interfaces MUST be suffixed by Interface: e.g. Psr\Foo\BarInterface.
+    Interfaces MUST be suffixed or prefixed by given affix: checks Interface suffix by default, e.g. BarInterface.
     ]]>
     </standard>
     <code_comparison>
         <code title="Valid: ">
         <![CDATA[
-interface FooInterface
+interface <em>BarInterface</em>
 {
 }
         ]]>
         </code>
         <code title="Invalid: ">
         <![CDATA[
-interface IFoo
+interface <em>Bar</em>
 {
 }
         ]]>
