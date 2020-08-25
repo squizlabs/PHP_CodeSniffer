@@ -43,10 +43,9 @@ class InterfaceSuffixRequiredForInterfaceSniff implements Sniff
             return;
         }
 
-        $interfaceNameLength = strlen($interfaceName);
-        $suffix = substr($interfaceName, ($interfaceNameLength - 9), $interfaceNameLength);
-        if ($suffix !== 'Interface') {
-            $phpcsFile->addError('Interfaces MUST be suffixed by Interface: e.g. Psr\Foo\BarInterface.', $stackPtr, 'RequiredInterfaceSuffix');
+        $suffix = substr($interfaceName, - 9);
+        if (strtolower($suffix) !== 'interface') {
+            $phpcsFile->addError('Interfaces MUST be suffixed by Interface: e.g. BarInterface. Found: %s', $stackPtr, 'Missing', [$interfaceName]);
         }
 
     }//end process()

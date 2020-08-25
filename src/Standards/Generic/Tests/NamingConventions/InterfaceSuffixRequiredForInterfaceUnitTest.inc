@@ -16,7 +16,7 @@ interface ISomeNameInterface
 }
 
 
-interface ISomeOtherNameinterface // error
+interface ISomeOtherNameinterface
 {
 
 }

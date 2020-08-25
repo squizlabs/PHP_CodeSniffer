@@ -52,3 +52,8 @@ $var = 'abstract class IncorrectNameButOk';
 $abstracVar = '';
 
 class NameAbstractBar {}
+
+abstract class abstractOkName
+{
+
+}

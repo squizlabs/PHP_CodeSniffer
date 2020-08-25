@@ -25,9 +25,8 @@ class TraitSuffixRequiredForTraitUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            3  => 1,
-            9  => 1,
-            11 => 1,
+            3 => 1,
+            9 => 1,
         ];
 
     }//end getErrorList()

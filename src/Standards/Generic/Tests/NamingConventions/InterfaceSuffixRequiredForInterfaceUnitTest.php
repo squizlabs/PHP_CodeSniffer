@@ -24,10 +24,7 @@ class InterfaceSuffixRequiredForInterfaceUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [
-            8  => 1,
-            19 => 1,
-        ];
+        return [8 => 1];
 
     }//end getErrorList()
 

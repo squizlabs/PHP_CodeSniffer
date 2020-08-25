@@ -38,8 +38,7 @@ class AbstractPrefixRequiredForAbstractClassSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if ($prev === false || $phpcsFile->getTokens()[$prev]['code'] !== T_ABSTRACT) {
+        if ($phpcsFile->getClassProperties($stackPtr)['is_abstract'] === false) {
             // This class is not abstract so we don't need to check it.
             return;
         }
@@ -51,8 +50,8 @@ class AbstractPrefixRequiredForAbstractClassSniff implements Sniff
         }
 
         $prefix = substr($className, 0, 8);
-        if ($prefix !== 'Abstract') {
-            $phpcsFile->addError('Abstract classes MUST be prefixed by Abstract: e.g. Psr\Foo\AbstractBar.', $stackPtr, 'RequiredAbstractPrefix');
+        if (strtolower($prefix) !== 'abstract') {
+            $phpcsFile->addError('Abstract classes MUST be prefixed by Abstract: e.g. AbstractBar. Found: %s', $stackPtr, 'Missing', [$className]);
         }
 
     }//end process()

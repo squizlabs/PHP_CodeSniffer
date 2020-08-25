@@ -43,10 +43,9 @@ class TraitSuffixRequiredForTraitSniff implements Sniff
             return;
         }
 
-        $traitNameLength = strlen($traitName);
-        $suffix          = substr($traitName, ($traitNameLength - 5), $traitNameLength);
-        if ($suffix !== 'Trait') {
-            $phpcsFile->addError('Traits MUST be suffixed by Trait: e.g. Psr\Foo\BarTrait.', $stackPtr, 'RequiredTraitSuffix');
+        $suffix = substr($traitName, - 5);
+        if (strtolower($suffix) !== 'trait') {
+            $phpcsFile->addError('Traits MUST be suffixed by Trait: e.g. BarTrait. Found: %s', $stackPtr, 'Missing', [$traitName]);
         }
 
     }//end process()

@@ -8,6 +8,6 @@ trait GoodTraitTrait {}
 
 trait BadTraitName {} // error
 
-trait BadTraitNametrait {} // error
+trait BadTraitNametrait {}
 
 trait NormalTraitNameTrait {}
