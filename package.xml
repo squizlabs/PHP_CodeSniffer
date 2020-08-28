@@ -256,7 +256,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="AbstractPrefixRequiredForAbstractClassStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="CamelCapsFunctionNameStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ConstructorNameStandard.xml" role="php" />
-        <file baseinstalldir="PHP/CodeSniffer" name="AffixRequiredForInterfaceStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InterfaceSuffixRequiredForInterfaceStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="TraitSuffixRequiredForTraitStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="UpperCaseConstantNameStandard.xml" role="php" />
        </dir>
@@ -364,7 +364,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="AbstractPrefixRequiredForAbstractClassSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="CamelCapsFunctionNameSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ConstructorNameSniff.php" role="php" />
-        <file baseinstalldir="PHP/CodeSniffer" name="AffixRequiredForInterfaceSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InterfaceSuffixRequiredForInterfaceSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="TraitSuffixRequiredForTraitSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="UpperCaseConstantNameSniff.php" role="php" />
        </dir>
@@ -615,8 +615,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="CamelCapsFunctionNameUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ConstructorNameUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ConstructorNameUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="AffixRequiredForInterfaceUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="AffixRequiredForInterfaceUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InterfaceSuffixRequiredForInterfaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="InterfaceSuffixRequiredForInterfaceUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="TraitSuffixRequiredForTraitUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="TraitSuffixRequiredForTraitUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="UpperCaseConstantNameUnitTest.inc" role="test" />

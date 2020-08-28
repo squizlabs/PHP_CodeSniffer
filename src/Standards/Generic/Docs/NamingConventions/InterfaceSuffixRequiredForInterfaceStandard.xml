@@ -1,7 +1,7 @@
 <documentation title="Interface name">
     <standard>
     <![CDATA[
-    Interfaces MUST be suffixed or prefixed by given affix: checks Interface suffix by default, e.g. BarInterface.
+    Interfaces MUST be suffixed by Interface: e.g. BarInterface.
     ]]>
     </standard>
     <code_comparison>
