@@ -620,7 +620,16 @@ class ArrayDeclarationSniff implements Sniff
 
                 $valuePointer = $value['value'];
 
-                $previous = $phpcsFile->findPrevious([T_WHITESPACE, T_COMMA], ($valuePointer - 1), ($arrayStart + 1), true);
+                $ignoreTokens = ([
+                    T_WHITESPACE => T_WHITESPACE,
+                    T_COMMA      => T_COMMA,
+                ] + Tokens::$castTokens);
+
+                if ($tokens[$valuePointer]['code'] === T_CLOSURE) {
+                    $ignoreTokens += [T_STATIC => T_STATIC];
+                }
+
+                $previous = $phpcsFile->findPrevious($ignoreTokens, ($valuePointer - 1), ($arrayStart + 1), true);
                 if ($previous === false) {
                     $previous = $stackPtr;
                 }

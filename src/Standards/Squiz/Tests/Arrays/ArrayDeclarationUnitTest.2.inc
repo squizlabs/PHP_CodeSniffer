@@ -436,6 +436,19 @@ $c];
 ['a' => $a, 'b' => $b,
 'c' => $c];
 
+[
+ static function() {
+     return null;
+ },
+ (array) [],
+ (bool) [],
+ (double) [],
+ (int) [],
+ (object) [],
+ (string) [],
+ (unset) [],
+];
+
 // Intentional syntax error.
 $a = [
       'a' =>
