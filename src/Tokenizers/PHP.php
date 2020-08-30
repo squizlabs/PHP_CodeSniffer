@@ -828,7 +828,7 @@ class PHP extends Tokenizer
                 && $tokens[($stackPtr + 2)][0] === T_STRING
                 && strtolower($tokens[($stackPtr + 2)][1]) === 'from'
             ) {
-                // Could be multi-line, so just the token stack.
+                // Could be multi-line, so adjust the token stack.
                 $token[0]  = T_YIELD_FROM;
                 $token[1] .= $tokens[($stackPtr + 1)][1].$tokens[($stackPtr + 2)][1];
 
@@ -960,7 +960,7 @@ class PHP extends Tokenizer
             /*
                 Before PHP 7, the ??= operator was tokenized as
                 T_INLINE_THEN, T_INLINE_THEN, T_EQUAL.
-                Between PHP 7.0 and 7.2, the ??= operator was tokenized as
+                Between PHP 7.0 and 7.3, the ??= operator was tokenized as
                 T_COALESCE, T_EQUAL.
                 So look for and combine these tokens in earlier versions.
             */
@@ -1372,7 +1372,7 @@ class PHP extends Tokenizer
 
                             if (is_array($tokens[$x]) === false && $tokens[$x] === '?') {
                                 // Found a nullable operator, so skip it.
-                                // But also covert the token to save the tokenizer
+                                // But also convert the token to save the tokenizer
                                 // a bit of time later on.
                                 $tokens[$x] = [
                                     T_NULLABLE,

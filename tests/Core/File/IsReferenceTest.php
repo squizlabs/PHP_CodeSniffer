@@ -16,7 +16,7 @@ class IsReferenceTest extends AbstractMethodUnitTest
 
 
     /**
-     * Test a class that extends another.
+     * Test correctly identifying whether a "bitwise and" token is a reference or not.
      *
      * @param string $identifier Comment which precedes the test case.
      * @param bool   $expected   Expected function output.

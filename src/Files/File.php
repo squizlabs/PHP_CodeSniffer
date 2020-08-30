@@ -2496,7 +2496,7 @@ class File
      * @param int        $stackPtr The position of the token we are checking.
      * @param int|string $type     The type of token to search for.
      * @param bool       $first    If TRUE, will return the matched condition
-     *                             furtherest away from the passed token.
+     *                             furthest away from the passed token.
      *                             If FALSE, will return the matched condition
      *                             closest to the passed token.
      *
