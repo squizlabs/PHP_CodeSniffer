@@ -820,7 +820,7 @@ class PHP extends Tokenizer
             }//end if
 
             /*
-                Between PHP 7.0 and 7.2, the ??= operator was tokenized as
+                Between PHP 7.0 and 7.3, the ??= operator was tokenized as
                 T_COALESCE, T_EQUAL.
                 So look for and combine these tokens in earlier versions.
             */
@@ -1229,7 +1229,7 @@ class PHP extends Tokenizer
 
                             if (is_array($tokens[$x]) === false && $tokens[$x] === '?') {
                                 // Found a nullable operator, so skip it.
-                                // But also covert the token to save the tokenizer
+                                // But also convert the token to save the tokenizer
                                 // a bit of time later on.
                                 $tokens[$x] = [
                                     T_NULLABLE,
