@@ -218,6 +218,8 @@ class JS extends Tokenizer
         '%='        => 'T_MOD_EQUAL',
         '++'        => 'T_INC',
         '--'        => 'T_DEC',
+        '??'        => 'T_COALESCE',
+        '??='       => 'T_COALESCE_EQUAL',
         '//'        => 'T_COMMENT',
         '/*'        => 'T_COMMENT',
         '/**'       => 'T_DOC_COMMENT',

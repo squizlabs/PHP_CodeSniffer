@@ -170,3 +170,8 @@ $value = ((binary) $blah + b"binary $foo");
 
 $test = (1 * static::TEST);
 $test = myfunc(1 * static::TEST);
+
+($foo += ($bar + $baz));
+($foo += ($bar + $baz));
+if (is_numeric($test = ($arr[$i] + $arr[$j]))) return $test;
+if (is_numeric($test = ($arr[$i] + $arr[$j]))) return $test;

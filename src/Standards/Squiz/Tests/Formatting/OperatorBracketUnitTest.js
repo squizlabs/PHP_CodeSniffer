@@ -116,3 +116,23 @@ if (something === true
 if (true === /^\d*\.?\d*$/.test(input)) return true;
 
 if ( ! /^(?:a|select)$/i.test( element.tagName ) ) return true;
+
+value = (value ?? value2);
+value = value ?? value2;
+value = (value ?? 'const');
+value = value ?? 'const';
+value = (value ?? -123.0);
+value = value ?? -123.0;
+
+value = ((value ?? val2) ?? val3);
+value = (value ?? val2 ?? val3);
+value = (value ?? val2) ?? val3;
+value = value ?? (val2 ?? val3);
+value = value ?? val2 ?? val3;
+
+(value = (val2 ?? 'const'));
+(value ??= (val2 ?? 'const'));
+(value = val2 ?? 'const');
+(value ??= val2 ?? 'const');
+
+call(value ?? val2 ?? val3);

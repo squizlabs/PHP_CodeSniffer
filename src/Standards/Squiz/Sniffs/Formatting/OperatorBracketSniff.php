@@ -243,15 +243,15 @@ class OperatorBracketSniff implements Sniff
                 $closeSquareBracket = $phpcsFile->findNext($brackets, ($stackPtr + 1));
                 if ($closeSquareBracket !== false && $tokens[$closeSquareBracket]['code'] === T_CLOSE_SQUARE_BRACKET) {
                     $this->addMissingBracketsError($phpcsFile, $stackPtr);
+                    return;
                 }
             }
-
-            return;
         }//end if
 
         $lastAssignment = $phpcsFile->findPrevious(Tokens::$assignmentTokens, $stackPtr, null, false, null, true);
         if ($lastAssignment !== false && $lastAssignment > $lastBracket) {
             $this->addMissingBracketsError($phpcsFile, $stackPtr);
+            return;
         }
 
     }//end process()
