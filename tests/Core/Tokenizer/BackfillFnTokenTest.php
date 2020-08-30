@@ -466,6 +466,34 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test arrow functions that use the namespace operator in the return type.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testNamespaceOperatorInTypes()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testNamespaceOperatorInTypes */', T_FN);
+        $this->backfillHelper($token);
+
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 16), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 19), 'Scope closer is not the semicolon token');
+
+        $opener = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 16), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 19), 'Opener scope closer is not the semicolon token');
+
+        $closer = $tokens[$token]['scope_closer'];
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 16), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 19), 'Closer scope closer is not the semicolon token');
+
+    }//end testNamespaceOperatorInTypes()
+
+
+    /**
      * Test arrow functions that use self/parent/callable/array/static return types.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
