@@ -63,6 +63,9 @@ $a = fn($x) => yield 'k' => $x;
 /* testNullableNamespace */
 $a = fn(?\DateTime $x) : ?\DateTime => $x;
 
+/* testNamespaceOperatorInTypes */
+$fn = fn(namespace\Foo $a) : ?namespace\Foo => $a;
+
 /* testSelfReturnType */
 fn(self $a) : self => $a;
 

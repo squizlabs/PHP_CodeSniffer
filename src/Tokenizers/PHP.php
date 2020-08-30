@@ -1898,6 +1898,7 @@ class PHP extends Tokenizer
                         T_STRING       => T_STRING,
                         T_ARRAY        => T_ARRAY,
                         T_COLON        => T_COLON,
+                        T_NAMESPACE    => T_NAMESPACE,
                         T_NS_SEPARATOR => T_NS_SEPARATOR,
                         T_NULLABLE     => T_NULLABLE,
                         T_CALLABLE     => T_CALLABLE,
