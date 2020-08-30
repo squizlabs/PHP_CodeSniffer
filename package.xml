@@ -121,6 +121,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="StableCommentWhitespaceTest.php" role="test" />
       <file baseinstalldir="" name="StableCommentWhitespaceWinTest.inc" role="test" />
       <file baseinstalldir="" name="StableCommentWhitespaceWinTest.php" role="test" />
+      <file baseinstalldir="" name="UndoNamespacedNameSingleTokenTest.inc" role="test" />
+      <file baseinstalldir="" name="UndoNamespacedNameSingleTokenTest.php" role="test" />
      </dir>
      <file baseinstalldir="" name="AbstractMethodUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllTests.php" role="test" />
@@ -1997,6 +1999,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.php" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -2058,6 +2062,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.php" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />
