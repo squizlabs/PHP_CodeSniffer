@@ -1382,6 +1382,7 @@ class File
                     $typeHintEndToken = $i;
                 }
                 break;
+            case T_NAMESPACE:
             case T_NS_SEPARATOR:
                 // Part of a type hint or default value.
                 if ($defaultStart === null) {
@@ -1571,6 +1572,7 @@ class File
                 T_SELF         => T_SELF,
                 T_PARENT       => T_PARENT,
                 T_STATIC       => T_STATIC,
+                T_NAMESPACE    => T_NAMESPACE,
                 T_NS_SEPARATOR => T_NS_SEPARATOR,
             ];
 
@@ -1753,6 +1755,7 @@ class File
                 T_CALLABLE     => T_CALLABLE,
                 T_SELF         => T_SELF,
                 T_PARENT       => T_PARENT,
+                T_NAMESPACE    => T_NAMESPACE,
                 T_NS_SEPARATOR => T_NS_SEPARATOR,
             ];
 
