@@ -1060,7 +1060,10 @@ class ScopeIndentSniff implements Sniff
                     $currentIndent = ($tokens[$i]['column'] - 1);
                 }
 
-                $lastOpenTag = $i;
+                // Ignore open tag if it's on the same line as the last close tag to allow inline non-PHP blocks.
+                if ($lastCloseTag === null || $tokens[$i]['line'] !== $tokens[$lastCloseTag]['line']) {
+                    $lastOpenTag = $i;
+                }
 
                 if (isset($adjustments[$i]) === true) {
                     $currentIndent += $adjustments[$i];

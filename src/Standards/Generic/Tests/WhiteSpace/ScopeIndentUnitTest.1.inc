@@ -1466,6 +1466,12 @@ return [
     else if (true) {
     }
 
+if (true) {
+    ?><?php echo addslashes(
+        ''
+    );
+}
+
 $a = 1;
 
 /*
