@@ -30,6 +30,10 @@ jobs:
         apt:
           packages:
             - libonig-dev
+      script:
+      - composer require --dev phpstan/phpstan
+      - php vendor/bin/phpstan analyse --configuration=phpstan.neon
+
     # Nightly is PHP 8.0 since Feb 2019.
     - php: nightly
       addons:
@@ -83,5 +87,3 @@ script:
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/PSR12/ruleset.xml <(xmllint --format "./src/Standards/PSR12/ruleset.xml"); fi
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/Squiz/ruleset.xml <(xmllint --format "./src/Standards/Squiz/ruleset.xml"); fi
   - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/Zend/ruleset.xml <(xmllint --format "./src/Standards/Zend/ruleset.xml"); fi
-  # Run PHPStan
-  - if [[ $PHPSTAN == "1" ]]; then composer require --dev phpstan/phpstan && php vendor/bin/phpstan analyse --configuration=phpstan.neon; fi
