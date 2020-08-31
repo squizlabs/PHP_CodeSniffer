@@ -45,7 +45,9 @@ class ClassInstantiationSniff implements Sniff
         // Find the class name.
         $allowed = [
             T_STRING                   => T_STRING,
-            T_NS_SEPARATOR             => T_NS_SEPARATOR,
+            T_NAME_QUALIFIED           => T_NAME_QUALIFIED,
+            T_NAME_FULLY_QUALIFIED     => T_NAME_FULLY_QUALIFIED,
+            T_NAME_RELATIVE            => T_NAME_RELATIVE,
             T_SELF                     => T_SELF,
             T_STATIC                   => T_STATIC,
             T_VARIABLE                 => T_VARIABLE,
