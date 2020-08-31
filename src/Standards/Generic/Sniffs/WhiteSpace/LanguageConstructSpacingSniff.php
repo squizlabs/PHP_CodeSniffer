@@ -71,8 +71,9 @@ class LanguageConstructSpacingSniff implements Sniff
         $content = $tokens[$stackPtr]['content'];
         if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
             $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
-            if ($nextNonEmpty !== false && $tokens[$nextNonEmpty]['code'] === T_NS_SEPARATOR) {
+            if ($nextNonEmpty !== false && $tokens[$nextNonEmpty]['code'] === T_NAME_FULLY_QUALIFIED) {
                 // Namespace keyword used as operator, not as the language construct.
+                // In PHP 8 this use with whitespace/comments between the parts is a parse error.
                 return;
             }
         }
