@@ -213,6 +213,10 @@ class IsReferenceTest extends AbstractMethodUnitTest
                 true,
             ],
             [
+                '/* testPassByReferenceK */',
+                true,
+            ],
+            [
                 '/* testNewByReferenceA */',
                 true,
             ],

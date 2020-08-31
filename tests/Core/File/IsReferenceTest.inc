@@ -128,6 +128,9 @@ functionCall($something, &\SomeNS\SomeClass::$somethingElse);
 /* testPassByReferenceJ */
 functionCall($something, &namespace\SomeClass::$somethingElse);
 
+/* testPassByReferenceK */
+functionCall($something, &Sub\Level\SomeClass::$somethingElse);
+
 /* testNewByReferenceA */
 $foobar2 = &new Foobar();
 
