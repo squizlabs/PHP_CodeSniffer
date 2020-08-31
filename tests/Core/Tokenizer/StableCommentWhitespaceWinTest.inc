@@ -39,5 +39,25 @@ echo 'a'; // Comment
 // Slash ?>
 <?php
 
+/* testSingleLineHashComment */
+# Comment
+
+/* testSingleLineHashCommentTrailing */
+echo 'a'; # Comment
+
+/* testMultiLineHashComment */
+# Comment1
+# Comment2
+# Comment3
+
+/* testMultiLineHashCommentWithIndent */
+    # Comment1
+    # Comment2
+    # Comment3
+
+/* testSingleLineHashCommentNoNewLineAtEnd */
+# Hash ?>
+<?php
+
 /* testCommentAtEndOfFile */
 /* Comment
