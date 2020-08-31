@@ -1362,7 +1362,10 @@ class File
                 }
                 break;
             case T_STRING:
-                // This is a string, so it may be a type hint, but it could
+            case T_NAME_QUALIFIED:
+            case T_NAME_FULLY_QUALIFIED:
+            case T_NAME_RELATIVE:
+                // This is an identifier name, so it may be a type declaration, but it could
                 // also be a constant used as a default value.
                 $prevComma = false;
                 for ($t = $i; $t >= $opener; $t--) {
@@ -1395,8 +1398,6 @@ class File
                     $typeHintEndToken = $i;
                 }
                 break;
-            case T_NAMESPACE:
-            case T_NS_SEPARATOR:
             case T_TYPE_UNION:
             case T_FALSE:
             case T_NULL:

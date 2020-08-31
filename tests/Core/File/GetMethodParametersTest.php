@@ -341,6 +341,66 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify handling of a variadic parameter with a class name based type declaration.
+     *
+     * @return void
+     */
+    public function testVariadicFunctionClassType()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$unit',
+            'content'           => '$unit',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$intervals',
+            'content'           => 'DateInterval ...$intervals',
+            'pass_by_reference' => false,
+            'variable_length'   => true,
+            'type_hint'         => 'DateInterval',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testVariadicFunctionClassType()
+
+
+    /**
+     * Verify recognition of various namespaced class name type declarations.
+     *
+     * @return void
+     */
+    public function testNameSpacedTypeDeclaration()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$a',
+            'content'           => '\Package\Sub\ClassName $a',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '\Package\Sub\ClassName',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$b',
+            'content'           => '?Sub\AnotherClass $b',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?Sub\AnotherClass',
+            'nullable_type'     => true,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testNameSpacedTypeDeclaration()
+
+
+    /**
      * Verify recognition of PHP8 union type declaration.
      *
      * @return void
