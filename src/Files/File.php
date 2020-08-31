@@ -2543,8 +2543,10 @@ class File
         }
 
         $find = [
-            T_NS_SEPARATOR,
             T_STRING,
+            T_NAME_QUALIFIED,
+            T_NAME_FULLY_QUALIFIED,
+            T_NAME_RELATIVE,
             T_WHITESPACE,
         ];
 

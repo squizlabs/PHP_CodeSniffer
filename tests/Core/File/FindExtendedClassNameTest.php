@@ -78,6 +78,14 @@ class FindExtendedClassNameTest extends AbstractMethodUnitTest
                 'testFECNAnonClass',
             ],
             [
+                '/* testNamespaceRelativeQualifiedClass */',
+                'Core\File\RelativeClass',
+            ],
+            [
+                '/* testExtendedClassUsingNamespaceOperator */',
+                'namespace\Bar',
+            ],
+            [
                 '/* testClassThatExtendsAndImplements */',
                 'testFECNClass',
             ],

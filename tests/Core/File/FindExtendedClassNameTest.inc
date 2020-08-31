@@ -30,6 +30,12 @@ class testFECNNestedExtendedClass {
 	}
 }
 
+/* testNamespaceRelativeQualifiedClass */
+class testFECNQualifiedClass extends Core\File\RelativeClass {}
+
+/* testExtendedClassUsingNamespaceOperator */
+class testWithNSOperator extends namespace\Bar {}
+
 /* testClassThatExtendsAndImplements */
 class testFECNClassThatExtendsAndImplements extends testFECNClass implements InterfaceA, InterfaceB {}
 
