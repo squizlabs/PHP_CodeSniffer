@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Classes;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class DuplicateClassNameSniff implements Sniff
 {
@@ -67,12 +68,12 @@ class DuplicateClassNameSniff implements Sniff
 
             // Keep track of what namespace we are in.
             if ($tokens[$stackPtr]['code'] === T_NAMESPACE) {
+                $find   = Tokens::$emptyTokens;
+                $find[] = T_STRING;
+                $find[] = T_NAME_QUALIFIED;
+
                 $nsEnd = $phpcsFile->findNext(
-                    [
-                        T_NS_SEPARATOR,
-                        T_STRING,
-                        T_WHITESPACE,
-                    ],
+                    $find,
                     ($stackPtr + 1),
                     null,
                     true
