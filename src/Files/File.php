@@ -342,7 +342,7 @@ class File
                 || $token['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $token['code'] === T_INLINE_HTML))
             ) {
-                $commentText      = ltrim($this->tokens[$stackPtr]['content'], ' /*');
+                $commentText      = ltrim($this->tokens[$stackPtr]['content'], " \t/*#");
                 $commentTextLower = strtolower($commentText);
                 if (substr($commentTextLower, 0, 16) === 'phpcs:ignorefile'
                     || substr($commentTextLower, 0, 17) === '@phpcs:ignorefile'

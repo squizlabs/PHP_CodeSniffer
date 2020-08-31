@@ -81,6 +81,46 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, $numErrors);
         $this->assertCount(0, $errors);
 
+        // Process with inline hash comment suppression.
+        $content = '<?php '.PHP_EOL.'# phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# phpcs:enable';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+
+        // Process with multi-line inline hash comment suppression, tab-indented.
+        $content = '<?php '.PHP_EOL."\t".'# For reasons'.PHP_EOL."\t".'# phpcs:disable'.PHP_EOL."\t".'$var = FALSE;'.PHP_EOL."\t".'# phpcs:enable';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+
+        // Process with inline hash @ comment suppression.
+        $content = '<?php '.PHP_EOL.'# @phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# @phpcs:enable';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+
+        // Process with inline hash comment suppression mixed case.
+        $content = '<?php '.PHP_EOL.'# PHPCS:Disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# pHPcs:enabLE';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+
         // Process with block comment suppression.
         $content = '<?php '.PHP_EOL.'/* phpcs:disable */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/* phpcs:enable */';
         $file    = new DummyFile($content, $ruleset, $config);
@@ -169,6 +209,26 @@ class ErrorSuppressionTest extends TestCase
 
         // Process with @ suppression.
         $content = '<?php '.PHP_EOL.'// @phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @phpcs:enable'.PHP_EOL.'$var = TRUE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertCount(1, $errors);
+
+        // Process with suppression (hash comment).
+        $content = '<?php '.PHP_EOL.'# phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# phpcs:enable'.PHP_EOL.'$var = TRUE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertCount(1, $errors);
+
+        // Process with @ suppression (hash comment).
+        $content = '<?php '.PHP_EOL.'# @phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# @phpcs:enable'.PHP_EOL.'$var = TRUE;';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
@@ -292,6 +352,26 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, $numErrors);
         $this->assertCount(1, $errors);
 
+        // Process with suppression on line before (hash comment).
+        $content = '<?php '.PHP_EOL.'# phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertCount(1, $errors);
+
+         // Process with @ suppression on line before (hash comment).
+        $content = '<?php '.PHP_EOL.'# @phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertCount(1, $errors);
+
         // Process with suppression on line before.
         $content = '<?php '.PHP_EOL.'/* phpcs:ignore */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
         $file    = new DummyFile($content, $ruleset, $config);
@@ -342,6 +422,26 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(1, $numErrors);
         $this->assertCount(1, $errors);
 
+        // Process with suppression on same line (hash comment).
+        $content = '<?php '.PHP_EOL.'$var = FALSE; # phpcs:ignore'.PHP_EOL.'$var = FALSE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertCount(1, $errors);
+
+        // Process with @ suppression on same line (hash comment).
+        $content = '<?php '.PHP_EOL.'$var = FALSE; # @phpcs:ignore'.PHP_EOL.'$var = FALSE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertCount(1, $errors);
+
     }//end testSuppressLine()
 
 
@@ -378,6 +478,16 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, $numErrors);
         $this->assertCount(0, $errors);
 
+        // Process with disable/enable suppression and no single line suppression (hash comment).
+        $content = '<?php '.PHP_EOL.'# phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'# phpcs:enable';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+
         // Process with line suppression nested within disable/enable suppression.
         $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'// phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// phpcs:enable';
         $file    = new DummyFile($content, $ruleset, $config);
@@ -390,6 +500,16 @@ class ErrorSuppressionTest extends TestCase
 
         // Process with line @ suppression nested within disable/enable @ suppression.
         $content = '<?php '.PHP_EOL.'// @phpcs:disable'.PHP_EOL.'// @phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// @phpcs:enable';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+
+        // Process with line @ suppression nested within disable/enable @ suppression (hash comment).
+        $content = '<?php '.PHP_EOL.'# @phpcs:disable'.PHP_EOL.'# @phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'# @phpcs:enable';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
@@ -426,6 +546,16 @@ class ErrorSuppressionTest extends TestCase
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//phpcs:disable'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//phpcs:enable'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors    = $file->getErrors();
+        $numErrors = $file->getErrorCount();
+        $this->assertEquals(0, $numErrors);
+        $this->assertCount(0, $errors);
+
+        // Process with suppression (hash comment).
+        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'#phpcs:disable'.PHP_EOL.'function myFunction() {'.PHP_EOL.'#phpcs:enable'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
@@ -508,6 +638,26 @@ class ErrorSuppressionTest extends TestCase
         $this->assertEquals(0, $numWarnings);
         $this->assertCount(0, $warnings);
 
+        // Process with suppression (hash comment).
+        $content = '<?php '.PHP_EOL.'# phpcs:ignoreFile'.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertCount(0, $warnings);
+
+        // Process with @ suppression (hash comment).
+        $content = '<?php '.PHP_EOL.'# @phpcs:ignoreFile'.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(0, $numWarnings);
+        $this->assertCount(0, $warnings);
+
         // Process mixed case.
         $content = '<?php '.PHP_EOL.'// PHPCS:Ignorefile'.PHP_EOL.'//TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
@@ -579,6 +729,20 @@ class ErrorSuppressionTest extends TestCase
 
         // Suppress a single sniff.
         $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $errors      = $file->getErrors();
+        $numErrors   = $file->getErrorCount();
+        $warnings    = $file->getWarnings();
+        $numWarnings = $file->getWarningCount();
+        $this->assertEquals(1, $numErrors);
+        $this->assertCount(1, $errors);
+        $this->assertEquals(0, $numWarnings);
+        $this->assertCount(0, $warnings);
+
+        // Suppress a single sniff with reason (hash comment).
+        $content = '<?php '.PHP_EOL.'# phpcs:disable Generic.Commenting.Todo -- for reasons'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
@@ -753,7 +917,7 @@ class ErrorSuppressionTest extends TestCase
         $this->assertCount(1, $warnings);
 
         // Suppress multiple sniffs and re-enable one.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting.Todo'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'$var = FALSE;';
+        $content = '<?php '.PHP_EOL.'# phpcs:disable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'# phpcs:enable Generic.Commenting.Todo'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'$var = FALSE;';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
@@ -809,7 +973,7 @@ class ErrorSuppressionTest extends TestCase
         $this->assertCount(1, $warnings);
 
         // Suppress a category and re-enable a whole standard.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic'.PHP_EOL.'//TODO: write some code';
+        $content = '<?php '.PHP_EOL.'# phpcs:disable Generic.Commenting'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'# phpcs:enable Generic'.PHP_EOL.'//TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
@@ -954,7 +1118,7 @@ class ErrorSuppressionTest extends TestCase
         $this->assertCount(0, $warnings);
 
         // Suppress a category of sniffs.
-        $content = '<?php '.PHP_EOL.'// phpcs:ignore Generic.Commenting'.PHP_EOL.'$var = FALSE; //TODO: write some code'.PHP_EOL.'$var = FALSE; //TODO: write some code';
+        $content = '<?php '.PHP_EOL.'# phpcs:ignore Generic.Commenting'.PHP_EOL.'$var = FALSE; //TODO: write some code'.PHP_EOL.'$var = FALSE; //TODO: write some code';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
