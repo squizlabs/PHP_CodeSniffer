@@ -21,12 +21,14 @@ class NullableTypeDeclarationSniff implements Sniff
      * @var array
      */
     private $validTokens = [
-        T_STRING       => true,
-        T_NS_SEPARATOR => true,
-        T_CALLABLE     => true,
-        T_SELF         => true,
-        T_PARENT       => true,
-        T_STATIC       => true,
+        T_STRING               => true,
+        T_NAME_QUALIFIED       => true,
+        T_NAME_FULLY_QUALIFIED => true,
+        T_NAME_RELATIVE        => true,
+        T_CALLABLE             => true,
+        T_SELF                 => true,
+        T_PARENT               => true,
+        T_STATIC               => true,
     ];
 
 
