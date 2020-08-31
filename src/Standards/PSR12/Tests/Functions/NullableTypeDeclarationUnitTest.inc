@@ -82,3 +82,6 @@ class testInstanceOf() {
         $bal = $value instanceof static ? CONSTANT_NAME : $value;
     }
 }
+
+// PHP 8.0: static return type.
+function testStatic() : ? static {}
