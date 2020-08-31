@@ -567,12 +567,12 @@ class PHP extends Tokenizer
             }
 
             /*
-                PHP 8 tokenizes a new line after a slash comment to the next whitespace token.
+                PHP 8 tokenizes a new line after a slash and hash comment to the next whitespace token.
             */
 
             if (PHP_VERSION_ID >= 80000
                 && $tokenIsArray === true
-                && ($token[0] === T_COMMENT && strpos($token[1], '//') === 0)
+                && ($token[0] === T_COMMENT && (strpos($token[1], '//') === 0 || strpos($token[1], '#') === 0))
                 && isset($tokens[($stackPtr + 1)]) === true
                 && is_array($tokens[($stackPtr + 1)]) === true
                 && $tokens[($stackPtr + 1)][0] === T_WHITESPACE

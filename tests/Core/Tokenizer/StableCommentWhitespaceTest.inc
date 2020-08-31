@@ -111,8 +111,28 @@ $prop = 123; /** Comment */
  * @tag Comment
  */
 
+/* testSingleLineHashComment */
+# Comment
+
+/* testSingleLineHashCommentTrailing */
+echo 'a'; # Comment
+
+/* testMultiLineHashComment */
+# Comment1
+# Comment2
+# Comment3
+
+/* testMultiLineHashCommentWithIndent */
+    # Comment1
+    # Comment2
+    # Comment3
+
 /* testSingleLineSlashCommentNoNewLineAtEnd */
 // Slash ?>
+<?php
+
+/* testSingleLineHashCommentNoNewLineAtEnd */
+# Hash ?>
 <?php
 
 /* testCommentAtEndOfFile */
