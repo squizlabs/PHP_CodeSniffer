@@ -68,6 +68,17 @@ class FindImplementedInterfaceNamesTest extends AbstractMethodUnitTest
                 false,
             ],
             [
+                '/* testNamespaceRelativeQualifiedClass */',
+                ['Core\File\RelativeInterface'],
+            ],
+            [
+                '/* testDeclarationMultiImplementedNamespaceOperator */',
+                [
+                    'namespace\testInterfaceA',
+                    'namespace\testInterfaceB',
+                ],
+            ],
+            [
                 '/* testClassThatExtendsAndImplements */',
                 [
                     'InterfaceA',
