@@ -27,8 +27,8 @@ class CompoundNamespaceDepthUnitTest extends AbstractSniffUnitTest
     {
         return [
             10 => 1,
-            18 => 1,
-            21 => 1,
+            19 => 1,
+            22 => 1,
         ];
 
     }//end getErrorList()
