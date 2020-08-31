@@ -250,7 +250,7 @@ abstract class Tokenizer
                 || $this->tokens[$i]['code'] === T_DOC_COMMENT_TAG
                 || ($inTests === true && $this->tokens[$i]['code'] === T_INLINE_HTML)
             ) {
-                $commentText      = ltrim($this->tokens[$i]['content'], " \t/*");
+                $commentText      = ltrim($this->tokens[$i]['content'], " \t/*#");
                 $commentText      = rtrim($commentText, " */\t\r\n");
                 $commentTextLower = strtolower($commentText);
                 if (strpos($commentText, '@codingStandards') !== false) {
