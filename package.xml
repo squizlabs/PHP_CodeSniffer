@@ -108,6 +108,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="BackfillFnTokenTest.php" role="test" />
       <file baseinstalldir="" name="BackfillNumericSeparatorTest.inc" role="test" />
       <file baseinstalldir="" name="BackfillNumericSeparatorTest.php" role="test" />
+      <file baseinstalldir="" name="NullsafeObjectOperatorTest.inc" role="test" />
+      <file baseinstalldir="" name="NullsafeObjectOperatorTest.php" role="test" />
       <file baseinstalldir="" name="ShortArrayTest.inc" role="test" />
       <file baseinstalldir="" name="ShortArrayTest.php" role="test" />
       <file baseinstalldir="" name="StableCommentWhitespaceTest.inc" role="test" />
@@ -1978,6 +1980,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.php" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.inc" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.php" name="tests/Core/Tokenizer/ShortArrayTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.inc" name="tests/Core/Tokenizer/ShortArrayTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceTest.php" name="tests/Core/Tokenizer/StableCommentWhitespaceTest.php" />
@@ -2037,6 +2041,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.php" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.inc" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.php" name="tests/Core/Tokenizer/ShortArrayTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.inc" name="tests/Core/Tokenizer/ShortArrayTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceTest.php" name="tests/Core/Tokenizer/StableCommentWhitespaceTest.php" />

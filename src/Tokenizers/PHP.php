@@ -372,6 +372,7 @@ class PHP extends Tokenizer
         T_NS_C                     => 13,
         T_NS_SEPARATOR             => 1,
         T_NEW                      => 3,
+        T_NULLSAFE_OBJECT_OPERATOR => 3,
         T_OBJECT_OPERATOR          => 2,
         T_OPEN_TAG_WITH_ECHO       => 3,
         T_OR_EQUAL                 => 2,
@@ -1018,6 +1019,29 @@ class PHP extends Tokenizer
             }
 
             /*
+                Before PHP 8, the ?-> operator was tokenized as
+                T_INLINE_THEN followed by T_OBJECT_OPERATOR.
+                So look for and combine these tokens in earlier versions.
+            */
+
+            if ($tokenIsArray === false
+                && $token[0] === '?'
+                && isset($tokens[($stackPtr + 1)]) === true
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === T_OBJECT_OPERATOR
+            ) {
+                $newToken            = [];
+                $newToken['code']    = T_NULLSAFE_OBJECT_OPERATOR;
+                $newToken['type']    = 'T_NULLSAFE_OBJECT_OPERATOR';
+                $newToken['content'] = '?->';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $newStackPtr++;
+                $stackPtr++;
+                continue;
+            }
+
+            /*
                 Before PHP 7.4, underscores inside T_LNUMBER and T_DNUMBER
                 tokens split the token with a T_STRING. So look for
                 and change these tokens in earlier versions.
@@ -1513,17 +1537,18 @@ class PHP extends Tokenizer
                     // Some T_STRING tokens should remain that way
                     // due to their context.
                     $context = [
-                        T_OBJECT_OPERATOR      => true,
-                        T_FUNCTION             => true,
-                        T_CLASS                => true,
-                        T_EXTENDS              => true,
-                        T_IMPLEMENTS           => true,
-                        T_NEW                  => true,
-                        T_CONST                => true,
-                        T_NS_SEPARATOR         => true,
-                        T_USE                  => true,
-                        T_NAMESPACE            => true,
-                        T_PAAMAYIM_NEKUDOTAYIM => true,
+                        T_OBJECT_OPERATOR          => true,
+                        T_NULLSAFE_OBJECT_OPERATOR => true,
+                        T_FUNCTION                 => true,
+                        T_CLASS                    => true,
+                        T_EXTENDS                  => true,
+                        T_IMPLEMENTS               => true,
+                        T_NEW                      => true,
+                        T_CONST                    => true,
+                        T_NS_SEPARATOR             => true,
+                        T_USE                      => true,
+                        T_NAMESPACE                => true,
+                        T_PAAMAYIM_NEKUDOTAYIM     => true,
                     ];
 
                     if (isset($context[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
@@ -2018,6 +2043,7 @@ class PHP extends Tokenizer
                     T_CLOSE_PARENTHESIS        => T_CLOSE_PARENTHESIS,
                     T_VARIABLE                 => T_VARIABLE,
                     T_OBJECT_OPERATOR          => T_OBJECT_OPERATOR,
+                    T_NULLSAFE_OBJECT_OPERATOR => T_NULLSAFE_OBJECT_OPERATOR,
                     T_STRING                   => T_STRING,
                     T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
                 ];
@@ -2087,9 +2113,10 @@ class PHP extends Tokenizer
                 }
 
                 $context = [
-                    T_OBJECT_OPERATOR      => true,
-                    T_NS_SEPARATOR         => true,
-                    T_PAAMAYIM_NEKUDOTAYIM => true,
+                    T_OBJECT_OPERATOR          => true,
+                    T_NULLSAFE_OBJECT_OPERATOR => true,
+                    T_NS_SEPARATOR             => true,
+                    T_PAAMAYIM_NEKUDOTAYIM     => true,
                 ];
                 if (isset($context[$this->tokens[$x]['code']]) === true) {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {

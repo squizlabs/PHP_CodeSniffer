@@ -124,6 +124,11 @@ if (defined('T_FN') === false) {
     define('T_FN', 'PHPCS_T_FN');
 }
 
+// Some PHP 8.0 tokens, replicated for lower versions.
+if (defined('T_NULLSAFE_OBJECT_OPERATOR') === false) {
+    define('T_NULLSAFE_OBJECT_OPERATOR', 'PHPCS_T_NULLSAFE_OBJECT_OPERATOR');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');
