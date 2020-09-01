@@ -218,7 +218,7 @@ class Filter extends \RecursiveFilterIterator
                     // Need to check this pattern for dirs as well as individual file paths.
                     $this->ignoreFilePatterns[$pattern] = $type;
 
-                    $pattern = substr($pattern, 0, -2);
+                    $pattern = substr($pattern, 0, -2).'(?=/|$)';
                     $this->ignoreDirPatterns[$pattern] = $type;
                 } else {
                     // This is a file-specific pattern, so only need to check this
