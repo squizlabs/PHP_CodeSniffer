@@ -444,6 +444,62 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      *
      * @return void
      */
+    public function testReturnTypeNamespacedClass()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testReturnTypeNamespacedClass */', T_FN);
+        $this->backfillHelper($token);
+
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 10), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 13), 'Scope closer is not the semicolon token');
+
+        $opener = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 10), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 13), 'Opener scope closer is not the semicolon token');
+
+        $closer = $tokens[$token]['scope_closer'];
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 10), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 13), 'Closer scope closer is not the semicolon token');
+
+    }//end testReturnTypeNamespacedClass()
+
+
+    /**
+     * Test arrow functions that use nullable namespace types.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testReturnTypePartiallyQualifiedClass()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testReturnTypePartiallyQualifiedClass */', T_FN);
+        $this->backfillHelper($token);
+
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 10), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 13), 'Scope closer is not the semicolon token');
+
+        $opener = $tokens[$token]['scope_opener'];
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 10), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 13), 'Opener scope closer is not the semicolon token');
+
+        $closer = $tokens[$token]['scope_closer'];
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 10), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 13), 'Closer scope closer is not the semicolon token');
+
+    }//end testReturnTypePartiallyQualifiedClass()
+
+
+    /**
+     * Test arrow functions that use nullable namespace types.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
     public function testNullableNamespace()
     {
         $tokens = self::$phpcsFile->getTokens();
@@ -451,16 +507,16 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
         $token = $this->getTargetToken('/* testNullableNamespace */', T_FN);
         $this->backfillHelper($token);
 
-        $this->assertSame($tokens[$token]['scope_opener'], ($token + 15), 'Scope opener is not the arrow token');
-        $this->assertSame($tokens[$token]['scope_closer'], ($token + 18), 'Scope closer is not the semicolon token');
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 13), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 16), 'Scope closer is not the semicolon token');
 
         $opener = $tokens[$token]['scope_opener'];
-        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 15), 'Opener scope opener is not the arrow token');
-        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 18), 'Opener scope closer is not the semicolon token');
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 13), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 16), 'Opener scope closer is not the semicolon token');
 
         $closer = $tokens[$token]['scope_closer'];
-        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 15), 'Closer scope opener is not the arrow token');
-        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 18), 'Closer scope closer is not the semicolon token');
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 13), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 16), 'Closer scope closer is not the semicolon token');
 
     }//end testNullableNamespace()
 
@@ -479,16 +535,16 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
         $token = $this->getTargetToken('/* testNamespaceOperatorInTypes */', T_FN);
         $this->backfillHelper($token);
 
-        $this->assertSame($tokens[$token]['scope_opener'], ($token + 16), 'Scope opener is not the arrow token');
-        $this->assertSame($tokens[$token]['scope_closer'], ($token + 19), 'Scope closer is not the semicolon token');
+        $this->assertSame($tokens[$token]['scope_opener'], ($token + 12), 'Scope opener is not the arrow token');
+        $this->assertSame($tokens[$token]['scope_closer'], ($token + 15), 'Scope closer is not the semicolon token');
 
         $opener = $tokens[$token]['scope_opener'];
-        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 16), 'Opener scope opener is not the arrow token');
-        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 19), 'Opener scope closer is not the semicolon token');
+        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 12), 'Opener scope opener is not the arrow token');
+        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 15), 'Opener scope closer is not the semicolon token');
 
         $closer = $tokens[$token]['scope_closer'];
-        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 16), 'Closer scope opener is not the arrow token');
-        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 19), 'Closer scope closer is not the semicolon token');
+        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 12), 'Closer scope opener is not the arrow token');
+        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 15), 'Closer scope closer is not the semicolon token');
 
     }//end testNamespaceOperatorInTypes()
 
@@ -672,25 +728,37 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
-     * Verify that "fn" keywords which are not arrow functions get tokenized as T_STRING and don't
+     * Verify that "fn" keywords which are not arrow functions get tokenized as identifier names and don't
      * have the extra token array indexes.
      *
-     * @param string $testMarker  The comment prefacing the target token.
-     * @param string $testContent The token content to look for.
+     * @param string $testMarker   The comment prefacing the target token.
+     * @param string $testContent  The token content to look for.
+     * @param string $expectedType Optional. The token type which is expected (not T_FN).
+     *                             Defaults to `T_STRING`.
      *
      * @dataProvider dataNotAnArrowFunction
      * @covers       PHP_CodeSniffer\Tokenizers\PHP::processAdditional
      *
      * @return void
      */
-    public function testNotAnArrowFunction($testMarker, $testContent='fn')
+    public function testNotAnArrowFunction($testMarker, $testContent='fn', $expectedType='T_STRING')
     {
         $tokens = self::$phpcsFile->getTokens();
 
-        $token      = $this->getTargetToken($testMarker, [T_STRING, T_FN], $testContent);
+        $token      = $this->getTargetToken(
+            $testMarker,
+            [
+                T_STRING,
+                T_FN,
+                T_NAME_FULLY_QUALIFIED,
+                T_NAME_QUALIFIED,
+                T_NAME_RELATIVE,
+            ],
+            $testContent
+        );
         $tokenArray = $tokens[$token];
 
-        $this->assertSame('T_STRING', $tokenArray['type'], 'Token tokenized as '.$tokenArray['type'].', not T_STRING');
+        $this->assertSame($expectedType, $tokenArray['type'], 'Token tokenized as '.$tokenArray['type'].', not T_STRING');
 
         $this->assertArrayNotHasKey('scope_condition', $tokenArray, 'Scope condition is set');
         $this->assertArrayNotHasKey('scope_opener', $tokenArray, 'Scope opener is set');
@@ -743,9 +811,14 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
             ],
             [
                 '/* testNonArrowNamespacedFunctionCall */',
-                'Fn',
+                'MyNS\Sub\Fn',
+                'T_NAME_QUALIFIED',
             ],
-            ['/* testNonArrowNamespaceOperatorFunctionCall */'],
+            [
+                '/* testNonArrowNamespaceOperatorFunctionCall */',
+                'namespace\fn',
+                'T_NAME_RELATIVE',
+            ],
             ['/* testNonArrowFunctionNameWithUnionTypes */'],
             ['/* testLiveCoding */'],
         ];

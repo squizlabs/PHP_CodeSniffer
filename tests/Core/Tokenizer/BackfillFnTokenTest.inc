@@ -60,6 +60,12 @@ $a = [
 /* testYield */
 $a = fn($x) => yield 'k' => $x;
 
+/* testReturnTypeNamespacedClass */
+$fn = fn($x) : ?\My\NS\ClassName => $x;
+
+/* testReturnTypePartiallyQualifiedClass */
+$fn = fn($x) : ?NS\ClassName => $x;
+
 /* testNullableNamespace */
 $a = fn(?\DateTime $x) : ?\DateTime => $x;
 
