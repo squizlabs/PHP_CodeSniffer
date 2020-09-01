@@ -79,13 +79,7 @@ jobs:
 before_install:
   # Speed up build time by disabling Xdebug when its not needed.
   - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
-  - |
-    if [[ $TRAVIS_PHP_VERSION != "nightly" ]]; then
-      travis_retry composer install
-    else
-      // Allow installing "incompatible" PHPUnit version on PHP 8/nightly.
-      travis_retry composer install --ignore-platform-reqs
-    fi
+  - travis_retry composer install
 
 script:
   - php bin/phpcs --config-set php_path php
