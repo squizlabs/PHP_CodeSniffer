@@ -5,35 +5,19 @@ language: php
 jobs:
   fast_finish: true
   include:
+    #############################################
+    # Builds using the default test script.
+    #############################################
     - php: 5.4
       dist: trusty
     - php: 5.5
       dist: trusty
-    - php: 5.5
-      dist: trusty
-      env: CUSTOM_INI=1 XMLLINT=1
-      addons:
-        apt:
-          packages:
-            - libxml2-utils
     - php: 5.6
     - php: 7.0
-    - php: 7.0
-      env: CUSTOM_INI=1 PEAR_VALIDATE=1
     - php: 7.1
     - php: 7.2
     - php: 7.3
     - php: 7.4
-    - php: 7.4
-      env: PHPSTAN=1
-      addons:
-        apt:
-          packages:
-            - libonig-dev
-      script:
-      - composer require --dev phpstan/phpstan
-      - php vendor/bin/phpstan analyse --configuration=phpstan.neon
-
     # Nightly is PHP 8.0 since Feb 2019.
     - php: nightly
       addons:
@@ -41,13 +25,76 @@ jobs:
           packages:
             - libonig-dev
 
+    #############################################
+    # Builds which don't use the default test script.
+    #############################################
+    # Builds running the basic tests with different PHP ini settings.
+    - php: 5.5
+      name: "PHP: 5.5 | Unit tests with custom PHP ini"
+      dist: trusty
+      before_script:
+      - phpenv config-add php5-testingConfig.ini
+      script:
+      - php bin/phpcs --config-set php_path php
+      - vendor/bin/phpunit tests/AllTests.php
+    - php: 7.0
+      name: "PHP: 7.4 | Unit tests with custom PHP ini"
+      before_script:
+      - phpenv config-add php7-testingConfig.ini
+      script:
+      - php bin/phpcs --config-set php_path php
+      - vendor/bin/phpunit tests/AllTests.php
+
+    # Build running just the PEAR package file and XML file validation and code style check.
+    - php: 7.4
+      name: "PHP: 7.4 | Pear + XML validate"
+      addons:
+        apt:
+          packages:
+            - libxml2-utils
+      before_install:
+      - export XMLLINT_INDENT="    "
+      - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
+      install:
+      - curl -O https://www.w3.org/2012/04/XMLSchema.xsd
+      script:
+      # Validate the Pear Package file contents.
+      - php scripts/validate-pear-package.php
+      # Validate the xml ruleset files.
+      # @link http://xmlsoft.org/xmllint.html
+      - xmllint --noout --schema phpcs.xsd ./src/Standards/*/ruleset.xml
+      - xmllint --noout --schema ./XMLSchema.xsd ./phpcs.xsd
+      # Check the code-style consistency of the xml files.
+      - diff -B ./phpcs.xml.dist <(xmllint --format "./phpcs.xml.dist")
+      - diff -B ./src/Standards/Generic/ruleset.xml <(xmllint --format "./src/Standards/Generic/ruleset.xml")
+      - diff -B ./src/Standards/MySource/ruleset.xml <(xmllint --format "./src/Standards/MySource/ruleset.xml")
+      - diff -B ./src/Standards/PEAR/ruleset.xml <(xmllint --format "./src/Standards/PEAR/ruleset.xml")
+      - diff -B ./src/Standards/PSR1/ruleset.xml <(xmllint --format "./src/Standards/PSR1/ruleset.xml")
+      - diff -B ./src/Standards/PSR2/ruleset.xml <(xmllint --format "./src/Standards/PSR2/ruleset.xml")
+      - diff -B ./src/Standards/PSR12/ruleset.xml <(xmllint --format "./src/Standards/PSR12/ruleset.xml")
+      - diff -B ./src/Standards/Squiz/ruleset.xml <(xmllint --format "./src/Standards/Squiz/ruleset.xml")
+      - diff -B ./src/Standards/Zend/ruleset.xml <(xmllint --format "./src/Standards/Zend/ruleset.xml")
+
+    # Build running just and only PHPStan.
+    - php: 7.4
+      name: "PHP: 7.4 | PHPStan"
+      env: PHPSTAN=1
+      addons:
+        apt:
+          packages:
+            - libonig-dev
+      before_install:
+      - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
+      script:
+      - composer require --dev phpstan/phpstan
+      - php vendor/bin/phpstan analyse --configuration=phpstan.neon
+
   allow_failures:
     - php: 7.4
       env: PHPSTAN=1
     - php: nightly
 
 before_install:
-  - export XMLLINT_INDENT="    "
   # Speed up build time by disabling Xdebug when its not needed.
   - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
   # PHPUnit 8.x is not (yet) supported, so prevent issues with Travis images using it.
@@ -59,31 +106,11 @@ before_install:
       composer install --ignore-platform-reqs
     fi
 
-before_script:
-  - if [[ $CUSTOM_INI == "1" && ${TRAVIS_PHP_VERSION:0:1} == "5" ]]; then phpenv config-add php5-testingConfig.ini; fi
-  - if [[ $CUSTOM_INI == "1" ]] && [[ ${TRAVIS_PHP_VERSION:0:1} == "7" || $TRAVIS_PHP_VERSION == "nightly" ]]; then phpenv config-add php7-testingConfig.ini; fi
-
 script:
   - php bin/phpcs --config-set php_path php
   - vendor/bin/phpunit tests/AllTests.php
-  - if [[ $CUSTOM_INI != "1" ]]; then php bin/phpcs --no-cache --parallel=1; fi
-  - if [[ $CUSTOM_INI != "1" && $TRAVIS_PHP_VERSION != "nightly" ]]; then pear package-validate package.xml; fi
-  - if [[ $PEAR_VALIDATE == "1" ]]; then php scripts/validate-pear-package.php; fi
-  - if [[ $CUSTOM_INI != "1" ]]; then composer validate --no-check-all --strict; fi
-  - if [[ $CUSTOM_INI != "1" ]]; then php scripts/build-phar.php; fi
-  - if [[ $CUSTOM_INI != "1" ]]; then php phpcs.phar; fi
-  # Validate the xml ruleset files.
-  # @link http://xmlsoft.org/xmllint.html
-  - if [[ $XMLLINT == "1" ]]; then xmllint --noout --schema phpcs.xsd ./src/Standards/*/ruleset.xml; fi
-  - if [[ $XMLLINT == "1" ]]; then curl -O https://www.w3.org/2012/04/XMLSchema.xsd; fi
-  - if [[ $XMLLINT == "1" ]]; then xmllint --noout --schema ./XMLSchema.xsd ./phpcs.xsd; fi
-  # Check the code-style consistency of the xml files.
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./phpcs.xml.dist <(xmllint --format "./phpcs.xml.dist"); fi
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/Generic/ruleset.xml <(xmllint --format "./src/Standards/Generic/ruleset.xml"); fi
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/MySource/ruleset.xml <(xmllint --format "./src/Standards/MySource/ruleset.xml"); fi
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/PEAR/ruleset.xml <(xmllint --format "./src/Standards/PEAR/ruleset.xml"); fi
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/PSR1/ruleset.xml <(xmllint --format "./src/Standards/PSR1/ruleset.xml"); fi
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/PSR2/ruleset.xml <(xmllint --format "./src/Standards/PSR2/ruleset.xml"); fi
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/PSR12/ruleset.xml <(xmllint --format "./src/Standards/PSR12/ruleset.xml"); fi
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/Squiz/ruleset.xml <(xmllint --format "./src/Standards/Squiz/ruleset.xml"); fi
-  - if [[ $XMLLINT == "1" ]]; then diff -B ./src/Standards/Zend/ruleset.xml <(xmllint --format "./src/Standards/Zend/ruleset.xml"); fi
+  - php bin/phpcs --no-cache --parallel=1
+  - pear package-validate package.xml
+  - composer validate --no-check-all --strict
+  - php scripts/build-phar.php
+  - php phpcs.phar
