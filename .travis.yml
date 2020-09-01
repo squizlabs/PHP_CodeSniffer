@@ -42,10 +42,10 @@ before_install:
   - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
   - |
     if [[ $TRAVIS_PHP_VERSION != "nightly" ]]; then
-      composer install
+      travis_retry composer install
     else
       // Allow installing "incompatible" PHPUnit version on PHP 8/nightly.
-      composer install --ignore-platform-reqs
+      travis_retry composer install --ignore-platform-reqs
     fi
 
 before_script:
