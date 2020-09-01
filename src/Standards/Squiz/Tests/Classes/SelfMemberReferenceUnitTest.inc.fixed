@@ -152,11 +152,11 @@ namespace Foo\Baz {
     }
 }
 
-// Prevent false negative when namespace has whitespace/comments.
+// Prevent false negative when namespace has whitespace/comments - no longer supported as of PHPCS 4.x.
 namespace Foo /*comment*/ \ Bah {
     class BarFoo {
         public function foo() {
-            echo   /*comment*/ self::$prop;
+            echo \Foo \ /*comment*/ Bah\BarFoo::$prop;
         }
     }
 }

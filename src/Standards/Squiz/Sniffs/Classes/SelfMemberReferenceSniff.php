@@ -75,48 +75,41 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
 
                 return;
             }
-        } else if ($tokens[$calledClassName]['code'] === T_STRING) {
-            // If the class is called with a namespace prefix, build fully qualified
-            // namespace calls for both current scope class and requested class.
-            $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($calledClassName - 1), null, true);
-            if ($prevNonEmpty !== false && $tokens[$prevNonEmpty]['code'] === T_NS_SEPARATOR) {
-                $declarationName        = $this->getDeclarationNameWithNamespace($tokens, $calledClassName);
-                $declarationName        = ltrim($declarationName, '\\');
-                $fullQualifiedClassName = $this->getNamespaceOfScope($phpcsFile, $currScope);
-                if ($fullQualifiedClassName === '\\') {
-                    $fullQualifiedClassName = '';
-                } else {
-                    $fullQualifiedClassName .= '\\';
-                }
-
-                $fullQualifiedClassName .= $phpcsFile->getDeclarationName($currScope);
-            } else {
-                $declarationName        = $phpcsFile->getDeclarationName($currScope);
-                $fullQualifiedClassName = $tokens[$calledClassName]['content'];
+        } else if ($tokens[$calledClassName]['code'] === T_STRING
+            || $tokens[$calledClassName]['code'] === T_NAME_QUALIFIED
+            || $tokens[$calledClassName]['code'] === T_NAME_FULLY_QUALIFIED
+            || $tokens[$calledClassName]['code'] === T_NAME_RELATIVE
+        ) {
+            $namespaceName = $this->getNamespaceName($phpcsFile, $currScope);
+            if ($namespaceName === '\\') {
+                $namespaceName = '';
             }
 
-            if ($declarationName === $fullQualifiedClassName) {
+            $declarationName = $namespaceName.'\\'.$phpcsFile->getDeclarationName($currScope);
+
+            switch ($tokens[$calledClassName]['code']) {
+            case T_NAME_FULLY_QUALIFIED:
+                $inlineName = $tokens[$calledClassName]['content'];
+                break;
+
+            case T_NAME_QUALIFIED:
+            case T_STRING:
+                $inlineName = $namespaceName.'\\'.$tokens[$calledClassName]['content'];
+                break;
+
+            case T_NAME_RELATIVE:
+                $inlineName = $namespaceName.substr($tokens[$calledClassName]['content'], 9);
+                break;
+            }
+
+            if ($declarationName === $inlineName) {
                 // Class name is the same as the current class, which is not allowed.
                 $error = 'Must use "self::" for local static member reference';
                 $fix   = $phpcsFile->addFixableError($error, $calledClassName, 'NotUsed');
 
                 if ($fix === true) {
                     $phpcsFile->fixer->beginChangeset();
-
-                    $currentPointer = ($stackPtr - 1);
-                    while ($tokens[$currentPointer]['code'] === T_NS_SEPARATOR
-                        || $tokens[$currentPointer]['code'] === T_STRING
-                        || isset(Tokens::$emptyTokens[$tokens[$currentPointer]['code']]) === true
-                    ) {
-                        if (isset(Tokens::$emptyTokens[$tokens[$currentPointer]['code']]) === true) {
-                            --$currentPointer;
-                            continue;
-                        }
-
-                        $phpcsFile->fixer->replaceToken($currentPointer, '');
-                        --$currentPointer;
-                    }
-
+                    $phpcsFile->fixer->replaceToken($calledClassName, '');
                     $phpcsFile->fixer->replaceToken($stackPtr, 'self::');
                     $phpcsFile->fixer->endChangeset();
 
@@ -180,38 +173,7 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
 
 
     /**
-     * Returns the declaration names for classes/interfaces/functions with a namespace.
-     *
-     * @param array $tokens   Token stack for this file
-     * @param int   $stackPtr The position where the namespace building will start.
-     *
-     * @return string
-     */
-    protected function getDeclarationNameWithNamespace(array $tokens, $stackPtr)
-    {
-        $nameParts      = [];
-        $currentPointer = $stackPtr;
-        while ($tokens[$currentPointer]['code'] === T_NS_SEPARATOR
-            || $tokens[$currentPointer]['code'] === T_STRING
-            || isset(Tokens::$emptyTokens[$tokens[$currentPointer]['code']]) === true
-        ) {
-            if (isset(Tokens::$emptyTokens[$tokens[$currentPointer]['code']]) === true) {
-                --$currentPointer;
-                continue;
-            }
-
-            $nameParts[] = $tokens[$currentPointer]['content'];
-            --$currentPointer;
-        }
-
-        $nameParts = array_reverse($nameParts);
-        return implode('', $nameParts);
-
-    }//end getDeclarationNameWithNamespace()
-
-
-    /**
-     * Returns the namespace declaration of a file.
+     * Returns the namespace name of a the current scope.
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file where this token was found.
      * @param int                         $stackPtr  The position where the search for the
@@ -219,22 +181,25 @@ class SelfMemberReferenceSniff extends AbstractScopeSniff
      *
      * @return string
      */
-    protected function getNamespaceOfScope(File $phpcsFile, $stackPtr)
+    protected function getNamespaceName(File $phpcsFile, $stackPtr)
     {
         $namespace            = '\\';
         $namespaceDeclaration = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
 
         if ($namespaceDeclaration !== false) {
-            $endOfNamespaceDeclaration = $phpcsFile->findNext([T_SEMICOLON, T_OPEN_CURLY_BRACKET], $namespaceDeclaration);
-            $namespace = $this->getDeclarationNameWithNamespace(
-                $phpcsFile->getTokens(),
-                ($endOfNamespaceDeclaration - 1)
-            );
+            $tokens       = $phpcsFile->getTokens();
+            $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($namespaceDeclaration + 1), null, true);
+            if ($nextNonEmpty !== false
+                && ($tokens[$nextNonEmpty]['code'] === T_NAME_QUALIFIED
+                || $tokens[$nextNonEmpty]['code'] === T_STRING)
+            ) {
+                $namespace .= $tokens[$nextNonEmpty]['content'];
+            }
         }
 
         return $namespace;
 
-    }//end getNamespaceOfScope()
+    }//end getNamespaceName()
 
 
 }//end class
