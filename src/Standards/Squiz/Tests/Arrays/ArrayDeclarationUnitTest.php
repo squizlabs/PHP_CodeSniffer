@@ -204,6 +204,7 @@ class ArrayDeclarationUnitTest extends AbstractSniffUnitTest
                 434 => 2,
                 436 => 2,
                 437 => 3,
+                443 => 1,
             ];
         default:
             return [];
