@@ -272,6 +272,9 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
 
         $find = [
             T_STRING,
+            T_NAME_QUALIFIED,
+            T_NAME_FULLY_QUALIFIED,
+            T_NAME_RELATIVE,
             $keywordTokenType,
         ];
 
@@ -301,16 +304,9 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                 continue;
             }
 
-            if ($checkingImplements === true
-                && $multiLineImplements === true
-                && ($tokens[($className - 1)]['code'] !== T_NS_SEPARATOR
-                || $tokens[($className - 2)]['code'] !== T_STRING)
-            ) {
+            if ($checkingImplements === true && $multiLineImplements === true) {
                 $prev = $phpcsFile->findPrevious(
-                    [
-                        T_NS_SEPARATOR,
-                        T_WHITESPACE,
-                    ],
+                    Tokens::$emptyTokens,
                     ($className - 1),
                     $implements,
                     true
@@ -386,14 +382,9 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
                         }
                     }
                 }//end if
-            } else if ($tokens[($className - 1)]['code'] !== T_NS_SEPARATOR
-                || $tokens[($className - 2)]['code'] !== T_STRING
-            ) {
+            } else {
                 // Not part of a longer fully qualified class name.
-                if ($tokens[($className - 1)]['code'] === T_COMMA
-                    || ($tokens[($className - 1)]['code'] === T_NS_SEPARATOR
-                    && $tokens[($className - 2)]['code'] === T_COMMA)
-                ) {
+                if ($tokens[($className - 1)]['code'] === T_COMMA) {
                     $error = 'Expected 1 space before "%s"; 0 found';
                     $data  = [$tokens[$className]['content']];
                     $fix   = $phpcsFile->addFixableError($error, ($nextComma + 1), 'NoSpaceBeforeName', $data);
@@ -437,7 +428,6 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
             }//end if
 
             if ($checkingImplements === true
-                && $tokens[($className + 1)]['code'] !== T_NS_SEPARATOR
                 && $tokens[($className + 1)]['code'] !== T_COMMA
             ) {
                 if ($n !== ($classCount - 1)) {
