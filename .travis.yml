@@ -53,10 +53,10 @@ before_install:
   # PHPUnit 8.x is not (yet) supported, so prevent issues with Travis images using it.
   - |
     if [[ $TRAVIS_PHP_VERSION != "nightly" ]]; then
-      composer install
+      travis_retry composer install
     elif [[ $TRAVIS_PHP_VERSION == "nightly" ]]; then
       // Allow installing "incompatible" PHPUnit version on PHP 8/nightly.
-      composer install --ignore-platform-reqs
+      travis_retry composer install --ignore-platform-reqs
     fi
 
 before_script:
