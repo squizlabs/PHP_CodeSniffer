@@ -362,4 +362,20 @@ class Foo
 
 
      var int $noComment = 1;
- }
+
+     public static ?\Folder\ClassName $FQNTypeDecl_noComment = null;
+
+     /**
+      * Description
+      *
+      * @var Folder\ClassName
+      */
+     public static Folder\ClassName $QualifiedTypeDecl_noComment = null;
+
+     /**
+      * Description
+      *
+      * @var ClassName
+      */
+     public static namespace\ClassName $relativeTypeDecl_noComment = null;
+}
