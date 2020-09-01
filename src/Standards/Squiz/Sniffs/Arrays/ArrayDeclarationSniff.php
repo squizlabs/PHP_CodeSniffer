@@ -450,9 +450,14 @@ class ArrayDeclarationSniff implements Sniff
                             $error = 'Expected 0 spaces before comma; %s found';
                             $data  = [$spaceLength];
 
-                            $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeComma', $data);
-                            if ($fix === true) {
-                                $phpcsFile->fixer->replaceToken(($nextToken - 1), '');
+                            // The error is only fixable if there is only whitespace between the tokens.
+                            if ($prev === $phpcsFile->findPrevious(T_WHITESPACE, ($nextToken - 1), null, true)) {
+                                $fix = $phpcsFile->addFixableError($error, $nextToken, 'SpaceBeforeComma', $data);
+                                if ($fix === true) {
+                                    $phpcsFile->fixer->replaceToken(($nextToken - 1), '');
+                                }
+                            } else {
+                                $phpcsFile->addError($error, $nextToken, 'SpaceBeforeComma', $data);
                             }
                         }
                     }//end if

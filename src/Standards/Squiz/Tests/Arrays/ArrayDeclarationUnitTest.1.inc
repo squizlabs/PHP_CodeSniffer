@@ -460,6 +460,13 @@ array()
  (unset) array(),
 );
 
+array(
+ 'foo',
+ 'bar'
+ // This is a non-fixable error.
+ ,
+);
+
 // Intentional syntax error.
 $a = array(
       'a' =>
