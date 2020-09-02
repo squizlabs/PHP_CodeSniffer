@@ -16,11 +16,11 @@ if (is_array($array) === TRUE) {
 }
 
 if (is_array($array) == TRUE) {
-} else if (myFunction($value) == FALSE) {
+} else if (Package\myFunction($value) == FALSE) {
 }
 
 if (is_array($array)) {
-} else if (!myFunction($value)) {
+} else if (!namespace\myFunction($value)) {
 }
 
 if ($value === TRUE || $other === FALSE) {
