@@ -283,8 +283,10 @@ class PHP extends Tokenizer
         T_ENDFOREACH          => T_ENDFOREACH,
         T_ENDWHILE            => T_ENDWHILE,
         T_ENDSWITCH           => T_ENDSWITCH,
+        T_ENDDECLARE          => T_ENDDECLARE,
         T_BREAK               => T_BREAK,
         T_END_HEREDOC         => T_END_HEREDOC,
+        T_END_NOWDOC          => T_END_NOWDOC,
     ];
 
     /**
