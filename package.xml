@@ -27,6 +27,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
   - The PHP 8.0 T_NULLSAFE_OBJECT_OPERATOR token has been made available for older versions
+    -- Existing sniffs that check for T_OBJECT_OPERATOR have been modified to apply the same rules for the nullsafe object operator
     -- Thanks to Juliette Reinders Folmer for the patch
   - Added support for changes to the way PHP 8.0 tokenizes hash comments
     -- The existing PHP 5-7 behaviour has been replicated for version 8, so no sniff changes are required
