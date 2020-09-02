@@ -67,6 +67,8 @@ class SideEffectsUnitTest extends AbstractSniffUnitTest
         case 'SideEffectsUnitTest.5.inc':
         case 'SideEffectsUnitTest.10.inc':
         case 'SideEffectsUnitTest.12.inc':
+        case 'SideEffectsUnitTest.15.inc':
+        case 'SideEffectsUnitTest.16.inc':
             return [1 => 1];
         default:
             return [];
