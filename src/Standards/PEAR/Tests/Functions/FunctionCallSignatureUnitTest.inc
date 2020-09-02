@@ -525,3 +525,16 @@ return trim(preg_replace_callback(
 
 $a = ['a' => function ($b) { return $b; }];
 $a['a']( 1 );
+
+$val = \functionCall ( $arg );
+$val = Package\functionCall( $arg );
+$val = namespace\functionCall ($arg);
+
+$val = \functionCall ( $arg
+, $arg2 );
+$val = Package\functionCall(
+                            $arg, $arg2);
+$val = namespace\functionCall(
+    $arg,
+    $arg2
+);
