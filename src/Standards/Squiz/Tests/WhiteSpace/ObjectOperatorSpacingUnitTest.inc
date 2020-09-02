@@ -46,3 +46,7 @@ thisObject::
     testThis();
 
 // phpcs:set Squiz.WhiteSpace.ObjectOperatorSpacing ignoreNewlines false
+
+$this?->testThis();
+$this?-> testThis();
+$this    ?->  testThis();

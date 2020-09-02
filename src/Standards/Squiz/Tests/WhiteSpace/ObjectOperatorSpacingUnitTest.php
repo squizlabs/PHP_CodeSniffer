@@ -43,6 +43,8 @@ class ObjectOperatorSpacingUnitTest extends AbstractSniffUnitTest
             39 => 1,
             40 => 2,
             42 => 2,
+            51 => 1,
+            52 => 2,
         ];
 
     }//end getErrorList()
