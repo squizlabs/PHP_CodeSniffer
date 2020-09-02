@@ -153,8 +153,8 @@ class PHP extends Tokenizer
             'with'   => [],
         ],
         T_USE           => [
-            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
-            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'start'  => [T_OPEN_USE_GROUP => T_OPEN_USE_GROUP],
+            'end'    => [T_CLOSE_USE_GROUP => T_CLOSE_USE_GROUP],
             'strict' => false,
             'shared' => false,
             'with'   => [],
