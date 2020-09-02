@@ -95,7 +95,9 @@ class DisallowSizeFunctionsInLoopsSniff implements Sniff
                     $functionName = 'object.'.$functionName;
                 } else {
                     // Make sure it isn't a member var.
-                    if ($tokens[($i - 1)]['code'] === T_OBJECT_OPERATOR) {
+                    if ($tokens[($i - 1)]['code'] === T_OBJECT_OPERATOR
+                        || $tokens[($i - 1)]['code'] === T_NULLSAFE_OBJECT_OPERATOR
+                    ) {
                         continue;
                     }
 
