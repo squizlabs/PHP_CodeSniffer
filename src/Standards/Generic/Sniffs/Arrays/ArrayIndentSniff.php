@@ -62,6 +62,7 @@ class ArrayIndentSniff extends AbstractArraySniff
         // Determine how far indented the entire array declaration should be.
         $ignore     = Tokens::$emptyTokens;
         $ignore[]   = T_DOUBLE_ARROW;
+        $ignore[]   = T_COMMA;
         $prev       = $phpcsFile->findPrevious($ignore, ($stackPtr - 1), null, true);
         $start      = $phpcsFile->findStartOfStatement($prev);
         $first      = $phpcsFile->findFirstOnLine(T_WHITESPACE, $start, true);

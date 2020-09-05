@@ -71,6 +71,15 @@ $foo =
     ],
 ];
 
+$foo = [
+    'foo'
+        . 'bar',
+    [
+        'baz',
+        'qux',
+    ],
+];
+
 // phpcs:set Generic.Arrays.ArrayIndent indent 2
 
 $var = [
