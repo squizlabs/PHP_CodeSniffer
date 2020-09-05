@@ -651,6 +651,8 @@ abstract class Tokenizer
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     Common::printStatusMessage("=> Found parenthesis owner at $i", (count($openers) + 1));
                 }
+
+                continue;
             } else if ($this->tokens[$i]['code'] === T_OPEN_PARENTHESIS) {
                 $openers[] = $i;
                 $this->tokens[$i]['parenthesis_opener'] = $i;
@@ -665,6 +667,8 @@ abstract class Tokenizer
                 } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     Common::printStatusMessage("=> Found unowned parenthesis opener at $i", count($openers));
                 }
+
+                continue;
             } else if ($this->tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
                 // Did we set an owner for this set of parenthesis?
                 $numOpeners = count($openers);
@@ -721,6 +725,22 @@ abstract class Tokenizer
                         echo "=> Found unowned attribute closer at $i for $opener".PHP_EOL;
                     }
                 }//end if
+
+                continue;
+            } else if ($openOwner !== null
+                && ($this->tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
+                || $this->tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET
+                || $this->tokens[$i]['code'] === T_OPEN_USE_GROUP
+                || $this->tokens[$i]['code'] === T_SEMICOLON
+                || $this->tokens[$i]['code'] === T_CLOSE_TAG)
+            ) {
+                // This must have been a T_USE for an import/trait use statement, not a closure.
+                unset(
+                    $this->tokens[$openOwner]['parenthesis_opener'],
+                    $this->tokens[$openOwner]['parenthesis_closer'],
+                    $this->tokens[$openOwner]['parenthesis_owner']
+                );
+                $openOwner = null;
             }//end if
 
             /*
@@ -734,10 +754,6 @@ abstract class Tokenizer
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     Common::printStatusMessage("=> Found square bracket opener at $i", (count($squareOpeners) + count($curlyOpeners)));
                 }
-
-                if ($openOwner !== null) {
-                    $openOwner = null;
-                }
                 break;
             case T_OPEN_CURLY_BRACKET:
                 if (isset($this->tokens[$i]['scope_closer']) === false) {
@@ -746,10 +762,6 @@ abstract class Tokenizer
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         Common::printStatusMessage("=> Found curly bracket opener at $i", (count($squareOpeners) + count($curlyOpeners)));
                     }
-                }
-
-                if ($openOwner !== null) {
-                    $openOwner = null;
                 }
                 break;
             case T_CLOSE_SQUARE_BRACKET:
