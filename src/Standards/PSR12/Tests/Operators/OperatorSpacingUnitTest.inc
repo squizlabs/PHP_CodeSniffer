@@ -56,3 +56,6 @@ function name($a = -1) {}
 
 $a =& $ref;
 $a = [ 'a' => &$something ];
+
+$fn = fn(array &$one) => 1;
+$fn = fn(array & $one) => 1;
