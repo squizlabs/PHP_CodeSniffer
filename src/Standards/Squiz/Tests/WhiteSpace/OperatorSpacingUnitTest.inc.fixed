@@ -459,5 +459,10 @@ $a = $a ? - $b : - $b;
 
 exit -1;
 
+$cl = function ($boo =-1) {};
+$cl = function ($boo =+1) {};
+$fn = fn ($boo =-1) => $boo;
+$fn = fn ($boo =+1) => $boo;
+
 /* Intentional parse error. This has to be the last test in the file. */
 $a = 10 +

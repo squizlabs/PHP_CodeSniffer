@@ -345,6 +345,7 @@ class OperatorSpacingSniff implements Sniff
                     $function = $tokens[$bracket]['parenthesis_owner'];
                     if ($tokens[$function]['code'] === T_FUNCTION
                         || $tokens[$function]['code'] === T_CLOSURE
+                        || $tokens[$function]['code'] === T_FN
                         || $tokens[$function]['code'] === T_DECLARE
                     ) {
                         return false;
