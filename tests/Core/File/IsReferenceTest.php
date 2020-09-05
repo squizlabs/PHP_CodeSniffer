@@ -229,6 +229,14 @@ class IsReferenceTest extends AbstractMethodUnitTest
                 true,
             ],
             [
+                '/* testArrowFunctionPassByReferenceA */',
+                true,
+            ],
+            [
+                '/* testArrowFunctionPassByReferenceB */',
+                true,
+            ],
+            [
                 '/* testClosureReturnByReference */',
                 true,
             ],
