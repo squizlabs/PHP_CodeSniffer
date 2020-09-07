@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #2975 : Undefined offset in PSR12.Functions.ReturnTypeDeclaration when checking function return type inside ternary
   - Fixed bug #3007 : Directory exclude pattern improperly excludes directories with names that start the same
     -- Thanks to Steve Talbot for the patch
+  - Fixed bug #3058 : Progress gets unaligned when 100% happens at the end of the available dots
  </notes>
  <contents>
   <dir name="/">
