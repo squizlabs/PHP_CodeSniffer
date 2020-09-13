@@ -107,6 +107,7 @@ class OperatorBracketSniff implements Sniff
                 T_OPEN_CURLY_BRACKET  => true,
                 T_OPEN_SHORT_ARRAY    => true,
                 T_CASE                => true,
+                T_EXIT                => true,
             ];
 
             if (isset($invalidTokens[$tokens[$previousToken]['code']]) === true) {
