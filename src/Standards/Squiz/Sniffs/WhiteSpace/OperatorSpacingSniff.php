@@ -79,6 +79,7 @@ class OperatorSpacingSniff implements Sniff
         $this->nonOperandTokens += [
             T_RETURN => T_RETURN,
             T_ECHO   => T_ECHO,
+            T_EXIT   => T_EXIT,
             T_PRINT  => T_PRINT,
             T_YIELD  => T_YIELD,
         ];
