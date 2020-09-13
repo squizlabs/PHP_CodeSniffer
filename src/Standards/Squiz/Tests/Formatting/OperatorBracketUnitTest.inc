@@ -172,3 +172,5 @@ $test = (1 * static::TEST);
 $test = myfunc(1 * static::TEST);
 
 $errorPos = $params[$x]?->getLine() + $commentStart;
+
+exit -1;
