@@ -1,4 +1,14 @@
 <?php
+
+// phpcs:set Squiz.Strings.DoubleQuoteUsage allowVariables true
+$string = "Hello $there";
+$string = 'Hello'."$there '".'hi';
+$string = "<div class='$class'>";
+$string = "Value: $var[test]";
+$x = "bar = '$z',
+baz = '" . $a . "'...$x";
+// phpcs:set Squiz.Strings.DoubleQuoteUsage allowVariables false
+
 $string = "Hello\tThere";
 $string = "Hello There\r\n";
 $string = "Hello There";

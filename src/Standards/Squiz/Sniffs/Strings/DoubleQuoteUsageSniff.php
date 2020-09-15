@@ -15,6 +15,12 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 class DoubleQuoteUsageSniff implements Sniff
 {
 
+    /**
+     * Whether to allow variables in strings or not.
+     *
+     * @var bool
+     */
+    public $allowVariables = false;
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -81,7 +87,7 @@ class DoubleQuoteUsageSniff implements Sniff
         if ($tokens[$stackPtr]['code'] === T_DOUBLE_QUOTED_STRING) {
             $stringTokens = token_get_all('<?php '.$workingString);
             foreach ($stringTokens as $token) {
-                if (is_array($token) === true && $token[0] === T_VARIABLE) {
+                if (!$this->allowVariables && is_array($token) === true && $token[0] === T_VARIABLE) {
                     $error = 'Variable "%s" not allowed in double quoted string; use concatenation instead';
                     $data  = [$token[1]];
                     $phpcsFile->addError($error, $stackPtr, 'ContainsVar', $data);
