@@ -129,6 +129,18 @@ if (defined('T_NULLSAFE_OBJECT_OPERATOR') === false) {
     define('T_NULLSAFE_OBJECT_OPERATOR', 'PHPCS_T_NULLSAFE_OBJECT_OPERATOR');
 }
 
+if (defined('T_NAME_QUALIFIED') === false) {
+    define('T_NAME_QUALIFIED', 'PHPCS_T_NAME_QUALIFIED');
+}
+
+if (defined('T_NAME_FULLY_QUALIFIED') === false) {
+    define('T_NAME_FULLY_QUALIFIED', 'PHPCS_T_NAME_FULLY_QUALIFIED');
+}
+
+if (defined('T_NAME_RELATIVE') === false) {
+    define('T_NAME_RELATIVE', 'PHPCS_T_NAME_RELATIVE');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');

@@ -816,6 +816,81 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                As of PHP 8.0 fully qualified, partially qualified and namespace relative
+                identifier names are tokenized differently.
+                This "undoes" the new tokenization so the tokenization will be the same in
+                in PHP 5, 7 and 8.
+            */
+
+            if (PHP_VERSION_ID >= 80000
+                && $tokenIsArray === true
+                && ($token[0] === T_NAME_QUALIFIED
+                || $token[0] === T_NAME_FULLY_QUALIFIED
+                || $token[0] === T_NAME_RELATIVE)
+            ) {
+                $name = $token[1];
+
+                if ($token[0] === T_NAME_FULLY_QUALIFIED) {
+                    $newToken            = [];
+                    $newToken['code']    = T_NS_SEPARATOR;
+                    $newToken['type']    = 'T_NS_SEPARATOR';
+                    $newToken['content'] = '\\';
+                    $finalTokens[$newStackPtr] = $newToken;
+                    ++$newStackPtr;
+
+                    $name = ltrim($name, '\\');
+                }
+
+                if ($token[0] === T_NAME_RELATIVE) {
+                    $newToken            = [];
+                    $newToken['code']    = T_NAMESPACE;
+                    $newToken['type']    = 'T_NAMESPACE';
+                    $newToken['content'] = substr($name, 0, 9);
+                    $finalTokens[$newStackPtr] = $newToken;
+                    ++$newStackPtr;
+
+                    $newToken            = [];
+                    $newToken['code']    = T_NS_SEPARATOR;
+                    $newToken['type']    = 'T_NS_SEPARATOR';
+                    $newToken['content'] = '\\';
+                    $finalTokens[$newStackPtr] = $newToken;
+                    ++$newStackPtr;
+
+                    $name = substr($name, 10);
+                }
+
+                $parts     = explode('\\', $name);
+                $partCount = count($parts);
+                $lastPart  = ($partCount - 1);
+
+                foreach ($parts as $i => $part) {
+                    $newToken            = [];
+                    $newToken['code']    = T_STRING;
+                    $newToken['type']    = 'T_STRING';
+                    $newToken['content'] = $part;
+                    $finalTokens[$newStackPtr] = $newToken;
+                    ++$newStackPtr;
+
+                    if ($i !== $lastPart) {
+                        $newToken            = [];
+                        $newToken['code']    = T_NS_SEPARATOR;
+                        $newToken['type']    = 'T_NS_SEPARATOR';
+                        $newToken['content'] = '\\';
+                        $finalTokens[$newStackPtr] = $newToken;
+                        ++$newStackPtr;
+                    }
+                }
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $type    = Util\Tokens::tokenName($token[0]);
+                    $content = Util\Common::prepareForOutput($token[1]);
+                    echo "\t\t* token $stackPtr split into individual tokens; was: $type => $content".PHP_EOL;
+                }
+
+                continue;
+            }//end if
+
+            /*
                 Before PHP 7.0, the "yield from" was tokenized as
                 T_YIELD, T_WHITESPACE and T_STRING. So look for
                 and change this token in earlier versions.
@@ -1131,7 +1206,7 @@ class PHP extends Tokenizer
                  * Check if the next non-empty token is one of the tokens which can be used
                  * in type declarations. If not, it's definitely a ternary.
                  * At this point, the only token types which need to be taken into consideration
-                 * as potential type declarations are T_STRING, T_ARRAY, T_CALLABLE and T_NS_SEPARATOR.
+                 * as potential type declarations are identifier names, T_ARRAY, T_CALLABLE and T_NS_SEPARATOR.
                  */
 
                 $lastRelevantNonEmpty = null;
@@ -1148,6 +1223,9 @@ class PHP extends Tokenizer
                     }
 
                     if ($tokenType === T_STRING
+                        || $tokenType === T_NAME_FULLY_QUALIFIED
+                        || $tokenType === T_NAME_RELATIVE
+                        || $tokenType === T_NAME_QUALIFIED
                         || $tokenType === T_ARRAY
                         || $tokenType === T_NS_SEPARATOR
                     ) {
@@ -1159,7 +1237,10 @@ class PHP extends Tokenizer
                         && isset($lastRelevantNonEmpty) === false)
                         || ($lastRelevantNonEmpty === T_ARRAY
                         && $tokenType === '(')
-                        || ($lastRelevantNonEmpty === T_STRING
+                        || (($lastRelevantNonEmpty === T_STRING
+                        || $lastRelevantNonEmpty === T_NAME_FULLY_QUALIFIED
+                        || $lastRelevantNonEmpty === T_NAME_RELATIVE
+                        || $lastRelevantNonEmpty === T_NAME_QUALIFIED)
                         && ($tokenType === T_DOUBLE_COLON
                         || $tokenType === '('
                         || $tokenType === ':'))
@@ -1304,6 +1385,10 @@ class PHP extends Tokenizer
                 tokenized as T_STRING even if it appears to be a different token,
                 such as when writing code like: function default(): foo
                 so go forward and change the token type before it is processed.
+
+                Note: this should not be done for `function Level\Name` within a
+                group use statement for the PHP 8 identifier name tokens as it
+                would interfere with the re-tokenization of those.
             */
 
             if ($tokenIsArray === true
@@ -1321,7 +1406,10 @@ class PHP extends Tokenizer
                         }
                     }
 
-                    if ($x < $numTokens && is_array($tokens[$x]) === true) {
+                    if ($x < $numTokens
+                        && is_array($tokens[$x]) === true
+                        && $tokens[$x][0] !== T_NAME_QUALIFIED
+                    ) {
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $oldType = Util\Tokens::tokenName($tokens[$x][0]);
                             echo "\t\t* token $x changed from $oldType to T_STRING".PHP_EOL;
@@ -1377,12 +1465,15 @@ class PHP extends Tokenizer
                         && $tokens[$x] === ':'
                     ) {
                         $allowed = [
-                            T_STRING       => T_STRING,
-                            T_ARRAY        => T_ARRAY,
-                            T_CALLABLE     => T_CALLABLE,
-                            T_SELF         => T_SELF,
-                            T_PARENT       => T_PARENT,
-                            T_NS_SEPARATOR => T_NS_SEPARATOR,
+                            T_STRING               => T_STRING,
+                            T_NAME_FULLY_QUALIFIED => T_NAME_FULLY_QUALIFIED,
+                            T_NAME_RELATIVE        => T_NAME_RELATIVE,
+                            T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
+                            T_ARRAY                => T_ARRAY,
+                            T_CALLABLE             => T_CALLABLE,
+                            T_SELF                 => T_SELF,
+                            T_PARENT               => T_PARENT,
+                            T_NS_SEPARATOR         => T_NS_SEPARATOR,
                         ];
 
                         $allowed += Util\Tokens::$emptyTokens;
