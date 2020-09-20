@@ -38,3 +38,6 @@ function mixedTypeHint(mixed &...$var1) {}
 /* testPHP8MixedTypeHintNullable */
 // Intentional fatal error - nullability is not allowed with mixed, but that's not the concern of the method.
 function mixedTypeHintNullable(?Mixed $var1) {}
+
+/* testNamespaceOperatorTypeHint */
+function namespaceOperatorTypeHint(?namespace\Name $var1) {}

@@ -479,6 +479,16 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'nullable_type'   => true,
                 ],
             ],
+            [
+                '/* testNamespaceOperatorTypeHint */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => '?namespace\Name',
+                    'nullable_type'   => true,
+                ],
+            ],
         ];
 
     }//end dataGetMemberProperties()

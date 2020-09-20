@@ -319,6 +319,28 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify recognition of type declarations using the namespace operator.
+     *
+     * @return void
+     */
+    public function testNamespaceOperatorTypeHint()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var1',
+            'content'           => '?namespace\Name $var1',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?namespace\Name',
+            'nullable_type'     => true,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testNamespaceOperatorTypeHint()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.

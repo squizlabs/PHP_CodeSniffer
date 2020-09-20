@@ -1227,6 +1227,7 @@ class PHP extends Tokenizer
                         || $tokenType === T_NAME_RELATIVE
                         || $tokenType === T_NAME_QUALIFIED
                         || $tokenType === T_ARRAY
+                        || $tokenType === T_NAMESPACE
                         || $tokenType === T_NS_SEPARATOR
                     ) {
                         $lastRelevantNonEmpty = $tokenType;
@@ -1473,6 +1474,7 @@ class PHP extends Tokenizer
                             T_CALLABLE             => T_CALLABLE,
                             T_SELF                 => T_SELF,
                             T_PARENT               => T_PARENT,
+                            T_NAMESPACE            => T_NAMESPACE,
                             T_NS_SEPARATOR         => T_NS_SEPARATOR,
                         ];
 
@@ -1987,6 +1989,7 @@ class PHP extends Tokenizer
                         T_STRING       => T_STRING,
                         T_ARRAY        => T_ARRAY,
                         T_COLON        => T_COLON,
+                        T_NAMESPACE    => T_NAMESPACE,
                         T_NS_SEPARATOR => T_NS_SEPARATOR,
                         T_NULLABLE     => T_NULLABLE,
                         T_CALLABLE     => T_CALLABLE,
