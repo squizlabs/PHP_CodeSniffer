@@ -2800,24 +2800,6 @@ class PHP extends Tokenizer
                 }
 
                 continue;
-            } else if ($this->tokens[$i]['code'] === T_STATIC) {
-                for ($x = ($i - 1); $x > 0; $x--) {
-                    if (isset(Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
-                        break;
-                    }
-                }
-
-                if ($this->tokens[$x]['code'] === T_INSTANCEOF) {
-                    $this->tokens[$i]['code'] = T_STRING;
-                    $this->tokens[$i]['type'] = 'T_STRING';
-
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $line = $this->tokens[$i]['line'];
-                        Common::printStatusMessage("* token $i on line $line changed from T_STATIC to T_STRING", 1);
-                    }
-                }
-
-                continue;
             } else if ($this->tokens[$i]['code'] === T_TRUE
                 || $this->tokens[$i]['code'] === T_FALSE
                 || $this->tokens[$i]['code'] === T_NULL

@@ -55,6 +55,7 @@ class ScopeKeywordSpacingSniff implements Sniff
         if ($tokens[$stackPtr]['code'] === T_STATIC) {
             if (($nextToken === false || $tokens[$nextToken]['code'] === T_DOUBLE_COLON)
                 || $tokens[$prevToken]['code'] === T_NEW
+                || $tokens[$prevToken]['code'] === T_INSTANCEOF
             ) {
                 // Late static binding, e.g., static:: OR new static() usage or live coding.
                 return;
