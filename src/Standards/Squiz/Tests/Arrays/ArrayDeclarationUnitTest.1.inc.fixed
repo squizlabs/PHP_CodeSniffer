@@ -483,7 +483,7 @@ array(
  'c' => $c,
 );
 
-array()
+array(
  static function() {
      return null;
  },
