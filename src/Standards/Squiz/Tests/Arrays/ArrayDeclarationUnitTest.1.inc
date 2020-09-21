@@ -447,6 +447,19 @@ $c);
 array('a' => $a, 'b' => $b,
 'c' => $c);
 
+array()
+ static function() {
+     return null;
+ },
+ (array) array(),
+ (bool) array(),
+ (double) array(),
+ (int) array(),
+ (object) array(),
+ (string) array(),
+ (unset) array(),
+);
+
 // Intentional syntax error.
 $a = array(
       'a' =>

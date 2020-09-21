@@ -620,10 +620,11 @@ class ArrayDeclarationSniff implements Sniff
 
                 $valuePointer = $value['value'];
 
-                $ignoreTokens = ([
+                $ignoreTokens  = [
                     T_WHITESPACE => T_WHITESPACE,
                     T_COMMA      => T_COMMA,
-                ] + Tokens::$castTokens);
+                ];
+                $ignoreTokens += Tokens::$castTokens;
 
                 if ($tokens[$valuePointer]['code'] === T_CLOSURE) {
                     $ignoreTokens += [T_STATIC => T_STATIC];
