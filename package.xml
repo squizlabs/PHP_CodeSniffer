@@ -52,6 +52,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sergei Morozov for the patch
   - Fixed bug #3060 : Squiz.Arrays.ArrayDeclaration false positive for static functions
     -- Thanks to Sergei Morozov for the patch
+  - Fixed bug #3065 : Should not fix Squiz.Arrays.ArrayDeclaration.SpaceBeforeComma if comment between element and comma
+    -- Thanks to Sergei Morozov for the patch
   - Fixed bug #3066 : No support for namespace operator used in type declarations
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3099 : Squiz.WhiteSpace.OperatorSpacing false positive when exiting with negative number
