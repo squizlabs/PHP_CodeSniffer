@@ -55,6 +55,10 @@ class ConcatenationSpacingSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
+        if (isset($tokens[($stackPtr + 2)]) === false) {
+            // Syntax error or live coding, bow out.
+            return;
+        }
 
         $ignoreBefore = false;
         $prev         = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
