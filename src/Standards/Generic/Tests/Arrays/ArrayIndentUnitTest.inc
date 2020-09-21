@@ -70,16 +70,6 @@ $foo =
     ],
 ];
 
-// phpcs:set Generic.Arrays.ArrayIndent indent 2
-
-$var = [
-1 => 'one',
-        2 => 'two',
-    /* three */ 3 => 'three',
-    ];
-
-// phpcs:set Generic.Arrays.ArrayIndent indent 4
-
 $foo = [
     'foo'
         . 'bar',
@@ -88,3 +78,11 @@ $foo = [
             'qux',
         ],
 ];
+
+// phpcs:set Generic.Arrays.ArrayIndent indent 2
+
+$var = [
+1 => 'one',
+        2 => 'two',
+    /* three */ 3 => 'three',
+    ];
