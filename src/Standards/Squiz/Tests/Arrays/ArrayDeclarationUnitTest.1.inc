@@ -447,7 +447,7 @@ $c);
 array('a' => $a, 'b' => $b,
 'c' => $c);
 
-array()
+array(
  static function() {
      return null;
  },
