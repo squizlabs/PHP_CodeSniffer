@@ -449,6 +449,13 @@ $c];
  (unset) [],
 ];
 
+[
+ 'foo',
+ 'bar'
+ // This is a non-fixable error.
+ ,
+];
+
 // Intentional syntax error.
 $a = [
       'a' =>
