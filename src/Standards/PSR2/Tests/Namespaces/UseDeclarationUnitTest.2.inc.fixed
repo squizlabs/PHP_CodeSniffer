@@ -9,6 +9,14 @@ use function My\Full\otherfunction;
 use const My\Full\constantname as someconstant;
 use const My\Full\otherconstant;
 
+use BarClass as Bar;
+use FooClass;
+use BazClass as Baz;
+use function My\Full\functionname as somefunction;
+use function My\Full\otherfunction;
+use const My\Full\constantname as someconstant;
+use const My\Full\otherconstant;
+
 
 namespace AnotherProject;
 
