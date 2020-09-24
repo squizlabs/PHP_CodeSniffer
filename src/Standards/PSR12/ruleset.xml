@@ -41,11 +41,7 @@
 
     <!-- There MUST NOT be trailing whitespace at the end of lines.
     Blank lines MAY be added to improve readability and to indicate related blocks of code except where explicitly forbidden. -->
-    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
-        <properties>
-            <property name="ignoreBlankLines" value="true"/>
-        </properties>
-    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
         <severity>0</severity>
     </rule>
