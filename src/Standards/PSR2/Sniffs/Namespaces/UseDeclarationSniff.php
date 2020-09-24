@@ -77,6 +77,10 @@ class UseDeclarationSniff implements Sniff
                         $baseUse = 'use';
                     }
 
+                    if ($tokens[($next + 1)]['code'] !== T_WHITESPACE) {
+                        $baseUse .= ' ';
+                    }
+
                     $phpcsFile->fixer->replaceToken($next, ';'.$phpcsFile->eolChar.$baseUse);
                 }
             } else {

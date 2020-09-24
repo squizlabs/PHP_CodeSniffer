@@ -51,6 +51,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Thiemo Kreuz for the patch
   - Fixed bug #3007 : Directory exclude pattern improperly excludes directories with names that start the same
     -- Thanks to Steve Talbot for the patch
+  - Fixed bug #3053 : PSR2 incorrect fix when multiple use statements on same line do not have whitespace between them
   - Fixed bug #3058 : Progress gets unaligned when 100% happens at the end of the available dots
   - Fixed bug #3059 : Squiz.Arrays.ArrayDeclaration false positive when using type casting
     -- Thanks to Sergei Morozov for the patch
