@@ -631,7 +631,9 @@ class ArrayDeclarationSniff implements Sniff
                 ];
                 $ignoreTokens += Tokens::$castTokens;
 
-                if ($tokens[$valuePointer]['code'] === T_CLOSURE) {
+                if ($tokens[$valuePointer]['code'] === T_CLOSURE
+                    || $tokens[$valuePointer]['code'] === T_FN
+                ) {
                     $ignoreTokens += [T_STATIC => T_STATIC];
                 }
 
@@ -667,12 +669,12 @@ class ArrayDeclarationSniff implements Sniff
                             $found,
                         ];
 
-                        $fix = $phpcsFile->addFixableError($error, $valuePointer, 'ValueNotAligned', $data);
+                        $fix = $phpcsFile->addFixableError($error, $first, 'ValueNotAligned', $data);
                         if ($fix === true) {
                             if ($found === 0) {
-                                $phpcsFile->fixer->addContent(($valuePointer - 1), str_repeat(' ', $expected));
+                                $phpcsFile->fixer->addContent(($first - 1), str_repeat(' ', $expected));
                             } else {
-                                $phpcsFile->fixer->replaceToken(($valuePointer - 1), str_repeat(' ', $expected));
+                                $phpcsFile->fixer->replaceToken(($first - 1), str_repeat(' ', $expected));
                             }
                         }
                     }

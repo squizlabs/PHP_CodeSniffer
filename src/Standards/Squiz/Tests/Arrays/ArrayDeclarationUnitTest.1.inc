@@ -467,6 +467,14 @@ array(
  ,
 );
 
+yield array(
+    static fn () : string => '',
+);
+
+yield array(
+       static fn () : string => '',
+      );
+
 // Intentional syntax error.
 $a = array(
       'a' =>
