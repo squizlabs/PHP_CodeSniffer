@@ -456,6 +456,14 @@ $c];
  ,
 ];
 
+yield [
+    static fn () : string => '',
+];
+
+yield [
+       static fn () : string => '',
+      ];
+
 // Intentional syntax error.
 $a = [
       'a' =>
