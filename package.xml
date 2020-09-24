@@ -62,6 +62,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3099 : Squiz.WhiteSpace.OperatorSpacing false positive when exiting with negative number
     -- Thanks to Sergei Morozov for the patch
+  - Fixed bug #3124 : PSR-12 not reporting error for empty lines with only whitespace
  </notes>
  <contents>
   <dir name="/">
