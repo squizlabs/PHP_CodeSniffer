@@ -61,6 +61,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Sergei Morozov for the patch
   - Fixed bug #3066 : No support for namespace operator used in type declarations
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3075 : PSR12.ControlStructures.BooleanOperatorPlacement false positive when operator is the only content on line
   - Fixed bug #3099 : Squiz.WhiteSpace.OperatorSpacing false positive when exiting with negative number
     -- Thanks to Sergei Morozov for the patch
   - Fixed bug #3124 : PSR-12 not reporting error for empty lines with only whitespace

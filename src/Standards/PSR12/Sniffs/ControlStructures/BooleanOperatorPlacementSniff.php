@@ -90,25 +90,10 @@ class BooleanOperatorPlacementSniff implements Sniff
                 break;
             }
 
-            $operators[] = $operator;
-
             $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($operator - 1), $parenOpener, true);
             if ($prev === false) {
                 // Parse error.
                 return;
-            }
-
-            if ($tokens[$prev]['line'] < $tokens[$operator]['line']) {
-                // The boolean operator is the first content on the line.
-                if ($position === null) {
-                    $position = 'first';
-                }
-
-                if ($position !== 'first') {
-                    $error = true;
-                }
-
-                continue;
             }
 
             $next = $phpcsFile->findNext(T_WHITESPACE, ($operator + 1), $parenCloser, true);
@@ -117,8 +102,44 @@ class BooleanOperatorPlacementSniff implements Sniff
                 return;
             }
 
+            $firstOnLine = false;
+            $lastOnLine  = false;
+
+            if ($tokens[$prev]['line'] < $tokens[$operator]['line']) {
+                // The boolean operator is the first content on the line.
+                $firstOnLine = true;
+            }
+
             if ($tokens[$next]['line'] > $tokens[$operator]['line']) {
                 // The boolean operator is the last content on the line.
+                $lastOnLine = true;
+            }
+
+            if ($firstOnLine === true && $lastOnLine === true) {
+                // The operator is the only content on the line.
+                // Don't record it because we can't determine
+                // placement information from looking at it.
+                continue;
+            }
+
+            $operators[] = $operator;
+
+            if ($firstOnLine === false && $lastOnLine === false) {
+                // It's in the middle of content, so we can't determine
+                // placement information from looking at it, but we may
+                // still need to process it.
+                continue;
+            }
+
+            if ($firstOnLine === true) {
+                if ($position === null) {
+                    $position = 'first';
+                }
+
+                if ($position !== 'first') {
+                    $error = true;
+                }
+            } else {
                 if ($position === null) {
                     $position = 'last';
                 }
@@ -126,8 +147,6 @@ class BooleanOperatorPlacementSniff implements Sniff
                 if ($position !== 'last') {
                     $error = true;
                 }
-
-                continue;
             }
         } while ($operator !== false);
 
