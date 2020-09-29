@@ -168,6 +168,19 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
 
             $className  = null;
             $newClasses = array_reverse(array_diff(get_declared_classes(), $classes));
+            // Since PHP 7.4 get_declared_classes() does not guarantee any order. That
+            // implies that parent classes aren't the first any more, rendering the
+            // array_reverse() technique futile for the loop & break code that follows.
+            // So, additionally, let's try to reduce the list of candidates by removing all
+            // the classes known to be "parents". That way, at the end, only the "main"
+            // class just included with remain.
+            $newClasses = array_reduce(
+                $newClasses,
+                function ($remaining, $current) {
+                    return array_diff($remaining, class_parents($current));
+                },
+                $newClasses
+            );
             foreach ($newClasses as $name) {
                 if (isset(self::$loadedFiles[$name]) === false) {
                     $className = $name;
