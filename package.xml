@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Running the unit tests now includes warnings in the found and fixable error code counts
     -- Thanks to Juliette Reinders Folmer for the patch
+  - PSR12.ControlStructures.BooleanOperatorPlacement.FoundMixed error message is now more accurate when using the allowOnly setting
+    -- Thanks to Vincent Langlet for the patch
   - PSR12.Functions.NullableTypeDeclaration now supports the PHP8 static return type
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed Squiz.Formatting.OperatorBracket false positive when exiting with a negative number
