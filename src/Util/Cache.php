@@ -218,10 +218,7 @@ class Cache
             $numFiles = count($config->files);
 
             $cacheFile = null;
-            $cacheDir  = getenv('XDG_CACHE_HOME');
-            if ($cacheDir === false || is_dir($cacheDir) === false) {
-                $cacheDir = sys_get_temp_dir();
-            }
+            $cacheDir  = self::getCacheDir();
 
             foreach ($paths as $file => $count) {
                 if ($count !== $numFiles) {
@@ -343,6 +340,66 @@ class Cache
         return (count(self::$cache) - 1);
 
     }//end getSize()
+
+
+    /**
+     * Returns the dir in which cache files should be stored/found
+     *
+     * @return string
+     */
+    private static function getCacheDir()
+    {
+        $cacheDir = getenv('XDG_CACHE_HOME');
+        if ($cacheDir === false || is_dir($cacheDir) === false) {
+            $cacheDir = sys_get_temp_dir();
+        }
+
+        return $cacheDir;
+
+    }//end getCacheDir()
+
+
+    /**
+     * Deletes the cache file
+     *
+     * @param string $cacheFile A cache file provided by the user to be deleted
+     *
+     * @return void
+     */
+    public static function delete(?string $cacheFile=null)
+    {
+        if ($cacheFile !== null) {
+            if (unlink($cacheFile) === true) {
+                echo $cacheFile.' deleted successfully'.PHP_EOL;
+            } else {
+                $error = error_get_last();
+                echo "ERROR : Could not delete ".$cacheFile.': '.$error['message'].PHP_EOL;
+            }
+
+            return;
+        }
+
+        $cacheDir = self::getCacheDir();
+        $files    = glob($cacheDir.DIRECTORY_SEPARATOR.'phpcs.*.cache');
+
+        if (count($files) === 0) {
+            echo 'No cache to delete'.PHP_EOL;
+            return;
+        }
+
+        $deletedFiles = 0;
+        foreach ($files as $file) {
+            if (unlink($file) === true) {
+                $deletedFiles++;
+            } else {
+                $error = error_get_last();
+                echo "ERROR : Could not delete ".$file.': '.$error['message'].PHP_EOL;
+            }
+        }
+
+        echo $deletedFiles.' cache files deleted successfully'.PHP_EOL;
+
+    }//end delete()
 
 
 }//end class
