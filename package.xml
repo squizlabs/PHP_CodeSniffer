@@ -102,6 +102,17 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </dir>
    <dir name="tests">
     <dir name="Core">
+     <dir name="Autoloader">
+       <dir name="TestFiles">
+        <dir name="Sub">
+         <file baseinstalldir="" name="C.inc" role="test" />
+        </dir>
+        <file baseinstalldir="" name="A.inc" role="test" />
+        <file baseinstalldir="" name="B.inc" role="test" />
+        <file baseinstalldir="" name="C.inc" role="test" />
+       </dir>
+       <file baseinstalldir="" name="DetermineLoadedClassTest.php" role="test" />
+     </dir>
      <dir name="File">
       <file baseinstalldir="" name="FindEndOfStatementTest.inc" role="test" />
       <file baseinstalldir="" name="FindEndOfStatementTest.php" role="test" />
@@ -1993,6 +2004,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
+   <install as="CodeSniffer/Core/Autoloader/DetermineLoadedClassTest.php" name="tests/Core/Autoloader/DetermineLoadedClassTest.php" />
+   <install as="CodeSniffer/Core/Autoloader/TestFiles/A.inc" name="tests/Core/Autoloader/TestFiles/A.inc" />
+   <install as="CodeSniffer/Core/Autoloader/TestFiles/B.inc" name="tests/Core/Autoloader/TestFiles/B.inc" />
+   <install as="CodeSniffer/Core/Autoloader/TestFiles/C.inc" name="tests/Core/Autoloader/TestFiles/C.inc" />
+   <install as="CodeSniffer/Core/Autoloader/TestFiles/Sub/C.inc" name="tests/Core/Autoloader/TestFiles/Sub/C.inc" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
    <install as="CodeSniffer/Core/File/FindExtendedClassNameTest.php" name="tests/Core/File/FindExtendedClassNameTest.php" />
@@ -2058,6 +2074,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/AllTests.php" name="tests/Core/AllTests.php" />
    <install as="CodeSniffer/Core/IsCamelCapsTest.php" name="tests/Core/IsCamelCapsTest.php" />
    <install as="CodeSniffer/Core/ErrorSuppressionTest.php" name="tests/Core/ErrorSuppressionTest.php" />
+   <install as="CodeSniffer/Core/Autoloader/DetermineLoadedClassTest.php" name="tests/Core/Autoloader/DetermineLoadedClassTest.php" />
+   <install as="CodeSniffer/Core/Autoloader/TestFiles/A.inc" name="tests/Core/Autoloader/TestFiles/A.inc" />
+   <install as="CodeSniffer/Core/Autoloader/TestFiles/B.inc" name="tests/Core/Autoloader/TestFiles/B.inc" />
+   <install as="CodeSniffer/Core/Autoloader/TestFiles/C.inc" name="tests/Core/Autoloader/TestFiles/C.inc" />
+   <install as="CodeSniffer/Core/Autoloader/TestFiles/Sub/C.inc" name="tests/Core/Autoloader/TestFiles/Sub/C.inc" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.php" name="tests/Core/File/FindEndOfStatementTest.php" />
    <install as="CodeSniffer/Core/File/FindEndOfStatementTest.inc" name="tests/Core/File/FindEndOfStatementTest.inc" />
    <install as="CodeSniffer/Core/File/FindExtendedClassNameTest.php" name="tests/Core/File/FindExtendedClassNameTest.php" />
