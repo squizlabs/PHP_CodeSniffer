@@ -376,10 +376,10 @@ abstract class Tokenizer
                         $disabledSniffs = [];
 
                         $additionalText = substr($commentText, 14);
-                        if ($additionalText === false) {
+                        if (empty($additionalText) === true) {
                             $ignoring = ['.all' => true];
                         } else {
-                            $parts = explode(',', substr($commentText, 13));
+                            $parts = explode(',', $additionalText);
                             foreach ($parts as $sniffCode) {
                                 $sniffCode = trim($sniffCode);
                                 $disabledSniffs[$sniffCode] = true;
@@ -411,10 +411,10 @@ abstract class Tokenizer
                             $enabledSniffs = [];
 
                             $additionalText = substr($commentText, 13);
-                            if ($additionalText === false) {
+                            if (empty($additionalText) === true) {
                                 $ignoring = null;
                             } else {
-                                $parts = explode(',', substr($commentText, 13));
+                                $parts = explode(',', $additionalText);
                                 foreach ($parts as $sniffCode) {
                                     $sniffCode = trim($sniffCode);
                                     $enabledSniffs[$sniffCode] = true;
@@ -472,10 +472,10 @@ abstract class Tokenizer
                         $ignoreRules = [];
 
                         $additionalText = substr($commentText, 13);
-                        if ($additionalText === false) {
+                        if (empty($additionalText) === true) {
                             $ignoreRules = ['.all' => true];
                         } else {
-                            $parts = explode(',', substr($commentText, 13));
+                            $parts = explode(',', $additionalText);
                             foreach ($parts as $sniffCode) {
                                 $ignoreRules[trim($sniffCode)] = true;
                             }
