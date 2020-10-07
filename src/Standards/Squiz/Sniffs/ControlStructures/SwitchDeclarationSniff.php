@@ -66,11 +66,12 @@ class SwitchDeclarationSniff implements Sniff
             return;
         }
 
-        $switch        = $tokens[$stackPtr];
-        $nextCase      = $stackPtr;
-        $caseAlignment = ($switch['column'] + $this->indent);
-        $caseCount     = 0;
-        $foundDefault  = false;
+        $switch         = $tokens[$stackPtr];
+        $nextCase       = $stackPtr;
+        $caseAlignment  = ($switch['column'] + $this->indent);
+        $breakAlignment = ($caseAlignment + $this->indent);
+        $caseCount      = 0;
+        $foundDefault   = false;
 
         while (($nextCase = $phpcsFile->findNext([T_CASE, T_DEFAULT, T_SWITCH], ($nextCase + 1), $switch['scope_closer'])) !== false) {
             // Skip nested SWITCH statements; they are handled on their own.
@@ -158,8 +159,8 @@ class SwitchDeclarationSniff implements Sniff
                     // Only need to check a couple of things once, even if the
                     // break is shared between multiple case statements, or even
                     // the default case.
-                    if ($tokens[$nextBreak]['column'] !== $caseAlignment) {
-                        $error = 'Case breaking statement must be indented '.$this->indent.' spaces from SWITCH keyword';
+                    if ($tokens[$nextBreak]['column'] !== $breakAlignment) {
+                        $error = 'Case breaking statement must be indented '.$this->indent.' spaces from '.strtoupper($type).' keyword';
                         $fix   = $phpcsFile->addFixableError($error, $nextBreak, 'BreakIndent');
 
                         if ($fix === true) {
