@@ -16,6 +16,13 @@ use PHP_CodeSniffer\Util\Common;
 class VariableCommentSniff extends AbstractVariableSniff
 {
 
+    /**
+     * Whether to use short forms of type keywords.
+     *
+     * @var boolean
+     */
+    public $useShortTypes = false;
+
 
     /**
      * Called to process class member vars.
@@ -113,7 +120,7 @@ class VariableCommentSniff extends AbstractVariableSniff
         $typeNames      = explode('|', $varType);
         $suggestedNames = [];
         foreach ($typeNames as $i => $typeName) {
-            $suggestedName = Common::suggestType($typeName);
+            $suggestedName = Common::suggestType($typeName, $this->useShortTypes);
             if (in_array($suggestedName, $suggestedNames, true) === false) {
                 $suggestedNames[] = $suggestedName;
             }
