@@ -55,6 +55,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Thiemo Kreuz for the patch
   - Fixed bug #3007 : Directory exclude pattern improperly excludes directories with names that start the same
     -- Thanks to Steve Talbot for the patch
+  - Fixed bug #3043 : Squiz.WhiteSpace.OperatorSpacing false positive for negation in arrow function
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3049 : Incorrect error with arrow function and parameter passed as reference
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3053 : PSR2 incorrect fix when multiple use statements on same line do not have whitespace between them
