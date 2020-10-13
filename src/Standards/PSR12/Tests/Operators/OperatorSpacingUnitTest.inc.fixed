@@ -59,3 +59,5 @@ $a = [ 'a' => &$something ];
 
 $fn = fn(array &$one) => 1;
 $fn = fn(array & $one) => 1;
+
+$fn = static fn(DateTime $a, DateTime $b): int => -($a->getTimestamp() <=> $b->getTimestamp());

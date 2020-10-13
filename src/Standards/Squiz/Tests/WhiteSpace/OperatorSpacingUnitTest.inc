@@ -470,5 +470,7 @@ $cl = function ($boo =+1) {};
 $fn = fn ($boo =-1) => $boo;
 $fn = fn ($boo =+1) => $boo;
 
+$fn = static fn(DateTime $a, DateTime $b): int => -($a->getTimestamp() <=> $b->getTimestamp());
+
 /* Intentional parse error. This has to be the last test in the file. */
 $a = 10 +
