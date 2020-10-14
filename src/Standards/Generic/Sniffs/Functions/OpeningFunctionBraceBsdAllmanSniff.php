@@ -121,6 +121,9 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
                         $phpcsFile->fixer->replaceToken(($openingBrace - 1), '');
                     }
 
+	                $indentSize = $tokens[$phpcsFile->findPrevious([T_IF, T_ELSEIF, T_ELSE], $stackPtr)]['column'];
+	                $phpcsFile->fixer->replaceToken($openingBrace, str_repeat(' ', $indentSize) . '{');
+
                     $phpcsFile->fixer->addNewlineBefore($openingBrace);
                 } else {
                     $phpcsFile->fixer->replaceToken($openingBrace, '');
