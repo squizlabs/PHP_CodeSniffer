@@ -30,6 +30,13 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
      */
     public $checkClosures = false;
 
+	/**
+	 * Should this sniff use tabs instead of spaces ?
+	 *
+	 * @var boolean
+	 */
+	public $tabIndent = false;
+
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -196,7 +203,7 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
 
             $fix = $phpcsFile->addFixableError($error, $openingBrace, 'BraceIndent', $data);
             if ($fix === true) {
-                $indent = str_repeat(' ', $expected);
+                $indent = str_repeat($this->tabIndent ? '	' : ' ', $expected);
                 if ($found === 0) {
                     $phpcsFile->fixer->addContentBefore($openingBrace, $indent);
                 } else {
