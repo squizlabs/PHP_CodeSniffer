@@ -442,11 +442,30 @@ class File
                     continue;
                 }
 
-                if (trim($this->path, '\'"') !== 'STDIN') {
-                    // If the file path matches one of our ignore patterns, skip it.
-                    // While there is support for a type of each pattern
-                    // (absolute or relative) we don't actually support it here.
-                    foreach ($listenerData['ignore'] as $pattern) {
+                // If the file path matches one of our ignore patterns, skip it.
+                // While there is support for a type of each pattern
+                // (absolute or relative) we don't actually support it here.
+                foreach ($listenerData['ignore'] as $pattern) {
+                    // We assume a / directory separator, as do the exclude rules
+                    // most developers write, so we need a special case for any system
+                    // that is different.
+                    if (DIRECTORY_SEPARATOR === '\\') {
+                        $pattern = str_replace('/', '\\\\', $pattern);
+                    }
+
+                    $pattern = '`'.$pattern.'`i';
+                    if (preg_match($pattern, $this->path) === 1) {
+                        $this->ignoredListeners[$class] = true;
+                        continue(2);
+                    }
+                }
+
+                // If the file path does not match one of our include patterns, skip it.
+                // While there is support for a type of each pattern
+                // (absolute or relative) we don't actually support it here.
+                if (empty($listenerData['include']) === false) {
+                    $included = false;
+                    foreach ($listenerData['include'] as $pattern) {
                         // We assume a / directory separator, as do the exclude rules
                         // most developers write, so we need a special case for any system
                         // that is different.
@@ -456,36 +475,15 @@ class File
 
                         $pattern = '`'.$pattern.'`i';
                         if (preg_match($pattern, $this->path) === 1) {
-                            $this->ignoredListeners[$class] = true;
-                            continue(2);
+                            $included = true;
+                            break;
                         }
                     }
 
-                    // If the file path does not match one of our include patterns, skip it.
-                    // While there is support for a type of each pattern
-                    // (absolute or relative) we don't actually support it here.
-                    if (empty($listenerData['include']) === false) {
-                        $included = false;
-                        foreach ($listenerData['include'] as $pattern) {
-                            // We assume a / directory separator, as do the exclude rules
-                            // most developers write, so we need a special case for any system
-                            // that is different.
-                            if (DIRECTORY_SEPARATOR === '\\') {
-                                $pattern = str_replace('/', '\\\\', $pattern);
-                            }
-
-                            $pattern = '`'.$pattern.'`i';
-                            if (preg_match($pattern, $this->path) === 1) {
-                                $included = true;
-                                break;
-                            }
-                        }
-
-                        if ($included === false) {
-                            $this->ignoredListeners[$class] = true;
-                            continue;
-                        }
-                    }//end if
+                    if ($included === false) {
+                        $this->ignoredListeners[$class] = true;
+                        continue;
+                    }
                 }//end if
 
                 $this->activeListener = $class;
