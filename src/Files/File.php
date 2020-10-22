@@ -965,63 +965,59 @@ class File
 
         // Make sure we are not ignoring this file.
         $included = null;
-        if (trim($this->path, '\'"') === 'STDIN') {
-            $included = true;
-        } else {
-            foreach ($checkCodes as $checkCode) {
-                $patterns = null;
+        foreach ($checkCodes as $checkCode) {
+            $patterns = null;
 
-                if (isset($this->configCache['includePatterns'][$checkCode]) === true) {
-                    $patterns  = $this->configCache['includePatterns'][$checkCode];
-                    $excluding = false;
-                } else if (isset($this->configCache['ignorePatterns'][$checkCode]) === true) {
-                    $patterns  = $this->configCache['ignorePatterns'][$checkCode];
-                    $excluding = true;
+            if (isset($this->configCache['includePatterns'][$checkCode]) === true) {
+                $patterns  = $this->configCache['includePatterns'][$checkCode];
+                $excluding = false;
+            } else if (isset($this->configCache['ignorePatterns'][$checkCode]) === true) {
+                $patterns  = $this->configCache['ignorePatterns'][$checkCode];
+                $excluding = true;
+            }
+
+            if ($patterns === null) {
+                continue;
+            }
+
+            foreach ($patterns as $pattern => $type) {
+                // While there is support for a type of each pattern
+                // (absolute or relative) we don't actually support it here.
+                $replacements = [
+                    '\\,' => ',',
+                    '*'   => '.*',
+                ];
+
+                // We assume a / directory separator, as do the exclude rules
+                // most developers write, so we need a special case for any system
+                // that is different.
+                if (DIRECTORY_SEPARATOR === '\\') {
+                    $replacements['/'] = '\\\\';
                 }
 
-                if ($patterns === null) {
+                $pattern = '`'.strtr($pattern, $replacements).'`i';
+                $matched = preg_match($pattern, $this->path);
+
+                if ($matched === 0) {
+                    if ($excluding === false && $included === null) {
+                        // This file path is not being included.
+                        $included = false;
+                    }
+
                     continue;
                 }
 
-                foreach ($patterns as $pattern => $type) {
-                    // While there is support for a type of each pattern
-                    // (absolute or relative) we don't actually support it here.
-                    $replacements = [
-                        '\\,' => ',',
-                        '*'   => '.*',
-                    ];
+                if ($excluding === true) {
+                    // This file path is being excluded.
+                    $this->ignoredCodes[$checkCode] = true;
+                    return false;
+                }
 
-                    // We assume a / directory separator, as do the exclude rules
-                    // most developers write, so we need a special case for any system
-                    // that is different.
-                    if (DIRECTORY_SEPARATOR === '\\') {
-                        $replacements['/'] = '\\\\';
-                    }
-
-                    $pattern = '`'.strtr($pattern, $replacements).'`i';
-                    $matched = preg_match($pattern, $this->path);
-
-                    if ($matched === 0) {
-                        if ($excluding === false && $included === null) {
-                            // This file path is not being included.
-                            $included = false;
-                        }
-
-                        continue;
-                    }
-
-                    if ($excluding === true) {
-                        // This file path is being excluded.
-                        $this->ignoredCodes[$checkCode] = true;
-                        return false;
-                    }
-
-                    // This file path is being included.
-                    $included = true;
-                    break;
-                }//end foreach
+                // This file path is being included.
+                $included = true;
+                break;
             }//end foreach
-        }//end if
+        }//end foreach
 
         if ($included === false) {
             // There were include rules set, but this file
