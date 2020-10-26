@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2020-10-23</date>
  <time>13:00:00</time>
  <version>
-  <release>3.5.8</release>
-  <api>3.5.8</api>
+  <release>3.6.0</release>
+  <api>3.6.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,8 +26,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Reverted a change to the way include/exclude patterns are processed for STDIN content
-    -- This change is not backwards compatible and will be re-introduced in version 3.6.0
+  - Include patterns are now ignored when processing STDIN
+    -- Previously, checks using include patterns were excluded when processing STDIN when no file path was provided via --stdin-path
+    -- Now, all include and exclude rules are ignored when no file path is provided, allowing all checks to run
+    -- If you want include and exclude rules enforced when checking STDIN, use --stdin-path to set the file path
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
