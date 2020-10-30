@@ -30,7 +30,7 @@ class LocalFile extends File
     public function __construct($path, Ruleset $ruleset, Config $config)
     {
         $this->path = trim($path);
-        if (is_readable($this->path) === false) {
+        if (Common::isReadable($this->path) === false) {
             parent::__construct($this->path, $ruleset, $config);
             $error = 'Error opening file; file no longer exists or you do not have access to read the file';
             $this->addMessage(true, $error, 1, 1, 'Internal.LocalFile', [], 5, false);
