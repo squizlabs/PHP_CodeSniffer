@@ -49,6 +49,34 @@ class Common
 
 
     /**
+     * Checks if a file is readable.
+     *
+     * Addresses PHP bug related to reading files from network drives on Windows.
+     * e.g. when using WSL2.
+     *
+     * @param string $path The path to the file.
+     *
+     * @return boolean
+     */
+    public static function isReadable($path)
+    {
+        if (is_readable($path) === true) {
+            return true;
+        }
+
+        if (file_exists($path) === true && is_file($path) === true) {
+            $f = @fopen($path, 'rb');
+            if (fclose($f) === true) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }//end isReadable()
+
+
+    /**
      * CodeSniffer alternative for realpath.
      *
      * Allows for PHAR support.

@@ -38,6 +38,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Vincent Langlet for the patch
   - The PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket error message is now reported on the closing parenthesis token
     -- Previously, the error was being reported on the function keyword, leading to confusing line numbers in the error report
+  - Fixed an issue that could occurr when checking files on network drives, such as with WSL2 on Windows 10
+    -- This works around a long-standing PHP bug with is_readable()
+    -- Thanks to Michael S for the patch
  </notes>
  <contents>
   <dir name="/">
