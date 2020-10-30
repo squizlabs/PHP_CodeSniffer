@@ -18,7 +18,8 @@ class FunctionCommentSniff implements Sniff
 
     /**
      * Disable the check for functions with a lower visibility than the value given.
-     * Allowed values are public, protected and private.
+     *
+     * Allowed values are public, protected, and private.
      *
      * @var string
      */
@@ -48,11 +49,6 @@ class FunctionCommentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        $ignore   = Tokens::$emptyTokens;
-        $ignore[] = T_STATIC;
-
         $scopeModifier = $phpcsFile->getMethodProperties($stackPtr)['scope'];
         if ($scopeModifier === 'protected'
             && $this->minimumVisibility === 'public'
@@ -62,6 +58,7 @@ class FunctionCommentSniff implements Sniff
             return;
         }
 
+        $tokens   = $phpcsFile->getTokens();
         $ignore   = Tokens::$methodPrefixes;
         $ignore[] = T_WHITESPACE;
 
