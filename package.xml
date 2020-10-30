@@ -36,6 +36,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set the "minimumVisibility" sniff property to "public" to ignore both private and protected methods
     -- The default remains at "private", so all methods are checked
     -- Thanks to Vincent Langlet for the patch
+  - The PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket error message is now reported on the closing parenthesis token
+    -- Previously, the error was being reported on the function keyword, leading to confusing line numbers in the error report
  </notes>
  <contents>
   <dir name="/">
