@@ -15,7 +15,7 @@ $foo = (int) $bar;
 $foo = (integer) $bar;
 $foo = (bool) $bar;
 $foo = (string) $bar;
-$foo = (array) $bar;
+$foo = ( array ) $bar;
 
 function foo(int $a, string $b, bool $c, array $d, Foo\Bar $e) : int {}
 function foo(int $a, string $b, bool $c, array $d, Foo\Bar $e) : Foo\Bar {}
@@ -45,3 +45,31 @@ $foo = function (?int $a, ?    callable $b)
 
 $var = (binary) $string;
 $var = (binary)$string;
+
+function unionParamTypesA (bool|array| /* nullability operator not allowed in union */ null $var) {}
+
+function unionParamTypesB (\Package\ClassName | int | \Package\Other_Class | false $var) {}
+
+function unionReturnTypesA ($var): bool|array| /* nullability operator not allowed in union */ null {}
+
+function unionReturnTypesB ($var): \Package\ClassName | int | \Package\Other_Class | false {}
+
+class TypedProperties
+{
+    protected ClassName $class;
+    public int $int;
+    private ?bool $bool;
+    public self $self;
+    protected parent $parent;
+    private array $array;
+    public float $float;
+    protected ?string $string;
+    private iterable $iterable;
+    public object $object;
+    protected mixed $mixed;
+
+    public iterable|false|null $unionTypeA;
+    protected self|parent /* comment */ |\Fully\Qualified\ClassName|UnQualifiedClass $unionTypeB;
+    private ClassName|/*comment*/float|string|false $unionTypeC;
+    public string | array | false $unionTypeD;
+}
