@@ -801,7 +801,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $function = $this->getTargetToken($commentString, [T_FUNCTION, T_CLOSURE, T_FN]);
         $found    = self::$phpcsFile->getMethodParameters($function);
 
-        $blacklist = [
+        $exclude = [
             'comma_token',
             'default_token',
             'default_equal_token',
@@ -810,10 +810,11 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint_token',
             'type_hint_end_token',
             'variadic_token',
+            'visibility_token',
         ];
 
         foreach ($found as $i => $data) {
-            foreach ($blacklist as $b) {
+            foreach ($exclude as $b) {
                 if (isset($found[$i][$b]) === true) {
                     unset($found[$i][$b]);
                 }

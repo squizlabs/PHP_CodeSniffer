@@ -741,9 +741,12 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
         $function = $this->getTargetToken($commentString, [T_FUNCTION, T_CLOSURE, T_FN]);
         $found    = self::$phpcsFile->getMethodProperties($function);
 
-        $blacklist = ['return_type_token'];
+        $exclude = [
+            'return_type_token',
+            'return_type_end_token',
+        ];
 
-        foreach ($blacklist as $b) {
+        foreach ($exclude as $b) {
             if (isset($found[$b]) === true) {
                 unset($found[$b]);
             }

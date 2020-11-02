@@ -30,12 +30,12 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
         $variable = $this->getTargetToken($identifier, T_VARIABLE);
         $found    = self::$phpcsFile->getMemberProperties($variable);
 
-        $blacklist = [
+        $exclude = [
             'type_token',
             'type_end_token',
         ];
 
-        foreach ($blacklist as $b) {
+        foreach ($exclude as $b) {
             if (isset($found[$b]) === true) {
                 unset($found[$b]);
             }
