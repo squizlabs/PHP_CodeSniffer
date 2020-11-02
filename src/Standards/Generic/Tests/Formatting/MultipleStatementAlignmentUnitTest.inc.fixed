@@ -406,3 +406,57 @@ $foofoo = new Foo([
 
 $i = 0;
 echo "TEST: ".($i += 1)."\n";
+
+// Valid
+$foo      = 'Hello';
+$variable = 12;
+$foo     .= ' World';
+$test     = 1;
+$test   <<= 6;
+
+// Invalid
+$foo      = 'Hello';
+$variable = 12;
+$foo     .= ' World';
+$test     = 1;
+$test   <<= 6;
+
+// phpcs:set Generic.Formatting.MultipleStatementAlignment alignAtEndOfAssignToken false
+
+// Valid
+$foo      = 'Hello';
+$variable = 12;
+$foo      .= ' World';
+$test     = 1;
+$test     <<= 6;
+
+// Invalid
+$foo      = 'Hello';
+$variable = 12;
+$foo      .= ' World';
+$test     = 1;
+$test     <<= 6;
+
+// phpcs:set Generic.Formatting.MultipleStatementAlignment maxPadding 8
+
+$one       = 'one';
+$varonetwo = 'two';
+$varonetwothree     = 'three';
+$varonetwothreefour = 'four';
+
+$one       = 'one';
+$varonetwo .= 'two';
+$varonetwo = 'two';
+$varonetwo .= 'two';
+$varonetwothree     = 'three';
+$varonetwothreefour = 'four';
+
+$one <<= 8;
+$onetwothree = 3;
+
+// phpcs:set Generic.Formatting.MultipleStatementAlignment alignAtEndOfAssignToken true
+
+$one       <<= 8;
+$onetwothree = 3;
+
+// phpcs:set Generic.Formatting.MultipleStatementAlignment maxPadding 1000
