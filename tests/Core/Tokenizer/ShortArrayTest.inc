@@ -45,6 +45,15 @@ $var ClassName::CONSTANT_NAME[2];
 /* testMagicConstantDereferencing */
 $var = __FILE__[0];
 
+/* testNamespacedConstantDereferencing */
+$var = MyNS\MY_CONSTANT[1];
+
+/* testFQNNamespacedConstantDereferencing */
+$var = \MY_CONSTANT[1];
+
+/* testNamespaceRelativeConstantDereferencing */
+$var = namespace\MY_CONSTANT[1];
+
 /* testArrayAccessCurlyBraces */
 $var = $array{'key'}['key'];
 

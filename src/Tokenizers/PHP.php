@@ -1971,6 +1971,9 @@ class PHP extends Tokenizer
                     T_OBJECT_OPERATOR          => T_OBJECT_OPERATOR,
                     T_NULLSAFE_OBJECT_OPERATOR => T_NULLSAFE_OBJECT_OPERATOR,
                     T_STRING                   => T_STRING,
+                    T_NAME_FULLY_QUALIFIED     => T_NAME_FULLY_QUALIFIED,
+                    T_NAME_RELATIVE            => T_NAME_RELATIVE,
+                    T_NAME_QUALIFIED           => T_NAME_QUALIFIED,
                     T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
                 ];
                 $allowed     += Tokens::$magicConstants;
