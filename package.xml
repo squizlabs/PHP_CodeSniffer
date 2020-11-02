@@ -26,6 +26,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Added support for PHP 8.0 union types
+    -- A new T_TYPE_UNION token is available to represent the pipe character
+    -- File::getMethodParameters(), getMethodProperties(), and getMemberProperties() will now return union types
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Include patterns are now ignored when processing STDIN
     -- Previously, checks using include patterns were excluded when processing STDIN when no file path was provided via --stdin-path
     -- Now, all include and exclude rules are ignored when no file path is provided, allowing all checks to run
