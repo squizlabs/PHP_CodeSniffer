@@ -48,21 +48,11 @@ class MultipleStatementAlignmentSniff implements Sniff
     public $maxPadding = 1000;
 
     /**
-     * Controls which side of the assignment token is used for alignment
-     *
-     * The default is to use the end of the assignemnt token:
-     *
-     * $test  = 'Hello';
-     * $test .= ' World';
-     *
-     * Setting to false reverses the alignment:
-     *
-     * $test = 'Hello';
-     * $test .= 'World';
+     * Controls which side of the assignment token is used for alignment.
      *
      * @var boolean
      */
-    public $alignAtEndOfAssignToken = true;
+    public $alignAtEnd = true;
 
 
     /**
@@ -270,7 +260,7 @@ class MultipleStatementAlignmentSniff implements Sniff
             // padding length if they aligned with us.
             $varEnd    = $tokens[($var + 1)]['column'];
             $assignLen = $tokens[$assign]['length'];
-            if ($this->alignAtEndOfAssignToken !== true) {
+            if ($this->alignAtEnd !== true) {
                 $assignLen = 1;
             }
 

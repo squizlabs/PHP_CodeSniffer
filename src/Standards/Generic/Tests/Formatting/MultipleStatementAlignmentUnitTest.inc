@@ -421,7 +421,7 @@ $foo      .= ' World';
 $test     = 1;
 $test     <<= 6;
 
-// phpcs:set Generic.Formatting.MultipleStatementAlignment alignAtEndOfAssignToken false
+// phpcs:set Generic.Formatting.MultipleStatementAlignment alignAtEnd false
 
 // Valid
 $foo      = 'Hello';
@@ -454,7 +454,7 @@ $varonetwothreefour = 'four';
 $one         <<= 8;
 $onetwothree = 3;
 
-// phpcs:set Generic.Formatting.MultipleStatementAlignment alignAtEndOfAssignToken true
+// phpcs:set Generic.Formatting.MultipleStatementAlignment alignAtEnd true
 
 $one       <<= 8;
 $onetwothree = 3;
