@@ -1294,7 +1294,8 @@ class File
      *                                           // or FALSE if there is no type hint.
      *         'type_hint_end_token' => integer, // The stack pointer to the end of the type hint
      *                                           // or FALSE if there is no type hint.
-     *         'nullable_type'       => boolean, // TRUE if the var type is nullable.
+     *         'nullable_type'       => boolean, // TRUE if the type is preceded by the nullability
+     *                                           // operator.
      *         'comma_token'         => integer, // The stack pointer to the comma after the param
      *                                           // or FALSE if this is the last param.
      *        )
@@ -1449,6 +1450,9 @@ class File
                 break;
             case T_NAMESPACE:
             case T_NS_SEPARATOR:
+            case T_TYPE_UNION:
+            case T_FALSE:
+            case T_NULL:
                 // Part of a type hint or default value.
                 if ($defaultStart === null) {
                     if ($typeHintToken === false) {
@@ -1539,7 +1543,8 @@ class File
      *    'return_type'          => '',       // The return type of the method.
      *    'return_type_token'    => integer,  // The stack pointer to the start of the return type
      *                                        // or FALSE if there is no return type.
-     *    'nullable_return_type' => false,    // TRUE if the return type is nullable.
+     *    'nullable_return_type' => false,    // TRUE if the return type is preceded by the
+     *                                        // nullability operator.
      *    'is_abstract'          => false,    // TRUE if the abstract keyword was found.
      *    'is_final'             => false,    // TRUE if the final keyword was found.
      *    'is_static'            => false,    // TRUE if the static keyword was found.
@@ -1637,8 +1642,11 @@ class File
                 T_SELF         => T_SELF,
                 T_PARENT       => T_PARENT,
                 T_STATIC       => T_STATIC,
+                T_FALSE        => T_FALSE,
+                T_NULL         => T_NULL,
                 T_NAMESPACE    => T_NAMESPACE,
                 T_NS_SEPARATOR => T_NS_SEPARATOR,
+                T_TYPE_UNION   => T_TYPE_UNION,
             ];
 
             for ($i = $this->tokens[$stackPtr]['parenthesis_closer']; $i < $this->numTokens; $i++) {
@@ -1706,7 +1714,8 @@ class File
      *                                  // or FALSE if there is no type.
      *    'type_end_token'  => integer, // The stack pointer to the end of the type
      *                                  // or FALSE if there is no type.
-     *    'nullable_type'   => boolean, // TRUE if the type is nullable.
+     *    'nullable_type'   => boolean, // TRUE if the type is preceded by the nullability
+     *                                  // operator.
      *   );
      * </code>
      *
@@ -1821,8 +1830,11 @@ class File
                 T_CALLABLE     => T_CALLABLE,
                 T_SELF         => T_SELF,
                 T_PARENT       => T_PARENT,
+                T_FALSE        => T_FALSE,
+                T_NULL         => T_NULL,
                 T_NAMESPACE    => T_NAMESPACE,
                 T_NS_SEPARATOR => T_NS_SEPARATOR,
+                T_TYPE_UNION   => T_TYPE_UNION,
             ];
 
             for ($i; $i < $stackPtr; $i++) {
