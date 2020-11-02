@@ -84,9 +84,9 @@ Or if you wish to check an entire directory you can specify the directory locati
 
     $ phpcs /path/to/code-directory
 
-If you wish to check your code against the PSR-2 coding standard, use the `--standard` command line argument:
+If you wish to check your code against the PSR-12 coding standard, use the `--standard` command line argument:
 
-    $ phpcs --standard=PSR2 /path/to/code-directory
+    $ phpcs --standard=PSR12 /path/to/code-directory
 
 If PHP_CodeSniffer finds any coding standard errors, a report will be shown after running the command.
 
