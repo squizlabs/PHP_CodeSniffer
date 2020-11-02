@@ -1301,10 +1301,14 @@ class File
      *        )
      * </code>
      *
-     * Parameters with default values have an additional array indexes of:
+     * Parameters with default values have additional array indexes of:
      *         'default'             => string,  // The full content of the default value.
      *         'default_token'       => integer, // The stack pointer to the start of the default value.
      *         'default_equal_token' => integer, // The stack pointer to the equals sign.
+     *
+     * Parameters declared using PHP 8 constructor property promotion, have these additional array indexes:
+     *         'property_visibility' => string,  // The property visibility as declared.
+     *         'visibility_token'    => integer, // The stack pointer to the visibility modifier token.
      *
      * @param int $stackPtr The position in the stack of the function token
      *                      to acquire the parameters for.
@@ -1359,6 +1363,7 @@ class File
         $typeHintToken   = false;
         $typeHintEndToken = false;
         $nullableType     = false;
+        $visibilityToken  = null;
 
         for ($i = $paramStart; $i <= $closer; $i++) {
             // Check to see if this token has a parenthesis or bracket opener. If it does
@@ -1470,6 +1475,13 @@ class File
                     $typeHintEndToken = $i;
                 }
                 break;
+            case T_PUBLIC:
+            case T_PROTECTED:
+            case T_PRIVATE:
+                if ($defaultStart === null) {
+                    $visibilityToken = $i;
+                }
+                break;
             case T_CLOSE_PARENTHESIS:
             case T_COMMA:
                 // If it's null, then there must be no parameters for this
@@ -1498,6 +1510,11 @@ class File
                 $vars[$paramCount]['type_hint_end_token'] = $typeHintEndToken;
                 $vars[$paramCount]['nullable_type']       = $nullableType;
 
+                if ($visibilityToken !== null) {
+                    $vars[$paramCount]['property_visibility'] = $this->tokens[$visibilityToken]['content'];
+                    $vars[$paramCount]['visibility_token']    = $visibilityToken;
+                }
+
                 if ($this->tokens[$i]['code'] === T_COMMA) {
                     $vars[$paramCount]['comma_token'] = $i;
                 } else {
@@ -1517,6 +1534,7 @@ class File
                 $typeHintToken    = false;
                 $typeHintEndToken = false;
                 $nullableType     = false;
+                $visibilityToken  = null;
 
                 $paramCount++;
                 break;
