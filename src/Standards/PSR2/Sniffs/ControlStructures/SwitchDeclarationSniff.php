@@ -152,7 +152,7 @@ class SwitchDeclarationSniff implements Sniff
                             $phpcsFile->fixer->replaceToken($nextCloser, trim($tokens[$nextCloser]['content']));
                         }
                     } else {
-                        $diff = ($caseAlignment + $this->indent - $tokens[$nextCloser]['column']);
+                        $diff = ($tokens[$nextCase]['column'] + $this->indent - $tokens[$nextCloser]['column']);
                         if ($diff !== 0) {
                             $error = 'Terminating statement must be indented to the same level as the CASE body';
                             $fix   = $phpcsFile->addFixableError($error, $nextCloser, 'BreakIndent');
