@@ -61,6 +61,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed an issue that could occurr when checking files on network drives, such as with WSL2 on Windows 10
     -- This works around a long-standing PHP bug with is_readable()
     -- Thanks to Michael S for the patch
+  - Fixed bug #3157 : PSR2.ControlStructures.SwitchDeclaration.BreakIndent false positive when case keyword is not indented
  </notes>
  <contents>
   <dir name="/">

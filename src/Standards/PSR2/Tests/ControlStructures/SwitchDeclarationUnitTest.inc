@@ -271,3 +271,13 @@ $foo = $foo ?
         }
     } :
     null;
+
+switch ($foo) {
+case Foo::INTERFACE:
+    echo '1';
+    return self::INTERFACE;
+case Foo::TRAIT:
+case Foo::ARRAY:
+    echo '1';
+    return self::VALUE;
+}
