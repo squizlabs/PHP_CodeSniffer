@@ -1622,6 +1622,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseDeclarationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercaseDeclarationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SwitchDeclarationUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="SwitchDeclarationUnitTest.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SwitchDeclarationUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SwitchDeclarationUnitTest.php" role="test" />
        </dir>
