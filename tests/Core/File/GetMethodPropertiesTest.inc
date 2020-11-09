@@ -44,6 +44,12 @@ class MyClass {
     function myFunction(): \MyNamespace /** comment *\/ comment */
                            \MyClass /* comment */
                            \Foo {}
+
+    /* testReturnUnqualifiedName */
+    private function myFunction(): ?MyClass {}
+
+    /* testReturnPartiallyQualifiedName */
+    function myFunction(): Sub\Level\MyClass {}
 }
 
 abstract class MyClass

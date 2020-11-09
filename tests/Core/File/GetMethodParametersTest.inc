@@ -42,6 +42,12 @@ function mixedTypeHintNullable(?Mixed $var1) {}
 /* testNamespaceOperatorTypeHint */
 function namespaceOperatorTypeHint(?namespace\Name $var1) {}
 
+/* testVariadicFunctionClassType */
+function variableLengthArgument($unit, DateInterval ...$intervals) {}
+
+/* testNameSpacedTypeDeclaration */
+function namespacedClassType( \Package\Sub\ClassName $a, ?Sub\AnotherClass $b ) {}
+
 /* testPHP8UnionTypesSimple */
 function unionTypeSimple(int|float $number, self|parent &...$obj) {}
 

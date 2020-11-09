@@ -43,7 +43,10 @@ class LowercasePHPFunctionsSniff implements Sniff
      */
     public function register()
     {
-        return [T_STRING];
+        return [
+            T_STRING,
+            T_NAME_FULLY_QUALIFIED,
+        ];
 
     }//end register()
 
@@ -62,6 +65,10 @@ class LowercasePHPFunctionsSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         $content   = $tokens[$stackPtr]['content'];
+        if ($tokens[$stackPtr]['code'] === T_NAME_FULLY_QUALIFIED) {
+            $content = ltrim($content, '\\');
+        }
+
         $contentLc = strtolower($content);
         if ($content === $contentLc) {
             return;
@@ -88,7 +95,7 @@ class LowercasePHPFunctionsSniff implements Sniff
 
         if ($tokens[$next]['code'] !== T_OPEN_PARENTHESIS) {
             // Is this a use statement importing a PHP native function ?
-            if ($tokens[$next]['code'] !== T_NS_SEPARATOR
+            if ($tokens[$stackPtr]['code'] === T_STRING
                 && $tokens[$prev]['code'] === T_STRING
                 && $tokens[$prev]['content'] === 'function'
                 && $prevPrev !== false
@@ -115,15 +122,15 @@ class LowercasePHPFunctionsSniff implements Sniff
             return;
         }
 
-        if ($tokens[$prev]['code'] === T_NS_SEPARATOR) {
-            if ($prevPrev !== false
-                && ($tokens[$prevPrev]['code'] === T_STRING
-                || $tokens[$prevPrev]['code'] === T_NAMESPACE
-                || $tokens[$prevPrev]['code'] === T_NEW)
+        if ($tokens[$stackPtr]['code'] === T_NAME_FULLY_QUALIFIED) {
+            if ($prev !== false
+                && ($tokens[$prev]['code'] === T_STRING
+                || $tokens[$prev]['code'] === T_NAMESPACE)
             ) {
                 // Namespaced class/function, not an inbuilt function.
                 // Could potentially give false negatives for non-namespaced files
-                // when namespace\functionName() is encountered.
+                // when namespace\functionName() is encountered and for identifier names
+                // interlaced with whitespace or comments (parse errors in PHP 8).
                 return;
             }
         }
@@ -153,7 +160,7 @@ class LowercasePHPFunctionsSniff implements Sniff
 
         $fix = $phpcsFile->addFixableError($error, $stackPtr, 'CallUppercase', $data);
         if ($fix === true) {
-            $phpcsFile->fixer->replaceToken($stackPtr, $contentLc);
+            $phpcsFile->fixer->replaceToken($stackPtr, strtolower($tokens[$stackPtr]['content']));
         }
 
     }//end process()

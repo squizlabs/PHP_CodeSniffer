@@ -19,6 +19,12 @@ class testFIINNamespacedClass implements \PHP_CodeSniffer\Tests\Core\File\testFI
 /* testNonImplementedClass */
 class testFIINNonImplementedClass {}
 
+/* testNamespaceRelativeQualifiedClass */
+class testFIINQualifiedClass implements Core\File\RelativeInterface {}
+
+/* testDeclarationMultiImplementedNamespaceOperator */
+class testMultiImplementedNSOperator implements namespace\testInterfaceA, namespace\testInterfaceB {}
+
 /* testClassThatExtendsAndImplements */
 class testFECNClassThatExtendsAndImplements extends testFECNClass implements InterfaceA, \NameSpaced\Cat\InterfaceB {}
 

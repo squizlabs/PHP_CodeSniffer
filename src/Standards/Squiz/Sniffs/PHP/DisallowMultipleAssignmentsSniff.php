@@ -116,7 +116,9 @@ class DisallowMultipleAssignmentsSniff implements Sniff
         $allowed = Tokens::$emptyTokens;
 
         $allowed[T_STRING]          = T_STRING;
-        $allowed[T_NS_SEPARATOR]    = T_NS_SEPARATOR;
+        $allowed[T_NAME_QUALIFIED]  = T_NAME_QUALIFIED;
+        $allowed[T_NAME_FULLY_QUALIFIED] = T_NAME_FULLY_QUALIFIED;
+        $allowed[T_NAME_RELATIVE]   = T_NAME_RELATIVE;
         $allowed[T_DOUBLE_COLON]    = T_DOUBLE_COLON;
         $allowed[T_OBJECT_OPERATOR] = T_OBJECT_OPERATOR;
         $allowed[T_ASPERAND]        = T_ASPERAND;

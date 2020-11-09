@@ -128,6 +128,18 @@ if (defined('T_NULLSAFE_OBJECT_OPERATOR') === false) {
     define('T_NULLSAFE_OBJECT_OPERATOR', 'PHPCS_T_NULLSAFE_OBJECT_OPERATOR');
 }
 
+if (defined('T_NAME_QUALIFIED') === false) {
+    define('T_NAME_QUALIFIED', 'PHPCS_T_NAME_QUALIFIED');
+}
+
+if (defined('T_NAME_FULLY_QUALIFIED') === false) {
+    define('T_NAME_FULLY_QUALIFIED', 'PHPCS_T_NAME_FULLY_QUALIFIED');
+}
+
+if (defined('T_NAME_RELATIVE') === false) {
+    define('T_NAME_RELATIVE', 'PHPCS_T_NAME_RELATIVE');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');
@@ -568,18 +580,21 @@ final class Tokens
      * @var array<int|string, int|string>
      */
     public static $functionNameTokens = [
-        T_STRING       => T_STRING,
-        T_EVAL         => T_EVAL,
-        T_EXIT         => T_EXIT,
-        T_INCLUDE      => T_INCLUDE,
-        T_INCLUDE_ONCE => T_INCLUDE_ONCE,
-        T_REQUIRE      => T_REQUIRE,
-        T_REQUIRE_ONCE => T_REQUIRE_ONCE,
-        T_ISSET        => T_ISSET,
-        T_UNSET        => T_UNSET,
-        T_EMPTY        => T_EMPTY,
-        T_SELF         => T_SELF,
-        T_STATIC       => T_STATIC,
+        T_STRING               => T_STRING,
+        T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
+        T_NAME_FULLY_QUALIFIED => T_NAME_FULLY_QUALIFIED,
+        T_NAME_RELATIVE        => T_NAME_RELATIVE,
+        T_EVAL                 => T_EVAL,
+        T_EXIT                 => T_EXIT,
+        T_INCLUDE              => T_INCLUDE,
+        T_INCLUDE_ONCE         => T_INCLUDE_ONCE,
+        T_REQUIRE              => T_REQUIRE,
+        T_REQUIRE_ONCE         => T_REQUIRE_ONCE,
+        T_ISSET                => T_ISSET,
+        T_UNSET                => T_UNSET,
+        T_EMPTY                => T_EMPTY,
+        T_SELF                 => T_SELF,
+        T_STATIC               => T_STATIC,
     ];
 
     /**

@@ -12,6 +12,7 @@ use Vendor\Package\SomeNamespace\{
     ClassZ,
 };
 
+// Parse error in PHP 8.0+, but will be detected correctly cross-version anyway.
 use Vendor\Package\SomeNamespace\{
     SubnamespaceOne /* comment */
     \AnotherNamespace // comment

@@ -62,6 +62,11 @@ class CompoundNamespaceDepthSniff implements Sniff
                 continue;
             }
 
+            if ($tokens[$i]['code'] === T_NAME_FULLY_QUALIFIED || $tokens[$i]['code'] === T_NAME_QUALIFIED) {
+                $depth += substr_count($tokens[$i]['content'], '\\');
+                continue;
+            }
+
             if ($i === $end || $tokens[$i]['code'] === T_COMMA) {
                 // End of a namespace.
                 if ($depth > $this->maxDepth) {
@@ -72,7 +77,7 @@ class CompoundNamespaceDepthSniff implements Sniff
 
                 $depth = 1;
             }
-        }
+        }//end for
 
     }//end process()
 

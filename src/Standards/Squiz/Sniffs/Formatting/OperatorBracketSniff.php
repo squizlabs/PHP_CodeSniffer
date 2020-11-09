@@ -118,8 +118,10 @@ class OperatorBracketSniff implements Sniff
             T_LNUMBER,
             T_DNUMBER,
             T_STRING,
+            T_NAME_QUALIFIED,
+            T_NAME_FULLY_QUALIFIED,
+            T_NAME_RELATIVE,
             T_WHITESPACE,
-            T_NS_SEPARATOR,
             T_THIS,
             T_SELF,
             T_STATIC,
@@ -148,7 +150,12 @@ class OperatorBracketSniff implements Sniff
                     break;
                 }
 
-                if ($prevCode === T_STRING || $prevCode === T_SWITCH) {
+                if ($prevCode === T_STRING
+                    || $prevCode === T_NAME_QUALIFIED
+                    || $prevCode === T_NAME_FULLY_QUALIFIED
+                    || $prevCode === T_NAME_RELATIVE
+                    || $prevCode === T_SWITCH
+                ) {
                     // We allow simple operations to not be bracketed.
                     // For example, ceil($one / $two).
                     for ($prev = ($stackPtr - 1); $prev > $bracket; $prev--) {
@@ -260,10 +267,12 @@ class OperatorBracketSniff implements Sniff
             T_LNUMBER                  => true,
             T_DNUMBER                  => true,
             T_STRING                   => true,
+            T_NAME_QUALIFIED           => true,
+            T_NAME_FULLY_QUALIFIED     => true,
+            T_NAME_RELATIVE            => true,
             T_CONSTANT_ENCAPSED_STRING => true,
             T_DOUBLE_QUOTED_STRING     => true,
             T_WHITESPACE               => true,
-            T_NS_SEPARATOR             => true,
             T_THIS                     => true,
             T_SELF                     => true,
             T_STATIC                   => true,

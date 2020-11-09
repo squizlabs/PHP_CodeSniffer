@@ -292,6 +292,52 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test a method with an unqualified named return type.
+     *
+     * @return void
+     */
+    public function testReturnUnqualifiedName()
+    {
+        $expected = [
+            'scope'                => 'private',
+            'scope_specified'      => true,
+            'return_type'          => '?MyClass',
+            'nullable_return_type' => true,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testReturnUnqualifiedName()
+
+
+    /**
+     * Test a method with a partially qualified namespaced return type.
+     *
+     * @return void
+     */
+    public function testReturnPartiallyQualifiedName()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'Sub\Level\MyClass',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testReturnPartiallyQualifiedName()
+
+
+    /**
      * Test a basic abstract method.
      *
      * @return void

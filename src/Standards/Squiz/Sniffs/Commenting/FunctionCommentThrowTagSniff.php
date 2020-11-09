@@ -90,46 +90,32 @@ class FunctionCommentThrowTagSniff implements Sniff
                 don't know the exception class.
             */
 
-            $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($currPos + 1), null, true);
+            $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($currPos + 1), null, true);
             if ($tokens[$nextToken]['code'] === T_NEW
-                || $tokens[$nextToken]['code'] === T_NS_SEPARATOR
+                || $tokens[$nextToken]['code'] === T_NAME_FULLY_QUALIFIED
+                || $tokens[$nextToken]['code'] === T_NAME_QUALIFIED
+                || $tokens[$nextToken]['code'] === T_NAME_RELATIVE
                 || $tokens[$nextToken]['code'] === T_STRING
             ) {
                 if ($tokens[$nextToken]['code'] === T_NEW) {
                     $currException = $phpcsFile->findNext(
-                        [
-                            T_NS_SEPARATOR,
-                            T_STRING,
-                        ],
-                        $currPos,
+                        Tokens::$emptyTokens,
+                        ($nextToken + 1),
                         $stackPtrEnd,
-                        false,
-                        null,
                         true
                     );
                 } else {
                     $currException = $nextToken;
                 }
 
-                if ($currException !== false) {
-                    $endException = $phpcsFile->findNext(
-                        [
-                            T_NS_SEPARATOR,
-                            T_STRING,
-                        ],
-                        ($currException + 1),
-                        $stackPtrEnd,
-                        true,
-                        null,
-                        true
-                    );
-
-                    if ($endException === false) {
-                        $thrownExceptions[] = $tokens[$currException]['content'];
-                    } else {
-                        $thrownExceptions[] = $phpcsFile->getTokensAsString($currException, ($endException - $currException));
-                    }
-                }//end if
+                if ($currException !== false
+                    && ($tokens[$currException]['code'] === T_NAME_FULLY_QUALIFIED
+                    || $tokens[$currException]['code'] === T_NAME_QUALIFIED
+                    || $tokens[$currException]['code'] === T_NAME_RELATIVE
+                    || $tokens[$currException]['code'] === T_STRING)
+                ) {
+                    $thrownExceptions[] = $tokens[$currException]['content'];
+                }
             } else if ($tokens[$nextToken]['code'] === T_VARIABLE) {
                 // Find the nearest catch block in this scope and, if the caught var
                 // matches our re-thrown var, use the exception types being caught as

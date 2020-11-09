@@ -60,7 +60,7 @@ class ImportStatementSniff implements Sniff
             $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($next + 1), null, true);
         }
 
-        if ($tokens[$next]['code'] !== T_NS_SEPARATOR) {
+        if ($tokens[$next]['code'] !== T_NAME_FULLY_QUALIFIED) {
             return;
         }
 
@@ -68,7 +68,7 @@ class ImportStatementSniff implements Sniff
         $fix   = $phpcsFile->addFixableError($error, $next, 'LeadingSlash');
 
         if ($fix === true) {
-            $phpcsFile->fixer->replaceToken($next, '');
+            $phpcsFile->fixer->replaceToken($next, ltrim($tokens[$next]['content'], '\\'));
         }
 
     }//end process()
