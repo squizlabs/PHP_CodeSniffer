@@ -15,7 +15,11 @@ If you're using PHP_CodeSniffer as part of a team, or you're running it on a [CI
 
 The easiest way to get started with PHP_CodeSniffer is to download the Phar files for each of the commands:
 ```
-# Download using curl
+# Download using php
+php -r "copy('https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar', 'phpcs');"
+php -r "copy('https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar', 'phpcbf');"
+
+# Or download using curl
 curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
 curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar
 
