@@ -1462,6 +1462,12 @@ echo $string?->append('foo')
 			?->outputUsing();
 // phpcs:set Generic.WhiteSpace.ScopeIndent exact false
 
+if (true) {
+	?><?php echo addslashes(
+		''
+	)?><?php
+}
+
 /* ADD NEW TESTS ABOVE THIS LINE AND MAKE SURE THAT THE 1 (space-based) AND 2 (tab-based) FILES ARE IN SYNC! */
 ?>
 
