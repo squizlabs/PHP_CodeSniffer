@@ -328,7 +328,14 @@ class ScopeIndentSniff implements Sniff
                             Common::printStatusMessage('* open tag is inside condition; using open tag *', 1);
                         }
 
-                        $checkIndent = ($tokens[$lastOpenTag]['column'] - 1);
+                        $first = $phpcsFile->findFirstOnLine([T_WHITESPACE, T_INLINE_HTML], $lastOpenTag, true);
+                        if ($this->debug === true) {
+                            $line = $tokens[$first]['line'];
+                            $type = $tokens[$first]['type'];
+                            echo "\t* first token on line $line is $first ($type) *".PHP_EOL;
+                        }
+
+                        $checkIndent = ($tokens[$first]['column'] - 1);
                         if (isset($adjustments[$condition]) === true) {
                             $checkIndent += $adjustments[$condition];
                         }
