@@ -740,15 +740,29 @@ class ScopeIndentSniff implements Sniff
                     && $tokens[$next]['code'] !== T_VARIABLE
                     && $tokens[$next]['code'] !== T_FN)
                 ) {
-                    if ($this->debug === true) {
-                        $line = $tokens[$checkToken]['line'];
-                        $type = $tokens[$checkToken]['type'];
-                        Common::printStatusMessage("* method prefix ($type) found on line $line; indent set to exact *", 1);
+                    $isMethodPrefix = true;
+                    if (isset($tokens[$checkToken]['nested_parenthesis']) === true) {
+                        $parenthesis = array_keys($tokens[$checkToken]['nested_parenthesis']);
+                        $deepestOpen = array_pop($parenthesis);
+                        if (isset($tokens[$deepestOpen]['parenthesis_owner']) === true
+                            && $tokens[$tokens[$deepestOpen]['parenthesis_owner']]['code'] === T_FUNCTION
+                        ) {
+                            // This is constructor property promotion and not a method prefix.
+                            $isMethodPrefix = false;
+                        }
                     }
 
-                    $exact = true;
-                }
-            }
+                    if ($isMethodPrefix === true) {
+                        if ($this->debug === true) {
+                            $line = $tokens[$checkToken]['line'];
+                            $type = $tokens[$checkToken]['type'];
+                            Common::printStatusMessage("* method prefix ($type) found on line $line; indent set to exact *", 1);
+                        }
+
+                        $exact = true;
+                    }
+                }//end if
+            }//end if
 
             // Open PHP tags needs to be indented to exact column positions
             // so they don't cause problems with indent checks for the code

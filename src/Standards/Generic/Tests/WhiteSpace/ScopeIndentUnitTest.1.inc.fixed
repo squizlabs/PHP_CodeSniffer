@@ -1468,6 +1468,14 @@ if (true) {
     )?><?php
 }
 
+class Foo
+{
+    public function __construct(
+        public int $intArg,
+    ) {
+    }
+}
+
 /* ADD NEW TESTS ABOVE THIS LINE AND MAKE SURE THAT THE 1 (space-based) AND 2 (tab-based) FILES ARE IN SYNC! */
 ?>
 
