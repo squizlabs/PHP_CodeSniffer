@@ -856,15 +856,29 @@ class ScopeIndentSniff implements Sniff
                     && $tokens[$next]['code'] !== T_VARIABLE
                     && $tokens[$next]['code'] !== T_FN)
                 ) {
-                    if ($this->debug === true) {
-                        $line = $tokens[$checkToken]['line'];
-                        $type = $tokens[$checkToken]['type'];
-                        echo "\t* method prefix ($type) found on line $line; indent set to exact *".PHP_EOL;
+                    $isMethodPrefix = true;
+                    if (isset($tokens[$checkToken]['nested_parenthesis']) === true) {
+                        $parenthesis = array_keys($tokens[$checkToken]['nested_parenthesis']);
+                        $deepestOpen = array_pop($parenthesis);
+                        if (isset($tokens[$deepestOpen]['parenthesis_owner']) === true
+                            && $tokens[$tokens[$deepestOpen]['parenthesis_owner']]['code'] === T_FUNCTION
+                        ) {
+                            // This is constructor property promotion and not a method prefix.
+                            $isMethodPrefix = false;
+                        }
                     }
 
-                    $exact = true;
-                }
-            }
+                    if ($isMethodPrefix === true) {
+                        if ($this->debug === true) {
+                            $line = $tokens[$checkToken]['line'];
+                            $type = $tokens[$checkToken]['type'];
+                            echo "\t* method prefix ($type) found on line $line; indent set to exact *".PHP_EOL;
+                        }
+
+                        $exact = true;
+                    }
+                }//end if
+            }//end if
 
             // JS property indentation has to be exact or else if will break
             // things like function and object indentation.
