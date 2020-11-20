@@ -62,6 +62,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This works around a long-standing PHP bug with is_readable()
     -- Thanks to Michael S for the patch
   - Fixed bug #2913 : Generic.WhiteSpace.ScopeIndent false positive when opening and closing tag on same line inside conditional
+  - Fixed bug #2992 : Enabling caching using a ruleset produces invalid cache files when using --sniffs and --exclude CLI args
   - Fixed bug #3157 : PSR2.ControlStructures.SwitchDeclaration.BreakIndent false positive when case keyword is not indented
   - Fixed bug #3165 : Squiz.PHP.DisallowComparisonAssignment false positive when comparison inside closure
   - Fixed bug #3167 : Generic.WhiteSpace.ScopeIndent false positive when using PHP 8.0 constructor property promotion

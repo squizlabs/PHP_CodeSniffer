@@ -126,15 +126,9 @@ class Ruleset
      */
     public function __construct(Config $config)
     {
-        // Ignore sniff restrictions if caching is on.
-        $restrictions = [];
-        $exclusions   = [];
-        if ($config->cache === false) {
-            $restrictions = $config->sniffs;
-            $exclusions   = $config->exclude;
-        }
-
         $this->config = $config;
+        $restrictions = $config->sniffs;
+        $exclusions   = $config->exclude;
         $sniffs       = [];
 
         $standardPaths = [];
@@ -199,6 +193,12 @@ class Ruleset
 
             $sniffs = array_merge($sniffs, $this->processRuleset($standard));
         }//end foreach
+
+        // Ignore sniff restrictions if caching is on.
+        if ($config->cache === true) {
+            $restrictions = [];
+            $exclusions   = [];
+        }
 
         $sniffRestrictions = [];
         foreach ($restrictions as $sniffCode) {
