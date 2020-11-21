@@ -51,6 +51,8 @@ if (strpos($tokenContent, 'b"') === 0 && substr($tokenContent, -1) === '"') {}
 
 $oldConstructorPos = +1;
 return -$content;
+return -PHP_INT_MAX;
+return 'min int is ' . -PHP_INT_MAX;
 
 function name($a = -1) {}
 
