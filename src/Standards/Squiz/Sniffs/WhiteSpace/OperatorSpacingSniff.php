@@ -87,15 +87,16 @@ class OperatorSpacingSniff implements Sniff
 
         // Trying to use a negative value; eg. myFunction($var, -2).
         $this->nonOperandTokens += [
-            T_COMMA               => T_COMMA,
-            T_OPEN_PARENTHESIS    => T_OPEN_PARENTHESIS,
-            T_OPEN_SQUARE_BRACKET => T_OPEN_SQUARE_BRACKET,
-            T_OPEN_SHORT_ARRAY    => T_OPEN_SHORT_ARRAY,
-            T_COLON               => T_COLON,
-            T_INLINE_THEN         => T_INLINE_THEN,
-            T_INLINE_ELSE         => T_INLINE_ELSE,
             T_CASE                => T_CASE,
+            T_COLON               => T_COLON,
+            T_COMMA               => T_COMMA,
+            T_INLINE_ELSE         => T_INLINE_ELSE,
+            T_INLINE_THEN         => T_INLINE_THEN,
             T_OPEN_CURLY_BRACKET  => T_OPEN_CURLY_BRACKET,
+            T_OPEN_PARENTHESIS    => T_OPEN_PARENTHESIS,
+            T_OPEN_SHORT_ARRAY    => T_OPEN_SHORT_ARRAY,
+            T_OPEN_SQUARE_BRACKET => T_OPEN_SQUARE_BRACKET,
+            T_STRING_CONCAT       => T_STRING_CONCAT,
         ];
 
         // Casting a negative value; eg. (array) -$a.

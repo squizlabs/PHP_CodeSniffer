@@ -68,6 +68,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3157 : PSR2.ControlStructures.SwitchDeclaration.BreakIndent false positive when case keyword is not indented
   - Fixed bug #3165 : Squiz.PHP.DisallowComparisonAssignment false positive when comparison inside closure
   - Fixed bug #3167 : Generic.WhiteSpace.ScopeIndent false positive when using PHP 8.0 constructor property promotion
+  - Fixed bug #3170 : Squiz.WhiteSpace.OperatorSpacing false positive when using negation with string concat
+    -- This also fixes the same issue in the PSR12.Operators.OperatorSpacing sniff
  </notes>
  <contents>
   <dir name="/">
