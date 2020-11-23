@@ -1975,6 +1975,7 @@ class PHP extends Tokenizer
                     T_NAME_RELATIVE            => T_NAME_RELATIVE,
                     T_NAME_QUALIFIED           => T_NAME_QUALIFIED,
                     T_CONSTANT_ENCAPSED_STRING => T_CONSTANT_ENCAPSED_STRING,
+                    T_DOUBLE_QUOTED_STRING     => T_DOUBLE_QUOTED_STRING,
                 ];
                 $allowed     += Tokens::$magicConstants;
 
