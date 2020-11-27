@@ -1572,6 +1572,7 @@ class PHP extends Tokenizer
                 $stopTokens = [
                     T_CASE               => true,
                     T_SEMICOLON          => true,
+                    T_OPEN_TAG           => true,
                     T_OPEN_CURLY_BRACKET => true,
                     T_INLINE_THEN        => true,
                 ];
