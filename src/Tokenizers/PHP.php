@@ -828,6 +828,63 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                Tokenize the parameter labels for PHP 8.0 named parameters as a special T_PARAM_NAME
+                token and ensure that the colon after it is always T_COLON.
+            */
+
+            if ($tokenIsArray === true
+                && ($token[0] === T_STRING
+                || preg_match('`^[a-zA-Z_\x80-\xff]`', $token[1]) === 1)
+            ) {
+                // Get the next non-empty token.
+                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                    if (is_array($tokens[$i]) === false
+                        || isset(Tokens::$emptyTokens[$tokens[$i][0]]) === false
+                    ) {
+                        break;
+                    }
+                }
+
+                if (isset($tokens[$i]) === true
+                    && is_array($tokens[$i]) === false
+                    && $tokens[$i] === ':'
+                ) {
+                    // Get the previous non-empty token.
+                    for ($j = ($stackPtr - 1); $j > 0; $j--) {
+                        if (is_array($tokens[$j]) === false
+                            || isset(Tokens::$emptyTokens[$tokens[$j][0]]) === false
+                        ) {
+                            break;
+                        }
+                    }
+
+                    if (is_array($tokens[$j]) === false
+                        && ($tokens[$j] === '('
+                        || $tokens[$j] === ',')
+                    ) {
+                        $newToken            = [];
+                        $newToken['code']    = T_PARAM_NAME;
+                        $newToken['type']    = 'T_PARAM_NAME';
+                        $newToken['content'] = $token[1];
+                        $finalTokens[$newStackPtr] = $newToken;
+
+                        $newStackPtr++;
+
+                        // Modify the original token stack so that future checks, like
+                        // determining T_COLON vs T_INLINE_ELSE can handle this correctly.
+                        $tokens[$stackPtr][0] = T_PARAM_NAME;
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $type = Tokens::tokenName($token[0]);
+                            Common::printStatusMessage("* token $stackPtr changed from $type to T_PARAM_NAME", 2);
+                        }
+
+                        continue;
+                    }
+                }//end if
+            }//end if
+
+            /*
                 Between PHP 7.0 and 7.3, the ??= operator was tokenized as
                 T_COALESCE, T_EQUAL.
                 So look for and combine these tokens in earlier versions.
@@ -1525,76 +1582,98 @@ class PHP extends Tokenizer
                 // Convert colons that are actually the ELSE component of an
                 // inline IF statement.
                 if (empty($insideInlineIf) === false && $newToken['code'] === T_COLON) {
-                    // Make sure this isn't a return type separator.
                     $isInlineIf = true;
+
+                    // Make sure this isn't a named parameter label.
+                    // Get the previous non-empty token.
                     for ($i = ($stackPtr - 1); $i > 0; $i--) {
                         if (is_array($tokens[$i]) === false
-                            || ($tokens[$i][0] !== T_DOC_COMMENT
-                            && $tokens[$i][0] !== T_COMMENT
-                            && $tokens[$i][0] !== T_WHITESPACE)
+                            || isset(Tokens::$emptyTokens[$tokens[$i][0]]) === false
                         ) {
                             break;
                         }
                     }
 
-                    if ($tokens[$i] === ')') {
-                        $parenCount = 1;
-                        for ($i--; $i > 0; $i--) {
-                            if ($tokens[$i] === '(') {
-                                $parenCount--;
-                                if ($parenCount === 0) {
-                                    break;
-                                }
-                            } else if ($tokens[$i] === ')') {
-                                $parenCount++;
-                            }
+                    if ($tokens[$i][0] === T_PARAM_NAME) {
+                        $isInlineIf = false;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            Common::printStatusMessage('* token is parameter label, not T_INLINE_ELSE', 2);
                         }
+                    }
 
-                        // We've found the open parenthesis, so if the previous
-                        // non-empty token is FUNCTION or USE, this is a return type.
-                        // Note that we need to skip T_STRING tokens here as these
-                        // can be function names.
-                        for ($i--; $i > 0; $i--) {
+                    if ($isInlineIf === true) {
+                        // Make sure this isn't a return type separator.
+                        for ($i = ($stackPtr - 1); $i > 0; $i--) {
                             if (is_array($tokens[$i]) === false
                                 || ($tokens[$i][0] !== T_DOC_COMMENT
                                 && $tokens[$i][0] !== T_COMMENT
-                                && $tokens[$i][0] !== T_WHITESPACE
-                                && $tokens[$i][0] !== T_STRING)
+                                && $tokens[$i][0] !== T_WHITESPACE)
                             ) {
                                 break;
                             }
                         }
 
-                        if ($tokens[$i][0] === T_FUNCTION || $tokens[$i][0] === T_FN || $tokens[$i][0] === T_USE) {
-                            $isInlineIf = false;
-                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                Common::printStatusMessage('* token is return type, not T_INLINE_ELSE', 2);
+                        if ($tokens[$i] === ')') {
+                            $parenCount = 1;
+                            for ($i--; $i > 0; $i--) {
+                                if ($tokens[$i] === '(') {
+                                    $parenCount--;
+                                    if ($parenCount === 0) {
+                                        break;
+                                    }
+                                } else if ($tokens[$i] === ')') {
+                                    $parenCount++;
+                                }
                             }
-                        }
+
+                            // We've found the open parenthesis, so if the previous
+                            // non-empty token is FUNCTION or USE, this is a return type.
+                            // Note that we need to skip T_STRING tokens here as these
+                            // can be function names.
+                            for ($i--; $i > 0; $i--) {
+                                if (is_array($tokens[$i]) === false
+                                    || ($tokens[$i][0] !== T_DOC_COMMENT
+                                    && $tokens[$i][0] !== T_COMMENT
+                                    && $tokens[$i][0] !== T_WHITESPACE
+                                    && $tokens[$i][0] !== T_STRING)
+                                ) {
+                                    break;
+                                }
+                            }
+
+                            if ($tokens[$i][0] === T_FUNCTION || $tokens[$i][0] === T_FN || $tokens[$i][0] === T_USE) {
+                                $isInlineIf = false;
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    Common::printStatusMessage('* token is return type, not T_INLINE_ELSE', 2);
+                                }
+                            }
+                        }//end if
                     }//end if
 
                     // Check to see if this is a CASE or DEFAULT opener.
-                    $inlineIfToken = $insideInlineIf[(count($insideInlineIf) - 1)];
-                    for ($i = $stackPtr; $i > $inlineIfToken; $i--) {
-                        if (is_array($tokens[$i]) === true
-                            && ($tokens[$i][0] === T_CASE
-                            || $tokens[$i][0] === T_DEFAULT)
-                        ) {
-                            $isInlineIf = false;
-                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                Common::printStatusMessage('* token is T_CASE or T_DEFAULT opener, not T_INLINE_ELSE', 2);
+                    if ($isInlineIf === true) {
+                        $inlineIfToken = $insideInlineIf[(count($insideInlineIf) - 1)];
+                        for ($i = $stackPtr; $i > $inlineIfToken; $i--) {
+                            if (is_array($tokens[$i]) === true
+                                && ($tokens[$i][0] === T_CASE
+                                || $tokens[$i][0] === T_DEFAULT)
+                            ) {
+                                $isInlineIf = false;
+                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                    Common::printStatusMessage('* token is T_CASE or T_DEFAULT opener, not T_INLINE_ELSE', 2);
+                                }
+
+                                break;
                             }
 
-                            break;
+                            if (is_array($tokens[$i]) === false
+                                && ($tokens[$i] === ';'
+                                || $tokens[$i] === '{')
+                            ) {
+                                break;
+                            }
                         }
-
-                        if (is_array($tokens[$i]) === false
-                            && ($tokens[$i] === ';'
-                            || $tokens[$i] === '{')
-                        ) {
-                            break;
-                        }
-                    }
+                    }//end if
 
                     if ($isInlineIf === true) {
                         array_pop($insideInlineIf);
