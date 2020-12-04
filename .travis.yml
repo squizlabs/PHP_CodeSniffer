@@ -18,7 +18,8 @@ jobs:
     - php: 7.2
     - php: 7.3
     - php: 7.4
-    # Nightly is PHP 8.0 since Feb 2019.
+    - php: 8.0
+    # Nightly is PHP 8.1 since Oct 2020.
     - php: nightly
       addons:
         apt:
@@ -97,13 +98,12 @@ jobs:
 before_install:
   # Speed up build time by disabling Xdebug when its not needed.
   - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
-  # PHPUnit 8.x is not (yet) supported, so prevent issues with Travis images using it.
   - |
-    if [[ $TRAVIS_PHP_VERSION != "nightly" ]]; then
-      travis_retry composer install
-    elif [[ $TRAVIS_PHP_VERSION == "nightly" ]]; then
+    if [[ $TRAVIS_PHP_VERSION == "nightly" || $TRAVIS_PHP_VERSION == "8.0" ]]; then
       // Allow installing "incompatible" PHPUnit version on PHP 8/nightly.
       travis_retry composer install --ignore-platform-reqs
+    else
+      travis_retry composer install
     fi
 
 script:
