@@ -251,8 +251,8 @@ class SwitchDeclarationSniff implements Sniff
         $lastToken = $phpcsFile->findPrevious(T_WHITESPACE, ($end - 1), $stackPtr, true);
         if ($lastToken !== false) {
             if ($tokens[$lastToken]['code'] === T_CLOSE_CURLY_BRACKET) {
-                // We found a closing curly bracket and want to check if its
-                // block belongs to an IF, ELSEIF or ELSE clause. If yes, we
+                // We found a closing curly bracket and want to check if its block
+                // belongs to a SWITCH or an IF, ELSEIF or ELSE clause. If yes, we
                 // continue searching for a terminating statement within that
                 // block. Note that we have to make sure that every block of
                 // the entire if/else statement has a terminating statement.
@@ -267,7 +267,7 @@ class SwitchDeclarationSniff implements Sniff
                         return false;
                     }
 
-                    // IF and ELSEIF clauses possess a condition we have to account for.
+                    // SWITCH, IF and ELSEIF clauses possess a condition we have to account for.
                     if ($tokens[$prevToken]['code'] === T_CLOSE_PARENTHESIS) {
                         $prevToken = $tokens[$prevToken]['parenthesis_owner'];
                     }
@@ -294,6 +294,39 @@ class SwitchDeclarationSniff implements Sniff
                         if ($tokens[$prevToken]['code'] === T_ELSE) {
                             $hasElseBlock = true;
                         }
+                    } else if ($tokens[$prevToken]['code'] === T_SWITCH) {
+                        $hasDefaultBlock = false;
+                        $endOfSwitch     = $tokens[$prevToken]['scope_closer'];
+                        $nextCase        = $prevToken;
+
+                        // We look for a terminating statement within every blocks.
+                        while (($nextCase = $this->findNextCase($phpcsFile, ($nextCase + 1), $endOfSwitch)) !== false) {
+                            if ($tokens[$nextCase]['code'] === T_DEFAULT) {
+                                $hasDefaultBlock = true;
+                            }
+
+                            $opener = $tokens[$nextCase]['scope_opener'];
+
+                            $nextCode = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), $endOfSwitch, true);
+                            if ($tokens[$nextCode]['code'] === T_CASE || $tokens[$nextCode]['code'] === T_DEFAULT) {
+                                // This case statement has no content. We skip it.
+                                continue;
+                            }
+
+                            $nextCode = $this->findNextCase($phpcsFile, ($opener + 1), $endOfSwitch);
+                            if ($nextCode === false) {
+                                $nextCode = $endOfSwitch;
+                            }
+
+                            $hasTerminator = $this->findNestedTerminator($phpcsFile, ($opener + 1), $nextCode);
+                            if ($hasTerminator === false) {
+                                return false;
+                            }
+                        }//end while
+
+                        // If we have not encountered a DEFAULT block by now, we cannot
+                        // be sure that the whole statement terminates in every case.
+                        return $hasDefaultBlock;
                     } else {
                         return false;
                     }//end if
