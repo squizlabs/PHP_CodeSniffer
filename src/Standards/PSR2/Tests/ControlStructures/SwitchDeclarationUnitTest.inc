@@ -281,3 +281,40 @@ case Foo::ARRAY:
     echo '1';
     return self::VALUE;
 }
+
+// OK: Every clause terminates
+switch ($foo) {
+    case 1:
+        switch ($bar) {
+            case 1:
+                return;
+            default:
+                return;
+        }
+    case 2:
+        return 2;
+}
+
+// KO: Not every clause terminates
+switch ($foo) {
+    case 1:
+        switch ($bar) {
+            case 1:
+                return;
+        }
+    case 2:
+        return 2;
+}
+
+// KO: Not every clause terminates
+switch ($foo) {
+    case 1:
+        switch ($bar) {
+            case 1:
+                return;
+            default:
+                $a = 1;
+        }
+    case 2:
+        return 2;
+}
