@@ -46,36 +46,6 @@ jobs:
       - php bin/phpcs --config-set php_path php
       - vendor/bin/phpunit tests/AllTests.php
 
-    # Build running just the PEAR package file and XML file validation and code style check.
-    - php: 7.4
-      name: "PHP: 7.4 | Pear + XML validate"
-      addons:
-        apt:
-          packages:
-            - libxml2-utils
-      before_install:
-      - export XMLLINT_INDENT="    "
-      - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
-      install:
-      - curl -O https://www.w3.org/2012/04/XMLSchema.xsd
-      script:
-      # Validate the Pear Package file contents.
-      - php scripts/validate-pear-package.php
-      # Validate the xml ruleset files.
-      # @link http://xmlsoft.org/xmllint.html
-      - xmllint --noout --schema phpcs.xsd ./src/Standards/*/ruleset.xml
-      - xmllint --noout --schema ./XMLSchema.xsd ./phpcs.xsd
-      # Check the code-style consistency of the xml files.
-      - diff -B ./phpcs.xml.dist <(xmllint --format "./phpcs.xml.dist")
-      - diff -B ./src/Standards/Generic/ruleset.xml <(xmllint --format "./src/Standards/Generic/ruleset.xml")
-      - diff -B ./src/Standards/MySource/ruleset.xml <(xmllint --format "./src/Standards/MySource/ruleset.xml")
-      - diff -B ./src/Standards/PEAR/ruleset.xml <(xmllint --format "./src/Standards/PEAR/ruleset.xml")
-      - diff -B ./src/Standards/PSR1/ruleset.xml <(xmllint --format "./src/Standards/PSR1/ruleset.xml")
-      - diff -B ./src/Standards/PSR2/ruleset.xml <(xmllint --format "./src/Standards/PSR2/ruleset.xml")
-      - diff -B ./src/Standards/PSR12/ruleset.xml <(xmllint --format "./src/Standards/PSR12/ruleset.xml")
-      - diff -B ./src/Standards/Squiz/ruleset.xml <(xmllint --format "./src/Standards/Squiz/ruleset.xml")
-      - diff -B ./src/Standards/Zend/ruleset.xml <(xmllint --format "./src/Standards/Zend/ruleset.xml")
-
   allow_failures:
     - php: nightly
 
