@@ -76,23 +76,7 @@ jobs:
       - diff -B ./src/Standards/Squiz/ruleset.xml <(xmllint --format "./src/Standards/Squiz/ruleset.xml")
       - diff -B ./src/Standards/Zend/ruleset.xml <(xmllint --format "./src/Standards/Zend/ruleset.xml")
 
-    # Build running just and only PHPStan.
-    - php: 7.4
-      name: "PHP: 7.4 | PHPStan"
-      env: PHPSTAN=1
-      addons:
-        apt:
-          packages:
-            - libonig-dev
-      before_install:
-      - phpenv config-rm xdebug.ini || echo 'No xdebug config.'
-      script:
-      - composer require --dev phpstan/phpstan
-      - php vendor/bin/phpstan analyse --configuration=phpstan.neon
-
   allow_failures:
-    - php: 7.4
-      env: PHPSTAN=1
     - php: nightly
 
 before_install:
