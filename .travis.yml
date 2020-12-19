@@ -64,7 +64,6 @@ script:
   - php bin/phpcs --config-set php_path php
   - vendor/bin/phpunit tests/AllTests.php
   - php bin/phpcs --no-cache --parallel=1
-  - pear package-validate package.xml
   - composer validate --no-check-all --strict
   - php scripts/build-phar.php
   - php phpcs.phar

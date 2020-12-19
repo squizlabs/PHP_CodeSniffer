@@ -71,3 +71,6 @@ jobs:
 
       - name: Validate the PEAR package file contents
         run: php scripts/validate-pear-package.php
+
+      - name: Validate the PEAR package
+        run: pear package-validate package.xml
