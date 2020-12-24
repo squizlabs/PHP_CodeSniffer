@@ -25,7 +25,7 @@ class MyClass
 
     public static$var = null;
 
-    public  
+    public
     static
     $var = null;
 }
@@ -82,3 +82,17 @@ class MyOtherClass
         $varS,
         $varT
 }
+
+// Issue #3188 - static as return type.
+public static function fCreate($attributes = []): static
+{
+    return static::factory()->create($attributes);
+}
+
+// Also account for static used within union types.
+public function fCreate($attributes = []): object|static
+{
+}
+
+// Ensure that static as a scope keyword when preceeded by a colon which is not for a type dclaration is still handled.
+$callback = $cond ? get_fn_name() : static  function ($a) { return $a * 10; };
