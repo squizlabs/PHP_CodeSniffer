@@ -89,6 +89,27 @@ class Config
     const STABILITY = 'stable';
 
     /**
+     * ENV variable to check for user specified config file
+     *
+     * @var string
+     */
+    const CONFIG_ENV = 'PHP_CODESNIFFER_CONFIG';
+
+    /**
+     * Config directory name.
+     *
+     * @var string
+     */
+    const CONFIG_DIR = 'PHP_CodeSniffer';
+
+    /**
+     * Config file name.
+     *
+     * @var string
+     */
+    const CONFIG_FILE = 'CodeSniffer.conf';
+
+    /**
      * An array of settings that PHPCS and PHPCBF accept.
      *
      * This array is not meant to be accessed directly. Instead, use the settings
@@ -1557,23 +1578,7 @@ class Config
         }
 
         if ($temp === false) {
-            $path = '';
-            if (is_callable('\Phar::running') === true) {
-                $path = \Phar::running(false);
-            }
-
-            if ($path !== '') {
-                $configFile = dirname($path).DIRECTORY_SEPARATOR.'CodeSniffer.conf';
-            } else {
-                $configFile = dirname(__DIR__).DIRECTORY_SEPARATOR.'CodeSniffer.conf';
-                if (is_file($configFile) === false
-                    && strpos('@data_dir@', '@data_dir') === false
-                ) {
-                    // If data_dir was replaced, this is a PEAR install and we can
-                    // use the PEAR data dir to store the conf file.
-                    $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
-                }
-            }
+            $configFile = self::getConfigFile();
 
             if (is_file($configFile) === true
                 && is_writable($configFile) === false
@@ -1635,21 +1640,7 @@ class Config
             return self::$configData;
         }
 
-        $path = '';
-        if (is_callable('\Phar::running') === true) {
-            $path = \Phar::running(false);
-        }
-
-        if ($path !== '') {
-            $configFile = dirname($path).DIRECTORY_SEPARATOR.'CodeSniffer.conf';
-        } else {
-            $configFile = dirname(__DIR__).DIRECTORY_SEPARATOR.'CodeSniffer.conf';
-            if (is_file($configFile) === false
-                && strpos('@data_dir@', '@data_dir') === false
-            ) {
-                $configFile = '@data_dir@/PHP_CodeSniffer/CodeSniffer.conf';
-            }
-        }
+        $configFile = self::getConfigFile();
 
         if (is_file($configFile) === false) {
             self::$configData = [];
@@ -1698,6 +1689,81 @@ class Config
         }
 
     }//end printConfigData()
+
+
+    /**
+     * Returns the path to the config file.
+     *
+     * Checks for a configuration file saved in env variable,
+     * if not provided, checks the XDG_CONFIG_HOME directory per
+     * https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+     * for a file.
+     *
+     * If no file is found falls back to using a file in the PHP_CodeSniffer directory
+     *
+     * @return string The path to the config file
+     */
+    private static function getConfigFile()
+    {
+        // Check if env file exists before any other logic.
+        $configFile = getenv(self::CONFIG_ENV);
+        if (is_file($configFile) === true) {
+            return $configFile;
+        }
+
+        $path = getenv('XDG_CONFIG_HOME');
+        if ($path === false) {
+            // Resort to trying default defined in https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+            // since XDG_CONFIG_HOME is not found.
+            $path = getenv('HOME');
+            if ($path !== false) {
+                $path = $path.DIRECTORY_SEPARATOR.'.config';
+            }
+        }
+
+        if ($path !== false && is_dir($path) === true) {
+            // Check if file exists in $XDG_CONFIG_HOME first.
+            $configFile = implode(
+                DIRECTORY_SEPARATOR,
+                [
+                    $path,
+                    self::CONFIG_DIR,
+                    self::CONFIG_FILE,
+                ]
+            );
+            if (is_file($configFile) === true) {
+                return $configFile;
+            }
+        }
+
+        $path = '';
+        if (is_callable('\Phar::running') === true) {
+            $path = \Phar::running(false);
+        }
+
+        if ($path !== '') {
+            $configFile = dirname($path).DIRECTORY_SEPARATOR.self::CONFIG_FILE;
+        } else {
+            $configFile = dirname(__DIR__).DIRECTORY_SEPARATOR.self::CONFIG_FILE;
+            if (is_file($configFile) === false
+                && strpos('@data_dir@', '@data_dir') === false
+            ) {
+                // If data_dir was replaced, this is a PEAR install and we can
+                // use the PEAR data dir to store the conf file.
+                $configFile = implode(
+                    DIRECTORY_SEPARATOR,
+                    [
+                        '@data_dir@',
+                        self::CONFIG_DIR,
+                        self::CONFIG_FILE,
+                    ]
+                );
+            }
+        }
+
+        return $configFile;
+
+    }//end getConfigFile()
 
 
 }//end class
