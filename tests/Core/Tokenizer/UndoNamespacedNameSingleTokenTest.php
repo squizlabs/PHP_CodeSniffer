@@ -13,7 +13,7 @@
  * {@link https://github.com/squizlabs/PHP_CodeSniffer/issues/3041}
  *
  * @author    Juliette Reinders Folmer <phpcs_nospam@adviesenzo.nl>
- * @copyright 2020 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2021 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
