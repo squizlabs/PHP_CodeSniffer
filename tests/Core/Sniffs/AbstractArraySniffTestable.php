@@ -3,7 +3,7 @@
  * A testable implementation of \PHP_CodeSniffer\Sniffs\AbstractArraySniff.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
- * @copyright 2006-2021 Squiz Pty Ltd (ABN 77 084 670 600)
+ * @copyright 2006-2020 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
