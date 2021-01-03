@@ -287,9 +287,9 @@ switch ($foo) {
     case 1:
         switch ($bar) {
             case 1:
-                return;
+                return 1;
             default:
-                return;
+                return 3;
         }
     case 2:
         return 2;
@@ -314,6 +314,19 @@ switch ($foo) {
                 return;
             default:
                 $a = 1;
+        }
+    case 2:
+        return 2;
+}
+
+// OK: Every clause terminates
+switch ($foo) {
+    case 1:
+        switch ($bar) {
+            case 1:
+                return 1;
+            default:
+                throw new \Exception();
         }
     case 2:
         return 2;
