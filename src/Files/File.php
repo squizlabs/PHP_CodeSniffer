@@ -2313,6 +2313,11 @@ class File
                 && $this->tokens[$i]['code'] !== T_CLOSE_PARENTHESIS
                 && $this->tokens[$i]['code'] !== T_END_NOWDOC
                 && $this->tokens[$i]['code'] !== T_END_HEREDOC
+                && $this->tokens[$i]['code'] !== T_BREAK
+                && $this->tokens[$i]['code'] !== T_RETURN
+                && $this->tokens[$i]['code'] !== T_CONTINUE
+                && $this->tokens[$i]['code'] !== T_THROW
+                && $this->tokens[$i]['code'] !== T_EXIT
             ) {
                 // Found the end of the previous scope block.
                 return $lastNotEmpty;
