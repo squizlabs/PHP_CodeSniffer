@@ -899,7 +899,8 @@ class PHP extends Tokenizer
             */
 
             if ($tokenIsArray === true
-                && preg_match('`^[a-zA-Z_\x80-\xff]`', $token[1]) === 1
+                && ($token[0] === T_STRING
+                || preg_match('`^[a-zA-Z_\x80-\xff]`', $token[1]) === 1)
             ) {
                 // Get the next non-empty token.
                 for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
