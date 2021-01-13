@@ -43,6 +43,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Now, all include and exclude rules are ignored when no file path is provided, allowing all checks to run
     -- If you want include and exclude rules enforced when checking STDIN, use --stdin-path to set the file path
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Added Generic.NamingConventions.AbstractClassNamePrefix to enforce that class names are prefixed with "Abstract"
+    -- Thanks to Anna Borzenko for the contribution
+  - Added Generic.NamingConventions.InterfaceNameSuffix to enforce that interface names are suffixed with "Interface"
+    -- Thanks to Anna Borzenko for the contribution
+  - Added Generic.NamingConventions.TraitNameSuffix to enforce that trait names are suffixed with "Trait"
+    -- Thanks to Anna Borzenko for the contribution
   - Generic.Formatting.MultipleStatementAlignment can now align statements at the start of the assignment token
     -- Previously, the sniff enforced that the values were aligned, even if this meant the assignment tokens were not
     -- Now, the sniff can enforce that the assignment tokens are aligned, even if this means the values are not
