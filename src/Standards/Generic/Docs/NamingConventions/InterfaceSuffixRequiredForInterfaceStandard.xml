@@ -1,0 +1,23 @@
+<documentation title="Interface name">
+    <standard>
+    <![CDATA[
+    Interfaces MUST be suffixed by Interface: e.g. BarInterface.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: ">
+        <![CDATA[
+interface <em>BarInterface</em>
+{
+}
+        ]]>
+        </code>
+        <code title="Invalid: ">
+        <![CDATA[
+interface <em>Bar</em>
+{
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
