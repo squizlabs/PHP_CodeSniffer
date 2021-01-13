@@ -29,14 +29,19 @@ The file documents changes to the PHP_CodeSniffer project.
 - None of the included sniffs will warn about possible parse errors any more
     - This improves the experience when the file is being checked inside an editor during live coding
     - If you want to detect parse errors, use the `Generic.PHP.Syntax` sniff or a dedicated linter instead
-- Changed the error code `Squiz.Classes.ValidClassName.NotCamelCaps` to `Squiz.Classes.ValidClassName.NotPascalCase`
-    - This reflects that the sniff is actually checking for `ClassName` and not `className`
 - All status, debug, and progress output is now sent to STDERR instead of STDOUT
     - Only report output now goes through STDOUT
     - Piping output to a file will now only include report output
         - Pipe both STDERR and STDOUT to the same file to capture the entire output of the run
     - The `--report-file` functionality remains untouched
 - Composer installs no longer include any test files
+- PHPCS now uses the PHP 8.0 native method of tokenizing namespaced names
+    - Before PHP 8.0, PHP would tokenize namespaced names using `T_STRING` and `T_NS_SEPARATOR`
+    - From PHP 8.0, PHP uses the tokens `T_NAME_FULLY_QUALIFIED`, `T_NAME_RELATIVE`, and `T_NAME_QUALIFIED` instead
+    - PHPCS now uses these new PHP 8.0 tokens no matter what version of PHP is being used to run PHPCS
+    - Custom sniffs that use `T_STRING` and `T_NS_SEPARATOR` tokens to look for namespaced names will need to be modified
+- Changed the error code `Squiz.Classes.ValidClassName.NotCamelCaps` to `Squiz.Classes.ValidClassName.NotPascalCase`
+    - This reflects that the sniff is actually checking for `ClassName` and not `className`
 - The `Config::setConfigData()` method is no longer static
 - T_USE tokens now contain parenthesis information if they are being used to pass variables to a closure
     - Previously, you had to find the opening and closing parenthesis by looking forward through the token stack
