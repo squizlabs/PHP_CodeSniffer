@@ -196,6 +196,9 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
             $className = null;
 
             $newClasses = array_diff($classesAfterLoad['classes'], $classesBeforeLoad['classes']);
+            if (PHP_VERSION_ID < 70400) {
+                $newClasses = array_reverse($newClasses);
+            }
 
             // Since PHP 7.4 get_declared_classes() does not guarantee any order, making
             // it impossible to use order to determine which is the parent an which is the child.
