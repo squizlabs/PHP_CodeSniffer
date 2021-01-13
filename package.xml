@@ -71,6 +71,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3167 : Generic.WhiteSpace.ScopeIndent false positive when using PHP 8.0 constructor property promotion
   - Fixed bug #3170 : Squiz.WhiteSpace.OperatorSpacing false positive when using negation with string concat
     -- This also fixes the same issue in the PSR12.Operators.OperatorSpacing sniff
+  - Fixed bug #3177 : Incorrect tokenization of GOTO statements in mixed PHP/HTML files
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3184 : PSR2.Namespace.NamespaceDeclaration false positive on namespace operator
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
