@@ -1,6 +1,6 @@
 <?php
 /**
- * Checks that traits are suffixed by Trait.
+ * Checks that interfaces are suffixed by Interface.
  *
  * @author  Anna Borzenko <annnechko@gmail.com>
  * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
-class TraitSuffixRequiredForTraitSniff implements Sniff
+class InterfaceNameSuffixSniff implements Sniff
 {
 
 
@@ -22,7 +22,7 @@ class TraitSuffixRequiredForTraitSniff implements Sniff
      */
     public function register()
     {
-        return [T_TRAIT];
+        return [T_INTERFACE];
 
     }//end register()
 
@@ -38,14 +38,14 @@ class TraitSuffixRequiredForTraitSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $traitName = $phpcsFile->getDeclarationName($stackPtr);
-        if ($traitName === null) {
+        $interfaceName = $phpcsFile->getDeclarationName($stackPtr);
+        if ($interfaceName === null) {
             return;
         }
 
-        $suffix = substr($traitName, -5);
-        if (strtolower($suffix) !== 'trait') {
-            $phpcsFile->addError('Traits MUST be suffixed by Trait: e.g. BarTrait. Found: %s', $stackPtr, 'Missing', [$traitName]);
+        $suffix = substr($interfaceName, -9);
+        if (strtolower($suffix) !== 'interface') {
+            $phpcsFile->addError('Interface names must be suffixed with "Interface"; found "%s"', $stackPtr, 'Missing', [$interfaceName]);
         }
 
     }//end process()

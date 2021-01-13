@@ -1,6 +1,6 @@
 <?php
 /**
- * Checks that abstract classes are prefixed by Abstract.
+ * Checks that traits are suffixed by Trait.
  *
  * @author  Anna Borzenko <annnechko@gmail.com>
  * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 
-class AbstractPrefixRequiredForAbstractClassSniff implements Sniff
+class TraitNameSuffixSniff implements Sniff
 {
 
 
@@ -22,7 +22,7 @@ class AbstractPrefixRequiredForAbstractClassSniff implements Sniff
      */
     public function register()
     {
-        return [T_CLASS];
+        return [T_TRAIT];
 
     }//end register()
 
@@ -38,20 +38,14 @@ class AbstractPrefixRequiredForAbstractClassSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        if ($phpcsFile->getClassProperties($stackPtr)['is_abstract'] === false) {
-            // This class is not abstract so we don't need to check it.
+        $traitName = $phpcsFile->getDeclarationName($stackPtr);
+        if ($traitName === null) {
             return;
         }
 
-        $className = $phpcsFile->getDeclarationName($stackPtr);
-        if ($className === null) {
-            // We are not interested in anonymous classes.
-            return;
-        }
-
-        $prefix = substr($className, 0, 8);
-        if (strtolower($prefix) !== 'abstract') {
-            $phpcsFile->addError('Abstract classes MUST be prefixed by Abstract: e.g. AbstractBar. Found: %s', $stackPtr, 'Missing', [$className]);
+        $suffix = substr($traitName, -5);
+        if (strtolower($suffix) !== 'trait') {
+            $phpcsFile->addError('Trait names must be suffixed with "Trait"; found "%s"', $stackPtr, 'Missing', [$traitName]);
         }
 
     }//end process()

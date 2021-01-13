@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the AbstractPrefixRequiredForAbstractClass sniff.
+ * Unit test class for the AbstractClassNamePrefix sniff.
  *
  * @author  Anna Borzenko <annnechko@gmail.com>
  * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -10,7 +10,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Tests\NamingConventions;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class AbstractPrefixRequiredForAbstractClassUnitTest extends AbstractSniffUnitTest
+class AbstractClassNamePrefixUnitTest extends AbstractSniffUnitTest
 {
 
 

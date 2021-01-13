@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the InterfaceSuffixRequiredForInterface sniff.
+ * Unit test class for the InterfaceNameSuffix sniff.
  *
  * @author  Anna Borzenko <annnechko@gmail.com>
  * @license https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
@@ -10,7 +10,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Tests\NamingConventions;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class InterfaceSuffixRequiredForInterfaceUnitTest extends AbstractSniffUnitTest
+class InterfaceSuffixNameUnitTest extends AbstractSniffUnitTest
 {
 
 

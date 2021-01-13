@@ -1,20 +1,20 @@
-<documentation title="Interface name">
+<documentation title="Abstract class name">
     <standard>
     <![CDATA[
-    Interfaces MUST be suffixed by Interface: e.g. BarInterface.
+    Abstract class names must be prefixed with "Abstract", e.g. AbstractBar.
     ]]>
     </standard>
     <code_comparison>
         <code title="Valid: ">
         <![CDATA[
-interface <em>BarInterface</em>
+abstract class <em>AbstractBar</em>
 {
 }
         ]]>
         </code>
         <code title="Invalid: ">
         <![CDATA[
-interface <em>Bar</em>
+abstract class <em>Bar</em>
 {
 }
         ]]>
