@@ -2,7 +2,7 @@ parameters:
     level: 0
     paths:
         - src
-    autoload_files:
+    bootstrapFiles:
         - tests/bootstrap.php
     ignoreErrors:
         -
