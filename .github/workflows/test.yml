@@ -1,0 +1,105 @@
+name: Test
+
+on:
+  # Run on all pushes and on all pull requests.
+  # Prevent the build from running when there are only irrelevant changes.
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Keys:
+      # - custom_ini: Whether to run with specific custom ini settings to hit very specific
+      #   code conditions.
+      # - experimental: Whether the build is "allowed to fail".
+      matrix:
+        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        custom_ini: [false]
+        experimental: [false]
+
+        include:
+          # Builds running the basic tests with different PHP ini settings.
+          - php: '5.5'
+            custom_ini: true
+            experimental: false
+          - php: '7.0'
+            custom_ini: true
+            experimental: false
+
+          # Nightly.
+          - php: '8.1'
+            custom_ini: false
+            experimental: true
+
+    name: "PHP: ${{ matrix.php }} ${{ matrix.custom_ini && ' with custom ini settings' || '' }}"
+
+    continue-on-error: ${{ matrix.experimental }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup ini config
+        id: set_ini
+        run: |
+          # On stable PHPCS versions, allow for PHP deprecation notices.
+          # Unit tests don't need to fail on those for stable releases where those issues won't get fixed anymore.
+          # Also set the "short_open_tag" ini to make sure specific conditions are tested.
+          if [[ ${{ matrix.custom_ini }} == true && "${{ matrix.php }}" == '5.5' ]]; then
+            echo '::set-output name=PHP_INI::phar.readonly=Off, date.timezone=Australia/Sydney, short_open_tag=On, asp_tags=On'
+          elif [[ ${{ matrix.custom_ini }} == true && "${{ matrix.php }}" == '7.0' ]]; then
+            echo '::set-output name=PHP_INI::phar.readonly=Off, date.timezone=Australia/Sydney, short_open_tag=On'
+          else
+            echo '::set-output name=PHP_INI::phar.readonly=Off'
+          fi
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          ini-values: ${{ steps.set_ini.outputs.PHP_INI }}
+          coverage: none
+
+      # Install dependencies and handle caching in one go.
+      # @link https://github.com/marketplace/actions/install-composer-dependencies
+      - name: Install Composer dependencies - normal
+        if: ${{ matrix.php < 8.0 }}
+        uses: "ramsey/composer-install@v1"
+
+      # For PHP 8.0+, we need to install with ignore platform reqs as PHPUnit 7 is still used.
+      - name: Install Composer dependencies - with ignore platform
+        if: ${{ matrix.php >= 8.0 }}
+        uses: "ramsey/composer-install@v1"
+        with:
+          composer-options: --ignore-platform-reqs
+
+      # Note: The code style check is run multiple times against every PHP version
+      # as it also acts as an integration test.
+      - name: 'PHPCS: set the path to PHP'
+        run: php bin/phpcs --config-set php_path php
+
+      - name: 'PHPUnit: run the tests'
+        run: vendor/bin/phpunit tests/AllTests.php
+
+      - name: 'PHPCS: check code style without cache, no parallel'
+        if: ${{ matrix.custom_ini  == false }}
+        run: php bin/phpcs --no-cache --parallel=1
+
+      - name: 'Composer: validate config'
+        if: ${{ matrix.custom_ini  == false }}
+        run: composer validate --no-check-all --strict
+
+      - name: Build the phar
+        if: ${{ matrix.custom_ini  == false }}
+        run: php scripts/build-phar.php
+
+      - name: 'PHPCS: check code style using the Phar file'
+        if: ${{ matrix.custom_ini  == false }}
+        run: php phpcs.phar

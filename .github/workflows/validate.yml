@@ -1,0 +1,76 @@
+name: Validate
+
+on:
+  # Run on all pushes and on all pull requests.
+  # Prevent the build from running when there are only irrelevant changes.
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  checkxml:
+    name: Check XML files
+    runs-on: ubuntu-latest
+
+    env:
+      XMLLINT_INDENT: '    '
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install xmllint
+        run: sudo apt-get install --no-install-recommends -y libxml2-utils
+
+      - name: Retrieve XML Schema
+        run: curl -O https://www.w3.org/2012/04/XMLSchema.xsd
+
+      # Show XML violations inline in the file diff.
+      # @link https://github.com/marketplace/actions/xmllint-problem-matcher
+      - uses: korelstar/xmllint-problem-matcher@v1
+
+      # Validate the XML ruleset files.
+      # @link http://xmlsoft.org/xmllint.html
+      - name: Validate rulesets against schema
+        run: xmllint --noout --schema phpcs.xsd ./src/Standards/*/ruleset.xml
+
+      # Validate the XSD file.
+      # @link http://xmlsoft.org/xmllint.html
+      - name: Validate XSD against schema
+        run: xmllint --noout --schema ./XMLSchema.xsd ./phpcs.xsd
+
+      # Check the code-style consistency of the XML files.
+      - name: Check XML code style
+        run: |
+          diff -B ./phpcs.xml.dist <(xmllint --format "./phpcs.xml.dist")
+          diff -B ./src/Standards/Generic/ruleset.xml <(xmllint --format "./src/Standards/Generic/ruleset.xml")
+          diff -B ./src/Standards/MySource/ruleset.xml <(xmllint --format "./src/Standards/MySource/ruleset.xml")
+          diff -B ./src/Standards/PEAR/ruleset.xml <(xmllint --format "./src/Standards/PEAR/ruleset.xml")
+          diff -B ./src/Standards/PSR1/ruleset.xml <(xmllint --format "./src/Standards/PSR1/ruleset.xml")
+          diff -B ./src/Standards/PSR2/ruleset.xml <(xmllint --format "./src/Standards/PSR2/ruleset.xml")
+          diff -B ./src/Standards/PSR12/ruleset.xml <(xmllint --format "./src/Standards/PSR12/ruleset.xml")
+          diff -B ./src/Standards/Squiz/ruleset.xml <(xmllint --format "./src/Standards/Squiz/ruleset.xml")
+          diff -B ./src/Standards/Zend/ruleset.xml <(xmllint --format "./src/Standards/Zend/ruleset.xml")
+
+  pear:
+    name: "PHP: 7.4 | PEAR package validation"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+
+      - name: Validate the PEAR package file contents
+        run: php scripts/validate-pear-package.php
+
+      - name: Validate the PEAR package
+        run: pear package-validate package.xml
