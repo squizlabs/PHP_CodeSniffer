@@ -86,6 +86,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3184 : PSR2.Namespace.NamespaceDeclaration false positive on namespace operator
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3188 : Squiz.WhiteSpace.ScopeKeywordSpacing false positive for static return type
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
