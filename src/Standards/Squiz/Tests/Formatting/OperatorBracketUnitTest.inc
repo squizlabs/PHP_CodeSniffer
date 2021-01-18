@@ -173,4 +173,6 @@ $test = myfunc(1 * static::TEST);
 
 $errorPos = $params[$x]?->getLine() + $commentStart;
 
+$foo = $this->gmail ?? $this->gmail = new Google_Service_Gmail($this->google);
+
 exit -1;

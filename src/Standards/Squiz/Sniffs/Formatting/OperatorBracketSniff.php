@@ -330,6 +330,10 @@ class OperatorBracketSniff implements Sniff
 
         $before = $phpcsFile->findNext(Tokens::$emptyTokens, ($before + 1), null, true);
 
+        // A few extra tokens are allowed to be on the right side of the expression.
+        $allowed[T_EQUAL] = true;
+        $allowed[T_NEW]   = true;
+
         // Find the last token in the expression.
         for ($after = ($stackPtr + 1); $after < $phpcsFile->numTokens; $after++) {
             // Special case for plus operators because we can't tell if they are used

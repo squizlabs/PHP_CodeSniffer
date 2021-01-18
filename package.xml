@@ -78,6 +78,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Michael S for the patch
   - Fixed bug #2913 : Generic.WhiteSpace.ScopeIndent false positive when opening and closing tag on same line inside conditional
   - Fixed bug #2992 : Enabling caching using a ruleset produces invalid cache files when using --sniffs and --exclude CLI args
+  - Fixed bug #3003 : Squiz.Formatting.OperatorBracket autofix incorrect when assignment used with null coalescing operator
   - Fixed bug #3145 : Autoloading of sniff fails when multiple classes declared in same file
   - Fixed bug #3157 : PSR2.ControlStructures.SwitchDeclaration.BreakIndent false positive when case keyword is not indented
   - Fixed bug #3163 : Undefined index error with pre-commit hook using husky on PHP 7.4
