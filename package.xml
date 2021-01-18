@@ -52,6 +52,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Anna Borzenko for the contribution
   - Added Generic.NamingConventions.TraitNameSuffix to enforce that trait names are suffixed with "Trait"
     -- Thanks to Anna Borzenko for the contribution
+  - Generic.CodeAnalysis.UnusedFunctionParameter can now be configured to ignore variable usage for specific type hints
+      -- This allows you to suppress warnings for some variables that are not required, but leave warnings for others
+      -- Set the ignoreTypeHints array property to a list of type hints to ignore
+      -- Thanks to Petr Bugyík for the patch
   - Generic.Formatting.MultipleStatementAlignment can now align statements at the start of the assignment token
     -- Previously, the sniff enforced that the values were aligned, even if this meant the assignment tokens were not
     -- Now, the sniff can enforce that the assignment tokens are aligned, even if this means the values are not
