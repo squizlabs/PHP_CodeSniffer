@@ -73,6 +73,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Vincent Langlet for the patch
   - The PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket error message is now reported on the closing parenthesis token
     -- Previously, the error was being reported on the function keyword, leading to confusing line numbers in the error report
+  - Squiz.Commenting.FunctionComment is now able to ignore function comments that are only inheritdoc statements
+    -- Set the skipIfInheritdoc sniff property to "true" to skip checking function comments if the content is only {@inhertidoc}
+    -- The default remains at "false", so these comments will continue to report errors
+    -- Thanks to Jess Myrbo for the patch
   - Fixed an issue that could occurr when checking files on network drives, such as with WSL2 on Windows 10
     -- This works around a long-standing PHP bug with is_readable()
     -- Thanks to Michael S for the patch
