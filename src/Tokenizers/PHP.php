@@ -3181,7 +3181,7 @@ class PHP extends Tokenizer
                 return null;
             }
 
-            array_splice($subTokens, count($subTokens), 0, array_slice($tokens, ($stackPtr + 1), ($bracketCloser - $stackPtr)));
+            $subTokens = array_merge($subTokens, array_slice($tokens, ($stackPtr + 1), ($bracketCloser - $stackPtr)));
             array_splice($tokens, ($stackPtr + 1), ($bracketCloser - $stackPtr));
         }
 
