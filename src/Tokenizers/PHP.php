@@ -904,6 +904,50 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                PHP 8.0 Attributes
+            */
+
+            if (PHP_VERSION_ID < 80000
+                && $token[0] === T_COMMENT
+                && strpos($token[1], '#[') === 0
+            ) {
+                $subTokens = $this->parsePhpAttribute($tokens, $stackPtr);
+                if ($subTokens !== null) {
+                    array_splice($tokens, $stackPtr, 1, $subTokens);
+                    $numTokens = count($tokens);
+
+                    $tokenIsArray = true;
+                    $token        = $tokens[$stackPtr];
+                } else {
+                    $token[0] = T_ATTRIBUTE;
+                }
+            }
+
+            if ($tokenIsArray === true
+                && $token[0] === T_ATTRIBUTE
+            ) {
+                // Go looking for the close bracket.
+                $bracketCloser = $this->findCloser($tokens, ($stackPtr + 1), '[', ']');
+
+                $newToken            = [];
+                $newToken['code']    = T_ATTRIBUTE;
+                $newToken['type']    = 'T_ATTRIBUTE';
+                $newToken['content'] = '#[';
+                $finalTokens[$newStackPtr] = $newToken;
+
+                $tokens[$bracketCloser]    = [];
+                $tokens[$bracketCloser][0] = T_ATTRIBUTE_END;
+                $tokens[$bracketCloser][1] = ']';
+
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo "\t\t* token $bracketCloser changed from T_CLOSE_SQUARE_BRACKET to T_ATTRIBUTE_END".PHP_EOL;
+                }
+
+                $newStackPtr++;
+                continue;
+            }//end if
+
+            /*
                 Tokenize the parameter labels for PHP 8.0 named parameters as a special T_PARAM_NAME
                 token and ensure that the colon after it is always T_COLON.
             */
@@ -1845,6 +1889,7 @@ class PHP extends Tokenizer
                         T_CLASS                    => true,
                         T_EXTENDS                  => true,
                         T_IMPLEMENTS               => true,
+                        T_ATTRIBUTE                => true,
                         T_NEW                      => true,
                         T_CONST                    => true,
                         T_NS_SEPARATOR             => true,
@@ -3075,6 +3120,74 @@ class PHP extends Tokenizer
         return $newToken;
 
     }//end resolveSimpleToken()
+
+
+    /**
+     * Finds a "closer" token (closing parenthesis or square bracket for example)
+     * Handle parenthesis balancing while searching for closing token
+     *
+     * @param array  $tokens     The list of tokens to iterate searching the closing token (as returned by token_get_all)
+     * @param int    $start      The starting position
+     * @param string $openerChar The opening character
+     * @param string $closerChar The closing character
+     *
+     * @return int|null The position of the closing token, if found. NULL otherwise.
+     */
+    private function findCloser(array &$tokens, $start, $openerChar, $closerChar)
+    {
+        $numTokens = count($tokens);
+        $stack     = [0];
+        $closer    = null;
+        for ($x = $start; $x < $numTokens; $x++) {
+            if ($tokens[$x] === $openerChar) {
+                $stack[] = $x;
+            } else if ($tokens[$x] === $closerChar) {
+                array_pop($stack);
+                if (empty($stack) === true) {
+                    $closer = $x;
+                    break;
+                }
+            }
+        }
+
+        return $closer;
+
+    }//end findCloser()
+
+
+    /**
+     * PHP 8 attributes parser for PHP < 8
+     * Handles single-line and multiline attributes.
+     *
+     * @param array $tokens   The original array of tokens (as returned by token_get_all)
+     * @param int   $stackPtr The current position in token array
+     *
+     * @return array|null The array of parsed attribute tokens
+     */
+    private function parsePhpAttribute(array &$tokens, $stackPtr)
+    {
+
+        $token = $tokens[$stackPtr];
+
+        $commentBody = substr($token[1], 2);
+        $subTokens   = @token_get_all('<?php '.$commentBody);
+        array_splice($subTokens, 0, 1, [[T_ATTRIBUTE, '#[']]);
+
+        // Go looking for the close bracket.
+        $bracketCloser = $this->findCloser($subTokens, 1, '[', ']');
+        if ($bracketCloser === null) {
+            $bracketCloser = $this->findCloser($tokens, $stackPtr, '[', ']');
+            if ($bracketCloser === null) {
+                return null;
+            }
+
+            array_splice($subTokens, count($subTokens), 0, array_slice($tokens, ($stackPtr + 1), ($bracketCloser - $stackPtr)));
+            array_splice($tokens, ($stackPtr + 1), ($bracketCloser - $stackPtr));
+        }
+
+        return $subTokens;
+
+    }//end parsePhpAttribute()
 
 
 }//end class

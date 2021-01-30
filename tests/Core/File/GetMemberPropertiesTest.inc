@@ -240,3 +240,19 @@ $anon = class() {
     // Intentional fatal error - duplicate types are not allowed in union types, but that's not the concern of the method.
     public int |string| /*comment*/ INT $duplicateTypeInUnion;
 };
+
+$anon = class {
+    /* testPHP8PropertySingleAttribute */
+    #[PropertyWithAttribute]
+    public string $foo;
+
+    /* testPHP8PropertyMultipleAttributes */
+    #[PropertyWithAttribute(foo: 'bar'), MyAttribute]
+    protected ?int|float $bar;
+
+    /* testPHP8PropertyMultilineAttribute */
+    #[
+        PropertyWithAttribute(/* comment */ 'baz')
+    ]
+    private mixed $baz;
+};

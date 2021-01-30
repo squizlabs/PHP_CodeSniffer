@@ -610,6 +610,36 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'nullable_type'   => false,
                 ],
             ],
+            [
+                '/* testPHP8PropertySingleAttribute */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'string',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP8PropertyMultipleAttributes */',
+                [
+                    'scope'           => 'protected',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => '?int|float',
+                    'nullable_type'   => true,
+                ],
+            ],
+            [
+                '/* testPHP8PropertyMultilineAttribute */',
+                [
+                    'scope'           => 'private',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'type'            => 'mixed',
+                    'nullable_type'   => false,
+                ],
+            ],
         ];
 
     }//end dataGetMemberProperties()

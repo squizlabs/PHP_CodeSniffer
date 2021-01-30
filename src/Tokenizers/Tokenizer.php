@@ -740,6 +740,23 @@ abstract class Tokenizer
                     $this->tokens[$i]['parenthesis_closer']      = $i;
                     $this->tokens[$opener]['parenthesis_closer'] = $i;
                 }//end if
+            } else if ($this->tokens[$i]['code'] === T_ATTRIBUTE) {
+                $found     = null;
+                $numTokens = count($this->tokens);
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
+                    if ($this->tokens[$x]['code'] === T_ATTRIBUTE_END) {
+                        $found = $x;
+                        break;
+                    }
+                }
+
+                $this->tokens[$i]['attribute_opener'] = $i;
+                $this->tokens[$i]['attribute_closer'] = $found;
+
+                if ($found !== null) {
+                    $this->tokens[$found]['attribute_opener'] = $i;
+                    $this->tokens[$found]['attribute_closer'] = $found;
+                }
             }//end if
 
             /*
