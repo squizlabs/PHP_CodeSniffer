@@ -30,6 +30,13 @@ use PHP_CodeSniffer\Util\Tokens;
 class EmptyStatementSniff implements Sniff
 {
 
+    /**
+     * Whether to allow statements that contain only comments.
+     *
+     * @var boolean
+     */
+    public $allowComments = false;
+
 
     /**
      * Registers the tokens that this sniff wants to listen for.
@@ -74,10 +81,16 @@ class EmptyStatementSniff implements Sniff
             return;
         }
 
+        if ($this->allowComments === true) {
+            $emptyTokens = ([T_WHITESPACE => T_WHITESPACE] + Tokens::$phpcsCommentTokens);
+        } else {
+            $emptyTokens = Tokens::$emptyTokens;
+        }
+
         $next = $phpcsFile->findNext(
-            Tokens::$emptyTokens,
+            $emptyTokens,
             ($token['scope_opener'] + 1),
-            ($token['scope_closer'] - 1),
+            $token['scope_closer'],
             true
         );
 

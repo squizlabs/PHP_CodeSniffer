@@ -70,3 +70,17 @@ try {
 }
 
 if (true) {} elseif (false) {}
+
+// phpcs:set Generic.CodeAnalysis.EmptyStatement allowComments true
+
+if ($foo) {
+    // Just a comment
+} elseif ($bar) {
+    /*
+     * Yet another comment
+     */
+} elseif ($baz) {
+    // phpcs:set Generic.CodeAnalysis.EmptyStatement somethingMadeUp true
+} else {
+
+}
