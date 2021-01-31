@@ -1,12 +1,3 @@
-/scripts export-ignore
-/src/Standards/Generic/Tests export-ignore
-/src/Standards/PEAR/Tests export-ignore
-/src/Standards/PSR1/Tests export-ignore
-/src/Standards/PSR2/Tests export-ignore
-/src/Standards/PSR12/Tests export-ignore
-/src/Standards/Squiz/Tests export-ignore
-/src/Standards/Zend/Tests export-ignore
-/tests export-ignore
 .cspell.json export-ignore
 .gitattributes export-ignore
 .github/ export-ignore
@@ -15,6 +6,9 @@ package.xml export-ignore
 phpcs.xml.dist export-ignore
 phpstan.neon export-ignore
 phpunit.xml.dist export-ignore
+scripts/ export-ignore
+src/Standards/**/Tests export-ignore
+tests/ export-ignore
 
 # Declare files that should always have CRLF line endings on checkout.
 *WinTest.inc text eol=crlf
