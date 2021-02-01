@@ -92,7 +92,7 @@ jobs:
         run: rm phpunit.xml.dist
 
       - name: 'PHPUnit: run the tests'
-        run: vendor/bin/phpunit tests/AllTests.php --bootstrap=tests/bootstrap.php
+        run: vendor/bin/phpunit tests/AllTests.php --bootstrap=tests/bootstrap.php --dont-report-useless-tests
 
       - name: 'PHPCS: check code style without cache, no parallel'
         if: ${{ matrix.custom_ini == false }}
