@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit backupGlobals="true" beStrictAboutTestsThatDoNotTestAnything="false" bootstrap="tests/bootstrap.php">
+<phpunit bootstrap="tests/bootstrap.php">
     <testsuites>
         <testsuite name="PHP_CodeSniffer Test Suite">
             <file>tests/AllTests.php</file>

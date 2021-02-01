@@ -75,7 +75,7 @@ jobs:
 
       # For PHP 8.0+, we need to install with ignore platform reqs as PHPUnit 7 is still used.
       - name: Install Composer dependencies - with ignore platform
-        if: ${{ matrix.php >= 8.0 }}
+        if: ${{ matrix.custom_ini == false }}
         uses: "ramsey/composer-install@v1"
         with:
           composer-options: --ignore-platform-reqs
@@ -85,21 +85,27 @@ jobs:
       - name: 'PHPCS: set the path to PHP'
         run: php bin/phpcs --config-set php_path php
 
+      # We need to remove the config file so that PHPUnit doesn't try to read it.
+      # This causes an error on PHP 8.1+ with PHPunit 7, but it's not needed here anyway as the
+      # phpunit command (below) specifies all required settings.
+      - name: 'PHPUnit: remove config file'
+        run: rm phpunit.xml.dist
+
       - name: 'PHPUnit: run the tests'
-        run: vendor/bin/phpunit tests/AllTests.php
+        run: vendor/bin/phpunit tests/AllTests.php --bootstrap=tests/bootstrap.php
 
       - name: 'PHPCS: check code style without cache, no parallel'
-        if: ${{ matrix.custom_ini  == false }}
+        if: ${{ matrix.custom_ini == false }}
         run: php bin/phpcs --no-cache --parallel=1
 
       - name: 'Composer: validate config'
-        if: ${{ matrix.custom_ini  == false }}
+        if: ${{ matrix.custom_ini == false }}
         run: composer validate --no-check-all --strict
 
       - name: Build the phar
-        if: ${{ matrix.custom_ini  == false }}
+        if: ${{ matrix.custom_ini == false }}
         run: php scripts/build-phar.php
 
       - name: 'PHPCS: check code style using the Phar file'
-        if: ${{ matrix.custom_ini  == false }}
+        if: ${{ matrix.custom_ini == false }}
         run: php phpcs.phar
