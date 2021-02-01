@@ -71,6 +71,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set the "minimumVisibility" sniff property to "public" to ignore both private and protected methods
     -- The default remains at "private", so all methods are checked
     -- Thanks to Vincent Langlet for the patch
+  - PSR2.ControlStructures.SwitchDeclaration now supports nested switch statements where every branch terminates
+    -- Previously, if a CASE only contained a SWITCH and no direct terminating statement, a fall-through error was displayed
+    -- Now, the error is surpressed if every branch of the SWITCH has a terminating statement
+    -- Thanks to Vincent Langlet for the patch
   - The PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket error message is now reported on the closing parenthesis token
     -- Previously, the error was being reported on the function keyword, leading to confusing line numbers in the error report
   - Squiz.Commenting.FunctionComment is now able to ignore function comments that are only inheritdoc statements
@@ -99,6 +103,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3188 : Squiz.WhiteSpace.ScopeKeywordSpacing false positive for static return type
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3192 : findStartOfStatement doesn't work correctly inside switch
+    -- Thanks to Vincent Langlet for the patch
   - Fixed bug #3197 : Squiz.NamingConventions.ValidVariableName does not use correct error code for all member vars
  </notes>
  <contents>
