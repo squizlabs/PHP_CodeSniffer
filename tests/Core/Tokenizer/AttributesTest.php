@@ -129,6 +129,28 @@ class AttributesTest extends AbstractMethodUnitTest
                 ],
             ],
             [
+                '/* testAttributeWithShortClosureParameter */',
+                17,
+                [
+                    T_STRING,
+                    T_OPEN_PARENTHESIS,
+                    T_STATIC,
+                    T_WHITESPACE,
+                    T_FN,
+                    T_WHITESPACE,
+                    T_OPEN_PARENTHESIS,
+                    T_VARIABLE,
+                    T_CLOSE_PARENTHESIS,
+                    T_WHITESPACE,
+                    T_FN_ARROW,
+                    T_WHITESPACE,
+                    T_BOOLEAN_NOT,
+                    T_WHITESPACE,
+                    T_VARIABLE,
+                    T_CLOSE_PARENTHESIS,
+                ],
+            ],
+            [
                 '/* testAttributeGrouping */',
                 26,
                 [

@@ -22,6 +22,10 @@ function attribute_on_function_test() {}
 #[AttributeWithParams('foo', bar: ['bar' => 'foobar'])]
 function attribute_with_params_on_function_test() {}
 
+/* testAttributeWithShortClosureParameter */
+#[AttributeWithParams(static fn ($value) => ! $value)]
+function attribute_with_short_closure_param_test() {}
+
 /* testTwoAttributeOnTheSameLine */
 #[CustomAttribute] #[AttributeWithParams('foo')]
 function two_attribute_on_same_line_test() {}
