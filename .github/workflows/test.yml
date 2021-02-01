@@ -91,7 +91,14 @@ jobs:
       - name: 'PHPUnit: remove config file'
         run: rm phpunit.xml.dist
 
+      # Useless tests were not reported for before PHPUnit 6, so it doesn't
+      # understand the CLI argument.
       - name: 'PHPUnit: run the tests'
+        if: ${{ matrix.php < 7.0 }}
+        run: vendor/bin/phpunit tests/AllTests.php --bootstrap=tests/bootstrap.php
+
+      - name: 'PHPUnit: run the tests, dont report useless'
+        if: ${{ matrix.php >= 7.0 }}
         run: vendor/bin/phpunit tests/AllTests.php --bootstrap=tests/bootstrap.php --dont-report-useless-tests
 
       - name: 'PHPCS: check code style without cache, no parallel'
