@@ -754,8 +754,10 @@ abstract class Tokenizer
                 $this->tokens[$i]['attribute_closer'] = $found;
 
                 if ($found !== null) {
-                    $this->tokens[$found]['attribute_opener'] = $i;
-                    $this->tokens[$found]['attribute_closer'] = $found;
+                    for ($x = ($i + 1); $x <= $found; ++$x) {
+                        $this->tokens[$x]['attribute_opener'] = $i;
+                        $this->tokens[$x]['attribute_closer'] = $found;
+                    }
                 }
             }//end if
 

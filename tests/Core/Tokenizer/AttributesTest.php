@@ -10,7 +10,6 @@
 namespace PHP_CodeSniffer\Tests\Core\Tokenizer;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
-use PHP_CodeSniffer\Util\Tokens;
 
 class AttributesTest extends AbstractMethodUnitTest
 {
@@ -46,7 +45,10 @@ class AttributesTest extends AbstractMethodUnitTest
         $this->assertSame($tokens[$attribute]['attribute_closer'], $tokens[$closer]['attribute_closer']);
 
         $map = array_map(
-            static function ($token) {
+            function ($token) use ($attribute, $length) {
+                $this->assertArrayHasKey('attribute_closer', $token);
+                $this->assertSame(($attribute + $length), $token['attribute_closer']);
+
                 return $token['code'];
             },
             array_slice($tokens, ($attribute + 1), ($length - 1))
