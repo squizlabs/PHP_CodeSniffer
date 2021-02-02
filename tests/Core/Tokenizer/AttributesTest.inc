@@ -60,6 +60,10 @@ function single_attribute_on_parameter_test(#[ParamAttribute] int $param) {}
 /* testMultipleAttributesOnParameter */
 function multiple_attributes_on_parameter_test(#[ParamAttribute, AttributeWithParams(/* another comment */ 'foo')] int $param) {}
 
+/* testFqcnAttribute */
+#[Boo\QualifiedName, \Foo\FullyQualifiedName('foo')]
+function fqcn_attrebute_test() {}
+
 /* testMultilineAttributesOnParameter */
 function multiline_attributes_on_parameter_test(#[
     AttributeWithParams(

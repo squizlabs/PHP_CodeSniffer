@@ -10,6 +10,7 @@
 namespace PHP_CodeSniffer\Tests\Core\Tokenizer;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
+use PHP_CodeSniffer\Util\Tokens;
 
 class AttributesTest extends AbstractMethodUnitTest
 {
@@ -215,6 +216,24 @@ class AttributesTest extends AbstractMethodUnitTest
                     T_CLOSE_SHORT_ARRAY,
                     T_CLOSE_PARENTHESIS,
                     T_WHITESPACE,
+                ],
+            ],
+            [
+                '/* testFqcnAttribute */',
+                13,
+                [
+                    T_STRING,
+                    T_NS_SEPARATOR,
+                    T_STRING,
+                    T_COMMA,
+                    T_WHITESPACE,
+                    T_NS_SEPARATOR,
+                    T_STRING,
+                    T_NS_SEPARATOR,
+                    T_STRING,
+                    T_OPEN_PARENTHESIS,
+                    T_CONSTANT_ENCAPSED_STRING,
+                    T_CLOSE_PARENTHESIS,
                 ],
             ],
         ];
