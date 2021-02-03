@@ -465,19 +465,33 @@ class AttributesTest extends AbstractMethodUnitTest
         $this->assertSame($tokens[$attribute]['attribute_opener'], $tokens[$closer]['attribute_opener']);
         $this->assertSame($tokens[$attribute]['attribute_closer'], $tokens[$closer]['attribute_closer']);
 
-        $test = function (array $tokens, $length) use ($attribute) {
+        $this->assertArrayNotHasKey('nested_attributes', $tokens[$attribute]);
+        $this->assertArrayHasKey('nested_attributes', $tokens[($attribute + 8)]);
+        $this->assertSame([$attribute => ($attribute + 24)], $tokens[($attribute + 8)]['nested_attributes']);
+
+        $test = function (array $tokens, $length, $nestedMap) use ($attribute) {
             foreach ($tokens as $token) {
                 $this->assertArrayHasKey('attribute_closer', $token);
                 $this->assertSame(($attribute + $length), $token['attribute_closer']);
+                $this->assertSame($nestedMap, $token['nested_attributes']);
             }
         };
 
-        $test(array_slice($tokens, ($attribute + 1), 7), 24);
+        $test(array_slice($tokens, ($attribute + 1), 7), 24, [$attribute => $attribute + 24]);
+        $test(array_slice($tokens, ($attribute + 8), 1), 8 + 5, [$attribute => $attribute + 24]);
 
         // Length here is 8 (nested attribute offset) + 5 (real length).
-        $test(array_slice($tokens, ($attribute + 8), 6), 8 + 5);
+        $test(
+            array_slice($tokens, ($attribute + 9), 4),
+            8 + 5,
+            [
+                $attribute     => $attribute + 24,
+                $attribute + 8 => $attribute + 13,
+            ]
+        );
 
-        $test(array_slice($tokens, ($attribute + 14), 11), 24);
+        $test(array_slice($tokens, ($attribute + 13), 1), 8 + 5, [$attribute => $attribute + 24]);
+        $test(array_slice($tokens, ($attribute + 14), 10), 24, [$attribute => $attribute + 24]);
 
         $map = array_map(
             static function ($token) {

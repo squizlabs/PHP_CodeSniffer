@@ -2147,6 +2147,8 @@ class PHP extends Tokenizer
             echo "\t*** START ADDITIONAL PHP PROCESSING ***".PHP_EOL;
         }
 
+        $this->createAttributesNestingMap();
+
         $numTokens = count($this->tokens);
         for ($i = ($numTokens - 1); $i >= 0; $i--) {
             // Check for any unset scope conditions due to alternate IF/ENDIF syntax.
@@ -3207,6 +3209,43 @@ class PHP extends Tokenizer
         return $subTokens;
 
     }//end parsePhpAttribute()
+
+
+    /**
+     * Creates a map for the attributes tokens that surround other tokens.
+     *
+     * @return void
+     */
+    private function createAttributesNestingMap()
+    {
+        $map = [];
+        for ($i = 0; $i < $this->numTokens; $i++) {
+            if (isset($this->tokens[$i]['attribute_opener']) === true
+                && $i === $this->tokens[$i]['attribute_opener']
+            ) {
+                if (empty($map) === false) {
+                    $this->tokens[$i]['nested_attributes'] = $map;
+                }
+
+                if (isset($this->tokens[$i]['attribute_closer']) === true) {
+                    $map[$this->tokens[$i]['attribute_opener']]
+                        = $this->tokens[$i]['attribute_closer'];
+                }
+            } else if (isset($this->tokens[$i]['attribute_closer']) === true
+                && $i === $this->tokens[$i]['attribute_closer']
+            ) {
+                array_pop($map);
+                if (empty($map) === false) {
+                    $this->tokens[$i]['nested_attributes'] = $map;
+                }
+            } else {
+                if (empty($map) === false) {
+                    $this->tokens[$i]['nested_attributes'] = $map;
+                }
+            }//end if
+        }//end for
+
+    }//end createAttributesNestingMap()
 
 
 }//end class
