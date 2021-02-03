@@ -741,24 +741,39 @@ abstract class Tokenizer
                     $this->tokens[$opener]['parenthesis_closer'] = $i;
                 }//end if
             } else if ($this->tokens[$i]['code'] === T_ATTRIBUTE) {
-                $found     = null;
-                $numTokens = count($this->tokens);
-                for ($x = ($i + 1); $x < $numTokens; $x++) {
-                    if ($this->tokens[$x]['code'] === T_ATTRIBUTE_END) {
-                        $found = $x;
-                        break;
-                    }
+                $openers[] = $i;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo str_repeat("\t", count($openers));
+                    echo "=> Found attribute opener at $i".PHP_EOL;
                 }
 
                 $this->tokens[$i]['attribute_opener'] = $i;
-                $this->tokens[$i]['attribute_closer'] = $found;
+                $this->tokens[$i]['attribute_closer'] = null;
+            } else if ($this->tokens[$i]['code'] === T_ATTRIBUTE_END) {
+                $numOpeners = count($openers);
+                if ($numOpeners !== 0) {
+                    $opener = array_pop($openers);
+                    if (isset($this->tokens[$opener]['attribute_opener']) === true) {
+                        $this->tokens[$opener]['attribute_closer'] = $i;
 
-                if ($found !== null) {
-                    for ($x = ($i + 1); $x <= $found; ++$x) {
-                        $this->tokens[$x]['attribute_opener'] = $i;
-                        $this->tokens[$x]['attribute_closer'] = $found;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo str_repeat("\t", (count($openers) + 1));
+                            echo "=> Found attribute closer at $i for $opener".PHP_EOL;
+                        }
+
+                        for ($x = ($opener + 1); $x <= $i; ++$x) {
+                            if (isset($this->tokens[$x]['attribute_closer']) === true) {
+                                continue;
+                            }
+
+                            $this->tokens[$x]['attribute_opener'] = $opener;
+                            $this->tokens[$x]['attribute_closer'] = $i;
+                        }
+                    } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo str_repeat("\t", (count($openers) + 1));
+                        echo "=> Found unowned attribute closer at $i for $opener".PHP_EOL;
                     }
-                }
+                }//end if
             }//end if
 
             /*

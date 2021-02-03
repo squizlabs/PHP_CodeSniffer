@@ -294,6 +294,7 @@ class AttributesTest extends AbstractMethodUnitTest
      * @param string $testMarker The comment which prefaces the target token in the test file.
      * @param int    $position   The token position (starting from T_FUNCTION) of T_ATTRIBUTE token.
      * @param int    $length     The number of tokens between opener and closer.
+     * @param array  $tokenCodes The codes of tokens inside the attributes.
      *
      * @dataProvider dataAttributeOnParameters
      *
@@ -303,7 +304,7 @@ class AttributesTest extends AbstractMethodUnitTest
      *
      * @return void
      */
-    public function testAttributeOnParameters($testMarker, $position, $length)
+    public function testAttributeOnParameters($testMarker, $position, $length, array $tokenCodes)
     {
         $tokens = self::$phpcsFile->getTokens();
 
@@ -312,6 +313,7 @@ class AttributesTest extends AbstractMethodUnitTest
 
         $this->assertSame(T_ATTRIBUTE, $tokens[$attribute]['code']);
         $this->assertArrayHasKey('attribute_closer', $tokens[$attribute]);
+
         $this->assertSame(($attribute + $length), $tokens[$attribute]['attribute_closer']);
 
         $closer = $tokens[$attribute]['attribute_closer'];
@@ -321,6 +323,18 @@ class AttributesTest extends AbstractMethodUnitTest
 
         $this->assertSame(T_VARIABLE, $tokens[($closer + 4)]['code']);
         $this->assertSame('$param', $tokens[($closer + 4)]['content']);
+
+        $map = array_map(
+            function ($token) use ($attribute, $length) {
+                $this->assertArrayHasKey('attribute_closer', $token);
+                $this->assertSame(($attribute + $length), $token['attribute_closer']);
+
+                return $token['code'];
+            },
+            array_slice($tokens, ($attribute + 1), ($length - 1))
+        );
+
+        $this->assertSame($tokenCodes, $map);
 
     }//end testAttributeOnParameters()
 
@@ -339,16 +353,42 @@ class AttributesTest extends AbstractMethodUnitTest
                 '/* testSingleAttributeOnParameter */',
                 4,
                 2,
+                [T_STRING],
             ],
             [
                 '/* testMultipleAttributesOnParameter */',
                 4,
                 10,
+                [
+                    T_STRING,
+                    T_COMMA,
+                    T_WHITESPACE,
+                    T_STRING,
+                    T_OPEN_PARENTHESIS,
+                    T_COMMENT,
+                    T_WHITESPACE,
+                    T_CONSTANT_ENCAPSED_STRING,
+                    T_CLOSE_PARENTHESIS,
+                ],
             ],
             [
                 '/* testMultilineAttributesOnParameter */',
                 4,
                 13,
+                [
+                    T_WHITESPACE,
+                    T_WHITESPACE,
+                    T_STRING,
+                    T_OPEN_PARENTHESIS,
+                    T_WHITESPACE,
+                    T_WHITESPACE,
+                    T_CONSTANT_ENCAPSED_STRING,
+                    T_WHITESPACE,
+                    T_WHITESPACE,
+                    T_CLOSE_PARENTHESIS,
+                    T_WHITESPACE,
+                    T_WHITESPACE,
+                ],
             ],
         ];
 
@@ -374,6 +414,81 @@ class AttributesTest extends AbstractMethodUnitTest
         $this->assertNull($tokens[$attribute]['attribute_closer']);
 
     }//end testInvalidAttribute()
+
+
+    /**
+     * Test that nested attributes are parsed correctly.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::tokenize
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::findCloser
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::parsePhpAttribute
+     *
+     * @return void
+     */
+    public function testNestedAttributes()
+    {
+        $tokens     = self::$phpcsFile->getTokens();
+        $tokenCodes = [
+            T_STRING,
+            T_NS_SEPARATOR,
+            T_STRING,
+            T_OPEN_PARENTHESIS,
+            T_FN,
+            T_WHITESPACE,
+            T_OPEN_PARENTHESIS,
+            T_ATTRIBUTE,
+            T_STRING,
+            T_OPEN_PARENTHESIS,
+            T_CONSTANT_ENCAPSED_STRING,
+            T_CLOSE_PARENTHESIS,
+            T_ATTRIBUTE_END,
+            T_WHITESPACE,
+            T_VARIABLE,
+            T_CLOSE_PARENTHESIS,
+            T_WHITESPACE,
+            T_FN_ARROW,
+            T_WHITESPACE,
+            T_STRING_CAST,
+            T_WHITESPACE,
+            T_VARIABLE,
+            T_CLOSE_PARENTHESIS,
+        ];
+
+        $attribute = $this->getTargetToken('/* testNestedAttributes */', T_ATTRIBUTE);
+        $this->assertArrayHasKey('attribute_closer', $tokens[$attribute]);
+
+        $closer = $tokens[$attribute]['attribute_closer'];
+        $this->assertSame(($attribute + 24), $closer);
+
+        $this->assertSame(T_ATTRIBUTE_END, $tokens[$closer]['code']);
+
+        $this->assertSame($tokens[$attribute]['attribute_opener'], $tokens[$closer]['attribute_opener']);
+        $this->assertSame($tokens[$attribute]['attribute_closer'], $tokens[$closer]['attribute_closer']);
+
+        $test = function (array $tokens, $length) use ($attribute) {
+            foreach ($tokens as $token) {
+                $this->assertArrayHasKey('attribute_closer', $token);
+                $this->assertSame(($attribute + $length), $token['attribute_closer']);
+            }
+        };
+
+        $test(array_slice($tokens, ($attribute + 1), 7), 24);
+
+        // Length here is 8 (nested attribute offset) + 5 (real length).
+        $test(array_slice($tokens, ($attribute + 8), 6), 8 + 5);
+
+        $test(array_slice($tokens, ($attribute + 14), 11), 24);
+
+        $map = array_map(
+            static function ($token) {
+                return $token['code'];
+            },
+            array_slice($tokens, ($attribute + 1), 23)
+        );
+
+        $this->assertSame($tokenCodes, $map);
+
+    }//end testNestedAttributes()
 
 
 }//end class

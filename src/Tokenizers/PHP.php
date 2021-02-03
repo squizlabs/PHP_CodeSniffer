@@ -927,7 +927,7 @@ class PHP extends Tokenizer
                 && $token[0] === T_ATTRIBUTE
             ) {
                 // Go looking for the close bracket.
-                $bracketCloser = $this->findCloser($tokens, ($stackPtr + 1), '[', ']');
+                $bracketCloser = $this->findCloser($tokens, ($stackPtr + 1), ['[', '#['], ']');
 
                 $newToken            = [];
                 $newToken['code']    = T_ATTRIBUTE;
@@ -3126,20 +3126,24 @@ class PHP extends Tokenizer
      * Finds a "closer" token (closing parenthesis or square bracket for example)
      * Handle parenthesis balancing while searching for closing token
      *
-     * @param array  $tokens     The list of tokens to iterate searching the closing token (as returned by token_get_all)
-     * @param int    $start      The starting position
-     * @param string $openerChar The opening character
-     * @param string $closerChar The closing character
+     * @param array           $tokens       The list of tokens to iterate searching the closing token (as returned by token_get_all)
+     * @param int             $start        The starting position
+     * @param string|string[] $openerTokens The opening character
+     * @param string          $closerChar   The closing character
      *
      * @return int|null The position of the closing token, if found. NULL otherwise.
      */
-    private function findCloser(array &$tokens, $start, $openerChar, $closerChar)
+    private function findCloser(array &$tokens, $start, $openerTokens, $closerChar)
     {
-        $numTokens = count($tokens);
-        $stack     = [0];
-        $closer    = null;
+        $numTokens    = count($tokens);
+        $stack        = [0];
+        $closer       = null;
+        $openerTokens = (array) $openerTokens;
+
         for ($x = $start; $x < $numTokens; $x++) {
-            if ($tokens[$x] === $openerChar) {
+            if (in_array($tokens[$x], $openerTokens, true) === true
+                || (is_array($tokens[$x]) === true && in_array($tokens[$x][1], $openerTokens, true) === true)
+            ) {
                 $stack[] = $x;
             } else if ($tokens[$x] === $closerChar) {
                 array_pop($stack);
@@ -3171,6 +3175,21 @@ class PHP extends Tokenizer
 
         $commentBody = substr($token[1], 2);
         $subTokens   = @token_get_all('<?php '.$commentBody);
+
+        foreach ($subTokens as $i => $subToken) {
+            if (is_array($subToken) === true
+                && $subToken[0] === T_COMMENT
+                && strpos($subToken[1], '#[') === 0
+            ) {
+                $reparsed = $this->parsePhpAttribute($subTokens, $i);
+                if ($reparsed !== null) {
+                    array_splice($subTokens, $i, 1, $reparsed);
+                } else {
+                    $subToken[0] = T_ATTRIBUTE;
+                }
+            }
+        }
+
         array_splice($subTokens, 0, 1, [[T_ATTRIBUTE, '#[']]);
 
         // Go looking for the close bracket.
