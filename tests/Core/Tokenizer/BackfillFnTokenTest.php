@@ -783,6 +783,8 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
         $this->assertTrue(array_key_exists('scope_opener', $tokens[$opener]), 'Opener scope opener is not set');
         $this->assertTrue(array_key_exists('scope_closer', $tokens[$opener]), 'Opener scope closer is not set');
         $this->assertSame($tokens[$opener]['scope_condition'], $token, 'Opener scope condition is not the T_FN token');
+        $this->assertSame(T_FN_ARROW, $tokens[$opener]['code'], 'Arrow scope opener not tokenized as T_FN_ARROW (code)');
+        $this->assertSame('T_FN_ARROW', $tokens[$opener]['type'], 'Arrow scope opener not tokenized as T_FN_ARROW (type)');
 
         $closer = $tokens[$token]['scope_closer'];
         $this->assertTrue(array_key_exists('scope_condition', $tokens[$closer]), 'Closer scope condition is not set');
