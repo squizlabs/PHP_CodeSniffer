@@ -121,16 +121,19 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
         $token = $this->getTargetToken('/* testNestedInner */', T_FN);
         $this->backfillHelper($token, true);
 
-        $this->assertSame($tokens[$token]['scope_opener'], ($token + 5), 'Scope opener is not the arrow token');
-        $this->assertSame($tokens[$token]['scope_closer'], ($token + 16), 'Scope closer is not the semicolon token');
+        $expectedScopeOpener = ($token + 5);
+        $expectedScopeCloser = ($token + 16);
+
+        $this->assertSame($expectedScopeOpener, $tokens[$token]['scope_opener'], 'Scope opener is not the arrow token');
+        $this->assertSame($expectedScopeCloser, $tokens[$token]['scope_closer'], 'Scope closer is not the semicolon token');
 
         $opener = $tokens[$token]['scope_opener'];
-        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 5), 'Opener scope opener is not the arrow token');
-        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 16), 'Opener scope closer is not the semicolon token');
+        $this->assertSame($expectedScopeOpener, $tokens[$opener]['scope_opener'], 'Opener scope opener is not the arrow token');
+        $this->assertSame($expectedScopeCloser, $tokens[$opener]['scope_closer'], 'Opener scope closer is not the semicolon token');
 
         $closer = $tokens[$token]['scope_closer'];
-        $this->assertSame($tokens[$closer]['scope_opener'], ($token - 4), 'Closer scope opener is not the arrow token of the "outer" arrow function (shared scope closer)');
-        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 16), 'Closer scope closer is not the semicolon token');
+        $this->assertSame(($token - 4), $tokens[$closer]['scope_opener'], 'Closer scope opener is not the arrow token of the "outer" arrow function (shared scope closer)');
+        $this->assertSame($expectedScopeCloser, $tokens[$closer]['scope_closer'], 'Closer scope closer is not the semicolon token');
 
     }//end testNestedInner()
 
@@ -356,16 +359,19 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
             $token = $this->getTargetToken('/* test'.$marker.'ReturnType */', T_FN);
             $this->backfillHelper($token);
 
-            $this->assertSame($tokens[$token]['scope_opener'], ($token + 11), "Scope opener is not the arrow token (for $marker)");
-            $this->assertSame($tokens[$token]['scope_closer'], ($token + 14), "Scope closer is not the semicolon token(for $marker)");
+            $expectedScopeOpener = ($token + 11);
+            $expectedScopeCloser = ($token + 14);
+
+            $this->assertSame($expectedScopeOpener, $tokens[$token]['scope_opener'], "Scope opener is not the arrow token (for $marker)");
+            $this->assertSame($expectedScopeCloser, $tokens[$token]['scope_closer'], "Scope closer is not the semicolon token(for $marker)");
 
             $opener = $tokens[$token]['scope_opener'];
-            $this->assertSame($tokens[$opener]['scope_opener'], ($token + 11), "Opener scope opener is not the arrow token(for $marker)");
-            $this->assertSame($tokens[$opener]['scope_closer'], ($token + 14), "Opener scope closer is not the semicolon token(for $marker)");
+            $this->assertSame($expectedScopeOpener, $tokens[$opener]['scope_opener'], "Opener scope opener is not the arrow token(for $marker)");
+            $this->assertSame($expectedScopeCloser, $tokens[$opener]['scope_closer'], "Opener scope closer is not the semicolon token(for $marker)");
 
             $closer = $tokens[$token]['scope_closer'];
-            $this->assertSame($tokens[$closer]['scope_opener'], ($token + 11), "Closer scope opener is not the arrow token(for $marker)");
-            $this->assertSame($tokens[$closer]['scope_closer'], ($token + 14), "Closer scope closer is not the semicolon token(for $marker)");
+            $this->assertSame($expectedScopeOpener, $tokens[$closer]['scope_opener'], "Closer scope opener is not the arrow token(for $marker)");
+            $this->assertSame($expectedScopeCloser, $tokens[$closer]['scope_closer'], "Closer scope closer is not the semicolon token(for $marker)");
         }
 
     }//end testKeywordReturnTypes()
@@ -425,30 +431,36 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
         $token = $this->getTargetToken('/* testTernaryThen */', T_FN);
         $this->backfillHelper($token);
 
-        $this->assertSame($tokens[$token]['scope_opener'], ($token + 8), 'Scope opener for THEN is not the arrow token');
-        $this->assertSame($tokens[$token]['scope_closer'], ($token + 12), 'Scope closer for THEN is not the semicolon token');
+        $expectedScopeOpener = ($token + 8);
+        $expectedScopeCloser = ($token + 12);
+
+        $this->assertSame($expectedScopeOpener, $tokens[$token]['scope_opener'], 'Scope opener for THEN is not the arrow token');
+        $this->assertSame($expectedScopeCloser, $tokens[$token]['scope_closer'], 'Scope closer for THEN is not the semicolon token');
 
         $opener = $tokens[$token]['scope_opener'];
-        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 8), 'Opener scope opener for THEN is not the arrow token');
-        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 12), 'Opener scope closer for THEN is not the semicolon token');
+        $this->assertSame($expectedScopeOpener, $tokens[$opener]['scope_opener'], 'Opener scope opener for THEN is not the arrow token');
+        $this->assertSame($expectedScopeCloser, $tokens[$opener]['scope_closer'], 'Opener scope closer for THEN is not the semicolon token');
 
         $closer = $tokens[$token]['scope_closer'];
-        $this->assertSame($tokens[$closer]['scope_opener'], ($token + 8), 'Closer scope opener for THEN is not the arrow token');
-        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 12), 'Closer scope closer for THEN is not the semicolon token');
+        $this->assertSame($expectedScopeOpener, $tokens[$closer]['scope_opener'], 'Closer scope opener for THEN is not the arrow token');
+        $this->assertSame($expectedScopeCloser, $tokens[$closer]['scope_closer'], 'Closer scope closer for THEN is not the semicolon token');
 
         $token = $this->getTargetToken('/* testTernaryElse */', T_FN);
         $this->backfillHelper($token, true);
 
-        $this->assertSame($tokens[$token]['scope_opener'], ($token + 8), 'Scope opener for ELSE is not the arrow token');
-        $this->assertSame($tokens[$token]['scope_closer'], ($token + 11), 'Scope closer for ELSE is not the semicolon token');
+        $expectedScopeOpener = ($token + 8);
+        $expectedScopeCloser = ($token + 11);
+
+        $this->assertSame($expectedScopeOpener, $tokens[$token]['scope_opener'], 'Scope opener for ELSE is not the arrow token');
+        $this->assertSame($expectedScopeCloser, $tokens[$token]['scope_closer'], 'Scope closer for ELSE is not the semicolon token');
 
         $opener = $tokens[$token]['scope_opener'];
-        $this->assertSame($tokens[$opener]['scope_opener'], ($token + 8), 'Opener scope opener for ELSE is not the arrow token');
-        $this->assertSame($tokens[$opener]['scope_closer'], ($token + 11), 'Opener scope closer for ELSE is not the semicolon token');
+        $this->assertSame($expectedScopeOpener, $tokens[$opener]['scope_opener'], 'Opener scope opener for ELSE is not the arrow token');
+        $this->assertSame($expectedScopeCloser, $tokens[$opener]['scope_closer'], 'Opener scope closer for ELSE is not the semicolon token');
 
         $closer = $tokens[$token]['scope_closer'];
-        $this->assertSame($tokens[$closer]['scope_opener'], ($token - 24), 'Closer scope opener for ELSE is not the arrow token of the "outer" arrow function (shared scope closer)');
-        $this->assertSame($tokens[$closer]['scope_closer'], ($token + 11), 'Closer scope closer for ELSE is not the semicolon token');
+        $this->assertSame(($token - 24), $tokens[$closer]['scope_opener'], 'Closer scope opener for ELSE is not the arrow token of the "outer" arrow function (shared scope closer)');
+        $this->assertSame($expectedScopeCloser, $tokens[$closer]['scope_closer'], 'Closer scope closer for ELSE is not the semicolon token');
 
     }//end testTernary()
 
