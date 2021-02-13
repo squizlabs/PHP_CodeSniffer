@@ -568,12 +568,12 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
     /**
      * Helper function to check that all token keys are correctly set for T_FN tokens.
      *
-     * @param string $token                The T_FN token to check.
-     * @param bool   $skipScopeCloserCheck Whether to skip the scope closer check.
-     *                                     This should be set to "true" when testing nested arrow functions,
-     *                                     where the "inner" arrow function shares a scope closer with the
-     *                                     "outer" arrow function, as the 'scope_condition' for the scope closer
-     *                                     of the "inner" arrow function will point to the "outer" arrow function.
+     * @param int  $token                The T_FN token to check.
+     * @param bool $skipScopeCloserCheck Whether to skip the scope closer check.
+     *                                   This should be set to "true" when testing nested arrow functions,
+     *                                   where the "inner" arrow function shares a scope closer with the
+     *                                   "outer" arrow function, as the 'scope_condition' for the scope closer
+     *                                   of the "inner" arrow function will point to the "outer" arrow function.
      *
      * @return void
      */
