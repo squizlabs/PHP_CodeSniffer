@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\Debug;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Common;
 
 class JSLintSniff implements Sniff
 {
@@ -56,8 +57,8 @@ class JSLintSniff implements Sniff
 
         $fileName = $phpcsFile->getFilename();
 
-        $rhinoPath  = escapeshellcmd($rhinoPath);
-        $jslintPath = escapeshellcmd($jslintPath);
+        $rhinoPath  = Common::escapeshellcmd($rhinoPath);
+        $jslintPath = Common::escapeshellcmd($jslintPath);
 
         $cmd = "$rhinoPath \"$jslintPath\" ".escapeshellarg($fileName);
         exec($cmd, $output, $retval);

@@ -240,6 +240,28 @@ class Common
 
 
     /**
+     * Escape a path to a system command.
+     *
+     * @param string $cmd The path to the system command.
+     *
+     * @return string
+     */
+    public static function escapeshellcmd($cmd)
+    {
+        $cmd = escapeshellcmd($cmd);
+
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            // Spaces are not escaped by escapeshellcmd on Windows, but need to be
+            // for the command to be able to execute.
+            $cmd = preg_replace('`(?<!^) `', '^ ', $cmd);
+        }
+
+        return $cmd;
+
+    }//end escapeshellcmd()
+
+
+    /**
      * Prepares token content for output to screen.
      *
      * Replaces invisible characters so they are visible. On non-Windows

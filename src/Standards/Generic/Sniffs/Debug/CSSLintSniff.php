@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Common;
 
 class CSSLintSniff implements Sniff
 {
@@ -54,7 +55,7 @@ class CSSLintSniff implements Sniff
 
         $fileName = $phpcsFile->getFilename();
 
-        $cmd = escapeshellcmd($csslintPath).' '.escapeshellarg($fileName).' 2>&1';
+        $cmd = Common::escapeshellcmd($csslintPath).' '.escapeshellarg($fileName).' 2>&1';
         exec($cmd, $output, $retval);
 
         if (is_array($output) === false) {
