@@ -1314,6 +1314,7 @@ class PHP extends Tokenizer
 
                     if ($x < $numTokens
                         && is_array($tokens[$x]) === true
+                        && $tokens[$x][0] !== T_STRING
                         && $tokens[$x][0] !== T_NAME_QUALIFIED
                         && $tokens[$x][0] !== T_NAME_FULLY_QUALIFIED
                     ) {
