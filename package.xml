@@ -35,6 +35,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Added support for PHP 8.0 dereferencing of text strings with interpolated variables
     -- Thanks to Juliette Reinders Folmer for the patch
+  - The value of the T_FN_ARROW token has changed from "T_FN_ARROW" to "PHPCS_T_FN_ARROW" to avoid package conflicts
+    -- This will have no impact on custom sniffs unless they are specifically looking at the value of the T_FN_ARROW constant
+    -- If sniffs are just using constant to find arrow functions, they will continue to work without modification
+    -- Thanks to Juliette Reinders Folmer for the patch
   - File::getMethodParameters() now supports PHP 8.0 constructor property promotion
     -- Returned method params now include a "property_visibility" and "visibility_token" index if property promotion is detected
     -- Thanks to Juliette Reinders Folmer for the patch
@@ -45,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Previously, checks using include patterns were excluded when processing STDIN when no file path was provided via --stdin-path
     -- Now, all include and exclude rules are ignored when no file path is provided, allowing all checks to run
     -- If you want include and exclude rules enforced when checking STDIN, use --stdin-path to set the file path
+    -- Thanks to Juliette Reinders Folmer for the patch
+  - Spaces are now correctly escaped in the paths to external on Windows
     -- Thanks to Juliette Reinders Folmer for the patch
   - Added Generic.NamingConventions.AbstractClassNamePrefix to enforce that class names are prefixed with "Abstract"
     -- Thanks to Anna Borzenko for the contribution
