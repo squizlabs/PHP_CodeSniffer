@@ -112,6 +112,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3192 : findStartOfStatement doesn't work correctly inside switch
     -- Thanks to Vincent Langlet for the patch
   - Fixed bug #3197 : Squiz.NamingConventions.ValidVariableName does not use correct error code for all member vars
+  - Fixed bug #3219 : Generic.Formatting.MultipleStatementAlignment false positive for empty anonymous classes and closures
  </notes>
  <contents>
   <dir name="/">
