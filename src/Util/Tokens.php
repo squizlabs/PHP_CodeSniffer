@@ -74,9 +74,9 @@ define('T_OPEN_USE_GROUP', 'PHPCS_T_OPEN_USE_GROUP');
 define('T_CLOSE_USE_GROUP', 'PHPCS_T_CLOSE_USE_GROUP');
 define('T_ZSR', 'PHPCS_T_ZSR');
 define('T_ZSR_EQUAL', 'PHPCS_T_ZSR_EQUAL');
-define('T_FN_ARROW', 'T_FN_ARROW');
-define('T_TYPE_UNION', 'T_TYPE_UNION');
-define('T_PARAM_NAME', 'T_PARAM_NAME');
+define('T_FN_ARROW', 'PHPCS_T_FN_ARROW');
+define('T_TYPE_UNION', 'PHPCS_T_TYPE_UNION');
+define('T_PARAM_NAME', 'PHPCS_T_PARAM_NAME');
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
