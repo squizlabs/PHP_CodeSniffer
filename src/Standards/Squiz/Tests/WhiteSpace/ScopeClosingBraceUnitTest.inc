@@ -107,3 +107,10 @@ public function foo()
 }
 
 $fn1 = fn($x) => $x + $y;
+
+$match = match ($test) { 1 => 'a', 2 => 'b' };
+
+$match = match ($test) {
+    1 => 'a',
+    2 => 'b'
+    };
