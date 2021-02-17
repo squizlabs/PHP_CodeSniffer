@@ -45,6 +45,7 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
  * @property string[] $ignored         Regular expressions used to ignore files and folders during checking.
  * @property string   $reportFile      A file where the report output should be written.
  * @property string   $generator       The documentation generator to use.
+ * @property string   $outputPath      The documentation output path.
  * @property string   $filter          The filter to use for the run.
  * @property string[] $bootstrap       One of more files to include before the run begins.
  * @property int      $reportWidth     The maximum number of columns that reports should use for output.
@@ -136,6 +137,7 @@ class Config
         'stdinContent'    => null,
         'stdinPath'       => null,
         'unknown'         => null,
+        'outputPath'      => null,
     ];
 
     /**
@@ -1200,6 +1202,8 @@ class Config
 
                 $this->tabWidth = (int) substr($arg, 10);
                 self::$overriddenDefaults['tabWidth'] = true;
+            } else if (substr($arg, 0, 12) === 'output-path=') {
+                $this->outputPath = strtolower(substr($arg, 12));
             } else {
                 if ($this->dieOnUnknownArg === false) {
                     $eqPos = strpos($arg, '=');
