@@ -134,7 +134,6 @@ abstract class AbstractSniffUnitTest extends TestCase
         } else {
             $config        = new Config();
             $config->cache = false;
-            $GLOBALS['PHP_CODESNIFFER_CONFIG'] = $config;
         }
 
         $config->standards = [$standardName];
