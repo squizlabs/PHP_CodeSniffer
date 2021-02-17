@@ -22,10 +22,11 @@ class HTML extends Generator
     /**
      * Generates the documentation for a standard.
      *
+     * @param null $outputPath
      * @return void
      * @see    processSniff()
      */
-    public function generate()
+    public function generate($outputPath = null)
     {
         ob_start();
         $this->printHeader();
@@ -43,7 +44,13 @@ class HTML extends Generator
         $content = ob_get_contents();
         ob_end_clean();
 
-        echo $content;
+        if (!empty($outputPath)) {
+            $file = fopen($outputPath, "w") or die("Unable to open file!");
+            fwrite($file, $content);
+            fclose($file);
+        } else {
+            echo $content;
+        }
 
     }//end generate()
 
