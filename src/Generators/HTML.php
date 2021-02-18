@@ -44,13 +44,7 @@ class HTML extends Generator
         $content = ob_get_contents();
         ob_end_clean();
 
-        if (empty($outputPath) === false) {
-            $file = fopen($outputPath, "w") or die("Unable to open file!");
-            fwrite($file, $content);
-            fclose($file);
-        } else {
-            echo $content;
-        }
+        echo $content;
 
     }//end generate()
 
