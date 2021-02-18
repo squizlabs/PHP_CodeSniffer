@@ -78,7 +78,7 @@ abstract class Generator
 
 
     /**
-     * Retrieves the rule of the sniff from the DOMNode supplied.
+     * Retrieves the rule of the sniff from the file path supplied.
      *
      * @param string $file The sniff file path.
      *
