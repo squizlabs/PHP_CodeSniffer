@@ -79,7 +79,7 @@ class Markdown extends Generator
      * @param \DOMNode $doc  The DOMNode object for the sniff.
      *                       It represents the "documentation"
      *                       tag in the XML standard file.
-     * @param string   $rule rule.
+     * @param string   $rule The rule.
      *
      * @return void
      */
