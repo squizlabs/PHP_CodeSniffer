@@ -22,12 +22,10 @@ class HTML extends Generator
     /**
      * Generates the documentation for a standard.
      *
-     * @param null $outputPath output path to write documentation into file
-     *
      * @return void
      * @see    processSniff()
      */
-    public function generate($outputPath=null)
+    public function generate()
     {
         ob_start();
         $this->printHeader();
@@ -37,7 +35,8 @@ class HTML extends Generator
             $doc = new \DOMDocument();
             $doc->load($file);
             $documentation = $doc->getElementsByTagName('documentation')->item(0);
-            $this->processSniff($documentation);
+            $rule          = $this->getRule($file);
+            $this->processSniff($documentation, $rule);
         }
 
         $this->printFooter();
@@ -90,6 +89,10 @@ class HTML extends Generator
                         font-size: 16px;
                         font-weight: normal;
                         margin-top: 50px;
+                    }
+                    
+                    h2 small {
+                        color: #000;
                     }
 
                     .code-comparison {
@@ -190,17 +193,18 @@ class HTML extends Generator
     /**
      * Process the documentation for a single sniff.
      *
-     * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                      It represents the "documentation" tag in the XML
-     *                      standard file.
+     * @param \DOMNode $doc  The DOMNode object for the sniff.
+     *                       It represents the "documentation"
+     *                       tag in the XML standard file.
+     * @param string   $rule rule.
      *
      * @return void
      */
-    public function processSniff(\DOMNode $doc)
+    public function processSniff(\DOMNode $doc, $rule)
     {
         $title = $this->getTitle($doc);
         echo '  <a name="'.str_replace(' ', '-', $title).'" />'.PHP_EOL;
-        echo "  <h2>$title</h2>".PHP_EOL;
+        echo "  <h2>$title <small>($rule)</small></h2>".PHP_EOL;
 
         foreach ($doc->childNodes as $node) {
             if ($node->nodeName === 'standard') {

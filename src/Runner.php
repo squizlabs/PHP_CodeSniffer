@@ -90,7 +90,7 @@ class Runner
                     $ruleset   = new Ruleset($this->config);
                     $class     = 'PHP_CodeSniffer\Generators\\'.$this->config->generator;
                     $generator = new $class($ruleset);
-                    $generator->generate($this->config->outputPath);
+                    $generator->generate();
                 }
 
                 return 0;
