@@ -373,6 +373,7 @@ class PHP extends Tokenizer
         T_LOGICAL_OR               => 2,
         T_LOGICAL_XOR              => 3,
         T_MATCH                    => 5,
+        T_MATCH_ARROW              => 2,
         T_MATCH_DEFAULT            => 7,
         T_METHOD_C                 => 10,
         T_MINUS_EQUAL              => 2,
@@ -1371,6 +1372,15 @@ class PHP extends Tokenizer
                     && is_array($tokens[$x]) === true
                     && $tokens[$x][0] === T_DOUBLE_ARROW
                 ) {
+                    // Modify the original token stack for the double arrow so that
+                    // future checks can disregard the double arrow token more easily.
+                    // For match expression "case" statements, this is handled
+                    // in PHP::processAdditional().
+                    $tokens[$x][0] = T_MATCH_ARROW;
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* token $x changed from T_DOUBLE_ARROW to T_MATCH_ARROW".PHP_EOL;
+                    }
+
                     $newToken            = [];
                     $newToken['code']    = T_MATCH_DEFAULT;
                     $newToken['type']    = 'T_MATCH_DEFAULT';
@@ -2450,6 +2460,47 @@ class PHP extends Tokenizer
                             echo "\t\t* cleaned parenthesis of token $i *".PHP_EOL;
                         }
                     }
+                } else {
+                    // Retokenize the double arrows for match expression cases to `T_MATCH_ARROW`.
+                    $searchFor  = [
+                        T_OPEN_CURLY_BRACKET  => T_OPEN_CURLY_BRACKET,
+                        T_OPEN_SQUARE_BRACKET => T_OPEN_SQUARE_BRACKET,
+                        T_OPEN_PARENTHESIS    => T_OPEN_PARENTHESIS,
+                        T_OPEN_SHORT_ARRAY    => T_OPEN_SHORT_ARRAY,
+                        T_DOUBLE_ARROW        => T_DOUBLE_ARROW,
+                    ];
+                    $searchFor += Util\Tokens::$scopeOpeners;
+
+                    for ($x = ($this->tokens[$i]['scope_opener'] + 1); $x < $this->tokens[$i]['scope_closer']; $x++) {
+                        if (isset($searchFor[$this->tokens[$x]['code']]) === false) {
+                            continue;
+                        }
+
+                        if (isset($this->tokens[$x]['scope_closer']) === true) {
+                            $x = $this->tokens[$x]['scope_closer'];
+                            continue;
+                        }
+
+                        if (isset($this->tokens[$x]['parenthesis_closer']) === true) {
+                            $x = $this->tokens[$x]['parenthesis_closer'];
+                            continue;
+                        }
+
+                        if (isset($this->tokens[$x]['bracket_closer']) === true) {
+                            $x = $this->tokens[$x]['bracket_closer'];
+                            continue;
+                        }
+
+                        // This must be a double arrow, but make sure anyhow.
+                        if ($this->tokens[$x]['code'] === T_DOUBLE_ARROW) {
+                            $this->tokens[$x]['code'] = T_MATCH_ARROW;
+                            $this->tokens[$x]['type'] = 'T_MATCH_ARROW';
+
+                            if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                                echo "\t\t* token $x changed from T_DOUBLE_ARROW to T_MATCH_ARROW".PHP_EOL;
+                            }
+                        }
+                    }//end for
                 }//end if
 
                 continue;

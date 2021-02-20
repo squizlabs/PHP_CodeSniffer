@@ -77,6 +77,7 @@ define('T_ZSR_EQUAL', 'PHPCS_T_ZSR_EQUAL');
 define('T_FN_ARROW', 'PHPCS_T_FN_ARROW');
 define('T_TYPE_UNION', 'PHPCS_T_TYPE_UNION');
 define('T_PARAM_NAME', 'PHPCS_T_PARAM_NAME');
+define('T_MATCH_ARROW', 'PHPCS_T_MATCH_ARROW');
 define('T_MATCH_DEFAULT', 'PHPCS_T_MATCH_DEFAULT');
 
 // Some PHP 5.5 tokens, replicated for lower versions.
