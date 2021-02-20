@@ -2242,6 +2242,31 @@ class PHP extends Tokenizer
                         $lastEndToken = null;
 
                         for ($scopeCloser = ($arrow + 1); $scopeCloser < $numTokens; $scopeCloser++) {
+                            // Arrow function closer should never be shared with the closer of a match
+                            // control structure.
+                            if (isset($this->tokens[$scopeCloser]['scope_closer'], $this->tokens[$scopeCloser]['scope_condition']) === true
+                                && $scopeCloser === $this->tokens[$scopeCloser]['scope_closer']
+                                && $this->tokens[$this->tokens[$scopeCloser]['scope_condition']]['code'] === T_MATCH
+                            ) {
+                                if ($arrow < $this->tokens[$scopeCloser]['scope_condition']) {
+                                    // Match in return value of arrow function. Move on to the next token.
+                                    continue;
+                                }
+
+                                // Arrow function as return value for the last match case without trailing comma.
+                                if ($lastEndToken !== null) {
+                                    $scopeCloser = $lastEndToken;
+                                    break;
+                                }
+
+                                for ($lastNonEmpty = ($scopeCloser - 1); $lastNonEmpty > $arrow; $lastNonEmpty--) {
+                                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$lastNonEmpty]['code']]) === false) {
+                                        $scopeCloser = $lastNonEmpty;
+                                        break 2;
+                                    }
+                                }
+                            }
+
                             if (isset($endTokens[$this->tokens[$scopeCloser]['code']]) === true) {
                                 if ($lastEndToken !== null
                                     && $this->tokens[$scopeCloser]['code'] === T_CLOSE_PARENTHESIS
