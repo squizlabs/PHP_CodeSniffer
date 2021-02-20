@@ -24,8 +24,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testSimple()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         foreach (['/* testStandard */', '/* testMixedCase */'] as $comment) {
             $token = $this->getTargetToken($comment, T_FN);
             $this->backfillHelper($token);
@@ -44,8 +42,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testWhitespace()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testWhitespace */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 6, 13);
@@ -62,8 +58,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testComment()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testComment */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 8, 15);
@@ -80,8 +74,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testHeredoc()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testHeredoc */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 4, 9);
@@ -98,8 +90,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testNestedOuter()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testNestedOuter */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 5, 25);
@@ -147,8 +137,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testFunctionCall()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testFunctionCall */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 5, 17);
@@ -165,8 +153,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testChainedFunctionCall()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testChainedFunctionCall */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 5, 12, 'bracket');
@@ -183,8 +169,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testFunctionArgument()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testFunctionArgument */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 8, 15, 'comma');
@@ -201,8 +185,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testClosure()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testClosure */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 5, 60, 'comma');
@@ -219,8 +201,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testReturnType()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testReturnType */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 11, 18, 'comma');
@@ -237,8 +217,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testReference()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testReference */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 6, 9);
@@ -255,8 +233,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testGrouped()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testGrouped */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 5, 8);
@@ -273,8 +249,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testArrayValue()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testArrayValue */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 4, 9, 'comma');
@@ -291,8 +265,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testYield()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testYield */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 5, 14);
@@ -309,8 +281,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testNullableNamespace()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testNullableNamespace */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 15, 18);
@@ -327,8 +297,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testNamespaceOperatorInTypes()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testNamespaceOperatorInTypes */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 16, 19);
@@ -386,8 +354,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testUnionParamType()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testUnionParamType */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 13, 21);
@@ -404,8 +370,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testUnionReturnType()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testUnionReturnType */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 11, 18);
@@ -474,8 +438,6 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
      */
     public function testNestedInMethod()
     {
-        $tokens = self::$phpcsFile->getTokens();
-
         $token = $this->getTargetToken('/* testNestedInMethod */', T_FN);
         $this->backfillHelper($token);
         $this->scopePositionTestHelper($token, 5, 17);
