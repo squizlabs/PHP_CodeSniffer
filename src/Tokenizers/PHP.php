@@ -373,6 +373,7 @@ class PHP extends Tokenizer
         T_LOGICAL_OR               => 2,
         T_LOGICAL_XOR              => 3,
         T_MATCH                    => 5,
+        T_MATCH_DEFAULT            => 7,
         T_METHOD_C                 => 10,
         T_MINUS_EQUAL              => 2,
         T_POW_EQUAL                => 3,
@@ -1335,6 +1336,48 @@ class PHP extends Tokenizer
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "\t\t* token $stackPtr changed from T_MATCH to T_STRING".PHP_EOL;
+                    }
+
+                    $finalTokens[$newStackPtr] = $newToken;
+                    $newStackPtr++;
+                    continue;
+                }//end if
+            }//end if
+
+            /*
+                Retokenize the T_DEFAULT in match control structures as T_MATCH_DEFAULT
+                to prevent scope being set and the scope for switch default statements
+                breaking.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_DEFAULT
+            ) {
+                for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
+                    if ($tokens[$x] === ',') {
+                        // Skip over potential trailing comma (supported in PHP).
+                        continue;
+                    }
+
+                    if (is_array($tokens[$x]) === false
+                        || isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                    ) {
+                        // Non-empty, non-comma content.
+                        break;
+                    }
+                }
+
+                if (isset($tokens[$x]) === true
+                    && is_array($tokens[$x]) === true
+                    && $tokens[$x][0] === T_DOUBLE_ARROW
+                ) {
+                    $newToken            = [];
+                    $newToken['code']    = T_MATCH_DEFAULT;
+                    $newToken['type']    = 'T_MATCH_DEFAULT';
+                    $newToken['content'] = $token[1];
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* token $stackPtr changed from T_DEFAULT to T_MATCH_DEFAULT".PHP_EOL;
                     }
 
                     $finalTokens[$newStackPtr] = $newToken;
