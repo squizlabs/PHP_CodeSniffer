@@ -31,8 +31,9 @@ class DisallowRequestSuperglobalSniff implements Sniff
     /**
      * Processes this sniff, when one of its tokens is encountered.
      *
-     * @param File $phpcsFile The file being scanned.
-     * @param int  $stackPtr  The position of the current token in the stack passed in $tokens.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token in the stack
+     *                                               passed in $tokens.
      *
      * @return void
      */
