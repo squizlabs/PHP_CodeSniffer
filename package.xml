@@ -196,6 +196,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.php" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.inc" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.php" role="test" />
+      <file baseinstalldir="" name="BackfillMatchTokenTest.inc" role="test" />
+      <file baseinstalldir="" name="BackfillMatchTokenTest.php" role="test" />
       <file baseinstalldir="" name="BackfillNumericSeparatorTest.inc" role="test" />
       <file baseinstalldir="" name="BackfillNumericSeparatorTest.php" role="test" />
       <file baseinstalldir="" name="BitwiseOrTest.inc" role="test" />
@@ -2100,6 +2102,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillMatchTokenTest.php" name="tests/Core/Tokenizer/BackfillMatchTokenTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillMatchTokenTest.inc" name="tests/Core/Tokenizer/BackfillMatchTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.php" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BitwiseOrTest.php" name="tests/Core/Tokenizer/BitwiseOrTest.php" />
@@ -2176,6 +2180,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillMatchTokenTest.php" name="tests/Core/Tokenizer/BackfillMatchTokenTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillMatchTokenTest.inc" name="tests/Core/Tokenizer/BackfillMatchTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.php" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BitwiseOrTest.php" name="tests/Core/Tokenizer/BitwiseOrTest.php" />

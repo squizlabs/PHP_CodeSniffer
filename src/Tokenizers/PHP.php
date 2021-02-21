@@ -251,6 +251,13 @@ class PHP extends Tokenizer
                 T_SWITCH => T_SWITCH,
             ],
         ],
+        T_MATCH         => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => true,
+            'shared' => false,
+            'with'   => [],
+        ],
         T_START_HEREDOC => [
             'start'  => [T_START_HEREDOC => T_START_HEREDOC],
             'end'    => [T_END_HEREDOC => T_END_HEREDOC],
@@ -365,6 +372,7 @@ class PHP extends Tokenizer
         T_LOGICAL_AND              => 3,
         T_LOGICAL_OR               => 2,
         T_LOGICAL_XOR              => 3,
+        T_MATCH                    => 5,
         T_METHOD_C                 => 10,
         T_MINUS_EQUAL              => 2,
         T_POW_EQUAL                => 3,
@@ -1252,6 +1260,87 @@ class PHP extends Tokenizer
                 $newStackPtr++;
                 $stackPtr = ($i - 1);
                 continue;
+            }//end if
+
+            /*
+                Backfill the T_MATCH token for PHP versions < 8.0 and
+                do initial correction for non-match expression T_MATCH tokens
+                to T_STRING for PHP >= 8.0.
+                A final check for non-match expression T_MATCH tokens is done
+                in PHP::processAdditional().
+            */
+
+            if ($tokenIsArray === true
+                && (($token[0] === T_STRING
+                && strtolower($token[1]) === 'match')
+                || $token[0] === T_MATCH)
+            ) {
+                $isMatch = false;
+                for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
+                    if (isset($tokens[$x][0], Util\Tokens::$emptyTokens[$tokens[$x][0]]) === true) {
+                        continue;
+                    }
+
+                    if ($tokens[$x] !== '(') {
+                        // This is not a match expression.
+                        break;
+                    }
+
+                    // Next was an open parenthesis, now check what is before the match keyword.
+                    for ($y = ($stackPtr - 1); $y >= 0; $y--) {
+                        if (isset(Util\Tokens::$emptyTokens[$tokens[$y][0]]) === true) {
+                            continue;
+                        }
+
+                        if (is_array($tokens[$y]) === true
+                            && ($tokens[$y][0] === T_PAAMAYIM_NEKUDOTAYIM
+                            || $tokens[$y][0] === T_OBJECT_OPERATOR
+                            || $tokens[$y][0] === T_NS_SEPARATOR
+                            || $tokens[$y][0] === T_NEW
+                            || $tokens[$y][0] === T_FUNCTION
+                            || $tokens[$y][0] === T_CLASS
+                            || $tokens[$y][0] === T_INTERFACE
+                            || $tokens[$y][0] === T_TRAIT
+                            || $tokens[$y][0] === T_NAMESPACE
+                            || $tokens[$y][0] === T_CONST)
+                        ) {
+                            // This is not a match expression.
+                            break 2;
+                        }
+
+                        $isMatch = true;
+                        break 2;
+                    }//end for
+                }//end for
+
+                if ($isMatch === true && $token[0] === T_STRING) {
+                    $newToken            = [];
+                    $newToken['code']    = T_MATCH;
+                    $newToken['type']    = 'T_MATCH';
+                    $newToken['content'] = $token[1];
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* token $stackPtr changed from T_STRING to T_MATCH".PHP_EOL;
+                    }
+
+                    $finalTokens[$newStackPtr] = $newToken;
+                    $newStackPtr++;
+                    continue;
+                } else if ($isMatch === false && $token[0] === T_MATCH) {
+                    // PHP 8.0, match keyword, but not a match expression.
+                    $newToken            = [];
+                    $newToken['code']    = T_STRING;
+                    $newToken['type']    = 'T_STRING';
+                    $newToken['content'] = $token[1];
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* token $stackPtr changed from T_MATCH to T_STRING".PHP_EOL;
+                    }
+
+                    $finalTokens[$newStackPtr] = $newToken;
+                    $newStackPtr++;
+                    continue;
+                }//end if
             }//end if
 
             /*
@@ -2264,6 +2353,36 @@ class PHP extends Tokenizer
                         echo "\t* token $closer on line $line changed from T_CLOSE_SQUARE_BRACKET to T_CLOSE_SHORT_ARRAY".PHP_EOL;
                     }
                 }
+
+                continue;
+            } else if ($this->tokens[$i]['code'] === T_MATCH) {
+                if (isset($this->tokens[$i]['scope_opener'], $this->tokens[$i]['scope_closer']) === false) {
+                    // Not a match expression after all.
+                    $this->tokens[$i]['code'] = T_STRING;
+                    $this->tokens[$i]['type'] = 'T_STRING';
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* token $i changed from T_MATCH to T_STRING".PHP_EOL;
+                    }
+
+                    if (isset($this->tokens[$i]['parenthesis_opener'], $this->tokens[$i]['parenthesis_closer']) === true) {
+                        $opener = $this->tokens[$i]['parenthesis_opener'];
+                        $closer = $this->tokens[$i]['parenthesis_closer'];
+                        unset(
+                            $this->tokens[$opener]['parenthesis_owner'],
+                            $this->tokens[$closer]['parenthesis_owner']
+                        );
+                        unset(
+                            $this->tokens[$i]['parenthesis_opener'],
+                            $this->tokens[$i]['parenthesis_closer'],
+                            $this->tokens[$i]['parenthesis_owner']
+                        );
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            echo "\t\t* cleaned parenthesis of token $i *".PHP_EOL;
+                        }
+                    }
+                }//end if
 
                 continue;
             } else if ($this->tokens[$i]['code'] === T_BITWISE_OR) {
