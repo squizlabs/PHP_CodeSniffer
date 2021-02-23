@@ -1206,7 +1206,7 @@ class PHP extends Tokenizer
                     }
 
                     if (is_array($tokens[$x]) === false
-                        || isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                        || isset(Tokens::$emptyTokens[$tokens[$x][0]]) === false
                     ) {
                         // Non-empty, non-comma content.
                         break;
@@ -1223,7 +1223,7 @@ class PHP extends Tokenizer
                     // in PHP::processAdditional().
                     $tokens[$x][0] = T_MATCH_ARROW;
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo "\t\t* token $x changed from T_DOUBLE_ARROW to T_MATCH_ARROW".PHP_EOL;
+                        Common::printStatusMessage("* token $x changed from T_DOUBLE_ARROW to T_MATCH_ARROW", 2);
                     }
 
                     $newToken            = [];
@@ -1232,7 +1232,7 @@ class PHP extends Tokenizer
                     $newToken['content'] = $token[1];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo "\t\t* token $stackPtr changed from T_DEFAULT to T_MATCH_DEFAULT".PHP_EOL;
+                        Common::printStatusMessage("* token $stackPtr changed from T_DEFAULT to T_MATCH_DEFAULT", 2);
                     }
 
                     $finalTokens[$newStackPtr] = $newToken;
@@ -2095,7 +2095,7 @@ class PHP extends Tokenizer
                                 }
 
                                 for ($lastNonEmpty = ($scopeCloser - 1); $lastNonEmpty > $arrow; $lastNonEmpty--) {
-                                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$lastNonEmpty]['code']]) === false) {
+                                    if (isset(Tokens::$emptyTokens[$this->tokens[$lastNonEmpty]['code']]) === false) {
                                         $scopeCloser = $lastNonEmpty;
                                         break 2;
                                     }
@@ -2268,7 +2268,7 @@ class PHP extends Tokenizer
                     $this->tokens[$i]['type'] = 'T_STRING';
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        Common::printStatusMessage("* token $i changed from T_MATCH to T_STRING", 2);
+                        Common::printStatusMessage("* token $i changed from T_MATCH to T_STRING", 1);
                     }
 
                     if (isset($this->tokens[$i]['parenthesis_opener'], $this->tokens[$i]['parenthesis_closer']) === true) {
@@ -2297,7 +2297,7 @@ class PHP extends Tokenizer
                         T_OPEN_SHORT_ARRAY    => T_OPEN_SHORT_ARRAY,
                         T_DOUBLE_ARROW        => T_DOUBLE_ARROW,
                     ];
-                    $searchFor += Util\Tokens::$scopeOpeners;
+                    $searchFor += Tokens::$scopeOpeners;
 
                     for ($x = ($this->tokens[$i]['scope_opener'] + 1); $x < $this->tokens[$i]['scope_closer']; $x++) {
                         if (isset($searchFor[$this->tokens[$x]['code']]) === false) {
@@ -2325,7 +2325,7 @@ class PHP extends Tokenizer
                             $this->tokens[$x]['type'] = 'T_MATCH_ARROW';
 
                             if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                echo "\t\t* token $x changed from T_DOUBLE_ARROW to T_MATCH_ARROW".PHP_EOL;
+                                Common::printStatusMessage("* token $x changed from T_DOUBLE_ARROW to T_MATCH_ARROW", 1);
                             }
                         }
                     }//end for
