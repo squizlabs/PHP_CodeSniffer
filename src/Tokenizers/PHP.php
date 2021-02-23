@@ -1290,7 +1290,9 @@ class PHP extends Tokenizer
 
                     // Next was an open parenthesis, now check what is before the match keyword.
                     for ($y = ($stackPtr - 1); $y >= 0; $y--) {
-                        if (isset(Util\Tokens::$emptyTokens[$tokens[$y][0]]) === true) {
+                        if (is_array($tokens[$y]) === true
+                            && isset(Util\Tokens::$emptyTokens[$tokens[$y][0]]) === true
+                        ) {
                             continue;
                         }
 
