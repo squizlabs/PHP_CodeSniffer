@@ -50,6 +50,7 @@ class EmptyStatementSniff implements Sniff
             T_IF,
             T_SWITCH,
             T_WHILE,
+            T_MATCH,
         ];
 
     }//end register()
