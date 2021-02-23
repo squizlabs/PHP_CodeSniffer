@@ -430,6 +430,109 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test arrow function returning a match control structure.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testWithMatchValue()
+    {
+        $token = $this->getTargetToken('/* testWithMatchValue */', T_FN);
+        $this->backfillHelper($token);
+        $this->scopePositionTestHelper($token, 5, 44);
+
+    }//end testWithMatchValue()
+
+
+    /**
+     * Test arrow function returning a match control structure with something behind it.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testWithMatchValueAndMore()
+    {
+        $token = $this->getTargetToken('/* testWithMatchValueAndMore */', T_FN);
+        $this->backfillHelper($token);
+        $this->scopePositionTestHelper($token, 5, 48);
+
+    }//end testWithMatchValueAndMore()
+
+
+    /**
+     * Test match control structure returning arrow functions.
+     *
+     * @param string $testMarker                 The comment prefacing the target token.
+     * @param int    $openerOffset               The expected offset of the scope opener in relation to the testMarker.
+     * @param int    $closerOffset               The expected offset of the scope closer in relation to the testMarker.
+     * @param string $expectedCloserType         The type of token expected for the scope closer.
+     * @param string $expectedCloserFriendlyName A friendly name for the type of token expected for the scope closer
+     *                                           to be used in the error message for failing tests.
+     *
+     * @dataProvider dataInMatchValue
+     * @covers       PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testInMatchValue($testMarker, $openerOffset, $closerOffset, $expectedCloserType, $expectedCloserFriendlyName)
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken($testMarker, T_FN);
+        $this->backfillHelper($token);
+        $this->scopePositionTestHelper($token, $openerOffset, $closerOffset, $expectedCloserFriendlyName);
+
+        $this->assertSame($expectedCloserType, $tokens[($token + $closerOffset)]['type'], 'Mismatched scope closer type');
+
+    }//end testInMatchValue()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testInMatchValue()
+     *
+     * @return array
+     */
+    public function dataInMatchValue()
+    {
+        return [
+            'not_last_value'                      => [
+                '/* testInMatchNotLastValue */',
+                5,
+                11,
+                'T_COMMA',
+                'comma',
+            ],
+            'last_value_with_trailing_comma'      => [
+                '/* testInMatchLastValueWithTrailingComma */',
+                5,
+                11,
+                'T_COMMA',
+                'comma',
+            ],
+            'last_value_without_trailing_comma_1' => [
+                '/* testInMatchLastValueNoTrailingComma1 */',
+                5,
+                10,
+                'T_CLOSE_PARENTHESIS',
+                'close parenthesis',
+            ],
+            'last_value_without_trailing_comma_2' => [
+                '/* testInMatchLastValueNoTrailingComma2 */',
+                5,
+                11,
+                'T_VARIABLE',
+                '$y variable',
+            ],
+        ];
+
+    }//end dataInMatchValue()
+
+
+    /**
      * Test arrow function nested within a method declaration.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
