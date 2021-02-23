@@ -225,14 +225,6 @@ $a = $obj->MATCH()->chain($param);
 /* testNoMatchPropertyAccess */
 $a = $obj->match;
 
-/* testNoMatchNamespacedFunctionCall */
-// Intentional fatal error.
-$a = MyNS\Sub\match($param);
-
-/* testNoMatchNamespaceOperatorFunctionCall */
-// Intentional fatal error.
-$a = namespace\match($param);
-
 interface MatchInterface {
     /* testNoMatchInterfaceMethodDeclaration */
     public static function match($param);

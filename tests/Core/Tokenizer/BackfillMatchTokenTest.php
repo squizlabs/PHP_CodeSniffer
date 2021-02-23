@@ -261,8 +261,6 @@ class BackfillMatchTokenTest extends AbstractMethodUnitTest
                 'MATCH',
             ],
             'property_access'                      => ['/* testNoMatchPropertyAccess */'],
-            'namespaced_function_call'             => ['/* testNoMatchNamespacedFunctionCall */'],
-            'namespace_operator_function_call'     => ['/* testNoMatchNamespaceOperatorFunctionCall */'],
             'interface_method_declaration'         => ['/* testNoMatchInterfaceMethodDeclaration */'],
             'class_constant_declaration'           => ['/* testNoMatchClassConstantDeclarationLower */'],
             'class_method_declaration'             => ['/* testNoMatchClassMethodDeclaration */'],
