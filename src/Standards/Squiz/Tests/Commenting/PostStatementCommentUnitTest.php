@@ -34,6 +34,7 @@ class PostStatementCommentUnitTest extends AbstractSniffUnitTest
                 10 => 1,
                 18 => 1,
                 35 => 1,
+                53 => 1,
             ];
 
         case 'PostStatementCommentUnitTest.1.js':
