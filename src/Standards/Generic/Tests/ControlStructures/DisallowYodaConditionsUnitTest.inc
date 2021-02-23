@@ -164,3 +164,12 @@ if ([function() { echo 'hi'; }] === [$foo]
 ) {
 }
 
+echo match (5 == $num) {
+    true => "true\n",
+    false => "false\n"
+};
+
+echo match ($text) {
+    'foo' => 10 === $y,
+    10 === $y => 'bar',
+};
