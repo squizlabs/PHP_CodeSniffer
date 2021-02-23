@@ -176,3 +176,15 @@ $errorPos = $params[$x]?->getLine() + $commentStart;
 $foo = $this->gmail ?? $this->gmail = new Google_Service_Gmail($this->google);
 
 exit -1;
+
+$expr = match ($number - 10) {
+    -1 => 0,
+};
+
+$expr = match ($number % 10) {
+    1 => 2 * $num,
+};
+
+$expr = match (true) {
+    $num * 100 > 500 => 'expression in key',
+};
