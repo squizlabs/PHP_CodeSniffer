@@ -31,6 +31,8 @@ class ScopeClosingBraceUnitTest extends AbstractSniffUnitTest
             24  => 1,
             80  => 1,
             102 => 1,
+            111 => 1,
+            116 => 1,
         ];
 
     }//end getErrorList()
