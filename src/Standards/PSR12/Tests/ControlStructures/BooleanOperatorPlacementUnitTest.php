@@ -35,6 +35,7 @@ class BooleanOperatorPlacementUnitTest extends AbstractSniffUnitTest
             90  => 1,
             98  => 1,
             104 => 1,
+            125 => 1,
         ];
 
     }//end getErrorList()
