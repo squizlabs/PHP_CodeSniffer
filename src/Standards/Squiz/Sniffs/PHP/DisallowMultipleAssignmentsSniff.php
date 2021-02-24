@@ -165,6 +165,7 @@ class DisallowMultipleAssignmentsSniff implements Sniff
                 T_SWITCH => T_SWITCH,
                 T_CASE   => T_CASE,
                 T_FOR    => T_FOR,
+                T_MATCH  => T_MATCH,
             ];
             foreach ($nested as $opener => $closer) {
                 if (isset($tokens[$opener]['parenthesis_owner']) === true
