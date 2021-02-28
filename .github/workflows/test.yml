@@ -66,6 +66,7 @@ jobs:
           php-version: ${{ matrix.php }}
           ini-values: ${{ steps.set_ini.outputs.PHP_INI }}
           coverage: none
+          tools: cs2pr
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
@@ -97,8 +98,17 @@ jobs:
         run: vendor/bin/phpunit tests/AllTests.php --no-configuration --bootstrap=tests/bootstrap.php --dont-report-useless-tests
 
       - name: 'PHPCS: check code style without cache, no parallel'
-        if: ${{ matrix.custom_ini == false }}
+        if: ${{ matrix.custom_ini == false && matrix.php != 7.4 }}
         run: php bin/phpcs --no-cache --parallel=1
+
+      - name: 'PHPCS: check code style to show results in PR'
+        if: ${{ matrix.custom_ini == false && matrix.php == 7.4 }}
+        continue-on-error: true
+        run: php bin/phpcs --no-cache --parallel=1 --report-full --report-checkstyle=./phpcs-report.xml
+
+      - name: Show PHPCS results in PR
+        if: ${{ matrix.custom_ini == false && matrix.php == 7.4 }}
+        run: cs2pr ./phpcs-report.xml
 
       - name: 'Composer: validate config'
         if: ${{ matrix.custom_ini == false }}
