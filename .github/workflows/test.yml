@@ -85,21 +85,16 @@ jobs:
       - name: 'PHPCS: set the path to PHP'
         run: php bin/phpcs --config-set php_path php
 
-      # We need to remove the config file so that PHPUnit doesn't try to read it.
-      # This causes an error on PHP 8.1+ with PHPunit 7, but it's not needed here anyway as the
-      # phpunit command (below) specifies all required settings.
-      - name: 'PHPUnit: remove config file'
-        run: rm phpunit.xml.dist
-
-      # Useless tests were not reported for before PHPUnit 6, so it doesn't
-      # understand the CLI argument.
       - name: 'PHPUnit: run the tests'
-        if: ${{ matrix.php < 7.0 }}
-        run: vendor/bin/phpunit tests/AllTests.php --bootstrap=tests/bootstrap.php
+        if: ${{ matrix.php != 8.1 }}
+        run: vendor/bin/phpunit tests/AllTests.php
 
-      - name: 'PHPUnit: run the tests, dont report useless'
-        if: ${{ matrix.php >= 7.0 }}
-        run: vendor/bin/phpunit tests/AllTests.php --bootstrap=tests/bootstrap.php --dont-report-useless-tests
+      # We need to ignore the config file so that PHPUnit doesn't try to read it.
+      # The config file causes an error on PHP 8.1+ with PHPunit 7, but it's not needed here anyway
+      # as we can pass all required settings in the phpunit command.
+      - name: 'PHPUnit: run the tests on PHP nightly'
+        if: ${{ matrix.php == 8.1 }}
+        run: vendor/bin/phpunit tests/AllTests.php --no-configuration --bootstrap=tests/bootstrap.php --dont-report-useless-tests
 
       - name: 'PHPCS: check code style without cache, no parallel'
         if: ${{ matrix.custom_ini == false }}
