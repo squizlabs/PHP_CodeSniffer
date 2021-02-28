@@ -75,7 +75,7 @@ jobs:
 
       # For PHP 8.0+, we need to install with ignore platform reqs as PHPUnit 7 is still used.
       - name: Install Composer dependencies - with ignore platform
-        if: ${{ matrix.custom_ini == false }}
+        if: ${{ matrix.php >= 8.0 }}
         uses: "ramsey/composer-install@v1"
         with:
           composer-options: --ignore-platform-reqs
