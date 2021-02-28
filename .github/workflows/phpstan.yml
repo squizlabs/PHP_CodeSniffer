@@ -25,14 +25,13 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-
-      - name: 'Composer: require PHPStan'
-        run: composer require --no-update --dev phpstan/phpstan
+          tools: phpstan
 
       # Install dependencies and handle caching in one go.
+      # Dependencies need to be installed to make sure the PHPUnit classes are recognized.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
       - name: Install Composer dependencies
         uses: "ramsey/composer-install@v1"
 
       - name: Run PHPStan
-        run: vendor/bin/phpstan analyse --configuration=phpstan.neon
+        run: phpstan analyse --configuration=phpstan.neon
