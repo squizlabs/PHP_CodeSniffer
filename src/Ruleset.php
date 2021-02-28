@@ -707,7 +707,7 @@ class Ruleset
         } else {
             // See if this is a whole standard being referenced.
             $path = Standards::getInstalledStandardPath($ref);
-            if (Common::isPharFile($path) === true && strpos($path, 'ruleset.xml') === false) {
+            if ($path !== null && Common::isPharFile($path) === true && strpos($path, 'ruleset.xml') === false) {
                 // If the ruleset exists inside the phar file, use it.
                 if (file_exists($path.DIRECTORY_SEPARATOR.'ruleset.xml') === true) {
                     $path .= DIRECTORY_SEPARATOR.'ruleset.xml';
