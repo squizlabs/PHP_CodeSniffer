@@ -236,7 +236,7 @@ class FileList implements \Iterator, \Countable
     /**
      * Return the number of files in the list.
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
