@@ -57,13 +57,13 @@ abstract class AbstractScopeSniff implements Sniff
     /**
      * Constructs a new AbstractScopeTest.
      *
-     * @param array   $scopeTokens   The type of scope the test wishes to listen to.
-     * @param array   $tokens        The tokens that the test wishes to listen to
-     *                               within the scope.
-     * @param boolean $listenOutside If true this test will also alert the
-     *                               extending class when a token is found outside
-     *                               the scope, by calling the
-     *                               processTokenOutsideScope method.
+     * @param array $scopeTokens   The type of scope the test wishes to listen to.
+     * @param array $tokens        The tokens that the test wishes to listen to
+     *                             within the scope.
+     * @param bool  $listenOutside If true this test will also alert the
+     *                             extending class when a token is found
+     *                             outside the scope, by calling the
+     *                             processTokenOutsideScope method.
      *
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified tokens arrays are empty
      *                                                      or invalid.

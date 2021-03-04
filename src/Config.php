@@ -1540,9 +1540,9 @@ class Config
      * @param string|null $value The value to set. If null, the config
      *                           entry is deleted, reverting it to the
      *                           default value.
-     * @param boolean     $temp  Set this config data temporarily for this
-     *                           script run. This will not write the config
-     *                           data to the config file.
+     * @param bool        $temp  Set this config data temporarily for this
+     *                           script run. This will not write the
+     *                           config data to the config file.
      *
      * @return bool
      * @see    getConfigData()

@@ -135,7 +135,7 @@ class Fixer
     /**
      * Attempt to fix the file by processing it until no fixes are made.
      *
-     * @return boolean
+     * @return bool
      */
     public function fixFile()
     {
@@ -217,10 +217,10 @@ class Fixer
     /**
      * Generates a text diff of the original file and the new content.
      *
-     * @param string  $filePath Optional file path to diff the file against.
-     *                          If not specified, the original version of the
-     *                          file will be used.
-     * @param boolean $colors   Print coloured output or not.
+     * @param string $filePath Optional file path to diff the file against.
+     *                         If not specified, the original version of
+     *                         the file will be used.
+     * @param bool   $colors   Print coloured output or not.
      *
      * @return string
      */
@@ -374,7 +374,7 @@ class Fixer
     /**
      * Stop recording actions for a changeset, and apply logged changes.
      *
-     * @return boolean
+     * @return bool
      */
     public function endChangeset()
     {

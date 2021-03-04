@@ -95,7 +95,7 @@ class ObjectOperatorSpacingSniff implements Sniff
      * @param mixed                       $before    The number of spaces found before the
      *                                               operator or the string 'newline'.
      *
-     * @return boolean true if there was no error, false otherwise.
+     * @return bool true if there was no error, false otherwise.
      */
     protected function checkSpacingBeforeOperator(File $phpcsFile, $stackPtr, $before)
     {
@@ -134,7 +134,7 @@ class ObjectOperatorSpacingSniff implements Sniff
      * @param mixed                       $after     The number of spaces found after the
      *                                               operator or the string 'newline'.
      *
-     * @return boolean true if there was no error, false otherwise.
+     * @return bool true if there was no error, false otherwise.
      */
     protected function checkSpacingAfterOperator(File $phpcsFile, $stackPtr, $after)
     {

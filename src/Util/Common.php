@@ -56,7 +56,7 @@ class Common
      *
      * @param string $path The path to the file.
      *
-     * @return boolean
+     * @return bool
      */
     public static function isReadable($path)
     {
@@ -183,7 +183,7 @@ class Common
     /**
      * Check if STDIN is a TTY.
      *
-     * @return boolean
+     * @return bool
      */
     public static function isStdinATTY()
     {
@@ -313,22 +313,22 @@ class Common
     /**
      * Returns true if the specified string is in the camel caps format.
      *
-     * @param string  $string      The string the verify.
-     * @param boolean $classFormat If true, check to see if the string is in the
-     *                             class format. Class format strings must start
-     *                             with a capital letter and contain no
-     *                             underscores.
-     * @param boolean $public      If true, the first character in the string
-     *                             must be an a-z character. If false, the
-     *                             character must be an underscore. This
-     *                             argument is only applicable if $classFormat
-     *                             is false.
-     * @param boolean $strict      If true, the string must not have two capital
-     *                             letters next to each other. If false, a
-     *                             relaxed camel caps policy is used to allow
-     *                             for acronyms.
+     * @param string $string      The string the verify.
+     * @param bool   $classFormat If true, check to see if the string is in the
+     *                            class format. Class format strings must start
+     *                            with a capital letter and contain no
+     *                            underscores.
+     * @param bool   $public      If true, the first character in the string
+     *                            must be an a-z character. If false, the
+     *                            character must be an underscore. This
+     *                            argument is only applicable if
+     *                            $classFormat is false.
+     * @param bool   $strict      If true, the string must not have two capital
+     *                            letters next to each other. If false, a
+     *                            relaxed camel caps policy is used to allow
+     *                            for acronyms.
      *
-     * @return boolean
+     * @return bool
      */
     public static function isCamelCaps(
         $string,
@@ -400,7 +400,7 @@ class Common
      *
      * @param string $string The string to verify.
      *
-     * @return boolean
+     * @return bool
      */
     public static function isUnderscoreName($string)
     {
