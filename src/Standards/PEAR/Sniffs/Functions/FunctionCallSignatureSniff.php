@@ -571,7 +571,7 @@ class FunctionCallSignatureSniff implements Sniff
 
                 if ($inArg === false) {
                     $argStart = $nextCode;
-                    $argEnd   = $phpcsFile->findEndOfStatement($nextCode);
+                    $argEnd   = $phpcsFile->findEndOfStatement($nextCode, [T_COLON]);
                 }
             }//end if
 
@@ -608,7 +608,7 @@ class FunctionCallSignatureSniff implements Sniff
                 }//end if
 
                 $argStart = $next;
-                $argEnd   = $phpcsFile->findEndOfStatement($next);
+                $argEnd   = $phpcsFile->findEndOfStatement($next, [T_COLON]);
             }//end if
         }//end for
 
