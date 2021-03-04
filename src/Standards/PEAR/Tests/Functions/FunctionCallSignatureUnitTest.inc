@@ -525,3 +525,26 @@ return trim(preg_replace_callback(
 
 $a = ['a' => function ($b) { return $b; }];
 $a['a']( 1 );
+
+// PHP 8.0 named parameters.
+array_fill_keys(
+    keys: range(
+        1,
+        12,
+    ),
+    value: true,
+);
+
+array_fill_keys(
+    keys: range( 1,
+            12,
+    ), value: true,
+);
+
+// phpcs:set PEAR.Functions.FunctionCallSignature allowMultipleArguments false
+array_fill_keys(
+    keys: range( 1,
+            12,
+    ), value: true,
+);
+// phpcs:set PEAR.Functions.FunctionCallSignature allowMultipleArguments true
