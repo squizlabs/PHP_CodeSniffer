@@ -242,3 +242,26 @@ function (array $term) use ($mode): string {
 },
 $search
 ));
+
+// PHP 8.0 named parameters.
+array_fill_keys(
+    keys: range(
+        1,
+        12,
+    ),
+    value: true,
+);
+
+array_fill_keys(
+    keys: range( 1,
+            12,
+    ), value: true,
+);
+
+// phpcs:set PSR2.Methods.FunctionCallSignature allowMultipleArguments true
+array_fill_keys(
+    keys: range( 1,
+            12,
+    ), value: true,
+);
+// phpcs:set PSR2.Methods.FunctionCallSignature allowMultipleArguments false
