@@ -76,9 +76,9 @@ class StaticThisUsageSniff extends AbstractScopeSniff
     /**
      * Check for $this variable usage between $next and $end tokens.
      *
-     * @param File $phpcsFile The current file being scanned.
-     * @param int  $next      The position of the next token to check.
-     * @param int  $end       The position of the last token to check.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The current file being scanned.
+     * @param int                         $next      The position of the next token to check.
+     * @param int                         $end       The position of the last token to check.
      *
      * @return void
      */
