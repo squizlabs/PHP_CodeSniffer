@@ -41,6 +41,9 @@ class ScopeKeywordSpacingUnitTest extends AbstractSniffUnitTest
             98  => 1,
             101 => 1,
             106 => 1,
+            114 => 1,
+            116 => 1,
+            122 => 2,
         ];
 
     }//end getErrorList()
