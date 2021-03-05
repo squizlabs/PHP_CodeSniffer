@@ -9,6 +9,8 @@ on:
   pull_request:
     paths-ignore:
       - '**.md'
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
 
 jobs:
   test:
@@ -66,6 +68,7 @@ jobs:
           php-version: ${{ matrix.php }}
           ini-values: ${{ steps.set_ini.outputs.PHP_INI }}
           coverage: none
+          tools: cs2pr
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
@@ -75,7 +78,7 @@ jobs:
 
       # For PHP 8.0+, we need to install with ignore platform reqs as PHPUnit 7 is still used.
       - name: Install Composer dependencies - with ignore platform
-        if: ${{ matrix.custom_ini == false }}
+        if: ${{ matrix.php >= 8.0 }}
         uses: "ramsey/composer-install@v1"
         with:
           composer-options: --ignore-platform-reqs
@@ -85,25 +88,29 @@ jobs:
       - name: 'PHPCS: set the path to PHP'
         run: php bin/phpcs --config-set php_path php
 
-      # We need to remove the config file so that PHPUnit doesn't try to read it.
-      # This causes an error on PHP 8.1+ with PHPunit 7, but it's not needed here anyway as the
-      # phpunit command (below) specifies all required settings.
-      - name: 'PHPUnit: remove config file'
-        run: rm phpunit.xml.dist
-
-      # Useless tests were not reported for before PHPUnit 6, so it doesn't
-      # understand the CLI argument.
       - name: 'PHPUnit: run the tests'
-        if: ${{ matrix.php < 7.0 }}
-        run: vendor/bin/phpunit tests/AllTests.php --bootstrap=tests/bootstrap.php
+        if: ${{ matrix.php != 8.1 }}
+        run: vendor/bin/phpunit tests/AllTests.php
 
-      - name: 'PHPUnit: run the tests, dont report useless'
-        if: ${{ matrix.php >= 7.0 }}
-        run: vendor/bin/phpunit tests/AllTests.php --bootstrap=tests/bootstrap.php --dont-report-useless-tests
+      # We need to ignore the config file so that PHPUnit doesn't try to read it.
+      # The config file causes an error on PHP 8.1+ with PHPunit 7, but it's not needed here anyway
+      # as we can pass all required settings in the phpunit command.
+      - name: 'PHPUnit: run the tests on PHP nightly'
+        if: ${{ matrix.php == 8.1 }}
+        run: vendor/bin/phpunit tests/AllTests.php --no-configuration --bootstrap=tests/bootstrap.php --dont-report-useless-tests
 
       - name: 'PHPCS: check code style without cache, no parallel'
-        if: ${{ matrix.custom_ini == false }}
+        if: ${{ matrix.custom_ini == false && matrix.php != 7.4 }}
         run: php bin/phpcs --no-cache --parallel=1
+
+      - name: 'PHPCS: check code style to show results in PR'
+        if: ${{ matrix.custom_ini == false && matrix.php == 7.4 }}
+        continue-on-error: true
+        run: php bin/phpcs --no-cache --parallel=1 --report-full --report-checkstyle=./phpcs-report.xml
+
+      - name: Show PHPCS results in PR
+        if: ${{ matrix.custom_ini == false && matrix.php == 7.4 }}
+        run: cs2pr ./phpcs-report.xml
 
       - name: 'Composer: validate config'
         if: ${{ matrix.custom_ini == false }}
