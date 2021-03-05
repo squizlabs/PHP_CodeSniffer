@@ -26,19 +26,21 @@ class ScopeKeywordSpacingUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            7  => 2,
-            8  => 1,
-            13 => 1,
-            14 => 1,
-            15 => 1,
-            17 => 2,
-            26 => 1,
-            28 => 1,
-            29 => 1,
-            64 => 1,
-            67 => 1,
-            71 => 1,
-            98 => 1,
+            7   => 2,
+            8   => 1,
+            13  => 1,
+            14  => 1,
+            15  => 1,
+            17  => 2,
+            26  => 1,
+            28  => 1,
+            29  => 1,
+            64  => 1,
+            67  => 1,
+            71  => 1,
+            98  => 1,
+            101 => 1,
+            106 => 1,
         ];
 
     }//end getErrorList()
