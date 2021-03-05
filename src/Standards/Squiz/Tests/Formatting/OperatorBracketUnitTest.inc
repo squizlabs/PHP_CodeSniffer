@@ -188,3 +188,8 @@ $expr = match ($number % 10) {
 $expr = match (true) {
     $num * 100 > 500 => 'expression in key',
 };
+
+// PHP 8.0 named parameters.
+if ($pos === count(value: $this->tokens) - 1) {
+    $file = '...'.substr(string: $file, offset: $padding * -1 + 3);
+}

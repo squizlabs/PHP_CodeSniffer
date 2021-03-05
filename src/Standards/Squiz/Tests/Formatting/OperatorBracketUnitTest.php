@@ -66,6 +66,8 @@ class OperatorBracketUnitTest extends AbstractSniffUnitTest
             176 => 1,
             185 => 1,
             189 => 1,
+            193 => 1,
+            194 => 3,
         ];
 
     }//end getErrorList()
