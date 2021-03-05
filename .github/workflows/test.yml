@@ -79,11 +79,7 @@ jobs:
         run: vendor/bin/phpunit
 
       - name: 'PHPCS: check code style without cache, no parallel'
-<<<<<<< HEAD
-        if: ${{ matrix.custom_ini  == false }}
-=======
         if: ${{ matrix.custom_ini == false && matrix.php != 7.4 }}
->>>>>>> a7b2b955c... GH Actions: report CS violations in the PR
         run: php bin/phpcs --no-cache --parallel=1
 
       - name: 'PHPCS: check code style to show results in PR'
