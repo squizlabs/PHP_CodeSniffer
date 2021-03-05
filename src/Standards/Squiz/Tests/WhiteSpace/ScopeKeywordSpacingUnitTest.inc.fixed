@@ -101,3 +101,17 @@ class TypedProperties {
         $boolA,
         $boolB;
 }
+
+// PHP 8.0 constructor property promotion.
+class ConstructorPropertyPromotionTest {
+    public function __construct(
+        public $x = 0.0,
+        protected $y = '',
+        private $z = null,
+        $normalParam,
+    ) {}
+}
+
+class ConstructorPropertyPromotionWithTypesTest {
+    public function __construct(protected float|int $x, public ?string &$y = 'test', private mixed $z) {}
+}
