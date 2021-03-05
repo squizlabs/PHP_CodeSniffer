@@ -80,7 +80,8 @@ class OperatorBracketSniff implements Sniff
                     $isAssignment = isset(Tokens::$assignmentTokens[$tokens[$previous]['code']]);
                     $isEquality   = isset(Tokens::$equalityTokens[$tokens[$previous]['code']]);
                     $isComparison = isset(Tokens::$comparisonTokens[$tokens[$previous]['code']]);
-                    if ($isAssignment === true || $isEquality === true || $isComparison === true) {
+                    $isUnary      = isset(Tokens::$operators[$tokens[$previous]['code']]);
+                    if ($isAssignment === true || $isEquality === true || $isComparison === true || $isUnary === true) {
                         // This is a negative assignment or comparison.
                         // We need to check that the minus and the number are
                         // adjacent.
