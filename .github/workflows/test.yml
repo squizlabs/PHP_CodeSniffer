@@ -67,8 +67,16 @@ jobs:
 
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
-      - name: Install Composer dependencies
+      - name: Install Composer dependencies - normal
+        if: ${{ matrix.experimental == false }}
         uses: "ramsey/composer-install@v1"
+
+      # For PHP nightly, install with ignore platform reqs as not all PHPUnit allow for it yet.
+      - name: Install Composer dependencies - with ignore platform
+        if: ${{ matrix.experimental == true }}
+        uses: "ramsey/composer-install@v1"
+        with:
+          composer-options: --ignore-platform-reqs
 
       # Note: The code style check is run multiple times against every PHP version
       # as it also acts as an integration test.
