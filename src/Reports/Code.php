@@ -45,9 +45,9 @@ class Code implements Report
         if (empty($tokens) === true) {
             if (PHP_CODESNIFFER_VERBOSITY === 1) {
                 $startTime = microtime(true);
-                echo 'CODE report is parsing '.basename($file).' ';
+                Util\Common::forcePrintStatusMessage('CODE report is parsing '.basename($file).' ', 0, true);
             } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                echo "CODE report is forcing parse of $file".PHP_EOL;
+                Util\Common::forcePrintStatusMessage("CODE report is forcing parse of $file", 0);
             }
 
             try {
@@ -61,13 +61,11 @@ class Code implements Report
                 $timeTaken = ((microtime(true) - $startTime) * 1000);
                 if ($timeTaken < 1000) {
                     $timeTaken = round($timeTaken);
-                    echo "DONE in {$timeTaken}ms";
+                    Util\Common::forcePrintStatusMessage("DONE in {$timeTaken}ms", 0);
                 } else {
                     $timeTaken = round(($timeTaken / 1000), 2);
-                    echo "DONE in $timeTaken secs";
+                    Util\Common::forcePrintStatusMessage("DONE in $timeTaken secs", 0);
                 }
-
-                echo PHP_EOL;
             }
 
             $tokens = $phpcsFile->getTokens();
