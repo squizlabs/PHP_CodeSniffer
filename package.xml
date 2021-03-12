@@ -121,6 +121,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Vincent Langlet for the patch
   - Fixed bug #3197 : Squiz.NamingConventions.ValidVariableName does not use correct error code for all member vars
   - Fixed bug #3219 : Generic.Formatting.MultipleStatementAlignment false positive for empty anonymous classes and closures
+  - Fixed bug #3258 : Squiz.Formatting.OperatorBracket duplicate error messages for unary minus
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
