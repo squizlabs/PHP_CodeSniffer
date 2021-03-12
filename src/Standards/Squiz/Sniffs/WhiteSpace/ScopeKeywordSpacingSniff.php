@@ -84,7 +84,23 @@ class ScopeKeywordSpacingSniff implements Sniff
             return;
         }
 
-        if ($nextToken !== false && $tokens[$nextToken]['code'] === T_VARIABLE) {
+        $isInFunctionDeclaration = false;
+        if (empty($tokens[$stackPtr]['nested_parenthesis']) === false) {
+            // Check if this is PHP 8.0 constructor property promotion.
+            // In that case, we can't have multi-property definitions.
+            $nestedParens    = $tokens[$stackPtr]['nested_parenthesis'];
+            $lastCloseParens = end($nestedParens);
+            if (isset($tokens[$lastCloseParens]['parenthesis_owner']) === true
+                && $tokens[$tokens[$lastCloseParens]['parenthesis_owner']]['code'] === T_FUNCTION
+            ) {
+                $isInFunctionDeclaration = true;
+            }
+        }
+
+        if ($nextToken !== false
+            && $tokens[$nextToken]['code'] === T_VARIABLE
+            && $isInFunctionDeclaration === false
+        ) {
             $endOfStatement = $phpcsFile->findNext(T_SEMICOLON, ($nextToken + 1));
             if ($endOfStatement === false) {
                 // Live coding.

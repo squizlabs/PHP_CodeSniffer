@@ -89,5 +89,29 @@ public function fCreate($attributes = []): object|static
 {
 }
 
-// Ensure that static as a scope keyword when preceeded by a colon which is not for a type dclaration is still handled.
+// Ensure that static as a scope keyword when preceeded by a colon which is not for a type declaration is still handled.
 $callback = $cond ? get_fn_name() : static function ($a) { return $a * 10; };
+
+class TypedProperties {
+    public int $var;
+
+    protected string $stringA, $stringB;
+
+    private bool
+        $boolA,
+        $boolB;
+}
+
+// PHP 8.0 constructor property promotion.
+class ConstructorPropertyPromotionTest {
+    public function __construct(
+        public $x = 0.0,
+        protected $y = '',
+        private $z = null,
+        $normalParam,
+    ) {}
+}
+
+class ConstructorPropertyPromotionWithTypesTest {
+    public function __construct(protected float|int $x, public ?string &$y = 'test', private mixed $z) {}
+}
