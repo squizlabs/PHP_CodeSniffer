@@ -37,11 +37,25 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Added support for PHP 8.0 match expressions
     -- Match expressions are now tokenised with parenthesis and scope openers and closers
-      --- Sniffs can listen for the T_MATCH token to process match expressions
-      --- Note that the case and default statements inside match expressions do not have scopes set
+       --- Sniffs can listen for the T_MATCH token to process match expressions
+       --- Note that the case and default statements inside match expressions do not have scopes set
     -- A new T_MATCH_ARROW token is available to represent the arrows in match expressions
     -- A new T_MATCH_DEFAULT token is available to represent the default keyword in match expressions
     -- All tokenizing of match expressions has been backfilled for older PHP versions
+    -- The following sniffs have been updated to support match expressions:
+       --- Generic.CodeAnalysis.AssignmentInCondition
+       --- Generic.CodeAnalysis.EmptyStatement
+       --- Generic.PHP.LowerCaseKeyword
+       --- PEAR.ControlStructures.ControlSignature
+       --- PSR12.ControlStructures.BooleanOperatorPlacement
+       --- Squiz.Commenting.LongConditionClosingComment
+       --- Squiz.Commenting.PostStatementComment
+       --- Squiz.ControlStructures.LowercaseDeclaration
+       --- Squiz.ControlStructures.ControlSignature
+       --- Squiz.Formatting.OperatorBracket
+       --- Squiz.PHP.DisallowMultipleAssignments
+       --- Squiz.Objects.ObjectInstantiation
+       --- Squiz.WhiteSpace.ControlStructureSpacing
     -- Thanks to Juliette Reinders Folmer for the patch
   - The value of the T_FN_ARROW token has changed from "T_FN_ARROW" to "PHPCS_T_FN_ARROW" to avoid package conflicts
     -- This will have no impact on custom sniffs unless they are specifically looking at the value of the T_FN_ARROW constant
