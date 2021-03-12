@@ -97,6 +97,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Jess Myrbo for the patch
   - Squiz.PHP.NonExecutableCode now has improved handling of syntax errors
     -- Thanks to Thiemo Kreuz for the patch
+  - Squiz.WhiteSpace.ScopeKeywordSpacing now checks spacing when using PHP 8.0 constructor property promotion
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed an issue that could occurr when checking files on network drives, such as with WSL2 on Windows 10
     -- This works around a long-standing PHP bug with is_readable()
     -- Thanks to Michael S for the patch
