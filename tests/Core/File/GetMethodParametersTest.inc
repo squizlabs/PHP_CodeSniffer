@@ -51,6 +51,9 @@ function namespacedClassType( \Package\Sub\ClassName $a, ?Sub\AnotherClass $b ) 
 /* testPHP8UnionTypesSimple */
 function unionTypeSimple(int|float $number, self|parent &...$obj) {}
 
+/* testPHP8UnionTypesWithSpreadOperatorAndReference */
+function globalFunctionWithSpreadAndReference(float|null &$paramA, string|int ...$paramB) {}
+
 /* testPHP8UnionTypesSimpleWithBitwiseOrInDefault */
 $fn = fn(int|float $var = CONSTANT_A | CONSTANT_B) => $var;
 

@@ -2370,7 +2370,6 @@ class PHP extends Tokenizer
                         || $this->tokens[$x]['code'] === T_ELLIPSIS)
                     ) {
                         // Skip past reference and variadic indicators for parameter types.
-                        ++$x;
                         continue;
                     }
 
