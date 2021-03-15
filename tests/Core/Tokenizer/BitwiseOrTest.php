@@ -110,6 +110,8 @@ class BitwiseOrTest extends AbstractMethodUnitTest
             ['/* testTypeUnionAbstractMethodReturnType1 */'],
             ['/* testTypeUnionAbstractMethodReturnType2 */'],
             ['/* testTypeUnionClosureParamIllegalNullable */'],
+            ['/* testTypeUnionWithReference */'],
+            ['/* testTypeUnionWithSpreadOperator */'],
             ['/* testTypeUnionClosureReturn */'],
             ['/* testTypeUnionArrowParam */'],
             ['/* testTypeUnionArrowReturnType */'],
