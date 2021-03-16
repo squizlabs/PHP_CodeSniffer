@@ -116,8 +116,10 @@
     <rule ref="Generic.Formatting.MultipleStatementAlignment">
         <properties>
             <property name="maxPadding" value="12"/>
-            <property name="error" value="true"/>
         </properties>
+    </rule>
+    <rule ref="Generic.Formatting.MultipleStatementAlignment">
+        <type>error</type>
     </rule>
 
     <!-- Ban some functions -->
