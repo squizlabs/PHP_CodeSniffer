@@ -73,3 +73,11 @@ class TypedProperties
     private ClassName|/*comment*/float|string|false $unionTypeC;
     public string | array | false $unionTypeD;
 }
+
+class ConstructorPropertyPromotionWithTypes {
+    public function __construct(protected float|int $x, public ?string &$y = 'test', private mixed $z) {}
+}
+
+class ConstructorPropertyPromotionAndNormalParams {
+    public function __construct(public int $promotedProp, ?int $normalArg) {}
+}
