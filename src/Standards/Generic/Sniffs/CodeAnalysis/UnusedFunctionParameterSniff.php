@@ -90,6 +90,11 @@ class UnusedFunctionParameterSniff implements Sniff
         }
 
         foreach ($methodParams as $param) {
+            if (isset($param['property_visibility']) === true) {
+                // Ignore. Constructor property promotion.
+                continue;
+            }
+
             $params[$param['name']] = $stackPtr;
         }
 
