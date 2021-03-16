@@ -64,7 +64,7 @@ class LowercasePHPFunctionsSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $content   = $tokens[$stackPtr]['content'];
+        $content = $tokens[$stackPtr]['content'];
         if ($tokens[$stackPtr]['code'] === T_NAME_FULLY_QUALIFIED) {
             $content = ltrim($content, '\\');
         }

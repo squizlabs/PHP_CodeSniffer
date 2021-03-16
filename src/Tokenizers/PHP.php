@@ -1042,9 +1042,9 @@ class PHP extends Tokenizer
                 && isset(Tokens::$emptyTokens[$tokens[($stackPtr + 1)][0]]) === false
                 && preg_match(self::PHP_LABEL_REGEX, $tokens[($stackPtr + 1)][1]) === 1))
             ) {
-                $nameStart           = $stackPtr;
-                $i                   = $stackPtr;
-                $newToken            = [];
+                $nameStart = $stackPtr;
+                $i         = $stackPtr;
+                $newToken  = [];
                 $newToken['content'] = $token[1];
 
                 switch ($token[0]) {
