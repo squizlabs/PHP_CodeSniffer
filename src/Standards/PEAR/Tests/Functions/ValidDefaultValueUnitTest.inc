@@ -100,5 +100,20 @@ $closure = function(array $arg2=array(), array $arg1) {}
 
 $fn = fn($a = [], $b) => $a[] = $b;
 
+class OnlyConstructorPropertyPromotion {
+    public function __construct(
+        public string $name = '',
+        protected $bar
+    ) {}
+}
+
+class ConstructorPropertyPromotionMixedWithNormalParams {
+    public function __construct(
+        public string $name = '',
+        ?int $optionalParam = 0,
+        mixed $requiredParam,
+    ) {}
+}
+
 // Intentional syntax error. Must be last thing in the file.
 function
