@@ -79,3 +79,8 @@ echo $a{0};
 if ($foo) {
 ;
 }
+
+// Do not remove semicolon after match
+$c = match ($a) {
+    1 => true,
+};
