@@ -190,6 +190,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="FindExtendedClassNameTest.php" role="test" />
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.inc" role="test" />
       <file baseinstalldir="" name="FindImplementedInterfaceNamesTest.php" role="test" />
+      <file baseinstalldir="" name="FindStartOfStatementTest.inc" role="test" />
+      <file baseinstalldir="" name="FindStartOfStatementTest.php" role="test" />
       <file baseinstalldir="" name="GetMemberPropertiesTest.inc" role="test" />
       <file baseinstalldir="" name="GetMemberPropertiesTest.php" role="test" />
       <file baseinstalldir="" name="GetMethodParametersTest.inc" role="test" />
@@ -2110,6 +2112,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindExtendedClassNameTest.inc" name="tests/Core/File/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.php" name="tests/Core/File/FindImplementedInterfaceNamesTest.php" />
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.inc" name="tests/Core/File/FindImplementedInterfaceNamesTest.inc" />
+   <install as="CodeSniffer/Core/File/FindStartOfStatementTest.php" name="tests/Core/File/FindStartOfStatementTest.php" />
+   <install as="CodeSniffer/Core/File/FindStartOfStatementTest.inc" name="tests/Core/File/FindStartOfStatementTest.inc" />
    <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.php" name="tests/Core/File/GetMemberPropertiesTest.php" />
    <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.inc" name="tests/Core/File/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
@@ -2192,6 +2196,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/File/FindExtendedClassNameTest.inc" name="tests/Core/File/FindExtendedClassNameTest.inc" />
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.php" name="tests/Core/File/FindImplementedInterfaceNamesTest.php" />
    <install as="CodeSniffer/Core/File/FindImplementedInterfaceNamesTest.inc" name="tests/Core/File/FindImplementedInterfaceNamesTest.inc" />
+   <install as="CodeSniffer/Core/File/FindStartOfStatementTest.php" name="tests/Core/File/FindStartOfStatementTest.php" />
+   <install as="CodeSniffer/Core/File/FindStartOfStatementTest.inc" name="tests/Core/File/FindStartOfStatementTest.inc" />
    <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.php" name="tests/Core/File/GetMemberPropertiesTest.php" />
    <install as="CodeSniffer/Core/File/GetMemberPropertiesTest.inc" name="tests/Core/File/GetMemberPropertiesTest.inc" />
    <install as="CodeSniffer/Core/File/GetMethodParametersTest.php" name="tests/Core/File/GetMethodParametersTest.php" />
