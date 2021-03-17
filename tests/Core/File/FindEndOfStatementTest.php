@@ -237,4 +237,176 @@ class FindEndOfStatementTest extends AbstractMethodUnitTest
     }//end testArrowFunctionWithArrayAsArgument()
 
 
+    /**
+     * Test simple match expression case.
+     *
+     * @return void
+     */
+    public function testMatchCase()
+    {
+        $start = $this->getTargetToken('/* testMatchCase */', T_LNUMBER);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 5), $found);
+
+        $start = $this->getTargetToken('/* testMatchCase */', T_CONSTANT_ENCAPSED_STRING);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 1), $found);
+
+    }//end testMatchCase()
+
+
+    /**
+     * Test simple match expression default case.
+     *
+     * @return void
+     */
+    public function testMatchDefault()
+    {
+        $start = $this->getTargetToken('/* testMatchDefault */', T_MATCH_DEFAULT);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 4), $found);
+
+        $start = $this->getTargetToken('/* testMatchDefault */', T_CONSTANT_ENCAPSED_STRING);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame($start, $found);
+
+    }//end testMatchDefault()
+
+
+    /**
+     * Test multiple comma-seperated match expression case values.
+     *
+     * @return void
+     */
+    public function testMatchMultipleCase()
+    {
+        $start = $this->getTargetToken('/* testMatchMultipleCase */', T_LNUMBER);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 13), $found);
+
+    }//end testMatchMultipleCase()
+
+
+    /**
+     * Test match expression default case with trailing comma.
+     *
+     * @return void
+     */
+    public function testMatchDefaultComma()
+    {
+        $start = $this->getTargetToken('/* testMatchDefaultComma */', T_MATCH_DEFAULT);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 5), $found);
+
+    }//end testMatchDefaultComma()
+
+
+    /**
+     * Test match expression with function call.
+     *
+     * @return void
+     */
+    public function testMatchFunctionCall()
+    {
+        $start = $this->getTargetToken('/* testMatchFunctionCall */', T_STRING);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 12), $found);
+
+        $start += 8;
+        $found  = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 1), $found);
+
+    }//end testMatchFunctionCall()
+
+
+    /**
+     * Test match expression with function call in the arm.
+     *
+     * @return void
+     */
+    public function testMatchFunctionCallArm()
+    {
+        // Check the first case.
+        $start = $this->getTargetToken('/* testMatchFunctionCallArm */', T_STRING);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 21), $found);
+
+        // Check the second case.
+        $start += 24;
+        $found  = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 21), $found);
+
+    }//end testMatchFunctionCallArm()
+
+
+    /**
+     * Test match expression with closure.
+     *
+     * @return void
+     */
+    public function testMatchClosure()
+    {
+        $start = $this->getTargetToken('/* testMatchClosure */', T_LNUMBER);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 14), $found);
+
+        $start += 17;
+        $found  = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 14), $found);
+
+    }//end testMatchClosure()
+
+
+    /**
+     * Test match expression with array declaration.
+     *
+     * @return void
+     */
+    public function testMatchArray()
+    {
+        $start = $this->getTargetToken('/* testMatchArray */', T_LNUMBER);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 11), $found);
+
+        $start += 14;
+        $found  = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 22), $found);
+
+    }//end testMatchArray()
+
+
+    /**
+     * Test nested match expressions.
+     *
+     * @return void
+     */
+    public function testNestedMatch()
+    {
+        $start = $this->getTargetToken('/* testNestedMatch */', T_LNUMBER);
+        $found = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 30), $found);
+
+        $start += 21;
+        $found  = self::$phpcsFile->findEndOfStatement($start);
+
+        $this->assertSame(($start + 5), $found);
+
+    }//end testNestedMatch()
+
+
 }//end class
