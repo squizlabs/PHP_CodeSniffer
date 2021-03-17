@@ -3,6 +3,12 @@
 /* testSimpleAssignment */
 $a = false;
 
+/* testFunctionCall */
+$a = doSomething();
+
+/* testFunctionCallArgument */
+$a = doSomething($a, $b);
+
 /* testControlStructure */
 while(true) {}
 $a = 1;
@@ -16,16 +22,17 @@ Foo
 END
 , 'bar');
 
-/* testSwitch */
 switch ($a) {
     case 1: {break;}
+    case 2: $foo = true; break;
     default: {break;}
+    /* testSwitch */
 }
 
 /* testStatementAsArrayValue */
 $a = [new Datetime];
 $a = array(new Datetime);
-$a = new Datetime;
+$a = ['a' => $foo + $bar, 'b' => true];
 
 /* testUseGroup */
 use Vendor\Package\{ClassA as A, ClassB, ClassC as C};

@@ -61,6 +61,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This will have no impact on custom sniffs unless they are specifically looking at the value of the T_FN_ARROW constant
     -- If sniffs are just using constant to find arrow functions, they will continue to work without modification
     -- Thanks to Juliette Reinders Folmer for the patch
+  - File::findStartOfStatement() now works correctly when passed the last token in a statement
   - File::getMethodParameters() now supports PHP 8.0 constructor property promotion
     -- Returned method params now include a "property_visibility" and "visibility_token" index if property promotion is detected
     -- Thanks to Juliette Reinders Folmer for the patch
