@@ -44,6 +44,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- All tokenizing of match expressions has been backfilled for older PHP versions
     -- The following sniffs have been updated to support match expressions:
        --- Generic.CodeAnalysis.AssignmentInCondition
+       --- Generic.CodeAnalysis.EmptyPHPStatement
+           ---- Thanks to Vadim Borodavko for the patch
        --- Generic.CodeAnalysis.EmptyStatement
        --- Generic.PHP.LowerCaseKeyword
        --- PEAR.ControlStructures.ControlSignature
