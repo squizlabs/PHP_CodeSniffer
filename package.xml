@@ -143,6 +143,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3258 : Squiz.Formatting.OperatorBracket duplicate error messages for unary minus
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3273 : Squiz.Functions.FunctionDeclarationArgumentSpacing reports line break as 0 spaces between parenthesis
+  - Fixed bug #3277 : Nullable static return typehint causes whitespace error
  </notes>
  <contents>
   <dir name="/">

@@ -67,6 +67,13 @@ class ScopeKeywordSpacingSniff implements Sniff
             }
 
             if ($prevToken !== false
+                && $tokens[$prevToken]['code'] === T_NULLABLE
+            ) {
+                // Not a scope keyword, but a return type.
+                return;
+            }
+
+            if ($prevToken !== false
                 && $tokens[$prevToken]['code'] === T_COLON
             ) {
                 $prevPrevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prevToken - 1), null, true);
