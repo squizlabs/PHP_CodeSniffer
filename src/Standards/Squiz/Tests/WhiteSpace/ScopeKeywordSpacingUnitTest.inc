@@ -89,6 +89,11 @@ public static function fCreate($attributes = []): static
     return static::factory()->create($attributes);
 }
 
+public static function fCreate($attributes = []): ?static
+{
+    return static::factory()->create($attributes);
+}
+
 // Also account for static used within union types.
 public function fCreate($attributes = []): object|static
 {
