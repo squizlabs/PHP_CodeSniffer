@@ -115,6 +115,10 @@ $match = match ($test) {
     2 => 'b'
     };
 
+function multilineNoContent(
+    int $a
+) {}
+
 class ConstructorPropertyPromotionNoContentInMethod
 {
     public function __construct(

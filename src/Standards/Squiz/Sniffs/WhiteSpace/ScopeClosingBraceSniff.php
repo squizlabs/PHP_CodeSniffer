@@ -63,6 +63,18 @@ class ScopeClosingBraceSniff implements Sniff
         $scopeStart  = $tokens[$stackPtr]['scope_opener'];
         $scopeEnd    = $tokens[$stackPtr]['scope_closer'];
 
+        // Allow empty braces with multiline parenthesis.
+        if ($tokens[$stackPtr]['type'] === 'T_FUNCTION') {
+            $parenthesisStart = $tokens[$stackPtr]['parenthesis_opener'];
+            $parenthesisEnd   = $tokens[$stackPtr]['parenthesis_closer'];
+            if ($tokens[$parenthesisStart]['line'] !== $tokens[$parenthesisEnd]['line']
+                && $tokens[$scopeStart]['line'] === $tokens[$scopeEnd]['line']
+                && ($tokens[$scopeStart]['column'] + 1) === $tokens[$scopeEnd]['column']
+            ) {
+                return;
+            }
+        }
+
         // Check that the closing brace is on it's own line.
         $lastContent = $phpcsFile->findPrevious([T_INLINE_HTML, T_WHITESPACE, T_OPEN_TAG], ($scopeEnd - 1), $scopeStart, true);
         if ($tokens[$lastContent]['line'] === $tokens[$scopeEnd]['line']) {
