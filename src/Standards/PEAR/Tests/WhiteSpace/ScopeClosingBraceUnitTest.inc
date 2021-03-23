@@ -152,3 +152,10 @@ $match = match ($test) {
     1 => 'a',
     2 => 'b'
     };
+
+class ConstructorPropertyPromotionNoContentInMethod
+{
+    public function __construct(
+        protected int $id
+    ) {}
+}
