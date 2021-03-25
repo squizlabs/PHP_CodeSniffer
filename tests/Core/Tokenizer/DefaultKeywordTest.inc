@@ -91,3 +91,105 @@ function switchWithDefaultInMatch() {
         }
     };
 }
+
+function shortArrayWithConstantKey() {
+    $arr = [
+        /* testClassConstantAsShortArrayKey */
+        SomeClass::DEFAULT => 1,
+        /* testClassPropertyAsShortArrayKey */
+        SomeClass->DEFAULT => 1,
+        /* testNamespacedConstantAsShortArrayKey */
+        // Intentional parse error PHP < 8.0. Reserved keyword used as namespaced constant.
+        SomeNamespace\DEFAULT => 1,
+        /* testFQNGlobalConstantAsShortArrayKey */
+        // Intentional parse error in PHP < 8.0. Reserved keyword used as global constant.
+        \DEFAULT => 1,
+    ];
+}
+
+function longArrayWithConstantKey() {
+    $arr = array(
+        /* testClassConstantAsLongArrayKey */
+        SomeClass::DEFAULT => 1,
+    );
+}
+
+function yieldWithConstantKey() {
+    /* testClassConstantAsYieldKey */
+    yield SomeClass::DEFAULT => 1;
+}
+
+function longArrayWithConstantKeyNestedInMatch() {
+    return match($x) {
+        /* testMatchDefaultWithNestedLongArrayWithClassConstantKey */
+        DEFAULT => array(
+            /* testClassConstantAsLongArrayKeyNestedInMatch */
+            SomeClass::DEFAULT => match($x) {
+                /* testMatchDefaultWithNestedLongArrayWithClassConstantKeyLevelDown */
+                DEFAULT => array(
+                    /* testClassConstantAsLongArrayKeyNestedInMatchLevelDown */
+                    SomeClass::DEFAULT => 1,
+                ),
+            },
+        ),
+    };
+}
+
+function shortArrayWithConstantKeyNestedInMatch() {
+    return match($x) {
+        /* testMatchDefaultWithNestedShortArrayWithClassConstantKey */
+        DEFAULT => [
+            /* testClassConstantAsShortArrayKeyNestedInMatch */
+            SomeClass::DEFAULT => match($x) {
+                /* testMatchDefaultWithNestedShortArrayWithClassConstantKeyLevelDown */
+                DEFAULT => [
+                    /* testClassConstantAsShortArrayKeyNestedInMatchLevelDown */
+                    SomeClass::DEFAULT => 1,
+                ],
+            },
+        ],
+    };
+}
+
+
+function longArrayWithConstantKeyWithNestedMatch() {
+    return array(
+        /* testClassConstantAsLongArrayKeyWithNestedMatch */
+        SomeClass::DEFAULT => match($x) {
+            /* testMatchDefaultNestedInLongArray */
+            DEFAULT => 'foo'
+        },
+    );
+}
+
+function shortArrayWithConstantKeyWithNestedMatch() {
+    return [
+        /* testClassConstantAsShortArrayKeyWithNestedMatch */
+        SomeClass::DEFAULT => match($x) {
+            /* testMatchDefaultNestedInShortArray */
+            DEFAULT => 'foo'
+        },
+    ];
+}
+
+function switchWithConstantNonDefault($i) {
+    switch ($i) {
+        /* testClassConstantInSwitchCase */
+        case SomeClass::DEFAULT:
+            return 1;
+
+        /* testClassPropertyInSwitchCase */
+        case SomeClass->DEFAULT:
+            return 2;
+
+        /* testNamespacedConstantInSwitchCase */
+        // Intentional parse error PHP < 8.0. Reserved keyword used as constant.
+        case SomeNamespace\DEFAULT:
+            return 2;
+
+        /* testNamespaceRelativeConstantInSwitchCase */
+        // Intentional parse error PHP < 8.0. Reserved keyword used as global constant.
+        case namespace\DEFAULT:
+            return 2;
+    }
+}
