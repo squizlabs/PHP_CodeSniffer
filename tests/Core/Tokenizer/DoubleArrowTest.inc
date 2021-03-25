@@ -219,3 +219,63 @@ function matchInShortList() {
     /* testMatchArrowInShortListKey */
     [match($x) {1 => 1, 2 => 2} /* testShortListArrowWithMatchInKey */ => $a] = $array;
 }
+
+function longArrayWithConstantKey() {
+    $arr = array(
+        /* testLongArrayArrowWithClassConstantKey */
+        SomeClass::DEFAULT => 1,
+    );
+}
+
+function shortArrayWithConstantKey() {
+    $arr = [
+        /* testShortArrayArrowWithClassConstantKey */
+        SomeClass::DEFAULT => 1,
+    ];
+}
+
+function yieldWithConstantKey() {
+    /* testYieldArrowWithClassConstantKey */
+    yield SomeClass::DEFAULT => 1;
+}
+
+function longArrayWithConstantKeyNestedInMatch() {
+    return match($x) {
+        /* testMatchArrowWithNestedLongArrayWithClassConstantKey */
+        default => array(
+            /* testLongArrayArrowWithClassConstantKeyNestedInMatch */
+            SomeClass::DEFAULT => 1,
+        ),
+    };
+}
+
+function shortArrayWithConstantKeyNestedInMatch() {
+    return match($x) {
+        /* testMatchArrowWithNestedShortArrayWithClassConstantKey */
+        default => [
+            /* testShortArrayArrowWithClassConstantKeyNestedInMatch */
+            SomeClass::DEFAULT => 1,
+        ],
+    };
+}
+
+
+function longArrayWithConstantKeyWithNestedMatch() {
+    return array(
+        /* testLongArrayArrowWithClassConstantKeyWithNestedMatch */
+        SomeClass::DEFAULT => match($x) {
+            /* testMatchArrowNestedInLongArrayWithClassConstantKey */
+            default => 'foo'
+        },
+    );
+}
+
+function shortArrayWithConstantKeyWithNestedMatch() {
+    return [
+        /* testShortArrayArrowWithClassConstantKeyWithNestedMatch */
+        SomeClass::DEFAULT => match($x) {
+            /* testMatchArrowNestedInShortArrayWithClassConstantKey */
+            default => 'foo'
+        },
+    ];
+}
