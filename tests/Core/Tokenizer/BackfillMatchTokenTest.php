@@ -294,6 +294,14 @@ class BackfillMatchTokenTest extends AbstractMethodUnitTest
                 '/* testNoMatchNamespaceDeclaration */',
                 'Match',
             ],
+            'class_extends_declaration'            => [
+                '/* testNoMatchExtendedClassDeclaration */',
+                'Match',
+            ],
+            'class_implements_declaration'         => [
+                '/* testNoMatchImplementedClassDeclaration */',
+                'Match',
+            ],
             'unsupported_inline_control_structure' => ['/* testNoMatchMissingCurlies */'],
             'unsupported_alternative_syntax'       => ['/* testNoMatchAlternativeSyntax */'],
             'live_coding'                          => ['/* testLiveCoding */'],
