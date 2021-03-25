@@ -1201,40 +1201,63 @@ class PHP extends Tokenizer
             if ($tokenIsArray === true
                 && $token[0] === T_DEFAULT
             ) {
-                for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
-                    if ($tokens[$x] === ',') {
-                        // Skip over potential trailing comma (supported in PHP).
-                        continue;
+                $ignoreContext = [
+                    T_OBJECT_OPERATOR          => true,
+                    T_NULLSAFE_OBJECT_OPERATOR => true,
+                    T_NS_SEPARATOR             => true,
+                    T_PAAMAYIM_NEKUDOTAYIM     => true,
+                ];
+
+                if (isset($ignoreContext[$finalTokens[$lastNotEmptyToken]['code']]) === false) {
+                    for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
+                        if ($tokens[$x] === ',') {
+                            // Skip over potential trailing comma (supported in PHP).
+                            continue;
+                        }
+
+                        if (is_array($tokens[$x]) === false
+                            || isset(Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                        ) {
+                            // Non-empty, non-comma content.
+                            break;
+                        }
                     }
 
-                    if (is_array($tokens[$x]) === false
-                        || isset(Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                    if (isset($tokens[$x]) === true
+                        && is_array($tokens[$x]) === true
+                        && $tokens[$x][0] === T_DOUBLE_ARROW
                     ) {
-                        // Non-empty, non-comma content.
-                        break;
-                    }
-                }
+                        // Modify the original token stack for the double arrow so that
+                        // future checks can disregard the double arrow token more easily.
+                        // For match expression "case" statements, this is handled
+                        // in PHP::processAdditional().
+                        $tokens[$x][0] = T_MATCH_ARROW;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            Common::printStatusMessage("* token $x changed from T_DOUBLE_ARROW to T_MATCH_ARROW", 2);
+                        }
 
-                if (isset($tokens[$x]) === true
-                    && is_array($tokens[$x]) === true
-                    && $tokens[$x][0] === T_DOUBLE_ARROW
-                ) {
-                    // Modify the original token stack for the double arrow so that
-                    // future checks can disregard the double arrow token more easily.
-                    // For match expression "case" statements, this is handled
-                    // in PHP::processAdditional().
-                    $tokens[$x][0] = T_MATCH_ARROW;
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        Common::printStatusMessage("* token $x changed from T_DOUBLE_ARROW to T_MATCH_ARROW", 2);
-                    }
+                        $newToken            = [];
+                        $newToken['code']    = T_MATCH_DEFAULT;
+                        $newToken['type']    = 'T_MATCH_DEFAULT';
+                        $newToken['content'] = $token[1];
 
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            Common::printStatusMessage("* token $stackPtr changed from T_DEFAULT to T_MATCH_DEFAULT", 2);
+                        }
+
+                        $finalTokens[$newStackPtr] = $newToken;
+                        $newStackPtr++;
+                        continue;
+                    }//end if
+                } else {
+                    // Definitely not the "default" keyword.
                     $newToken            = [];
-                    $newToken['code']    = T_MATCH_DEFAULT;
-                    $newToken['type']    = 'T_MATCH_DEFAULT';
+                    $newToken['code']    = T_STRING;
+                    $newToken['type']    = 'T_STRING';
                     $newToken['content'] = $token[1];
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        Common::printStatusMessage("* token $stackPtr changed from T_DEFAULT to T_MATCH_DEFAULT", 2);
+                        Common::printStatusMessage("* token $stackPtr changed from T_DEFAULT to T_STRING", 2);
                     }
 
                     $finalTokens[$newStackPtr] = $newToken;
