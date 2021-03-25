@@ -220,7 +220,7 @@ $a = MyClass::Match[$a];
 $a = $obj->match($param);
 
 /* testNoMatchMethodCallUpper */
-$a = $obj->MATCH()->chain($param);
+$a = $obj??->MATCH()->chain($param);
 
 /* testNoMatchPropertyAccess */
 $a = $obj->match;
@@ -281,6 +281,18 @@ function match() {}
 /* testNoMatchNamespaceDeclaration */
 // Intentional fatal error. Match is now a reserved keyword.
 namespace Match {}
+
+/* testNoMatchExtendedClassDeclaration */
+// Intentional fatal error. Match is now a reserved keyword.
+class Foo extends Match {}
+
+/* testNoMatchImplementedClassDeclaration */
+// Intentional fatal error. Match is now a reserved keyword.
+class Bar implements Match {}
+
+/* testNoMatchInUseStatement */
+// Intentional fatal error in PHP < 8. Match is now a reserved keyword.
+use Match\me;
 
 function brokenMatchNoCurlies($x) {
     /* testNoMatchMissingCurlies */
