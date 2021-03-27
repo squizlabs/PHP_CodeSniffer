@@ -38,6 +38,7 @@ class LongConditionClosingCommentSniff implements Sniff
         T_WHILE,
         T_TRY,
         T_CASE,
+        T_MATCH,
     ];
 
     /**
@@ -152,6 +153,17 @@ class LongConditionClosingCommentSniff implements Sniff
                     break;
                 }
             } while (isset($tokens[$nextToken]['scope_closer']) === true);
+        }
+
+        if ($startCondition['code'] === T_MATCH) {
+            // Move the stackPtr to after the semi-colon/comma if there is one.
+            $nextToken = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
+            if ($nextToken !== false
+                && ($tokens[$nextToken]['code'] === T_SEMICOLON
+                || $tokens[$nextToken]['code'] === T_COMMA)
+            ) {
+                $stackPtr = $nextToken;
+            }
         }
 
         $lineDifference = ($endBrace['line'] - $startBrace['line']);

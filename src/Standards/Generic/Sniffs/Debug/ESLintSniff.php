@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Debug;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Common;
 
 class ESLintSniff implements Sniff
 {
@@ -76,7 +77,7 @@ class ESLintSniff implements Sniff
             $eslintOptions[] = '--config '.escapeshellarg($configFile);
         }
 
-        $cmd = escapeshellcmd(escapeshellarg($eslintPath).' '.implode(' ', $eslintOptions).' '.escapeshellarg($filename));
+        $cmd = Common::escapeshellcmd(escapeshellarg($eslintPath).' '.implode(' ', $eslintOptions).' '.escapeshellarg($filename));
 
         // Execute!
         exec($cmd, $stdout, $code);

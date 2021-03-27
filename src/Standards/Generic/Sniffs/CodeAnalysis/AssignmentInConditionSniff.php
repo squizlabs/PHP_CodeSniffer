@@ -60,6 +60,7 @@ class AssignmentInConditionSniff implements Sniff
             T_SWITCH,
             T_CASE,
             T_WHILE,
+            T_MATCH,
         ];
 
     }//end register()

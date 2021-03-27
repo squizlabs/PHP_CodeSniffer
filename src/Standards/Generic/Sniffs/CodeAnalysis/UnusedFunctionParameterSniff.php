@@ -23,6 +23,13 @@ use PHP_CodeSniffer\Util\Tokens;
 class UnusedFunctionParameterSniff implements Sniff
 {
 
+    /**
+     * The list of class type hints which will be ignored.
+     *
+     * @var array
+     */
+    public $ignoreTypeHints = [];
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -83,6 +90,11 @@ class UnusedFunctionParameterSniff implements Sniff
         }
 
         foreach ($methodParams as $param) {
+            if (isset($param['property_visibility']) === true) {
+                // Ignore. Constructor property promotion.
+                continue;
+            }
+
             $params[$param['name']] = $stackPtr;
         }
 
@@ -191,6 +203,10 @@ class UnusedFunctionParameterSniff implements Sniff
             // If there is only one parameter and it is unused, no need for additional errorcode toggling logic.
             if ($methodParamsCount === 1) {
                 foreach ($params as $paramName => $position) {
+                    if (in_array($methodParams[0]['type_hint'], $this->ignoreTypeHints, true) === true) {
+                        continue;
+                    }
+
                     $data = [$paramName];
                     $phpcsFile->addWarning($error, $position, $errorCode, $data);
                 }
@@ -207,6 +223,7 @@ class UnusedFunctionParameterSniff implements Sniff
                         $errorInfo[$methodParams[$i]['name']] = [
                             'position'  => $params[$methodParams[$i]['name']],
                             'errorcode' => $errorCode.'BeforeLastUsed',
+                            'typehint'  => $methodParams[$i]['type_hint'],
                         ];
                     }
                 } else {
@@ -216,14 +233,19 @@ class UnusedFunctionParameterSniff implements Sniff
                         $errorInfo[$methodParams[$i]['name']] = [
                             'position'  => $params[$methodParams[$i]['name']],
                             'errorcode' => $errorCode.'AfterLastUsed',
+                            'typehint'  => $methodParams[$i]['type_hint'],
                         ];
                     }
                 }
-            }
+            }//end for
 
             if (count($errorInfo) > 0) {
                 $errorInfo = array_reverse($errorInfo);
                 foreach ($errorInfo as $paramName => $info) {
+                    if (in_array($info['typehint'], $this->ignoreTypeHints, true) === true) {
+                        continue;
+                    }
+
                     $data = [$paramName];
                     $phpcsFile->addWarning($error, $info['position'], $info['errorcode'], $data);
                 }

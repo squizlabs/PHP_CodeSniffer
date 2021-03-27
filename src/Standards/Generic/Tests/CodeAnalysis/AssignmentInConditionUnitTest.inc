@@ -91,3 +91,5 @@ while ( $sample = false ) {}
 
 if ($a = 123) :
 endif;
+
+match ($a[0] = 123) {};

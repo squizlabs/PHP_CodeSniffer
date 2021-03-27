@@ -802,6 +802,11 @@ class ScopeIndentSniff implements Sniff
                 && isset($tokens[$checkToken]['scope_opener']) === true
             ) {
                 $exact = true;
+                if ($disableExactEnd > $checkToken) {
+                    if ($tokens[$checkToken]['conditions'] === $tokens[$disableExactEnd]['conditions']) {
+                        $exact = false;
+                    }
+                }
 
                 $lastOpener = null;
                 if (empty($openScopes) === false) {

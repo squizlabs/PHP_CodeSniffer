@@ -75,3 +75,15 @@ class Bar
     public bool $c = false, $d = true;
     protected int $e = 123, $f = 987;
 }
+
+switch ($b < 10 && $a = 10) {
+    case true:
+        break;
+}
+
+$array = [
+    match ($b < 10 && $a = 10) {
+        true => 10,
+        false => 0
+    },
+];

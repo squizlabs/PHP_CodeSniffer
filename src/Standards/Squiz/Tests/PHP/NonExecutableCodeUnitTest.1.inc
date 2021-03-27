@@ -296,3 +296,6 @@ class TestAlternativeControlStructures {
 
 $var_after_class_in_global_space = 1;
 do_something_else();
+
+// Intentional syntax error.
+return array_map(

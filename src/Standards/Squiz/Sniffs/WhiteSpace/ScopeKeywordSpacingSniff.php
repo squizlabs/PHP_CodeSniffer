@@ -51,20 +51,63 @@ class ScopeKeywordSpacingSniff implements Sniff
         $prevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
 
-        if ($tokens[$stackPtr]['code'] === T_STATIC
-            && (($nextToken === false || $tokens[$nextToken]['code'] === T_DOUBLE_COLON)
-            || $tokens[$prevToken]['code'] === T_NEW)
-        ) {
-            // Late static binding, e.g., static:: OR new static() usage or live coding.
-            return;
-        }
+        if ($tokens[$stackPtr]['code'] === T_STATIC) {
+            if (($nextToken === false || $tokens[$nextToken]['code'] === T_DOUBLE_COLON)
+                || $tokens[$prevToken]['code'] === T_NEW
+            ) {
+                // Late static binding, e.g., static:: OR new static() usage or live coding.
+                return;
+            }
+
+            if ($prevToken !== false
+                && $tokens[$prevToken]['code'] === T_TYPE_UNION
+            ) {
+                // Not a scope keyword, but a union return type.
+                return;
+            }
+
+            if ($prevToken !== false
+                && $tokens[$prevToken]['code'] === T_NULLABLE
+            ) {
+                // Not a scope keyword, but a return type.
+                return;
+            }
+
+            if ($prevToken !== false
+                && $tokens[$prevToken]['code'] === T_COLON
+            ) {
+                $prevPrevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prevToken - 1), null, true);
+                if ($prevPrevToken !== false
+                    && $tokens[$prevPrevToken]['code'] === T_CLOSE_PARENTHESIS
+                ) {
+                    // Not a scope keyword, but a return type.
+                    return;
+                }
+            }
+        }//end if
 
         if ($tokens[$prevToken]['code'] === T_AS) {
             // Trait visibility change, e.g., "use HelloWorld { sayHello as private; }".
             return;
         }
 
-        if ($nextToken !== false && $tokens[$nextToken]['code'] === T_VARIABLE) {
+        $isInFunctionDeclaration = false;
+        if (empty($tokens[$stackPtr]['nested_parenthesis']) === false) {
+            // Check if this is PHP 8.0 constructor property promotion.
+            // In that case, we can't have multi-property definitions.
+            $nestedParens    = $tokens[$stackPtr]['nested_parenthesis'];
+            $lastCloseParens = end($nestedParens);
+            if (isset($tokens[$lastCloseParens]['parenthesis_owner']) === true
+                && $tokens[$tokens[$lastCloseParens]['parenthesis_owner']]['code'] === T_FUNCTION
+            ) {
+                $isInFunctionDeclaration = true;
+            }
+        }
+
+        if ($nextToken !== false
+            && $tokens[$nextToken]['code'] === T_VARIABLE
+            && $isInFunctionDeclaration === false
+        ) {
             $endOfStatement = $phpcsFile->findNext(T_SEMICOLON, ($nextToken + 1));
             if ($endOfStatement === false) {
                 // Live coding.
