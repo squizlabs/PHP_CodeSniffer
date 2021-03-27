@@ -173,4 +173,23 @@ $test = myfunc(1 * static::TEST);
 
 $errorPos = $params[$x]?->getLine() + $commentStart;
 
+$foo = $this->gmail ?? $this->gmail = new Google_Service_Gmail($this->google);
+
 exit -1;
+
+$expr = match ($number - 10) {
+    -1 => 0,
+};
+
+$expr = match ($number % 10) {
+    1 => 2 * $num,
+};
+
+$expr = match (true) {
+    $num * 100 > 500 => 'expression in key',
+};
+
+// PHP 8.0 named parameters.
+if ($pos === count(value: $this->tokens) - 1) {
+    $file = '...'.substr(string: $file, offset: $padding * -1 + 3);
+}

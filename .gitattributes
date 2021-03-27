@@ -1,13 +1,11 @@
-.travis.yml export-ignore
 .cspell.json export-ignore
 .gitattributes export-ignore
+.github/ export-ignore
 .gitignore export-ignore
+package.xml export-ignore
 phpcs.xml.dist export-ignore
 phpstan.neon export-ignore
-package.xml export-ignore
 phpunit.xml.dist export-ignore
-php5-testingConfig.ini export-ignore
-php7-testingConfig.ini export-ignore
 scripts/ export-ignore
 
 # Declare files that should always have CRLF line endings on checkout.

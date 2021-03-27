@@ -454,9 +454,17 @@ $varonetwothreefour = 'four';
 $one         <<= 8;
 $onetwothree = 3;
 
+// phpcs:set Generic.Formatting.MultipleStatementAlignment maxPadding 1000
+
+$a        = 123;
+$model    = new class() {
+    // empty
+};
+$resource = new class() {
+    // empty
+};
+
 // phpcs:set Generic.Formatting.MultipleStatementAlignment alignAtEnd true
 
 $one       <<= 8;
 $onetwothree = 3;
-
-// phpcs:set Generic.Formatting.MultipleStatementAlignment maxPadding 1000

@@ -37,6 +37,7 @@ class BooleanOperatorPlacementSniff implements Sniff
             T_WHILE,
             T_SWITCH,
             T_ELSEIF,
+            T_MATCH,
         ];
 
     }//end register()

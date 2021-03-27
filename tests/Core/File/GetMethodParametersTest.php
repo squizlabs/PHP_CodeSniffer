@@ -371,6 +371,36 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify recognition of PHP8 union type declaration when the variable has either a spread operator or a reference.
+     *
+     * @return void
+     */
+    public function testPHP8UnionTypesWithSpreadOperatorAndReference()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$paramA',
+            'content'           => 'float|null &$paramA',
+            'pass_by_reference' => true,
+            'variable_length'   => false,
+            'type_hint'         => 'float|null',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$paramB',
+            'content'           => 'string|int ...$paramB',
+            'pass_by_reference' => false,
+            'variable_length'   => true,
+            'type_hint'         => 'string|int',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8UnionTypesWithSpreadOperatorAndReference()
+
+
+    /**
      * Verify recognition of PHP8 union type declaration with a bitwise or in the default value.
      *
      * @return void

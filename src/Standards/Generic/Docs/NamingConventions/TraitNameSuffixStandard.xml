@@ -1,0 +1,23 @@
+<documentation title="Trait name suffix">
+    <standard>
+    <![CDATA[
+    Trait names must be suffixed with "Trait", e.g. BarTrait.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: ">
+        <![CDATA[
+trait <em>BarTrait</em>
+{
+}
+        ]]>
+        </code>
+        <code title="Invalid: ">
+        <![CDATA[
+trait <em>Bar</em>
+{
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

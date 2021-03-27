@@ -74,8 +74,11 @@ define('T_OPEN_USE_GROUP', 'PHPCS_T_OPEN_USE_GROUP');
 define('T_CLOSE_USE_GROUP', 'PHPCS_T_CLOSE_USE_GROUP');
 define('T_ZSR', 'PHPCS_T_ZSR');
 define('T_ZSR_EQUAL', 'PHPCS_T_ZSR_EQUAL');
-define('T_FN_ARROW', 'T_FN_ARROW');
-define('T_TYPE_UNION', 'T_TYPE_UNION');
+define('T_FN_ARROW', 'PHPCS_T_FN_ARROW');
+define('T_TYPE_UNION', 'PHPCS_T_TYPE_UNION');
+define('T_PARAM_NAME', 'PHPCS_T_PARAM_NAME');
+define('T_MATCH_ARROW', 'PHPCS_T_MATCH_ARROW');
+define('T_MATCH_DEFAULT', 'PHPCS_T_MATCH_DEFAULT');
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
@@ -142,6 +145,10 @@ if (defined('T_NAME_RELATIVE') === false) {
     define('T_NAME_RELATIVE', 'PHPCS_T_NAME_RELATIVE');
 }
 
+if (defined('T_MATCH') === false) {
+    define('T_MATCH', 'PHPCS_T_MATCH');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');
@@ -188,6 +195,7 @@ final class Tokens
         T_CATCH               => 50,
         T_FINALLY             => 50,
         T_SWITCH              => 50,
+        T_MATCH               => 50,
 
         T_SELF                => 25,
         T_PARENT              => 25,
@@ -380,6 +388,7 @@ final class Tokens
         T_ELSEIF     => T_ELSEIF,
         T_CATCH      => T_CATCH,
         T_DECLARE    => T_DECLARE,
+        T_MATCH      => T_MATCH,
     ];
 
     /**
@@ -412,6 +421,7 @@ final class Tokens
         T_PROPERTY   => T_PROPERTY,
         T_OBJECT     => T_OBJECT,
         T_USE        => T_USE,
+        T_MATCH      => T_MATCH,
     ];
 
     /**

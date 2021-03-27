@@ -1,0 +1,23 @@
+<documentation title="Abstract class name">
+    <standard>
+    <![CDATA[
+    Abstract class names must be prefixed with "Abstract", e.g. AbstractBar.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: ">
+        <![CDATA[
+abstract class <em>AbstractBar</em>
+{
+}
+        ]]>
+        </code>
+        <code title="Invalid: ">
+        <![CDATA[
+abstract class <em>Bar</em>
+{
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

@@ -134,3 +134,9 @@ $someObject?->someFunction("some", "parameter")
     ->someOtherFunc3(23, 42)
     ?->andAThirdFunction();
 // phpcs:set PEAR.WhiteSpace.ObjectOperatorIndent multilevel false
+
+$someObject
+    ->startSomething(paramName: $value)
+    ->someOtherFunc(nameA: 23, nameB: 42)
+    ->endSomething($value, name: $value)
+    ->endEverything();

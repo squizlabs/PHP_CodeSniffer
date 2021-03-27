@@ -1000,3 +1000,15 @@ public function foo(object $a, ?object $b) {}
  * @return void
  */
 function foo($foo) {}
+
+/**
+ * {@inheritDoc}
+ */
+public function foo($a, $b) {}
+
+// phpcs:set Squiz.Commenting.FunctionComment skipIfInheritdoc true
+
+/**
+ * {@inheritDoc}
+ */
+public function foo($a, $b) {}

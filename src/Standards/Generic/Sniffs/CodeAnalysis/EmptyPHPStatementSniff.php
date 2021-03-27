@@ -72,7 +72,7 @@ class EmptyPHPStatementSniff implements Sniff
                 }
 
                 $scopeOwner = $tokens[$tokens[$prevNonEmpty]['scope_condition']]['code'];
-                if ($scopeOwner === T_CLOSURE || $scopeOwner === T_ANON_CLASS) {
+                if ($scopeOwner === T_CLOSURE || $scopeOwner === T_ANON_CLASS || $scopeOwner === T_MATCH) {
                     return;
                 }
 

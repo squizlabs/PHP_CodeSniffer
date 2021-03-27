@@ -67,6 +67,11 @@ class OperatorBracketUnitTest extends AbstractSniffUnitTest
                 165 => 2,
                 169 => 1,
                 174 => 1,
+                176 => 1,
+                185 => 1,
+                189 => 1,
+                193 => 1,
+                194 => 2,
             ];
             break;
         case 'OperatorBracketUnitTest.js':
