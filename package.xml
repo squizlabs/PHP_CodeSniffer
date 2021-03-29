@@ -33,6 +33,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for PHP 8.0 named function call arguments
     -- A new T_PARAM_NAME token is available to represent the label with the name of the function argument in it
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Added support for PHP 8.0 attributes
+    -- The PHP-supplied T_ATTRIBUTE token marks the start of an attribute
+    -- A new T_ATTRIBUTE_END token is available to mark the end of an attribute
+    -- New attribute_owner and attribute_closer indexes are available in the tokens array for all tokens inside an attribute
+    -- Tokenizing of attributes has been backfilled for older PHP versions
+    -- Thanks to Alessandro Chitolina for the patch
   - Added support for PHP 8.0 dereferencing of text strings with interpolated variables
     -- Thanks to Juliette Reinders Folmer for the patch
   - Added support for PHP 8.0 match expressions
