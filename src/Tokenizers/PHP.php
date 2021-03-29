@@ -1288,33 +1288,22 @@ class PHP extends Tokenizer
                         break;
                     }
 
-                    // Next was an open parenthesis, now check what is before the match keyword.
-                    for ($y = ($stackPtr - 1); $y >= 0; $y--) {
-                        if (is_array($tokens[$y]) === true
-                            && isset(Util\Tokens::$emptyTokens[$tokens[$y][0]]) === true
-                        ) {
-                            continue;
-                        }
+                    $notMatchContext = [
+                        T_PAAMAYIM_NEKUDOTAYIM     => true,
+                        T_OBJECT_OPERATOR          => true,
+                        T_NULLSAFE_OBJECT_OPERATOR => true,
+                        T_NS_SEPARATOR             => true,
+                        T_NEW                      => true,
+                        T_FUNCTION                 => true,
+                    ];
 
-                        if (is_array($tokens[$y]) === true
-                            && ($tokens[$y][0] === T_PAAMAYIM_NEKUDOTAYIM
-                            || $tokens[$y][0] === T_OBJECT_OPERATOR
-                            || $tokens[$y][0] === T_NS_SEPARATOR
-                            || $tokens[$y][0] === T_NEW
-                            || $tokens[$y][0] === T_FUNCTION
-                            || $tokens[$y][0] === T_CLASS
-                            || $tokens[$y][0] === T_INTERFACE
-                            || $tokens[$y][0] === T_TRAIT
-                            || $tokens[$y][0] === T_NAMESPACE
-                            || $tokens[$y][0] === T_CONST)
-                        ) {
-                            // This is not a match expression.
-                            break 2;
-                        }
+                    if (isset($notMatchContext[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
+                        // Also not a match expression.
+                        break;
+                    }
 
-                        $isMatch = true;
-                        break 2;
-                    }//end for
+                    $isMatch = true;
+                    break;
                 }//end for
 
                 if ($isMatch === true && $token[0] === T_STRING) {
