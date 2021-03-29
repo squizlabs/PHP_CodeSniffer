@@ -904,9 +904,9 @@ class PHP extends Tokenizer
                 }
 
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    $type    = Util\Tokens::tokenName($token[0]);
-                    $content = Util\Common::prepareForOutput($token[1]);
-                    echo "\t\t* token $stackPtr split into individual tokens; was: $type => $content".PHP_EOL;
+                    $type    = Tokens::tokenName($token[0]);
+                    $content = Common::prepareForOutput($token[1]);
+                    Common::printStatusMessage("* token $stackPtr split into individual tokens; was: $type => $content", 2);
                 }
 
                 continue;
