@@ -1813,6 +1813,7 @@ class File
                 T_SEMICOLON,
                 T_OPEN_CURLY_BRACKET,
                 T_CLOSE_CURLY_BRACKET,
+                T_ATTRIBUTE_END,
             ],
             ($stackPtr - 1)
         );

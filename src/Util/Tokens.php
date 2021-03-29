@@ -79,6 +79,7 @@ define('T_TYPE_UNION', 'PHPCS_T_TYPE_UNION');
 define('T_PARAM_NAME', 'PHPCS_T_PARAM_NAME');
 define('T_MATCH_ARROW', 'PHPCS_T_MATCH_ARROW');
 define('T_MATCH_DEFAULT', 'PHPCS_T_MATCH_DEFAULT');
+define('T_ATTRIBUTE_END', 'PHPCS_T_ATTRIBUTE_END');
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
@@ -147,6 +148,10 @@ if (defined('T_NAME_RELATIVE') === false) {
 
 if (defined('T_MATCH') === false) {
     define('T_MATCH', 'PHPCS_T_MATCH');
+}
+
+if (defined('T_ATTRIBUTE') === false) {
+    define('T_ATTRIBUTE', 'PHPCS_T_ATTRIBUTE');
 }
 
 // Tokens used for parsing doc blocks.
