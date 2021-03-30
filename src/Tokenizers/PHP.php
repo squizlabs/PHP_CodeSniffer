@@ -2343,7 +2343,12 @@ class PHP extends Tokenizer
                                     && $this->tokens[$scopeCloser]['code'] === T_CLOSE_PARENTHESIS
                                     && $this->tokens[$scopeCloser]['parenthesis_opener'] < $arrow
                                 ) {
-                                    $scopeCloser = $lastEndToken;
+                                    for ($lastNonEmpty = ($scopeCloser - 1); $lastNonEmpty > $arrow; $lastNonEmpty--) {
+                                        if (isset(Util\Tokens::$emptyTokens[$this->tokens[$lastNonEmpty]['code']]) === false) {
+                                            $scopeCloser = $lastNonEmpty;
+                                            break;
+                                        }
+                                    }
                                 }
 
                                 break;

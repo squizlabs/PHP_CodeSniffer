@@ -91,7 +91,7 @@ class UnusedFunctionParameterSniff implements Sniff
 
         foreach ($methodParams as $param) {
             if (isset($param['property_visibility']) === true) {
-                // Ignore. Constructor property promotion.
+                // Ignore constructor property promotion.
                 continue;
             }
 
@@ -100,6 +100,13 @@ class UnusedFunctionParameterSniff implements Sniff
 
         $next = ++$token['scope_opener'];
         $end  = --$token['scope_closer'];
+
+        // Check the end token for arrow functions as
+        // they can end at a content token due to not having
+        // a clearly defined closing token.
+        if ($token['code'] === T_FN) {
+            ++$end;
+        }
 
         $foundContent = false;
         $validTokens  = [

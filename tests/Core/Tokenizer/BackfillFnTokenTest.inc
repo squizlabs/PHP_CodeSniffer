@@ -40,6 +40,9 @@ $extended = fn($c) => $callable(function() {
     echo 'done';
 }, $c);
 
+/* testArrayIndex */
+$found = in_array_cb($needle, $haystack, fn($array, $needle) => $array[2] === $needle);
+
 $result = array_map(
     /* testReturnType */
     static fn(int $number) : int => $number + 1,

@@ -193,6 +193,22 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test arrow functions using an array index.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testArrayIndex()
+    {
+        $token = $this->getTargetToken('/* testArrayIndex */', T_FN);
+        $this->backfillHelper($token);
+        $this->scopePositionTestHelper($token, 8, 17, 'comma');
+
+    }//end testArrayIndex()
+
+
+    /**
      * Test arrow functions with a return type.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional

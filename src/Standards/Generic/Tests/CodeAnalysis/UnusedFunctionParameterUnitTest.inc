@@ -150,3 +150,5 @@ class ConstructorPropertyPromotionWithContentInMethod {
         }
     }
 }
+
+$found = in_array_cb($needle, $haystack, fn($array, $needle) => $array[2] === $needle);
