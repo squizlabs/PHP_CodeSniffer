@@ -50,9 +50,28 @@ class ClassCommentSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
         $find   = Tokens::$methodPrefixes;
-        $find[] = T_WHITESPACE;
+        $find[T_WHITESPACE] = T_WHITESPACE;
 
-        $commentEnd = $phpcsFile->findPrevious($find, ($stackPtr - 1), null, true);
+        $previousContent = null;
+        for ($commentEnd = ($stackPtr - 1); $commentEnd >= 0; $commentEnd--) {
+            if (isset($find[$tokens[$commentEnd]['code']]) === true) {
+                continue;
+            }
+
+            if ($previousContent === null) {
+                $previousContent = $commentEnd;
+            }
+
+            if ($tokens[$commentEnd]['code'] === T_ATTRIBUTE_END
+                && isset($tokens[$commentEnd]['attribute_opener']) === true
+            ) {
+                $commentEnd = $tokens[$commentEnd]['attribute_opener'];
+                continue;
+            }
+
+            break;
+        }
+
         if ($tokens[$commentEnd]['code'] !== T_DOC_COMMENT_CLOSE_TAG
             && $tokens[$commentEnd]['code'] !== T_COMMENT
         ) {
@@ -69,7 +88,7 @@ class ClassCommentSniff implements Sniff
             return;
         }
 
-        if ($tokens[$commentEnd]['line'] !== ($tokens[$stackPtr]['line'] - 1)) {
+        if ($tokens[$previousContent]['line'] !== ($tokens[$stackPtr]['line'] - 1)) {
             $error = 'There must be no blank lines after the class comment';
             $phpcsFile->addError($error, $commentEnd, 'SpacingAfter');
         }
