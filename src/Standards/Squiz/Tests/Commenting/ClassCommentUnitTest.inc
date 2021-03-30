@@ -123,3 +123,11 @@ class Space_At_end
 {
 
 }//end class
+
+/**
+ * Sample class comment
+ */
+#[Attribute]
+class AllGood
+{
+}
