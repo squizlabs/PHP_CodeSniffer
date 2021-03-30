@@ -1059,7 +1059,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Commenting">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassCommentUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc.fixed" role="test" />
