@@ -540,6 +540,37 @@ class MyClass {
     // function d() {}
 }
 
+class ClassWithAttributes {
+
+    #[Attribute1]
+    #[Attribute2]
+    function a(){}
+
+
+    #[Attribute3]
+    function b(){}
+    #[Attribute4]
+    function c(){}
+
+
+    /**
+     * Description.
+     */
+    #[Attribute5]
+    function d(){}
+    /**
+     * Description.
+     */
+    #[Attribute6]
+    #[Attribute7]
+    function e(){}
+
+
+    #[Attribute8]
+    #[Attribute9]
+    function f(){}
+}
+
 // phpcs:set Squiz.WhiteSpace.FunctionSpacing spacing 2
 // phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingBeforeFirst 2
 // phpcs:set Squiz.WhiteSpace.FunctionSpacing spacingAfterLast 2
