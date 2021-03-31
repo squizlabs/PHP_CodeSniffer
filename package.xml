@@ -45,6 +45,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
        --- PSR12.Files.FileHeader
        --- Squiz.Commenting.ClassComment
        --- Squiz.Commenting.FileComment
+       --- Squiz.WhiteSpace.FunctionSpacing
+           ---- Thanks to Vadim Borodavko for the patch
     -- Thanks to Alessandro Chitolina for the patch
   - Added support for PHP 8.0 dereferencing of text strings with interpolated variables
     -- Thanks to Juliette Reinders Folmer for the patch
