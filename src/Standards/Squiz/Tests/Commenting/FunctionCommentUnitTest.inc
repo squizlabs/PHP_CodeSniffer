@@ -1012,3 +1012,12 @@ public function foo($a, $b) {}
  * {@inheritDoc}
  */
 public function foo($a, $b) {}
+
+/**
+ * Foo.
+ *
+ * @param mixed $a Comment.
+ *
+ * @return mixed
+ */
+public function foo(mixed $a): mixed {}

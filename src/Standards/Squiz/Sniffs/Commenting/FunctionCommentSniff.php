@@ -444,6 +444,12 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     }
                 }
 
+                if ($this->phpVersion >= 80000) {
+                    if ($suggestedName === 'mixed') {
+                        $suggestedTypeHint = 'mixed';
+                    }
+                }
+
                 if ($suggestedTypeHint !== '' && isset($realParams[$pos]) === true) {
                     $typeHint = $realParams[$pos]['type_hint'];
 
