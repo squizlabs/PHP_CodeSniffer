@@ -127,6 +127,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set the skipIfInheritdoc sniff property to "true" to skip checking function comments if the content is only {@inhertidoc}
     -- The default remains at "false", so these comments will continue to report errors
     -- Thanks to Jess Myrbo for the patch
+  - Squiz.Commenting.FunctionComment now supports the PHP 8 mixed type
+    -- Thanks to Vadim Borodavko for the patch
   - Squiz.PHP.NonExecutableCode now has improved handling of syntax errors
     -- Thanks to Thiemo Kreuz for the patch
   - Squiz.WhiteSpace.ScopeKeywordSpacing now checks spacing when using PHP 8.0 constructor property promotion
