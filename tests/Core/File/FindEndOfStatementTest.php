@@ -286,8 +286,11 @@ class FindEndOfStatementTest extends AbstractMethodUnitTest
     {
         $start = $this->getTargetToken('/* testMatchMultipleCase */', T_LNUMBER);
         $found = self::$phpcsFile->findEndOfStatement($start);
-
         $this->assertSame(($start + 13), $found);
+
+        $start += 6;
+        $found  = self::$phpcsFile->findEndOfStatement($start);
+        $this->assertSame(($start + 7), $found);
 
     }//end testMatchMultipleCase()
 
