@@ -895,13 +895,14 @@ class ScopeIndentSniff implements Sniff
             if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
                 $disableExactEnd = max($disableExactEnd, $tokens[$i]['bracket_closer']);
                 if ($this->debug === true) {
-                    $line = $tokens[$i]['line'];
-                    $type = $tokens[$disableExactEnd]['type'];
+                    $line    = $tokens[$i]['line'];
+                    $type    = $tokens[$disableExactEnd]['type'];
+                    $endLine = $tokens[$disableExactEnd]['line'];
                     Common::printStatusMessage("Opening short array bracket found on line $line");
                     if ($disableExactEnd === $tokens[$i]['bracket_closer']) {
-                        Common::printStatusMessage("=> disabling exact indent checking until $disableExactEnd ($type)", 1);
+                        Common::printStatusMessage("=> disabling exact indent checking until $disableExactEnd ($type) on line $endLine", 1);
                     } else {
-                        Common::printStatusMessage("=> continuing to disable exact indent checking until $disableExactEnd ($type)", 1);
+                        Common::printStatusMessage("=> continuing to disable exact indent checking until $disableExactEnd ($type) on line $endLine", 1);
                     }
                 }
             }
