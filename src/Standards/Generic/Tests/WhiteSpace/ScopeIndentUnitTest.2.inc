@@ -1533,6 +1533,20 @@ $list = [
 		}
 ];
 
+$foo = match ($type) {
+	'a' => [
+		'aa' => 'DESC',
+		'ab' => 'DESC',
+	],
+	'b' => [
+		'ba' => 'DESC',
+		'bb' => 'DESC',
+	],
+	default => [
+		'da' => 'DESC',
+	],
+};
+
 /* ADD NEW TESTS ABOVE THIS LINE AND MAKE SURE THAT THE 1 (space-based) AND 2 (tab-based) FILES ARE IN SYNC! */
 ?>
 

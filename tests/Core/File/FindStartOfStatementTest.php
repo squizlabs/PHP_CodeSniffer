@@ -419,16 +419,25 @@ class FindStartOfStatementTest extends AbstractMethodUnitTest
      */
     public function testMatchArray()
     {
-        $start  = $this->getTargetToken('/* testMatchArray */', T_LNUMBER);
+        // Start of first case statement.
+        $start = $this->getTargetToken('/* testMatchArray */', T_LNUMBER);
+        $found = self::$phpcsFile->findStartOfStatement($start);
+        $this->assertSame($start, $found);
+
+        // Comma after first statement.
         $start += 11;
         $found  = self::$phpcsFile->findStartOfStatement($start);
-
         $this->assertSame(($start - 7), $found);
 
-        $start += 25;
+        // Start of second case statement.
+        $start += 3;
         $found  = self::$phpcsFile->findStartOfStatement($start);
+        $this->assertSame($start, $found);
 
-        $this->assertSame(($start - 18), $found);
+        // Comma after first statement.
+        $start += 30;
+        $found  = self::$phpcsFile->findStartOfStatement($start);
+        $this->assertSame(($start - 26), $found);
 
     }//end testMatchArray()
 

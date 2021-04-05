@@ -2354,8 +2354,8 @@ class File
                     return $next;
                 }
 
-                $nextComma = $this->findNext(T_COMMA, ($prevMatchArrow + 1));
-                $next      = $this->findNext(Util\Tokens::$emptyTokens, ($nextComma + 1), null, true);
+                $end  = $this->findEndOfStatement($prevMatchArrow);
+                $next = $this->findNext(Util\Tokens::$emptyTokens, ($end + 1), null, true);
                 return $next;
             }
         }//end if
@@ -2459,26 +2459,28 @@ class File
         // If the start token is inside the case part of a match expression,
         // advance to the match arrow and continue looking for the
         // end of the statement from there so that we skip over commas.
-        $matchExpression = $this->getCondition($start, T_MATCH);
-        if ($matchExpression !== false) {
-            $beforeArrow    = true;
-            $prevMatchArrow = $this->findPrevious(T_MATCH_ARROW, ($start - 1), $this->tokens[$matchExpression]['scope_opener']);
-            if ($prevMatchArrow !== false) {
-                $prevComma = $this->findNext(T_COMMA, ($prevMatchArrow + 1), $start);
-                if ($prevComma === false) {
-                    // No comma between this token and the last match arrow,
-                    // so this token exists after the arrow and we can continue
-                    // checking as normal.
-                    $beforeArrow = false;
+        if ($this->tokens[$start]['code'] !== T_MATCH_ARROW) {
+            $matchExpression = $this->getCondition($start, T_MATCH);
+            if ($matchExpression !== false) {
+                $beforeArrow    = true;
+                $prevMatchArrow = $this->findPrevious(T_MATCH_ARROW, ($start - 1), $this->tokens[$matchExpression]['scope_opener']);
+                if ($prevMatchArrow !== false) {
+                    $prevComma = $this->findNext(T_COMMA, ($prevMatchArrow + 1), $start);
+                    if ($prevComma === false) {
+                        // No comma between this token and the last match arrow,
+                        // so this token exists after the arrow and we can continue
+                        // checking as normal.
+                        $beforeArrow = false;
+                    }
                 }
-            }
 
-            if ($beforeArrow === true) {
-                $nextMatchArrow = $this->findNext(T_MATCH_ARROW, ($start + 1), $this->tokens[$matchExpression]['scope_closer']);
-                if ($nextMatchArrow !== false) {
-                    $start = $nextMatchArrow;
+                if ($beforeArrow === true) {
+                    $nextMatchArrow = $this->findNext(T_MATCH_ARROW, ($start + 1), $this->tokens[$matchExpression]['scope_closer']);
+                    if ($nextMatchArrow !== false) {
+                        $start = $nextMatchArrow;
+                    }
                 }
-            }
+            }//end if
         }//end if
 
         $lastNotEmpty = $start;

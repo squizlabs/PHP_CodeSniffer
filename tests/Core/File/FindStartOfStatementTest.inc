@@ -94,7 +94,8 @@ $result = match ($key) {
 /* testMatchArray */
 $result = match ($key) {
     1 => [1,2,3],
-    2 => [1 => one(), 2 => two()],
+    2 => [1 => one($a, $b), 2 => two($b, $c)],
+    3 => [],
 };
 
 /* testNestedMatch */
