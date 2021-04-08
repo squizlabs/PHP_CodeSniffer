@@ -43,7 +43,7 @@ class DisallowMultipleAssignmentsSniff implements Sniff
         $tokens = $phpcsFile->getTokens();
 
         // Ignore default value assignments in function definitions.
-        $function = $phpcsFile->findPrevious([T_FUNCTION, T_CLOSURE], ($stackPtr - 1), null, false, null, true);
+        $function = $phpcsFile->findPrevious([T_FUNCTION, T_CLOSURE, T_FN], ($stackPtr - 1), null, false, null, true);
         if ($function !== false) {
             $opener = $tokens[$function]['parenthesis_opener'];
             $closer = $tokens[$function]['parenthesis_closer'];
@@ -83,6 +83,12 @@ class DisallowMultipleAssignmentsSniff implements Sniff
         */
 
         for ($varToken = ($stackPtr - 1); $varToken >= 0; $varToken--) {
+            if (in_array($tokens[$varToken]['code'], [T_SEMICOLON, T_OPEN_CURLY_BRACKET], true) === true) {
+                // We've reached the next statement, so we
+                // didn't find a variable.
+                return;
+            }
+
             // Skip brackets.
             if (isset($tokens[$varToken]['parenthesis_opener']) === true && $tokens[$varToken]['parenthesis_opener'] < $varToken) {
                 $varToken = $tokens[$varToken]['parenthesis_opener'];
@@ -92,12 +98,6 @@ class DisallowMultipleAssignmentsSniff implements Sniff
             if (isset($tokens[$varToken]['bracket_opener']) === true) {
                 $varToken = $tokens[$varToken]['bracket_opener'];
                 continue;
-            }
-
-            if ($tokens[$varToken]['code'] === T_SEMICOLON) {
-                // We've reached the next statement, so we
-                // didn't find a variable.
-                return;
             }
 
             if ($tokens[$varToken]['code'] === T_VARIABLE) {
@@ -146,6 +146,7 @@ class DisallowMultipleAssignmentsSniff implements Sniff
 
         if ($tokens[$varToken]['code'] === T_VARIABLE
             || $tokens[$varToken]['code'] === T_OPEN_TAG
+            || $tokens[$varToken]['code'] === T_GOTO_LABEL
             || $tokens[$varToken]['code'] === T_INLINE_THEN
             || $tokens[$varToken]['code'] === T_INLINE_ELSE
             || $tokens[$varToken]['code'] === T_SEMICOLON
