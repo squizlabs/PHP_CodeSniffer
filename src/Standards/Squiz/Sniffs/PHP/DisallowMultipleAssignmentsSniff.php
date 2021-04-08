@@ -146,6 +146,7 @@ class DisallowMultipleAssignmentsSniff implements Sniff
 
         if ($tokens[$varToken]['code'] === T_VARIABLE
             || $tokens[$varToken]['code'] === T_OPEN_TAG
+            || $tokens[$varToken]['code'] === T_GOTO_LABEL
             || $tokens[$varToken]['code'] === T_INLINE_THEN
             || $tokens[$varToken]['code'] === T_INLINE_ELSE
             || $tokens[$varToken]['code'] === T_SEMICOLON

@@ -98,3 +98,13 @@ function ($html) {
         return $all;
     }, $html);
 };
+
+
+function () {
+    $a = false;
+
+    some_label:
+
+    $b = getB();
+};
+
