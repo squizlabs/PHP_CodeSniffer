@@ -278,7 +278,7 @@ class FindEndOfStatementTest extends AbstractMethodUnitTest
 
 
     /**
-     * Test multiple comma-seperated match expression case values.
+     * Test multiple comma-separated match expression case values.
      *
      * @return void
      */
