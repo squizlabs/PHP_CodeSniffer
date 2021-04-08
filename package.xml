@@ -136,6 +136,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed an issue that could occurr when checking files on network drives, such as with WSL2 on Windows 10
     -- This works around a long-standing PHP bug with is_readable()
     -- Thanks to Michael S for the patch
+  - Fixed a number of false positives in the Squiz.PHP.DisallowMultipleAssignments sniff
+    -- Sniff no longer errors for default value assignments in arrow functions
+    -- Sniff no longer errors for assignments on first line of closure
+    -- Sniff no longer errors for assignments after a goto label
+    -- Thanks to Jaroslav Hanslík for the patch
   - Fixed bug #2913 : Generic.WhiteSpace.ScopeIndent false positive when opening and closing tag on same line inside conditional
   - Fixed bug #2992 : Enabling caching using a ruleset produces invalid cache files when using --sniffs and --exclude CLI args
   - Fixed bug #3003 : Squiz.Formatting.OperatorBracket autofix incorrect when assignment used with null coalescing operator
