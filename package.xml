@@ -117,6 +117,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Set the "minimumVisibility" sniff property to "public" to ignore both private and protected methods
     -- The default remains at "private", so all methods are checked
     -- Thanks to Vincent Langlet for the patch
+  - PEAR.Commenting.FunctionComment and Squiz.Commenting.FunctionComment sniffs can now ignore return tags in any method
+    -- Previously, only __construct and __destruct were ignored
+    -- Set the list of method names to ignore in the "specialMethods" sniff property
+    -- The default remains at "__construct" and "__destruct" only
+    -- Thanks to Vincent Langlet for the patch
   - PSR2.ControlStructures.SwitchDeclaration now supports nested switch statements where every branch terminates
     -- Previously, if a CASE only contained a SWITCH and no direct terminating statement, a fall-through error was displayed
     -- Now, the error is surpressed if every branch of the SWITCH has a terminating statement
