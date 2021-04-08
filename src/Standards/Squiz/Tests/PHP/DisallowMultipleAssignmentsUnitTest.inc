@@ -87,3 +87,5 @@ $array = [
         false => 0
     },
 ];
+
+$arrow_function = fn ($a = null) => $a;
