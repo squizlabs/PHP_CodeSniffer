@@ -973,18 +973,38 @@ class ScopeIndentSniff implements Sniff
                 }
 
                 if ($this->tabIndent === true) {
-                    $error .= '%s tabs, found %s';
-                    $data   = [
-                        floor($checkIndent / $this->tabWidth),
-                        floor($tokenIndent / $this->tabWidth),
-                    ];
+                    $expectedTabs = floor($checkIndent / $this->tabWidth);
+                    $foundTabs    = floor($tokenIndent / $this->tabWidth);
+                    $foundSpaces  = ($tokenIndent - ($foundTabs * $this->tabWidth));
+                    if ($foundSpaces > 0) {
+                        if ($foundTabs > 0) {
+                            $error .= '%s tabs, found %s tabs and %s spaces';
+                            $data   = [
+                                $expectedTabs,
+                                $foundTabs,
+                                $foundSpaces,
+                            ];
+                        } else {
+                            $error .= '%s tabs, found %s spaces';
+                            $data   = [
+                                $expectedTabs,
+                                $foundSpaces,
+                            ];
+                        }
+                    } else {
+                        $error .= '%s tabs, found %s';
+                        $data   = [
+                            $expectedTabs,
+                            $foundTabs,
+                        ];
+                    }//end if
                 } else {
                     $error .= '%s spaces, found %s';
                     $data   = [
                         $checkIndent,
                         $tokenIndent,
                     ];
-                }
+                }//end if
 
                 if ($this->debug === true) {
                     $line    = $tokens[$checkToken]['line'];
