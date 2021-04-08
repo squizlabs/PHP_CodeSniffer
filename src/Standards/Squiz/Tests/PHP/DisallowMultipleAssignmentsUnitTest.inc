@@ -89,3 +89,12 @@ $array = [
 ];
 
 $arrow_function = fn ($a = null) => $a;
+
+function ($html) {
+    $regEx = '/regexp/';
+
+    return preg_replace_callback($regEx, function ($matches) {
+        [$all] = $matches;
+        return $all;
+    }, $html);
+};
