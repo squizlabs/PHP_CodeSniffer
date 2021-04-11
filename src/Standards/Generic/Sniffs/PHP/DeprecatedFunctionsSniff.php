@@ -61,6 +61,18 @@ class DeprecatedFunctionsSniff extends ForbiddenFunctionsSniff
         $error = 'Function %s() has been deprecated';
         $type  = 'Deprecated';
 
+        if ($pattern === null) {
+            $pattern = strtolower($function);
+        }
+
+        if ($this->forbiddenFunctions[$pattern] !== null
+            && $this->forbiddenFunctions[$pattern] !== 'null'
+        ) {
+            $type  .= 'WithAlternative';
+            $data[] = $this->forbiddenFunctions[$pattern];
+            $error .= '; use %s() instead';
+        }
+
         if ($this->error === true) {
             $phpcsFile->addError($error, $stackPtr, $type, $data);
         } else {
