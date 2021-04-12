@@ -3213,14 +3213,27 @@ class PHP extends Tokenizer
 
         // Go looking for the close bracket.
         $bracketCloser = $this->findCloser($subTokens, 1, '[', ']');
-        if ($bracketCloser === null) {
-            $bracketCloser = $this->findCloser($tokens, $stackPtr, '[', ']');
-            if ($bracketCloser === null) {
-                return null;
+        if (PHP_VERSION_ID < 80000 && $bracketCloser === null) {
+            foreach (array_slice($tokens, ($stackPtr + 1)) as $token) {
+                if (is_array($token) === true) {
+                    $commentBody .= $token[1];
+                } else {
+                    $commentBody .= $token;
+                }
             }
 
-            $subTokens = array_merge($subTokens, array_slice($tokens, ($stackPtr + 1), ($bracketCloser - $stackPtr)));
-            array_splice($tokens, ($stackPtr + 1), ($bracketCloser - $stackPtr));
+            $subTokens = @token_get_all('<?php '.$commentBody);
+            array_splice($subTokens, 0, 1, [[T_ATTRIBUTE, '#[']]);
+
+            $bracketCloser = $this->findCloser($subTokens, 1, '[', ']');
+            if ($bracketCloser !== null) {
+                array_splice($tokens, ($stackPtr + 1), count($tokens), array_slice($subTokens, ($bracketCloser + 1)));
+                $subTokens = array_slice($subTokens, 0, ($bracketCloser + 1));
+            }
+        }
+
+        if ($bracketCloser === null) {
+            return null;
         }
 
         return $subTokens;

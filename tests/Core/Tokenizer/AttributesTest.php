@@ -396,6 +396,157 @@ class AttributesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test that an attribute containing text which looks like a PHP close tag is tokenized correctly.
+     *
+     * @param string $testMarker              The comment which prefaces the target token in the test file.
+     * @param int    $length                  The number of tokens between opener and closer.
+     * @param array  $expectedTokensAttribute The codes of tokens inside the attributes.
+     * @param array  $expectedTokensAfter     The codes of tokens after the attributes.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::parsePhpAttribute
+     *
+     * @dataProvider dataAttributeOnTextLookingLikeCloseTag
+     *
+     * @return void
+     */
+    public function testAttributeContainingTextLookingLikeCloseTag($testMarker, $length, array $expectedTokensAttribute, array $expectedTokensAfter)
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $attribute = $this->getTargetToken($testMarker, T_ATTRIBUTE);
+
+        $this->assertSame('T_ATTRIBUTE', $tokens[$attribute]['type']);
+        $this->assertArrayHasKey('attribute_closer', $tokens[$attribute]);
+
+        $closer = $tokens[$attribute]['attribute_closer'];
+        $this->assertSame(($attribute + $length), $closer);
+        $this->assertSame(T_ATTRIBUTE_END, $tokens[$closer]['code']);
+        $this->assertSame('T_ATTRIBUTE_END', $tokens[$closer]['type']);
+
+        $this->assertSame($tokens[$attribute]['attribute_opener'], $tokens[$closer]['attribute_opener']);
+        $this->assertSame($tokens[$attribute]['attribute_closer'], $tokens[$closer]['attribute_closer']);
+
+        $i = ($attribute + 1);
+        foreach ($expectedTokensAttribute as $item) {
+            list($expectedType, $expectedContents) = $item;
+            $this->assertSame($expectedType, $tokens[$i]['type']);
+            $this->assertSame($expectedContents, $tokens[$i]['content']);
+            $this->assertArrayHasKey('attribute_opener', $tokens[$i]);
+            $this->assertArrayHasKey('attribute_closer', $tokens[$i]);
+            ++$i;
+        }
+
+        $i = ($closer + 1);
+        foreach ($expectedTokensAfter as $expectedCode) {
+            $this->assertSame($expectedCode, $tokens[$i]['code']);
+            ++$i;
+        }
+
+    }//end testAttributeContainingTextLookingLikeCloseTag()
+
+
+    /**
+     * Data provider.
+     *
+     * @see dataAttributeOnTextLookingLikeCloseTag()
+     *
+     * @return array
+     */
+    public function dataAttributeOnTextLookingLikeCloseTag()
+    {
+        return [
+            [
+                '/* testAttributeContainingTextLookingLikeCloseTag */',
+                5,
+                [
+                    [
+                        'T_STRING',
+                        'DeprecationReason',
+                    ],
+                    [
+                        'T_OPEN_PARENTHESIS',
+                        '(',
+                    ],
+                    [
+                        'T_CONSTANT_ENCAPSED_STRING',
+                        "'reason: <https://some-website/reason?>'",
+                    ],
+                    [
+                        'T_CLOSE_PARENTHESIS',
+                        ')',
+                    ],
+                    [
+                        'T_ATTRIBUTE_END',
+                        ']',
+                    ],
+                ],
+                [
+                    T_WHITESPACE,
+                    T_FUNCTION,
+                    T_WHITESPACE,
+                    T_STRING,
+                    T_OPEN_PARENTHESIS,
+                    T_CLOSE_PARENTHESIS,
+                    T_WHITESPACE,
+                    T_OPEN_CURLY_BRACKET,
+                    T_CLOSE_CURLY_BRACKET,
+                ],
+            ],
+            [
+                '/* testAttributeContainingMultilineTextLookingLikeCloseTag */',
+                8,
+                [
+                    [
+                        'T_STRING',
+                        'DeprecationReason',
+                    ],
+                    [
+                        'T_OPEN_PARENTHESIS',
+                        '(',
+                    ],
+                    [
+                        'T_WHITESPACE',
+                        "\n",
+                    ],
+                    [
+                        'T_WHITESPACE',
+                        "    ",
+                    ],
+                    [
+                        'T_CONSTANT_ENCAPSED_STRING',
+                        "'reason: <https://some-website/reason?>'",
+                    ],
+                    [
+                        'T_WHITESPACE',
+                        "\n",
+                    ],
+                    [
+                        'T_CLOSE_PARENTHESIS',
+                        ')',
+                    ],
+                    [
+                        'T_ATTRIBUTE_END',
+                        ']',
+                    ],
+                ],
+                [
+                    T_WHITESPACE,
+                    T_FUNCTION,
+                    T_WHITESPACE,
+                    T_STRING,
+                    T_OPEN_PARENTHESIS,
+                    T_CLOSE_PARENTHESIS,
+                    T_WHITESPACE,
+                    T_OPEN_CURLY_BRACKET,
+                    T_CLOSE_CURLY_BRACKET,
+                ],
+            ],
+        ];
+
+    }//end dataAttributeOnTextLookingLikeCloseTag()
+
+
+    /**
      * Test that invalid attribute (or comment starting with #[ and without ]) are parsed correctly.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::tokenize
