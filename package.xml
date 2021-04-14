@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2021-04-09</date>
  <time>10:51:00</time>
  <version>
-  <release>3.6.0</release>
-  <api>3.6.0</api>
+  <release>3.6.1</release>
+  <api>3.6.1</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,153 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Added support for PHP 8.0 union types
-    -- A new T_TYPE_UNION token is available to represent the pipe character
-    -- File::getMethodParameters(), getMethodProperties(), and getMemberProperties() will now return union types
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Added support for PHP 8.0 named function call arguments
-    -- A new T_PARAM_NAME token is available to represent the label with the name of the function argument in it
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Added support for PHP 8.0 attributes
-    -- The PHP-supplied T_ATTRIBUTE token marks the start of an attribute
-    -- A new T_ATTRIBUTE_END token is available to mark the end of an attribute
-    -- New attribute_owner and attribute_closer indexes are available in the tokens array for all tokens inside an attribute
-    -- Tokenizing of attributes has been backfilled for older PHP versions
-    -- The following sniffs have been updated to support attributes:
-       --- PEAR.Commenting.ClassComment
-       --- PEAR.Commenting.FileComment
-       --- PSR1.Files.SideEffects
-       --- PSR12.Files.FileHeader
-       --- Squiz.Commenting.ClassComment
-       --- Squiz.Commenting.FileComment
-       --- Squiz.WhiteSpace.FunctionSpacing
-           ---- Thanks to Vadim Borodavko for the patch
+  - Fixed bug #3294 : Bug in attribute tokenization when content contains PHP end token or attribute closer on new line
     -- Thanks to Alessandro Chitolina for the patch
-  - Added support for PHP 8.0 dereferencing of text strings with interpolated variables
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Added support for PHP 8.0 match expressions
-    -- Match expressions are now tokenised with parenthesis and scope openers and closers
-       --- Sniffs can listen for the T_MATCH token to process match expressions
-       --- Note that the case and default statements inside match expressions do not have scopes set
-    -- A new T_MATCH_ARROW token is available to represent the arrows in match expressions
-    -- A new T_MATCH_DEFAULT token is available to represent the default keyword in match expressions
-    -- All tokenizing of match expressions has been backfilled for older PHP versions
-    -- The following sniffs have been updated to support match expressions:
-       --- Generic.CodeAnalysis.AssignmentInCondition
-       --- Generic.CodeAnalysis.EmptyPHPStatement
-           ---- Thanks to Vadim Borodavko for the patch
-       --- Generic.CodeAnalysis.EmptyStatement
-       --- Generic.PHP.LowerCaseKeyword
-       --- PEAR.ControlStructures.ControlSignature
-       --- PSR12.ControlStructures.BooleanOperatorPlacement
-       --- Squiz.Commenting.LongConditionClosingComment
-       --- Squiz.Commenting.PostStatementComment
-       --- Squiz.ControlStructures.LowercaseDeclaration
-       --- Squiz.ControlStructures.ControlSignature
-       --- Squiz.Formatting.OperatorBracket
-       --- Squiz.PHP.DisallowMultipleAssignments
-       --- Squiz.Objects.ObjectInstantiation
-       --- Squiz.WhiteSpace.ControlStructureSpacing
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - The value of the T_FN_ARROW token has changed from "T_FN_ARROW" to "PHPCS_T_FN_ARROW" to avoid package conflicts
-    -- This will have no impact on custom sniffs unless they are specifically looking at the value of the T_FN_ARROW constant
-    -- If sniffs are just using constant to find arrow functions, they will continue to work without modification
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - File::findStartOfStatement() now works correctly when passed the last token in a statement
-  - File::getMethodParameters() now supports PHP 8.0 constructor property promotion
-    -- Returned method params now include a "property_visibility" and "visibility_token" index if property promotion is detected
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - File::getMethodProperties() now includes a "return_type_end_token" index in the return value
-    -- This indicates the last token in the return type, which is helpful when checking union types
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Include patterns are now ignored when processing STDIN
-    -- Previously, checks using include patterns were excluded when processing STDIN when no file path was provided via --stdin-path
-    -- Now, all include and exclude rules are ignored when no file path is provided, allowing all checks to run
-    -- If you want include and exclude rules enforced when checking STDIN, use --stdin-path to set the file path
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Spaces are now correctly escaped in the paths to external on Windows
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Added Generic.NamingConventions.AbstractClassNamePrefix to enforce that class names are prefixed with "Abstract"
-    -- Thanks to Anna Borzenko for the contribution
-  - Added Generic.NamingConventions.InterfaceNameSuffix to enforce that interface names are suffixed with "Interface"
-    -- Thanks to Anna Borzenko for the contribution
-  - Added Generic.NamingConventions.TraitNameSuffix to enforce that trait names are suffixed with "Trait"
-    -- Thanks to Anna Borzenko for the contribution
-  - Generic.CodeAnalysis.UnusedFunctionParameter can now be configured to ignore variable usage for specific type hints
-      -- This allows you to suppress warnings for some variables that are not required, but leave warnings for others
-      -- Set the ignoreTypeHints array property to a list of type hints to ignore
-      -- Thanks to Petr Bugyík for the patch
-  - Generic.Formatting.MultipleStatementAlignment can now align statements at the start of the assignment token
-    -- Previously, the sniff enforced that the values were aligned, even if this meant the assignment tokens were not
-    -- Now, the sniff can enforce that the assignment tokens are aligned, even if this means the values are not
-    -- Set the "alignAtEnd" sniff property to "false" to align the assignment tokens
-    -- The default remains at "true", so the assigned values are aligned
-    -- Thanks to John P. Bloch for the patch
-  - Generic.PHP.LowerCaseType now supports checking of typed properties
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.PHP.LowerCaseType now supports checking of union types
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - PEAR.Commenting.FunctionComment and Squiz.Commenting.FunctionComment sniffs can now ignore private and protected methods
-    -- Set the "minimumVisibility" sniff property to "protected" to ignore private methods
-    -- Set the "minimumVisibility" sniff property to "public" to ignore both private and protected methods
-    -- The default remains at "private", so all methods are checked
-    -- Thanks to Vincent Langlet for the patch
-  - PEAR.Commenting.FunctionComment and Squiz.Commenting.FunctionComment sniffs can now ignore return tags in any method
-    -- Previously, only __construct and __destruct were ignored
-    -- Set the list of method names to ignore in the "specialMethods" sniff property
-    -- The default remains at "__construct" and "__destruct" only
-    -- Thanks to Vincent Langlet for the patch
-  - PSR2.ControlStructures.SwitchDeclaration now supports nested switch statements where every branch terminates
-    -- Previously, if a CASE only contained a SWITCH and no direct terminating statement, a fall-through error was displayed
-    -- Now, the error is surpressed if every branch of the SWITCH has a terminating statement
-    -- Thanks to Vincent Langlet for the patch
-  - The PSR2.Methods.FunctionCallSignature.SpaceBeforeCloseBracket error message is now reported on the closing parenthesis token
-    -- Previously, the error was being reported on the function keyword, leading to confusing line numbers in the error report
-  - Squiz.Commenting.FunctionComment is now able to ignore function comments that are only inheritdoc statements
-    -- Set the skipIfInheritdoc sniff property to "true" to skip checking function comments if the content is only {@inhertidoc}
-    -- The default remains at "false", so these comments will continue to report errors
-    -- Thanks to Jess Myrbo for the patch
-  - Squiz.Commenting.FunctionComment now supports the PHP 8 mixed type
-    -- Thanks to Vadim Borodavko for the patch
-  - Squiz.PHP.NonExecutableCode now has improved handling of syntax errors
-    -- Thanks to Thiemo Kreuz for the patch
-  - Squiz.WhiteSpace.ScopeKeywordSpacing now checks spacing when using PHP 8.0 constructor property promotion
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed an issue that could occurr when checking files on network drives, such as with WSL2 on Windows 10
-    -- This works around a long-standing PHP bug with is_readable()
-    -- Thanks to Michael S for the patch
-  - Fixed a number of false positives in the Squiz.PHP.DisallowMultipleAssignments sniff
-    -- Sniff no longer errors for default value assignments in arrow functions
-    -- Sniff no longer errors for assignments on first line of closure
-    -- Sniff no longer errors for assignments after a goto label
-    -- Thanks to Jaroslav Hanslík for the patch
-  - Fixed bug #2913 : Generic.WhiteSpace.ScopeIndent false positive when opening and closing tag on same line inside conditional
-  - Fixed bug #2992 : Enabling caching using a ruleset produces invalid cache files when using --sniffs and --exclude CLI args
-  - Fixed bug #3003 : Squiz.Formatting.OperatorBracket autofix incorrect when assignment used with null coalescing operator
-  - Fixed bug #3145 : Autoloading of sniff fails when multiple classes declared in same file
-  - Fixed bug #3157 : PSR2.ControlStructures.SwitchDeclaration.BreakIndent false positive when case keyword is not indented
-  - Fixed bug #3163 : Undefined index error with pre-commit hook using husky on PHP 7.4
-    -- Thanks to Ismo Vuorinen for the patch
-  - Fixed bug #3165 : Squiz.PHP.DisallowComparisonAssignment false positive when comparison inside closure
-  - Fixed bug #3167 : Generic.WhiteSpace.ScopeIndent false positive when using PHP 8.0 constructor property promotion
-  - Fixed bug #3170 : Squiz.WhiteSpace.OperatorSpacing false positive when using negation with string concat
-    -- This also fixes the same issue in the PSR12.Operators.OperatorSpacing sniff
-  - Fixed bug #3177 : Incorrect tokenization of GOTO statements in mixed PHP/HTML files
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3184 : PSR2.Namespace.NamespaceDeclaration false positive on namespace operator
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3188 : Squiz.WhiteSpace.ScopeKeywordSpacing false positive for static return type
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3192 : findStartOfStatement doesn't work correctly inside switch
-    -- Thanks to Vincent Langlet for the patch
-  - Fixed bug #3195 : Generic.WhiteSpace.ScopeIndent confusing message when combination of tabs and spaces found
-  - Fixed bug #3197 : Squiz.NamingConventions.ValidVariableName does not use correct error code for all member vars
-  - Fixed bug #3219 : Generic.Formatting.MultipleStatementAlignment false positive for empty anonymous classes and closures
-  - Fixed bug #3258 : Squiz.Formatting.OperatorBracket duplicate error messages for unary minus
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3273 : Squiz.Functions.FunctionDeclarationArgumentSpacing reports line break as 0 spaces between parenthesis
-  - Fixed bug #3277 : Nullable static return typehint causes whitespace error
-  - Fixed bug #3284 : Unused parameter false positive when using array index in arrow function
+    -- Thanks to Juliette Reinders Folmer for the tests
  </notes>
  <contents>
   <dir name="/">
