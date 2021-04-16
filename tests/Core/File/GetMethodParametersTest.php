@@ -819,6 +819,29 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify and document behaviour when there are comments within a parameter declaration.
+     *
+     * @return void
+     */
+    public function testCommentsInParameter()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$param',
+            'content'           => '// Leading comment.
+    ?MyClass /*-*/ & /*-*/.../*-*/ $param /*-*/ = /*-*/ \'default value\' . /*-*/ \'second part\' // Trailing comment.',
+            'pass_by_reference' => true,
+            'variable_length'   => true,
+            'type_hint'         => '?MyClass',
+            'nullable_type'     => true,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testCommentsInParameter()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.
