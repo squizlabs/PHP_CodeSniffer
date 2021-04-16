@@ -331,3 +331,12 @@ switch ($foo) {
     case 2:
         return 2;
 }
+
+switch ($foo) {
+    case 1:
+        // phpcs:ignore
+    case 2:
+        return 1;
+    case 3:
+        return 2;
+}
