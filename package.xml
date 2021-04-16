@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3294 : Bug in attribute tokenization when content contains PHP end token or attribute closer on new line
     -- Thanks to Alessandro Chitolina for the patch
     -- Thanks to Juliette Reinders Folmer for the tests
+  - Fixed bug #3296 : PSR2.ControlStructures.SwitchDeclaration takes phpcs:ignore as content of case body
  </notes>
  <contents>
   <dir name="/">

@@ -186,7 +186,7 @@ class SwitchDeclarationSniff implements Sniff
                 $nextCode = $this->findNextCase($phpcsFile, ($opener + 1), $nextCloser);
                 if ($nextCode !== false) {
                     $prevCode = $phpcsFile->findPrevious(T_WHITESPACE, ($nextCode - 1), $nextCase, true);
-                    if ($tokens[$prevCode]['code'] !== T_COMMENT
+                    if (isset(Tokens::$commentTokens[$tokens[$prevCode]['code']]) === false
                         && $this->findNestedTerminator($phpcsFile, ($opener + 1), $nextCode) === false
                     ) {
                         $error = 'There must be a comment when fall-through is intentional in a non-empty case body';
