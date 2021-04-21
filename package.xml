@@ -589,7 +589,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="LineLengthUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineLengthUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineLengthUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="LowercasedFilenameUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowercasedFilenameUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LowercasedFilenameUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LowercasedFilenameUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneClassPerFileUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="OneClassPerFileUnitTest.php" role="test" />
