@@ -579,8 +579,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.css.fixed" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="LineEndingsUnitTest.php" role="test" />

@@ -11,3 +11,4 @@ scripts/ export-ignore
 # Declare files that should always have CRLF line endings on checkout.
 *WinTest.inc text eol=crlf
 *WinTest.php text eol=crlf
+src/Standards/Generic/Tests/Files/LineEndingsUnitTest*.inc text eol=crlf
