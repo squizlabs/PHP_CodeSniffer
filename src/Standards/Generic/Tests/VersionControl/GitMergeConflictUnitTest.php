@@ -99,6 +99,16 @@ class GitMergeConflictUnitTest extends AbstractSniffUnitTest
                 32 => 1,
             ];
 
+        case 'GitMergeConflictUnitTest.7.inc':
+            return [
+                3  => 1,
+                5  => 1,
+                7  => 1,
+                12 => 1,
+                14 => 1,
+                16 => 1,
+            ];
+
         case 'GitMergeConflictUnitTest.1.css':
             return [
                 3  => 1,
