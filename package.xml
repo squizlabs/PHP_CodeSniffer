@@ -30,6 +30,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Alessandro Chitolina for the patch
     -- Thanks to Juliette Reinders Folmer for the tests
   - Fixed bug #3296 : PSR2.ControlStructures.SwitchDeclaration takes phpcs:ignore as content of case body
+  - Fixed bug #3303 : findStartOfStatement() doesn't work with T_OPEN_TAG_WITH_ECHO
  </notes>
  <contents>
   <dir name="/">

@@ -111,3 +111,13 @@ $result = match ($key) {
 };
 
 return 0;
+
+/* testOpenTag */
+?>
+<h1>Test</h1>
+<?php echo '<h2>', foo(), '</h2>';
+
+/* testOpenTagWithEcho */
+?>
+<h1>Test</h1>
+<?= '<h2>', foo(), '</h2>';
