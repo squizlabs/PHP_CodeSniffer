@@ -468,4 +468,36 @@ class FindStartOfStatementTest extends AbstractMethodUnitTest
     }//end testNestedMatch()
 
 
+    /**
+     * Test nested match expressions.
+     *
+     * @return void
+     */
+    public function testOpenTag()
+    {
+        $start  = $this->getTargetToken('/* testOpenTag */', T_OPEN_TAG);
+        $start += 2;
+        $found  = self::$phpcsFile->findStartOfStatement($start);
+
+        $this->assertSame(($start - 1), $found);
+
+    }//end testOpenTag()
+
+
+    /**
+     * Test nested match expressions.
+     *
+     * @return void
+     */
+    public function testOpenTagWithEcho()
+    {
+        $start  = $this->getTargetToken('/* testOpenTagWithEcho */', T_OPEN_TAG_WITH_ECHO);
+        $start += 3;
+        $found  = self::$phpcsFile->findStartOfStatement($start);
+
+        $this->assertSame(($start - 1), $found);
+
+    }//end testOpenTagWithEcho()
+
+
 }//end class

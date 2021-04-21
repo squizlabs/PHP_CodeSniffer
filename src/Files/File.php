@@ -2230,8 +2230,9 @@ class File
     public function findStartOfStatement($start, $ignore=null)
     {
         $startTokens = Tokens::$blockOpeners;
-        $startTokens[T_OPEN_SHORT_ARRAY] = true;
-        $startTokens[T_OPEN_TAG]         = true;
+        $startTokens[T_OPEN_SHORT_ARRAY]   = true;
+        $startTokens[T_OPEN_TAG]           = true;
+        $startTokens[T_OPEN_TAG_WITH_ECHO] = true;
 
         $endTokens = [
             T_CLOSE_TAG    => true,
