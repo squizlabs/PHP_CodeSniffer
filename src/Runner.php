@@ -50,6 +50,7 @@ class Runner
      * Run the PHPCS script.
      *
      * @param array $cliArgs An array of values gathered from CLI args.
+     *
      * @return int
      */
     public function runPHPCS(array $cliArgs = [])
@@ -141,6 +142,7 @@ class Runner
      * Run the PHPCBF script.
      *
      * @param array $cliArgs An array of values gathered from CLI args.
+     *
      * @return int
      */
     public function runPHPCBF(array $cliArgs = [])
