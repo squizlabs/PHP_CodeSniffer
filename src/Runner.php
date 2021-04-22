@@ -53,7 +53,7 @@ class Runner
      *
      * @return int
      */
-    public function runPHPCS(array $cliArgs = [])
+    public function runPHPCS(array $cliArgs=[])
     {
         if (defined('PHP_CODESNIFFER_CBF') === false) {
             define('PHP_CODESNIFFER_CBF', false);
@@ -145,7 +145,7 @@ class Runner
      *
      * @return int
      */
-    public function runPHPCBF(array $cliArgs = [])
+    public function runPHPCBF(array $cliArgs=[])
     {
         if (defined('PHP_CODESNIFFER_CBF') === false) {
             define('PHP_CODESNIFFER_CBF', true);
