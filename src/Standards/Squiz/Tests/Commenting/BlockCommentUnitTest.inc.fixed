@@ -258,3 +258,19 @@ $y = 10 + /* test */ -2;
 /*
  * No blank line allowed above the comment if it's the first non-empty token after a PHP open tag.
  */
+
+?>
+<?=
+/*
+ * No blank line required above the comment if it's the first non-empty token after a PHP open tag.
+ */
+
+$contentToEcho
+?>
+<?=
+
+
+/*
+ * No blank line allowed above the comment if it's the first non-empty token after a PHP open tag.
+ */
+$contentToEcho
