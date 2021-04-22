@@ -744,8 +744,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.css" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.css.fixed" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.inc" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.1.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.2.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.php" role="test" />
