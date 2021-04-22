@@ -739,6 +739,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.2.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.3.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowSpaceIndentUnitTest.php" role="test" />
