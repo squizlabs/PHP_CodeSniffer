@@ -49,22 +49,23 @@ class Runner
     /**
      * Run the PHPCS script.
      *
-     * @return array
+     * @param array $cliArgs An array of values gathered from CLI args.
+     * @return int
      */
-    public function runPHPCS()
+    public function runPHPCS(array $cliArgs = [])
     {
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
+            define('PHP_CODESNIFFER_CBF', false);
+        }
+
         try {
             Util\Timing::startTiming();
             Runner::checkRequirements();
 
-            if (defined('PHP_CODESNIFFER_CBF') === false) {
-                define('PHP_CODESNIFFER_CBF', false);
-            }
-
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
             // values the user has set.
-            $this->config = new Config();
+            $this->config = new Config($cliArgs);
 
             // Init the run and load the rulesets to set additional config vars.
             $this->init();
@@ -139,9 +140,10 @@ class Runner
     /**
      * Run the PHPCBF script.
      *
-     * @return array
+     * @param array $cliArgs An array of values gathered from CLI args.
+     * @return int
      */
-    public function runPHPCBF()
+    public function runPHPCBF(array $cliArgs = [])
     {
         if (defined('PHP_CODESNIFFER_CBF') === false) {
             define('PHP_CODESNIFFER_CBF', true);
@@ -154,7 +156,7 @@ class Runner
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
             // values the user has set.
-            $this->config = new Config();
+            $this->config = new Config($cliArgs);
 
             // When processing STDIN, we can't output anything to the screen
             // or it will end up mixed in with the file output.
@@ -222,7 +224,7 @@ class Runner
     /**
      * Exits if the minimum requirements of PHP_CodeSniffer are not met.
      *
-     * @return array
+     * @return void
      * @throws \PHP_CodeSniffer\Exceptions\DeepExitException If the requirements are not met.
      */
     public function checkRequirements()
