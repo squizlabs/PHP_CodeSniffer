@@ -446,6 +446,24 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test typed arrow functions used in ternary operators.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testTernaryWithTypes()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token = $this->getTargetToken('/* testTernaryWithTypes */', T_FN);
+        $this->backfillHelper($token);
+        $this->scopePositionTestHelper($token, 15, 27);
+
+    }//end testTernaryWithTypes()
+
+
+    /**
      * Test arrow function returning a match control structure.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional

@@ -93,6 +93,9 @@ $arrowWithUnionReturn = fn($param) : int|float => $param | 10;
 /* testTernary */
 $fn = fn($a) => $a ? /* testTernaryThen */ fn() : string => 'a' : /* testTernaryElse */ fn() : string => 'b';
 
+/* testTernaryWithTypes */
+$fn = fn(int|null $a) : array|null => $a ? null : [];
+
 function matchInArrow($x) {
     /* testWithMatchValue */
     $fn = fn($x) => match(true) {
