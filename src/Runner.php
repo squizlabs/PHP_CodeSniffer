@@ -487,6 +487,7 @@ class Runner
                         $file = $todo->current();
 
                         if ($file->ignored === true) {
+                            $todo->next();
                             continue;
                         }
 
