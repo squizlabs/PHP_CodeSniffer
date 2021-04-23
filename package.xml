@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3303 : findStartOfStatement() doesn't work with T_OPEN_TAG_WITH_ECHO
   - Fixed bug #3316 : Arrow function not tokenized correctly when using null in union type
+  - Fixed bug #3317 : Problem with how phpcs handles ignored files when running in parallel
+    -- Thanks to Emil Andersson for the patch
  </notes>
  <contents>
   <dir name="/">
