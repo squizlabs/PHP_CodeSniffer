@@ -61,7 +61,7 @@ class Runner
 
         try {
             Util\Timing::startTiming();
-            Runner::checkRequirements();
+            $this->checkRequirements();
 
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
@@ -130,10 +130,9 @@ class Runner
         } else if ($this->reporter->totalFixable === 0) {
             // Errors found, but none of them can be fixed by PHPCBF.
             return 1;
-        } else {
-            // Errors found, and some can be fixed by PHPCBF.
-            return 2;
         }
+        // Errors found, and some can be fixed by PHPCBF.
+        return 2;
 
     }//end runPHPCS()
 
@@ -153,7 +152,7 @@ class Runner
 
         try {
             Util\Timing::startTiming();
-            Runner::checkRequirements();
+            $this->checkRequirements();
 
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
@@ -313,10 +312,11 @@ class Runner
         // Create this class so it is autoloaded and sets up a bunch
         // of PHP_CodeSniffer-specific token type constants.
         $tokens = new Util\Tokens();
+        unset($tokens);
 
         // Allow autoloading of custom files inside installed standards.
         $installedStandards = Standards::getInstalledStandardDetails();
-        foreach ($installedStandards as $name => $details) {
+        foreach ($installedStandards as $details) {
             Autoload::addSearchPath($details['path'], $details['namespace']);
         }
 
@@ -363,7 +363,7 @@ class Runner
             $dummy = new DummyFile($fileContents, $this->ruleset, $this->config);
             $todo->addFile($dummy->path, $dummy);
         } else {
-            if (empty($this->config->files) === true) {
+            if (empty($this->config->files)) {
                 $error  = 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
                 $error .= $this->config->printShortUsage(true);
                 throw new DeepExitException($error, 3);
@@ -593,7 +593,7 @@ class Runner
      * @param string $file    The path of the file that raised the error.
      * @param int    $line    The line number the error was raised at.
      *
-     * @return void
+     * @return bool
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
      */
     public function handleErrors($code, $message, $file, $line)
@@ -635,7 +635,7 @@ class Runner
                     $timeTaken = round($timeTaken);
                     Common::printStatusMessage("DONE in {$timeTaken}ms", 0, true);
                 } else {
-                    $timeTaken = round(($timeTaken / 1000), 2);
+                    $timeTaken = round($timeTaken / 1000, 2);
                     Common::printStatusMessage("DONE in $timeTaken secs", 0, true);
                 }
 
@@ -689,7 +689,6 @@ class Runner
                     $file->reloadContent();
                     $file->process();
                     $this->reporter->cacheFileReport($file, $this->config);
-                    break;
                 }
             }//end while
         }//end if
