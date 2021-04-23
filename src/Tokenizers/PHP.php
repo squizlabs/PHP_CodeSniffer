@@ -2100,17 +2100,18 @@ class PHP extends Tokenizer
                 if (isset($this->tokens[$x]) === true && $this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
                     $ignore  = Tokens::$emptyTokens;
                     $ignore += [
-                        T_STRING               => T_STRING,
-                        T_NAME_FULLY_QUALIFIED => T_NAME_FULLY_QUALIFIED,
-                        T_NAME_RELATIVE        => T_NAME_RELATIVE,
-                        T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
                         T_ARRAY                => T_ARRAY,
-                        T_COLON                => T_COLON,
-                        T_NULLABLE             => T_NULLABLE,
                         T_CALLABLE             => T_CALLABLE,
+                        T_COLON                => T_COLON,
+                        T_NAME_FULLY_QUALIFIED => T_NAME_FULLY_QUALIFIED,
+                        T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
+                        T_NAME_RELATIVE        => T_NAME_RELATIVE,
+                        T_NULL                 => T_NULL,
+                        T_NULLABLE             => T_NULLABLE,
                         T_PARENT               => T_PARENT,
                         T_SELF                 => T_SELF,
                         T_STATIC               => T_STATIC,
+                        T_STRING               => T_STRING,
                         T_TYPE_UNION           => T_TYPE_UNION,
                     ];
 
