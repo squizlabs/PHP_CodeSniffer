@@ -2584,6 +2584,7 @@ class PHP extends Tokenizer
                     T_STATIC       => T_STATIC,
                     T_FALSE        => T_FALSE,
                     T_NULL         => T_NULL,
+                    T_NAMESPACE    => T_NAMESPACE,
                     T_NS_SEPARATOR => T_NS_SEPARATOR,
                 ];
 
