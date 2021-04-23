@@ -665,7 +665,7 @@ class Runner
             // we only print violations for a single file each time.
             $numErrors = null;
             while ($numErrors !== 0) {
-                $numErrors = ($file->getErrorCount() + $file->getWarningCount());
+                $numErrors = $file->getErrorCount() + $file->getWarningCount();
                 if ($numErrors === 0) {
                     continue;
                 }
@@ -688,7 +688,7 @@ class Runner
                     $file->ruleset->populateTokenListeners();
                     $file->reloadContent();
                     $file->process();
-                    $this->reporter->cacheFileReport($file, $this->config);
+                    $this->reporter->cacheFileReport($file);
                 }
             }//end while
         }//end if
