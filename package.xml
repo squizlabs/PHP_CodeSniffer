@@ -36,6 +36,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3316 : Arrow function not tokenized correctly when using null in union type
   - Fixed bug #3317 : Problem with how phpcs handles ignored files when running in parallel
     -- Thanks to Emil Andersson for the patch
+  - Fixed bug #3324 : PHPCS hangs processing some nested arrow functions inside a function call
  </notes>
  <contents>
   <dir name="/">

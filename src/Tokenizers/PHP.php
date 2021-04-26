@@ -2355,6 +2355,16 @@ class PHP extends Tokenizer
                                 break;
                             }
 
+                            if ($inTernary === false
+                                && isset($this->tokens[$scopeCloser]['scope_closer'], $this->tokens[$scopeCloser]['scope_condition']) === true
+                                && $scopeCloser === $this->tokens[$scopeCloser]['scope_closer']
+                                && $this->tokens[$this->tokens[$scopeCloser]['scope_condition']]['code'] === T_FN
+                            ) {
+                                // Found a nested arrow function that already has the closer set and is in
+                                // the same scope as us, so we can use its closer.
+                                break;
+                            }
+
                             if (isset($this->tokens[$scopeCloser]['scope_closer']) === true
                                 && $this->tokens[$scopeCloser]['code'] !== T_INLINE_ELSE
                                 && $this->tokens[$scopeCloser]['code'] !== T_END_HEREDOC

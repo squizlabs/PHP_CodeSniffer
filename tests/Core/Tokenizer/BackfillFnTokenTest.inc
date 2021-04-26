@@ -23,6 +23,9 @@ function fn() {}
 /* testNestedOuter */
 $fn = fn($x) => /* testNestedInner */ fn($y) => $x * $y + $z;
 
+/* testNestedSharedCloserOuter */
+$foo = foo(fn() => /* testNestedSharedCloserInner */ fn() => bar() === true);
+
 /* testFunctionCall */
 $extended = fn($c) => $callable($factory($c), $c);
 
