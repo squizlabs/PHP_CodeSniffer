@@ -26,6 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - PHPCS annotations can now be specified using hash-style comments
+    -- Previously, only slash-style and block-style comments could be used to do things like disable errors
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3294 : Bug in attribute tokenization when content contains PHP end token or attribute closer on new line
     -- Thanks to Alessandro Chitolina for the patch
     -- Thanks to Juliette Reinders Folmer for the tests
