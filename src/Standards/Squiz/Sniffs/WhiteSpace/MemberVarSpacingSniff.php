@@ -60,12 +60,91 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
         $start = $startOfStatement;
         $prev  = $phpcsFile->findPrevious($ignore, ($startOfStatement - 1), null, true);
+
+        if ($tokens[$prev]['code'] === T_ATTRIBUTE_END) {
+            do {
+                if ($tokens[$start]['code'] === T_ATTRIBUTE_END) {
+                    $nextContent = $tokens[$start]['attribute_opener'];
+                } else {
+                    $nextContent = $start;
+                }
+
+                if ($tokens[$prev]['line'] === $tokens[$nextContent]['line']) {
+                    $error = 'Each attribute must be on a line by itself';
+                    $fix   = $phpcsFile->addFixableError($error, $prev, 'NoNewLineBeforeAttribute');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+
+                        /*
+                         * Remove redundant whitespaces.
+                         */
+
+                        $cur = $prev;
+                        while (($cur = $phpcsFile->findNext(T_WHITESPACE, ($cur + 1), $nextContent)) !== false) {
+                            $phpcsFile->fixer->replaceToken($cur, '');
+                        }
+
+                        /*
+                         * Fix indent.
+                         */
+
+                        $indent = '';
+                        $cur    = $prev;
+
+                        do {
+                            $cur = $phpcsFile->findPrevious(T_WHITESPACE, ($cur - 1));
+                            if ($tokens[$cur]['line'] !== $tokens[$prev]['line']) {
+                                break;
+                            }
+
+                            $indent = str_repeat(' ', $tokens[$cur]['length']);
+                        } while (true);
+
+                        $phpcsFile->fixer->addContentBefore($nextContent, $indent);
+
+                        $phpcsFile->fixer->addNewlineBefore($nextContent);
+                        $phpcsFile->fixer->endChangeset();
+                    }//end if
+                }//end if
+
+                $foundLines = ($tokens[$nextContent]['line'] - $tokens[$prev]['line'] - 1);
+                if ($foundLines > 0) {
+                    $error = 'Expected 0 blank lines after attribute; %s found';
+                    $data  = [$foundLines];
+                    $fix   = $phpcsFile->addFixableError($error, $prev, 'AfterAttribute', $data);
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+
+                        for ($i = ($prev + 1); $i <= $nextContent; $i++) {
+                            if ($tokens[$i]['line'] === $tokens[$nextContent]['line']) {
+                                break;
+                            }
+
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->addNewline($prev);
+                        $phpcsFile->fixer->endChangeset();
+                    }
+                }
+
+                $start = $prev;
+                $prev  = $phpcsFile->findPrevious($ignore, ($tokens[$prev]['attribute_opener'] - 1), null, true);
+            } while ($tokens[$prev]['code'] === T_ATTRIBUTE_END);
+        }//end if
+
         if (isset(Tokens::$commentTokens[$tokens[$prev]['code']]) === true) {
             // Assume the comment belongs to the member var if it is on a line by itself.
             $prevContent = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prev - 1), null, true);
             if ($tokens[$prevContent]['line'] !== $tokens[$prev]['line']) {
+                if ($tokens[$start]['code'] === T_ATTRIBUTE_END) {
+                    $nextContent = $tokens[$start]['attribute_opener'];
+                } else {
+                    $nextContent = $start;
+                }
+
                 // Check the spacing, but then skip it.
-                $foundLines = ($tokens[$startOfStatement]['line'] - $tokens[$prev]['line'] - 1);
+                $foundLines = ($tokens[$nextContent]['line'] - $tokens[$prev]['line'] - 1);
                 if ($foundLines > 0) {
                     $error = 'Expected 0 blank lines after member var comment; %s found';
                     $data  = [$foundLines];
@@ -78,8 +157,8 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
                             $phpcsFile->fixer->replaceToken($prev, rtrim($tokens[$prev]['content']));
                         }
 
-                        for ($i = ($prev + 1); $i <= $startOfStatement; $i++) {
-                            if ($tokens[$i]['line'] === $tokens[$startOfStatement]['line']) {
+                        for ($i = ($prev + 1); $i <= $nextContent; $i++) {
+                            if ($tokens[$i]['line'] === $tokens[$start]['line']) {
                                 break;
                             }
 
@@ -93,6 +172,44 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
                 $start = $prev;
             }//end if
+
+            if ($tokens[$prevContent]['code'] === T_ATTRIBUTE_END) {
+                $error = 'Member var comment must be before attributes';
+                $fix   = $phpcsFile->addFixableError($error, $prev, 'AttributeAfterComment');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+
+                    /*
+                     * Fix indent.
+                     */
+
+                    $indent = '';
+                    $cur    = $tokens[$prevContent]['attribute_opener'];
+
+                    do {
+                        $cur = $phpcsFile->findPrevious(T_WHITESPACE, ($cur - 1));
+
+                        if ($tokens[$cur]['line'] !== $tokens[$tokens[$prevContent]['attribute_opener']]['line']) {
+                            break;
+                        }
+
+                        $indent = str_repeat(' ', $tokens[$cur]['length']);
+                    } while (true);
+
+                    $phpcsFile->fixer->addContentBefore($tokens[$prevContent]['attribute_opener'], $indent);
+
+                    $commentContent = '';
+                    for ($i = $tokens[$prev]['comment_opener']; $i <= $prev; $i++) {
+                        $commentContent .= $phpcsFile->fixer->getTokenContent($i);
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->addNewlineBefore($tokens[$prevContent]['attribute_opener']);
+                    $phpcsFile->fixer->addContentBefore($tokens[$prevContent]['attribute_opener'], $commentContent);
+
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
+            }//end if
         }//end if
 
         // There needs to be n blank lines before the var, not counting comments.
@@ -102,6 +219,8 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
             if ($first === false) {
                 $first = $start;
             }
+        } else if ($tokens[$start]['code'] === T_ATTRIBUTE_END) {
+            $first = $tokens[$start]['attribute_opener'];
         } else if ($tokens[$start]['code'] === T_DOC_COMMENT_CLOSE_TAG) {
             $first = $tokens[$start]['comment_opener'];
         } else {

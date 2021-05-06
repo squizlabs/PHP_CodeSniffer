@@ -332,3 +332,68 @@ class CommentedOutCodeAtStartOfClassNoBlankLine {
      */
     public $property = true;
 }
+
+class ClassWithAttributes {
+
+    #[Attribute1]
+    public $var1 = 'value';
+
+    #[Attribute1]
+
+
+    #[Attribute2]
+
+    public string $var2 = 'value';
+
+    /**
+     * Description.
+     */
+
+    #[Attribute1]
+    protected $var3 = 'value';
+
+    /**
+     * Description.
+     */
+
+    #[Attribute1]
+
+    #[Attribute2]
+
+
+    private $var4 = 'value';
+
+    #[Attribute1]
+
+    #[Attribute2]
+
+    /**
+     * Description.
+     */
+    private $var5 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]#[Attribute2]
+    private $var6 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1] #[Attribute2] private $var7 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]
+    #[Attribute2]private $var8 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]#[MultiLineAttribute(
+        multi: 'line1',
+        line: 'line2'
+    )]private $var9 = 'value';
+}
