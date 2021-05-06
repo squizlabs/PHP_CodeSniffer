@@ -343,7 +343,7 @@ class HasAttributes
 
     #[ORM\Id]#[ORM\Column("integer")]
 
-    private $id;
+    private $var1;
 
 
     /**
@@ -354,5 +354,62 @@ class HasAttributes
     #[ORM\GeneratedValue]
 
     #[ORM\Column(ORM\Column::T_INTEGER)]
-    protected $height;
+    protected $var2;
+
+    #[Attribute1]
+    public $var3 = 'value';
+
+    #[Attribute1]
+
+
+    #[Attribute2]
+
+    public string $var4 = 'value';
+
+    /**
+     * Description.
+     */
+
+    #[Attribute1]
+    protected $var5 = 'value';
+
+    /**
+     * Description.
+     */
+
+    #[Attribute1]
+
+    #[Attribute2]
+
+
+    private $var6 = 'value';
+
+    #[Attribute1]
+
+    #[Attribute2]
+
+    /**
+     * Description.
+     */
+    private $var7 = 'value';
+
+
+    /**
+     * Description.
+     */
+    #[Attribute1] #[Attribute2] private $var8 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]
+    #[Attribute2]private $var9 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]#[MultiLineAttribute(
+        multi: 'line1',
+        line: 'line2'
+    )]private $var10 = 'value';
 }

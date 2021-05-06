@@ -328,8 +328,9 @@ class HasAttributes
      *
      * @var array
      */
-    #[ORM\Id]#[ORM\Column("integer")]
-    private $id;
+    #[ORM\Id]
+    #[ORM\Column("integer")]
+    private $var1;
 
     /**
      * Short description of the member variable.
@@ -338,5 +339,56 @@ class HasAttributes
      */
     #[ORM\GeneratedValue]
     #[ORM\Column(ORM\Column::T_INTEGER)]
-    protected $height;
+    protected $var2;
+
+    #[Attribute1]
+    public $var3 = 'value';
+
+    #[Attribute1]
+    #[Attribute2]
+    public string $var4 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]
+    protected $var5 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]
+    #[Attribute2]
+    private $var6 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]
+    #[Attribute2]
+    private $var7 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]
+    #[Attribute2]
+    private $var8 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]
+    #[Attribute2]
+    private $var9 = 'value';
+
+    /**
+     * Description.
+     */
+    #[Attribute1]
+    #[MultiLineAttribute(
+        multi: 'line1',
+        line: 'line2'
+    )]
+    private $var10 = 'value';
 }
