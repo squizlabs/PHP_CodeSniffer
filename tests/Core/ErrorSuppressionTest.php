@@ -154,97 +154,94 @@ class ErrorSuppressionTest extends TestCase
     /**
      * Test suppressing 1 out of 2 errors.
      *
+     * @param string $before         Annotation to place before the code.
+     * @param string $between        Annotation to place between the code.
+     * @param int    $expectedErrors Optional. Number of errors expected.
+     *                               Defaults to 1.
+     *
+     * @dataProvider dataSuppressSomeErrors
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testSuppressSomeErrors()
+    public function testSuppressSomeErrors($before, $between, $expectedErrors=1)
     {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-        $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['Generic'];
+            $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
 
-        // Process without suppression.
-        $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = <<<EOD
+<?php
+$before
+\$var = FALSE;
+$between
+\$var = TRUE;
+EOD;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(2, $numErrors);
-        $this->assertCount(2, $errors);
-
-        // Process with suppression.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// phpcs:enable'.PHP_EOL.'$var = TRUE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with @ suppression.
-        $content = '<?php '.PHP_EOL.'// @phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @phpcs:enable'.PHP_EOL.'$var = TRUE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with suppression (hash comment).
-        $content = '<?php '.PHP_EOL.'# phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# phpcs:enable'.PHP_EOL.'$var = TRUE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with @ suppression (hash comment).
-        $content = '<?php '.PHP_EOL.'# @phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# @phpcs:enable'.PHP_EOL.'$var = TRUE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd'.PHP_EOL.'$var = TRUE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with a PHPDoc block suppression.
-        $content = '<?php '.PHP_EOL.'/** phpcs:disable */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** phpcs:enable */'.PHP_EOL.'$var = TRUE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with a PHPDoc block suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** @codingStandardsIgnoreEnd */'.PHP_EOL.'$var = TRUE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
+        $this->assertSame($expectedErrors, $file->getErrorCount());
+        $this->assertCount($expectedErrors, $file->getErrors());
 
     }//end testSuppressSomeErrors()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testSuppressSomeErrors()
+     *
+     * @return array
+     */
+    public function dataSuppressSomeErrors()
+    {
+        return [
+            'no suppression'                               => [
+                'before'         => '',
+                'between'        => '',
+                'expectedErrors' => 2,
+            ],
+
+            // With suppression.
+            'disable/enable: slash comment'                => [
+                'before'  => '// phpcs:disable',
+                'between' => '// phpcs:enable',
+            ],
+            'disable/enable: slash comment, with @'        => [
+                'before'  => '// @phpcs:disable',
+                'between' => '// @phpcs:enable',
+            ],
+            'disable/enable: hash comment'                 => [
+                'before'  => '# phpcs:disable',
+                'between' => '# phpcs:enable',
+            ],
+            'disable/enable: hash comment, with @'         => [
+                'before'  => '# @phpcs:disable',
+                'between' => '# @phpcs:enable',
+            ],
+            'disable/enable: single line docblock comment' => [
+                'before'  => '/** phpcs:disable */',
+                'between' => '/** phpcs:enable */',
+            ],
+
+            // Deprecated syntax.
+            'old style: slash comment'                     => [
+                'before'  => '// @codingStandardsIgnoreStart',
+                'between' => '// @codingStandardsIgnoreEnd',
+            ],
+            'old style: single line docblock comment'      => [
+                'before'  => '/** @codingStandardsIgnoreStart */',
+                'between' => '/** @codingStandardsIgnoreEnd */',
+            ],
+        ];
+
+    }//end dataSuppressSomeErrors()
 
 
     /**
