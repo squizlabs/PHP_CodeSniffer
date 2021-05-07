@@ -424,16 +424,6 @@ EOD;
         $this->assertEquals(1, $numErrors);
         $this->assertCount(1, $errors);
 
-        // Process with @ suppression on line before inside docblock.
-        $content = '<?php '.PHP_EOL.'/**'.PHP_EOL.' * Comment here'.PHP_EOL.' * @phpcs:ignore'.PHP_EOL.' * '.str_repeat('a ', 50).PHP_EOL.'*/';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
         // Process with suppression on same line.
         $content = '<?php '.PHP_EOL.'$var = FALSE; // phpcs:ignore'.PHP_EOL.'$var = FALSE;';
         $file    = new DummyFile($content, $ruleset, $config);
@@ -485,6 +475,40 @@ EOD;
         $this->assertCount(1, $errors);
 
     }//end testSuppressLine()
+
+
+    /**
+     * Test suppressing a single error using a single line ignore within a docblock.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
+     * @return void
+     */
+    public function testSuppressLineWithinDocblock()
+    {
+        $config            = new Config();
+        $config->standards = ['Generic'];
+        $config->sniffs    = ['Generic.Files.LineLength'];
+
+        $ruleset = new Ruleset($config);
+
+        // Process with @ suppression on line before inside docblock.
+        $comment = str_repeat('a ', 50);
+        $content = <<<EOD
+<?php
+/**
+ * Comment here
+ * @phpcs:ignore
+ * $comment
+ */
+EOD;
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $this->assertSame(0, $file->getErrorCount());
+        $this->assertCount(0, $file->getErrors());
+
+    }//end testSuppressLineWithinDocblock()
 
 
     /**
