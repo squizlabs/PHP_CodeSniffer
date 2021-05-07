@@ -765,162 +765,105 @@ EOD;
     /**
      * Test disabling specific sniffs.
      *
+     * @param string $before           Annotation to place before the code.
+     * @param int    $expectedErrors   Optional. Number of errors expected.
+     *                                 Defaults to 0.
+     * @param int    $expectedWarnings Optional. Number of warnings expected.
+     *                                 Defaults to 0.
+     *
+     * @dataProvider dataDisableSelected
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testDisableSelected()
+    public function testDisableSelected($before, $expectedErrors=0, $expectedWarnings=0)
     {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-        $config->sniffs    = [
-            'Generic.PHP.LowerCaseConstant',
-            'Generic.Commenting.Todo',
-        ];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['Generic'];
+            $config->sniffs    = [
+                'Generic.PHP.LowerCaseConstant',
+                'Generic.Commenting.Todo',
+            ];
 
-        // Suppress a single sniff.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = <<<EOD
+<?php
+$before
+\$var = FALSE;
+//TODO: write some code
+EOD;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
+        $this->assertSame($expectedErrors, $file->getErrorCount());
+        $this->assertCount($expectedErrors, $file->getErrors());
 
-        // Suppress a single sniff with reason (hash comment).
-        $content = '<?php '.PHP_EOL.'# phpcs:disable Generic.Commenting.Todo -- for reasons'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Suppress multiple sniffs.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Suppress adding sniffs.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'// phpcs:disable Generic.PHP.LowerCaseConstant'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Suppress a category of sniffs.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Suppress a whole standard.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Suppress using docblocks.
-        $content = '<?php '.PHP_EOL.'/**
-        '.PHP_EOL.' * phpcs:disable Generic.Commenting.Todo'.PHP_EOL.' */ '.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        $content = '<?php '.PHP_EOL.'/**
-        '.PHP_EOL.' * @phpcs:disable Generic.Commenting.Todo'.PHP_EOL.' */ '.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Suppress wrong category using docblocks.
-        $content = '<?php '.PHP_EOL.'/**
-        '.PHP_EOL.' * phpcs:disable Generic.Files'.PHP_EOL.' */ '.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        $content = '<?php '.PHP_EOL.'/**
-        '.PHP_EOL.' * @phpcs:disable Generic.Files'.PHP_EOL.' */ '.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
+        $this->assertSame($expectedWarnings, $file->getWarningCount());
+        $this->assertCount($expectedWarnings, $file->getWarnings());
 
     }//end testDisableSelected()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testDisableSelected()
+     *
+     * @return array
+     */
+    public function dataDisableSelected()
+    {
+        return [
+            // Single sniff.
+            'disable: single sniff'                        => [
+                'before'         => '// phpcs:disable Generic.Commenting.Todo',
+                'expectedErrors' => 1,
+            ],
+            'disable: single sniff with reason'            => [
+                'before'         => '# phpcs:disable Generic.Commenting.Todo -- for reasons',
+                'expectedErrors' => 1,
+            ],
+            'disable: single sniff, docblock'              => [
+                'before'         => '/**'.PHP_EOL.' * phpcs:disable Generic.Commenting.Todo'.PHP_EOL.' */ ',
+                'expectedErrors' => 1,
+            ],
+            'disable: single sniff, docblock, with @'      => [
+                'before'         => '/**'.PHP_EOL.' * @phpcs:disable Generic.Commenting.Todo'.PHP_EOL.' */ ',
+                'expectedErrors' => 1,
+            ],
+
+            // Multiple sniffs.
+            'disable: multiple sniffs in one comment'      => ['before' => '// phpcs:disable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant'],
+            'disable: multiple sniff in multiple comments' => [
+                'before' => '// phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'// phpcs:disable Generic.PHP.LowerCaseConstant',
+            ],
+
+            // Selectiveness variations.
+            'disable: complete category'                   => [
+                'before'         => '// phpcs:disable Generic.Commenting',
+                'expectedErrors' => 1,
+            ],
+            'disable: whole standard'                      => ['before' => '// phpcs:disable Generic'],
+
+            // Wrong category using docblocks.
+            'disable: wrong category, docblock'            => [
+                'before'           => '/**'.PHP_EOL.' * phpcs:disable Generic.Files'.PHP_EOL.' */ ',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 1,
+            ],
+            'disable: wrong category, docblock, with @'    => [
+                'before'           => '/**'.PHP_EOL.' * @phpcs:disable Generic.Files'.PHP_EOL.' */ ',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 1,
+            ],
+        ];
+
+    }//end dataDisableSelected()
 
 
     /**
