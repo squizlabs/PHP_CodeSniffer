@@ -331,150 +331,95 @@ EOD;
     /**
      * Test suppressing a single error using a single line ignore.
      *
+     * @param string $before         Annotation to place before the code.
+     * @param string $after          Optional. Annotation to place after the code.
+     *                               Defaults to an empty string.
+     * @param int    $expectedErrors Optional. Number of errors expected.
+     *                               Defaults to 1.
+     *
+     * @dataProvider dataSuppressLine
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testSuppressLine()
+    public function testSuppressLine($before, $after='', $expectedErrors=1)
     {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-        $config->sniffs    = [
-            'Generic.PHP.LowerCaseConstant',
-            'Generic.Files.LineLength',
-        ];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['Generic'];
+            $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
 
-        // Process without suppression.
-        $content = '<?php '.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = <<<EOD
+<?php
+$before
+\$var = FALSE;$after
+\$var = FALSE;
+EOD;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(2, $numErrors);
-        $this->assertCount(2, $errors);
-
-        // Process with suppression on line before.
-        $content = '<?php '.PHP_EOL.'// phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-         // Process with @ suppression on line before.
-        $content = '<?php '.PHP_EOL.'// @phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with suppression on line before (hash comment).
-        $content = '<?php '.PHP_EOL.'# phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-         // Process with @ suppression on line before (hash comment).
-        $content = '<?php '.PHP_EOL.'# @phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with suppression on line before.
-        $content = '<?php '.PHP_EOL.'/* phpcs:ignore */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with @ suppression on line before.
-        $content = '<?php '.PHP_EOL.'/* @phpcs:ignore */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with suppression on line before (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with suppression on same line.
-        $content = '<?php '.PHP_EOL.'$var = FALSE; // phpcs:ignore'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with @ suppression on same line.
-        $content = '<?php '.PHP_EOL.'$var = FALSE; // @phpcs:ignore'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with suppression on same line (hash comment).
-        $content = '<?php '.PHP_EOL.'$var = FALSE; # phpcs:ignore'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with @ suppression on same line (hash comment).
-        $content = '<?php '.PHP_EOL.'$var = FALSE; # @phpcs:ignore'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with suppression on same line (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'$var = FALSE; // @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
+        $this->assertSame($expectedErrors, $file->getErrorCount());
+        $this->assertCount($expectedErrors, $file->getErrors());
 
     }//end testSuppressLine()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testSuppressLine()
+     *
+     * @return array
+     */
+    public function dataSuppressLine()
+    {
+        return [
+            'no suppression'                             => [
+                'before'         => '',
+                'after'          => '',
+                'expectedErrors' => 2,
+            ],
+
+            // With suppression on line before.
+            'ignore: line before, slash comment'         => ['before' => '// phpcs:ignore'],
+            'ignore: line before, slash comment, with @' => ['before' => '// @phpcs:ignore'],
+            'ignore: line before, hash comment'          => ['before' => '# phpcs:ignore'],
+            'ignore: line before, hash comment, with @'  => ['before' => '# @phpcs:ignore'],
+            'ignore: line before, star comment'          => ['before' => '/* phpcs:ignore */'],
+            'ignore: line before, star comment, with @'  => ['before' => '/* @phpcs:ignore */'],
+
+            // With suppression as trailing comment on code line.
+            'ignore: end of line, slash comment'         => [
+                'before' => '',
+                'after'  => ' // phpcs:ignore',
+            ],
+            'ignore: end of line, slash comment, with @' => [
+                'before' => '',
+                'after'  => ' // @phpcs:ignore',
+            ],
+            'ignore: end of line, hash comment'          => [
+                'before' => '',
+                'after'  => ' # phpcs:ignore',
+            ],
+            'ignore: end of line, hash comment, with @'  => [
+                'before' => '',
+                'after'  => ' # @phpcs:ignore',
+            ],
+
+            // Deprecated syntax.
+            'old style: line before, slash comment'      => ['before' => '// @codingStandardsIgnoreLine'],
+            'old style: end of line, slash comment'      => [
+                'before' => '',
+                'after'  => ' // @codingStandardsIgnoreLine',
+            ],
+        ];
+
+    }//end dataSuppressLine()
 
 
     /**
