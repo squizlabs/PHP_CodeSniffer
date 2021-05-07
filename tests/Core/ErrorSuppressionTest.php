@@ -247,77 +247,85 @@ EOD;
     /**
      * Test suppressing a single warning.
      *
+     * @param string $before           Annotation to place before the code.
+     * @param string $after            Annotation to place after the code.
+     * @param int    $expectedWarnings Optional. Number of warnings expected.
+     *                                 Defaults to 0.
+     *
+     * @dataProvider dataSuppressWarning
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testSuppressWarning()
+    public function testSuppressWarning($before, $after, $expectedWarnings=0)
     {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-        $config->sniffs    = ['Generic.Commenting.Todo'];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['Generic'];
+            $config->sniffs    = ['Generic.Commenting.Todo'];
 
-        // Process without suppression.
-        $content = '<?php '.PHP_EOL.'//TODO: write some code';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = <<<EOD
+<?php
+$before
+//TODO: write some code.
+$after
+EOD;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Process with suppression.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with @ suppression.
-        $content = '<?php '.PHP_EOL.'// @phpcs:disable'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// @phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with a docblock suppression.
-        $content = '<?php '.PHP_EOL.'/** phpcs:disable */'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'/** phpcs:enable */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with a docblock suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'/** @codingStandardsIgnoreEnd */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
+        $this->assertSame($expectedWarnings, $file->getWarningCount());
+        $this->assertCount($expectedWarnings, $file->getWarnings());
 
     }//end testSuppressWarning()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testSuppressWarning()
+     *
+     * @return array
+     */
+    public function dataSuppressWarning()
+    {
+        return [
+            'no suppression'                               => [
+                'before'           => '',
+                'after'            => '',
+                'expectedWarnings' => 1,
+            ],
+
+            // With suppression.
+            'disable/enable: slash comment'                => [
+                'before' => '// phpcs:disable',
+                'after'  => '// phpcs:enable',
+            ],
+            'disable/enable: slash comment, with @'        => [
+                'before' => '// @phpcs:disable',
+                'after'  => '// @phpcs:enable',
+            ],
+            'disable/enable: single line docblock comment' => [
+                'before' => '/** phpcs:disable */',
+                'after'  => '/** phpcs:enable */',
+            ],
+
+            // Deprecated syntax.
+            'old style: slash comment'                     => [
+                'before' => '// @codingStandardsIgnoreStart',
+                'after'  => '// @codingStandardsIgnoreEnd',
+            ],
+            'old style: single line docblock comment'      => [
+                'before' => '/** @codingStandardsIgnoreStart */',
+                'after'  => '/** @codingStandardsIgnoreEnd */',
+            ],
+        ];
+
+    }//end dataSuppressWarning()
 
 
     /**
