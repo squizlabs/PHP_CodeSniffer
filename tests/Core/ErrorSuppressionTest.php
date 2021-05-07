@@ -484,97 +484,90 @@ EOD;
     /**
      * Test that using a single line ignore does not interfere with other suppressions.
      *
+     * @param string $before Annotation to place before the code.
+     * @param string $after  Annotation to place after the code.
+     *
+     * @dataProvider dataNestedSuppressLine
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testNestedSuppressLine()
+    public function testNestedSuppressLine($before, $after)
     {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-        $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['Generic'];
+            $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
 
-        // Process with disable/enable suppression and no single line suppression.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// phpcs:enable';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = <<<EOD
+<?php
+$before
+\$var = FALSE;
+\$var = TRUE;
+$after
+EOD;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with disable/enable @ suppression and no single line suppression.
-        $content = '<?php '.PHP_EOL.'// @phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// @phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with disable/enable suppression and no single line suppression (hash comment).
-        $content = '<?php '.PHP_EOL.'# phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'# phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with disable/enable suppression and no single line suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with line suppression nested within disable/enable suppression.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'// phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with line @ suppression nested within disable/enable @ suppression.
-        $content = '<?php '.PHP_EOL.'// @phpcs:disable'.PHP_EOL.'// @phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// @phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with line @ suppression nested within disable/enable @ suppression (hash comment).
-        $content = '<?php '.PHP_EOL.'# @phpcs:disable'.PHP_EOL.'# @phpcs:ignore'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'# @phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with line suppression nested within disable/enable suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'// @codingStandardsIgnoreLine'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'$var = TRUE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
+        $this->assertSame(0, $file->getErrorCount());
+        $this->assertCount(0, $file->getErrors());
 
     }//end testNestedSuppressLine()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testNestedSuppressLine()
+     *
+     * @return array
+     */
+    public function dataNestedSuppressLine()
+    {
+        return [
+            // Process with disable/enable suppression and no single line suppression.
+            'disable/enable: slash comment, no single line suppression'                       => [
+                'before' => '// phpcs:disable',
+                'after'  => '// phpcs:enable',
+            ],
+            'disable/enable: slash comment, with @, no single line suppression'               => [
+                'before' => '// @phpcs:disable',
+                'after'  => '// @phpcs:enable',
+            ],
+            'disable/enable: hash comment, no single line suppression'                        => [
+                'before' => '# phpcs:disable',
+                'after'  => '# phpcs:enable',
+            ],
+            'old style: slash comment, no single line suppression'                            => [
+                'before' => '// @codingStandardsIgnoreStart',
+                'after'  => '// @codingStandardsIgnoreEnd',
+            ],
+
+            // Process with line suppression nested within disable/enable suppression.
+            'disable/enable: slash comment, next line nested single line suppression'         => [
+                'before' => '// phpcs:disable'.PHP_EOL.'// phpcs:ignore',
+                'after'  => '// phpcs:enable',
+            ],
+            'disable/enable: slash comment, with @, next line nested single line suppression' => [
+                'before' => '// @phpcs:disable'.PHP_EOL.'// @phpcs:ignore',
+                'after'  => '// @phpcs:enable',
+            ],
+            'disable/enable: hash comment, next line nested single line suppression'          => [
+                'before' => '# @phpcs:disable'.PHP_EOL.'# @phpcs:ignore',
+                'after'  => '# @phpcs:enable',
+            ],
+            'old style: slash comment, next line nested single line suppression'              => [
+                'before' => '// @codingStandardsIgnoreStart'.PHP_EOL.'// @codingStandardsIgnoreLine',
+                'after'  => '// @codingStandardsIgnoreEnd',
+            ],
+        ];
+
+    }//end dataNestedSuppressLine()
 
 
     /**
