@@ -21,197 +21,134 @@ class ErrorSuppressionTest extends TestCase
     /**
      * Test suppressing a single error.
      *
+     * @param string $before         Annotation to place before the code.
+     * @param string $after          Annotation to place after the code.
+     * @param int    $expectedErrors Optional. Number of errors expected.
+     *                               Defaults to 0.
+     *
+     * @dataProvider dataSuppressError
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testSuppressError()
+    public function testSuppressError($before, $after, $expectedErrors=0)
     {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-        $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['Generic'];
+            $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
 
-        // Process without suppression.
-        $content = '<?php '.PHP_EOL.'$var = FALSE;';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = '<?php '.PHP_EOL.$before.'$var = FALSE;'.PHP_EOL.$after;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with inline comment suppression.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with multi-line inline comment suppression, tab-indented.
-        $content = '<?php '.PHP_EOL."\t".'// For reasons'.PHP_EOL."\t".'// phpcs:disable'.PHP_EOL."\t".'$var = FALSE;'.PHP_EOL."\t".'// phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with inline @ comment suppression.
-        $content = '<?php '.PHP_EOL.'// @phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with inline comment suppression mixed case.
-        $content = '<?php '.PHP_EOL.'// PHPCS:Disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// pHPcs:enabLE';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with inline hash comment suppression.
-        $content = '<?php '.PHP_EOL.'# phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with multi-line inline hash comment suppression, tab-indented.
-        $content = '<?php '.PHP_EOL."\t".'# For reasons'.PHP_EOL."\t".'# phpcs:disable'.PHP_EOL."\t".'$var = FALSE;'.PHP_EOL."\t".'# phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with inline hash @ comment suppression.
-        $content = '<?php '.PHP_EOL.'# @phpcs:disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# @phpcs:enable';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with inline hash comment suppression mixed case.
-        $content = '<?php '.PHP_EOL.'# PHPCS:Disable'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'# pHPcs:enabLE';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with inline comment suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreStart'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// @codingStandardsIgnoreEnd';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with block comment suppression.
-        $content = '<?php '.PHP_EOL.'/* phpcs:disable */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/* phpcs:enable */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with multi-line block comment suppression.
-        $content = '<?php '.PHP_EOL.'/*'.PHP_EOL.' phpcs:disable'.PHP_EOL.' */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/*'.PHP_EOL.' phpcs:enable'.PHP_EOL.' */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with multi-line block comment suppression, each line starred.
-        $content = '<?php '.PHP_EOL.'/*'.PHP_EOL.' * phpcs:disable'.PHP_EOL.' */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/*'.PHP_EOL.' * phpcs:enable'.PHP_EOL.' */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with multi-line block comment suppression, tab-indented.
-        $content = '<?php '.PHP_EOL."\t".'/*'.PHP_EOL."\t".' * phpcs:disable'.PHP_EOL."\t".' */'.PHP_EOL."\t".'$var = FALSE;'.PHP_EOL."\t".'/*'.PHP_EOL.' * phpcs:enable'.PHP_EOL.' */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with block comment suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/* @codingStandardsIgnoreEnd */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with multi-line block comment suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'/*'.PHP_EOL.' @codingStandardsIgnoreStart'.PHP_EOL.' */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/*'.PHP_EOL.' @codingStandardsIgnoreEnd'.PHP_EOL.' */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with a docblock suppression.
-        $content = '<?php '.PHP_EOL.'/** phpcs:disable */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** phpcs:enable */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with a docblock suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'/** @codingStandardsIgnoreEnd */';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
+        $this->assertSame($expectedErrors, $file->getErrorCount());
+        $this->assertCount($expectedErrors, $file->getErrors());
 
     }//end testSuppressError()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testSuppressError()
+     *
+     * @return array
+     */
+    public function dataSuppressError()
+    {
+        return [
+            'no suppression'                                                           => [
+                'before'         => '',
+                'after'          => '',
+                'expectedErrors' => 1,
+            ],
+
+            // Inline slash comments.
+            'disable/enable: slash comment'                                            => [
+                'before' => '// phpcs:disable'.PHP_EOL,
+                'after'  => '// phpcs:enable',
+            ],
+            'disable/enable: multi-line slash comment, tab indented'                   => [
+                'before' => "\t".'// For reasons'.PHP_EOL."\t".'// phpcs:disable'.PHP_EOL."\t",
+                'after'  => "\t".'// phpcs:enable',
+            ],
+            'disable/enable: slash comment, with @'                                    => [
+                'before' => '// @phpcs:disable'.PHP_EOL,
+                'after'  => '// @phpcs:enable',
+            ],
+            'disable/enable: slash comment, mixed case'                                => [
+                'before' => '// PHPCS:Disable'.PHP_EOL,
+                'after'  => '// pHPcs:enabLE',
+            ],
+
+            // Inline hash comments.
+            'disable/enable: hash comment'                                             => [
+                'before' => '# phpcs:disable'.PHP_EOL,
+                'after'  => '# phpcs:enable',
+            ],
+            'disable/enable: multi-line hash comment, tab indented'                    => [
+                'before' => "\t".'# For reasons'.PHP_EOL."\t".'# phpcs:disable'.PHP_EOL."\t",
+                'after'  => "\t".'# phpcs:enable',
+            ],
+            'disable/enable: hash comment, with @'                                     => [
+                'before' => '# @phpcs:disable'.PHP_EOL,
+                'after'  => '# @phpcs:enable',
+            ],
+            'disable/enable: hash comment, mixed case'                                 => [
+                'before' => '# PHPCS:Disable'.PHP_EOL,
+                'after'  => '# pHPcs:enabLE',
+            ],
+
+            // Inline star (block) comments.
+            'disable/enable: star comment'                                             => [
+                'before' => '/* phpcs:disable */'.PHP_EOL,
+                'after'  => '/* phpcs:enable */',
+            ],
+            'disable/enable: multi-line star comment'                                  => [
+                'before' => '/*'.PHP_EOL.' phpcs:disable'.PHP_EOL.' */'.PHP_EOL,
+                'after'  => '/*'.PHP_EOL.' phpcs:enable'.PHP_EOL.' */',
+            ],
+            'disable/enable: multi-line star comment, each line starred'               => [
+                'before' => '/*'.PHP_EOL.' * phpcs:disable'.PHP_EOL.' */'.PHP_EOL,
+                'after'  => '/*'.PHP_EOL.' * phpcs:enable'.PHP_EOL.' */',
+            ],
+            'disable/enable: multi-line star comment, each line starred, tab indented' => [
+                'before' => "\t".'/*'.PHP_EOL."\t".' * phpcs:disable'.PHP_EOL."\t".' */'.PHP_EOL."\t",
+                'after'  => "\t".'/*'.PHP_EOL.' * phpcs:enable'.PHP_EOL.' */',
+            ],
+
+            // Docblock comments.
+            'disable/enable: single line docblock comment'                             => [
+                'before' => '/** phpcs:disable */'.PHP_EOL,
+                'after'  => '/** phpcs:enable */',
+            ],
+
+            // Deprecated syntax.
+            'old style: slash comment'                                                 => [
+                'before' => '// @codingStandardsIgnoreStart'.PHP_EOL,
+                'after'  => '// @codingStandardsIgnoreEnd',
+            ],
+            'old style: star comment'                                                  => [
+                'before' => '/* @codingStandardsIgnoreStart */'.PHP_EOL,
+                'after'  => '/* @codingStandardsIgnoreEnd */',
+            ],
+            'old style: multi-line star comment'                                       => [
+                'before' => '/*'.PHP_EOL.' @codingStandardsIgnoreStart'.PHP_EOL.' */'.PHP_EOL,
+                'after'  => '/*'.PHP_EOL.' @codingStandardsIgnoreEnd'.PHP_EOL.' */',
+            ],
+            'old style: single line docblock comment'                                  => [
+                'before' => '/** @codingStandardsIgnoreStart */'.PHP_EOL,
+                'after'  => '/** @codingStandardsIgnoreEnd */',
+            ],
+        ];
+
+    }//end dataSuppressError()
 
 
     /**
