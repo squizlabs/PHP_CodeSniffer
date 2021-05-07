@@ -670,167 +670,96 @@ EOD;
     /**
      * Test suppressing a whole file.
      *
+     * @param string $before           Annotation to place before the code.
+     * @param string $after            Optional. Annotation to place after the code.
+     *                                 Defaults to an empty string.
+     * @param int    $expectedWarnings Optional. Number of warnings expected.
+     *                                 Defaults to 0.
+     *
+     * @dataProvider dataSuppressFile
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testSuppressFile()
+    public function testSuppressFile($before, $after='', $expectedWarnings=0)
     {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-        $config->sniffs    = ['Generic.Commenting.Todo'];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['Generic'];
+            $config->sniffs    = ['Generic.Commenting.Todo'];
 
-        // Process without suppression.
-        $content = '<?php '.PHP_EOL.'//TODO: write some code';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = <<<EOD
+<?php
+$before
+class MyClass {}
+\$foo = new MyClass();
+//TODO: write some code
+$after
+EOD;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Process with suppression.
-        $content = '<?php '.PHP_EOL.'// phpcs:ignoreFile'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with @ suppression.
-        $content = '<?php '.PHP_EOL.'// @phpcs:ignoreFile'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with suppression (hash comment).
-        $content = '<?php '.PHP_EOL.'# phpcs:ignoreFile'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with @ suppression (hash comment).
-        $content = '<?php '.PHP_EOL.'# @phpcs:ignoreFile'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'// @codingStandardsIgnoreFile'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process mixed case.
-        $content = '<?php '.PHP_EOL.'// PHPCS:Ignorefile'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process late comment.
-        $content = '<?php '.PHP_EOL.'class MyClass {}'.PHP_EOL.'$foo = new MyClass();'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:ignoreFile';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process late comment (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'class MyClass {}'.PHP_EOL.'$foo = new MyClass();'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// @codingStandardsIgnoreFile';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with a block comment suppression.
-        $content = '<?php '.PHP_EOL.'/* phpcs:ignoreFile */'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with a multi-line block comment suppression.
-        $content = '<?php '.PHP_EOL.'/*'.PHP_EOL.' phpcs:ignoreFile'.PHP_EOL.' */'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with a block comment suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'/* @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with a multi-line block comment suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'/*'.PHP_EOL.' @codingStandardsIgnoreFile'.PHP_EOL.' */'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with docblock suppression.
-        $content = '<?php '.PHP_EOL.'/** phpcs:ignoreFile */'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Process with docblock suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'/** @codingStandardsIgnoreFile */'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
+        $this->assertSame($expectedWarnings, $file->getWarningCount());
+        $this->assertCount($expectedWarnings, $file->getWarnings());
 
     }//end testSuppressFile()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testSuppressFile()
+     *
+     * @return array
+     */
+    public function dataSuppressFile()
+    {
+        return [
+            'no suppression'                                          => [
+                'before'         => '',
+                'after'          => '',
+                'expectedErrors' => 1,
+            ],
+
+            // Process with suppression.
+            'ignoreFile: start of file, slash comment'                => ['before' => '// phpcs:ignoreFile'],
+            'ignoreFile: start of file, slash comment, with @'        => ['before' => '// @phpcs:ignoreFile'],
+            'ignoreFile: start of file, slash comment, mixed case'    => ['before' => '// PHPCS:Ignorefile'],
+            'ignoreFile: start of file, hash comment'                 => ['before' => '# phpcs:ignoreFile'],
+            'ignoreFile: start of file, hash comment, with @'         => ['before' => '# @phpcs:ignoreFile'],
+            'ignoreFile: start of file, single-line star comment'     => ['before' => '/* phpcs:ignoreFile */'],
+            'ignoreFile: start of file, multi-line star comment'      => [
+                'before' => '/*'.PHP_EOL.' phpcs:ignoreFile'.PHP_EOL.' */',
+            ],
+            'ignoreFile: start of file, single-line docblock comment' => ['before' => '/** phpcs:ignoreFile */'],
+
+            // Process late comment.
+            'ignoreFile: late comment, slash comment'                 => [
+                'before' => '',
+                'after'  => '// phpcs:ignoreFile',
+            ],
+
+            // Deprecated syntax.
+            'old style: start of file, slash comment'                 => ['before' => '// @codingStandardsIgnoreFile'],
+            'old style: start of file, single-line star comment'      => ['before' => '/* @codingStandardsIgnoreFile */'],
+            'old style: start of file, multi-line star comment'       => [
+                'before' => '/*'.PHP_EOL.' @codingStandardsIgnoreFile'.PHP_EOL.' */',
+            ],
+            'old style: start of file, single-line docblock comment'  => ['before' => '/** @codingStandardsIgnoreFile */'],
+
+            // Deprecated syntax, late comment.
+            'old style: late comment, slash comment'                  => [
+                'before' => '',
+                'after'  => '// @codingStandardsIgnoreFile',
+            ],
+        ];
+
+    }//end dataSuppressFile()
 
 
     /**
