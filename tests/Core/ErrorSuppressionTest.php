@@ -579,7 +579,7 @@ EOD;
     {
         $config            = new Config();
         $config->standards = ['PEAR'];
-        $config->sniffs    = ['PEAR.NamingConventions.ValidVariableName'];
+        $config->sniffs    = ['PEAR.Functions.FunctionDeclaration'];
 
         $ruleset = new Ruleset($config);
 
@@ -590,8 +590,8 @@ EOD;
 
         $errors    = $file->getErrors();
         $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
+        $this->assertEquals(1, $numErrors);
+        $this->assertCount(1, $errors);
 
         // Process with suppression.
         $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//phpcs:disable'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//phpcs:enable'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
