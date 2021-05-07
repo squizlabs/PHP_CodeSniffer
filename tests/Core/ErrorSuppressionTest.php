@@ -849,8 +849,18 @@ EOD;
                 'expectedErrors' => 1,
             ],
             'disable: whole standard'                      => ['before' => '// phpcs:disable Generic'],
+            'disable: single errorcode'                    => [
+                'before'         => '# @phpcs:disable Generic.Commenting.Todo.TaskFound',
+                'expectedErrors' => 1,
+            ],
+            'disable: single errorcode and a category'     => ['before' => '// phpcs:disable Generic.PHP.LowerCaseConstant.Found,Generic.Commenting'],
 
-            // Wrong category using docblocks.
+            // Wrong category/sniff/code.
+            'disable: wrong error code and category'       => [
+                'before'           => '/**'.PHP_EOL.' * phpcs:disable Generic.PHP.LowerCaseConstant.Upper,Generic.Comments'.PHP_EOL.' */ ',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 1,
+            ],
             'disable: wrong category, docblock'            => [
                 'before'           => '/**'.PHP_EOL.' * phpcs:disable Generic.Files'.PHP_EOL.' */ ',
                 'expectedErrors'   => 1,
