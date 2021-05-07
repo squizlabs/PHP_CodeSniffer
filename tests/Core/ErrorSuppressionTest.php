@@ -573,94 +573,98 @@ EOD;
     /**
      * Test suppressing a scope opener.
      *
+     * @param string $before         Annotation to place before the scope opener.
+     * @param string $after          Annotation to place after the scope opener.
+     * @param int    $expectedErrors Optional. Number of errors expected.
+     *                               Defaults to 0.
+     *
+     * @dataProvider dataSuppressScope
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testSuppressScope()
+    public function testSuppressScope($before, $after, $expectedErrors=0)
     {
-        $config            = new Config();
-        $config->standards = ['PEAR'];
-        $config->sniffs    = ['PEAR.Functions.FunctionDeclaration'];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['PEAR'];
+            $config->sniffs    = ['PEAR.Functions.FunctionDeclaration'];
 
-        // Process without suppression.
-        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'function myFunction() {'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = '<?php '.PHP_EOL.$before.'$var = FALSE;'.$after.PHP_EOL.'$var = FALSE;';
+        $content = <<<EOD
+<?php
+class MyClass() {
+    $before
+    function myFunction() {
+        $after
+        \$this->foo();
+    }
+}
+EOD;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-
-        // Process with suppression.
-        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//phpcs:disable'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//phpcs:enable'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with suppression (hash comment).
-        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'#phpcs:disable'.PHP_EOL.'function myFunction() {'.PHP_EOL.'#phpcs:enable'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with suppression.
-        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//@phpcs:disable'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//@phpcs:enable'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'//@codingStandardsIgnoreStart'.PHP_EOL.'function myFunction() {'.PHP_EOL.'//@codingStandardsIgnoreEnd'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with a docblock suppression.
-        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'/** phpcs:disable */'.PHP_EOL.'function myFunction() {'.PHP_EOL.'/** phpcs:enable */'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file    = new DummyFile($content, $ruleset, $config);
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with a docblock @ suppression.
-        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'/** @phpcs:disable */'.PHP_EOL.'function myFunction() {'.PHP_EOL.'/** @phpcs:enable */'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file    = new DummyFile($content, $ruleset, $config);
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-
-        // Process with a docblock suppression (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'class MyClass() {'.PHP_EOL.'/** @codingStandardsIgnoreStart */'.PHP_EOL.'function myFunction() {'.PHP_EOL.'/** @codingStandardsIgnoreEnd */'.PHP_EOL.'$this->foo();'.PHP_EOL.'}'.PHP_EOL.'}';
-        $file    = new DummyFile($content, $ruleset, $config);
-
-        $errors    = $file->getErrors();
-        $numErrors = $file->getErrorCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
+        $this->assertSame($expectedErrors, $file->getErrorCount());
+        $this->assertCount($expectedErrors, $file->getErrors());
 
     }//end testSuppressScope()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testSuppressScope()
+     *
+     * @return array
+     */
+    public function dataSuppressScope()
+    {
+        return [
+            'no suppression'                                       => [
+                'before'         => '',
+                'after'          => '',
+                'expectedErrors' => 1,
+            ],
+
+            // Process with suppression.
+            'disable/enable: slash comment'                        => [
+                'before' => '//phpcs:disable',
+                'after'  => '//phpcs:enable',
+            ],
+            'disable/enable: slash comment, with @'                => [
+                'before' => '//@phpcs:disable',
+                'after'  => '//@phpcs:enable',
+            ],
+            'disable/enable: hash comment'                         => [
+                'before' => '#phpcs:disable',
+                'after'  => '#phpcs:enable',
+            ],
+            'disable/enable: single line docblock comment'         => [
+                'before' => '/** phpcs:disable */',
+                'after'  => '/** phpcs:enable */',
+            ],
+            'disable/enable: single line docblock comment, with @' => [
+                'before' => '/** @phpcs:disable */',
+                'after'  => '/** @phpcs:enable */',
+            ],
+
+            // Deprecated syntax.
+            'old style: start/end, slash comment'                  => [
+                'before' => '//@codingStandardsIgnoreStart',
+                'after'  => '//@codingStandardsIgnoreEnd',
+            ],
+            'old style: start/end, single line docblock comment'   => [
+                'before' => '/** @codingStandardsIgnoreStart */',
+                'after'  => '/** @codingStandardsIgnoreEnd */',
+            ],
+        ];
+
+    }//end dataSuppressScope()
 
 
     /**
