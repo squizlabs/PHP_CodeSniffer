@@ -751,7 +751,7 @@ EOD;
         $this->assertCount(0, $warnings);
 
         // Process late comment.
-        $content = '<?php '.PHP_EOL.'class MyClass {}'.PHP_EOL.'$foo = new MyClass()'.PHP_EOL.'// phpcs:ignoreFile';
+        $content = '<?php '.PHP_EOL.'class MyClass {}'.PHP_EOL.'$foo = new MyClass();'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:ignoreFile';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
@@ -761,7 +761,7 @@ EOD;
         $this->assertCount(0, $warnings);
 
         // Process late comment (deprecated syntax).
-        $content = '<?php '.PHP_EOL.'class MyClass {}'.PHP_EOL.'$foo = new MyClass()'.PHP_EOL.'// @codingStandardsIgnoreFile';
+        $content = '<?php '.PHP_EOL.'class MyClass {}'.PHP_EOL.'$foo = new MyClass();'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// @codingStandardsIgnoreFile';
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
