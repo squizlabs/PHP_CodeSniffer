@@ -1146,90 +1146,102 @@ EOD;
     /**
      * Test ignoring specific sniffs.
      *
+     * @param string $code             Code pattern to check.
+     * @param int    $expectedErrors   Number of errors expected.
+     * @param int    $expectedWarnings Number of warnings expected.
+     *
+     * @dataProvider dataCommenting
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testCommenting()
+    public function testCommenting($code, $expectedErrors, $expectedWarnings)
     {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-        $config->sniffs    = [
-            'Generic.PHP.LowerCaseConstant',
-            'Generic.Commenting.Todo',
-        ];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['Generic'];
+            $config->sniffs    = [
+                'Generic.PHP.LowerCaseConstant',
+                'Generic.Commenting.Todo',
+            ];
 
-        // Suppress a single sniff.
-        $content = '<?php '.PHP_EOL.'// phpcs:ignore Generic.Commenting.Todo -- Because reasons'.PHP_EOL.'$var = FALSE; //TODO: write some code'.PHP_EOL.'$var = FALSE; //TODO: write some code';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = '<?php '.$code;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(2, $numErrors);
-        $this->assertCount(2, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
+        $this->assertSame($expectedErrors, $file->getErrorCount());
+        $this->assertCount($expectedErrors, $file->getErrors());
 
-        // Suppress a single sniff and re-enable.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo --Because reasons'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting.Todo   --  Because reasons'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Suppress a single sniff using block comments.
-        $content = '<?php '.PHP_EOL.'/*'.PHP_EOL.'    Disable some checks'.PHP_EOL.'    phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'*/'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
-
-        // Suppress a single sniff with a multi-line comment.
-        $content = '<?php '.PHP_EOL.'// Turn off a check for the next line of code.'.PHP_EOL.'// phpcs:ignore Generic.Commenting.Todo'.PHP_EOL.'$var = FALSE; //TODO: write some code'.PHP_EOL.'$var = FALSE; //TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(2, $numErrors);
-        $this->assertCount(2, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Ignore an enable before a disable.
-        $content = '<?php '.PHP_EOL.'// phpcs:enable Generic.PHP.NoSilencedErrors -- Because reasons'.PHP_EOL.'$var = @delete( $filename );'.PHP_EOL;
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(0, $numWarnings);
-        $this->assertCount(0, $warnings);
+        $this->assertSame($expectedWarnings, $file->getWarningCount());
+        $this->assertCount($expectedWarnings, $file->getWarnings());
 
     }//end testCommenting()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testCommenting()
+     *
+     * @return array
+     */
+    public function dataCommenting()
+    {
+        return [
+            'ignore: single sniff'                                                                         => [
+                'code'             => '
+                    // phpcs:ignore Generic.Commenting.Todo -- Because reasons
+                    $var = FALSE; //TODO: write some code
+                    $var = FALSE; //TODO: write some code',
+                'expectedErrors'   => 2,
+                'expectedWarnings' => 1,
+            ],
+            'disable: single sniff; enable: same sniff - test whitespace handling around reason delimiter' => [
+                'code'             => '
+                    // phpcs:disable Generic.Commenting.Todo --Because reasons
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic.Commenting.Todo   --  Because reasons
+                    //TODO: write some code',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 1,
+            ],
+            'disable: single sniff, multi-line comment'                                                    => [
+                'code'             => '
+                    /*
+                        Disable some checks
+                        phpcs:disable Generic.Commenting.Todo
+                    */
+                    $var = FALSE;
+                    //TODO: write some code',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 0,
+            ],
+            'ignore: single sniff, multi-line slash comment'                                               => [
+                'code'             => '
+                    // Turn off a check for the next line of code.
+                    // phpcs:ignore Generic.Commenting.Todo
+                    $var = FALSE; //TODO: write some code
+                    $var = FALSE; //TODO: write some code',
+                'expectedErrors'   => 2,
+                'expectedWarnings' => 1,
+            ],
+            'enable before disable, sniff not in standard'                                                 => [
+                'code'             => '
+                    // phpcs:enable Generic.PHP.NoSilencedErrors -- Because reasons
+                    $var = @delete( $filename );
+                    ',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 0,
+            ],
+        ];
+
+    }//end dataCommenting()
 
 
 }//end class
