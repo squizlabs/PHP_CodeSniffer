@@ -423,6 +423,31 @@ EOD;
 
 
     /**
+     * Test suppressing a single error using a single line ignore in the middle of a line.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
+     * @return void
+     */
+    public function testSuppressLineMidLine()
+    {
+        $config            = new Config();
+        $config->standards = ['Generic'];
+        $config->sniffs    = ['Generic.PHP.LowerCaseConstant'];
+
+        $ruleset = new Ruleset($config);
+
+        $content = '<?php '.PHP_EOL.'$var = FALSE; /* @phpcs:ignore */ $var = FALSE;';
+        $file    = new DummyFile($content, $ruleset, $config);
+        $file->process();
+
+        $this->assertSame(0, $file->getErrorCount());
+        $this->assertCount(0, $file->getErrors());
+
+    }//end testSuppressLineMidLine()
+
+
+    /**
      * Test suppressing a single error using a single line ignore within a docblock.
      *
      * @covers PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
