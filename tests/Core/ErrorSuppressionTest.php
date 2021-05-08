@@ -879,174 +879,176 @@ EOD;
     /**
      * Test re-enabling specific sniffs that have been disabled.
      *
+     * @param string $code             Code pattern to check.
+     * @param int    $expectedErrors   Number of errors expected.
+     * @param int    $expectedWarnings Number of warnings expected.
+     *
+     * @dataProvider dataEnableSelected
+     * @covers       PHP_CodeSniffer\Tokenizers\Tokenizer::createPositionMap
+     *
      * @return void
      */
-    public function testEnableSelected()
+    public function testEnableSelected($code, $expectedErrors, $expectedWarnings)
     {
-        $config            = new Config();
-        $config->standards = ['Generic'];
-        $config->sniffs    = [
-            'Generic.PHP.LowerCaseConstant',
-            'Generic.Commenting.Todo',
-        ];
+        static $config, $ruleset;
 
-        $ruleset = new Ruleset($config);
+        if (isset($config, $ruleset) === false) {
+            $config            = new Config();
+            $config->standards = ['Generic'];
+            $config->sniffs    = [
+                'Generic.PHP.LowerCaseConstant',
+                'Generic.Commenting.Todo',
+            ];
 
-        // Suppress a single sniff and re-enable.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting.Todo'.PHP_EOL.'//TODO: write some code';
+            $ruleset = new Ruleset($config);
+        }
+
+        $content = '<?php '.$code;
         $file    = new DummyFile($content, $ruleset, $config);
         $file->process();
 
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
+        $this->assertSame($expectedErrors, $file->getErrorCount());
+        $this->assertCount($expectedErrors, $file->getErrors());
 
-        // Suppress multiple sniffs and re-enable.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Suppress multiple sniffs and re-enable one.
-        $content = '<?php '.PHP_EOL.'# phpcs:disable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'# phpcs:enable Generic.Commenting.Todo'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'$var = FALSE;';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Suppress a category of sniffs and re-enable.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Suppress a whole standard and re-enable.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Suppress a whole standard and re-enable a category.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Suppress a category and re-enable a whole standard.
-        $content = '<?php '.PHP_EOL.'# phpcs:disable Generic.Commenting'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'# phpcs:enable Generic'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Suppress a sniff and re-enable a category.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Suppress a whole standard and re-enable a sniff.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting.Todo'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(1, $numWarnings);
-        $this->assertCount(1, $warnings);
-
-        // Suppress a whole standard and re-enable and re-disable a sniff.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting.Todo'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:disable Generic.Commenting.Todo'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable'.PHP_EOL.'//TODO: write some code';
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(0, $numErrors);
-        $this->assertCount(0, $errors);
-        $this->assertEquals(2, $numWarnings);
-        $this->assertCount(2, $warnings);
-
-        // Suppress a whole standard and re-enable 2 specific sniffs independently.
-        $content = '<?php '.PHP_EOL.'// phpcs:disable Generic'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'// phpcs:enable Generic.Commenting.Todo'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'$var = FALSE;'.PHP_EOL.'// phpcs:enable Generic.PHP.LowerCaseConstant'.PHP_EOL.'//TODO: write some code'.PHP_EOL.'$var = FALSE;'.PHP_EOL;
-        $file    = new DummyFile($content, $ruleset, $config);
-        $file->process();
-
-        $errors      = $file->getErrors();
-        $numErrors   = $file->getErrorCount();
-        $warnings    = $file->getWarnings();
-        $numWarnings = $file->getWarningCount();
-        $this->assertEquals(1, $numErrors);
-        $this->assertCount(1, $errors);
-        $this->assertEquals(2, $numWarnings);
-        $this->assertCount(2, $warnings);
+        $this->assertSame($expectedWarnings, $file->getWarningCount());
+        $this->assertCount($expectedWarnings, $file->getWarnings());
 
     }//end testEnableSelected()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testEnableSelected()
+     *
+     * @return array
+     */
+    public function dataEnableSelected()
+    {
+        return [
+            'disable/enable: a single sniff'                                                                                => [
+                'code'             => '
+                    // phpcs:disable Generic.Commenting.Todo
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic.Commenting.Todo
+                    //TODO: write some code',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 1,
+            ],
+            'disable/enable: multiple sniffs'                                                                               => [
+                'code'             => '
+                    // phpcs:disable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant
+                    //TODO: write some code
+                    $var = FALSE;',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 1,
+            ],
+            'disable: multiple sniffs; enable: one'                                                                         => [
+                'code'             => '
+                    # phpcs:disable Generic.Commenting.Todo,Generic.PHP.LowerCaseConstant
+                    $var = FALSE;
+                    //TODO: write some code
+                    # phpcs:enable Generic.Commenting.Todo
+                    //TODO: write some code
+                    $var = FALSE;',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 1,
+            ],
+            'disable/enable: complete category'                                                                             => [
+                'code'             => '
+                    // phpcs:disable Generic.Commenting
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic.Commenting
+                    //TODO: write some code',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 1,
+            ],
+            'disable/enable: whole standard'                                                                                => [
+                'code'             => '
+                    // phpcs:disable Generic
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic
+                    //TODO: write some code',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 1,
+            ],
+            'disable: whole standard; enable: category from the standard'                                                   => [
+                'code'             => '
+                    // phpcs:disable Generic
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic.Commenting
+                    //TODO: write some code',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 1,
+            ],
+            'disable: a category; enable: the whole standard containing the category'                                       => [
+                'code'             => '
+                    # phpcs:disable Generic.Commenting
+                    $var = FALSE;
+                    //TODO: write some code
+                    # phpcs:enable Generic
+                    //TODO: write some code',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 1,
+            ],
+            'disable: single sniff; enable: the category containing the sniff'                                              => [
+                'code'             => '
+                    // phpcs:disable Generic.Commenting.Todo
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic.Commenting
+                    //TODO: write some code',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 1,
+            ],
+            'disable: whole standard; enable: single sniff from the standard'                                               => [
+                'code'             => '
+                    // phpcs:disable Generic
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic.Commenting.Todo
+                    //TODO: write some code',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 1,
+            ],
+            'disable: whole standard; enable: single sniff from the standard; disable: that same sniff; enable: everything' => [
+                'code'             => '
+                    // phpcs:disable Generic
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic.Commenting.Todo
+                    //TODO: write some code
+                    // phpcs:disable Generic.Commenting.Todo
+                    //TODO: write some code
+                    // phpcs:enable
+                    //TODO: write some code',
+                'expectedErrors'   => 0,
+                'expectedWarnings' => 2,
+            ],
+            'disable: whole standard; enable: single sniff from the standard; enable: other sniff from the standard'        => [
+                'code'             => '
+                    // phpcs:disable Generic
+                    $var = FALSE;
+                    //TODO: write some code
+                    // phpcs:enable Generic.Commenting.Todo
+                    //TODO: write some code
+                    $var = FALSE;
+                    // phpcs:enable Generic.PHP.LowerCaseConstant
+                    //TODO: write some code
+                    $var = FALSE;',
+                'expectedErrors'   => 1,
+                'expectedWarnings' => 2,
+            ],
+        ];
+
+    }//end dataEnableSelected()
 
 
     /**
