@@ -694,8 +694,7 @@ abstract class Tokenizer
             } else if ($this->tokens[$i]['code'] === T_ATTRIBUTE) {
                 $openers[] = $i;
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                    echo str_repeat("\t", count($openers));
-                    echo "=> Found attribute opener at $i".PHP_EOL;
+                    Common::printStatusMessage("=> Found attribute opener at $i", count($openers));
                 }
 
                 $this->tokens[$i]['attribute_opener'] = $i;
@@ -708,8 +707,7 @@ abstract class Tokenizer
                         $this->tokens[$opener]['attribute_closer'] = $i;
 
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                            echo str_repeat("\t", (count($openers) + 1));
-                            echo "=> Found attribute closer at $i for $opener".PHP_EOL;
+                            Common::printStatusMessage("=> Found attribute closer at $i for $opener", (count($openers) + 1));
                         }
 
                         for ($x = ($opener + 1); $x <= $i; ++$x) {
@@ -721,8 +719,7 @@ abstract class Tokenizer
                             $this->tokens[$x]['attribute_closer'] = $i;
                         }
                     } else if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        echo str_repeat("\t", (count($openers) + 1));
-                        echo "=> Found unowned attribute closer at $i for $opener".PHP_EOL;
+                        Common::printStatusMessage("=> Found unowned attribute closer at $i for $opener", (count($openers) + 1));
                     }
                 }//end if
 

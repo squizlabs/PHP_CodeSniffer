@@ -332,7 +332,7 @@ class ScopeIndentSniff implements Sniff
                         if ($this->debug === true) {
                             $line = $tokens[$first]['line'];
                             $type = $tokens[$first]['type'];
-                            echo "\t* first token on line $line is $first ($type) *".PHP_EOL;
+                            Common::printStatusMessage("* first token on line $line is $first ($type) *", 1);
                         }
 
                         $checkIndent = ($tokens[$first]['column'] - 1);
