@@ -200,7 +200,7 @@ class MultiLineFunctionDeclarationSniff extends PEARFunctionDeclarationSniff
         // The open bracket should be the last thing on the line.
         if ($tokens[$openBracket]['line'] !== $tokens[$closeBracket]['line']) {
             $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($openBracket + 1), null, true);
-            if ($tokens[$next]['line'] !== ($tokens[$openBracket]['line'] + 1)) {
+            if ($tokens[$next]['line'] === $tokens[$openBracket]['line']) {
                 $error = 'The first parameter of a multi-line '.$type.' declaration must be on the line after the opening bracket';
                 $fix   = $phpcsFile->addFixableError($error, $next, $errorPrefix.'FirstParamSpacing');
                 if ($fix === true) {
