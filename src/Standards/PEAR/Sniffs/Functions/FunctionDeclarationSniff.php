@@ -446,9 +446,10 @@ class FunctionDeclarationSniff implements Sniff
                 }
 
                 // We changed lines, so this should be a whitespace indent token.
-                if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                    $foundIndent = 0;
-                } else if ($tokens[$i]['line'] !== $tokens[($i + 1)]['line']) {
+                $foundIndent = 0;
+                if ($tokens[$i]['code'] === T_WHITESPACE
+                    && $tokens[$i]['line'] !== $tokens[($i + 1)]['line']
+                ) {
                     // This is an empty line, so don't check the indent.
                     $foundIndent = $expectedIndent;
 
@@ -457,8 +458,11 @@ class FunctionDeclarationSniff implements Sniff
                     if ($fix === true) {
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
-                } else {
+                } else if ($tokens[$i]['code'] === T_WHITESPACE) {
                     $foundIndent = $tokens[$i]['length'];
+                } else if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE) {
+                    $foundIndent = $tokens[$i]['length'];
+                    ++$expectedIndent;
                 }
 
                 if ($expectedIndent !== $foundIndent) {

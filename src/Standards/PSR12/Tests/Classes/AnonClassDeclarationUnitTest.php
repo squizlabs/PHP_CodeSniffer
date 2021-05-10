@@ -32,7 +32,7 @@ class AnonClassDeclarationUnitTest extends AbstractSniffUnitTest
             32 => 1,
             33 => 1,
             34 => 1,
-            35 => 2,
+            35 => 1,
             36 => 1,
             37 => 3,
             39 => 1,
