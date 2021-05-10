@@ -1723,6 +1723,8 @@ class PHP extends Tokenizer
                         T_NULLSAFE_OBJECT_OPERATOR => true,
                         T_FUNCTION                 => true,
                         T_CLASS                    => true,
+                        T_INTERFACE                => true,
+                        T_TRAIT                    => true,
                         T_EXTENDS                  => true,
                         T_IMPLEMENTS               => true,
                         T_ATTRIBUTE                => true,
