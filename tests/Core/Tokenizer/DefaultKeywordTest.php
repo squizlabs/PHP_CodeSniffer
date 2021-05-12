@@ -263,9 +263,36 @@ class DefaultKeywordTest extends AbstractMethodUnitTest
 
             'class-constant-in-switch-case'                       => ['/* testClassConstantInSwitchCase */'],
             'class-property-in-switch-case'                       => ['/* testClassPropertyInSwitchCase */'],
+
+            'class-constant-declaration'                          => ['/* testClassConstant */'],
+            'class-method-declaration'                            => [
+                '/* testMethodDeclaration */',
+                'default',
+            ],
         ];
 
     }//end dataNotDefaultKeyword()
+
+
+    /**
+     * Test a specific edge case where a scope opener would be incorrectly set.
+     *
+     * @link https://github.com/squizlabs/PHP_CodeSniffer/issues/3326
+     *
+     * @return void
+     */
+    public function testIssue3326()
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $token      = $this->getTargetToken('/* testClassConstant */', [T_SEMICOLON]);
+        $tokenArray = $tokens[$token];
+
+        $this->assertArrayNotHasKey('scope_condition', $tokenArray, 'Scope condition is set');
+        $this->assertArrayNotHasKey('scope_opener', $tokenArray, 'Scope opener is set');
+        $this->assertArrayNotHasKey('scope_closer', $tokenArray, 'Scope closer is set');
+
+    }//end testIssue3326()
 
 
 }//end class

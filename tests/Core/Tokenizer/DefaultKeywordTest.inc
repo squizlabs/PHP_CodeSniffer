@@ -177,3 +177,11 @@ function switchWithConstantNonDefault($i) {
             return 2;
     }
 }
+
+class Foo {
+    /* testClassConstant */
+    const DEFAULT = 'foo';
+
+    /* testMethodDeclaration */
+    public function default() {}
+}
