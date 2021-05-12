@@ -150,6 +150,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="Tokenizer">
       <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.inc" role="test" />
       <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.php" role="test" />
+      <file baseinstalldir="" name="ArrayKeywordTest.inc" role="test" />
+      <file baseinstalldir="" name="ArrayKeywordTest.php" role="test" />
       <file baseinstalldir="" name="AttributesTest.inc" role="test" />
       <file baseinstalldir="" name="AttributesTest.php" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.inc" role="test" />
@@ -2098,6 +2100,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTestable.php" name="tests/Core/Sniffs/AbstractArraySniffTestable.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.php" name="tests/Core/Tokenizer/ArrayKeywordTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.inc" name="tests/Core/Tokenizer/ArrayKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.php" name="tests/Core/Tokenizer/AttributesTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.inc" name="tests/Core/Tokenizer/AttributesTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
@@ -2186,6 +2190,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTestable.php" name="tests/Core/Sniffs/AbstractArraySniffTestable.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.php" name="tests/Core/Tokenizer/ArrayKeywordTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.inc" name="tests/Core/Tokenizer/ArrayKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.php" name="tests/Core/Tokenizer/AttributesTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.inc" name="tests/Core/Tokenizer/AttributesTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
