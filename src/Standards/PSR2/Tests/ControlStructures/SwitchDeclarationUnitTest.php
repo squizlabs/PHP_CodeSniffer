@@ -53,6 +53,7 @@ class SwitchDeclarationUnitTest extends AbstractSniffUnitTest
             350 => 1,
             356 => 1,
             362 => 1,
+            384 => 1,
         ];
 
     }//end getErrorList()
