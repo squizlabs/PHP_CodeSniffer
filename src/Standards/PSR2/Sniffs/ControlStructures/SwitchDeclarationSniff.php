@@ -343,15 +343,15 @@ class SwitchDeclarationSniff implements Sniff
             // We found the last statement of the CASE. Now we want to
             // check whether it is a terminating one.
             $terminators = [
-                T_RETURN,
-                T_BREAK,
-                T_CONTINUE,
-                T_THROW,
-                T_EXIT,
+                T_RETURN   => T_RETURN,
+                T_BREAK    => T_BREAK,
+                T_CONTINUE => T_CONTINUE,
+                T_THROW    => T_THROW,
+                T_EXIT     => T_EXIT,
             ];
 
             $terminator = $phpcsFile->findStartOfStatement(($lastToken - 1));
-            if (in_array($tokens[$terminator]['code'], $terminators, true) === true) {
+            if (isset($terminators[$tokens[$terminator]['code']]) === true) {
                 return $terminator;
             }
         }//end if
