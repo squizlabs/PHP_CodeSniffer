@@ -264,7 +264,7 @@ class SwitchDeclarationSniff implements Sniff
                 $scopeOpener = $tokens[$currentCloser]['scope_opener'];
                 $scopeCloser = $tokens[$currentCloser]['scope_closer'];
 
-                $prevToken = $phpcsFile->findPrevious(T_WHITESPACE, ($scopeOpener - 1), $stackPtr, true);
+                $prevToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($scopeOpener - 1), $stackPtr, true);
                 if ($prevToken === false) {
                     return false;
                 }
@@ -292,7 +292,7 @@ class SwitchDeclarationSniff implements Sniff
                         return false;
                     }
 
-                    $currentCloser = $phpcsFile->findPrevious(T_WHITESPACE, ($prevToken - 1), $stackPtr, true);
+                    $currentCloser = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prevToken - 1), $stackPtr, true);
                     if ($tokens[$prevToken]['code'] === T_ELSE) {
                         $hasElseBlock = true;
                     }
@@ -309,7 +309,7 @@ class SwitchDeclarationSniff implements Sniff
 
                         $opener = $tokens[$nextCase]['scope_opener'];
 
-                        $nextCode = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), $endOfSwitch, true);
+                        $nextCode = $phpcsFile->findNext(Tokens::$emptyTokens, ($opener + 1), $endOfSwitch, true);
                         if ($tokens[$nextCode]['code'] === T_CASE || $tokens[$nextCode]['code'] === T_DEFAULT) {
                             // This case statement has no content, so skip it.
                             continue;

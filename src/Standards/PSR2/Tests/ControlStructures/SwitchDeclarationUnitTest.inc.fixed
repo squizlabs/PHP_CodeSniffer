@@ -373,3 +373,29 @@ switch ( $test ) {
 
         break;
 }
+
+// Handle comments correctly.
+switch ($foo) {
+    case 1:
+        if ($bar > 0) {
+            doSomething();
+        }
+        // Comment
+        else {
+            return 1;
+        }
+    case 2:
+        return 2;
+}
+
+switch ($foo) {
+    case 1:
+        if ($bar > 0) /*comment*/ {
+            return doSomething();
+        }
+        else {
+            return 1;
+        }
+    case 2:
+        return 2;
+}
