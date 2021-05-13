@@ -343,3 +343,33 @@ switch ($foo) {
     case 3:
         return 2;
 }
+
+// Issue 3352.
+switch ( $test ) {
+    case 2: // comment followed by empty line
+        break;
+
+    case 3: /* phpcs:ignore Stnd.Cat.SniffName -- Verify correct handling of ignore comments. */
+        break;
+
+    case 4: /** inline docblock */
+        break;
+
+    case 5: /* checking how it handles */ /* two trailing comments */
+        break;
+
+    case 6:
+       // Comment as first content of the body.
+
+        break;
+
+    case 7:
+        /* phpcs:ignore Stnd.Cat.SniffName -- Verify correct handling of ignore comments at start of body. */
+
+        break;
+
+    case 8:
+        /** inline docblock */
+
+        break;
+}

@@ -107,13 +107,13 @@ class SwitchDeclarationSniff implements Sniff
                     }
                 }
 
-                $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
-                if ($tokens[$next]['line'] === $tokens[$opener]['line']
-                    && ($tokens[$next]['code'] === T_COMMENT
-                    || isset(Tokens::$phpcsCommentTokens[$tokens[$next]['code']]) === true)
-                ) {
-                    // Skip comments on the same line.
-                    $next = $phpcsFile->findNext(T_WHITESPACE, ($next + 1), null, true);
+                for ($next = ($opener + 1); $next < $nextCloser; $next++) {
+                    if (isset(Tokens::$emptyTokens[$tokens[$next]['code']]) === false
+                        || (isset(Tokens::$commentTokens[$tokens[$next]['code']]) === true
+                        && $tokens[$next]['line'] !== $tokens[$opener]['line'])
+                    ) {
+                        break;
+                    }
                 }
 
                 if ($tokens[$next]['line'] !== ($tokens[$opener]['line'] + 1)) {
@@ -126,6 +126,11 @@ class SwitchDeclarationSniff implements Sniff
                         } else {
                             $phpcsFile->fixer->beginChangeset();
                             for ($i = ($opener + 1); $i < $next; $i++) {
+                                if ($tokens[$i]['line'] === $tokens[$opener]['line']) {
+                                    // Ignore trailing comments.
+                                    continue;
+                                }
+
                                 if ($tokens[$i]['line'] === $tokens[$next]['line']) {
                                     break;
                                 }
@@ -133,10 +138,9 @@ class SwitchDeclarationSniff implements Sniff
                                 $phpcsFile->fixer->replaceToken($i, '');
                             }
 
-                            $phpcsFile->fixer->addNewLineBefore($i);
                             $phpcsFile->fixer->endChangeset();
                         }
-                    }
+                    }//end if
                 }//end if
 
                 if ($tokens[$nextCloser]['scope_condition'] === $nextCase) {
