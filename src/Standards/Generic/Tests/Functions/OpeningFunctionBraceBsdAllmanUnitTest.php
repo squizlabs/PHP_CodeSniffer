@@ -58,6 +58,9 @@ class OpeningFunctionBraceBsdAllmanUnitTest extends AbstractSniffUnitTest
             220 => 1,
             231 => 1,
             236 => 1,
+            244 => 1,
+            252 => 1,
+            260 => 1,
         ];
 
     }//end getErrorList()
