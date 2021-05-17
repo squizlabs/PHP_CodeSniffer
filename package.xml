@@ -577,6 +577,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNoNewlineUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ExecutableFileUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ExecutableFileUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ExecutableFileUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ExecutableFileUnitTest.4.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ExecutableFileUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="InlineHTMLUnitTest.2.inc" role="test" />
