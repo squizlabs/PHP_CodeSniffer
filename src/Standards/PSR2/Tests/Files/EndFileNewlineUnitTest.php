@@ -35,6 +35,10 @@ class EndFileNewlineUnitTest extends AbstractSniffUnitTest
         case 'EndFileNewlineUnitTest.9.inc':
         case 'EndFileNewlineUnitTest.10.inc':
             return [2 => 1];
+        case 'EndFileNewlineUnitTest.11.inc':
+        case 'EndFileNewlineUnitTest.12.inc':
+        case 'EndFileNewlineUnitTest.13.inc':
+            return [1 => 1];
         default:
             return [];
         }//end switch
