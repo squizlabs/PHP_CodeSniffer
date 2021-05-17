@@ -688,7 +688,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="CharacterBeforePHPOpeningTagUnitTest.php" role="test" />
-        <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.1.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingPHPTagUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DeprecatedFunctionsUnitTest.php" role="test" />
