@@ -29,6 +29,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - PHPCS annotations can now be specified using hash-style comments
     -- Previously, only slash-style and block-style comments could be used to do things like disable errors
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed an issue where some sniffs would not run on PHP files that only used the short open tag with echo tag
+    -- The following sniffs were affected:
+       --- Generic.Files.ExecutableFile
+       --- Generic.Files.LowercasedFilename
+       --- Generic.Files.LineEndings
+       --- Generic.Files.EndFileNewline
+       --- Generic.Files.EndFileNoNewline
+       --- Generic.PHP.ClosingPHPTag
+       --- Generic.PHP.Syntax
+       --- Generic.VersionControl.GitMergeConflict
+       --- Generic.WhiteSpace.DisallowSpaceIndent
+       --- Generic.WhiteSpace.DisallowTabIndent
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3294 : Bug in attribute tokenization when content contains PHP end token or attribute closer on new line
     -- Thanks to Alessandro Chitolina for the patch
     -- Thanks to Juliette Reinders Folmer for the tests
