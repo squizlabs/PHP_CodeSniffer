@@ -86,6 +86,17 @@ class DisallowSpaceIndentUnitTest extends AbstractSniffUnitTest
                 118 => 1,
             ];
             break;
+        case 'DisallowSpaceIndentUnitTest.3.inc':
+            return [
+                2  => 1,
+                5  => 1,
+                10 => 1,
+                12 => 1,
+                13 => 1,
+                14 => 1,
+                15 => 1,
+            ];
+            break;
         case 'DisallowSpaceIndentUnitTest.js':
             return [3 => 1];
             break;
