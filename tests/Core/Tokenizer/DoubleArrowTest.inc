@@ -185,7 +185,7 @@ function matchShortArrayMismash() {
         } => match ($test) {
             /* testMatchArrowInComplexShortArrayValue1 */
             1 => [ /* testShortArrayArrowInComplexMatchValueinShortArrayValue */ 1 => 'a'],
-            /* testMatchArrowInComplexShortArrayValue1 */
+            /* testMatchArrowInComplexShortArrayValue2 */
             2 => /* testFnArrowInComplexMatchValueInShortArrayValue */ fn($y) => callMe($y)
         },
     ];
