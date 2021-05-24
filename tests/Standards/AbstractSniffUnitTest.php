@@ -170,6 +170,7 @@ abstract class AbstractSniffUnitTest extends TestCase
             try {
                 $this->setCliValues($filename, $config);
                 $phpcsFile = new LocalFile($testFile, $ruleset, $config);
+                $phpcsFile->reloadContent();
                 $phpcsFile->process();
             } catch (RuntimeException $e) {
                 $this->fail('An unexpected exception has been caught: '.$e->getMessage());

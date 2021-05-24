@@ -628,6 +628,7 @@ class Runner
         }
 
         try {
+            $file->reloadContent();
             $file->process();
 
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
