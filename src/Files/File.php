@@ -29,9 +29,9 @@ class File
     /**
      * The content of the file.
      *
-     * @var string
+     * @var string|null
      */
-    protected $content = '';
+    protected $content = null;
 
     /**
      * The config data for the run.
@@ -558,6 +558,11 @@ class File
         if (empty($this->tokens) === false) {
             // File has already been parsed.
             return;
+        }
+
+        if ($this->content === null) {
+            // No content has been set.
+            $this->reloadContent();
         }
 
         try {
