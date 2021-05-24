@@ -84,7 +84,12 @@ class FileList implements \Iterator, \Countable
                 $iterator = new \RecursiveIteratorIterator($filter);
 
                 foreach ($iterator as $file) {
-                    $this->files[$file->getPathname()] = null;
+                    if ($file instanceof LocalFile) {
+                        $this->files[$file->getFilename()] = $file;
+                    } else {
+                        $this->files[$file->getPathname()] = null;
+                    }
+
                     $this->numFiles++;
                 }
             } else {
@@ -125,7 +130,12 @@ class FileList implements \Iterator, \Countable
         $iterator = new \RecursiveIteratorIterator($filter);
 
         foreach ($iterator as $path) {
-            $this->files[$path] = $file;
+            if ($path instanceof LocalFile) {
+                $this->files[$path->getFilename()] = ($file ?? $path);
+            } else {
+                $this->files[$path] = null;
+            }
+
             $this->numFiles++;
         }
 
