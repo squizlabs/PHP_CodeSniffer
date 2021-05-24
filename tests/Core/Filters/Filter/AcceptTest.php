@@ -11,6 +11,7 @@
 namespace PHP_CodeSniffer\Tests\Core\Filters\Filter;
 
 use PHP_CodeSniffer\Config;
+use PHP_CodeSniffer\Files\LocalFile;
 use PHP_CodeSniffer\Filters\Filter;
 use PHP_CodeSniffer\Ruleset;
 use PHPUnit\Framework\TestCase;
@@ -93,6 +94,39 @@ class AcceptTest extends TestCase
         $this->assertEquals($expectedOutput, $files);
 
     }//end testExcludePatterns()
+
+
+    /**
+     * Test filtering a file list for excluded paths, when producing LocalFile objects.
+     *
+     * @param array $inputPaths     List of file paths to be filtered.
+     * @param array $expectedOutput Expected filtering result.
+     *
+     * @dataProvider dataExcludePatterns
+     *
+     * @return void
+     */
+    public function testExcludePatternsProducingLocalFileObjects($inputPaths, $expectedOutput)
+    {
+        $fakeDI   = new \RecursiveArrayIterator($inputPaths);
+        $filter   = new Filter($fakeDI, '/', self::$config, self::$ruleset);
+        $iterator = new \RecursiveIteratorIterator($filter);
+        $files    = [];
+
+        // Set the filter object to produce LocalFile objects.
+        $rc = new \ReflectionClass($filter);
+        $rp = $rc->getProperty('produceLocalFileObjects');
+        $rp->setAccessible(true);
+        $rp->setValue($filter, true);
+
+        foreach ($iterator as $file) {
+            $this->assertInstanceOf(LocalFile::class, $file);
+            $files[] = $file->getFilename();
+        }
+
+        $this->assertEquals($expectedOutput, $files);
+
+    }//end testExcludePatternsProducingLocalFileObjects()
 
 
     /**
