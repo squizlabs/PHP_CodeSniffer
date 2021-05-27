@@ -38,7 +38,7 @@ class NamedFunctionCallArgumentsTest extends AbstractMethodUnitTest
             $this->assertSame(
                 T_PARAM_NAME,
                 $tokens[$label]['code'],
-                'Token tokenized as '.$tokens[$label]['code'].', not T_PARAM_NAME (code)'
+                'Token tokenized as '.$tokens[$label]['type'].', not T_PARAM_NAME (code)'
             );
             $this->assertSame(
                 'T_PARAM_NAME',
@@ -278,7 +278,7 @@ class NamedFunctionCallArgumentsTest extends AbstractMethodUnitTest
         $this->assertSame(
             T_STRING,
             $tokens[$label]['code'],
-            'Token tokenized as '.$tokens[$label]['code'].', not T_STRING (code)'
+            'Token tokenized as '.$tokens[$label]['type'].', not T_STRING (code)'
         );
         $this->assertSame(
             'T_STRING',
@@ -709,7 +709,7 @@ class NamedFunctionCallArgumentsTest extends AbstractMethodUnitTest
         $this->assertSame(
             T_PARAM_NAME,
             $tokens[$label]['code'],
-            'Token tokenized as '.$tokens[$label]['code'].', not T_PARAM_NAME (code)'
+            'Token tokenized as '.$tokens[$label]['type'].', not T_PARAM_NAME (code)'
         );
         $this->assertSame(
             'T_PARAM_NAME',
