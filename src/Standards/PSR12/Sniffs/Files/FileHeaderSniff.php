@@ -300,8 +300,9 @@ class FileHeaderSniff implements Sniff
                 // this block.
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($line['end'] + 1), null, true);
                 if ($next !== false && $tokens[$next]['line'] !== ($tokens[$line['end']]['line'] + 2)) {
-                    $error = 'Header blocks must be separated by a single blank line';
-                    $fix   = $phpcsFile->addFixableError($error, $line['end'], 'SpacingAfterBlock');
+                    $error     = 'Header blocks must be separated by a single blank line';
+                    $errorCode = 'SpacingAfter'.str_replace(' ', '', ucwords($line['type'])).'Block';
+                    $fix       = $phpcsFile->addFixableError($error, $line['end'], $errorCode);
                     if ($fix === true) {
                         if ($tokens[$next]['line'] === $tokens[$line['end']]['line']) {
                             $phpcsFile->fixer->addContentBefore($next, $phpcsFile->eolChar.$phpcsFile->eolChar);
@@ -339,8 +340,9 @@ class FileHeaderSniff implements Sniff
                 // blank line after this statement.
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($line['end'] + 1), null, true);
                 if ($tokens[$next]['line'] > ($tokens[$line['end']]['line'] + 1)) {
-                    $error = 'Header blocks must not contain blank lines';
-                    $fix   = $phpcsFile->addFixableError($error, $line['end'], 'SpacingInsideBlock');
+                    $error     = 'Header blocks must not contain blank lines';
+                    $errorCode = 'SpacingInside'.str_replace(' ', '', ucwords($line['type'])).'Block';
+                    $fix       = $phpcsFile->addFixableError($error, $line['end'], $errorCode);
                     if ($fix === true) {
                         $phpcsFile->fixer->beginChangeset();
                         for ($i = ($line['end'] + 1); $i < $next; $i++) {
@@ -357,7 +359,7 @@ class FileHeaderSniff implements Sniff
 
                         $phpcsFile->fixer->endChangeset();
                     }
-                }
+                }//end if
             }//end if
 
             if (isset($found[$line['type']]) === false) {
