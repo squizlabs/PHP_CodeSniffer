@@ -236,3 +236,28 @@ function myFunction($a, $lot, $of, $params)
     : array /* comment */ {
     return null;
 }
+
+class Issue3357
+{
+    public function extraLine(string: $a): void
+
+    {
+        // code here.
+    }
+}
+
+function issue3357WithoutIndent(string: $a): void
+
+
+{
+    // code here.
+}
+
+class Issue3357WithComment
+{
+    public function extraLine(string: $a): void
+    // Comment.
+    {
+        // code here.
+    }
+}
