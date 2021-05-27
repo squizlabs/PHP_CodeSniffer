@@ -2086,6 +2086,7 @@ class PHP extends Tokenizer
                 // where "finally" should be T_FINALLY instead of T_STRING.
                 if ($newToken['code'] === T_STRING
                     && strtolower($newToken['content']) === 'finally'
+                    && $finalTokens[$lastNotEmptyToken]['code'] === T_CLOSE_CURLY_BRACKET
                 ) {
                     $newToken['code'] = T_FINALLY;
                     $newToken['type'] = 'T_FINALLY';
