@@ -61,6 +61,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3342 : PSR12/Squiz/PEAR standards all error on promoted properties with docblocks
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3345 : IF statement with no braces and double catch turned into syntax error by auto-fixer
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3352 : PSR2.ControlStructures.SwitchDeclaration can remove comments on the same line as the case statement while fixing
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3357 : Generic.Functions.OpeningFunctionBraceBsdAllman removes return type when additional lines are present
