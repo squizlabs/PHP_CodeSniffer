@@ -141,6 +141,38 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
 
 
         /**
+         * Determine which class was loaded from path
+         *
+         * @param array  $classesBeforeLoad The classes/interfaces/traits before the file was included.
+         * @param string $path              The path that already has been included.
+         *
+         * @return string The fully qualified name of the class in the loaded file.
+         */
+        private static function determinePathClass(
+            array $classesBeforeLoad, $path
+        ) {
+            $alreadyIncluded = in_array($path, get_included_files(), true);
+            if ($alreadyIncluded === false) {
+                return null;
+            }
+
+            $name     = pathinfo($path, PATHINFO_FILENAME);
+            $declared = preg_grep(
+                '(\\\\'.preg_quote($name).'$)',
+                $classesBeforeLoad['classes']
+            );
+            foreach ($declared as $className) {
+                $reflection    = new \ReflectionClass($className);
+                $classFileName = $reflection->getFileName();
+                if ($classFileName === $path) {
+                    return $className;
+                }
+            }
+
+        }//end determinePathClass()
+
+
+        /**
          * Includes a file and tracks what class or interface was loaded as a result.
          *
          * @param string $path The path of the file to load.
@@ -166,6 +198,12 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
                 'traits'     => get_declared_traits(),
             ];
 
+            $className = self::determinePathClass($classesBeforeLoad, $path);
+
+            if ($className !== null) {
+                goto determined_className;
+            }
+
             include $path;
 
             $classesAfterLoad = [
@@ -174,7 +212,12 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
                 'traits'     => get_declared_traits(),
             ];
 
-            $className = self::determineLoadedClass($classesBeforeLoad, $classesAfterLoad);
+            $className = self::determineLoadedClass(
+                $classesBeforeLoad,
+                $classesAfterLoad
+            );
+
+            determined_className:
 
             self::$loadedClasses[$path]    = $className;
             self::$loadedFiles[$className] = $path;
