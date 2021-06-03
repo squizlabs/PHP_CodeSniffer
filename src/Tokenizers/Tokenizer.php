@@ -643,7 +643,7 @@ abstract class Tokenizer
 
                 // Move the pointer to the next tab stop.
                 $length      = $tabWidth - ($currColumn + $tabWidth - 1) % $tabWidth;
-	            $currColumn += $length;
+                $currColumn += $length;
                 $newContent .= $prefix.str_repeat($padding, ($length - 1));
             }//end foreach
         }//end if
