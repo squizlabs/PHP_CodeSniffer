@@ -642,7 +642,7 @@ abstract class Tokenizer
                 $tabNum++;
 
                 // Move the pointer to the next tab stop.
-                $pad         = $tabWidth - ($currColumn + $tabWidth - 1) % $tabWidth;
+                $pad         = ($tabWidth - ($currColumn + $tabWidth - 1) % $tabWidth);
                 $currColumn += $pad;
                 $length     += $pad;
                 $newContent .= $prefix.str_repeat($padding, ($pad - 1));
