@@ -642,21 +642,9 @@ abstract class Tokenizer
                 $tabNum++;
 
                 // Move the pointer to the next tab stop.
-                if (($currColumn % $tabWidth) === 0) {
-                    // This is the first tab, and we are already at a
-                    // tab stop, so this tab counts as a single space.
-                    $currColumn++;
-                } else {
-                    $currColumn++;
-                    while (($currColumn % $tabWidth) !== 0) {
-                        $currColumn++;
-                    }
-
-                    $currColumn++;
-                }
-
-                $length     += ($currColumn - $lastCurrColumn);
-                $newContent .= $prefix.str_repeat($padding, ($currColumn - $lastCurrColumn - 1));
+                $length      = $tabWidth - ($currColumn + $tabWidth - 1) % $tabWidth;
+	            $currColumn += $length;
+                $newContent .= $prefix.str_repeat($padding, ($length - 1));
             }//end foreach
         }//end if
 
