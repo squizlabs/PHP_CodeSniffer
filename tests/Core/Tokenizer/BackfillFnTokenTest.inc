@@ -63,6 +63,11 @@ $a = [
     'a' => fn() => return 1,
 ];
 
+/* testArrayValueNoTrailingComma */
+$a = [
+    'a' => fn() => foo()
+];
+
 /* testYield */
 $a = fn($x) => yield 'k' => $x;
 

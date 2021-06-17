@@ -308,6 +308,22 @@ class BackfillFnTokenTest extends AbstractMethodUnitTest
 
 
     /**
+     * Test arrow functions that are used as array values with no trailing comma.
+     *
+     * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional
+     *
+     * @return void
+     */
+    public function testArrayValueNoTrailingComma()
+    {
+        $token = $this->getTargetToken('/* testArrayValueNoTrailingComma */', T_FN);
+        $this->backfillHelper($token);
+        $this->scopePositionTestHelper($token, 4, 8, 'closing parenthesis');
+
+    }//end testArrayValueNoTrailingComma()
+
+
+    /**
      * Test arrow functions that use the yield keyword.
      *
      * @covers PHP_CodeSniffer\Tokenizers\PHP::processAdditional

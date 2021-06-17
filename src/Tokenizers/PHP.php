@@ -2344,8 +2344,10 @@ class PHP extends Tokenizer
 
                             if (isset($endTokens[$this->tokens[$scopeCloser]['code']]) === true) {
                                 if ($lastEndToken !== null
-                                    && $this->tokens[$scopeCloser]['code'] === T_CLOSE_PARENTHESIS
-                                    && $this->tokens[$scopeCloser]['parenthesis_opener'] < $arrow
+                                    && ((isset($this->tokens[$scopeCloser]['parenthesis_opener']) === true
+                                    && $this->tokens[$scopeCloser]['parenthesis_opener'] < $arrow)
+                                    || (isset($this->tokens[$scopeCloser]['bracket_opener']) === true
+                                    && $this->tokens[$scopeCloser]['bracket_opener'] < $arrow))
                                 ) {
                                     for ($lastNonEmpty = ($scopeCloser - 1); $lastNonEmpty > $arrow; $lastNonEmpty--) {
                                         if (isset(Util\Tokens::$emptyTokens[$this->tokens[$lastNonEmpty]['code']]) === false) {
