@@ -1547,6 +1547,15 @@ $foo = match ($type) {
 	],
 };
 
+$a = [
+	'a' => [
+		'a' => fn () => foo()
+	],
+	'a' => [
+		'a' => 'a',
+	]
+];
+
 /* ADD NEW TESTS ABOVE THIS LINE AND MAKE SURE THAT THE 1 (space-based) AND 2 (tab-based) FILES ARE IN SYNC! */
 ?>
 
