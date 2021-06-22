@@ -89,7 +89,7 @@ switch ($httpResponseCode) {
 
 switch($i) {
 case 1: {
-    }
+}
 }
 
 switch ($httpResponseCode) {
