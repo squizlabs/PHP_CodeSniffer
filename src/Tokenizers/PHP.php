@@ -455,6 +455,29 @@ class PHP extends Tokenizer
     ];
 
     /**
+     * Contexts in which keywords should always be tokenized as T_STRING.
+     *
+     * @var array
+     */
+    protected $tstringContexts = [
+        T_OBJECT_OPERATOR          => true,
+        T_NULLSAFE_OBJECT_OPERATOR => true,
+        T_FUNCTION                 => true,
+        T_CLASS                    => true,
+        T_INTERFACE                => true,
+        T_TRAIT                    => true,
+        T_EXTENDS                  => true,
+        T_IMPLEMENTS               => true,
+        T_ATTRIBUTE                => true,
+        T_NEW                      => true,
+        T_CONST                    => true,
+        T_NS_SEPARATOR             => true,
+        T_USE                      => true,
+        T_NAMESPACE                => true,
+        T_PAAMAYIM_NEKUDOTAYIM     => true,
+    ];
+
+    /**
      * A cache of different token types, resolved into arrays.
      *
      * @var array
@@ -1332,16 +1355,7 @@ class PHP extends Tokenizer
                         break;
                     }
 
-                    $notMatchContext = [
-                        T_PAAMAYIM_NEKUDOTAYIM     => true,
-                        T_OBJECT_OPERATOR          => true,
-                        T_NULLSAFE_OBJECT_OPERATOR => true,
-                        T_NS_SEPARATOR             => true,
-                        T_NEW                      => true,
-                        T_FUNCTION                 => true,
-                    ];
-
-                    if (isset($notMatchContext[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
+                    if (isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
                         // Also not a match expression.
                         break;
                     }
@@ -1389,14 +1403,7 @@ class PHP extends Tokenizer
             if ($tokenIsArray === true
                 && $token[0] === T_DEFAULT
             ) {
-                $ignoreContext = [
-                    T_OBJECT_OPERATOR          => true,
-                    T_NULLSAFE_OBJECT_OPERATOR => true,
-                    T_NS_SEPARATOR             => true,
-                    T_PAAMAYIM_NEKUDOTAYIM     => true,
-                ];
-
-                if (isset($ignoreContext[$finalTokens[$lastNotEmptyToken]['code']]) === false) {
+                if (isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === false) {
                     for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
                         if ($tokens[$x] === ',') {
                             // Skip over potential trailing comma (supported in PHP).
@@ -1894,25 +1901,7 @@ class PHP extends Tokenizer
                 if ($tokenIsArray === true && $token[0] === T_STRING) {
                     // Some T_STRING tokens should remain that way
                     // due to their context.
-                    $context = [
-                        T_OBJECT_OPERATOR          => true,
-                        T_NULLSAFE_OBJECT_OPERATOR => true,
-                        T_FUNCTION                 => true,
-                        T_CLASS                    => true,
-                        T_INTERFACE                => true,
-                        T_TRAIT                    => true,
-                        T_EXTENDS                  => true,
-                        T_IMPLEMENTS               => true,
-                        T_ATTRIBUTE                => true,
-                        T_NEW                      => true,
-                        T_CONST                    => true,
-                        T_NS_SEPARATOR             => true,
-                        T_USE                      => true,
-                        T_NAMESPACE                => true,
-                        T_PAAMAYIM_NEKUDOTAYIM     => true,
-                    ];
-
-                    if (isset($context[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
+                    if (isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
                         // Special case for syntax like: return new self
                         // where self should not be a string.
                         if ($finalTokens[$lastNotEmptyToken]['code'] === T_NEW
@@ -2786,13 +2775,7 @@ class PHP extends Tokenizer
                     }
                 }
 
-                $context = [
-                    T_OBJECT_OPERATOR          => true,
-                    T_NULLSAFE_OBJECT_OPERATOR => true,
-                    T_NS_SEPARATOR             => true,
-                    T_PAAMAYIM_NEKUDOTAYIM     => true,
-                ];
-                if (isset($context[$this->tokens[$x]['code']]) === true) {
+                if (isset($this->tstringContexts[$this->tokens[$x]['code']]) === true) {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         $line = $this->tokens[$i]['line'];
                         $type = $this->tokens[$i]['type'];

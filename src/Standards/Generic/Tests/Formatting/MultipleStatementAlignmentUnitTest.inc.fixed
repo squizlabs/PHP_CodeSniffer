@@ -468,3 +468,13 @@ $resource = new class() {
 
 $one       <<= 8;
 $onetwothree = 3;
+
+// Issue 3326.
+class Test
+{
+    public const DEFAULT = 'default';
+    public const SOS     = 'sos';
+    public const HELP    = 'help';
+
+    protected static $thisIsAReallyLongVariableName = [];
+}
