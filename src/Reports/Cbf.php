@@ -42,8 +42,13 @@ class Cbf implements Report
         $errors = $phpcsFile->getFixableCount();
         if ($errors !== 0) {
             if (PHP_CODESNIFFER_VERBOSITY > 0) {
-                $startTime = microtime(true);
-                Common::forcePrintStatusMessage("=> Fixing file: $errors/$errors violations remaining", 1, true);
+                $startTime       = microtime(true);
+                $suppressNewline = true;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $suppressNewline = false;
+                }
+
+                Common::forcePrintStatusMessage("=> Fixing file: $errors/$errors violations remaining", 1, $suppressNewline);
             }
 
             $fixed = $phpcsFile->fixer->fixFile();

@@ -180,8 +180,13 @@ class Fixer
                     $statusMessage .= 'es';
                 }
 
-                $statusMessage .= ']... ';
-                Common::forcePrintStatusMessage($statusMessage, 1, true);
+                $statusMessage  .= ']... ';
+                $suppressNewline = true;
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    $suppressNewline = false;
+                }
+
+                Common::forcePrintStatusMessage($statusMessage, 1, $suppressNewline);
             }
 
             if ($this->numFixes === 0 && $this->inConflict === false) {
