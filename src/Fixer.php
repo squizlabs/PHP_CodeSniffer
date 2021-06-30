@@ -184,6 +184,9 @@ class Fixer
                 }
 
                 echo ']... ';
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo PHP_EOL;
+                }
             }
 
             if ($this->numFixes === 0 && $this->inConflict === false) {

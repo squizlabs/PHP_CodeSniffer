@@ -44,6 +44,9 @@ class Cbf implements Report
                 ob_end_clean();
                 $startTime = microtime(true);
                 echo "\t=> Fixing file: $errors/$errors violations remaining";
+                if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                    echo PHP_EOL;
+                }
             }
 
             $fixed = $phpcsFile->fixer->fixFile();
