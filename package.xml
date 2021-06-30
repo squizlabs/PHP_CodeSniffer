@@ -59,6 +59,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3317 : Problem with how phpcs handles ignored files when running in parallel
     -- Thanks to Emil Andersson for the patch
   - Fixed bug #3324 : PHPCS hangs processing some nested arrow functions inside a function call
+  - Fixed bug #3326 : Generic.Formatting.MultipleStatementAlignment error with const DEFAULT
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3340 : Ensure interface and trait names are always tokenized as T_STRING
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3342 : PSR12/Squiz/PEAR standards all error on promoted properties with docblocks
