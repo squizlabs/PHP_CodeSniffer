@@ -78,6 +78,25 @@ abstract class Generator
 
 
     /**
+     * Retrieves the rule of the sniff from the file path supplied.
+     *
+     * @param string $file The sniff file path.
+     *
+     * @return string
+     */
+    protected function getRule($file)
+    {
+        $rule = explode('Standards'.DIRECTORY_SEPARATOR, $file);
+        $rule = str_replace('Docs'.DIRECTORY_SEPARATOR, '', $rule[1]);
+        $rule = str_replace('Standard.xml', '', $rule);
+        $rule = explode(DIRECTORY_SEPARATOR, $rule);
+
+        return implode('.', $rule);
+
+    }//end getRule()
+
+
+    /**
      * Generates the documentation for a standard.
      *
      * It's probably wise for doc generators to override this method so they
@@ -93,7 +112,8 @@ abstract class Generator
             $doc = new \DOMDocument();
             $doc->load($file);
             $documentation = $doc->getElementsByTagName('documentation')->item(0);
-            $this->processSniff($documentation);
+            $rule          = $this->getRule($file);
+            $this->processSniff($documentation, $rule);
         }
 
     }//end generate()
@@ -104,14 +124,15 @@ abstract class Generator
      *
      * Doc generators must implement this function to produce output.
      *
-     * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                      It represents the "documentation" tag in the XML
-     *                      standard file.
+     * @param \DOMNode $doc  The DOMNode object for the sniff.
+     *                       It represents the "documentation"
+     *                       tag in the XML standard file.
+     * @param string   $rule rule.
      *
      * @return void
      * @see    generate()
      */
-    abstract protected function processSniff(\DOMNode $doc);
+    abstract protected function processSniff(\DOMNode $doc, $rule);
 
 
 }//end class

@@ -1,0 +1,27 @@
+<documentation title="Array Indent">
+    <standard>
+    <![CDATA[
+    Ensures that array are indented one tab stop.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: One tab stop.">
+            <![CDATA[
+$arr = [
+<em>    </em>'foo' => 'bar',
+];
+        ]]>
+        </code>
+        <code title="Invalid: More or less than one tab stop.">
+        <![CDATA[
+$arr = [
+<em>        </em>'foo' => 'bar',
+];
+
+$arr = [
+<em></em>'foo' => 'bar',
+];
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
