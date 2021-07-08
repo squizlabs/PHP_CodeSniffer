@@ -1,0 +1,25 @@
+<documentation title="Constant Visibility">
+    <standard>
+        <![CDATA[
+    Visibility MUST be declared on all constants if your project PHP minimum version supports constant visibilities (PHP 7.1 or later).
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Visibility declaration.">
+            <![CDATA[
+class Foo {
+    <em>public</em> const BAR = 1;
+    <em>private</em> const BAZ = 2;
+}
+        ]]>
+        </code>
+        <code title="Invalid: Missing visibility declaration.">
+        <![CDATA[
+class Foo {
+    const BAR = 1;
+    const BAZ = 2;
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

@@ -17,9 +17,9 @@ public function functionName(
         <code title="Invalid: superfluous whitespace used.">
         <![CDATA[
 public function functionName(
-    ? string $arg1,
-    ? int $arg2
-): ? string {
+    ?<em> </em>string $arg1,
+    ?<em> </em>int $arg2
+): ?<em> </em>string {
 }
         ]]>
         </code>
@@ -27,17 +27,19 @@ public function functionName(
     <code_comparison>
         <code title="Valid: no unexpected characters.">
             <![CDATA[
-public function foo(?int $arg): ?string
-{
+public function foo(
+    ?int $arg
+): ?string {
 }
         ]]>
         </code>
         <code title="Invalid: unexpected characters used.">
             <![CDATA[
-public function bar(? /* comment */ int $arg): ?
+public function bar(
+    ?<em> /* comment */ </em>string $arg1
+): ?<em>
     // nullable for a reason
-    string
-{
+    </em>string {
 }
         ]]>
         </code>

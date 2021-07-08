@@ -1,0 +1,41 @@
+<documentation title="Boolean Operator Placement">
+    <standard>
+        <![CDATA[
+    Boolean operators between conditions MUST always be at the beginning or at the end of the line, not a mix of both.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: operator placed on left side.">
+            <![CDATA[
+if (
+    $expr1
+    <em>&& </em>$expr2
+    <em>&& </em>$expr3
+) {
+    // if body
+} elseif (
+    $expr4
+    <em>&& </em>$expr5
+) {
+    // elseif body
+}
+        ]]>
+        </code>
+        <code title="Invalid: inconsistent operator placement.">
+            <![CDATA[
+if (
+    $expr1<em> &&
+    </em>$expr2
+    <em>&& </em>$expr3
+) {
+    // if body
+} elseif (
+    $expr4<em>&&
+    </em>$expr5
+) {
+    // elseif body
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
