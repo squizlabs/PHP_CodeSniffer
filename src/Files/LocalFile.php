@@ -19,7 +19,7 @@ class LocalFile extends File
 
 
     /**
-     * Creates a LocalFile object and sets the content.
+     * Creates a LocalFile object. Content is not set, call reloadContent() before use.
      *
      * @param string                   $path    The absolute path to the file.
      * @param \PHP_CodeSniffer\Ruleset $ruleset The ruleset used for the run.
@@ -57,8 +57,6 @@ class LocalFile extends File
                 }
             }
         }
-
-        $this->reloadContent();
 
         parent::__construct($this->path, $ruleset, $config);
 
