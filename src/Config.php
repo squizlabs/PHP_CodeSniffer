@@ -744,6 +744,12 @@ class Config
             $this->cache = false;
             self::$overriddenDefaults['cache'] = true;
             break;
+        case 'delete-cache':
+            ob_start();
+            Util\Cache::delete($this->cacheFile);
+            $output = ob_get_contents();
+            ob_end_clean();
+            throw new DeepExitException($output, 0);
         case 'ignore-annotations':
             if (isset(self::$overriddenDefaults['annotations']) === true) {
                 break;
@@ -1344,7 +1350,7 @@ class Config
     public function printPHPCSUsage()
     {
         echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
-        echo '  [--cache[=<cacheFile>]] [--no-cache] [--tab-width=<tabWidth>]'.PHP_EOL;
+        echo '  [--cache[=<cacheFile>]] [--delete-cache] [--no-cache] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '  [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>]'.PHP_EOL;
         echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--bootstrap=<bootstrap>]'.PHP_EOL;
         echo '  [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
@@ -1376,10 +1382,11 @@ class Config
         echo ' --colors              Use colors in output'.PHP_EOL;
         echo ' --no-colors           Do not use colors in output (this is the default)'.PHP_EOL;
         echo ' --cache               Cache results between runs'.PHP_EOL;
+        echo ' --delete-cache        Delete existing cached data'.PHP_EOL;
         echo ' --no-cache            Do not cache results between runs (this is the default)'.PHP_EOL;
         echo ' --ignore-annotations  Ignore all phpcs: annotations in code comments'.PHP_EOL;
         echo PHP_EOL;
-        echo ' <cacheFile>    Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
+        echo ' <cacheFile>    Use (or delete) a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo ' <basepath>     A path to strip from the front of file paths inside reports'.PHP_EOL;
         echo ' <bootstrap>    A comma separated list of files to run before processing begins'.PHP_EOL;
         echo ' <encoding>     The encoding of the files being checked (default is utf-8)'.PHP_EOL;
