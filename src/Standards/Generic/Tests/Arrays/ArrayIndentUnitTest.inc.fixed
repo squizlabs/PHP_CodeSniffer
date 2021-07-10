@@ -99,3 +99,16 @@ $array = [
     match ($test) { 1 => 'a', 2 => 'b' }
        => 'dynamic keys, woho!',
 ];
+
+// Ensure that PHP 8.0 named parameters don't affect the sniff.
+$array = [
+    functionCall(
+        name: $value
+    ),
+];
+
+$array = [
+    functionCall(
+    name: $value
+    ),
+];
