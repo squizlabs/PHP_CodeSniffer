@@ -49,22 +49,24 @@ class Runner
     /**
      * Run the PHPCS script.
      *
-     * @return array
+     * @param array $cliArgs An array of values gathered from CLI args.
+     *
+     * @return int
      */
-    public function runPHPCS()
+    public function runPHPCS(array $cliArgs=[])
     {
+        if (defined('PHP_CODESNIFFER_CBF') === false) {
+            define('PHP_CODESNIFFER_CBF', false);
+        }
+
         try {
             Util\Timing::startTiming();
-            Runner::checkRequirements();
-
-            if (defined('PHP_CODESNIFFER_CBF') === false) {
-                define('PHP_CODESNIFFER_CBF', false);
-            }
+            $this->checkRequirements();
 
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
             // values the user has set.
-            $this->config = new Config();
+            $this->config = new Config($cliArgs);
 
             // Init the run and load the rulesets to set additional config vars.
             $this->init();
@@ -128,10 +130,9 @@ class Runner
         } else if ($this->reporter->totalFixable === 0) {
             // Errors found, but none of them can be fixed by PHPCBF.
             return 1;
-        } else {
-            // Errors found, and some can be fixed by PHPCBF.
-            return 2;
         }
+        // Errors found, and some can be fixed by PHPCBF.
+        return 2;
 
     }//end runPHPCS()
 
@@ -139,9 +140,11 @@ class Runner
     /**
      * Run the PHPCBF script.
      *
-     * @return array
+     * @param array $cliArgs An array of values gathered from CLI args.
+     *
+     * @return int
      */
-    public function runPHPCBF()
+    public function runPHPCBF(array $cliArgs=[])
     {
         if (defined('PHP_CODESNIFFER_CBF') === false) {
             define('PHP_CODESNIFFER_CBF', true);
@@ -149,12 +152,12 @@ class Runner
 
         try {
             Util\Timing::startTiming();
-            Runner::checkRequirements();
+            $this->checkRequirements();
 
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
             // values the user has set.
-            $this->config = new Config();
+            $this->config = new Config($cliArgs);
 
             // When processing STDIN, we can't output anything to the screen
             // or it will end up mixed in with the file output.
@@ -222,7 +225,7 @@ class Runner
     /**
      * Exits if the minimum requirements of PHP_CodeSniffer are not met.
      *
-     * @return array
+     * @return void
      * @throws \PHP_CodeSniffer\Exceptions\DeepExitException If the requirements are not met.
      */
     public function checkRequirements()
@@ -309,10 +312,11 @@ class Runner
         // Create this class so it is autoloaded and sets up a bunch
         // of PHP_CodeSniffer-specific token type constants.
         $tokens = new Util\Tokens();
+        unset($tokens);
 
         // Allow autoloading of custom files inside installed standards.
         $installedStandards = Standards::getInstalledStandardDetails();
-        foreach ($installedStandards as $name => $details) {
+        foreach ($installedStandards as $details) {
             Autoload::addSearchPath($details['path'], $details['namespace']);
         }
 
@@ -359,7 +363,7 @@ class Runner
             $dummy = new DummyFile($fileContents, $this->ruleset, $this->config);
             $todo->addFile($dummy->path, $dummy);
         } else {
-            if (empty($this->config->files) === true) {
+            if (empty($this->config->files)) {
                 $error  = 'ERROR: You must supply at least one file or directory to process.'.PHP_EOL.PHP_EOL;
                 $error .= $this->config->printShortUsage(true);
                 throw new DeepExitException($error, 3);
@@ -590,7 +594,7 @@ class Runner
      * @param string $file    The path of the file that raised the error.
      * @param int    $line    The line number the error was raised at.
      *
-     * @return void
+     * @return bool
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException
      */
     public function handleErrors($code, $message, $file, $line)
@@ -632,7 +636,7 @@ class Runner
                     $timeTaken = round($timeTaken);
                     Common::printStatusMessage("DONE in {$timeTaken}ms", 0, true);
                 } else {
-                    $timeTaken = round(($timeTaken / 1000), 2);
+                    $timeTaken = round($timeTaken / 1000, 2);
                     Common::printStatusMessage("DONE in $timeTaken secs", 0, true);
                 }
 
@@ -662,7 +666,7 @@ class Runner
             // we only print violations for a single file each time.
             $numErrors = null;
             while ($numErrors !== 0) {
-                $numErrors = ($file->getErrorCount() + $file->getWarningCount());
+                $numErrors = $file->getErrorCount() + $file->getWarningCount();
                 if ($numErrors === 0) {
                     continue;
                 }
@@ -685,8 +689,7 @@ class Runner
                     $file->ruleset->populateTokenListeners();
                     $file->reloadContent();
                     $file->process();
-                    $this->reporter->cacheFileReport($file, $this->config);
-                    break;
+                    $this->reporter->cacheFileReport($file);
                 }
             }//end while
         }//end if
