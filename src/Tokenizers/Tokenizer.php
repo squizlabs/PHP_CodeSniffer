@@ -111,7 +111,7 @@ abstract class Tokenizer
      * @param string $content The content to tokenize.
      * @param string $eolChar The EOL char used in the content.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isMinifiedContent($content, $eolChar='\n')
     {

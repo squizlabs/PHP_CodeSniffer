@@ -320,7 +320,7 @@ class OperatorSpacingSniff implements Sniff
      * @param int                         $stackPtr  The position of the operator in
      *                                               the stack.
      *
-     * @return boolean
+     * @return bool
      */
     protected function isOperator(File $phpcsFile, $stackPtr)
     {

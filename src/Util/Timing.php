@@ -43,8 +43,8 @@ class Timing
     /**
      * Print information about the run.
      *
-     * @param boolean $force If TRUE, prints the output even if it has
-     *                       already been printed during the run.
+     * @param bool $force If TRUE, prints the output even if it has
+     *                    already been printed during the run.
      *
      * @return void
      */

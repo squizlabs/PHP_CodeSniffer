@@ -58,7 +58,7 @@ abstract class AbstractPatternSniff implements Sniff
     /**
      * Constructs a AbstractPatternSniff.
      *
-     * @param boolean $ignoreComments If true, comments will be ignored.
+     * @param bool $ignoreComments If true, comments will be ignored.
      */
     public function __construct($ignoreComments=null)
     {

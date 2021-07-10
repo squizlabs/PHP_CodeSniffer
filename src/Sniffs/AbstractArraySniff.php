@@ -104,9 +104,9 @@ abstract class AbstractArraySniff implements Sniff
     /**
      * Find next separator in array - either: comma or double arrow.
      *
-     * @param File $phpcsFile The current file being checked.
-     * @param int  $ptr       The position of current token.
-     * @param int  $arrayEnd  The token that ends the array definition.
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The current file being checked.
+     * @param int                         $ptr       The position of current token.
+     * @param int                         $arrayEnd  The token that ends the array definition.
      *
      * @return int
      */
