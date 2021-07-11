@@ -1,0 +1,27 @@
+<documentation title="Return Type Declaration">
+    <standard>
+        <![CDATA[
+        Return type declarations are optional, and have a specified amount of spaces between the function's closing parenthesis and colon, and a
+        specified amount of spaces between the colon and the return type.
+        The default is zero spaces between closing parenthesis and colon and one space between colon and return type.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Zero spaces between closing parenthesis and colon, one space between colon and return type.">
+            <![CDATA[
+function fooFunction()<em>: string</em>
+{
+...
+}
+        ]]>
+        </code>
+        <code title="Invalid: One space between closing parenthesis and colon, zero spaces between colon and return type.">
+            <![CDATA[
+function fooFunction()<em> :string</em>
+{
+ ...
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
