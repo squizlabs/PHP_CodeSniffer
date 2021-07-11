@@ -12,7 +12,6 @@
 namespace PHP_CodeSniffer\Baseline;
 
 use PHP_CodeSniffer\Exceptions\RuntimeException;
-use PHP_CodeSniffer\Util\Common;
 
 class BaselineSetFactory
 {

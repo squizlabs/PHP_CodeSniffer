@@ -96,8 +96,8 @@ class Baseline implements Report
         $toScreen=true
     ) {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<phpcs_baseline version="'.Config::VERSION.'">'.PHP_EOL;
+        echo '<phpcs-baseline version="'.Config::VERSION.'">'.PHP_EOL;
         echo $cachedData;
-        echo '</phpcs_baseline>'.PHP_EOL;
+        echo '</phpcs-baseline>'.PHP_EOL;
     }
 }
