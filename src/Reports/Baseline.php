@@ -1,8 +1,8 @@
 <?php
 /**
- * XML report for PHP_CodeSniffer.
+ * Baseline report for PHP_CodeSniffer.
  *
- * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @author    Frank Dekker <fdekker@123inkt.nl>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
