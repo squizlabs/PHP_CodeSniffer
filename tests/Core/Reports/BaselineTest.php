@@ -30,6 +30,11 @@ class BaselineTest extends TestCase
     private $file;
 
 
+    /**
+     * Setup the test mock object
+     *
+     * @return void
+     */
     protected function setup()
     {
         $this->file = $this->createMock('PHP_CodeSniffer\Files\File');

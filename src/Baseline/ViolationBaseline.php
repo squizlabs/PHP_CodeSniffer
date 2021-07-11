@@ -15,28 +15,36 @@ class ViolationBaseline
 {
 
     /**
+     * The name of the sniff
+     *
      * @var string
      */
     private $sniffName;
 
     /**
+     * The relative file path
+     *
      * @var string
      */
     private $fileName;
 
     /**
+     * The length of the filename to improve comparison performance
+     *
      * @var integer
      */
     private $fileNameLength;
 
 
     /**
-     * @param string $ruleName
-     * @param string $fileName
+     * Initialize the violation baseline
+     *
+     * @param string $sniffName The name of the sniff that's baselined.
+     * @param string $fileName  The relative file path.
      */
-    public function __construct($ruleName, $fileName)
+    public function __construct($sniffName, $fileName)
     {
-        $this->sniffName      = $ruleName;
+        $this->sniffName      = $sniffName;
         $this->fileName       = $fileName;
         $this->fileNameLength = strlen($fileName);
 
@@ -44,6 +52,8 @@ class ViolationBaseline
 
 
     /**
+     * Get the sniff name that was baselined
+     *
      * @return string
      */
     public function getSniffName()
@@ -56,7 +66,7 @@ class ViolationBaseline
     /**
      * Test if the given filepath matches the relative filename in the baseline
      *
-     * @param string $filepath
+     * @param string $filepath the full filepath to match against
      *
      * @return bool
      */

@@ -52,7 +52,7 @@ class BaselineSetFactory
                 throw new RuntimeException('Missing `file` attribute in `violation` in '.$fileName);
             }
 
-            // normalize filepath (if needed)
+            // Normalize filepath (if needed).
             $filePath = '/'.ltrim(str_replace('\\', '/', (string) $node['file']), '/');
 
             $baselineSet->addEntry(new ViolationBaseline((string) $node['sniff'], $filePath));

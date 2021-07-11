@@ -376,7 +376,7 @@ class Config
             } while ($currentDir !== '.' && $currentDir !== $lastDir && @is_readable($currentDir) === true);
         }//end if
 
-        // load baseline file (if any)
+        // Load baseline file (if any).
         $this->baseline = BaselineSetFactory::fromFile($this->baselineFile);
 
         if (defined('STDIN') === false

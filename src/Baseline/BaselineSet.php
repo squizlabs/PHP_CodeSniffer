@@ -15,11 +15,18 @@ class BaselineSet
 {
 
     /**
+     * A collection of a baselined violations
+     *
      * @var array<string, ViolationBaseline[]>
      */
     private $violations = [];
 
 
+    /**
+     * Add a single entry to the baseline set
+     *
+     * @param ViolationBaseline $entry the entry to add to the collection
+     */
     public function addEntry(ViolationBaseline $entry)
     {
         $this->violations[$entry->getSniffName()][] = $entry;
@@ -28,8 +35,10 @@ class BaselineSet
 
 
     /**
-     * @param string $sniffName
-     * @param string $fileName
+     * Test if the given sniff and filename is in the baseline collection
+     *
+     * @param string $sniffName the name of the sniff to search for
+     * @param string $fileName  the full filename of the file to match
      *
      * @return bool
      */

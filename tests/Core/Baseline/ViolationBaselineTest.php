@@ -26,6 +26,7 @@ class ViolationBaselineTest extends TestCase
      *
      * @covers ::__construct
      * @covers ::getSniffName
+     * @return void
      */
     public function testGetSniffName()
     {
@@ -40,6 +41,7 @@ class ViolationBaselineTest extends TestCase
      *
      * @covers ::__construct
      * @covers ::matches
+     * @return void
      */
     public function testMatches()
     {

@@ -27,6 +27,7 @@ class BaselineSetTest extends TestCase
      *
      * @covers ::addEntry
      * @covers ::contains
+     * @return void
      */
     public function testSetContainsEntry()
     {
@@ -43,6 +44,7 @@ class BaselineSetTest extends TestCase
      *
      * @covers ::addEntry
      * @covers ::contains
+     * @return void
      */
     public function testShouldFindEntryForIdenticalRules()
     {
@@ -62,6 +64,7 @@ class BaselineSetTest extends TestCase
      *
      * @covers ::addEntry
      * @covers ::contains
+     * @return void
      */
     public function testShouldNotFindEntryForNonExistingRule()
     {

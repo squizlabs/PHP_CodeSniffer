@@ -1031,8 +1031,8 @@ class File
             return false;
         }
 
-        // The message is part of the baselined violations
-        if ($this->config->baseline !== null && $this->config->baseline->contains($sniffCode, $this->path)) {
+        // The message is part of the baselined violations.
+        if ($this->config->baseline !== null && $this->config->baseline->contains($sniffCode, $this->path) === true) {
             return false;
         }
 
