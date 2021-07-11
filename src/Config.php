@@ -143,6 +143,7 @@ class Config
 
     /**
      * The configured baselined violations
+     *
      * @var \PHP_CodeSniffer\Baseline\BaselineSet|null
      */
     public $baseline = null;
@@ -413,6 +414,7 @@ class Config
         }//end if
 
         fclose($handle);
+
     }//end __construct()
 
 
@@ -1040,6 +1042,7 @@ class Config
                     $this->basepath = null;
                     break;
                 }
+
                 $this->baselineFile = Util\Common::realpath(substr($arg, 13));
                 if (is_file($this->baselineFile) === false) {
                     $error  = 'ERROR: The specified baselineFile "'.substr($arg, 13).'" points to a non-existent file'.PHP_EOL.PHP_EOL;

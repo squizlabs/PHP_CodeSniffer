@@ -15,6 +15,8 @@ use XMLWriter;
 
 class Baseline implements Report
 {
+
+
     /**
      * Generate a partial report for a single processed file.
      * Function should return TRUE if it printed or stored data about the file
@@ -66,7 +68,9 @@ class Baseline implements Report
         echo $content;
 
         return true;
-    }
+
+    }//end generateFileReport()
+
 
     /**
      * Prints all violations for processed files, in a proprietary XML format.
@@ -99,5 +103,8 @@ class Baseline implements Report
         echo '<phpcs-baseline version="'.Config::VERSION.'">'.PHP_EOL;
         echo $cachedData;
         echo '</phpcs-baseline>'.PHP_EOL;
-    }
-}
+
+    }//end generate()
+
+
+}//end class

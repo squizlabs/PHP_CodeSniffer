@@ -17,6 +17,8 @@ use PHPUnit\Framework\TestCase;
  */
 class ViolationBaselineTest extends TestCase
 {
+
+
     /**
      * @covers ::__construct
      * @covers ::getSniffName
@@ -25,7 +27,9 @@ class ViolationBaselineTest extends TestCase
     {
         $violation = new ViolationBaseline('sniff', 'foobar');
         static::assertSame('sniff', $violation->getSniffName());
-    }
+
+    }//end testGetSniffName()
+
 
     /**
      * @covers ::__construct
@@ -37,5 +41,8 @@ class ViolationBaselineTest extends TestCase
         static::assertTrue($violation->matches('foobar.txt'));
         static::assertTrue($violation->matches('/test/foobar.txt'));
         static::assertFalse($violation->matches('foo.txt'));
-    }
-}
+
+    }//end testMatches()
+
+
+}//end class

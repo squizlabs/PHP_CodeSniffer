@@ -13,17 +13,23 @@ namespace PHP_CodeSniffer\Baseline;
 
 class BaselineSet
 {
-    /** @var array<string, ViolationBaseline[]> */
+
+    /**
+     * @var array<string, ViolationBaseline[]>
+     */
     private $violations = [];
+
 
     public function addEntry(ViolationBaseline $entry)
     {
         $this->violations[$entry->getSniffName()][] = $entry;
-    }
+
+    }//end addEntry()
+
 
     /**
-     * @param string      $sniffName
-     * @param string      $fileName
+     * @param string $sniffName
+     * @param string $fileName
      *
      * @return bool
      */
@@ -43,5 +49,8 @@ class BaselineSet
         }
 
         return false;
-    }
-}
+
+    }//end contains()
+
+
+}//end class

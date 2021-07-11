@@ -15,6 +15,8 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
 
 class BaselineSetFactory
 {
+
+
     /**
      * Read the baseline violations from the given filename path. Append the baseDir to all the file paths within
      * the baseline file.
@@ -32,7 +34,7 @@ class BaselineSetFactory
 
         $xml = @simplexml_load_string(file_get_contents($fileName));
         if ($xml === false) {
-            throw new RuntimeException('Unable to read xml from: ' . $fileName);
+            throw new RuntimeException('Unable to read xml from: '.$fileName);
         }
 
         $baselineSet = new BaselineSet();
@@ -43,19 +45,22 @@ class BaselineSetFactory
             }
 
             if (isset($node['sniff']) === false) {
-                throw new RuntimeException('Missing `sniff` attribute in `violation` in ' . $fileName);
+                throw new RuntimeException('Missing `sniff` attribute in `violation` in '.$fileName);
             }
 
             if (isset($node['file']) === false) {
-                throw new RuntimeException('Missing `file` attribute in `violation` in ' . $fileName);
+                throw new RuntimeException('Missing `file` attribute in `violation` in '.$fileName);
             }
 
             // normalize filepath (if needed)
-            $filePath = '/' . ltrim(str_replace('\\', '/', (string)$node['file']), '/');
+            $filePath = '/'.ltrim(str_replace('\\', '/', (string) $node['file']), '/');
 
-            $baselineSet->addEntry(new ViolationBaseline((string)$node['sniff'], $filePath));
+            $baselineSet->addEntry(new ViolationBaseline((string) $node['sniff'], $filePath));
         }
 
         return $baselineSet;
-    }
-}
+
+    }//end fromFile()
+
+
+}//end class

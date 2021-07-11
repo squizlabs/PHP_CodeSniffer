@@ -17,27 +17,33 @@ use PHPUnit\Framework\TestCase;
  */
 class BaselineSetFactoryTest extends TestCase
 {
+
+
     /**
      * @covers ::fromFile
      */
     public function testFromFileShouldSucceed()
     {
-        $filename = __DIR__ . '/TestFiles/baseline.xml';
+        $filename = __DIR__.'/TestFiles/baseline.xml';
         $set      = BaselineSetFactory::fromFile($filename);
 
         static::assertTrue($set->contains('Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen', '/test/src/foo/bar'));
-    }
+
+    }//end testFromFileShouldSucceed()
+
 
     /**
      * @covers ::fromFile
      */
     public function testFromFileShouldSucceedWithBackAndForwardSlashes()
     {
-        $filename = __DIR__ . '/TestFiles/baseline.xml';
+        $filename = __DIR__.'/TestFiles/baseline.xml';
         $set      = BaselineSetFactory::fromFile($filename);
 
         static::assertTrue($set->contains('Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen', '/test\\src\\foo/bar'));
-    }
+
+    }//end testFromFileShouldSucceedWithBackAndForwardSlashes()
+
 
     /**
      * @covers ::fromFile
@@ -45,7 +51,9 @@ class BaselineSetFactoryTest extends TestCase
     public function testFromFileShouldReturnNullIfAbsent()
     {
         static::assertNull(BaselineSetFactory::fromFile('foobar.xml'));
-    }
+
+    }//end testFromFileShouldReturnNullIfAbsent()
+
 
     /**
      * @covers ::fromFile
@@ -54,8 +62,10 @@ class BaselineSetFactoryTest extends TestCase
     {
         $this->expectException('PHP_CodeSniffer\Exceptions\RuntimeException');
         $this->expectExceptionMessage('Unable to read xml from');
-        BaselineSetFactory::fromFile(__DIR__ .'/TestFiles/invalid-baseline.xml');
-    }
+        BaselineSetFactory::fromFile(__DIR__.'/TestFiles/invalid-baseline.xml');
+
+    }//end testFromFileShouldThrowExceptionForOnInvalidXML()
+
 
     /**
      * @covers ::fromFile
@@ -64,8 +74,10 @@ class BaselineSetFactoryTest extends TestCase
     {
         $this->expectException('PHP_CodeSniffer\Exceptions\RuntimeException');
         $this->expectExceptionMessage('Missing `sniff` attribute in `violation`');
-        BaselineSetFactory::fromFile(__DIR__ .'/TestFiles/missing-sniff-baseline.xml');
-    }
+        BaselineSetFactory::fromFile(__DIR__.'/TestFiles/missing-sniff-baseline.xml');
+
+    }//end testFromFileViolationMissingRuleShouldThrowException()
+
 
     /**
      * @covers ::fromFile
@@ -74,6 +86,9 @@ class BaselineSetFactoryTest extends TestCase
     {
         $this->expectException('PHP_CodeSniffer\Exceptions\RuntimeException');
         $this->expectExceptionMessage('Missing `file` attribute in `violation` in');
-        BaselineSetFactory::fromFile(__DIR__ .'/TestFiles/missing-file-baseline.xml');
-    }
-}
+        BaselineSetFactory::fromFile(__DIR__.'/TestFiles/missing-file-baseline.xml');
+
+    }//end testFromFileViolationMissingFileShouldThrowException()
+
+
+}//end class

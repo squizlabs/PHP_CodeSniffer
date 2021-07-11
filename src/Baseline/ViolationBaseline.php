@@ -13,14 +13,22 @@ namespace PHP_CodeSniffer\Baseline;
 
 class ViolationBaseline
 {
-    /** @var string */
+
+    /**
+     * @var string
+     */
     private $sniffName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $fileName;
 
-    /** @var int */
+    /**
+     * @var integer
+     */
     private $fileNameLength;
+
 
     /**
      * @param string $ruleName
@@ -31,7 +39,9 @@ class ViolationBaseline
         $this->sniffName      = $ruleName;
         $this->fileName       = $fileName;
         $this->fileNameLength = strlen($fileName);
-    }
+
+    }//end __construct()
+
 
     /**
      * @return string
@@ -39,7 +49,9 @@ class ViolationBaseline
     public function getSniffName()
     {
         return $this->sniffName;
-    }
+
+    }//end getSniffName()
+
 
     /**
      * Test if the given filepath matches the relative filename in the baseline
@@ -51,5 +63,8 @@ class ViolationBaseline
     public function matches($filepath)
     {
         return substr($filepath, -$this->fileNameLength) === $this->fileName;
-    }
-}
+
+    }//end matches()
+
+
+}//end class

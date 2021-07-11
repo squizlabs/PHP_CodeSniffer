@@ -19,13 +19,19 @@ use PHPUnit\Framework\TestCase;
  */
 class BaselineTest extends TestCase
 {
-    /** @var File|MockObject */
+
+    /**
+     * @var File|MockObject
+     */
     private $file;
+
 
     protected function setup()
     {
         $this->file = $this->createMock('PHP_CodeSniffer\Files\File');
-    }
+
+    }//end setup()
+
 
     /**
      * @covers ::generateFileReport
@@ -34,7 +40,9 @@ class BaselineTest extends TestCase
     {
         $report = new Baseline();
         static::assertFalse($report->generateFileReport(['errors' => 0, 'warnings' => 0], $this->file));
-    }
+
+    }//end testGenerateFileReportEmptyShouldReturnFalse()
+
 
     /**
      * @covers ::generateFileReport
@@ -45,29 +53,34 @@ class BaselineTest extends TestCase
             'filename' => '/test/foobar.txt',
             'errors'   => 1,
             'warnings' => 0,
-            'messages' => [[[['sniff' => 'MySniff']]]]
+            'messages' => [[[['sniff' => 'MySniff']]]],
         ];
 
         $report = new Baseline();
         ob_start();
         static::assertTrue($report->generateFileReport($reportData, $this->file));
         $result = ob_get_clean();
-        static::assertSame('<violation file="/test/foobar.txt" sniff="MySniff"/>' . "\n", $result);
-    }
+        static::assertSame('<violation file="/test/foobar.txt" sniff="MySniff"/>'."\n", $result);
+
+    }//end testGenerateFileReportShouldPrintReport()
+
 
     /**
      * @covers ::generate
      */
     public function testGenerate()
     {
-        $expected = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" . PHP_EOL;
-        $expected .= "<phpcs-baseline version=\"3.6.1\">"  . PHP_EOL;
-        $expected .= "<violation file=\"/test/foobar.txt\" sniff=\"MySniff\"/></phpcs-baseline>"  . PHP_EOL;
+        $expected  = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>".PHP_EOL;
+        $expected .= "<phpcs-baseline version=\"3.6.1\">".PHP_EOL;
+        $expected .= "<violation file=\"/test/foobar.txt\" sniff=\"MySniff\"/></phpcs-baseline>".PHP_EOL;
 
         $report = new Baseline();
         ob_start();
         $report->generate('<violation file="/test/foobar.txt" sniff="MySniff"/>', 1, 1, 0, 1);
         $result = ob_get_clean();
         static::assertSame($expected, $result);
-    }
-}
+
+    }//end testGenerate()
+
+
+}//end class

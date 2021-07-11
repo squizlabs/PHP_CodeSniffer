@@ -18,6 +18,8 @@ use PHPUnit\Framework\TestCase;
  */
 class BaselineSetTest extends TestCase
 {
+
+
     /**
      * @covers ::addEntry
      * @covers ::contains
@@ -28,7 +30,9 @@ class BaselineSetTest extends TestCase
         $set->addEntry(new ViolationBaseline('sniff', 'foobar'));
 
         static::assertTrue($set->contains('sniff', 'foobar'));
-    }
+
+    }//end testSetContainsEntryWithoutMethodName()
+
 
     /**
      * @covers ::addEntry
@@ -43,7 +47,9 @@ class BaselineSetTest extends TestCase
         static::assertTrue($set->contains('sniff', 'foo'));
         static::assertTrue($set->contains('sniff', 'bar'));
         static::assertFalse($set->contains('sniff', 'unknown'));
-    }
+
+    }//end testShouldFindEntryForIdenticalRules()
+
 
     /**
      * @covers ::addEntry
@@ -55,5 +61,8 @@ class BaselineSetTest extends TestCase
         $set->addEntry(new ViolationBaseline('sniff', 'foo'));
 
         static::assertFalse($set->contains('unknown', 'foo'));
-    }
-}
+
+    }//end testShouldNotFindEntryForNonExistingRule()
+
+
+}//end class
