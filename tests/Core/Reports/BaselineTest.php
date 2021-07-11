@@ -15,12 +15,16 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Testcases for the baseline report output file
+ *
  * @coversDefaultClass \PHP_CodeSniffer\Reports\Baseline
  */
 class BaselineTest extends TestCase
 {
 
     /**
+     * The mock file object
+     *
      * @var File|MockObject
      */
     private $file;
@@ -34,7 +38,10 @@ class BaselineTest extends TestCase
 
 
     /**
+     * Test that generation is skipped when there are no errors
+     *
      * @covers ::generateFileReport
+     * @return void
      */
     public function testGenerateFileReportEmptyShouldReturnFalse()
     {
@@ -45,7 +52,10 @@ class BaselineTest extends TestCase
 
 
     /**
+     * Test the generation of a single error message
+     *
      * @covers ::generateFileReport
+     * @return void
      */
     public function testGenerateFileReportShouldPrintReport()
     {
@@ -66,7 +76,10 @@ class BaselineTest extends TestCase
 
 
     /**
+     * Test the generate of the complete file
+     *
      * @covers ::generate
+     * @return void
      */
     public function testGenerate()
     {

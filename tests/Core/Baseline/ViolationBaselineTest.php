@@ -13,6 +13,8 @@ use PHP_CodeSniffer\Baseline\ViolationBaseline;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Test the violation baseline data model
+ *
  * @coversDefaultClass \PHP_CodeSniffer\Baseline\ViolationBaseline
  */
 class ViolationBaselineTest extends TestCase
@@ -20,6 +22,8 @@ class ViolationBaselineTest extends TestCase
 
 
     /**
+     * Test the sniff name is returned
+     *
      * @covers ::__construct
      * @covers ::getSniffName
      */
@@ -32,6 +36,8 @@ class ViolationBaselineTest extends TestCase
 
 
     /**
+     * Test the give file matches the baseline correctly
+     *
      * @covers ::__construct
      * @covers ::matches
      */

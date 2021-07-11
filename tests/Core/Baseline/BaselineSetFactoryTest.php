@@ -13,6 +13,8 @@ use PHP_CodeSniffer\Baseline\BaselineSetFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Testcases for the reading the baseline set from file
+ *
  * @coversDefaultClass \PHP_CodeSniffer\Baseline\BaselineSetFactory
  */
 class BaselineSetFactoryTest extends TestCase
@@ -20,7 +22,10 @@ class BaselineSetFactoryTest extends TestCase
 
 
     /**
+     * Read the baseline from a file
+     *
      * @covers ::fromFile
+     * @return void
      */
     public function testFromFileShouldSucceed()
     {
@@ -33,7 +38,10 @@ class BaselineSetFactoryTest extends TestCase
 
 
     /**
+     * Read the baseline from a file with different slashes
+     *
      * @covers ::fromFile
+     * @return void
      */
     public function testFromFileShouldSucceedWithBackAndForwardSlashes()
     {
@@ -46,7 +54,10 @@ class BaselineSetFactoryTest extends TestCase
 
 
     /**
+     * Test that reading absent file returns null
+     *
      * @covers ::fromFile
+     * @return void
      */
     public function testFromFileShouldReturnNullIfAbsent()
     {
@@ -56,7 +67,10 @@ class BaselineSetFactoryTest extends TestCase
 
 
     /**
+     * Test that reading invalid xml throws exception
+     *
      * @covers ::fromFile
+     * @return void
      */
     public function testFromFileShouldThrowExceptionForOnInvalidXML()
     {
@@ -68,7 +82,10 @@ class BaselineSetFactoryTest extends TestCase
 
 
     /**
+     * Test that missing attributes throws exception
+     *
      * @covers ::fromFile
+     * @return void
      */
     public function testFromFileViolationMissingRuleShouldThrowException()
     {
@@ -80,7 +97,10 @@ class BaselineSetFactoryTest extends TestCase
 
 
     /**
+     * Test that missing attributes throws exception
+     *
      * @covers ::fromFile
+     * @return void
      */
     public function testFromFileViolationMissingFileShouldThrowException()
     {

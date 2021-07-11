@@ -14,6 +14,8 @@ use PHP_CodeSniffer\Baseline\ViolationBaseline;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Test the logic of the baseline set
+ *
  * @coversDefaultClass \PHP_CodeSniffer\Baseline\BaselineSet
  */
 class BaselineSetTest extends TestCase
@@ -21,20 +23,24 @@ class BaselineSetTest extends TestCase
 
 
     /**
+     * Test that contains find the correct sniff
+     *
      * @covers ::addEntry
      * @covers ::contains
      */
-    public function testSetContainsEntryWithoutMethodName()
+    public function testSetContainsEntry()
     {
         $set = new BaselineSet();
         $set->addEntry(new ViolationBaseline('sniff', 'foobar'));
 
         static::assertTrue($set->contains('sniff', 'foobar'));
 
-    }//end testSetContainsEntryWithoutMethodName()
+    }//end testSetContainsEntry()
 
 
     /**
+     * Test that contains differentiates between types
+     *
      * @covers ::addEntry
      * @covers ::contains
      */
@@ -52,6 +58,8 @@ class BaselineSetTest extends TestCase
 
 
     /**
+     * Test that unknown sniffs are not found
+     *
      * @covers ::addEntry
      * @covers ::contains
      */
