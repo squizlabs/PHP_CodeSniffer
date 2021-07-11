@@ -44,6 +44,7 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
  *                                     If empty, all sniffs in the supplied standards will be used.
  * @property string[] $ignored         Regular expressions used to ignore files and folders during checking.
  * @property string   $reportFile      A file where the report output should be written.
+ * @property string   $baselineFile    The baselined violations file to include.
  * @property string   $generator       The documentation generator to use.
  * @property string   $filter          The filter to use for the run.
  * @property string[] $bootstrap       One of more files to include before the run begins.
@@ -122,6 +123,7 @@ class Config
         'exclude'         => null,
         'ignored'         => null,
         'reportFile'      => null,
+        'baselineFile'    => null,
         'generator'       => null,
         'filter'          => null,
         'bootstrap'       => null,
@@ -489,6 +491,7 @@ class Config
         $this->exclude         = [];
         $this->ignored         = [];
         $this->reportFile      = null;
+        $this->baselineFile    = 'phpcs.baseline.xml';
         $this->generator       = null;
         $this->filter          = null;
         $this->bootstrap       = [];
@@ -1020,6 +1023,17 @@ class Config
 
                 if (is_dir($this->basepath) === false) {
                     $error  = 'ERROR: The specified basepath "'.$this->basepath.'" points to a non-existent directory'.PHP_EOL.PHP_EOL;
+                    $error .= $this->printShortUsage(true);
+                    throw new DeepExitException($error, 3);
+                }
+            } else if (substr($arg, 0, 13) === 'baselineFile=') {
+                if (substr($arg, 13) === '') {
+                    $this->basepath = null;
+                    break;
+                }
+                $this->baselineFile = Util\Common::realpath(substr($arg, 13));
+                if (is_file($this->baselineFile) === false) {
+                    $error  = 'ERROR: The specified baselineFile "'.substr($arg, 13).'" points to a non-existent file'.PHP_EOL.PHP_EOL;
                     $error .= $this->printShortUsage(true);
                     throw new DeepExitException($error, 3);
                 }
