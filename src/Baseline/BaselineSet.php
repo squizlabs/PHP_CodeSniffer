@@ -25,7 +25,8 @@ class BaselineSet
     /**
      * Add a single entry to the baseline set
      *
-     * @param  ViolationBaseline $entry the entry to add to the collection
+     * @param ViolationBaseline $entry the entry to add to the collection
+     *
      * @return void
      */
     public function addEntry(ViolationBaseline $entry)
