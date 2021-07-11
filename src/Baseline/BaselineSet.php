@@ -25,7 +25,8 @@ class BaselineSet
     /**
      * Add a single entry to the baseline set
      *
-     * @param ViolationBaseline $entry the entry to add to the collection
+     * @param  ViolationBaseline $entry the entry to add to the collection
+     * @return void
      */
     public function addEntry(ViolationBaseline $entry)
     {
@@ -48,11 +49,11 @@ class BaselineSet
             return false;
         }
 
-        // normalize slashes in file name
+        // Normalize slashes in file name.
         $fileName = str_replace('\\', '/', $fileName);
 
         foreach ($this->violations[$sniffName] as $baseline) {
-            if ($baseline->matches($fileName)) {
+            if ($baseline->matches($fileName) === true) {
                 return true;
             }
         }
