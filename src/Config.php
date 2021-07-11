@@ -1372,9 +1372,10 @@ class Config
         echo 'Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors]'.PHP_EOL;
         echo '  [--cache[=<cacheFile>]] [--no-cache] [--tab-width=<tabWidth>]'.PHP_EOL;
         echo '  [--report=<report>] [--report-file=<reportFile>] [--report-<report>=<reportFile>]'.PHP_EOL;
-        echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--bootstrap=<bootstrap>]'.PHP_EOL;
-        echo '  [--severity=<severity>] [--error-severity=<severity>] [--warning-severity=<severity>]'.PHP_EOL;
-        echo '  [--runtime-set key value] [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
+        echo '  [--report-width=<reportWidth>] [--basepath=<basepath>] [--baselineFile=<baselineFile>]'.PHP_EOL;
+        echo '  [--bootstrap=<bootstrap>] [--severity=<severity>] [--error-severity=<severity>]'.PHP_EOL;
+        echo '  [--warning-severity=<severity>] [--runtime-set key value]'.PHP_EOL;
+        echo '  [--config-set key value] [--config-delete key] [--config-show]'.PHP_EOL;
         echo '  [--standard=<standard>] [--sniffs=<sniffs>] [--exclude=<sniffs>]'.PHP_EOL;
         echo '  [--encoding=<encoding>] [--parallel=<processes>] [--generator=<generator>]'.PHP_EOL;
         echo '  [--extensions=<extensions>] [--ignore=<patterns>] [--ignore-annotations]'.PHP_EOL;
@@ -1407,6 +1408,7 @@ class Config
         echo PHP_EOL;
         echo ' <cacheFile>    Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo ' <basepath>     A path to strip from the front of file paths inside reports'.PHP_EOL;
+        echo ' <baselineFile> The path to the file with the baselined violations'.PHP_EOL;
         echo ' <bootstrap>    A comma separated list of files to run before processing begins'.PHP_EOL;
         echo ' <encoding>     The encoding of the files being checked (default is utf-8)'.PHP_EOL;
         echo ' <extensions>   A comma separated list of file extensions to check'.PHP_EOL;
