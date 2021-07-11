@@ -68,7 +68,7 @@ class BaselineTest extends TestCase
             'filename' => '/test/foobar.txt',
             'errors'   => 1,
             'warnings' => 0,
-            'messages' => [[[['sniff' => 'MySniff']]]],
+            'messages' => [[[['source' => 'MySniff']]]],
         ];
 
         $report = new Baseline();
