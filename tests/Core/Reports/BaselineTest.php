@@ -75,7 +75,7 @@ class BaselineTest extends TestCase
         ob_start();
         static::assertTrue($report->generateFileReport($reportData, $this->file));
         $result = ob_get_clean();
-        static::assertSame('<violation file="/test/foobar.txt" sniff="MySniff"/>'."\n", $result);
+        static::assertSame('<violation file="/test/foobar.txt" sniff="MySniff"/>'.PHP_EOL, $result);
 
     }//end testGenerateFileReportShouldPrintReport()
 

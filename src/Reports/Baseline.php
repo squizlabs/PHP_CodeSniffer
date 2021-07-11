@@ -59,11 +59,8 @@ class Baseline implements Report
         // add that manually later. We only have it in here to
         // properly set the encoding.
         $content = $out->flush();
-        if (strpos($content, PHP_EOL) !== false) {
-            $content = substr($content, (strpos($content, PHP_EOL) + strlen(PHP_EOL)));
-        } else if (strpos($content, "\n") !== false) {
-            $content = substr($content, (strpos($content, "\n") + 1));
-        }
+        $content = preg_replace("/[\n\r]/", PHP_EOL, $content);
+        $content = substr($content, (strpos($content, PHP_EOL) + strlen(PHP_EOL)));
 
         echo $content;
 
@@ -101,6 +98,15 @@ class Baseline implements Report
     ) {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
         echo '<phpcs-baseline version="'.Config::VERSION.'">'.PHP_EOL;
+
+        // Split violations on line-ending, make them unique and sort them.
+        if ($cachedData !== "") {
+            $lines = explode(PHP_EOL, $cachedData);
+            $lines = array_unique($lines);
+            sort($lines);
+            $cachedData = implode(PHP_EOL, $lines);
+        }
+
         echo $cachedData;
         echo '</phpcs-baseline>'.PHP_EOL;
 
