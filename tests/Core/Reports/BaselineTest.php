@@ -7,7 +7,7 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Tests\Core\Baseline;
+namespace PHP_CodeSniffer\Tests\Core\Reports;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Reports\Baseline;
