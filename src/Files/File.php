@@ -1031,6 +1031,11 @@ class File
             return false;
         }
 
+        // The message is part of the baselined violations
+        if ($this->config->baseline !== null && $this->config->baseline->contains($sniffCode, $this->path)) {
+            return false;
+        }
+
         $messageCount++;
         if ($fixable === true) {
             $this->fixableCount++;

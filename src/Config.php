@@ -12,6 +12,7 @@
 
 namespace PHP_CodeSniffer;
 
+use PHP_CodeSniffer\Baseline\BaselineSetFactory;
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 
@@ -139,6 +140,12 @@ class Config
         'stdinPath'       => null,
         'unknown'         => null,
     ];
+
+    /**
+     * The configured baselined violations
+     * @var \PHP_CodeSniffer\Baseline\BaselineSet|null
+     */
+    public $baseline = null;
 
     /**
      * Whether or not to kill the process when an unknown command line arg is found.
@@ -368,6 +375,9 @@ class Config
             } while ($currentDir !== '.' && $currentDir !== $lastDir && @is_readable($currentDir) === true);
         }//end if
 
+        // load baseline file (if any)
+        $this->baseline = BaselineSetFactory::fromFile($this->baselineFile);
+
         if (defined('STDIN') === false
             || strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
         ) {
@@ -403,7 +413,6 @@ class Config
         }//end if
 
         fclose($handle);
-
     }//end __construct()
 
 

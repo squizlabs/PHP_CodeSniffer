@@ -46,8 +46,7 @@ class Baseline implements Report
                 foreach ($colErrors as $error) {
                     $out->startElement('violation');
                     $out->writeAttribute('file', $report['filename']);
-                    $out->writeAttribute('type', $error['type']);
-                    $out->writeAttribute('source', $error['source']);
+                    $out->writeAttribute('sniff', $error['sniff']);
 
                     $out->endElement();
                 }
