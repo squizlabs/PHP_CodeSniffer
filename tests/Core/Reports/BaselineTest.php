@@ -9,6 +9,7 @@
 
 namespace PHP_CodeSniffer\Tests\Core\Reports;
 
+use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Reports\Baseline;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -89,7 +90,7 @@ class BaselineTest extends TestCase
     public function testGenerate()
     {
         $expected  = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>".PHP_EOL;
-        $expected .= "<phpcs-baseline version=\"3.6.1\">".PHP_EOL;
+        $expected .= "<phpcs-baseline version=\"".Config::VERSION."\">".PHP_EOL;
         $expected .= "<violation file=\"/test/foobar.txt\" sniff=\"MySniff\"/></phpcs-baseline>".PHP_EOL;
 
         $report = new Baseline();
