@@ -57,6 +57,9 @@ use PHP_CodeSniffer\Exceptions\RuntimeException;
  * @property bool     $stdin           Read content from STDIN instead of supplied files.
  * @property string   $stdinContent    Content passed directly to PHPCS on STDIN.
  * @property string   $stdinPath       The path to use for content passed on STDIN.
+ * @property int      $maxWarnings     Maximum number of warnings or errors to forgive and allow zero-code exit.
+ *                                     E.g. if maxWarnings is 50 and there are 50 errors or warnings, the exit
+ *                                     code will be 0. Helpful for legacy projects.
  *
  * @property array<string, string>      $extensions File extensions that should be checked, and what tokenizer to use.
  *                                                  E.g., array('inc' => 'PHP');
@@ -135,6 +138,7 @@ class Config
         'stdin'           => null,
         'stdinContent'    => null,
         'stdinPath'       => null,
+        'maxWarnings'     => null,
         'unknown'         => null,
     ];
 
@@ -502,6 +506,7 @@ class Config
         $this->stdin           = false;
         $this->stdinContent    = null;
         $this->stdinPath       = null;
+        $this->maxWarnings     = 0;
         $this->unknown         = [];
 
         $standard = self::getConfigData('default_standard');
@@ -1200,6 +1205,13 @@ class Config
 
                 $this->tabWidth = (int) substr($arg, 10);
                 self::$overriddenDefaults['tabWidth'] = true;
+            } else if (substr($arg, 0, 13) === 'max-warnings=') {
+                if (isset(self::$overriddenDefaults['maxWarnings']) === true) {
+                    break;
+                }
+
+                $this->maxWarnings = (int) substr($arg, 13);
+                self::$overriddenDefaults['maxWarnings'] = true;
             } else {
                 if ($this->dieOnUnknownArg === false) {
                     $eqPos = strpos($arg, '=');
@@ -1378,6 +1390,7 @@ class Config
         echo ' --cache               Cache results between runs'.PHP_EOL;
         echo ' --no-cache            Do not cache results between runs (this is the default)'.PHP_EOL;
         echo ' --ignore-annotations  Ignore all phpcs: annotations in code comments'.PHP_EOL;
+        echo ' --max-warnings        Maximum number of warnings or errors to forgive and allow zero-code exit'.PHP_EOL;
         echo PHP_EOL;
         echo ' <cacheFile>    Use a specific file for caching (uses a temporary file by default)'.PHP_EOL;
         echo ' <basepath>     A path to strip from the front of file paths inside reports'.PHP_EOL;
