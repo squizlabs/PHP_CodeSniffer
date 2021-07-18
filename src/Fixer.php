@@ -412,6 +412,7 @@ class Fixer
         }
 
         $this->changeset = [];
+        return true;
 
     }//end endChangeset()
 

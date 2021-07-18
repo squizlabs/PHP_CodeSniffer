@@ -750,6 +750,8 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             }
         }
 
+        return false;
+
     }//end checkInheritdoc()
 
 
