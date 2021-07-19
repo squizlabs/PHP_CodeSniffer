@@ -289,10 +289,6 @@ class Runner
             define('PHP_CODESNIFFER_CBF', false);
         }
 
-        // Ensure this option is enabled or else line endings will not always
-        // be detected properly for files created on a Mac with the /r line ending.
-        ini_set('auto_detect_line_endings', true);
-
         // Disable the PCRE JIT as this caused issues with parallel running.
         ini_set('pcre.jit', false);
 
