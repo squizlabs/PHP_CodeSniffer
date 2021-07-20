@@ -368,6 +368,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$unit',
             'content'           => '$unit',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '',
@@ -376,6 +377,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$intervals',
             'content'           => 'DateInterval ...$intervals',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => true,
             'type_hint'         => 'DateInterval',
@@ -398,6 +400,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$a',
             'content'           => '\Package\Sub\ClassName $a',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '\Package\Sub\ClassName',
@@ -406,6 +409,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$b',
             'content'           => '?Sub\AnotherClass $b',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '?Sub\AnotherClass',
@@ -938,6 +942,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'variable_length'   => true,
             'type_hint'         => '?MyClass',
             'nullable_type'     => true,
+            'default'           => '\'default value\' . /*-*/ \'second part\' // Trailing comment.',
         ];
 
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
