@@ -42,6 +42,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
        --- Generic.WhiteSpace.DisallowSpaceIndent
        --- Generic.WhiteSpace.DisallowTabIndent
     -- Thanks to Juliette Reinders Folmer for the patch
+  - File::getMethodParameters() no longer incorrectly returns argument attributes in the type hint array index
+    -- A new has_attributes array index is available and set to TRUE if the argument has attributes defined
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Generic.NamingConventions.ConstructorName no longer throws deprecation notices on PHP 8.1
     -- Thanks to Juliette Reinders Folmer for the patch
   - Squiz.Commenting.BlockComment now correctly applies rules for block comments after a short echo tag
