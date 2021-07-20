@@ -1283,7 +1283,7 @@ class File
      *         'name'                => '$var',  // The variable name.
      *         'token'               => integer, // The stack pointer to the variable name.
      *         'content'             => string,  // The full content of the variable definition.
-     *         'attributes'          => boolean, // Does the parameter have one or more attributes attached ?
+     *         'has_attributes'      => boolean, // Does the parameter have one or more attributes attached ?
      *         'pass_by_reference'   => boolean, // Is the variable passed by reference?
      *         'reference_token'     => integer, // The stack pointer to the reference operator
      *                                           // or FALSE if the param is not passed by reference.
@@ -1356,7 +1356,7 @@ class File
         $defaultStart    = null;
         $equalToken      = null;
         $paramCount      = 0;
-        $attributes      = false;
+        $hasAttributes   = false;
         $passByReference = false;
         $referenceToken  = false;
         $variableLength  = false;
@@ -1389,7 +1389,7 @@ class File
 
             switch ($this->tokens[$i]['code']) {
             case T_ATTRIBUTE:
-                $attributes = true;
+                $hasAttributes = true;
 
                 // Skip to the end of the attribute.
                 $i = $this->tokens[$i]['attribute_closer'];
@@ -1510,7 +1510,7 @@ class File
                     $vars[$paramCount]['default_equal_token'] = $equalToken;
                 }
 
-                $vars[$paramCount]['attributes']          = $attributes;
+                $vars[$paramCount]['has_attributes']      = $hasAttributes;
                 $vars[$paramCount]['pass_by_reference']   = $passByReference;
                 $vars[$paramCount]['reference_token']     = $referenceToken;
                 $vars[$paramCount]['variable_length']     = $variableLength;
@@ -1536,7 +1536,7 @@ class File
                 $paramStart       = ($i + 1);
                 $defaultStart     = null;
                 $equalToken       = null;
-                $attributes       = false;
+                $hasAttributes    = false;
                 $passByReference  = false;
                 $referenceToken   = false;
                 $variableLength   = false;
