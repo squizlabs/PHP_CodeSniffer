@@ -363,3 +363,23 @@ class Foo
 
      var int $noComment = 1;
  }
+
+class HasAttributes
+{
+    /**
+     * Short description of the member variable.
+     *
+     * @var array
+     */
+    #[ORM\Id]#[ORM\Column("integer")]
+    private $id;
+
+    /**
+     * Short description of the member variable.
+     *
+     * @var array
+     */
+    #[ORM\GeneratedValue]
+    #[ORM\Column(ORM\Column::T_INTEGER)]
+    protected $height;
+}
