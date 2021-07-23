@@ -429,3 +429,50 @@ public function ignored() {
 }
 
 // phpcs:set PEAR.Commenting.FunctionComment specialMethods[] __construct,__destruct
+
+class Something implements JsonSerializable {
+    /**
+     * Single attribute.
+     *
+     * @return mixed
+     */
+    #[ReturnTypeWillChange]
+    public function jsonSerialize() {}
+
+    /**
+     * Multiple attributes.
+     *
+     * @return Something
+     */
+    #[AttributeA]
+    #[AttributeB]
+    public function methodName() {}
+
+    /**
+     * Blank line between docblock and attribute.
+     *
+     * @return mixed
+     */
+
+    #[ReturnTypeWillChange]
+    public function blankLineDetectionA() {}
+
+    /**
+     * Blank line between attribute and function declaration.
+     *
+     * @return mixed
+     */
+    #[ReturnTypeWillChange]
+
+    public function blankLineDetectionB() {}
+
+    /**
+     * Blank line between both docblock and attribute and attribute and function declaration.
+     *
+     * @return mixed
+     */
+
+    #[ReturnTypeWillChange]
+
+    public function blankLineDetectionC() {}
+}
