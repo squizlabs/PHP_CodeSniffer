@@ -272,3 +272,19 @@ $contentToEcho
  * No blank line allowed above the comment if it's the first non-empty token after a PHP open tag.
  */
 $contentToEcho
+
+/**
+ * Comment should be ignored, even though there is an attribute between the docblock and the class declaration.
+ */
+
+#[AttributeA]
+
+final class MyClass
+{
+    /**
+     * Comment should be ignored, even though there is an attribute between the docblock and the function declaration
+     */
+    #[AttributeA]
+    #[AttributeB]
+    final public function test() {}
+}
