@@ -55,11 +55,25 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
 
         $endOfStatement = $phpcsFile->findNext(T_SEMICOLON, ($stackPtr + 1), null, false, null, true);
 
-        $ignore   = $validPrefixes;
-        $ignore[] = T_WHITESPACE;
+        $ignore = $validPrefixes;
+        $ignore[T_WHITESPACE] = T_WHITESPACE;
 
         $start = $startOfStatement;
-        $prev  = $phpcsFile->findPrevious($ignore, ($startOfStatement - 1), null, true);
+        for ($prev = ($startOfStatement - 1); $prev >= 0; $prev--) {
+            if (isset($ignore[$tokens[$prev]['code']]) === true) {
+                continue;
+            }
+
+            if ($tokens[$prev]['code'] === T_ATTRIBUTE_END
+                && isset($tokens[$prev]['attribute_opener']) === true
+            ) {
+                $prev = $tokens[$prev]['attribute_opener'];
+                continue;
+            }
+
+            break;
+        }
+
         if (isset(Tokens::$commentTokens[$tokens[$prev]['code']]) === true) {
             // Assume the comment belongs to the member var if it is on a line by itself.
             $prevContent = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($prev - 1), null, true);
@@ -67,28 +81,48 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
                 // Check the spacing, but then skip it.
                 $foundLines = ($tokens[$startOfStatement]['line'] - $tokens[$prev]['line'] - 1);
                 if ($foundLines > 0) {
-                    $error = 'Expected 0 blank lines after member var comment; %s found';
-                    $data  = [$foundLines];
-                    $fix   = $phpcsFile->addFixableError($error, $prev, 'AfterComment', $data);
-                    if ($fix === true) {
-                        $phpcsFile->fixer->beginChangeset();
-                        // Inline comments have the newline included in the content but
-                        // docblock do not.
-                        if ($tokens[$prev]['code'] === T_COMMENT) {
-                            $phpcsFile->fixer->replaceToken($prev, rtrim($tokens[$prev]['content']));
+                    for ($i = ($prev + 1); $i < $startOfStatement; $i++) {
+                        if ($tokens[$i]['column'] !== 1) {
+                            continue;
                         }
 
-                        for ($i = ($prev + 1); $i <= $startOfStatement; $i++) {
-                            if ($tokens[$i]['line'] === $tokens[$startOfStatement]['line']) {
-                                break;
-                            }
+                        if ($tokens[$i]['code'] === T_WHITESPACE
+                            && $tokens[$i]['line'] !== $tokens[($i + 1)]['line']
+                        ) {
+                            $error = 'Expected 0 blank lines after member var comment; %s found';
+                            $data  = [$foundLines];
+                            $fix   = $phpcsFile->addFixableError($error, $prev, 'AfterComment', $data);
+                            if ($fix === true) {
+                                $phpcsFile->fixer->beginChangeset();
+                                // Inline comments have the newline included in the content but
+                                // docblocks do not.
+                                if ($tokens[$prev]['code'] === T_COMMENT) {
+                                    $phpcsFile->fixer->replaceToken($prev, rtrim($tokens[$prev]['content']));
+                                }
 
-                            $phpcsFile->fixer->replaceToken($i, '');
-                        }
+                                for ($i = ($prev + 1); $i <= $startOfStatement; $i++) {
+                                    if ($tokens[$i]['line'] === $tokens[$startOfStatement]['line']) {
+                                        break;
+                                    }
 
-                        $phpcsFile->fixer->addNewline($prev);
-                        $phpcsFile->fixer->endChangeset();
-                    }
+                                    // Remove the newline after the docblock, and any entirely
+                                    // empty lines before the member var.
+                                    if ($tokens[$i]['code'] === T_WHITESPACE
+                                        && $tokens[$i]['line'] === $tokens[$prev]['line']
+                                        || ($tokens[$i]['column'] === 1
+                                        && $tokens[$i]['line'] !== $tokens[($i + 1)]['line'])
+                                    ) {
+                                        $phpcsFile->fixer->replaceToken($i, '');
+                                    }
+                                }
+
+                                $phpcsFile->fixer->addNewline($prev);
+                                $phpcsFile->fixer->endChangeset();
+                            }//end if
+
+                            break;
+                        }//end if
+                    }//end for
                 }//end if
 
                 $start = $prev;
