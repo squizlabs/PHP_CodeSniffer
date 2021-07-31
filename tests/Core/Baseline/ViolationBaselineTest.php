@@ -30,7 +30,7 @@ class ViolationBaselineTest extends TestCase
      */
     public function testGetSniffName()
     {
-        $violation = new ViolationBaseline('sniff', 'foobar');
+        $violation = new ViolationBaseline('sniff', 'foobar', 'signature');
         static::assertSame('sniff', $violation->getSniffName());
 
     }//end testGetSniffName()
@@ -45,10 +45,11 @@ class ViolationBaselineTest extends TestCase
      */
     public function testMatches()
     {
-        $violation = new ViolationBaseline('sniff', 'foobar.txt');
-        static::assertTrue($violation->matches('foobar.txt'));
-        static::assertTrue($violation->matches('/test/foobar.txt'));
-        static::assertFalse($violation->matches('foo.txt'));
+        $violation = new ViolationBaseline('sniff', 'foobar.txt', 'signature');
+        static::assertTrue($violation->matches('foobar.txt', 'signature'));
+        static::assertTrue($violation->matches('/test/foobar.txt', 'signature'));
+        static::assertFalse($violation->matches('foo.txt', 'signature'));
+        static::assertFalse($violation->matches('foobar.txt', 'bad-signature'));
 
     }//end testMatches()
 

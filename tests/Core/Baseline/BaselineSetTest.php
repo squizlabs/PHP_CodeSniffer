@@ -32,9 +32,9 @@ class BaselineSetTest extends TestCase
     public function testSetContainsEntry()
     {
         $set = new BaselineSet();
-        $set->addEntry(new ViolationBaseline('sniff', 'foobar'));
+        $set->addEntry(new ViolationBaseline('sniff', 'foobar', 'signature'));
 
-        static::assertTrue($set->contains('sniff', 'foobar'));
+        static::assertTrue($set->contains('sniff', 'foobar', 'signature'));
 
     }//end testSetContainsEntry()
 
@@ -49,12 +49,13 @@ class BaselineSetTest extends TestCase
     public function testShouldFindEntryForIdenticalRules()
     {
         $set = new BaselineSet();
-        $set->addEntry(new ViolationBaseline('sniff', 'foo'));
-        $set->addEntry(new ViolationBaseline('sniff', 'bar'));
+        $set->addEntry(new ViolationBaseline('sniff', 'foo', 'signA'));
+        $set->addEntry(new ViolationBaseline('sniff', 'bar', 'signB'));
 
-        static::assertTrue($set->contains('sniff', 'foo'));
-        static::assertTrue($set->contains('sniff', 'bar'));
-        static::assertFalse($set->contains('sniff', 'unknown'));
+        static::assertTrue($set->contains('sniff', 'foo', 'signA'));
+        static::assertTrue($set->contains('sniff', 'bar', 'signB'));
+        static::assertFalse($set->contains('sniff', 'unknown', 'signA'));
+        static::assertFalse($set->contains('sniff', 'foo', 'signB'));
 
     }//end testShouldFindEntryForIdenticalRules()
 
@@ -69,9 +70,9 @@ class BaselineSetTest extends TestCase
     public function testShouldNotFindEntryForNonExistingRule()
     {
         $set = new BaselineSet();
-        $set->addEntry(new ViolationBaseline('sniff', 'foo'));
+        $set->addEntry(new ViolationBaseline('sniff', 'foo', 'signature'));
 
-        static::assertFalse($set->contains('unknown', 'foo'));
+        static::assertFalse($set->contains('unknown', 'foo', 'signature'));
 
     }//end testShouldNotFindEntryForNonExistingRule()
 

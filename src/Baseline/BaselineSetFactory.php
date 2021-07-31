@@ -57,7 +57,7 @@ class BaselineSetFactory
             // Normalize filepath (if needed).
             $filePath = '/'.ltrim(str_replace('\\', '/', (string) $node['file']), '/');
 
-            $baselineSet->addEntry(new ViolationBaseline((string) $node['sniff'], $filePath, $node['signature']));
+            $baselineSet->addEntry(new ViolationBaseline((string) $node['sniff'], $filePath, (string) $node['signature']));
         }//end foreach
 
         return $baselineSet;

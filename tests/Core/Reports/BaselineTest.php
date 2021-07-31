@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Tests\Core\Reports;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Reports\Baseline;
+use PHP_CodeSniffer\Util;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -69,20 +70,29 @@ class BaselineTest extends TestCase
             'filename' => '/test/foobar.txt',
             'errors'   => 1,
             'warnings' => 0,
-            'messages' => [[[['source' => 'MySniff']]]],
+            'messages' => [5 => [[['source' => 'MySniff']]]],
         ];
+
+        $tokens    = [
+            [
+                'content' => 'foobar',
+                'line'    => 5,
+            ],
+        ];
+        $signature = Util\CodeSignature::createSignature($tokens, 5);
+        $this->file->method('getTokens')->willReturn($tokens);
 
         $report = new Baseline();
         ob_start();
         static::assertTrue($report->generateFileReport($reportData, $this->file));
         $result = ob_get_clean();
-        static::assertSame('<violation file="/test/foobar.txt" sniff="MySniff"/>'.PHP_EOL, $result);
+        static::assertSame('<violation file="/test/foobar.txt" sniff="MySniff" signature="'.$signature.'"/>'.PHP_EOL, $result);
 
     }//end testGenerateFileReportShouldPrintReport()
 
 
     /**
-     * Test the generate of the complete file
+     * Test the generation of the complete file
      *
      * @covers ::generate
      * @return void
@@ -90,8 +100,9 @@ class BaselineTest extends TestCase
     public function testGenerate()
     {
         $expected  = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>".PHP_EOL;
-        $expected .= "<phpcs-baseline version=\"".Config::VERSION."\">".PHP_EOL;
-        $expected .= "<violation file=\"/test/foobar.txt\" sniff=\"MySniff\"/></phpcs-baseline>".PHP_EOL;
+        $expected .= "<phpcs-baseline version=\"".Config::VERSION."\">";
+        $expected .= "<violation file=\"/test/foobar.txt\" sniff=\"MySniff\"/>".PHP_EOL;
+        $expected .= "</phpcs-baseline>".PHP_EOL;
 
         $report = new Baseline();
         ob_start();

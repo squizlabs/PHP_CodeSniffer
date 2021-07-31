@@ -32,7 +32,7 @@ class BaselineSetFactoryTest extends TestCase
         $filename = __DIR__.'/TestFiles/baseline.xml';
         $set      = BaselineSetFactory::fromFile($filename);
 
-        static::assertTrue($set->contains('Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen', '/test/src/foo/bar'));
+        static::assertTrue($set->contains('Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen', '/test/src/foo/bar', 'foobar'));
 
     }//end testFromFileShouldSucceed()
 
@@ -48,7 +48,7 @@ class BaselineSetFactoryTest extends TestCase
         $filename = __DIR__.'/TestFiles/baseline.xml';
         $set      = BaselineSetFactory::fromFile($filename);
 
-        static::assertTrue($set->contains('Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen', '/test\\src\\foo/bar'));
+        static::assertTrue($set->contains('Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingAfterOpen', '/test\\src\\foo/bar', 'foobar'));
 
     }//end testFromFileShouldSucceedWithBackAndForwardSlashes()
 
@@ -87,13 +87,28 @@ class BaselineSetFactoryTest extends TestCase
      * @covers ::fromFile
      * @return void
      */
-    public function testFromFileViolationMissingRuleShouldThrowException()
+    public function testFromFileViolationMissingSniffShouldThrowException()
     {
         $this->expectException('PHP_CodeSniffer\Exceptions\RuntimeException');
         $this->expectExceptionMessage('Missing `sniff` attribute in `violation`');
         BaselineSetFactory::fromFile(__DIR__.'/TestFiles/missing-sniff-baseline.xml');
 
-    }//end testFromFileViolationMissingRuleShouldThrowException()
+    }//end testFromFileViolationMissingSniffShouldThrowException()
+
+
+    /**
+     * Test that missing signature attribute throws exception
+     *
+     * @covers ::fromFile
+     * @return void
+     */
+    public function testFromFileViolationMissingSignatureShouldThrowException()
+    {
+        $this->expectException('PHP_CodeSniffer\Exceptions\RuntimeException');
+        $this->expectExceptionMessage('Missing `signature` attribute in `violation` in');
+        BaselineSetFactory::fromFile(__DIR__.'/TestFiles/missing-signature-baseline.xml');
+
+    }//end testFromFileViolationMissingSignatureShouldThrowException()
 
 
     /**
