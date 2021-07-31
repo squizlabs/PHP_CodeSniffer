@@ -376,8 +376,10 @@ class Config
             } while ($currentDir !== '.' && $currentDir !== $lastDir && @is_readable($currentDir) === true);
         }//end if
 
-        // Load baseline file (if any).
-        $this->baseline = BaselineSetFactory::fromFile($this->baselineFile);
+        // Load baseline file, only if no baseline should be created.
+        if (isset($this->settings['reports']['baseline']) === false) {
+            $this->baseline = BaselineSetFactory::fromFile($this->baselineFile);
+        }
 
         if (defined('STDIN') === false
             || strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'

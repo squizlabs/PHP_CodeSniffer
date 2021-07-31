@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Reports;
 
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Files\File;
+use PHP_CodeSniffer\Util;
 use XMLWriter;
 
 class Baseline implements Report
@@ -43,12 +44,15 @@ class Baseline implements Report
             return false;
         }
 
-        foreach ($report['messages'] as $lineErrors) {
+        foreach ($report['messages'] as $lineNr => $lineErrors) {
+            $signature = Util\Signature::createSignature($phpcsFile->getTokens(), $lineNr);
+
             foreach ($lineErrors as $colErrors) {
                 foreach ($colErrors as $error) {
                     $out->startElement('violation');
                     $out->writeAttribute('file', $report['filename']);
                     $out->writeAttribute('sniff', $error['source']);
+                    $out->writeAttribute('signature', $signature);
 
                     $out->endElement();
                 }
@@ -97,7 +101,7 @@ class Baseline implements Report
         $toScreen=true
     ) {
         echo '<?xml version="1.0" encoding="UTF-8"?>'.PHP_EOL;
-        echo '<phpcs-baseline version="'.Config::VERSION.'">'.PHP_EOL;
+        echo '<phpcs-baseline version="'.Config::VERSION.'">';
 
         // Split violations on line-ending, make them unique and sort them.
         if ($cachedData !== "") {
@@ -108,7 +112,7 @@ class Baseline implements Report
         }
 
         echo $cachedData;
-        echo '</phpcs-baseline>'.PHP_EOL;
+        echo PHP_EOL.'</phpcs-baseline>'.PHP_EOL;
 
     }//end generate()
 
