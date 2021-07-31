@@ -33,18 +33,27 @@ class ViolationBaseline
      */
     private $fileNameLength;
 
+    /**
+     * The code signature for the baseline
+     *
+     * @var string
+     */
+    private $signature;
+
 
     /**
      * Initialize the violation baseline
      *
      * @param string $sniffName The name of the sniff that's baselined.
      * @param string $fileName  The relative file path.
+     * @param string $signature The code signature for the baseline.
      */
-    public function __construct($sniffName, $fileName)
+    public function __construct($sniffName, $fileName, $signature)
     {
         $this->sniffName      = $sniffName;
         $this->fileName       = $fileName;
         $this->fileNameLength = strlen($fileName);
+        $this->signature      = $signature;
 
     }//end __construct()
 
@@ -64,13 +73,14 @@ class ViolationBaseline
     /**
      * Test if the given filepath matches the relative filename in the baseline
      *
-     * @param string $filepath the full filepath to match against
+     * @param string $filepath  the full filepath to match against
+     * @param string $signature the code signature of the violation
      *
      * @return bool
      */
-    public function matches($filepath)
+    public function matches($filepath, $signature)
     {
-        return substr($filepath, -$this->fileNameLength) === $this->fileName;
+        return $this->signature === $signature && substr($filepath, -$this->fileNameLength) === $this->fileName;
 
     }//end matches()
 

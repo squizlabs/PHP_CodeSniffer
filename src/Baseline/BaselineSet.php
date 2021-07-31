@@ -39,10 +39,11 @@ class BaselineSet
      *
      * @param string $sniffName the name of the sniff to search for
      * @param string $fileName  the full filename of the file to match
+     * @param string $signature the code signature of the violation
      *
      * @return bool
      */
-    public function contains($sniffName, $fileName)
+    public function contains($sniffName, $fileName, $signature)
     {
         if (isset($this->violations[$sniffName]) === false) {
             return false;
@@ -52,7 +53,7 @@ class BaselineSet
         $fileName = str_replace('\\', '/', $fileName);
 
         foreach ($this->violations[$sniffName] as $baseline) {
-            if ($baseline->matches($fileName) === true) {
+            if ($baseline->matches($fileName, $signature) === true) {
                 return true;
             }
         }

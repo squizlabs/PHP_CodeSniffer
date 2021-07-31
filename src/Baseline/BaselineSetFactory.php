@@ -50,11 +50,15 @@ class BaselineSetFactory
                 throw new RuntimeException('Missing `file` attribute in `violation` in '.$fileName);
             }
 
+            if (isset($node['signature']) === false) {
+                throw new RuntimeException('Missing `signature` attribute in `violation` in '.$fileName);
+            }
+
             // Normalize filepath (if needed).
             $filePath = '/'.ltrim(str_replace('\\', '/', (string) $node['file']), '/');
 
-            $baselineSet->addEntry(new ViolationBaseline((string) $node['sniff'], $filePath));
-        }
+            $baselineSet->addEntry(new ViolationBaseline((string) $node['sniff'], $filePath, $node['signature']));
+        }//end foreach
 
         return $baselineSet;
 

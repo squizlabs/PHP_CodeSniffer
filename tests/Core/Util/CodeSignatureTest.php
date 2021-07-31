@@ -2,20 +2,22 @@
 /**
  * Tests the generation of code signature based on tokens
  *
- * @author    Frank Dekker <fdekker@123inkt.nl
+ * @author    Frank Dekker <fdekker@123inkt.nl>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
 namespace PHP_CodeSniffer\Tests\Core\Util;
 
-use PHP_CodeSniffer\Util\Signature;
+use PHP_CodeSniffer\Util\CodeSignature;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \PHP_CodeSniffer\Util\Signature
+ * Tests the generation of code signature based on tokens
+ *
+ * @coversDefaultClass \PHP_CodeSniffer\Util\CodeSignature
  */
-class SignatureTest extends TestCase
+class CodeSignatureTest extends TestCase
 {
 
 
@@ -24,6 +26,8 @@ class SignatureTest extends TestCase
      *
      * @param int    $lineNr   the line nr within the file
      * @param string $expected the expected signature
+     *
+     * @return void
      *
      * @covers       ::createSignature
      * @dataProvider dataProvider
@@ -57,13 +61,15 @@ class SignatureTest extends TestCase
             ],
         ];
 
-        $signature = Signature::createSignature($tokens, $lineNr);
+        $signature = CodeSignature::createSignature($tokens, $lineNr);
         static::assertSame($expected, $signature);
 
     }//end testCreateSignature()
 
 
     /**
+     * Provide edge case scenario's for the code signature
+     *
      * @return array<string, array<int, string>>
      */
     public function dataProvider()
@@ -80,7 +86,7 @@ class SignatureTest extends TestCase
             'last line of file'   => [
                 5,
                 hash('sha1', 'line4line5'),
-            ]
+            ],
         ];
 
     }//end dataProvider()

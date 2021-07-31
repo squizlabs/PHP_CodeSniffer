@@ -45,7 +45,7 @@ class Baseline implements Report
         }
 
         foreach ($report['messages'] as $lineNr => $lineErrors) {
-            $signature = Util\Signature::createSignature($phpcsFile->getTokens(), $lineNr);
+            $signature = Util\CodeSignature::createSignature($phpcsFile->getTokens(), $lineNr);
 
             foreach ($lineErrors as $colErrors) {
                 foreach ($colErrors as $error) {

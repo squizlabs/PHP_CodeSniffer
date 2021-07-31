@@ -9,7 +9,7 @@
 
 namespace PHP_CodeSniffer\Util;
 
-class Signature
+class CodeSignature
 {
 
 
@@ -23,24 +23,24 @@ class Signature
      */
     public static function createSignature(array $tokens, $lineNr)
     {
-        // get all tokens one line before and after
+        // Get all tokens one line before and after.
         $start = ($lineNr - 1);
         $end   = ($lineNr + 1);
 
-        $line = '';
+        $content = '';
         foreach ($tokens as $token) {
             if ($token['line'] > $end) {
                 break;
             }
 
-            if ($token['line'] >= $start) {
-                // concat content excluding line endings.
-                $line .= isset($token['content']) ? trim($token['content'], "\r\n") : '';
+            // Concat content excluding line endings.
+            if ($token['line'] >= $start && isset($token['content']) === true) {
+                $content .= trim($token['content'], "\r\n");
             }
         }
 
-        // generate hash
-        return hash('sha1', $line);
+        // Generate sha1 hash.
+        return hash('sha1', $content);
 
     }//end createSignature()
 

@@ -1032,8 +1032,11 @@ class File
         }
 
         // The message is part of the baselined violations.
-        if ($this->config->baseline !== null && $this->config->baseline->contains($sniffCode, $this->path) === true) {
-            return false;
+        if ($this->config->baseline !== null) {
+            $signature = Util\CodeSignature::createSignature($this->getTokens(), $line);
+            if ($this->config->baseline->contains($sniffCode, $this->path, $signature) === true) {
+                return false;
+            }
         }
 
         $messageCount++;
