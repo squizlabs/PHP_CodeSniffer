@@ -16,8 +16,7 @@ class BaselineSetFactory
 
 
     /**
-     * Read the baseline violations from the given filename path. Append the baseDir to all the file paths within
-     * the baseline file.
+     * Read the baseline violations from the given filename path.
      *
      * @param string $fileName the baseline file to import
      *
