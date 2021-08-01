@@ -29,7 +29,7 @@ class BaselineSet
      */
     public function addEntry(ViolationBaseline $entry)
     {
-        $this->violations[$entry->getSniffName()][] = $entry;
+        $this->violations[$entry->getSniffName()][$entry->getSignature()][] = $entry;
 
     }//end addEntry()
 
@@ -45,15 +45,15 @@ class BaselineSet
      */
     public function contains($sniffName, $fileName, $signature)
     {
-        if (isset($this->violations[$sniffName]) === false) {
+        if (isset($this->violations[$sniffName][$signature]) === false) {
             return false;
         }
 
         // Normalize slashes in file name.
         $fileName = str_replace('\\', '/', $fileName);
 
-        foreach ($this->violations[$sniffName] as $baseline) {
-            if ($baseline->matches($fileName, $signature) === true) {
+        foreach ($this->violations[$sniffName][$signature] as $baseline) {
+            if ($baseline->matches($fileName) === true) {
                 return true;
             }
         }

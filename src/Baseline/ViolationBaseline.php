@@ -71,16 +71,27 @@ class ViolationBaseline
 
 
     /**
+     * Get the code signature for this baseline
+     *
+     * @return string
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+
+    }//end getSignature()
+
+
+    /**
      * Test if the given filepath matches the relative filename in the baseline
      *
-     * @param string $filepath  the full filepath to match against
-     * @param string $signature the code signature of the violation
+     * @param string $filepath the full filepath to match against
      *
      * @return bool
      */
-    public function matches($filepath, $signature)
+    public function matches($filepath)
     {
-        return $this->signature === $signature && substr($filepath, -$this->fileNameLength) === $this->fileName;
+        return substr($filepath, -$this->fileNameLength) === $this->fileName;
 
     }//end matches()
 

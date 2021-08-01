@@ -22,18 +22,20 @@ class ViolationBaselineTest extends TestCase
 
 
     /**
-     * Test the sniff name is returned
+     * Test the sniff name and signature is returned
      *
      * @covers ::__construct
      * @covers ::getSniffName
+     * @covers ::getSignature
      * @return void
      */
-    public function testGetSniffName()
+    public function testAccessors()
     {
         $violation = new ViolationBaseline('sniff', 'foobar', 'signature');
         static::assertSame('sniff', $violation->getSniffName());
+        static::assertSame('signature', $violation->getSignature());
 
-    }//end testGetSniffName()
+    }//end testAccessors()
 
 
     /**
@@ -46,10 +48,9 @@ class ViolationBaselineTest extends TestCase
     public function testMatches()
     {
         $violation = new ViolationBaseline('sniff', 'foobar.txt', 'signature');
-        static::assertTrue($violation->matches('foobar.txt', 'signature'));
-        static::assertTrue($violation->matches('/test/foobar.txt', 'signature'));
-        static::assertFalse($violation->matches('foo.txt', 'signature'));
-        static::assertFalse($violation->matches('foobar.txt', 'bad-signature'));
+        static::assertTrue($violation->matches('foobar.txt'));
+        static::assertTrue($violation->matches('/test/foobar.txt'));
+        static::assertFalse($violation->matches('foo.txt'));
 
     }//end testMatches()
 
