@@ -154,6 +154,15 @@ if (defined('T_ATTRIBUTE') === false) {
     define('T_ATTRIBUTE', 'PHPCS_T_ATTRIBUTE');
 }
 
+// Some PHP 8.1 tokens, replicated for lower versions.
+if (defined('T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG') === false) {
+    define('T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG', 'PHPCS_T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG');
+}
+
+if (defined('T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG') === false) {
+    define('T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG', 'PHPCS_T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');

@@ -647,6 +647,25 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                PHP 8.1 introduced two dedicated tokens for the & character.
+                Retokenizing both of these to T_BITWISE_AND, which is the
+                token PHPCS already tokenized them as.
+            */
+
+            if ($tokenIsArray === true
+                && ($token[0] === T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG
+                || $token[0] === T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG)
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_BITWISE_AND,
+                    'type'    => 'T_BITWISE_AND',
+                    'content' => $token[1],
+                ];
+                $newStackPtr++;
+                continue;
+            }
+
+            /*
                 If this is a double quoted string, PHP will tokenize the whole
                 thing which causes problems with the scope map when braces are
                 within the string. So we need to merge the tokens together to
@@ -1667,7 +1686,8 @@ class PHP extends Tokenizer
                 if ($token[0] === T_FUNCTION) {
                     for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
                         if (is_array($tokens[$x]) === false
-                            || isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                            || (isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                            && $tokens[$x][1] !== '&')
                         ) {
                             // Non-empty content.
                             break;
