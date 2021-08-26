@@ -42,6 +42,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
        --- Generic.WhiteSpace.DisallowSpaceIndent
        --- Generic.WhiteSpace.DisallowTabIndent
     -- Thanks to Juliette Reinders Folmer for the patch
+  - The new PHP 8.1 tokenisation for ampersands has been reverted to use the existing PHP_CodeSniffer method
+    -- The PHP 8.1 tokens T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG and T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG are unsued
+    -- Ampersands continue to be tokenized as T_BITWISE_AND for all PHP versions
+    -- Thanks to Juliette Reinders Folmer and Anna Filina for the patch
   - File::getMethodParameters() no longer incorrectly returns argument attributes in the type hint array index
     -- A new has_attributes array index is available and set to TRUE if the argument has attributes defined
     -- Thanks to Juliette Reinders Folmer for the patch
