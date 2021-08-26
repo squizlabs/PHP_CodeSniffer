@@ -50,6 +50,8 @@ The file documents changes to the PHP_CodeSniffer project.
 ### Removed
 - Removed support for installing via PEAR
     - Use composer or the phar files
+- Removed use of the deprecated `auto_detect_line_endings` ini setting
+    - This removes support for files with `\r` line endings
 - Support for checking the coding standards of JS files has been removed
 - Support for checking the coding standards of CSS files has been removed
 - Support for the deprecated `@codingStandard` annotation syntax has been removed
