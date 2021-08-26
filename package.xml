@@ -89,6 +89,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3362 : Generic.WhiteSpace.ScopeIndent false positive for arrow functions inside arrays
   - Fixed bug #3384 : Squiz.Commenting.FileComment.SpacingAfterComment false positive on empty file
+  - Fixed bug #3400 : PHP 8.1: prevent deprecation notices about missing return types
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
