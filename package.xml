@@ -2436,8 +2436,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - The PHP 8.0 T_NULLSAFE_OBJECT_OPERATOR token has been made available for older versions
       -- Existing sniffs that check for T_OBJECT_OPERATOR have been modified to apply the same rules for the nullsafe object   operator
       -- Thanks to Juliette Reinders Folmer for the patch
-    - The new method of PHP 8.0 tokenizing for namespaced names has been revert to thr pre 8.0 method
-      -- This maintains backwards compatible for existing sniffs on PHP 8.0
+    - The new method of PHP 8.0 tokenizing for namespaced names has been reverted to the pre 8.0 method
+      -- This maintains backwards compatibility for existing sniffs on PHP 8.0
       -- This change will be removed in PHPCS 4.0 as the PHP 8.0 tokenizing method will be backported for pre 8.0 versions
       -- Thanks to Juliette Reinders Folmer for the patch
     - Added support for changes to the way PHP 8.0 tokenizes hash comments
