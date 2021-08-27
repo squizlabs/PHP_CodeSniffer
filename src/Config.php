@@ -962,7 +962,13 @@ class Config
                 if ($this->stdinPath === false) {
                     $this->stdinPath = trim(substr($arg, 11));
                 }
-
+                /**
+                * eXtreme Go Horse (XGH)
+                *
+                * Modification so that the file path is read and the error does not appear:
+                * ERROR: You must supply at least one file or directory to process.
+                */
+                $this->processFilePath($this->stdinPath);
                 self::$overriddenDefaults['stdinPath'] = true;
             } else if (PHP_CODESNIFFER_CBF === false && substr($arg, 0, 12) === 'report-file=') {
                 if (isset(self::$overriddenDefaults['reportFile']) === true) {
