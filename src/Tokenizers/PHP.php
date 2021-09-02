@@ -1796,23 +1796,6 @@ class PHP extends Tokenizer
 
                             break;
                         }//end for
-
-                        // Any T_ARRAY tokens we find between here and the next
-                        // token that can't be part of the return type, need to be
-                        // converted to T_STRING tokens.
-                        for ($x; $x < $numTokens; $x++) {
-                            if ((is_array($tokens[$x]) === false && $tokens[$x] !== '|')
-                                || (is_array($tokens[$x]) === true && isset($allowed[$tokens[$x][0]]) === false)
-                            ) {
-                                break;
-                            } else if (is_array($tokens[$x]) === true && $tokens[$x][0] === T_ARRAY) {
-                                $tokens[$x][0] = T_STRING;
-
-                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                    echo "\t\t* token $x changed from T_ARRAY to T_STRING".PHP_EOL;
-                                }
-                            }
-                        }
                     }//end if
                 }//end if
             }//end if
@@ -2075,19 +2058,24 @@ class PHP extends Tokenizer
                     }
                 }//end if
 
-                // This is a special condition for T_ARRAY tokens used for
-                // type hinting function arguments as being arrays. We want to keep
-                // the parenthesis map clean, so let's tag these tokens as
+                // This is a special condition for T_ARRAY tokens used for anything else
+                // but array declarations, like type hinting function arguments as
+                // being arrays.
+                // We want to keep the parenthesis map clean, so let's tag these tokens as
                 // T_STRING.
                 if ($newToken['code'] === T_ARRAY) {
-                    for ($i = $stackPtr; $i < $numTokens; $i++) {
-                        if ($tokens[$i] === '(') {
-                            break;
-                        } else if ($tokens[$i][0] === T_VARIABLE) {
-                            $newToken['code'] = T_STRING;
-                            $newToken['type'] = 'T_STRING';
+                    for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                        if (is_array($tokens[$i]) === false
+                            || isset(Util\Tokens::$emptyTokens[$tokens[$i][0]]) === false
+                        ) {
+                            // Non-empty content.
                             break;
                         }
+                    }
+
+                    if ($tokens[$i] !== '(' && $i !== $numTokens) {
+                        $newToken['code'] = T_STRING;
+                        $newToken['type'] = 'T_STRING';
                     }
                 }
 
