@@ -638,7 +638,6 @@ abstract class Tokenizer
                 }
 
                 // Process the tab that comes after the content.
-                $lastCurrColumn = $currColumn;
                 $tabNum++;
 
                 // Move the pointer to the next tab stop.
