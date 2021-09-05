@@ -45,11 +45,11 @@ jobs:
           # Set the "short_open_tag" ini to make sure specific conditions are tested.
           # Also turn on error_reporting to ensure all notices are shown.
           if [[ ${{ matrix.custom_ini }} == true && "${{ matrix.php }}" == '5.5' ]]; then
-            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=E_ALL, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On, asp_tags=On'
+            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=-1, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On, asp_tags=On'
           elif [[ ${{ matrix.custom_ini }} == true && "${{ matrix.php }}" == '7.0' ]]; then
-            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=E_ALL, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On'
+            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=-1, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On'
           else
-            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=E_ALL, display_errors=On'
+            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=-1, display_errors=On'
           fi
 
       - name: Install PHP
