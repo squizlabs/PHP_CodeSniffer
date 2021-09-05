@@ -13,8 +13,60 @@ on:
   workflow_dispatch:
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
+
+    name: "Build Phar on PHP: ${{ matrix.php }}"
+
+    continue-on-error: ${{ matrix.php == '8.2' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          ini-values: phar.readonly=Off, error_reporting=-1, display_errors=On
+
+      - name: Build the phar
+        run: php scripts/build-phar.php
+
+      - name: Upload the PHPCS phar
+        uses: actions/upload-artifact@v2
+        if: ${{ success() && matrix.php == '7.4' }}
+        with:
+          name: phpcs-phar
+          path: ./phpcs.phar
+          if-no-files-found: error
+          retention-days: 28
+
+      - name: Upload the PHPCBF phar
+        uses: actions/upload-artifact@v2
+        if: ${{ success() && matrix.php == '7.4' }}
+        with:
+          name: phpcbf-phar
+          path: ./phpcbf.phar
+          if-no-files-found: error
+          retention-days: 28
+
+      # Both the below only check a few files which are rarely changed and therefore unlikely to have issues.
+      # This test is about testing that the phars are functional, *not* about whether the code style complies.
+      - name: 'PHPCS: check code style using the Phar file to test the Phar is functional'
+        run: php phpcs.phar ./scripts
+
+      - name: 'PHPCBF: fix code style using the Phar file to test the Phar is functional'
+        run: php phpcbf.phar ./scripts
+
   test:
     runs-on: ubuntu-latest
+    needs: build
 
     strategy:
       # Keys:
@@ -45,11 +97,11 @@ jobs:
           # Set the "short_open_tag" ini to make sure specific conditions are tested.
           # Also turn on error_reporting to ensure all notices are shown.
           if [[ ${{ matrix.custom_ini }} == true && "${{ matrix.php }}" == '5.5' ]]; then
-            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=-1, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On, asp_tags=On'
+            echo '::set-output name=PHP_INI::error_reporting=-1, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On, asp_tags=On'
           elif [[ ${{ matrix.custom_ini }} == true && "${{ matrix.php }}" == '7.0' ]]; then
-            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=-1, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On'
+            echo '::set-output name=PHP_INI::error_reporting=-1, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On'
           else
-            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=-1, display_errors=On'
+            echo '::set-output name=PHP_INI::error_reporting=-1, display_errors=On'
           fi
 
       - name: Install PHP
@@ -106,10 +158,12 @@ jobs:
         if: ${{ matrix.custom_ini == false }}
         run: composer validate --no-check-all --strict
 
-      - name: Build the phar
-        if: ${{ matrix.custom_ini == false }}
-        run: php scripts/build-phar.php
+      - name: Download the PHPCS phar
+        uses: actions/download-artifact@v2
+        with:
+          name: phpcs-phar
 
+      # This test specifically tests that the Phar which will be released works correctly on all PHP versions.
       - name: 'PHPCS: check code style using the Phar file'
         if: ${{ matrix.custom_ini == false }}
         run: php phpcs.phar
