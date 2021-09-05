@@ -43,9 +43,9 @@ jobs:
           # Set the "short_open_tag" ini to make sure specific conditions are tested.
           # Also turn on error_reporting to ensure all notices are shown.
           if [[ ${{ matrix.custom_ini }} == true ]]; then
-            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=E_ALL, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On'
+            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=-1, display_errors=On, date.timezone=Australia/Sydney, short_open_tag=On'
           else
-            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=E_ALL, display_errors=On'
+            echo '::set-output name=PHP_INI::phar.readonly=Off, error_reporting=-1, display_errors=On'
           fi
 
       - name: Install PHP
@@ -59,12 +59,12 @@ jobs:
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
       - name: Install Composer dependencies - normal
-        if: ${{ matrix.experimental == false }}
+        if: ${{ matrix.php == '8.1' }}
         uses: "ramsey/composer-install@v1"
 
       # For PHP nightly, install with ignore platform reqs as not all PHPUnit allow for it yet.
       - name: Install Composer dependencies - with ignore platform
-        if: ${{ matrix.experimental == true }}
+        if: ${{ matrix.php == '8.1' }}
         uses: "ramsey/composer-install@v1"
         with:
           composer-options: --ignore-platform-reqs
