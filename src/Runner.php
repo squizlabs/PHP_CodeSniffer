@@ -724,7 +724,7 @@ class Runner
 
                         if (isset($childOutput) === false) {
                             // The child process died, so the run has failed.
-                            $file = new DummyFile(null, $this->ruleset, $this->config);
+                            $file = new DummyFile('', $this->ruleset, $this->config);
                             $file->setErrorCounts(1, 0, 0, 0);
                             $this->printProgress($file, $totalBatches, $numProcessed);
                             $success = false;
@@ -748,7 +748,7 @@ class Runner
                         }
 
                         // Fake a processed file so we can print progress output for the batch.
-                        $file = new DummyFile(null, $this->ruleset, $this->config);
+                        $file = new DummyFile('', $this->ruleset, $this->config);
                         $file->setErrorCounts(
                             $childOutput['totalErrors'],
                             $childOutput['totalWarnings'],
