@@ -20,29 +20,20 @@ jobs:
       # Keys:
       # - custom_ini: Whether to run with specific custom ini settings to hit very specific
       #   code conditions.
-      # - experimental: Whether the build is "allowed to fail".
       matrix:
-        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
         custom_ini: [false]
-        experimental: [false]
 
         include:
           # Builds running the basic tests with different PHP ini settings.
           - php: '5.5'
             custom_ini: true
-            experimental: false
           - php: '7.0'
             custom_ini: true
-            experimental: false
-
-          # Nightly.
-          - php: '8.1'
-            custom_ini: false
-            experimental: true
 
     name: "PHP: ${{ matrix.php }} ${{ matrix.custom_ini && ' with custom ini settings' || '' }}"
 
-    continue-on-error: ${{ matrix.experimental }}
+    continue-on-error: ${{ matrix.php == '8.1' }}
 
     steps:
       - name: Checkout code
