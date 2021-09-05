@@ -63,12 +63,12 @@ jobs:
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
       - name: Install Composer dependencies - normal
-        if: ${{ matrix.php < 8.0 }}
+        if: ${{ matrix.php < '8.0' }}
         uses: "ramsey/composer-install@v1"
 
       # For PHP 8.0+, we need to install with ignore platform reqs as PHPUnit 7 is still used.
       - name: Install Composer dependencies - with ignore platform
-        if: ${{ matrix.php >= 8.0 }}
+        if: ${{ matrix.php >= '8.0' }}
         uses: "ramsey/composer-install@v1"
         with:
           composer-options: --ignore-platform-reqs
@@ -79,27 +79,27 @@ jobs:
         run: php bin/phpcs --config-set php_path php
 
       - name: 'PHPUnit: run the tests'
-        if: ${{ matrix.php != 8.1 }}
+        if: ${{ matrix.php != '8.1' }}
         run: vendor/bin/phpunit tests/AllTests.php
 
       # We need to ignore the config file so that PHPUnit doesn't try to read it.
       # The config file causes an error on PHP 8.1+ with PHPunit 7, but it's not needed here anyway
       # as we can pass all required settings in the phpunit command.
       - name: 'PHPUnit: run the tests on PHP nightly'
-        if: ${{ matrix.php == 8.1 }}
+        if: ${{ matrix.php == '8.1' }}
         run: vendor/bin/phpunit tests/AllTests.php --no-configuration --bootstrap=tests/bootstrap.php --dont-report-useless-tests
 
       - name: 'PHPCS: check code style without cache, no parallel'
-        if: ${{ matrix.custom_ini == false && matrix.php != 7.4 }}
+        if: ${{ matrix.custom_ini == false && matrix.php != '7.4' }}
         run: php bin/phpcs --no-cache --parallel=1
 
       - name: 'PHPCS: check code style to show results in PR'
-        if: ${{ matrix.custom_ini == false && matrix.php == 7.4 }}
+        if: ${{ matrix.custom_ini == false && matrix.php == '7.4' }}
         continue-on-error: true
         run: php bin/phpcs --no-cache --parallel=1 --report-full --report-checkstyle=./phpcs-report.xml
 
       - name: Show PHPCS results in PR
-        if: ${{ matrix.custom_ini == false && matrix.php == 7.4 }}
+        if: ${{ matrix.custom_ini == false && matrix.php == '7.4' }}
         run: cs2pr ./phpcs-report.xml
 
       - name: 'Composer: validate config'
