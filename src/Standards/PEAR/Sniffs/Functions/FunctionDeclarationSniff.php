@@ -507,6 +507,13 @@ class FunctionDeclarationSniff implements Sniff
                 $lastLine = $tokens[$i]['line'];
                 continue;
             }
+
+            if ($tokens[$i]['code'] === T_ATTRIBUTE) {
+                // Skip attributes as they have their own indentation rules.
+                $i        = $tokens[$i]['attribute_closer'];
+                $lastLine = $tokens[$i]['line'];
+                continue;
+            }
         }//end for
 
     }//end processArgumentList()

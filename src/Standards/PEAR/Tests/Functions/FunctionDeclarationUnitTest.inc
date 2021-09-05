@@ -372,3 +372,47 @@ private string $private,
     ) {
     }
 }
+
+class ConstructorPropertyPromotionMultiLineAttributesOK
+    public function __construct(
+        #[ORM\ManyToOne(
+            Something: true,
+            SomethingElse: 'text',
+        )]
+        #[Groups([
+            'ArrayEntry',
+            'Another.ArrayEntry',
+        ])]
+        #[MoreGroups(
+            [
+                'ArrayEntry',
+                'Another.ArrayEntry',
+            ]
+        )]
+        private Type $property
+    ) {
+        // Do something.
+    }
+}
+
+class ConstructorPropertyPromotionMultiLineAttributesIncorrectIndent
+    public function __construct(
+    #[ORM\ManyToOne(
+        Something: true,
+        SomethingElse: 'text',
+    )]
+            #[Groups([
+                'ArrayEntry',
+                'Another.ArrayEntry',
+            ])]
+        #[MoreGroups(
+    [
+        'ArrayEntry',
+        'Another.ArrayEntry',
+    ]
+        )]
+        private Type $property
+    ) {
+        // Do something.
+    }
+}
