@@ -11,9 +11,21 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class UpperCaseConstantSniff implements Sniff
 {
+
+    /**
+     * The tokens this sniff is targetting.
+     *
+     * @var array
+     */
+    private $targets = [
+        T_TRUE  => T_TRUE,
+        T_FALSE => T_FALSE,
+        T_NULL  => T_NULL,
+    ];
 
 
     /**
@@ -23,11 +35,14 @@ class UpperCaseConstantSniff implements Sniff
      */
     public function register()
     {
-        return [
-            T_TRUE,
-            T_FALSE,
-            T_NULL,
-        ];
+        $targets = $this->targets;
+
+        // Register function keywords to filter out type declarations.
+        $targets[] = T_FUNCTION;
+        $targets[] = T_CLOSURE;
+        $targets[] = T_FN;
+
+        return $targets;
 
     }//end register()
 
@@ -43,9 +58,88 @@ class UpperCaseConstantSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
+        $tokens = $phpcsFile->getTokens();
+
+        // Handle function declarations separately as they may contain the keywords in type declarations.
+        if ($tokens[$stackPtr]['code'] === T_FUNCTION
+            || $tokens[$stackPtr]['code'] === T_CLOSURE
+            || $tokens[$stackPtr]['code'] === T_FN
+        ) {
+            if (isset($tokens[$stackPtr]['parenthesis_closer']) === false) {
+                return;
+            }
+
+            $end = $tokens[$stackPtr]['parenthesis_closer'];
+            if (isset($tokens[$stackPtr]['scope_opener']) === true) {
+                $end = $tokens[$stackPtr]['scope_opener'];
+            }
+
+            // Do a quick check if any of the targets exist in the declaration.
+            $found = $phpcsFile->findNext($this->targets, $tokens[$stackPtr]['parenthesis_opener'], $end);
+            if ($found === false) {
+                // Skip forward, no need to examine these tokens again.
+                return $end;
+            }
+
+            // Handle the whole function declaration in one go.
+            $params = $phpcsFile->getMethodParameters($stackPtr);
+            foreach ($params as $param) {
+                if (isset($param['default_token']) === false) {
+                    continue;
+                }
+
+                $paramEnd = $param['comma_token'];
+                if ($param['comma_token'] === false) {
+                    $paramEnd = $tokens[$stackPtr]['parenthesis_closer'];
+                }
+
+                for ($i = $param['default_token']; $i < $paramEnd; $i++) {
+                    if (isset($this->targets[$tokens[$i]['code']]) === true) {
+                        $this->processConstant($phpcsFile, $i);
+                    }
+                }
+            }
+
+            // Skip over return type declarations.
+            return $end;
+        }//end if
+
+        // Handle property declarations separately as they may contain the keywords in type declarations.
+        if (isset($tokens[$stackPtr]['conditions']) === true) {
+            $conditions    = $tokens[$stackPtr]['conditions'];
+            $lastCondition = end($conditions);
+            if (isset(Tokens::$ooScopeTokens[$lastCondition]) === true) {
+                // This can only be an OO constant or property declaration as methods are handled above.
+                $equals = $phpcsFile->findPrevious(T_EQUAL, ($stackPtr - 1), null, false, null, true);
+                if ($equals !== false) {
+                    $this->processConstant($phpcsFile, $stackPtr);
+                }
+
+                return;
+            }
+        }
+
+        // Handle everything else.
+        $this->processConstant($phpcsFile, $stackPtr);
+
+    }//end process()
+
+
+    /**
+     * Processes a non-type declaration constant.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int                         $stackPtr  The position of the current token in the
+     *                                               stack passed in $tokens.
+     *
+     * @return void
+     */
+    protected function processConstant(File $phpcsFile, $stackPtr)
+    {
         $tokens   = $phpcsFile->getTokens();
         $keyword  = $tokens[$stackPtr]['content'];
         $expected = strtoupper($keyword);
+
         if ($keyword !== $expected) {
             if ($keyword === strtolower($keyword)) {
                 $phpcsFile->recordMetric($stackPtr, 'PHP constant case', 'lower');
@@ -67,7 +161,7 @@ class UpperCaseConstantSniff implements Sniff
             $phpcsFile->recordMetric($stackPtr, 'PHP constant case', 'upper');
         }
 
-    }//end process()
+    }//end processConstant()
 
 
 }//end class
