@@ -8,9 +8,9 @@
  * use PHP_CodeSniffer\Files\File;
  * class ClassScopeTest extends AbstractScopeSniff
  * {
- *     public function __construct(bool $listenOutside = false)
+ *     public function __construct()
  *     {
- *         parent::__construct(array(T_CLASS), array(T_FUNCTION), $listenOutside);
+ *         parent::__construct(array(T_CLASS), array(T_FUNCTION));
  *     }
  *
  *     protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
@@ -21,8 +21,6 @@
  *
  *     protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
  *     {
- *         $className = $phpcsFile->getDeclarationName($currScope);
- *         echo 'encountered a function outside class '.$className;
  *     }
  * }
  * </code>
