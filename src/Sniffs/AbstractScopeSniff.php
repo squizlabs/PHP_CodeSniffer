@@ -4,17 +4,25 @@
  *
  * Below is a test that listens to methods that exist only within classes:
  * <code>
- * class ClassScopeTest extends \PHP_CodeSniffer\Sniffs\AbstractScopeSniff
+ * use PHP_CodeSniffer\Sniffs\AbstractScopeSniff;
+ * use PHP_CodeSniffer\Files\File;
+ * class ClassScopeTest extends AbstractScopeSniff
  * {
- *     public function __construct()
+ *     public function __construct(bool $listenOutside = false)
  *     {
- *         parent::__construct(array(T_CLASS), array(T_FUNCTION));
+ *         parent::__construct(array(T_CLASS), array(T_FUNCTION), $listenOutside);
  *     }
  *
- *     protected function processTokenWithinScope(\PHP_CodeSniffer\Files\File $phpcsFile, $stackPtr, $currScope)
+ *     protected function processTokenWithinScope(File $phpcsFile, $stackPtr, $currScope)
  *     {
  *         $className = $phpcsFile->getDeclarationName($currScope);
  *         echo 'encountered a method within class '.$className;
+ *     }
+ *
+ *     protected function processTokenOutsideScope(File $phpcsFile, $stackPtr)
+ *     {
+ *         $className = $phpcsFile->getDeclarationName($currScope);
+ *         echo 'encountered a function outside class '.$className;
  *     }
  * }
  * </code>
