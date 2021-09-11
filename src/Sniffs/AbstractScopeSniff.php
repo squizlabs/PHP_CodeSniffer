@@ -4,7 +4,7 @@
  *
  * Below is a test that listens to methods that exist only within classes:
  * <code>
- * class ClassScopeTest extends PHP_CodeSniffer_Standards_AbstractScopeSniff
+ * class ClassScopeTest extends \PHP_CodeSniffer\Sniffs\AbstractScopeSniff
  * {
  *     public function __construct()
  *     {
