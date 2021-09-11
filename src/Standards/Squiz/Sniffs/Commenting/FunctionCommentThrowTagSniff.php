@@ -177,13 +177,14 @@ class FunctionCommentThrowTagSniff implements Sniff
             }
 
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
-                $exception = $tokens[($tag + 2)]['content'];
-                $space     = strpos($exception, ' ');
-                if ($space !== false) {
-                    $exception = substr($exception, 0, $space);
+                $throws = $tokens[($tag + 2)]['content'];
+                // Extract class name(s).
+                list($throws) = explode(' ', $throws, 2);
+                // Split multiple definition like as `Exception|Exception2`.
+                $throws = explode('|', $throws);
+                foreach ($throws as $throw) {
+                    $throwTags[$throw] = true;
                 }
-
-                $throwTags[$exception] = true;
             }
         }
 
