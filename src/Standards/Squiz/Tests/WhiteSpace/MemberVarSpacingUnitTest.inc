@@ -355,4 +355,13 @@ class HasAttributes
 
     #[ORM\Column(ORM\Column::T_INTEGER)]
     protected $height;
+
+    #[SingleAttribute]
+    protected $propertySingle;
+
+    #[FirstAttribute]
+    #[SecondAttribute]
+    protected $propertyDouble;
+    #[ThirdAttribute]
+    protected $propertyWithoutSpacing;
 }
