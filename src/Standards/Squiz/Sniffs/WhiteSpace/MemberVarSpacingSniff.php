@@ -67,7 +67,8 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
             if ($tokens[$prev]['code'] === T_ATTRIBUTE_END
                 && isset($tokens[$prev]['attribute_opener']) === true
             ) {
-                $prev = $tokens[$prev]['attribute_opener'];
+                $prev  = $tokens[$prev]['attribute_opener'];
+                $start = $prev;
                 continue;
             }
 
@@ -140,7 +141,7 @@ class MemberVarSpacingSniff extends AbstractVariableSniff
             $first = $tokens[$start]['comment_opener'];
         } else {
             $first = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($start - 1), null, true);
-            $first = $phpcsFile->findNext(Tokens::$commentTokens, ($first + 1));
+            $first = $phpcsFile->findNext(array_merge(Tokens::$commentTokens, [T_ATTRIBUTE]), ($first + 1));
         }
 
         // Determine if this is the first member var.
