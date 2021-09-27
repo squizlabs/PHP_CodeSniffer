@@ -374,6 +374,7 @@ private string $private,
 }
 
 class ConstructorPropertyPromotionMultiLineAttributesOK
+{
     public function __construct(
         #[ORM\ManyToOne(
             Something: true,
@@ -396,6 +397,7 @@ class ConstructorPropertyPromotionMultiLineAttributesOK
 }
 
 class ConstructorPropertyPromotionMultiLineAttributesIncorrectIndent
+{
     public function __construct(
     #[ORM\ManyToOne(
         Something: true,
