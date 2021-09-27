@@ -92,6 +92,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3394 : Fix PHP 8.1 auto_detect_line_endings deprecation notice
   - Fixed bug #3400 : PHP 8.1: prevent deprecation notices about missing return types
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3424 : PHPCS fails when using PHP 8 Constructor property promotion with attributes
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3425 : PHP 8.1 | Runner::processChildProcs(): fix passing null to non-nullable bug
     -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
