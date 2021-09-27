@@ -460,14 +460,14 @@ class FunctionDeclarationSniff implements Sniff
                 if ($tokens[$i]['code'] === T_WHITESPACE
                     && $tokens[$i]['line'] !== $tokens[($i + 1)]['line']
                 ) {
-                    // This is an empty line, so don't check the indent.
-                    $foundIndent = $expectedIndent;
-
                     $error = 'Blank lines are not allowed in a multi-line '.$type.' declaration';
                     $fix   = $phpcsFile->addFixableError($error, $i, 'EmptyLine');
                     if ($fix === true) {
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
+
+                    // This is an empty line, so don't check the indent.
+                    continue;
                 } else if ($tokens[$i]['code'] === T_WHITESPACE) {
                     $foundIndent = $tokens[$i]['length'];
                 } else if ($tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE) {
@@ -504,6 +504,13 @@ class FunctionDeclarationSniff implements Sniff
                     $i = $tokens[$i]['parenthesis_closer'];
                 }
 
+                $lastLine = $tokens[$i]['line'];
+                continue;
+            }
+
+            if ($tokens[$i]['code'] === T_ATTRIBUTE) {
+                // Skip attributes as they have their own indentation rules.
+                $i        = $tokens[$i]['attribute_closer'];
                 $lastLine = $tokens[$i]['line'];
                 continue;
             }

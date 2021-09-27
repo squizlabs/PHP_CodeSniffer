@@ -97,6 +97,8 @@ class FunctionDeclarationUnitTest extends AbstractSniffUnitTest
                 369 => 1,
                 370 => 1,
                 371 => 1,
+                400 => 1,
+                404 => 1,
             ];
         } else {
             $errors = [
