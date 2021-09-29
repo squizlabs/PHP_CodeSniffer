@@ -59,10 +59,10 @@ jobs:
       # Install dependencies and handle caching in one go.
       # @link https://github.com/marketplace/actions/install-composer-dependencies
       - name: Install Composer dependencies - normal
-        if: ${{ matrix.php == '8.1' }}
+        if: ${{ matrix.php != '8.1' }}
         uses: "ramsey/composer-install@v1"
 
-      # For PHP nightly, install with ignore platform reqs as not all PHPUnit allow for it yet.
+      # For PHP 8.1, install with ignore platform reqs as not all PHPUnit allow for it yet.
       - name: Install Composer dependencies - with ignore platform
         if: ${{ matrix.php == '8.1' }}
         uses: "ramsey/composer-install@v1"
