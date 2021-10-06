@@ -114,3 +114,9 @@ $match = match ($test) {
     1 => 'a',
     2 => 'b'
     };
+
+?>
+<?php if ($someConditional) : ?>
+<div class="container">
+
+</div> <?php endif; ?>
