@@ -96,6 +96,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3425 : PHP 8.1 | Runner::processChildProcs(): fix passing null to non-nullable bug
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3445 : Nullable parameter after attribute incorrectly tokenized as ternary operator
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
