@@ -64,7 +64,7 @@ class Timing
 
         if ($time > 60000) {
             $mins = floor($time / 60000);
-            $secs = round((($time % 60000) / 1000), 2);
+            $secs = round((fmod($time, 60000) / 1000), 2);
             $time = $mins.' mins';
             if ($secs !== 0) {
                 $time .= ", $secs secs";
