@@ -196,7 +196,7 @@ public function noReturnOutsideClass()
  * @see
  * @return void
  * @extra  Invalid tag
- * @throws UnknownException unknown
+ * @throws UnknownException unknown.
  */
 public function missingTwoParamComment($one, $two, $three)
 {
