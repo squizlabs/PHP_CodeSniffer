@@ -241,7 +241,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 
                 for ($i = ($tag + 3); $i < $end; $i++) {
                     if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
-                        $comment .= ' ' . $tokens[$i]['content'];
+                        $comment .= ' '.$tokens[$i]['content'];
                     }
                 }
 
@@ -255,10 +255,10 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 $lastChar = substr($comment, -1);
                 if ($lastChar !== '.') {
                     $error = '@throws tag comment must end with a full stop';
-                    $fix = $phpcsFile->addFixableError($error, ($tag + 2), 'ThrowsNoFullStop');
+                    $fix   = $phpcsFile->addFixableError($error, ($tag + 2), 'ThrowsNoFullStop');
 
-                    if ($fix) {
-                        $phpcsFile->fixer->replaceToken(($tag + 2), $tokens[($tag + 2)]['content'] . '.');
+                    if ($fix === true) {
+                        $phpcsFile->fixer->replaceToken(($tag + 2), $tokens[($tag + 2)]['content'].'.');
                     }
                 }
             }//end if
