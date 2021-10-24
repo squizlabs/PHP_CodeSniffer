@@ -45,7 +45,7 @@ class ExecutableFileUnitTest extends AbstractSniffUnitTest
         switch ($testFile) {
         case 'ExecutableFileUnitTest.2.inc':
         case 'ExecutableFileUnitTest.4.inc':
-            return [1 => 0];
+            return [1 => 1];
         default:
             return [];
         }//end switch
