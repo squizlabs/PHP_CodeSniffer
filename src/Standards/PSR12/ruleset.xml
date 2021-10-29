@@ -219,7 +219,7 @@
     The body MUST be on the next line after the opening brace
     The closing brace MUST be on the next line after the body
     The body of each structure MUST be enclosed by braces. This standardizes how the structures look and reduces the likelihood of introducing errors as new lines get added to the body. -->
-    <rule ref="Squiz.ControlStructures.ControlSignature"/>
+    <rule ref="Squiz.ControlStructures.ControlSignature">
         <properties>
             <property name="requiredSpacesBeforeColon" value="0"/>
         </properties>
