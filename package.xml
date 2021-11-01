@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2021-10-11</date>
  <time>14:58:00</time>
  <version>
-  <release>3.6.1</release>
-  <api>3.6.1</api>
+  <release>3.6.2</release>
+  <api>3.6.2</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,78 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - PHPCS annotations can now be specified using hash-style comments
-    -- Previously, only slash-style and block-style comments could be used to do things like disable errors
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed an issue where some sniffs would not run on PHP files that only used the short echo tag
-    -- The following sniffs were affected:
-       --- Generic.Files.ExecutableFile
-       --- Generic.Files.LowercasedFilename
-       --- Generic.Files.LineEndings
-       --- Generic.Files.EndFileNewline
-       --- Generic.Files.EndFileNoNewline
-       --- Generic.PHP.ClosingPHPTag
-       --- Generic.PHP.Syntax
-       --- Generic.VersionControl.GitMergeConflict
-       --- Generic.WhiteSpace.DisallowSpaceIndent
-       --- Generic.WhiteSpace.DisallowTabIndent
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - The new PHP 8.1 tokenisation for ampersands has been reverted to use the existing PHP_CodeSniffer method
-    -- The PHP 8.1 tokens T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG and T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG are unsued
-    -- Ampersands continue to be tokenized as T_BITWISE_AND for all PHP versions
-    -- Thanks to Juliette Reinders Folmer and Anna Filina for the patch
-  - File::getMethodParameters() no longer incorrectly returns argument attributes in the type hint array index
-    -- A new has_attributes array index is available and set to TRUE if the argument has attributes defined
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.NamingConventions.ConstructorName no longer throws deprecation notices on PHP 8.1
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Squiz.Commenting.BlockComment now correctly applies rules for block comments after a short echo tag
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed false positives when using attributes in the following sniffs:
-    -- PEAR.Commenting.FunctionComment
-    -- Squiz.Commenting.InlineComment
-    -- Squiz.Commenting.BlockComment
-    -- Squiz.Commenting.VariableComment
-    -- Squiz.WhiteSpace.MemberVarSpacing
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3294 : Bug in attribute tokenization when content contains PHP end token or attribute closer on new line
-    -- Thanks to Alessandro Chitolina for the patch
-    -- Thanks to Juliette Reinders Folmer for the tests
-  - Fixed bug #3296 : PSR2.ControlStructures.SwitchDeclaration takes phpcs:ignore as content of case body
-  - Fixed bug #3297 : PSR2.ControlStructures.SwitchDeclaration.TerminatingComment does not handle try/finally blocks
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3302 : PHP 8.0 | Tokenizer/PHP: bugfix for union types using namespace operator
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3303 : findStartOfStatement() doesn't work with T_OPEN_TAG_WITH_ECHO
-  - Fixed bug #3316 : Arrow function not tokenized correctly when using null in union type
-  - Fixed bug #3317 : Problem with how phpcs handles ignored files when running in parallel
-    -- Thanks to Emil Andersson for the patch
-  - Fixed bug #3324 : PHPCS hangs processing some nested arrow functions inside a function call
-  - Fixed bug #3326 : Generic.Formatting.MultipleStatementAlignment error with const DEFAULT
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3333 : Squiz.Objects.ObjectInstantiation: null coalesce operators are not recognized as assignment
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3340 : Ensure interface and trait names are always tokenized as T_STRING
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3342 : PSR12/Squiz/PEAR standards all error on promoted properties with docblocks
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3345 : IF statement with no braces and double catch turned into syntax error by auto-fixer
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3352 : PSR2.ControlStructures.SwitchDeclaration can remove comments on the same line as the case statement while fixing
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3357 : Generic.Functions.OpeningFunctionBraceBsdAllman removes return type when additional lines are present
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3362 : Generic.WhiteSpace.ScopeIndent false positive for arrow functions inside arrays
-  - Fixed bug #3384 : Squiz.Commenting.FileComment.SpacingAfterComment false positive on empty file
-  - Fixed bug #3394 : Fix PHP 8.1 auto_detect_line_endings deprecation notice
-  - Fixed bug #3400 : PHP 8.1: prevent deprecation notices about missing return types
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3424 : PHPCS fails when using PHP 8 Constructor property promotion with attributes
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3425 : PHP 8.1 | Runner::processChildProcs(): fix passing null to non-nullable bug
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3445 : Nullable parameter after attribute incorrectly tokenized as ternary operator
-    -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3448 : PHP 8.1 deprecation notice while generating running time value
+    -- Thanks to Juliette Reinders Folmer and Andy Postnikov for the patch
  </notes>
  <contents>
   <dir name="/">
