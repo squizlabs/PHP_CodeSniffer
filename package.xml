@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Fixed bug #3422 : Squiz.WhiteSpace.ScopeClosingBrace fixer removes HTML content when fixing closing brace alignment
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3448 : PHP 8.1 deprecation notice while generating running time value
     -- Thanks to Juliette Reinders Folmer and Andy Postnikov for the patch
  </notes>
