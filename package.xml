@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Processing large code bases that use tab indenting inside comments and strings will now be faster
+    -- Thanks to Thiemo Kreuz for the patch
   - Fixed bug #3388 : phpcs does not work when run from WSL drives
     -- Thanks to Juliette Reinders Folmer and Graham Wharton for the patch
   - Fixed bug #3422 : Squiz.WhiteSpace.ScopeClosingBrace fixer removes HTML content when fixing closing brace alignment
