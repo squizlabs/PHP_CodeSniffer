@@ -21,11 +21,17 @@ class CyclomaticComplexityUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of errors that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getErrorList()
+    public function getErrorList($testFile='')
     {
-        return [116 => 1];
+        switch ($testFile) {
+            default:
+                return [];
+                break;
+        }//end switch
 
     }//end getErrorList()
 
@@ -36,14 +42,26 @@ class CyclomaticComplexityUnitTest extends AbstractSniffUnitTest
      * The key of the array should represent the line number and the value
      * should represent the number of warnings that should occur on that line.
      *
+     * @param string $testFile The name of the file being tested.
+     *
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList($testFile='')
     {
-        return [
-            45 => 1,
-            72 => 1,
-        ];
+        switch ($testFile) {
+        case 'CyclomaticComplexityUnitTest.2.inc':
+            return [
+                26 => 1,
+                72 => 1,
+                118 => 1,
+                164 => 1,
+                210 => 1,
+            ];
+            break;
+        default:
+            return [];
+            break;
+        }//end switch
 
     }//end getWarningList()
 
