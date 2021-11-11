@@ -79,9 +79,11 @@ function complexityTwenty()
 
     switch ($condition) {
         case '1':
-            if ($condition) {
-            } else if ($cond) {
-            }
+            do {
+                if ($condition) {
+                } else if ($cond) {
+                }
+            } while ($cond);
         break;
         case '2':
             while ($cond) {
@@ -116,9 +118,11 @@ function complexityTwenty()
 function complexityTwentyOne()
 {
     while ($condition === true) {
-        if ($condition) {
-        } else if ($cond) {
-        }
+        do {
+            if ($condition) {
+            } else if ($cond) {
+            }
+        } while ($cond);
     }
 
     switch ($condition) {
