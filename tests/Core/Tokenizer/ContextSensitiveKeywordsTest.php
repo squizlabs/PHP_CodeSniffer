@@ -71,6 +71,7 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testEndIf */'],
             ['/* testEndSwitch */'],
             ['/* testEndWhile */'],
+            ['/* testEnum */'],
             ['/* testExit */'],
             ['/* testExtends */'],
             ['/* testFinal */'],
@@ -250,6 +251,10 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             [
                 '/* testTraitIsKeyword */',
                 'T_TRAIT',
+            ],
+            [
+                '/* testEnumIsKeyword */',
+                'T_ENUM',
             ],
 
             [

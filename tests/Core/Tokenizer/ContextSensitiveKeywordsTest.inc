@@ -28,6 +28,7 @@ class ContextSensitiveKeywords
     const /* testEndIf */ ENDIF = 'ENDIF';
     const /* testEndSwitch */ ENDSWITCH = 'ENDSWITCH';
     const /* testEndWhile */ ENDWHILE = 'ENDWHILE';
+    const /* testEnum */ ENUM = 'ENUM';
     const /* testExit */ EXIT = 'EXIT';
     const /* testExtends */ EXTENDS = 'EXTENDS';
     const /* testFinal */ FINAL = 'FINAL';
@@ -113,6 +114,7 @@ namespace /* testNamespaceNameIsString1 */ my\ /* testNamespaceNameIsString2 */ 
 
 /* testInterfaceIsKeyword */ interface SomeInterface {}
 /* testTraitIsKeyword */ trait SomeTrait {}
+/* testEnumIsKeyword */ enum SomeEnum {}
 
 $object = /* testNewIsKeyword */ new SomeClass();
 $object /* testInstanceOfIsKeyword */ instanceof SomeClass;
