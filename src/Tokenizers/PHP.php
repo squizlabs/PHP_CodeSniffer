@@ -393,6 +393,7 @@ class PHP extends Tokenizer
         T_PRIVATE                  => 7,
         T_PUBLIC                   => 6,
         T_PROTECTED                => 9,
+        T_READONLY                 => 8,
         T_REQUIRE                  => 7,
         T_REQUIRE_ONCE             => 12,
         T_RETURN                   => 6,
@@ -2812,6 +2813,72 @@ class PHP extends Tokenizer
                     $this->tokens[$x]['code'] = T_STRING;
                     $this->tokens[$x]['type'] = 'T_STRING';
                 }
+            } else if (($this->tokens[$i]['code'] === T_STRING && strtolower($this->tokens[$i]['content']) === 'readonly')
+                || $this->tokens[$i]['code'] === T_READONLY
+            ) {
+                /*
+                    "readonly" keyword support
+                    PHP < 8.1: Converts T_STRING to T_READONLY
+                    PHP >= 8.1: Converts some T_READONLY to T_STRING because token_get_all() without the TOKEN_PARSE flag cannot distinguish between them in some situations
+                */
+
+                $allowedAfter = [
+                    T_STRING               => T_STRING,
+                    T_NS_SEPARATOR         => T_NS_SEPARATOR,
+                    T_NAME_FULLY_QUALIFIED => T_NAME_FULLY_QUALIFIED,
+                    T_NAME_RELATIVE        => T_NAME_RELATIVE,
+                    T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
+                    T_TYPE_UNION           => T_TYPE_UNION,
+                    T_BITWISE_OR           => T_BITWISE_OR,
+                    T_ARRAY                => T_ARRAY,
+                    T_CALLABLE             => T_CALLABLE,
+                    T_SELF                 => T_SELF,
+                    T_PARENT               => T_PARENT,
+                    T_NULL                 => T_FALSE,
+                    T_NULLABLE             => T_NULLABLE,
+                    T_STATIC               => T_STATIC,
+                    T_PUBLIC               => T_PUBLIC,
+                    T_PROTECTED            => T_PROTECTED,
+                    T_PRIVATE              => T_PRIVATE,
+                    T_VAR                  => T_VAR,
+                ];
+
+                $shouldBeReadonly = true;
+
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === true) {
+                        continue;
+                    }
+
+                    if ($this->tokens[$x]['code'] === T_VARIABLE) {
+                        break;
+                    }
+
+                    if (isset($allowedAfter[$this->tokens[$x]['code']]) === false) {
+                        $shouldBeReadonly = false;
+                        break;
+                    }
+                }
+
+                if ($this->tokens[$i]['code'] === T_STRING && $shouldBeReadonly === true) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_STRING to T_READONLY".PHP_EOL;
+                    }
+
+                    $this->tokens[$i]['code'] = T_READONLY;
+                    $this->tokens[$i]['type'] = 'T_READONLY';
+                } else if ($this->tokens[$i]['code'] === T_READONLY && $shouldBeReadonly === false) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_READONLY to T_STRING".PHP_EOL;
+                    }
+
+                    $this->tokens[$i]['code'] = T_STRING;
+                    $this->tokens[$i]['type'] = 'T_STRING';
+                }
+
+                continue;
             }//end if
 
             if (($this->tokens[$i]['code'] !== T_CASE
