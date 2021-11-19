@@ -152,6 +152,13 @@ class PHP extends Tokenizer
             'shared' => false,
             'with'   => [],
         ],
+        T_ENUM          => [
+            'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
+            'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
+            'strict' => true,
+            'shared' => false,
+            'with'   => [],
+        ],
         T_USE           => [
             'start'  => [T_OPEN_CURLY_BRACKET => T_OPEN_CURLY_BRACKET],
             'end'    => [T_CLOSE_CURLY_BRACKET => T_CLOSE_CURLY_BRACKET],
@@ -339,6 +346,7 @@ class PHP extends Tokenizer
         T_ENDIF                    => 5,
         T_ENDSWITCH                => 9,
         T_ENDWHILE                 => 8,
+        T_ENUM                     => 4,
         T_EVAL                     => 4,
         T_EXTENDS                  => 7,
         T_FILE                     => 8,
@@ -467,6 +475,7 @@ class PHP extends Tokenizer
         T_CLASS                    => true,
         T_INTERFACE                => true,
         T_TRAIT                    => true,
+        T_ENUM                     => true,
         T_EXTENDS                  => true,
         T_IMPLEMENTS               => true,
         T_ATTRIBUTE                => true,
@@ -950,6 +959,42 @@ class PHP extends Tokenizer
 
                 // Continue, as we're done with this token.
                 continue;
+            }//end if
+
+            /*
+                Enum keyword for PHP < 8.1
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STRING
+                && strtolower($token[1]) === 'enum'
+            ) {
+                // Get the next non-empty token.
+                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                    if (is_array($tokens[$i]) === false
+                        || isset(Util\Tokens::$emptyTokens[$tokens[$i][0]]) === false
+                    ) {
+                        break;
+                    }
+                }
+
+                if (isset($tokens[$i]) === true
+                    && is_array($tokens[$i]) === true
+                    && $tokens[$i][0] === T_STRING
+                ) {
+                    $newToken            = [];
+                    $newToken['code']    = T_ENUM;
+                    $newToken['type']    = 'T_ENUM';
+                    $newToken['content'] = $token[1];
+                    $finalTokens[$newStackPtr] = $newToken;
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* token $stackPtr changed from T_STRING to T_ENUM".PHP_EOL;
+                    }
+
+                    $newStackPtr++;
+                    continue;
+                }
             }//end if
 
             /*

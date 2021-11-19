@@ -167,6 +167,10 @@ if (defined('T_READONLY') === false) {
     define('T_READONLY', 'PHPCS_T_READONLY');
 }
 
+if (defined('T_ENUM') === false) {
+    define('T_ENUM', 'PHPCS_T_ENUM');
+}
+
 // Tokens used for parsing doc blocks.
 define('T_DOC_COMMENT_STAR', 'PHPCS_T_DOC_COMMENT_STAR');
 define('T_DOC_COMMENT_WHITESPACE', 'PHPCS_T_DOC_COMMENT_WHITESPACE');
@@ -194,6 +198,7 @@ final class Tokens
         T_CLASS               => 1000,
         T_INTERFACE           => 1000,
         T_TRAIT               => 1000,
+        T_ENUM                => 1000,
         T_NAMESPACE           => 1000,
         T_FUNCTION            => 100,
         T_CLOSURE             => 100,
@@ -419,6 +424,7 @@ final class Tokens
         T_ANON_CLASS => T_ANON_CLASS,
         T_INTERFACE  => T_INTERFACE,
         T_TRAIT      => T_TRAIT,
+        T_ENUM       => T_ENUM,
         T_NAMESPACE  => T_NAMESPACE,
         T_FUNCTION   => T_FUNCTION,
         T_CLOSURE    => T_CLOSURE,
@@ -633,6 +639,7 @@ final class Tokens
         T_ANON_CLASS => T_ANON_CLASS,
         T_INTERFACE  => T_INTERFACE,
         T_TRAIT      => T_TRAIT,
+        T_ENUM       => T_ENUM,
     ];
 
     /**
@@ -684,6 +691,7 @@ final class Tokens
         T_ENDIF        => T_ENDIF,
         T_ENDSWITCH    => T_ENDSWITCH,
         T_ENDWHILE     => T_ENDWHILE,
+        T_ENUM         => T_ENUM,
         T_EXIT         => T_EXIT,
         T_EXTENDS      => T_EXTENDS,
         T_FINAL        => T_FINAL,

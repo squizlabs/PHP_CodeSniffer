@@ -131,6 +131,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="ArrayKeywordTest.php" role="test" />
       <file baseinstalldir="" name="AttributesTest.inc" role="test" />
       <file baseinstalldir="" name="AttributesTest.php" role="test" />
+      <file baseinstalldir="" name="BackfillEnumTest.inc" role="test" />
+      <file baseinstalldir="" name="BackfillEnumTest.php" role="test" />
       <file baseinstalldir="" name="BackfillExplicitOctalNotationTest.inc" role="test" />
       <file baseinstalldir="" name="BackfillExplicitOctalNotationTest.php" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.inc" role="test" />
@@ -2092,6 +2094,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.inc" name="tests/Core/Tokenizer/ArrayKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.php" name="tests/Core/Tokenizer/AttributesTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.inc" name="tests/Core/Tokenizer/AttributesTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillEnumTest.php" name="tests/Core/Tokenizer/BackfillEnumTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillEnumTest.inc" name="tests/Core/Tokenizer/BackfillEnumTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
@@ -2188,6 +2192,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.inc" name="tests/Core/Tokenizer/ArrayKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.php" name="tests/Core/Tokenizer/AttributesTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.inc" name="tests/Core/Tokenizer/AttributesTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillEnumTest.php" name="tests/Core/Tokenizer/BackfillEnumTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillEnumTest.inc" name="tests/Core/Tokenizer/BackfillEnumTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
