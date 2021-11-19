@@ -1754,6 +1754,7 @@ class File
             T_PROTECTED => T_PROTECTED,
             T_STATIC    => T_STATIC,
             T_VAR       => T_VAR,
+            T_READONLY  => T_READONLY,
         ];
 
         $valid += Tokens::$emptyTokens;
@@ -1761,6 +1762,7 @@ class File
         $scope          = 'public';
         $scopeSpecified = false;
         $isStatic       = false;
+        $isReadonly     = false;
 
         $startOfStatement = $this->findPrevious(
             [
@@ -1792,6 +1794,9 @@ class File
                 break;
             case T_STATIC:
                 $isStatic = true;
+                break;
+            case T_READONLY:
+                $isReadonly = true;
                 break;
             }
         }//end for
@@ -1845,6 +1850,7 @@ class File
             'scope'           => $scope,
             'scope_specified' => $scopeSpecified,
             'is_static'       => $isStatic,
+            'is_readonly'     => $isReadonly,
             'type'            => $type,
             'type_token'      => $typeToken,
             'type_end_token'  => $typeEndToken,
