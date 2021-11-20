@@ -1771,6 +1771,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.php" role="test" />
        </dir>
        <dir name="Formatting">
