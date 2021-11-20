@@ -39,5 +39,8 @@ class Reading {
     Public READOnly int $var;
 }
 
+EnuM Enum {
+}
+
 __HALT_COMPILER(); // An exception due to phar support.
 function
