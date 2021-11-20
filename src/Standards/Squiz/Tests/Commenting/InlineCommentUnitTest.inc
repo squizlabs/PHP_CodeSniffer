@@ -173,3 +173,11 @@ final class MyClass
  */
 
 // For this test line having an empty line below it, is fine.
+
+/**
+ * Comment should be ignored.
+ *
+ */
+enum MyEnum {
+
+}
