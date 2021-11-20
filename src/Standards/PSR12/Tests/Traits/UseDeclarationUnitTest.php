@@ -47,6 +47,7 @@ class UseDeclarationUnitTest extends AbstractSniffUnitTest
             165 => 1,
             170 => 1,
             208 => 1,
+            218 => 1,
         ];
 
     }//end getErrorList()
