@@ -1653,6 +1653,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.8.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.9.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.js" role="test" />
