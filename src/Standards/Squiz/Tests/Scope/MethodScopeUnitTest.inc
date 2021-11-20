@@ -40,3 +40,11 @@ class Nested {
         };
     }
 }
+
+enum SomeEnum
+{
+    function func1() {}
+    public function func1() {}
+    private function func1() {}
+    protected function func1() {}
+}
