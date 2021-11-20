@@ -31,6 +31,7 @@ class ClosingBraceUnitTest extends AbstractSniffUnitTest
             19 => 1,
             24 => 1,
             31 => 1,
+            52 => 1,
         ];
 
     }//end getErrorList()
