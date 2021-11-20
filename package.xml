@@ -164,6 +164,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="DefaultKeywordTest.php" role="test" />
       <file baseinstalldir="" name="DoubleArrowTest.inc" role="test" />
       <file baseinstalldir="" name="DoubleArrowTest.php" role="test" />
+      <file baseinstalldir="" name="EnumCaseTest.inc" role="test" />
+      <file baseinstalldir="" name="EnumCaseTest.php" role="test" />
       <file baseinstalldir="" name="FinallyTest.inc" role="test" />
       <file baseinstalldir="" name="FinallyTest.php" role="test" />
       <file baseinstalldir="" name="GotoLabelTest.inc" role="test" />
@@ -2127,6 +2129,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.inc" name="tests/Core/Tokenizer/DefaultKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.php" name="tests/Core/Tokenizer/DoubleArrowTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.inc" name="tests/Core/Tokenizer/DoubleArrowTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.php" name="tests/Core/Tokenizer/EnumCaseTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.inc" name="tests/Core/Tokenizer/EnumCaseTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.php" name="tests/Core/Tokenizer/FinallyTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.inc" name="tests/Core/Tokenizer/FinallyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.php" name="tests/Core/Tokenizer/GotoLabelTest.php" />
@@ -2225,6 +2229,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.inc" name="tests/Core/Tokenizer/DefaultKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.php" name="tests/Core/Tokenizer/DoubleArrowTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.inc" name="tests/Core/Tokenizer/DoubleArrowTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.php" name="tests/Core/Tokenizer/EnumCaseTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.inc" name="tests/Core/Tokenizer/EnumCaseTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.php" name="tests/Core/Tokenizer/FinallyTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.inc" name="tests/Core/Tokenizer/FinallyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.php" name="tests/Core/Tokenizer/GotoLabelTest.php" />
