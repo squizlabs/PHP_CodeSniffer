@@ -115,3 +115,9 @@ $b = new class()
         return $This;
     }
 }
+
+enum MyEnum {
+    public static function myFunc() {
+        $this->doSomething();
+    }
+}

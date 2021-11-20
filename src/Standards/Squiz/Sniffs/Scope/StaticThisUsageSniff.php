@@ -22,7 +22,7 @@ class StaticThisUsageSniff extends AbstractScopeSniff
      */
     public function __construct()
     {
-        parent::__construct([T_CLASS, T_TRAIT, T_ANON_CLASS], [T_FUNCTION]);
+        parent::__construct([T_CLASS, T_TRAIT, T_ENUM, T_ANON_CLASS], [T_FUNCTION]);
 
     }//end __construct()
 
