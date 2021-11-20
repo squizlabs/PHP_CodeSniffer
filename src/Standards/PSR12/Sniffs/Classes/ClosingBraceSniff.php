@@ -27,6 +27,7 @@ class ClosingBraceSniff implements Sniff
             T_CLASS,
             T_INTERFACE,
             T_TRAIT,
+            T_ENUM,
             T_FUNCTION,
         ];
 
