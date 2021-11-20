@@ -12,10 +12,15 @@ class baz {
 }
 
 trait barTrait {
-    
+
 }
 
 interface barInterface {
 
 }
+
+enum barEnum {
+
+}
+
 ?>
