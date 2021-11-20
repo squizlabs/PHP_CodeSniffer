@@ -220,3 +220,8 @@ abstract class My_Class {
     public function my_class() {}
     public function _MY_CLASS() {}
 }
+
+enum My_Enum {
+    public function my_class() {}
+    public function _MY_CLASS() {}
+}
