@@ -554,6 +554,23 @@ class PHP extends Tokenizer
             }
 
             /*
+                For Explicit Octal Notation prior to PHP 8.1 we need to combine the
+                T_NUMBER and T_STRING token values into a single token value, and
+                then ignore the T_STRING token.
+            */
+
+            if (PHP_VERSION_ID < 80100
+                && $tokenIsArray === true && $token[1] === '0'
+                && (isset($tokens[($stackPtr + 1)]) === true
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === T_STRING
+                && $tokens[($stackPtr + 1)][1][0] === 'o')
+            ) {
+                $token[1] .= $tokens[($stackPtr + 1)][1];
+                $tokens[($stackPtr + 1)] = '';
+            }
+
+            /*
                 If we are using \r\n newline characters, the \r and \n are sometimes
                 split over two tokens. This normally occurs after comments. We need
                 to merge these two characters together so that our line endings are
@@ -1330,6 +1347,7 @@ class PHP extends Tokenizer
                 if ($newType === T_LNUMBER
                     && ((stripos($newContent, '0x') === 0 && hexdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
                     || (stripos($newContent, '0b') === 0 && bindec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
+                    || (stripos($newContent, '0o') === 0 && octdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
                     || (stripos($newContent, '0x') !== 0
                     && stripos($newContent, 'e') !== false || strpos($newContent, '.') !== false)
                     || (strpos($newContent, '0') === 0 && stripos($newContent, '0x') !== 0
