@@ -121,6 +121,16 @@ trait Empty_Trait_Doc
 
 
 /**
+ *
+ *
+ */
+enum Empty_Enum_Doc
+{
+
+}//end enum
+
+
+/**
  * Sample class comment
  *
  * @category  PHP
