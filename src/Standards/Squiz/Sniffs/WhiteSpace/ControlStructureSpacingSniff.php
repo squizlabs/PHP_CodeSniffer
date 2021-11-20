@@ -145,6 +145,7 @@ class ControlStructureSpacingSniff implements Sniff
             T_CLASS                => true,
             T_INTERFACE            => true,
             T_TRAIT                => true,
+            T_ENUM                 => true,
             T_DOC_COMMENT_OPEN_TAG => true,
         ];
 

@@ -261,3 +261,7 @@ $expr = match( $foo ){
 
 };
 echo $expr;
+
+enum SomeEnum
+{
+}
