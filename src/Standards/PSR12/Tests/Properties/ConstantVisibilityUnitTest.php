@@ -43,6 +43,7 @@ class ConstantVisibilityUnitTest extends AbstractSniffUnitTest
         return [
             4  => 1,
             12 => 1,
+            21 => 1,
         ];
 
     }//end getWarningList()
