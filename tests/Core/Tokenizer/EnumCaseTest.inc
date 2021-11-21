@@ -76,3 +76,20 @@ switch ($x) {
         enum Bar {}
         break;
 }
+
+enum Foo: string {
+    /* testKeywordAsEnumCaseNameShouldBeString1 */
+    case INTERFACE = 'interface';
+    /* testKeywordAsEnumCaseNameShouldBeString2 */
+    case TRAIT = 'trait';
+    /* testKeywordAsEnumCaseNameShouldBeString3 */
+    case ENUM = 'enum';
+    /* testKeywordAsEnumCaseNameShouldBeString4 */
+    case FUNCTION = 'function';
+    /* testKeywordAsEnumCaseNameShouldBeString5 */
+    case FALSE = 'false';
+    /* testKeywordAsEnumCaseNameShouldBeString6 */
+    case DEFAULT = 'default';
+    /* testKeywordAsEnumCaseNameShouldBeString7 */
+    case ARRAY = 'array';
+}

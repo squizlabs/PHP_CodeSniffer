@@ -477,6 +477,7 @@ class PHP extends Tokenizer
         T_INTERFACE                => true,
         T_TRAIT                    => true,
         T_ENUM                     => true,
+        T_ENUM_CASE                => true,
         T_EXTENDS                  => true,
         T_IMPLEMENTS               => true,
         T_ATTRIBUTE                => true,
