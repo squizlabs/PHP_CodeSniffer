@@ -113,4 +113,45 @@ class EnumCaseTest extends AbstractMethodUnitTest
     }//end dataNotEnumCases()
 
 
+    /**
+     * Test that "case" that is not enum case is still tokenized as `T_CASE`.
+     *
+     * @param string $testMarker The comment which prefaces the target token in the test file.
+     *
+     * @dataProvider dataKeywordAsEnumCaseNameShouldBeString
+     * @covers       PHP_CodeSniffer\Tokenizers\PHP::tokenize
+     *
+     * @return void
+     */
+    public function testKeywordAsEnumCaseNameShouldBeString($testMarker)
+    {
+        $tokens = self::$phpcsFile->getTokens();
+
+        $enumCaseName = $this->getTargetToken($testMarker, [T_STRING, T_INTERFACE, T_TRAIT, T_ENUM, T_FUNCTION, T_FALSE, T_DEFAULT, T_ARRAY]);
+
+        $this->assertSame(T_STRING, $tokens[$enumCaseName]['code']);
+        $this->assertSame('T_STRING', $tokens[$enumCaseName]['type']);
+
+    }//end testKeywordAsEnumCaseNameShouldBeString()
+
+
+    /**
+     * Data provider.
+     *
+     * @see testKeywordAsEnumCaseNameShouldBeString()
+     *
+     * @return array
+     */
+    public function dataKeywordAsEnumCaseNameShouldBeString()
+    {
+        return [
+            ['/* testKeywordAsEnumCaseNameShouldBeString1 */'],
+            ['/* testKeywordAsEnumCaseNameShouldBeString2 */'],
+            ['/* testKeywordAsEnumCaseNameShouldBeString3 */'],
+            ['/* testKeywordAsEnumCaseNameShouldBeString4 */'],
+        ];
+
+    }//end dataKeywordAsEnumCaseNameShouldBeString()
+
+
 }//end class
