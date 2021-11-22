@@ -32,6 +32,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer and Graham Wharton for the patch
   - Fixed bug #3422 : Squiz.WhiteSpace.ScopeClosingBrace fixer removes HTML content when fixing closing brace alignment
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3437 : PSR12 does not forbid blank lines at the start of the class body
+    -- Added new PSR12.Classes.OpeningBraceSpace sniff to enforce this
   - Fixed bug #3448 : PHP 8.1 deprecation notice while generating running time value
     -- Thanks to Juliette Reinders Folmer and Andy Postnikov for the patch
  </notes>
@@ -1109,6 +1111,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="AnonClassDeclarationSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSpaceSniff.php" role="php" />
        </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementSniff.php" role="php" />
@@ -1150,6 +1153,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSpaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSpaceUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSpaceUnitTest.php" role="test" />
        </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementUnitTest.inc" role="test" />

@@ -123,6 +123,7 @@
     <!-- Opening braces MUST be on their own line and MUST NOT be preceded or followed by a blank line. -->
     <!-- Closing braces MUST be on their own line and MUST NOT be preceded by a blank line. -->
     <!-- Lists of implements and, in the case of interfaces, extends MAY be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line. -->
+    <!-- checked by PSR12.Classes.OpeningBraceSpace -->
     <rule ref="PSR2.Classes.ClassDeclaration"/>
 
     <!-- 4.2 Using traits -->
