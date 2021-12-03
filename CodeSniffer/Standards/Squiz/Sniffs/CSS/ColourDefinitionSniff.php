@@ -81,8 +81,8 @@ class Squiz_Sniffs_CSS_ColourDefinitionSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        if ($colour{1} === $colour{2} && $colour{3} === $colour{4} && $colour{5} === $colour{6}) {
-            $expected = '#'.$colour{1}.$colour{3}.$colour{5};
+        if ($colour[1] === $colour[2] && $colour[3] === $colour[4] && $colour[5] === $colour[6]) {
+            $expected = '#'.$colour[1].$colour[3].$colour[5];
             $error    = 'CSS colours must use shorthand if available; expected %s but found %s';
             $data     = array(
                          $expected,

@@ -2264,7 +2264,7 @@ class PHP_CodeSniffer_File
                         $ignore++;
                     } else {
                         // Make sure this is actually an opener and not a
-                        // string offset (e.g., $var{0}).
+                        // string offset (e.g., $var[0]).
                         for ($x = ($i - 1); $x > 0; $x--) {
                             if (isset(PHP_CodeSniffer_Tokens::$emptyTokens[$tokens[$x]['code']]) === true) {
                                 continue;

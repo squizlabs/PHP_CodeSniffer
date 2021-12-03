@@ -450,13 +450,13 @@ class PHP_CodeSniffer_CLI
                 continue;
             }
 
-            if ($arg{0} === '-') {
+            if ($arg[0] === '-') {
                 if ($arg === '-' || $arg === '--') {
                     // Empty argument, ignore it.
                     continue;
                 }
 
-                if ($arg{1} === '-') {
+                if ($arg[1] === '-') {
                     $this->processLongArgument(substr($arg, 2), $i);
                 } else {
                     $switches = str_split($arg);
@@ -736,7 +736,7 @@ class PHP_CodeSniffer_CLI
                         // Passed report file is a file in the current directory.
                         $this->values['reportFile'] = getcwd().'/'.basename($this->values['reportFile']);
                     } else {
-                        if ($dir{0} === '/') {
+                        if ($dir[0] === '/') {
                             // An absolute path.
                             $dir = PHP_CodeSniffer::realpath($dir);
                         } else {
@@ -777,7 +777,7 @@ class PHP_CodeSniffer_CLI
                                 // Passed report file is a filename in the current directory.
                                 $output = getcwd().'/'.basename($output);
                             } else {
-                                if ($dir{0} === '/') {
+                                if ($dir[0] === '/') {
                                     // An absolute path.
                                     $dir = PHP_CodeSniffer::realpath($dir);
                                 } else {
@@ -871,7 +871,7 @@ class PHP_CodeSniffer_CLI
     public function processUnknownArgument($arg, $pos)
     {
         // We don't know about any additional switches; just files.
-        if ($arg{0} === '-') {
+        if ($arg[0] === '-') {
             if ($this->dieOnUnknownArg === false) {
                 return;
             }

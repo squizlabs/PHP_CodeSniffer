@@ -56,7 +56,7 @@ class PEAR_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        if ($tokens[$stackPtr]['content']{0} === '#') {
+        if ($tokens[$stackPtr]['content'][0] === '#') {
             $phpcsFile->recordMetric($stackPtr, 'Inline comment style', '# ...');
 
             $error  = 'Perl-style comments are not allowed. Use "// Comment."';
@@ -67,12 +67,12 @@ class PEAR_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sniff
                 $newComment = '// '.$newComment;
                 $phpcsFile->fixer->replaceToken($stackPtr, $newComment);
             }
-        } else if ($tokens[$stackPtr]['content']{0} === '/'
-            && $tokens[$stackPtr]['content']{1} === '/'
+        } else if ($tokens[$stackPtr]['content'][0] === '/'
+            && $tokens[$stackPtr]['content'][1] === '/'
         ) {
             $phpcsFile->recordMetric($stackPtr, 'Inline comment style', '// ...');
-        } else if ($tokens[$stackPtr]['content']{0} === '/'
-            && $tokens[$stackPtr]['content']{1} === '*'
+        } else if ($tokens[$stackPtr]['content'][0] === '/'
+            && $tokens[$stackPtr]['content'][1] === '*'
         ) {
             $phpcsFile->recordMetric($stackPtr, 'Inline comment style', '/* ... */');
         }

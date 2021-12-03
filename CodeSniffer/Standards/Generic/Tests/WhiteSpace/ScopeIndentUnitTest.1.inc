@@ -257,7 +257,7 @@ switch ($foo) {
     case 1:
         switch ($bar) {
             default:
-                echo $string{1};
+                echo $string[1];
         }
     break;
 }
@@ -278,7 +278,7 @@ switch ($foo) {
         switch ($bar) {
         default:
             if ($something) {
-                echo $string{1};
+                echo $string[1];
             } else if ($else) {
                 switch ($else) {
                 default:
@@ -611,9 +611,9 @@ switch ($arg) {
         echo 'default';
 }
 
-if ($tokens[$stackPtr]['content']{0} === '#') {
-} else if ($tokens[$stackPtr]['content']{0} === '/'
-    && $tokens[$stackPtr]['content']{1} === '/'
+if ($tokens[$stackPtr]['content'][0] === '#') {
+} else if ($tokens[$stackPtr]['content'][0] === '/'
+    && $tokens[$stackPtr]['content'][1] === '/'
 ) {
 }
 

@@ -103,7 +103,7 @@ function myFunction($var=true)
         $lastCharWasCaps = ($classFormat === false) ? false : true;
 
         for ($i = 1; $i < $length; $i++) {
-            $isCaps = (strtoupper($string{$i}) === $string{$i}) ? true : false;
+            $isCaps = (strtoupper($string[$i]) === $string[$i]) ? true : false;
             if ($isCaps === true && $lastCharWasCaps === true) {
                 return false;
             }

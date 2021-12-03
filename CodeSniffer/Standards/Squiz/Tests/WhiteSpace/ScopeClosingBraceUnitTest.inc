@@ -26,8 +26,8 @@ class Test2
 
 public function test2()
 {
-    if ($str{0}) {
-        $chr = $str{0};
+    if ($str[0]) {
+        $chr = $str[0];
     }
     
     if (!class_exists($class_name)) {
@@ -48,7 +48,7 @@ foreach ($elements as $element) {
 if ($token['code'] === T_COMMENT
     && $multiLineComment === false
     && (substr($token['content'], 0, 2) === '//'
-    || $token['content']{0} === '#')
+    || $token['content'][0] === '#')
 ) {
 }
 
