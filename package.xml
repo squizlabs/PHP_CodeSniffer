@@ -34,6 +34,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3437 : PSR12 does not forbid blank lines at the start of the class body
     -- Added new PSR12.Classes.OpeningBraceSpace sniff to enforce this
+  - Fixed bug #3440 : Squiz.WhiteSpace.MemberVarSpacing false positives when attributes used without docblock
+    -- Thanks to Vadim Borodavko for the patch
   - Fixed bug #3448 : PHP 8.1 deprecation notice while generating running time value
     -- Thanks to Juliette Reinders Folmer and Andy Postnikov for the patch
  </notes>
