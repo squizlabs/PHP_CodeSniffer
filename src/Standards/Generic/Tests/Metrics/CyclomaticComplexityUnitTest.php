@@ -25,7 +25,7 @@ class CyclomaticComplexityUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList()
     {
-        return [116 => 1];
+        return [118 => 1];
 
     }//end getErrorList()
 
