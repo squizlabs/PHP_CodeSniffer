@@ -38,6 +38,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Vadim Borodavko for the patch
   - Fixed bug #3448 : PHP 8.1 deprecation notice while generating running time value
     -- Thanks to Juliette Reinders Folmer and Andy Postnikov for the patch
+  - Fixed bug #3468 : do/while loops are double-counted in Generic.Metrics.CyclomaticComplexity
+    -- Thanks to Mark Baker for the patch
+  - Fixed bug #3469 : Ternary Operator and Null Coalescing Operator are not counted in Generic.Metrics.CyclomaticComplexity
+    -- Thanks to Mark Baker for the patch
+  - Fixed bug #3472 : PHP 8 match() expression is not counted in Generic.Metrics.CyclomaticComplexity
+    -- Thanks to Mark Baker for the patch
  </notes>
  <contents>
   <dir name="/">
