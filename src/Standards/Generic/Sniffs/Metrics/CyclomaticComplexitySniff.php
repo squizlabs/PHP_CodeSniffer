@@ -78,8 +78,6 @@ class CyclomaticComplexitySniff implements Sniff
             T_FOR            => true,
             T_FOREACH        => true,
             T_WHILE          => true,
-            // T_DO is not required for incrementing CYC, as the terminating while in a do/while loop triggers the branch.
-            // T_DO      => true.
             T_ELSEIF         => true,
             T_INLINE_THEN    => true,
             T_COALESCE       => true,
