@@ -21,7 +21,7 @@ jobs:
       # - custom_ini: Whether to run with specific custom ini settings to hit very specific
       #   code conditions.
       matrix:
-        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1']
+        php: ['5.4', '5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
         custom_ini: [false]
 
         include:
@@ -33,7 +33,7 @@ jobs:
 
     name: "PHP: ${{ matrix.php }} ${{ matrix.custom_ini && ' with custom ini settings' || '' }}"
 
-    continue-on-error: ${{ matrix.php == '8.1' }}
+    continue-on-error: ${{ matrix.php == '8.2' }}
 
     steps:
       - name: Checkout code
@@ -79,14 +79,14 @@ jobs:
         run: php bin/phpcs --config-set php_path php
 
       - name: 'PHPUnit: run the tests'
-        if: ${{ matrix.php != '8.1' }}
+        if: ${{ matrix.php != '8.1' && matrix.php != '8.2' }}
         run: vendor/bin/phpunit tests/AllTests.php
 
       # We need to ignore the config file so that PHPUnit doesn't try to read it.
       # The config file causes an error on PHP 8.1+ with PHPunit 7, but it's not needed here anyway
       # as we can pass all required settings in the phpunit command.
-      - name: 'PHPUnit: run the tests on PHP nightly'
-        if: ${{ matrix.php == '8.1' }}
+      - name: 'PHPUnit: run the tests on PHP > 8.0'
+        if: ${{ matrix.php == '8.1' || matrix.php == '8.2' }}
         run: vendor/bin/phpunit tests/AllTests.php --no-configuration --bootstrap=tests/bootstrap.php --dont-report-useless-tests
 
       - name: 'PHPCS: check code style without cache, no parallel'
