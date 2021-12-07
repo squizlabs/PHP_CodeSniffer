@@ -21,7 +21,7 @@ jobs:
       # - custom_ini: Whether to run with specific custom ini settings to hit very specific
       #   code conditions.
       matrix:
-        php: ['7.2', '7.3', '7.4', '8.0', '8.1']
+        php: ['7.2', '7.3', '7.4', '8.0', '8.1', '8.2']
         custom_ini: [false]
 
         include:
@@ -31,7 +31,7 @@ jobs:
 
     name: "PHP: ${{ matrix.php }} ${{ matrix.custom_ini && ' with custom ini settings' || '' }}"
 
-    continue-on-error: ${{ matrix.php == '8.1' }}
+    continue-on-error: ${{ matrix.php == '8.2' }}
 
     steps:
       - name: Checkout code
@@ -62,9 +62,9 @@ jobs:
         if: ${{ matrix.php != '8.1' }}
         uses: "ramsey/composer-install@v1"
 
-      # For PHP 8.1, install with ignore platform reqs as not all PHPUnit allow for it yet.
+      # For PHP > 8.0, install with ignore platform reqs as not all PHPUnit allow for it yet.
       - name: Install Composer dependencies - with ignore platform
-        if: ${{ matrix.php == '8.1' }}
+        if: ${{ matrix.php == '8.1' || matrix.php == '8.2' }}
         uses: "ramsey/composer-install@v1"
         with:
           composer-options: --ignore-platform-reqs
