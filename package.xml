@@ -38,6 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Vadim Borodavko for the patch
   - Fixed bug #3448 : PHP 8.1 deprecation notice while generating running time value
     -- Thanks to Juliette Reinders Folmer and Andy Postnikov for the patch
+  - Fixed bug #3456 : PSR12.Classes.ClassInstantiation.MissingParentheses false positive using attributes on anonymous class
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3460 : Generic.Formatting.MultipleStatementAlignment false positive on closure with parameters
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3468 : do/while loops are double-counted in Generic.Metrics.CyclomaticComplexity
