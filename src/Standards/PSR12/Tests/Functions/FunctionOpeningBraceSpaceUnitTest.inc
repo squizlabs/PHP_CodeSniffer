@@ -3,7 +3,6 @@
 function MyFunction() {
 
     // Some code goes here.
-    echo $code;
 }
 
 class MyClass
@@ -12,14 +11,10 @@ class MyClass
     {
 
         // Some code goes here.
-        echo $code;
     }
-
-    public function register();
 }
 
-$a = function()
-{
+$a = function() {
 
 
 

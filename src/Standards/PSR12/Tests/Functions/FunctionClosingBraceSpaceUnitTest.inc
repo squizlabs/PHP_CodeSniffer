@@ -7,16 +7,14 @@ function MyFunction() {
 
 class MyClass
 {
-    function MyFunction() {
+    function MyFunction()
+    {
         // Some code goes here.
 
     }
-
-    public function register();
 }
 
-$a = function()
-{
+$a = function() {
     echo 'Testing a closure';
 
 

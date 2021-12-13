@@ -27,10 +27,10 @@ class FunctionOpeningBraceSpaceUnitTest extends AbstractSniffUnitTest
     {
         return [
             4  => 1,
-            13 => 1,
-            23 => 1,
-            24 => 1,
-            25 => 1,
+            12 => 1,
+            18 => 1,
+            19 => 1,
+            20 => 1,
         ];
 
     }//end getErrorList()

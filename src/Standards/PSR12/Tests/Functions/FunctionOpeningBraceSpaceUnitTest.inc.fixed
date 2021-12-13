@@ -1,7 +1,6 @@
 <?php
 
-function MyFunction()
-{
+function MyFunction() {
     // Some code goes here.
     echo $code;
 }
@@ -17,7 +16,6 @@ class MyClass
     public function register();
 }
 
-$a = function()
-{
+$a = function() {
 	echo 'Testing a closure';
 };
