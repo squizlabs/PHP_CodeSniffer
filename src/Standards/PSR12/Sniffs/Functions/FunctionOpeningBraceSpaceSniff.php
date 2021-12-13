@@ -1,6 +1,6 @@
 <?php
 /**
- * Checks that there is no empty line after the opening brace of a function.
+ * Checks that there is one empty line after the opening brace of a function.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
