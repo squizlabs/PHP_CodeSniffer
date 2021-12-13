@@ -1,0 +1,27 @@
+<?php
+
+function MyFunction() {
+
+    // Some code goes here.
+    echo $code;
+}
+
+class MyClass
+{
+    function MyFunction()
+    {
+
+        // Some code goes here.
+        echo $code;
+    }
+
+    public function register();
+}
+
+$a = function()
+{
+
+
+
+	echo 'Testing a closure';
+};
