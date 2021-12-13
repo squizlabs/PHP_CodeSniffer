@@ -14,14 +14,13 @@ use PHP_CodeSniffer\Sniffs\Sniff;
 
 class FunctionOpeningBraceSpaceSniff implements Sniff
 {
+
     /**
      * A list of tokenizers this sniff supports.
      *
      * @var array
      */
-    public $supportedTokenizers = [
-        'PHP',
-    ];
+    public $supportedTokenizers = ['PHP'];
 
 
     /**

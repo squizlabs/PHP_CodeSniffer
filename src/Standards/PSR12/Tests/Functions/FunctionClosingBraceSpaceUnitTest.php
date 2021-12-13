@@ -13,6 +13,8 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
 class ReturnTypeDeclarationUnitTest extends AbstractSniffUnitTest
 {
+
+
     /**
      * Returns the lines where errors should occur.
      *
@@ -24,7 +26,7 @@ class ReturnTypeDeclarationUnitTest extends AbstractSniffUnitTest
     protected function getErrorList()
     {
         return [
-            5 => 1,
+            5  => 1,
             12 => 1,
             21 => 1,
             22 => 1,
