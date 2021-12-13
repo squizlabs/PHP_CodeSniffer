@@ -21,7 +21,6 @@ class FunctionOpeningBraceSpaceSniff implements Sniff
      */
     public $supportedTokenizers = [
         'PHP',
-        'JS',
     ];
 
 
