@@ -1136,6 +1136,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="OpenTagSniff.php" role="php" />
        </dir>
        <dir name="Functions">
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceSpaceSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionOpeningBraceSpaceSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="NullableTypeDeclarationSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ReturnTypeDeclarationSniff.php" role="php" />
        </dir>
