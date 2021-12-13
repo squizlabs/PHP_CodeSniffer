@@ -1,6 +1,6 @@
 <?php
 /**
- * Unit test class for the ReturnTypeDeclaration sniff.
+ * Unit test class for the FunctionOpeningBraceSpaceSniff sniff.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2018 Squiz Pty Ltd (ABN 77 084 670 600)
@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Standards\PSR12\Tests\Functions;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class ReturnTypeDeclarationUnitTest extends AbstractSniffUnitTest
+class FunctionClosingBraceSpaceUnitTest extends AbstractSniffUnitTest
 {
 
 
