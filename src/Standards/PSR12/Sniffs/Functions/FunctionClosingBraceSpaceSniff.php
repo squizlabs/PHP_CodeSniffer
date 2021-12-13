@@ -70,68 +70,31 @@ class FunctionClosingBraceSpaceSniff implements Sniff
         $prevLine  = $tokens[$prevContent]['line'];
         $found     = ($braceLine - $prevLine - 1);
 
-        if ($nestedFunction === true) {
-            if ($found < 0) {
-                $error = 'Closing brace of nested function must be on a new line';
-                $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'ContentBeforeClose');
-                if ($fix === true) {
-                    $phpcsFile->fixer->addNewlineBefore($closeBrace);
-                }
-            } else if ($found > 0) {
-                $error = 'Expected 0 blank lines before closing brace of nested function; %s found';
-                $data  = [$found];
-                $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeNestedClose', $data);
+        if ($found > 0) {
+            $error = 'Expected 0 blank lines before closing brace of nested function; %s found';
+            $data  = [$found];
+            $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeNestedClose', $data);
 
-                if ($fix === true) {
-                    $phpcsFile->fixer->beginChangeset();
-                    $changeMade = false;
-                    for ($i = ($prevContent + 1); $i < $closeBrace; $i++) {
-                        // Try and maintain indentation.
-                        if ($tokens[$i]['line'] === ($braceLine - 1)) {
-                            break;
-                        }
-
-                        $phpcsFile->fixer->replaceToken($i, '');
-                        $changeMade = true;
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $changeMade = false;
+                for ($i = ($prevContent + 1); $i < $closeBrace; $i++) {
+                    // Try and maintain indentation.
+                    if ($tokens[$i]['line'] === ($braceLine - 1)) {
+                        break;
                     }
 
-                    // Special case for when the last content contains the newline
-                    // token as well, like with a comment.
-                    if ($changeMade === false) {
-                        $phpcsFile->fixer->replaceToken(($prevContent + 1), '');
-                    }
-
-                    $phpcsFile->fixer->endChangeset();
-                }//end if
-            }//end if
-        } else {
-            if ($found !== 1) {
-                if ($found < 0) {
-                    $found = 0;
+                    $phpcsFile->fixer->replaceToken($i, '');
+                    $changeMade = true;
                 }
 
-                $error = 'Expected 1 blank line before closing function brace; %s found';
-                $data  = [$found];
-                $fix   = $phpcsFile->addFixableError($error, $closeBrace, 'SpacingBeforeClose', $data);
-
-                if ($fix === true) {
-                    if ($found > 1) {
-                        $phpcsFile->fixer->beginChangeset();
-                        for ($i = ($prevContent + 1); $i < ($closeBrace - 1); $i++) {
-                            $phpcsFile->fixer->replaceToken($i, '');
-                        }
-
-                        $phpcsFile->fixer->replaceToken($i, $phpcsFile->eolChar);
-                        $phpcsFile->fixer->endChangeset();
-                    } else {
-                        // Try and maintain indentation.
-                        if ($tokens[($closeBrace - 1)]['code'] === T_WHITESPACE) {
-                            $phpcsFile->fixer->addNewlineBefore($closeBrace - 1);
-                        } else {
-                            $phpcsFile->fixer->addNewlineBefore($closeBrace);
-                        }
-                    }
+                // Special case for when the last content contains the newline
+                // token as well, like with a comment.
+                if ($changeMade === false) {
+                    $phpcsFile->fixer->replaceToken(($prevContent + 1), '');
                 }
+
+                $phpcsFile->fixer->endChangeset();
             }//end if
         }//end if
 
