@@ -134,7 +134,7 @@ class BackfillNumericSeparatorTest extends AbstractMethodUnitTest
             ],
             [
                 [
-                    'marker' => '/* testExplicitOctal (Introduced in PHP 8.1) */',
+                    'marker' => '/* testExplicitOctal */',
                     'type'   => 'T_LNUMBER',
                     'value'  => '0o137_041',
                 ],

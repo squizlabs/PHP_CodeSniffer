@@ -34,7 +34,7 @@ $foo = 0b0101_1111;
 /* testOctal */
 $foo = 0137_041;
 
-/* testExplicitOctal (Introduced in PHP 8.1) */
+/* testExplicitOctal */
 $foo = 0o137_041;
 
 /* testIntMoreThanMax */
