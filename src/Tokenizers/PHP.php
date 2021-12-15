@@ -554,23 +554,6 @@ class PHP extends Tokenizer
             }
 
             /*
-                For Explicit Octal Notation prior to PHP 8.1 we need to combine the
-                T_NUMBER and T_STRING token values into a single token value, and
-                then ignore the T_STRING token.
-            */
-
-            if (PHP_VERSION_ID < 80100
-                && $tokenIsArray === true && $token[1] === '0'
-                && (isset($tokens[($stackPtr + 1)]) === true
-                && is_array($tokens[($stackPtr + 1)]) === true
-                && $tokens[($stackPtr + 1)][0] === T_STRING
-                && $tokens[($stackPtr + 1)][1][0] === 'o')
-            ) {
-                $token[1] .= $tokens[($stackPtr + 1)][1];
-                $tokens[($stackPtr + 1)] = '';
-            }
-
-            /*
                 If we are using \r\n newline characters, the \r and \n are sometimes
                 split over two tokens. This normally occurs after comments. We need
                 to merge these two characters together so that our line endings are
@@ -662,6 +645,29 @@ class PHP extends Tokenizer
                     }
                 }//end if
             }//end if
+
+            /*
+                For Explicit Octal Notation prior to PHP 8.1 we need to combine the
+                T_LNUMBER and T_STRING token values into a single token value, and
+                then ignore the T_STRING token.
+            */
+
+            if (PHP_VERSION_ID < 80100
+                && $tokenIsArray === true && $token[1] === '0'
+                && (isset($tokens[($stackPtr + 1)]) === true
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === T_STRING
+                && strtolower($tokens[($stackPtr + 1)][1][0]) === 'o')
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_LNUMBER,
+                    'type'    => 'T_LNUMBER',
+                    'content' => $token[1] .= $tokens[($stackPtr + 1)][1],
+                ];
+                $stackPtr++;
+                $newStackPtr++;
+                continue;
+            }
 
             /*
                 PHP 8.1 introduced two dedicated tokens for the & character.
