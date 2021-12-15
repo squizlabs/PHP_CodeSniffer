@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Tests\Core\Tokenizer;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 
-class ExplicitOctalNotationTest extends AbstractMethodUnitTest
+class BackfillExplicitOctalNotationTest extends AbstractMethodUnitTest
 {
 
 
