@@ -40,7 +40,7 @@ jobs:
 
       - name: Upload the PHPCS phar
         uses: actions/upload-artifact@v2
-        if: ${{ success() && matrix.php == '7.4' }}
+        if: ${{ success() && matrix.php == '8.0' }}
         with:
           name: phpcs-phar
           path: ./phpcs.phar
@@ -49,7 +49,7 @@ jobs:
 
       - name: Upload the PHPCBF phar
         uses: actions/upload-artifact@v2
-        if: ${{ success() && matrix.php == '7.4' }}
+        if: ${{ success() && matrix.php == '8.0' }}
         with:
           name: phpcbf-phar
           path: ./phpcbf.phar
