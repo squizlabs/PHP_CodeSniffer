@@ -436,7 +436,7 @@ class Something implements JsonSerializable {
      *
      * @return mixed
      */
-    #[ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function jsonSerialize() {}
 
     /**
@@ -454,7 +454,7 @@ class Something implements JsonSerializable {
      * @return mixed
      */
 
-    #[ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
     public function blankLineDetectionA() {}
 
     /**
@@ -462,7 +462,7 @@ class Something implements JsonSerializable {
      *
      * @return mixed
      */
-    #[ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
 
     public function blankLineDetectionB() {}
 
@@ -472,7 +472,7 @@ class Something implements JsonSerializable {
      * @return mixed
      */
 
-    #[ReturnTypeWillChange]
+    #[\ReturnTypeWillChange]
 
     public function blankLineDetectionC() {}
 }
