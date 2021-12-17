@@ -60,7 +60,7 @@ foreach ($scripts as $script) {
         }
 
         $fullpath = $file->getPathname();
-        if (strpos($fullpath, '/Tests/') !== false) {
+        if (strpos($fullpath, DIRECTORY_SEPARATOR.'Tests'.DIRECTORY_SEPARATOR) !== false) {
             continue;
         }
 
