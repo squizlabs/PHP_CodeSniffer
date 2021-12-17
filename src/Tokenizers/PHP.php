@@ -2837,13 +2837,15 @@ class PHP extends Tokenizer
                     $this->tokens[$x]['code'] = T_STRING;
                     $this->tokens[$x]['type'] = 'T_STRING';
                 }
-            } else if (($this->tokens[$i]['code'] === T_STRING && strtolower($this->tokens[$i]['content']) === 'readonly')
-                || $this->tokens[$i]['code'] === T_READONLY
+            } else if ($this->tokens[$i]['code'] === T_READONLY
+                || ($this->tokens[$i]['code'] === T_STRING
+                && strtolower($this->tokens[$i]['content']) === 'readonly')
             ) {
                 /*
-                    "readonly" keyword support
-                    PHP < 8.1: Converts T_STRING to T_READONLY
-                    PHP >= 8.1: Converts some T_READONLY to T_STRING because token_get_all() without the TOKEN_PARSE flag cannot distinguish between them in some situations
+                    Adds "readonly" keyword support:
+                        PHP < 8.1: Converts T_STRING to T_READONLY
+                        PHP >= 8.1: Converts some T_READONLY to T_STRING because token_get_all()
+                    without the TOKEN_PARSE flag cannot distinguish between them in some situations.
                 */
 
                 $allowedAfter = [
@@ -2874,7 +2876,9 @@ class PHP extends Tokenizer
                         continue;
                     }
 
-                    if ($this->tokens[$x]['code'] === T_VARIABLE) {
+                    if ($this->tokens[$x]['code'] === T_VARIABLE
+                        || $this->tokens[$x]['code'] === T_CONST
+                    ) {
                         break;
                     }
 

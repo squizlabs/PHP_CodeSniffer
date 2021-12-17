@@ -12,6 +12,8 @@ class Foo
     static readonly int $staticReadonlyProperty;
     /* testReadonlyStaticProperty */
     readonly static int $readonlyStaticProperty;
+    /* testConstReadonlyProperty */
+    public readonly const MYCONSTANT = 'foo';
     /* testReadonlyPropertyWithoutType */
     readonly $propertyWithoutType;
     /* testPublicReadonlyProperty */

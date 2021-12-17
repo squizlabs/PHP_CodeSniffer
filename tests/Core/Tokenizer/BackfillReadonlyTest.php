@@ -11,7 +11,7 @@ namespace PHP_CodeSniffer\Tests\Core\Tokenizer;
 
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 
-class ReadonlyTest extends AbstractMethodUnitTest
+class BackfillReadonlyTest extends AbstractMethodUnitTest
 {
 
 
@@ -65,6 +65,10 @@ class ReadonlyTest extends AbstractMethodUnitTest
             ],
             [
                 '/* testReadonlyStaticProperty */',
+                'readonly',
+            ],
+            [
+                '/* testConstReadonlyProperty */',
                 'readonly',
             ],
             [
