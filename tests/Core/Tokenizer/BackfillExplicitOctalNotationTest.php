@@ -57,7 +57,7 @@ class BackfillExplicitOctalNotationTest extends AbstractMethodUnitTest
             ],
             [
                 [
-                    'marker' => '/* testExplicitOctal capitalised */',
+                    'marker' => '/* testExplicitOctalCapitalised */',
                     'type'   => 'T_LNUMBER',
                     'value'  => '0O137041',
                 ],

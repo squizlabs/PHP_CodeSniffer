@@ -3,5 +3,5 @@
 /* testExplicitOctal */
 $foo = 0o137041;
 
-/* testExplicitOctal capitalised */
+/* testExplicitOctalCapitalised */
 $bar = 0O137041;
