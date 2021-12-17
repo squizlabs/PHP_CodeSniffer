@@ -65,15 +65,14 @@ foreach ($scripts as $script) {
         }
 
         $path = 'src'.substr($fullpath, $srcDirLen);
-
-        $phar->addFromString($path, php_strip_whitespace($fullpath));
+        $phar->addFile($fullpath, $path);
     }
 
     // Add autoloader.
-    $phar->addFromString('autoload.php', php_strip_whitespace(realpath(__DIR__.'/../autoload.php')));
+    $phar->addFile(realpath(__DIR__.'/../autoload.php'), 'autoload.php');
 
     // Add licence file.
-    $phar->addFromString('licence.txt', php_strip_whitespace(realpath(__DIR__.'/../licence.txt')));
+    $phar->addFile(realpath(__DIR__.'/../licence.txt'), 'licence.txt');
 
     echo 'done'.PHP_EOL;
 
