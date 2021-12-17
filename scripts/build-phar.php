@@ -21,6 +21,8 @@ if (ini_get('phar.readonly') === '1') {
     exit(1);
 }
 
+$startTime = microtime(true);
+
 $scripts = [
     'phpcs',
     'phpcbf',
@@ -51,6 +53,7 @@ foreach ($scripts as $script) {
     $rdi = new \RecursiveDirectoryIterator($srcDir, \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
     $di  = new \RecursiveIteratorIterator($rdi, 0, \RecursiveIteratorIterator::CATCH_GET_CHILD);
 
+    $fileCount = 0;
     foreach ($di as $file) {
         $filename = $file->getFilename();
 
@@ -65,9 +68,16 @@ foreach ($scripts as $script) {
         }
 
         $path = 'src'.substr($fullpath, $srcDirLen);
+<<<<<<< HEAD
 
         $phar->addFromString($path, php_strip_whitespace($fullpath));
     }
+=======
+        $phar->addFile($fullpath, $path);
+
+        ++$fileCount;
+    }//end foreach
+>>>>>>> a4b521737... Build Phar: show more debug information
 
     // Add autoloader.
     $phar->addFromString('autoload.php', php_strip_whitespace(realpath(__DIR__.'/../autoload.php')));
@@ -76,6 +86,7 @@ foreach ($scripts as $script) {
     $phar->addFromString('licence.txt', php_strip_whitespace(realpath(__DIR__.'/../licence.txt')));
 
     echo 'done'.PHP_EOL;
+    echo "\t   Added ".$fileCount.' files'.PHP_EOL;
 
     /*
         Add the stub.
@@ -94,3 +105,16 @@ foreach ($scripts as $script) {
 
     echo 'done'.PHP_EOL;
 }//end foreach
+
+$timeTaken = ((microtime(true) - $startTime) * 1000);
+if ($timeTaken < 1000) {
+    $timeTaken = round($timeTaken);
+    echo "DONE in {$timeTaken}ms".PHP_EOL;
+} else {
+    $timeTaken = round(($timeTaken / 1000), 2);
+    echo "DONE in $timeTaken secs".PHP_EOL;
+}
+
+echo PHP_EOL;
+echo 'Filesize generated phpcs.phar file: '.filesize(dirname(__DIR__).'/phpcs.phar').' bytes'.PHP_EOL;
+echo 'Filesize generated phpcs.phar file: '.filesize(dirname(__DIR__).'/phpcbf.phar').' bytes'.PHP_EOL;
