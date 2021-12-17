@@ -647,6 +647,29 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                For Explicit Octal Notation prior to PHP 8.1 we need to combine the
+                T_LNUMBER and T_STRING token values into a single token value, and
+                then ignore the T_STRING token.
+            */
+
+            if (PHP_VERSION_ID < 80100
+                && $tokenIsArray === true && $token[1] === '0'
+                && (isset($tokens[($stackPtr + 1)]) === true
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === T_STRING
+                && strtolower($tokens[($stackPtr + 1)][1][0]) === 'o')
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_LNUMBER,
+                    'type'    => 'T_LNUMBER',
+                    'content' => $token[1] .= $tokens[($stackPtr + 1)][1],
+                ];
+                $stackPtr++;
+                $newStackPtr++;
+                continue;
+            }
+
+            /*
                 PHP 8.1 introduced two dedicated tokens for the & character.
                 Retokenizing both of these to T_BITWISE_AND, which is the
                 token PHPCS already tokenized them as.
@@ -1330,6 +1353,7 @@ class PHP extends Tokenizer
                 if ($newType === T_LNUMBER
                     && ((stripos($newContent, '0x') === 0 && hexdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
                     || (stripos($newContent, '0b') === 0 && bindec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
+                    || (stripos($newContent, '0o') === 0 && octdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
                     || (stripos($newContent, '0x') !== 0
                     && stripos($newContent, 'e') !== false || strpos($newContent, '.') !== false)
                     || (strpos($newContent, '0') === 0 && stripos($newContent, '0x') !== 0
