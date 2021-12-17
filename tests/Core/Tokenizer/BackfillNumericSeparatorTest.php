@@ -141,6 +141,13 @@ class BackfillNumericSeparatorTest extends AbstractMethodUnitTest
             ],
             [
                 [
+                    'marker' => '/* testExplicitOctalCapitalised */',
+                    'type'   => 'T_LNUMBER',
+                    'value'  => '0O137_041',
+                ],
+            ],
+            [
+                [
                     'marker' => '/* testIntMoreThanMax */',
                     'type'   => $testIntMoreThanMaxType,
                     'value'  => '10_223_372_036_854_775_807',

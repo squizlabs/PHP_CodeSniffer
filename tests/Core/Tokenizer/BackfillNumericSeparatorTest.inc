@@ -37,6 +37,9 @@ $foo = 0137_041;
 /* testExplicitOctal */
 $foo = 0o137_041;
 
+/* testExplicitOctalCapitalised */
+$foo = 0O137_041;
+
 /* testIntMoreThanMax */
 $foo = 10_223_372_036_854_775_807;
 
