@@ -3,7 +3,7 @@
     <phar name="phpcs">
         <release version="3.6.2" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcs-3.6.2.phar">
             <signature type="gpg"/>
-            <hash type="sha-256" value="a022fbc98c5a3603c02bcd3e9c15ac36517fa192d7b3d54a2feb9561cc0d12e9"/>
+            <hash type="sha-256" value="c0832cdce3e419c337011640ddebd08b7daac32344250ac7cfbc799309506f77"/>
         </release>
         <release version="3.6.1" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcs-3.6.1.phar">
             <signature type="gpg"/>
@@ -93,7 +93,7 @@
     <phar name="phpcbf">
         <release version="3.6.2" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcbf-3.6.2.phar">
             <signature type="gpg"/>
-            <hash type="sha-256" value="e69d6ddb94aff39658bd38079848e9340a6fee897fda38b746b5bb11a9922076"/>
+            <hash type="sha-256" value="28d74aaaa7ad251c4ed23481e7fa18b755450ee57872d22be0ecb8fe21f50dc8"/>
         </release>
         <release version="3.6.1" url="https://squizlabs.github.io/PHP_CodeSniffer/phars/phpcbf-3.6.1.phar">
             <signature type="gpg"/>
