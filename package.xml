@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2021-12-13</date>
  <time>08:44:00</time>
  <version>
-  <release>3.6.2</release>
-  <api>3.6.2</api>
+  <release>3.7.0</release>
+  <api>3.7.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,27 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Processing large code bases that use tab indenting inside comments and strings will now be faster
-    -- Thanks to Thiemo Kreuz for the patch
-  - Fixed bug #3388 : phpcs does not work when run from WSL drives
-    -- Thanks to Juliette Reinders Folmer and Graham Wharton for the patch
-  - Fixed bug #3422 : Squiz.WhiteSpace.ScopeClosingBrace fixer removes HTML content when fixing closing brace alignment
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3437 : PSR12 does not forbid blank lines at the start of the class body
-    -- Added new PSR12.Classes.OpeningBraceSpace sniff to enforce this
-  - Fixed bug #3440 : Squiz.WhiteSpace.MemberVarSpacing false positives when attributes used without docblock
-    -- Thanks to Vadim Borodavko for the patch
-  - Fixed bug #3448 : PHP 8.1 deprecation notice while generating running time value
-    -- Thanks to Juliette Reinders Folmer and Andy Postnikov for the patch
-  - Fixed bug #3456 : PSR12.Classes.ClassInstantiation.MissingParentheses false positive using attributes on anonymous class
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3460 : Generic.Formatting.MultipleStatementAlignment false positive on closure with parameters
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3468 : do/while loops are double-counted in Generic.Metrics.CyclomaticComplexity
-    -- Thanks to Mark Baker for the patch
-  - Fixed bug #3469 : Ternary Operator and Null Coalescing Operator are not counted in Generic.Metrics.CyclomaticComplexity
-    -- Thanks to Mark Baker for the patch
-  - Fixed bug #3472 : PHP 8 match() expression is not counted in Generic.Metrics.CyclomaticComplexity
+  - Added support for PHP 8.1 explicit octal notation
+    -- This new syntax has been backfilled for PHP versions less than 8.1
     -- Thanks to Mark Baker for the patch
  </notes>
  <contents>
@@ -135,6 +116,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="ArrayKeywordTest.php" role="test" />
       <file baseinstalldir="" name="AttributesTest.inc" role="test" />
       <file baseinstalldir="" name="AttributesTest.php" role="test" />
+      <file baseinstalldir="" name="BackfillExplicitOctalNotationTest.inc" role="test" />
+      <file baseinstalldir="" name="BackfillExplicitOctalNotationTest.php" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.inc" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.php" role="test" />
       <file baseinstalldir="" name="BackfillMatchTokenTest.inc" role="test" />
@@ -2090,6 +2073,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.inc" name="tests/Core/Tokenizer/ArrayKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.php" name="tests/Core/Tokenizer/AttributesTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.inc" name="tests/Core/Tokenizer/AttributesTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillMatchTokenTest.php" name="tests/Core/Tokenizer/BackfillMatchTokenTest.php" />
@@ -2180,6 +2165,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.inc" name="tests/Core/Tokenizer/ArrayKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.php" name="tests/Core/Tokenizer/AttributesTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.inc" name="tests/Core/Tokenizer/AttributesTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillMatchTokenTest.php" name="tests/Core/Tokenizer/BackfillMatchTokenTest.php" />
