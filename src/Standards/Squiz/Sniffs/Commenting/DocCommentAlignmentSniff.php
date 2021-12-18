@@ -57,6 +57,7 @@ class DocCommentAlignmentSniff implements Sniff
             T_OBJECT    => true,
             T_PROTOTYPE => true,
             T_VAR       => true,
+            T_READONLY  => true,
         ];
 
         if ($nextToken === false || isset($ignore[$tokens[$nextToken]['code']]) === false) {
