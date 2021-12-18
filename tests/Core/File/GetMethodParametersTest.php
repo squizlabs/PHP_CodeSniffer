@@ -760,6 +760,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => '',
             'nullable_type'       => false,
             'property_visibility' => 'public',
+            'property_readonly'   => false,
         ];
         $expected[1] = [
             'name'                => '$y',
@@ -771,6 +772,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => '',
             'nullable_type'       => false,
             'property_visibility' => 'protected',
+            'property_readonly'   => false,
         ];
         $expected[2] = [
             'name'                => '$z',
@@ -782,6 +784,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => '',
             'nullable_type'       => false,
             'property_visibility' => 'private',
+            'property_readonly'   => false,
         ];
 
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
@@ -806,6 +809,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => 'float|int',
             'nullable_type'       => false,
             'property_visibility' => 'protected',
+            'property_readonly'   => false,
         ];
         $expected[1] = [
             'name'                => '$y',
@@ -817,6 +821,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => '?string',
             'nullable_type'       => true,
             'property_visibility' => 'public',
+            'property_readonly'   => false,
         ];
         $expected[2] = [
             'name'                => '$z',
@@ -827,6 +832,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => 'mixed',
             'nullable_type'       => false,
             'property_visibility' => 'private',
+            'property_readonly'   => false,
         ];
 
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
@@ -851,6 +857,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => 'int',
             'nullable_type'       => false,
             'property_visibility' => 'public',
+            'property_readonly'   => false,
         ];
         $expected[1] = [
             'name'              => '$normalArg',
@@ -865,6 +872,42 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testPHP8ConstructorPropertyPromotionAndNormalParam()
+
+
+    /**
+     * Verify recognition of PHP8 constructor with property promotion using PHP 8.1 readonly keyword.
+     *
+     * @return void
+     */
+    public function testPHP81ConstructorPropertyPromotionWithReadOnly()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'                => '$promotedProp',
+            'content'             => 'public readonly ?int $promotedProp',
+            'has_attributes'      => false,
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => '?int',
+            'nullable_type'       => true,
+            'property_visibility' => 'public',
+            'property_readonly'   => true,
+        ];
+        $expected[1] = [
+            'name'                => '$promotedToo',
+            'content'             => 'readonly private string|bool &$promotedToo',
+            'has_attributes'      => false,
+            'pass_by_reference'   => true,
+            'variable_length'     => false,
+            'type_hint'           => 'string|bool',
+            'nullable_type'       => false,
+            'property_visibility' => 'private',
+            'property_readonly'   => true,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81ConstructorPropertyPromotionWithReadOnly()
 
 
     /**
@@ -884,6 +927,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => '',
             'nullable_type'       => false,
             'property_visibility' => 'private',
+            'property_readonly'   => false,
         ];
 
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
@@ -908,6 +952,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => 'callable',
             'nullable_type'       => false,
             'property_visibility' => 'public',
+            'property_readonly'   => false,
         ];
         $expected[1] = [
             'name'                => '$x',
@@ -918,6 +963,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => '',
             'nullable_type'       => false,
             'property_visibility' => 'private',
+            'property_readonly'   => false,
         ];
 
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
@@ -967,6 +1013,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => 'string',
             'nullable_type'       => false,
             'property_visibility' => 'private',
+            'property_readonly'   => false,
         ];
         $expected[1] = [
             'name'              => '$typedParamSingleAttribute',
@@ -1036,6 +1083,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint_end_token',
             'variadic_token',
             'visibility_token',
+            'readonly_token',
         ];
 
         foreach ($found as $i => $data) {
