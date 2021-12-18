@@ -383,3 +383,22 @@ class HasAttributes
     #[ORM\Column(ORM\Column::T_INTEGER)]
     protected $height;
 }
+
+class ReadOnlyProps
+{
+    /**
+     * Short description of the member variable.
+     *
+     * @var array
+     */
+     public readonly array $variableName = array();
+
+    /**
+     * Short description of the member variable.
+     *
+     * @var
+     */
+     readonly protected ?int $variableName = 10;
+
+     private readonly string $variable;
+}
