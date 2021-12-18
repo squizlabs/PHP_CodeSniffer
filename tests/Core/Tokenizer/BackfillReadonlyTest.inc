@@ -52,6 +52,9 @@ class Foo
     public function __construct(private readonly bool $constructorPropertyPromotion)
     {
     }
+
+    /* testReadonlyConstructorPropertyPromotionWithReference */
+    public function __construct(private ReadOnly bool &$constructorPropertyPromotion) {}
 }
 
 $anonymousClass = new class () {

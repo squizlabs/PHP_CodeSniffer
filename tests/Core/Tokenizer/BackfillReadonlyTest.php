@@ -140,6 +140,10 @@ class BackfillReadonlyTest extends AbstractMethodUnitTest
                 'readonly',
             ],
             [
+                '/* testReadonlyConstructorPropertyPromotionWithReference */',
+                'ReadOnly',
+            ],
+            [
                 '/* testReadonlyPropertyInAnonymousClass */',
                 'readonly',
             ],
