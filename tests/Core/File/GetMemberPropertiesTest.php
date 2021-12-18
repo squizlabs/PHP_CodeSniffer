@@ -594,6 +594,7 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'scope'           => 'public',
                     'scope_specified' => true,
                     'is_static'       => false,
+                    'is_readonly'     => false,
                     // Missing static, but that's OK as not an allowed syntax.
                     'is_readonly'     => false,
                     'type'            => 'callable||void',
@@ -678,17 +679,6 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                 ],
             ],
             [
-                '/* testPHP81NotReadonly */',
-                [
-                    'scope'           => 'private',
-                    'scope_specified' => true,
-                    'is_static'       => false,
-                    'is_readonly'     => false,
-                    'type'            => 'string',
-                    'nullable_type'   => false,
-                ],
-            ],
-            [
                 '/* testPHP81Readonly */',
                 [
                     'scope'           => 'public',
@@ -696,6 +686,28 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'is_static'       => false,
                     'is_readonly'     => true,
                     'type'            => 'int',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP81ReadonlyWithNullableType */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'is_readonly'     => true,
+                    'type'            => '?array',
+                    'nullable_type'   => true,
+                ],
+            ],
+            [
+                '/* testPHP81ReadonlyWithUnionType */',
+                [
+                    'scope'           => 'protected',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'is_readonly'     => true,
+                    'type'            => 'string|null',
                     'nullable_type'   => false,
                 ],
             ],
