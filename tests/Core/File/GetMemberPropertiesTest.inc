@@ -240,10 +240,14 @@ $anon = class() {
     // Intentional fatal error - duplicate types are not allowed in union types, but that's not the concern of the method.
     public int |string| /*comment*/ INT $duplicateTypeInUnion;
 
-    /* testPHP81NotReadonly */
-    private string $notReadonly;
     /* testPHP81Readonly */
     public readonly int $readonly;
+
+    /* testPHP81ReadonlyWithNullableType */
+    public readonly ?array $array;
+
+    /* testPHP81ReadonlyWithUnionType */
+    protected ReadOnly string|null $array;
 };
 
 $anon = class {
