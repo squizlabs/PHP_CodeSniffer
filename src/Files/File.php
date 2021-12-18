@@ -1310,6 +1310,8 @@ class File
      * Parameters declared using PHP 8 constructor property promotion, have these additional array indexes:
      *         'property_visibility' => string,  // The property visibility as declared.
      *         'visibility_token'    => integer, // The stack pointer to the visibility modifier token.
+     *         'property_readonly'   => bool,    // TRUE if the readonly keyword was found.
+     *         'readonly_token'      => integer, // The stack pointer to the readonly modifier token.
      *
      * @param int $stackPtr The position in the stack of the function token
      *                      to acquire the parameters for.
@@ -1366,6 +1368,7 @@ class File
         $typeHintEndToken = false;
         $nullableType     = false;
         $visibilityToken  = null;
+        $readonlyToken    = null;
 
         for ($i = $paramStart; $i <= $closer; $i++) {
             // Check to see if this token has a parenthesis or bracket opener. If it does
@@ -1491,6 +1494,11 @@ class File
                     $visibilityToken = $i;
                 }
                 break;
+            case T_READONLY:
+                if ($defaultStart === null) {
+                    $readonlyToken = $i;
+                }
+                break;
             case T_CLOSE_PARENTHESIS:
             case T_COMMA:
                 // If it's null, then there must be no parameters for this
@@ -1523,6 +1531,12 @@ class File
                 if ($visibilityToken !== null) {
                     $vars[$paramCount]['property_visibility'] = $this->tokens[$visibilityToken]['content'];
                     $vars[$paramCount]['visibility_token']    = $visibilityToken;
+                    $vars[$paramCount]['property_readonly']   = false;
+                }
+
+                if ($readonlyToken !== null) {
+                    $vars[$paramCount]['property_readonly'] = true;
+                    $vars[$paramCount]['readonly_token']    = $readonlyToken;
                 }
 
                 if ($this->tokens[$i]['code'] === T_COMMA) {
@@ -1546,6 +1560,7 @@ class File
                 $typeHintEndToken = false;
                 $nullableType     = false;
                 $visibilityToken  = null;
+                $readonlyToken    = null;
 
                 $paramCount++;
                 break;
