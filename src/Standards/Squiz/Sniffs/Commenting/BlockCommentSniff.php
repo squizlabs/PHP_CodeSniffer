@@ -93,6 +93,7 @@ class BlockCommentSniff implements Sniff
                 T_ABSTRACT  => true,
                 T_CONST     => true,
                 T_VAR       => true,
+                T_READONLY  => true,
             ];
             if (isset($ignore[$tokens[$nextToken]['code']]) === true) {
                 return;
