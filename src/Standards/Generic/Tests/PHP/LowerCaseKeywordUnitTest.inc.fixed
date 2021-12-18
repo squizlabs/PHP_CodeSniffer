@@ -35,5 +35,9 @@ $r = match ($x) {
     default, => 3,
 };
 
+class Reading {
+    public readonly int $var;
+}
+
 __HALT_COMPILER(); // An exception due to phar support.
 function
