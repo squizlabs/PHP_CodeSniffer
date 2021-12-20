@@ -32,6 +32,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for the PHP 8.1 readonly token
     -- Tokenzing of the readonly keyword has been backfilled for PHP versions less than 8.1
     -- Thanks to Jaroslav Hanslík for the patch
+  - Support for new PHP 8.1 readonly keyword has been added to the following sniffs:
+    -- Generic.PHP.LowerCaseKeyword
+    -- PSR2.Classes.PropertyDeclaration
+    -- Squiz.Commenting.BlockCommentS
+    -- Squiz.Commenting.DocCommentAlignment
+    -- Squiz.Commenting.VariableComment
+    -- Thanks to Juliette Reinders Folmer for the patches
  </notes>
  <contents>
   <dir name="/">
