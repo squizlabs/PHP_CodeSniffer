@@ -41,6 +41,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
         $find   = Tokens::$scopeModifiers;
         $find[] = T_VARIABLE;
         $find[] = T_VAR;
+        $find[] = T_READONLY;
         $find[] = T_SEMICOLON;
         $find[] = T_OPEN_CURLY_BRACKET;
 
