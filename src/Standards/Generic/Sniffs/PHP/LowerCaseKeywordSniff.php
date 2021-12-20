@@ -82,6 +82,7 @@ class LowerCaseKeywordSniff implements Sniff
             T_PRIVATE,
             T_PROTECTED,
             T_PUBLIC,
+            T_READONLY,
             T_REQUIRE,
             T_REQUIRE_ONCE,
             T_RETURN,
