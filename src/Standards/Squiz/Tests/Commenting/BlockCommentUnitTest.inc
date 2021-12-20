@@ -288,3 +288,14 @@ final class MyClass
     #[AttributeB]
     final public function test() {}
 }
+
+/**
+ * Comment should be ignored.
+ */
+abstract class MyClass
+{
+    /**
+     * Comment should be ignored.
+     */
+    readonly public string $prop;
+}
