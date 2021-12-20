@@ -2856,6 +2856,7 @@ class PHP extends Tokenizer
                     T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
                     T_TYPE_UNION           => T_TYPE_UNION,
                     T_BITWISE_OR           => T_BITWISE_OR,
+                    T_BITWISE_AND          => T_BITWISE_AND,
                     T_ARRAY                => T_ARRAY,
                     T_CALLABLE             => T_CALLABLE,
                     T_SELF                 => T_SELF,
