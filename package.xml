@@ -39,6 +39,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Squiz.Commenting.DocCommentAlignment
     -- Squiz.Commenting.VariableComment
     -- Thanks to Juliette Reinders Folmer for the patches
+  - Fixed bug #3502 : A match statement within an array produces Squiz.Arrays.ArrayDeclaration.NoKeySpecified
   - Fixed bug #3503 : Squiz.Commenting.FunctionComment.ThrowsNoFullStop false positive when one line @throw
  </notes>
  <contents>

@@ -374,6 +374,7 @@ class ArrayDeclarationSniff implements Sniff
                 || $tokens[$nextToken]['code'] === T_OPEN_SHORT_ARRAY
                 || $tokens[$nextToken]['code'] === T_CLOSURE
                 || $tokens[$nextToken]['code'] === T_FN
+                || $tokens[$nextToken]['code'] === T_MATCH
             ) {
                 // Let subsequent calls of this test handle nested arrays.
                 if ($tokens[$lastToken]['code'] !== T_DOUBLE_ARROW) {
