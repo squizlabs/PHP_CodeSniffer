@@ -452,10 +452,7 @@ class Runner
                 if ($pid === -1) {
                     throw new RuntimeException('Failed to create child process');
                 } else if ($pid !== 0) {
-                    $childProcs[] = [
-                        'pid' => $pid,
-                        'out' => $childOutFilename,
-                    ];
+                    $childProcs[$pid] = $childOutFilename;
                 } else {
                     // Move forward to the start of the batch.
                     $todo->rewind();
@@ -528,7 +525,7 @@ class Runner
 
                     $output .= ";\n?".'>';
                     file_put_contents($childOutFilename, $output);
-                    exit($pid);
+                    exit();
                 }//end if
             }//end for
 
@@ -711,54 +708,56 @@ class Runner
         $success = true;
 
         while (count($childProcs) > 0) {
-            foreach ($childProcs as $key => $procData) {
-                $res = pcntl_waitpid($procData['pid'], $status, WNOHANG);
-                if ($res === $procData['pid']) {
-                    if (file_exists($procData['out']) === true) {
-                        include $procData['out'];
+            $pid = pcntl_waitpid(0, $status);
+            if ($pid <= 0) {
+                continue;
+            }
 
-                        unlink($procData['out']);
-                        unset($childProcs[$key]);
+            $out = $childProcs[$pid];
+            unset($childProcs[$pid]);
+            if (file_exists($out) === false) {
+                continue;
+            }
 
-                        $numProcessed++;
+            include $out;
+            unlink($out);
 
-                        if (isset($childOutput) === false) {
-                            // The child process died, so the run has failed.
-                            $file = new DummyFile('', $this->ruleset, $this->config);
-                            $file->setErrorCounts(1, 0, 0, 0);
-                            $this->printProgress($file, $totalBatches, $numProcessed);
-                            $success = false;
-                            continue;
-                        }
+            $numProcessed++;
 
-                        $this->reporter->totalFiles    += $childOutput['totalFiles'];
-                        $this->reporter->totalErrors   += $childOutput['totalErrors'];
-                        $this->reporter->totalWarnings += $childOutput['totalWarnings'];
-                        $this->reporter->totalFixable  += $childOutput['totalFixable'];
-                        $this->reporter->totalFixed    += $childOutput['totalFixed'];
+            if (isset($childOutput) === false) {
+                // The child process died, so the run has failed.
+                $file = new DummyFile('', $this->ruleset, $this->config);
+                $file->setErrorCounts(1, 0, 0, 0);
+                $this->printProgress($file, $totalBatches, $numProcessed);
+                $success = false;
+                continue;
+            }
 
-                        if (isset($debugOutput) === true) {
-                            echo $debugOutput;
-                        }
+            $this->reporter->totalFiles    += $childOutput['totalFiles'];
+            $this->reporter->totalErrors   += $childOutput['totalErrors'];
+            $this->reporter->totalWarnings += $childOutput['totalWarnings'];
+            $this->reporter->totalFixable  += $childOutput['totalFixable'];
+            $this->reporter->totalFixed    += $childOutput['totalFixed'];
 
-                        if (isset($childCache) === true) {
-                            foreach ($childCache as $path => $cache) {
-                                Cache::set($path, $cache);
-                            }
-                        }
+            if (isset($debugOutput) === true) {
+                echo $debugOutput;
+            }
 
-                        // Fake a processed file so we can print progress output for the batch.
-                        $file = new DummyFile('', $this->ruleset, $this->config);
-                        $file->setErrorCounts(
-                            $childOutput['totalErrors'],
-                            $childOutput['totalWarnings'],
-                            $childOutput['totalFixable'],
-                            $childOutput['totalFixed']
-                        );
-                        $this->printProgress($file, $totalBatches, $numProcessed);
-                    }//end if
-                }//end if
-            }//end foreach
+            if (isset($childCache) === true) {
+                foreach ($childCache as $path => $cache) {
+                    Cache::set($path, $cache);
+                }
+            }
+
+            // Fake a processed file so we can print progress output for the batch.
+            $file = new DummyFile('', $this->ruleset, $this->config);
+            $file->setErrorCounts(
+                $childOutput['totalErrors'],
+                $childOutput['totalWarnings'],
+                $childOutput['totalFixable'],
+                $childOutput['totalFixed']
+            );
+            $this->printProgress($file, $totalBatches, $numProcessed);
         }//end while
 
         return $success;
