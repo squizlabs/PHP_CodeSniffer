@@ -1786,22 +1786,6 @@ class PHP extends Tokenizer
                         && is_array($tokens[$x]) === false
                         && $tokens[$x] === ':'
                     ) {
-                        $allowed = [
-                            T_STRING               => T_STRING,
-                            T_NAME_FULLY_QUALIFIED => T_NAME_FULLY_QUALIFIED,
-                            T_NAME_RELATIVE        => T_NAME_RELATIVE,
-                            T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
-                            T_ARRAY                => T_ARRAY,
-                            T_CALLABLE             => T_CALLABLE,
-                            T_SELF                 => T_SELF,
-                            T_PARENT               => T_PARENT,
-                            T_NAMESPACE            => T_NAMESPACE,
-                            T_STATIC               => T_STATIC,
-                            T_NS_SEPARATOR         => T_NS_SEPARATOR,
-                        ];
-
-                        $allowed += Util\Tokens::$emptyTokens;
-
                         // Find the start of the return type.
                         for ($x += 1; $x < $numTokens; $x++) {
                             if (is_array($tokens[$x]) === true
