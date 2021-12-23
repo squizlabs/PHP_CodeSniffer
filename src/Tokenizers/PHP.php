@@ -2098,7 +2098,7 @@ class PHP extends Tokenizer
                         }
                     }
 
-                    if ($tokens[$i] !== '(' && $i !== $numTokens) {
+                    if ($i !== $numTokens && $tokens[$i] !== '(') {
                         $newToken['code'] = T_STRING;
                         $newToken['type'] = 'T_STRING';
                     }
