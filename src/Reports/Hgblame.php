@@ -97,7 +97,7 @@ class Hgblame extends VersionControl
         }
 
         $rawContent = stream_get_contents($handle);
-        fclose($handle);
+        pclose($handle);
 
         $blames = explode("\n", $rawContent);
         chdir($cwd);
