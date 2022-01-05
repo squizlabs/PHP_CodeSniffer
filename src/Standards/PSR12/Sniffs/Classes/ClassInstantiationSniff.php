@@ -63,6 +63,14 @@ class ClassInstantiationSniff implements Sniff
                 continue;
             }
 
+            // Skip over potential attributes for anonymous classes.
+            if ($tokens[$i]['code'] === T_ATTRIBUTE
+                && isset($tokens[$i]['attribute_closer']) === true
+            ) {
+                $i = $tokens[$i]['attribute_closer'];
+                continue;
+            }
+
             if ($tokens[$i]['code'] === T_OPEN_SQUARE_BRACKET
                 || $tokens[$i]['code'] === T_OPEN_CURLY_BRACKET
             ) {
@@ -72,7 +80,7 @@ class ClassInstantiationSniff implements Sniff
 
             $classNameEnd = $i;
             break;
-        }
+        }//end for
 
         if ($classNameEnd === null) {
             return;
@@ -85,6 +93,11 @@ class ClassInstantiationSniff implements Sniff
 
         if ($tokens[$classNameEnd]['code'] === T_OPEN_PARENTHESIS) {
             // Using parenthesis.
+            return;
+        }
+
+        if ($classNameEnd === $stackPtr) {
+            // Failed to find the class name.
             return;
         }
 

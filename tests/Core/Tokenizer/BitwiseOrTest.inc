@@ -33,6 +33,9 @@ class TypeUnion
     /* testTypeUnionPropertyFullyQualified */
     public \Fully\Qualified\NameA|\Fully\Qualified\NameB $fullyQual;
 
+    /* testTypeUnionPropertyWithReadOnlyKeyword */
+    protected readonly string|null $array;
+
     public function paramTypes(
         /* testTypeUnionParam1 */
         int|float $paramA /* testBitwiseOrParamDefaultValue */ = CONSTANT_A | CONSTANT_B,

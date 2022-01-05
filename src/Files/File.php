@@ -1291,6 +1291,7 @@ class File
      *         'name'                => '$var',  // The variable name.
      *         'token'               => integer, // The stack pointer to the variable name.
      *         'content'             => string,  // The full content of the variable definition.
+     *         'has_attributes'      => boolean, // Does the parameter have one or more attributes attached ?
      *         'pass_by_reference'   => boolean, // Is the variable passed by reference?
      *         'reference_token'     => integer, // The stack pointer to the reference operator
      *                                           // or FALSE if the param is not passed by reference.
@@ -1363,6 +1364,7 @@ class File
         $defaultStart    = null;
         $equalToken      = null;
         $paramCount      = 0;
+        $hasAttributes   = false;
         $passByReference = false;
         $referenceToken  = false;
         $variableLength  = false;
@@ -1381,18 +1383,25 @@ class File
             if (isset($this->tokens[$i]['parenthesis_opener']) === true) {
                 // Don't do this if it's the close parenthesis for the method.
                 if ($i !== $this->tokens[$i]['parenthesis_closer']) {
-                    $i = ($this->tokens[$i]['parenthesis_closer'] + 1);
+                    $i = $this->tokens[$i]['parenthesis_closer'];
+                    continue;
                 }
             }
 
             if (isset($this->tokens[$i]['bracket_opener']) === true) {
-                // Don't do this if it's the close parenthesis for the method.
                 if ($i !== $this->tokens[$i]['bracket_closer']) {
-                    $i = ($this->tokens[$i]['bracket_closer'] + 1);
+                    $i = $this->tokens[$i]['bracket_closer'];
+                    continue;
                 }
             }
 
             switch ($this->tokens[$i]['code']) {
+            case T_ATTRIBUTE:
+                $hasAttributes = true;
+
+                // Skip to the end of the attribute.
+                $i = $this->tokens[$i]['attribute_closer'];
+                break;
             case T_BITWISE_AND:
                 if ($defaultStart === null) {
                     $passByReference = true;
@@ -1509,6 +1518,7 @@ class File
                     $vars[$paramCount]['default_equal_token'] = $equalToken;
                 }
 
+                $vars[$paramCount]['has_attributes']      = $hasAttributes;
                 $vars[$paramCount]['pass_by_reference']   = $passByReference;
                 $vars[$paramCount]['reference_token']     = $referenceToken;
                 $vars[$paramCount]['variable_length']     = $variableLength;
@@ -1534,6 +1544,7 @@ class File
                 $paramStart       = ($i + 1);
                 $defaultStart     = null;
                 $equalToken       = null;
+                $hasAttributes    = false;
                 $passByReference  = false;
                 $referenceToken   = false;
                 $variableLength   = false;
@@ -1808,6 +1819,7 @@ class File
             T_PROTECTED => T_PROTECTED,
             T_STATIC    => T_STATIC,
             T_VAR       => T_VAR,
+            T_READONLY  => T_READONLY,
         ];
 
         $valid += Util\Tokens::$emptyTokens;
@@ -1815,6 +1827,7 @@ class File
         $scope          = 'public';
         $scopeSpecified = false;
         $isStatic       = false;
+        $isReadonly     = false;
 
         $startOfStatement = $this->findPrevious(
             [
@@ -1846,6 +1859,9 @@ class File
                 break;
             case T_STATIC:
                 $isStatic = true;
+                break;
+            case T_READONLY:
+                $isReadonly = true;
                 break;
             }
         }//end for
@@ -1898,6 +1914,7 @@ class File
             'scope'           => $scope,
             'scope_specified' => $scopeSpecified,
             'is_static'       => $isStatic,
+            'is_readonly'     => $isReadonly,
             'type'            => $type,
             'type_token'      => $typeToken,
             'type_end_token'  => $typeEndToken,

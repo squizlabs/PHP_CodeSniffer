@@ -14,11 +14,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2021-04-09</date>
- <time>10:51:00</time>
+ <date>2021-12-13</date>
+ <time>08:44:00</time>
  <version>
-  <release>3.6.1</release>
-  <api>3.6.1</api>
+  <release>3.7.0</release>
+  <api>3.7.0</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,52 +26,21 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - PHPCS annotations can now be specified using hash-style comments
-    -- Previously, only slash-style and block-style comments could be used to do things like disable errors
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed an issue where some sniffs would not run on PHP files that only used the short echo tag
-    -- The following sniffs were affected:
-       --- Generic.Files.ExecutableFile
-       --- Generic.Files.LowercasedFilename
-       --- Generic.Files.LineEndings
-       --- Generic.Files.EndFileNewline
-       --- Generic.Files.EndFileNoNewline
-       --- Generic.PHP.ClosingPHPTag
-       --- Generic.PHP.Syntax
-       --- Generic.VersionControl.GitMergeConflict
-       --- Generic.WhiteSpace.DisallowSpaceIndent
-       --- Generic.WhiteSpace.DisallowTabIndent
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.NamingConventions.ConstructorName no longer throws deprecation notices on PHP 8.1
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Squiz.Commenting.BlockComment now correctly applies rules for block comments after a short echo tag
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3294 : Bug in attribute tokenization when content contains PHP end token or attribute closer on new line
-    -- Thanks to Alessandro Chitolina for the patch
-    -- Thanks to Juliette Reinders Folmer for the tests
-  - Fixed bug #3296 : PSR2.ControlStructures.SwitchDeclaration takes phpcs:ignore as content of case body
-  - Fixed bug #3297 : PSR2.ControlStructures.SwitchDeclaration.TerminatingComment does not handle try/finally blocks
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3302 : PHP 8.0 | Tokenizer/PHP: bugfix for union types using namespace operator
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3303 : findStartOfStatement() doesn't work with T_OPEN_TAG_WITH_ECHO
-  - Fixed bug #3316 : Arrow function not tokenized correctly when using null in union type
-  - Fixed bug #3317 : Problem with how phpcs handles ignored files when running in parallel
-    -- Thanks to Emil Andersson for the patch
-  - Fixed bug #3324 : PHPCS hangs processing some nested arrow functions inside a function call
-  - Fixed bug #3326 : Generic.Formatting.MultipleStatementAlignment error with const DEFAULT
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3340 : Ensure interface and trait names are always tokenized as T_STRING
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3342 : PSR12/Squiz/PEAR standards all error on promoted properties with docblocks
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3345 : IF statement with no braces and double catch turned into syntax error by auto-fixer
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3352 : PSR2.ControlStructures.SwitchDeclaration can remove comments on the same line as the case statement while fixing
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3357 : Generic.Functions.OpeningFunctionBraceBsdAllman removes return type when additional lines are present
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3362 : Generic.WhiteSpace.ScopeIndent false positive for arrow functions inside arrays
+  - Added support for PHP 8.1 explicit octal notation
+    -- This new syntax has been backfilled for PHP versions less than 8.1
+    -- Thanks to Mark Baker for the patch
+  - Added support for the PHP 8.1 readonly token
+    -- Tokenzing of the readonly keyword has been backfilled for PHP versions less than 8.1
+    -- Thanks to Jaroslav Hanslík for the patch
+  - Support for new PHP 8.1 readonly keyword has been added to the following sniffs:
+    -- Generic.PHP.LowerCaseKeyword
+    -- PSR2.Classes.PropertyDeclaration
+    -- Squiz.Commenting.BlockCommentS
+    -- Squiz.Commenting.DocCommentAlignment
+    -- Squiz.Commenting.VariableComment
+    -- Thanks to Juliette Reinders Folmer for the patches
+  - Fixed bug #3502 : A match statement within an array produces Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+  - Fixed bug #3503 : Squiz.Commenting.FunctionComment.ThrowsNoFullStop false positive when one line @throw
  </notes>
  <contents>
   <dir name="/">
@@ -155,8 +124,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="Tokenizer">
       <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.inc" role="test" />
       <file baseinstalldir="" name="AnonClassParenthesisOwnerTest.php" role="test" />
+      <file baseinstalldir="" name="ArrayKeywordTest.inc" role="test" />
+      <file baseinstalldir="" name="ArrayKeywordTest.php" role="test" />
       <file baseinstalldir="" name="AttributesTest.inc" role="test" />
       <file baseinstalldir="" name="AttributesTest.php" role="test" />
+      <file baseinstalldir="" name="BackfillExplicitOctalNotationTest.inc" role="test" />
+      <file baseinstalldir="" name="BackfillExplicitOctalNotationTest.php" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.inc" role="test" />
       <file baseinstalldir="" name="BackfillFnTokenTest.php" role="test" />
       <file baseinstalldir="" name="BackfillMatchTokenTest.inc" role="test" />
@@ -177,6 +150,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="NamedFunctionCallArgumentsTest.php" role="test" />
       <file baseinstalldir="" name="NullsafeObjectOperatorTest.inc" role="test" />
       <file baseinstalldir="" name="NullsafeObjectOperatorTest.php" role="test" />
+      <file baseinstalldir="" name="BackfillReadonlyTest.inc" role="test" />
+      <file baseinstalldir="" name="BackfillReadonlyTest.php" role="test" />
       <file baseinstalldir="" name="ScopeSettingWithNamespaceOperatorTest.inc" role="test" />
       <file baseinstalldir="" name="ScopeSettingWithNamespaceOperatorTest.php" role="test" />
       <file baseinstalldir="" name="ShortArrayTest.inc" role="test" />
@@ -1145,6 +1120,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="AnonClassDeclarationSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationSniff.php" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceSniff.php" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSpaceSniff.php" role="php" />
        </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementSniff.php" role="php" />
@@ -1186,6 +1162,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassInstantiationUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClosingBraceUnitTest.php" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSpaceUnitTest.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSpaceUnitTest.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="OpeningBraceSpaceUnitTest.php" role="test" />
        </dir>
        <dir name="ControlStructures">
         <file baseinstalldir="PHP/CodeSniffer" name="BooleanOperatorPlacementUnitTest.inc" role="test" />
@@ -1640,6 +1619,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.7.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.8.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.js" role="test" />
@@ -2103,8 +2083,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTestable.php" name="tests/Core/Sniffs/AbstractArraySniffTestable.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.php" name="tests/Core/Tokenizer/ArrayKeywordTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.inc" name="tests/Core/Tokenizer/ArrayKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.php" name="tests/Core/Tokenizer/AttributesTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.inc" name="tests/Core/Tokenizer/AttributesTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillMatchTokenTest.php" name="tests/Core/Tokenizer/BackfillMatchTokenTest.php" />
@@ -2125,6 +2109,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.inc" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillReadonlyTest.php" name="tests/Core/Tokenizer/BackfillReadonlyTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillReadonlyTest.inc" name="tests/Core/Tokenizer/BackfillReadonlyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/ScopeSettingWithNamespaceOperatorTest.php" name="tests/Core/Tokenizer/ScopeSettingWithNamespaceOperatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/ScopeSettingWithNamespaceOperatorTest.inc" name="tests/Core/Tokenizer/ScopeSettingWithNamespaceOperatorTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.php" name="tests/Core/Tokenizer/ShortArrayTest.php" />
@@ -2191,8 +2177,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTestable.php" name="tests/Core/Sniffs/AbstractArraySniffTestable.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" name="tests/Core/Tokenizer/AnonClassParenthesisOwnerTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.php" name="tests/Core/Tokenizer/ArrayKeywordTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/ArrayKeywordTest.inc" name="tests/Core/Tokenizer/ArrayKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.php" name="tests/Core/Tokenizer/AttributesTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/AttributesTest.inc" name="tests/Core/Tokenizer/AttributesTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" name="tests/Core/Tokenizer/BackfillExplicitOctalNotationTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.php" name="tests/Core/Tokenizer/BackfillFnTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillFnTokenTest.inc" name="tests/Core/Tokenizer/BackfillFnTokenTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BackfillMatchTokenTest.php" name="tests/Core/Tokenizer/BackfillMatchTokenTest.php" />
@@ -2213,6 +2203,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.inc" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillReadonlyTest.php" name="tests/Core/Tokenizer/BackfillReadonlyTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/BackfillReadonlyTest.inc" name="tests/Core/Tokenizer/BackfillReadonlyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/ScopeSettingWithNamespaceOperatorTest.php" name="tests/Core/Tokenizer/ScopeSettingWithNamespaceOperatorTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/ScopeSettingWithNamespaceOperatorTest.inc" name="tests/Core/Tokenizer/ScopeSettingWithNamespaceOperatorTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/ShortArrayTest.php" name="tests/Core/Tokenizer/ShortArrayTest.php" />
@@ -2230,6 +2222,128 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>3.6.2</release>
+    <api>3.6.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2021-12-13</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Processing large code bases that use tab indenting inside comments and strings will now be faster
+      -- Thanks to Thiemo Kreuz for the patch
+    - Fixed bug #3388 : phpcs does not work when run from WSL drives
+      -- Thanks to Juliette Reinders Folmer and Graham Wharton for the patch
+    - Fixed bug #3422 : Squiz.WhiteSpace.ScopeClosingBrace fixer removes HTML content when fixing closing brace alignment
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3437 : PSR12 does not forbid blank lines at the start of the class body
+      -- Added new PSR12.Classes.OpeningBraceSpace sniff to enforce this
+    - Fixed bug #3440 : Squiz.WhiteSpace.MemberVarSpacing false positives when attributes used without docblock
+      -- Thanks to Vadim Borodavko for the patch
+    - Fixed bug #3448 : PHP 8.1 deprecation notice while generating running time value
+      -- Thanks to Juliette Reinders Folmer and Andy Postnikov for the patch
+    - Fixed bug #3456 : PSR12.Classes.ClassInstantiation.MissingParentheses false positive using attributes on anonymous class
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3460 : Generic.Formatting.MultipleStatementAlignment false positive on closure with parameters
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3468 : do/while loops are double-counted in Generic.Metrics.CyclomaticComplexity
+      -- Thanks to Mark Baker for the patch
+    - Fixed bug #3469 : Ternary Operator and Null Coalescing Operator are not counted in Generic.Metrics.CyclomaticComplexity
+      -- Thanks to Mark Baker for the patch
+    - Fixed bug #3472 : PHP 8 match() expression is not counted in Generic.Metrics.CyclomaticComplexity
+      -- Thanks to Mark Baker for the patch
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>3.6.1</release>
+    <api>3.6.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2021-10-11</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - PHPCS annotations can now be specified using hash-style comments
+      -- Previously, only slash-style and block-style comments could be used to do things like disable errors
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed an issue where some sniffs would not run on PHP files that only used the short echo tag
+      -- The following sniffs were affected:
+         --- Generic.Files.ExecutableFile
+         --- Generic.Files.LowercasedFilename
+         --- Generic.Files.LineEndings
+         --- Generic.Files.EndFileNewline
+         --- Generic.Files.EndFileNoNewline
+         --- Generic.PHP.ClosingPHPTag
+         --- Generic.PHP.Syntax
+         --- Generic.VersionControl.GitMergeConflict
+         --- Generic.WhiteSpace.DisallowSpaceIndent
+         --- Generic.WhiteSpace.DisallowTabIndent
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - The new PHP 8.1 tokenisation for ampersands has been reverted to use the existing PHP_CodeSniffer method
+      -- The PHP 8.1 tokens T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG and T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG are unsued
+      -- Ampersands continue to be tokenized as T_BITWISE_AND for all PHP versions
+      -- Thanks to Juliette Reinders Folmer and Anna Filina for the patch
+    - File::getMethodParameters() no longer incorrectly returns argument attributes in the type hint array index
+      -- A new has_attributes array index is available and set to TRUE if the argument has attributes defined
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.NamingConventions.ConstructorName no longer throws deprecation notices on PHP 8.1
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Squiz.Commenting.BlockComment now correctly applies rules for block comments after a short echo tag
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed false positives when using attributes in the following sniffs:
+      -- PEAR.Commenting.FunctionComment
+      -- Squiz.Commenting.InlineComment
+      -- Squiz.Commenting.BlockComment
+      -- Squiz.Commenting.VariableComment
+      -- Squiz.WhiteSpace.MemberVarSpacing
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3294 : Bug in attribute tokenization when content contains PHP end token or attribute closer on new line
+      -- Thanks to Alessandro Chitolina for the patch
+      -- Thanks to Juliette Reinders Folmer for the tests
+    - Fixed bug #3296 : PSR2.ControlStructures.SwitchDeclaration takes phpcs:ignore as content of case body
+    - Fixed bug #3297 : PSR2.ControlStructures.SwitchDeclaration.TerminatingComment does not handle try/finally blocks
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3302 : PHP 8.0 | Tokenizer/PHP: bugfix for union types using namespace operator
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3303 : findStartOfStatement() doesn't work with T_OPEN_TAG_WITH_ECHO
+    - Fixed bug #3316 : Arrow function not tokenized correctly when using null in union type
+    - Fixed bug #3317 : Problem with how phpcs handles ignored files when running in parallel
+      -- Thanks to Emil Andersson for the patch
+    - Fixed bug #3324 : PHPCS hangs processing some nested arrow functions inside a function call
+    - Fixed bug #3326 : Generic.Formatting.MultipleStatementAlignment error with const DEFAULT
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3333 : Squiz.Objects.ObjectInstantiation: null coalesce operators are not recognized as assignment
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3340 : Ensure interface and trait names are always tokenized as T_STRING
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3342 : PSR12/Squiz/PEAR standards all error on promoted properties with docblocks
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3345 : IF statement with no braces and double catch turned into syntax error by auto-fixer
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3352 : PSR2.ControlStructures.SwitchDeclaration can remove comments on the same line as the case statement while   fixing
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3357 : Generic.Functions.OpeningFunctionBraceBsdAllman removes return type when additional lines are present
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3362 : Generic.WhiteSpace.ScopeIndent false positive for arrow functions inside arrays
+    - Fixed bug #3384 : Squiz.Commenting.FileComment.SpacingAfterComment false positive on empty file
+    - Fixed bug #3394 : Fix PHP 8.1 auto_detect_line_endings deprecation notice
+    - Fixed bug #3400 : PHP 8.1: prevent deprecation notices about missing return types
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3424 : PHPCS fails when using PHP 8 Constructor property promotion with attributes
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3425 : PHP 8.1 | Runner::processChildProcs(): fix passing null to non-nullable bug
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3445 : Nullable parameter after attribute incorrectly tokenized as ternary operator
+      -- Thanks to Juliette Reinders Folmer for the patch
+   </notes>
+  </release>
   <release>
    <version>
     <release>3.6.0</release>
@@ -2422,8 +2536,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - The PHP 8.0 T_NULLSAFE_OBJECT_OPERATOR token has been made available for older versions
       -- Existing sniffs that check for T_OBJECT_OPERATOR have been modified to apply the same rules for the nullsafe object   operator
       -- Thanks to Juliette Reinders Folmer for the patch
-    - The new method of PHP 8.0 tokenizing for namespaced names has been revert to thr pre 8.0 method
-      -- This maintains backwards compatible for existing sniffs on PHP 8.0
+    - The new method of PHP 8.0 tokenizing for namespaced names has been reverted to the pre 8.0 method
+      -- This maintains backwards compatibility for existing sniffs on PHP 8.0
       -- This change will be removed in PHPCS 4.0 as the PHP 8.0 tokenizing method will be backported for pre 8.0 versions
       -- Thanks to Juliette Reinders Folmer for the patch
     - Added support for changes to the way PHP 8.0 tokenizes hash comments

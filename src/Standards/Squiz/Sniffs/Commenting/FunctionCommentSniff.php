@@ -245,6 +245,8 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     }
                 }
 
+                $comment = trim($comment);
+
                 // Starts with a capital letter and ends with a fullstop.
                 $firstChar = $comment[0];
                 if (strtoupper($firstChar) !== $firstChar) {
@@ -757,6 +759,8 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 }
             }
         }
+
+        return false;
 
     }//end checkInheritdoc()
 

@@ -77,6 +77,14 @@ class MyClass2
     var $x;
 }
 
+abstract class MyClass
+{
+    /**
+     * Property comment
+     */
+    readonly public string $prop;
+}
+
 /** ************************************************************************
  * Example with no errors.
  **************************************************************************/

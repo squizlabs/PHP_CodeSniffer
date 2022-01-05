@@ -118,6 +118,9 @@ class MultipleStatementAlignmentUnitTest extends AbstractSniffUnitTest
                 442 => 1,
                 443 => 1,
                 454 => 1,
+                487 => 1,
+                499 => 1,
+                500 => 1,
             ];
         break;
         case 'MultipleStatementAlignmentUnitTest.js':

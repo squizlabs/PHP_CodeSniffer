@@ -60,11 +60,11 @@ class Common
      */
     public static function isReadable($path)
     {
-        if (is_readable($path) === true) {
+        if (@is_readable($path) === true) {
             return true;
         }
 
-        if (file_exists($path) === true && is_file($path) === true) {
+        if (@file_exists($path) === true && @is_file($path) === true) {
             $f = @fopen($path, 'rb');
             if (fclose($f) === true) {
                 return true;

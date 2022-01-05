@@ -1,17 +1,17 @@
 <?php
 /**
- * Unit test class for the ScopeClosingBrace sniff.
+ * Unit test class for the OpeningBraceSpace sniff.
  *
  * @author    Greg Sherwood <gsherwood@squiz.net>
  * @copyright 2006-2015 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  */
 
-namespace PHP_CodeSniffer\Standards\Squiz\Tests\WhiteSpace;
+namespace PHP_CodeSniffer\Standards\PSR12\Tests\Classes;
 
 use PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest;
 
-class ScopeClosingBraceUnitTest extends AbstractSniffUnitTest
+class OpeningBraceSpaceUnitTest extends AbstractSniffUnitTest
 {
 
 
@@ -26,14 +26,11 @@ class ScopeClosingBraceUnitTest extends AbstractSniffUnitTest
     public function getErrorList()
     {
         return [
-            11  => 1,
-            13  => 1,
-            24  => 1,
-            80  => 1,
-            102 => 1,
-            111 => 1,
-            116 => 1,
-            122 => 1,
+            10 => 1,
+            18 => 1,
+            24 => 1,
+            34 => 1,
+            41 => 1,
         ];
 
     }//end getErrorList()
