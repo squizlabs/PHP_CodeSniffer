@@ -5,3 +5,13 @@ class Foo {
 }
 
 const APPLICATION_ENV = 'development';
+
+// Issue 3526, PHP 8.1 final constants.
+class SampleEnum
+{
+    final const FOO = 'SAMPLE';
+
+    public final const BAR = 'SAMPLE';
+
+    final private const BAZ = 'SAMPLE';
+}
