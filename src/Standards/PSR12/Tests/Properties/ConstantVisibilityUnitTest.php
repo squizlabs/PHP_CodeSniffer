@@ -40,7 +40,10 @@ class ConstantVisibilityUnitTest extends AbstractSniffUnitTest
      */
     public function getWarningList()
     {
-        return [4 => 1];
+        return [
+            4  => 1,
+            12 => 1,
+        ];
 
     }//end getWarningList()
 
