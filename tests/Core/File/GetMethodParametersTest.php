@@ -26,6 +26,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => '&$var',
+            'has_attributes'    => false,
             'pass_by_reference' => true,
             'variable_length'   => false,
             'type_hint'         => '',
@@ -48,6 +49,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => 'array $var',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'array',
@@ -70,6 +72,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var1',
             'content'           => 'foo $var1',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'foo',
@@ -79,6 +82,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$var2',
             'content'           => 'bar $var2',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'bar',
@@ -101,6 +105,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => 'self $var',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'self',
@@ -123,6 +128,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var1',
             'content'           => '?int $var1',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '?int',
@@ -132,6 +138,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$var2',
             'content'           => '?\bar $var2',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '?\bar',
@@ -154,6 +161,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => '$var',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '',
@@ -176,6 +184,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var1',
             'content'           => '$var1=self::CONSTANT',
+            'has_attributes'    => false,
             'default'           => 'self::CONSTANT',
             'pass_by_reference' => false,
             'variable_length'   => false,
@@ -199,6 +208,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var1',
             'content'           => '$var1=1',
+            'has_attributes'    => false,
             'default'           => '1',
             'pass_by_reference' => false,
             'variable_length'   => false,
@@ -208,6 +218,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$var2',
             'content'           => "\$var2='value'",
+            'has_attributes'    => false,
             'default'           => "'value'",
             'pass_by_reference' => false,
             'variable_length'   => false,
@@ -232,6 +243,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'              => '$a',
             'content'           => '$a = 10 & 20',
             'default'           => '10 & 20',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '',
@@ -254,6 +266,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$a',
             'content'           => 'int $a',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'int',
@@ -263,6 +276,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$b',
             'content'           => '...$b',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => true,
             'type_hint'         => '',
@@ -285,6 +299,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var1',
             'content'           => 'mixed &...$var1',
+            'has_attributes'    => false,
             'pass_by_reference' => true,
             'variable_length'   => true,
             'type_hint'         => 'mixed',
@@ -307,6 +322,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var1',
             'content'           => '?Mixed $var1',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '?Mixed',
@@ -329,6 +345,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var1',
             'content'           => '?namespace\Name $var1',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '?namespace\Name',
@@ -351,6 +368,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$number',
             'content'           => 'int|float $number',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'int|float',
@@ -359,6 +377,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$obj',
             'content'           => 'self|parent &...$obj',
+            'has_attributes'    => false,
             'pass_by_reference' => true,
             'variable_length'   => true,
             'type_hint'         => 'self|parent',
@@ -381,6 +400,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$paramA',
             'content'           => 'float|null &$paramA',
+            'has_attributes'    => false,
             'pass_by_reference' => true,
             'variable_length'   => false,
             'type_hint'         => 'float|null',
@@ -389,6 +409,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$paramB',
             'content'           => 'string|int ...$paramB',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => true,
             'type_hint'         => 'string|int',
@@ -412,6 +433,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'              => '$var',
             'content'           => 'int|float $var = CONSTANT_A | CONSTANT_B',
             'default'           => 'CONSTANT_A | CONSTANT_B',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'int|float',
@@ -434,6 +456,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => 'MyClassA|\Package\MyClassB $var',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'MyClassA|\Package\MyClassB',
@@ -456,6 +479,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => 'array|bool|callable|int|float|null|object|string $var',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'array|bool|callable|int|float|null|object|string',
@@ -478,6 +502,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => 'false|mixed|self|parent|iterable|Resource $var',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'false|mixed|self|parent|iterable|Resource',
@@ -500,6 +525,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$number',
             'content'           => '?int|float $number',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '?int|float',
@@ -523,6 +549,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'              => '$var',
             'content'           => 'null $var = null',
             'default'           => 'null',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'null',
@@ -546,6 +573,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'              => '$var',
             'content'           => 'false $var = false',
             'default'           => 'false',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'false',
@@ -569,6 +597,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'              => '$var',
             'content'           => 'bool|false $var = false',
             'default'           => 'false',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'bool|false',
@@ -591,6 +620,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => 'object|ClassName $var',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'object|ClassName',
@@ -613,6 +643,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => 'iterable|array|Traversable $var',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'iterable|array|Traversable',
@@ -635,6 +666,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var',
             'content'           => 'int | string /*comment*/ | INT $var',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => 'int|string|INT',
@@ -658,6 +690,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'                => '$x',
             'content'             => 'public $x = 0.0',
             'default'             => '0.0',
+            'has_attributes'      => false,
             'pass_by_reference'   => false,
             'variable_length'     => false,
             'type_hint'           => '',
@@ -668,6 +701,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'                => '$y',
             'content'             => 'protected $y = \'\'',
             'default'             => "''",
+            'has_attributes'      => false,
             'pass_by_reference'   => false,
             'variable_length'     => false,
             'type_hint'           => '',
@@ -678,6 +712,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'                => '$z',
             'content'             => 'private $z = null',
             'default'             => 'null',
+            'has_attributes'      => false,
             'pass_by_reference'   => false,
             'variable_length'     => false,
             'type_hint'           => '',
@@ -701,6 +736,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'                => '$x',
             'content'             => 'protected float|int $x',
+            'has_attributes'      => false,
             'pass_by_reference'   => false,
             'variable_length'     => false,
             'type_hint'           => 'float|int',
@@ -711,6 +747,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'                => '$y',
             'content'             => 'public ?string &$y = \'test\'',
             'default'             => "'test'",
+            'has_attributes'      => false,
             'pass_by_reference'   => true,
             'variable_length'     => false,
             'type_hint'           => '?string',
@@ -720,6 +757,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[2] = [
             'name'                => '$z',
             'content'             => 'private mixed $z',
+            'has_attributes'      => false,
             'pass_by_reference'   => false,
             'variable_length'     => false,
             'type_hint'           => 'mixed',
@@ -743,6 +781,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'                => '$promotedProp',
             'content'             => 'public int $promotedProp',
+            'has_attributes'      => false,
             'pass_by_reference'   => false,
             'variable_length'     => false,
             'type_hint'           => 'int',
@@ -752,6 +791,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$normalArg',
             'content'           => '?int $normalArg',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '?int',
@@ -774,6 +814,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'                => '$x',
             'content'             => 'private $x',
+            'has_attributes'      => false,
             'pass_by_reference'   => false,
             'variable_length'     => false,
             'type_hint'           => '',
@@ -797,6 +838,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'                => '$y',
             'content'             => 'public callable $y',
+            'has_attributes'      => false,
             'pass_by_reference'   => false,
             'variable_length'     => false,
             'type_hint'           => 'callable',
@@ -806,6 +848,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'                => '$x',
             'content'             => 'private ...$x',
+            'has_attributes'      => false,
             'pass_by_reference'   => false,
             'variable_length'     => true,
             'type_hint'           => '',
@@ -816,6 +859,93 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testPHP8ConstructorPropertyPromotionAbstractMethod()
+
+
+    /**
+     * Verify and document behaviour when there are comments within a parameter declaration.
+     *
+     * @return void
+     */
+    public function testCommentsInParameter()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$param',
+            'content'           => '// Leading comment.
+    ?MyClass /*-*/ & /*-*/.../*-*/ $param /*-*/ = /*-*/ \'default value\' . /*-*/ \'second part\' // Trailing comment.',
+            'has_attributes'    => false,
+            'pass_by_reference' => true,
+            'variable_length'   => true,
+            'type_hint'         => '?MyClass',
+            'nullable_type'     => true,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testCommentsInParameter()
+
+
+    /**
+     * Verify behaviour when parameters have attributes attached.
+     *
+     * @return void
+     */
+    public function testParameterAttributesInFunctionDeclaration()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'                => '$constructorPropPromTypedParamSingleAttribute',
+            'content'             => '#[\MyExample\MyAttribute] private string $constructorPropPromTypedParamSingleAttribute',
+            'has_attributes'      => true,
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => 'string',
+            'nullable_type'       => false,
+            'property_visibility' => 'private',
+        ];
+        $expected[1] = [
+            'name'              => '$typedParamSingleAttribute',
+            'content'           => '#[MyAttr([1, 2])]
+        Type|false
+        $typedParamSingleAttribute',
+            'has_attributes'    => true,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'Type|false',
+            'nullable_type'     => false,
+        ];
+        $expected[2] = [
+            'name'              => '$nullableTypedParamMultiAttribute',
+            'content'           => '#[MyAttribute(1234), MyAttribute(5678)] ?int $nullableTypedParamMultiAttribute',
+            'has_attributes'    => true,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?int',
+            'nullable_type'     => true,
+        ];
+        $expected[3] = [
+            'name'              => '$nonTypedParamTwoAttributes',
+            'content'           => '#[WithoutArgument] #[SingleArgument(0)] $nonTypedParamTwoAttributes',
+            'has_attributes'    => true,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+        $expected[4] = [
+            'name'              => '$otherParam',
+            'content'           => '#[MyAttribute(array("key" => "value"))]
+        &...$otherParam',
+            'has_attributes'    => true,
+            'pass_by_reference' => true,
+            'variable_length'   => true,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testParameterAttributesInFunctionDeclaration()
 
 
     /**

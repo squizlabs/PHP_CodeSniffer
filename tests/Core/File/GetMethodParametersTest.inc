@@ -120,3 +120,23 @@ abstract class ConstructorPropertyPromotionAbstractMethod {
     // 3. The callable type is not supported for properties, but that's not the concern of this method.
     abstract public function __construct(public callable $y, private ...$x);
 }
+
+/* testCommentsInParameter */
+function commentsInParams(
+    // Leading comment.
+    ?MyClass /*-*/ & /*-*/.../*-*/ $param /*-*/ = /*-*/ 'default value' . /*-*/ 'second part' // Trailing comment.
+) {}
+
+/* testParameterAttributesInFunctionDeclaration */
+class ParametersWithAttributes(
+    public function __construct(
+        #[\MyExample\MyAttribute] private string $constructorPropPromTypedParamSingleAttribute,
+        #[MyAttr([1, 2])]
+        Type|false
+        $typedParamSingleAttribute,
+        #[MyAttribute(1234), MyAttribute(5678)] ?int $nullableTypedParamMultiAttribute,
+        #[WithoutArgument] #[SingleArgument(0)] $nonTypedParamTwoAttributes,
+        #[MyAttribute(array("key" => "value"))]
+        &...$otherParam,
+    ) {}
+}

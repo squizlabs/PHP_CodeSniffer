@@ -393,6 +393,7 @@ class PHP extends Tokenizer
         T_PRIVATE                  => 7,
         T_PUBLIC                   => 6,
         T_PROTECTED                => 9,
+        T_READONLY                 => 8,
         T_REQUIRE                  => 7,
         T_REQUIRE_ONCE             => 12,
         T_RETURN                   => 6,
@@ -645,6 +646,48 @@ class PHP extends Tokenizer
                     }
                 }//end if
             }//end if
+
+            /*
+                For Explicit Octal Notation prior to PHP 8.1 we need to combine the
+                T_LNUMBER and T_STRING token values into a single token value, and
+                then ignore the T_STRING token.
+            */
+
+            if (PHP_VERSION_ID < 80100
+                && $tokenIsArray === true && $token[1] === '0'
+                && (isset($tokens[($stackPtr + 1)]) === true
+                && is_array($tokens[($stackPtr + 1)]) === true
+                && $tokens[($stackPtr + 1)][0] === T_STRING
+                && strtolower($tokens[($stackPtr + 1)][1][0]) === 'o')
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_LNUMBER,
+                    'type'    => 'T_LNUMBER',
+                    'content' => $token[1] .= $tokens[($stackPtr + 1)][1],
+                ];
+                $stackPtr++;
+                $newStackPtr++;
+                continue;
+            }
+
+            /*
+                PHP 8.1 introduced two dedicated tokens for the & character.
+                Retokenizing both of these to T_BITWISE_AND, which is the
+                token PHPCS already tokenized them as.
+            */
+
+            if ($tokenIsArray === true
+                && ($token[0] === T_AMPERSAND_FOLLOWED_BY_VAR_OR_VARARG
+                || $token[0] === T_AMPERSAND_NOT_FOLLOWED_BY_VAR_OR_VARARG)
+            ) {
+                $finalTokens[$newStackPtr] = [
+                    'code'    => T_BITWISE_AND,
+                    'type'    => 'T_BITWISE_AND',
+                    'content' => $token[1],
+                ];
+                $newStackPtr++;
+                continue;
+            }
 
             /*
                 If this is a double quoted string, PHP will tokenize the whole
@@ -1311,6 +1354,7 @@ class PHP extends Tokenizer
                 if ($newType === T_LNUMBER
                     && ((stripos($newContent, '0x') === 0 && hexdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
                     || (stripos($newContent, '0b') === 0 && bindec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
+                    || (stripos($newContent, '0o') === 0 && octdec(str_replace('_', '', $newContent)) > PHP_INT_MAX)
                     || (stripos($newContent, '0x') !== 0
                     && stripos($newContent, 'e') !== false || strpos($newContent, '.') !== false)
                     || (strpos($newContent, '0') === 0 && stripos($newContent, '0x') !== 0
@@ -1557,7 +1601,7 @@ class PHP extends Tokenizer
                         && isset(Util\Tokens::$emptyTokens[$tokenType]) === false
                     ) {
                         // Found the previous non-empty token.
-                        if ($tokenType === ':' || $tokenType === ',') {
+                        if ($tokenType === ':' || $tokenType === ',' || $tokenType === T_ATTRIBUTE_END) {
                             $newToken['code'] = T_NULLABLE;
                             $newToken['type'] = 'T_NULLABLE';
 
@@ -1667,7 +1711,8 @@ class PHP extends Tokenizer
                 if ($token[0] === T_FUNCTION) {
                     for ($x = ($stackPtr + 1); $x < $numTokens; $x++) {
                         if (is_array($tokens[$x]) === false
-                            || isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                            || (isset(Util\Tokens::$emptyTokens[$tokens[$x][0]]) === false
+                            && $tokens[$x][1] !== '&')
                         ) {
                             // Non-empty content.
                             break;
@@ -1776,23 +1821,6 @@ class PHP extends Tokenizer
 
                             break;
                         }//end for
-
-                        // Any T_ARRAY tokens we find between here and the next
-                        // token that can't be part of the return type, need to be
-                        // converted to T_STRING tokens.
-                        for ($x; $x < $numTokens; $x++) {
-                            if ((is_array($tokens[$x]) === false && $tokens[$x] !== '|')
-                                || (is_array($tokens[$x]) === true && isset($allowed[$tokens[$x][0]]) === false)
-                            ) {
-                                break;
-                            } else if (is_array($tokens[$x]) === true && $tokens[$x][0] === T_ARRAY) {
-                                $tokens[$x][0] = T_STRING;
-
-                                if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                                    echo "\t\t* token $x changed from T_ARRAY to T_STRING".PHP_EOL;
-                                }
-                            }
-                        }
                     }//end if
                 }//end if
             }//end if
@@ -2055,19 +2083,24 @@ class PHP extends Tokenizer
                     }
                 }//end if
 
-                // This is a special condition for T_ARRAY tokens used for
-                // type hinting function arguments as being arrays. We want to keep
-                // the parenthesis map clean, so let's tag these tokens as
+                // This is a special condition for T_ARRAY tokens used for anything else
+                // but array declarations, like type hinting function arguments as
+                // being arrays.
+                // We want to keep the parenthesis map clean, so let's tag these tokens as
                 // T_STRING.
                 if ($newToken['code'] === T_ARRAY) {
-                    for ($i = $stackPtr; $i < $numTokens; $i++) {
-                        if ($tokens[$i] === '(') {
-                            break;
-                        } else if ($tokens[$i][0] === T_VARIABLE) {
-                            $newToken['code'] = T_STRING;
-                            $newToken['type'] = 'T_STRING';
+                    for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                        if (is_array($tokens[$i]) === false
+                            || isset(Util\Tokens::$emptyTokens[$tokens[$i][0]]) === false
+                        ) {
+                            // Non-empty content.
                             break;
                         }
+                    }
+
+                    if ($tokens[$i] !== '(' && $i !== $numTokens) {
+                        $newToken['code'] = T_STRING;
+                        $newToken['type'] = 'T_STRING';
                     }
                 }
 
@@ -2677,7 +2710,8 @@ class PHP extends Tokenizer
 
                     if ($suspectedType === 'property or parameter'
                         && (isset(Util\Tokens::$scopeModifiers[$this->tokens[$x]['code']]) === true
-                        || $this->tokens[$x]['code'] === T_VAR)
+                        || $this->tokens[$x]['code'] === T_VAR
+                        || $this->tokens[$x]['code'] === T_READONLY)
                     ) {
                         // This will also confirm constructor property promotion parameters, but that's fine.
                         $confirmed = true;
@@ -2804,6 +2838,77 @@ class PHP extends Tokenizer
                     $this->tokens[$x]['code'] = T_STRING;
                     $this->tokens[$x]['type'] = 'T_STRING';
                 }
+            } else if ($this->tokens[$i]['code'] === T_READONLY
+                || ($this->tokens[$i]['code'] === T_STRING
+                && strtolower($this->tokens[$i]['content']) === 'readonly')
+            ) {
+                /*
+                    Adds "readonly" keyword support:
+                        PHP < 8.1: Converts T_STRING to T_READONLY
+                        PHP >= 8.1: Converts some T_READONLY to T_STRING because token_get_all()
+                    without the TOKEN_PARSE flag cannot distinguish between them in some situations.
+                */
+
+                $allowedAfter = [
+                    T_STRING               => T_STRING,
+                    T_NS_SEPARATOR         => T_NS_SEPARATOR,
+                    T_NAME_FULLY_QUALIFIED => T_NAME_FULLY_QUALIFIED,
+                    T_NAME_RELATIVE        => T_NAME_RELATIVE,
+                    T_NAME_QUALIFIED       => T_NAME_QUALIFIED,
+                    T_TYPE_UNION           => T_TYPE_UNION,
+                    T_BITWISE_OR           => T_BITWISE_OR,
+                    T_BITWISE_AND          => T_BITWISE_AND,
+                    T_ARRAY                => T_ARRAY,
+                    T_CALLABLE             => T_CALLABLE,
+                    T_SELF                 => T_SELF,
+                    T_PARENT               => T_PARENT,
+                    T_NULL                 => T_FALSE,
+                    T_NULLABLE             => T_NULLABLE,
+                    T_STATIC               => T_STATIC,
+                    T_PUBLIC               => T_PUBLIC,
+                    T_PROTECTED            => T_PROTECTED,
+                    T_PRIVATE              => T_PRIVATE,
+                    T_VAR                  => T_VAR,
+                ];
+
+                $shouldBeReadonly = true;
+
+                for ($x = ($i + 1); $x < $numTokens; $x++) {
+                    if (isset(Util\Tokens::$emptyTokens[$this->tokens[$x]['code']]) === true) {
+                        continue;
+                    }
+
+                    if ($this->tokens[$x]['code'] === T_VARIABLE
+                        || $this->tokens[$x]['code'] === T_CONST
+                    ) {
+                        break;
+                    }
+
+                    if (isset($allowedAfter[$this->tokens[$x]['code']]) === false) {
+                        $shouldBeReadonly = false;
+                        break;
+                    }
+                }
+
+                if ($this->tokens[$i]['code'] === T_STRING && $shouldBeReadonly === true) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_STRING to T_READONLY".PHP_EOL;
+                    }
+
+                    $this->tokens[$i]['code'] = T_READONLY;
+                    $this->tokens[$i]['type'] = 'T_READONLY';
+                } else if ($this->tokens[$i]['code'] === T_READONLY && $shouldBeReadonly === false) {
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        $line = $this->tokens[$i]['line'];
+                        echo "\t* token $i on line $line changed from T_READONLY to T_STRING".PHP_EOL;
+                    }
+
+                    $this->tokens[$i]['code'] = T_STRING;
+                    $this->tokens[$i]['type'] = 'T_STRING';
+                }
+
+                continue;
             }//end if
 
             if (($this->tokens[$i]['code'] !== T_CASE

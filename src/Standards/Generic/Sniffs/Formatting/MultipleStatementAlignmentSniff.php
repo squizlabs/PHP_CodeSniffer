@@ -80,25 +80,6 @@ class MultipleStatementAlignmentSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
-        // Ignore assignments used in a condition, like an IF or FOR.
-        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
-            // If the parenthesis is on the same line as the assignment,
-            // then it should be ignored as it is specifically being grouped.
-            $parens    = $tokens[$stackPtr]['nested_parenthesis'];
-            $lastParen = array_pop($parens);
-            if ($tokens[$lastParen]['line'] === $tokens[$stackPtr]['line']) {
-                return;
-            }
-
-            foreach ($tokens[$stackPtr]['nested_parenthesis'] as $start => $end) {
-                if (isset($tokens[$start]['parenthesis_owner']) === true) {
-                    return;
-                }
-            }
-        }
-
         $lastAssign = $this->checkAlignment($phpcsFile, $stackPtr);
         return ($lastAssign + 1);
 
@@ -119,6 +100,23 @@ class MultipleStatementAlignmentSniff implements Sniff
     public function checkAlignment($phpcsFile, $stackPtr, $end=null)
     {
         $tokens = $phpcsFile->getTokens();
+
+        // Ignore assignments used in a condition, like an IF or FOR or closure param defaults.
+        if (isset($tokens[$stackPtr]['nested_parenthesis']) === true) {
+            // If the parenthesis is on the same line as the assignment,
+            // then it should be ignored as it is specifically being grouped.
+            $parens    = $tokens[$stackPtr]['nested_parenthesis'];
+            $lastParen = array_pop($parens);
+            if ($tokens[$lastParen]['line'] === $tokens[$stackPtr]['line']) {
+                return $stackPtr;
+            }
+
+            foreach ($tokens[$stackPtr]['nested_parenthesis'] as $start => $end) {
+                if (isset($tokens[$start]['parenthesis_owner']) === true) {
+                    return $stackPtr;
+                }
+            }
+        }
 
         $assignments = [];
         $prevAssign  = null;

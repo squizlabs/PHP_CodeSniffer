@@ -14,6 +14,7 @@ namespace PHP_CodeSniffer;
 
 use PHP_CodeSniffer\Exceptions\DeepExitException;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
+use PHP_CodeSniffer\Util\Common;
 
 /**
  * Stores the configuration used to run PHPCS and PHPCBF.
@@ -79,7 +80,7 @@ class Config
      *
      * @var string
      */
-    const VERSION = '3.6.1';
+    const VERSION = '3.7.0';
 
     /**
      * Package stability; either stable, beta or alpha.
@@ -363,7 +364,7 @@ class Config
 
                 $lastDir    = $currentDir;
                 $currentDir = dirname($currentDir);
-            } while ($currentDir !== '.' && $currentDir !== $lastDir && @is_readable($currentDir) === true);
+            } while ($currentDir !== '.' && $currentDir !== $lastDir && Common::isReadable($currentDir) === true);
         }//end if
 
         if (defined('STDIN') === false
@@ -459,7 +460,7 @@ class Config
     /**
      * Restore default values for all possible command line arguments.
      *
-     * @return array
+     * @return void
      */
     public function restoreDefaults()
     {
@@ -1656,7 +1657,7 @@ class Config
             return [];
         }
 
-        if (is_readable($configFile) === false) {
+        if (Common::isReadable($configFile) === false) {
             $error = 'ERROR: Config file '.$configFile.' is not readable'.PHP_EOL.PHP_EOL;
             throw new DeepExitException($error, 3);
         }

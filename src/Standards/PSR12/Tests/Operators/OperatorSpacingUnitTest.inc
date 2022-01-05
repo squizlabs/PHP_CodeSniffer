@@ -63,3 +63,15 @@ $fn = fn(array & $one) => 1;
 $fn = static fn(DateTime $a, DateTime $b): int => -($a->getTimestamp() <=> $b->getTimestamp());
 
 function issue3267(string|int ...$values) {}
+
+function setDefault(#[ImportValue(
+        constraints: [
+            [
+                Assert\Type::class,
+                ['type' => 'bool'],
+            ],
+        ]
+    )] ?bool $value = null): void
+    {
+        // Do something
+    }
