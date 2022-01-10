@@ -1325,11 +1325,14 @@ class ScopeIndentSniff implements Sniff
                 continue;
             }//end if
 
-            // Closing an anon class or function.
+            // Closing an anon class, closure, or match.
+            // Each may be returned, which can confuse control structures that
+            // use return as a closer, like CASE statements.
             if (isset($tokens[$i]['scope_condition']) === true
                 && $tokens[$i]['scope_closer'] === $i
                 && ($tokens[$tokens[$i]['scope_condition']]['code'] === T_CLOSURE
-                || $tokens[$tokens[$i]['scope_condition']]['code'] === T_ANON_CLASS)
+                || $tokens[$tokens[$i]['scope_condition']]['code'] === T_ANON_CLASS
+                || $tokens[$tokens[$i]['scope_condition']]['code'] === T_MATCH)
             ) {
                 if ($this->debug === true) {
                     $type = str_replace('_', ' ', strtolower(substr($tokens[$tokens[$i]['scope_condition']]['type'], 2)));
