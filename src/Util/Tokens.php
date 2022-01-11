@@ -653,6 +653,81 @@ final class Tokens
         T_TRAIT_C  => T_TRAIT_C,
     ];
 
+    /**
+     * Tokens representing context sensitive keywords in PHP.
+     *
+     * @var array<int|string, int|string>
+     *
+     * https://wiki.php.net/rfc/context_sensitive_lexer
+     */
+    public static $contextSensitiveKeywords = [
+        T_ABSTRACT     => T_ABSTRACT,
+        T_ARRAY        => T_ARRAY,
+        T_AS           => T_AS,
+        T_BREAK        => T_BREAK,
+        T_CALLABLE     => T_CALLABLE,
+        T_CASE         => T_CASE,
+        T_CATCH        => T_CATCH,
+        T_CLASS        => T_CLASS,
+        T_CLONE        => T_CLONE,
+        T_CONST        => T_CONST,
+        T_CONTINUE     => T_CONTINUE,
+        T_DECLARE      => T_DECLARE,
+        T_DEFAULT      => T_DEFAULT,
+        T_DO           => T_DO,
+        T_ECHO         => T_ECHO,
+        T_ELSE         => T_ELSE,
+        T_ELSEIF       => T_ELSEIF,
+        T_ENDDECLARE   => T_ENDDECLARE,
+        T_ENDFOR       => T_ENDFOR,
+        T_ENDFOREACH   => T_ENDFOREACH,
+        T_ENDIF        => T_ENDIF,
+        T_ENDSWITCH    => T_ENDSWITCH,
+        T_ENDWHILE     => T_ENDWHILE,
+        T_EXIT         => T_EXIT,
+        T_EXTENDS      => T_EXTENDS,
+        T_FINAL        => T_FINAL,
+        T_FINALLY      => T_FINALLY,
+        T_FN           => T_FN,
+        T_FOR          => T_FOR,
+        T_FOREACH      => T_FOREACH,
+        T_FUNCTION     => T_FUNCTION,
+        T_GLOBAL       => T_GLOBAL,
+        T_GOTO         => T_GOTO,
+        T_IF           => T_IF,
+        T_IMPLEMENTS   => T_IMPLEMENTS,
+        T_INCLUDE      => T_INCLUDE,
+        T_INCLUDE_ONCE => T_INCLUDE_ONCE,
+        T_INSTANCEOF   => T_INSTANCEOF,
+        T_INSTEADOF    => T_INSTEADOF,
+        T_INTERFACE    => T_INTERFACE,
+        T_LIST         => T_LIST,
+        T_LOGICAL_AND  => T_LOGICAL_AND,
+        T_LOGICAL_OR   => T_LOGICAL_OR,
+        T_LOGICAL_XOR  => T_LOGICAL_XOR,
+        T_MATCH        => T_MATCH,
+        T_NAMESPACE    => T_NAMESPACE,
+        T_NEW          => T_NEW,
+        T_PRINT        => T_PRINT,
+        T_PRIVATE      => T_PRIVATE,
+        T_PROTECTED    => T_PROTECTED,
+        T_PUBLIC       => T_PUBLIC,
+        T_READONLY     => T_READONLY,
+        T_REQUIRE      => T_REQUIRE,
+        T_REQUIRE_ONCE => T_REQUIRE_ONCE,
+        T_RETURN       => T_RETURN,
+        T_STATIC       => T_STATIC,
+        T_SWITCH       => T_SWITCH,
+        T_THROW        => T_THROW,
+        T_TRAIT        => T_TRAIT,
+        T_TRY          => T_TRY,
+        T_USE          => T_USE,
+        T_VAR          => T_VAR,
+        T_WHILE        => T_WHILE,
+        T_YIELD        => T_YIELD,
+        T_YIELD_FROM   => T_YIELD_FROM,
+    ];
+
 
     /**
      * Given a token, returns the name of the token.

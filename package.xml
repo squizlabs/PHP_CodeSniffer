@@ -141,6 +141,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="BackfillNumericSeparatorTest.php" role="test" />
       <file baseinstalldir="" name="BitwiseOrTest.inc" role="test" />
       <file baseinstalldir="" name="BitwiseOrTest.php" role="test" />
+      <file baseinstalldir="" name="ContextSensitiveKeywordsTest.inc" role="test" />
+      <file baseinstalldir="" name="ContextSensitiveKeywordsTest.php" role="test" />
       <file baseinstalldir="" name="DefaultKeywordTest.inc" role="test" />
       <file baseinstalldir="" name="DefaultKeywordTest.php" role="test" />
       <file baseinstalldir="" name="DoubleArrowTest.inc" role="test" />
@@ -2100,6 +2102,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BitwiseOrTest.php" name="tests/Core/Tokenizer/BitwiseOrTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BitwiseOrTest.inc" name="tests/Core/Tokenizer/BitwiseOrTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/ContextSensitiveKeywordsTest.php" name="tests/Core/Tokenizer/ContextSensitiveKeywordsTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/ContextSensitiveKeywordsTest.inc" name="tests/Core/Tokenizer/ContextSensitiveKeywordsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.php" name="tests/Core/Tokenizer/DefaultKeywordTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.inc" name="tests/Core/Tokenizer/DefaultKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.php" name="tests/Core/Tokenizer/DoubleArrowTest.php" />
@@ -2194,6 +2198,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/BackfillNumericSeparatorTest.inc" name="tests/Core/Tokenizer/BackfillNumericSeparatorTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/BitwiseOrTest.php" name="tests/Core/Tokenizer/BitwiseOrTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/BitwiseOrTest.inc" name="tests/Core/Tokenizer/BitwiseOrTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/ContextSensitiveKeywordsTest.php" name="tests/Core/Tokenizer/ContextSensitiveKeywordsTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/ContextSensitiveKeywordsTest.inc" name="tests/Core/Tokenizer/ContextSensitiveKeywordsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.php" name="tests/Core/Tokenizer/DefaultKeywordTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.inc" name="tests/Core/Tokenizer/DefaultKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.php" name="tests/Core/Tokenizer/DoubleArrowTest.php" />
