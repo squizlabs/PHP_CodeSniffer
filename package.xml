@@ -29,6 +29,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for PHP 8.1 explicit octal notation
     -- This new syntax has been backfilled for PHP versions less than 8.1
     -- Thanks to Mark Baker for the patch
+  - Added support for PHP 8.1 enums
+    -- This new syntax has been backfilled for PHP versions less than 8.1
+    -- Thanks to Jaroslav Hanslík for the patch
   - Added support for the PHP 8.1 readonly token
     -- Tokenzing of the readonly keyword has been backfilled for PHP versions less than 8.1
     -- Thanks to Jaroslav Hanslík for the patch
