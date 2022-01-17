@@ -35,6 +35,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for the PHP 8.1 readonly token
     -- Tokenzing of the readonly keyword has been backfilled for PHP versions less than 8.1
     -- Thanks to Jaroslav Hanslík for the patch
+  - File::getMethodParameters now supports readonly tokens
+    -- When constructor property promotion is used, a new property_readonly array index is included in the return value
+      --- This is a boolean value indicating if the property is readonly
+    -- If the readonly token is detected, a new readonly_token array index is included in the return value
+      --- This contains the token index of the readonly keyword
+    -- Thanks to Juliette Reinders Folmer for the patch
   - Support for new PHP 8.1 readonly keyword has been added to the following sniffs:
     -- Generic.PHP.LowerCaseKeyword
     -- PSR2.Classes.PropertyDeclaration
