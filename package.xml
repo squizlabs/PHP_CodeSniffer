@@ -47,6 +47,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3502 : A match statement within an array produces Squiz.Arrays.ArrayDeclaration.NoKeySpecified
   - Fixed bug #3503 : Squiz.Commenting.FunctionComment.ThrowsNoFullStop false positive when one line @throw
+  - Fixed bug #3505 : The nullsafe operator is not counted in Generic.Metrics.CyclomaticComplexity
+    -- Thanks to Mark Baker for the patch
   - Fixed bug #3526 : PSR12.Properties.ConstantVisibility false positive when using public final const syntax
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3530 : Line indented incorrectly false positive when using match-expression inside switch case
