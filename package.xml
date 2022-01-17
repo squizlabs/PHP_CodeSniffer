@@ -35,7 +35,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for the PHP 8.1 readonly token
     -- Tokenzing of the readonly keyword has been backfilled for PHP versions less than 8.1
     -- Thanks to Jaroslav Hanslík for the patch
-  - File::getMethodParameters now supports readonly tokens
+  - File::getMethodParameters now supports the new PHP 8.1 readonly token
     -- When constructor property promotion is used, a new property_readonly array index is included in the return value
       --- This is a boolean value indicating if the property is readonly
     -- If the readonly token is detected, a new readonly_token array index is included in the return value
@@ -47,6 +47,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Squiz.Commenting.BlockCommentS
     -- Squiz.Commenting.DocCommentAlignment
     -- Squiz.Commenting.VariableComment
+    -- Squiz.WhiteSpace.ScopeKeywordSpacing
     -- Thanks to Juliette Reinders Folmer for the patches
   - Generic.PHP.UpperCaseConstant and Generic.PHP.LowerCaseConstant now ignore type declarations
     -- These sniffs now only report errors for true/false/null when used as values
