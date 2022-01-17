@@ -49,6 +49,7 @@ class CyclomaticComplexityUnitTest extends AbstractSniffUnitTest
             333 => 1,
             381 => 1,
             417 => 1,
+            445 => 1,
         ];
 
     }//end getWarningList()
