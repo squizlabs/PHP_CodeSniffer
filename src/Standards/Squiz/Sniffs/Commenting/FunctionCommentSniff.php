@@ -752,7 +752,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             if (in_array($tokens[$i]['code'], $allowedTokens) === false) {
                 $trimmedContent = strtolower(trim($tokens[$i]['content']));
 
-	            return $trimmedContent === '{@inheritdoc}' || $trimmedContent === '@inheritdoc';
+                return $trimmedContent === '{@inheritdoc}' || $trimmedContent === '@inheritdoc';
             }
         }
 
