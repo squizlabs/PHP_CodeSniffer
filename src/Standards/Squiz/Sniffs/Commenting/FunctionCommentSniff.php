@@ -737,7 +737,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
      *                                                  in the stack passed in $tokens.
      * @param int                         $commentStart The position in the stack where the comment started.
      *
-     * @return boolean TRUE if the docblock contains only {@inheritdoc} (case-insensitive).
+     * @return boolean TRUE if the docblock contains {@inheritdoc} or @inheritdoc (case-insensitive).
      */
     protected function checkInheritdoc(File $phpcsFile, $stackPtr, $commentStart)
     {
@@ -751,12 +751,12 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
         for ($i = $commentStart; $i <= $tokens[$commentStart]['comment_closer']; $i++) {
             if (in_array($tokens[$i]['code'], $allowedTokens) === false) {
                 $trimmedContent = strtolower(trim($tokens[$i]['content']));
+	            $allowedInheritDocs = [
+		            '{@inheritdoc}',
+		            '@inheritdoc',
+	            ];
 
-                if ($trimmedContent === '{@inheritdoc}') {
-                    return true;
-                } else {
-                    return false;
-                }
+	            return in_array($trimmedContent, $allowedInheritDocs);
             }
         }
 
