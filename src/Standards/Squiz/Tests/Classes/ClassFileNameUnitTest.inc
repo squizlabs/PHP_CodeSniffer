@@ -6,7 +6,7 @@ class ClassFileNameUnitTest {}
 interface ClassFileNameUnitTest {}
 trait ClassFileNameUnitTest {}
 enum ClassFileNameUnitTest {}
-
+enum ClassFileNameUnitTest: int {}
 
 // Invalid filename matching class name (case sensitive).
 class classFileNameUnitTest {}
