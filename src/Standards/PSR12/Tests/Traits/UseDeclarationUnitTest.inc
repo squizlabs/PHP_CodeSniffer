@@ -215,6 +215,7 @@ enum SomeEnum1
 
 enum SomeEnum2
 {
-    use FirstTrait;
+
+    use   FirstTrait;
 
 }
