@@ -67,19 +67,19 @@ trait ___ {}
 
 trait Invalid__Name {}
 
-enum Valid_Name {}
+enum Valid_Name: string {}
 
-enum invalid_Name {}
+enum invalid_Name : String {}
 
 enum invalid_name {}
 
-enum Invalid_name {}
+enum Invalid_name: Int {}
 
 enum VALID_Name {}
 
 enum VALID_NAME {}
 
-enum VALID_Name {}
+enum VALID_Name : int {}
 
 enum ValidName {}
 
