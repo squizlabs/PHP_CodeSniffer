@@ -4,8 +4,9 @@ class YourClass {}
 interface MyInterface {}
 interface YourInterface {}
 trait MyTrait {}
-enum MyEnum {}
 trait YourTrait {}
+enum MyEnum {}
+enum YourEnum {}
 class MyClass {}
 interface MyInterface {}
 trait MyTrait {}
