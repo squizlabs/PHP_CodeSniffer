@@ -1223,7 +1223,7 @@ class File
 
 
     /**
-     * Returns the declaration names for classes, interfaces, traits, and functions.
+     * Returns the declaration name for classes, interfaces, traits, enums, and functions.
      *
      * @param int $stackPtr The position of the declaration token which
      *                      declared the class, interface, trait, or function.
