@@ -138,7 +138,7 @@ trait Base
 }
 
 // Valid enum name.
-enum ValidCamelCaseClass {}
+enum ValidCamelCaseClass: string {}
 
 
 // Incorrect usage of camel case.
@@ -147,22 +147,22 @@ enum Invalid_Camel_Case_Class_With_Underscores {}
 
 
 // All lowercase.
-enum invalidlowercaseclass {}
+enum invalidlowercaseclass: INT {}
 enum invalid_lowercase_class_with_underscores {}
 
 
 // All uppercase.
-enum VALIDUPPERCASECLASS {}
+enum VALIDUPPERCASECLASS: int {}
 enum INVALID_UPPERCASE_CLASS_WITH_UNDERSCORES {}
 
 
 // Mix camel case with uppercase.
-enum ValidCamelCaseClassWithUPPERCASE {}
+enum ValidCamelCaseClassWithUPPERCASE : string {}
 
 
 // Usage of numeric characters.
 enum ValidCamelCaseClassWith1Number {}
-enum ValidCamelCaseClassWith12345Numbers {}
+enum ValidCamelCaseClassWith12345Numbers : string {}
 enum ValidCamelCaseClassEndingWithNumber5 {}
 
 enum Testing{}
