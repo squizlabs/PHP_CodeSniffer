@@ -30,7 +30,7 @@ class LowercaseClassKeywordsUnitTest extends AbstractSniffUnitTest
             3  => 3,
             4  => 1,
             5  => 1,
-            6  => 1,
+            6  => 2,
             10 => 1,
             11 => 1,
             14 => 1,
