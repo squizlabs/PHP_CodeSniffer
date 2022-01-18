@@ -122,8 +122,10 @@ class ValidFunctionNameUnitTest extends AbstractSniffUnitTest
             212 => 1,
             213 => 1,
             214 => 1,
-            225 => 1,
-            226 => 2,
+            235 => 1,
+            236 => 2,
+            239 => 1,
+            242 => 1,
         ];
 
     }//end getErrorList()
