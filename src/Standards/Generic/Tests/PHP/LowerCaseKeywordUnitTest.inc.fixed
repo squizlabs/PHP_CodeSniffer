@@ -39,7 +39,9 @@ class Reading {
     public readonly int $var;
 }
 
-enum Enum {
+enum ENUM: string
+{
+    case HEARTS;
 }
 
 __HALT_COMPILER(); // An exception due to phar support.
