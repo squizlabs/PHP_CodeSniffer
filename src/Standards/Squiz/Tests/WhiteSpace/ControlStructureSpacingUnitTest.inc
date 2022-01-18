@@ -262,6 +262,8 @@ $expr = match( $foo ){
 };
 echo $expr;
 
-enum SomeEnum
-{
+if($true) {
+
+    enum SomeEnum {}
+
 }
