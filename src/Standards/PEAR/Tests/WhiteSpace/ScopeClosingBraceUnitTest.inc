@@ -152,3 +152,13 @@ $match = match ($test) {
     1 => 'a',
     2 => 'b'
     };
+
+enum Enum
+{
+}
+
+enum Suits {}
+
+enum Cards
+{
+    }
