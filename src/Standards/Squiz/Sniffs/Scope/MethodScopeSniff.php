@@ -54,17 +54,8 @@ class MethodScopeSniff extends AbstractScopeSniff
             return;
         }
 
-        $modifier = null;
-        for ($i = ($stackPtr - 1); $i > 0; $i--) {
-            if ($tokens[$i]['line'] < $tokens[$stackPtr]['line']) {
-                break;
-            } else if (isset(Tokens::$scopeModifiers[$tokens[$i]['code']]) === true) {
-                $modifier = $i;
-                break;
-            }
-        }
-
-        if ($modifier === null) {
+        $properties = $phpcsFile->getMethodProperties($stackPtr);
+        if ($properties['scope_specified'] === false) {
             $error = 'Visibility must be declared on method "%s"';
             $data  = [$methodName];
             $phpcsFile->addError($error, $stackPtr, 'Missing', $data);
