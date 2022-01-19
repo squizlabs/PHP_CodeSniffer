@@ -48,3 +48,10 @@ enum SomeEnum
     private function func1() {}
     protected function func1() {}
 }
+
+class UnconventionalSpacing {
+    public
+    static
+    function
+    myFunction() {}
+}
