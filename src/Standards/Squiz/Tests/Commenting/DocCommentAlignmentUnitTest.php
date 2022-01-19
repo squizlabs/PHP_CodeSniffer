@@ -42,6 +42,10 @@ class DocCommentAlignmentUnitTest extends AbstractSniffUnitTest
             75 => 1,
             83 => 1,
             84 => 1,
+            90 => 1,
+            91 => 1,
+            95 => 1,
+            96 => 1,
         ];
 
     }//end getErrorList()

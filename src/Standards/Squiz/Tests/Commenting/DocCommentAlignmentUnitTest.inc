@@ -85,6 +85,18 @@ abstract class MyClass
     readonly public string $prop;
 }
 
+/**
+ * Some info about the enum here
+  *
+*/
+enum Suits: string
+{
+    /**
+      * Some info about the case here.
+       */
+    case HEARTS;
+}
+
 /** ************************************************************************
  * Example with no errors.
  **************************************************************************/
