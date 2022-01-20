@@ -45,6 +45,14 @@ class ScopeIndentSniff implements Sniff
     public $exact = false;
 
     /**
+     * Enforces the entire scope of a function to be indented. Including
+     * blank lines.
+     *
+     * @var boolean
+     */
+    public $indentWhitespaceInScope = false;
+
+    /**
      * Should tabs be used for indenting?
      *
      * If TRUE, fixes will be made using tabs instead of spaces.
@@ -256,6 +264,9 @@ class ScopeIndentSniff implements Sniff
                     ) {
                         $checkToken  = ($i + 1);
                         $tokenIndent = ($tokens[($i + 1)]['column'] - 1);
+                    } else if ($this->indentWhitespaceInScope === true) {
+                        $checkToken  = ($i);
+                        $tokenIndent = ($tokens[($i)]['length']);
                     }
                 } else {
                     $checkToken  = $i;
@@ -1532,7 +1543,9 @@ class ScopeIndentSniff implements Sniff
             }
         }
 
-        if ($tokens[$stackPtr]['column'] === 1) {
+        if ($tokens[$stackPtr]['column'] === 1 && $tokens[$stackPtr]['code'] === T_WHITESPACE) {
+            $accepted = $phpcsFile->fixer->replaceToken(($stackPtr), $padding.PHP_EOL);
+        } else if ($tokens[$stackPtr]['column'] === 1) {
             $trimmed  = ltrim($tokens[$stackPtr]['content']);
             $accepted = $phpcsFile->fixer->replaceToken($stackPtr, $padding.$trimmed);
         } else {
