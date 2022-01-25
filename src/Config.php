@@ -1597,7 +1597,7 @@ class Config
         if ($temp === false) {
             $output  = '<'.'?php'."\n".' $phpCodeSnifferConfig = ';
             $output .= var_export($phpCodeSnifferConfig, true);
-            $output .= "\n?".'>';
+            $output .= ";\n?".'>';
 
             if (file_put_contents($configFile, $output) === false) {
                 $error = 'ERROR: Config file '.$configFile.' could not be written'.PHP_EOL.PHP_EOL;
