@@ -57,7 +57,7 @@ class Cbf implements Report
             // even if nothing was fixed. Exit here because we
             // can't process any more than 1 file in this setup.
             $fixedContent = $phpcsFile->fixer->getContents();
-            throw new DeepExitException($fixedContent, 1);
+            throw new DeepExitException($fixedContent, $errors > 0);
         }
 
         if ($errors === 0) {
