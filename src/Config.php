@@ -368,7 +368,7 @@ class Config
         }//end if
 
         if (defined('STDIN') === false
-            || strtoupper(substr(PHP_OS, 0, 3)) === 'WIN'
+            || stripos(PHP_OS, 'WIN') === 0
         ) {
             return;
         }
@@ -1517,7 +1517,7 @@ class Config
             return self::$executablePaths[$name];
         }
 
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        if (stripos(PHP_OS, 'WIN') === 0) {
             $cmd = 'where '.escapeshellarg($name).' 2> nul';
         } else {
             $cmd = 'which '.escapeshellarg($name).' 2> /dev/null';

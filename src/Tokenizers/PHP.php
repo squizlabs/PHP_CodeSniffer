@@ -511,7 +511,7 @@ class PHP extends Tokenizer
         if (PHP_CODESNIFFER_VERBOSITY > 1) {
             echo "\t*** START PHP TOKENIZING ***".PHP_EOL;
             $isWin = false;
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            if (stripos(PHP_OS, 'WIN') === 0) {
                 $isWin = true;
             }
         }
