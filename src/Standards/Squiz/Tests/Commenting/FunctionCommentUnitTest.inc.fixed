@@ -1042,7 +1042,19 @@ public function ignored() {
 
 // phpcs:set Squiz.Commenting.FunctionComment specialMethods[] __construct,__destruct
 
-/** 
+/**
  * @return void
  * @throws Exception If any other error occurs. */
 function throwCommentOneLine() {}
+
+/**
+ * Using generic as a type hint should satisfy a specified object parameter type.
+ * @see https://phpstan.org/blog/generics-in-php-using-phpdocs
+ *
+ * @param Collection<int, string> $values An object with int, string pairs.
+ *
+ * @return void
+ */
+public function specifiedArray1(Collection $values) {
+
+}// end specifiedArray1()
