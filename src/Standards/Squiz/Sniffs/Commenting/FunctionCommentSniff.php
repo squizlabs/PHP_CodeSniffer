@@ -419,14 +419,14 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 
                 // Check type hint for array and custom type.
                 $suggestedTypeHint = '';
-                if (preg_match('/^(.*)<.*>$/', $suggestedName, $matches)) {
-                    $suggestedTypeHint = $matches[1];
-                } else if (strpos($suggestedName, 'array') !== false || substr($suggestedName, -2) === '[]') {
+                if (strpos($suggestedName, 'array') !== false || substr($suggestedName, -2) === '[]') {
                     $suggestedTypeHint = 'array';
                 } else if (strpos($suggestedName, 'callable') !== false) {
                     $suggestedTypeHint = 'callable';
                 } else if (strpos($suggestedName, 'callback') !== false) {
                     $suggestedTypeHint = 'callable';
+                } else if (preg_match('/^([^<]+)<[^>]+>$/', $suggestedName, $matches)) {
+                    $suggestedTypeHint = $matches[1];
                 } else if (in_array($suggestedName, Common::$allowedTypes, true) === false) {
                     $suggestedTypeHint = $suggestedName;
                 }
