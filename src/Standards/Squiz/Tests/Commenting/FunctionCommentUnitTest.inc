@@ -1055,6 +1055,6 @@ function throwCommentOneLine() {}
  *
  * @return void
  */
-public function specifiedArray1(Collection $values) {
+public function genericType(Collection $values) {
 
-}// end specifiedArray1()
+}// end genericType()
