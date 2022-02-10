@@ -463,6 +463,18 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
                 'T_IMPLEMENTS',
             ],
             [
+                '/* testClassInstantiationParentIsKeyword */',
+                'T_PARENT',
+            ],
+            [
+                '/* testClassInstantiationSelfIsKeyword */',
+                'T_SELF',
+            ],
+            [
+                '/* testClassInstantiationStaticIsKeyword */',
+                'T_STATIC',
+            ],
+            [
                 '/* testNamespaceInNameIsKeyword */',
                 'T_NAMESPACE',
             ],
