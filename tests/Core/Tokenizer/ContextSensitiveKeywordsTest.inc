@@ -206,5 +206,9 @@ $anonymousClass = new /* testAnonymousClassIsKeyword */ class {};
 $anonymousClass2 = new class /* testExtendsInAnonymousClassIsKeyword */ extends SomeParent {};
 $anonymousClass3 = new class /* testImplementsInAnonymousClassIsKeyword */ implements SomeInterface {};
 
+$instantiated1 = new /* testClassInstantiationParentIsKeyword */ parent();
+$instantiated2 = new /* testClassInstantiationSelfIsKeyword */ SELF;
+$instantiated3 = new /* testClassInstantiationStaticIsKeyword */ static($param);
+
 class Foo extends /* testNamespaceInNameIsKeyword */ namespace\Exception
 {}
