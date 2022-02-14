@@ -1905,6 +1905,7 @@ class PHP extends Tokenizer
                     T_OPEN_TAG           => true,
                     T_OPEN_CURLY_BRACKET => true,
                     T_INLINE_THEN        => true,
+                    T_ENUM               => true,
                 ];
 
                 for ($x = ($newStackPtr - 1); $x > 0; $x--) {
@@ -1915,6 +1916,7 @@ class PHP extends Tokenizer
 
                 if ($finalTokens[$x]['code'] !== T_CASE
                     && $finalTokens[$x]['code'] !== T_INLINE_THEN
+                    && $finalTokens[$x]['code'] !== T_ENUM
                 ) {
                     $finalTokens[$newStackPtr] = [
                         'content' => $token[1].':',
