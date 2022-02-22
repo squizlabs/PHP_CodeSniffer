@@ -608,8 +608,11 @@ class PHP extends Tokenizer
             ) {
                 $preserveKeyword = false;
 
-                // `new class` should be preserved
-                if ($token[0] === T_CLASS && $finalTokens[$lastNotEmptyToken]['code'] === T_NEW) {
+                // `new class`, and `new static` should be preserved.
+                if ($finalTokens[$lastNotEmptyToken]['code'] === T_NEW
+                    && ($token[0] === T_CLASS
+                    || $token[0] === T_STATIC)
+                ) {
                     $preserveKeyword = true;
                 }
 
@@ -1970,16 +1973,24 @@ class PHP extends Tokenizer
                     && $token[0] === T_STRING
                     && isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true
                 ) {
-                    // Special case for syntax like: return new self
-                    // where self should not be a string.
+                    // Special case for syntax like: return new self/new parent
+                    // where self/parent should not be a string.
+                    $tokenContentLower = strtolower($token[1]);
                     if ($finalTokens[$lastNotEmptyToken]['code'] === T_NEW
-                        && strtolower($token[1]) === 'self'
+                        && ($tokenContentLower === 'self' || $tokenContentLower === 'parent')
                     ) {
                         $finalTokens[$newStackPtr] = [
                             'content' => $token[1],
-                            'code'    => T_SELF,
-                            'type'    => 'T_SELF',
                         ];
+                        if ($tokenContentLower === 'self') {
+                            $finalTokens[$newStackPtr]['code'] = T_SELF;
+                            $finalTokens[$newStackPtr]['type'] = 'T_SELF';
+                        }
+
+                        if ($tokenContentLower === 'parent') {
+                            $finalTokens[$newStackPtr]['code'] = T_PARENT;
+                            $finalTokens[$newStackPtr]['type'] = 'T_PARENT';
+                        }
                     } else {
                         $finalTokens[$newStackPtr] = [
                             'content' => $token[1],
