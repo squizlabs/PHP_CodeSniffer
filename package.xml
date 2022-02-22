@@ -49,6 +49,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Squiz.Commenting.VariableComment
     -- Squiz.WhiteSpace.ScopeKeywordSpacing
     -- Thanks to Juliette Reinders Folmer for the patches
+  - The parallel feature is now more efficent and runs faster in some situations due to improved process managment
+    -- Thanks to Sergei Morozov for the patch
   - Generic.PHP.UpperCaseConstant and Generic.PHP.LowerCaseConstant now ignore type declarations
     -- These sniffs now only report errors for true/false/null when used as values
     -- Thanks to Juliette Reinders Folmer for the patch
