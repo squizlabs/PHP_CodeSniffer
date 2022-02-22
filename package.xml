@@ -63,6 +63,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3530 : Line indented incorrectly false positive when using match-expression inside switch case
   - Fixed bug #3534 : Name of typed enum tokenized as T_GOTO_LABEL
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3546 : Tokenizer/PHP: bug fix - parent/static keywords in class instantiations
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
