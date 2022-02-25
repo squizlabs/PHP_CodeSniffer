@@ -511,7 +511,7 @@ switch ( $a ) {
     case 1:
         if ($a) {
             try {
-                return true;
+                return true; // Comment.
             } catch (MyException $e) {
                 throw new Exception($e->getMessage());
             }
@@ -582,5 +582,17 @@ switch ( $a ) {
         }
     default:
         $other = $code;
+        break;
+}
+
+// Issue 3550 - comment after terminating statement.
+switch (rand()) {
+    case 1:
+        if (rand() === 1) {
+            break;
+        } else {
+            break; // comment
+        }
+    default:
         break;
 }
