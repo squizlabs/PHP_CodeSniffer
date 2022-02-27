@@ -2,6 +2,10 @@
 
 $a = true;
 
+// Warning
+if ($a)
+    echo true;
+
 // Fixable errors
 if ($a) {
     echo true;
