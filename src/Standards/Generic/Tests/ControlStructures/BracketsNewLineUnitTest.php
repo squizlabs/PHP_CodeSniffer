@@ -47,6 +47,9 @@ class BracketsNewLineUnitTest extends AbstractSniffUnitTest
             188 => 1,
             209 => 1,
             227 => 1,
+            239 => 1,
+            251 => 1,
+            259 => 1,
         ];
 
     }//end getErrorList()

@@ -233,3 +233,30 @@ class Application
             );
     }
 }
+
+// Examples of comments being placed between the closing parenthesis and the opening brace of the control structures
+if ($a) // comment
+
+{
+    echo true;
+}
+
+if ($a)
+// comment
+{
+    echo true;
+}
+
+if ($a)
+
+// comment
+{
+    echo true;
+}
+
+if ($a)
+// comment
+
+{
+    echo true;
+}
