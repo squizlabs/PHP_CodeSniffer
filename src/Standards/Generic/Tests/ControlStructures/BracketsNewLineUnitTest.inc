@@ -260,3 +260,11 @@ if ($a)
 {
     echo true;
 }
+
+// Examples of the phpcs annotations like "phpcs ignore for reasons"
+if ($a)
+// phpcs:ignore -- for reasons
+
+{
+    echo true;
+}
