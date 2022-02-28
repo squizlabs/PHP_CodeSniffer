@@ -337,6 +337,32 @@ class BackfillNumericSeparatorTest extends AbstractMethodUnitTest
                 ],
             ],
             [
+                '/* testInvalid11 */',
+                [
+                    [
+                        'code'    => T_LNUMBER,
+                        'content' => '0',
+                    ],
+                    [
+                        'code'    => T_STRING,
+                        'content' => 'o_137',
+                    ],
+                ],
+            ],
+            [
+                '/* testInvalid12 */',
+                [
+                    [
+                        'code'    => T_LNUMBER,
+                        'content' => '0',
+                    ],
+                    [
+                        'code'    => T_STRING,
+                        'content' => 'O_41',
+                    ],
+                ],
+            ],
+            [
                 '/* testCalc1 */',
                 [
                     [
