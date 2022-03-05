@@ -26,7 +26,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -39,7 +39,7 @@ jobs:
         run: php scripts/build-phar.php
 
       - name: Upload the PHPCS phar
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() && matrix.php == '8.0' }}
         with:
           name: phpcs-phar
@@ -48,7 +48,7 @@ jobs:
           retention-days: 28
 
       - name: Upload the PHPCBF phar
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ success() && matrix.php == '8.0' }}
         with:
           name: phpcbf-phar
@@ -89,7 +89,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup ini config
         id: set_ini
@@ -159,7 +159,7 @@ jobs:
         run: composer validate --no-check-all --strict
 
       - name: Download the PHPCS phar
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: phpcs-phar
 
