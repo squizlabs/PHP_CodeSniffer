@@ -347,6 +347,7 @@ class PHP extends Tokenizer
         T_ENDSWITCH                => 9,
         T_ENDWHILE                 => 8,
         T_ENUM                     => 4,
+        T_ENUM_CASE                => 4,
         T_EVAL                     => 4,
         T_EXTENDS                  => 7,
         T_FILE                     => 8,
@@ -476,6 +477,7 @@ class PHP extends Tokenizer
         T_INTERFACE                => true,
         T_TRAIT                    => true,
         T_ENUM                     => true,
+        T_ENUM_CASE                => true,
         T_EXTENDS                  => true,
         T_IMPLEMENTS               => true,
         T_ATTRIBUTE                => true,
@@ -985,6 +987,9 @@ class PHP extends Tokenizer
                     && is_array($tokens[$i]) === true
                     && $tokens[$i][0] === T_STRING
                 ) {
+                    // Modify $tokens directly so we can use it later when converting enum "case".
+                    $tokens[$stackPtr][0] = T_ENUM;
+
                     $newToken            = [];
                     $newToken['code']    = T_ENUM;
                     $newToken['type']    = 'T_ENUM';
@@ -993,6 +998,65 @@ class PHP extends Tokenizer
 
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {
                         echo "\t\t* token $stackPtr changed from T_STRING to T_ENUM".PHP_EOL;
+                    }
+
+                    $newStackPtr++;
+                    continue;
+                }
+            }//end if
+
+            /*
+                Convert enum "case" to T_ENUM_CASE
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_CASE
+                && isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === false
+            ) {
+                $isEnumCase = false;
+                $scope      = 1;
+
+                for ($i = ($stackPtr - 1); $i > 0; $i--) {
+                    if ($tokens[$i] === '}') {
+                        $scope++;
+                        continue;
+                    }
+
+                    if ($tokens[$i] === '{') {
+                        $scope--;
+                        continue;
+                    }
+
+                    if (is_array($tokens[$i]) === false) {
+                        continue;
+                    }
+
+                    if ($scope !== 0) {
+                        continue;
+                    }
+
+                    if ($tokens[$i][0] === T_SWITCH) {
+                        break;
+                    }
+
+                    if ($tokens[$i][0] === T_ENUM || $tokens[$i][0] === T_ENUM_CASE) {
+                        $isEnumCase = true;
+                        break;
+                    }
+                }//end for
+
+                if ($isEnumCase === true) {
+                    // Modify $tokens directly so we can use it as optimisation for other enum "case".
+                    $tokens[$stackPtr][0] = T_ENUM_CASE;
+
+                    $newToken            = [];
+                    $newToken['code']    = T_ENUM_CASE;
+                    $newToken['type']    = 'T_ENUM_CASE';
+                    $newToken['content'] = $token[1];
+                    $finalTokens[$newStackPtr] = $newToken;
+
+                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                        echo "\t\t* token $stackPtr changed from T_CASE to T_ENUM_CASE".PHP_EOL;
                     }
 
                     $newStackPtr++;
