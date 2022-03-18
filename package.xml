@@ -29,6 +29,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Added support for PHP 8.1 explicit octal notation
     -- This new syntax has been backfilled for PHP versions less than 8.1
     -- Thanks to Mark Baker for the patch
+    -- Thanks to Juliette Reinders Folmer for additional fixes
   - Added support for PHP 8.1 enums
     -- This new syntax has been backfilled for PHP versions less than 8.1
     -- Includes a new T_ENUM_CASE token to represent the case statements inside an enum
