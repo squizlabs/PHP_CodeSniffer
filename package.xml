@@ -66,6 +66,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3546 : Tokenizer/PHP: bug fix - parent/static keywords in class instantiations
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3550 : False positive from PSR2.ControlStructures.SwitchDeclaration.TerminatingComment when using trailing comment
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
