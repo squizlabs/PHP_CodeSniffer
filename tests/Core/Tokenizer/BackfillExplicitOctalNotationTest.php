@@ -62,6 +62,27 @@ class BackfillExplicitOctalNotationTest extends AbstractMethodUnitTest
                     'value'  => '0O137041',
                 ],
             ],
+            [
+                [
+                    'marker' => '/* testExplicitOctalWithNumericSeparator */',
+                    'type'   => 'T_LNUMBER',
+                    'value'  => '0o137_041',
+                ],
+            ],
+            [
+                [
+                    'marker' => '/* testInvalid1 */',
+                    'type'   => 'T_LNUMBER',
+                    'value'  => '0',
+                ],
+            ],
+            [
+                [
+                    'marker' => '/* testInvalid2 */',
+                    'type'   => 'T_LNUMBER',
+                    'value'  => '0',
+                ],
+            ],
         ];
 
     }//end dataExplicitOctalNotation()

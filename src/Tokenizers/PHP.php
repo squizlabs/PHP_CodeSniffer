@@ -730,7 +730,8 @@ class PHP extends Tokenizer
                 && (isset($tokens[($stackPtr + 1)]) === true
                 && is_array($tokens[($stackPtr + 1)]) === true
                 && $tokens[($stackPtr + 1)][0] === T_STRING
-                && strtolower($tokens[($stackPtr + 1)][1][0]) === 'o')
+                && strtolower($tokens[($stackPtr + 1)][1][0]) === 'o'
+                && $tokens[($stackPtr + 1)][1][1] !== '_')
             ) {
                 $finalTokens[$newStackPtr] = [
                     'code'    => T_LNUMBER,
