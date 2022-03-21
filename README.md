@@ -33,9 +33,9 @@ php phpcbf.phar -h
 
 ### Composer
 If you use Composer, you can install PHP_CodeSniffer system-wide with the following command:
-
-    composer global require "squizlabs/php_codesniffer=*"
-
+```bash
+composer global require "squizlabs/php_codesniffer=*"
+```
 Make sure you have the composer bin dir in your PATH. The default value is `~/.composer/vendor/bin/`, but you can check the value that you need to use by running `composer global config bin-dir --absolute`.
 
 Or alternatively, include a dependency for `squizlabs/php_codesniffer` in your `composer.json` file. For example:
@@ -49,42 +49,43 @@ Or alternatively, include a dependency for `squizlabs/php_codesniffer` in your `
 ```
 
 You will then be able to run PHP_CodeSniffer from the vendor bin directory:
-
-    ./vendor/bin/phpcs -h
-    ./vendor/bin/phpcbf -h
-
+```bash
+./vendor/bin/phpcs -h
+./vendor/bin/phpcbf -h
+```
 ### Phive
 If you use Phive, you can install PHP_CodeSniffer as a project tool using the following commands:
-
-    phive install phpcs
-    phive install phpcbf
-
+```bash
+phive install phpcs
+phive install phpcbf
+```
 You will then be able to run PHP_CodeSniffer from the tools directory:
-
-    ./tools/phpcs -h
-    ./tools/phpcbf -h
-
+```bash
+./tools/phpcs -h
+./tools/phpcbf -h
+```
 ### Git Clone
 You can also download the PHP_CodeSniffer source and run the `phpcs` and `phpcbf` commands directly from the Git clone:
-
-    git clone https://github.com/squizlabs/PHP_CodeSniffer.git
-    cd PHP_CodeSniffer
-    php bin/phpcs -h
-    php bin/phpcbf -h
-
+```bash
+git clone https://github.com/squizlabs/PHP_CodeSniffer.git
+cd PHP_CodeSniffer
+php bin/phpcs -h
+php bin/phpcbf -h
+```
 ## Getting Started
 
-The default coding standard used by PHP_CodeSniffer is the PSR12 coding standard. To check a file against the PEAR coding standard, simply specify the file's location:
-
-    $ phpcs /path/to/code/myfile.php
-
+The default coding standard used by PHP_CodeSniffer is the PSR12 coding standard. To check a file against the PSR12 coding standard, simply specify the file's location:
+```bash
+phpcs /path/to/code/myfile.php
+```
 Or if you wish to check an entire directory you can specify the directory location instead of a file.
-
-    $ phpcs /path/to/code-directory
-
-If you wish to check your code against the PSR-12 coding standard, use the `--standard` command line argument:
-
-    $ phpcs --standard=PSR12 /path/to/code-directory
+```bash
+phpcs /path/to/code-directory
+```
+If you wish to check your code against the PSR2 coding standard, use the `--standard` command line argument:
+```bash
+phpcs --standard=PSR2 /path/to/code-directory
+```
 
 If PHP_CodeSniffer finds any coding standard errors, a report will be shown after running the command.
 
