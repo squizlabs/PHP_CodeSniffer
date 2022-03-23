@@ -19,7 +19,9 @@ $class->unset($filepath);
 
 function delete() {}
 function unset() {}
+/** @return int */
 function sizeof() {}
+/** @return int */
 function count() {}
 
 trait DelProvider {
