@@ -261,3 +261,18 @@ $anon = class {
     ]
     private mixed $baz;
 };
+
+enum Suit
+{
+    /* testEnumProperty */
+    protected $anonymous;
+}
+
+enum Direction implements ArrayAccess
+{
+    case Up;
+    case Down;
+
+    /* testEnumMethodParamNotProperty */
+    public function offsetGet($val) { ... }
+}
