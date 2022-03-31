@@ -95,6 +95,7 @@ class FileCommentSniff implements Sniff
             T_CLASS,
             T_INTERFACE,
             T_TRAIT,
+            T_ENUM,
             T_FUNCTION,
             T_CLOSURE,
             T_PUBLIC,

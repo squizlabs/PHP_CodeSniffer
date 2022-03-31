@@ -44,6 +44,7 @@ class ClassCommentUnitTest extends AbstractSniffUnitTest
             96  => 5,
             106 => 5,
             116 => 5,
+            126 => 5,
         ];
 
     }//end getErrorList()

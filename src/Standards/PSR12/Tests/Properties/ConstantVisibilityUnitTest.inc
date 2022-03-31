@@ -15,3 +15,8 @@ class SampleEnum
 
     final private const BAZ = 'SAMPLE';
 }
+
+enum SomeEnum {
+    public const BAR = 'bar';
+    const BAZ = 'baz';
+}

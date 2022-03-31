@@ -50,6 +50,9 @@ class FileCommentUnitTest extends AbstractSniffUnitTest
         case 'FileCommentUnitTest.2.inc':
             return [1 => 1];
 
+        case 'FileCommentUnitTest.3.inc':
+            return [1 => 1];
+
         default:
             return [];
         }//end switch

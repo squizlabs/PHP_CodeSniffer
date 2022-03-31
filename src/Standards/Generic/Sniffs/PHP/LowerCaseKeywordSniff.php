@@ -50,6 +50,7 @@ class LowerCaseKeywordSniff implements Sniff
             T_ENDIF,
             T_ENDSWITCH,
             T_ENDWHILE,
+            T_ENUM,
             T_EVAL,
             T_EXIT,
             T_EXTENDS,

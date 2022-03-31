@@ -1223,7 +1223,7 @@ class File
 
 
     /**
-     * Returns the declaration names for classes, interfaces, traits, and functions.
+     * Returns the declaration name for classes, interfaces, traits, enums, and functions.
      *
      * @param int $stackPtr The position of the declaration token which
      *                      declared the class, interface, trait, or function.
@@ -1232,7 +1232,7 @@ class File
      *                     or NULL if the function or class is anonymous.
      * @throws \PHP_CodeSniffer\Exceptions\RuntimeException If the specified token is not of type
      *                                                      T_FUNCTION, T_CLASS, T_ANON_CLASS,
-     *                                                      T_CLOSURE, T_TRAIT, or T_INTERFACE.
+     *                                                      T_CLOSURE, T_TRAIT, T_ENUM, or T_INTERFACE.
      */
     public function getDeclarationName($stackPtr)
     {
@@ -1246,8 +1246,9 @@ class File
             && $tokenCode !== T_CLASS
             && $tokenCode !== T_INTERFACE
             && $tokenCode !== T_TRAIT
+            && $tokenCode !== T_ENUM
         ) {
-            throw new RuntimeException('Token type "'.$this->tokens[$stackPtr]['type'].'" is not T_FUNCTION, T_CLASS, T_INTERFACE or T_TRAIT');
+            throw new RuntimeException('Token type "'.$this->tokens[$stackPtr]['type'].'" is not T_FUNCTION, T_CLASS, T_INTERFACE, T_TRAIT or T_ENUM');
         }
 
         if ($tokenCode === T_FUNCTION

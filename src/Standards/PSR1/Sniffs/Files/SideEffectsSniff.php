@@ -82,6 +82,7 @@ class SideEffectsSniff implements Sniff
             T_CLASS     => T_CLASS,
             T_INTERFACE => T_INTERFACE,
             T_TRAIT     => T_TRAIT,
+            T_ENUM      => T_ENUM,
             T_FUNCTION  => T_FUNCTION,
         ];
 

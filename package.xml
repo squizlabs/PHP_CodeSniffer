@@ -1015,6 +1015,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc.fixed" role="test" />
@@ -1103,6 +1104,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Classes">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.php" role="test" />
        </dir>
        <dir name="Files">
@@ -1654,6 +1656,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.8.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.9.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.js" role="test" />
@@ -1771,6 +1774,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.php" role="test" />
        </dir>
        <dir name="Formatting">

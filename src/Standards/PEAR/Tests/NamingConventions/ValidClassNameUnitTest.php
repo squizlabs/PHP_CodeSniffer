@@ -44,6 +44,12 @@ class ValidClassNameUnitTest extends AbstractSniffUnitTest
             64 => 1,
             66 => 2,
             68 => 1,
+            72 => 1,
+            74 => 2,
+            76 => 1,
+            86 => 1,
+            88 => 2,
+            90 => 1,
         ];
 
     }//end getErrorList()
