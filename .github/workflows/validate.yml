@@ -25,7 +25,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install xmllint
-        run: sudo apt-get install --no-install-recommends -y libxml2-utils
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y libxml2-utils
 
       - name: Retrieve XML Schema
         run: curl -O https://www.w3.org/2012/04/XMLSchema.xsd
