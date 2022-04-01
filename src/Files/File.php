@@ -2765,11 +2765,11 @@ class File
 
 
     /**
-     * Returns the names of the interfaces that the specified class implements.
+     * Returns the names of the interfaces that the specified class or enum implements.
      *
      * Returns FALSE on error or if there are no implemented interface names.
      *
-     * @param int $stackPtr The stack position of the class.
+     * @param int $stackPtr The stack position of the class or enum token.
      *
      * @return array|false
      */
@@ -2782,6 +2782,7 @@ class File
 
         if ($this->tokens[$stackPtr]['code'] !== T_CLASS
             && $this->tokens[$stackPtr]['code'] !== T_ANON_CLASS
+            && $this->tokens[$stackPtr]['code'] !== T_ENUM
         ) {
             return false;
         }
