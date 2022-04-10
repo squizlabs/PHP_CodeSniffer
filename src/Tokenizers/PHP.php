@@ -761,16 +761,32 @@ class PHP extends Tokenizer
                 && $tokens[($stackPtr + 1)][0] === T_STRING
                 && strtolower($tokens[($stackPtr + 1)][1][0]) === 'o'
                 && $tokens[($stackPtr + 1)][1][1] !== '_')
+                && preg_match('`^(o[0-7]+(?:_[0-7]+)?)([0-9_]*)$`i', $tokens[($stackPtr + 1)][1], $matches) === 1
             ) {
                 $finalTokens[$newStackPtr] = [
                     'code'    => T_LNUMBER,
                     'type'    => 'T_LNUMBER',
-                    'content' => $token[1] .= $tokens[($stackPtr + 1)][1],
+                    'content' => $token[1] .= $matches[1],
                 ];
-                $stackPtr++;
                 $newStackPtr++;
+
+                if (isset($matches[2]) === true && $matches[2] !== '') {
+                    $type = 'T_LNUMBER';
+                    if ($matches[2][0] === '_') {
+                        $type = 'T_STRING';
+                    }
+
+                    $finalTokens[$newStackPtr] = [
+                        'code'    => constant($type),
+                        'type'    => $type,
+                        'content' => $matches[2],
+                    ];
+                    $newStackPtr++;
+                }
+
+                $stackPtr++;
                 continue;
-            }
+            }//end if
 
             /*
                 PHP 8.1 introduced two dedicated tokens for the & character.
