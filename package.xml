@@ -277,6 +277,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <dir name="Generic">
       <dir name="Docs">
        <dir name="Arrays">
+        <file baseinstalldir="PHP/CodeSniffer" name="ArrayIndentStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowLongArraySyntaxStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowShortArraySyntaxStandard.xml" role="php" />
        </dir>

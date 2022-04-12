@@ -18,13 +18,14 @@ class Text extends Generator
     /**
      * Process the documentation for a single sniff.
      *
-     * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                      It represents the "documentation" tag in the XML
-     *                      standard file.
+     * @param \DOMNode $doc  The DOMNode object for the sniff.
+     *                       It represents the "documentation"
+     *                       tag in the XML standard file.
+     * @param string   $rule The rule.
      *
      * @return void
      */
-    public function processSniff(\DOMNode $doc)
+    public function processSniff(\DOMNode $doc, $rule)
     {
         $this->printTitle($doc);
 

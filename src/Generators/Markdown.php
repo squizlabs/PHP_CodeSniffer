@@ -30,7 +30,8 @@ class Markdown extends Generator
             $doc = new \DOMDocument();
             $doc->load($file);
             $documentation = $doc->getElementsByTagName('documentation')->item(0);
-            $this->processSniff($documentation);
+            $rule          = $this->getRule($file);
+            $this->processSniff($documentation, $rule);
         }
 
         $this->printFooter();
@@ -75,13 +76,14 @@ class Markdown extends Generator
     /**
      * Process the documentation for a single sniff.
      *
-     * @param \DOMNode $doc The DOMNode object for the sniff.
-     *                      It represents the "documentation" tag in the XML
-     *                      standard file.
+     * @param \DOMNode $doc  The DOMNode object for the sniff.
+     *                       It represents the "documentation"
+     *                       tag in the XML standard file.
+     * @param string   $rule The rule.
      *
      * @return void
      */
-    protected function processSniff(\DOMNode $doc)
+    protected function processSniff(\DOMNode $doc, $rule)
     {
         $title = $this->getTitle($doc);
         echo PHP_EOL."## $title".PHP_EOL;
