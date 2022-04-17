@@ -11,7 +11,8 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use PHP_CodeSniffer\Util;
+use PHP_CodeSniffer\Util\Common;
+use PHP_CodeSniffer\Util\Tokens;
 
 class LowerCaseKeywordSniff implements Sniff
 {
@@ -24,82 +25,20 @@ class LowerCaseKeywordSniff implements Sniff
      */
     public function register()
     {
-        return [
-            T_ABSTRACT,
-            T_ARRAY,
-            T_AS,
-            T_BREAK,
-            T_CALLABLE,
-            T_CASE,
-            T_CATCH,
-            T_CLASS,
-            T_CLONE,
-            T_CLOSURE,
-            T_CONST,
-            T_CONTINUE,
-            T_DECLARE,
-            T_DEFAULT,
-            T_DO,
-            T_ECHO,
-            T_ELSE,
-            T_ELSEIF,
-            T_EMPTY,
-            T_ENDDECLARE,
-            T_ENDFOR,
-            T_ENDFOREACH,
-            T_ENDIF,
-            T_ENDSWITCH,
-            T_ENDWHILE,
-            T_ENUM,
-            T_EVAL,
-            T_EXIT,
-            T_EXTENDS,
-            T_FINAL,
-            T_FINALLY,
-            T_FN,
-            T_FOR,
-            T_FOREACH,
-            T_FUNCTION,
-            T_GLOBAL,
-            T_GOTO,
-            T_IF,
-            T_IMPLEMENTS,
-            T_INCLUDE,
-            T_INCLUDE_ONCE,
-            T_INSTANCEOF,
-            T_INSTEADOF,
-            T_INTERFACE,
-            T_ISSET,
-            T_LIST,
-            T_LOGICAL_AND,
-            T_LOGICAL_OR,
-            T_LOGICAL_XOR,
-            T_MATCH,
-            T_MATCH_DEFAULT,
-            T_NAMESPACE,
-            T_NEW,
-            T_PARENT,
-            T_PRINT,
-            T_PRIVATE,
-            T_PROTECTED,
-            T_PUBLIC,
-            T_READONLY,
-            T_REQUIRE,
-            T_REQUIRE_ONCE,
-            T_RETURN,
-            T_SELF,
-            T_STATIC,
-            T_SWITCH,
-            T_THROW,
-            T_TRAIT,
-            T_TRY,
-            T_UNSET,
-            T_USE,
-            T_VAR,
-            T_WHILE,
-            T_YIELD,
-            T_YIELD_FROM,
+        $targets  = Tokens::$contextSensitiveKeywords;
+        $targets += [
+            T_CLOSURE       => T_CLOSURE,
+            T_EMPTY         => T_EMPTY,
+            T_ENUM_CASE     => T_ENUM_CASE,
+            T_EVAL          => T_EVAL,
+            T_ISSET         => T_ISSET,
+            T_MATCH_DEFAULT => T_MATCH_DEFAULT,
+            T_PARENT        => T_PARENT,
+            T_SELF          => T_SELF,
+            T_UNSET         => T_UNSET,
         ];
+
+        return $targets;
 
     }//end register()
 
@@ -124,7 +63,7 @@ class LowerCaseKeywordSniff implements Sniff
                 $phpcsFile->recordMetric($stackPtr, 'PHP keyword case', 'mixed');
             }
 
-            $messageKeyword = Util\Common::prepareForOutput($keyword);
+            $messageKeyword = Common::prepareForOutput($keyword);
 
             $error = 'PHP keywords must be lowercase; expected "%s" but found "%s"';
             $data  = [
