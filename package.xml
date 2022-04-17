@@ -34,6 +34,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- This new syntax has been backfilled for PHP versions less than 8.1
     -- Includes a new T_ENUM_CASE token to represent the case statements inside an enum
     -- Thanks to Jaroslav Hanslík for the patch
+    -- Thanks to Juliette Reinders Folmer for additional sniff support
   - Added support for the PHP 8.1 readonly token
     -- Tokenzing of the readonly keyword has been backfilled for PHP versions less than 8.1
     -- Thanks to Jaroslav Hanslík for the patch
