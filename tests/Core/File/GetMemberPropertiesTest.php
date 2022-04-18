@@ -662,6 +662,10 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'nullable_type'   => false,
                 ],
             ],
+            [
+                '/* testEnumProperty */',
+                [],
+            ],
         ];
 
     }//end dataGetMemberProperties()
@@ -703,6 +707,7 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
             ['/* testGlobalVariable */'],
             ['/* testNestedMethodParam 1 */'],
             ['/* testNestedMethodParam 2 */'],
+            ['/* testEnumMethodParamNotProperty */'],
         ];
 
     }//end dataNotClassProperty()

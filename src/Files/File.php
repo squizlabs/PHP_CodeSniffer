@@ -1791,23 +1791,26 @@ class File
             && $this->tokens[$ptr]['code'] !== T_TRAIT)
         ) {
             if (isset($this->tokens[$ptr]) === true
-                && $this->tokens[$ptr]['code'] === T_INTERFACE
+                && ($this->tokens[$ptr]['code'] === T_INTERFACE
+                || $this->tokens[$ptr]['code'] === T_ENUM)
             ) {
-                // T_VARIABLEs in interfaces can actually be method arguments
+                // T_VARIABLEs in interfaces/enums can actually be method arguments
                 // but they wont be seen as being inside the method because there
                 // are no scope openers and closers for abstract methods. If it is in
                 // parentheses, we can be pretty sure it is a method argument.
                 if (isset($this->tokens[$stackPtr]['nested_parenthesis']) === false
                     || empty($this->tokens[$stackPtr]['nested_parenthesis']) === true
                 ) {
-                    $error = 'Possible parse error: interfaces may not include member vars';
-                    $this->addWarning($error, $stackPtr, 'Internal.ParseError.InterfaceHasMemberVar');
+                    $error = 'Possible parse error: %ss may not include member vars';
+                    $code  = sprintf('Internal.ParseError.%sHasMemberVar', ucfirst($this->tokens[$ptr]['content']));
+                    $data  = [strtolower($this->tokens[$ptr]['content'])];
+                    $this->addWarning($error, $stackPtr, $code, $data);
                     return [];
                 }
             } else {
                 throw new RuntimeException('$stackPtr is not a class member var');
             }
-        }
+        }//end if
 
         // Make sure it's not a method parameter.
         if (empty($this->tokens[$stackPtr]['nested_parenthesis']) === false) {
