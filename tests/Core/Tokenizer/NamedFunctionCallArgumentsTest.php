@@ -831,6 +831,7 @@ class NamedFunctionCallArgumentsTest extends AbstractMethodUnitTest
             'resource',
             'mixed',
             'numeric',
+            'never',
 
             // Not reserved keyword, but do have their own token in PHPCS.
             'parent',

@@ -38,6 +38,7 @@ class LowerCaseTypeSniff implements Sniff
         'static'   => true,
         'false'    => true,
         'null'     => true,
+        'never'    => true,
     ];
 
 
