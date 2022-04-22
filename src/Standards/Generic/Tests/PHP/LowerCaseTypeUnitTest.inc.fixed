@@ -85,3 +85,7 @@ class ConstructorPropertyPromotionAndNormalParams {
 function (): never {
     exit;
 };
+
+function intersectionParamTypes (\Package\ClassName&\Package\Other_Class $var) {}
+
+function intersectionReturnTypes ($var): \Package\ClassName&\Package\Other_Class {}

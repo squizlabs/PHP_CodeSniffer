@@ -85,3 +85,7 @@ class ConstructorPropertyPromotionAndNormalParams {
 function (): NeVeR {
     exit;
 };
+
+function intersectionParamTypes (\Package\ClassName&\Package\Other_Class $var) {}
+
+function intersectionReturnTypes ($var): \Package\ClassName&\Package\Other_Class {}
