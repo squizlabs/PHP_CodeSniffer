@@ -151,3 +151,20 @@ class ParametersWithAttributes(
         &...$otherParam,
     ) {}
 }
+
+/* testPHP8IntersectionTypes */
+function intersectionTypes(Foo&Bar $obj1, Boo&Bar $obj2) {}
+
+/* testPHP81IntersectionTypesWithSpreadOperatorAndReference */
+function globalFunctionWithSpreadAndReference(Boo&Bar &$paramA, Foo&Bar ...$paramB) {}
+
+/* testPHP81MoreIntersectionTypes */
+function moreIntersectionTypes(MyClassA&\Package\MyClassB&\Package\MyClassC $var) {}
+
+/* testPHP81IllegalIntersectionTypes */
+// Intentional fatal error - simple types are not allowed with intersection types, but that's not the concern of the method.
+$closure = function (string&int $numeric_string) {};
+
+/* testPHP81NullableIntersectionTypes */
+// Intentional fatal error - nullability is not allowed with intersection types, but that's not the concern of the method.
+$closure = function (?Foo&Bar $object) {};

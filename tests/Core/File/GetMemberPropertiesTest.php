@@ -770,6 +770,50 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                 '/* testEnumProperty */',
                 [],
             ],
+            [
+                '/* testPHP81IntersectionTypes */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'is_readonly'     => false,
+                    'type'            => 'Foo&Bar',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP81MoreIntersectionTypes */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'is_readonly'     => false,
+                    'type'            => 'Foo&Bar&Baz',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP81IllegalIntersectionTypes */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'is_readonly'     => false,
+                    'type'            => 'int&string',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP81NulltableIntersectionType */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'is_readonly'     => false,
+                    'type'            => '?Foo&Bar',
+                    'nullable_type'   => true,
+                ],
+            ],
         ];
 
     }//end dataGetMemberProperties()

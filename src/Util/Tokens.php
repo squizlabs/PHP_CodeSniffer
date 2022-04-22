@@ -79,6 +79,7 @@ define('T_MATCH_ARROW', 'PHPCS_T_MATCH_ARROW');
 define('T_MATCH_DEFAULT', 'PHPCS_T_MATCH_DEFAULT');
 define('T_ATTRIBUTE_END', 'PHPCS_T_ATTRIBUTE_END');
 define('T_ENUM_CASE', 'PHPCS_T_ENUM_CASE');
+define('T_TYPE_INTERSECTION', 'PHPCS_T_TYPE_INTERSECTION');
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {

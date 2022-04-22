@@ -286,3 +286,19 @@ enum Direction implements ArrayAccess
     /* testEnumMethodParamNotProperty */
     public function offsetGet($val) { ... }
 }
+
+$anon = class() {
+    /* testPHP81IntersectionTypes */
+    public Foo&Bar $intersectionType;
+
+    /* testPHP81MoreIntersectionTypes */
+    public Foo&Bar&Baz $moreIntersectionTypes;
+
+    /* testPHP81IllegalIntersectionTypes */
+    // Intentional fatal error - types which are not allowed for intersection type, but that's not the concern of the method.
+    public int&string $illegalIntersectionType;
+
+    /* testPHP81NulltableIntersectionType */
+    // Intentional fatal error - nullability is not allowed with intersection type, but that's not the concern of the method.
+    public ?Foo&Bar $nullableIntersectionType;
+};

@@ -1412,6 +1412,7 @@ class File
                 }
                 break;
             case T_TYPE_UNION:
+            case T_TYPE_INTERSECTION:
             case T_FALSE:
             case T_NULL:
                 // Part of a type hint or default value.
@@ -1638,6 +1639,7 @@ class File
                 T_STATIC               => T_STATIC,
                 T_FALSE                => T_FALSE,
                 T_NULL                 => T_NULL,
+                T_TYPE_INTERSECTION    => T_TYPE_INTERSECTION,
                 T_TYPE_UNION           => T_TYPE_UNION,
             ];
 
@@ -1836,6 +1838,7 @@ class File
                 T_PARENT               => T_PARENT,
                 T_FALSE                => T_FALSE,
                 T_NULL                 => T_NULL,
+                T_TYPE_INTERSECTION    => T_TYPE_INTERSECTION,
                 T_TYPE_UNION           => T_TYPE_UNION,
             ];
 
