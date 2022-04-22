@@ -199,6 +199,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="StableCommentWhitespaceTest.php" role="test" />
       <file baseinstalldir="" name="StableCommentWhitespaceWinTest.inc" role="test" />
       <file baseinstalldir="" name="StableCommentWhitespaceWinTest.php" role="test" />
+      <file baseinstalldir="" name="TypeIntersectionTest.inc" role="test" />
+      <file baseinstalldir="" name="TypeIntersectionTest.php" role="test" />
       <file baseinstalldir="" name="UndoNamespacedNameSingleTokenTest.inc" role="test" />
       <file baseinstalldir="" name="UndoNamespacedNameSingleTokenTest.php" role="test" />
      </dir>
@@ -2168,6 +2170,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.php" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.php" name="tests/Core/Tokenizer/TypeIntersectionTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.inc" name="tests/Core/Tokenizer/TypeIntersectionTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
@@ -2268,6 +2272,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.php" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.php" name="tests/Core/Tokenizer/TypeIntersectionTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.inc" name="tests/Core/Tokenizer/TypeIntersectionTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
