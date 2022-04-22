@@ -703,11 +703,33 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
             [
                 '/* testPHP81ReadonlyWithUnionType */',
                 [
+                    'scope'           => 'public',
+                    'scope_specified' => true,
+                    'is_static'       => false,
+                    'is_readonly'     => true,
+                    'type'            => 'string|int',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP81ReadonlyWithUnionTypeWithNull */',
+                [
                     'scope'           => 'protected',
                     'scope_specified' => true,
                     'is_static'       => false,
                     'is_readonly'     => true,
                     'type'            => 'string|null',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
+                '/* testPHP81OnlyReadonlyWithUnionType */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => false,
+                    'is_static'       => false,
+                    'is_readonly'     => true,
+                    'type'            => 'string|int',
                     'nullable_type'   => false,
                 ],
             ],
