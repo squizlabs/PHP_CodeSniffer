@@ -36,6 +36,18 @@ class TypeUnion
     /* testTypeUnionPropertyWithReadOnlyKeyword */
     protected readonly string|null $array;
 
+    /* testTypeUnionPropertyWithStaticAndReadOnlyKeywords */
+    static readonly string|null $array;
+
+    /* testTypeUnionPropertyWithVarAndReadOnlyKeywords */
+    var readonly string|null $array;
+
+    /* testTypeUnionPropertyWithReadOnlyKeywordFirst */
+    readonly protected string|null $array;
+
+    /* testTypeUnionPropertyWithOnlyReadOnlyKeyword */
+    readonly string|null $nullableString;
+
     public function paramTypes(
         /* testTypeUnionParam1 */
         int|float $paramA /* testBitwiseOrParamDefaultValue */ = CONSTANT_A | CONSTANT_B,

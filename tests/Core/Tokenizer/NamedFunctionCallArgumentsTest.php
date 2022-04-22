@@ -804,6 +804,7 @@ class NamedFunctionCallArgumentsTest extends AbstractMethodUnitTest
             'private',
             'protected',
             'public',
+            'readonly',
             'require',
             'require_once',
             'return',

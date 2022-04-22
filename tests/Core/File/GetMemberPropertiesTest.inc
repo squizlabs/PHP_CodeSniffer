@@ -247,7 +247,13 @@ $anon = class() {
     public readonly ?array $array;
 
     /* testPHP81ReadonlyWithUnionType */
-    protected ReadOnly string|null $array;
+    public readonly string|int $readonlyWithUnionType;
+
+    /* testPHP81ReadonlyWithUnionTypeWithNull */
+    protected ReadOnly string|null $readonlyWithUnionTypeWithNull;
+
+    /* testPHP81OnlyReadonlyWithUnionType */
+    readonly string|int $onlyReadonly;
 };
 
 $anon = class {
