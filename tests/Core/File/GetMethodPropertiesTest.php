@@ -775,6 +775,52 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify recognition of PHP8.1 type "never".
+     *
+     * @return void
+     */
+    public function testPHP81NeverType()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'never',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81NeverType()
+
+
+    /**
+     * Verify recognition of PHP8.1 type "never"  with (illegal) nullability.
+     *
+     * @return void
+     */
+    public function testPHP81NullableNeverType()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '?never',
+            'nullable_return_type' => true,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81NullableNeverType()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.

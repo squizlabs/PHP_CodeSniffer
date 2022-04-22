@@ -81,3 +81,7 @@ class ConstructorPropertyPromotionWithTypes {
 class ConstructorPropertyPromotionAndNormalParams {
     public function __construct(public int $promotedProp, ?int $normalArg) {}
 }
+
+function (): never {
+    exit;
+};

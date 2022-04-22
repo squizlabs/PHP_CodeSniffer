@@ -33,7 +33,7 @@ class MyClass {
 
     /* testMessyNullableReturnMethod */
     public function myFunction() /* comment
-        */ :  
+        */ :
         /* comment */ ? //comment
         array {}
 
@@ -132,3 +132,10 @@ interface FooBar {
 /* testPHP8DuplicateTypeInUnionWhitespaceAndComment */
 // Intentional fatal error - duplicate types are not allowed in union types, but that's not the concern of the method.
 function duplicateTypeInUnion(): int | /*comment*/ string | INT {}
+
+/* testPHP81NeverType */
+function never(): never {}
+
+/* testPHP81NullableNeverType */
+// Intentional fatal error - nullability is not allowed with never, but that's not the concern of the method.
+function nullableNever(): ?never {}

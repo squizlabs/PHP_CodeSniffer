@@ -81,3 +81,7 @@ class ConstructorPropertyPromotionWithTypes {
 class ConstructorPropertyPromotionAndNormalParams {
     public function __construct(public Int $promotedProp, ?Int $normalArg) {}
 }
+
+function (): NeVeR {
+    exit;
+};
