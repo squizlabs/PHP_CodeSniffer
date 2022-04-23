@@ -776,6 +776,7 @@ class NamedFunctionCallArgumentsTest extends AbstractMethodUnitTest
             'endif',
             'endswitch',
             'endwhile',
+            'enum',
             'eval',
             'exit',
             'extends',
