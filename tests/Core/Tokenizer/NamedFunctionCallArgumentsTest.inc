@@ -208,6 +208,9 @@ foobar(elseif: $value, /* testReservedKeywordElseif2 */ elseif: $value);
 /* testReservedKeywordEmpty1 */
 foobar(empty: $value, /* testReservedKeywordEmpty2 */ empty: $value);
 
+/* testReservedKeywordEnum1 */
+foobar(enum: $value, /* testReservedKeywordEnum2 */ enum: $value);
+
 /* testReservedKeywordEnddeclare1 */
 foobar(enddeclare: $value, /* testReservedKeywordEnddeclare2 */ enddeclare: $value);
 
