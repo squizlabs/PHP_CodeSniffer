@@ -396,3 +396,6 @@ foobar(parent: $value, /* testReservedKeywordParent2 */ parent: $value);
 
 /* testReservedKeywordSelf1 */
 foobar(self: $value, /* testReservedKeywordSelf2 */ self: $value);
+
+/* testReservedKeywordNever1 */
+foobar(never: $value, /* testReservedKeywordNever2 */ never: $value);
