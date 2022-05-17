@@ -1469,6 +1469,7 @@ class File
             case T_NAMESPACE:
             case T_NS_SEPARATOR:
             case T_TYPE_UNION:
+            case T_TYPE_INTERSECTION:
             case T_FALSE:
             case T_NULL:
                 // Part of a type hint or default value.
@@ -1685,16 +1686,17 @@ class File
             }
 
             $valid = [
-                T_STRING       => T_STRING,
-                T_CALLABLE     => T_CALLABLE,
-                T_SELF         => T_SELF,
-                T_PARENT       => T_PARENT,
-                T_STATIC       => T_STATIC,
-                T_FALSE        => T_FALSE,
-                T_NULL         => T_NULL,
-                T_NAMESPACE    => T_NAMESPACE,
-                T_NS_SEPARATOR => T_NS_SEPARATOR,
-                T_TYPE_UNION   => T_TYPE_UNION,
+                T_STRING            => T_STRING,
+                T_CALLABLE          => T_CALLABLE,
+                T_SELF              => T_SELF,
+                T_PARENT            => T_PARENT,
+                T_STATIC            => T_STATIC,
+                T_FALSE             => T_FALSE,
+                T_NULL              => T_NULL,
+                T_NAMESPACE         => T_NAMESPACE,
+                T_NS_SEPARATOR      => T_NS_SEPARATOR,
+                T_TYPE_UNION        => T_TYPE_UNION,
+                T_TYPE_INTERSECTION => T_TYPE_INTERSECTION,
             ];
 
             for ($i = $this->tokens[$stackPtr]['parenthesis_closer']; $i < $this->numTokens; $i++) {
@@ -1886,15 +1888,16 @@ class File
         if ($i < $stackPtr) {
             // We've found a type.
             $valid = [
-                T_STRING       => T_STRING,
-                T_CALLABLE     => T_CALLABLE,
-                T_SELF         => T_SELF,
-                T_PARENT       => T_PARENT,
-                T_FALSE        => T_FALSE,
-                T_NULL         => T_NULL,
-                T_NAMESPACE    => T_NAMESPACE,
-                T_NS_SEPARATOR => T_NS_SEPARATOR,
-                T_TYPE_UNION   => T_TYPE_UNION,
+                T_STRING            => T_STRING,
+                T_CALLABLE          => T_CALLABLE,
+                T_SELF              => T_SELF,
+                T_PARENT            => T_PARENT,
+                T_FALSE             => T_FALSE,
+                T_NULL              => T_NULL,
+                T_NAMESPACE         => T_NAMESPACE,
+                T_NS_SEPARATOR      => T_NS_SEPARATOR,
+                T_TYPE_UNION        => T_TYPE_UNION,
+                T_TYPE_INTERSECTION => T_TYPE_INTERSECTION,
             ];
 
             for ($i; $i < $stackPtr; $i++) {

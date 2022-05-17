@@ -462,6 +462,7 @@ class PHP extends Tokenizer
         T_OPEN_SHORT_ARRAY         => 1,
         T_CLOSE_SHORT_ARRAY        => 1,
         T_TYPE_UNION               => 1,
+        T_TYPE_INTERSECTION        => 1,
     ];
 
     /**
@@ -2438,18 +2439,19 @@ class PHP extends Tokenizer
                 if (isset($this->tokens[$x]) === true && $this->tokens[$x]['code'] === T_OPEN_PARENTHESIS) {
                     $ignore  = Util\Tokens::$emptyTokens;
                     $ignore += [
-                        T_ARRAY        => T_ARRAY,
-                        T_CALLABLE     => T_CALLABLE,
-                        T_COLON        => T_COLON,
-                        T_NAMESPACE    => T_NAMESPACE,
-                        T_NS_SEPARATOR => T_NS_SEPARATOR,
-                        T_NULL         => T_NULL,
-                        T_NULLABLE     => T_NULLABLE,
-                        T_PARENT       => T_PARENT,
-                        T_SELF         => T_SELF,
-                        T_STATIC       => T_STATIC,
-                        T_STRING       => T_STRING,
-                        T_TYPE_UNION   => T_TYPE_UNION,
+                        T_ARRAY             => T_ARRAY,
+                        T_CALLABLE          => T_CALLABLE,
+                        T_COLON             => T_COLON,
+                        T_NAMESPACE         => T_NAMESPACE,
+                        T_NS_SEPARATOR      => T_NS_SEPARATOR,
+                        T_NULL              => T_NULL,
+                        T_NULLABLE          => T_NULLABLE,
+                        T_PARENT            => T_PARENT,
+                        T_SELF              => T_SELF,
+                        T_STATIC            => T_STATIC,
+                        T_STRING            => T_STRING,
+                        T_TYPE_UNION        => T_TYPE_UNION,
+                        T_TYPE_INTERSECTION => T_TYPE_INTERSECTION,
                     ];
 
                     $closer = $this->tokens[$x]['parenthesis_closer'];
@@ -2745,9 +2747,12 @@ class PHP extends Tokenizer
                 }//end if
 
                 continue;
-            } else if ($this->tokens[$i]['code'] === T_BITWISE_OR) {
+            } else if ($this->tokens[$i]['code'] === T_BITWISE_OR
+                || $this->tokens[$i]['code'] === T_BITWISE_AND
+            ) {
                 /*
                     Convert "|" to T_TYPE_UNION or leave as T_BITWISE_OR.
+                    Convert "&" to T_TYPE_INTERSECTION or leave as T_BITWISE_AND.
                 */
 
                 $allowed = [
@@ -2812,12 +2817,12 @@ class PHP extends Tokenizer
                 }//end for
 
                 if ($typeTokenCount === 0 || isset($suspectedType) === false) {
-                    // Definitely not a union type, move on.
+                    // Definitely not a union or intersection type, move on.
                     continue;
                 }
 
                 $typeTokenCount = 0;
-                $unionOperators = [$i];
+                $typeOperators  = [$i];
                 $confirmed      = false;
 
                 for ($x = ($i - 1); $x >= 0; $x--) {
@@ -2830,13 +2835,13 @@ class PHP extends Tokenizer
                         continue;
                     }
 
-                    // Union types can't use the nullable operator, but be tolerant to parse errors.
+                    // Union and intersection types can't use the nullable operator, but be tolerant to parse errors.
                     if ($typeTokenCount > 0 && $this->tokens[$x]['code'] === T_NULLABLE) {
                         continue;
                     }
 
-                    if ($this->tokens[$x]['code'] === T_BITWISE_OR) {
-                        $unionOperators[] = $x;
+                    if ($this->tokens[$x]['code'] === T_BITWISE_OR || $this->tokens[$x]['code'] === T_BITWISE_AND) {
+                        $typeOperators[] = $x;
                         continue;
                     }
 
@@ -2902,17 +2907,27 @@ class PHP extends Tokenizer
                 }//end if
 
                 if ($confirmed === false) {
-                    // Not a union type after all, move on.
+                    // Not a union or intersection type after all, move on.
                     continue;
                 }
 
-                foreach ($unionOperators as $x) {
-                    $this->tokens[$x]['code'] = T_TYPE_UNION;
-                    $this->tokens[$x]['type'] = 'T_TYPE_UNION';
+                foreach ($typeOperators as $x) {
+                    if ($this->tokens[$x]['code'] === T_BITWISE_OR) {
+                        $this->tokens[$x]['code'] = T_TYPE_UNION;
+                        $this->tokens[$x]['type'] = 'T_TYPE_UNION';
 
-                    if (PHP_CODESNIFFER_VERBOSITY > 1) {
-                        $line = $this->tokens[$x]['line'];
-                        echo "\t* token $x on line $line changed from T_BITWISE_OR to T_TYPE_UNION".PHP_EOL;
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $line = $this->tokens[$x]['line'];
+                            echo "\t* token $x on line $line changed from T_BITWISE_OR to T_TYPE_UNION".PHP_EOL;
+                        }
+                    } else {
+                        $this->tokens[$x]['code'] = T_TYPE_INTERSECTION;
+                        $this->tokens[$x]['type'] = 'T_TYPE_INTERSECTION';
+
+                        if (PHP_CODESNIFFER_VERBOSITY > 1) {
+                            $line = $this->tokens[$x]['line'];
+                            echo "\t* token $x on line $line changed from T_BITWISE_AND to T_TYPE_INTERSECTION".PHP_EOL;
+                        }
                     }
                 }
 
