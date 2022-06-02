@@ -47,3 +47,6 @@
 "${foo->{${'a'}}}";
 /* testNested5 */
 "${foo->{"${'a'}"}}";
+
+/* testParseError */
+"${foo["${bar
