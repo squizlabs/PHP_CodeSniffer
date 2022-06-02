@@ -123,6 +123,11 @@ class DoubleQuotedStringTest extends AbstractMethodUnitTest
                 'testMarker'      => '/* testNested5 */',
                 'expectedContent' => '"${foo->{"${\'a\'}"}}"',
             ],
+            [
+                'testMarker'      => '/* testParseError */',
+                'expectedContent' => '"${foo["${bar
+',
+            ],
         ];
 
     }//end dataDoubleQuotedString()
