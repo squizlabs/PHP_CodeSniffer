@@ -182,6 +182,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="DefaultKeywordTest.php" role="test" />
       <file baseinstalldir="" name="DoubleArrowTest.inc" role="test" />
       <file baseinstalldir="" name="DoubleArrowTest.php" role="test" />
+      <file baseinstalldir="" name="DoubleQuotedStringTest.inc" role="test" />
+      <file baseinstalldir="" name="DoubleQuotedStringTest.php" role="test" />
       <file baseinstalldir="" name="EnumCaseTest.inc" role="test" />
       <file baseinstalldir="" name="EnumCaseTest.php" role="test" />
       <file baseinstalldir="" name="FinallyTest.inc" role="test" />
@@ -2153,6 +2155,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.inc" name="tests/Core/Tokenizer/DefaultKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.php" name="tests/Core/Tokenizer/DoubleArrowTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.inc" name="tests/Core/Tokenizer/DoubleArrowTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/DoubleQuotedStringTest.php" name="tests/Core/Tokenizer/DoubleQuotedStringTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/DoubleQuotedStringTest.inc" name="tests/Core/Tokenizer/DoubleQuotedStringTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.php" name="tests/Core/Tokenizer/EnumCaseTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.inc" name="tests/Core/Tokenizer/EnumCaseTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.php" name="tests/Core/Tokenizer/FinallyTest.php" />
@@ -2255,6 +2259,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.inc" name="tests/Core/Tokenizer/DefaultKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.php" name="tests/Core/Tokenizer/DoubleArrowTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.inc" name="tests/Core/Tokenizer/DoubleArrowTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/DoubleQuotedStringTest.php" name="tests/Core/Tokenizer/DoubleQuotedStringTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/DoubleQuotedStringTest.inc" name="tests/Core/Tokenizer/DoubleQuotedStringTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.php" name="tests/Core/Tokenizer/EnumCaseTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.inc" name="tests/Core/Tokenizer/EnumCaseTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.php" name="tests/Core/Tokenizer/FinallyTest.php" />
