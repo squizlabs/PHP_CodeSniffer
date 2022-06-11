@@ -10,13 +10,10 @@
 if (!<em> </em>$someVar || !<em> </em>$x instanceOf stdClass) {};
         ]]>
         </code>
-        <code title="Invalid: A NOT operator not followed by whitespace.">
+        <code title="Invalid: A NOT operator not followed by whitespace or followed by too much whitespace.">
         <![CDATA[
 if (!<em></em>$someVar || !<em></em>$x instanceOf stdClass) {};
-        ]]>
-        </code>
-        <code title="Invalid: A NOT operator followed by a new line or more than one space.">
-        <![CDATA[
+
 if (!<em>     </em>$someVar || !<em>
     </em>$x instanceOf stdClass) {};
         ]]>
