@@ -10,13 +10,10 @@
 $a = (null !== $extra);
         ]]>
         </code>
-        <code title="Invalid: spaces on the inside of a set of arbitrary parentheses.">
+        <code title="Invalid: spaces or new lines on the inside of a set of arbitrary parentheses.">
         <![CDATA[
 $a = ( null !== $extra );
-        ]]>
-        </code>
-        <code title="Invalid: new lines on the inside of a set of arbitrary parentheses.">
-        <![CDATA[
+
 $a = (
     null !== $extra
 );
