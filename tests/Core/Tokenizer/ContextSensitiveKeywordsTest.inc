@@ -217,3 +217,4 @@ class Foo extends /* testNamespaceInNameIsKeyword */ namespace\Exception
 {}
 
 function /* testKeywordAfterFunctionShouldBeString */ eval() {}
+function /* testKeywordAfterFunctionByRefShouldBeString */ &switch() {}

@@ -607,38 +607,57 @@ class PHP extends Tokenizer
 
             if ($tokenIsArray === true
                 && isset(Util\Tokens::$contextSensitiveKeywords[$token[0]]) === true
-                && isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true
+                && (isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true
+                || $finalTokens[$lastNotEmptyToken]['content'] === '&')
             ) {
-                $preserveKeyword = false;
+                if (isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
+                    $preserveKeyword = false;
 
-                // `new class`, and `new static` should be preserved.
-                if ($finalTokens[$lastNotEmptyToken]['code'] === T_NEW
-                    && ($token[0] === T_CLASS
-                    || $token[0] === T_STATIC)
-                ) {
-                    $preserveKeyword = true;
-                }
+                    // `new class`, and `new static` should be preserved.
+                    if ($finalTokens[$lastNotEmptyToken]['code'] === T_NEW
+                        && ($token[0] === T_CLASS
+                        || $token[0] === T_STATIC)
+                    ) {
+                        $preserveKeyword = true;
+                    }
 
-                // `new class extends` `new class implements` should be preserved
-                if (($token[0] === T_EXTENDS || $token[0] === T_IMPLEMENTS)
-                    && $finalTokens[$lastNotEmptyToken]['code'] === T_CLASS
-                ) {
-                    $preserveKeyword = true;
-                }
+                    // `new class extends` `new class implements` should be preserved
+                    if (($token[0] === T_EXTENDS || $token[0] === T_IMPLEMENTS)
+                        && $finalTokens[$lastNotEmptyToken]['code'] === T_CLASS
+                    ) {
+                        $preserveKeyword = true;
+                    }
 
-                // `namespace\` should be preserved
-                if ($token[0] === T_NAMESPACE) {
-                    for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
-                        if (is_array($tokens[$i]) === false) {
+                    // `namespace\` should be preserved
+                    if ($token[0] === T_NAMESPACE) {
+                        for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                            if (is_array($tokens[$i]) === false) {
+                                break;
+                            }
+
+                            if (isset(Util\Tokens::$emptyTokens[$tokens[$i][0]]) === true) {
+                                continue;
+                            }
+
+                            if ($tokens[$i][0] === T_NS_SEPARATOR) {
+                                $preserveKeyword = true;
+                            }
+
                             break;
                         }
+                    }
+                }//end if
 
-                        if (isset(Util\Tokens::$emptyTokens[$tokens[$i][0]]) === true) {
+                if ($finalTokens[$lastNotEmptyToken]['content'] === '&') {
+                    $preserveKeyword = true;
+
+                    for ($i = ($lastNotEmptyToken - 1); $i >= 0; $i--) {
+                        if (isset(Util\Tokens::$emptyTokens[$finalTokens[$i]['code']]) === true) {
                             continue;
                         }
 
-                        if ($tokens[$i][0] === T_NS_SEPARATOR) {
-                            $preserveKeyword = true;
+                        if ($finalTokens[$i]['code'] === T_FUNCTION) {
+                            $preserveKeyword = false;
                         }
 
                         break;

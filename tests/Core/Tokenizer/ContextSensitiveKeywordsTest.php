@@ -124,6 +124,7 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testNamespaceNameIsString3 */'],
 
             ['/* testKeywordAfterFunctionShouldBeString */'],
+            ['/* testKeywordAfterFunctionByRefShouldBeString */'],
         ];
 
     }//end dataStrings()
