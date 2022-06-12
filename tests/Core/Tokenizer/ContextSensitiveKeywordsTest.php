@@ -72,6 +72,7 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testEndSwitch */'],
             ['/* testEndWhile */'],
             ['/* testEnum */'],
+            ['/* testEval */'],
             ['/* testExit */'],
             ['/* testExtends */'],
             ['/* testFinal */'],
@@ -121,6 +122,8 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testNamespaceNameIsString1 */'],
             ['/* testNamespaceNameIsString2 */'],
             ['/* testNamespaceNameIsString3 */'],
+
+            ['/* testKeywordAfterFunctionShouldBeString */'],
         ];
 
     }//end dataStrings()
@@ -375,6 +378,10 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             [
                 '/* testDieIsKeyword */',
                 'T_EXIT',
+            ],
+            [
+                '/* testEvalIsKeyword */',
+                'T_EVAL',
             ],
             [
                 '/* testExitIsKeyword */',

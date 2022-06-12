@@ -29,6 +29,7 @@ class ContextSensitiveKeywords
     const /* testEndSwitch */ ENDSWITCH = 'ENDSWITCH';
     const /* testEndWhile */ ENDWHILE = 'ENDWHILE';
     const /* testEnum */ ENUM = 'ENUM';
+    const /* testEval */ EVAL = 'EVAL';
     const /* testExit */ EXIT = 'EXIT';
     const /* testExtends */ EXTENDS = 'EXTENDS';
     const /* testFinal */ FINAL = 'FINAL';
@@ -165,6 +166,8 @@ echo $foo;
 print $foo;
 /* testDieIsKeyword */
 die($foo);
+/* testEvalIsKeyword */
+eval('<?php echo 5;');
 /* testExitIsKeyword */
 exit;
 
@@ -212,3 +215,5 @@ $instantiated3 = new /* testClassInstantiationStaticIsKeyword */ static($param);
 
 class Foo extends /* testNamespaceInNameIsKeyword */ namespace\Exception
 {}
+
+function /* testKeywordAfterFunctionShouldBeString */ eval() {}

@@ -696,6 +696,7 @@ final class Tokens
         T_ENDSWITCH    => T_ENDSWITCH,
         T_ENDWHILE     => T_ENDWHILE,
         T_ENUM         => T_ENUM,
+        T_EVAL         => T_EVAL,
         T_EXIT         => T_EXIT,
         T_EXTENDS      => T_EXTENDS,
         T_FINAL        => T_FINAL,
