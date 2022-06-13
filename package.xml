@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2022-06-13</date>
  <time>16:30:00</time>
  <version>
-  <release>3.7.0</release>
-  <api>3.7.0</api>
+  <release>3.7.1</release>
+  <api>3.7.1</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,61 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Added support for PHP 8.1 explicit octal notation
-    -- This new syntax has been backfilled for PHP versions less than 8.1
-    -- Thanks to Mark Baker for the patch
-    -- Thanks to Juliette Reinders Folmer for additional fixes
-  - Added support for PHP 8.1 enums
-    -- This new syntax has been backfilled for PHP versions less than 8.1
-    -- Includes a new T_ENUM_CASE token to represent the case statements inside an enum
-    -- Thanks to Jaroslav Hanslík for the patch
-    -- Thanks to Juliette Reinders Folmer for additional core and sniff support
-  - Added support for the PHP 8.1 readonly token
-    -- Tokenzing of the readonly keyword has been backfilled for PHP versions less than 8.1
-    -- Thanks to Jaroslav Hanslík for the patch
-  - Added support for PHP 8.1 intersection types
-    -- Includes a new T_TYPE_INTERSECTION token to represent the ampersand character inside intersection types
-    -- Thanks to Jaroslav Hanslík for the patch
-  - File::getMethodParameters now supports the new PHP 8.1 readonly token
-    -- When constructor property promotion is used, a new property_readonly array index is included in the return value
-      --- This is a boolean value indicating if the property is readonly
-    -- If the readonly token is detected, a new readonly_token array index is included in the return value
-      --- This contains the token index of the readonly keyword
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Support for new PHP 8.1 readonly keyword has been added to the following sniffs:
-    -- Generic.PHP.LowerCaseKeyword
-    -- PSR2.Classes.PropertyDeclaration
-    -- Squiz.Commenting.BlockCommentS
-    -- Squiz.Commenting.DocCommentAlignment
-    -- Squiz.Commenting.VariableComment
-    -- Squiz.WhiteSpace.ScopeKeywordSpacing
-    -- Thanks to Juliette Reinders Folmer for the patches
-  - The parallel feature is now more efficent and runs faster in some situations due to improved process managment
-    -- Thanks to Sergei Morozov for the patch
-  - The list of installed coding standards now has consistent ordering across all platforms
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.PHP.UpperCaseConstant and Generic.PHP.LowerCaseConstant now ignore type declarations
-    -- These sniffs now only report errors for true/false/null when used as values
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Generic.PHP.LowerCaseType now supports the PHP 8.1 never type
-    -- Thanks to Jaroslav Hanslík for the patch
-  - Fixed bug #3502 : A match statement within an array produces Squiz.Arrays.ArrayDeclaration.NoKeySpecified
-  - Fixed bug #3503 : Squiz.Commenting.FunctionComment.ThrowsNoFullStop false positive when one line @throw
-  - Fixed bug #3505 : The nullsafe operator is not counted in Generic.Metrics.CyclomaticComplexity
-    -- Thanks to Mark Baker for the patch
-  - Fixed bug #3526 : PSR12.Properties.ConstantVisibility false positive when using public final const syntax
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3530 : Line indented incorrectly false positive when using match-expression inside switch case
-  - Fixed bug #3534 : Name of typed enum tokenized as T_GOTO_LABEL
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3546 : Tokenizer/PHP: bug fix - parent/static keywords in class instantiations
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3550 : False positive from PSR2.ControlStructures.SwitchDeclaration.TerminatingComment when using trailing comment
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3575: Squiz.Scope.MethodScope misses visibility keyword on previous line
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3604: Tokenizer/PHP: bug fix for double quoted strings using ${
-    -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3609: Method with name empty is always reported as error
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
  <contents>
   <dir name="/">
@@ -2332,12 +2279,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - Support for new PHP 8.1 readonly keyword has been added to the following sniffs:
       -- Generic.PHP.LowerCaseKeyword
       -- PSR2.Classes.PropertyDeclaration
-      -- Squiz.Commenting.BlockCommentS
+      -- Squiz.Commenting.BlockComment
       -- Squiz.Commenting.DocCommentAlignment
       -- Squiz.Commenting.VariableComment
       -- Squiz.WhiteSpace.ScopeKeywordSpacing
       -- Thanks to Juliette Reinders Folmer for the patches
-    - The parallel feature is now more efficent and runs faster in some situations due to improved process managment
+    - The parallel feature is now more efficient and runs faster in some situations due to improved process management
       -- Thanks to Sergei Morozov for the patch
     - The list of installed coding standards now has consistent ordering across all platforms
       -- Thanks to Juliette Reinders Folmer for the patch
