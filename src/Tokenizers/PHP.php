@@ -824,7 +824,8 @@ class PHP extends Tokenizer
 
                     if ($subTokenIsArray === true) {
                         $tokenContent .= $subToken[1];
-                        if ($subToken[1] === '{'
+                        if (($subToken[1] === '{'
+                            || $subToken[1] === '${')
                             && $subToken[0] !== T_ENCAPSED_AND_WHITESPACE
                         ) {
                             $nestedVars[] = $i;
