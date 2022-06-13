@@ -22,6 +22,7 @@ class ContextSensitiveKeywords
     const /* testEcho */ ECHO = 'ECHO';
     const /* testElse */ ELSE = 'ELSE';
     const /* testElseIf */ ELSEIF = 'ELSEIF';
+    const /* testEmpty */ EMPTY = 'EMPTY';
     const /* testEndDeclare */ ENDDECLARE = 'ENDDECLARE';
     const /* testEndFor */ ENDFOR = 'ENDFOR';
     const /* testEndForeach */ ENDFOREACH = 'ENDFOREACH';
@@ -47,6 +48,7 @@ class ContextSensitiveKeywords
     const /* testInstanceOf */ INSTANCEOF = 'INSTANCEOF';
     const /* testInsteadOf */ INSTEADOF = 'INSTEADOF';
     const /* testInterface */ INTERFACE = 'INTERFACE';
+    const /* testIsset */ ISSET = 'ISSET';
     const /* testList */ LIST = 'LIST';
     const /* testMatch */ MATCH = 'MATCH';
     const /* testNamespace */ NAMESPACE = 'NAMESPACE';
@@ -66,6 +68,7 @@ class ContextSensitiveKeywords
     const /* testThrows */ THROW = 'THROW';
     const /* testTrait */ TRAIT = 'TRAIT';
     const /* testTry */ TRY = 'TRY';
+    const /* testUnset */ UNSET = 'UNSET';
     const /* testUse */ USE = 'USE';
     const /* testVar */ VAR = 'VAR';
     const /* testWhile */ WHILE = 'WHILE';
@@ -121,7 +124,7 @@ $object = /* testNewIsKeyword */ new SomeClass();
 $object /* testInstanceOfIsKeyword */ instanceof SomeClass;
 $copy = /* testCloneIsKeyword */ clone $object;
 
-/* testIfIsKeyword */ if (true):
+/* testIfIsKeyword */ if (/* testEmptyIsKeyword */ empty($a)):
 /* testElseIfIsKeyword */ elseif (false):
 /* testElseIsKeyword */ else:
 /* testEndIfIsKeyword */ endif;
@@ -170,6 +173,10 @@ die($foo);
 eval('<?php echo 5;');
 /* testExitIsKeyword */
 exit;
+/* testIssetIsKeyword */
+$a = isset($a);
+/* testUnsetIsKeyword */
+unset($a);
 
 /* testIncludeIsKeyword */
 include 'file.php';
