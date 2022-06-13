@@ -14,3 +14,15 @@ $foo = 0o_137;
 
 /* testInvalid2 */
 $foo = 0O_41;
+
+/* testInvalid3 */
+$foo = 0o91;
+
+/* testInvalid4 */
+$foo = 0O282;
+
+/* testInvalid5 */
+$foo = 0o28_2;
+
+/* testInvalid6 */
+$foo = 0o2_82;
