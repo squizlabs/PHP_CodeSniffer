@@ -79,6 +79,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer for the patch
   - Fixed bug #3575: Squiz.Scope.MethodScope misses visibility keyword on previous line
     -- Thanks to Juliette Reinders Folmer for the patch
+  - Fixed bug #3604: Tokenizer/PHP: bug fix for double quoted strings using ${
+    -- Thanks to Juliette Reinders Folmer for the patch
  </notes>
  <contents>
   <dir name="/">
