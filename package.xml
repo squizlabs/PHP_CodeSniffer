@@ -26,7 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed bug #3609: Method with name empty is always reported as error
+  - Fixed bug #3609: Methods/constants with name empty/isset/unset are always reported as error
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
  <contents>
