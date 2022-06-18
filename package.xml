@@ -14,8 +14,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2022-06-13</date>
- <time>16:30:00</time>
+ <date>2022-06-18</date>
+ <time>17:20:00</time>
  <version>
   <release>3.7.1</release>
   <api>3.7.1</api>
@@ -2243,6 +2243,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>3.7.1</release>
+    <api>3.7.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2022-06-18</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Fixed bug #3609: Methods/constants with name empty/isset/unset are always reported as error
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+   </notes>
+  </release>
   <release>
    <version>
     <release>3.7.0</release>
