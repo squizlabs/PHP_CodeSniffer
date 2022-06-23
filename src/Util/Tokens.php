@@ -628,6 +628,7 @@ final class Tokens
         T_UNSET        => T_UNSET,
         T_EMPTY        => T_EMPTY,
         T_SELF         => T_SELF,
+        T_PARENT       => T_PARENT,
         T_STATIC       => T_STATIC,
     ];
 
