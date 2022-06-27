@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2022-06-18</date>
  <time>17:20:00</time>
  <version>
-  <release>3.7.1</release>
-  <api>3.7.1</api>
+  <release>3.7.2</release>
+  <api>3.7.2</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,7 +26,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed bug #3609: Methods/constants with name empty/isset/unset are always reported as error
+  - Fixed bug #3616: Squiz.PHP.DisallowComparisonAssignment false positive for PHP 8 match expression
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
  <contents>
