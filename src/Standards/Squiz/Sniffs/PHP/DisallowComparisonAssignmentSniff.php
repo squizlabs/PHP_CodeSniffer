@@ -61,8 +61,8 @@ class DisallowComparisonAssignmentSniff implements Sniff
         );
 
         if ($nextNonEmpty !== false
-            && ($tokens[$nextNonEmpty]['code'] === \T_ARRAY
-            || $tokens[$nextNonEmpty]['code'] === \T_MATCH)
+            && ($tokens[$nextNonEmpty]['code'] === T_ARRAY
+            || $tokens[$nextNonEmpty]['code'] === T_MATCH)
         ) {
             return;
         }
