@@ -26,7 +26,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed bug #3616: Squiz.PHP.DisallowComparisonAssignment false positive for PHP 8 match expression
+  - Fixed bug #3616 : Squiz.PHP.DisallowComparisonAssignment false positive for PHP 8 match expression
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3618 : Generic.WhiteSpace.ArbitraryParenthesesSpacing false positive for return new parent()
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
  <contents>
@@ -2255,7 +2257,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <date>2022-06-18</date>
    <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
-    - Fixed bug #3609: Methods/constants with name empty/isset/unset are always reported as error
+    - Fixed bug #3609 : Methods/constants with name empty/isset/unset are always reported as error
       -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
    </notes>
   </release>
