@@ -36,6 +36,10 @@ class FunctionOpeningBraceSpaceSniff implements Sniff
         return [
             T_FUNCTION,
             T_CLOSURE,
+            T_CLASS,
+            T_INTERFACE,
+            T_TRAIT,
+            T_ENUM,
         ];
 
     }//end register()

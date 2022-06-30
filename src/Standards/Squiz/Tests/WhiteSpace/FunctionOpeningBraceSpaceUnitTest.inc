@@ -31,6 +31,34 @@ class MyClass
     public function register();
 }
 
+class MyClass1
+{
+
+    public function foo()
+    {
+    }
+}
+
+interface MyInterface
+{
+
+    public function foo();
+}
+
+trait MyTrait
+{
+
+    public function foo()
+    {
+    }
+}
+
+enum MyEnum
+{
+
+    case Foo;
+}
+
 function emptyFunction()
 {
 
