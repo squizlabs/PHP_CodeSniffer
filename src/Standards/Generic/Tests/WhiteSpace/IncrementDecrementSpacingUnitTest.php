@@ -27,19 +27,32 @@ class IncrementDecrementSpacingUnitTest extends AbstractSniffUnitTest
      */
     public function getErrorList($testFile='IncrementDecrementSpacingUnitTest.inc')
     {
+        $errors = [
+            5  => 1,
+            6  => 1,
+            8  => 1,
+            10 => 1,
+            13 => 1,
+            14 => 1,
+            16 => 1,
+            17 => 1,
+        ];
+
         switch ($testFile) {
         case 'IncrementDecrementSpacingUnitTest.inc':
+            $errors[21] = 1;
+            $errors[23] = 1;
+            $errors[26] = 1;
+            $errors[27] = 1;
+            $errors[30] = 1;
+            $errors[31] = 1;
+            $errors[34] = 1;
+            $errors[37] = 1;
+
+            return $errors;
+
         case 'IncrementDecrementSpacingUnitTest.js':
-            return [
-                5  => 1,
-                6  => 1,
-                8  => 1,
-                10 => 1,
-                13 => 1,
-                14 => 1,
-                16 => 1,
-                17 => 1,
-            ];
+            return $errors;
 
         default:
             return [];

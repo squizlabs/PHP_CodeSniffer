@@ -63,7 +63,8 @@ class IncrementDecrementSpacingSniff implements Sniff
         // Is this a pre-increment/decrement ?
         $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         if ($nextNonEmpty !== false
-            && (($phpcsFile->tokenizerType === 'PHP' && $tokens[$nextNonEmpty]['code'] === T_VARIABLE)
+            && (($phpcsFile->tokenizerType === 'PHP'
+            && ($tokens[$nextNonEmpty]['code'] === T_VARIABLE || $tokens[$nextNonEmpty]['code'] === T_STRING))
             || ($phpcsFile->tokenizerType === 'JS' && $tokens[$nextNonEmpty]['code'] === T_STRING))
         ) {
             if ($nextNonEmpty === ($stackPtr + 1)) {
@@ -116,7 +117,10 @@ class IncrementDecrementSpacingSniff implements Sniff
         // Is this a post-increment/decrement ?
         $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if ($prevNonEmpty !== false
-            && (($phpcsFile->tokenizerType === 'PHP' && $tokens[$prevNonEmpty]['code'] === T_VARIABLE)
+            && (($phpcsFile->tokenizerType === 'PHP'
+            && ($tokens[$prevNonEmpty]['code'] === T_VARIABLE
+            || $tokens[$prevNonEmpty]['code'] === T_STRING
+            || $tokens[$prevNonEmpty]['code'] === T_CLOSE_SQUARE_BRACKET))
             || ($phpcsFile->tokenizerType === 'JS' && $tokens[$prevNonEmpty]['code'] === T_STRING))
         ) {
             if ($prevNonEmpty === ($stackPtr - 1)) {

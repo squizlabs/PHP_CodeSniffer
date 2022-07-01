@@ -15,3 +15,23 @@ $i /*comment*/ --;
 $i++;
 $i ++;
 $i /*comment*/ ++;
+
+// Handle properties and array access too.
+$i['key']++;
+$i['key'] ++;
+$i['key']['id']++;
+$i['key']['id'] ++;
+
+$obj->prop++;
+$obj->prop ++;
+$obj?->prop ++;
+
+$obj->obj->prop++;
+$obj->obj->prop ++;
+$obj?->obj->prop ++;
+
+$obj->prop['key']++;
+$obj->prop['key'] ++;
+
+--ClassName::$prop;
+-- ClassName::$prop;
