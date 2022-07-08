@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Fixtures" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
+    <rule ref="./tests/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyNotAllowedViaAttributeSniff.php">
+        <properties>
+            <property name="arbitrarystring" value="arbitraryvalue"/>
+        </properties>
+    </rule>
+
+</ruleset>
