@@ -361,9 +361,12 @@ class File
                         $listenerCode = $token['sniffCode'];
                         if (isset($this->ruleset->sniffCodes[$listenerCode]) === true) {
                             $propertyCode  = $token['sniffProperty'];
-                            $propertyValue = $token['sniffPropertyValue'];
+                            $settings      = [
+                                'value' => $token['sniffPropertyValue'],
+                                'scope' => 'sniff',
+                            ];
                             $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
-                            $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
+                            $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $settings);
                         }
                     }
                 }//end if

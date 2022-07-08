@@ -14,6 +14,7 @@ namespace PHP_CodeSniffer;
 use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Util\Common;
 use PHP_CodeSniffer\Util\Standards;
+use stdClass;
 
 class Ruleset
 {
@@ -932,6 +933,11 @@ class Ruleset
             if (isset($rule->properties) === true
                 && $this->shouldProcessElement($rule->properties) === true
             ) {
+                $propertyScope = 'standard';
+                if ($code === $ref || substr($ref, -9) === 'Sniff.php') {
+                    $propertyScope = 'sniff';
+                }
+
                 foreach ($rule->properties->property as $prop) {
                     if ($this->shouldProcessElement($prop) === false) {
                         continue;
@@ -952,9 +958,9 @@ class Ruleset
                         $values = [];
                         if (isset($prop['extend']) === true
                             && (string) $prop['extend'] === 'true'
-                            && isset($this->ruleset[$code]['properties'][$name]) === true
+                            && isset($this->ruleset[$code]['properties'][$name]['value']) === true
                         ) {
-                            $values = $this->ruleset[$code]['properties'][$name];
+                            $values = $this->ruleset[$code]['properties'][$name]['value'];
                         }
 
                         if (isset($prop->element) === true) {
@@ -978,7 +984,10 @@ class Ruleset
                             $printValue = rtrim($printValue, ',');
                         }
 
-                        $this->ruleset[$code]['properties'][$name] = $values;
+                        $this->ruleset[$code]['properties'][$name] = [
+                            'value' => $values,
+                            'scope' => $propertyScope,
+                        ];
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $statusMessage = "=> array property \"$name\" set to \"$printValue\"";
                             if ($code !== $ref) {
@@ -988,7 +997,10 @@ class Ruleset
                             Common::printStatusMessage($statusMessage, ($depth + 2));
                         }
                     } else {
-                        $this->ruleset[$code]['properties'][$name] = (string) $prop['value'];
+                        $this->ruleset[$code]['properties'][$name] = [
+                            'value' => (string) $prop['value'],
+                            'scope' => $propertyScope,
+                        ];
                         if (PHP_CODESNIFFER_VERBOSITY > 1) {
                             $statusMessage = "=> property \"$name\" set to \"".(string) $prop['value'].'"';
                             if ($code !== $ref) {
@@ -1177,8 +1189,8 @@ class Ruleset
 
             // Set custom properties.
             if (isset($this->ruleset[$sniffCode]['properties']) === true) {
-                foreach ($this->ruleset[$sniffCode]['properties'] as $name => $value) {
-                    $this->setSniffProperty($sniffClass, $name, $value);
+                foreach ($this->ruleset[$sniffCode]['properties'] as $name => $settings) {
+                    $this->setSniffProperty($sniffClass, $name, $settings);
                 }
             }
 
@@ -1234,18 +1246,48 @@ class Ruleset
      *
      * @param string $sniffClass The class name of the sniff.
      * @param string $name       The name of the property to change.
-     * @param string $value      The new value of the property.
+     * @param array  $settings   Array with the new value of the property and the scope of the property being set.
      *
      * @return void
+     *
+     * @throws \PHP_CodeSniffer\Exceptions\RuntimeException When attempting to set a non-existent property on a sniff
+     *                                                      which doesn't declare the property or explicitly supports
+     *                                                      dynamic properties.
      */
-    public function setSniffProperty($sniffClass, $name, $value)
+    public function setSniffProperty($sniffClass, $name, $settings)
     {
         // Setting a property for a sniff we are not using.
         if (isset($this->sniffs[$sniffClass]) === false) {
             return;
         }
 
-        $name = trim($name);
+        $name         = trim($name);
+        $propertyName = $name;
+        if (substr($propertyName, -2) === '[]') {
+            $propertyName = substr($propertyName, 0, -2);
+        }
+
+        $isSettable  = false;
+        $sniffObject = $this->sniffs[$sniffClass];
+        if (property_exists($sniffObject, $propertyName) === true
+            || ($sniffObject instanceof stdClass) === true
+            || method_exists($sniffObject, '__set') === true
+        ) {
+            $isSettable = true;
+        }
+
+        if ($isSettable === false) {
+            if ($settings['scope'] === 'sniff') {
+                $notice  = "Ruleset invalid. Property \"$propertyName\" does not exist on sniff ";
+                $notice .= array_search($sniffClass, $this->sniffCodes, true);
+                throw new RuntimeException($notice);
+            }
+
+            return;
+        }
+
+        $value = $settings['value'];
+
         if (is_string($value) === true) {
             $value = trim($value);
         }
@@ -1260,7 +1302,7 @@ class Ruleset
         } else if ($value === 'false') {
             $value = false;
         } else if (substr($name, -2) === '[]') {
-            $name   = substr($name, 0, -2);
+            $name   = $propertyName;
             $values = [];
             if ($value !== null) {
                 foreach (explode(',', $value) as $val) {
@@ -1276,7 +1318,7 @@ class Ruleset
             $value = $values;
         }
 
-        $this->sniffs[$sniffClass]->$name = $value;
+        $sniffObject->$name = $value;
 
     }//end setSniffProperty()
 
