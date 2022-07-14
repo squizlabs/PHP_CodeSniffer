@@ -2514,13 +2514,18 @@ class PHP extends Tokenizer
                     }
 
                     if (isset(Tokens::$emptyTokens[$this->tokens[$x]['code']]) === false) {
-                        if (isset($allowed[$this->tokens[$x]['code']]) === false) {
+                        // Allow for control structures without braces.
+                        if (($this->tokens[$x]['code'] === T_CLOSE_PARENTHESIS
+                            && isset($this->tokens[$x]['parenthesis_owner']) === true
+                            && isset(Tokens::$scopeOpeners[$this->tokens[$this->tokens[$x]['parenthesis_owner']]['code']]) === true)
+                            || isset($allowed[$this->tokens[$x]['code']]) === false
+                        ) {
                             $isShortArray = true;
                         }
 
                         break;
                     }
-                }
+                }//end for
 
                 if ($isShortArray === true) {
                     $this->tokens[$i]['code'] = T_OPEN_SHORT_ARRAY;
