@@ -118,30 +118,70 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
             $phpcsFile->addError($error, $stackPtr, 'ScopeMissing', $data);
         }
 
+        /*
+         * Note: per PSR-PER section 4.6, the order should be:
+         * - Inheritance modifier: `abstract` or `final`.
+         * - Visibility modifier: `public`, `protected`, or `private`.
+         * - Scope modifier: `static`.
+         * - Mutation modifier: `readonly`.
+         * - Type declaration.
+         * - Name.
+         *
+         * Ref: https://www.php-fig.org/per/coding-style/#46-modifier-keywords
+         *
+         * At this time (PHP 8.2), inheritance modifiers cannot be applied to properties and
+         * the `static` and `readonly` modifiers are mutually exclusive and cannot be used together.
+         *
+         * Based on that, the below modifier keyword order checks are sufficient (for now).
+         */
+
         if ($propertyInfo['scope_specified'] === true && $propertyInfo['is_static'] === true) {
             $scopePtr  = $phpcsFile->findPrevious(Tokens::$scopeModifiers, ($stackPtr - 1));
             $staticPtr = $phpcsFile->findPrevious(T_STATIC, ($stackPtr - 1));
-            if ($scopePtr < $staticPtr) {
-                return;
-            }
+            if ($scopePtr > $staticPtr) {
+                $error = 'The static declaration must come after the visibility declaration';
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'StaticBeforeVisibility');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
 
-            $error = 'The static declaration must come after the visibility declaration';
-            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'StaticBeforeVisibility');
-            if ($fix === true) {
-                $phpcsFile->fixer->beginChangeset();
+                    for ($i = ($scopePtr + 1); $scopePtr < $stackPtr; $i++) {
+                        if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
+                        }
 
-                for ($i = ($scopePtr + 1); $scopePtr < $stackPtr; $i++) {
-                    if ($tokens[$i]['code'] !== T_WHITESPACE) {
-                        break;
+                        $phpcsFile->fixer->replaceToken($i, '');
                     }
 
-                    $phpcsFile->fixer->replaceToken($i, '');
+                    $phpcsFile->fixer->replaceToken($scopePtr, '');
+                    $phpcsFile->fixer->addContentBefore($staticPtr, $propertyInfo['scope'].' ');
+
+                    $phpcsFile->fixer->endChangeset();
                 }
+            }
+        }//end if
 
-                $phpcsFile->fixer->replaceToken($scopePtr, '');
-                $phpcsFile->fixer->addContentBefore($staticPtr, $propertyInfo['scope'].' ');
+        if ($propertyInfo['scope_specified'] === true && $propertyInfo['is_readonly'] === true) {
+            $scopePtr    = $phpcsFile->findPrevious(Tokens::$scopeModifiers, ($stackPtr - 1));
+            $readonlyPtr = $phpcsFile->findPrevious(T_READONLY, ($stackPtr - 1));
+            if ($scopePtr > $readonlyPtr) {
+                $error = 'The readonly declaration must come after the visibility declaration';
+                $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'ReadonlyBeforeVisibility');
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
 
-                $phpcsFile->fixer->endChangeset();
+                    for ($i = ($scopePtr + 1); $scopePtr < $stackPtr; $i++) {
+                        if ($tokens[$i]['code'] !== T_WHITESPACE) {
+                            break;
+                        }
+
+                        $phpcsFile->fixer->replaceToken($i, '');
+                    }
+
+                    $phpcsFile->fixer->replaceToken($scopePtr, '');
+                    $phpcsFile->fixer->addContentBefore($readonlyPtr, $propertyInfo['scope'].' ');
+
+                    $phpcsFile->fixer->endChangeset();
+                }
             }
         }//end if
 
