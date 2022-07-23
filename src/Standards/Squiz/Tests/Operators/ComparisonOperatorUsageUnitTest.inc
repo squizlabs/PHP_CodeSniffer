@@ -136,3 +136,10 @@ if (empty($argTags > 0)) {
 }
 
 myFunction($var1 === true ? "" : "foobar");
+
+$anon = new class(!$foo ? 0 : 1, ($bar == true) ? 1 : 0) {
+    function __construct($a, $b) {}
+};
+$anon = new class($foo === false ? 0 : 1, ($bar === true) ? 1 : 0) {
+    function __construct($a, $b) {}
+};
