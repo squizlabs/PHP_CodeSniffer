@@ -281,3 +281,26 @@ array_fill_keys(
     ), value: true,
 );
 // phpcs:set PSR2.Methods.FunctionCallSignature allowMultipleArguments false
+
+// Anonymous object instantiations are treated the same as a normal call.
+$anon = new class() {};
+$anon = new class($foo, true) {};
+$anon = new class(
+    $foo,
+    true,
+    10
+) {};
+
+$anon = new class() {};
+$anon = new class($foo, true) {};
+$anon = new class(
+    $foo,
+    true,
+    10
+) {};
+
+// ... though do not enforce no space between the class keyword and the open parenthesis.
+$anon = new class () {};
+
+// And anonymous object instantiations without parentheses are ignored.
+$anon = new class {};

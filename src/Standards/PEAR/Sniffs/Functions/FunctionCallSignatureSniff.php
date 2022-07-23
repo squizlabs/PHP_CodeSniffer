@@ -120,7 +120,9 @@ class FunctionCallSignatureSniff implements Sniff
 
         $closeBracket = $tokens[$openBracket]['parenthesis_closer'];
 
-        if (($stackPtr + 1) !== $openBracket) {
+        if ($tokens[$stackPtr]['code'] !== T_ANON_CLASS
+            && ($stackPtr + 1) !== $openBracket
+        ) {
             // Checking this: $value = my_function[*](...).
             $error = 'Space before opening parenthesis of function call prohibited';
             $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceBeforeOpenBracket');

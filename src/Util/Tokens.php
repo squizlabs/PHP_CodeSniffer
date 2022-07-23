@@ -630,6 +630,7 @@ final class Tokens
         T_SELF         => T_SELF,
         T_PARENT       => T_PARENT,
         T_STATIC       => T_STATIC,
+        T_ANON_CLASS   => T_ANON_CLASS,
     ];
 
     /**
