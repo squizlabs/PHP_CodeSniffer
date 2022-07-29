@@ -95,6 +95,11 @@ class DisallowTabIndentUnitTest extends AbstractSniffUnitTest
                 13 => 1,
                 19 => 1,
             ];
+        case 'DisallowTabIndentUnitTest.3.inc':
+            return [
+                7  => 1,
+                13 => 1,
+            ];
         default:
             return [];
         }//end switch
