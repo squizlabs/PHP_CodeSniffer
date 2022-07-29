@@ -143,6 +143,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="FinallyTest.php" role="test" />
       <file baseinstalldir="" name="GotoLabelTest.inc" role="test" />
       <file baseinstalldir="" name="GotoLabelTest.php" role="test" />
+      <file baseinstalldir="" name="HeredocNowdocCloserTest.inc" role="test" />
+      <file baseinstalldir="" name="HeredocNowdocCloserTest.php" role="test" />
       <file baseinstalldir="" name="NamedFunctionCallArgumentsTest.inc" role="test" />
       <file baseinstalldir="" name="NamedFunctionCallArgumentsTest.php" role="test" />
       <file baseinstalldir="" name="NullsafeObjectOperatorTest.inc" role="test" />
@@ -2116,6 +2118,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.inc" name="tests/Core/Tokenizer/FinallyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.php" name="tests/Core/Tokenizer/GotoLabelTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.inc" name="tests/Core/Tokenizer/GotoLabelTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.php" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.inc" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
@@ -2220,6 +2224,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.inc" name="tests/Core/Tokenizer/FinallyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.php" name="tests/Core/Tokenizer/GotoLabelTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.inc" name="tests/Core/Tokenizer/GotoLabelTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.php" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.inc" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
