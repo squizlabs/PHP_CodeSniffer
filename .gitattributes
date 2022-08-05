@@ -7,6 +7,7 @@ phpcs.xml.dist export-ignore
 phpstan.neon export-ignore
 phpunit.xml.dist export-ignore
 scripts/ export-ignore
+/tests export-ignore
 
 # Declare files that should always have CRLF line endings on checkout.
 *WinTest.inc text eol=crlf
