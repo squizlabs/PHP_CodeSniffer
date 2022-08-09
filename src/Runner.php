@@ -713,6 +713,11 @@ class Runner
                 continue;
             }
 
+            $childProcessStatus = pcntl_wexitstatus($status);
+            if ($childProcessStatus !== 0) {
+                $success = false;
+            }
+
             $out = $childProcs[$pid];
             unset($childProcs[$pid]);
             if (file_exists($out) === false) {
