@@ -54,8 +54,12 @@ class SpreadOperatorSpacingAfterSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens        = $phpcsFile->getTokens();
-        $this->spacing = (int) $this->spacing;
+        $tokens         = $phpcsFile->getTokens();
+        $this->spacing  = (int) $this->spacing;
+        $pluralizeSpace = 's';
+        if ($this->spacing === 1) {
+            $pluralizeSpace = '';
+        }
 
         $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         if ($nextNonEmpty === false) {
@@ -81,8 +85,11 @@ class SpreadOperatorSpacingAfterSniff implements Sniff
 
         $nextNonWhitespace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($nextNonEmpty !== $nextNonWhitespace) {
-            $error = 'Expected %s space(s) after the spread operator; comment found';
-            $data  = [$this->spacing];
+            $error = 'Expected %s space%s after the spread operator; comment found';
+            $data  = [
+                $this->spacing,
+                $pluralizeSpace,
+            ];
             $phpcsFile->addError($error, $stackPtr, 'CommentFound', $data);
 
             if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
@@ -107,9 +114,10 @@ class SpreadOperatorSpacingAfterSniff implements Sniff
             return;
         }
 
-        $error = 'Expected %s space(s) after the spread operator; %s found';
+        $error = 'Expected %s space%s after the spread operator; %s found';
         $data  = [
             $this->spacing,
+            $pluralizeSpace,
             $found,
         ];
 
