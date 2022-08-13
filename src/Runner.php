@@ -713,20 +713,17 @@ class Runner
         $numProcessed = 0;
         $totalBatches = count($childProcs);
 
-        $success            = true;
-        $childProcessFailed = false;
+        $success = true;
 
         while (count($childProcs) > 0) {
             $pid = pcntl_waitpid(0, $status);
-
             if ($pid <= 0) {
                 continue;
             }
 
             $childProcessStatus = pcntl_wexitstatus($status);
-
             if ($childProcessStatus !== 0) {
-                $childProcessFailed = true;
+                $success = false;
             }
 
             $out = $childProcs[$pid];
@@ -776,7 +773,7 @@ class Runner
             $this->printProgress($file, $totalBatches, $numProcessed);
         }//end while
 
-        return $success && !$childProcessFailed;
+        return $success;
 
     }//end processChildProcs()
 
