@@ -30,6 +30,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3618 : Generic.WhiteSpace.ArbitraryParenthesesSpacing false positive for return new parent()
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3645 : PHPCS can show 0 exit code when running in parallel even if child process has fatal error
+    -- Thanks to Alex Panshin (@enl) for the patch
  </notes>
  <contents>
   <dir name="/">
