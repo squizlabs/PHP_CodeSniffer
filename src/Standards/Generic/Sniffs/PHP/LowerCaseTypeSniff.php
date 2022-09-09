@@ -52,6 +52,7 @@ class LowerCaseTypeSniff implements Sniff
         $tokens   = Tokens::$castTokens;
         $tokens[] = T_FUNCTION;
         $tokens[] = T_CLOSURE;
+        $tokens[] = T_FN;
         $tokens[] = T_VARIABLE;
         return $tokens;
 
