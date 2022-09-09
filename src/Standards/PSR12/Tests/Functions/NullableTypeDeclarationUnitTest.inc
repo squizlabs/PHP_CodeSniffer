@@ -85,3 +85,11 @@ class testInstanceOf() {
 
 // PHP 8.0: static return type.
 function testStatic() : ? static {}
+
+// PHP 8.2: nullable true/false.
+function fooG(): ? true {}
+function fooH(): ?
+     false {}
+
+// Fatal error: null cannot be marked as nullable, but that's not the concern of this sniff.
+function fooI(): ? null {}

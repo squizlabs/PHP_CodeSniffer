@@ -41,6 +41,9 @@ class NullableTypeDeclarationUnitTest extends AbstractSniffUnitTest
             58 => 2,
             59 => 2,
             87 => 1,
+            90 => 1,
+            91 => 1,
+            95 => 1,
         ];
 
     }//end getErrorList()

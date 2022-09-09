@@ -27,6 +27,9 @@ class NullableTypeDeclarationSniff implements Sniff
         T_SELF         => true,
         T_PARENT       => true,
         T_STATIC       => true,
+        T_NULL         => true,
+        T_FALSE        => true,
+        T_TRUE         => true,
     ];
 
 
