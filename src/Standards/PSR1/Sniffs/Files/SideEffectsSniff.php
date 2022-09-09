@@ -169,7 +169,9 @@ class SideEffectsSniff implements Sniff
             }
 
             // Ignore function/class prefixes.
-            if (isset(Tokens::$methodPrefixes[$tokens[$i]['code']]) === true) {
+            if (isset(Tokens::$methodPrefixes[$tokens[$i]['code']]) === true
+                || $tokens[$i]['code'] === T_READONLY
+            ) {
                 continue;
             }
 
