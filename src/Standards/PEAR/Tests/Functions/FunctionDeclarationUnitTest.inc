@@ -465,3 +465,24 @@ new ExceptionMessage(),
     ) {
     }
 }
+
+$arrowNoArgs = fn () => $retrievedfromscope;
+
+$arrowSingleLineArgs = fn (Type $param1, int $param2, string $param3): \ReturnType => $retrievedfromscope;
+
+$arrowMultiLineArgs = fn (
+    $longVar1,
+    $longerVar2,
+    &...$muchLongerVar3
+) => $longVar1;
+
+$arrowNoArgs = fn(  )
+    => $retrievedfromscope;
+
+$arrowSingleLineArgs = fn( Type   $param1  ,   int   $param2, string $param3
+   )  : \ReturnType   => $retrievedfromscope;
+
+$arrowMultiLineArgs = fn (
+    $longVar1, $longerVar2,
+
+  & ...  $muchLongerVar3) => $longVar1;
