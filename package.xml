@@ -37,6 +37,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3645 : PHPCS can show 0 exit code when running in parallel even if child process has fatal error
     -- Thanks to Alex Panshin (@enl) for the patch
+  - Fixed bug #3653 : False positives for match() in OperatorSpacingSniff
+    -- Thanks to Jaroslav Hanslík (@kukulich) for the patch
  </notes>
  <contents>
   <dir name="/">
