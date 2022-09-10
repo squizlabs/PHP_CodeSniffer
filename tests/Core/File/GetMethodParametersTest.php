@@ -1125,6 +1125,54 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify recognition of PHP 8.2 stand-alone `true` type.
+     *
+     * @return void
+     */
+    public function testPHP82PseudoTypeTrue()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => '?true $var = true',
+            'default'           => 'true',
+            'has_attributes'    => false,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?true',
+            'nullable_type'     => true,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP82PseudoTypeTrue()
+
+
+    /**
+     * Verify recognition of PHP 8.2 type declaration with (illegal) type false combined with type true.
+     *
+     * @return void
+     */
+    public function testPHP82PseudoTypeFalseAndTrue()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => 'true|false $var = true',
+            'default'           => 'true',
+            'has_attributes'    => false,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'true|false',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP82PseudoTypeFalseAndTrue()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.
