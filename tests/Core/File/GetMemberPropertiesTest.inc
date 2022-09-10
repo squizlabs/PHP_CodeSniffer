@@ -217,11 +217,11 @@ $anon = class() {
     public ?int|float $unionTypesNullable;
 
     /* testPHP8PseudoTypeNull */
-    // Intentional fatal error - null pseudotype is only allowed in union types, but that's not the concern of the method.
+    // PHP 8.0 - 8.1: Intentional fatal error - null pseudotype is only allowed in union types, but that's not the concern of the method.
     public null $pseudoTypeNull;
 
     /* testPHP8PseudoTypeFalse */
-    // Intentional fatal error - false pseudotype is only allowed in union types, but that's not the concern of the method.
+    // PHP 8.0 - 8.1: Intentional fatal error - false pseudotype is only allowed in union types, but that's not the concern of the method.
     public false $pseudoTypeFalse;
 
     /* testPHP8PseudoTypeFalseAndBool */
@@ -298,7 +298,22 @@ $anon = class() {
     // Intentional fatal error - types which are not allowed for intersection type, but that's not the concern of the method.
     public int&string $illegalIntersectionType;
 
-    /* testPHP81NulltableIntersectionType */
+    /* testPHP81NullableIntersectionType */
     // Intentional fatal error - nullability is not allowed with intersection type, but that's not the concern of the method.
     public ?Foo&Bar $nullableIntersectionType;
+};
+
+$anon = class() {
+    /* testPHP82PseudoTypeTrue */
+    public true $pseudoTypeTrue;
+
+    /* testPHP82NullablePseudoTypeTrue */
+    static protected ?true $pseudoTypeNullableTrue;
+
+    /* testPHP82PseudoTypeTrueInUnion */
+    private int|string|true $pseudoTypeTrueInUnion;
+
+    /* testPHP82PseudoTypeFalseAndTrue */
+    // Intentional fatal error - Type contains both true and false, bool should be used instead, but that's not the concern of the method.
+    readonly true|FALSE $pseudoTypeFalseAndTrue;
 };
