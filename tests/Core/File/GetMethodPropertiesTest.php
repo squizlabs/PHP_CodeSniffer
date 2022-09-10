@@ -890,6 +890,52 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify recognition of PHP 8.2 stand-alone `true` type.
+     *
+     * @return void
+     */
+    public function testPHP82PseudoTypeTrue()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '?true',
+            'nullable_return_type' => true,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP82PseudoTypeTrue()
+
+
+    /**
+     * Verify recognition of PHP 8.2 type declaration with (illegal) type false combined with type true.
+     *
+     * @return void
+     */
+    public function testPHP82PseudoTypeFalseAndTrue()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'true|false',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP82PseudoTypeFalseAndTrue()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.

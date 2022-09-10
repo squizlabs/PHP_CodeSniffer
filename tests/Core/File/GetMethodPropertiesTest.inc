@@ -102,11 +102,11 @@ function unionTypesAllPseudoTypes($var) : false|MIXED|self|parent|static|iterabl
 $closure = function () use($a) :?int|float {};
 
 /* testPHP8PseudoTypeNull */
-// Intentional fatal error - null pseudotype is only allowed in union types, but that's not the concern of the method.
+// PHP 8.0 - 8.1: Intentional fatal error - null pseudotype is only allowed in union types, but that's not the concern of the method.
 function pseudoTypeNull(): null {}
 
 /* testPHP8PseudoTypeFalse */
-// Intentional fatal error - false pseudotype is only allowed in union types, but that's not the concern of the method.
+// PHP 8.0 - 8.1: Intentional fatal error - false pseudotype is only allowed in union types, but that's not the concern of the method.
 function pseudoTypeFalse(): false {}
 
 /* testPHP8PseudoTypeFalseAndBool */
@@ -150,3 +150,10 @@ $closure = function (): string&int {};
 /* testPHP81NullableIntersectionTypes */
 // Intentional fatal error - nullability is not allowed with intersection types, but that's not the concern of the method.
 $closure = function (): ?Foo&Bar {};
+
+/* testPHP82PseudoTypeTrue */
+function pseudoTypeTrue(): ?true {}
+
+/* testPHP82PseudoTypeFalseAndTrue */
+// Intentional fatal error - Type contains both true and false, bool should be used instead, but that's not the concern of the method.
+function pseudoTypeFalseAndTrue(): true|false {}
