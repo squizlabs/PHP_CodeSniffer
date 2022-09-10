@@ -26,6 +26,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Newer versions of Composer will now suggest installing PHPCS using require-dev instead of require
+    -- Thanks to Gary Jones (@GaryJones) for the patch
   - Generic.PHP.LowerCaseType sniff now correctly examines types inside arrow functions
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3616 : Squiz.PHP.DisallowComparisonAssignment false positive for PHP 8 match expression
