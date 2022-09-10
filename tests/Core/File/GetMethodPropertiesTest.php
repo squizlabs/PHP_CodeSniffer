@@ -821,7 +821,6 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
 
 
     /**
-    /**
      * Verify recognition of PHP8.1 intersection type declaration.
      *
      * @return void
