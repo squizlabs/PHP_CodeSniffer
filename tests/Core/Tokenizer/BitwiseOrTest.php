@@ -130,6 +130,9 @@ class BitwiseOrTest extends AbstractMethodUnitTest
             ['/* testTypeUnionArrowParam */'],
             ['/* testTypeUnionArrowReturnType */'],
             ['/* testTypeUnionNonArrowFunctionDeclaration */'],
+            ['/* testTypeUnionPHP82TrueFirst */'],
+            ['/* testTypeUnionPHP82TrueMiddle */'],
+            ['/* testTypeUnionPHP82TrueLast */'],
         ];
 
     }//end dataTypeUnion()
