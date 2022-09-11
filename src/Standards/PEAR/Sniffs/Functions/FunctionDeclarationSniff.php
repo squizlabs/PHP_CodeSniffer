@@ -308,7 +308,9 @@ class FunctionDeclarationSniff implements Sniff
             return;
         }
 
-        // The opening brace needs to be one space away from the closing parenthesis.
+        // The opening brace needs to be on the same line as the closing parenthesis.
+        // There should only be one space between the closing parenthesis - or the end of the
+        // return type - and the opening brace.
         $opener = $tokens[$stackPtr]['scope_opener'];
         if ($tokens[$opener]['line'] !== $tokens[$closeBracket]['line']) {
             $error = 'The closing parenthesis and the %s of a multi-line function declaration must be on the same line';
@@ -320,67 +322,72 @@ class FunctionDeclarationSniff implements Sniff
                 $data = ['arrow'];
             }
 
-            $fix = $phpcsFile->addFixableError($error, $opener, $code, $data);
-            if ($fix === true) {
-                $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($opener - 1), $closeBracket, true);
-                $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->addContent($prev, ' '.$tokens[$opener]['content']);
+            $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($opener - 1), $closeBracket, true);
+            if ($tokens[$prev]['line'] === $tokens[$opener]['line']) {
+                // End of the return type is not on the same line as the close parenthesis.
+                $phpcsFile->addError($error, $opener, $code, $data);
+            } else {
+                $fix = $phpcsFile->addFixableError($error, $opener, $code, $data);
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    $phpcsFile->fixer->addContent($prev, ' '.$tokens[$opener]['content']);
 
-                // If the opener is on a line by itself, removing it will create
-                // an empty line, so just remove the entire line instead.
-                $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($opener - 1), $closeBracket, true);
-                $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
+                    // If the opener is on a line by itself, removing it will create
+                    // an empty line, so just remove the entire line instead.
+                    $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($opener - 1), $closeBracket, true);
+                    $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
 
-                if ($tokens[$prev]['line'] < $tokens[$opener]['line']
-                    && $tokens[$next]['line'] > $tokens[$opener]['line']
-                ) {
-                    // Clear the whole line.
-                    for ($i = ($prev + 1); $i < $next; $i++) {
-                        if ($tokens[$i]['line'] === $tokens[$opener]['line']) {
-                            $phpcsFile->fixer->replaceToken($i, '');
+                    if ($tokens[$prev]['line'] < $tokens[$opener]['line']
+                        && $tokens[$next]['line'] > $tokens[$opener]['line']
+                    ) {
+                        // Clear the whole line.
+                        for ($i = ($prev + 1); $i < $next; $i++) {
+                            if ($tokens[$i]['line'] === $tokens[$opener]['line']) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+                        }
+                    } else {
+                        // Just remove the opener.
+                        $phpcsFile->fixer->replaceToken($opener, '');
+                        if ($tokens[$next]['line'] === $tokens[$opener]['line']) {
+                            $phpcsFile->fixer->replaceToken(($opener + 1), '');
                         }
                     }
-                } else {
-                    // Just remove the opener.
-                    $phpcsFile->fixer->replaceToken($opener, '');
-                    if ($tokens[$next]['line'] === $tokens[$opener]['line']) {
-                        $phpcsFile->fixer->replaceToken(($opener + 1), '');
-                    }
-                }
 
-                $phpcsFile->fixer->endChangeset();
-            }//end if
-        } else {
-            $prev = $tokens[($opener - 1)];
-            if ($prev['code'] !== T_WHITESPACE) {
-                $length = 0;
-            } else {
-                $length = strlen($prev['content']);
-            }
-
-            if ($length !== 1) {
-                $error = 'There must be a single space between the closing parenthesis and the %s of a multi-line function declaration; found %s spaces';
-                $code  = 'SpaceBeforeOpenBrace';
-                $data  = ['opening brace'];
-
-                if ($tokens[$stackPtr]['code'] === T_FN) {
-                    $code = 'SpaceBeforeArrow';
-                    $data = ['arrow'];
-                }
-
-                $data[] = $length;
-
-                $fix = $phpcsFile->addFixableError($error, ($opener - 1), $code, $data);
-                if ($fix === true) {
-                    if ($length === 0) {
-                        $phpcsFile->fixer->addContentBefore($opener, ' ');
-                    } else {
-                        $phpcsFile->fixer->replaceToken(($opener - 1), ' ');
-                    }
-                }
+                    $phpcsFile->fixer->endChangeset();
+                }//end if
 
                 return;
             }//end if
+        }//end if
+
+        $prev = $tokens[($opener - 1)];
+        if ($prev['code'] !== T_WHITESPACE) {
+            $length = 0;
+        } else {
+            $length = strlen($prev['content']);
+        }
+
+        if ($length !== 1) {
+            $error = 'There must be a single space before the %s of a multi-line function declaration; found %s spaces';
+            $code  = 'SpaceBeforeOpenBrace';
+            $data  = ['opening brace'];
+
+            if ($tokens[$stackPtr]['code'] === T_FN) {
+                $code = 'SpaceBeforeArrow';
+                $data = ['arrow'];
+            }
+
+            $data[] = $length;
+
+            $fix = $phpcsFile->addFixableError($error, ($opener - 1), $code, $data);
+            if ($fix === true) {
+                if ($length === 0) {
+                    $phpcsFile->fixer->addContentBefore($opener, ' ');
+                } else {
+                    $phpcsFile->fixer->replaceToken(($opener - 1), ' ');
+                }
+            }
         }//end if
 
     }//end processMultiLineDeclaration()
