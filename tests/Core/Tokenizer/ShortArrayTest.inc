@@ -92,6 +92,20 @@ echo [1, 2, 3][0];
 /* testArrayWithinFunctionCall */
 $var = functionCall([$x, $y]);
 
+if ( true ) {
+    /* testShortListDeclarationAfterBracedControlStructure */
+    [ $a ] = [ 'hi' ];
+}
+
+if ( true )
+    /* testShortListDeclarationAfterNonBracedControlStructure */
+    [ $a ] = [ 'hi' ];
+
+if ( true ) :
+    /* testShortListDeclarationAfterAlternativeControlStructure */
+    [ $a ] = [ 'hi' ];
+endif;
+
 /* testLiveCoding */
 // Intentional parse error. This has to be the last test in the file.
 $array = [
