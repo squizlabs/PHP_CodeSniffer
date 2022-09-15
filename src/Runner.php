@@ -53,7 +53,7 @@ class Runner
      */
     public function runPHPCS()
     {
-        $this->register_out_of_memory_shutdown_message('phpcs');
+        $this->registerOutOfMemoryShutdownMessage('phpcs');
 
         try {
             Util\Timing::startTiming();
@@ -155,7 +155,7 @@ class Runner
      */
     public function runPHPCBF()
     {
-        $this->register_out_of_memory_shutdown_message('phpcbf');
+        $this->registerOutOfMemoryShutdownMessage('phpcbf');
 
         if (defined('PHP_CODESNIFFER_CBF') === false) {
             define('PHP_CODESNIFFER_CBF', true);
@@ -902,7 +902,7 @@ class Runner
      *
      * @return void
      */
-    private function register_out_of_memory_shutdown_message($command)
+    private function registerOutOfMemoryShutdownMessage($command)
     {
         // Allocate all needed memory beforehand as much as possible.
         $errorMsg    = PHP_EOL.'The PHP_CodeSniffer "%1$s" command ran out of memory.'.PHP_EOL;
@@ -930,7 +930,7 @@ class Runner
             }
         );
 
-    }//end register_out_of_memory_shutdown_message()
+    }//end registerOutOfMemoryShutdownMessage()
 
 
 }//end class
