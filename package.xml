@@ -44,6 +44,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Alex Panshin (@enl) for the patch
   - Fixed bug #3653 : False positives for match() in OperatorSpacingSniff
     -- Thanks to Jaroslav Hanslík (@kukulich) for the patch
+  - Fixed bug #3666 : PEAR.Functions.FunctionCallSignature incorrect indent fix when checking mixed HTML/PHP files
  </notes>
  <contents>
   <dir name="/">
