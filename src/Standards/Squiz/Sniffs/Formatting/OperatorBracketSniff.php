@@ -142,6 +142,7 @@ class OperatorBracketSniff implements Sniff
             T_THIS,
             T_SELF,
             T_STATIC,
+            T_PARENT,
             T_OBJECT_OPERATOR,
             T_NULLSAFE_OBJECT_OPERATOR,
             T_DOUBLE_COLON,
