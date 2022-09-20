@@ -50,6 +50,7 @@ class ClassInstantiationSniff implements Sniff
             T_NAME_RELATIVE            => T_NAME_RELATIVE,
             T_SELF                     => T_SELF,
             T_STATIC                   => T_STATIC,
+            T_PARENT                   => T_PARENT,
             T_VARIABLE                 => T_VARIABLE,
             T_DOLLAR                   => T_DOLLAR,
             T_OBJECT_OPERATOR          => T_OBJECT_OPERATOR,
