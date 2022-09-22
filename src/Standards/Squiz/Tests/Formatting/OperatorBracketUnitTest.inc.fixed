@@ -199,3 +199,5 @@ match ($a) {
     'b', 'c', 'd' => -2,
     default => -3,
 };
+
+$cntPages = ceil(count($items) / parent::ON_PAGE);
