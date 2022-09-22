@@ -45,6 +45,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3653 : False positives for match() in OperatorSpacingSniff
     -- Thanks to Jaroslav Hanslík (@kukulich) for the patch
   - Fixed bug #3666 : PEAR.Functions.FunctionCallSignature incorrect indent fix when checking mixed HTML/PHP files
+  - Fixed bug #3668 : PSR12.Classes.ClassInstantiation.MissingParentheses false positive when instantiating parent classes
+    -- Similar issues also fixed in Generic.Functions.FunctionCallArgumentSpacing and Squiz.Formatting.OperatorBracket
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
  <contents>
   <dir name="/">
