@@ -50,10 +50,10 @@ class LowerCaseTypeSniff implements Sniff
     public function register()
     {
         $tokens   = Tokens::$castTokens;
+        $tokens  += Tokens::$ooScopeTokens;
         $tokens[] = T_FUNCTION;
         $tokens[] = T_CLOSURE;
         $tokens[] = T_FN;
-        $tokens[] = T_VARIABLE;
         return $tokens;
 
     }//end register()
@@ -89,35 +89,61 @@ class LowerCaseTypeSniff implements Sniff
          * Check property types.
          */
 
-        if ($tokens[$stackPtr]['code'] === T_VARIABLE) {
-            try {
-                $props = $phpcsFile->getMemberProperties($stackPtr);
-            } catch (RuntimeException $e) {
-                // Not an OO property.
+        if (isset(Tokens::$ooScopeTokens[$tokens[$stackPtr]['code']]) === true) {
+            if (isset($tokens[$stackPtr]['scope_opener'], $tokens[$stackPtr]['scope_closer']) === false) {
                 return;
             }
 
-            // Strip off potential nullable indication.
-            $type = ltrim($props['type'], '?');
-
-            if ($type !== '') {
-                $error     = 'PHP property type declarations must be lowercase; expected "%s" but found "%s"';
-                $errorCode = 'PropertyTypeFound';
-
-                if ($props['type_token'] === T_TYPE_INTERSECTION) {
-                    // Intersection types don't support simple types.
-                } else if (strpos($type, '|') !== false) {
-                    $this->processUnionType(
-                        $phpcsFile,
-                        $props['type_token'],
-                        $props['type_end_token'],
-                        $error,
-                        $errorCode
-                    );
-                } else if (isset($this->phpTypes[strtolower($type)]) === true) {
-                    $this->processType($phpcsFile, $props['type_token'], $type, $error, $errorCode);
+            for ($i = ($tokens[$stackPtr]['scope_opener'] + 1); $i < $tokens[$stackPtr]['scope_closer']; $i++) {
+                // Skip over potentially large docblocks.
+                if ($tokens[$i]['code'] === \T_DOC_COMMENT_OPEN_TAG
+                    && isset($tokens[$i]['comment_closer']) === true
+                ) {
+                    $i = $tokens[$i]['comment_closer'];
+                    continue;
                 }
-            }
+
+                // Skip over function declarations and everything nested within.
+                if ($tokens[$i]['code'] === \T_FUNCTION
+                    && isset($tokens[$i]['scope_closer']) === true
+                ) {
+                    $i = $tokens[$i]['scope_closer'];
+                    continue;
+                }
+
+                if ($tokens[$i]['code'] !== \T_VARIABLE) {
+                    continue;
+                }
+
+                try {
+                    $props = $phpcsFile->getMemberProperties($i);
+                } catch (RuntimeException $e) {
+                    // Not an OO property.
+                    continue;
+                }
+
+                // Strip off potential nullable indication.
+                $type = ltrim($props['type'], '?');
+
+                if ($type !== '') {
+                    $error     = 'PHP property type declarations must be lowercase; expected "%s" but found "%s"';
+                    $errorCode = 'PropertyTypeFound';
+
+                    if ($props['type_token'] === T_TYPE_INTERSECTION) {
+                        // Intersection types don't support simple types.
+                    } else if (strpos($type, '|') !== false) {
+                        $this->processUnionType(
+                            $phpcsFile,
+                            $props['type_token'],
+                            $props['type_end_token'],
+                            $error,
+                            $errorCode
+                        );
+                    } else if (isset($this->phpTypes[strtolower($type)]) === true) {
+                        $this->processType($phpcsFile, $props['type_token'], $type, $error, $errorCode);
+                    }
+                }
+            }//end for
 
             return;
         }//end if
