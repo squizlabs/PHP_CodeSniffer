@@ -48,6 +48,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3668 : PSR12.Classes.ClassInstantiation.MissingParentheses false positive when instantiating parent classes
     -- Similar issues also fixed in Generic.Functions.FunctionCallArgumentSpacing and Squiz.Formatting.OperatorBracket
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3672 : Incorrect ScopeIndent.IncorrectExact report for match inside array literal
  </notes>
  <contents>
   <dir name="/">
