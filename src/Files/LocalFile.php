@@ -29,7 +29,7 @@ class LocalFile extends File
      */
     public function __construct($path, Ruleset $ruleset, Config $config)
     {
-        $this->path = trim($path);
+        $this->path = trim((string) $path);
         if (Common::isReadable($this->path) === false) {
             parent::__construct($this->path, $ruleset, $config);
             $error = 'Error opening file; file no longer exists or you do not have access to read the file';
