@@ -73,6 +73,13 @@ class UnnecessaryFinalModifierSniff implements Sniff
                 $error = 'Unnecessary FINAL modifier in FINAL class';
                 $phpcsFile->addWarning($error, $next, 'Found');
             }
+
+            // Skip over the contents of functions as those can't contain the `final` keyword anyway.
+            if ($tokens[$next]['code'] === T_FUNCTION
+                && isset($tokens[$next]['scope_closer']) === true
+            ) {
+                $next = $tokens[$next]['scope_closer'];
+            }
         }
 
     }//end process()
