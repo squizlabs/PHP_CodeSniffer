@@ -1899,6 +1899,7 @@ class File
      *   array(
      *    'is_abstract' => false, // true if the abstract keyword was found.
      *    'is_final'    => false, // true if the final keyword was found.
+     *    'is_readonly' => false, // true if the readonly keyword was found.
      *   );
      * </code>
      *
@@ -1918,6 +1919,7 @@ class File
         $valid = [
             T_FINAL       => T_FINAL,
             T_ABSTRACT    => T_ABSTRACT,
+            T_READONLY    => T_READONLY,
             T_WHITESPACE  => T_WHITESPACE,
             T_COMMENT     => T_COMMENT,
             T_DOC_COMMENT => T_DOC_COMMENT,
@@ -1925,6 +1927,7 @@ class File
 
         $isAbstract = false;
         $isFinal    = false;
+        $isReadonly = false;
 
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
             if (isset($valid[$this->tokens[$i]['code']]) === false) {
@@ -1939,12 +1942,17 @@ class File
             case T_FINAL:
                 $isFinal = true;
                 break;
+
+            case T_READONLY:
+                $isReadonly = true;
+                break;
             }
         }//end for
 
         return [
             'is_abstract' => $isAbstract,
             'is_final'    => $isFinal,
+            'is_readonly' => $isReadonly,
         ];
 
     }//end getClassProperties()
