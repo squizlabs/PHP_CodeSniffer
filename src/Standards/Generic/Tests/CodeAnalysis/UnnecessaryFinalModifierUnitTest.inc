@@ -27,3 +27,8 @@ final class Bar_Foo {
     protected function foo() {}
     private function Bar() {}
 }
+
+final readonly class Foo_Bar {
+    public final function fooBar() {}
+    final protected function fool() {}
+}
