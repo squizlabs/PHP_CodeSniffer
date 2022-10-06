@@ -170,6 +170,7 @@ class FileCommentSniff implements Sniff
             T_FINAL,
             T_STATIC,
             T_ABSTRACT,
+            T_READONLY,
             T_CONST,
             T_PROPERTY,
         ];
