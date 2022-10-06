@@ -266,7 +266,7 @@ class Cache
             self::$cache = json_decode(file_get_contents(self::$path), true);
 
             // Verify the contents of the cache file.
-            if (self::$cache['config'] !== $configData) {
+            if (!is_array(self::$cache) || self::$cache['config'] !== $configData) {
                 self::$cache = [];
                 if (PHP_CODESNIFFER_VERBOSITY > 1) {
                     echo "\t* cache was invalid and has been cleared *".PHP_EOL;
