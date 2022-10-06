@@ -239,3 +239,12 @@ C8
 
 foo(new class {
 });
+
+readonly
+class Test
+{
+}
+
+readonly    class Test
+{
+}
