@@ -143,3 +143,21 @@ enum Empty_Enum_Doc
 class TodoController extends AbstractController implements MustBeLoggedInInterface
 {
 }
+
+/**
+ * Docblock
+ *
+ * @category  PHP
+ * @package   PHP_CodeSniffer
+ * @author    Greg Sherwood <gsherwood@squiz.net>
+ * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
+ * @link      http://pear.php.net/package/PHP_CodeSniffer
+ */
+abstract readonly class AbstractReadonlyWithDocblock {}
+
+/*
+ * Docblock
+ */
+readonly class ReadonlyWrongStyle {}
+
+readonly final class ReadonlyFinalWithoutDocblock {}
