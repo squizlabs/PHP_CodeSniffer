@@ -62,7 +62,13 @@ function bar( &   ...  $spread ) {
     );
 }
 
+// Ignore PHP 8.1 first class callable declarations.
+$map = array_map(strtolower(...), $map);
+
 // phpcs:set Generic.WhiteSpace.SpreadOperatorSpacingAfter spacing 0
+
+// Ignore PHP 8.1 first class callable declarations.
+$map = array_map(strtolower( ... ), $map);
 
 // Intentional parse error. This has to be the last test in the file.
 function bar( ...
