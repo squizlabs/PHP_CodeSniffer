@@ -66,7 +66,7 @@ class Runner
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
             // values the user has set.
-            $this->config = new Config();
+            $this->config = $this->getConfig();
 
             // Init the run and load the rulesets to set additional config vars.
             $this->init();
@@ -168,7 +168,7 @@ class Runner
             // Creating the Config object populates it with all required settings
             // based on the CLI arguments provided to the script and any config
             // values the user has set.
-            $this->config = new Config();
+            $this->config = $this->getConfig();
 
             // When processing STDIN, we can't output anything to the screen
             // or it will end up mixed in with the file output.
@@ -893,6 +893,17 @@ class Runner
         echo str_repeat(' ', $padding)." $numProcessed / $numFiles ($percent%)".PHP_EOL;
 
     }//end printProgress()
+
+
+    /**
+     * Get configuration.
+     *
+     * @return Config
+     */
+    protected function getConfig()
+    {
+        return new Config();
+    }//end getConfig()
 
 
     /**
