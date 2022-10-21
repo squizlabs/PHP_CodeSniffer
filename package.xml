@@ -40,6 +40,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3632 : Short list not tokenized correctly in control structures without braces
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3640 : Generic.WhiteSpace.DisallowTabIndent not reporting errors for PHP 7.3 flexible heredoc/nowdoc syntax
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3645 : PHPCS can show 0 exit code when running in parallel even if child process has fatal error
     -- Thanks to Alex Panshin (@enl) for the patch
   - Fixed bug #3653 : False positives for match() in OperatorSpacingSniff
