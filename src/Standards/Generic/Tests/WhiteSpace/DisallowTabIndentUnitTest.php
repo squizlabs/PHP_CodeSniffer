@@ -96,10 +96,15 @@ class DisallowTabIndentUnitTest extends AbstractSniffUnitTest
                 19 => 1,
             ];
         case 'DisallowTabIndentUnitTest.3.inc':
-            return [
-                7  => 1,
-                13 => 1,
-            ];
+            if (\PHP_VERSION_ID >= 70300) {
+                return [
+                    7  => 1,
+                    13 => 1,
+                ];
+            }
+
+            // PHP 7.2 or lower: PHP version which doesn't support flexible heredocs/nowdocs yet.
+            return [];
         default:
             return [];
         }//end switch
