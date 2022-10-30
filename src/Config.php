@@ -305,7 +305,7 @@ class Config
      *
      * @param array<string, mixed> $settings The array of config settings.
      *
-     * @return void
+     * @return array
      */
     public function setSettings($settings)
     {

@@ -28,7 +28,7 @@ class Gitblame extends VersionControl
      *
      * @param string $line Line to parse.
      *
-     * @return mixed string or false if impossible to recover.
+     * @return array|false|string|string[]|null string or false if impossible to recover.
      */
     protected function getAuthor($line)
     {

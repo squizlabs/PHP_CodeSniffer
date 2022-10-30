@@ -82,7 +82,7 @@ class IncludeOwnSystemSniff implements Sniff
      * @param int                         $stackPtr  The position in the tokens array of the
      *                                               potentially included class.
      *
-     * @return string
+     * @return false
      */
     protected function getIncludedClassFromToken(
         $phpcsFile,
