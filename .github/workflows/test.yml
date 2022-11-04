@@ -113,6 +113,9 @@ jobs:
       - name: Install Composer dependencies - normal
         if: ${{ matrix.php != '8.1' }}
         uses: "ramsey/composer-install@v2"
+        with:
+          # Bust the cache at least once a month - output format: YYYY-MM.
+          custom-cache-suffix: $(date -u "+%Y-%m")
 
       # For PHP > 8.0, install with ignore platform reqs as not all PHPUnit allow for it yet.
       - name: Install Composer dependencies - with ignore platform
@@ -120,6 +123,7 @@ jobs:
         uses: "ramsey/composer-install@v2"
         with:
           composer-options: --ignore-platform-reqs
+          custom-cache-suffix: $(date -u "+%Y-%m")
 
       # Note: The code style check is run multiple times against every PHP version
       # as it also acts as an integration test.
