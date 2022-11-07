@@ -62,6 +62,87 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify variable.
+     *
+     * @return void
+     */
+    public function testVariable()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => '$var',
+            'has_attributes'    => false,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testVariable()
+
+
+    /**
+     * Verify default value parsing with a single function param.
+     *
+     * @return void
+     */
+    public function testSingleDefaultValue()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var1',
+            'content'           => '$var1=self::CONSTANT',
+            'has_attributes'    => false,
+            'default'           => 'self::CONSTANT',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testSingleDefaultValue()
+
+
+    /**
+     * Verify default value parsing.
+     *
+     * @return void
+     */
+    public function testDefaultValues()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var1',
+            'content'           => '$var1=1',
+            'has_attributes'    => false,
+            'default'           => '1',
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$var2',
+            'content'           => "\$var2='value'",
+            'has_attributes'    => false,
+            'default'           => "'value'",
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testDefaultValues()
+
+
+    /**
      * Verify type hint parsing.
      *
      * @return void
@@ -148,87 +229,6 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testNullableTypeHint()
-
-
-    /**
-     * Verify variable.
-     *
-     * @return void
-     */
-    public function testVariable()
-    {
-        $expected    = [];
-        $expected[0] = [
-            'name'              => '$var',
-            'content'           => '$var',
-            'has_attributes'    => false,
-            'pass_by_reference' => false,
-            'variable_length'   => false,
-            'type_hint'         => '',
-            'nullable_type'     => false,
-        ];
-
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
-
-    }//end testVariable()
-
-
-    /**
-     * Verify default value parsing with a single function param.
-     *
-     * @return void
-     */
-    public function testSingleDefaultValue()
-    {
-        $expected    = [];
-        $expected[0] = [
-            'name'              => '$var1',
-            'content'           => '$var1=self::CONSTANT',
-            'has_attributes'    => false,
-            'default'           => 'self::CONSTANT',
-            'pass_by_reference' => false,
-            'variable_length'   => false,
-            'type_hint'         => '',
-            'nullable_type'     => false,
-        ];
-
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
-
-    }//end testSingleDefaultValue()
-
-
-    /**
-     * Verify default value parsing.
-     *
-     * @return void
-     */
-    public function testDefaultValues()
-    {
-        $expected    = [];
-        $expected[0] = [
-            'name'              => '$var1',
-            'content'           => '$var1=1',
-            'has_attributes'    => false,
-            'default'           => '1',
-            'pass_by_reference' => false,
-            'variable_length'   => false,
-            'type_hint'         => '',
-            'nullable_type'     => false,
-        ];
-        $expected[1] = [
-            'name'              => '$var2',
-            'content'           => "\$var2='value'",
-            'has_attributes'    => false,
-            'default'           => "'value'",
-            'pass_by_reference' => false,
-            'variable_length'   => false,
-            'type_hint'         => '',
-            'nullable_type'     => false,
-        ];
-
-        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
-
-    }//end testDefaultValues()
 
 
     /**
@@ -989,6 +989,139 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
 
     }//end testParameterAttributesInFunctionDeclaration()
+
+
+    /**
+     * Verify recognition of PHP8.1 intersection type declaration.
+     *
+     * @return void
+     */
+    public function testPHP8IntersectionTypes()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$obj1',
+            'content'           => 'Foo&Bar $obj1',
+            'has_attributes'    => false,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'Foo&Bar',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$obj2',
+            'content'           => 'Boo&Bar $obj2',
+            'has_attributes'    => false,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'Boo&Bar',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8IntersectionTypes()
+
+
+    /**
+     * Verify recognition of PHP8 intersection type declaration when the variable has either a spread operator or a reference.
+     *
+     * @return void
+     */
+    public function testPHP81IntersectionTypesWithSpreadOperatorAndReference()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$paramA',
+            'content'           => 'Boo&Bar &$paramA',
+            'has_attributes'    => false,
+            'pass_by_reference' => true,
+            'variable_length'   => false,
+            'type_hint'         => 'Boo&Bar',
+            'nullable_type'     => false,
+        ];
+        $expected[1] = [
+            'name'              => '$paramB',
+            'content'           => 'Foo&Bar ...$paramB',
+            'has_attributes'    => false,
+            'pass_by_reference' => false,
+            'variable_length'   => true,
+            'type_hint'         => 'Foo&Bar',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81IntersectionTypesWithSpreadOperatorAndReference()
+
+
+    /**
+     * Verify recognition of PHP8.1 intersection type declaration with more types.
+     *
+     * @return void
+     */
+    public function testPHP81MoreIntersectionTypes()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$var',
+            'content'           => 'MyClassA&\Package\MyClassB&\Package\MyClassC $var',
+            'has_attributes'    => false,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'MyClassA&\Package\MyClassB&\Package\MyClassC',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81MoreIntersectionTypes()
+
+
+    /**
+     * Verify recognition of PHP8.1 intersection type declaration with illegal simple types.
+     *
+     * @return void
+     */
+    public function testPHP81IllegalIntersectionTypes()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$numeric_string',
+            'content'           => 'string&int $numeric_string',
+            'has_attributes'    => false,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => 'string&int',
+            'nullable_type'     => false,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81IllegalIntersectionTypes()
+
+
+    /**
+     * Verify recognition of PHP8.1 intersection type declaration with (illegal) nullability.
+     *
+     * @return void
+     */
+    public function testPHP81NullableIntersectionTypes()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'              => '$object',
+            'content'           => '?Foo&Bar $object',
+            'has_attributes'    => false,
+            'pass_by_reference' => false,
+            'variable_length'   => false,
+            'type_hint'         => '?Foo&Bar',
+            'nullable_type'     => true,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81NullableIntersectionTypes()
 
 
     /**

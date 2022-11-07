@@ -13,7 +13,7 @@ enum Boo: int {
 }
 
 /* testBackedStringEnum */
-enum Hoo: string
+enum Hoo : string
 {
     case ONE = 'one';
     case TWO = 'two';

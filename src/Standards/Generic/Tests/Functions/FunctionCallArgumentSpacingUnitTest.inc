@@ -153,3 +153,12 @@ $foobar = functionCallAnonClassParam(
 $result = myFunction(param1: $arg1, param2: $arg2);
 $result = myFunction(param1: $arg1 ,  param2:$arg2);
 $result = myFunction(param1: $arg1, param2:$arg2, param3: $arg3,param4:$arg4, param5:$arg5);
+
+class Testing extends Bar
+{
+    public static function baz($foo, $bar)
+    {
+        $a = new parent($foo, $bar);
+        $a = new parent($foo ,$bar);
+    }
+}

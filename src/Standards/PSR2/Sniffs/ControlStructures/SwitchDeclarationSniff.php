@@ -247,7 +247,7 @@ class SwitchDeclarationSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $lastToken = $phpcsFile->findPrevious(T_WHITESPACE, ($end - 1), $stackPtr, true);
+        $lastToken = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($end - 1), $stackPtr, true);
         if ($lastToken === false) {
             return false;
         }

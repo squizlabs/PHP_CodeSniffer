@@ -22,6 +22,7 @@ class ContextSensitiveKeywords
     const /* testEcho */ ECHO = 'ECHO';
     const /* testElse */ ELSE = 'ELSE';
     const /* testElseIf */ ELSEIF = 'ELSEIF';
+    const /* testEmpty */ EMPTY = 'EMPTY';
     const /* testEndDeclare */ ENDDECLARE = 'ENDDECLARE';
     const /* testEndFor */ ENDFOR = 'ENDFOR';
     const /* testEndForeach */ ENDFOREACH = 'ENDFOREACH';
@@ -29,6 +30,7 @@ class ContextSensitiveKeywords
     const /* testEndSwitch */ ENDSWITCH = 'ENDSWITCH';
     const /* testEndWhile */ ENDWHILE = 'ENDWHILE';
     const /* testEnum */ ENUM = 'ENUM';
+    const /* testEval */ EVAL = 'EVAL';
     const /* testExit */ EXIT = 'EXIT';
     const /* testExtends */ EXTENDS = 'EXTENDS';
     const /* testFinal */ FINAL = 'FINAL';
@@ -46,6 +48,7 @@ class ContextSensitiveKeywords
     const /* testInstanceOf */ INSTANCEOF = 'INSTANCEOF';
     const /* testInsteadOf */ INSTEADOF = 'INSTEADOF';
     const /* testInterface */ INTERFACE = 'INTERFACE';
+    const /* testIsset */ ISSET = 'ISSET';
     const /* testList */ LIST = 'LIST';
     const /* testMatch */ MATCH = 'MATCH';
     const /* testNamespace */ NAMESPACE = 'NAMESPACE';
@@ -65,6 +68,7 @@ class ContextSensitiveKeywords
     const /* testThrows */ THROW = 'THROW';
     const /* testTrait */ TRAIT = 'TRAIT';
     const /* testTry */ TRY = 'TRY';
+    const /* testUnset */ UNSET = 'UNSET';
     const /* testUse */ USE = 'USE';
     const /* testVar */ VAR = 'VAR';
     const /* testWhile */ WHILE = 'WHILE';
@@ -120,7 +124,7 @@ $object = /* testNewIsKeyword */ new SomeClass();
 $object /* testInstanceOfIsKeyword */ instanceof SomeClass;
 $copy = /* testCloneIsKeyword */ clone $object;
 
-/* testIfIsKeyword */ if (true):
+/* testIfIsKeyword */ if (/* testEmptyIsKeyword */ empty($a)):
 /* testElseIfIsKeyword */ elseif (false):
 /* testElseIsKeyword */ else:
 /* testEndIfIsKeyword */ endif;
@@ -165,8 +169,14 @@ echo $foo;
 print $foo;
 /* testDieIsKeyword */
 die($foo);
+/* testEvalIsKeyword */
+eval('<?php echo 5;');
 /* testExitIsKeyword */
 exit;
+/* testIssetIsKeyword */
+$a = isset($a);
+/* testUnsetIsKeyword */
+unset($a);
 
 /* testIncludeIsKeyword */
 include 'file.php';
@@ -206,5 +216,12 @@ $anonymousClass = new /* testAnonymousClassIsKeyword */ class {};
 $anonymousClass2 = new class /* testExtendsInAnonymousClassIsKeyword */ extends SomeParent {};
 $anonymousClass3 = new class /* testImplementsInAnonymousClassIsKeyword */ implements SomeInterface {};
 
+$instantiated1 = new /* testClassInstantiationParentIsKeyword */ parent();
+$instantiated2 = new /* testClassInstantiationSelfIsKeyword */ SELF;
+$instantiated3 = new /* testClassInstantiationStaticIsKeyword */ static($param);
+
 class Foo extends /* testNamespaceInNameIsKeyword */ namespace\Exception
 {}
+
+function /* testKeywordAfterFunctionShouldBeString */ eval() {}
+function /* testKeywordAfterFunctionByRefShouldBeString */ &switch() {}

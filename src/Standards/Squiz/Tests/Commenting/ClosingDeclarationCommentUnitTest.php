@@ -34,6 +34,7 @@ class ClosingDeclarationCommentUnitTest extends AbstractSniffUnitTest
             63 => 1,
             67 => 1,
             79 => 1,
+            83 => 1,
         ];
 
     }//end getErrorList()

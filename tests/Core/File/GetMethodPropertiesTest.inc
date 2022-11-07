@@ -33,7 +33,7 @@ class MyClass {
 
     /* testMessyNullableReturnMethod */
     public function myFunction() /* comment
-        */ :  
+        */ :
         /* comment */ ? //comment
         array {}
 
@@ -126,3 +126,27 @@ interface FooBar {
 /* testPHP8DuplicateTypeInUnionWhitespaceAndComment */
 // Intentional fatal error - duplicate types are not allowed in union types, but that's not the concern of the method.
 function duplicateTypeInUnion(): int | /*comment*/ string | INT {}
+
+/* testPHP81NeverType */
+function never(): never {}
+
+/* testPHP81NullableNeverType */
+// Intentional fatal error - nullability is not allowed with never, but that's not the concern of the method.
+function nullableNever(): ?never {}
+
+/* testPHP8IntersectionTypes */
+function intersectionTypes(): Foo&Bar {}
+
+/* testPHP81MoreIntersectionTypes */
+function moreIntersectionTypes(): MyClassA&\Package\MyClassB&\Package\MyClassC {}
+
+/* testPHP81IntersectionArrowFunction */
+$fn = fn($var): MyClassA&\Package\MyClassB => $var;
+
+/* testPHP81IllegalIntersectionTypes */
+// Intentional fatal error - simple types are not allowed with intersection types, but that's not the concern of the method.
+$closure = function (): string&int {};
+
+/* testPHP81NullableIntersectionTypes */
+// Intentional fatal error - nullability is not allowed with intersection types, but that's not the concern of the method.
+$closure = function (): ?Foo&Bar {};

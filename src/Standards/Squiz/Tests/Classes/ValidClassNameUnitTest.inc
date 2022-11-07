@@ -137,6 +137,50 @@ trait Base
     }
 }
 
+// Valid enum name.
+enum ValidCamelCaseClass: string {}
+
+
+// Incorrect usage of camel case.
+enum invalidCamelCaseClass {}
+enum Invalid_Camel_Case_Class_With_Underscores {}
+
+
+// All lowercase.
+enum invalidlowercaseclass: INT {}
+enum invalid_lowercase_class_with_underscores {}
+
+
+// All uppercase.
+enum VALIDUPPERCASECLASS: int {}
+enum INVALID_UPPERCASE_CLASS_WITH_UNDERSCORES {}
+
+
+// Mix camel case with uppercase.
+enum ValidCamelCaseClassWithUPPERCASE : string {}
+
+
+// Usage of numeric characters.
+enum ValidCamelCaseClassWith1Number {}
+enum ValidCamelCaseClassWith12345Numbers : string {}
+enum ValidCamelCaseClassEndingWithNumber5 {}
+
+enum Testing{}
+
+enum Base
+{
+    public function __construct()
+    {
+        $this->anonymous = new class extends ArrayObject
+        {
+            public function __construct()
+            {
+                parent::__construct(['a' => 1, 'b' => 2]);
+            }
+        };
+    }
+}
+
 if ( class_exists( Test :: class ) ) {}
 if ( class_exists( Test2 ::class ) ) {}
 

@@ -240,10 +240,20 @@ $anon = class() {
     // Intentional fatal error - duplicate types are not allowed in union types, but that's not the concern of the method.
     public int |string| /*comment*/ INT $duplicateTypeInUnion;
 
-    /* testPHP81NotReadonly */
-    private string $notReadonly;
     /* testPHP81Readonly */
     public readonly int $readonly;
+
+    /* testPHP81ReadonlyWithNullableType */
+    public readonly ?array $array;
+
+    /* testPHP81ReadonlyWithUnionType */
+    public readonly string|int $readonlyWithUnionType;
+
+    /* testPHP81ReadonlyWithUnionTypeWithNull */
+    protected ReadOnly string|null $readonlyWithUnionTypeWithNull;
+
+    /* testPHP81OnlyReadonlyWithUnionType */
+    readonly string|int $onlyReadonly;
 };
 
 $anon = class {
@@ -260,4 +270,35 @@ $anon = class {
         PropertyWithAttribute(/* comment */ 'baz')
     ]
     private mixed $baz;
+};
+
+enum Suit
+{
+    /* testEnumProperty */
+    protected $anonymous;
+}
+
+enum Direction implements ArrayAccess
+{
+    case Up;
+    case Down;
+
+    /* testEnumMethodParamNotProperty */
+    public function offsetGet($val) { ... }
+}
+
+$anon = class() {
+    /* testPHP81IntersectionTypes */
+    public Foo&Bar $intersectionType;
+
+    /* testPHP81MoreIntersectionTypes */
+    public Foo&Bar&Baz $moreIntersectionTypes;
+
+    /* testPHP81IllegalIntersectionTypes */
+    // Intentional fatal error - types which are not allowed for intersection type, but that's not the concern of the method.
+    public int&string $illegalIntersectionType;
+
+    /* testPHP81NulltableIntersectionType */
+    // Intentional fatal error - nullability is not allowed with intersection type, but that's not the concern of the method.
+    public ?Foo&Bar $nullableIntersectionType;
 };

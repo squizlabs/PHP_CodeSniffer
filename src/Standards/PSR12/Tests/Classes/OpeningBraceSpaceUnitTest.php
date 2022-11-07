@@ -31,6 +31,7 @@ class OpeningBraceSpaceUnitTest extends AbstractSniffUnitTest
             24 => 1,
             34 => 1,
             41 => 1,
+            55 => 1,
         ];
 
     }//end getErrorList()

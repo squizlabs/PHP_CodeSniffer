@@ -729,6 +729,167 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify recognition of PHP8.1 type "never".
+     *
+     * @return void
+     */
+    public function testPHP81NeverType()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'never',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81NeverType()
+
+
+    /**
+     * Verify recognition of PHP8.1 type "never"  with (illegal) nullability.
+     *
+     * @return void
+     */
+    public function testPHP81NullableNeverType()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '?never',
+            'nullable_return_type' => true,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81NullableNeverType()
+
+
+    /**
+     * Verify recognition of PHP8.1 intersection type declaration.
+     *
+     * @return void
+     */
+    public function testPHP8IntersectionTypes()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'Foo&Bar',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP8IntersectionTypes()
+
+
+    /**
+     * Verify recognition of PHP8.1 intersection type declaration with more types.
+     *
+     * @return void
+     */
+    public function testPHP81MoreIntersectionTypes()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'MyClassA&\Package\MyClassB&\Package\MyClassC',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81MoreIntersectionTypes()
+
+
+    /**
+     * Verify recognition of PHP8.1 intersection type declaration in arrow function.
+     *
+     * @return void
+     */
+    public function testPHP81IntersectionArrowFunction()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'MyClassA&\Package\MyClassB',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81IntersectionArrowFunction()
+
+
+    /**
+     * Verify recognition of PHP8.1 intersection type declaration with illegal simple types.
+     *
+     * @return void
+     */
+    public function testPHP81IllegalIntersectionTypes()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => 'string&int',
+            'nullable_return_type' => false,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81IllegalIntersectionTypes()
+
+
+    /**
+     * Verify recognition of PHP8.1 intersection type declaration with (illegal) nullability.
+     *
+     * @return void
+     */
+    public function testPHP81NullableIntersectionTypes()
+    {
+        $expected = [
+            'scope'                => 'public',
+            'scope_specified'      => false,
+            'return_type'          => '?Foo&Bar',
+            'nullable_return_type' => true,
+            'is_abstract'          => false,
+            'is_final'             => false,
+            'is_static'            => false,
+            'has_body'             => true,
+        ];
+
+        $this->getMethodPropertiesTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81NullableIntersectionTypes()
+
+
+    /**
      * Test helper.
      *
      * @param string $commentString The comment which preceeds the test.

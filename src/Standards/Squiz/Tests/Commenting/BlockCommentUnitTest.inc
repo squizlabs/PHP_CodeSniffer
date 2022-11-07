@@ -299,3 +299,11 @@ abstract class MyClass
      */
     readonly public string $prop;
 }
+
+/**
+ * Comment should be ignored
+ *
+ */
+enum MyEnum {
+
+}

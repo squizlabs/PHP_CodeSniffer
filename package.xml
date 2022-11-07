@@ -14,11 +14,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <email>gsherwood@squiz.net</email>
   <active>yes</active>
  </lead>
- <date>2021-12-13</date>
- <time>08:44:00</time>
+ <date>2022-06-18</date>
+ <time>17:20:00</time>
  <version>
-  <release>3.7.0</release>
-  <api>3.7.0</api>
+  <release>3.7.2</release>
+  <api>3.7.2</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,39 +26,33 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Added support for PHP 8.1 explicit octal notation
-    -- This new syntax has been backfilled for PHP versions less than 8.1
-    -- Thanks to Mark Baker for the patch
-  - Added support for PHP 8.1 enums
-    -- This new syntax has been backfilled for PHP versions less than 8.1
-    -- Thanks to Jaroslav Hanslík for the patch
-  - Added support for the PHP 8.1 readonly token
-    -- Tokenzing of the readonly keyword has been backfilled for PHP versions less than 8.1
-    -- Thanks to Jaroslav Hanslík for the patch
-  - File::getMethodParameters now supports the new PHP 8.1 readonly token
-    -- When constructor property promotion is used, a new property_readonly array index is included in the return value
-      --- This is a boolean value indicating if the property is readonly
-    -- If the readonly token is detected, a new readonly_token array index is included in the return value
-      --- This contains the token index of the readonly keyword
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Support for new PHP 8.1 readonly keyword has been added to the following sniffs:
-    -- Generic.PHP.LowerCaseKeyword
-    -- PSR2.Classes.PropertyDeclaration
-    -- Squiz.Commenting.BlockCommentS
-    -- Squiz.Commenting.DocCommentAlignment
-    -- Squiz.Commenting.VariableComment
-    -- Squiz.WhiteSpace.ScopeKeywordSpacing
-    -- Thanks to Juliette Reinders Folmer for the patches
-  - Generic.PHP.UpperCaseConstant and Generic.PHP.LowerCaseConstant now ignore type declarations
-    -- These sniffs now only report errors for true/false/null when used as values
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3502 : A match statement within an array produces Squiz.Arrays.ArrayDeclaration.NoKeySpecified
-  - Fixed bug #3503 : Squiz.Commenting.FunctionComment.ThrowsNoFullStop false positive when one line @throw
-  - Fixed bug #3505 : The nullsafe operator is not counted in Generic.Metrics.CyclomaticComplexity
-    -- Thanks to Mark Baker for the patch
-  - Fixed bug #3526 : PSR12.Properties.ConstantVisibility false positive when using public final const syntax
-    -- Thanks to Juliette Reinders Folmer for the patch
-  - Fixed bug #3530 : Line indented incorrectly false positive when using match-expression inside switch case
+  - Newer versions of Composer will now suggest installing PHPCS using require-dev instead of require
+    -- Thanks to Gary Jones (@GaryJones) for the patch
+  - A custom Out Of Memory error will now be shown if PHPCS or PHPCBF run out of memory during a run
+    -- Error message provides actionable information about how to fix the problem and ensures the error is not silent
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) and Alain Schlesser (@schlessera) for the patch
+  - Generic.PHP.LowerCaseType sniff now correctly examines types inside arrow functions
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Squiz.Formatting.OperatorBracket no longer reports false positives in match() structures
+  - Fixed bug #3616 : Squiz.PHP.DisallowComparisonAssignment false positive for PHP 8 match expression
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3618 : Generic.WhiteSpace.ArbitraryParenthesesSpacing false positive for return new parent()
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3632 : Short list not tokenized correctly in control structures without braces
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3639 : Tokenizer not applying tab replacement to heredoc/nowdoc closers
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3640 : Generic.WhiteSpace.DisallowTabIndent not reporting errors for PHP 7.3 flexible heredoc/nowdoc syntax
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3645 : PHPCS can show 0 exit code when running in parallel even if child process has fatal error
+    -- Thanks to Alex Panshin (@enl) for the patch
+  - Fixed bug #3653 : False positives for match() in OperatorSpacingSniff
+    -- Thanks to Jaroslav Hanslík (@kukulich) for the patch
+  - Fixed bug #3666 : PEAR.Functions.FunctionCallSignature incorrect indent fix when checking mixed HTML/PHP files
+  - Fixed bug #3668 : PSR12.Classes.ClassInstantiation.MissingParentheses false positive when instantiating parent classes
+    -- Similar issues also fixed in Generic.Functions.FunctionCallArgumentSpacing and Squiz.Formatting.OperatorBracket
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3672 : Incorrect ScopeIndent.IncorrectExact report for match inside array literal
  </notes>
  <contents>
   <dir name="/">
@@ -164,10 +158,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="DefaultKeywordTest.php" role="test" />
       <file baseinstalldir="" name="DoubleArrowTest.inc" role="test" />
       <file baseinstalldir="" name="DoubleArrowTest.php" role="test" />
+      <file baseinstalldir="" name="DoubleQuotedStringTest.inc" role="test" />
+      <file baseinstalldir="" name="DoubleQuotedStringTest.php" role="test" />
+      <file baseinstalldir="" name="EnumCaseTest.inc" role="test" />
+      <file baseinstalldir="" name="EnumCaseTest.php" role="test" />
       <file baseinstalldir="" name="FinallyTest.inc" role="test" />
       <file baseinstalldir="" name="FinallyTest.php" role="test" />
       <file baseinstalldir="" name="GotoLabelTest.inc" role="test" />
       <file baseinstalldir="" name="GotoLabelTest.php" role="test" />
+      <file baseinstalldir="" name="HeredocNowdocCloserTest.inc" role="test" />
+      <file baseinstalldir="" name="HeredocNowdocCloserTest.php" role="test" />
       <file baseinstalldir="" name="NamedFunctionCallArgumentsTest.inc" role="test" />
       <file baseinstalldir="" name="NamedFunctionCallArgumentsTest.php" role="test" />
       <file baseinstalldir="" name="NullsafeObjectOperatorTest.inc" role="test" />
@@ -182,6 +182,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="StableCommentWhitespaceTest.php" role="test" />
       <file baseinstalldir="" name="StableCommentWhitespaceWinTest.inc" role="test" />
       <file baseinstalldir="" name="StableCommentWhitespaceWinTest.php" role="test" />
+      <file baseinstalldir="" name="TypeIntersectionTest.inc" role="test" />
+      <file baseinstalldir="" name="TypeIntersectionTest.php" role="test" />
       <file baseinstalldir="" name="UndoNamespacedNameSingleTokenTest.inc" role="test" />
       <file baseinstalldir="" name="UndoNamespacedNameSingleTokenTest.php" role="test" />
      </dir>
@@ -808,6 +810,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.2.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.3.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.php" role="test" />
@@ -1003,6 +1007,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FunctionCommentUnitTest.inc.fixed" role="test" />
@@ -1091,6 +1096,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
        <dir name="Classes">
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.1.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.2.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ClassDeclarationUnitTest.php" role="test" />
        </dir>
        <dir name="Files">
@@ -1642,6 +1648,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.6.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.8.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.9.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.1.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileCommentUnitTest.2.js" role="test" />
@@ -1759,6 +1766,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.5.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileExtensionUnitTest.php" role="test" />
        </dir>
        <dir name="Formatting">
@@ -2127,10 +2135,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.inc" name="tests/Core/Tokenizer/DefaultKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.php" name="tests/Core/Tokenizer/DoubleArrowTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.inc" name="tests/Core/Tokenizer/DoubleArrowTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/DoubleQuotedStringTest.php" name="tests/Core/Tokenizer/DoubleQuotedStringTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/DoubleQuotedStringTest.inc" name="tests/Core/Tokenizer/DoubleQuotedStringTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.php" name="tests/Core/Tokenizer/EnumCaseTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.inc" name="tests/Core/Tokenizer/EnumCaseTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.php" name="tests/Core/Tokenizer/FinallyTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.inc" name="tests/Core/Tokenizer/FinallyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.php" name="tests/Core/Tokenizer/GotoLabelTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.inc" name="tests/Core/Tokenizer/GotoLabelTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.php" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.inc" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
@@ -2145,6 +2159,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.php" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.php" name="tests/Core/Tokenizer/TypeIntersectionTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.inc" name="tests/Core/Tokenizer/TypeIntersectionTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
@@ -2225,10 +2241,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/DefaultKeywordTest.inc" name="tests/Core/Tokenizer/DefaultKeywordTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.php" name="tests/Core/Tokenizer/DoubleArrowTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/DoubleArrowTest.inc" name="tests/Core/Tokenizer/DoubleArrowTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/DoubleQuotedStringTest.php" name="tests/Core/Tokenizer/DoubleQuotedStringTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/DoubleQuotedStringTest.inc" name="tests/Core/Tokenizer/DoubleQuotedStringTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.php" name="tests/Core/Tokenizer/EnumCaseTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/EnumCaseTest.inc" name="tests/Core/Tokenizer/EnumCaseTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.php" name="tests/Core/Tokenizer/FinallyTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.inc" name="tests/Core/Tokenizer/FinallyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.php" name="tests/Core/Tokenizer/GotoLabelTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.inc" name="tests/Core/Tokenizer/GotoLabelTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.php" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.inc" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
@@ -2243,6 +2265,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.php" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" name="tests/Core/Tokenizer/StableCommentWhitespaceWinTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.php" name="tests/Core/Tokenizer/TypeIntersectionTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.inc" name="tests/Core/Tokenizer/TypeIntersectionTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
@@ -2252,6 +2276,91 @@ http://pear.php.net/dtd/package-2.0.xsd">
   </filelist>
  </phprelease>
  <changelog>
+  <release>
+   <version>
+    <release>3.7.1</release>
+    <api>3.7.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2022-06-18</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Fixed bug #3609 : Methods/constants with name empty/isset/unset are always reported as error
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>3.7.0</release>
+    <api>3.7.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2022-06-13</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Added support for PHP 8.1 explicit octal notation
+      -- This new syntax has been backfilled for PHP versions less than 8.1
+      -- Thanks to Mark Baker for the patch
+      -- Thanks to Juliette Reinders Folmer for additional fixes
+    - Added support for PHP 8.1 enums
+      -- This new syntax has been backfilled for PHP versions less than 8.1
+      -- Includes a new T_ENUM_CASE token to represent the case statements inside an enum
+      -- Thanks to Jaroslav Hanslík for the patch
+      -- Thanks to Juliette Reinders Folmer for additional core and sniff support
+    - Added support for the PHP 8.1 readonly token
+      -- Tokenzing of the readonly keyword has been backfilled for PHP versions less than 8.1
+      -- Thanks to Jaroslav Hanslík for the patch
+    - Added support for PHP 8.1 intersection types
+      -- Includes a new T_TYPE_INTERSECTION token to represent the ampersand character inside intersection types
+      -- Thanks to Jaroslav Hanslík for the patch
+    - File::getMethodParameters now supports the new PHP 8.1 readonly token
+      -- When constructor property promotion is used, a new property_readonly array index is included in the return value
+        --- This is a boolean value indicating if the property is readonly
+      -- If the readonly token is detected, a new readonly_token array index is included in the return value
+        --- This contains the token index of the readonly keyword
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Support for new PHP 8.1 readonly keyword has been added to the following sniffs:
+      -- Generic.PHP.LowerCaseKeyword
+      -- PSR2.Classes.PropertyDeclaration
+      -- Squiz.Commenting.BlockComment
+      -- Squiz.Commenting.DocCommentAlignment
+      -- Squiz.Commenting.VariableComment
+      -- Squiz.WhiteSpace.ScopeKeywordSpacing
+      -- Thanks to Juliette Reinders Folmer for the patches
+    - The parallel feature is now more efficient and runs faster in some situations due to improved process management
+      -- Thanks to Sergei Morozov for the patch
+    - The list of installed coding standards now has consistent ordering across all platforms
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.PHP.UpperCaseConstant and Generic.PHP.LowerCaseConstant now ignore type declarations
+      -- These sniffs now only report errors for true/false/null when used as values
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Generic.PHP.LowerCaseType now supports the PHP 8.1 never type
+      -- Thanks to Jaroslav Hanslík for the patch
+    - Fixed bug #3502 : A match statement within an array produces Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+    - Fixed bug #3503 : Squiz.Commenting.FunctionComment.ThrowsNoFullStop false positive when one line @throw
+    - Fixed bug #3505 : The nullsafe operator is not counted in Generic.Metrics.CyclomaticComplexity
+      -- Thanks to Mark Baker for the patch
+    - Fixed bug #3526 : PSR12.Properties.ConstantVisibility false positive when using public final const syntax
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3530 : Line indented incorrectly false positive when using match-expression inside switch case
+    - Fixed bug #3534 : Name of typed enum tokenized as T_GOTO_LABEL
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3546 : Tokenizer/PHP: bug fix - parent/static keywords in class instantiations
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3550 : False positive from PSR2.ControlStructures.SwitchDeclaration.TerminatingComment when using trailing   comment
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3575: Squiz.Scope.MethodScope misses visibility keyword on previous line
+      -- Thanks to Juliette Reinders Folmer for the patch
+    - Fixed bug #3604: Tokenizer/PHP: bug fix for double quoted strings using ${
+      -- Thanks to Juliette Reinders Folmer for the patch
+   </notes>
+  </release>
   <release>
    <version>
     <release>3.6.2</release>

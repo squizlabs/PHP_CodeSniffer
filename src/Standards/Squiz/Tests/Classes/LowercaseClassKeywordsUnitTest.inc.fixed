@@ -3,6 +3,7 @@ abstract class MyClass extends MyClass {}
 final class MyClass implements MyInterface {}
 interface MyInterface {}
 trait MyTrait {}
+enum MyEnum implements Colorful {}
 
 class MyClass
 {

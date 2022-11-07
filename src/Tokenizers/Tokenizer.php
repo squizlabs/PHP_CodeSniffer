@@ -194,6 +194,8 @@ abstract class Tokenizer
             T_DOUBLE_QUOTED_STRING     => true,
             T_HEREDOC                  => true,
             T_NOWDOC                   => true,
+            T_END_HEREDOC              => true,
+            T_END_NOWDOC               => true,
             T_INLINE_HTML              => true,
         ];
 

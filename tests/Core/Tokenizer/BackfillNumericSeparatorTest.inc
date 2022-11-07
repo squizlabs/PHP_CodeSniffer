@@ -77,6 +77,12 @@ $testValue = 107_925_284 .88;
 /* testInvalid10 */
 $testValue = 107_925_284/*comment*/.88;
 
+/* testInvalid11 */
+$foo = 0o_137;
+
+/* testInvalid12 */
+$foo = 0O_41;
+
 /*
  * Ensure that legitimate calculations are not touched by the backfill.
  */

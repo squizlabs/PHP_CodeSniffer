@@ -80,6 +80,8 @@ define('T_PARAM_NAME', 'PHPCS_T_PARAM_NAME');
 define('T_MATCH_ARROW', 'PHPCS_T_MATCH_ARROW');
 define('T_MATCH_DEFAULT', 'PHPCS_T_MATCH_DEFAULT');
 define('T_ATTRIBUTE_END', 'PHPCS_T_ATTRIBUTE_END');
+define('T_ENUM_CASE', 'PHPCS_T_ENUM_CASE');
+define('T_TYPE_INTERSECTION', 'PHPCS_T_TYPE_INTERSECTION');
 
 // Some PHP 5.5 tokens, replicated for lower versions.
 if (defined('T_FINALLY') === false) {
@@ -626,6 +628,7 @@ final class Tokens
         T_UNSET        => T_UNSET,
         T_EMPTY        => T_EMPTY,
         T_SELF         => T_SELF,
+        T_PARENT       => T_PARENT,
         T_STATIC       => T_STATIC,
     ];
 
@@ -685,6 +688,7 @@ final class Tokens
         T_ECHO         => T_ECHO,
         T_ELSE         => T_ELSE,
         T_ELSEIF       => T_ELSEIF,
+        T_EMPTY        => T_EMPTY,
         T_ENDDECLARE   => T_ENDDECLARE,
         T_ENDFOR       => T_ENDFOR,
         T_ENDFOREACH   => T_ENDFOREACH,
@@ -692,6 +696,7 @@ final class Tokens
         T_ENDSWITCH    => T_ENDSWITCH,
         T_ENDWHILE     => T_ENDWHILE,
         T_ENUM         => T_ENUM,
+        T_EVAL         => T_EVAL,
         T_EXIT         => T_EXIT,
         T_EXTENDS      => T_EXTENDS,
         T_FINAL        => T_FINAL,
@@ -709,6 +714,7 @@ final class Tokens
         T_INSTANCEOF   => T_INSTANCEOF,
         T_INSTEADOF    => T_INSTEADOF,
         T_INTERFACE    => T_INTERFACE,
+        T_ISSET        => T_ISSET,
         T_LIST         => T_LIST,
         T_LOGICAL_AND  => T_LOGICAL_AND,
         T_LOGICAL_OR   => T_LOGICAL_OR,
@@ -729,6 +735,7 @@ final class Tokens
         T_THROW        => T_THROW,
         T_TRAIT        => T_TRAIT,
         T_TRY          => T_TRY,
+        T_UNSET        => T_UNSET,
         T_USE          => T_USE,
         T_VAR          => T_VAR,
         T_WHILE        => T_WHILE,

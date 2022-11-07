@@ -12,7 +12,7 @@ $a = [ $something & $somethingElse ];
 $a = [ $first, $something & self::$somethingElse ];
 
 /* testBitwiseAndD */
-$a = array $first, $something & $somethingElse );
+$a = array( $first, $something & $somethingElse );
 
 /* testBitwiseAndE */
 $a = [ 'a' => $first, 'b' => $something & $somethingElse ];
@@ -51,7 +51,7 @@ function myFunction(array &$one) {}
 $closure = function (\MyClass &$one) {};
 
 /* testFunctionPassByReferenceG */
-$closure = function myFunc($param, &...$moreParams) {};
+$closure = function ($param, &...$moreParams) {};
 
 /* testForeachValueByReference */
 foreach( $array as $key => &$value ) {}

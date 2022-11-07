@@ -65,6 +65,7 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testEcho */'],
             ['/* testElse */'],
             ['/* testElseIf */'],
+            ['/* testEmpty */'],
             ['/* testEndDeclare */'],
             ['/* testEndFor */'],
             ['/* testEndForeach */'],
@@ -72,6 +73,7 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testEndSwitch */'],
             ['/* testEndWhile */'],
             ['/* testEnum */'],
+            ['/* testEval */'],
             ['/* testExit */'],
             ['/* testExtends */'],
             ['/* testFinal */'],
@@ -89,6 +91,7 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testInstanceOf */'],
             ['/* testInsteadOf */'],
             ['/* testInterface */'],
+            ['/* testIsset */'],
             ['/* testList */'],
             ['/* testMatch */'],
             ['/* testNamespace */'],
@@ -108,6 +111,7 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testThrows */'],
             ['/* testTrait */'],
             ['/* testTry */'],
+            ['/* testUnset */'],
             ['/* testUse */'],
             ['/* testVar */'],
             ['/* testWhile */'],
@@ -121,6 +125,9 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testNamespaceNameIsString1 */'],
             ['/* testNamespaceNameIsString2 */'],
             ['/* testNamespaceNameIsString3 */'],
+
+            ['/* testKeywordAfterFunctionShouldBeString */'],
+            ['/* testKeywordAfterFunctionByRefShouldBeString */'],
         ];
 
     }//end dataStrings()
@@ -275,6 +282,10 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
                 'T_IF',
             ],
             [
+                '/* testEmptyIsKeyword */',
+                'T_EMPTY',
+            ],
+            [
                 '/* testElseIfIsKeyword */',
                 'T_ELSEIF',
             ],
@@ -377,8 +388,20 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
                 'T_EXIT',
             ],
             [
+                '/* testEvalIsKeyword */',
+                'T_EVAL',
+            ],
+            [
                 '/* testExitIsKeyword */',
                 'T_EXIT',
+            ],
+            [
+                '/* testIssetIsKeyword */',
+                'T_ISSET',
+            ],
+            [
+                '/* testUnsetIsKeyword */',
+                'T_UNSET',
             ],
 
             [
@@ -461,6 +484,18 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             [
                 '/* testImplementsInAnonymousClassIsKeyword */',
                 'T_IMPLEMENTS',
+            ],
+            [
+                '/* testClassInstantiationParentIsKeyword */',
+                'T_PARENT',
+            ],
+            [
+                '/* testClassInstantiationSelfIsKeyword */',
+                'T_SELF',
+            ],
+            [
+                '/* testClassInstantiationStaticIsKeyword */',
+                'T_STATIC',
             ],
             [
                 '/* testNamespaceInNameIsKeyword */',

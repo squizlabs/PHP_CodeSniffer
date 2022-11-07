@@ -30,9 +30,10 @@ class LowercaseClassKeywordsUnitTest extends AbstractSniffUnitTest
             3  => 3,
             4  => 1,
             5  => 1,
-            9  => 1,
+            6  => 2,
             10 => 1,
-            13 => 1,
+            11 => 1,
+            14 => 1,
         ];
 
         return $errors;

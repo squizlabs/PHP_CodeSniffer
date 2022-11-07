@@ -27,6 +27,7 @@ class ClosingDeclarationCommentSniff implements Sniff
             T_FUNCTION,
             T_CLASS,
             T_INTERFACE,
+            T_ENUM,
         ];
 
     }//end register()
@@ -69,8 +70,10 @@ class ClosingDeclarationCommentSniff implements Sniff
             $comment = '//end '.$decName.'()';
         } else if ($tokens[$stackPtr]['code'] === T_CLASS) {
             $comment = '//end class';
-        } else {
+        } else if ($tokens[$stackPtr]['code'] === T_INTERFACE) {
             $comment = '//end interface';
+        } else {
+            $comment = '//end enum';
         }//end if
 
         if (isset($tokens[$stackPtr]['scope_closer']) === false) {

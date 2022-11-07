@@ -87,20 +87,20 @@ class BackfillEnumTest extends AbstractMethodUnitTest
             [
                 '/* testBackedIntEnum */',
                 'enum',
-                6,
-                28,
+                7,
+                29,
             ],
             [
                 '/* testBackedStringEnum */',
                 'enum',
-                6,
-                28,
+                8,
+                30,
             ],
             [
                 '/* testComplexEnum */',
                 'enum',
-                10,
-                71,
+                11,
+                72,
             ],
             [
                 '/* testEnumWithEnumAsClassName */',
