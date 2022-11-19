@@ -44,13 +44,13 @@ HERE;
     $x = $parameter; // This line must be immediately after the HERE; with no intervening blank lines.
     $tango = <<<HERE
 1 Must be a HEREdoc
-2 
-3 
-4 
-5   
+2
+3
+4
+5
 6
 7
-8 
+8
 9 at least 9 lines long
 HERE;
 }
@@ -170,5 +170,82 @@ class MyExtendedClass implements SomeInterface {
     public function something($a, $b) {
         $c = $a + $b;
         $fn = fn($c, $d) => $c[2];
+    }
+}
+
+
+/**
+ * Magic methods must match the function signature dictated by PHP.
+ * Flagging unused parameters leads to notices which cannot be solved.
+ */
+class MagicMethodsWithParams {
+    public function __set(string $name, mixed $value) {
+        // Forbid dynamic properties & overloading inaccessible properties.
+        throw new RuntimeException('Forbidden');
+    }
+
+    public function __get(string $name) {
+        throw new RuntimeException('Forbidden');
+    }
+
+    public function __isset(string $name) {
+        throw new RuntimeException('Forbidden');
+    }
+
+    public function __unset(string $name) {
+        throw new RuntimeException('Forbidden');
+    }
+
+    public function __unserialize( array $data ) {
+        // Prevent unserializing from a stored representation of the object for security reasons.
+        $this->instance = new self();
+    }
+
+    public static function __set_state(array $properties) {
+        return new self();
+    }
+
+    public function __call(string $name, array $arguments) {
+        if (method_exists($this, $name)) {
+            // None of the methods which can be called in this class take arguments, so not passing them.
+            return $this->$name();
+        }
+    }
+
+    public static function __callStatic(string $name, array $arguments) {
+        if (method_exists($this, $name)) {
+            // None of the methods which can be called in this class take arguments, so not passing them.
+            return self::$name();
+        }
+    }
+}
+
+/**
+ * Unused parameters in magic methods which have flexible function signatures should still be flagged.
+ */
+class MagicMethodsWithParamsNotDictatedByPHP {
+    public $foo;
+    public function __construct($foo, $bar, $baz) {
+        $this->foo = $foo;
+    }
+
+    public function __invoke($foo, $bar, $baz) {
+        $this->foo = $foo;
+    }
+}
+
+/**
+ * Unused parameters in magic methods which have flexible function signatures
+ * where the method potentially overloads a parent method should still be flagged,
+ * but should use the `FoundInExtendedClassAfterLastUsed` error code.
+ */
+class MagicMethodsWithParamsNotDictatedByPHPInChildClass extends SomeParent{
+    public $foo;
+    public function __construct($foo, $bar, $baz) {
+        $this->foo = $foo;
+    }
+
+    public function __invoke($foo, $bar, $baz) {
+        $this->foo = $foo;
     }
 }

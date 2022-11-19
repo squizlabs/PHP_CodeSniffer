@@ -52,6 +52,10 @@ class UnusedFunctionParameterUnitTest extends AbstractSniffUnitTest
             125 => 2,
             163 => 1,
             172 => 1,
+            228 => 2,
+            232 => 2,
+            244 => 2,
+            248 => 2,
         ];
 
     }//end getWarningList()
