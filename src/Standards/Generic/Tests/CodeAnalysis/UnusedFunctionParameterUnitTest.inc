@@ -152,3 +152,23 @@ class ConstructorPropertyPromotionWithContentInMethod {
 }
 
 $found = in_array_cb($needle, $haystack, fn($array, $needle) => $array[2] === $needle);
+
+
+/*
+ * Don't adjust the error code for closures and arrow functions in extended classes/classes implementing interfaces.
+ */
+class MyExtendedClass extends SomeClass {
+    public function something($a, $b) {
+        $c = $a + $b;
+        $closure = function ($c, $d) {
+            return $c * 2;
+        };
+    }
+}
+
+class MyExtendedClass implements SomeInterface {
+    public function something($a, $b) {
+        $c = $a + $b;
+        $fn = fn($c, $d) => $c[2];
+    }
+}
