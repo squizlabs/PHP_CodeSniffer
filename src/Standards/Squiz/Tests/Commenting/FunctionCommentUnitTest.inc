@@ -1129,3 +1129,8 @@ public function variableCaseTest(
 public function variableOrderMismatch($bar, $baz, $foo) {
     return;
 }
+
+/**
+ * @return never
+ */
+function foo() {}
