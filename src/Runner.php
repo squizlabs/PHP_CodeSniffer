@@ -652,6 +652,39 @@ class Runner
             }
         } catch (\Exception $e) {
             $error = 'An error occurred during processing; checking has been aborted. The error message was: '.$e->getMessage();
+
+            // Determine which sniff caused the error.
+            $sniffStack = null;
+            $nextStack  = null;
+            foreach ($e->getTrace() as $step) {
+                if (isset($step['file']) === false) {
+                    continue;
+                }
+
+                if (empty($sniffStack) === false) {
+                    $nextStack = $step;
+                    break;
+                }
+
+                if (substr($step['file'], -9) === 'Sniff.php') {
+                    $sniffStack = $step;
+                    continue;
+                }
+            }
+
+            if (empty($sniffStack) === false) {
+                if (empty($nextStack) === false
+                    && isset($nextStack['class']) === true
+                    && substr($nextStack['class'], -5) === 'Sniff'
+                ) {
+                    $sniffCode = Common::getSniffCode($nextStack['class']);
+                } else {
+                    $sniffCode = substr(strrchr(str_replace('\\', '/', $sniffStack['file']), '/'), 1);
+                }
+
+                $error .= sprintf(PHP_EOL.'The error originated in the %s sniff on line %s.', $sniffCode, $sniffStack['line']);
+            }
+
             $file->addErrorOnLine($error, 1, 'Internal.Exception');
         }//end try
 
