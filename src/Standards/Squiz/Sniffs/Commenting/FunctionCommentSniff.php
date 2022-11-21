@@ -143,9 +143,12 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                             }
                         }
                     }//end if
-                } else if ($returnType !== 'mixed' && in_array('void', $typeNames, true) === false) {
-                    // If return type is not void, there needs to be a return statement
-                    // somewhere in the function that returns something.
+                } else if ($returnType !== 'mixed'
+                    && $returnType !== 'never'
+                    && in_array('void', $typeNames, true) === false
+                ) {
+                    // If return type is not void, never, or mixed, there needs to be a
+                    // return statement somewhere in the function that returns something.
                     if (isset($tokens[$stackPtr]['scope_closer']) === true) {
                         $endToken = $tokens[$stackPtr]['scope_closer'];
                         for ($returnToken = $stackPtr; $returnToken < $endToken; $returnToken++) {
