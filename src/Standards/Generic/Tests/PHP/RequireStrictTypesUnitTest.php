@@ -29,6 +29,8 @@ class RequireStrictTypesUnitTest extends AbstractSniffUnitTest
     {
         switch ($testFile) {
         case 'RequireStrictTypesUnitTest.2.inc':
+        case 'RequireStrictTypesUnitTest.5.inc':
+        case 'RequireStrictTypesUnitTest.6.inc':
             return [1 => 1];
 
         default:

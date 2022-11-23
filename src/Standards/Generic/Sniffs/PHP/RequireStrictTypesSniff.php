@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class RequireStrictTypesSniff implements Sniff
 {
@@ -40,19 +41,31 @@ class RequireStrictTypesSniff implements Sniff
     public function process(File $phpcsFile, $stackPtr)
     {
         $tokens  = $phpcsFile->getTokens();
-        $declare = $phpcsFile->findNext(T_DECLARE, $stackPtr);
-        $found   = false;
+        $declare = $phpcsFile->findNext(T_DECLARE, ($stackPtr + 1));
+
+        $found = false;
 
         if ($declare !== false) {
-            $nextString = $phpcsFile->findNext(T_STRING, $declare);
-
-            if ($nextString !== false) {
-                if (strtolower($tokens[$nextString]['content']) === 'strict_types') {
-                    // There is a strict types declaration.
-                    $found = true;
-                }
+            if (isset($tokens[$declare]['parenthesis_opener'], $tokens[$declare]['parenthesis_closer']) === false) {
+                // Live coding, ignore for now.
+                return $phpcsFile->numTokens;
             }
-        }
+
+            $next = $phpcsFile->findNext(
+                Tokens::$emptyTokens,
+                ($tokens[$declare]['parenthesis_opener'] + 1),
+                $tokens[$declare]['parenthesis_closer'],
+                true
+            );
+
+            if ($next !== false
+                && $tokens[$next]['code'] === T_STRING
+                && strtolower($tokens[$next]['content']) === 'strict_types'
+            ) {
+                // There is a strict types declaration.
+                $found = true;
+            }
+        }//end if
 
         if ($found === false) {
             $error = 'Missing required strict_types declaration';

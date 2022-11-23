@@ -765,6 +765,9 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.3.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.4.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.5.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.6.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.7.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="RequireStrictTypesUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="SAPIUsageUnitTest.php" role="test" />
