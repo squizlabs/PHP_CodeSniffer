@@ -44,14 +44,22 @@ class RequireStrictTypesUnitTest extends AbstractSniffUnitTest
     /**
      * Returns the lines where warnings should occur.
      *
-     * The key of the array should represent the line number and the value
-     * should represent the number of warnings that should occur on that line.
+     * @param string $testFile The name of the file being tested.
      *
      * @return array<int, int>
      */
-    public function getWarningList()
+    public function getWarningList($testFile='')
     {
-        return [];
+        switch ($testFile) {
+        case 'RequireStrictTypesUnitTest.11.inc':
+        case 'RequireStrictTypesUnitTest.12.inc':
+        case 'RequireStrictTypesUnitTest.14.inc':
+        case 'RequireStrictTypesUnitTest.15.inc':
+            return [3 => 1];
+
+        default:
+            return [];
+        }
 
     }//end getWarningList()
 

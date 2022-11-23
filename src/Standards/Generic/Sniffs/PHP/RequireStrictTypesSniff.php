@@ -77,6 +77,25 @@ class RequireStrictTypesSniff implements Sniff
         if ($found === false) {
             $error = 'Missing required strict_types declaration';
             $phpcsFile->addError($error, $stackPtr, 'MissingDeclaration');
+
+            return $phpcsFile->numTokens;
+        }
+
+        // Strict types declaration found, make sure strict types is enabled.
+        $skip     = Tokens::$emptyTokens;
+        $skip[]   = T_EQUAL;
+        $valuePtr = $phpcsFile->findNext($skip, ($next + 1), null, true);
+
+        if ($valuePtr !== false
+            && $tokens[$valuePtr]['code'] === T_LNUMBER
+            && $tokens[$valuePtr]['content'] === '0'
+        ) {
+            $error = 'Required strict_types declaration found, but strict types is disabled. Set the value to 1 to enable';
+            $fix   = $phpcsFile->addFixableWarning($error, $valuePtr, 'Disabled');
+
+            if ($fix === true) {
+                $phpcsFile->fixer->replaceToken($valuePtr, '1');
+            }
         }
 
         // Skip the rest of the file so we don't pick up additional
