@@ -28,12 +28,12 @@ class RequireStrictTypesUnitTest extends AbstractSniffUnitTest
     public function getErrorList($testFile='')
     {
         switch ($testFile) {
-        case 'RequireStrictTypesUnitTest.1.inc':
-            return [];
-            break;
-        }
+        case 'RequireStrictTypesUnitTest.2.inc':
+            return [1 => 1];
 
-        return [1 => 1];
+        default:
+            return [];
+        }
 
     }//end getErrorList()
 
