@@ -51,20 +51,27 @@ class RequireStrictTypesSniff implements Sniff
                 return $phpcsFile->numTokens;
             }
 
-            $next = $phpcsFile->findNext(
-                Tokens::$emptyTokens,
-                ($tokens[$declare]['parenthesis_opener'] + 1),
-                $tokens[$declare]['parenthesis_closer'],
-                true
-            );
+            $next = $tokens[$declare]['parenthesis_opener'];
 
-            if ($next !== false
-                && $tokens[$next]['code'] === T_STRING
-                && strtolower($tokens[$next]['content']) === 'strict_types'
-            ) {
-                // There is a strict types declaration.
-                $found = true;
-            }
+            do {
+                $next = $phpcsFile->findNext(
+                    Tokens::$emptyTokens,
+                    ($next + 1),
+                    $tokens[$declare]['parenthesis_closer'],
+                    true
+                );
+
+                if ($next !== false
+                    && $tokens[$next]['code'] === T_STRING
+                    && strtolower($tokens[$next]['content']) === 'strict_types'
+                ) {
+                    // There is a strict types declaration.
+                    $found = true;
+                    break;
+                }
+
+                $next = $phpcsFile->findNext(T_COMMA, ($next + 1), $tokens[$declare]['parenthesis_closer']);
+            } while ($next !== false && $next < $tokens[$declare]['parenthesis_closer']);
         }//end if
 
         if ($found === false) {

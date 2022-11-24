@@ -31,6 +31,7 @@ class RequireStrictTypesUnitTest extends AbstractSniffUnitTest
         case 'RequireStrictTypesUnitTest.2.inc':
         case 'RequireStrictTypesUnitTest.5.inc':
         case 'RequireStrictTypesUnitTest.6.inc':
+        case 'RequireStrictTypesUnitTest.10.inc':
             return [1 => 1];
 
         default:
