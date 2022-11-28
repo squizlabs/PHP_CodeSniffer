@@ -346,49 +346,27 @@ class Common
             if ($strict === false) {
                 // Can either start with a lowercase letter, or multiple uppercase
                 // in a row, representing an acronym.
-                $legalFirstChar .= '([A-Z]{2,}|[a-z])';
+                $legalFirstChar .= '([[:upper:]]{2,}|[[:lower:]])';
             } else {
-                $legalFirstChar .= '[a-z]';
+                $legalFirstChar .= '[[:lower:]]';
             }
         } else {
-            $legalFirstChar = '[A-Z]';
+            $legalFirstChar = '[[:upper:]]';
         }
 
-        if (preg_match("/^$legalFirstChar/", $string) === 0) {
+        if (preg_match("/^$legalFirstChar/u", $string) === 0) {
             return false;
         }
 
         // Check that the name only contains legal characters.
-        $legalChars = 'a-zA-Z0-9';
-        if (preg_match("|[^$legalChars]|", substr($string, 1)) > 0) {
+        if (preg_match('/^[[:alnum:]]*$/u', substr($string, 1)) === 0) {
             return false;
         }
 
-        if ($strict === true) {
-            // Check that there are not two capital letters next to each other.
-            $length          = strlen($string);
-            $lastCharWasCaps = $classFormat;
-
-            for ($i = 1; $i < $length; $i++) {
-                $ascii = ord($string[$i]);
-                if ($ascii >= 48 && $ascii <= 57) {
-                    // The character is a number, so it cant be a capital.
-                    $isCaps = false;
-                } else {
-                    if (strtoupper($string[$i]) === $string[$i]) {
-                        $isCaps = true;
-                    } else {
-                        $isCaps = false;
-                    }
-                }
-
-                if ($isCaps === true && $lastCharWasCaps === true) {
-                    return false;
-                }
-
-                $lastCharWasCaps = $isCaps;
-            }
-        }//end if
+        // Check that there are not two capital letters next to each other.
+        if ($strict === true && preg_match('/[[:upper:]]{2}/u', $string) === 1) {
+            return false;
+        }
 
         return true;
 

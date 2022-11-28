@@ -25,6 +25,8 @@ class IsCamelCapsTest extends TestCase
     {
         $this->assertTrue(Common::isCamelCaps('thisIsCamelCaps', false, true, true));
         $this->assertTrue(Common::isCamelCaps('thisISCamelCaps', false, true, false));
+        $this->assertTrue(Common::isCamelCaps('élément', false, true, false));
+        $this->assertTrue(Common::isCamelCaps('unÉlément', false, true, false));
 
     }//end testValidNotClassFormatPublic()
 
@@ -39,6 +41,8 @@ class IsCamelCapsTest extends TestCase
         $this->assertFalse(Common::isCamelCaps('_thisIsCamelCaps', false, true, true));
         $this->assertFalse(Common::isCamelCaps('thisISCamelCaps', false, true, true));
         $this->assertFalse(Common::isCamelCaps('ThisIsCamelCaps', false, true, true));
+        $this->assertFalse(Common::isCamelCaps('Élément', false, true, true));
+        $this->assertFalse(Common::isCamelCaps('UnÉlément', false, true, true));
 
         $this->assertFalse(Common::isCamelCaps('3thisIsCamelCaps', false, true, true));
         $this->assertFalse(Common::isCamelCaps('*thisIsCamelCaps', false, true, true));
@@ -61,6 +65,8 @@ class IsCamelCapsTest extends TestCase
     {
         $this->assertTrue(Common::isCamelCaps('_thisIsCamelCaps', false, false, true));
         $this->assertTrue(Common::isCamelCaps('_thisISCamelCaps', false, false, false));
+        $this->assertTrue(Common::isCamelCaps('_élément', false, false, false));
+        $this->assertTrue(Common::isCamelCaps('_unÉlément', false, false, false));
         $this->assertTrue(Common::isCamelCaps('_i18N', false, false, true));
         $this->assertTrue(Common::isCamelCaps('_i18n', false, false, true));
 
@@ -79,6 +85,7 @@ class IsCamelCapsTest extends TestCase
         $this->assertFalse(Common::isCamelCaps('_ThisIsCamelCaps', false, false, true));
         $this->assertFalse(Common::isCamelCaps('__thisIsCamelCaps', false, false, true));
         $this->assertFalse(Common::isCamelCaps('__thisISCamelCaps', false, false, false));
+        $this->assertFalse(Common::isCamelCaps('_unÉLément', false, false, true));
 
         $this->assertFalse(Common::isCamelCaps('3thisIsCamelCaps', false, false, true));
         $this->assertFalse(Common::isCamelCaps('*thisIsCamelCaps', false, false, true));
@@ -98,6 +105,7 @@ class IsCamelCapsTest extends TestCase
         $this->assertTrue(Common::isCamelCaps('ThisIsCamelCaps', true, true, true));
         $this->assertTrue(Common::isCamelCaps('ThisISCamelCaps', true, true, false));
         $this->assertTrue(Common::isCamelCaps('This3IsCamelCaps', true, true, false));
+        $this->assertTrue(Common::isCamelCaps('Élément', true, true, true));
 
     }//end testValidClassFormatPublic()
 
@@ -112,6 +120,7 @@ class IsCamelCapsTest extends TestCase
         $this->assertFalse(Common::isCamelCaps('thisIsCamelCaps', true));
         $this->assertFalse(Common::isCamelCaps('This-IsCamelCaps', true));
         $this->assertFalse(Common::isCamelCaps('This_Is_Camel_Caps', true));
+        $this->assertFalse(Common::isCamelCaps('UnÉLément', true));
 
     }//end testInvalidClassFormat()
 
@@ -128,6 +137,7 @@ class IsCamelCapsTest extends TestCase
     {
         $this->assertFalse(Common::isCamelCaps('_ThisIsCamelCaps', true, true));
         $this->assertFalse(Common::isCamelCaps('_ThisIsCamelCaps', true, false));
+        $this->assertFalse(Common::isCamelCaps('_UnÉlément', true, false));
 
     }//end testInvalidClassFormatPrivate()
 
