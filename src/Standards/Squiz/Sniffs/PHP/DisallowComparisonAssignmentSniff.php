@@ -52,17 +52,18 @@ class DisallowComparisonAssignmentSniff implements Sniff
             }
         }
 
-        // Ignore values in array definitions.
-        $array = $phpcsFile->findNext(
-            T_ARRAY,
+        // Ignore values in array definitions or match structures.
+        $nextNonEmpty = $phpcsFile->findNext(
+            Tokens::$emptyTokens,
             ($stackPtr + 1),
-            null,
-            false,
             null,
             true
         );
 
-        if ($array !== false) {
+        if ($nextNonEmpty !== false
+            && ($tokens[$nextNonEmpty]['code'] === T_ARRAY
+            || $tokens[$nextNonEmpty]['code'] === T_MATCH)
+        ) {
             return;
         }
 

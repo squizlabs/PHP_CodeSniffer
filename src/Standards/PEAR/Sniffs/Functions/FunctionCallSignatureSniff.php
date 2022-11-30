@@ -390,11 +390,14 @@ class FunctionCallSignatureSniff implements Sniff
                 $padding    = str_repeat(' ', $functionIndent);
                 if ($foundFunctionIndent === 0) {
                     $phpcsFile->fixer->addContentBefore($first, $padding);
+                } else if ($tokens[$first]['code'] === T_INLINE_HTML) {
+                    $newContent = $padding.ltrim($tokens[$first]['content']);
+                    $phpcsFile->fixer->replaceToken($first, $newContent);
                 } else {
                     $phpcsFile->fixer->replaceToken(($first - 1), $padding);
                 }
             }
-        }
+        }//end if
 
         $next = $phpcsFile->findNext(Tokens::$emptyTokens, ($openBracket + 1), null, true);
         if ($tokens[$next]['line'] === $tokens[$openBracket]['line']) {

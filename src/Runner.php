@@ -53,6 +53,8 @@ class Runner
      */
     public function runPHPCS()
     {
+        $this->registerOutOfMemoryShutdownMessage('phpcs');
+
         try {
             Util\Timing::startTiming();
             Runner::checkRequirements();
@@ -153,6 +155,8 @@ class Runner
      */
     public function runPHPCBF()
     {
+        $this->registerOutOfMemoryShutdownMessage('phpcbf');
+
         if (defined('PHP_CODESNIFFER_CBF') === false) {
             define('PHP_CODESNIFFER_CBF', true);
         }
@@ -721,6 +725,11 @@ class Runner
                 continue;
             }
 
+            $childProcessStatus = pcntl_wexitstatus($status);
+            if ($childProcessStatus !== 0) {
+                $success = false;
+            }
+
             $out = $childProcs[$pid];
             unset($childProcs[$pid]);
             if (file_exists($out) === false) {
@@ -884,6 +893,44 @@ class Runner
         echo str_repeat(' ', $padding)." $numProcessed / $numFiles ($percent%)".PHP_EOL;
 
     }//end printProgress()
+
+
+    /**
+     * Registers a PHP shutdown function to provide a more informative out of memory error.
+     *
+     * @param string $command The command which was used to initiate the PHPCS run.
+     *
+     * @return void
+     */
+    private function registerOutOfMemoryShutdownMessage($command)
+    {
+        // Allocate all needed memory beforehand as much as possible.
+        $errorMsg    = PHP_EOL.'The PHP_CodeSniffer "%1$s" command ran out of memory.'.PHP_EOL;
+        $errorMsg   .= 'Either raise the "memory_limit" of PHP in the php.ini file or raise the memory limit at runtime'.PHP_EOL;
+        $errorMsg   .= 'using `%1$s -d memory_limit=512M` (replace 512M with the desired memory limit).'.PHP_EOL;
+        $errorMsg    = sprintf($errorMsg, $command);
+        $memoryError = 'Allowed memory size of';
+        $errorArray  = [
+            'type'    => 42,
+            'message' => 'Some random dummy string to take up memory and take up some more memory and some more',
+            'file'    => 'Another random string, which would be a filename this time. Should be relatively long to allow for deeply nested files',
+            'line'    => 31427,
+        ];
+
+        register_shutdown_function(
+            static function () use (
+                $errorMsg,
+                $memoryError,
+                $errorArray
+            ) {
+                $errorArray = error_get_last();
+                if (is_array($errorArray) === true && strpos($errorArray['message'], $memoryError) !== false) {
+                    echo $errorMsg;
+                }
+            }
+        );
+
+    }//end registerOutOfMemoryShutdownMessage()
 
 
 }//end class

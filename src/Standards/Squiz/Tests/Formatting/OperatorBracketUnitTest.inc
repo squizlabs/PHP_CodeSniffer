@@ -193,3 +193,11 @@ $expr = match (true) {
 if ($pos === count(value: $this->tokens) - 1) {
     $file = '...'.substr(string: $file, offset: $padding * -1 + 3);
 }
+
+match ($a) {
+    'a' => -1,
+    'b', 'c', 'd' => -2,
+    default => -3,
+};
+
+$cntPages = ceil(count($items) / parent::ON_PAGE);

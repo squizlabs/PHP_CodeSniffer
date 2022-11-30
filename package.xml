@@ -17,8 +17,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <date>2022-06-18</date>
  <time>17:20:00</time>
  <version>
-  <release>3.7.1</release>
-  <api>3.7.1</api>
+  <release>3.7.2</release>
+  <api>3.7.2</api>
  </version>
  <stability>
   <release>stable</release>
@@ -26,8 +26,33 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
-  - Fixed bug #3609: Methods/constants with name empty/isset/unset are always reported as error
+  - Newer versions of Composer will now suggest installing PHPCS using require-dev instead of require
+    -- Thanks to Gary Jones (@GaryJones) for the patch
+  - A custom Out Of Memory error will now be shown if PHPCS or PHPCBF run out of memory during a run
+    -- Error message provides actionable information about how to fix the problem and ensures the error is not silent
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) and Alain Schlesser (@schlessera) for the patch
+  - Generic.PHP.LowerCaseType sniff now correctly examines types inside arrow functions
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Squiz.Formatting.OperatorBracket no longer reports false positives in match() structures
+  - Fixed bug #3616 : Squiz.PHP.DisallowComparisonAssignment false positive for PHP 8 match expression
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3618 : Generic.WhiteSpace.ArbitraryParenthesesSpacing false positive for return new parent()
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3632 : Short list not tokenized correctly in control structures without braces
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3639 : Tokenizer not applying tab replacement to heredoc/nowdoc closers
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3640 : Generic.WhiteSpace.DisallowTabIndent not reporting errors for PHP 7.3 flexible heredoc/nowdoc syntax
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3645 : PHPCS can show 0 exit code when running in parallel even if child process has fatal error
+    -- Thanks to Alex Panshin (@enl) for the patch
+  - Fixed bug #3653 : False positives for match() in OperatorSpacingSniff
+    -- Thanks to Jaroslav Hanslík (@kukulich) for the patch
+  - Fixed bug #3666 : PEAR.Functions.FunctionCallSignature incorrect indent fix when checking mixed HTML/PHP files
+  - Fixed bug #3668 : PSR12.Classes.ClassInstantiation.MissingParentheses false positive when instantiating parent classes
+    -- Similar issues also fixed in Generic.Functions.FunctionCallArgumentSpacing and Squiz.Formatting.OperatorBracket
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3672 : Incorrect ScopeIndent.IncorrectExact report for match inside array literal
  </notes>
  <contents>
   <dir name="/">
@@ -141,6 +166,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="FinallyTest.php" role="test" />
       <file baseinstalldir="" name="GotoLabelTest.inc" role="test" />
       <file baseinstalldir="" name="GotoLabelTest.php" role="test" />
+      <file baseinstalldir="" name="HeredocNowdocCloserTest.inc" role="test" />
+      <file baseinstalldir="" name="HeredocNowdocCloserTest.php" role="test" />
       <file baseinstalldir="" name="NamedFunctionCallArgumentsTest.inc" role="test" />
       <file baseinstalldir="" name="NamedFunctionCallArgumentsTest.php" role="test" />
       <file baseinstalldir="" name="NullsafeObjectOperatorTest.inc" role="test" />
@@ -783,6 +810,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.1.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.2.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.2.inc.fixed" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.3.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.3.inc.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.js" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.js.fixed" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="DisallowTabIndentUnitTest.php" role="test" />
@@ -2114,6 +2143,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.inc" name="tests/Core/Tokenizer/FinallyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.php" name="tests/Core/Tokenizer/GotoLabelTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.inc" name="tests/Core/Tokenizer/GotoLabelTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.php" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.inc" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
@@ -2218,6 +2249,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/FinallyTest.inc" name="tests/Core/Tokenizer/FinallyTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.php" name="tests/Core/Tokenizer/GotoLabelTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/GotoLabelTest.inc" name="tests/Core/Tokenizer/GotoLabelTest.inc" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.php" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.php" />
+   <install as="CodeSniffer/Core/Tokenizer/HeredocNowdocCloserTest.inc" name="tests/Core/Tokenizer/HeredocNowdocCloserTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" name="tests/Core/Tokenizer/NamedFunctionCallArgumentsTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/NullsafeObjectOperatorTest.php" name="tests/Core/Tokenizer/NullsafeObjectOperatorTest.php" />
@@ -2255,7 +2288,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <date>2022-06-18</date>
    <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
    <notes>
-    - Fixed bug #3609: Methods/constants with name empty/isset/unset are always reported as error
+    - Fixed bug #3609 : Methods/constants with name empty/isset/unset are always reported as error
       -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
    </notes>
   </release>

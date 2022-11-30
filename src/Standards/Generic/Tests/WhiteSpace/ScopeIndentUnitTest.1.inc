@@ -1572,6 +1572,13 @@ switch ($foo) {
         return 'default';
 }
 
+foo(function ($foo) {
+    return [
+        match ($foo) {
+        }
+    ];
+});
+
 /* ADD NEW TESTS ABOVE THIS LINE AND MAKE SURE THAT THE 1 (space-based) AND 2 (tab-based) FILES ARE IN SYNC! */
 ?>
 

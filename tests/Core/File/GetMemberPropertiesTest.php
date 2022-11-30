@@ -211,6 +211,17 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                 ],
             ],
             [
+                '/* testNoPrefix */',
+                [
+                    'scope'           => 'public',
+                    'scope_specified' => false,
+                    'is_static'       => false,
+                    'is_readonly'     => false,
+                    'type'            => '',
+                    'nullable_type'   => false,
+                ],
+            ],
+            [
                 '/* testPublicStaticWithDocblock */',
                 [
                     'scope'           => 'public',
@@ -285,17 +296,6 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'is_readonly'     => false,
                     'type'            => '?string',
                     'nullable_type'   => true,
-                ],
-            ],
-            [
-                '/* testNoPrefix */',
-                [
-                    'scope'           => 'public',
-                    'scope_specified' => false,
-                    'is_static'       => false,
-                    'is_readonly'     => false,
-                    'type'            => '',
-                    'nullable_type'   => false,
                 ],
             ],
             [
