@@ -73,6 +73,8 @@ if (class_exists('PHP_CodeSniffer\Autoload', false) === false) {
                     return;
                 }
 
+                require_once __DIR__.'/vendor/autoload.php';
+
                 if (strpos(__DIR__, 'phar://') !== 0
                     && @file_exists(__DIR__.'/../../autoload.php') === true
                 ) {
