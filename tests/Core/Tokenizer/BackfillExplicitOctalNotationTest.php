@@ -106,6 +106,12 @@ class BackfillExplicitOctalNotationTest extends AbstractMethodUnitTest
                 'nextToken'   => T_STRING,
                 'nextContent' => '_82',
             ],
+            [
+                'marker'      => '/* testInvalid7 */',
+                'value'       => '0',
+                'nextToken'   => T_STRING,
+                'nextContent' => 'o',
+            ],
         ];
 
     }//end dataExplicitOctalNotation()
