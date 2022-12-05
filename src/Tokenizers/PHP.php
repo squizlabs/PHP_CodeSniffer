@@ -759,6 +759,7 @@ class PHP extends Tokenizer
                 && (isset($tokens[($stackPtr + 1)]) === true
                 && is_array($tokens[($stackPtr + 1)]) === true
                 && $tokens[($stackPtr + 1)][0] === T_STRING
+                && isset($tokens[($stackPtr + 1)][1][0], $tokens[($stackPtr + 1)][1][1]) === true
                 && strtolower($tokens[($stackPtr + 1)][1][0]) === 'o'
                 && $tokens[($stackPtr + 1)][1][1] !== '_')
                 && preg_match('`^(o[0-7]+(?:_[0-7]+)?)([0-9_]*)$`i', $tokens[($stackPtr + 1)][1], $matches) === 1
