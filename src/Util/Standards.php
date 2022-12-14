@@ -65,12 +65,12 @@ class Standards
      * use getInstalledStandardPaths() instead as it performs less work to
      * retrieve coding standard names.
      *
-     * @param boolean $includeGeneric If true, the special "Generic"
-     *                                coding standard will be included
-     *                                if installed.
-     * @param string  $standardsDir   A specific directory to look for standards
-     *                                in. If not specified, PHP_CodeSniffer will
-     *                                look in its default locations.
+     * @param bool   $includeGeneric If true, the special "Generic"
+     *                               coding standard will be
+     *                               included if installed.
+     * @param string $standardsDir   A specific directory to look for standards
+     *                               in. If not specified, PHP_CodeSniffer will
+     *                               look in its default locations.
      *
      * @return array
      * @see    getInstalledStandardPaths()
@@ -154,12 +154,12 @@ class Standards
      * CodeSniffer/Standards directory. Valid coding standards
      * include a Sniffs subdirectory.
      *
-     * @param boolean $includeGeneric If true, the special "Generic"
-     *                                coding standard will be included
-     *                                if installed.
-     * @param string  $standardsDir   A specific directory to look for standards
-     *                                in. If not specified, PHP_CodeSniffer will
-     *                                look in its default locations.
+     * @param bool   $includeGeneric If true, the special "Generic"
+     *                               coding standard will be
+     *                               included if installed.
+     * @param string $standardsDir   A specific directory to look for standards
+     *                               in. If not specified, PHP_CodeSniffer will
+     *                               look in its default locations.
      *
      * @return array
      * @see    isInstalledStandard()
@@ -227,7 +227,7 @@ class Standards
      *
      * @param string $standard The name of the coding standard.
      *
-     * @return boolean
+     * @return bool
      * @see    getInstalledStandards()
      */
     public static function isInstalledStandard($standard)

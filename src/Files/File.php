@@ -643,15 +643,16 @@ class File
     /**
      * Records an error against a specific token in the file.
      *
-     * @param string  $error    The error message.
-     * @param int     $stackPtr The stack position where the error occurred.
-     * @param string  $code     A violation code unique to the sniff message.
-     * @param array   $data     Replacements for the error message.
-     * @param int     $severity The severity level for this error. A value of 0
-     *                          will be converted into the default severity level.
-     * @param boolean $fixable  Can the error be fixed by the sniff?
+     * @param string $error    The error message.
+     * @param int    $stackPtr The stack position where the error occurred.
+     * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the error message.
+     * @param int    $severity The severity level for this error. A value of 0
+     *                         will be converted into the default severity
+     *                         level.
+     * @param bool   $fixable  Can the error be fixed by the sniff?
      *
-     * @return boolean
+     * @return bool
      */
     public function addError(
         $error,
@@ -677,15 +678,16 @@ class File
     /**
      * Records a warning against a specific token in the file.
      *
-     * @param string  $warning  The error message.
-     * @param int     $stackPtr The stack position where the error occurred.
-     * @param string  $code     A violation code unique to the sniff message.
-     * @param array   $data     Replacements for the warning message.
-     * @param int     $severity The severity level for this warning. A value of 0
-     *                          will be converted into the default severity level.
-     * @param boolean $fixable  Can the warning be fixed by the sniff?
+     * @param string $warning  The error message.
+     * @param int    $stackPtr The stack position where the error occurred.
+     * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the warning message.
+     * @param int    $severity The severity level for this warning. A value of 0
+     *                         will be converted into the default severity
+     *                         level.
+     * @param bool   $fixable  Can the warning be fixed by the sniff?
      *
-     * @return boolean
+     * @return bool
      */
     public function addWarning(
         $warning,
@@ -718,7 +720,7 @@ class File
      * @param int    $severity The severity level for this error. A value of 0
      *                         will be converted into the default severity level.
      *
-     * @return boolean
+     * @return bool
      */
     public function addErrorOnLine(
         $error,
@@ -742,7 +744,7 @@ class File
      * @param int    $severity The severity level for this warning. A value of 0 will
      *                         will be converted into the default severity level.
      *
-     * @return boolean
+     * @return bool
      */
     public function addWarningOnLine(
         $warning,
@@ -768,7 +770,7 @@ class File
      * @param int    $severity The severity level for this error. A value of 0
      *                         will be converted into the default severity level.
      *
-     * @return boolean
+     * @return bool
      */
     public function addFixableError(
         $error,
@@ -799,7 +801,7 @@ class File
      * @param int    $severity The severity level for this warning. A value of 0
      *                         will be converted into the default severity level.
      *
-     * @return boolean
+     * @return bool
      */
     public function addFixableWarning(
         $warning,
@@ -821,17 +823,18 @@ class File
     /**
      * Adds an error to the error stack.
      *
-     * @param boolean $error    Is this an error message?
-     * @param string  $message  The text of the message.
-     * @param int     $line     The line on which the message occurred.
-     * @param int     $column   The column at which the message occurred.
-     * @param string  $code     A violation code unique to the sniff message.
-     * @param array   $data     Replacements for the message.
-     * @param int     $severity The severity level for this message. A value of 0
-     *                          will be converted into the default severity level.
-     * @param boolean $fixable  Can the problem be fixed by the sniff?
+     * @param bool   $error    Is this an error message?
+     * @param string $message  The text of the message.
+     * @param int    $line     The line on which the message occurred.
+     * @param int    $column   The column at which the message occurred.
+     * @param string $code     A violation code unique to the sniff message.
+     * @param array  $data     Replacements for the message.
+     * @param int    $severity The severity level for this message. A value of 0
+     *                         will be converted into the default severity
+     *                         level.
+     * @param bool   $fixable  Can the problem be fixed by the sniff?
      *
-     * @return boolean
+     * @return bool
      */
     protected function addMessage($error, $message, $line, $column, $code, $data, $severity, $fixable)
     {
@@ -1093,7 +1096,7 @@ class File
      * @param string $metric   The name of the metric being recorded.
      * @param string $value    The value of the metric being recorded.
      *
-     * @return boolean
+     * @return bool
      */
     public function recordMetric($stackPtr, $metric, $value)
     {
@@ -2006,7 +2009,7 @@ class File
      *
      * @param int $stackPtr The position of the T_BITWISE_AND token.
      *
-     * @return boolean
+     * @return bool
      */
     public function isReference($stackPtr)
     {
@@ -2647,7 +2650,7 @@ class File
      * @param int              $stackPtr The position of the token we are checking.
      * @param int|string|array $types    The type(s) of tokens to search for.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasCondition($stackPtr, $types)
     {

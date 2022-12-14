@@ -225,7 +225,7 @@ class FileList implements \Iterator, \Countable
     /**
      * Checks if current position is valid.
      *
-     * @return boolean
+     * @return bool
      */
     #[ReturnTypeWillChange]
     public function valid()
@@ -242,7 +242,7 @@ class FileList implements \Iterator, \Countable
     /**
      * Return the number of files in the list.
      *
-     * @return integer
+     * @return int
      */
     #[ReturnTypeWillChange]
     public function count()
