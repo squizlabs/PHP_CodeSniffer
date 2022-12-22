@@ -249,7 +249,12 @@ class Ruleset
         // one last time and clear the output buffer.
         $sniffs[] = '';
 
-        echo PHP_EOL."The $this->name standard contains $sniffCount sniffs".PHP_EOL;
+        $summaryLine = PHP_EOL."The $this->name standard contains 1 sniff".PHP_EOL;
+        if ($sniffCount !== 1) {
+            $summaryLine = str_replace('1 sniff', "$sniffCount sniffs", $summaryLine);
+        }
+
+        echo $summaryLine;
 
         ob_start();
 
