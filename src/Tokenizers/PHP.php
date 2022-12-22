@@ -1223,7 +1223,7 @@ class PHP extends Tokenizer
 
             /*
                 Tokenize the parameter labels for PHP 8.0 named parameters as a special T_PARAM_NAME
-                token and ensure that the colon after it is always T_COLON.
+                token and ensures that the colon after it is always T_COLON.
             */
 
             if ($tokenIsArray === true

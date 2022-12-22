@@ -1798,7 +1798,7 @@ class File
                 || $this->tokens[$ptr]['code'] === T_ENUM)
             ) {
                 // T_VARIABLEs in interfaces/enums can actually be method arguments
-                // but they wont be seen as being inside the method because there
+                // but they won't be seen as being inside the method because there
                 // are no scope openers and closers for abstract methods. If it is in
                 // parentheses, we can be pretty sure it is a method argument.
                 if (isset($this->tokens[$stackPtr]['nested_parenthesis']) === false
