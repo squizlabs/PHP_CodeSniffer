@@ -25,7 +25,7 @@ class LineLengthSniff implements Sniff
      *
      * @var integer
      */
-    public $lineLimit = 80;
+    public $lineLimit = 120;
 
     /**
      * The limit that the length of a line must not exceed.
@@ -34,7 +34,7 @@ class LineLengthSniff implements Sniff
      *
      * @var integer
      */
-    public $absoluteLineLimit = 100;
+    public $absoluteLineLimit = 120;
 
     /**
      * Whether or not to ignore trailing comments.
