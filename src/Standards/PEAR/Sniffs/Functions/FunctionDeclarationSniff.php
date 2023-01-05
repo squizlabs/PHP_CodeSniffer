@@ -308,7 +308,7 @@ class FunctionDeclarationSniff implements Sniff
                 $phpcsFile->fixer->addContent($prev, ' {');
 
                 // If the opener is on a line by itself, removing it will create
-                // an empty line, so just remove the entire line instead.
+                // an empty line, so remove the entire line instead.
                 $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($opener - 1), $closeBracket, true);
                 $next = $phpcsFile->findNext(T_WHITESPACE, ($opener + 1), null, true);
 
@@ -324,7 +324,9 @@ class FunctionDeclarationSniff implements Sniff
                 } else {
                     // Just remove the opener.
                     $phpcsFile->fixer->replaceToken($opener, '');
-                    if ($tokens[$next]['line'] === $tokens[$opener]['line']) {
+                    if ($tokens[$next]['line'] === $tokens[$opener]['line']
+                        && ($opener + 1) !== $next
+                    ) {
                         $phpcsFile->fixer->replaceToken(($opener + 1), '');
                     }
                 }

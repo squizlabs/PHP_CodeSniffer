@@ -465,3 +465,12 @@ new ExceptionMessage(),
     ) {
     }
 }
+
+// Issue #3736 - prevent the fixer creating a parse error by removing the function close brace.
+class Test
+{
+    public function __construct(
+        protected int $id
+    )
+    {}
+}
