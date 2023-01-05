@@ -474,3 +474,17 @@ class Test
     )
     {}
 }
+
+// Prevent fixer conflict with itself.
+function foo(
+    $param1,
+)
+: \SomeClass
+  {
+  }
+
+function foo(
+    $param1,
+    $param2
+) : // comment.
+   \Package\Sub\SomeClass   {}
