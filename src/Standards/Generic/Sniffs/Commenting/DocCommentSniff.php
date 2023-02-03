@@ -71,9 +71,31 @@ class DocCommentSniff implements Sniff
         if ($short === false) {
             // No content at all.
             $error = 'Doc comment is empty';
-            $phpcsFile->addError($error, $stackPtr, 'Empty');
+            $fix   = $phpcsFile->addFixableError($error, $stackPtr, 'Empty');
+
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                for ($i = $commentStart; $i <= $commentEnd; $i++) {
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $tokenBefore = ($tokens[($commentStart - 1)] ?? null);
+                $tokenAfter  = ($tokens[($commentEnd + 1)] ?? null);
+                if ($tokenBefore !== null
+                    && $tokenBefore['code'] === T_WHITESPACE
+                    && $tokenBefore['content'] === $phpcsFile->eolChar
+                    && $tokenAfter !== null
+                    && $tokenAfter['code'] === T_WHITESPACE
+                    && $tokenAfter['content'] === $phpcsFile->eolChar
+                ) {
+                    $phpcsFile->fixer->replaceToken(($commentStart - 1), '');
+                }
+
+                $phpcsFile->fixer->endChangeset();
+            }
+
             return;
-        }
+        }//end if
 
         // The first line of the comment should just be the /** code.
         if ($tokens[$short]['line'] === $tokens[$stackPtr]['line']) {
@@ -157,7 +179,22 @@ class DocCommentSniff implements Sniff
 
             if (preg_match('/^\p{Ll}/u', $shortContent) === 1) {
                 $error = 'Doc comment short description must start with a capital letter';
-                $phpcsFile->addError($error, $short, 'ShortNotCapital');
+
+                $firstCharacter      = mb_substr($shortContent, 0, 1);
+                $firstCharacterUpper = mb_strtoupper($firstCharacter);
+                $fix = false;
+
+                if ($firstCharacter !== $firstCharacterUpper) {
+                    $fix = $phpcsFile->addFixableError($error, $short, 'ShortNotCapital');
+                } else {
+                    $phpcsFile->addError($error, $short, 'ShortNotCapital');
+                }
+
+                if ($fix === true) {
+                    $phpcsFile->fixer->beginChangeset();
+                    $phpcsFile->fixer->replaceToken($short, $firstCharacterUpper.mb_substr($tokens[$short]['content'], 1));
+                    $phpcsFile->fixer->endChangeset();
+                }
             }
 
             $long = $phpcsFile->findNext($empty, ($shortEnd + 1), ($commentEnd - 1), true);
@@ -183,7 +220,22 @@ class DocCommentSniff implements Sniff
 
                 if (preg_match('/^\p{Ll}/u', $tokens[$long]['content']) === 1) {
                     $error = 'Doc comment long description must start with a capital letter';
-                    $phpcsFile->addError($error, $long, 'LongNotCapital');
+
+                    $firstCharacter      = mb_substr($tokens[$long]['content'][0], 0, 1);
+                    $firstCharacterUpper = mb_strtoupper($firstCharacter);
+                    $fix = false;
+
+                    if ($firstCharacter !== $firstCharacterUpper) {
+                        $fix = $phpcsFile->addFixableError($error, $long, 'LongNotCapital');
+                    } else {
+                        $phpcsFile->addError($error, $long, 'LongNotCapital');
+                    }
+
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+                        $phpcsFile->fixer->replaceToken($long, $firstCharacterUpper.mb_substr($tokens[$long]['content'], 1));
+                        $phpcsFile->fixer->endChangeset();
+                    }
                 }
             }//end if
         }//end if
@@ -192,6 +244,8 @@ class DocCommentSniff implements Sniff
             // No tags in the comment.
             return;
         }
+
+        $indent = str_repeat(' ', $tokens[$stackPtr]['column']);
 
         $firstTag = $tokens[$commentStart]['comment_tags'][0];
         $prev     = $phpcsFile->findPrevious($empty, ($firstTag - 1), $stackPtr, true);
@@ -210,7 +264,6 @@ class DocCommentSniff implements Sniff
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
-                $indent = str_repeat(' ', $tokens[$stackPtr]['column']);
                 $phpcsFile->fixer->addContent($prev, $phpcsFile->eolChar.$indent.'*'.$phpcsFile->eolChar);
                 $phpcsFile->fixer->endChangeset();
             }
@@ -222,6 +275,7 @@ class DocCommentSniff implements Sniff
         $tagGroups    = [];
         $groupid      = 0;
         $paramGroupid = null;
+        $firstTagAfterParams = null;
         foreach ($tokens[$commentStart]['comment_tags'] as $pos => $tag) {
             if ($pos > 0) {
                 $prev = $phpcsFile->findPrevious(
@@ -244,28 +298,93 @@ class DocCommentSniff implements Sniff
                     && $paramGroupid !== $groupid
                 ) {
                     $error = 'Parameter tags must be grouped together in a doc comment';
-                    $phpcsFile->addError($error, $tag, 'ParamGroup');
-                }
+                    $fix   = $phpcsFile->addFixableError($error, $tag, 'ParamGroup');
+
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+
+                        $thisTagLineStart = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $tag, $commentStart, false, $phpcsFile->eolChar));
+
+                        if (isset($tokens[$stackPtr]['comment_tags'][($pos + 1)]) === true) {
+                            $nextTag          = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($tag + 1), $commentEnd);
+                            $nextTagLineStart = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $nextTag, $commentStart, false, $phpcsFile->eolChar));
+                        } else {
+                            $nextTagLineStart = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $commentEnd, $commentStart, false, $phpcsFile->eolChar));
+                        }
+
+                        $thisTagContent = '';
+                        for ($i = $thisTagLineStart; $i < $nextTagLineStart; $i++) {
+                            if ($tokens[($i - 1)]['content'] === $phpcsFile->eolChar
+                                && $tokens[$i]['content'] === $indent
+                                && $tokens[($i + 1)]['content'] === '*'
+                                && $tokens[($i + 2)]['content'] === $phpcsFile->eolChar
+                            ) {
+                                break;
+                            }
+
+                            $thisTagContent .= $tokens[$i]['content'];
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $insertionPointer = $phpcsFile->findPrevious(T_DOC_COMMENT_TAG, ($tag - 1), $commentStart, false, '@param');
+
+                        while ($tokens[($insertionPointer - 1)]['content'] !== $phpcsFile->eolChar
+                            || $tokens[$insertionPointer]['content'] !== $indent
+                            || $tokens[($insertionPointer + 1)]['content'] !== '*'
+                            || $tokens[($insertionPointer + 2)]['content'] !== $phpcsFile->eolChar
+                        ) {
+                            $insertionPointer++;
+                        }
+
+                        $phpcsFile->fixer->addContentBefore($insertionPointer, $thisTagContent);
+
+                        $phpcsFile->fixer->endChangeset();
+                    }//end if
+                }//end if
 
                 if ($paramGroupid === null) {
                     $paramGroupid = $groupid;
                 }
+            } else if ($paramGroupid !== null && $firstTagAfterParams === null) {
+                $firstTagAfterParams = $tag;
             }//end if
 
             $tagGroups[$groupid][] = $tag;
         }//end foreach
 
         foreach ($tagGroups as $groupid => $group) {
-            $maxLength = 0;
-            $paddings  = [];
+            $maxLength           = 0;
+            $paddings            = [];
+            $canFixNonParamGroup = true;
             foreach ($group as $pos => $tag) {
                 if ($paramGroupid === $groupid
                     && $tokens[$tag]['content'] !== '@param'
                 ) {
                     $error = 'Tag %s cannot be grouped with parameter tags in a doc comment';
                     $data  = [$tokens[$tag]['content']];
-                    $phpcsFile->addError($error, $tag, 'NonParamGroup', $data);
-                }
+
+                    if ($canFixNonParamGroup === true) {
+                        $canFixNonParamGroup = $phpcsFile->addFixableError($error, $tag, 'NonParamGroup', $data);
+                    } else {
+                        $phpcsFile->addError($error, $tag, 'NonParamGroup', $data);
+                    }
+
+                    if ($canFixNonParamGroup === true) {
+                        $phpcsFile->fixer->beginChangeset();
+
+                        if ($pos > 0) {
+                            $thisTagLineStart = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $tag, $commentStart, false, $phpcsFile->eolChar));
+                            $phpcsFile->fixer->addContentBefore($thisTagLineStart, $indent.'*'.$phpcsFile->eolChar);
+                        } else {
+                            $nextTag          = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($tag + 1), $commentEnd);
+                            $nextTagLineStart = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $nextTag, $commentStart, false, $phpcsFile->eolChar));
+                            $phpcsFile->fixer->addContentBefore($nextTagLineStart, $indent.'*'.$phpcsFile->eolChar);
+                        }
+
+                        $phpcsFile->fixer->endChangeset();
+                        $canFixNonParamGroup = false;
+                    }
+                }//end if
 
                 $tagLength = $tokens[$tag]['length'];
                 if ($tagLength > $maxLength) {
@@ -277,7 +396,7 @@ class DocCommentSniff implements Sniff
                 if ($string !== false && $tokens[$string]['line'] === $tokens[$tag]['line']) {
                     $paddings[$tag] = $tokens[($tag + 1)]['length'];
                 }
-            }
+            }//end foreach
 
             // Check that there was single blank line after the tag block
             // but account for a multi-line tag comments.
@@ -298,7 +417,6 @@ class DocCommentSniff implements Sniff
                             $phpcsFile->fixer->replaceToken($i, '');
                         }
 
-                        $indent = str_repeat(' ', $tokens[$stackPtr]['column']);
                         $phpcsFile->fixer->addContent($prev, $phpcsFile->eolChar.$indent.'*'.$phpcsFile->eolChar);
                         $phpcsFile->fixer->endChangeset();
                     }
@@ -328,8 +446,45 @@ class DocCommentSniff implements Sniff
         // If there is a param group, it needs to be first.
         if ($paramGroupid !== null && $paramGroupid !== 0) {
             $error = 'Parameter tags must be defined first in a doc comment';
-            $phpcsFile->addError($error, $tagGroups[$paramGroupid][0], 'ParamNotFirst');
-        }
+            $fix   = $phpcsFile->addFixableError($error, $tagGroups[$paramGroupid][0], 'ParamNotFirst');
+
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+
+                $firstTag      = $phpcsFile->findNext(T_DOC_COMMENT_TAG, $stackPtr, $commentEnd);
+                $firstParamTag = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($firstTag + 1), $commentEnd, false, '@param');
+                if ($firstTagAfterParams === null) {
+                    $firstTagAfterParams = $commentEnd;
+                }
+
+                $lineBetween = ($tokens[$firstParamTag]['line'] - 1);
+
+                $tagGroupOne = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $firstTag, $commentStart, false, $phpcsFile->eolChar));
+                $tagGroupTwo = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $firstParamTag, $commentStart, false, $phpcsFile->eolChar));
+                $markerThree = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $firstTagAfterParams, $commentStart, false, $phpcsFile->eolChar));
+
+                $otherContent = $tokens[$tagGroupOne]['content'];
+                for ($i = ($tagGroupOne + 1); $i < $tagGroupTwo; $i++) {
+                    if ($tokens[$i]['line'] === $lineBetween) {
+                        break;
+                    }
+
+                    $otherContent .= $tokens[$i]['content'];
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $paramContent = $tokens[$tagGroupTwo]['content'];
+                for ($i = ($tagGroupTwo + 1); $i < $markerThree; $i++) {
+                    $paramContent .= $tokens[$i]['content'];
+                    $phpcsFile->fixer->replaceToken($i, '');
+                }
+
+                $phpcsFile->fixer->replaceToken($tagGroupOne, $paramContent);
+                $phpcsFile->fixer->replaceToken($tagGroupTwo, $otherContent);
+
+                $phpcsFile->fixer->endChangeset();
+            }//end if
+        }//end if
 
         $foundTags = [];
         foreach ($tokens[$stackPtr]['comment_tags'] as $pos => $tag) {
@@ -338,14 +493,46 @@ class DocCommentSniff implements Sniff
                 $lastTag = $tokens[$stackPtr]['comment_tags'][($pos - 1)];
                 if ($tokens[$lastTag]['content'] !== $tagName) {
                     $error = 'Tags must be grouped together in a doc comment';
-                    $phpcsFile->addError($error, $tag, 'TagsNotGrouped');
-                }
+                    $fix   = $phpcsFile->addFixableError($error, $tag, 'TagsNotGrouped');
+
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+
+                        $prevTag          = $phpcsFile->findPrevious(T_DOC_COMMENT_TAG, ($tag - 1), $commentStart);
+                        $prevTagLineStart = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $prevTag, $commentStart, false, $phpcsFile->eolChar));
+                        $thisTagLineStart = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $tag, $commentStart, false, $phpcsFile->eolChar));
+
+                        if (isset($tokens[$stackPtr]['comment_tags'][($pos + 1)]) === true) {
+                            $nextTag          = $phpcsFile->findNext(T_DOC_COMMENT_TAG, ($tag + 1), $commentEnd);
+                            $nextTagLineStart = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $nextTag, $commentStart, false, $phpcsFile->eolChar));
+                        } else {
+                            $nextTagLineStart = (1 + $phpcsFile->findPrevious(T_DOC_COMMENT_WHITESPACE, $commentEnd, $commentStart, false, $phpcsFile->eolChar));
+                        }
+
+                        $prevTagContent = $tokens[$prevTagLineStart]['content'];
+                        for ($i = ($prevTagLineStart + 1); $i < $thisTagLineStart; $i++) {
+                            $prevTagContent .= $tokens[$i]['content'];
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $thisTagContent = $tokens[$thisTagLineStart]['content'];
+                        for ($i = ($thisTagLineStart + 1); $i < $nextTagLineStart; $i++) {
+                            $thisTagContent .= $tokens[$i]['content'];
+                            $phpcsFile->fixer->replaceToken($i, '');
+                        }
+
+                        $phpcsFile->fixer->replaceToken($prevTagLineStart, $thisTagContent);
+                        $phpcsFile->fixer->replaceToken($thisTagLineStart, $prevTagContent);
+
+                        $phpcsFile->fixer->endChangeset();
+                    }//end if
+                }//end if
 
                 continue;
-            }
+            }//end if
 
             $foundTags[$tagName] = true;
-        }
+        }//end foreach
 
     }//end process()
 
