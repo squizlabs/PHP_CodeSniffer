@@ -64,9 +64,9 @@
  * Short description.
  *
  *
- * @param
+ * @param one
  *
- * @param
+ * @param two
  *
  *
  * @tag one
@@ -164,6 +164,27 @@
  */
 
 /**
+ * @one
+ * @two
+ * @three
+ * @four
+ * @one
+ * @two
+ * @three
+ * @four
+ */
+
+/**
+ * @one this has more than one line (1)
+ *      and should remain with the first tag (1)
+ * @two a different tag which should be (2)
+ *      moved to after the third tag (2)
+ * @one the same tag as the first but listed (3)
+ *      after a different tag; this should be (3)
+ *      moved above the second tag (3)
+ */
+
+/**
  * @ var Comment
  */
 
@@ -247,6 +268,10 @@
  * @copyright 2006-2012 Squiz Pty Ltd (ABN 77 084 670 600)
  * @license	  	https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link		http://pear.php.net/package/PHP_CodeSniffer
+ */
+
+/**
+ *
  */
 
 /** No docblock close tag. Must be last test without new line.

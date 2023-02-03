@@ -11,9 +11,9 @@
  */
 
 /**
- * short description
+ * Short description
  *
- * long description
+ * Long description
  * over multiple lines.
  *
  * @tag1 one
@@ -44,25 +44,7 @@
 /**
  * Short description.
  *
- * @tag one
- *
  * @param
- * @param
- */
-
-/**
- * Short description.
- *
- * @param
- * @param
- * @tag   one
- */
-
-/**
- * Short description.
- *
- * @param
- *
  * @param
  *
  * @tag one
@@ -72,9 +54,27 @@
  * Short description.
  *
  * @param
- *
- * @tag   one
  * @param
+ *
+ * @tag one
+ */
+
+/**
+ * Short description.
+ *
+ * @param one
+ * @param two
+ *
+ * @tag one
+ */
+
+/**
+ * Short description.
+ *
+ * @param
+ * @param
+ *
+ * @tag one
  */
 
 /**
@@ -147,15 +147,36 @@
  * Comment
  *
  * @one
- * @two
  * @one
  *
+ * @two
  * @two   something
  *        here
  * @two   foo
  * @three something
  *        here
  * @three bar
+ */
+
+/**
+ * @one
+ * @one
+ * @two
+ * @two
+ * @three
+ * @three
+ * @four
+ * @four
+ */
+
+/**
+ * @one this has more than one line (1)
+ *      and should remain with the first tag (1)
+ * @one the same tag as the first but listed (3)
+ *      after a different tag; this should be (3)
+ *      moved above the second tag (3)
+ * @two a different tag which should be (2)
+ *      moved to after the third tag (2)
  */
 
 /**
@@ -180,27 +201,31 @@
  */
 
 /**
- * this is a test
+ * This is a test
+ *
+ * @param boolean $foo blah
+ * @param boolean $bar Blah.
  *
  * @author test
- * @param  boolean $foo blah
+ *
  * @return boolean
- * @param  boolean $bar Blah.
  */
 
 /**
  * Short description.
  *
+ * @param int    $number
+ * @param string $text
+ *
  * @tag    one
- * @param  int    $number
- * @param  string $text
  * @return something
  */
 
 /**
  *
- * @param  int    $number
- * @param  string $text
+ * @param int    $number
+ * @param string $text
+ *
  * @return something
  */
 
@@ -209,11 +234,11 @@
  */
 
 /**
- * étude des ...
+ * Étude des ...
  */
 
 /**
-* doc comment 
+* Doc comment 
 */
 
         /**
@@ -221,7 +246,8 @@
          *
          * @param
          * @param
-         * @tag   one
+         *
+         * @tag one
          */
 
         /**
@@ -253,5 +279,6 @@
  * @license   https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt BSD Licence
  * @link      http://pear.php.net/package/PHP_CodeSniffer
  */
+
 
 /** No docblock close tag. Must be last test without new line.
