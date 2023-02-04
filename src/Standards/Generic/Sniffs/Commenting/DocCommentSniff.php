@@ -69,16 +69,16 @@ class DocCommentSniff implements Sniff
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
-                $tokenBefore = ($tokens[($commentStart - 1)] ?? null);
-                $tokenAfter  = ($tokens[($commentEnd + 1)] ?? null);
-                if ($tokenBefore !== null
-                    && $tokenBefore['code'] === T_WHITESPACE
-                    && $tokenBefore['content'] === $phpcsFile->eolChar
-                    && $tokenAfter !== null
-                    && $tokenAfter['code'] === T_WHITESPACE
-                    && $tokenAfter['content'] === $phpcsFile->eolChar
-                ) {
-                    $phpcsFile->fixer->replaceToken(($commentStart - 1), '');
+                if (isset($tokens[($commentStart - 1)]) === true && isset($tokens[($commentEnd + 1)]) === true) {
+                    $tokenBefore = $tokens[($commentStart - 1)];
+                    $tokenAfter  = $tokens[($commentEnd + 1)];
+                    if ($tokenBefore['code'] === T_WHITESPACE
+                        && $tokenBefore['content'] === $phpcsFile->eolChar
+                        && $tokenAfter['code'] === T_WHITESPACE
+                        && $tokenAfter['content'] === $phpcsFile->eolChar
+                    ) {
+                        $phpcsFile->fixer->replaceToken(($commentStart - 1), '');
+                    }
                 }
 
                 $phpcsFile->fixer->endChangeset();
