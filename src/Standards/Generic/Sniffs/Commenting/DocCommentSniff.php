@@ -222,18 +222,17 @@ class DocCommentSniff implements Sniff
 
                     $firstCharacter      = mb_substr($tokens[$long]['content'][0], 0, 1);
                     $firstCharacterUpper = mb_strtoupper($firstCharacter);
-                    $fix = false;
 
-                    if ($firstCharacter !== $firstCharacterUpper) {
-                        $fix = $phpcsFile->addFixableError($error, $long, 'LongNotCapital');
-                    } else {
+                    if ($firstCharacter === $firstCharacterUpper) {
                         $phpcsFile->addError($error, $long, 'LongNotCapital');
-                    }
+                    } else {
+                        $fix = $phpcsFile->addFixableError($error, $long, 'LongNotCapital');
 
-                    if ($fix === true) {
-                        $phpcsFile->fixer->beginChangeset();
-                        $phpcsFile->fixer->replaceToken($long, $firstCharacterUpper.mb_substr($tokens[$long]['content'], 1));
-                        $phpcsFile->fixer->endChangeset();
+                        if ($fix === true) {
+                            $phpcsFile->fixer->beginChangeset();
+                            $phpcsFile->fixer->replaceToken($long, $firstCharacterUpper.mb_substr($tokens[$long]['content'], 1));
+                            $phpcsFile->fixer->endChangeset();
+                        }
                     }
                 }
             }//end if
