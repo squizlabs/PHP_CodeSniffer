@@ -57,3 +57,20 @@ jobs:
           diff -B ./src/Standards/PSR12/ruleset.xml <(xmllint --format "./src/Standards/PSR12/ruleset.xml")
           diff -B ./src/Standards/Squiz/ruleset.xml <(xmllint --format "./src/Standards/Squiz/ruleset.xml")
           diff -B ./src/Standards/Zend/ruleset.xml <(xmllint --format "./src/Standards/Zend/ruleset.xml")
+
+  check-composer:
+    name: Check composer.json
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: 'Composer: validate config'
+        run: composer --no-interaction validate --no-check-all --strict
+
+      - name: Install Composer dependencies
+        uses: "ramsey/composer-install@v2"
+
+      - name: 'Composer require checker'
+        run: vendor/bin/composer-require-checker check --config-file=.composer-require-checker.json

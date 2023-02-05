@@ -142,10 +142,6 @@ jobs:
         if: ${{ matrix.custom_ini == false && matrix.php == '7.4' }}
         run: cs2pr ./phpcs-report.xml
 
-      - name: 'Composer: validate config'
-        if: ${{ matrix.custom_ini  == false }}
-        run: composer validate --no-check-all --strict
-
       - name: Download the PHPCS phar
         uses: actions/download-artifact@v3
         with:
