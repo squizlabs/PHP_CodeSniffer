@@ -27,12 +27,36 @@
     },
     "require": {
         "php": ">=5.4.0",
+        "ext-ctype": "*",
+        "ext-dom": "*",
+        "ext-iconv": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
         "ext-tokenizer": "*",
         "ext-xmlwriter": "*",
         "ext-simplexml": "*"
     },
     "require-dev": {
+        "maglnet/composer-require-checker": "^3.0",
         "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+    },
+    "suggest": {
+        "ext-posix": "More reliable detection of STDIN being a terminal device",
+        "ext-pcntl": "Allow files to be processed in parallel"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHP_CodeSniffer\\": "src/"
+        },
+        "files": [
+            "autoload.php",
+            "src/Util/Tokens.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHP_CodeSniffer\\Tests\\": "tests/"
+        }
     },
     "bin": [
         "bin/phpcs",

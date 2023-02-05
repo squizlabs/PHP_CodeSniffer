@@ -78,3 +78,20 @@ jobs:
 
       - name: Validate the PEAR package
         run: pear package-validate package.xml
+
+  check-composer:
+    name: Check composer.json
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: 'Composer: validate config'
+        run: composer --no-interaction validate --no-check-all --strict
+
+      - name: Install Composer dependencies
+        uses: "ramsey/composer-install@v2"
+
+      - name: 'Composer require checker'
+        run: vendor/bin/composer-require-checker check --config-file=.composer-require-checker.json
