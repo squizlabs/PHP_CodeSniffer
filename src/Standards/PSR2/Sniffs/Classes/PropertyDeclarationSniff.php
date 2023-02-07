@@ -85,7 +85,9 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
                 if ($tokens[$next]['line'] !== $tokens[$typeToken]['line']) {
                     $found = 'newline';
                 } else {
-                    $found = $tokens[($typeToken + 1)]['length'];
+                    // According to PSR-12: "There MUST be a space between type declaration and property name."
+                    // This does not mean a single space only is expected, but at least 1. So, if many, ignore sniff.
+                    return;
                 }
 
                 $data = [$found];
@@ -96,17 +98,13 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
                 } else {
                     $fix = $phpcsFile->addFixableError($error, $typeToken, 'SpacingAfterType', $data);
                     if ($fix === true) {
-                        if ($found === 'newline') {
-                            $phpcsFile->fixer->beginChangeset();
-                            for ($x = ($typeToken + 1); $x < $next; $x++) {
-                                $phpcsFile->fixer->replaceToken($x, '');
-                            }
-
-                            $phpcsFile->fixer->addContent($typeToken, ' ');
-                            $phpcsFile->fixer->endChangeset();
-                        } else {
-                            $phpcsFile->fixer->replaceToken(($typeToken + 1), ' ');
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($x = ($typeToken + 1); $x < $next; $x++) {
+                            $phpcsFile->fixer->replaceToken($x, '');
                         }
+
+                        $phpcsFile->fixer->addContent($typeToken, ' ');
+                        $phpcsFile->fixer->endChangeset();
                     }
                 }
             }//end if

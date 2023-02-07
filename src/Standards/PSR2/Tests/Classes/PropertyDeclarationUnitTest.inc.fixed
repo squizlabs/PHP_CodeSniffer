@@ -38,7 +38,7 @@ class ABC {
     public static $propD;
     protected static
         $propE;
-    private static /*comment*/   $propF;
+    private static    /*comment*/   $propF;
 }
 
 class MyClass
@@ -65,7 +65,7 @@ class MyClass
 {
     public string $var = null;
     protected ?Folder\ClassName $var = null;
-    public int $var = null;
+    public int   $var = null;
     public static int /*comment*/$var = null;
 }
 
@@ -74,7 +74,7 @@ class ReadOnlyProp {
         $bar,
         $var = null;
 
-    protected readonly ?string $foo;
+    protected readonly ?string    $foo;
 
     readonly array $foo;
 }

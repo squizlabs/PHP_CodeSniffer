@@ -35,7 +35,6 @@ class PropertyDeclarationUnitTest extends AbstractSniffUnitTest
             23 => 1,
             38 => 1,
             41 => 1,
-            42 => 1,
             50 => 2,
             51 => 1,
             55 => 1,
@@ -45,9 +44,7 @@ class PropertyDeclarationUnitTest extends AbstractSniffUnitTest
             68 => 1,
             69 => 1,
             71 => 1,
-            72 => 1,
             76 => 1,
-            80 => 1,
             82 => 1,
         ];
 
