@@ -38,7 +38,7 @@ class ABC {
     public static $propD;
     protected static
         $propE;
-    private static    /*comment*/   $propF;
+    private static /*comment*/   $propF;
 }
 
 class MyClass

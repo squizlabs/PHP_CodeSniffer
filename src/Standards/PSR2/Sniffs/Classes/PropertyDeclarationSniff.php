@@ -73,7 +73,7 @@ class PropertyDeclarationSniff extends AbstractVariableSniff
 
         if ($propertyInfo['type'] !== '') {
             $typeToken = $propertyInfo['type_end_token'];
-            $error     = 'There must be 1 space after the property type declaration; %s found';
+            $error     = 'There must be a space after the property type declaration; %s found';
             if ($tokens[($typeToken + 1)]['code'] !== T_WHITESPACE) {
                 $data = ['0'];
                 $fix  = $phpcsFile->addFixableError($error, $typeToken, 'SpacingAfterType', $data);
