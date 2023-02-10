@@ -402,3 +402,11 @@ class ReadOnlyProps
 
      private readonly string $variable;
 }
+
+class UnionTypes
+{
+    /**
+     * @var array|boolean
+     */
+    private array|bool $variableName = array();
+}
