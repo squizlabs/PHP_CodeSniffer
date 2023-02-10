@@ -419,7 +419,7 @@ class FunctionCallSignatureSniff implements Sniff
             if ($fix === true) {
                 $phpcsFile->fixer->addContentBefore(
                     $closeBracket,
-                    $phpcsFile->eolChar.str_repeat(' ', ($foundFunctionIndent + $this->indent))
+                    $phpcsFile->eolChar.str_repeat(' ', $foundFunctionIndent)
                 );
             }
         }
