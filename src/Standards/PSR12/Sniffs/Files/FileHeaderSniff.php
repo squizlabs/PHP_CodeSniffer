@@ -332,8 +332,25 @@ class FileHeaderSniff implements Sniff
                         $headerLines[($i + 1)]['type'],
                         $tokens[$found[$headerLines[($i + 1)]['type']]['start']]['line'],
                     ];
-                    $phpcsFile->addError($error, $headerLines[($i + 1)]['start'], 'IncorrectGrouping', $data);
-                }
+
+                    $fix = $phpcsFile->addFixableError($error, $headerLines[($i + 1)]['start'], 'IncorrectGrouping', $data);
+
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+
+                        $nextLine = $headerLines[($i + 1)];
+                        $type     = $nextLine['type'];
+
+                        $nextLineContent = '';
+                        for ($j = $nextLine['start']; $j <= ($nextLine['end'] + 1); $j++) {
+                            $nextLineContent .= $tokens[$j]['content'];
+                            $phpcsFile->fixer->replaceToken($j, '');
+                        }
+
+                        $phpcsFile->fixer->addContent(($found[$type]['end'] + 1), $nextLineContent);
+                        $phpcsFile->fixer->endChangeset();
+                    }
+                }//end if
             } else if ($headerLines[($i + 1)]['type'] === $line['type']) {
                 // Still in the same block, so make sure there is no
                 // blank line after this statement.
@@ -418,8 +435,40 @@ class FileHeaderSniff implements Sniff
                     $blockOrder[$type],
                     $blockOrder[$prevValidType],
                 ];
-                $phpcsFile->addError($error, $found[$type]['start'], 'IncorrectOrder', $data);
+
+                if (isset($previousType) === false) {
+                    $phpcsFile->addError($error, $found[$type]['start'], 'IncorrectOrder', $data);
+                } else {
+                    $fix = $phpcsFile->addFixableError($error, $found[$type]['start'], 'IncorrectOrder', $data);
+
+                    if ($fix === true) {
+                        $phpcsFile->fixer->beginChangeset();
+
+                        $previousTypeContent = '';
+                        for ($i = $found[$previousType]['start']; $i <= $found[$previousType]['end']; $i++) {
+                            $previousTypeContent .= $tokens[$i]['content'];
+                            if ($i > $found[$previousType]['start']) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+                        }
+
+                        $typeContent = '';
+                        for ($i = $found[$type]['start']; $i <= $found[$type]['end']; $i++) {
+                            $typeContent .= $tokens[$i]['content'];
+                            if ($i > $found[$type]['start']) {
+                                $phpcsFile->fixer->replaceToken($i, '');
+                            }
+                        }
+
+                        $phpcsFile->fixer->replaceToken($found[$type]['start'], $previousTypeContent);
+                        $phpcsFile->fixer->replaceToken($found[$previousType]['start'], $typeContent);
+
+                        $phpcsFile->fixer->endChangeset();
+                    }//end if
+                }//end if
             }//end if
+
+            $previousType = $type;
         }//end foreach
 
     }//end processHeaderLines()
