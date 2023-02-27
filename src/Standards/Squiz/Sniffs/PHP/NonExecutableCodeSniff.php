@@ -258,6 +258,16 @@ class NonExecutableCodeSniff implements Sniff
                 continue;
             }
 
+            // Skip HTML whitespace.
+            if ($tokens[$i]['code'] === T_INLINE_HTML && \trim($tokens[$i]['content']) === '') {
+                continue;
+            }
+
+            // Skip PHP re-open tag (eg, after inline HTML).
+            if ($tokens[$i]['code'] === T_OPEN_TAG) {
+                continue;
+            }
+
             $line = $tokens[$i]['line'];
             if ($line > $lastLine) {
                 $type    = substr($tokens[$stackPtr]['type'], 2);
