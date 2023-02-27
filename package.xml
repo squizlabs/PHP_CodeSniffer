@@ -2287,6 +2287,49 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <changelog>
   <release>
    <version>
+    <release>3.7.2</release>
+    <api>3.7.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2023-02-23</date>
+   <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD License</license>
+   <notes>
+    - Newer versions of Composer will now suggest installing PHPCS using require-dev instead of require
+      -- Thanks to Gary Jones (@GaryJones) for the patch
+    - A custom Out Of Memory error will now be shown if PHPCS or PHPCBF run out of memory during a run
+      -- Error message provides actionable information about how to fix the problem and ensures the error is not silent
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) and Alain Schlesser (@schlessera) for the patch
+    - Generic.PHP.LowerCaseType sniff now correctly examines types inside arrow functions
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+    - Squiz.Formatting.OperatorBracket no longer reports false positives in match() structures
+    - Fixed bug #3616 : Squiz.PHP.DisallowComparisonAssignment false positive for PHP 8 match expression
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+    - Fixed bug #3618 : Generic.WhiteSpace.ArbitraryParenthesesSpacing false positive for return new parent()
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+    - Fixed bug #3632 : Short list not tokenized correctly in control structures without braces
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+    - Fixed bug #3639 : Tokenizer not applying tab replacement to heredoc/nowdoc closers
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+    - Fixed bug #3640 : Generic.WhiteSpace.DisallowTabIndent not reporting errors for PHP 7.3 flexible heredoc/nowdoc syntax
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+    - Fixed bug #3645 : PHPCS can show 0 exit code when running in parallel even if child process has fatal error
+      -- Thanks to Alex Panshin (@enl) for the patch
+    - Fixed bug #3653 : False positives for match() in OperatorSpacingSniff
+      -- Thanks to Jaroslav Hanslík (@kukulich) for the patch
+    - Fixed bug #3666 : PEAR.Functions.FunctionCallSignature incorrect indent fix when checking mixed HTML/PHP files
+    - Fixed bug #3668 : PSR12.Classes.ClassInstantiation.MissingParentheses false positive when instantiating parent classes
+      -- Similar issues also fixed in Generic.Functions.FunctionCallArgumentSpacing and Squiz.Formatting.OperatorBracket
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+    - Fixed bug #3672 : Incorrect ScopeIndent.IncorrectExact report for match inside array literal
+    - Fixed bug #3694 : Generic.WhiteSpace.SpreadOperatorSpacingAfter does not ignore spread operator in PHP 8.1 first class   callables
+      -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+   </notes>
+  </release>
+  <release>
+   <version>
     <release>3.7.1</release>
     <api>3.7.1</api>
    </version>
