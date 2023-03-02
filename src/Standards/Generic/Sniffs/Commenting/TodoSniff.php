@@ -34,7 +34,12 @@ class TodoSniff implements Sniff
      */
     public function register()
     {
-        return array_diff(Tokens::$commentTokens, Tokens::$phpcsCommentTokens);
+        return [
+            T_COMMENT,
+            T_DOC_COMMENT,
+            T_DOC_COMMENT_TAG,
+            T_DOC_COMMENT_STRING,
+        ];
 
     }//end register()
 
