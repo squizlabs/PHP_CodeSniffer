@@ -103,7 +103,8 @@ class SideEffectsSniff implements Sniff
                 && (empty($tokens[$i]['sniffCodes']) === true
                 || isset($tokens[$i]['sniffCodes']['PSR1']) === true
                 || isset($tokens[$i]['sniffCodes']['PSR1.Files']) === true
-                || isset($tokens[$i]['sniffCodes']['PSR1.Files.SideEffects']) === true)
+                || isset($tokens[$i]['sniffCodes']['PSR1.Files.SideEffects']) === true
+                || isset($tokens[$i]['sniffCodes']['PSR1.Files.SideEffects.FoundWithSymbols']) === true)
             ) {
                 do {
                     $i = $phpcsFile->findNext(T_PHPCS_ENABLE, ($i + 1));
@@ -111,7 +112,8 @@ class SideEffectsSniff implements Sniff
                     && empty($tokens[$i]['sniffCodes']) === false
                     && isset($tokens[$i]['sniffCodes']['PSR1']) === false
                     && isset($tokens[$i]['sniffCodes']['PSR1.Files']) === false
-                    && isset($tokens[$i]['sniffCodes']['PSR1.Files.SideEffects']) === false);
+                    && isset($tokens[$i]['sniffCodes']['PSR1.Files.SideEffects']) === false
+                    && isset($tokens[$i]['sniffCodes']['PSR1.Files.SideEffects.FoundWithSymbols']) === false);
 
                 if ($i === false) {
                     // The entire rest of the file is disabled,
