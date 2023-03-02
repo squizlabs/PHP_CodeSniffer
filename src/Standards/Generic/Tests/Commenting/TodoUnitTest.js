@@ -21,3 +21,15 @@ alert('test');
 //TODO.
 //étodo
 //todoé
+
+/**
+ * @todo This message should be picked up.
+ * @todo: This message should be picked up too.
+ * @todo - here is a message
+ *
+ * The below should not show a message as there is no description associated with the tag.
+ * @todo
+ * @anothertag
+ *
+ * @param string $something TODO: add description
+ */
