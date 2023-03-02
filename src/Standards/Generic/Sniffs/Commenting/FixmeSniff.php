@@ -12,7 +12,6 @@ namespace PHP_CodeSniffer\Standards\Generic\Sniffs\Commenting;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
-use PHP_CodeSniffer\Util\Tokens;
 
 class FixmeSniff implements Sniff
 {
@@ -56,26 +55,39 @@ class FixmeSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens = $phpcsFile->getTokens();
-
+        $tokens  = $phpcsFile->getTokens();
         $content = $tokens[$stackPtr]['content'];
         $matches = [];
-        preg_match('/(?:\A|[^\p{L}]+)fixme([^\p{L}]+(.*)|\Z)/ui', $content, $matches);
-        if (empty($matches) === false) {
-            // Clear whitespace and some common characters not required at
-            // the end of a fixme message to make the error more informative.
-            $type         = 'CommentFound';
-            $fixmeMessage = trim($matches[1]);
-            $fixmeMessage = trim($fixmeMessage, '-:[](). ');
-            $error        = 'Comment refers to a FIXME task';
-            $data         = [$fixmeMessage];
-            if ($fixmeMessage !== '') {
-                $type   = 'TaskFound';
-                $error .= ' "%s"';
-            }
 
-            $phpcsFile->addError($error, $stackPtr, $type, $data);
+        if (preg_match('/(?:\A|[^\p{L}]+)fixme([^\p{L}]+(.*)|\Z)/ui', $content, $matches) !== 1) {
+            return;
         }
+
+        $fixmeMessage = trim($matches[1]);
+        // Clear whitespace and some common characters not required at
+        // the end of a to-do message to make the warning more informative.
+        $fixmeMessage = trim($fixmeMessage, '-:[](). ');
+
+        if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_TAG
+            && $fixmeMessage === ''
+        ) {
+            $nextNonEmpty = $phpcsFile->findNext(T_DOC_COMMENT_WHITESPACE, ($stackPtr + 1), null, true);
+            if ($nextNonEmpty !== false
+                && $tokens[$nextNonEmpty]['code'] === T_DOC_COMMENT_STRING
+            ) {
+                $fixmeMessage = trim($tokens[$nextNonEmpty]['content'], '-:[](). ');
+            }
+        }
+
+        $error = 'Comment refers to a FIXME task';
+        $type  = 'CommentFound';
+        $data  = [$fixmeMessage];
+        if ($fixmeMessage !== '') {
+            $error .= ' "%s"';
+            $type   = 'TaskFound';
+        }
+
+        $phpcsFile->addError($error, $stackPtr, $type, $data);
 
     }//end process()
 
