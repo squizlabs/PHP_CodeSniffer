@@ -148,10 +148,6 @@ class BackfillReadonlyTest extends AbstractMethodUnitTest
                 'readonly',
             ],
             [
-                '/* testReadonlyUsedAsFunctionCallWithSpaceBetweenKeywordAndParens */',
-                'readonly',
-            ],
-            [
                 '/* testParseErrorLiveCoding */',
                 'readonly',
             ],
@@ -222,6 +218,10 @@ class BackfillReadonlyTest extends AbstractMethodUnitTest
             ],
             [
                 '/* testReadonlyAsFunctionCall */',
+                'readonly',
+            ],
+            [
+                '/* testReadonlyUsedAsFunctionCallWithSpaceBetweenKeywordAndParens */',
                 'readonly',
             ],
             [

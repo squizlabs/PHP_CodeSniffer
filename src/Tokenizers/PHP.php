@@ -566,6 +566,17 @@ class PHP extends Tokenizer
                 $lastNotEmptyToken = ($newStackPtr - 1);
             }
 
+            // Get the next non-empty token.
+            $nextNonEmptyToken = null;
+            for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                if (is_array($tokens[$i]) === false
+                    || isset(Util\Tokens::$emptyTokens[$tokens[$i][0]]) === false
+                ) {
+                    $nextNonEmptyToken = $i;
+                    break;
+                }
+            }
+
             /*
                 If we are using \r\n newline characters, the \r and \n are sometimes
                 split over two tokens. This normally occurs after comments. We need
@@ -602,14 +613,17 @@ class PHP extends Tokenizer
             }
 
             /*
-                Tokenize context sensitive keyword as string when it should be string.
+                Tokenize context-sensitive keyword as string when it should be string.
             */
 
             if ($tokenIsArray === true
                 && isset(Util\Tokens::$contextSensitiveKeywords[$token[0]]) === true
                 && (isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true
-                || $finalTokens[$lastNotEmptyToken]['content'] === '&')
+                || $finalTokens[$lastNotEmptyToken]['content'] === '&'
+                || (isset($nextNonEmptyToken) === true && $tokens[$nextNonEmptyToken] === '('))
             ) {
+                $preserveKeyword = true;
+
                 if (isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
                     $preserveKeyword = false;
 
@@ -649,8 +663,6 @@ class PHP extends Tokenizer
                 }//end if
 
                 if ($finalTokens[$lastNotEmptyToken]['content'] === '&') {
-                    $preserveKeyword = true;
-
                     for ($i = ($lastNotEmptyToken - 1); $i >= 0; $i--) {
                         if (isset(Util\Tokens::$emptyTokens[$finalTokens[$i]['code']]) === true) {
                             continue;
@@ -662,6 +674,13 @@ class PHP extends Tokenizer
 
                         break;
                     }
+                }
+
+                if (isset($nextNonEmptyToken) === true
+                    && $tokens[$nextNonEmptyToken] === '('
+                    && $token[0] === T_READONLY
+                ) {
+                    $preserveKeyword = false;
                 }
 
                 if ($preserveKeyword === false) {
@@ -1012,18 +1031,9 @@ class PHP extends Tokenizer
                 && $token[0] === T_STRING
                 && strtolower($token[1]) === 'enum'
             ) {
-                // Get the next non-empty token.
-                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
-                    if (is_array($tokens[$i]) === false
-                        || isset(Util\Tokens::$emptyTokens[$tokens[$i][0]]) === false
-                    ) {
-                        break;
-                    }
-                }
-
-                if (isset($tokens[$i]) === true
-                    && is_array($tokens[$i]) === true
-                    && $tokens[$i][0] === T_STRING
+                if (isset($tokens[$nextNonEmptyToken]) === true
+                    && is_array($tokens[$nextNonEmptyToken]) === true
+                    && $tokens[$nextNonEmptyToken][0] === T_STRING
                 ) {
                     // Modify $tokens directly so we can use it later when converting enum "case".
                     $tokens[$stackPtr][0] = T_ENUM;
@@ -1230,18 +1240,9 @@ class PHP extends Tokenizer
                 && ($token[0] === T_STRING
                 || preg_match('`^[a-zA-Z_\x80-\xff]`', $token[1]) === 1)
             ) {
-                // Get the next non-empty token.
-                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
-                    if (is_array($tokens[$i]) === false
-                        || isset(Util\Tokens::$emptyTokens[$tokens[$i][0]]) === false
-                    ) {
-                        break;
-                    }
-                }
-
-                if (isset($tokens[$i]) === true
-                    && is_array($tokens[$i]) === false
-                    && $tokens[$i] === ':'
+                if (isset($tokens[$nextNonEmptyToken]) === true
+                    && is_array($tokens[$nextNonEmptyToken]) === false
+                    && $tokens[$nextNonEmptyToken] === ':'
                 ) {
                     // Get the previous non-empty token.
                     for ($j = ($stackPtr - 1); $j > 0; $j--) {
@@ -1287,17 +1288,8 @@ class PHP extends Tokenizer
                 && strtolower($token[1]) === 'readonly'
                 && isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === false
             ) {
-                // Get the next non-whitespace token.
-                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
-                    if (is_array($tokens[$i]) === false
-                        || $tokens[$i][0] !== T_WHITESPACE
-                    ) {
-                        break;
-                    }
-                }
-
-                if (isset($tokens[$i]) === false
-                    || $tokens[$i] !== '('
+                if (isset($tokens[$nextNonEmptyToken]) === false
+                    || $tokens[$nextNonEmptyToken] !== '('
                 ) {
                     $finalTokens[$newStackPtr] = [
                         'code'    => T_READONLY,
