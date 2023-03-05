@@ -25,7 +25,7 @@ class JSHintUnitTest extends AbstractSniffUnitTest
     {
         $rhinoPath  = Config::getExecutablePath('rhino');
         $jshintPath = Config::getExecutablePath('jshint');
-        if ($rhinoPath === null && $jshintPath === null) {
+        if ($jshintPath === null) {
             return true;
         }
 
