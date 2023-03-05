@@ -88,7 +88,7 @@ abstract class AbstractSniffUnitTest extends TestCase
         }
 
         // Put them in order.
-        sort($testFiles);
+        sort($testFiles, SORT_NATURAL);
 
         return $testFiles;
 
