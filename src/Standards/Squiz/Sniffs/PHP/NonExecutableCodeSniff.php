@@ -16,6 +16,16 @@ use PHP_CodeSniffer\Util\Tokens;
 class NonExecutableCodeSniff implements Sniff
 {
 
+    /**
+     * Tokens for terminating expressions, which can be used inline.
+     *
+     * This is in contrast to terminating statements, which cannot be used inline
+     * and would result in a parse error (which is not the concern of this sniff).
+     *
+     * @var array
+     */
+    private $expressionTokens = [T_EXIT => T_EXIT];
+
 
     /**
      * Returns an array of tokens this test wants to listen for.
@@ -49,11 +59,15 @@ class NonExecutableCodeSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // If this token is preceded with an "or", it only relates to one line
-        // and should be ignored. For example: fopen() or die().
         $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
-        if ($tokens[$prev]['code'] === T_LOGICAL_OR || $tokens[$prev]['code'] === T_BOOLEAN_OR) {
-            return;
+
+        // Tokens which can be used in inline expressions need special handling.
+        if (isset($this->expressionTokens[$tokens[$stackPtr]['code']]) === true) {
+            // If this token is preceded with an "or", it only relates to one line
+            // and should be ignored. For example: fopen() or die().
+            if ($tokens[$prev]['code'] === T_LOGICAL_OR || $tokens[$prev]['code'] === T_BOOLEAN_OR) {
+                return;
+            }
         }
 
         // Check if this token is actually part of a one-line IF or ELSE statement.

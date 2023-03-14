@@ -297,5 +297,16 @@ class TestAlternativeControlStructures {
 $var_after_class_in_global_space = 1;
 do_something_else();
 
+// These are parse errors, but that's not the concern of the sniff.
+function parseError1() {
+    defined('FOO') or return 'foo';
+    echo 'unreachable';
+}
+
+function parseError2() {
+    defined('FOO') || continue;
+    echo 'unreachable';
+}
+
 // Intentional syntax error.
 return array_map(
