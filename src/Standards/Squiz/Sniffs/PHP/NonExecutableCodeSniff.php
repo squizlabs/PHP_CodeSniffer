@@ -63,9 +63,9 @@ class NonExecutableCodeSniff implements Sniff
 
         // Tokens which can be used in inline expressions need special handling.
         if (isset($this->expressionTokens[$tokens[$stackPtr]['code']]) === true) {
-            // If this token is preceded with an "or", it only relates to one line
+            // If this token is preceded by a logical operator, it only relates to one line
             // and should be ignored. For example: fopen() or die().
-            if ($tokens[$prev]['code'] === T_LOGICAL_OR || $tokens[$prev]['code'] === T_BOOLEAN_OR) {
+            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
                 return;
             }
         }

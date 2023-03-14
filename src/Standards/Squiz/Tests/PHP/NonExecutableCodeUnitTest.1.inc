@@ -308,5 +308,20 @@ function parseError2() {
     echo 'unreachable';
 }
 
+// All logical operators are allowed with inline expressions (but this was not correctly handled by the sniff).
+function exitExpressionsWithLogicalOperators() {
+    $condition = false;
+    $condition || exit();
+    $condition or die();
+
+    $condition = true;
+    $condition && die();
+    $condition and exit;
+
+    $condition xor die();
+
+    echo 'still executable as exit, in all of the above cases, is used as part of an expression';
+}
+
 // Intentional syntax error.
 return array_map(
