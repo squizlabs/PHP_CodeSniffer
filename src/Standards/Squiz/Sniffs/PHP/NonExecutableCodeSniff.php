@@ -139,7 +139,6 @@ class NonExecutableCodeSniff implements Sniff
         // This token may be part of an inline condition.
         // If we find a closing parenthesis that belongs to a condition
         // we should ignore this token.
-        $prev = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($stackPtr - 1), null, true);
         if (isset($tokens[$prev]['parenthesis_owner']) === true) {
             $owner  = $tokens[$prev]['parenthesis_owner'];
             $ignore = [
