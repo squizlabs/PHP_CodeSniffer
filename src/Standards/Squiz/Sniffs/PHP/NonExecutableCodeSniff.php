@@ -22,9 +22,15 @@ class NonExecutableCodeSniff implements Sniff
      * This is in contrast to terminating statements, which cannot be used inline
      * and would result in a parse error (which is not the concern of this sniff).
      *
+     * `throw` can be used as an expression since PHP 8.0.
+     * {@link https://wiki.php.net/rfc/throw_expression}
+     *
      * @var array
      */
-    private $expressionTokens = [T_EXIT => T_EXIT];
+    private $expressionTokens = [
+        T_EXIT  => T_EXIT,
+        T_THROW => T_THROW,
+    ];
 
 
     /**
@@ -65,7 +71,10 @@ class NonExecutableCodeSniff implements Sniff
         if (isset($this->expressionTokens[$tokens[$stackPtr]['code']]) === true) {
             // If this token is preceded by a logical operator, it only relates to one line
             // and should be ignored. For example: fopen() or die().
-            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
+            // Note: There is one exception: throw expressions can not be used with xor.
+            if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true
+                && ($tokens[$stackPtr]['code'] === T_THROW && $tokens[$prev]['code'] === T_LOGICAL_XOR) === false
+            ) {
                 return;
             }
 

@@ -348,5 +348,53 @@ function exitExpressionsInArrowFunction() {
     echo 'still executable';
 }
 
+// PHP 8.0+: throw expressions which don't stop execution.
+function nonStoppingThrowExpressions() {
+    $callable = fn() => throw new Exception();
+
+    $value = $myValue ? 'something' : throw new Exception();
+    $value = $myValue ?: throw new Exception();
+    $value = $myValue ? throw new Exception() : 'something';
+
+    $value = $nullableValue ?? throw new Exception();
+    $value ??= throw new Exception();
+
+    $condition && throw new Exception();
+    $condition || throw new Exception();
+    $condition and throw new Exception();
+    $condition or throw new Exception();
+
+    echo 'still executable as throw, in all of the above cases, is used as part of an expression';
+
+    throw new Exception();
+    echo 'non-executable';
+}
+
+// PHP 8.0+: throw expressions which do stop execution.
+function executionStoppingThrowExpressionsA() {
+    $condition xor throw new Exception();
+    echo 'non-executable';
+}
+
+function executionStoppingThrowExpressionsB() {
+    throw $userIsAuthorized ? new ForbiddenException() : new UnauthorizedException();
+    echo 'non-executable';
+}
+
+function executionStoppingThrowExpressionsC() {
+    throw $condition1 && $condition2 ? new Exception1() : new Exception2();
+    echo 'non-executable';
+}
+
+function executionStoppingThrowExpressionsD() {
+    throw $exception ??= new Exception();
+    echo 'non-executable';
+}
+
+function executionStoppingThrowExpressionsE() {
+    throw $maybeNullException ?? new Exception();
+    echo 'non-executable';
+}
+
 // Intentional syntax error.
 return array_map(
