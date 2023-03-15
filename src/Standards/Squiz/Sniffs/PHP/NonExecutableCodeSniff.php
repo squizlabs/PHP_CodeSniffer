@@ -78,7 +78,12 @@ class NonExecutableCodeSniff implements Sniff
             if ($tokens[$prev]['code'] === T_COALESCE || $tokens[$prev]['code'] === T_COALESCE_EQUAL) {
                 return;
             }
-        }
+
+            // Expressions are allowed in arrow functions.
+            if ($tokens[$prev]['code'] === T_FN_ARROW) {
+                return;
+            }
+        }//end if
 
         // Check if this token is actually part of a one-line IF or ELSE statement.
         for ($i = ($stackPtr - 1); $i > 0; $i--) {
