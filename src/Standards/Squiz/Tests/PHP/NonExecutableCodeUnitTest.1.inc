@@ -335,5 +335,12 @@ function exitExpressionsInTernary() {
     echo 'still executable';
 }
 
+// Inline expressions are allowed with null coalesce and null coalesce equals.
+function exitExpressionsWithNullCoalesce() {
+    $value = $nullableValue ?? exit();
+    $value ??= die();
+    echo 'still executable';
+}
+
 // Intentional syntax error.
 return array_map(

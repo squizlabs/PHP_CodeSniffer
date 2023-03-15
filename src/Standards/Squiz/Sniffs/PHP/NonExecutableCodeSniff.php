@@ -73,6 +73,11 @@ class NonExecutableCodeSniff implements Sniff
             if ($tokens[$prev]['code'] === T_INLINE_THEN || $tokens[$prev]['code'] === T_INLINE_ELSE) {
                 return;
             }
+
+            // Expressions are allowed with PHP 7.0+ null coalesce and PHP 7.4+ null coalesce equals.
+            if ($tokens[$prev]['code'] === T_COALESCE || $tokens[$prev]['code'] === T_COALESCE_EQUAL) {
+                return;
+            }
         }
 
         // Check if this token is actually part of a one-line IF or ELSE statement.
