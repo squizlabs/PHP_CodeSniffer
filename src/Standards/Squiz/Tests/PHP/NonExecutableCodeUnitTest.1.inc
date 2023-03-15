@@ -342,5 +342,11 @@ function exitExpressionsWithNullCoalesce() {
     echo 'still executable';
 }
 
+// Inline expressions are allowed in arrow functions.
+function exitExpressionsInArrowFunction() {
+    $callable = fn() => die();
+    echo 'still executable';
+}
+
 // Intentional syntax error.
 return array_map(
