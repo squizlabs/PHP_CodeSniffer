@@ -323,5 +323,17 @@ function exitExpressionsWithLogicalOperators() {
     echo 'still executable as exit, in all of the above cases, is used as part of an expression';
 }
 
+// Inline expressions are allowed in ternaries.
+function exitExpressionsInTernary() {
+    $value = $myValue ? $myValue : exit();
+    $value = $myValue ?: exit();
+    $value = $var == 'foo' ? 'bar' : die( 'world' );
+
+    $value = (!$myValue ) ? exit() : $myValue;
+    $value = $var != 'foo' ? die( 'world' ) : 'bar';
+
+    echo 'still executable';
+}
+
 // Intentional syntax error.
 return array_map(

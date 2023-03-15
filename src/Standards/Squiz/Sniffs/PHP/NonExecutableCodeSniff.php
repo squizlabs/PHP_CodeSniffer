@@ -68,6 +68,11 @@ class NonExecutableCodeSniff implements Sniff
             if (isset(Tokens::$booleanOperators[$tokens[$prev]['code']]) === true) {
                 return;
             }
+
+            // Expressions are allowed in the `else` clause of ternaries.
+            if ($tokens[$prev]['code'] === T_INLINE_THEN || $tokens[$prev]['code'] === T_INLINE_ELSE) {
+                return;
+            }
         }
 
         // Check if this token is actually part of a one-line IF or ELSE statement.
