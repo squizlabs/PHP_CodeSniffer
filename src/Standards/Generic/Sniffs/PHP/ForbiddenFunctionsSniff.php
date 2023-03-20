@@ -162,6 +162,11 @@ class ForbiddenFunctionsSniff implements Sniff
             return;
         }
 
+        if (empty($tokens[$stackPtr]['nested_attributes']) === false) {
+            // Class instantiation in attribute, not function call.
+            return;
+        }
+
         $function = strtolower($tokens[$stackPtr]['content']);
         if ($tokens[$stackPtr]['code'] === T_NAME_FULLY_QUALIFIED) {
             $function = ltrim($function, '\\');
