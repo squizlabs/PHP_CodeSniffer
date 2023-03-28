@@ -226,9 +226,19 @@ class ForbiddenFunctionsSniff implements Sniff
             $type  .= 'WithAlternative';
             $data[] = $this->forbiddenFunctions[$pattern];
             $error .= '; use %s() instead';
-        }
 
-        if ($this->error === true) {
+            if ($this->error === true) {
+                $fix = $phpcsFile->addFixableError($error, $stackPtr, $type, $data);
+            } else {
+                $fix = $phpcsFile->addFixableWarning($error, $stackPtr, $type, $data);
+            }
+
+            if ($fix === true) {
+                $phpcsFile->fixer->beginChangeset();
+                $phpcsFile->fixer->replaceToken($stackPtr, $this->forbiddenFunctions[$pattern]);
+                $phpcsFile->fixer->endChangeset();
+            }
+        } elseif ($this->error === true) {
             $phpcsFile->addError($error, $stackPtr, $type, $data);
         } else {
             $phpcsFile->addWarning($error, $stackPtr, $type, $data);
