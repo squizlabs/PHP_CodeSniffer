@@ -332,6 +332,11 @@ class DocCommentSniff implements Sniff
                             || $tokens[($insertionPointer + 2)]['content'] !== $phpcsFile->eolChar
                         ) {
                             $insertionPointer++;
+
+                            if (($insertionPointer + 2) >= $commentEnd) {
+                                $insertionPointer = $commentEnd - 1;
+                                break;
+                            }
                         }
 
                         $phpcsFile->fixer->addContentBefore($insertionPointer, $thisTagContent);
