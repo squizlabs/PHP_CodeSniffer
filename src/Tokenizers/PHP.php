@@ -2249,11 +2249,12 @@ class PHP extends Tokenizer
 
                             if (is_array($tokens[$i]) === false
                                 && ($tokens[$i] === ';'
-                                || $tokens[$i] === '{')
+                                || $tokens[$i] === '{'
+                                || $tokens[$i] === '}')
                             ) {
                                 break;
                             }
-                        }
+                        }//end for
                     }//end if
 
                     if ($isInlineIf === true) {
