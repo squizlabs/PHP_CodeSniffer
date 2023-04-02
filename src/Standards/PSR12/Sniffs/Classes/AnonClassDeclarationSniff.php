@@ -97,7 +97,11 @@ class AnonClassDeclarationSniff extends ClassDeclarationSniff
                 $first  = $phpcsFile->findFirstOnLine(T_WHITESPACE, $stackPtr, true);
                 $indent = str_repeat(' ', ($tokens[$first]['column'] - 1));
                 $phpcsFile->fixer->beginChangeset();
-                $phpcsFile->fixer->replaceToken(($prev + 1), '');
+
+                if ($tokens[($prev + 1)]['code'] === \T_WHITESPACE) {
+                    $phpcsFile->fixer->replaceToken(($prev + 1), '');
+                }
+
                 $phpcsFile->fixer->addNewline($prev);
                 $phpcsFile->fixer->addContentBefore($opener, $indent);
                 $phpcsFile->fixer->endChangeset();

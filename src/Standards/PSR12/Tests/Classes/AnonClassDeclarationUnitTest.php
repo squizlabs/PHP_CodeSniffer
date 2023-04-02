@@ -48,6 +48,8 @@ class AnonClassDeclarationUnitTest extends AbstractSniffUnitTest
             56 => 2,
             63 => 1,
             75 => 1,
+            87 => 1,
+            88 => 1,
         ];
 
     }//end getErrorList()
