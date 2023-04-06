@@ -1,0 +1,47 @@
+<?php
+$var = [];
+$var = ['a' => $a,'b' => $b,'c' => $c];
+$foo = compact($var[1],$var[2]);
+$foo = [
+        'a' => $a,
+        "b" => $b,
+        'c' => $c
+       ];
+$var = /*comment*/['a' => $a, 'b' => $b, "c" => $c];
+$var = compact(['aa', 'bb' => 'cc']);
+$var = compact(array('aa', 'bb' => 'cc'));
+
+function foo($compact) {}
+$compact = function ($a, $b, $c) use ($foo): array {};
+$compact('a', 'b', 'c');
+
+view('some.view', ["a" => $a, 'b' => $b, 'c' => $c]);
+view('some.view', [
+    'a' => $a,
+    'b' => $b,
+    'c' => $c
+]);
+
+$var = compact('aa', 'invalid-var.name');
+['a' => $a];
+['a' => $a];
+$var = Bazz::compact('a', 'b');
+$ver = $foo->compact('a', 'b');
+$obj?->compact('a');
+class compact {
+    public function compact( $param = 'a' ) {}
+    public function &compact( $param = 'a' ) {}
+}
+new compact('a');
+MyNamespace\compact('a');
+namespace\compact('a');
+['a' => $a];
+compact(...$names);
+compact( 'prefix' . $name, '$name' . 'suffix', "some$name");
+compact(...get_names('category1', 'category2'));
+$bar = @['a' => $a, 'b' => $b];
+$foo = true && ['a' => $a, 'b' => $b];
+$baz = &compact('a', 'b');
+func(['a' => $a, 'b' => $b]);
+// Live coding/parse error.
+compact( 'a', 'b'
