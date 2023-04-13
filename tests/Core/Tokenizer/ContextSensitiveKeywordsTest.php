@@ -30,7 +30,7 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
     {
         $tokens = self::$phpcsFile->getTokens();
 
-        $token = $this->getTargetToken($testMarker, (Tokens::$contextSensitiveKeywords + [T_STRING]));
+        $token = $this->getTargetToken($testMarker, (Tokens::$contextSensitiveKeywords + [T_STRING, T_NULL, T_FALSE, T_TRUE, T_PARENT, T_SELF]));
 
         $this->assertSame(T_STRING, $tokens[$token]['code']);
         $this->assertSame('T_STRING', $tokens[$token]['type']);
@@ -120,6 +120,9 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             ['/* testAnd */'],
             ['/* testOr */'],
             ['/* testXor */'],
+            ['/* testFalse */'],
+            ['/* testTrue */'],
+            ['/* testNull */'],
 
             ['/* testKeywordAfterNamespaceShouldBeString */'],
             ['/* testNamespaceNameIsString1 */'],
@@ -128,6 +131,24 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
 
             ['/* testKeywordAfterFunctionShouldBeString */'],
             ['/* testKeywordAfterFunctionByRefShouldBeString */'],
+            ['/* testKeywordSelfAfterFunctionByRefShouldBeString */'],
+            ['/* testKeywordStaticAfterFunctionByRefShouldBeString */'],
+            ['/* testKeywordParentAfterFunctionByRefShouldBeString */'],
+            ['/* testKeywordFalseAfterFunctionByRefShouldBeString */'],
+            ['/* testKeywordTrueAfterFunctionByRefShouldBeString */'],
+            ['/* testKeywordNullAfterFunctionByRefShouldBeString */'],
+
+            ['/* testKeywordAsFunctionCallNameShouldBeStringSelf */'],
+            ['/* testKeywordAsFunctionCallNameShouldBeStringStatic */'],
+            ['/* testKeywordAsMethodCallNameShouldBeStringStatic */'],
+            ['/* testKeywordAsFunctionCallNameShouldBeStringParent */'],
+            ['/* testKeywordAsFunctionCallNameShouldBeStringFalse */'],
+            ['/* testKeywordAsFunctionCallNameShouldBeStringTrue */'],
+            ['/* testKeywordAsFunctionCallNameShouldBeStringNull */'],
+
+            ['/* testClassInstantiationFalseIsString */'],
+            ['/* testClassInstantiationTrueIsString */'],
+            ['/* testClassInstantiationNullIsString */'],
         ];
 
     }//end dataStrings()
@@ -148,7 +169,7 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
     {
         $tokens = self::$phpcsFile->getTokens();
 
-        $token = $this->getTargetToken($testMarker, (Tokens::$contextSensitiveKeywords + [T_ANON_CLASS, T_MATCH_DEFAULT, T_PARENT, T_SELF, T_STRING, T_NAME_RELATIVE]));
+        $token = $this->getTargetToken($testMarker, (Tokens::$contextSensitiveKeywords + [T_ANON_CLASS, T_MATCH_DEFAULT, T_PARENT, T_SELF, T_STRING, T_NULL, T_FALSE, T_TRUE, T_NAME_RELATIVE]));
 
         $this->assertSame(constant($expectedTokenType), $tokens[$token]['code']);
         $this->assertSame($expectedTokenType, $tokens[$token]['type']);
@@ -500,6 +521,60 @@ class ContextSensitiveKeywordsTest extends AbstractMethodUnitTest
             [
                 '/* testNamespaceInNameIsKeyword */',
                 'T_NAME_RELATIVE',
+            ],
+
+            [
+                '/* testStaticIsKeywordBeforeClosure */',
+                'T_STATIC',
+            ],
+            [
+                '/* testStaticIsKeywordWhenParamType */',
+                'T_STATIC',
+            ],
+            [
+                '/* testStaticIsKeywordBeforeArrow */',
+                'T_STATIC',
+            ],
+            [
+                '/* testStaticIsKeywordWhenReturnType */',
+                'T_STATIC',
+            ],
+
+            [
+                '/* testFalseIsKeywordAsParamType */',
+                'T_FALSE',
+            ],
+            [
+                '/* testTrueIsKeywordAsParamType */',
+                'T_TRUE',
+            ],
+            [
+                '/* testNullIsKeywordAsParamType */',
+                'T_NULL',
+            ],
+            [
+                '/* testFalseIsKeywordAsReturnType */',
+                'T_FALSE',
+            ],
+            [
+                '/* testTrueIsKeywordAsReturnType */',
+                'T_TRUE',
+            ],
+            [
+                '/* testNullIsKeywordAsReturnType */',
+                'T_NULL',
+            ],
+            [
+                '/* testFalseIsKeywordInComparison */',
+                'T_FALSE',
+            ],
+            [
+                '/* testTrueIsKeywordInComparison */',
+                'T_TRUE',
+            ],
+            [
+                '/* testNullIsKeywordInComparison */',
+                'T_NULL',
             ],
         ];
 

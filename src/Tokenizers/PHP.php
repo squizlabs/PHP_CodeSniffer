@@ -691,6 +691,36 @@ class PHP extends Tokenizer
             }//end if
 
             /*
+                Special case for `static` used as a function name, i.e. `static()`.
+            */
+
+            if ($tokenIsArray === true
+                && $token[0] === T_STATIC
+                && $finalTokens[$lastNotEmptyToken]['code'] !== T_NEW
+            ) {
+                for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                    if (is_array($tokens[$i]) === true
+                        && isset(Tokens::$emptyTokens[$tokens[$i][0]]) === true
+                    ) {
+                        continue;
+                    }
+
+                    if ($tokens[$i][0] === '(') {
+                        $finalTokens[$newStackPtr] = [
+                            'code'    => T_STRING,
+                            'type'    => 'T_STRING',
+                            'content' => $token[1],
+                        ];
+
+                        $newStackPtr++;
+                        continue 2;
+                    }
+
+                    break;
+                }
+            }//end if
+
+            /*
                 Parse doc blocks into something that can be easily iterated over.
             */
 
@@ -1926,38 +1956,60 @@ class PHP extends Tokenizer
                 }
             } else {
                 // Some T_STRING tokens should remain that way due to their context.
-                if ($tokenIsArray === true
-                    && $token[0] === T_STRING
-                    && isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true
-                ) {
-                    // Special case for syntax like: return new self/new parent
-                    // where self/parent should not be a string.
-                    $tokenContentLower = strtolower($token[1]);
-                    if ($finalTokens[$lastNotEmptyToken]['code'] === T_NEW
-                        && ($tokenContentLower === 'self' || $tokenContentLower === 'parent')
-                    ) {
-                        $finalTokens[$newStackPtr] = [
-                            'content' => $token[1],
-                        ];
-                        if ($tokenContentLower === 'self') {
-                            $finalTokens[$newStackPtr]['code'] = T_SELF;
-                            $finalTokens[$newStackPtr]['type'] = 'T_SELF';
-                        }
+                if ($tokenIsArray === true && $token[0] === T_STRING) {
+                    $preserveTstring = false;
 
-                        if ($tokenContentLower === 'parent') {
-                            $finalTokens[$newStackPtr]['code'] = T_PARENT;
-                            $finalTokens[$newStackPtr]['type'] = 'T_PARENT';
+                    if (isset($this->tstringContexts[$finalTokens[$lastNotEmptyToken]['code']]) === true) {
+                        $preserveTstring = true;
+
+                        // Special case for syntax like: return new self/new parent
+                        // where self/parent should not be a string.
+                        $tokenContentLower = strtolower($token[1]);
+                        if ($finalTokens[$lastNotEmptyToken]['code'] === T_NEW
+                            && ($tokenContentLower === 'self' || $tokenContentLower === 'parent')
+                        ) {
+                            $preserveTstring = false;
+                        }
+                    } else if ($finalTokens[$lastNotEmptyToken]['content'] === '&') {
+                        // Function names for functions declared to return by reference.
+                        for ($i = ($lastNotEmptyToken - 1); $i >= 0; $i--) {
+                            if (isset(Tokens::$emptyTokens[$finalTokens[$i]['code']]) === true) {
+                                continue;
+                            }
+
+                            if ($finalTokens[$i]['code'] === T_FUNCTION) {
+                                $preserveTstring = true;
+                            }
+
+                            break;
                         }
                     } else {
+                        // Keywords with special PHPCS token when used as a function call.
+                        for ($i = ($stackPtr + 1); $i < $numTokens; $i++) {
+                            if (is_array($tokens[$i]) === true
+                                && isset(Tokens::$emptyTokens[$tokens[$i][0]]) === true
+                            ) {
+                                continue;
+                            }
+
+                            if ($tokens[$i][0] === '(') {
+                                $preserveTstring = true;
+                            }
+
+                            break;
+                        }
+                    }//end if
+
+                    if ($preserveTstring === true) {
                         $finalTokens[$newStackPtr] = [
-                            'content' => $token[1],
                             'code'    => T_STRING,
                             'type'    => 'T_STRING',
+                            'content' => $token[1],
                         ];
-                    }
 
-                    $newStackPtr++;
-                    continue;
+                        $newStackPtr++;
+                        continue;
+                    }
                 }//end if
 
                 $newToken = null;
