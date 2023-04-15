@@ -1287,25 +1287,25 @@ class File
      *
      * <code>
      *   0 => array(
-     *         'name'                => '$var',  // The variable name.
-     *         'token'               => integer, // The stack pointer to the variable name.
-     *         'content'             => string,  // The full content of the variable definition.
-     *         'has_attributes'      => boolean, // Does the parameter have one or more attributes attached ?
-     *         'pass_by_reference'   => boolean, // Is the variable passed by reference?
-     *         'reference_token'     => integer, // The stack pointer to the reference operator
-     *                                           // or FALSE if the param is not passed by reference.
-     *         'variable_length'     => boolean, // Is the param of variable length through use of `...` ?
-     *         'variadic_token'      => integer, // The stack pointer to the ... operator
-     *                                           // or FALSE if the param is not variable length.
-     *         'type_hint'           => string,  // The type hint for the variable.
-     *         'type_hint_token'     => integer, // The stack pointer to the start of the type hint
-     *                                           // or FALSE if there is no type hint.
-     *         'type_hint_end_token' => integer, // The stack pointer to the end of the type hint
-     *                                           // or FALSE if there is no type hint.
-     *         'nullable_type'       => boolean, // TRUE if the type is preceded by the nullability
-     *                                           // operator.
-     *         'comma_token'         => integer, // The stack pointer to the comma after the param
-     *                                           // or FALSE if this is the last param.
+     *         'name'                => string,        // The variable name.
+     *         'token'               => integer,       // The stack pointer to the variable name.
+     *         'content'             => string,        // The full content of the variable definition.
+     *         'has_attributes'      => boolean,       // Does the parameter have one or more attributes attached ?
+     *         'pass_by_reference'   => boolean,       // Is the variable passed by reference?
+     *         'reference_token'     => integer|false, // The stack pointer to the reference operator
+     *                                                 // or FALSE if the param is not passed by reference.
+     *         'variable_length'     => boolean,       // Is the param of variable length through use of `...` ?
+     *         'variadic_token'      => integer|false, // The stack pointer to the ... operator
+     *                                                 // or FALSE if the param is not variable length.
+     *         'type_hint'           => string,        // The type hint for the variable.
+     *         'type_hint_token'     => integer|false, // The stack pointer to the start of the type hint
+     *                                                 // or FALSE if there is no type hint.
+     *         'type_hint_end_token' => integer|false, // The stack pointer to the end of the type hint
+     *                                                 // or FALSE if there is no type hint.
+     *         'nullable_type'       => boolean,       // TRUE if the type is preceded by the nullability
+     *                                                 // operator.
+     *         'comma_token'         => integer|false, // The stack pointer to the comma after the param
+     *                                                 // or FALSE if this is the last param.
      *        )
      * </code>
      *
@@ -1597,19 +1597,19 @@ class File
      * The format of the return value is:
      * <code>
      *   array(
-     *    'scope'                 => 'public', // Public, private, or protected
-     *    'scope_specified'       => true,     // TRUE if the scope keyword was found.
-     *    'return_type'           => '',       // The return type of the method.
-     *    'return_type_token'     => integer,  // The stack pointer to the start of the return type
-     *                                         // or FALSE if there is no return type.
-     *    'return_type_end_token' => integer,  // The stack pointer to the end of the return type
-     *                                         // or FALSE if there is no return type.
-     *    'nullable_return_type'  => false,    // TRUE if the return type is preceded by the
-     *                                         // nullability operator.
-     *    'is_abstract'           => false,    // TRUE if the abstract keyword was found.
-     *    'is_final'              => false,    // TRUE if the final keyword was found.
-     *    'is_static'             => false,    // TRUE if the static keyword was found.
-     *    'has_body'              => false,    // TRUE if the method has a body
+     *    'scope'                 => string,        // Public, private, or protected
+     *    'scope_specified'       => boolean,       // TRUE if the scope keyword was found.
+     *    'return_type'           => string,        // The return type of the method.
+     *    'return_type_token'     => integer|false, // The stack pointer to the start of the return type
+     *                                              // or FALSE if there is no return type.
+     *    'return_type_end_token' => integer|false, // The stack pointer to the end of the return type
+     *                                              // or FALSE if there is no return type.
+     *    'nullable_return_type'  => boolean,       // TRUE if the return type is preceded by the
+     *                                              // nullability operator.
+     *    'is_abstract'           => boolean,       // TRUE if the abstract keyword was found.
+     *    'is_final'              => boolean,       // TRUE if the final keyword was found.
+     *    'is_static'             => boolean,       // TRUE if the static keyword was found.
+     *    'has_body'              => boolean,       // TRUE if the method has a body
      *   );
      * </code>
      *
@@ -1771,17 +1771,17 @@ class File
      *
      * <code>
      *   array(
-     *    'scope'           => string,  // Public, private, or protected.
-     *    'scope_specified' => boolean, // TRUE if the scope was explicitly specified.
-     *    'is_static'       => boolean, // TRUE if the static keyword was found.
-     *    'is_readonly'     => boolean, // TRUE if the readonly keyword was found.
-     *    'type'            => string,  // The type of the var (empty if no type specified).
-     *    'type_token'      => integer, // The stack pointer to the start of the type
-     *                                  // or FALSE if there is no type.
-     *    'type_end_token'  => integer, // The stack pointer to the end of the type
-     *                                  // or FALSE if there is no type.
-     *    'nullable_type'   => boolean, // TRUE if the type is preceded by the nullability
-     *                                  // operator.
+     *    'scope'           => string,        // Public, private, or protected.
+     *    'scope_specified' => boolean,       // TRUE if the scope was explicitly specified.
+     *    'is_static'       => boolean,       // TRUE if the static keyword was found.
+     *    'is_readonly'     => boolean,       // TRUE if the readonly keyword was found.
+     *    'type'            => string,        // The type of the var (empty if no type specified).
+     *    'type_token'      => integer|false, // The stack pointer to the start of the type
+     *                                        // or FALSE if there is no type.
+     *    'type_end_token'  => integer|false, // The stack pointer to the end of the type
+     *                                        // or FALSE if there is no type.
+     *    'nullable_type'   => boolean,       // TRUE if the type is preceded by the nullability
+     *                                        // operator.
      *   );
      * </code>
      *
@@ -1958,9 +1958,9 @@ class File
      * The format of the return value is:
      * <code>
      *   array(
-     *    'is_abstract' => false, // true if the abstract keyword was found.
-     *    'is_final'    => false, // true if the final keyword was found.
-     *    'is_readonly' => false, // true if the readonly keyword was found.
+     *    'is_abstract' => boolean, // TRUE if the abstract keyword was found.
+     *    'is_final'    => boolean, // TRUE if the final keyword was found.
+     *    'is_readonly' => boolean, // TRUE if the readonly keyword was found.
      *   );
      * </code>
      *
