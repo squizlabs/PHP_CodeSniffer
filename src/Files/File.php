@@ -1309,10 +1309,12 @@ class File
      *         'default_equal_token' => integer, // The stack pointer to the equals sign.
      *
      * Parameters declared using PHP 8 constructor property promotion, have these additional array indexes:
-     *         'property_visibility' => string,  // The property visibility as declared.
-     *         'visibility_token'    => integer, // The stack pointer to the visibility modifier token.
-     *         'property_readonly'   => bool,    // TRUE if the readonly keyword was found.
-     *         'readonly_token'      => integer, // The stack pointer to the readonly modifier token.
+     *         'property_visibility' => string,        // The property visibility as declared.
+     *         'visibility_token'    => integer|false, // The stack pointer to the visibility modifier token
+     *                                                 // or FALSE if the visibility is not explicitly declared.
+     *         'property_readonly'   => boolean,       // TRUE if the readonly keyword was found.
+     *         'readonly_token'      => integer,       // The stack pointer to the readonly modifier token.
+     *                                                 // This index will only be set if the property is readonly.
      *
      * @param int $stackPtr The position in the stack of the function token
      *                      to acquire the parameters for.
@@ -1530,15 +1532,20 @@ class File
                 $vars[$paramCount]['type_hint_end_token'] = $typeHintEndToken;
                 $vars[$paramCount]['nullable_type']       = $nullableType;
 
-                if ($visibilityToken !== null) {
-                    $vars[$paramCount]['property_visibility'] = $this->tokens[$visibilityToken]['content'];
-                    $vars[$paramCount]['visibility_token']    = $visibilityToken;
+                if ($visibilityToken !== null || $readonlyToken !== null) {
+                    $vars[$paramCount]['property_visibility'] = 'public';
+                    $vars[$paramCount]['visibility_token']    = false;
                     $vars[$paramCount]['property_readonly']   = false;
-                }
 
-                if ($readonlyToken !== null) {
-                    $vars[$paramCount]['property_readonly'] = true;
-                    $vars[$paramCount]['readonly_token']    = $readonlyToken;
+                    if ($visibilityToken !== null) {
+                        $vars[$paramCount]['property_visibility'] = $this->tokens[$visibilityToken]['content'];
+                        $vars[$paramCount]['visibility_token']    = $visibilityToken;
+                    }
+
+                    if ($readonlyToken !== null) {
+                        $vars[$paramCount]['property_readonly'] = true;
+                        $vars[$paramCount]['readonly_token']    = $readonlyToken;
+                    }
                 }
 
                 if ($this->tokens[$i]['code'] === T_COMMA) {
