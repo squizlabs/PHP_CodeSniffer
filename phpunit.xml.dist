@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit beStrictAboutTestsThatDoNotTestAnything="false" bootstrap="tests/bootstrap.php">
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.2/phpunit.xsd"
+    backupGlobals="true"
+    beStrictAboutTestsThatDoNotTestAnything="false"
+    bootstrap="tests/bootstrap.php"
+    convertErrorsToExceptions="true"
+    convertWarningsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertDeprecationsToExceptions="true"
+    >
     <testsuites>
         <testsuite name="PHP_CodeSniffer Test Suite">
             <file>tests/AllTests.php</file>
