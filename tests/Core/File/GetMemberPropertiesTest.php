@@ -30,7 +30,10 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
         $variable = $this->getTargetToken($identifier, T_VARIABLE);
         $result   = self::$phpcsFile->getMemberProperties($variable);
 
-        $this->assertArraySubset($expected, $result, true);
+        // Unset those indexes which are not being tested.
+        unset($result['type_token'], $result['type_end_token']);
+
+        $this->assertSame($expected, $result);
 
     }//end testGetMemberProperties()
 

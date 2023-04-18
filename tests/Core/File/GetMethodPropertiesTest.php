@@ -902,7 +902,10 @@ class GetMethodPropertiesTest extends AbstractMethodUnitTest
         $function = $this->getTargetToken($commentString, [T_FUNCTION, T_CLOSURE, T_FN]);
         $found    = self::$phpcsFile->getMethodProperties($function);
 
-        $this->assertArraySubset($expected, $found, true);
+        // Unset those indexes which are not being tested.
+        unset($found['return_type_token'], $found['return_type_end_token']);
+
+        $this->assertSame($expected, $found);
 
     }//end getMethodPropertiesTestHelper()
 
