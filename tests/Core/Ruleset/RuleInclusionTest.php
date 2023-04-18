@@ -113,7 +113,6 @@ class RuleInclusionTest extends TestCase
      */
     public function testHasSniffCodes()
     {
-        $this->assertObjectHasAttribute('sniffCodes', self::$ruleset);
         $this->assertCount(48, self::$ruleset->sniffCodes);
 
     }//end testHasSniffCodes()
@@ -358,7 +357,6 @@ class RuleInclusionTest extends TestCase
      */
     public function testSettingProperties($sniffClass, $propertyName, $expectedValue)
     {
-        $this->assertObjectHasAttribute('sniffs', self::$ruleset);
         $this->assertArrayHasKey($sniffClass, self::$ruleset->sniffs);
         $this->assertObjectHasAttribute($propertyName, self::$ruleset->sniffs[$sniffClass]);
 
@@ -448,7 +446,6 @@ class RuleInclusionTest extends TestCase
      */
     public function testSettingInvalidPropertiesOnStandardsAndCategoriesSilentlyFails($sniffClass, $propertyName)
     {
-        $this->assertObjectHasAttribute('sniffs', self::$ruleset, 'Ruleset does not have property sniffs');
         $this->assertArrayHasKey($sniffClass, self::$ruleset->sniffs, 'Sniff class '.$sniffClass.' not listed in registered sniffs');
 
         $sniffObject = self::$ruleset->sniffs[$sniffClass];
