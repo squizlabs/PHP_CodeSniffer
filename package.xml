@@ -273,6 +273,32 @@ http://pear.php.net/dtd/package-2.0.xsd">
      <file baseinstalldir="" name="ErrorSuppressionTest.php" role="test" />
      <file baseinstalldir="" name="IsCamelCapsTest.php" role="test" />
     </dir>
+    <dir name="EndToEnd">
+     <dir name="Fixtures">
+      <dir name="Reports">
+       <file baseinstalldir="" name="Dirty.php" role="test" />
+       <file baseinstalldir="" name="CleanClass.php" role="test" />
+      </dir>
+     </dir>
+     <dir name="Reports">
+      <file baseinstalldir="" name="checkstyle.phpt" role="test" />
+      <file baseinstalldir="" name="code-no-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="code-with-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="csv.phpt" role="test" />
+      <file baseinstalldir="" name="emacs-no-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="emacs-with-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="full-no-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="full-with-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="gitblame-no-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="gitblame-with-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="json.phpt" role="test" />
+      <file baseinstalldir="" name="junit.phpt" role="test" />
+      <file baseinstalldir="" name="source-no-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="source-with-errorcodes.phpt" role="test" />
+      <file baseinstalldir="" name="summary.phpt" role="test" />
+      <file baseinstalldir="" name="xml.phpt" role="test" />
+     </dir>
+    </dir>
     <dir name="Standards">
      <file baseinstalldir="" name="AbstractSniffUnitTest.php" role="test" />
      <file baseinstalldir="" name="AllSniffs.php" role="test" />
@@ -2264,6 +2290,24 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.inc" name="tests/Core/Tokenizer/TypeIntersectionTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
+   <install as="CodeSniffer/EndToEnd/Fixtures/Reports/Dirty.php" name="tests/EndToEnd/Fixtures/Reports/Dirty.php" />
+   <install as="CodeSniffer/EndToEnd/Fixtures/Reports/CleanClass.php" name="tests/EndToEnd/Fixtures/Reports/CleanClass.php" />
+   <install as="CodeSniffer/EndToEnd/Reports/checkstyle.phpt" name="tests/EndToEnd/Reports/checkstyle.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/code-no-errorcodes.phpt" name="tests/EndToEnd/Reports/code-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/code-with-errorcodes.phpt" name="tests/EndToEnd/Reports/code-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/csv.phpt" name="tests/EndToEnd/Reports/csv.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/emacs-no-errorcodes.phpt" name="tests/EndToEnd/Reports/emacs-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/emacs-with-errorcodes.phpt" name="tests/EndToEnd/Reports/emacs-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/full-no-errorcodes.phpt" name="tests/EndToEnd/Reports/full-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/full-with-errorcodes.phpt" name="tests/EndToEnd/Reports/full-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/gitblame-no-errorcodes.phpt" name="tests/EndToEnd/Reports/gitblame-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/gitblame-with-errorcodes.phpt" name="tests/EndToEnd/Reports/gitblame-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/json.phpt" name="tests/EndToEnd/Reports/json.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/junit.phpt" name="tests/EndToEnd/Reports/junit.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/source-no-errorcodes.phpt" name="tests/EndToEnd/Reports/source-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/source-with-errorcodes.phpt" name="tests/EndToEnd/Reports/source-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/summary.phpt" name="tests/EndToEnd/Reports/summary.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/xml.phpt" name="tests/EndToEnd/Reports/xml.phpt" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
   </filelist>
@@ -2388,6 +2432,24 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Tokenizer/TypeIntersectionTest.inc" name="tests/Core/Tokenizer/TypeIntersectionTest.inc" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.php" />
    <install as="CodeSniffer/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" name="tests/Core/Tokenizer/UndoNamespacedNameSingleTokenTest.inc" />
+   <install as="CodeSniffer/EndToEnd/Fixtures/Reports/Dirty.php" name="tests/EndToEnd/Fixtures/Reports/Dirty.php" />
+   <install as="CodeSniffer/EndToEnd/Fixtures/Reports/CleanClass.php" name="tests/EndToEnd/Fixtures/Reports/CleanClass.php" />
+   <install as="CodeSniffer/EndToEnd/Reports/checkstyle.phpt" name="tests/EndToEnd/Reports/checkstyle.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/code-no-errorcodes.phpt" name="tests/EndToEnd/Reports/code-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/code-with-errorcodes.phpt" name="tests/EndToEnd/Reports/code-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/csv.phpt" name="tests/EndToEnd/Reports/csv.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/emacs-no-errorcodes.phpt" name="tests/EndToEnd/Reports/emacs-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/emacs-with-errorcodes.phpt" name="tests/EndToEnd/Reports/emacs-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/full-no-errorcodes.phpt" name="tests/EndToEnd/Reports/full-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/full-with-errorcodes.phpt" name="tests/EndToEnd/Reports/full-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/gitblame-no-errorcodes.phpt" name="tests/EndToEnd/Reports/gitblame-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/gitblame-with-errorcodes.phpt" name="tests/EndToEnd/Reports/gitblame-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/json.phpt" name="tests/EndToEnd/Reports/json.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/junit.phpt" name="tests/EndToEnd/Reports/junit.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/source-no-errorcodes.phpt" name="tests/EndToEnd/Reports/source-no-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/source-with-errorcodes.phpt" name="tests/EndToEnd/Reports/source-with-errorcodes.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/summary.phpt" name="tests/EndToEnd/Reports/summary.phpt" />
+   <install as="CodeSniffer/EndToEnd/Reports/xml.phpt" name="tests/EndToEnd/Reports/xml.phpt" />
    <install as="CodeSniffer/Standards/AllSniffs.php" name="tests/Standards/AllSniffs.php" />
    <install as="CodeSniffer/Standards/AbstractSniffUnitTest.php" name="tests/Standards/AbstractSniffUnitTest.php" />
    <ignore name="bin/phpcs.bat" />

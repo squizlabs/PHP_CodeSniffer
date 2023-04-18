@@ -131,12 +131,12 @@ class ValidatePEARPackageXML
         $srcFiles   = (new FileList(
             $this->projectRoot.'src/',
             $this->projectRoot,
-            '`\.(css|fixed|inc|js|php|xml)$`Di'
+            '`\.(css|fixed|inc|js|phpt|php|xml)$`Di'
         ))->getList();
         $testsFiles = (new FileList(
             $this->projectRoot.'tests/',
             $this->projectRoot,
-            '`\.(css|inc|js|php|xml)$`Di'
+            '`\.(css|inc|js|phpt|php|xml)$`Di'
         ))->getList();
         $files      = array_merge($srcFiles, $testsFiles);
 
@@ -317,7 +317,7 @@ class ValidatePEARPackageXML
                 }
 
                 // Check validity of the tags for files in the tests root subdirectories.
-                if (preg_match('`^tests/.+\.(php|inc|js|css|xml)$`', $name) === 1
+                if (preg_match('`^tests/.+\.(phpt|php|inc|js|css|xml)$`', $name) === 1
                     && $as === str_replace('tests/', 'CodeSniffer/', $name)
                 ) {
                     continue;
@@ -338,7 +338,7 @@ class ValidatePEARPackageXML
          * Verify that all files in the `tests` directory are listed in both `<phprelease>` tags.
          */
 
-        $testFiles = (new FileList($this->projectRoot.'tests/', $this->projectRoot, '`\.(inc|php|js|css|xml)$`Di'))->getList();
+        $testFiles = (new FileList($this->projectRoot.'tests/', $this->projectRoot, '`\.(inc|phpt|php|js|css|xml)$`Di'))->getList();
 
         foreach ($testFiles as $file) {
             foreach ($listedFiles as $key => $listed) {

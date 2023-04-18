@@ -4,5 +4,9 @@
         <testsuite name="PHP_CodeSniffer Test Suite">
             <file>tests/AllTests.php</file>
         </testsuite>
+        <testsuite name="End2End">
+            <directory suffix=".phpt">tests/EndToEnd/</directory>
+            <exclude>tests/EndToEnd/Fixtures</exclude>
+        </testsuite>
     </testsuites>
 </phpunit>
