@@ -32,7 +32,7 @@ class GotoLabelTest extends AbstractMethodUnitTest
 
         $label = $this->getTargetToken($testMarker, T_STRING);
 
-        $this->assertInternalType('int', $label);
+        $this->assertTrue(is_int($label));
         $this->assertSame($testContent, $tokens[$label]['content']);
 
     }//end testGotoStatement()
@@ -78,7 +78,7 @@ class GotoLabelTest extends AbstractMethodUnitTest
 
         $label = $this->getTargetToken($testMarker, T_GOTO_LABEL);
 
-        $this->assertInternalType('int', $label);
+        $this->assertTrue(is_int($label));
         $this->assertSame($testContent, $tokens[$label]['content']);
 
     }//end testGotoDeclaration()
