@@ -36,31 +36,33 @@ class ESLintUnitTest extends AbstractSniffUnitTest
     /**
      * Sets up this unit test.
      *
+     * @before
+     *
      * @return void
      */
-    protected function setUp()
+    protected function setUpPrerequisites()
     {
-        parent::setUp();
+        parent::setUpPrerequisites();
 
         $cwd = getcwd();
         file_put_contents($cwd.'/.eslintrc.json', self::ESLINT_CONFIG);
 
-    }//end setUp()
+    }//end setUpPrerequisites()
 
 
     /**
      * Remove artifact.
      *
+     * @after
+     *
      * @return void
      */
-    protected function tearDown()
+    protected function resetProperties()
     {
-        parent::tearDown();
-
         $cwd = getcwd();
         unlink($cwd.'/.eslintrc.json');
 
-    }//end tearDown()
+    }//end resetProperties()
 
 
     /**

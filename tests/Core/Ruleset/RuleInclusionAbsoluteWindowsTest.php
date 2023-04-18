@@ -41,9 +41,11 @@ class RuleInclusionAbsoluteWindowsTest extends TestCase
     /**
      * Initialize the config and ruleset objects.
      *
+     * @before
+     *
      * @return void
      */
-    public function setUp()
+    public function initializeConfigAndRuleset()
     {
         if (DIRECTORY_SEPARATOR === '/') {
             $this->markTestSkipped('Windows specific test');
@@ -73,21 +75,23 @@ class RuleInclusionAbsoluteWindowsTest extends TestCase
         $config        = new Config(["--standard={$this->standard}"]);
         $this->ruleset = new Ruleset($config);
 
-    }//end setUp()
+    }//end initializeConfigAndRuleset()
 
 
     /**
      * Reset ruleset file.
      *
+     * @after
+     *
      * @return void
      */
-    public function tearDown()
+    public function resetRuleset()
     {
         if (DIRECTORY_SEPARATOR !== '/') {
             file_put_contents($this->standard, $this->contents);
         }
 
-    }//end tearDown()
+    }//end resetRuleset()
 
 
     /**

@@ -36,9 +36,11 @@ class AcceptTest extends TestCase
     /**
      * Initialize the test.
      *
+     * @before
+     *
      * @return void
      */
-    public function setUp()
+    public function skipOnPEAR()
     {
         if ($GLOBALS['PHP_CODESNIFFER_PEAR'] === true) {
             // PEAR installs test and sniff files into different locations
@@ -47,15 +49,17 @@ class AcceptTest extends TestCase
             $this->markTestSkipped('Test cannot run from a PEAR install');
         }
 
-    }//end setUp()
+    }//end skipOnPEAR()
 
 
     /**
      * Initialize the config and ruleset objects based on the `AcceptTest.xml` ruleset file.
      *
+     * @beforeClass
+     *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function initializeConfigAndRuleset()
     {
         if ($GLOBALS['PHP_CODESNIFFER_PEAR'] === true) {
             // This test will be skipped.
@@ -66,7 +70,7 @@ class AcceptTest extends TestCase
         self::$config  = new Config(["--standard=$standard", "--ignore=*/somethingelse/*"]);
         self::$ruleset = new Ruleset(self::$config);
 
-    }//end setUpBeforeClass()
+    }//end initializeConfigAndRuleset()
 
 
     /**

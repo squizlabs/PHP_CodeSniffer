@@ -41,9 +41,11 @@ class RuleInclusionAbsoluteLinuxTest extends TestCase
     /**
      * Initialize the config and ruleset objects.
      *
+     * @before
+     *
      * @return void
      */
-    public function setUp()
+    public function initializeConfigAndRuleset()
     {
         if ($GLOBALS['PHP_CODESNIFFER_PEAR'] === true) {
             // PEAR installs test and sniff files into different locations
@@ -74,19 +76,21 @@ class RuleInclusionAbsoluteLinuxTest extends TestCase
         $config        = new Config(["--standard={$this->standard}"]);
         $this->ruleset = new Ruleset($config);
 
-    }//end setUp()
+    }//end initializeConfigAndRuleset()
 
 
     /**
      * Reset ruleset file.
      *
+     * @after
+     *
      * @return void
      */
-    public function tearDown()
+    public function resetRuleset()
     {
         file_put_contents($this->standard, $this->contents);
 
-    }//end tearDown()
+    }//end resetRuleset()
 
 
     /**

@@ -29,9 +29,11 @@ class HeredocNowdocCloserTest extends AbstractMethodUnitTest
      * {@internal This is a near duplicate of the original method. Only difference is that
      * tab replacement is enabled for this test.}
      *
+     * @beforeClass
+     *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function initializeFile()
     {
         $config            = new Config();
         $config->standards = ['PSR1'];
@@ -51,7 +53,7 @@ class HeredocNowdocCloserTest extends AbstractMethodUnitTest
         self::$phpcsFile = new DummyFile($contents, $ruleset, $config);
         self::$phpcsFile->process();
 
-    }//end setUpBeforeClass()
+    }//end initializeFile()
 
 
     /**

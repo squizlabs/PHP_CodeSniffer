@@ -26,9 +26,11 @@ class SetSniffPropertyTest extends TestCase
     /**
      * Initialize the test.
      *
+     * @before
+     *
      * @return void
      */
-    public function setUp()
+    public function skipOnPEAR()
     {
         if ($GLOBALS['PHP_CODESNIFFER_PEAR'] === true) {
             // PEAR installs test and sniff files into different locations
@@ -37,7 +39,7 @@ class SetSniffPropertyTest extends TestCase
             $this->markTestSkipped('Test cannot run from a PEAR install');
         }
 
-    }//end setUp()
+    }//end skipOnPEAR()
 
 
     /**

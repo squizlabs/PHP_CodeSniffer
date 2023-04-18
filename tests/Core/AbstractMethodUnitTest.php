@@ -41,9 +41,11 @@ abstract class AbstractMethodUnitTest extends TestCase
      * The test case file for a unit test class has to be in the same directory
      * directory and use the same file name as the test class, using the .inc extension.
      *
+     * @beforeClass
+     *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function initializeFile()
     {
         $config            = new Config();
         $config->standards = ['PSR1'];
@@ -62,19 +64,21 @@ abstract class AbstractMethodUnitTest extends TestCase
         self::$phpcsFile = new DummyFile($contents, $ruleset, $config);
         self::$phpcsFile->process();
 
-    }//end setUpBeforeClass()
+    }//end initializeFile()
 
 
     /**
      * Clean up after finished test.
      *
+     * @afterClass
+     *
      * @return void
      */
-    public static function tearDownAfterClass()
+    public static function resetFile()
     {
         self::$phpcsFile = null;
 
-    }//end tearDownAfterClass()
+    }//end resetFile()
 
 
     /**

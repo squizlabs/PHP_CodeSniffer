@@ -19,13 +19,15 @@ class DetermineLoadedClassTest extends TestCase
     /**
      * Load the test files.
      *
+     * @beforeClass
+     *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function includeFixture()
     {
         include __DIR__.'/TestFiles/Sub/C.inc';
 
-    }//end setUpBeforeClass()
+    }//end includeFixture()
 
 
     /**

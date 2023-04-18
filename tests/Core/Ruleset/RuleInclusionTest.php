@@ -42,9 +42,11 @@ class RuleInclusionTest extends TestCase
     /**
      * Initialize the test.
      *
+     * @before
+     *
      * @return void
      */
-    public function setUp()
+    public function skipOnPEAR()
     {
         if ($GLOBALS['PHP_CODESNIFFER_PEAR'] === true) {
             // PEAR installs test and sniff files into different locations
@@ -53,15 +55,17 @@ class RuleInclusionTest extends TestCase
             $this->markTestSkipped('Test cannot run from a PEAR install');
         }
 
-    }//end setUp()
+    }//end skipOnPEAR()
 
 
     /**
      * Initialize the config and ruleset objects based on the `RuleInclusionTest.xml` ruleset file.
      *
+     * @beforeClass
+     *
      * @return void
      */
-    public static function setUpBeforeClass()
+    public static function initializeConfigAndRuleset()
     {
         if ($GLOBALS['PHP_CODESNIFFER_PEAR'] === true) {
             // This test will be skipped.
@@ -92,19 +96,21 @@ class RuleInclusionTest extends TestCase
         $config        = new Config(["--standard=$standard"]);
         self::$ruleset = new Ruleset($config);
 
-    }//end setUpBeforeClass()
+    }//end initializeConfigAndRuleset()
 
 
     /**
      * Reset ruleset file.
      *
+     * @after
+     *
      * @return void
      */
-    public function tearDown()
+    public function resetRuleset()
     {
         file_put_contents(self::$standard, self::$contents);
 
-    }//end tearDown()
+    }//end resetRuleset()
 
 
     /**
