@@ -12,6 +12,7 @@ namespace PHP_CodeSniffer\Tests\Core\Ruleset;
 use PHP_CodeSniffer\Config;
 use PHP_CodeSniffer\Ruleset;
 use PHPUnit\Framework\TestCase;
+use ReflectionObject;
 
 /**
  * These tests specifically focus on the changes made to work around the PHP 8.2 dynamic properties deprecation.
@@ -135,8 +136,10 @@ class SetSniffPropertyTest extends TestCase
         // Test that the property doesn't get set for the one sniff which doesn't support the property.
         $sniffClass = 'PHP_CodeSniffer\Standards\PEAR\Sniffs\Functions\ValidDefaultValueSniff';
         $this->assertArrayHasKey($sniffClass, $ruleset->sniffs, 'Sniff class '.$sniffClass.' not listed in registered sniffs');
-        $sniffObject = $ruleset->sniffs[$sniffClass];
-        $this->assertObjectNotHasAttribute($propertyName, $sniffObject, 'Property registered for sniff '.$sniffClass.' which does not support it');
+
+        $hasProperty = (new ReflectionObject($ruleset->sniffs[$sniffClass]))->hasProperty($propertyName);
+        $errorMsg    = sprintf('Property %s registered for sniff %s which does not support it', $propertyName, $sniffClass);
+        $this->assertFalse($hasProperty, $errorMsg);
 
     }//end testSetPropertyAppliesPropertyToMultipleSniffsInCategory()
 
