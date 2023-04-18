@@ -95,8 +95,8 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var1',
             'content'           => '$var1=self::CONSTANT',
-            'has_attributes'    => false,
             'default'           => 'self::CONSTANT',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '',
@@ -119,8 +119,8 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[0] = [
             'name'              => '$var1',
             'content'           => '$var1=1',
-            'has_attributes'    => false,
             'default'           => '1',
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '',
@@ -129,8 +129,8 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
         $expected[1] = [
             'name'              => '$var2',
             'content'           => "\$var2='value'",
-            'has_attributes'    => false,
             'default'           => "'value'",
+            'has_attributes'    => false,
             'pass_by_reference' => false,
             'variable_length'   => false,
             'type_hint'         => '',
@@ -900,6 +900,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => '',
             'nullable_type'       => false,
             'property_visibility' => 'private',
+            'property_readonly'   => false,
         ];
 
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
@@ -924,6 +925,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => 'callable',
             'nullable_type'       => false,
             'property_visibility' => 'public',
+            'property_readonly'   => false,
         ];
         $expected[1] = [
             'name'                => '$x',
@@ -934,6 +936,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => '',
             'nullable_type'       => false,
             'property_visibility' => 'private',
+            'property_readonly'   => false,
         ];
 
         $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
@@ -953,6 +956,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'name'              => '$param',
             'content'           => '// Leading comment.
     ?MyClass /*-*/ & /*-*/.../*-*/ $param /*-*/ = /*-*/ \'default value\' . /*-*/ \'second part\' // Trailing comment.',
+            'default'           => '\'default value\' . /*-*/ \'second part\' // Trailing comment.',
             'has_attributes'    => false,
             'pass_by_reference' => true,
             'variable_length'   => true,
@@ -982,6 +986,7 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
             'type_hint'           => 'string',
             'nullable_type'       => false,
             'property_visibility' => 'private',
+            'property_readonly'   => false,
         ];
         $expected[1] = [
             'name'              => '$typedParamSingleAttribute',
