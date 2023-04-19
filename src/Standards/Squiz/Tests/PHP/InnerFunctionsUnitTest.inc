@@ -48,3 +48,10 @@ new class {
         }
     }
 };
+
+$outerClosure = function ()
+{
+    // Functions inside closures are not allowed.
+    function innerFunction() {
+    }
+};

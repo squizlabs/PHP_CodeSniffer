@@ -43,8 +43,11 @@ class InnerFunctionsSniff implements Sniff
 
         $function = $phpcsFile->getCondition($stackPtr, T_FUNCTION);
         if ($function === false) {
-            // Not a nested function.
-            return;
+            $function = $phpcsFile->getCondition($stackPtr, T_CLOSURE);
+            if ($function === false) {
+                // Not a nested function.
+                return;
+            }
         }
 
         $class = $phpcsFile->getCondition($stackPtr, T_ANON_CLASS, false);
