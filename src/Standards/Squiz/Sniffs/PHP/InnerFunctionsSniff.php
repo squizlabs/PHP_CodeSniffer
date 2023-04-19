@@ -46,7 +46,8 @@ class InnerFunctionsSniff implements Sniff
             return;
         }
 
-        $reversedConditions = array_reverse($tokens[$stackPtr]['conditions'], true);
+        $conditions         = $tokens[$stackPtr]['conditions'];
+        $reversedConditions = array_reverse($conditions, true);
 
         $outerFuncToken = null;
         foreach ($reversedConditions as $condToken => $condition) {
