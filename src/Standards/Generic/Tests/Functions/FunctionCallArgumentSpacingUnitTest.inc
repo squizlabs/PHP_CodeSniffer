@@ -162,3 +162,13 @@ class Testing extends Bar
         $a = new parent($foo ,$bar);
     }
 }
+
+// Ignore spacing after PHP 7.3+ trailing comma in single-line function calls to prevent fixer conflicts.
+// This is something which should be decided by a sniff dealing with the function call parentheses.
+$foo = new MyClass($obj, 'getMethod',);
+$foo = new MyClass($obj, 'getMethod', );
+$foo = new MyClass($obj, 'getMethod',       );
+$foo = new MyClass(
+    $obj,
+    'getMethod',
+);
