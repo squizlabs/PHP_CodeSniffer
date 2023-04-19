@@ -29,6 +29,7 @@ class InnerFunctionsUnitTest extends AbstractSniffUnitTest
             5  => 1,
             46 => 1,
             55 => 1,
+            83 => 1,
         ];
 
     }//end getErrorList()

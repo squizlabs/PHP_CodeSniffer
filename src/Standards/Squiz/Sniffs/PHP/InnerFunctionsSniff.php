@@ -11,6 +11,7 @@ namespace PHP_CodeSniffer\Standards\Squiz\Sniffs\PHP;
 
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
+use PHP_CodeSniffer\Util\Tokens;
 
 class InnerFunctionsSniff implements Sniff
 {
@@ -45,37 +46,24 @@ class InnerFunctionsSniff implements Sniff
             return;
         }
 
-        $conditions = $tokens[$stackPtr]['conditions'];
+        $reversedConditions = array_reverse($tokens[$stackPtr]['conditions'], true);
 
         $outerFuncToken = null;
-        foreach ($conditions as $condToken => $condition) {
+        foreach ($reversedConditions as $condToken => $condition) {
             if ($condition === T_FUNCTION || $condition === T_CLOSURE) {
                 $outerFuncToken = $condToken;
                 break;
+            }
+
+            if (\array_key_exists($condition, Tokens::$ooScopeTokens) === true) {
+                // Ignore methods in OOP structures defined within functions.
+                return;
             }
         }
 
         if ($outerFuncToken === null) {
             // Not a nested function.
             return;
-        }
-
-        $reversedConditions   = array_reverse($conditions, true);
-        $allowedOOPConditions = [
-            T_ANON_CLASS => true,
-            T_CLASS      => true,
-            T_TRAIT      => true,
-            T_INTERFACE  => true,
-        ];
-        foreach ($reversedConditions as $condToken => $condition) {
-            if ($condToken <= $outerFuncToken) {
-                break;
-            }
-
-            if (\array_key_exists($condition, $allowedOOPConditions) === true) {
-                // Ignore methods in OOP structures defined within functions.
-                return;
-            }
         }
 
         $error = 'The use of inner functions is forbidden';

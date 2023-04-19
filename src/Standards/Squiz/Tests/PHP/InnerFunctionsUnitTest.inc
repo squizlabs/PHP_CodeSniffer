@@ -75,4 +75,13 @@ function foo() {
             function foo();
         }
     }
+
+    // But disallow functions nested inside those methods
+    if (class_exists('NestedFunctionInMethod') === false) {
+        class NestedFunctionInMethod {
+            function foo() {
+                function innerFunction() {}
+            }
+        }
+    }
 }
