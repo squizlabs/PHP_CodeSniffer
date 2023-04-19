@@ -41,25 +41,41 @@ class InnerFunctionsSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        $function = $phpcsFile->getCondition($stackPtr, T_FUNCTION);
-        if ($function === false) {
-            $function = $phpcsFile->getCondition($stackPtr, T_CLOSURE);
-            if ($function === false) {
-                // Not a nested function.
-                return;
+        if (isset($tokens[$stackPtr]['conditions']) === false) {
+            return;
+        }
+
+        $conditions = $tokens[$stackPtr]['conditions'];
+
+        $outerFuncToken = null;
+        foreach ($conditions as $condToken => $condition) {
+            if ($condition === T_FUNCTION || $condition === T_CLOSURE) {
+                $outerFuncToken = $condToken;
+                break;
             }
         }
 
-        $class = $phpcsFile->getCondition($stackPtr, T_ANON_CLASS, false);
-        if ($class !== false && $class > $function) {
-            // Ignore methods in anon classes.
+        if ($outerFuncToken === null) {
+            // Not a nested function.
             return;
         }
 
-        $prev = $phpcsFile->findPrevious(T_WHITESPACE, ($stackPtr - 1), null, true);
-        if ($tokens[$prev]['code'] === T_EQUAL) {
-            // Ignore closures.
-            return;
+        $reversedConditions   = array_reverse($conditions, true);
+        $allowedOOPConditions = [
+            T_ANON_CLASS => true,
+            T_CLASS      => true,
+            T_TRAIT      => true,
+            T_INTERFACE  => true,
+        ];
+        foreach ($reversedConditions as $condToken => $condition) {
+            if ($condToken <= $outerFuncToken) {
+                break;
+            }
+
+            if (\array_key_exists($condition, $allowedOOPConditions) === true) {
+                // Ignore methods in OOP structures defined within functions.
+                return;
+            }
         }
 
         $error = 'The use of inner functions is forbidden';

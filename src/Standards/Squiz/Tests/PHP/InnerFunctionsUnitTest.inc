@@ -55,3 +55,24 @@ $outerClosure = function ()
     function innerFunction() {
     }
 };
+
+// Allow methods in classes/traits/interfaces defined inside functions
+function foo() {
+    if (class_exists('MyClass') === false) {
+        class MyClass {
+            function foo() {}
+        }
+    }
+
+    if (trait_exists('MyTrait') === false) {
+        trait MyTrait {
+            function foo() {}
+        }
+    }
+
+    if (interface_exists('MyInterface') === false) {
+        interface MyInterface {
+            function foo();
+        }
+    }
+}
