@@ -156,10 +156,13 @@ class FunctionCallArgumentSpacingSniff implements Sniff
                 }//end if
 
                 if ($tokens[($nextSeparator + 1)]['code'] !== T_WHITESPACE) {
-                    $error = 'No space found after comma in argument list';
-                    $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'NoSpaceAfterComma');
-                    if ($fix === true) {
-                        $phpcsFile->fixer->addContent($nextSeparator, ' ');
+                    // Ignore trailing comma's after last argument as that's outside the scope of this sniff.
+                    if (($nextSeparator + 1) !== $closeBracket) {
+                        $error = 'No space found after comma in argument list';
+                        $fix   = $phpcsFile->addFixableError($error, $nextSeparator, 'NoSpaceAfterComma');
+                        if ($fix === true) {
+                            $phpcsFile->fixer->addContent($nextSeparator, ' ');
+                        }
                     }
                 } else {
                     // If there is a newline in the space, then they must be formatting
