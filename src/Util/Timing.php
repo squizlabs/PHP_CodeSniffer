@@ -41,6 +41,51 @@ class Timing
 
 
     /**
+     * Get the duration of the run up to "now".
+     *
+     * @return int Duration in microseconds.
+     */
+    public static function getDuration()
+    {
+        if (self::$startTime === null) {
+            // Timing was never started.
+            return 0;
+        }
+
+        return ((microtime(true) - self::$startTime) * 1000);
+
+    }//end getDuration()
+
+
+    /**
+     * Convert a duration in microseconds to a human readable duration string.
+     *
+     * @param int $duration Duration in microseconds.
+     *
+     * @return string
+     */
+    public static function getHumanReadableDuration($duration)
+    {
+        $timeString = '';
+        if ($duration > 60000) {
+            $mins       = floor($duration / 60000);
+            $secs       = round((fmod($duration, 60000) / 1000), 2);
+            $timeString = $mins.' mins';
+            if ($secs !== 0) {
+                $timeString .= ", $secs secs";
+            }
+        } else if ($duration > 1000) {
+            $timeString = round(($duration / 1000), 2).' secs';
+        } else {
+            $timeString = round($duration).'ms';
+        }
+
+        return $timeString;
+
+    }//end getHumanReadableDuration()
+
+
+    /**
      * Print information about the run.
      *
      * @param boolean $force If TRUE, prints the output even if it has
@@ -60,23 +105,11 @@ class Timing
             return;
         }
 
-        $time = ((microtime(true) - self::$startTime) * 1000);
-
-        if ($time > 60000) {
-            $mins = floor($time / 60000);
-            $secs = round((fmod($time, 60000) / 1000), 2);
-            $time = $mins.' mins';
-            if ($secs !== 0) {
-                $time .= ", $secs secs";
-            }
-        } else if ($time > 1000) {
-            $time = round(($time / 1000), 2).' secs';
-        } else {
-            $time = round($time).'ms';
-        }
+        $duration = self::getDuration();
+        $duration = self::getHumanReadableDuration($duration);
 
         $mem = round((memory_get_peak_usage(true) / (1024 * 1024)), 2).'MB';
-        echo "Time: $time; Memory: $mem".PHP_EOL.PHP_EOL;
+        echo "Time: $duration; Memory: $mem".PHP_EOL.PHP_EOL;
 
         self::$printed = true;
 
