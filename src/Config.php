@@ -143,6 +143,7 @@ class Config
         'stdin'           => null,
         'stdinContent'    => null,
         'stdinPath'       => null,
+        'trackTime'       => null,
         'unknown'         => null,
     ];
 
@@ -263,6 +264,13 @@ class Config
             }
 
             $value = $cleaned;
+            break;
+
+        // Only track time when explicitly needed.
+        case 'verbosity':
+            if ($value > 2) {
+                $this->settings['trackTime'] = true;
+            }
             break;
         default :
             // No validation required.
@@ -517,6 +525,7 @@ class Config
         $this->stdin           = false;
         $this->stdinContent    = null;
         $this->stdinPath       = null;
+        $this->trackTime       = false;
         $this->unknown         = [];
 
         $standard = self::getConfigData('default_standard');
