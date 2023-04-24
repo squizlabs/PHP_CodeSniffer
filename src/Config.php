@@ -272,6 +272,13 @@ class Config
                 $this->settings['trackTime'] = true;
             }
             break;
+        case 'reports':
+            $reports = array_change_key_case($value, CASE_LOWER);
+            if (array_key_exists('performance', $reports) === true) {
+                $this->settings['trackTime'] = true;
+            }
+            break;
+
         default :
             // No validation required.
             break;
@@ -1420,8 +1427,8 @@ class Config
         echo ' <processes>    How many files should be checked simultaneously (default is 1)'.PHP_EOL;
         echo ' <report>       Print either the "full", "xml", "checkstyle", "csv"'.PHP_EOL;
         echo '                "json", "junit", "emacs", "source", "summary", "diff"'.PHP_EOL;
-        echo '                "svnblame", "gitblame", "hgblame" or "notifysend" report,'.PHP_EOL;
-        echo '                or specify the path to a custom report class'.PHP_EOL;
+        echo '                "svnblame", "gitblame", "hgblame", "notifysend" or "performance",'.PHP_EOL;
+        echo '                report or specify the path to a custom report class'.PHP_EOL;
         echo '                (the "full" report is printed by default)'.PHP_EOL;
         echo ' <reportFile>   Write the report to the specified file path'.PHP_EOL;
         echo ' <reportWidth>  How many columns wide screen reports should be printed'.PHP_EOL;
