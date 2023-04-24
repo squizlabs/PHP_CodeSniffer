@@ -56,7 +56,7 @@ class ReportWidthTest extends TestCase
 
     /**
      * Reset the static properties in the Config class to their true defaults to prevent this class
-     * from unfluencing other tests.
+     * from influencing other tests.
      *
      * @afterClass
      *
@@ -287,7 +287,7 @@ class ReportWidthTest extends TestCase
      * Helper function to set a static property on the Config class.
      *
      * @param string $name  The name of the property to set.
-     * @param mixed  $value The value to set the propert to.
+     * @param mixed  $value The value to set the property to.
      *
      * @return void
      */

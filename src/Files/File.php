@@ -739,7 +739,7 @@ class File
 
 
     /**
-     * Records a warning against a specific token in the file.
+     * Records a warning against a specific line in the file.
      *
      * @param string $warning  The error message.
      * @param int    $line     The line on which the warning occurred.
