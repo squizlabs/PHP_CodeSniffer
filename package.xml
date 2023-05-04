@@ -59,11 +59,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3722 : Potential "Uninitialized string offset 1" in octal notation backfill
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3777 : Squiz/NonExecutableCode: slew of bug fixes, mostly related to modern PHP
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3779 : Squiz/LowercasePHPFunctions + Generic/ForbiddenFunctions: bug fix for class names in attributes
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3789 : Incorrect tokenization for ternary operator with match inside of it
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3797 : Tokenizer/PHP: more context sensitive keyword fixes
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3805 : Generic/FunctionCallArgumentSpacing: prevent fixer conflict over PHP 7.3+ trailing comma's in function calls
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
  <contents>
