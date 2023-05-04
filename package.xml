@@ -55,6 +55,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3672 : Incorrect ScopeIndent.IncorrectExact report for match inside array literal
   - Fixed bug #3694 : Generic.WhiteSpace.SpreadOperatorSpacingAfter does not ignore spread operator in PHP 8.1 first class callables
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3722 : Potential "Uninitialized string offset 1" in octal notation backfill
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
  <contents>
   <dir name="/">
