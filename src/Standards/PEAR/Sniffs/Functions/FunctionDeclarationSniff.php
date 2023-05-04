@@ -496,6 +496,19 @@ class FunctionDeclarationSniff implements Sniff
                 $lastLine = $tokens[$i]['line'];
             }//end if
 
+            if ($tokens[$i]['code'] === T_OPEN_PARENTHESIS
+                && isset($tokens[$i]['parenthesis_closer']) === true
+            ) {
+                $prevNonEmpty = $phpcsFile->findPrevious(Tokens::$emptyTokens, ($i - 1), null, true);
+                if ($tokens[$prevNonEmpty]['code'] !== T_USE) {
+                    // Since PHP 8.1, a default value can contain a class instantiation.
+                    // Skip over these "function calls" as they have their own indentation rules.
+                    $i        = $tokens[$i]['parenthesis_closer'];
+                    $lastLine = $tokens[$i]['line'];
+                    continue;
+                }
+            }
+
             if ($tokens[$i]['code'] === T_ARRAY || $tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
                 // Skip arrays as they have their own indentation rules.
                 if ($tokens[$i]['code'] === T_OPEN_SHORT_ARRAY) {
