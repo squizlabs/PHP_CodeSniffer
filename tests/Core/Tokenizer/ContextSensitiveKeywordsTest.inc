@@ -78,6 +78,10 @@ class ContextSensitiveKeywords
     const /* testAnd */ AND = 'LOGICAL_AND';
     const /* testOr */ OR = 'LOGICAL_OR';
     const /* testXor */ XOR = 'LOGICAL_XOR';
+
+    const /* testFalse */ FALSE = 'FALSE',
+    const /* testTrue */ TRUE = 'TRUE',
+    const /* testNull */ NULL = 'NULL',
 }
 
 namespace /* testKeywordAfterNamespaceShouldBeString */ class;
@@ -225,3 +229,36 @@ class Foo extends /* testNamespaceInNameIsKeyword */ namespace\Exception
 
 function /* testKeywordAfterFunctionShouldBeString */ eval() {}
 function /* testKeywordAfterFunctionByRefShouldBeString */ &switch() {}
+
+function /* testKeywordSelfAfterFunctionByRefShouldBeString */ &self() {}
+function /* testKeywordStaticAfterFunctionByRefShouldBeString */ &static() {}
+function /* testKeywordParentAfterFunctionByRefShouldBeString */ &parent() {}
+function /* testKeywordFalseAfterFunctionByRefShouldBeString */ &false() {}
+function /* testKeywordTrueAfterFunctionByRefShouldBeString */ & true () {}
+function /* testKeywordNullAfterFunctionByRefShouldBeString */ &NULL() {}
+
+/* testKeywordAsFunctionCallNameShouldBeStringSelf */ self();
+/* testKeywordAsFunctionCallNameShouldBeStringStatic */ static();
+$obj-> /* testKeywordAsMethodCallNameShouldBeStringStatic */ static();
+/* testKeywordAsFunctionCallNameShouldBeStringParent */ parent();
+/* testKeywordAsFunctionCallNameShouldBeStringFalse */ false();
+/* testKeywordAsFunctionCallNameShouldBeStringTrue */ True ();
+/* testKeywordAsFunctionCallNameShouldBeStringNull */ null /*comment*/ ();
+
+$instantiated4 = new /* testClassInstantiationFalseIsString */ False();
+$instantiated5 = new /* testClassInstantiationTrueIsString */ true ();
+$instantiated6 = new /* testClassInstantiationNullIsString */ null();
+
+$function = /* testStaticIsKeywordBeforeClosure */ static function(/* testStaticIsKeywordWhenParamType */ static $param) {};
+$arrow = /* testStaticIsKeywordBeforeArrow */ static fn(): /* testStaticIsKeywordWhenReturnType */ static => 10;
+
+function standAloneFalseTrueNullTypesAndMore(
+    /* testFalseIsKeywordAsParamType */ false $paramA,
+    /* testTrueIsKeywordAsParamType */ true $paramB,
+    /* testNullIsKeywordAsParamType */ null $paramC,
+) /* testFalseIsKeywordAsReturnType */ false | /* testTrueIsKeywordAsReturnType */ true | /* testNullIsKeywordAsReturnType */ null {
+    if ($a === /* testFalseIsKeywordInComparison */ false
+    || $a === /* testTrueIsKeywordInComparison */ true
+    || $a === /* testNullIsKeywordInComparison */ null
+    ) {}
+}
