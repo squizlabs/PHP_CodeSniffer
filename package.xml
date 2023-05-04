@@ -31,6 +31,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - A custom Out Of Memory error will now be shown if PHPCS or PHPCBF run out of memory during a run
     -- Error message provides actionable information about how to fix the problem and ensures the error is not silent
     -- Thanks to Juliette Reinders Folmer (@jrfnl) and Alain Schlesser (@schlessera) for the patch
+  - Sniff error messages are now more informative to help bugs get reported to the correct project
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Generic.PHP.LowerCaseType sniff now correctly examines types inside arrow functions
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Squiz.Formatting.OperatorBracket no longer reports false positives in match() structures
