@@ -230,4 +230,184 @@ class SetSniffPropertyTest extends TestCase
     }//end testSetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForCategory()
 
 
+    /**
+     * Test that setting a property via a direct call to the Ruleset::setSniffProperty() method
+     * sets the property correctly when using the new $settings array format.
+     *
+     * @return void
+     */
+    public function testDirectCallWithNewArrayFormatSetsProperty()
+    {
+        $name       = 'SetPropertyAllowedAsDeclared';
+        $sniffCode  = "Fixtures.Category.{$name}";
+        $sniffClass = 'Fixtures\Sniffs\Category\\'.$name.'Sniff';
+
+        // Set up the ruleset.
+        $standard = __DIR__."/{$name}Test.xml";
+        $config   = new Config(["--standard=$standard"]);
+        $ruleset  = new Ruleset($config);
+
+        $propertyName  = 'arbitrarystring';
+        $propertyValue = 'new value';
+
+        $ruleset->setSniffProperty(
+            $sniffClass,
+            $propertyName,
+            [
+                'scope' => 'sniff',
+                'value' => $propertyValue,
+            ]
+        );
+
+        // Verify that the sniff has been registered.
+        $this->assertGreaterThan(0, count($ruleset->sniffCodes), 'No sniff codes registered');
+
+        // Verify that our target sniff has been registered.
+        $this->assertArrayHasKey($sniffCode, $ruleset->sniffCodes, 'Target sniff not registered');
+        $this->assertSame($sniffClass, $ruleset->sniffCodes[$sniffCode], 'Target sniff not registered with the correct class');
+
+        // Test that the property as declared in the ruleset has been set on the sniff.
+        $this->assertArrayHasKey($sniffClass, $ruleset->sniffs, 'Sniff class not listed in registered sniffs');
+
+        $sniffObject = $ruleset->sniffs[$sniffClass];
+        $this->assertSame($propertyValue, $sniffObject->$propertyName, 'Property value not set to expected value');
+
+    }//end testDirectCallWithNewArrayFormatSetsProperty()
+
+
+    /**
+     * Test that setting a property via a direct call to the Ruleset::setSniffProperty() method
+     * sets the property correctly when using the old $settings array format.
+     *
+     * Tested by silencing the deprecation notice as otherwise the test would fail on the deprecation notice.
+     *
+     * @param mixed $propertyValue Value for the property to set.
+     *
+     * @dataProvider dataDirectCallWithOldArrayFormatSetsProperty
+     *
+     * @return void
+     */
+    public function testDirectCallWithOldArrayFormatSetsProperty($propertyValue)
+    {
+        $name       = 'SetPropertyAllowedAsDeclared';
+        $sniffCode  = "Fixtures.Category.{$name}";
+        $sniffClass = 'Fixtures\Sniffs\Category\\'.$name.'Sniff';
+
+        // Set up the ruleset.
+        $standard = __DIR__."/{$name}Test.xml";
+        $config   = new Config(["--standard=$standard"]);
+        $ruleset  = new Ruleset($config);
+
+        $propertyName = 'arbitrarystring';
+
+        @$ruleset->setSniffProperty(
+            $sniffClass,
+            $propertyName,
+            $propertyValue
+        );
+
+        // Verify that the sniff has been registered.
+        $this->assertGreaterThan(0, count($ruleset->sniffCodes), 'No sniff codes registered');
+
+        // Verify that our target sniff has been registered.
+        $this->assertArrayHasKey($sniffCode, $ruleset->sniffCodes, 'Target sniff not registered');
+        $this->assertSame($sniffClass, $ruleset->sniffCodes[$sniffCode], 'Target sniff not registered with the correct class');
+
+        // Test that the property as declared in the ruleset has been set on the sniff.
+        $this->assertArrayHasKey($sniffClass, $ruleset->sniffs, 'Sniff class not listed in registered sniffs');
+
+        $sniffObject = $ruleset->sniffs[$sniffClass];
+        $this->assertSame($propertyValue, $sniffObject->$propertyName, 'Property value not set to expected value');
+
+    }//end testDirectCallWithOldArrayFormatSetsProperty()
+
+
+    /**
+     * Data provider.
+     *
+     * @see self::testDirectCallWithOldArrayFormatSetsProperty()
+     *
+     * @return array
+     */
+    public function dataDirectCallWithOldArrayFormatSetsProperty()
+    {
+        return [
+            'Property value is not an array (boolean)'                       => [false],
+            'Property value is not an array (string)'                        => ['a string'],
+            'Property value is an empty array'                               => [[]],
+            'Property value is an array without keys'                        => [
+                [
+                    'value',
+                    false,
+                ],
+            ],
+            'Property value is an array without the "scope" or "value" keys' => [
+                [
+                    'key1' => 'value',
+                    'key2' => false,
+                ],
+            ],
+            'Property value is an array without the "scope" key'             => [
+                [
+                    'key1'  => 'value',
+                    'value' => true,
+                ],
+            ],
+            'Property value is an array without the "value" key'             => [
+                [
+                    'scope' => 'value',
+                    'key2'  => 1234,
+                ],
+            ],
+        ];
+
+    }//end dataDirectCallWithOldArrayFormatSetsProperty()
+
+
+    /**
+     * Test that setting a property via a direct call to the Ruleset::setSniffProperty() method
+     * throws a deprecation notice when using the old $settings array format.
+     *
+     * Note: as PHPUnit stops as soon as it sees the deprecation notice, the setting of the property
+     * value is not tested here.
+     *
+     * @return void
+     */
+    public function testDirectCallWithOldArrayFormatThrowsDeprecationNotice()
+    {
+        $exceptionClass = 'PHPUnit\Framework\Error\Deprecated';
+        if (class_exists($exceptionClass) === false) {
+            $exceptionClass = 'PHPUnit_Framework_Error_Deprecated';
+        }
+
+        $exceptionMsg = 'the format of the $settings parameter has changed from (mixed) $value to array(\'scope\' => \'sniff|standard\', \'value\' => $value). Please update your integration code. See PR #3629 for more information.';
+
+        if (method_exists($this, 'expectException') === true) {
+            $this->expectException($exceptionClass);
+            $this->expectExceptionMessage($exceptionMsg);
+        } else {
+            // PHPUnit < 5.2.0.
+            $this->setExpectedException($exceptionClass, $exceptionMsg);
+        }
+
+        $name       = 'SetPropertyAllowedAsDeclared';
+        $sniffCode  = "Fixtures.Category.{$name}";
+        $sniffClass = 'Fixtures\Sniffs\Category\\'.$name.'Sniff';
+
+        // Set up the ruleset.
+        $standard = __DIR__."/{$name}Test.xml";
+        $config   = new Config(["--standard=$standard"]);
+        $ruleset  = new Ruleset($config);
+
+        $propertyName = 'arbitrarystring';
+
+        $ruleset->setSniffProperty(
+            $sniffClass,
+            'arbitrarystring',
+            ['key' => 'value']
+        );
+
+    }//end testDirectCallWithOldArrayFormatThrowsDeprecationNotice()
+
+
 }//end class

@@ -1319,6 +1319,34 @@ class Ruleset
             $propertyName = substr($propertyName, 0, -2);
         }
 
+        /*
+         * BC-compatibility layer for $settings using the pre-PHPCS 3.8.0 format.
+         *
+         * Prior to PHPCS 3.8.0, `$settings` was expected to only contain the new _value_
+         * for the property (which could be an array).
+         * Since PHPCS 3.8.0, `$settings` is expected to be an array with two keys: 'scope'
+         * and 'value', where 'scope' indicates whether the property should be set to the given 'value'
+         * for one individual sniff or for all sniffs in a standard.
+         *
+         * This BC-layer is only for integrations with PHPCS which may call this method directly
+         * and will be removed in PHPCS 4.0.0.
+         */
+
+        if (is_array($settings) === false
+            || isset($settings['scope'], $settings['value']) === false
+        ) {
+            // This will be an "old" format value.
+            $settings = [
+                'value' => $settings,
+                'scope' => 'standard',
+            ];
+
+            trigger_error(
+                __FUNCTION__.': the format of the $settings parameter has changed from (mixed) $value to array(\'scope\' => \'sniff|standard\', \'value\' => $value). Please update your integration code. See PR #3629 for more information.',
+                E_USER_DEPRECATED
+            );
+        }
+
         $isSettable  = false;
         $sniffObject = $this->sniffs[$sniffClass];
         if (property_exists($sniffObject, $propertyName) === true
