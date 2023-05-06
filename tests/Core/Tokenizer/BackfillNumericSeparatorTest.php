@@ -57,7 +57,7 @@ class BackfillNumericSeparatorTest extends AbstractMethodUnitTest
         }
 
         $testIntMoreThanMaxType = 'T_LNUMBER';
-        if (PHP_INT_MAX < 10223372036854775807) {
+        if (PHP_INT_MAX < 9223372036854775807) {
             $testIntMoreThanMaxType = 'T_DNUMBER';
         }
 
