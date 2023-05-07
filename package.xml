@@ -35,6 +35,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Generic.PHP.LowerCaseType sniff now correctly examines types inside arrow functions
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - PSR2.Classes.PropertyDeclaration now enforces that the readonly modifier comes after the visibility modifier
+    - PSR2 and PSR12 do not have documented rules for this as they pre-date the readonly modifier
+    - PSR-PER has been used to confirm the order of this keyword so it can be applied to PSR2 and PSR12 correctly
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Squiz.Formatting.OperatorBracket no longer reports false positives in match() structures
   - Fixed bug #3616 : Squiz.PHP.DisallowComparisonAssignment false positive for PHP 8 match expression
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
