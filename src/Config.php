@@ -90,6 +90,13 @@ class Config
     const STABILITY = 'stable';
 
     /**
+     * Default report width when no report width is provided and 'auto' does not yield a valid width.
+     *
+     * @var int
+     */
+    const DEFAULT_REPORT_WIDTH = 80;
+
+    /**
      * An array of settings that PHPCS and PHPCBF accept.
      *
      * This array is not meant to be accessed directly. Instead, use the settings
@@ -223,13 +230,20 @@ class Config
         switch ($name) {
         case 'reportWidth' :
             // Support auto terminal width.
-            if ($value === 'auto'
-                && function_exists('shell_exec') === true
-                && preg_match('|\d+ (\d+)|', shell_exec('stty size 2>&1'), $matches) === 1
-            ) {
-                $value = (int) $matches[1];
-            } else {
+            if ($value === 'auto' && function_exists('shell_exec') === true) {
+                $dimensions = shell_exec('stty size 2>&1');
+                if (is_string($dimensions) === true && preg_match('|\d+ (\d+)|', $dimensions, $matches) === 1) {
+                    $value = (int) $matches[1];
+                    break;
+                }
+            }
+
+            if (is_int($value) === true) {
+                $value = abs($value);
+            } else if (is_string($value) === true && preg_match('`^\d+$`', $value) === 1) {
                 $value = (int) $value;
+            } else {
+                $value = self::DEFAULT_REPORT_WIDTH;
             }
             break;
         case 'standards' :
