@@ -37,5 +37,47 @@
     "bin": [
         "bin/phpcs",
         "bin/phpcbf"
-    ]
+    ],
+    "scripts": {
+        "cs": [
+            "@php ./bin/phpcs"
+        ],
+        "cbf": [
+            "@php ./bin/phpcbf"
+        ],
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php ./vendor/phpunit/phpunit/phpunit tests/AllTests.php --no-coverage"
+        ],
+        "test-php8": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php ./vendor/phpunit/phpunit/phpunit tests/AllTests.php --no-configuration --bootstrap=tests/bootstrap.php --dont-report-useless-tests --no-coverage"
+        ],
+        "coverage": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php ./vendor/phpunit/phpunit/phpunit tests/AllTests.php -d max_execution_time=0"
+        ],
+        "build": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php -d phar.readonly=0 -f ./scripts/build-phar.php"
+        ],
+        "check-package": [
+            "@php -f ./scripts/validate-pear-package.php"
+        ],
+        "check-all": [
+            "@cs",
+            "@test",
+            "@check-package"
+        ]
+    },
+    "scripts-descriptions": {
+        "cs": "Check for code style violations.",
+        "cbf": "Fix code style violations.",
+        "test": "Run the unit tests without code coverage.",
+        "test-php8": "Run the unit tests without code coverage on PHP 8.1 or higher.",
+        "coverage": "Run the unit tests with code coverage.",
+        "build": "Create PHAR files for PHPCS and PHPCBF.",
+        "check-package": "Check all files are correctly listed in the package.xml file.",
+        "check-all": "Run all checks (phpcs, tests, package check)."
+    }
 }
