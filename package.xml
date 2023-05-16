@@ -116,7 +116,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    </file>
    <file baseinstalldir="PHP/CodeSniffer" name="CodeSniffer.conf.dist" role="data" />
    <file baseinstalldir="PHP/CodeSniffer" name="README.md" role="doc" />
-   <file baseinstalldir="PHP/CodeSniffer" name="CONTRIBUTING.md" role="doc" />
    <file baseinstalldir="PHP/CodeSniffer" name="licence.txt" role="doc" />
    <file baseinstalldir="PHP/CodeSniffer" name="phpcs.xml.dist" role="php" />
    <file baseinstalldir="PHP/CodeSniffer" name="phpcs.xsd" role="php" />
@@ -2153,7 +2152,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="phpcs.bat" name="bin/phpcs.bat" />
    <install as="phpcbf.bat" name="bin/phpcbf.bat" />
    <install as="README" name="README.md" />
-   <install as="CONTRIBUTING" name="CONTRIBUTING.md" />
    <install as="LICENCE" name="licence.txt" />
    <install as="phpunit.xml" name="phpunit.xml.dist" />
    <install as="AllTests.php" name="tests/AllTests.php" />
@@ -2277,7 +2275,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="phpcs" name="bin/phpcs" />
    <install as="phpcbf" name="bin/phpcbf" />
    <install as="README" name="README.md" />
-   <install as="CONTRIBUTING" name="CONTRIBUTING.md" />
    <install as="LICENCE" name="licence.txt" />
    <install as="phpunit.xml" name="phpunit.xml.dist" />
    <install as="tests/AllTests.php" name="tests/AllTests.php" />
