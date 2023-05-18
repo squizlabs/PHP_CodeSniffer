@@ -90,6 +90,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3797 : Tokenizer/PHP: more context sensitive keyword fixes
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3801 : File::getMethodParameters(): allow for readonly promoted properties without visibility
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3805 : Generic/FunctionCallArgumentSpacing: prevent fixer conflict over PHP 7.3+ trailing comma's in function calls
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
