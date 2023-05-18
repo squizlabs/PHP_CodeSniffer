@@ -52,6 +52,18 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Added support for readonly classes to File::getClassProperties() through a new is_readonly array index in the return value
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Added support for readonly class to a number of sniffs
+    -- Generic.CodeAnalysis.UnnecessaryFinalModifier
+    -- PEAR.Commenting.ClassComment
+    -- PEAR.Commenting.FileComment
+    -- PSR2.Classes.ClassDeclaration
+    -- Squiz.Classes.ClassDeclaration
+    -- Squiz.Classes.LowercaseClassKeywords
+    -- Squiz.Commenting.ClassComment
+    -- Squiz.Commenting.DocCommentAlignment
+    -- Squiz.Commenting.FileComment
+    -- Squiz.Commenting.InlineComment
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Generic.PHP.LowerCaseType sniff now correctly examines types inside arrow functions
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - PSR2.Classes.PropertyDeclaration now enforces that the readonly modifier comes after the visibility modifier
