@@ -847,6 +847,43 @@ class GetMethodParametersTest extends AbstractMethodUnitTest
 
 
     /**
+     * Verify recognition of PHP8 constructor with property promotion using PHP 8.1 readonly
+     * keyword without explicit visibility.
+     *
+     * @return void
+     */
+    public function testPHP81ConstructorPropertyPromotionWithOnlyReadOnly()
+    {
+        $expected    = [];
+        $expected[0] = [
+            'name'                => '$promotedProp',
+            'content'             => 'readonly Foo&Bar $promotedProp',
+            'has_attributes'      => false,
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => 'Foo&Bar',
+            'nullable_type'       => false,
+            'property_visibility' => 'public',
+            'property_readonly'   => true,
+        ];
+        $expected[1] = [
+            'name'                => '$promotedToo',
+            'content'             => 'readonly ?bool $promotedToo',
+            'has_attributes'      => false,
+            'pass_by_reference'   => false,
+            'variable_length'     => false,
+            'type_hint'           => '?bool',
+            'nullable_type'       => true,
+            'property_visibility' => 'public',
+            'property_readonly'   => true,
+        ];
+
+        $this->getMethodParametersTestHelper('/* '.__FUNCTION__.' */', $expected);
+
+    }//end testPHP81ConstructorPropertyPromotionWithOnlyReadOnly()
+
+
+    /**
      * Verify behaviour when a non-constructor function uses PHP 8 property promotion syntax.
      *
      * @return void
