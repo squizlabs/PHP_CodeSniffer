@@ -26,6 +26,21 @@ http://pear.php.net/dtd/package-2.0.xsd">
  </stability>
  <license uri="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/licence.txt">BSD 3-Clause License</license>
  <notes>
+  - Changes have been made to the way PHPCS handles invalid sniff properties being set in a custom ruleset
+    -- Fixes PHP 8.2 deprecation notices for properties set in a (custom) ruleset for complete standards/complete sniff categories
+    -- Invalid sniff properties set for individual sniffs will now result in an error and halt the execution of PHPCS
+      --- A descriptive error message is provided to allow users to fix their ruleset
+    -- Sniff properties set for complete standards/complete sniff categories will now only be set on sniffs which explicitly support the property
+      --- The property will be silently ignored for those sniffs which do not support the property
+    -- For sniff developers, it is strongly recommended for sniffs to explicitly declare any user-adjustable public properties
+      --- If dynamic properties need to be supported for a sniff, either declare the magic __set()/__get()/__isset()/__unset() methods on the sniff or let the sniff extend stdClass
+      --- Note: The #[\AllowDynamicProperties] attribute will have no effect for properties which are being set in rulesets.
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - The third parameter for the Ruleset::setSniffProperty() method has been changed to expect an array
+    -- Sniff developers/integrators of PHPCS may need to make some small adjustments to allow for this change
+    -- Existing code will continue to work but will throw a deprecation error
+    -- The backwards compatiblity layer will be removed in PHPCS 4.0
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Newer versions of Composer will now suggest installing PHPCS using require-dev instead of require
     -- Thanks to Gary Jones (@GaryJones) for the patch
   - A custom Out Of Memory error will now be shown if PHPCS or PHPCBF run out of memory during a run
