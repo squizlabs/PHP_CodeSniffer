@@ -144,6 +144,16 @@ http://pear.php.net/dtd/package-2.0.xsd">
       </dir>
      </dir>
      <dir name="Ruleset">
+      <dir name="Fixtures">
+       <dir name="Sniffs">
+        <dir name="Category">
+         <file baseinstalldir="" name="SetPropertyAllowedAsDeclaredSniff.php" role="test" />
+         <file baseinstalldir="" name="SetPropertyAllowedViaMagicMethodSniff.php" role="test" />
+         <file baseinstalldir="" name="SetPropertyAllowedViaStdClassSniff.php" role="test" />
+         <file baseinstalldir="" name="SetPropertyNotAllowedViaAttributeSniff.php" role="test" />
+        </dir>
+       </dir>
+      </dir>
       <file baseinstalldir="" name="RuleInclusionTest.php" role="test" />
       <file baseinstalldir="" name="RuleInclusionTest.xml" role="test" />
       <file baseinstalldir="" name="RuleInclusionTest-include.xml" role="test" />
@@ -151,6 +161,15 @@ http://pear.php.net/dtd/package-2.0.xsd">
       <file baseinstalldir="" name="RuleInclusionAbsoluteLinuxTest.xml" role="test" />
       <file baseinstalldir="" name="RuleInclusionAbsoluteWindowsTest.php" role="test" />
       <file baseinstalldir="" name="RuleInclusionAbsoluteWindowsTest.xml" role="test" />
+      <file baseinstalldir="" name="SetSniffPropertyTest.php" role="test" />
+      <file baseinstalldir="" name="SetPropertyAllowedAsDeclaredTest.xml" role="test" />
+      <file baseinstalldir="" name="SetPropertyAllowedViaMagicMethodTest.xml" role="test" />
+      <file baseinstalldir="" name="SetPropertyAllowedViaStdClassTest.xml" role="test" />
+      <file baseinstalldir="" name="SetPropertyAppliesPropertyToMultipleSniffsInCategoryTest.xml" role="test" />
+      <file baseinstalldir="" name="SetPropertyThrowsErrorOnInvalidPropertyTest.xml" role="test" />
+      <file baseinstalldir="" name="SetPropertyNotAllowedViaAttributeTest.xml" role="test" />
+      <file baseinstalldir="" name="SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForStandardTest.xml" role="test" />
+      <file baseinstalldir="" name="SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForCategoryTest.xml" role="test" />
      </dir>
      <dir name="Sniffs">
       <file baseinstalldir="" name="AbstractArraySniffTest.inc" role="test" />
@@ -2134,6 +2153,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" />
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" />
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetSniffPropertyTest.php" name="tests/Core/Ruleset/SetSniffPropertyTest.php" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyAllowedAsDeclaredTest.xml" name="tests/Core/Ruleset/SetPropertyAllowedAsDeclaredTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyAllowedViaMagicMethodTest.xml" name="tests/Core/Ruleset/SetPropertyAllowedViaMagicMethodTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyAllowedViaStdClassTest.xml" name="tests/Core/Ruleset/SetPropertyAllowedViaStdClassTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyAppliesPropertyToMultipleSniffsInCategoryTest.xml" name="tests/Core/Ruleset/SetPropertyAppliesPropertyToMultipleSniffsInCategoryTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyNotAllowedViaAttributeTest.xml" name="tests/Core/Ruleset/SetPropertyNotAllowedViaAttributeTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForCategoryTest.xml" name="tests/Core/Ruleset/SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForCategoryTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForStandardTest.xml" name="tests/Core/Ruleset/SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForStandardTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyThrowsErrorOnInvalidPropertyTest.xml" name="tests/Core/Ruleset/SetPropertyThrowsErrorOnInvalidPropertyTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedAsDeclaredSniff.php" name="tests/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedAsDeclaredSniff.php" />
+   <install as="CodeSniffer/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedViaMagicMethodSniff.php" name="tests/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedViaMagicMethodSniff.php" />
+   <install as="CodeSniffer/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedViaStdClassSniff.php" name="tests/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedViaStdClassSniff.php" />
+   <install as="CodeSniffer/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyNotAllowedViaAttributeSniff.php" name="tests/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyNotAllowedViaAttributeSniff.php" />
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTest.inc" name="tests/Core/Sniffs/AbstractArraySniffTest.inc" />
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTest.php" name="tests/Core/Sniffs/AbstractArraySniffTest.php" />
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTestable.php" name="tests/Core/Sniffs/AbstractArraySniffTestable.php" />
@@ -2242,6 +2274,19 @@ http://pear.php.net/dtd/package-2.0.xsd">
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteLinuxTest.xml" />
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.php" />
    <install as="CodeSniffer/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" name="tests/Core/Ruleset/RuleInclusionAbsoluteWindowsTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetSniffPropertyTest.php" name="tests/Core/Ruleset/SetSniffPropertyTest.php" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyAllowedAsDeclaredTest.xml" name="tests/Core/Ruleset/SetPropertyAllowedAsDeclaredTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyAllowedViaMagicMethodTest.xml" name="tests/Core/Ruleset/SetPropertyAllowedViaMagicMethodTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyAllowedViaStdClassTest.xml" name="tests/Core/Ruleset/SetPropertyAllowedViaStdClassTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyNotAllowedViaAttributeTest.xml" name="tests/Core/Ruleset/SetPropertyNotAllowedViaAttributeTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyAppliesPropertyToMultipleSniffsInCategoryTest.xml" name="tests/Core/Ruleset/SetPropertyAppliesPropertyToMultipleSniffsInCategoryTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForCategoryTest.xml" name="tests/Core/Ruleset/SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForCategoryTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForStandardTest.xml" name="tests/Core/Ruleset/SetPropertyDoesNotThrowErrorOnInvalidPropertyWhenSetForStandardTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/SetPropertyThrowsErrorOnInvalidPropertyTest.xml" name="tests/Core/Ruleset/SetPropertyThrowsErrorOnInvalidPropertyTest.xml" />
+   <install as="CodeSniffer/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedAsDeclaredSniff.php" name="tests/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedAsDeclaredSniff.php" />
+   <install as="CodeSniffer/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedViaMagicMethodSniff.php" name="tests/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedViaMagicMethodSniff.php" />
+   <install as="CodeSniffer/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedViaStdClassSniff.php" name="tests/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyAllowedViaStdClassSniff.php" />
+   <install as="CodeSniffer/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyNotAllowedViaAttributeSniff.php" name="tests/Core/Ruleset/Fixtures/Sniffs/Category/SetPropertyNotAllowedViaAttributeSniff.php" />
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTest.inc" name="tests/Core/Sniffs/AbstractArraySniffTest.inc" />
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTest.php" name="tests/Core/Sniffs/AbstractArraySniffTest.php" />
    <install as="CodeSniffer/Core/Sniffs/AbstractArraySniffTestable.php" name="tests/Core/Sniffs/AbstractArraySniffTestable.php" />

@@ -379,9 +379,12 @@ class File
                                 if (isset($this->ruleset->sniffCodes[$parts[0]]) === true) {
                                     $listenerCode  = array_shift($parts);
                                     $propertyCode  = array_shift($parts);
-                                    $propertyValue = rtrim(implode(' ', $parts), " */\r\n");
+                                    $settings      = [
+                                        'value' => rtrim(implode(' ', $parts), " */\r\n"),
+                                        'scope' => 'sniff',
+                                    ];
                                     $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
-                                    $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
+                                    $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $settings);
                                 }
                             }
                         }
@@ -403,9 +406,12 @@ class File
                         $listenerCode = $token['sniffCode'];
                         if (isset($this->ruleset->sniffCodes[$listenerCode]) === true) {
                             $propertyCode  = $token['sniffProperty'];
-                            $propertyValue = $token['sniffPropertyValue'];
+                            $settings      = [
+                                'value' => $token['sniffPropertyValue'],
+                                'scope' => 'sniff',
+                            ];
                             $listenerClass = $this->ruleset->sniffCodes[$listenerCode];
-                            $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $propertyValue);
+                            $this->ruleset->setSniffProperty($listenerClass, $propertyCode, $settings);
                         }
                     }
                 }//end if

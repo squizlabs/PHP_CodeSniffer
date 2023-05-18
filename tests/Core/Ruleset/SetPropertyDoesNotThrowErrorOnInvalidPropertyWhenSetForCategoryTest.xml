@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Fixtures" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master/phpcs.xsd">
+
+    <rule ref="Generic.Arrays">
+        <properties>
+            <property name="doesnotexist" value="2"/>
+        </properties>
+    </rule>
+</ruleset>
