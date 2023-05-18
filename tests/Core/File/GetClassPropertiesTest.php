@@ -9,6 +9,7 @@
 
 namespace PHP_CodeSniffer\Tests\Core\File;
 
+use PHP_CodeSniffer\Exceptions\RuntimeException;
 use PHP_CodeSniffer\Tests\Core\AbstractMethodUnitTest;
 
 class GetClassPropertiesTest extends AbstractMethodUnitTest
@@ -23,13 +24,13 @@ class GetClassPropertiesTest extends AbstractMethodUnitTest
      *
      * @dataProvider dataNotAClassException
      *
-     * @expectedException        PHP_CodeSniffer\Exceptions\RuntimeException
-     * @expectedExceptionMessage $stackPtr must be of type T_CLASS
-     *
      * @return void
      */
     public function testNotAClassException($testMarker, $tokenType)
     {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('$stackPtr must be of type T_CLASS');
+
         $target = $this->getTargetToken($testMarker, $tokenType);
         self::$phpcsFile->getClassProperties($target);
 
