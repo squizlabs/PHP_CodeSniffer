@@ -1,0 +1,26 @@
+<documentation title="Function Closing Brace">
+    <standard>
+    <![CDATA[
+    Checks that the closing brace of a function goes directly after the body.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Correct closing parenthesis.">
+        <![CDATA[
+function foo()
+{
+    echo 'foo';
+<em>}</em>
+        ]]>
+        </code>
+        <code title="Invalid: Incorrect closing parenthesis.">
+        <![CDATA[
+function foo()
+{
+    echo 'foo';
+<em></em>
+<em>}</em>
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
