@@ -207,6 +207,22 @@ class Config
             throw new RuntimeException("ERROR: unable to get value of property \"$name\"");
         }
 
+        // Figure out what the terminal width needs to be for "auto".
+        if ($name === 'reportWidth' && $this->settings[$name] === 'auto') {
+            if (function_exists('shell_exec') === true) {
+                $dimensions = shell_exec('stty size 2>&1');
+                if (is_string($dimensions) === true && preg_match('|\d+ (\d+)|', $dimensions, $matches) === 1) {
+                    $this->settings[$name] = (int) $matches[1];
+                }
+            }
+
+            if ($this->settings[$name] === 'auto') {
+                // If shell_exec wasn't available or didn't yield a usable value, set to the default.
+                // This will prevent subsequent retrievals of the reportWidth from making another call to stty.
+                $this->settings[$name] = self::DEFAULT_REPORT_WIDTH;
+            }
+        }
+
         return $this->settings[$name];
 
     }//end __get()
@@ -229,13 +245,9 @@ class Config
 
         switch ($name) {
         case 'reportWidth' :
-            // Support auto terminal width.
-            if ($value === 'auto' && function_exists('shell_exec') === true) {
-                $dimensions = shell_exec('stty size 2>&1');
-                if (is_string($dimensions) === true && preg_match('|\d+ (\d+)|', $dimensions, $matches) === 1) {
-                    $value = (int) $matches[1];
-                    break;
-                }
+            if (is_string($value) === true && $value === 'auto') {
+                // Nothing to do. Leave at 'auto'.
+                break;
             }
 
             if (is_int($value) === true) {
@@ -246,6 +258,7 @@ class Config
                 $value = self::DEFAULT_REPORT_WIDTH;
             }
             break;
+
         case 'standards' :
             $cleaned = [];
 
