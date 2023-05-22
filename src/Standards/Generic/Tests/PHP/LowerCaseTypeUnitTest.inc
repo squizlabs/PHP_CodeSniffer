@@ -92,3 +92,8 @@ function intersectionReturnTypes ($var): \Package\ClassName&\Package\Other_Class
 
 $arrow = fn (int $a, string $b, bool $c, array $d, Foo\Bar $e) : int => $a * $b;
 $arrow = fn (Int $a, String $b, BOOL $c, Array $d, Foo\Bar $e) : Float => $a * $b;
+
+// Intentional error, should be ignored by the sniff.
+interface PropertiesNotAllowed {
+    public $notAllowed;
+}

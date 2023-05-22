@@ -97,6 +97,11 @@ class LowerCaseTypeSniff implements Sniff
                 return;
             }
 
+            if (empty($props) === true) {
+                // Parse error - property in interface or enum. Ignore.
+                return;
+            }
+
             // Strip off potential nullable indication.
             $type = ltrim($props['type'], '?');
 
