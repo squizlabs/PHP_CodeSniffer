@@ -110,6 +110,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3805 : Generic/FunctionCallArgumentSpacing: prevent fixer conflict over PHP 7.3+ trailing comma's in function calls
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3816 : PSR12/FileHeader: bug fix - false positives on PHP 8.2+ readonly classes
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
  <contents>
   <dir name="/">
