@@ -48,13 +48,13 @@ A clear and concise description of what you expected to happen.
 
 ## Versions (please complete the following information)
 
-|                         |                                                                              |
-|-------------------------|------------------------------------------------------------------------------|
-| Operating System        | [e.g., Windows 10, MacOS 10.15]                                              |
-| PHP version             | [e.g., 7.2, 7.4]                                                             |
-| PHP_CodeSniffer version | [e.g., 3.5.5, master]                                                        |
-| Standard                | [e.g., PSR2, PSR12, Squiz, custom]                                           |
-| Install type            | [e.g. Composer (global/local), PHAR, PEAR, git clone, other (please expand)] |
+| | |
+|-|-|
+| Operating System | [e.g., Windows 10, MacOS 10.15]
+| PHP version | [e.g., 7.2, 7.4]
+| PHP_CodeSniffer version | [e.g., 3.5.5, master]
+| Standard | [e.g., PSR2, PSR12, Squiz, custom]
+| Install type | [e.g. Composer (global/local), PHAR, PEAR, git clone, other (please expand)]
 
 ## Additional context
 Add any other context about the problem here.
