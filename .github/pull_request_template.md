@@ -32,7 +32,7 @@ Fixes #
 ## PR checklist
 <!-- Go over all the following points, and put an `x` in all the boxes that apply. -->
 - [ ] I have checked there is no other PR open for the same change.
-- [ ] I have read the [Contribution Guidelines](.github/CONTRIBUTING.md).
+- [ ] I have read the [Contribution Guidelines](https://github.com/squizlabs/PHP_CodeSniffer/blob/HEAD/CONTRIBUTING.md).
 - [ ] I grant the project the right to include and distribute the code under the BSD-3-Clause license (and I have the right to grant these rights).
 - [ ] I have added tests to cover my changes.
 - [ ] I have verified that the code complies with the projects coding standards.
