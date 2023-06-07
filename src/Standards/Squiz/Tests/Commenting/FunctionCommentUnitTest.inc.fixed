@@ -1006,10 +1006,20 @@ function foo($foo) {}
  */
 public function foo($a, $b) {}
 
+/**
+ * @inheritDoc
+ */
+public function foo($a, $b) {}
+
 // phpcs:set Squiz.Commenting.FunctionComment skipIfInheritdoc true
 
 /**
  * {@inheritDoc}
+ */
+public function foo($a, $b) {}
+
+/**
+ * @inheritDoc
  */
 public function foo($a, $b) {}
 
@@ -1042,7 +1052,7 @@ public function ignored() {
 
 // phpcs:set Squiz.Commenting.FunctionComment specialMethods[] __construct,__destruct
 
-/** 
+/**
  * @return void
  * @throws Exception If any other error occurs. */
 function throwCommentOneLine() {}
