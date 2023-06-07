@@ -612,6 +612,10 @@ class PHP extends Tokenizer
                 echo PHP_EOL;
             }
 
+            if (PHP_VERSION_ID < 802000 && $token[0] === T_STRING && strtolower($token[1]) === 'readonly') {
+                $token[0] = T_READONLY;
+            }
+
             /*
                 Tokenize context-sensitive keyword as string when it should be string.
             */
@@ -676,12 +680,60 @@ class PHP extends Tokenizer
                     }
                 }
 
-                if (isset($nextNonEmptyToken) === true
-                    && $tokens[$nextNonEmptyToken] === '('
+                if ($preserveKeyword === true
                     && $token[0] === T_READONLY
+                    && isset($nextNonEmptyToken) === true
+                    && $tokens[$nextNonEmptyToken] === '('
                 ) {
-                    $preserveKeyword = false;
-                }
+                    $foundProperty      = false;
+                    $foundDNFCloseParen = false;
+                    $foundDNFPipe       = false;
+
+                    for ($i = ($nextNonEmptyToken + 1); $i < $numTokens; $i++) {
+                        if ($foundDNFCloseParen === false && $tokens[$i] === ')') {
+                            $foundDNFCloseParen = true;
+                            continue;
+                        }
+
+                        if ($foundDNFCloseParen === true && $foundDNFPipe === false && $tokens[$i] === '|') {
+                            $foundDNFPipe = true;
+                            continue;
+                        }
+
+                        $stopTokens = [
+                            '{',
+                            '}',
+                            '=',
+                            ';',
+                            '|',
+                            ':',
+                            ',',
+                            '(',
+                            ')',
+                        ];
+                        if (in_array($tokens[$i], $stopTokens, true) === true) {
+                            // We have finished our search.
+                            break;
+                        }
+
+                        if ($foundDNFPipe !== true) {
+                            continue;
+                        }
+
+                        if (is_array($tokens[$i]) === false) {
+                            continue;
+                        }
+
+                        if ($tokens[$i][0] === T_VARIABLE) {
+                            $foundProperty = true;
+                            break;
+                        }
+                    }//end for
+
+                    if ($foundProperty === false) {
+                        $preserveKeyword = false;
+                    }
+                }//end if
 
                 if ($preserveKeyword === false) {
                     if (PHP_CODESNIFFER_VERBOSITY > 1) {

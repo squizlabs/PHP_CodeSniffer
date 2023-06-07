@@ -148,6 +148,82 @@ class BackfillReadonlyTest extends AbstractMethodUnitTest
                 'readonly',
             ],
             [
+                '/* testDNFPropertyReadonlyPublicABC */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyReadonlyPublicBCA */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyReadonlyProtectedABC */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyReadonlyProtectedBCA */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyReadonlyPrivateABC */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyReadonlyPrivateBCA */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyReadonlyABC */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyReadonlyBCA */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyPublicReadonlyABC */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyPublicReadonlyBCA */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyProtectedReadonlyABC */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyProtectedReadonlyBCA */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyPrivateReadonlyABC */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyPrivateReadonlyBCA */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyPrivateReadonlyB_space_CA */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyPrivateReadonlyBC_space_A */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyPrivateReadonlyB_space_C_space_A */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyPromotionABC */',
+                'readonly',
+            ],
+            [
+                '/* testDNFPropertyPromotionBCA */',
+                'readonly',
+            ],
+            [
                 '/* testParseErrorLiveCoding */',
                 'readonly',
             ],
@@ -227,6 +303,10 @@ class BackfillReadonlyTest extends AbstractMethodUnitTest
             [
                 '/* testClassConstantFetchWithReadonlyAsConstantName */',
                 'READONLY',
+            ],
+            [
+                '/* testDNFMethodAB */',
+                'readonly',
             ],
         ];
 
