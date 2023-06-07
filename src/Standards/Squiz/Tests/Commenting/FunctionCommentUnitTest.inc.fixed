@@ -1046,3 +1046,20 @@ public function ignored() {
  * @return void
  * @throws Exception If any other error occurs. */
 function throwCommentOneLine() {}
+
+
+/**
+ * @param array{foo: int}  $a    A.
+ * @param array{x: int}    $ccc  C.
+ * @param array{xxxx: int} $dddd D.
+ * @param array<array{
+ *            foo: array{foo: int},
+ *            bar: int
+ *        }> $bb B.
+ *
+ * @return integer
+ */
+public function multiLineArray(array $a, array $ccc, array $dddd, array $bb)
+{
+    return 1;
+}//end multiLineArray()

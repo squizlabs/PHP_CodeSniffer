@@ -306,16 +306,47 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             $varSpace     = 0;
             $comment      = '';
             $commentLines = [];
+            $isMultiLine  = false;
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
+                $content = $tokens[($tag + 2)]['content'];
+
+                $multiLineExtra = 0;
+
+                if ($this->parenthesisClosed($content, '{', '}') === false
+                    || $this->parenthesisClosed($content, '<', '>') === false
+                ) {
+                    $isMultiLine = true;
+                    $content     = '';
+
+                    $i = ($tag + 2);
+
+                    while (true) {
+                        if ($tokens[$i]['content'] === '@param') {
+                            break;
+                        }
+
+                        $content .= $tokens[$i]['content'];
+
+                        if ($this->parenthesisClosed($content, '{', '}') === true
+                            && $this->parenthesisClosed($content, '<', '>') === true
+                        ) {
+                            break;
+                        }
+
+                        $multiLineExtra++;
+                        $i++;
+                    }
+                }//end if
+
                 $matches = [];
-                preg_match('/([^$&.]+)(?:((?:\.\.\.)?(?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
+                preg_match('/([^$&.]+)(?:((?:\.\.\.)?(?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $content, $matches);
 
                 if (empty($matches) === false) {
                     $typeLen   = strlen($matches[1]);
                     $type      = trim($matches[1]);
                     $typeSpace = ($typeLen - strlen($type));
                     $typeLen   = strlen($type);
-                    if ($typeLen > $maxType) {
+                    if ($typeLen > $maxType && $isMultiLine === false) {
                         $maxType = $typeLen;
                     }
                 }
@@ -323,7 +354,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 if (isset($matches[2]) === true) {
                     $var    = $matches[2];
                     $varLen = strlen($var);
-                    if ($varLen > $maxVar) {
+                    if ($varLen > $maxVar && $isMultiLine === false) {
                         $maxVar = $varLen;
                     }
 
@@ -332,7 +363,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                         $comment        = $matches[4];
                         $commentLines[] = [
                             'comment' => $comment,
-                            'token'   => ($tag + 2),
+                            'token'   => ($tag + 2 + $multiLineExtra),
                             'indent'  => $varSpace,
                         ];
 
@@ -343,7 +374,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                             $end = $tokens[$commentStart]['comment_closer'];
                         }
 
-                        for ($i = ($tag + 3); $i < $end; $i++) {
+                        for ($i = ($tag + 3 + $multiLineExtra); $i < $end; $i++) {
                             if ($tokens[$i]['code'] === T_DOC_COMMENT_STRING) {
                                 $indent = 0;
                                 if ($tokens[($i - 1)]['code'] === T_DOC_COMMENT_WHITESPACE) {
@@ -380,6 +411,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                 'commentLines' => $commentLines,
                 'type_space'   => $typeSpace,
                 'var_space'    => $varSpace,
+                'multi_line'   => $isMultiLine,
             ];
         }//end foreach
 
@@ -547,7 +579,9 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             $foundParams[] = $param['var'];
 
             // Check number of spaces after the type.
-            $this->checkSpacingAfterParamType($phpcsFile, $param, $maxType);
+            if ($param['multi_line'] === false) {
+                $this->checkSpacingAfterParamType($phpcsFile, $param, $maxType);
+            }
 
             // Make sure the param name is correct.
             if (isset($realParams[$pos]) === true) {
@@ -580,7 +614,9 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             }
 
             // Check number of spaces after the var name.
-            $this->checkSpacingAfterParamName($phpcsFile, $param, $maxVar);
+            if ($param['multi_line'] === false) {
+                $this->checkSpacingAfterParamName($phpcsFile, $param, $maxVar);
+            }
 
             // Param comments must start with a capital letter and end with a full stop.
             if (preg_match('/^(\p{Ll}|\P{L})/u', $param['comment']) === 1) {
@@ -763,6 +799,29 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
         return false;
 
     }//end checkInheritdoc()
+
+
+    /**
+     * Determines wether string has the same number of open and close parenthesis.
+     *
+     * @param string $string    String to check
+     * @param string $openChar  Opening character.
+     * @param string $closeChar Closing character.
+     *
+     * @return bool
+     */
+    private function parenthesisClosed($string, $openChar, $closeChar)
+    {
+        if (stripos($string, $openChar) === false) {
+            return true;
+        }
+
+        $open  = substr_count($string, $openChar);
+        $close = substr_count($string, $closeChar);
+
+        return $open === $close;
+
+    }//end parenthesisClosed()
 
 
 }//end class
