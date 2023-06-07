@@ -15,6 +15,7 @@ use PHP_CodeSniffer\Util\Tokens;
 
 class FunctionCommentSniff implements Sniff
 {
+    const PARAMS_REGEX = '/((?:(?![$.]|&(?=\$)).)*)(?:((?:\.\.\.)?(?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/';
 
     /**
      * Disable the check for functions with a lower visibility than the value given.
@@ -270,7 +271,7 @@ class FunctionCommentSniff implements Sniff
 
             if ($tokens[($tag + 2)]['code'] === T_DOC_COMMENT_STRING) {
                 $matches = [];
-                preg_match('/((?:(?![$.]|&(?=\$)).)*)(?:((?:\.\.\.)?(?:\$|&)[^\s]+)(?:(\s+)(.*))?)?/', $tokens[($tag + 2)]['content'], $matches);
+                preg_match(self::PARAMS_REGEX, $tokens[($tag + 2)]['content'], $matches);
 
                 if (empty($matches) === false) {
                     $typeLen   = strlen($matches[1]);
