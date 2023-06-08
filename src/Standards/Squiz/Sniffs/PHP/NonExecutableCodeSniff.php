@@ -94,21 +94,13 @@ class NonExecutableCodeSniff implements Sniff
             }
         }//end if
 
-        // Check if this token is actually part of a one-line IF or ELSE statement.
-        for ($i = ($stackPtr - 1); $i > 0; $i--) {
-            if ($tokens[$i]['code'] === T_CLOSE_PARENTHESIS) {
-                $i = $tokens[$i]['parenthesis_opener'];
-                continue;
-            } else if (isset(Tokens::$emptyTokens[$tokens[$i]['code']]) === true) {
-                continue;
-            }
-
-            break;
-        }
-
-        if ($tokens[$i]['code'] === T_IF
-            || $tokens[$i]['code'] === T_ELSE
-            || $tokens[$i]['code'] === T_ELSEIF
+        // This token may be part of an inline condition.
+        // If we find a closing parenthesis that belongs to a condition,
+        // or an "else", we should ignore this token.
+        if ($tokens[$prev]['code'] === T_ELSE
+            || (isset($tokens[$prev]['parenthesis_owner']) === true
+            && ($tokens[$tokens[$prev]['parenthesis_owner']]['code'] === T_IF
+            || $tokens[$tokens[$prev]['parenthesis_owner']]['code'] === T_ELSEIF))
         ) {
             return;
         }
@@ -175,21 +167,6 @@ class NonExecutableCodeSniff implements Sniff
                 return;
             }//end if
         }//end if
-
-        // This token may be part of an inline condition.
-        // If we find a closing parenthesis that belongs to a condition
-        // we should ignore this token.
-        if (isset($tokens[$prev]['parenthesis_owner']) === true) {
-            $owner  = $tokens[$prev]['parenthesis_owner'];
-            $ignore = [
-                T_IF     => true,
-                T_ELSE   => true,
-                T_ELSEIF => true,
-            ];
-            if (isset($ignore[$tokens[$owner]['code']]) === true) {
-                return;
-            }
-        }
 
         $ourConditions = array_keys($tokens[$stackPtr]['conditions']);
 
