@@ -405,8 +405,12 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
             $suggestedTypeNames = [];
 
             foreach ($typeNames as $typeName) {
+                if ($typeName === '') {
+                    continue;
+                }
+
                 // Strip nullable operator.
-                if (isset($typeName[0]) === true && $typeName[0] === '?') {
+                if ($typeName[0] === '?') {
                     $typeName = substr($typeName, 1);
                 }
 
