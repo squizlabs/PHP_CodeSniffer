@@ -228,6 +228,10 @@ class NonExecutableCodeSniff implements Sniff
             if ($tokens[$start]['code'] === T_SEMICOLON) {
                 break;
             }
+
+            if ($tokens[$start]['code'] === T_CLOSE_TAG) {
+                break;
+            }
         }//end for
 
         if (isset($tokens[$start]) === false) {
