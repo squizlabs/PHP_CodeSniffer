@@ -94,6 +94,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3722 : Potential "Uninitialized string offset 1" in octal notation backfill
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3728 : PHP 8.2 | PSR1/SideEffects: allow for readonly classes
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3777 : Squiz/NonExecutableCode: slew of bug fixes, mostly related to modern PHP
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3779 : Squiz/LowercasePHPFunctions + Generic/ForbiddenFunctions: bug fix for class names in attributes
@@ -107,6 +109,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3801 : File::getMethodParameters(): allow for readonly promoted properties without visibility
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3805 : Generic/FunctionCallArgumentSpacing: prevent fixer conflict over PHP 7.3+ trailing comma's in function calls
+    -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3816 : PSR12/FileHeader: bug fix - false positives on PHP 8.2+ readonly classes
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
  <contents>
@@ -1311,6 +1315,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.15.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.16.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.17.inc" role="test" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.18.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="FileHeaderUnitTest.php" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc" role="test" />
         <file baseinstalldir="PHP/CodeSniffer" name="ImportStatementUnitTest.inc.fixed" role="test" />
