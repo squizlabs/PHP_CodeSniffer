@@ -7,14 +7,12 @@
     <code_comparison>
         <code title="Valid: Correct spacing used.">
         <![CDATA[
-foo<em></em>(<em></em>$bar, $baz<em></em>) {
-}
+foo<em></em>(<em></em>$bar, $baz<em></em>);
         ]]>
         </code>
         <code title="Invalid: Invalid spacing used.">
         <![CDATA[
-foo<em> </em>(<em> </em>$bar, $baz<em> </em>) {
-}
+foo<em> </em>(<em> </em>$bar, $baz<em> </em>);
         ]]>
         </code>
     </code_comparison>
@@ -24,8 +22,7 @@ foo<em> </em>(<em> </em>$bar, $baz<em> </em>) {
 foo(
 <em>    </em>$bar,
 <em>    </em>$baz
-) {
-}
+);
         ]]>
         </code>
         <code title="Invalid: Incorrect number of spaces are used for indent.">
@@ -33,8 +30,7 @@ foo(
 foo(
 <em>  </em>$bar,
 <em>      </em>$baz
-) {
-}
+);
         ]]>
         </code>
     </code_comparison>
@@ -44,16 +40,14 @@ foo(
 foo(
     $bar,
     $baz
-<em>)</em> {
-}
+<em>)</em>;
         ]]>
         </code>
         <code title="Invalid: Incorrect closing parenthesis.">
         <![CDATA[
 foo(
     $bar,
-    $baz<em>)</em> {
-}
+    $baz<em>)</em>;
         ]]>
         </code>
     </code_comparison>
