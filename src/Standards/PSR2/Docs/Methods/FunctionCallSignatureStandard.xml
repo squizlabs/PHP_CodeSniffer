@@ -51,4 +51,57 @@ foo(
         ]]>
         </code>
     </code_comparison>
+    <code_comparison>
+        <code title="Valid: The first argument of a multi-line function call is on a new line.">
+        <![CDATA[
+foo(
+    <em>$bar</em>,
+    $baz
+);
+        ]]>
+        </code>
+        <code title="Invalid: The first argument of a multi-line function call is not on a new line.">
+        <![CDATA[
+foo(<em>$bar</em>,
+    $baz
+);
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: Only one argument per line in a multi-line function call.">
+        <![CDATA[
+foo(
+    $bar,
+    <em>$baz</em>
+);
+        ]]>
+        </code>
+        <code title="Invalid: Two or more arguments per line in a multi-line function call.">
+        <![CDATA[
+foo(
+    $bar, <em>$baz</em>
+);
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: No blank lines in a multi-line function call.">
+        <![CDATA[
+foo(
+    $bar,
+    $baz
+);
+        ]]>
+        </code>
+        <code title="Invalid: Blank line in multi-line function call.">
+        <![CDATA[
+foo(
+    $bar,
+<em></em>
+    $baz
+);
+        ]]>
+        </code>
+    </code_comparison>
 </documentation>
