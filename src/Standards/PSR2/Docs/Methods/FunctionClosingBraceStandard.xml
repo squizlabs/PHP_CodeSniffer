@@ -5,7 +5,7 @@
     ]]>
     </standard>
     <code_comparison>
-        <code title="Valid: Correct closing parenthesis.">
+        <code title="Valid: Closing brace directly follows the function body.">
         <![CDATA[
 function foo()
 {
@@ -13,7 +13,7 @@ function foo()
 <em>}</em>
         ]]>
         </code>
-        <code title="Invalid: Incorrect closing parenthesis.">
+        <code title="Invalid: Blank line between the function body and the closing brace.">
         <![CDATA[
 function foo()
 {

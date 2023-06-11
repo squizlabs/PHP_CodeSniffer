@@ -5,19 +5,19 @@
     ]]>
     </standard>
     <code_comparison>
-        <code title="Valid: Correct spacing used.">
+        <code title="Valid: Correct spacing is used around parentheses.">
         <![CDATA[
 foo<em></em>(<em></em>$bar, $baz<em></em>);
         ]]>
         </code>
-        <code title="Invalid: Invalid spacing used.">
+        <code title="Invalid: Incorrect spacing used, too much space around the parentheses.">
         <![CDATA[
 foo<em> </em>(<em> </em>$bar, $baz<em> </em>);
         ]]>
         </code>
     </code_comparison>
     <code_comparison>
-        <code title="Valid: Correct number of spaces used for indent.">
+        <code title="Valid: Correct number of spaces used for indent in a multi-line function call.">
         <![CDATA[
 foo(
 <em>    </em>$bar,
@@ -25,7 +25,7 @@ foo(
 );
         ]]>
         </code>
-        <code title="Invalid: Incorrect number of spaces are used for indent.">
+        <code title="Invalid: Incorrect number of spaces used for indent in a multi-line function call.">
         <![CDATA[
 foo(
 <em>  </em>$bar,
@@ -35,7 +35,7 @@ foo(
         </code>
     </code_comparison>
     <code_comparison>
-        <code title="Valid: Correct closing parenthesis.">
+        <code title="Valid: Closing parenthesis for a multi-line function call is on a new line after the last parameter.">
         <![CDATA[
 foo(
     $bar,
@@ -43,7 +43,7 @@ foo(
 <em>)</em>;
         ]]>
         </code>
-        <code title="Invalid: Incorrect closing parenthesis.">
+        <code title="Invalid: Closing parenthesis for a multi-line function call is not on a new line after the last parameter.">
         <![CDATA[
 foo(
     $bar,
