@@ -204,8 +204,8 @@ class NonExecutableCodeSniff implements Sniff
             $end = ($phpcsFile->numTokens - 1);
         }//end if
 
-        // Find the semicolon that ends this statement, skipping
-        // nested statements like FOR loops and closures.
+        // Find the semicolon or closing PHP tag that ends this statement,
+        // skipping nested statements like FOR loops and closures.
         for ($start = ($stackPtr + 1); $start < $phpcsFile->numTokens; $start++) {
             if ($start === $end) {
                 break;
@@ -225,11 +225,7 @@ class NonExecutableCodeSniff implements Sniff
                 continue;
             }
 
-            if ($tokens[$start]['code'] === T_SEMICOLON) {
-                break;
-            }
-
-            if ($tokens[$start]['code'] === T_CLOSE_TAG) {
+            if ($tokens[$start]['code'] === T_SEMICOLON || $tokens[$start]['code'] === T_CLOSE_TAG) {
                 break;
             }
         }//end for
