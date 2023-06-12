@@ -58,4 +58,10 @@ $a = new class {
     }
 };
 
+// Multiple statements are still one line of unreachable code, so should get
+// only one complaint from this sniff. (Well, technically two here since there
+// are two 'exit()' statements above, so one complaint from each of those. So,
+// two here, but not six.)
+echo 'one'; echo 'two'; echo 'three';
+
 interface MyInterface {
