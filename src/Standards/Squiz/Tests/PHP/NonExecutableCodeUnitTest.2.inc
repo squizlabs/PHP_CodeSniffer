@@ -64,4 +64,10 @@ $a = new class {
 // two here, but not six.)
 echo 'one'; echo 'two'; echo 'three';
 
+// A single statement split across multiple lines. Here we get complaints for
+// each line, even though they're all part of one statement.
+echo 'one' . 'two'
+    . 'three' . 'four'
+    . 'five' . 'six';
+
 interface MyInterface {
