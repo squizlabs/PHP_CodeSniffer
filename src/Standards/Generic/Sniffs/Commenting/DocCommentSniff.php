@@ -306,7 +306,7 @@ class DocCommentSniff implements Sniff
                             $insertionPointer++;
 
                             if (($insertionPointer + 2) >= $commentEnd) {
-                                $insertionPointer = $commentEnd - 1;
+                                $insertionPointer = ($commentEnd - 1);
                                 break;
                             }
                         }
