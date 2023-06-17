@@ -11,9 +11,9 @@
  */
 
 /**
- * Short description
+ * short description
  *
- * Long description
+ * long description
  * over multiple lines.
  *
  * @tag1 one
@@ -201,7 +201,7 @@
  */
 
 /**
- * This is a test
+ * this is a test
  *
  * @param boolean $foo blah
  * @param boolean $bar Blah.
@@ -234,11 +234,11 @@
  */
 
 /**
- * Étude des ...
+ * étude des ...
  */
 
 /**
-* Doc comment 
+* doc comment 
 */
 
         /**

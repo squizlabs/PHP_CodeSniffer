@@ -179,21 +179,7 @@ class DocCommentSniff implements Sniff
 
             if (preg_match('/^\p{Ll}/u', $shortContent) === 1) {
                 $error = 'Doc comment short description must start with a capital letter';
-
-                $firstCharacter      = mb_substr($shortContent, 0, 1);
-                $firstCharacterUpper = mb_strtoupper($firstCharacter);
-
-                if ($firstCharacter === $firstCharacterUpper) {
-                    $phpcsFile->addError($error, $short, 'ShortNotCapital');
-                } else {
-                    $fix = $phpcsFile->addFixableError($error, $short, 'ShortNotCapital');
-
-                    if ($fix === true) {
-                        $phpcsFile->fixer->beginChangeset();
-                        $phpcsFile->fixer->replaceToken($short, $firstCharacterUpper.mb_substr($tokens[$short]['content'], 1));
-                        $phpcsFile->fixer->endChangeset();
-                    }
-                }
+                $phpcsFile->addError($error, $short, 'ShortNotCapital');
             }
 
             $long = $phpcsFile->findNext($empty, ($shortEnd + 1), ($commentEnd - 1), true);
@@ -219,21 +205,7 @@ class DocCommentSniff implements Sniff
 
                 if (preg_match('/^\p{Ll}/u', $tokens[$long]['content']) === 1) {
                     $error = 'Doc comment long description must start with a capital letter';
-
-                    $firstCharacter      = mb_substr($tokens[$long]['content'][0], 0, 1);
-                    $firstCharacterUpper = mb_strtoupper($firstCharacter);
-
-                    if ($firstCharacter === $firstCharacterUpper) {
-                        $phpcsFile->addError($error, $long, 'LongNotCapital');
-                    } else {
-                        $fix = $phpcsFile->addFixableError($error, $long, 'LongNotCapital');
-
-                        if ($fix === true) {
-                            $phpcsFile->fixer->beginChangeset();
-                            $phpcsFile->fixer->replaceToken($long, $firstCharacterUpper.mb_substr($tokens[$long]['content'], 1));
-                            $phpcsFile->fixer->endChangeset();
-                        }
-                    }
+                    $phpcsFile->addError($error, $long, 'LongNotCapital');
                 }
             }//end if
         }//end if
