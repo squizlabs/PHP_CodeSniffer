@@ -468,3 +468,9 @@ yield [
 $a = [
       'a' =>
      ];
+
+// Ensure absence of NoKeySpecified error for array unpacking
+$x = [
+      'foo' => 'bar',
+    ...$a,
+     ];
