@@ -430,9 +430,22 @@ class ArrayDeclarationSniff implements Sniff
                 }
 
                 if ($keyUsed === true && $tokens[$lastToken]['code'] === T_COMMA) {
-                    $error = 'No key specified for array entry; first entry specifies key';
-                    $phpcsFile->addError($error, $nextToken, 'NoKeySpecified');
-                    return;
+                    $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($lastToken + 1), null, true);
+
+                    /*
+                        Allow array unpacking
+
+                        $x = [
+                          'foo' => 'bar',
+                          ...$baz,
+                        ];
+                    */
+
+                    if ($tokens[$nextToken]['code'] !== T_ELLIPSIS) {
+                        $error = 'No key specified for array entry; first entry specifies key';
+                        $phpcsFile->addError($error, $nextToken, 'NoKeySpecified');
+                        return;
+                    }
                 }
 
                 if ($keyUsed === false) {
