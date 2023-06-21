@@ -474,7 +474,7 @@ class ArrayDeclarationSniff implements Sniff
                         true
                     );
 
-                    $indices[]  = ['value' => $valueContent];
+                    $indices[]          = ['value' => $valueContent];
                     $usesArrayUnpacking = $phpcsFile->findPrevious(
                         Tokens::$emptyTokens,
                         ($nextToken - 2),
