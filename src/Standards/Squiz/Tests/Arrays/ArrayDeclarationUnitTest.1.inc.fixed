@@ -522,3 +522,20 @@ $foo = [
 $a = array(
       'a' =>
      );
+
+// Ensure absence of NoKeySpecified error for PHP 7.4+ array unpacking.
+$x = array(
+    ...$a,
+      'foo' => 'bar',
+     );
+
+$x = array(
+      'foo' => 'bar',
+    ...$a,
+     );
+
+$x = array(
+      'foo' => 'bar',
+    ...$a,
+      'baz' => 'bar',
+     );

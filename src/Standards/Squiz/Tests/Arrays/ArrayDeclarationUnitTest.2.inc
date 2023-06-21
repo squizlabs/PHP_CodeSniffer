@@ -469,8 +469,19 @@ $a = [
       'a' =>
      ];
 
-// Ensure absence of NoKeySpecified error for array unpacking
+// Ensure absence of NoKeySpecified error for PHP 7.4+ array unpacking.
+$x = [
+    ...$a,
+      'foo' => 'bar',
+     ];
+
 $x = [
       'foo' => 'bar',
     ...$a,
+     ];
+
+$x = [
+      'foo' => 'bar',
+    ...$a,
+      'baz' => 'bar',
      ];
