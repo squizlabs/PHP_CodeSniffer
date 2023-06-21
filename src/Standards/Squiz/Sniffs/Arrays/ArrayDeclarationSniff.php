@@ -475,7 +475,16 @@ class ArrayDeclarationSniff implements Sniff
                     );
 
                     $indices[]  = ['value' => $valueContent];
-                    $singleUsed = true;
+                    $usesArrayUnpacking = $phpcsFile->findPrevious(
+                        Tokens::$emptyTokens,
+                        ($nextToken - 2),
+                        null,
+                        true
+                    );
+                    if ($tokens[$usesArrayUnpacking]['code'] !== T_ELLIPSIS) {
+                        // Don't decide if an array is key => value indexed or not when PHP 7.4+ array unpacking is used.
+                        $singleUsed = true;
+                    }
                 }//end if
 
                 $lastToken = $nextToken;
