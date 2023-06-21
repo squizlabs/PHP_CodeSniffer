@@ -464,6 +464,13 @@ yield [
        static fn () : string => '',
       ];
 
+$foo = [
+        'foo' => match ($anything) {
+            'foo' => 'bar',
+            default => null,
+        },
+       ];
+
 // Intentional syntax error.
 $a = [
       'a' =>
@@ -484,4 +491,30 @@ $x = [
       'foo' => 'bar',
     ...$a,
       'baz' => 'bar',
+     ];
+
+$x = [
+    ...$a,
+    'foo' => 'bar', // OK.
+    'bar', // NoKeySpecified Error (based on second entry).
+     ];
+
+$x = [
+    ...$a,
+    'bar', // OK.
+    'foo' => 'bar', // KeySpecified Error (based on second entry).
+     ];
+
+$x = [
+    'foo' => 'bar',
+    ...$a,
+    'baz' => 'bar',
+    'bar', // NoKeySpecified Error (based on first entry).
+     ];
+
+$x = [
+    'bar',
+    ...$a,
+    'bar',
+    'baz' => 'bar', // KeySpecified (based on first entry).
      ];

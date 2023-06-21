@@ -475,12 +475,12 @@ yield array(
        static fn () : string => '',
       );
 
-$foo = [
+$foo = array(
         'foo' => match ($anything) {
             'foo' => 'bar',
             default => null,
         },
-       ];
+       );
 
 // Intentional syntax error.
 $a = array(
