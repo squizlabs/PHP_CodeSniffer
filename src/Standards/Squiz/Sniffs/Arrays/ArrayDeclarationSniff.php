@@ -431,16 +431,7 @@ class ArrayDeclarationSniff implements Sniff
 
                 if ($keyUsed === true && $tokens[$lastToken]['code'] === T_COMMA) {
                     $nextToken = $phpcsFile->findNext(Tokens::$emptyTokens, ($lastToken + 1), null, true);
-
-                    /*
-                        Allow array unpacking
-
-                        $x = [
-                          'foo' => 'bar',
-                          ...$baz,
-                        ];
-                    */
-
+                    // Allow for PHP 7.4+ array unpacking within an array declaration.
                     if ($tokens[$nextToken]['code'] !== T_ELLIPSIS) {
                         $error = 'No key specified for array entry; first entry specifies key';
                         $phpcsFile->addError($error, $nextToken, 'NoKeySpecified');
