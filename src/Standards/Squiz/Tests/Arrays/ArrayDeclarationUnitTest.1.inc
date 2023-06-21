@@ -487,7 +487,7 @@ $a = array(
       'a' =>
      );
 
-// Ensure absence of NoKeySpecified error for PHP 7.4+ array unpacking.
+// Safeguard correct errors for key/no key when PHP 7.4+ array unpacking is encountered.
 $x = array(
     ...$a,
       'foo' => 'bar',
