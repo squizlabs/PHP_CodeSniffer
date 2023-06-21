@@ -503,3 +503,29 @@ $x = array(
     ...$a,
       'baz' => 'bar',
      );
+
+$x = array(
+    ...$a,
+    'foo' => 'bar', // OK.
+    'bar', // NoKeySpecified Error (based on second entry).
+     );
+
+$x = array(
+    ...$a,
+    'bar', // OK.
+    'foo' => 'bar', // KeySpecified Error (based on second entry).
+     );
+
+$x = array(
+    'foo' => 'bar',
+    ...$a,
+    'baz' => 'bar',
+    'bar', // NoKeySpecified Error (based on first entry).
+     );
+
+$x = array(
+    'bar',
+    ...$a,
+    'bar',
+    'baz' => 'bar', // KeySpecified (based on first entry).
+     );
