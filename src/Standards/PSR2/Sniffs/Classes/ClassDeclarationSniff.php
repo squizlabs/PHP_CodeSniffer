@@ -492,12 +492,12 @@ class ClassDeclarationSniff extends PEARClassDeclarationSniff
 
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
-                for ($i = ($prevContent + 1); $i < $closeBrace; $i++) {
+                for ($i = ($prevContent + 1); $tokens[$i]['line'] !== $tokens[$closeBrace]['line']; $i++) {
                     $phpcsFile->fixer->replaceToken($i, '');
                 }
 
                 if (strpos($tokens[$prevContent]['content'], $phpcsFile->eolChar) === false) {
-                    $phpcsFile->fixer->replaceToken($closeBrace, $phpcsFile->eolChar.$tokens[$closeBrace]['content']);
+                    $phpcsFile->fixer->addNewline($prevContent);
                 }
 
                 $phpcsFile->fixer->endChangeset();
