@@ -102,6 +102,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3779 : Squiz/LowercasePHPFunctions + Generic/ForbiddenFunctions: bug fix for class names in attributes
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3785 : Squiz/FunctionComment: potential "Uninitialized string offset 0" when a type contains a duplicate pipe symbol
+    -- Thanks to Dan Wallis (@fredden) for the patch
   - Fixed bug #3787 : PEAR/Squiz/[MultiLine]FunctionDeclaration: allow for PHP 8.1 new in initializers
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3789 : Incorrect tokenization for ternary operator with match inside of it
