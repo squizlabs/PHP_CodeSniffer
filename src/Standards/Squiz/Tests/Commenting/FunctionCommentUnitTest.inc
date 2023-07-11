@@ -1046,3 +1046,11 @@ public function ignored() {
  * @return void
  * @throws Exception If any other error occurs. */
 function throwCommentOneLine() {}
+
+/**
+ * When two adjacent pipe symbols are used (by mistake), the sniff should not throw a PHP Fatal error
+ *
+ * @param stdClass||null $object While invalid, this should not throw a PHP Fatal error.
+ * @return void
+ */
+function doublePipeFatalError(?stdClass $object) {}
