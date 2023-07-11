@@ -547,16 +547,38 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
 
             // Make sure the param name is correct.
             if (isset($realParams[$pos]) === true) {
-                $realName = $realParams[$pos]['name'];
-                if ($realName !== $param['var']) {
+                $realName     = $realParams[$pos]['name'];
+                $paramVarName = $param['var'];
+
+                if ($param['var'][0] === '&') {
+                    // Even when passed by reference, the variable name in $realParams does not have
+                    // a leading '&'. This sniff will accept both '&$var' and '$var' in these cases.
+                    $paramVarName = substr($param['var'], 1);
+
+                    // This makes sure that the 'MissingParamTag' check won't throw a false positive.
+                    $foundParams[(count($foundParams) - 1)] = $paramVarName;
+
+                    if ($realParams[$pos]['pass_by_reference'] !== true && $realName === $paramVarName) {
+                        // Don't complain about this unless the param name is otherwise correct.
+                        $error = 'Doc comment for parameter %s is prefixed with "&" but parameter is not passed by reference';
+                        $code  = 'ParamNameUnexpectedAmpersandPrefix';
+                        $data  = [$paramVarName];
+
+                        // We're not offering an auto-fix here because we can't tell if the docblock
+                        // is wrong, or the parameter should be passed by reference.
+                        $phpcsFile->addError($error, $param['tag'], $code, $data);
+                    }
+                }
+
+                if ($realName !== $paramVarName) {
                     $code = 'ParamNameNoMatch';
                     $data = [
-                        $param['var'],
+                        $paramVarName,
                         $realName,
                     ];
 
                     $error = 'Doc comment for parameter %s does not match ';
-                    if (strtolower($param['var']) === strtolower($realName)) {
+                    if (strtolower($paramVarName) === strtolower($realName)) {
                         $error .= 'case of ';
                         $code   = 'ParamNameNoCaseMatch';
                     }
@@ -564,7 +586,7 @@ class FunctionCommentSniff extends PEARFunctionCommentSniff
                     $error .= 'actual variable name %s';
 
                     $phpcsFile->addError($error, $param['tag'], $code, $data);
-                }
+                }//end if
             } else if (substr($param['var'], -4) !== ',...') {
                 // We must have an extra parameter comment.
                 $error = 'Superfluous parameter comment';
