@@ -1378,9 +1378,12 @@ http://pear.php.net/dtd/package-2.0.xsd">
         <file baseinstalldir="PHP/CodeSniffer" name="SwitchDeclarationStandard.xml" role="php" />
        </dir>
        <dir name="Files">
+        <file baseinstalldir="PHP/CodeSniffer" name="ClosingTagStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="EndFileNewlineStandard.xml" role="php" />
        </dir>
        <dir name="Methods">
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionCallSignatureStandard.xml" role="php" />
+        <file baseinstalldir="PHP/CodeSniffer" name="FunctionClosingBraceStandard.xml" role="php" />
         <file baseinstalldir="PHP/CodeSniffer" name="MethodDeclarationStandard.xml" role="php" />
        </dir>
        <dir name="Namespaces">

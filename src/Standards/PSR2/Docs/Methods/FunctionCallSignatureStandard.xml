@@ -1,0 +1,107 @@
+<documentation title="Function Call Signature">
+    <standard>
+    <![CDATA[
+    Checks that the function call format is correct.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Correct spacing is used around parentheses.">
+        <![CDATA[
+foo<em></em>(<em></em>$bar, $baz<em></em>);
+        ]]>
+        </code>
+        <code title="Invalid: Incorrect spacing used, too much space around the parentheses.">
+        <![CDATA[
+foo<em> </em>(<em> </em>$bar, $baz<em> </em>);
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: Correct number of spaces used for indent in a multi-line function call.">
+        <![CDATA[
+foo(
+<em>    </em>$bar,
+<em>    </em>$baz
+);
+        ]]>
+        </code>
+        <code title="Invalid: Incorrect number of spaces used for indent in a multi-line function call.">
+        <![CDATA[
+foo(
+<em>  </em>$bar,
+<em>      </em>$baz
+);
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: Closing parenthesis for a multi-line function call is on a new line after the last parameter.">
+        <![CDATA[
+foo(
+    $bar,
+    $baz
+<em>)</em>;
+        ]]>
+        </code>
+        <code title="Invalid: Closing parenthesis for a multi-line function call is not on a new line after the last parameter.">
+        <![CDATA[
+foo(
+    $bar,
+    $baz<em>)</em>;
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: The first argument of a multi-line function call is on a new line.">
+        <![CDATA[
+foo(
+    <em>$bar</em>,
+    $baz
+);
+        ]]>
+        </code>
+        <code title="Invalid: The first argument of a multi-line function call is not on a new line.">
+        <![CDATA[
+foo(<em>$bar</em>,
+    $baz
+);
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: Only one argument per line in a multi-line function call.">
+        <![CDATA[
+foo(
+    $bar,
+    <em>$baz</em>
+);
+        ]]>
+        </code>
+        <code title="Invalid: Two or more arguments per line in a multi-line function call.">
+        <![CDATA[
+foo(
+    $bar, <em>$baz</em>
+);
+        ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="Valid: No blank lines in a multi-line function call.">
+        <![CDATA[
+foo(
+    $bar,
+    $baz
+);
+        ]]>
+        </code>
+        <code title="Invalid: Blank line in multi-line function call.">
+        <![CDATA[
+foo(
+    $bar,
+<em></em>
+    $baz
+);
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

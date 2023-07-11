@@ -1,0 +1,26 @@
+<documentation title="Function Closing Brace">
+    <standard>
+    <![CDATA[
+    Checks that the closing brace of a function goes directly after the body.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Closing brace directly follows the function body.">
+        <![CDATA[
+function foo()
+{
+    echo 'foo';
+<em>}</em>
+        ]]>
+        </code>
+        <code title="Invalid: Blank line between the function body and the closing brace.">
+        <![CDATA[
+function foo()
+{
+    echo 'foo';
+<em></em>
+<em>}</em>
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
