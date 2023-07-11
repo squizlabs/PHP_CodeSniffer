@@ -12,6 +12,7 @@
 namespace PHP_CodeSniffer\Filters;
 
 use PHP_CodeSniffer\Util;
+use ReturnTypeWillChange;
 
 abstract class ExactMatch extends Filter
 {
@@ -40,6 +41,7 @@ abstract class ExactMatch extends Filter
      *
      * @return bool
      */
+    #[ReturnTypeWillChange]
     public function accept()
     {
         if (parent::accept() === false) {
@@ -79,6 +81,7 @@ abstract class ExactMatch extends Filter
      *
      * @return \RecursiveIterator
      */
+    #[ReturnTypeWillChange]
     public function getChildren()
     {
         $children            = parent::getChildren();
