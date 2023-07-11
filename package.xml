@@ -71,6 +71,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - PSR-PER has been used to confirm the order of this keyword so it can be applied to PSR2 and PSR12 correctly
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Squiz.Formatting.OperatorBracket no longer reports false positives in match() structures
+  - Squiz.PHP.InnerFunctions sniff no longer reports on OO methods for OO structures declared within a function or closure
+    -- Thanks to @Daimona for the patch
   - Documentation has been added for the following sniffs:
     -- PSR2.Files.ClosingTag
     -- PSR2.Methods.FunctionCallSignature
@@ -121,6 +123,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3805 : Generic/FunctionCallArgumentSpacing: prevent fixer conflict over PHP 7.3+ trailing comma's in function calls
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3806 : Squiz.PHP.InnerFunctions sniff now correctly reports inner functions declared within a closure
+    -- Thanks to @Daimona for the patch
   - Fixed bug #3816 : PSR12/FileHeader: bug fix - false positives on PHP 8.2+ readonly classes
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
  </notes>
