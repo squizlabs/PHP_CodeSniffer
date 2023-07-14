@@ -70,7 +70,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     - PSR2 and PSR12 do not have documented rules for this as they pre-date the readonly modifier
     - PSR-PER has been used to confirm the order of this keyword so it can be applied to PSR2 and PSR12 correctly
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
-  - Squiz/FunctionComment: new ParamNameUnexpectedAmpersandPrefix error for parameters annotated as passed by reference while the parameter is not passed by reference
+  - Squiz.Commenting.FunctionComment: new ParamNameUnexpectedAmpersandPrefix error for parameters annotated as passed by reference while the parameter is not passed by reference
     -- Thanks to Dan Wallis (@fredden) for the patch
   - Squiz.Formatting.OperatorBracket no longer reports false positives in match() structures
   - Squiz.PHP.InnerFunctions sniff no longer reports on OO methods for OO structures declared within a function or closure
@@ -103,6 +103,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
   - Fixed bug #3672 : Incorrect ScopeIndent.IncorrectExact report for match inside array literal
   - Fixed bug #3694 : Generic.WhiteSpace.SpreadOperatorSpacingAfter does not ignore spread operator in PHP 8.1 first class callables
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
+  - Fixed bug #3717 : Squiz.Commenting.FunctionComment: fixed false positive for InvalidNoReturn when type is never
+    -- Thanks to Choraimy Kroonstuiver (@axlon) for the patch
   - Fixed bug #3722 : Potential "Uninitialized string offset 1" in octal notation backfill
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3728 : PHP 8.2 | PSR1/SideEffects: allow for readonly classes
@@ -113,7 +115,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3779 : Squiz/LowercasePHPFunctions + Generic/ForbiddenFunctions: bug fix for class names in attributes
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
-  - Fixed bug #3785 : Squiz/FunctionComment: potential "Uninitialized string offset 0" when a type contains a duplicate pipe symbol
+  - Fixed bug #3785 : Squiz.Commenting.FunctionComment: potential "Uninitialized string offset 0" when a type contains a duplicate pipe symbol
     -- Thanks to Dan Wallis (@fredden) for the patch
   - Fixed bug #3787 : PEAR/Squiz/[MultiLine]FunctionDeclaration: allow for PHP 8.1 new in initializers
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
@@ -127,7 +129,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3806 : Squiz.PHP.InnerFunctions sniff now correctly reports inner functions declared within a closure
     -- Thanks to @Daimona for the patch
-  - Fixed bug #3813 : Squiz/FunctionComment: false positive for parameter name mismatch on parameters annotated as passed by reference
+  - Fixed bug #3813 : Squiz.Commenting.FunctionComment: false positive for parameter name mismatch on parameters annotated as passed by reference
     -- Thanks to Dan Wallis (@fredden) for the patch
   - Fixed bug #3816 : PSR12/FileHeader: bug fix - false positives on PHP 8.2+ readonly classes
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
