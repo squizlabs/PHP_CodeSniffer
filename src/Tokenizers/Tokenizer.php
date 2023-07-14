@@ -27,7 +27,7 @@ abstract class Tokenizer
      *
      * @var string
      */
-    protected $eolChar = [];
+    protected $eolChar = '';
 
     /**
      * A token-based representation of the content.
