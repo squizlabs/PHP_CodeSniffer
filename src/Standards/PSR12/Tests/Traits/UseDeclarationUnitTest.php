@@ -30,7 +30,7 @@ class UseDeclarationUnitTest extends AbstractSniffUnitTest
             29  => 2,
             30  => 1,
             42  => 1,
-            57  => 3,
+            57  => 4,
             59  => 3,
             61  => 1,
             63  => 5,

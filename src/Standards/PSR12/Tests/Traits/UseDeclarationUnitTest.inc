@@ -54,7 +54,7 @@ class ClassName7
 
 class ClassName8
 {
-    use A ,  B,
+    use   A ,  B,
     C
     {
 

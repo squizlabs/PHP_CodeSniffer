@@ -177,6 +177,38 @@ class UseDeclarationSniff implements Sniff
                 }//end if
             }//end if
 
+            $error = 'Expected 1 space after USE in trait import statement; %s found';
+            if ($tokens[($useToken + 1)]['code'] !== T_WHITESPACE) {
+                $data = ['0'];
+                $fix  = $phpcsFile->addFixableError($error, $useToken, 'SpaceAfterUse', $data);
+                if ($fix === true) {
+                    $phpcsFile->fixer->addContent($useToken, ' ');
+                }
+            } else if ($tokens[($useToken + 1)]['content'] !== ' ') {
+                $next = $phpcsFile->findNext(T_WHITESPACE, ($useToken + 1), null, true);
+                if ($tokens[$next]['line'] !== $tokens[$useToken]['line']) {
+                    $found = 'newline';
+                } else {
+                    $found = $tokens[($useToken + 1)]['length'];
+                }
+
+                $data = [$found];
+                $fix  = $phpcsFile->addFixableError($error, $useToken, 'SpaceAfterUse', $data);
+                if ($fix === true) {
+                    if ($found === 'newline') {
+                        $phpcsFile->fixer->beginChangeset();
+                        for ($x = ($useToken + 1); $x < $next; $x++) {
+                            $phpcsFile->fixer->replaceToken($x, '');
+                        }
+
+                        $phpcsFile->fixer->addContent($useToken, ' ');
+                        $phpcsFile->fixer->endChangeset();
+                    } else {
+                        $phpcsFile->fixer->replaceToken(($useToken + 1), ' ');
+                    }
+                }
+            }//end if
+
             // Check the formatting of the statement.
             if (isset($tokens[$useToken]['scope_opener']) === true) {
                 $this->processUseGroup($phpcsFile, $useToken);
@@ -651,38 +683,6 @@ class UseDeclarationSniff implements Sniff
     protected function processUseStatement(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-
-        $error = 'Expected 1 space after USE in trait import statement; %s found';
-        if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
-            $data = ['0'];
-            $fix  = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterUse', $data);
-            if ($fix === true) {
-                $phpcsFile->fixer->addContent($stackPtr, ' ');
-            }
-        } else if ($tokens[($stackPtr + 1)]['content'] !== ' ') {
-            $next = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
-            if ($tokens[$next]['line'] !== $tokens[$stackPtr]['line']) {
-                $found = 'newline';
-            } else {
-                $found = $tokens[($stackPtr + 1)]['length'];
-            }
-
-            $data = [$found];
-            $fix  = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterUse', $data);
-            if ($fix === true) {
-                if ($found === 'newline') {
-                    $phpcsFile->fixer->beginChangeset();
-                    for ($x = ($stackPtr + 1); $x < $next; $x++) {
-                        $phpcsFile->fixer->replaceToken($x, '');
-                    }
-
-                    $phpcsFile->fixer->addContent($stackPtr, ' ');
-                    $phpcsFile->fixer->endChangeset();
-                } else {
-                    $phpcsFile->fixer->replaceToken(($stackPtr + 1), ' ');
-                }
-            }
-        }//end if
 
         $next = $phpcsFile->findNext([T_COMMA, T_SEMICOLON], ($stackPtr + 1));
         if ($next !== false && $tokens[$next]['code'] === T_COMMA) {
