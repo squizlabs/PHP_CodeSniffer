@@ -655,7 +655,7 @@ class UseDeclarationSniff implements Sniff
         $error = 'Expected 1 space after USE in trait import statement; %s found';
         if ($tokens[($stackPtr + 1)]['code'] !== T_WHITESPACE) {
             $data = ['0'];
-            $fix  = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterAs', $data);
+            $fix  = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterUse', $data);
             if ($fix === true) {
                 $phpcsFile->fixer->addContent($stackPtr, ' ');
             }
@@ -668,7 +668,7 @@ class UseDeclarationSniff implements Sniff
             }
 
             $data = [$found];
-            $fix  = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterAs', $data);
+            $fix  = $phpcsFile->addFixableError($error, $stackPtr, 'SpaceAfterUse', $data);
             if ($fix === true) {
                 if ($found === 'newline') {
                     $phpcsFile->fixer->beginChangeset();
