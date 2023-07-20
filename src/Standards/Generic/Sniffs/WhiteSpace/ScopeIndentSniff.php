@@ -1090,8 +1090,11 @@ class ScopeIndentSniff implements Sniff
             if ($tokens[$i]['code'] === T_CONSTANT_ENCAPSED_STRING
                 || $tokens[$i]['code'] === T_DOUBLE_QUOTED_STRING
             ) {
-                $i = $phpcsFile->findNext($tokens[$i]['code'], ($i + 1), null, true);
-                $i--;
+                $nextNonTextString = $phpcsFile->findNext($tokens[$i]['code'], ($i + 1), null, true);
+                if ($nextNonTextString !== false) {
+                    $i = ($nextNonTextString - 1);
+                }
+
                 continue;
             }
 
