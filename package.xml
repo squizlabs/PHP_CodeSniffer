@@ -100,6 +100,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
     -- Thanks to Juliette Reinders Folmer (@jrfnl) for the patch
   - Fixed bug #3806 : Squiz.PHP.InnerFunctions sniff now correctly reports inner functions declared within a closure
     -- Thanks to @Daimona for the patch
+  - Fixed bug #3809 : GitBlame report was broken when passing a basepath
+    -- Thanks to Chris (@datengraben) for the patch
   - Fixed bug #3813 : Squiz.Commenting.FunctionComment: false positive for parameter name mismatch on parameters annotated as passed by reference
     -- Thanks to Dan Wallis (@fredden) for the patch
   - Fixed bug #3816 : PSR12/FileHeader: bug fix - false positives on PHP 8.2+ readonly classes
