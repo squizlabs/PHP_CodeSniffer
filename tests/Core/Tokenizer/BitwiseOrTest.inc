@@ -48,6 +48,9 @@ class TypeUnion
     /* testTypeUnionPropertyWithOnlyReadOnlyKeyword */
     readonly string|null $nullableString;
 
+    /* testTypeUnionPropertyWithOnlyStaticKeyword */
+    static Foo|Bar $obj;
+
     public function paramTypes(
         /* testTypeUnionParam1 */
         int|float $paramA /* testBitwiseOrParamDefaultValue */ = CONSTANT_A | CONSTANT_B,

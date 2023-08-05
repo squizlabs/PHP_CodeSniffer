@@ -584,8 +584,7 @@ class GetMemberPropertiesTest extends AbstractMethodUnitTest
                     'scope_specified' => true,
                     'is_static'       => false,
                     'is_readonly'     => false,
-                    // Missing static, but that's OK as not an allowed syntax.
-                    'type'            => 'callable||void',
+                    'type'            => 'callable|void',
                     'nullable_type'   => false,
                 ],
             ],

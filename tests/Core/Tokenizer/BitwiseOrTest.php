@@ -110,6 +110,7 @@ class BitwiseOrTest extends AbstractMethodUnitTest
             ['/* testTypeUnionPropertyWithStaticAndReadOnlyKeywords */'],
             ['/* testTypeUnionPropertyWithVarAndReadOnlyKeywords */'],
             ['/* testTypeUnionPropertyWithOnlyReadOnlyKeyword */'],
+            ['/* testTypeUnionPropertyWithOnlyStaticKeyword */'],
             ['/* testTypeUnionParam1 */'],
             ['/* testTypeUnionParam2 */'],
             ['/* testTypeUnionParam3 */'],

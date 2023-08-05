@@ -2916,6 +2916,10 @@ class PHP extends Tokenizer
                     continue;
                 }
 
+                if ($suspectedType === 'property or parameter') {
+                    unset($allowed[\T_STATIC]);
+                }
+
                 $typeTokenCount = 0;
                 $typeOperators  = [$i];
                 $confirmed      = false;
@@ -2948,6 +2952,7 @@ class PHP extends Tokenizer
                     if ($suspectedType === 'property or parameter'
                         && (isset(Util\Tokens::$scopeModifiers[$this->tokens[$x]['code']]) === true
                         || $this->tokens[$x]['code'] === T_VAR
+                        || $this->tokens[$x]['code'] === T_STATIC
                         || $this->tokens[$x]['code'] === T_READONLY)
                     ) {
                         // This will also confirm constructor property promotion parameters, but that's fine.

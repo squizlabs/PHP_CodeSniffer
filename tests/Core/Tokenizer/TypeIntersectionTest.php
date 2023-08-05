@@ -109,6 +109,7 @@ class TypeIntersectionTest extends AbstractMethodUnitTest
             ['/* testTypeIntersectionPropertyPartiallyQualified */'],
             ['/* testTypeIntersectionPropertyFullyQualified */'],
             ['/* testTypeIntersectionPropertyWithReadOnlyKeyword */'],
+            ['/* testTypeIntersectionPropertyWithStaticKeyword */'],
             ['/* testTypeIntersectionParam1 */'],
             ['/* testTypeIntersectionParam2 */'],
             ['/* testTypeIntersectionParam3 */'],
