@@ -4,7 +4,7 @@ PHP_CodeSniffer is a set of two PHP scripts; the main `phpcs` script that tokeni
 
 [![Build Status](https://github.com/squizlabs/PHP_CodeSniffer/workflows/Validate/badge.svg?branch=master)](https://github.com/squizlabs/PHP_CodeSniffer/actions)
 [![Build Status](https://github.com/squizlabs/PHP_CodeSniffer/workflows/Test/badge.svg?branch=master)](https://github.com/squizlabs/PHP_CodeSniffer/actions)
-[![Code consistency](http://squizlabs.github.io/PHP_CodeSniffer/analysis/squizlabs/PHP_CodeSniffer/grade.svg)](http://squizlabs.github.io/PHP_CodeSniffer/analysis/squizlabs/PHP_CodeSniffer)
+[![Code consistency](https://squizlabs.github.io/PHP_CodeSniffer/analysis/squizlabs/PHP_CodeSniffer/grade.svg)](http://squizlabs.github.io/PHP_CodeSniffer/analysis/squizlabs/PHP_CodeSniffer)
 [![Join the chat at https://gitter.im/squizlabs/PHP_CodeSniffer](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/squizlabs/PHP_CodeSniffer?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Requirements
@@ -65,7 +65,7 @@ You will then be able to run PHP_CodeSniffer from the tools directory:
 ./tools/phpcbf -h
 ```
 ### PEAR
-If you use PEAR, you can install PHP_CodeSniffer using the PEAR installer. This will make the `phpcs` and `phpcbf` commands immediately available for use. To install PHP_CodeSniffer using the PEAR installer, first ensure you have [installed PEAR](http://pear.php.net/manual/en/installation.getting.php) and then run the following command:
+If you use PEAR, you can install PHP_CodeSniffer using the PEAR installer. This will make the `phpcs` and `phpcbf` commands immediately available for use. To install PHP_CodeSniffer using the PEAR installer, first ensure you have [installed PEAR](https://pear.php.net/manual/en/installation.getting.php) and then run the following command:
 ```bash
 pear install PHP_CodeSniffer
 ```
