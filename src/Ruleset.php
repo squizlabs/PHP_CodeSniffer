@@ -238,7 +238,7 @@ class Ruleset
     public function explain()
     {
         $sniffs = array_keys($this->sniffCodes);
-        sort($sniffs);
+        sort($sniffs, (SORT_NATURAL | SORT_FLAG_CASE));
 
         ob_start();
 
