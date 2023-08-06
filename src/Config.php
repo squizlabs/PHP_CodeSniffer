@@ -704,7 +704,7 @@ class Config
 
 
     /**
-     * Processes a long (--example) command line argument.
+     * Processes a long (--example) command-line argument.
      *
      * @param string $arg The command line argument.
      * @param int    $pos The position of the argument on the command line.
@@ -723,7 +723,7 @@ class Config
             throw new DeepExitException($output, 0);
         case 'version':
             $output  = 'PHP_CodeSniffer version '.self::VERSION.' ('.self::STABILITY.') ';
-            $output .= 'by Squiz (http://www.squiz.net)'.PHP_EOL;
+            $output .= 'by Squiz (https://www.squiz.net)'.PHP_EOL;
             throw new DeepExitException($output, 0);
         case 'colors':
             if (isset(self::$overriddenDefaults['colors']) === true) {
