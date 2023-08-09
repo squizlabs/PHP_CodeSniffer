@@ -170,15 +170,13 @@ class OpeningFunctionBraceBsdAllmanSniff implements Sniff
         $ignore[] = T_WHITESPACE;
         $next     = $phpcsFile->findNext($ignore, ($openingBrace + 1), null, true);
         if ($tokens[$next]['line'] === $tokens[$openingBrace]['line']) {
-            if ($next === $tokens[$stackPtr]['scope_closer']) {
-                // Ignore empty functions.
-                return;
-            }
-
-            $error = 'Opening brace must be the last content on the line';
-            $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'ContentAfterBrace');
-            if ($fix === true) {
-                $phpcsFile->fixer->addNewline($openingBrace);
+            // Only throw this error when this is not an empty function.
+            if ($next !== $tokens[$stackPtr]['scope_closer']) {
+                $error = 'Opening brace must be the last content on the line';
+                $fix   = $phpcsFile->addFixableError($error, $openingBrace, 'ContentAfterBrace');
+                if ($fix === true) {
+                    $phpcsFile->fixer->addNewline($openingBrace);
+                }
             }
         }
 
