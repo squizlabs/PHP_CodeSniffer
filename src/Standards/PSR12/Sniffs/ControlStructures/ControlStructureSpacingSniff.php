@@ -38,7 +38,6 @@ class ControlStructureSpacingSniff implements Sniff
             T_FOREACH,
             T_FOR,
             T_SWITCH,
-            T_ELSE,
             T_ELSEIF,
             T_CATCH,
             T_MATCH,
