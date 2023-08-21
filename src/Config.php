@@ -1403,7 +1403,7 @@ class Config
         echo '                e.g., module/php,es/js'.PHP_EOL;
         echo ' <file>         One or more files and/or directories to check'.PHP_EOL;
         echo ' <fileList>     A file containing a list of files and/or directories to check (one per line)'.PHP_EOL;
-        echo ' <filter>       Use either the "gitmodified" or "gitstaged" filter,'.PHP_EOL;
+        echo ' <filter>       Use either the "GitModified" or "GitStaged" filter,'.PHP_EOL;
         echo '                or specify the path to a custom filter class'.PHP_EOL;
         echo ' <generator>    Use either the "HTML", "Markdown" or "Text" generator'.PHP_EOL;
         echo '                (forces documentation generation instead of checking)'.PHP_EOL;
