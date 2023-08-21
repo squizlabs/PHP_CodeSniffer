@@ -1465,7 +1465,7 @@ class Config
         echo '               e.g., module/php,es/js'.PHP_EOL;
         echo ' <file>        One or more files and/or directories to fix'.PHP_EOL;
         echo ' <fileList>    A file containing a list of files and/or directories to fix (one per line)'.PHP_EOL;
-        echo ' <filter>      Use either the "gitmodified" or "gitstaged" filter,'.PHP_EOL;
+        echo ' <filter>      Use either the "GitModified" or "GitStaged" filter,'.PHP_EOL;
         echo '               or specify the path to a custom filter class'.PHP_EOL;
         echo ' <patterns>    A comma separated list of patterns to ignore files and directories'.PHP_EOL;
         echo ' <processes>   How many files should be fixed simultaneously (default is 1)'.PHP_EOL;
