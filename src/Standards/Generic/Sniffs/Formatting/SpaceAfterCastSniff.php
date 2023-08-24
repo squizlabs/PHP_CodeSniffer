@@ -56,6 +56,10 @@ class SpaceAfterCastSniff implements Sniff
     {
         $tokens        = $phpcsFile->getTokens();
         $this->spacing = (int) $this->spacing;
+        $pluralizeSpace = 's';
+        if ($this->spacing === 1) {
+            $pluralizeSpace = '';
+        }
 
         if ($tokens[$stackPtr]['code'] === T_BINARY_CAST
             && $tokens[$stackPtr]['content'] === 'b'
@@ -83,8 +87,11 @@ class SpaceAfterCastSniff implements Sniff
 
         $nextNonWhitespace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($nextNonEmpty !== $nextNonWhitespace) {
-            $error = 'Expected %s space(s) after cast statement; comment found';
-            $data  = [$this->spacing];
+            $error = 'Expected %s space%s after cast statement; comment found';
+            $data  = [
+                $this->spacing,
+                $pluralizeSpace,
+            ];
             $phpcsFile->addError($error, $stackPtr, 'CommentFound', $data);
 
             if ($tokens[($stackPtr + 1)]['code'] === T_WHITESPACE) {
@@ -109,9 +116,10 @@ class SpaceAfterCastSniff implements Sniff
             return;
         }
 
-        $error = 'Expected %s space(s) after cast statement; %s found';
+        $error = 'Expected %s space%s after cast statement; %s found';
         $data  = [
             $this->spacing,
+            $pluralizeSpace,
             $found,
         ];
 

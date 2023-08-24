@@ -332,9 +332,14 @@ class ArrayDeclarationSniff implements Sniff
             // Check the closing bracket is lined up under the "a" in array.
             $expected = ($keywordStart - 1);
             $found    = ($tokens[$arrayEnd]['column'] - 1);
-            $error    = 'Closing parenthesis not aligned correctly; expected %s space(s) but found %s';
+            $pluralizeSpace = 's';
+            if ($expected === 1) {
+                $pluralizeSpace = '';
+            }
+            $error    = 'Closing parenthesis not aligned correctly; expected %s space%s but found %s';
             $data     = [
                 $expected,
+                $pluralizeSpace,
                 $found,
             ];
 
@@ -676,10 +681,15 @@ class ArrayDeclarationSniff implements Sniff
 
                     $first = $phpcsFile->findFirstOnLine(T_WHITESPACE, $valuePointer, true);
                     $found = ($tokens[$first]['column'] - 1);
+                    $pluralizeSpace = 's';
+                    if ($expected === 1) {
+                        $pluralizeSpace = '';
+                    }
                     if ($found !== $expected) {
-                        $error = 'Array value not aligned correctly; expected %s spaces but found %s';
+                        $error = 'Array value not aligned correctly; expected %s space%s but found %s';
                         $data  = [
                             $expected,
+                            $pluralizeSpace,
                             $found,
                         ];
 
@@ -785,9 +795,14 @@ class ArrayDeclarationSniff implements Sniff
             if ($tokens[$index['arrow']]['column'] !== $arrowStart) {
                 $expected = ($arrowStart - ($index['index_length'] + $tokens[$indexPointer]['column']));
                 $found    = ($tokens[$index['arrow']]['column'] - ($index['index_length'] + $tokens[$indexPointer]['column']));
-                $error    = 'Array double arrow not aligned correctly; expected %s space(s) but found %s';
+                $pluralizeSpace = 's';
+                if ($expected === 1) {
+                    $pluralizeSpace = '';
+                }
+                $error    = 'Array double arrow not aligned correctly; expected %s space%s but found %s';
                 $data     = [
                     $expected,
+                    $pluralizeSpace,
                     $found,
                 ];
 
@@ -810,10 +825,15 @@ class ArrayDeclarationSniff implements Sniff
                 if ($found < 0) {
                     $found = 'newline';
                 }
+                $pluralizeSpace = 's';
+                if ($expected === 1) {
+                    $pluralizeSpace = '';
+                }
 
-                $error = 'Array value not aligned correctly; expected %s space(s) but found %s';
+                $error = 'Array value not aligned correctly; expected %s space%s but found %s';
                 $data  = [
                     $expected,
+                    $pluralizeSpace,
                     $found,
                 ];
 

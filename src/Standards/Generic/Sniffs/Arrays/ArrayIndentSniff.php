@@ -153,10 +153,15 @@ class ArrayIndentSniff extends AbstractArraySniff
         if ($foundIndent === $expectedIndent) {
             return;
         }
+        $pluralizeSpace = 's';
+        if ($expectedIndent === 1) {
+            $pluralizeSpace = '';
+        }
 
-        $error = 'Array close brace not indented correctly; expected %s spaces but found %s';
+        $error = 'Array close brace not indented correctly; expected %s space%s but found %s';
         $data  = [
             $expectedIndent,
+            $pluralizeSpace,
             $foundIndent,
         ];
         $fix   = $phpcsFile->addFixableError($error, $arrayEnd, 'CloseBraceIncorrect', $data);

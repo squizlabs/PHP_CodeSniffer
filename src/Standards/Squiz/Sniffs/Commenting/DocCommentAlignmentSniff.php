@@ -112,9 +112,14 @@ class DocCommentAlignmentSniff implements Sniff
             }
 
             if ($tokens[$i]['column'] !== $requiredColumn) {
-                $error = 'Expected %s space(s) before asterisk; %s found';
+                $pluralizeSpace = 's';
+                if ($requiredColumn - 1 === 1) {
+                    $pluralizeSpace = '';
+                }
+                $error = 'Expected %s space%s before asterisk; %s found';
                 $data  = [
                     ($requiredColumn - 1),
+                    $pluralizeSpace,
                     ($tokens[$i]['column'] - 1),
                 ];
                 $fix   = $phpcsFile->addFixableError($error, $i, 'SpaceBeforeStar', $data);

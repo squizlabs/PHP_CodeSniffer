@@ -66,6 +66,10 @@ class SpaceAfterNotSniff implements Sniff
     {
         $tokens        = $phpcsFile->getTokens();
         $this->spacing = (int) $this->spacing;
+        $pluralizeSpace = 's';
+        if ($this->spacing === 1) {
+            $pluralizeSpace = '';
+        }
 
         $nextNonEmpty = $phpcsFile->findNext(Tokens::$emptyTokens, ($stackPtr + 1), null, true);
         if ($nextNonEmpty === false) {
@@ -84,8 +88,11 @@ class SpaceAfterNotSniff implements Sniff
 
         $nextNonWhitespace = $phpcsFile->findNext(T_WHITESPACE, ($stackPtr + 1), null, true);
         if ($nextNonEmpty !== $nextNonWhitespace) {
-            $error = 'Expected %s space(s) after NOT operator; comment found';
-            $data  = [$this->spacing];
+            $error = 'Expected %s space%s after NOT operator; comment found';
+            $data  = [
+                $this->spacing,
+                $pluralizeSpace,
+            ];
             $phpcsFile->addError($error, $stackPtr, 'CommentFound', $data);
             return;
         }
@@ -101,9 +108,10 @@ class SpaceAfterNotSniff implements Sniff
             return;
         }
 
-        $error = 'Expected %s space(s) after NOT operator; %s found';
+        $error = 'Expected %s space%s after NOT operator; %s found';
         $data  = [
             $this->spacing,
+            $pluralizeSpace,
             $found,
         ];
 

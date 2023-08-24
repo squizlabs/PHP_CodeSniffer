@@ -105,9 +105,14 @@ class ControlSignatureSniff implements Sniff
         }
 
         if ($found !== $expected) {
-            $error = 'Expected %s space(s) after %s keyword; %s found';
+            $pluralizeSpace = 's';
+            if ($expected === 1) {
+                $pluralizeSpace = '';
+            }
+            $error = 'Expected %s space%s after %s keyword; %s found';
             $data  = [
                 $expected,
+                $pluralizeSpace,
                 strtoupper($tokens[$stackPtr]['content']),
                 $found,
             ];
@@ -146,9 +151,14 @@ class ControlSignatureSniff implements Sniff
             }
 
             if ($found !== $expected) {
-                $error = 'Expected %s space(s) after closing parenthesis; found %s';
+                $pluralizeSpace = 's';
+                if ($expected === 1) {
+                    $pluralizeSpace = '';
+                }
+                $error = 'Expected %s space%s after closing parenthesis; found %s';
                 $data  = [
                     $expected,
+                    $pluralizeSpace,
                     $found,
                 ];
 
