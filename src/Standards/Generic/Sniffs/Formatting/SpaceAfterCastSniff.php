@@ -54,8 +54,8 @@ class SpaceAfterCastSniff implements Sniff
      */
     public function process(File $phpcsFile, $stackPtr)
     {
-        $tokens        = $phpcsFile->getTokens();
-        $this->spacing = (int) $this->spacing;
+        $tokens         = $phpcsFile->getTokens();
+        $this->spacing  = (int) $this->spacing;
         $pluralizeSpace = 's';
         if ($this->spacing === 1) {
             $pluralizeSpace = '';

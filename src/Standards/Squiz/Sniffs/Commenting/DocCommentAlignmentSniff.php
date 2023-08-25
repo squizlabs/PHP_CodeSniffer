@@ -113,9 +113,10 @@ class DocCommentAlignmentSniff implements Sniff
 
             if ($tokens[$i]['column'] !== $requiredColumn) {
                 $pluralizeSpace = 's';
-                if ($requiredColumn - 1 === 1) {
+                if (($requiredColumn - 1) === 1) {
                     $pluralizeSpace = '';
                 }
+
                 $error = 'Expected %s space%s before asterisk; %s found';
                 $data  = [
                     ($requiredColumn - 1),
@@ -131,7 +132,7 @@ class DocCommentAlignmentSniff implements Sniff
                         $phpcsFile->fixer->replaceToken(($i - 1), $padding);
                     }
                 }
-            }
+            }//end if
 
             if ($tokens[$i]['code'] !== T_DOC_COMMENT_STAR) {
                 continue;

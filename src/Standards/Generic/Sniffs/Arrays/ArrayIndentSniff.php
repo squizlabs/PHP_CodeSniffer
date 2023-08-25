@@ -153,6 +153,7 @@ class ArrayIndentSniff extends AbstractArraySniff
         if ($foundIndent === $expectedIndent) {
             return;
         }
+
         $pluralizeSpace = 's';
         if ($expectedIndent === 1) {
             $pluralizeSpace = '';
