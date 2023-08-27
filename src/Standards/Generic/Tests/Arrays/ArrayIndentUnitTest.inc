@@ -111,3 +111,19 @@ $array = [
     name: $value
     ),
 ];
+
+// phpcs:set Generic.Arrays.ArrayIndent indent 1
+
+// Testing pluralization of indent text - array item indent.
+$var = [
+ 1 => 'one',
+      2 => 'two',
+    /* three */ 3 => 'three',
+];
+
+// Testing pluralization of indent text - close brace indent.
+ $var = [
+  1 => 'one',
+  ];
+
+// phpcs:set Generic.Arrays.ArrayIndent indent 4
