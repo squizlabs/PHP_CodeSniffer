@@ -529,3 +529,9 @@ $x = array(
     'bar',
     'baz' => 'bar', // KeySpecified (based on first entry).
      );
+
+ $x =
+ array(
+  'a',
+  'b',
+   );

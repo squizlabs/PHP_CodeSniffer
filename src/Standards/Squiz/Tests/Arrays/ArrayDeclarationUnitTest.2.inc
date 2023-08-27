@@ -518,3 +518,9 @@ $x = [
     'bar',
     'baz' => 'bar', // KeySpecified (based on first entry).
      ];
+
+ $x =
+ [
+  'a',
+  'b',
+   ];
